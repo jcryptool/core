@@ -1,0 +1,1 @@
+The JCrypTool Core project contains all plug-ins required to run JCrypTool: the bare runtime, editors, crypto providers and some basic views. Core features, dependencies as well as the build projects are included in this repository too.
