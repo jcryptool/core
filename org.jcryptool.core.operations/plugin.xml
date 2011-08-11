@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="algorithms" name="All kind of Algorithms (Symmetric, Asymmetric etc)" schema="schema/algorithms.exsd"/>
+   <extension-point id="editorServices" name="Used editors provide a service" schema="schema/editorServices.exsd"/>
+   <extension-point id="providers" name="Crypto Providers" schema="schema/providers.exsd"/>
+   <extension-point id="alphabets" name="Alphabets" schema="schema/alphabets.exsd"/>
+   <extension-point id="keystores" name="The KeyStores" schema="schema/keystores.exsd"/>
+   <extension-point id="pkcsFactories" name="Factories for all PKCS standards" schema="schema/pkcsFactories.exsd"/>
+   <extension-point id="providers2" name="The new and improved providers extension point" schema="schema/providers2.exsd"/>
+   <extension-point id="games" name="games" schema="schema/games.exsd"/>
+   <extension-point id="visuals" name="visuals" schema="schema/visuals.exsd"/>
+   <extension-point id="analysis" name="analysis" schema="schema/analysis.exsd"/>
+   <extension-point id="operationsManager" name="OperationsManager" schema="schema/operationsManager.exsd"/>
+   <extension
+         id="org.jcryptool.core.operations.algorithm.AlgorithmRegistry"
+         name="AlgorithmRegistry"
+         point="org.jcryptool.core.operations.operationsManager">
+      <manager
+            class="org.jcryptool.core.operations.algorithm.AlgorithmRegistry"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jcryptool.preferences.crypto"
+            class="org.jcryptool.core.operations.providers.preferences.ProvidersPreferencesPage"
+            id="org.jcryptool.core.operations.providers"
+            name="%Label.Name">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jcryptool.core.operations.providers.preferences.ProvidersPreferencesInitializer"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.elementFactories">
+      <factory
+            class="org.jcryptool.core.operations.editors.JCTElementFactory"
+            id="org.jcryptool.core.operations.service.JCTElementFactory"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

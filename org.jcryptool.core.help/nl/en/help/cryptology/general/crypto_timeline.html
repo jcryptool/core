@@ -1,0 +1,386 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<BODY>
+
+<h1>Time-table / time-travel through cryptography and cryptanalysis</h1>
+
+<P>This <B>overview</B> of the various <B>cryptographic algorithms</B> is a chronological history of cryptology, whose origins date back to the days of antiquity and which over time has undergone steady refinement of its methods. Please note that this table is by no means complete.</P>
+
+<P>The first human writing dates back more than 6000 years. Encryption has been in existence for around 3000 years.</P>
+
+<TABLE cols=2 width="0*" class="pad20">
+
+<TR VALIGN="top">
+<TD><nobr>c. 1900 BC</nobr></TD>
+<TD>Non standard symbols were used in old Egypt. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 1500 BC</TD>
+<TD>The Phoenicians developed an <B>alphabet</B>. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 1000 BC</TD>
+<TD>Non standard symbols were used in old Mesopotamia. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 600 BC</TD>
+<TD>In Palestine texts have been encrypted with the simple monoalphabetic substitution cipher <B>Atbash</B>. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 500 BC</TD>
+<TD>Spartans (Greeks) encrypted messages using <B>Scytale</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 400 BC</TD>
+<TD>The <B>Kamasutra</B> described a monoalphabetic substitution cipher.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 200 BC</TD>
+<TD>The Greek historian Polybius described his <B>Polybius system</B> for the first time.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 100-44 BC</TD>
+<TD>Julius Caesar wrote confidential messages in the code named after him, the <B>Caesar code</B>. This is the most well-known of all the mono-alphabetic algorithms.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>c. 500-1400 AD</TD>
+<TD>The "dark age of cryptography" began in Europe: During this period cryptography was considered as black magic art and a lot of knowledge was lost. By contrast cryptography flourished in the Persian world. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>855 AD</TD>
+<TD>In the Arabic world the first book on cryptology appeared. Among other things, Abu 'Abd al-Raham al-Khahil ibn Ahmad ibn'Amr ibn Tammam al Farahidi al-Zadi al Yahamadi (Abu-Yusuf Yaqub ibn Ishaq al-Kindi, called <B>Al-Kindi</B>) proudly described in his book the successful decryption of a Greek ciphertext that was intended for the Byzantine Emperor. His solution was based on frequency analysis and on known (correctly guessed) plaintext at the message start -- a standard cryptanalytic method, used even in WW-II against Enigma messages.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1379</TD>
+<TD>When the pontifex Clement VII escaped to Avignion, he made his secretary Gabrieli di Lavinde (Parma) to develop a new code, which became the <B>nomenclature code</B>, a combination of substituting single letters of the alphabet and code words: He built a list of the most common words together with 2-letter substitutes. The words, that weren't on the list were encrypted with monoalphabetic substitution.<BR>
+Due to its simplicity this nomenclature code was used over the next 450 years especially in diplomatic circles.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1412</TD>
+<TD>A 14-volume Arabic encyclopaedia also described cryptographic methods. Here, in addition to <B>substitution</B> and <B>transposition</B>, the method of <B>repeated substitution</B> applied to a plaintext character was mentioned the first time.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>15th century</TD>
+<TD>Boom of cryptology in Italy because of highly developed diplomatic life.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1466</TD>
+<TD>Leon Battista <B>Alberti</B>, one of the leading figures of the Italian Renaissance, published his book "Modus scribendi in ziferas", in which the cipher wheels invented by him were mentioned for the first time. He also published the first polyalphabetic cipher. Alberti was secretary of an official body concerned with cryptographs (ciphers) at the papal court in Rome. He is known as the "father of cryptography".</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1518</TD>
+<TD>The first printed book on cryptology titled "Polygraphia libri sex", written by the abbot Johannes <B>Trithemius</B>, appeared in the German-speaking world. He also described polyalphabetic ciphers in the now-standard form of rectangular substitution tables.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1563</TD>
+<TD>Giovanni Battista <B>Porta</B> published "De Furtivis Literarum Notis", a book describing encryption methods and cryptanalysis. In it the first digraph substitution cipher is mentioned.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>End of 16th century</TD>
+<TD>France got the lead in cryptanalysis.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1577</TD>
+<TD>The brilliant Flemish code breaker <B>Van Marnix</B> wrote European history by decrypting a Spanish letter, which contained the plan, to conquer England by sending Spanish troops from the Netherlands.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1585</TD>
+<TD>The 600-page book "Tractié de Chiffre" by the French diplomat, Blaise de Vigenère, appeared. He discovered the first working polyalphabetic system with autokey, called "Le chiffre indéchiffrable". Later the weaker <B>Vigenère code</B> was named after him. This code is the most well-known of all the poly-alphabetic algorithms.<BR>
+The autokey idea survived today e.g. in the DES CBC and CFB modes.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1586</TD>
+<TD>The <B>Babington plot</B> tried to kill the Queen Elisabeth I. of England and to replace her on the throne by <B>Mary Stuart</B>, Queen of Scotland.
+<BR>
+Successful cryptanalysis by the "British secret service" enabled to get the six conspirators and to condemn Mary.
+<BR>
+Mary communicated via letters with her conspirators. The bearer of the messages was a spy of Elisabeth: He made exact copies of the letters and sent them to Francis Walsingham, Elizabeth's secretary of state. Walsingham engaged Thomas <B>Phelippes</B>, a cipher and language expert, to decrypt the messages. Successful decryption revealed the plot against Elisabeth. But Walsingham additionally wanted the identity of the conspirators: He made Phelippes forge a postscript, and Mary added the enciphered names of the conspirators in her answer.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>17th century</TD>
+<TD>The era of the <B>black chambers</B> began. Most governments had their own department with professional code breakers, who systematically broke the used nomenclature codes.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1623</TD>
+<TD>Sir Francis <B>Bacon</B> described a method of steganography: To encode a message each letter of the plain text is replaced by a group of five of the letters 'A' or 'B' interspersed into normal text with different typeface. This is a forerunner of what today is called a 5-bit binary encoding.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1628</TD>
+<TD>Antoine <B>Rissignol</B> became the first full-time cryptanalyst being employed after his decryption of an hostile encoded message, which terminated the siege of Realmont by the Huguenots. Since then, cryptanalysts have always been a fixed element in military organizations.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1700</TD>
+<TD>The Russian tsar used a big code table of 2000-3000 syllables and words to encrypt his messages.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1795</TD>
+<TD>Thomas <B>Jefferson</B> developed the first cylindrical cipher device, known as the "wheel cipher". However, he never used it, so that it was forgotten, or rather never became public knowledge. This meant that cylindrical cipher devices were reinvented in a number of places in parallel.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1854</TD>
+<TD>The English mathematics professor Charles <B>Babbage</B> invented a cylindrical cipher device, similar to the "wheel cipher". And he was the first to find a cryptanalytic way to break Vigenère's autokey cipher (the "unbreakable cipher" of the time) as well as the much weaker cipher that is called Vigenère cipher today: This did not become public until looking over his remains in the 20th century.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>19th century</TD>
+<TD>Cryptology found its way into literature: A.C. Doyle, J. Verne, E.A. Poe.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1854</TD>
+<TD>The English physicist, Charles <B>Wheatstone</B>, invented a cipher which worked with a 5*5 matrix. His friend, Lord Lyon Playfair, Baron of St. Andrews, made this public in military and diplomatic circles in Victorian England, and thus it became known as the <B>Playfair cipher</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1863</TD>
+<TD>Friedrich <B>Kasiski</B>, a Prussian major, developed statistical methods of cryptanalysis that were able to decrypt the "unbreakable" Vigenère cipher.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1883</TD>
+<TD>"La Cryptographie militaire" by Auguste <B>Kerckhoff </B>von Nieuwendhoff appeared. This constituted a cryptographic milestone in the telegraph era. It contains the "principle of Kerckhoff", which requires to base the security of an encryption method only on the privacy of the key and not of the algorithm.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1891</TD>
+<TD>The French major Etienne <B>Bazeries</B> invented a cylindrical device known as the Bazeries cylinder that was similar in principle to the wheel cipher. He published the design in 1901, after the French Army rejected it. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1917</TD>
+<TD>The decryption of the <B>Zimmermann telegram</B> by the English secret service (room 40) prompted the critical entrance of the US at the side of the allies into World War I.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1917</TD>
+<TD>The American, Gilbert S. <B>Vernam</B>, employee of AT&T, discovered and developed the <B>one-time-pad</B>, the only provably secure crypto system.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1918</TD>
+<TD>The French cryptanalyst, Lieutenant Georges Painvin broke the <B>ADFGVX</B> cipher, which was put into service by the Germans near the end of World War I. This was a 2-step cipher which first performed a substitution (each letter was substitutes by a bigram through a keyed array), and then the bigrams were fractionated in columns and the columns transpositioned.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1918</TD>
+<TD>Arthur Scherbius and Richard Ritter invented the first <B>Enigma</B>. At the same time the rotor cipher machine was invented and patented respectively by Alexander Koch (Netherlands) und Arvid Damm (Sweden).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1920</TD>
+<TD>William F. <B>Friedmann</B> (1891-1969), later to be honored as the father of US cryptanalysis, developed -- independently of Kasiski -- statistical methods for the cryptanalysis of the Vigenère cipher.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1921</TD>
+<TD>The Californian Edward Hebern built the first cipher machine based on the <B>rotor </B>principle.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1922</TD>
+<TD>Thomas Jefferson's <B>wheel cipher</B> was re-discovered in the US, further developed by the US Marines and was used during the Second World War.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1923</TD>
+<TD>The <B>Enigma</B> rotor machine, developed by the German engineer Arthur Scherbius, was unveiled at the International Post Congress. The "Chiffriermaschinen AG" company was founded by Scherbius to market his Enigma around the world.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1929</TD>
+<TD>Lester S. Hill published the article "Cryptography in an Algebraic Alphabet". The <B>Hill cipher</B> applied algebra (matrix multiplication) for encryption.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1940</TD>
+<TD>Micro dots were used by German spies.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1940</TD>
+<TD>Alan <B>Turing</B> broke the Enigma with the idea of his "bombs" building on work done by <B>Marian Rejewski</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1941</TD>
+<TD>The internal Japanese messages regarding the impending attack on Pearl Harbor was decrypted. This was due to the work of a team headed by William Frederick Friedman who broke the Japanese Purple machine.<BR>
+Many historians believe that cryptanalysis shortened Second World War II by one year.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1948/1949</TD>
+<TD>Claude <B>Shannon</B> established the mathematical basis of information theory and published "Communication Theory of Secrecy Systems", where he also proved that all theoretically unbreakable ciphers must fulfill the same requirements as the one-time pad.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1973</TD>
+<TD>David Elliott Bell and Len LaPadula developed the <B>Bell-LaPadula model</B> which formalizes the rules of access to classified information in order to achieve data confidentiality.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1973-1975</TD>
+<TD>Ellis, Cocks and Williamson developed public-key encryption on behalf of the British government (<B>GCHQ</B>). This discovery was not publicly known until 1997.<BR>
+Because these methods were independently and publicly redeveloped again by Diffie, Hellman, Rivest, Shamir and Adleman, they were considered the discoverers of public-key cryptography.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1975</TD>
+<TD>Diffie and Hellman described that <B>public key procedures</B> are theoretically possible, although they, in fact, set out to prove the opposite.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1976</TD>
+<TD>Whitfield Diffie and Martin Hellman published the paper "New Directions in Cryptography". It introduced a radically new method of distributing cryptographic keys, which addressed one of the fundamental problems of cryptography, key distribution. This has become known as <B>Diffie-Hellman key exchange protocol</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1977</TD>
+<TD>The <B>DES (Data Encryption Standard)</B> invented by IBM in 1975 was chosen by NIST (FIPS PUB-46) as the US standard encryption algorithm.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1977</TD>
+<TD>The <B>RSA algorithm</B>, named after its developers, Ronald Rivest, Adi Shamir and Leonard Adleman, was published. It was the first public key procedure used in practice and it ranks as the most innovative contribution of cryptologic research in the 20th century.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1979</TD>
+<TD>The first ATMs (automatic teller machines) exploited <B>DES</B> in order to encrypt the PINs.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1982</TD>
+<TD>The physician Richard Feynman developed the theoretical model of a <B>quantum computer</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1984</TD>
+<TD>Charles H. Bennett and Gilles Brassard described <B>quantum cryptography</B> (BB84 protocol).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1985</TD>
+<TD>Goldwasser, Micali and Racoff unveiled the <B>zero-knowledge procedure</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1986</TD>
+<TD>Independently of each other, Neal Koblitz and Victor Miller proposed using <B>elliptic curves</B> for public key cryptography.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1991</TD>
+<TD>Xueija Lai and James Massey developed the <B>IDEA algorithm</B> in Switzerland, which, for example, is used in the <b>PGP</b> cryptology software.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1991</TD>
+<TD><B>DSA</B> was chosen by NIST as the standard digital signature algorithm. </TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1991</TD>
+<TD><B>PGP</B> (Pretty Good Privacy) was developed by Phil Zimmermann as freeware and open source, in order to encrypt and exchange files highly securely. This was the first time that hybrid encryption (combination of symmetric and asymmetric cryptography) was applied within a program popular (even today) by end users. Main purpose was the encryption of email attachments (which later was covered too by the S/MIME standard).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>1994</TD>
+<TD>Peter <B>Shor</B> devised an algorithm to let quantum computers determine the factorization of large integers. This was the first interesting problem for which quantum computers promised a significant speed-up, and it therefore generated a lot of interest in quantum computers.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>08/1994</TD>
+<TD>The encryption protocol <B>SSL</B> 1.0 was published by Netscape Communications -- only 9 months after the first release of Mosaic 1.0, the first popular web browser. Meanwhile, SSL encryption is supported by all popular web browsers. However, the transport protocol SSL (TLS) is not restricted to the application HTTPS.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>10/1995</TD>
+<TD><B>S/MIME</B>, a standard mechanism for secure email, was published as RFC 1847. In the meantime it is supported by all popular email clients. S/MIME (Secure/Multipurpose Internet Mail Extensions) described a consistent way to send and receive secure (signed and/or encrypted) emails. It is based on the popular Internet MIME standard. However, S/MIME is not restricted to mail.
+<BR>
+S/MIME and SSL are the mostly used cryptographic protocols in the internet.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>July, 17, 1998</TD>
+<TD>The EFF's DES cracker (Deep Crack) broke a DES key with a known-plaintext attack in 56 hours (DES challenge 2 by RSA Laboratories).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>January, 19, 1999</TD>
+<TD>Together, Deep Crack and distributed.net broke a DES key with a known-plaintext attack in 22 hours and 15 minutes (DES challenge 3 by RSA Laboratories).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>10/2000</TD>
+<TD>After public competition lasting for 5 years, the algorithm <B>Rijndael</B> was chosen by <B>NIST</B> as the successor of DES and is now called <B>AES (Advanced Encryption Standard)</B>.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>From about 2000</TD>
+<TD><B>Weil Pairing</B> was used for novel commitment schemes like IBE (identity based encryption, which turned out to be more interesting from a theoretical than from a practical point of view).</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>08/2004</TD>
+<TD>At the Crypto 2004 conference, Chinese researchers showed structural weaknesses in common hash functions (MD5, SHA), which make them vulnerable to practical <B>collision attacks</B>. These hash functions are still used in almost all cryptographic protocols. The Chinese researchers didn't publish all the details.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>05/2005</TD>
+<TD><B>Jens Franke</B> et al. factorized the 663 bit long number RSA-200.</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD>04/2007</TD>
+<TD>The university of Darmstadt demonstrated to break a 104-bit WEP encryption in less than 60 seconds (by improving the best known attack against RC4). WEP (Wired Equivalent Privacy), the old standard protocol used to secure wireless networks, was already known to be insecure and has been replaced by Wi-Fi Protected Access (WPA), but WEP is still in use in 2007.</TD>
+</TR>
+
+</TABLE><BR>
+
+
+<P> </P>
+<P>You can find further overviews about the history of cryptology at e.g. the following links:</P>
+
+<ul>
+<li><a href="http://www.regenechsen.de/phpwcms/index.php?krypto_zeittafel&hashID=e7813e37255d66a8af8bddf751147255" target="_blank">Zeittafel der Kryptologie (German only)</a></li>
+<li><a href="http://www.tronland.net/cryptron/jvk.htm" target="_blank">Jenseits von Kahn -- Die verborgene Geschichte der Codebrecher (German only)</a></li>
+<li><a href="http://www.xramp.com/resources/crypto-uni/" target="_blank">Cryptography history by XRamp</a></li>
+<li><a href="http://cs-exhibitions.uni-klu.ac.at/index.php?id=192" target="_blank">The History of Cryptography (from the Virtual Exhibitions in Informatics page of the University Klagenfurth)</a></li>
+<li><a href="http://cam.qubit.org/articles/crypto/intro.php" target="_blank">CQC History of Cryptography</a></li>
+<li><a href="http://jproc.ca/crypto/crypto_hist.html" target="_blank">A short history of crypto from the Crypto Machines Home page</a></li>
+<li><a href="http://users.telenet.be/d.rijmenants/en/timeline.htm" target="_blank">Cipher Machines Timeline</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Timeline_of_cryptography" target="_blank">Wikipedia Timeline of cryptography</a></li>
+</ul>
+
+</BODY>
+</HTML>

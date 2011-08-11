@@ -1,0 +1,181 @@
+/* Shared style applied to all pages */
+/* trick to get desired scroll bar behavior on all browsers */
+html {
+    overflow: auto;
+    border: 0px;
+    height: 100%;
+}
+
+body {
+    background: url(../graphics/bg.gif) repeat-x;
+    color: #000;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, li, dl, dt, dd, th, td, a {
+    font-family: "Lucida Grande", Arial, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+/* clearfix class for clearing floats */
+.clearfix {
+    min-height: 1%;
+}
+
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    font-size: 1px;
+    visibility: hidden;
+}
+
+/* center whole page */
+div#centered-zone {
+    width: 803px;
+    margin: 0 auto;
+}
+
+div#headline {
+    border-bottom:1px solid #ddd;
+    padding: 15px;
+}
+
+div#content {
+    border-bottom:1px solid #ddd;
+    padding: 15px;
+}
+
+div#content p {
+    font-size: 12px;
+    line-height: 14px;
+    padding-top: 5px;
+}
+
+h1 {
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: normal;
+    color: #999;
+    padding-top: 5px;
+}
+
+h3 {
+    font-size: 14px;
+    line-height: 16px;
+    padding-top: 5px;
+}
+
+h4 {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+p a {
+    display:inline;
+    color:#08c;
+    font-weight:normal;
+    text-decoration:none;
+}
+
+p a:hover {
+    color: #08c;
+    text-decoration: underline;
+}
+
+a {
+    display:block;
+    color:#000;
+    font-weight:normal;
+    text-decoration:none;
+}
+
+a:hover {
+    color: #08c;
+}
+
+div.column-1 {
+    float: left;
+    margin-right: 30px;
+}
+
+div.column-2 {
+    float: left;
+    width: 540px;
+}
+
+/* navigation pane */
+ul#prim-nav {
+    width: 200px;
+}
+
+ul#prim-nav li {
+    background: url(../graphics/menu-bg.gif) 0 0 no-repeat;
+}
+
+ul#prim-nav li.active {
+    background: url(../graphics/menu-active.gif) 0 0 no-repeat;
+}
+
+
+ul#prim-nav li.first {
+    background: url(../graphics/menu-first.gif) 0 0 no-repeat;
+}
+
+ul#prim-nav li.first-active {
+    background: url(../graphics/menu-first-active.gif) 0 0 no-repeat;
+}
+
+
+ul#prim-nav li.last {
+    background: url(../graphics/menu-last.gif) 0 0 no-repeat;
+}
+
+ul#prim-nav li.last-active {
+    background: url(../graphics/menu-last-active.gif) 0 0 no-repeat;
+}
+
+ul#prim-nav a {
+    font-size: 14px;
+    line-height: 50px;
+}
+
+img.icon {
+    margin: 3px 8px 0 6px;
+    float: left;
+}
+
+/* footer */
+div#footer {
+    padding: 15px;
+}
+
+div#footer p {
+    font-size: 11px;
+    line-height: 13px;
+    text-align: center;
+    color: #999;
+}

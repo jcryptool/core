@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<index version="1.0">
+    <entry keyword="Konsole">
+        <topic href="help/view.html" />
+    </entry>
+    <entry keyword="Konsole erweitern">
+        <topic href="help/dev.html" />
+    </entry>
+</index>

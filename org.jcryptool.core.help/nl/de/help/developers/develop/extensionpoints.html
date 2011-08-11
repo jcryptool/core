@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Extension Points</h1>
+
+	<p>JCrypTool verfügt über eine stetig wachsende Anzahl an <strong>Extension Points</strong>. Extension Points stellen dabei die Punkte dar,
+	an denen JCrypTool am besten erweitert werden kann. Die meisten (und wohl wichtigsten) Extension Points finden sich im
+	<strong>org.jcryptool.core.operations</strong> Plug-in: von den Algorithmen bis hin zu den Providern.</p>
+
+	<p>Extension Points werden grundsätzlich in einer <strong>*.exsd</strong> Datei definiert. Diese befindet sich in der Regel in einem
+	<strong>schemas</strong> Verzeichnis im definierenden Plug-in. Einen JCrypTool Extension Point verwenden Sie dabei genauso wie einen
+	normalen Eclipse Extension Point: Öffnen Sie die plugin.xml Ihres Plug-ins und klicken Sie auf den Add Button auf der Extensions Seite
+	des Editors. Alle JCrypTool Extension Points beginnen mit <strong>org.jcryptool</strong> als ID, z.B. org.jcryptool.core.algorithms.</p>
+
+	<h2>Dokumentation zum Extension Point</h2>
+
+	<p>Fügen Sie den Extension Point wie oben beschrieben zu Ihrem Plug-in hinzu. Nach dem Markieren des neuen Eintrags erscheint ein Link
+	<strong>Show extension point description</strong> auf der rechten Seite. Ein Klick darauf öffnet ein weiteres Fenster mit Informationen
+	zum gewählten Extension Point. Über weitere Links im Editor können Sie zum Extension Point Schema springen oder das deklarierende Plug-in
+	suchen.</p>
+
+	<h2>Wichtige Extension Points</h2>
+
+	<p>Die für kryptografische Erweiterungen (Krypto Plug-ins) notwendigen Extension Points gehören zu den meist verwendeten in JCrypTool:</p>
+
+	<ul>
+		<li>org.jcryptool.core.operations.algorithms</li>
+		<li>org.jcryptool.core.operations.analysis</li>
+		<li>org.jcryptool.core.operations.games</li>
+		<li>org.jcryptool.core.operations.visuals</li>
+	</ul>
+
+	<p>Einer dieser Extension Points (abhängig vom Typ Ihres Plug-ins) ist notwendig um JCrypTool um ein weiteres Krypto Plug-in zu erweitern.
+	Der Extension Point sorgt dafür, dass die kryptografische Erweiterung (z.B. ein Algorithmus) im entsprechenden Menü auftaucht und auch die
+	<a href="../../users/general/view_algorithms.html">Krypto Explorer</a> Sicht um einen Eintrag erweitert wird. D.h. Sie müssen nichts weiter tun
+	als die mit einem <strong>*</strong> markierten Pflichtfelder auszufüllen und schon zeigt JCrypTool Ihre Erweiterung in der GUI an.</p>
+</body>
+</html>

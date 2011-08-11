@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc_users_guide.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="$nl$/toc_developers_guide.xml"
+            primary="true"/>
+      <toc
+            file="$nl$/toc_cryptology.xml"
+            primary="true"/>
+      <toc
+            file="$nl$/toc_glossary.xml"
+            primary="true"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.index">
+      <index
+            file="$nl$/index.xml">
+      </index>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="org.jcryptool.core.cheatsheets.general"
+            name="%cheatsheet.category.general">
+      </category>
+      <cheatsheet
+            category="org.jcryptool.core.cheatsheets.general"
+            contentFile="$nl$/cheatsheets/general.xml"
+            id="org.jcryptool.core.cheatsheets.general.cheatsheet"
+            name="%cheatsheet.general.name">
+            <description>%cheatsheet.general.description</description>
+      </cheatsheet>
+   </extension>
+
+</plugin>

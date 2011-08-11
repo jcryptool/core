@@ -1,0 +1,73 @@
+body {
+  font-size: 0.8em;
+  font-family: Verdana, Geneva, serif;
+}
+
+.help_breadcrumbs {
+  font-size: 0.8em;
+}
+
+h1 {
+  font-size: 1.37em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+  font-size: 1.25em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h3 {
+  font-size: 1.12em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+  font-size: 1.0em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #00F;
+}
+
+p a {
+  font-size: 1.00em;
+}
+
+a.external {
+  target: new;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #009;
+}
+
+div.code {
+  background-color: #fff;
+  border-left-width: 4px;
+  border-left-color: #ccc;
+  border-left-style: solid;
+  padding-left: 2px;
+  margin-left: 2px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8em;;
+}
+
+ul {
+  list-style-type: square;
+}
+
+th {
+  background-color: #666;
+  text-align: left;
+  font-size: 0.8em;
+  font-family: Verdana, Geneva, serif;
+}
+
+td {
+  font-size: 0.8em;
+  font-family: Verdana, Geneva, serif;
+}

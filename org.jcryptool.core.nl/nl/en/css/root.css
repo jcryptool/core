@@ -1,0 +1,13 @@
+body
+{
+	background: url(../graphics/bg2.gif) repeat-x;
+}
+
+div#headline {
+	border-bottom: none;
+	padding: 0 0 25px 0;
+}
+
+img#headervisual {
+	margin-top: 15px;
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="providerPreferences" title="Kryptoanbieter">
+      <description>Auf dieser Seite erhalten Sie zum einen eine Übersicht über alle derzeit in JCrypTool installierten Kryptoanbieter und deren Versionen. Zum anderen können Sie über die Hoch und Runter Buttons auf der rechten Seite die Reihenfolge der Kryptoanbieter festlegen. Der Anbieter an erster Stelle wird dabei automatisch der Standardanbieter.</description>
+      <topic href="../org.jcryptool.core.help/nl/de/help/users/general/preferences_provider.html" label="Kryptoanbieter"/>
+   </context>
+</contexts>

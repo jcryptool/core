@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="AlgorithmView" title="Algorithmen">
+      <description>Die &lt;b&gt;Algorithmen&lt;/b&gt; Sicht bietet Zugriff auf die verschiedenen Verfahren, die von FlexiProvider bereitgestellt werden. Die Verfahren sind dabei in thematische Gruppen, wie beispielsweise Blockchiffren, Hash-Funktionen, Signaturverfahren und so weiter sortiert.
+
+Per Doppelklick auf einen Algorithmus fügen Sie diesen zur &lt;b&gt;Operationen&lt;/b&gt; Sicht hinzu. Dort können weitere Parameter des Algorithmus festgelegt und der Algorithmus ausgeführt werden.</description>
+   </context>
+</contexts>

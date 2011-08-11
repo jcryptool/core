@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<helpentries>
+	<helpentry mainname="Asymmetric Block Ciphers" contextid="AsymmetricCiphers">
+		<aliases>
+			<alias>Asymmetrische Blockchiffren</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Hybrid Ciphers" contextid="HybridCiphers">
+		<aliases>
+			<alias>Hybride Verschlüsselung</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Block Ciphers" contextid="BlockCiphers">
+		<aliases>
+			<alias>Blockchiffren</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Password-Based Ciphers" contextid="passwordBasedEncryption">
+		<aliases>
+			<alias>Ciphers</alias>
+			<alias>Chiffren</alias>
+			<alias>Passwortbasierte Chiffren</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Message Authentication Codes" contextid="MAC">
+		<aliases>
+			<alias>Authentifizierungscodes</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Message Digests" contextid="MessageDigests">
+		<aliases>
+			<alias>Hash-Funktionen</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Pseudo Random Number Generators" contextid="PRNG">
+		<aliases>
+			<alias>Pseudo-Zufallszahlengeneratoren</alias>
+		</aliases>
+	</helpentry>
+
+	<helpentry mainname="Signatures" contextid="Signatures">
+		<aliases>
+			<alias>Signaturen</alias>
+		</aliases>
+	</helpentry>
+
+
+
+
+	<helpentry mainname="CMSSSignature" contextid="CMSSSignature" />
+	<helpentry mainname="GMSSSignature" contextid="GMSSSignature" />
+
+
+</helpentries>

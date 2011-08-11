@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="preferences" title="Logging">
+   		<description>This page allows you to choose the JCrypTool logging level. The default log level is &lt;b&gt;Error&lt;/b&gt;, which only logs critical errors. &lt;b&gt;Warning&lt;/b&gt; includes problems and uncritical errors. And finally &lt;b&gt;Info&lt;/b&gt; simply logs everything, from errors up to the debug information which is mainly used during plug-in development. Since the last two levels do log a lot of messages, JCrypTool will slow down. So the best thing to do is to use the default level &lt;b&gt;Error&lt;/b&gt; and to only switch to another log level if additional information is required (e.g. to find an error inside a plug-in).</description>
+      <topic href="../org.jcryptool.core.help/nl/en/help/users/general/views.html" label="Views"/>
+      <topic href="../org.jcryptool.core.help/nl/en/help/users/about/tips.html" label="Tips and Tricks"/>
+   </context>
+</contexts>

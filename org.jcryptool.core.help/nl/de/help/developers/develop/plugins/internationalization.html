@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Internationalisierung</h1>
+
+	<p>JCrypTool ist durchgängig in zwei Sprachen verfügbar: <strong>Englisch</strong> (die Standardsprache) und
+	<strong>Deutsch</strong>. Es ist daher empfehlenswert, bereits bei der Entwicklung eines Plug-ins an die
+	Internationalisierung zu denken. Dies gilt auch, wenn das Plug-in nur in einer Sprache zur Verfügung gestellt
+	werden soll. Sofern nur eine Sprache unterstützt werden soll muss das Englisch sein. Das zusätzliche Erstellen
+	einer deutschen Version wird aber sehr empfohlen.</p>
+
+	<h2>Eclipse Unterstützung</h2>
+
+	<p>Eclipse bietet eine weitreichende und einfach zu nutzende Möglichkeiten an, mehrsprachige Plug-ins zu erstellen. Dabei gilt
+	es, einige wenige Punkte zu beachten.</p>
+
+	<ol>
+	    <li>Alle Texte aus der <strong>plugin.xml</strong> müssen in <strong>bundle.properties</strong>
+	    (Englisch, Standard) und <strong>bundle_de.properties</strong> (für Deutsch) ausgelagert werden. Dazu klicken Sie mit
+	    der rechten Maustaste auf die <strong>plugin.xml</strong> und wählen <strong>PDE Tools -&gt; Externalize Strings</strong> aus.
+	    Damit wird die englische Datei erstellt. Kopieren Sie nun einfach die <strong>bundle.properties</strong> Datei
+	    und benennen Sie diese für die deutsche Version in <strong>bundle_de.properties</strong> um. Anschließend können
+	    Sie die Inhalte übersetzen. Stellen Sie sicher, dass beide Dateien in den <strong>build.properties</strong>
+	    enthalten sind (nur die automatisch generierte Datei bundle.properties wird von Eclipse hinzugefügt, die deutsche Übersetzung
+	    in der bundle_de.properties Datei fehlt damit im Binary Build).</li>
+	    <li><strong>Externalize strings</strong> (wie Nachrichten und Titel) in allen Ihren Java Klassen. Dazu wählen Sie den
+	    <strong>src</strong> Ordner Ihres Plug-ins und wählen <strong>Source -&gt; Externalize Strings</strong>
+	    im Menü aus. Wichtig: Benutzen Sie unbedingt den <strong>Eclipse mechanism</strong> (aktivieren Sie die Checkbox).
+	    Der Assistent erstellt pro Package eine <strong>messages.properties</strong> Datei, die alle Texte aus Ihren Java-Klassen
+	    enthält. Diese Datei muss die englischen Texte enthalten. Kopieren Sie diese Datei und benennen Sie sie nach
+	    <strong>messages_de.properties</strong> für die deutsche Version um.</li>
+	    <li>Das <strong>nl</strong> Verzeichnis enthält zwei (oder mehr) Sprachen <strong>de</strong> und <strong>en</strong>,
+	    wobei jedes Verzeichnis dieselben Dateien enthalten muss. <strong>toc.xml</strong> enthält das Inhaltsverzeichnis der Hilfe,
+	    <strong>contexts.xml</strong> (optional) die kontextsensitive Hilfe. Diese beiden Dateien müssen in den jeweiligen Wurzelverzeichnissen
+	    für ihre jeweilige Sprache enthalten sein. Für Hilfetexte (html Dateien), Grafiken und weitere Ressourcen müssen in den jeweiligen
+	    Verzeichnissen (z.B. nl/de) weitere Unterverzeichnisse angelegt werden. Große Ressourcen die in allen Sprachen identisch sind bitte
+	    nicht doppelt ablegen. Stattdessen auf eine gemeinsame Version verlinken.</li>
+	</ol>
+
+	<p>Beachten Sie die Kodierung, deutsche Umlaute müssen in der jeweiligen Properties Datei durch die Unicode Variante ersetzt werden.
+	Ein vollständiges Beispiel dazu finden Sie im <strong>org.jcryptool.crypto.classic.vigenere</strong> Plug-in.</p>
+
+	<p>Die folgende Tabelle enthält einige gebräuchliche Zeichen und deren Unicode Repräsentation.</p>
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th style="width:50%">Zeichen</th>
+	      <th style="width:50%">Unicode</th>
+	    </tr>
+	  </thead>
+		<tbody>
+			<tr>
+				<td>ä</td>
+				<td>\u00e4</td>
+			</tr>
+			<tr>
+				<td>Ä</td>
+				<td>\u00c4</td>
+			</tr>
+			<tr>
+				<td>ö</td>
+				<td>\u00f6</td>
+			</tr>
+			<tr>
+				<td>Ö</td>
+				<td>\u00d6</td>
+			</tr>
+			<tr>
+				<td>ü</td>
+				<td>\u00fc</td>
+			</tr>
+			<tr>
+				<td>Ü</td>
+				<td>\u00dc</td>
+			</tr>
+			<tr>
+				<td>ß</td>
+				<td>\u00df</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Testen</h2>
+
+	<p>Bitte testen Sie jede unterstützte Sprache Ihres Plug-ins separat. Es ist relativ einfach, eine Datei in einer Sprache zu vergessen,
+	was zu ärgerlichen und leicht vermeidbaren Bugs führt...</p>
+
+	<p>Testen verschiedener Sprachen</p>
+
+	<ol>
+	    <li>Öffnen Sie die <strong>Run Configurations</strong> und wählen Sie den JCrypTool Eintrag aus</li>
+	    <li>Wechseln Sie auf den <strong>Arguments</strong> Tag</li>
+	    <li>In den <strong>Program Arguments</strong> ersetzen Sie den <strong>-nl</strong> Parameterwert (den Text in
+	    <strong>{}</strong>) mit <strong>en</strong> (d.h. hier steht anschließend <strong>-nl en</strong>)</li>
+	    <li>Benennen Sie diese Run Configuration mit JCrypTool English und klicken Sie auf den <strong>Apply</strong> Button</li>
+	    <li>Kopieren Sie diesen Run Configuration Eintrag und nennen Sie die kopierte Version JCrypTool German</li>
+	    <li>Im kopierten Eintrag ersetzen Sie auf dem <strong>Arguments</strong> Tab den <strong>en</strong> Parameter durch <strong>de</strong>
+	    (hier steht damit <strong>-nl de</strong>)</li>
+	</ol>
+
+	<p>Es ist empfehlenswert den Workspace vor jedem Start aufräumen zu lassen. Dazu aktivieren Sie die
+	<strong>Clear Workspace</strong> Checkbox auf dem ersten Tab in den Run Configurations. Andernfalls ist es möglich, dass die Oberfläche in
+	einem Mix aus Deutsch und Englisch angezeigt wird.</p>
+
+	<h2>Einschränkung</h2>
+
+	<p>Die obige Anleitung dient nur zur Übersetzung Ihrer selbst entwickelten Plug-ins. Bestandteile der Eclipse Plattform (wie z.B. der
+	Dialog für die Benutzereinstellungen) können und dürfen von Plug-in Entwicklern nicht selbst übersetzt werden.</p>
+</body>
+</html>

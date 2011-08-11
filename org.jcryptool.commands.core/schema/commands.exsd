@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.jcryptool.commands.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="org.jcryptool.commands.core" id="commands" name="Commands"/>
+      </appinfo>
+      <documentation>
+         Integrate a command with Console view.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="command" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="command">
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="alias" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="example" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of the command.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  A short description of the command, get&apos;s displayed by commands available list.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="syntax" type="string">
+            <annotation>
+               <documentation>
+                  Although syntax can be generated automatically for commands (if the Command class createOption()-object covers all usage cases), the syntax that is displayed in help context for this command can be specified manually.
+
+Syntax string for commands as follows:
+commandname [-option] -o ARGUMENT -mutually | -exclusive | -option GROUP
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="commandImpl" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The Command implementation for use in Console view
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.jcryptool.commands.core.api.AbstractCommand:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="example">
+      <annotation>
+         <documentation>
+            An example is used in the help system to make the usage of a command clearer. Providing examples will make them automatically available in the help system.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="commandline" type="string" use="required">
+            <annotation>
+               <documentation>
+                  An example command line to make the usage of the command clearer.
+Use &quot;#commandname#&quot; to mark the spot where the name of the command has to be placed (makes sense if the command uses aliases)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="explanation" type="string" use="required">
+            <annotation>
+               <documentation>
+                  An explanation of what the specified command line call would do.
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="alias">
+      <annotation>
+         <documentation>
+            An alias is an alternate name for a command which can be used to call the command as well.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="alias" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The alternative name for the command (alias). Upper/lowercase matters.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         JCrypTool 1.0.0 Milestone 6
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         [Enter extension point usage example here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

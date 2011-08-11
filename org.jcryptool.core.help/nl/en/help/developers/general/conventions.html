@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Conventions</h1>
+
+	<p>JCrypTool consists of many different plug-ins, developed by many different people. This inevitably results into
+	many differences in plug-in development. To minimize those differences we do give some conventions and recommendations,
+	which all developers should keep in mind.</p>
+
+	<h2>Categories</h2>
+
+	<p>Normally interested developers do contribute crypto plug-ins. The official JCrypTool Plug-ins in this category
+	always start with <strong>org.jcryptool</strong>. The following table shows the complete names of all
+	existing categories today.</p>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:50%">Type</th>
+	      <th style="width:50%">Description</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Analysis</td>
+	      <td>org.jcryptool.analysis</td>
+	    </tr>
+	    <tr>
+	      <td>Classic Algorithms</td>
+	      <td>org.jcryptool.crypto.classic</td>
+	    </tr>
+	    <tr>
+	      <td>Modern Algorithms</td>
+	      <td>org.jcryptool.crypto.modern</td>
+	    </tr>
+	    <tr>
+	      <td>FlexiProvider Algorithms</td>
+	      <td>org.jcryptool.crypto.flexiprovider</td>
+	    </tr>
+	    <tr>
+	      <td>Games</td>
+	      <td>org.jcryptool.games</td>
+	    </tr>
+	    <tr>
+	      <td>Visualizations</td>
+	      <td>org.jcryptool.visual</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<p>The categories name reflects in the so called branding plug-in. This plug-in takes care of the branding of all plug-ins in this
+	category and can contain general code used by one or more plug-ins. The feature of a category can be identified by adding
+	<strong>.feature</strong> to the name of the branding plug-in.</p>
+
+	<h2>Naming Conventions</h2>
+
+	<p>With regard to the category plug-ins should end with the name of the implementing algorithm or cryptographic procedure,
+	e.g. <strong>org.jcryptool.crypto.classic.xor</strong> or <strong>org.jcryptool.visual.ecdh</strong>.</p>
+
+	<h2>Implementation</h2>
+
+	<p><strong>System.out.println()</strong> (or its counterpart <strong>System.err.println</strong>) as well as
+	<strong>printStackTrace()</strong> calls are not allowed inside plug-ins. Neither are <strong>public static void main</strong>
+	methods or <strong>System.exit()</strong> calls.</p>
+
+	<h2>Other Conventions</h2>
+
+	<p>Stick to the <a href="http://www.oracle.com/technetwork/java/codeconv-138413.html">Code Conventions for Java</a>
+	and the <a href="http://wiki.eclipse.org/index.php/Development_Conventions_and_Guidelines">Eclipse Development Conventions and Guidelines</a>
+	for other conventions.</p>
+</body>
+</html>

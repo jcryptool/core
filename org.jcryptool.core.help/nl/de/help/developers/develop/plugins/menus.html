@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Menüs und Toolbars</h1>
+
+	<p>Bei Verwendung eines der JCrypTool <a href="../extensionpoints.html">Extension Points</a> müssen Sie sich über die Erweiterung
+	des Menüs (z.B. Algorithmen) und über die Erweiterung der <a href="../../../users/general/view_algorithms.html">Krypto Explorer</a> Sicht
+	keine Gedanken machen. JCrypTool verwendet für alle Krypto Plug-ins eine Art <em>Pull Mechanismus</em>, d.h. JCrypTool selbst sucht
+	nach Krypto Plug-ins die in die jeweilige Kategorie passen. Dies weicht vom üblichen Eclipse Plug-in Mechanismus ab, da normalerweise
+	die Plug-ins selbst bestimmen, wo Menüs, Toolbars oder andere Teile der GUI erweitert werden.</p>
+
+	<p>Prinzipiell ist JCrypTool überall erweiterbar. Der hier beschriebene Mechanismus greift allerdings nur für Krypto Plug-ins (gleich
+	welcher Kategorie). Sofern Sie ein anderes Plug-in zu JCrypTool hinzufügen möchten (z.B. einen Editor, eine Sicht, ...) muss der in
+	Eclipse übliche Mechanismus verwendet werden. </p>
+
+	<h2>Die Datei Explorer Sicht erweitern</h2>
+
+	<p>Die <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">Datei Explorer</a> Sicht kann umfangreich an vielen Punkten
+	erweitert werden. Neben dem Kontextmenü lassen sich	so auch das Menü der Sicht sowie deren Toolbar erweitern.</p>
+
+	<h3>Kontextmenü</h3>
+
+	<p>Die Kontextmenü (Popup Menü) ID lautet <strong>org.jcryptool.fileexplorer.popup</strong>. Dieses Menü kann an fünf Positionen erweitert
+	werden:</p>
+
+	<ul>
+	    <li>crypto</li>
+	    <li>edit</li>
+	    <li>delete</li>
+	    <li>rename</li>
+	    <li>additions</li>
+	</ul>
+
+	<p>Für Kryptografie Plug-ins ist der Bereich <strong>crypto</strong> vorgesehen. Um Beispielsweise hier einen zusätzlichen Eintrag
+	hinzuzufügen muss die folgende Location URI (für Eclipse Commands) verwendet werden:
+	<strong>popup:org.jcryptool.fileexplorer.popup?before=crypto</strong>. Neben <strong>before</strong> ist auch noch <strong>after</strong>
+	möglich. Contributions ohne exakte Positionsangabe, d.h. nur mit <strong>popup:org.jcryptool.fileexplorer.popup</strong> werden ganz am Ende
+	des Menüs (im Bereich <strong>additions</strong>) angefügt.</p>
+
+	<p>Kryptografie Plug-ins, die ohnehin den <strong>algorithms</strong> <a href="../extensionpoints.html">Extension Point</a> im
+	<strong>org.jcryptool.core.operations</strong> Plug-in erweitern, werden automatisch mit in das Menü
+	<strong>Verschlüsselung/Entschlüsselung</strong> aufgenommen. Ein solches Plug-in darf keinen weiteren Eintrag im Kontextmenü anlegen!</p>
+
+	<h3>Menü</h3>
+
+	<p>Um das Menü der Datei Explorer Sicht zu erweitern muss die Location URI
+	<strong>menu:org.jcryptool.fileexplorer.views.FileExplorerView</strong> verwendet werden.</p>
+
+	<h3>Toolbar</h3>
+
+	<p>Um die Toolbar der Datei Explorer Sicht zu erweitern muss die Location URI
+	<strong>toolbar:org.jcryptool.fileexplorer.views.FileExplorerView</strong> angegeben werden.</p>
+</body>
+</html>

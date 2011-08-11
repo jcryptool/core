@@ -1,0 +1,283 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Help Contents</h1>
+
+	<p>The JCrypTool help is based on a fixed structure which makes it easy for end users and developers to navigate and to find
+	certain help content. This requires all JCrypTool plug-ins to follow this structure and to extend the help contents only at
+	the defined points.</p>
+
+	<p><strong>No plug-in is allowed to extend the help content on the top level, meaning there is no other entry allowed on the
+	level of the four books.</strong></p>
+
+	<p>The complete help is available in two languages (German and English). Plug-in developers are encouraged to provide both
+	languages as well and to use the default Eclipse mechanisms to achieve that goal (by using the <strong>nl</strong>
+	directories). Remember to add those directories to the build.properties file; otherwise they will be missing in the
+	binary build.</p>
+
+	<h2>Categories</h2>
+
+	<p>Help consists of four categories: <a href="#userguide">User Guide</a>, <a href="#developerguide">Developer Guide</a>,
+	<a href="#cryptology">Cryptology</a> and <a href="#glossary">Glossary</a>. Every category can be extended. Crypto plug-ins
+	usually extended the category <strong>User Guide</strong>. The <strong>Developer Guide</strong> is normally not extended,
+	however it is possible.</p>
+
+	<p>Use the <strong>link_to</strong> attribute to integrate a help page into a certain topic, e.g.
+	<em>link_to=&quot;../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizations&quot;</em> to integrate a help page
+	into the visualizations category. A complete <strong>toc.xml</strong> for a classic algorithm plug-in for example looks
+	like this:</p>
+
+	<div class="code">
+	&lt;toc label=&quot;Caesar&quot; link_to=&quot;../org.jcryptool.core.help/$nl$/toc_users_guide.xml#classicAlgorithmPlugins&quot;&gt;<br/>
+	&nbsp;&lt;topic label=&quot;Caesar Encryption&quot; href=&quot;$nl$/help/content/tutorial.html&quot; /&gt;<br/>
+	&lt;/toc&gt;
+	</div>
+
+	<h3><a name="userguide"></a>User Guide</h3>
+
+	<p>The user guide should make the first steps of new users as easy as possible. Every plug-in, normal and crypto plug-ins,
+	should at least provide one page with informations on how to use it. In depth cryptographic information should be contained
+	in the category <strong>Cryptology</strong> (provide links between the two parts). This category answers the questions, what
+	a user can do with a plug-in and how he can do it. Explanations and theories for the cryptographic mechanisms belong into the
+	<strong>Cryptology</strong> category.</p>
+
+	<h4>Available IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Description</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>General Information</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Editors</td>
+	      <td>editors</td>
+	    </tr>
+	    <tr>
+	      <td>Views</td>
+	      <td>views</td>
+	    </tr>
+	    <tr>
+	      <td>Preferences</td>
+	      <td>preferences</td>
+	    </tr>
+	    <tr>
+	      <td>Algorithms</td>
+	      <td>algorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Classic)</td>
+	      <td>classicAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Asymmetric)</td>
+	      <td>asymmetricAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Symmetric)</td>
+	      <td>symmetricAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Hybrid)</td>
+	      <td>hybridAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Hash</td>
+	      <td>hashPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>MAC</td>
+	      <td>macPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Random Number</td>
+	      <td>randomNumberPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Signature</td>
+	      <td>signaturePlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Analysis</td>
+	      <td>analysisPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Visualizations</td>
+	      <td>visualizationPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Games</td>
+	      <td>gamePlugins</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="developerguide"></a>Developer Guide</h3>
+
+	<p>The developer guide should explain the JCrypTool conventions and requirements to all interested developers. This category
+	explains how to extend JCrypTool with plug-ins. Normally this category is maintained by the JCrypTool Core Team. In case a
+	plug-in is offering own extension points it is possible to extend this part of the online help as well.</p>
+
+	<h4>Available IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Description</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>General Information</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Development</td>
+	      <td>development</td>
+	    </tr>
+	    <tr>
+	      <td>Plug-ins</td>
+	      <td>plugins</td>
+	    </tr>
+	    <tr>
+	      <td>Plug-in</td>
+	      <td>plugin</td>
+	    </tr>
+	    <tr>
+	      <td>Extension Points</td>
+	      <td>extensionpoint</td>
+	    </tr>
+	    <tr>
+	      <td>Preferences</td>
+	      <td>preferences</td>
+	    </tr>
+	    <tr>
+	      <td>Help Contents</td>
+	      <td>helpContents</td>
+	    </tr>
+	    <tr>
+	      <td>Features</td>
+	      <td>features</td>
+	    </tr>
+	    <tr>
+	      <td>Feature</td>
+	      <td>feature</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="cryptology"></a>Cryptology</h3>
+
+	<p>The category cryptology contains information on the cryptographic theory and background information on all cryptographic
+	mechanisms and operations available in JCrypTool. The pages here can contain extensive background information, mathematical
+	explanations on algorithms, analysis and so on. The structure of this category is identical with the one from the
+	<strong>User Guide</strong>.</p>
+
+	<h4>Available IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Description</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>General Information</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Algorithms</td>
+	      <td>algorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption</td>
+	      <td>encryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Classic)</td>
+	      <td>classicEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Asymmetric)</td>
+	      <td>asymmetricEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Symmetric)</td>
+	      <td>symmetricEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Encryption (Hybrid)</td>
+	      <td>hybridEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Hash</td>
+	      <td>hashAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>MAC</td>
+	      <td>macAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Random Number</td>
+	      <td>randomNumberAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Signature</td>
+	      <td>signatureAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Analysis</td>
+	      <td>analysis</td>
+	    </tr>
+	    <tr>
+	      <td>Visualizations</td>
+	      <td>visualizations</td>
+	    </tr>
+	    <tr>
+	      <td>Games</td>
+	      <td>games</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="glossary"></a>Glossary</h3>
+
+	<p>The glossary should contain short(!) explanations for cryptographic terms. Extensive explanations belong into the
+	category <strong>Cryptology</strong>, connected with links. Sorting is alphabetically which is done automatically.</p>
+
+	<h4>Available IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Description</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Glossary</td>
+	      <td>glossary</td>
+	    </tr>
+	  </tbody>
+	</table>
+</body>
+</html>

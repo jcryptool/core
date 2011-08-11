@@ -1,0 +1,31 @@
+Este es el archivo de ejemplo de JCrypTool.
+
+Usted puede utilizar este archivo para un inicio rápido con
+JCrypTool, por ejemplo, para cifrar o firmar digitalmente se
+realiza a través del menú "Algoritmos", o mediante la aplicación
+de uno de los análisis ofrecidos en el menú 'Análisis'.
+
+Todas las operaciones criptográficas son, además, organizados en
+la Vista "Crypto Explorer" sobre el lado derecho. Un doble clic
+sobre la entrada seleccionada en la pestaña "Algoritmos" lanza
+un asistente que guía paso a paso a través del proceso de cifrado.
+Descifrar el archivo en otro momento funciona de la misma manera.
+
+Todos los algoritmos ofrecidos aquí, así como todos los análisis
+siempre requieren un archivo abierto en uno de los editores
+JCrypTool. Las Visualizaciones y Juegos por el contrario normalmente son
+independientes de cualquier archivo abierto. Puede utilizar
+archivo de ejemplo o abrir cualquiera de sus propios archivos
+donde éste sea necesario. El archivo original permanece intacto
+todo el tiempo, cada operacion criptográfica crea su propio
+archivo de trabajo.
+
+El campo de filtro en la parte superior de la vista
+"Crypto Explorer" le puede ayudar en la búsqueda de un algoritmo
+particular (que pueden ser Análisis, Visualización o Juego).
+Utilize este campo de filtros en la pestaña activa en los
+resultados coincidentes.
+
+Más información sobre el aprendizaje, utilización y amplición
+de JCrypTool están disponibles en la extensa ayuda en línea, que
+se puede acceder a través del menú "Ayuda"->"Contenido de la Ayuda".

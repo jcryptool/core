@@ -1,0 +1,16 @@
+In der JCrypTool-Konsole können Sie die kryptografischen Algorithmen von der Kommandozeile aufrufen.
+Geben Sie 'help -l' ein, um eine vollständige (alphabetisch geordnete) Liste der Algorithmen zu erhalten.
+Zu jedem Befehl liefert die Hilfe sowohl die Befehlssyntax als auch Aufrufbeispiele:
+
+SYNTAX-HILFE:
+Zu jedem Befehl gibt es eine kurze und eine ausführliche Syntaxausgabe, die man auf folgende Weise aufrufen kann:
+Kurz:                   Ausführlich:
+'help <command>'        'HELP <command>'
+'? <command>'           '?? <command>'
+'<command> help'        '<command> HELP'
+'<command> ?'           '<command> ??'
+
+BEISPIELE:
+Viele Befehle bieten Beispiele ihrer Benutzung an. Sie können sie mit 'help -x <command>' aufrufen.
+
+Versuchen Sie doch einmal, die Beispiele dieses 'help'-Befehls (mit 'help -x help') aufzurufen!

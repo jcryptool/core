@@ -1,0 +1,1345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiProvider version="1.6.0.p5">
+  <ParameterSpecs>
+    <ParameterSpec class="de.flexiprovider.core.rc2.RC2KeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size in bits</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.serpent.SerpentKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rijndael.RijndaelKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.camellia.CamelliaKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.mars.MARSKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, 256, 320, 384, or 448 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rc5.RC5KeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size in bits</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rc6.RC6KeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.saferplus.SAFERPlusKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.saferplusplus.SAFERPlusPlusKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128 or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.shacal.ShacalKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, 256, 320, 384, or 448 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.shacal2.Shacal2KeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, 256, 320, 384, or 448 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.twofish.TwofishKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="keySize" type="int">the key size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.pbe.PBEParameterSpec">
+      <Constructor>
+        <Parameter name="salt" type="byte[]">the salt</Parameter>
+        <Parameter name="iterationCount" type="int">the iteration count</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.kdf.PBKDF2ParameterSpec">
+      <Constructor>
+        <Parameter name="salt" type="byte[]">the salt</Parameter>
+        <Parameter name="iterationCount" type="int">the iteration count</Parameter>
+        <Parameter name="keySize" type="int">the key size</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.pbe.PBES2ParameterSpec">
+      <Constructor>
+        <Parameter name="kdfParamSpec" type="de.flexiprovider.core.kdf.PBKDF2ParameterSpec">the KDF parameters (salt, iteration count, and key size)</Parameter>
+        <Parameter name="iv" type="byte[]">the initialization vector for the underlying cipher</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.common.mode.ModeParameterSpec">
+      <Constructor>
+        <Parameter name="iv" type="byte[]">the byte array containing the IV</Parameter>
+        <Parameter name="offset" type="int">the offset where the IV starts</Parameter>
+        <Parameter name="length" type="int">the length of the IV</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rc5.RC5ParameterSpec">
+      <Constructor>
+        <Parameter name="numRounds" type="int">the number of rounds (8...127)</Parameter>
+        <Parameter name="wordSize" type="int">the word size (16, 32, or 64 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rijndael.RijndaelParameterSpec">
+      <Constructor>
+        <Parameter name="blockSize" type="int">the block size (128, 192, or 256 bits)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.common.ies.IESParameterSpec">
+      <Constructor>
+        <Parameter name="symCipherName" type="java.lang.String">the name of the desired symmetric cipher algorithm
+("internal" for the internal cipher (one-time pad), or one
+of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
+"AES256_CBC").</Parameter>
+        <Parameter name="macName" type="java.lang.String">the name of the desired MAC function ("HmacSHA1",
+"HmacSHA256", "HmacSHA384", "HmacSHA512", or
+"HmacRIPEMD160").</Parameter>
+        <Parameter name="macEncParam" type="byte[]">the encoding parameter used for the MAC</Parameter>
+        <Parameter name="sharedInfo" type="byte[]">the shared data used for the key derivation function</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.dsa.DSAParamGenParameterSpec">
+      <Constructor>
+        <Parameter name="size" type="int">the bit size of the prime &lt;tt&gt;p&lt;/tt&gt;</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParameterSpec">
+      <Constructor>
+        <Parameter name="discriminant" type="de.flexiprovider.common.math.FlexiBigInt">the discriminant of the class group</Parameter>
+        <Parameter name="gamma" type="de.flexiprovider.common.math.quadraticfields.QuadraticIdeal">the generator of the class group</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParamGenParameterSpec">
+      <Constructor>
+        <Parameter name="size" type="int">the bit length of the discriminant (&amp;gt;= 2, &amp;lt;=
+{@link #MAX_SIZE})</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParameterSpec">
+      <Constructor>
+        <Parameter name="discriminant" type="de.flexiprovider.common.math.FlexiBigInt">the discriminant of the class group</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParamGenParameterSpec">
+      <Constructor>
+        <Parameter name="size" type="int">the bit length of the discriminant (&amp;gt;= 2, &amp;lt;=
+{@link #MAX_SIZE})</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParameterSpec">
+      <Constructor>
+        <Parameter name="discriminant" type="de.flexiprovider.common.math.FlexiBigInt">the discriminant of the class group</Parameter>
+        <Parameter name="modulus" type="de.flexiprovider.common.math.FlexiBigInt">the modulus</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParamGenParameterSpec">
+      <Constructor>
+        <Parameter name="size" type="int">the bit length of the discriminant (&amp;gt;= 2, &amp;lt;=
+{@link #MAX_SIZE})</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec">
+      <Constructor>
+        <Parameter name="heightOfTrees" type="int">the height of the authentication trees</Parameter>
+        <Parameter name="seedSize" type="int">the size in bytes of the seed for the PRNG</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.pqc.hbc.gmss.GMSSParameterSpec">
+      <Constructor>
+        <Parameter name="layers" type="int">layers of the GMSS tree</Parameter>
+        <Parameter name="defh" type="int[]">height of the single layers of the GMSS tree</Parameter>
+        <Parameter name="defw" type="int[]">Winternitz parameters for each layer</Parameter>
+        <Parameter name="defk" type="int[]">parameter for the AuthPath computation</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec">
+      <Constructor>
+        <Parameter name="mdName" type="java.lang.String">the name of the hash function</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.pqc.ecc.ECCKeyGenParameterSpec">
+      <Constructor>
+        <Parameter name="m" type="int">degree of the finite field GF(2^m)</Parameter>
+        <Parameter name="t" type="int">error correction capability of the code</Parameter>
+        <Parameter name="poly" type="int">the field polynomial</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+    <ParameterSpec class="de.flexiprovider.core.rsa.PSSParameterSpec">
+      <Constructor>
+        <Parameter name="md" type="java.lang.String">the name of the message digest</Parameter>
+        <Parameter name="saltLength" type="int">the salt length (in bytes)</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.dsa.DSAParameterSpec">
+      <Constructor>
+        <Parameter name="p" type="de.flexiprovider.common.math.FlexiBigInt">the prime</Parameter>
+        <Parameter name="q" type="de.flexiprovider.common.math.FlexiBigInt">the subprime</Parameter>
+        <Parameter name="g" type="de.flexiprovider.common.math.FlexiBigInt">the base</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.core.rsa.RSAOAEPParameterSpec">
+      <Constructor>
+        <Parameter name="md" type="java.lang.String">the OID of the hash function</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.common.mode.OFBParameterSpec">
+      <Constructor>
+        <Parameter name="iv" type="byte[]">the initialization vector</Parameter>
+        <Parameter name="blockSize" type="int">the block size</Parameter>
+      </Constructor>
+    </ParameterSpec>
+    <ParameterSpec class="de.flexiprovider.common.mode.CFBParameterSpec">
+      <Constructor>
+        <Parameter name="iv" type="byte[]">the initialization vector</Parameter>
+        <Parameter name="blockSize" type="int">the block size</Parameter>
+      </Constructor>
+    </ParameterSpec>
+  </ParameterSpecs>
+  <SecretKeyGenerators>
+    <SecretKeyGenerator class="de.flexiprovider.core.rc2.RC2KeyGenerator" oid="1.2.840.113549.3.2">
+      <Names>RC2</Names>
+      <ParameterSpec class="de.flexiprovider.core.rc2.RC2KeyGenParameterSpec" />
+      <KeyStrengths default="64">8...128</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.desede.DESedeKeyGenerator" oid="1.2.840.113549.3.7">
+      <Names>DESede</Names>
+      <KeyStrengths default="192" />
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" oid="1.3.6.1.4.1.11591.13.2">
+      <Names>Serpent</Names>
+      <ParameterSpec class="de.flexiprovider.core.serpent.SerpentKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" oid="1.3.6.1.4.1.188.7.1.1">
+      <Names>IDEA</Names>
+      <KeyStrengths default="128" />
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$MD5" oid="1.3.6.1.5.5.8.1.1">
+      <Names>HmacMD5</Names>
+      <KeyStrengths default="128">64,128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA1" oid="1.3.6.1.5.5.8.1.2">
+      <Names>Hmac,HmacSHA1</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$Tiger" oid="1.3.6.1.5.5.8.1.3">
+      <Names>HmacTiger</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD160" oid="1.3.6.1.5.5.8.1.4">
+      <Names>HmacRIPEMD160</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$DHA256">
+      <Names>HmacDHA256</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$FORK256">
+      <Names>HmacFORK256</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$MD4">
+      <Names>HmacMD4</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD128">
+      <Names>HmacRIPEMD128</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD256">
+      <Names>HmacRIPEMD256</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD320">
+      <Names>HmacRIPEMD320</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA224">
+      <Names>HmacSHA224</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA256">
+      <Names>HmacSHA256</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA384">
+      <Names>HmacSHA384</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA512">
+      <Names>HmacSHA512</Names>
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" oid="2.16.840.1.101.3.4.1">
+      <Names>AES,Rijndael</Names>
+      <ParameterSpec class="de.flexiprovider.core.rijndael.RijndaelKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.camellia.CamelliaKeyGenerator">
+      <Names>Camellia</Names>
+      <ParameterSpec class="de.flexiprovider.core.camellia.CamelliaKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mars.MARSKeyGenerator">
+      <Names>MARS</Names>
+      <ParameterSpec class="de.flexiprovider.core.mars.MARSKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.misty1.Misty1KeyGenerator">
+      <Names>Misty1</Names>
+      <KeyStrengths default="128" />
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.pbe.PBEKeyGenerator">
+      <Names>PBE,PBES1,PBES2</Names>
+      <KeyStrengths default="128" />
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.rc5.RC5KeyGenerator">
+      <Names>RC5</Names>
+      <ParameterSpec class="de.flexiprovider.core.rc5.RC5KeyGenParameterSpec" />
+      <KeyStrengths default="128">0...2040</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.rc6.RC6KeyGenerator">
+      <Names>RC6</Names>
+      <ParameterSpec class="de.flexiprovider.core.rc6.RC6KeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.saferplus.SAFERPlusKeyGenerator">
+      <Names>SAFER+</Names>
+      <ParameterSpec class="de.flexiprovider.core.saferplus.SAFERPlusKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.saferplusplus.SAFERPlusPlusKeyGenerator">
+      <Names>SAFER++</Names>
+      <ParameterSpec class="de.flexiprovider.core.saferplusplus.SAFERPlusPlusKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.shacal.ShacalKeyGenerator">
+      <Names>Shacal</Names>
+      <ParameterSpec class="de.flexiprovider.core.shacal.ShacalKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,256,384,512</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.shacal2.Shacal2KeyGenerator">
+      <Names>Shacal2</Names>
+      <ParameterSpec class="de.flexiprovider.core.shacal2.Shacal2KeyGenParameterSpec" />
+      <KeyStrengths default="128">128,256,384,512</KeyStrengths>
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator">
+      <Names>TwoTrackMac</Names>
+      <KeyStrengths default="160" />
+    </SecretKeyGenerator>
+    <SecretKeyGenerator class="de.flexiprovider.core.twofish.TwofishKeyGenerator">
+      <Names>Twofish</Names>
+      <ParameterSpec class="de.flexiprovider.core.twofish.TwofishKeyGenParameterSpec" />
+      <KeyStrengths default="128">128,192,256</KeyStrengths>
+    </SecretKeyGenerator>
+  </SecretKeyGenerators>
+  <Ciphers>
+    <Cipher class="de.flexiprovider.core.pbe.PBEWithSHAAnd3_KeyTripleDES_CBC" oid="1.2.840.113549.1.12.1.3">
+      <Names>PbeWithSHAAnd3_KeyTripleDES_CBC</Names>
+      <ParameterSpec class="de.flexiprovider.core.pbe.PBEParameterSpec" />
+    </Cipher>
+    <Cipher class="de.flexiprovider.core.pbe.PBEWithSHAAnd40BitRC2_CBC" oid="1.2.840.113549.1.12.1.6">
+      <Names>PbeWithSHAAnd40BitRC2_CBC</Names>
+      <ParameterSpec class="de.flexiprovider.core.pbe.PBEParameterSpec" />
+    </Cipher>
+    <Cipher class="de.flexiprovider.core.pbe.PBEWithSHA1AndDES_CBC" oid="1.2.840.113549.1.5.10">
+      <Names>PbeWithSHA1AndDES_CBC</Names>
+      <ParameterSpec class="de.flexiprovider.core.pbe.PBEParameterSpec" />
+    </Cipher>
+    <Cipher class="de.flexiprovider.core.pbe.PBES2" oid="1.2.840.113549.1.5.13">
+      <Names>PBES2</Names>
+      <ParameterSpec class="de.flexiprovider.core.pbe.PBES2ParameterSpec" />
+      <SecretKeyGenerator class="de.flexiprovider.core.pbe.PBEKeyGenerator" />
+    </Cipher>
+    <Cipher class="de.flexiprovider.core.pbe.PBEWithMD5AndDES_CBC" oid="1.2.840.113549.1.5.3">
+      <Names>PbeWithMD5AndDES_CBC</Names>
+      <ParameterSpec class="de.flexiprovider.core.pbe.PBEParameterSpec" />
+    </Cipher>
+  </Ciphers>
+  <BlockCiphers>
+    <BlockCipher class="de.flexiprovider.core.camellia.Camellia$Camellia128_CBC" oid="1.2.392.200011.61.1.1.1.2">
+      <Names>Camellia128_CBC</Names>
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.camellia.Camellia$Camellia192_CBC" oid="1.2.392.200011.61.1.1.1.3">
+      <Names>Camellia192_CBC</Names>
+      <BlockLengths default="192" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.camellia.Camellia$Camellia256_CBC" oid="1.2.392.200011.61.1.1.1.4">
+      <Names>Camellia256_CBC</Names>
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rc2.RC2$RC2_CBC" oid="1.2.840.113549.3.2">
+      <Names>RC2_CBC</Names>
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.desede.DESede$DESede_CBC" oid="1.2.840.113549.3.7">
+      <Names>DESede_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.desede.DESedeKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent" oid="1.3.6.1.4.1.11591.13.2">
+      <Names>Serpent</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent128_ECB" oid="1.3.6.1.4.1.11591.13.2.1">
+      <Names>Serpent128_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent128_CBC" oid="1.3.6.1.4.1.11591.13.2.2">
+      <Names>Serpent128_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent192_ECB" oid="1.3.6.1.4.1.11591.13.2.21">
+      <Names>Serpent192_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent192_CBC" oid="1.3.6.1.4.1.11591.13.2.22">
+      <Names>Serpent192_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent192_OFB" oid="1.3.6.1.4.1.11591.13.2.23">
+      <Names>Serpent192_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent192_CFB" oid="1.3.6.1.4.1.11591.13.2.24">
+      <Names>Serpent192_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent128_OFB" oid="1.3.6.1.4.1.11591.13.2.3">
+      <Names>Serpent128_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent128_CFB" oid="1.3.6.1.4.1.11591.13.2.4">
+      <Names>Serpent128_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent256_ECB" oid="1.3.6.1.4.1.11591.13.2.41">
+      <Names>Serpent256_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent256_CBC" oid="1.3.6.1.4.1.11591.13.2.42">
+      <Names>Serpent256_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent256_OFB" oid="1.3.6.1.4.1.11591.13.2.43">
+      <Names>Serpent256_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.serpent.Serpent$Serpent256_CFB" oid="1.3.6.1.4.1.11591.13.2.44">
+      <Names>Serpent256_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.serpent.SerpentKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.idea.IDEA" oid="1.3.6.1.4.1.188.7.1.1">
+      <Names>IDEA</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.idea.IDEA$IDEA_ECB" oid="1.3.6.1.4.1.188.7.1.1.1">
+      <Names>IDEA_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.idea.IDEA$IDEA_CBC" oid="1.3.6.1.4.1.188.7.1.1.2">
+      <Names>IDEA_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.idea.IDEA$IDEA_CFB" oid="1.3.6.1.4.1.188.7.1.1.3">
+      <Names>IDEA_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.idea.IDEA$IDEA_OFB" oid="1.3.6.1.4.1.188.7.1.1.4">
+      <Names>IDEA_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.idea.IDEAKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES" oid="2.16.840.1.101.3.4.1">
+      <Names>AES</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128">128,192,256</BlockLengths>
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES128_ECB" oid="2.16.840.1.101.3.4.1.1">
+      <Names>AES128_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES128_CBC" oid="2.16.840.1.101.3.4.1.2">
+      <Names>AES128_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES192_ECB" oid="2.16.840.1.101.3.4.1.21">
+      <Names>AES192_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="192" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES192_CBC" oid="2.16.840.1.101.3.4.1.22">
+      <Names>AES192_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="192" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES192_OFB" oid="2.16.840.1.101.3.4.1.23">
+      <Names>AES192_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="192" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES192_CFB" oid="2.16.840.1.101.3.4.1.24">
+      <Names>AES192_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="192" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES128_OFB" oid="2.16.840.1.101.3.4.1.3">
+      <Names>AES128_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES128_CFB" oid="2.16.840.1.101.3.4.1.4">
+      <Names>AES128_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES256_ECB" oid="2.16.840.1.101.3.4.1.41">
+      <Names>AES256_ECB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES256_CBC" oid="2.16.840.1.101.3.4.1.42">
+      <Names>AES256_CBC</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES256_OFB" oid="2.16.840.1.101.3.4.1.43">
+      <Names>AES256_OFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael$AES$AES256_CFB" oid="2.16.840.1.101.3.4.1.44">
+      <Names>AES256_CFB</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.camellia.Camellia">
+      <Names>Camellia</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.camellia.CamelliaKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.desede.DESede">
+      <Names>DESede</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.desede.DESedeKeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.mars.MARS">
+      <Names>MARS</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mars.MARSKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.misty1.Misty1">
+      <Names>Misty1</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.misty1.Misty1KeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rc2.RC2">
+      <Names>RC2</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rc2.RC2KeyGenerator" />
+      <BlockLengths default="64" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rc5.RC5">
+      <Names>RC5</Names>
+      <ParameterSpec class="de.flexiprovider.core.rc5.RC5ParameterSpec" />
+      <SecretKeyGenerator class="de.flexiprovider.core.rc5.RC5KeyGenerator" />
+      <BlockLengths default="64">32,64,128</BlockLengths>
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rc6.RC6">
+      <Names>RC6</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.rc6.RC6KeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.rijndael.Rijndael">
+      <Names>Rijndael</Names>
+      <ParameterSpec class="de.flexiprovider.core.rijndael.RijndaelParameterSpec" />
+      <SecretKeyGenerator class="de.flexiprovider.core.rijndael.RijndaelKeyGenerator" />
+      <BlockLengths default="128">128,192,256</BlockLengths>
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.saferplus.SAFERPlus">
+      <Names>SAFER+</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.saferplus.SAFERPlusKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.saferplusplus.SAFERPlusPlus">
+      <Names>SAFER++</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.saferplusplus.SAFERPlusPlusKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.shacal.Shacal">
+      <Names>Shacal</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.shacal.ShacalKeyGenerator" />
+      <BlockLengths default="160" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.shacal2.Shacal2">
+      <Names>Shacal2</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.shacal2.Shacal2KeyGenerator" />
+      <BlockLengths default="256" />
+    </BlockCipher>
+    <BlockCipher class="de.flexiprovider.core.twofish.Twofish">
+      <Names>Twofish</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.twofish.TwofishKeyGenerator" />
+      <BlockLengths default="128" />
+    </BlockCipher>
+  </BlockCiphers>
+  <Macs>
+    <Mac class="de.flexiprovider.core.mac.HMac$MD5" oid="1.3.6.1.5.5.8.1.1">
+      <Names>HmacMD5</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$MD5" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$SHA1" oid="1.3.6.1.5.5.8.1.2">
+      <Names>Hmac,HmacSHA1</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA1" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$Tiger" oid="1.3.6.1.5.5.8.1.3">
+      <Names>HmacTiger</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$Tiger" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$RIPEMD160" oid="1.3.6.1.5.5.8.1.4">
+      <Names>HmacRIPEMD160</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD160" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$AES128">
+      <Names>CBCmacAES128</Names>
+      <BlockCipherReference name="AES128_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$AES192">
+      <Names>CBCmacAES192</Names>
+      <BlockCipherReference name="AES192_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$AES256">
+      <Names>CBCmacAES256</Names>
+      <BlockCipherReference name="AES256_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Camellia">
+      <Names>CBCmacCamellia</Names>
+      <BlockCipherReference name="Camellia" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$DESede">
+      <Names>CBCmacDESede</Names>
+      <BlockCipherReference name="DESede" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$IDEA">
+      <Names>CBCmacIDEA</Names>
+      <BlockCipherReference name="IDEA" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$MARS">
+      <Names>CBCmacMARS</Names>
+      <BlockCipherReference name="MARS" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Misty1">
+      <Names>CBCmacMisty1</Names>
+      <BlockCipherReference name="Mysti1" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$RC2">
+      <Names>CBCmacRC2</Names>
+      <BlockCipherReference name="RC2" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$RC5">
+      <Names>CBCmacRC5</Names>
+      <BlockCipherReference name="RC5" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$RC6">
+      <Names>CBCmacRC6</Names>
+      <BlockCipherReference name="RC6" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$SAFERPlus">
+      <Names>CBCmacSAFER+</Names>
+      <BlockCipherReference name="SAFERPlus" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$SAFERPlusPlus">
+      <Names>CBCmacSAFER++</Names>
+      <BlockCipherReference name="SAFERPlusPlus" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Serpent">
+      <Names>CBCmacSerpent</Names>
+      <BlockCipherReference name="Serpent" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Shacal">
+      <Names>CBCmacShacal</Names>
+      <BlockCipherReference name="Shacal" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Shacal2">
+      <Names>CBCmacShacal2</Names>
+      <BlockCipherReference name="Shacal2" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CBCMac$Twofish">
+      <Names>CBCmacTwofish</Names>
+      <BlockCipherReference name="Twofish" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CMac$AES128">
+      <Names>CmacAES128</Names>
+      <BlockCipherReference name="AES128_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CMac$AES192">
+      <Names>CmacAES192</Names>
+      <BlockCipherReference name="AES192_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CMac$AES256">
+      <Names>CmacAES256</Names>
+      <BlockCipherReference name="AES256_CBC" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.CMac$DESede">
+      <Names>CmacDESede</Names>
+      <BlockCipherReference name="DESede" mode="CBC" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$DHA256">
+      <Names>HmacDHA256</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$DHA256" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$FORK256">
+      <Names>HmacFORK256</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$FORK256" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$MD4">
+      <Names>HmacMD4</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$MD4" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$RIPEMD128">
+      <Names>HmacRIPEMD128</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD128" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$RIPEMD256">
+      <Names>HmacRIPEMD256</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD256" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$RIPEMD320">
+      <Names>HmacRIPEMD320</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$RIPEMD320" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$SHA224">
+      <Names>HmacSHA224</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA224" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$SHA256">
+      <Names>HmacSHA256</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA256" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$SHA384">
+      <Names>HmacSHA384</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA384" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.HMac$SHA512">
+      <Names>HmacSHA512</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.HMacKeyGenerator$SHA512" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac128">
+      <Names>TTmac128,TwoTrackMac128</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac160">
+      <Names>TTmac,TTmac160,TwoTrackMac,TwoTrackMac160</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac32">
+      <Names>TTmac32,TwoTrackMac32</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac64">
+      <Names>TTmac64,TwoTrackMac64</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac96">
+      <Names>TTmac96,TwoTrackMac96</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac128">
+      <Names>TTmac128,TwoTrackMac128</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac32">
+      <Names>TTmac32,TwoTrackMac32</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+    <Mac class="de.flexiprovider.core.mac.TwoTrackMac$TTMac64">
+      <Names>TTmac64,TwoTrackMac64</Names>
+      <SecretKeyGenerator class="de.flexiprovider.core.mac.TwoTrackMacKeyGenerator" />
+    </Mac>
+  </Macs>
+  <KeyPairGenerators>
+    <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" oid="1.2.840.10045.2.1">
+      <Names>EC,ECDH,ECDSA,ECIES,ECNR</Names>
+      <ParameterSpec class="de.flexiprovider.common.ies.IESParameterSpec" />
+      <KeyStrengths default="192" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.rsa.RSAKeyPairGenerator" oid="1.2.840.113549.1.1.1">
+      <Names>RSA</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.dsa.DSAKeyPairGenerator" oid="1.3.14.3.2.12">
+      <Names>DSA</Names>
+      <ParameterGenerator class="de.flexiprovider.core.dsa.DSAParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.core.dsa.DSAParamGenParameterSpec" />
+      </ParameterGenerator>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.elgamal.ElGamalKeyPairGenerator" oid="1.3.14.7.2.1.1">
+      <Names>ElGamal</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.nf.iq.iqdsa.IQDSAKeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.1.1">
+      <Names>IQDSA</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqdsa.IQDSAParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParamGenParameterSpec" />
+      </ParameterGenerator>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.nf.iq.iqgq.IQGQKeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.1.4">
+      <Names>IQGQ</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqgq.IQGQParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParamGenParameterSpec" />
+      </ParameterGenerator>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAKeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.1.7">
+      <Names>IQRDSA</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParamGenParameterSpec" />
+      </ParameterGenerator>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA1andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.1">
+      <Names>MerkleOTSwithSHA1</Names>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA256andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.2">
+      <Names>MerkleOTS,MerkleOTSwithSHA256</Names>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA384andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.3">
+      <Names>MerkleOTSwithSHA384</Names>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA512andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.4">
+      <Names>MerkleOTSwithSHA512</Names>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.1">
+      <Names>CMSSwithSHA1andWinternitzOTS_1</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.10">
+      <Names>CMSSwithSHA384andWinternitzOTS_2</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.11">
+      <Names>CMSSwithSHA384andWinternitzOTS_3</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.12">
+      <Names>CMSSwithSHA384andWinternitzOTS_4</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.13">
+      <Names>CMSSwithSHA512andWinternitzOTS_1</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.14">
+      <Names>CMSSwithSHA512andWinternitzOTS_2</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.15">
+      <Names>CMSSwithSHA512andWinternitzOTS_3</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.16">
+      <Names>CMSSwithSHA512andWinternitzOTS_4</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.2">
+      <Names>CMSSwithSHA1andWinternitzOTS_2</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.3">
+      <Names>CMSSwithSHA1andWinternitzOTS_3</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.4">
+      <Names>CMSSwithSHA1andWinternitzOTS_4</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.5">
+      <Names>CMSSwithSHA256andWinternitzOTS_1</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.6">
+      <Names>CMSSwithSHA256andWinternitzOTS_2</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.7">
+      <Names>CMSSwithSHA256andWinternitzOTS_3</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.8">
+      <Names>CMSSwithSHA256andWinternitzOTS_4</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.9">
+      <Names>CMSSwithSHA384andWinternitzOTS_1</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.hbc.cmss.CMSSParameterSpec" />
+      <KeyStrengths default="10">2,4,6,8,10,12</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA1" oid="1.3.6.1.4.1.8301.3.1.3.3.1">
+      <Names>GMSSwithSHA1</Names>
+      <KeyStrengths default="10">10,20,40</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA224" oid="1.3.6.1.4.1.8301.3.1.3.3.2">
+      <Names>GMSSwithSHA224</Names>
+      <KeyStrengths default="10">10,20,40</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA256" oid="1.3.6.1.4.1.8301.3.1.3.3.3">
+      <Names>GMSSwithSHA256</Names>
+      <KeyStrengths default="10">10,20,40</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA384" oid="1.3.6.1.4.1.8301.3.1.3.3.4">
+      <Names>GMSSwithSHA384</Names>
+      <KeyStrengths default="10">10,20,40</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA512" oid="1.3.6.1.4.1.8301.3.1.3.3.5">
+      <Names>GMSSwithSHA512</Names>
+      <KeyStrengths default="10">10,20,40</KeyStrengths>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ecc.mceliece.McElieceKeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.3.4.1">
+      <Names>McEliece</Names>
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2KeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.3.4.2">
+      <Names>McElieceCCA2</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.pqc.ecc.niederreiter.NiederreiterKeyPairGenerator" oid="1.3.6.1.4.1.8301.3.1.3.4.3">
+      <Names>Niederreiter</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.ECCKeyGenParameterSpec" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator">
+      <Names>MeRSA</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.mprsa.MpRSAKeyPairGenerator">
+      <Names>MpRSA</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.rbrsa.RbRSAKeyPairGenerator">
+      <Names>RbRSA</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+    <KeyPairGenerator class="de.flexiprovider.core.rprimersa.RprimeRSAKeyPairGenerator">
+      <Names>RprimeRSA</Names>
+      <KeyStrengths default="1024" />
+    </KeyPairGenerator>
+  </KeyPairGenerators>
+  <Signatures>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$SHA1" oid="1.2.840.10045.4.1">
+      <Names>ECDSA,SHA1/ECDSA,SHA1withECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$SHA224" oid="1.2.840.10045.4.3.1">
+      <Names>SHA224/ECDSA,SHA224withECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$SHA256" oid="1.2.840.10045.4.3.2">
+      <Names>SHA256/ECDSA,SHA256withECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$SHA384" oid="1.2.840.10045.4.3.3">
+      <Names>SHA384/ECDSA,SHA384withECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$SHA512" oid="1.2.840.10045.4.3.4">
+      <Names>SHA512/ECDSA,SHA512withECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePSS" oid="1.2.840.113549.1.1.10">
+      <Names>RSASSA-PSS,RbRSA</Names>
+      <ParameterSpec class="de.flexiprovider.core.rsa.PSSParameterSpec" />
+      <KeyPairGenerator class="de.flexiprovider.core.rbrsa.RbRSAKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$SHA256" oid="1.2.840.113549.1.1.11">
+      <Names>SHA256/RSA,SHA256withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$SHA384" oid="1.2.840.113549.1.1.12">
+      <Names>SHA384/RSA,SHA384withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$SHA512" oid="1.2.840.113549.1.1.13">
+      <Names>SHA512/RSA,SHA512withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$SHA224" oid="1.2.840.113549.1.1.14">
+      <Names>SHA224/RSA,SHA224withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$MD5" oid="1.2.840.113549.1.1.4">
+      <Names>MD5/RSA,MD5withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$SHA1" oid="1.2.840.113549.1.1.5">
+      <Names>SHA/RSA,SHA1/RSA,SHA1withRSA,SHAwithRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.dsa.DSASignature$SHA1" oid="1.3.14.3.2.13">
+      <Names>DSS,SHA/DSA,SHA1/DSA,SHA1withDSA,SHAwithDSA</Names>
+      <ParameterSpec class="de.flexiprovider.core.dsa.DSAParameterSpec" />
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RIPEMD160" oid="1.3.36.3.3.1.2">
+      <Names>RIPEMD160/RSA,RIPEMD160withRSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqdsa.IQDSASignature$SHA1" oid="1.3.6.1.4.1.8301.3.1.1.2">
+      <Names>IQDSA,SHA1withIQDSA</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqdsa.IQDSAParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqdsa.IQDSAParamGenParameterSpec" />
+      </ParameterGenerator>
+      <KeyPairGenerator class="de.flexiprovider.nf.iq.iqdsa.IQDSAKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqdsa.IQDSASignature$RIPEMD160" oid="1.3.6.1.4.1.8301.3.1.1.3">
+      <Names>RIPEMD160withIQDSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqgq.IQGQSignature$SHA1" oid="1.3.6.1.4.1.8301.3.1.1.5">
+      <Names>IQGQ,SHA1withIQGQ</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqgq.IQGQParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqgq.IQGQParamGenParameterSpec" />
+      </ParameterGenerator>
+      <KeyPairGenerator class="de.flexiprovider.nf.iq.iqgq.IQGQKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqgq.IQGQSignature$RIPEMD160" oid="1.3.6.1.4.1.8301.3.1.1.6">
+      <Names>RIPEMD160withIQGQ</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqrdsa.IQRDSASignature$SHA1" oid="1.3.6.1.4.1.8301.3.1.1.8">
+      <Names>IQRDSA,SHA1withIQRDSA</Names>
+      <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParameterSpec" />
+      <ParameterGenerator class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParameterGenerator">
+        <ParameterSpec class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAParamGenParameterSpec" />
+      </ParameterGenerator>
+      <KeyPairGenerator class="de.flexiprovider.nf.iq.iqrdsa.IQRDSAKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.nf.iq.iqrdsa.IQRDSASignature$RIPEMD160" oid="1.3.6.1.4.1.8301.3.1.1.9">
+      <Names>RIPEMD160withIQRDSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.ots.merkle.MerkleOTSSignature$SHA1andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.1">
+      <Names>MerkleOTSwithSHA1</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA1andSHA1PRNG" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.ots.merkle.MerkleOTSSignature$SHA256andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.2">
+      <Names>MerkleOTS,MerkleOTSwithSHA256</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA256andSHA1PRNG" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.ots.merkle.MerkleOTSSignature$SHA384andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.3">
+      <Names>MerkleOTSwithSHA384</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA384andSHA1PRNG" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.ots.merkle.MerkleOTSSignature$SHA512andSHA1PRNG" oid="1.3.6.1.4.1.8301.3.1.3.1.1.4">
+      <Names>MerkleOTSwithSHA512</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.ots.merkle.MerkleOTSKeyPairGenerator$SHA512andSHA1PRNG" />
+    </Signature> 
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA1andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.1">
+      <Names>CMSSwithSHA1andWinternitzOTS_1</Names>      
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_1" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA1andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.2">
+      <Names>CMSSwithSHA1andWinternitzOTS_2</Names>  
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_2" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA1andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.3">
+      <Names>CMSSwithSHA1andWinternitzOTS_3</Names>  
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_3" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA1andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.4">
+      <Names>CMSSwithSHA1andWinternitzOTS_4</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA1andWinternitzOTS_4" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA256andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.5">
+      <Names>CMSSwithSHA256andWinternitzOTS_1</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_1" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA256andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.6">
+      <Names>CMSS,CMSSwithSHA256andWinternitzOTS_2</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_2" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA256andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.7">
+      <Names>CMSSwithSHA256andWinternitzOTS_3</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_3" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA256andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.8">
+      <Names>CMSSwithSHA256andWinternitzOTS_4</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA256andWinternitzOTS_4" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA384andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.9">
+      <Names>CMSSwithSHA384andWinternitzOTS_1</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_1" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA384andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.10">
+      <Names>CMSSwithSHA384andWinternitzOTS_2</Names>   
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_2" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA384andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.11">
+      <Names>CMSSwithSHA384andWinternitzOTS_3</Names>      
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_3" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA384andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.12">
+      <Names>CMSSwithSHA384andWinternitzOTS_4</Names>      
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA384andWinternitzOTS_4" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA512andWinternitzOTS_1" oid="1.3.6.1.4.1.8301.3.1.3.2.13">
+      <Names>CMSSwithSHA512andWinternitzOTS_1</Names>      
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_1" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA512andWinternitzOTS_2" oid="1.3.6.1.4.1.8301.3.1.3.2.14">
+      <Names>CMSSwithSHA512andWinternitzOTS_2</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_2" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA512andWinternitzOTS_3" oid="1.3.6.1.4.1.8301.3.1.3.2.15">
+      <Names>CMSSwithSHA512andWinternitzOTS_3</Names>      
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_3" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.cmss.CMSSSignature$SHA512andWinternitzOTS_4" oid="1.3.6.1.4.1.8301.3.1.3.2.16">
+      <Names>CMSSwithSHA512andWinternitzOTS_4</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.cmss.CMSSKeyPairGenerator$SHA512andWinternitzOTS_4" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.gmss.GMSSSignature$GMSSwithSHA1" oid="1.3.6.1.4.1.8301.3.1.3.3.1">
+      <Names>GMSSwithSHA1</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA1" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.gmss.GMSSSignature$GMSSwithSHA224" oid="1.3.6.1.4.1.8301.3.1.3.3.2">
+      <Names>GMSSwithSHA224</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA224" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.gmss.GMSSSignature$GMSSwithSHA256" oid="1.3.6.1.4.1.8301.3.1.3.3.3">
+      <Names>GMSSwithSHA256</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA256" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.gmss.GMSSSignature$GMSSwithSHA384" oid="1.3.6.1.4.1.8301.3.1.3.3.4">
+      <Names>GMSSwithSHA384</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA384" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.hbc.gmss.GMSSSignature$GMSSwithSHA512" oid="1.3.6.1.4.1.8301.3.1.3.3.5">
+      <Names>GMSSwithSHA512</Names>     
+      <KeyPairGenerator class="de.flexiprovider.pqc.hbc.gmss.GMSSKeyPairGenerator$GMSSwithSHA512" />
+    </Signature>
+    <Signature class="de.flexiprovider.pqc.ecc.niederreiter.NiederreiterCFSSignature" oid="1.3.6.1.4.1.8301.3.1.3.4.3.2">
+      <Names>Niederreiter,NiederreiterCFS</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.ECCKeyGenParameterSpec" />
+      <KeyPairGenerator class="de.flexiprovider.pqc.ecc.niederreiter.NiederreiterKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawMD5">
+      <Names>MD5/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.mersa.MeRSASignaturePSS">
+      <Names>MeRSA</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.core.mprsa.MpRSASignaturePSS">
+      <Names>MpRSA,RprimeRSA</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.rprimersa.RprimeRSAKeyPairGenerator" />
+    </Signature>
+    <Signature class="de.flexiprovider.core.dsa.DSASignature$Raw">
+      <Names>RAW/DSA,RawDSA</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawRIPEMD160">
+      <Names>RIPEMD160/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECDSASignature$Raw">
+      <Names>RAWECDSA,RawECDSA</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.ec.ECNRSignature">
+      <Names>ECNR,SHA1/ECNR,SHA1withECNR</Names>
+      <ParameterSpec class="de.flexiprovider.ec.parameters.CurveParams" />
+      <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" />
+      <StandardParameters>1.3.132.0.29,1.3.132.0.28,1.2.840.10045.3.1.7,1.2.840.10045.3.1.2,1.2.840.10045.3.1.1,1.2.840.10045.3.1.6,1.2.840.10045.3.1.5,1.2.840.10045.3.1.4,1.2.840.10045.3.1.3,1.3.36.3.3.2.8.1.1.9,1.3.36.3.3.2.8.1.1.11,1.3.36.3.3.2.8.1.1.7,1.3.36.3.3.2.8.1.1.5,1.3.36.3.3.2.8.1.1.13,1.3.132.0.30,1.3.132.0.32,1.3.132.0.31,1.3.132.0.34,1.3.132.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.16,1.3.6.1.4.1.8301.3.1.2.9.0.17,1.3.6.1.4.1.8301.3.1.2.9.0.14,1.3.6.1.4.1.8301.3.1.2.9.0.15,1.3.6.1.4.1.8301.3.1.2.9.0.18,1.3.6.1.4.1.8301.3.1.2.9.0.19,1.3.6.1.4.1.8301.3.1.2.9.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.8,1.3.132.0.6,1.3.6.1.4.1.8301.3.1.2.9.0.5,1.3.132.0.7,1.3.6.1.4.1.8301.3.1.2.9.0.6,1.3.132.0.8,1.3.6.1.4.1.8301.3.1.2.9.0.12,1.3.132.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.13,1.3.6.1.4.1.8301.3.1.2.9.0.9,1.3.6.1.4.1.8301.3.1.2.9.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.11,1.3.6.1.4.1.8301.3.1.2.9.0.2,1.3.6.1.4.1.8301.3.1.2.9.0.1,1.3.6.1.4.1.8301.3.1.2.9.0.4,1.3.6.1.4.1.8301.3.1.2.9.0.3,1.3.6.1.4.1.8301.3.1.2.9.0.22,1.3.6.1.4.1.8301.3.1.2.9.0.21,1.3.6.1.4.1.8301.3.1.2.9.0.24,1.3.6.1.4.1.8301.3.1.2.9.0.23,1.3.6.1.4.1.8301.3.1.2.9.0.20,1.3.6.1.4.1.8301.3.1.2.9.0.29,1.3.6.1.4.1.8301.3.1.2.9.0.26,1.3.6.1.4.1.8301.3.1.2.9.0.25,1.3.6.1.4.1.8301.3.1.2.9.0.28,1.3.6.1.4.1.8301.3.1.2.9.0.27,1.3.36.3.3.2.8.1.1.1,1.3.36.3.3.2.8.1.1.3,1.3.132.0.10,1.3.6.1.4.1.8301.3.1.2.9.0.35,1.3.6.1.4.1.8301.3.1.2.9.0.34,1.3.6.1.4.1.8301.3.1.2.9.0.33,1.3.6.1.4.1.8301.3.1.2.9.0.32,1.3.6.1.4.1.8301.3.1.2.9.0.31,1.3.6.1.4.1.8301.3.1.2.9.0.30,1.3.6.1.4.1.8301.3.1.2.9.0.38,1.3.6.1.4.1.8301.3.1.2.9.0.37,1.3.6.1.4.1.8301.3.1.2.9.0.36</StandardParameters>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawSHA1">
+      <Names>SHA1/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawSHA224">
+      <Names>SHA224/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawSHA256">
+      <Names>SHA256/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawSHA384">
+      <Names>SHA384/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.RSASignaturePKCS1v15$RawSHA512">
+      <Names>SHA512/RSA/RAW</Names>
+    </Signature>
+    <Signature class="de.flexiprovider.core.rsa.SSLSignature">
+      <Names>SSL_MD5andSHA1withRSA</Names>
+    </Signature>
+  </Signatures>
+  <AsymmetricBlockCiphers>
+    <AsymmetricBlockCipher class="de.flexiprovider.core.rsa.RSA_PKCS1_v1_5" oid="1.2.840.113549.1.1.1">
+      <Names>RSA,RSA_PKCS1_v1_5</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.rsa.RSAKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.core.rsa.RSA_PKCS1_v2_1" oid="1.2.840.113549.1.1.7">
+      <Names>RSA-OAEP,RSA_PKCS1_v2_1,RbRSA</Names>
+      <ParameterSpec class="de.flexiprovider.core.rsa.RSAOAEPParameterSpec" />
+      <KeyPairGenerator class="de.flexiprovider.core.rbrsa.RbRSAKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.core.elgamal.ElGamal" oid="1.3.14.7.2.1.1">
+      <Names>ElGamal</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.elgamal.ElGamalKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.pqc.ecc.mceliece.McEliecePKCS" oid="1.3.6.1.4.1.8301.3.1.3.4.1">
+      <Names>McEliece,McEliecePKCS</Names>
+      <KeyPairGenerator class="de.flexiprovider.pqc.ecc.mceliece.McElieceKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.core.mersa.MeRSA">
+      <Names>MeRSA</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.mersa.MeRSAKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.core.mprsa.MpRSA">
+      <Names>MpRSA,RprimeRSA</Names>
+      <KeyPairGenerator class="de.flexiprovider.core.rprimersa.RprimeRSAKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+    <AsymmetricBlockCipher class="de.flexiprovider.pqc.ecc.niederreiter.NiederreiterPKCS">
+      <Names>Niederreiter</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.ECCKeyGenParameterSpec" />
+      <KeyPairGenerator class="de.flexiprovider.pqc.ecc.niederreiter.NiederreiterKeyPairGenerator" />
+    </AsymmetricBlockCipher>
+  </AsymmetricBlockCiphers>
+  <AsymmetricHybridCiphers>
+    <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McElieceFujisakiCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.1">
+      <Names>McElieceFujisakiCipher</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
+    </AsymmetricHybridCipher>
+    <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McEliecePointchevalCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.2">
+      <Names>McEliecePointchevalCipher</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
+    </AsymmetricHybridCipher>
+    <AsymmetricHybridCipher class="de.flexiprovider.pqc.ecc.mceliece.McElieceKobaraImaiCipher" oid="1.3.6.1.4.1.8301.3.1.3.4.2.3">
+      <Names>McElieceKobaraImaiCipher</Names>
+      <ParameterSpec class="de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2ParameterSpec" />
+    </AsymmetricHybridCipher>
+    <AsymmetricHybridCipher class="de.flexiprovider.ec.ECIES">
+      <Names>ECIES</Names>
+      <ParameterSpec class="de.flexiprovider.common.ies.IESParameterSpec" />
+      <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" />
+    </AsymmetricHybridCipher>
+  </AsymmetricHybridCiphers>
+  <SecureRandoms>
+    <SecureRandom class="de.flexiprovider.core.random.BBSRandom">
+      <Names>BBSRandom</Names>
+    </SecureRandom>
+    <SecureRandom class="de.flexiprovider.ec.ECPRNG">
+      <Names>ECPRNG</Names>
+    </SecureRandom>
+    <SecureRandom class="de.flexiprovider.core.random.SHA1PRNG">
+      <Names>SHA1PRNG</Names>
+    </SecureRandom>
+  </SecureRandoms>
+  <MessageDigests>
+    <MessageDigest class="de.flexiprovider.core.md.MD4" oid="1.2.840.113549.2.4">
+      <Names>MD4</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.MD5" oid="1.2.840.113549.2.5">
+      <Names>MD5</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.SHA1" oid="1.3.14.3.2.26">
+      <Names>SHA,SHA1</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.RIPEMD160" oid="1.3.36.3.2.1">
+      <Names>RIPEMD160</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.RIPEMD128" oid="1.3.36.3.2.2">
+      <Names>RIPEMD128</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.RIPEMD256" oid="1.3.36.3.2.3">
+      <Names>RIPEMD256</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.Tiger" oid="1.3.6.1.4.1.11591.12.2">
+      <Names>Tiger</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.SHA256" oid="2.16.840.1.101.3.4.2.1">
+      <Names>SHA256</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.SHA384" oid="2.16.840.1.101.3.4.2.2">
+      <Names>SHA384</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.SHA512" oid="2.16.840.1.101.3.4.2.3">
+      <Names>SHA512</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.SHA224" oid="2.16.840.1.101.3.4.2.4">
+      <Names>SHA224</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.DHA256">
+      <Names>DHA256</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.FORK256">
+      <Names>FORK256</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.RIPEMD320">
+      <Names>RIPEMD320</Names>
+    </MessageDigest>
+    <MessageDigest class="de.flexiprovider.core.md.VSH">
+      <Names>VSH</Names>
+    </MessageDigest>
+  </MessageDigests>
+  <Modes>
+    <Modes class="de.flexiprovider.common.mode.ECB" id="ECB" name="(ECB) Electronic Codebook" />
+    <Modes class="de.flexiprovider.common.mode.CBC" id="CBC" name="(CBC) Cipherblock Chaining">
+      <ParameterSpec class="de.flexiprovider.common.mode.ModeParameterSpec" />
+    </Modes>
+    <Modes class="de.flexiprovider.common.mode.OFB" id="OFB" name="(OFB) Output Feedback">
+      <ParameterSpec class="de.flexiprovider.common.mode.OFBParameterSpec" />
+    </Modes>
+    <Modes class="de.flexiprovider.common.mode.CFB" id="CFB" name="(CFB) Cipher Feedback">
+      <ParameterSpec class="de.flexiprovider.common.mode.CFBParameterSpec" />
+    </Modes>
+    <Modes class="de.flexiprovider.common.mode.CTR" id="CTR" name="(CTR) Counter">
+      <ParameterSpec class="de.flexiprovider.common.mode.ModeParameterSpec" />
+    </Modes>
+  </Modes>
+  <PaddingSchemes>
+    <PaddingScheme class="de.flexiprovider.common.padding.NoPadding" id="NoPadding" name="No Padding" />
+    <PaddingScheme class="de.flexiprovider.common.padding.OneAndZeroesPadding" id="OneAndZeroesPadding" name="One and Zeroes Padding" />
+    <PaddingScheme class="de.flexiprovider.common.padding.PKCS5Padding" id="PKCS5Padding" name="PKCS#5 Padding" />
+  </PaddingSchemes>
+</FlexiProvider>

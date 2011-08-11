@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<BODY>
+
+<h1>Hash function</h1>
+
+<P>A <B>hash function</B> is a (mathematical) function which receives an input of arbitrary length and returns a function value (hash value) of a fixed length (usually 128 or 160 bits). The hash functions which are used in cryptography should be called <B>one-way hash functions</B>.</P>
+
+<P>The hash function itself must be public, i.e. everyone should be able to (efficiently) calculate the hash value for a given input. Conversely, however, it must be (computationally) infeasible to find an input for a given value which possesses exactly the predetermined value as hash value (this is referred to as <B>a one-way characteristic</B>).</P>
+
+<P>In cryptographic practice, generally hash functions must satisfy a second, more stringent requirement: it must be impossible to find two values which are mapped by the hash function onto the same hash value (collisions), since otherwise it would be possible to replace an already signed message after the event. Hash functions are especially used in connection with digital <A href="signature.html">signatures</A>. Here, for reasons of efficiency, the hash value of a message is signed instead of the message itself.</P>
+
+<P>The hash value H = H(M) of an original message M, is used to check, if the received message M' has been changed.</P>
+
+<P>Example: Some earlier computer magazines added row check sums to the printouts of source code examples. Using these check sums it was possible to recover fast typing errors of the printed source code, because only the row check numbers of the source code have to be checked to discover an error within a row (CDs and downloads didn't exist in these times).</P>
+
+<P>For these checksum methods it is easy to find two different row messages R1, R2 with the same row check sum - meaning H(R1) = H(R2) but R1 != R2: So it is possible to compute a malicious modified source code, without the possibility to detect this modification only via checking the row check sums. We call two different rows with equal check sum a collision. In the notion of hash values we call this a collision if</P>
+
+<P>M != M' and H(M) = H(M')</P>
+
+<P>For cryptographic purposes we must consider the requirement that for the hashing method H and any message M it must be practically impossible to compute a collision. This means to compute a fake massage M' != M, with the characteristic H(M') = H(M).</P>
+
+<P>In the example with the printed source code in earlier computer magazines simple checksum methods have been satisfying, because messages (lines) were not faked by will, but only accidentally mistyped.</P>
+
+</BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Target Platform</h1>
+
+	<p>A target platform decouples the target platform from the development platform. On one side this requires some
+	additional setup work but on the other side makes later development much easier.</p>
+
+	<p>There are two possibilities to create a target platform: The <a href="#automaticSetup">automatic setup</a>
+	(recommended) and the <a href="#manualSetup">manual setup</a>.</p>
+
+	<a name="automaticSetup"></a><h2>Automatic Setup</h2>
+
+	<p><strong>Be aware that an active Internet connection is required and you will be downloading some megabytes
+	into your workspace.</strong></p>
+
+	<p>In order to use the target definition file, you'll have to check out our sources first. The JCrypTool target
+	definition is contained in the file <strong>jcryptool.target</strong> in the <strong>org.jcryptool.releng</strong>
+	project. Simply open this file in the <strong>Target Editor</strong>. Eclipse will now try to resolve all
+	plug-ins referenced in this file, which will take quite a while depending on your hardware and your Internet
+	connection speed. After resolving all plug-ins, the target definition editor will show something like the
+	following screenshot:</p>
+
+    <div class="screenshot">
+    	<img src="images/target-definition.png" width="720" height="718" alt="Target Definition"/>
+    </div>
+
+	<p>The next thing to do is to click on the <strong>Set as Target Platform</strong> link in the upper right which
+	will download and install all configured plug-ins as your active target platform. This includes the optional
+	German translations from Eclipse Babel, so you can launch an English and a German JCrypTool right away. The
+	setup process is finished after all JCrypTool projects have been automatically re-builded.</p>
+
+	<a name="manualSetup"></a><h2>Manual Setup</h2>
+
+	<p>The contained plug-ins in the <strong>Eclipse RCP SDK</strong> form the basis of the JCrypTool RCP, but do not
+	contain all required plug-ins. This forces you to copy additional plug-ins manually from the <em>normal</em>
+	Eclipse IDE into target platform directory.</p>
+
+	<h3>Proceeding</h3>
+
+	<ol>
+		<li>Download the Eclipse RCP SDK
+		(<a href="http://download.eclipse.org/eclipse/downloads/">http://download.eclipse.org/eclipse/downloads</a>)
+		(e.g. <strong>org.eclipse.rcp.source-3.6.1.zip</strong>) and extract it into an	empty directory.</li>
+		<li>Launch your normal Eclipse IDE installation, the Eclipse RCP SDK extracted before is <strong>not</strong>
+		executable.</li>
+		<li>Setup this directory in the JCrypTool workspace preferences as new target definition (switch to the
+		<strong>Target Platform</strong> page, click the <strong>Add</strong> button for a new target platform and
+		select the previously created directory as <strong>Location</strong>).</li>
+		<li>After closing the preferences select the <strong>org.jcryptool.core.dependencies.feature</strong> project
+		and open the <strong>feature.xml</strong> file. Switch to the Plug-ins tab and identify the missing plug-ins
+		with the help of the yellow exclamation marks. Copy those jar files from the Eclipse IDE directory to your
+		target platform. Remember to refresh your target definition in the preferences after adding new plug-ins. Repeat
+		this step until all warnings are gone. Be careful: The dependencies feature does reference plug-ins and three included
+		features. So open the included feature definitions as well (double click on each entry) and make sure the feature as well
+		as all referenced plug-ins are contained in the target platform! You can only ignore the org.eclipse.rcp feature since
+		this feature and all its plug-ins are provided by the RCP SDK installed before.</li>
+		<li>Only plug-ins in the <strong>org.jcryptool.core.dependencies.nl_de.feature</strong> feature are optional, all
+		other plug-ins are required.</li>
+	</ol>
+
+	<p>This created a fully functional target platform, but only for your active operating system. This is good enough for
+	JCrypTool. But in order to support other operating systems you need to execute the following steps as well:</p>
+
+	<ol>
+		<li>Download the Eclipse Delta Pack
+		(<a href="http://download.eclipse.org/eclipse/downloads/">http://download.eclipse.org/eclipse/downloads</a>)
+		(<strong>eclipse-3.6.1-delta-pack.zip</strong> for any platform) and extract it into the target directory created
+		above. Overwrite all files if prompted.</li>
+		<li>Refresh the target platform in the preferences.</li>
+	</ol>
+
+	<p>This enables you to export JCrypTool for any supported platform. In order to get a completely German GUI you need to
+	execute the following steps as well:</p>
+
+	<ol>
+		<li>Load Eclipse Babel (<a href="http://www.eclipse.org/babel/">http://www.eclipse.org/babel</a>) and download the following files
+		for Eclipse Helios:
+			<ol>
+				<li>BabelLanguagePack-eclipse-de_3.6.0.v20100814043401.zip</li>
+				<li>BabelLanguagePack-rt.equinox.p2-de_3.6.0.v20100814043401.zip</li>
+			</ol>
+		</li>
+		<li>You can extract those files into the target platform created above. However we do recommend creating a different directory outside
+		the rest of the target platform. Extract the two zip archives in there.</li>
+		<li>Add a new <strong>Location</strong> in the target definition created above and select the directory containing the <strong>Language Packs</strong>.</li>
+		<li>After the automatic rebuild the <strong>feature.xml</strong> in the <strong>org.jcryptool.core.dependencies.nl_de.feature</strong>
+		project should not show any more warnings.</li>
+	</ol>
+
+	<p>That is all you have to do for target platform setup. Every once in a while a new plug-in dependency is added to JCrypTool in the
+	dependencies feature. In case the <strong>feature.xml</strong> displays a warning you have to update your target platform with one or
+	more new plug-ins as described above.</p>
+
+	<p>We always develop against the latest <strong>stable</strong> Eclipse version. This requires to update the target platform after
+	a new Eclipse release (e.g. Eclipse 3.6.2) is available as well. We recommend to start with a fresh target platform in this case
+	and not to update the existing one.</p>
+</body>
+</html>

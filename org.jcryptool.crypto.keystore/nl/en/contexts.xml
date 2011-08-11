@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="KeystoreView" title="Keystore">
+      <description>The &lt;b&gt;Keystore&lt;/b&gt; view stores cryptographic keys in a secure format on the hard disk. If you like to run an algorithm from the FlexiProvider perspective, the according key must first be created in the keystore. Each key in the keystore is protected by a password.
+
+For convenience, JCrypTool is shipped with some default keys. The default password for these keys is &lt;b&gt;1234&lt;/b&gt;.
+
+Keys created in the keystore can be exported and can later be imported on another machine.
+      </description>
+   </context>
+</contexts>

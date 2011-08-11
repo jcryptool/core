@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="AlgorithmView" title="Algorithm">
+      <description>The &lt;b&gt;Algorithms&lt;/b&gt; view is the heart of the FlexiProvider perspective. It shows all the algorithms implemented in FlexiProvider, grouped by their functionality (like block cipher, signature schemes etc.).
+
+An algorithm can be selected via a double click on its name. In the appearing wizard the user can change the parameters of the algorithm, like the block cipher mode.
+
+Selecting a function (algorithm) is the first step. All following steps are then shown in the Operations view window.</description>
+   </context>
+</contexts>

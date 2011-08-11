@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="algorithmsView" title="Crypto Explorer View">
+      <description>The &lt;b&gt;Crypto Explorer&lt;/b&gt; view lists all available cryptographic operations in JCrypTool ordered by category. A file must be opened in one of the JCrypTool editors in order to execute an algorithm. Analysis, visualizations and games generally do not require an opened file.
+
+Use the menu to switch between the tree and palette presentation. The filter field enables you to filter for the name of an algorithm, analysis, visualization or game.</description>
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/view_algorithms.html" label="Crypto Explorer View" />
+   </context>
+
+</contexts>

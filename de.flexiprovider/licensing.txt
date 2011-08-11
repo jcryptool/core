@@ -1,0 +1,5 @@
+Licensing: The FlexiProvider is open source. The Core Provider module is LGPL licensed, the EC and the NF Provider modules are GPL licensed. Alternative licensing options are available upon request. 
+
+Licensing of the codec package is subject to the SeMoA license which is similar to the LGPL. 
+
+This licensing information was copied from http://flexiprovider.de/#Licensing on 2007-06-12

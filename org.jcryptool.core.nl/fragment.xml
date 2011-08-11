@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         id="intro"
+         point="org.eclipse.ui.intro.config">
+      <config
+            content="$nl$/introContent.xml"
+            id="org.jcryptool.intro.intro.config"
+            introId="org.jcryptool.intro">
+         <presentation home-page-id="root" standby-page-id="standby">
+          <implementation kind="html" style="$nl$/css/standby.css"/>
+
+          <launchBar bg="#d7e5f0" location="fastview">
+            <shortcut tooltip="%overview.tooltip" icon="icons/overview_small.gif" url="http://org.eclipse.ui.intro/showPage?id=overview"/>
+            <shortcut tooltip="%tutorials.tooltip" icon="icons/tutorials_small.gif" url="http://org.eclipse.ui.intro/showPage?id=tutorials"/>
+          </launchBar>
+         </presentation>
+      </config>
+   </extension>
+
+</fragment>

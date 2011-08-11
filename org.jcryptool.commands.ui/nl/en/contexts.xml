@@ -1,0 +1,10 @@
+<contexts>
+	<context id="consoleView" title="Console View">
+		<description>The &lt;b&gt;Console&lt;/b&gt; view allows you to enter cryptographic commands directly inside JCrypTool, instead of selecting/ clicking the command parameter in different wizards.</description>
+  <topic href="nl/de/help/view.html" label="Console View"/>
+	</context>
+ <context id="generalPreferences" title="Console Preferences">
+    <description>The &lt;b&gt;Console&lt;/b&gt; settings allow you, to select various options for the &lt;b&gt;Console&lt;/b&gt; view.</description>
+    <topic href="nl/de/help/preferences.html" label="Console Preferences"/>
+ </context>
+</contexts>

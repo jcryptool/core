@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Actions</h1>
+
+    <p><strong>Actions</strong> ermöglicht die Aufzeichnung und Wiedergabe von kryptografischen Operationen. Dabei wird in der Art eines
+    <em>Makro-Rekorders</em> ein Verlauf aufgezeichnet, welche kryptografischen Operationen Sie in welcher Reihenfolge mit welchen
+    Parametern ausführen. Diese Operationen werden automatisch protokolliert und in der Actions Sicht angezeigt. Dort können Sie die
+    Kaskade bearbeiten oder wiedergeben und alle kryptografischen Operationen der Reihe nach beliebig oft auf beliebigen
+    Inhalt ausführen lassen. Im Normalfall ist bei der Wiedergabe keine weitere Aktion von Ihnen erforderlich, die Kaskade wird vollständig
+    automatisch ausgeführt. Über die Export- und Import-Funktionalität können Sie Kaskaden mit anderen Benutzern austauschen oder auch
+    fremde Kaskaden wiedergeben.</p>
+
+    <p>Beachten Sie, dass eine Kaskade nicht automatisch gespeichert wird! Nach einem JCrypTool Neustart steht somit die aufgezeichnete Kaskade
+    nicht mehr zur Verfügung. Wenn Sie eine Kaskade zur weiteren Verwendung sichern wollen müssen Sie daher die <a href="#export">Export</a>
+    Funktionalität verwenden.</p>
+
+    <div class="screenshot">
+			<img src="images/view_actions.png" width="235" height="292" alt="Actions"/>
+		</div>
+
+    <p>Ausgangspunkt bei der Aufzeichnung einer Kaskade ist der aktive Editor, dessen Inhalt durch die Einträge in der Kaskade
+    kryptografisch bearbeitet wird. Gleiche Ergebnisse beim Ausführen der Kaskade erhalten Sie somit nur, wenn auch der
+    Editorinhalt identisch ist. Das ist aber kein Muss, Sie können eine Kaskade auf jeden beliebigen Editor anwenden. Durch Anklicken
+    eines Eintrags werden im Detailfeld weitere Informationen angezeigt, beispielsweise das verwendete Alphabet, Schlüssellängen
+    und andere Parameter. Die angezeigten Parameter hängen vom Typ des ausgewählten Eintrags ab (z.B. haben klassische und moderne
+    Algorithmen unterschiedliche Parameter).</p>
+
+    <p>Wie Sie einen Algorithmus (d.h. einen Assistenten) aufrufen spielt keine Rolle. Aufgezeichnet werden alle Operationen die über die
+    Krypto Explorer Sicht oder das Algorithmen Menü gestartet werden.</p>
+
+    <h2>Begriffe</h2>
+
+    <h3>Eintrag</h3>
+
+    <p>Ein Eintrag entspricht einem Element in der Actions Sicht, beispielsweise einer AES-Verschlüsselung. D.h. ein Eintrag steht
+    für eine kryptografische Operation. Im Beispiel oben entspräche eine spätere XOR-Entschlüsselung damit einem weiteren Eintrag.</p>
+
+    <h3>Kaskade</h3>
+
+    <p>Eine Kaskade enthält mindestens ein (bis beliebig viele) Einträge. Die Reihenfolge ist von Bedeutung: Bei der Wiedergabe
+    werden die Einträge in dieser Reihenfolge ausgeführt und auf den Editorinhalt angewendet. Eine Kaskade besitzt immer einen
+    Namen, der in der Form <strong>[Dateiname]Cascade.xml</strong> vorgegeben wird. Der Dateiname entspricht dabei dem Namen der im initialen
+    Editor geladenen Datei. Von Bedeutung ist der Name der Kaskade allerdings nur beim Austausch über die Im- und Export Funktionen.</p>
+
+    <p>Im Screenshot oben besteht die Kaskade somit aus zwei Einträgen (d.h. kryptografischen Operationen): einer Caesar Verschlüsselung
+    und einer XOR Verschlüsselung.</p>
+
+    <h2>Bedienung</h2>
+
+    <p>Sämtliche Aktionen werden über die Toolbar oder das identische Menü der Sicht ausgeführt. Je nach Situation sind unpassende Einträge
+    deaktiviert und können nicht ausgewählt werden.</p>
+
+    <div class="screenshot">
+			<img src="images/view_menu.png" width="180" height="23" alt="Actions Toolbar und Menü"/>
+		</div>
+
+		<p>Über das Kontextmenü (Rechtsklick auf einen der Einträge) können Sie den markierten Eintrag löschen oder um eine Position nach oben
+		oder unten schieben.</p>
+
+    <h3>Neu</h3>
+
+    <p>Ein Klick auf <strong>Neu</strong> legt eine neue Kaskade an. Sofern bereits Einträge in der Sicht vorhanden sind müssen Sie diesen
+    Vorgang bestätigen (vorhandene Einträge werden unwiderruflich gelöscht!).</p>
+
+    <h3>Aufzeichnen</h3>
+
+    <p>Durch Klick auf das <strong>Aufzeichnen</strong> Icon beginnen Sie mit der Aufzeichnung einer Kaskade. Sofern bereits Einträge
+    in der Kaskade vorhanden sind wird diese erweitert. Die neuen Einträge werden dabei am Ende angefügt. Zum Stoppen (Unterbrechen) oder
+    Fortsetzen der Aufzeichnung müssen Sie das Icon erneut anklicken. Sie können die Aufzeichnung jederzeit unterbrechen und wieder fortsetzen. Während
+    die Aufnahme unterbrochen ist können Sie beliebige kryptografische Operationen anwenden (oder ausprobieren), ohne dass diese der Aufzeichnung
+    hinzugefügt werden.</p>
+
+    <p>Der Editorinhalt selbst fließt nicht in die Aufzeichnung mit ein. Der Dateiname in der Sicht dient somit nur zu Ihrer besseren Orientierung.
+    Aufgezeichnet werden vielmehr der Typ der Aktion (z.B. Verschlüsselung, Signatur, Hash) und der dazu verwendete Algorithmus. Bei den Details finden
+    Sie beispielsweise bei klassischen Algorithmen Informationen zum verwendeten Alphabet und Schlüssel. Bei modernen Algorithmen werden entsprechende
+    Schlüsselinformationen angezeigt.</p>
+
+    <p>Die Aufzeichnung ist nicht an einen bestimmten Editorinhalt gebunden. Bei aktiver Aufzeichnung werden vielmehr alle kryptografischen Operationen
+    aufgezeichnet, egal auf welchen Editor diese angewendet werden.</p>
+
+    <h3>Wiedergeben</h3>
+
+    <p>Sie können entweder eine selbst erstellte oder eine importierte Kaskade wiedergeben. Öffnen Sie dazu einfach die Datei die Sie mit der Kaskade
+    bearbeiten wollen in einem der JCrypTool <a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/editors.html">Editoren</a> und
+    klicken anschließend auf <strong>Wiedergeben</strong>. Die Kaskade wird von Anfang bis Ende durchlaufen und alle kryptografischen Operationen
+    ausgeführt. Wie bei einer manuellen Ausführung durch Sie selbst wird dabei pro ausgeführtem Eintrag ein neuer Editor mit dem veränderten Inhalt
+    angezeigt. Dessen Inhalt wird anschließend als Eingabe für den nächsten Schritt verwendet.</p>
+
+    <p>Das obige Beispiel würde also zwei neue Editorfenster öffnen: Im ersten Editor findet sich die Caesar verschlüsselte Form der gewählten Quelle (des
+    aktiven Editors), im zweiten Editor das Ergebnis der XOR Verschlüsselung des ersten Ergebnisses (der Caesar Verschlüsselung). D.h. das Ergebnis der
+    vorherigen Operation fließt als Eingabe in die folgende kryptografische Operation. Bei der wiederholten Anwendung einer Kaskade auf einen
+    identischen Editorinhalt wird somit immer dieselbe Ausgabe erzeugt.</p>
+
+    <p>Im Normalfall müssen Sie bei der Wiedergabe keine weiteren Informationen eingeben, sondern können sich entspannt zurücklehnen und JCrypTool die
+    Arbeit erledigen lassen. Vor allem bei importierten Kaskaden kann es jedoch zu <a href="#possibleProblems">Problemen</a> kommen.
+    Beachten Sie hierzu auch die hier aufgeführten <a href="#hints">Hinweise</a>.</p>
+
+    <h3>Löschen</h3>
+
+    <p>Einzelne Einträge in einer Kaskade können auch nachträglich gelöscht werden. Markieren Sie dazu den gewünschten Eintrag und rufen den
+    <strong>Löschen</strong> Befehl über das Menü oder das Kontextmenü auf.</p>
+
+    <h3>Import</h3>
+
+    <p>Mit dem <strong>Import</strong> können Sie eine Kaskade importieren und anschließend in Ihrem JCrypTool ausführen.
+    Sie können auch weitere Einträge zu einer so importierten Kaskade hinzufügen und diese nach Belieben bearbeiten.</p>
+
+    <h3><a name="export"></a>Export</h3>
+
+    <p>Über <strong>Export</strong> kann eine Kaskade exportiert werden. Diese wird in einer XML-Datei gespeichert und kann damit mit
+    anderen Anwendern ausgetauscht oder für Sie selbst gesichert werden. Der vorgegebene Dateiname entspricht der initial für diese Kaskade
+    ausgewählten Datei mit der Erweiterung <strong>Cascade</strong> und der Dateiendung XML.<br/>
+    Prinzipiell können Sie bei ausreichend XML-Kenntnissen die XML-Datei in jedem (XML-) Editor selbst editieren. Beim Import führt JCrypTool
+    einige Überprüfungen durch, eine ungültige Kaskade (nicht wohlgeformtes XML, ungültige Elemente oder Attribute) wird daher abgelehnt.</p>
+
+    <h2>Erweiterung der Datei Explorer Sicht</h2>
+
+	<p>Actions erweitert das Kontextmenü der <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">Datei Explorer</a> Sicht um
+	den Eintrag <strong>Action Kaskade importieren</strong>. Dieser Menüeintrag ist aktiv, sofern Sie eine XML-Datei im Datei Explorer markiert
+	haben. Durch Klick können Sie, sofern es sich um eine gültige <strong>Action Kaskade</strong> handelt, die gewählte Datei direkt
+	in der <strong>Actions Sicht</strong> öffnen und dort ausführen.</p>
+
+	<p>Sofern es sich um eine normale XML-Datei und nicht um eine Action Kaskade handelt, erscheint eine Fehlermeldung und die Datei wird nicht
+	in der Actions Sicht geöffnet.</p>
+
+    <h2><a name="possibleProblems"></a>Mögliche Probleme</h2>
+
+    <p>Bei der Wiedergabe einer auf Ihrem PC erstellten Kaskade sollten normalerweise keine Probleme auftauchen. Beim Austausch von
+    Kaskaden mit anderen Benutzern kann es dagegen vorkommen, dass nicht alle Einträge ausgeführt werden können. Das hat vielfältige
+    Ursachen. Zum einen ist JCrypTool sehr modular aufgebaut, d.h. andere Anwender können andere Plug-ins installiert haben. Sofern ein in
+    der Kaskade vorhandenes Plug-in bei Ihnen nicht installiert ist kann die kryptografische Operation natürlich nicht durchgeführt werden.
+    Weiterhin ist es möglich, dass nicht auf jedem System alle Algorithmen in beliebiger Stärke vorhanden sind. Schließlich können die bei
+    modernen Algorithmen notwendigen Schlüssel oder Schlüsselspeicher fehlen.</p>
+
+    <p>Diese möglichen Probleme können verhindert werden wenn identische JCrypTool Installationen (und Versionen) verwendet werden und auf
+    allen beteiligen Systemen dieselben Schlüsselspeicher/ Schlüssel vorhanden sind. Helfen kann auch die Reduzierung der Schlüssellänge auf
+    die Standardlänge.</p>
+
+    <p>Damit ein Krypto Plug-in in der Actions Sicht verwendet werden kann müssen bei der <a href="dev.html">Entwicklung</a> einige
+    wenige Punkte beachtet werden. D.h. auch wenn ein Krypto Plug-in normal in JCrypTool verwendet werden kann ist das noch keine
+    Garantie dafür, dass Sie es auch ohne Einschränkungen in der Actions Sicht verwenden können.</p>
+
+    <h2><a name="hints"></a>Weitere Hinweise</h2>
+
+    <p>Sofern in den <a href="preferences.html">Benutzervorgaben</a> festgelegt werden Passwörter und sämtliche andere Daten einer
+    kryptografischen Operation im Klartext gespeichert. D.h. beim Austausch einer Kaskade mit einem anderen Anwender erhält dieser
+    alle dazu notwendigen Passwörter und andere Daten. Da JCrypTool eine Lernsoftware darstellt ist dies kein unentdecktes Sicherheitsloch.
+    Stattdessen wird der Austausch von Kaskaden damit erleichtert. Sofern Sie Passwörter nicht in der Kaskade speichern möchten
+    können Sie dies explizit in den <a href="preferences.html">Benutzervorgaben</a> deaktivieren. Bei der Wiedergabe werden dann Sie
+    und jeder andere Benutzer zur Eingabe des jeweiligen Passworts aufgefordert.</p>
+</body>
+</html>

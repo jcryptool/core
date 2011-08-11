@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.jcryptool.core.operations.providers2">
+      <providerController
+            providerController="de.flexiprovider.FlexiProviderController">
+      </providerController>
+   </extension>
+   <extension
+         id="de.flexiprovider"
+         name="FlexiProvider 1.7.0.p1"
+         point="org.jcryptool.core.operations.providers">
+      <provider
+            cipherModes="CBC|CFB|ECB"
+            class="de.flexiprovider.core.FlexiCoreProvider"
+            paddings="PKCS5Padding|OneAndZeroesPadding"
+            providerInfo="FlexiProvider 1.7.0.p1"
+            providerName="FlexiCore">
+      </provider>
+   </extension>
+
+</plugin>

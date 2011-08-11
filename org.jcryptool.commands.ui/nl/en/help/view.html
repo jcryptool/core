@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Console</h1>
+
+    <p>The JCrypTool <strong>Console</strong> enables you to directly enter commands inside JCrypTool. To start the view either click
+    the console icon in the toolbar or use the usual way via the <strong>Window -&gt; Show view</strong> dialog.</p>
+
+    <div class="screenshot">
+		<img src="images/view_icon.png" width="220" height="31" alt="Console Icon"/>
+	</div>
+
+	<p>The console is by default shown at the bottom of the JCrypTool window. You can directly start typing commands, just like in the
+	Windows command prompt or a terminal on Linux or Mac OS X.</p>
+
+    <div class="screenshot">
+		<img src="images/view_console.png" width="600" height="147" alt="Console"/>
+	</div>
+
+	<h2>Usage</h2>
+
+	<p>The whole console is text oriented and only offers a minimal toolbar. The only action available here is to delete the views content.
+	All other commands have to be entered manually.</p>
+
+	<p>Use the command <strong>help</strong> for general assistance. Without any other parameter you get an overview about all available
+	commands. This includes algorithms. The amount of available commands depends on the installed plug-ins in your environment (plug-ins
+	can provide their own extensions to the Console view).</p>
+
+	<p>A more detailed description for one of the available commands can be shown by entering <strong>help commandname</strong>, e.g.
+	<strong>help caesar</strong>. This shows you the syntax of all available parameters/ options of the command. The commands and their
+	possible parameters/ options do differ between the crypto plug-ins. Some commands may not be available everywhere, or they result into
+	different operations. So simply use the command help via <strong>help commandname</strong> to get all this information.</p>
+
+	<h2>Command Overview</h2>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Command</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>help <em>[Command]</em></td>
+				<td>Without any following command or parameter (entering <strong>help</strong> only) all available commands will be listed
+				(including the algorithms).	With another command or parameter (e.g. <strong>help caesar</strong>) the syntax of the given
+				command with its parameters and options will be	shown.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Limitations</h2>
+
+	<p>Not every crypto plug-in can be used via the console. Only algorithm plug-ins (from classic to modern) in principal do support
+	the console. Analysis, Games and Visualizations are not supported. In order for an algorithm to be used via the console, the plug-in
+	must provide certain extensions. This requires the plug-in developer to extend a so called <a href="dev.html">Extension Point</a> with
+	his plug-in. However this extension is optional, so even if a crypto plug-in is available in the menu or the
+	<a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/view_algorithms.html">Crypto Explorer</a> view it is not necessarily
+	available in the Console view too.</p>
+</body>
+</html>

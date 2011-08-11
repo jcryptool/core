@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Plug-in</h1>
+
+	<p>Plug-ins sind die kleinste eigenständige Komponente um JCrypTool zu erweitern (genaugenommen sind Fragmente noch kleiner
+	als Plug-ins, allerdings können Fragmente nicht eigenständig arbeiten). Um ein Plug-in über den <strong>Update Manager</strong>
+	zu installieren muss dieses in ein <a href="../features/toc.html">Feature</a> integriert werden.</p>
+
+	<p>JCrypTool besteht aus unzähligen Plug-ins. Alle zum Core gehörenden Plug-ins stellen dabei die Plattform dar. Diese bieten
+	z.B. <a href="../../../users/general/editors.html">Editoren</a> und allgemein nützliche Sichten wie den
+	<a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">Datei Explorer</a> und den
+	<a href="../../../users/general/view_algorithms.html">Krypto Explorer</a>.</p>
+
+	<p>Den Großteil der Plug-ins machen aber die Krypto Plug-ins, von Analysen bis hin zu Visualisierungen, aus. Jedes dieser Plug-ins
+	ist in der Regel hochspezialisiert und stellt beispielsweise die Implementierung für ein bestimmtes kryptografisches Verfahren
+	zur Verfügung.</p>
+
+	<p>Es gibt keine festen Vorgaben, welche Art von Krypto Plug-in welchen Teil der Oberfläche wie erweitert. Die meisten Algorithmen
+	stehen derzeit als Assistenten zur Verfügung, die anderen Krypto Plug-ins (Analysen, Spiele, Visualisierungen) als Sichten. Diese
+	Entscheidung bleibt aber völlig dem Entwickler überlassen. Egal welche GUI-Elemente entwickelt werden, die Eclipse Standards und
+	Konventionen müssen in jedem Fall beachtet werden. D.h. beispielsweise in Assistenten, keine erklärenden Texte in den Inhaltsbereich
+	zu integrieren. Derartige Texte gehören in kurzer Form in den Kopf des Assistenten, in längerer Form in die Kontexthilfe. Bei den
+	Sichten erscheinen erklärende Texte ausschließlich in der Kontexthilfe und nirgendwo sonst.</p>
+
+	<p>Nach der Fertigstellung eines Plug-ins sollten sämtliche Texte (in der GUI, in der Hilfe, ...) mit einer professionellen
+	Textverarbeitung auf Rechtschreibfehler überprüft werden.</p>
+
+	<p>Um mit gutem Beispiel voranzugehen (schließlich ist JCrypTool eine eLearning Plattform für Kryptografie) sollten Plug-ins
+	nur signiert ausgeliefert werden.</p>
+
+	<h2>Bestandteile</h2>
+
+	<p>Neben der eigentlichen Krypto Implementierung (d.h. dem Java Code) gehören zu einem vollständigen JCrypTool Plug-in eine
+	<a href="help.html">Online-Hilfe</a> zur Bedienung und zum kryptografischen Hintergrund sowie eine kontextsensitive Hilfe. Optional
+	können interaktive <a href="../../../users/general/cheatsheets.html">Cheat Sheets</a> zur Verfügung gestellt werden. Alle Texte sollten
+	dabei in Deutsch und Englisch vorliegen. Englisch ist ein Muss, Deutsch zwar optional aber sehr empfohlen. Das gesamte Plug-in sollte
+	vollständig <a href="internationalization.html">internationalisiert</a> in Deutsch und Englisch verfügbar sein.</p>
+
+	<p>Beachten Sie, dass am Ende der Entwicklung alle notwendigen Dateien mit ausgeliefert werden. Dazu müssen Sie sicherstellen, dass in
+	der <strong>build.properties</strong> Konfigurationdatei alle gewünschten Dateien enthalten sind. Insbesondere Verzeichnisse mit
+	Hilfedateien und Grafiken müssen hier explizit hinzugefügt werden.</p>
+
+	<h2>Betriebssystemunabhängigkeit</h2>
+
+	<p>JCrypTool unterstützt die Systeme Linux, Mac OS X und Windows. Obwohl die Unterschiede zwischen den Systemen für Plug-in Entwickler
+	eigentlich unerheblich sind, müssen einige Punkte, in Abhängigkeit vom Plug-in, beachtet werden. Zum einen dürfen in Ressourcen, also z.B.
+	den Icons oder HTML-Dateien eines Plug-ins, die Dateinamen <strong>keine Leerzeichen</strong> enthalten. Alle Dateinamen müssen konsequent
+	kleingeschrieben werden.<br/>
+	Zum anderen muss bei Zugriffen über den FileDialog ein auf allen Systemen vorhandenes Verzeichnis angegeben werden. Als JCrypTool-Standard
+	hat sich hier <strong>System.getProperty(&quot;user.home&quot;)</strong> eingebürgert.</p>
+
+	<h2>Kryptografische Operationen</h2>
+
+	<p>Je nach Größe der Eingabedatei bzw. des Editorinhalts und des gewählten Algorithmus (Schlüsselstärke, Parameter, ...) können kryptografische
+	Operationen sehr lange dauern. Werden diese dabei im UI-Thread ausgeführt wird das gesamte JCrypTool blockiert. Die Operation wirkt auf
+	den Anwender dabei viel träger als sie eigentlich ist. Normale Eclipse Actions oder Commands werden standardmäßig immer im UI-Thread
+	ausgeführt. Wir empfehlen daher immer einen Job zu verwenden und die kryptografische Operation in einen eigenen Thread auszulagern. Damit
+	blockiert die GUI nicht, der Anwender wird über den Fortschritt informiert und kann normal weiterarbeiten.</p>
+
+	<div class="code">
+		Job job = new Job("Jobtitel") {<br/>
+        &nbsp;public IStatus run(final IProgressMonitor monitor) {<br/>
+        &nbsp;&nbsp;try {<br/>
+        &nbsp;&nbsp;&nbsp;// mit fixer Länge und monitor.worked(Schritt); Aufrufen in regelmäßigen Abständen<br/>
+        &nbsp;&nbsp;&nbsp;monitor.beginTask("Jobtitel", 5);<br/>
+        &nbsp;&nbsp;&nbsp;// ODER mit unbekannter Länge<br/>
+        &nbsp;&nbsp;&nbsp;monitor.beginTask("Jobtitel", IProgressMonitor.UNKNOWN);<br/>
+        &nbsp;&nbsp;&nbsp;if (monitor.isCanceled()) {<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;return Status.CANCEL_STATUS;<br/>
+        &nbsp;&nbsp;&nbsp;}<br/>
+        &nbsp;&nbsp;} catch (final Exception ex) {<br/>
+        &nbsp;&nbsp;&nbsp;LogUtil.logError(ex);<br/>
+        &nbsp;&nbsp;} finally {<br/>
+        &nbsp;&nbsp;&nbsp;monitor.done();<br/>
+        &nbsp;&nbsp;}<br/>
+        &nbsp;&nbsp;return Status.OK_STATUS;<br/>
+        &nbsp;}<br/>
+        };<br/>
+        job.setUser(true);<br/>
+        job.schedule();
+	</div>
+
+	<h2>Datei Explorer</h2>
+
+	<p>Der <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">Datei Explorer</a> ermöglicht kryptografische Operationen auf Dateien,
+	ohne diese öffnen zu müssen. D.h. auch sehr große Dateien lassen sich kryptografisch bearbeiten, ohne diese zunächst im Editor zu öffnen. In der
+	Standardeinstellung werden jedoch alle Dateien geöffnet. D.h. Benutzer müssen explizit in den Benutzereinstellungen auswählen, dass die gewählte
+	Datei vor der Bearbeitung nicht geöffnet werden soll. Auch für die resultierende Datei (z.B. die verschlüsselte Datei) kann
+	eingestellt werden, dass diese nur geschrieben, nicht aber in einem Editor geöffnet wird. Diese Einstellungen können über
+	die IDs <strong>fileExplorerOpenSource</strong> und <strong>fileExplorerOpenTarget</strong> abgefragt werden. Rückgabe ist ein Wert
+	vom Typ Boolean. Es wird empfohlen, dass Krypto Plug-ins diese Werte abfragen und beachten.</p>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Benutzervorgaben</h1>
+
+	<p>Auch die Benutzervorgaben von JCrypTool können von allen Plug-ins erweitert werden. Jedes Plug-in steuert dabei seine eigene Seite bei. Es ist
+	somit nicht möglich, eine von einem anderen Plug-in erzeugte Preference Page durch ein anders Plug-in zu erweitern.</p>
+
+	<div class="code">
+	&lt;extension point=&quot;org.eclipse.ui.preferencePages&quot;&gt;<br/>
+	&nbsp;&lt;page<br/>
+	&nbsp;&nbsp;category=&quot;org.jcryptool.preferences.general&quot;<br/>
+	&nbsp;&nbsp;class=&quot;org.jcryptool.actions.ui.preferences.GeneralPage&quot;<br/>
+	&nbsp;&nbsp;id=&quot;org.jcryptool.actions.ui.general&quot;<br/>
+	&nbsp;&nbsp;name=&quot;Actions&quot;&gt;<br/>
+	&nbsp;&lt;/page&gt;<br/>
+	&lt;/extension&gt;
+	</div>
+
+	<h2>Krypto Plug-ins</h2>
+
+	<p>Die Gruppierung der Benutzervorgaben spiegelt die in JCrypTool überall verwendete Kategorisierung wieder. D.h. es gibt Bereiche für
+	<a href="#algorithms">Algorithmen</a>, <a href="#anlysis">Analysen</a>, <a href="#games">Spiele</a> und <a href="#visuals">Visualisierungen</a>. Es ist
+	die Aufgabe jedes Plug-in Entwicklers, die Seite(n) für die Benutzereinstellungen in die korrekte Kategorie einzufügen.</p>
+
+	<h3>Kryptographie</h3>
+
+	<p>Dies ist der Bereich für allgemeine kryptografische Benutzervorgaben. Die ID für diese Kategorie lautet
+	<strong>org.jcryptool.preferences.crypto</strong>.</p>
+
+	<h3><a name="algorithms"></a>Algorithmen</h3>
+
+	<p>Dies ist der Bereich für Algorithmen Plug-ins, von klassischen bis hin zu modernen Verfahren. Die ID für diese Kategorie lautet
+	<strong>org.jcryptool.preferences.algorithms</strong>.</p>
+
+	<h3><a name="anlysis"></a>Analysen</h3>
+
+	<p>Dies ist der Bereich für kryptografische Analysen. Die ID für diese Kategorie lautet <strong>org.jcryptool.preferences.anlysis</strong>.</p>
+
+	<h3><a name="games"></a>Spiele</h3>
+
+	<p>Dies ist der Bereich für kryptografische Spiele. Die ID für diese Kategorie lautet <strong>org.jcryptool.preferences.games</strong>.</p>
+
+	<h3><a name="visuals"></a>Visualisierungen</h3>
+
+	<p>Dies ist der Bereich für kryptografische Visualisierungen. Die ID für diese Kategorie lautet <strong>org.jcryptool.preferences.visuals</strong>.</p>
+
+	<h2>Sonstige Plug-ins</h2>
+
+	<p>Auch die weiteren allgemeinen Seiten in den Benutzereinstellungen können ergänzt werden.</p>
+
+	<h3>Allgemein</h3>
+
+	<p>In diesen Bereich gehören die allgemeinen Einstellungen für JCrypTool. Die ID für diese Kategorie lautet
+	<strong>org.jcryptool.preferences.general</strong>.</p>
+
+	<h3>Editoren</h3>
+
+	<p>Editoren gleich welchen Typs gehören in diese Kategorie. Die ID für diese Kategorie lautet <strong>org.jcryptool.preferences.editors</strong>.</p>
+
+	<p></p>
+</body>
+</html>

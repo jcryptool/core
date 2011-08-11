@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+  <context id="AsymmetricCiphers" title="Asymmetrische Blockchiffren">
+   <description>Eine &lt;b&gt;asymmetrische Blockchiffre&lt;/b&gt; ist ein Verschlüsselungsverfahren, bei dem zwei Schlüssel existieren, der private (geheime) Schlüssel und der öffentliche Schlüssel.
+
+Mit dem öffentlichen Schlüssel, der jedem frei zugänglich gemacht werden kann, können Daten verschlüsselt werden. Der private Schlüssel, der unbedingt geheim bleiben muss, können diese Daten wieder entschlüsselt werden.
+   </description>
+  </context>
+
+  <context id="HybridCiphers" title="Hybride Verschlüsselung">
+   <description>Asymmetrische Verschlüsselungsverfahren sind im Gegensatz zu symmetrischen Verschlüsselungsverfahren sehr langsam. Deswegen existiert &lt;b&gt;Hybride Verschlüsselung&lt;/b&gt; Dort wird ein asymmetrisches Verfahren wie beispielsweise RSA verwendet, um einen zufällig erzeugten Schlüssel zu verschlüsseln (Sitzungsschlüssel genannt).
+
+Dieser  Sitzungsschlüssel wird dann für ein symmetrisches Verfahren wie beispielsweise AES genutzt, um Nachrichten zu verschlüsseln.
+
+Somit nutzt man den Vorteil beider Verfahren aus: Die leichte Schlüsselaustauschprozess von asymmetrischen Verfahren und die Performance von symmetrischen Verfahren.
+   </description>
+  </context>
+
+  <context id="BlockCiphers" title="Blockchiffren">
+   <description>Eine &lt;b&gt;Blockchiffre&lt;/b&gt; teilt den zu verschlüsselnden Text in gleichgroße Blöcke, von beispielsweise 16 Byte, auf, und verschlüsselt diese anschließend unabhängig voneinander jeweils mit demselben Schlüssel.  Zum Entschlüsseln wird der Geheimtext erneut wieder in gleichgroße Blöcke aufgeteilt und jeder Block unabhängig voneinander entschlüsselt.
+   </description>
+  </context>
+
+  <context id="passwordBasedEncryption" title="Passwortbasierte Chiffren">
+   <description>Passwortbasierte Chriffen (engl. password-based encryption, PBE) verwenden eine "Key Derivation Function " um aus einem Passwort oder einer Passphrase einen Schlüssel für eine gewöhnliche Blockchiffre abzuleiten. Dieser abgeleitete Schlüssel wird dann verwendet, um die Daten zu verschlüsseln.
+
+FlexiProvider implementiert dabei den PKCS #5 version 2.0-Standard. Da dieser allerdings DES für PBES1 bzw. Triple-DES für PBES2 einsetzt, ist von der Anwendung dieser Algorithmen im echten Umfeld abzuraten.
+   </description>
+  </context>
+
+  <context id="MAC" title="Authentifizierungscodes">
+   <description>&lt;b&gt;Authentifizierungscodes&lt;/b&gt; (engl. Message Authentication Codes) dienen zur Authentifizierung von gesendeten Nachrichten und schützen somit vor der unbemerkten Manipulation einer Nachricht.
+
+Im Gegensatz zu digitalen Signaturen verwenden Authentifizierungscode symmetrische Verschlüsselungsverfahren oder Hash-Funktionen. Somit wird derselbe Schlüssel für die Erzeugung und für die Überprüfung eines Authentifizierungscodes verwendet.  Dies hat zur Folge, dass der Sender und der Empfänger sich zuvor auf einen gemeinsamen, geheimen Schlüssel einigen müssen. Bei digitalen Signaturen ist dies nicht erforderlich.
+   </description>
+  </context>
+
+  <context id="MessageDigests" title="Hash-Funktionen">
+   <description>Eine kryptologische &lt;b&gt;Hash-Funktion&lt;/b&gt; bildet eine beliebig lange Zeichenfolge auf eine Zeichenlänge fester Länge ab, der Hashwert genannt wird. Beliebte Längen (Hash-Länge genannt) sind beispielsweise 128, 160 oder 256 Bits, was 16, 20 beziehungsweise 32 Bytes entspricht.
+
+Kryptologische Hash-Funktionen müssen dabei bestimmte Sicherheitseigenschaften erfüllen. Zum einen muss es eine Einwegfunktion sein, das heißt, für einen gegeben Hashwert  muss es praktisch unmöglich sein, eine Eingabe zu finden die diesen Hashwert besitzt. Ebenfalls muss eine sichere Hash-Funktion kollisionsresistent sein: Es muss praktisch unmöglich sein, zwei verschiedene Eingabewerte zu finden, die denselben Hashwert besitzen.
+
+Hash-Funktionen haben in der Kryptographie viele Einsatzgebiete,  beispielsweise bei digitalen Signaturen, zur Integritätsprüfung von Dateien oder zur sicheren Abspeicherung von Passwörtern.
+   </description>
+  </context>
+
+  <context id="PRNG" title="Pseudo-Zufallszahlengeneratoren">
+   <description>Zufallsgeneratoren spielen in der Kryptographie eine wichtige Rolle und finden in fast jedem Kryptosystem Verwendung. Ein Einsatzgebiet ist beispielsweise das Erzeugen von Schlüsseln, beispielsweise bei hybriden Verfahren.
+
+Da ein herkömmlicher Computer nicht oder nur sehr schwer echte Zufallszahlen erzeugen kann, werden so genannte &lt;b&gt;Pseudo-Zufallsgeneratoren&lt;/b&gt; verwendet. Diese erzeugen eine Zahlenfolge, die zwar zufällig aussieht, aber in Wirklichkeit durch einen Algorithmus berechnet werden. Kryptographisch sichere Pseudo-Zufallsgeneratoren verwenden allerdings einen geheimen internen Zustand, um die nächste Zufallszahl zu berechnen. Ohne Kenntnis dieses internen Zustandes ist es faktisch unmöglich, die nächste Zufallszahl vorherzusagen.
+
+Bei der Initialisierung eines Pseudo-Zufallsgenerators wird der interne Zustand mit Informationen gefüllt, die ein möglicher Angreifer nur sehr schwer erraten kann. Dies kann zum Beispiel die aktuelle Zeit auf Millisekunden genau sein, oder welche Prozesse aktuell auf dem Computer laufen und wie viel Speicherplatz jeder Prozess aktuell belegt hat.
+   </description>
+  </context>
+
+  <context id="Signatures" title="Signaturen">
+  	<description>&lt;b&gt;Digitale Signaturen&lt;/b&gt; schützen Texte und Dateien vor unbemerkten Änderungen. Wird eine Änderung an einem Text vorgenommen, so führt dies dazu, dass die Signatur ihre Gültigkeit verliert. Die veränderte Version müsste neu signiert werden.
+
+Der Empfänger einer Nachricht mit einer digitalen Signatur ist in der Lage, die Gültigkeit der Signatur für die empfangene Nachricht zu überprüfen. Dadurch wird sichergestellt, dass der Empfänger dieselbe Nachricht empfangen hat, die der Sender auch gesendet und signiert hat. Ein Angreifer ist somit nicht in der Lage, die Nachricht während des Datentransfers vom Sender zum Empfänger zu verändern.
+
+Bei einer digitalen Signatur wird der Text für gewöhnlich nicht verschlüsselt. Dies muss in einem separaten Schritt passieren.
+
+Im Gegensatz zu Authentifizierungscodes wird für digitale Signaturen asymmetrische Kryptographie verwendet. Das bedeutet, dass ein Schlüssel zum Signieren (privater Schlüssel) existiert, der geheim gehalten werden muss, und ein anderer Schlüssel zum Überprüfen der Signatur existiert (öffentlicher Schlüssel).
+   </description>
+  </context>
+
+
+
+
+  <context id="CMSSSignature" title="CMSSSignature">
+	<description>&lt;b&gt;CMSS&lt;/b&gt; ist eine Erweiterung des Merkle Signature Scheme. Das Merkle Signature Scheme basiert auf dem Prinzip der Einmalsignaturen unter der Verwendung von Hash-Funktionen.
+
+Einmalsignaturen erlauben es, mit einem Schlüsselpaar genau eine Signatur zu erstellen. für eine weitere Nachricht die man signieren möchte, muss man dementsprechend ein neues Schlüsselpaar generieren.
+
+Um diesen Problem zu lösen, dass mit jeder neuen Nachricht ein neues Schlüsselpaar erstellt werden muss, speichert das Merkle Signature Scheme mehrere Einmalsignatur-Schlüssel in einer binären Baumstruktur. Somit können dann bis zu 2^20 (ca. 1 Millionen) Signaturen effektiv erstellt werden, ohne einen neuen Schlüssel generieren zu müssen.
+
+CMSS verwendet einen zweischichtigen binären Baum, womit bis zu 2^40 (ca. 1 Billion) Signaturen effektiv erstellt werden können.
+
+Erzeugt man ein CMSS-Schlüsselpaar, so wird man nach der Schlüssellänge gefragt, die einen Wert zwischen 2 und 12 sein kann. Die Schlüssellänge gibt die Tiefe des binären Baumes an. Eine Schlüssellänge von 10 erlaubt es beispielsweise 2^(2*10), also 2^20 Signaturen zu erstellen.
+
+Das Besondere an GMSS ist, im Gegensatz zu z.B. RSA oder DSA, dass dieses Verfahren nach aktuellem Stand der Forschung weiterhin sicher ist, selbst wenn Quantencomputer zur Verfügung stehen.
+	</description>
+  </context>
+
+  <context id="GMSSSignature" title="GMSSSignature">
+	<description>&lt;b&gt;Generalized Merkle Signature Scheme&lt;/b&gt; (GMSS) ist ähnlich wie CMSS eine Erweiterung des Merkle Signature Schemes. Das Merkle Signature Scheme basiert auf dem Prinzip der Einmalsignaturen unter der Verwendung von Hash-Funktionen.
+
+Einmalsignaturen erlauben es, mit einem Schlüsselpaar genau eine Signatur zu erstellen. für eine weitere Nachricht die man signieren möchte, muss man dementsprechend ein neues Schlüsselpaar generieren.
+
+Um diesen Problem zu lösen, dass mit jeder neuen Nachricht ein neues Schlüsselpaar erstellt werden muss, speichert das Merkle Signature Scheme mehrere Einmalsignatur-Schlüssel in einer binären Baumstruktur. Somit können dann bis zu 2^20 (ca. 1 Millionen) Signaturen effektiv erstellt werden, ohne einen neuen Schlüssel generieren zu müssen.
+
+Im Gegensatz zu CMSS, bei dem ein zweischichtiger Baum verwendet wird, erlaubt GMSS die Verwendung von Bäumen mit beliebig vielen Schichten. Somit könnte mit einem einzigen Schlüsselpaar beispielsweise bis zu 2^80 Signaturen erstellt werden.
+
+Bei der Erzeugung von GMSS-Schlüsselpaaren lässt sich die Anzahl der möglichen Signaturen bestimmten. Eine Schlüssellänge von 10 bedeutet, dass bis zu 2^10 Signaturen sich mit diesem Schlüssel erzeugen lassen.
+
+Das Besondere an GMSS ist, im Gegensatz zu z.B. RSA oder DSA, dass dieses Verfahren nach aktuellem Stand der Forschung weiterhin sicher ist, selbst wenn Quantencomputer zur Verfügung stehen.
+</description>
+  </context>
+
+</contexts>

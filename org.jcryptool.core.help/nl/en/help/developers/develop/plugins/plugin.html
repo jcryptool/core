@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Plug-ins</h1>
+
+	<p>Plug-ins are the smallest executable components to extend JCrypTool (well, actually fragments are even smaller,
+	but cannot be executed alone). In order to deliver a plug-in via an <strong>Update Site</strong> you have to integrate
+	it into a <a href="../features/toc.html">Feature</a>.</p>
+
+	<p>JCrypTool consists of many plug-ins. All core plug-ins are part of the platform itself. Those plug-ins offer for
+	example <a href="../../../users/general/editors.html">editors</a> or supporting views like the
+	<a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">File Explorer</a> or the
+	<a href="../../../users/general/view_algorithms.html">Crypto Explorer</a> view.</p>
+
+	<p>The bulk of plug-ins are crypto plug-ins, from analysis to visualizations. Almost any of those plug-ins is highly
+	specialized and offers for example the implementation of a certain cryptographic operation.</p>
+
+	<p>There are no fixed requirements on how which type of crypto plug-in extends which part of the GUI. Most algorithm plug-ins
+	do use wizards, whereas the rest (analysis, games, visualizations) is available as views. However this decision is up to the
+	developer. No matter which parts will be extended it is essential to stick to the Eclipse recommendations and conventions. This
+	means that there are absolutely no explanations in the wizards' content area. Such explanations belong into the wizards head,
+	longer ones into the context help. Views only contain such explanations in the context help, nowhere else.</p>
+
+	<p>We recommend signing all your plug-ins, after all, JCrypTool is an e-learning platform for cryptography!</p>
+
+	<h2>Components</h2>
+
+	<p>Besides the actual cryptographic implementation a complete JCrypTool plug-in consists of an online help with
+	detailed information on how to use the plug-in, the cryptographic background of the implementation and context
+	sensitive help. Interactive <strong>Cheat Sheets</strong> are optional. Every text should be available in German
+	and English. English is a must have, German is optional but strongly recommended. The plug-in should be fully
+	<a href="internationalization.html">internationalized</a> and contain German and English translations.</p>
+
+	<p>Make sure that at the end of development, all files are included in the binary build. Check the <strong>build.properties</strong>
+	file for that matter and verify that all required files are selected.</p>
+
+	<h2>Operating System Independence</h2>
+
+	<p>JCrypTool supports the systems Linux, Mac OS X and Windows. Normally the differences between those systems do not affect the plug-in
+	developer. However, some points, depending on the plug-in, do matter. Resources, like icons or html files of a plug-in, may not contain
+	any spaces in their filename. Use lowercase letters everywhere.<br/>
+	File system access in a file dialog must define a start directory that is available on every system. The JCrypTool default is to use
+	<strong>System.getProperty(&quot;user.home&quot;)</strong> which starts in the user home directory.</p>
+
+	<h2>Cryptographic Operations</h2>
+
+	<p>Depending on the file size or editor content and the chosen algorithm (key strength, parameters, ...) cryptographic operations may
+	take a while. In case those actions are executed in the UI-Thread the whole JCrypTool will be blocked. And the operation feels much
+	longer than it actually is. Normal Eclipse Actions or Commands are executed in the UI-Thread by default. We recommend using a Job and
+	to swap the operation in a separate task. This way the GUI doesn't block, the user is informed about the progress and can continue to
+	use JCrypTool normally.</p>
+
+	<div class="code">
+		Job job = new Job("Jobtitle") {<br/>
+        &nbsp;public IStatus run(final IProgressMonitor monitor) {<br/>
+        &nbsp;&nbsp;try {<br/>
+        &nbsp;&nbsp;&nbsp;// with fixed length and monitor.worked(step); calls<br/>
+        &nbsp;&nbsp;&nbsp;monitor.beginTask("Jobtitle", 5);<br/>
+        &nbsp;&nbsp;&nbsp;// OR with unknown length<br/>
+        &nbsp;&nbsp;&nbsp;monitor.beginTask("Jobtitle", IProgressMonitor.UNKNOWN);<br/>
+        &nbsp;&nbsp;&nbsp;if (monitor.isCanceled()) {<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;return Status.CANCEL_STATUS;<br/>
+        &nbsp;&nbsp;&nbsp;}<br/>
+        &nbsp;&nbsp;} catch (final Exception ex) {<br/>
+        &nbsp;&nbsp;&nbsp;LogUtil.logError(ex);<br/>
+        &nbsp;&nbsp;} finally {<br/>
+        &nbsp;&nbsp;&nbsp;monitor.done();<br/>
+        &nbsp;&nbsp;}<br/>
+        &nbsp;&nbsp;return Status.OK_STATUS;<br/>
+        &nbsp;}<br/>
+        };<br/>
+        job.setUser(true);<br/>
+        job.schedule();
+	</div>
+
+	<h2>File Explorer</h2>
+
+	<p>The <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">File Explorer</a> enables cryptographic operations on files without actually opening them. This
+	way even large files can be encrypted. However the default setting is to open all files prior to the cryptographic
+	operation and afterwards the result. In case of huge files this can result into a significant waiting period until
+	the editor is opened. Because of that users can set some preferences to not open the input file before the cryptographic
+	operation and to not open the resulting file (e.g. the cipher text file) automatically. Plug-in developers can query
+	those settings using the IDs <strong>fileExplorerOpenSource</strong> and <strong>fileExplorerOpenTarget</strong>.
+	Return value is of type Boolean in each case. We recommend that all crypto plug-ins have a look at those parameters
+	before executing any file operation.</p>
+</body>
+</html>

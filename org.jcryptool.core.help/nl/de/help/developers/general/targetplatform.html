@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Target Platform</h1>
+
+	<p>Eine Target Platform entkoppelt die Zielplattform von der Entwicklungsplattform. Dadurch ist zwar initial ein
+	gewisser Mehraufwand notwendig, die spätere Entwicklung wird aber deutlich erleichtert.</p>
+
+	<p>Es gibt zwei Möglichkeiten, eine Target Platform aufzusetzen: Die <a href="#automaticSetup">automatische Installation</a>
+	(empfohlen) und die <a href="#manualSetup">manuelle Installation</a>.</p>
+
+	<a name="#automaticSetup"></a><h2>Automatische Installation</h2>
+
+	<p><strong>Bitte beachten Sie, dass Sie für die automatische Installation eine aktive Internetverbindung benötigen
+	und einige Megabytes in Ihren Workspace heruntergeladen werden.</strong></p>
+
+	<p>Um die JCrypTool Target Definition Datei verwenden zu können, müssen Sie zunächst unsere Sourcen herunterladen. Die
+	JCrypTool Target Definition befindet sich in der Datei <strong>jcryptool.target</strong> im <strong>org.jcryptool.releng</strong>
+	Projekt. Öffnen Sie diese Datei einfach im <strong>Target Editor</strong>. Eclipse wird nun versuchen, die in dieser Datei
+	referenzierten Plug-ins aufzulösen. Dieser Vorgang kann einige Zeit dauern, abhängig von der Geschwindigkeit Ihrer
+	Internetverbindung. Nachdem er abgeschlossen ist sollte der Target Definition Editor in etwa wie im folgenden Screenshot
+	aussehen:</p>
+
+    <div class="screenshot">
+    	<img src="images/target-definition.png" width="720" height="718" alt="Target Definition"/>
+    </div>
+
+    <p>Als nächstes müssen Sie auf den <strong>Set as Target Platform</strong> rechts oben klicken. Damit wird der Download und
+    die Installation aller referenzierten Plug-ins gestartet und die neue Target Platform auf aktiv gesetzt. Enthalten sind hier
+    auch die deutschen Übersetzungen von Eclipse Babel. Sie können JCrypTool anschließend also sowohl auf Englisch als auch auf
+    Deutsch ausführen. Die automatische Installation ist abgeschlossen, nachdem JCrypTool mit der neuen Target Platform automatisch
+    neu gebaut wurde.</p>
+
+	<a name="manualSetup"></a><h2>Manuelle Installation</h2>
+
+	<p>Die im <strong>Eclipse RCP SDK</strong> enthaltenen Plug-ins bilden die Basis für die JCrypTool RCP, enthält
+	aber längst nicht alle notwendigen Plug-ins. Daher müssen verschiedene weitere Plug-ins von Hand aus der <em>normalen</em>
+	Eclipse IDE ins Target Platform Verzeichnis kopiert werden.</p>
+
+	<h1>Vorgehen</h1>
+
+	<ol>
+		<li>Das Eclipse RCP SDK
+		(<a href="http://download.eclipse.org/eclipse/downloads/">http://download.eclipse.org/eclipse/downloads</a>)
+		herunterladen (z.B. <strong>org.eclipse.rcp.source-3.6.1.zip</strong>) und in ein leeres Verzeichnis entpacken.</li>
+		<li>Starten Sie Ihre normale Eclipse IDE Installation, das zuvor entpackte Eclipse RCP SDK ist
+		<strong>nicht</strong> ausführbar.</li>
+		<li>Dieses Verzeichnis im JCrypTool Workspace in den Preferences als neue Target Definition einrichten (d.h.
+		auf der Seite <strong>Target Platform</strong> per <strong>Add</strong> Button eine neue Target Platform
+		anlegen und das im vorherigen Schritt angelegte Verzeichnis als <strong>Location</strong> auswählen).</li>
+		<li>Nach dem Schließen der Preferences im <strong>org.jcryptool.core.dependencies.feature</strong> Projekt
+		die Datei <strong>feature.xml</strong> öffnen. Auf dem Plug-ins Tab die in der Target Platform noch fehlenden
+		Plug-ins anhand der gelben Warnung identifizieren und diese jar-Dateien aus dem Eclipse IDE Verzeichnis in die
+		Target Platform kopieren. Nach dem Kopieren müssen Sie in den Preferences einen Refresh auf die Target Platform
+		durchführen. Wiederholen Sie diesen Schritt so lange bis alle Warnungen verschwunden sind. Achtung: Das
+		Dependencies Feature enthält neben den Plug-ins auch drei weitere Features (wovon Sie org.eclipse.rcp ignorieren können,
+		dieses Feature wird von der RCP SDK zur Verfügung gestellt). Führen Sie einen Doppelklick auf jede
+		Feature Referenz durch um dieses zu öffnen. Stellen Sie sicher, dass sowohl das Feature als auch dessen referenzierte
+		Plug-ins in der Target Platform zur Verfügung stehen.</li>
+		<li>Lediglich die Plug-ins aus dem <strong>org.jcryptool.core.dependencies.nl_de.feature</strong> Feature sind optional,
+		alle anderen Eclipse Plug-ins müssen vorhanden sein.</li>
+	</ol>
+
+	<p>Hiermit ist eine funktionsfähige Target Platform eingerichtet, allerdings nur für das aktuelle Betriebssystem.
+	JCrypTool ist damit prinzipiell lauffähig. Um mehrere Betriebssysteme zu unterstützen müssen die folgenden Schritte
+	zusätzlich ausgeführt werden:</p>
+
+	<ol>
+		<li>Den Eclipse Delta Pack
+		(<a href="http://download.eclipse.org/eclipse/downloads/">http://download.eclipse.org/eclipse/downloads</a>)
+		herunterladen (<strong>eclipse-3.6.1-delta-pack.zip</strong> ist für alle Plattformen identisch) und in das
+		obige Verzeichnis entpacken. Vorhandene Dateien dabei überschreiben.</li>
+		<li>Einen Refresh der Target Platform in den Preferences durchführen.</li>
+	</ol>
+
+	<p>Jetzt kann JCrypTool für alle von Eclipse unterstützten Plattformen exportiert werden. Um eine vollständig deutsche Oberfläche
+	zu erhalten sind noch einige weitere Schritte erforderlich:</p>
+
+	<ol>
+		<li>Von Eclipse Babel (<a href="http://www.eclipse.org/babel/">http://www.eclipse.org/babel</a>) die folgenden Dateien für Eclipse Helios
+		herunterladen:
+			<ol>
+				<li>BabelLanguagePack-eclipse-de_3.6.0.v20100814043401.zip</li>
+				<li>BabelLanguagePack-rt.equinox.p2-de_3.6.0.v20100814043401.zip</li>
+			</ol>
+		</li>
+		<li>Prinzipiell können diese Dateien in das oben erstellte Verzeichnis der Standard-Target-Platform entpackt werden.
+		Empfehlenswerter ist es aber, die Sprachdateien vom Rest der Target Platform zu trennen. Dazu einfach ein neues Verzeichnis
+		außerhalb der normalen Target Platform erstellen und die beiden zip-Archive hierin zu entpacken.</li>
+		<li>In der oben angelegten Target Platform nun eine weitere <strong>Location</strong> hinzufügen und dabei das Verzeichnis
+		mit den <strong>Language Packs</strong> auswählen.</li>
+		<li>Nach dem automatischen Rebuild sollte die <strong>feature.xml</strong> aus dem
+		<strong>org.jcryptool.core.dependencies.nl_de.feature</strong> Projekt keine Warnungen mehr anzeigen.</li>
+	</ol>
+
+	<p>Damit ist das Setup der Target Platform komplett. Von Zeit zu Zeit kommen allerdings weitere Plug-in Abhängigkeiten zu JCrypTool hinzu, d.h.
+	das Dependency Feature wird um weitere Einträge ergänzt. Sofern im <strong>feature.xml</strong> nach einem Update Warnungen angezeigt werden
+	muss die Target Platform entsprechend aktualisiert werden.</p>
+
+	<p>Wir arbeiten stets gegen die aktuellste <strong>stabile</strong> Eclipse Version. Nach dem Erscheinen einer neuen Version
+	(z.B. Eclipse 3.6.2) muss daher auch ein Update der Target Platform durchgeführt werden. Hier ist es empfehlenswert, mit einer
+	neuen Target Platform zu starten.</p>
+</body>
+</html>

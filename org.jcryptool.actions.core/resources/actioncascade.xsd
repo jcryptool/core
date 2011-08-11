@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.jcryptool.org/actioncascade" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:jct="http://www.jcryptool.org/actioncascade">
+    <annotation>
+    	<documentation>Schema definition for an Action Cascade with arbitrary Action Item elements.</documentation></annotation>
+
+    <element name="ActionCascade" type="jct:ActionCascade"></element>
+    
+    <complexType name="ActionItem">
+    	<sequence minOccurs="1" maxOccurs="1">
+    	    <element name="ActionType" type="string" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="FileName" type="string" minOccurs="1"
+    			maxOccurs="1">
+    		</element>
+    		<element name="ActionName" type="jct:ActionName"
+    			minOccurs="1" maxOccurs="1">
+    		</element>
+    		<element name="Alphabet" type="string" minOccurs="1" 
+    		    maxOccurs="1">
+    		</element>
+    		<element name="Parameters" type="jct:Parameters"
+    			minOccurs="1" maxOccurs="1">
+    		</element>
+    	</sequence>
+    </complexType>
+
+	<complexType name="ActionName" mixed="true">
+    	<attribute name="plugin" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="ActionCascade">
+    	<sequence>
+    		<element name="ActionItems" type="jct:ActionItems" minOccurs="1" maxOccurs="1"></element>
+    	</sequence>
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="passwords" type="string" use="required"></attribute>
+    </complexType>
+
+    <complexType name="ActionItems">
+    	<sequence>
+    		<element name="ActionItem" type="jct:ActionItem" minOccurs="1" maxOccurs="unbounded"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Parameter">
+    	<sequence>
+    		<element name="Key" type="string" minOccurs="1" maxOccurs="1"></element>
+    		<element name="Value" type="string" minOccurs="1" maxOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="Parameters">
+        <sequence minOccurs="0" maxOccurs="unbounded">
+			<element name="Parameter" type="jct:Parameter"
+				minOccurs="0" maxOccurs="unbounded">
+			</element>
+		</sequence>
+		<attribute name="dataobjecttype" type="string" use="required"></attribute>
+    </complexType>
+    
+</schema>

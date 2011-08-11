@@ -1,0 +1,18 @@
+# pkcs-9 ContentType attribute
+1.2.840.113549.1.9.3 = codec.asn1.ASN1ObjectIdentifier
+
+# pkcs-9 MessageDigest attribute
+1.2.840.113549.1.9.4 = codec.asn1.ASN1OctetString
+
+# pkcs-9 SigningTime attribute
+1.2.840.113549.1.9.5 = codec.asn1.ASN1UTCTime
+
+# pkcs-9 CounterSignature attribute
+1.2.840.113549.1.9.6 = codec.pkcs7.SignerInfo
+
+# pkcs-7 types
+1.2.840.113549.1.7.1 = codec.pkcs7.Data
+1.2.840.113549.1.7.2 = codec.pkcs7.SignedData
+1.2.840.113549.1.7.3 = codec.pkcs7.EnvelopedData
+1.2.840.113549.1.7.4 = codec.pkcs7.SignedAndEnvelopedData
+1.2.840.113549.1.7.6 = codec.pkcs7.EncryptedData

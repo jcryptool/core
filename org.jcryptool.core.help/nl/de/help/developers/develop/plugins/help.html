@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Hilfe Inhalte</h1>
+
+	<p>Die JCrypTool Hilfe verfügt über eine festgelegte Struktur, um sowohl den Endanwendern als auch Entwicklern die Navigation und
+	die Verwendung so einfach wie möglich zu machen. Dazu ist es notwendig, dass sich alle JCrypTool Plug-ins an die vorgegebene Struktur
+	halten und die Hilfe nur an den festgelegten Punkten erweitern.</p>
+
+	<p><strong>Grundsätzlich darf kein Plug-in die Hilfe auf oberster Ebene erweitern, es darf somit kein weiterer Top Level Eintrag
+	auf Ebene der Handbücher hinzugefügt werden!</strong></p>
+
+	<p>Die komplette Hilfe ist zweisprachig gehalten (Deutsch und Englisch). Plug-in Entwickler sollten daher ebenfalls beide Sprachen
+	anbieten und dazu die üblichen Eclipse Mechanismen (die <strong>nl</strong> Verzeichnisse mit den jeweiligen Unterverzeichnissen)
+	verwenden. Denken Sie daran, diese Verzeichnisse zu den build.properties hinzuzufügen, andernfalls fehlen sie im Binary Build!</p>
+
+	<h2>Kategorien</h2>
+
+	<p>Die Hilfe besteht aus vier Kategorien: <a href="#userguide">Anwenderhandbuch</a>, <a href="#developerguide">Entwicklerhandbuch</a>,
+	<a href="#cryptology">Kryptologie</a> und <a href="#glossary">Glossar</a>. Jede dieser Kategorien kann erweitert werden, am Gebräuchlichsten
+	für Krypto Plug-ins ist dabei die Kategorie <strong>Anwenderhandbuch</strong>. Das <strong>Entwicklerhandbuch</strong> wird in der Regel
+	nicht von einem Krypto Plug-in erweitert, möglich ist dies dennoch.</p>
+
+	<p>Die Einordnung eines Hilfethemas in die entsprechende Kategorie wird mit dem <strong>link_to</strong> Attribut durchgeführt, z.B.
+	<em>link_to=&quot;../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizations&quot;</em> um eine Hilfeseite bei den
+	Visualisierungen einzuordnen. Eine vollständige <strong>toc.xml</strong> für einen klassischen Algorithmus sieht damit z.B.
+	so aus:</p>
+
+	<div class="code">
+	&lt;toc label=&quot;Caesar&quot; link_to=&quot;../org.jcryptool.core.help/$nl$/toc_users_guide.xml#classicAlgorithmPlugins&quot;&gt;<br/>
+	&nbsp;&lt;topic label=&quot;Caesar Encryption&quot; href=&quot;$nl$/help/content/tutorial.html&quot; /&gt;<br/>
+	&lt;/toc&gt;
+	</div>
+
+	<h3><a name="userguide"></a>Anwenderhandbuch</h3>
+
+	<p>Das Anwenderhandbuch soll neuen Anwendern die ersten Schritte mit JCrypTool und den enthaltenen Plug-ins erleichtern. Hier
+	sollte daher zu jedem Plug-in zumindest eine Seite mit Informationen verfügbar sein. Tiefergehende kryptografische Erklärungen
+	sollen in die Kategorie <strong>Kryptologie</strong> integriert werden (entsprechend verlinken). In dieser Kategorie geht es darum,
+	was wie mit einem Plug-in getan werden kann. Das Warum und die Theorien dahinter gehören in die Kategorie
+	<strong>Kryptologie</strong>.</p>
+
+	<h4>Verfügbare IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Beschreibung</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Allgemeine Informationen</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Editoren</td>
+	      <td>editors</td>
+	    </tr>
+	    <tr>
+	      <td>Sichten</td>
+	      <td>views</td>
+	    </tr>
+	    <tr>
+	      <td>Benutzervorgaben</td>
+	      <td>preferences</td>
+	    </tr>
+	    <tr>
+	      <td>Algorithmen (Plug-ins)</td>
+	      <td>algorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Hash</td>
+	      <td>hashPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>MAC</td>
+	      <td>macPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Signaturen</td>
+	      <td>signaturePlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Klassisch)</td>
+	      <td>classicAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Asymmetrisch)</td>
+	      <td>asymmetricAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Symmetrisch)</td>
+	      <td>symmetricAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Hybrid)</td>
+	      <td>hybridAlgorithmPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Zufallszahlen</td>
+	      <td>randomnumberPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Analysen</td>
+	      <td>analysisPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Visualisierungen</td>
+	      <td>visualizationPlugins</td>
+	    </tr>
+	    <tr>
+	      <td>Spiele</td>
+	      <td>gamePlugins</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="developerguide"></a>Entwicklerhandbuch</h3>
+
+	<p>Das Entwicklerhandbuch soll JCrypTool Plug-in Entwicklern die JCrypTool Konventionen und Anforderungen näher bringen. Hier geht
+	es also darum, wie JCrypTool mit Plug-ins erweitert werden kann. Diese Kategorie wird normalerweise vom JCrypTool Core Team gepflegt.
+	Stellt ein Plug-in aber Erweiterungspunkte zur Verfügung, können diese hier näher beschrieben werden.</p>
+
+	<h4>Verfügbare IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Beschreibung</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Allgemeine Informationen</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Entwicklung</td>
+	      <td>development</td>
+	    </tr>
+	    <tr>
+	      <td>Plug-ins</td>
+	      <td>plugins</td>
+	    </tr>
+	    <tr>
+	      <td>Plug-in</td>
+	      <td>plugin</td>
+	    </tr>
+	    <tr>
+	      <td>Extension Points</td>
+	      <td>extensionpoint</td>
+	    </tr>
+	    <tr>
+	      <td>Benutzervorgaben</td>
+	      <td>preferences</td>
+	    </tr>
+	    <tr>
+	      <td>Hilfe Inhalte</td>
+	      <td>helpContents</td>
+	    </tr>
+	    <tr>
+	      <td>Features</td>
+	      <td>features</td>
+	    </tr>
+	    <tr>
+	      <td>Feature</td>
+	      <td>feature</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="cryptology"></a>Kryptologie</h3>
+
+	<p>In der Kategorie Kryptologie findet sich die Theorie zu den kryptografischen Mechanismen. Hier können ausführliche Erklärungen
+	zu Algorithmen, Analysen usw. integriert werden. Die Struktur dieses Bereichs ist identisch zu der des
+	<strong>Anwenderhandbuchs</strong>.</p>
+
+	<h4>Verfügbare IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Beschreibung</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Allgemeine Informationen</td>
+	      <td>general</td>
+	    </tr>
+	    <tr>
+	      <td>Algorithmen</td>
+	      <td>algorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Hash</td>
+	      <td>hashAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>MAC</td>
+	      <td>macAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Signatur</td>
+	      <td>signatureAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung</td>
+	      <td>encryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Klassisch)</td>
+	      <td>classicEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Asymmetrisch)</td>
+	      <td>asymmetricEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Symmetrisch)</td>
+	      <td>symmetricEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Verschlüsselung (Hybrid)</td>
+	      <td>hybridEncryptionAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Zufallszahlen</td>
+	      <td>randomNumberAlgorithms</td>
+	    </tr>
+	    <tr>
+	      <td>Analysen</td>
+	      <td>analysis</td>
+	    </tr>
+	    <tr>
+	      <td>Visualisierungen</td>
+	      <td>visualizations</td>
+	    </tr>
+	    <tr>
+	      <td>Spiele</td>
+	      <td>games</td>
+	    </tr>
+	  </tbody>
+	</table>
+
+	<h3><a name="glossary"></a>Glossar</h3>
+
+	<p>Das Glossar soll kurze(!) Erklärungen zu kryptografischen Begriffen enthalten. Umfangreichere Erklärungen bitte in die Kategorie
+	<strong>Kryptologie</strong> integrieren und entsprechend verlinken. Die Sortierung erfolgt automatisch alphabetisch.</p>
+
+	<h4>Verfügbare IDs</h4>
+
+	<table style="width: 98%">
+	  <thead>
+	    <tr>
+	      <th style="width:60%">Beschreibung</th>
+	      <th style="width:40%">ID</th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <tr>
+	      <td>Glossar</td>
+	      <td>glossary</td>
+	    </tr>
+	  </tbody>
+	</table>
+</body>
+</html>

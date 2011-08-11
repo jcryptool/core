@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="org.jcryptool.core.views"
+            class="org.jcryptool.webbrowser.ui.BrowserView"
+            icon="icons/browser.gif"
+            id="org.jcryptool.webbrowser.browser"
+            name="%view.name"
+            restorable="true">
+         <description>
+            %view.description
+         </description>
+      </view>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.jcryptool.core.perspective">
+         <view
+               closeable="true"
+               id="org.jcryptool.webbrowser.browser"
+               minimized="false"
+               moveable="true"
+               ratio="0.5"
+               relationship="bottom"
+               relative="org.eclipse.ui.editorss"
+               showTitle="true"
+               visible="false">
+         </view>
+         <viewShortcut
+               id="org.jcryptool.webbrowser.browser">
+         </viewShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jcryptool.webbrowser.actionSet"
+            label="%actionSet.label"
+            visible="true">
+         <action
+               class="org.jcryptool.webbrowser.action.OpenWebBrowserAction"
+               icon="icons/browser.gif"
+               id="org.jcryptool.webbrowser.openwebbrowseraction"
+               label="%action.label"
+               style="push"
+               toolbarPath="org.jcryptool.core.toolbar/additions">
+         </action>
+      </actionSet>
+   </extension>
+
+</plugin>

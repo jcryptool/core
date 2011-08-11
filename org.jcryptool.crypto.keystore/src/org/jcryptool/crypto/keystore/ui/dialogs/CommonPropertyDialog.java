@@ -1,0 +1,154 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
+package org.jcryptool.crypto.keystore.ui.dialogs;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
+import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
+import org.jcryptool.crypto.keystore.ui.dialogs.contentproviders.ContentProviderFactory;
+import org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode;
+
+/**
+ * @author Anatoli Barski
+ *
+ */
+public class CommonPropertyDialog extends TitleAreaDialog {
+
+    IStructuredContentProvider contentProvider;
+
+    TreeNode treeNode;
+    private Table table;
+
+    public CommonPropertyDialog(Shell parentShell, TreeNode treeNode) {
+        super(parentShell);
+        setShellStyle(SWT.RESIZE | SWT.TITLE);
+        this.treeNode = treeNode;
+    }
+
+    public IStructuredContentProvider getContentProvider() {
+        if (contentProvider == null)
+            contentProvider = ContentProviderFactory.create(treeNode);
+        return contentProvider;
+    }
+
+    /**
+     * Create contents of the dialog.
+     * 
+     * @param parent
+     */
+    @Override
+    protected Control createDialogArea(Composite parent) {
+
+        Composite area = (Composite) super.createDialogArea(parent);
+
+        Composite composite = new Composite(area, SWT.NONE);
+        TableColumnLayout tcl_composite = new TableColumnLayout();
+        composite.setLayout(tcl_composite);
+
+        TableViewer tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.H_SCROLL);
+        tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            public void selectionChanged(SelectionChangedEvent event) {
+                StructuredSelection selection = (StructuredSelection) event.getSelectionProvider().getSelection();
+                TableEntry tableEntry = (TableEntry) selection.getFirstElement();
+                final Clipboard cb = new Clipboard(Display.getCurrent());
+                cb.setContents(new Object[] {tableEntry.getValue()}, new Transfer[] {TextTransfer.getInstance()});
+            }
+        });
+        table = tableViewer.getTable();
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+
+        TableViewerColumn tableViewerNameColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+        tableViewerNameColumn.setLabelProvider(new ColumnLabelProvider() {
+            @Override
+            public Image getImage(Object element) {
+                return null;
+            }
+
+            @Override
+            public String getText(Object element) {
+                TableEntry entry = (TableEntry) element;
+                return entry == null ? "" : entry.getName();
+            }
+        });
+        TableColumn tblclmnNameColumn = tableViewerNameColumn.getColumn();
+        tcl_composite.setColumnData(tblclmnNameColumn, new ColumnWeightData(1, 2));
+        tblclmnNameColumn.setText(Messages.getString("AbstractKeyDialog.tblclmnNameColumn.text")); //$NON-NLS-1$
+
+        TableViewerColumn tableViewerValueColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+        tableViewerValueColumn.setLabelProvider(new ColumnLabelProvider() {
+            @Override
+            public Image getImage(Object element) {
+                return null;
+            }
+
+            @Override
+            public String getText(Object element) {
+                TableEntry entry = (TableEntry) element;
+                return entry == null ? "" : entry.getValue();
+            }
+        });
+        TableColumn tblclmnValueColumn = tableViewerValueColumn.getColumn();
+        tcl_composite.setColumnData(tblclmnValueColumn, new ColumnWeightData(2, 2));
+        tblclmnValueColumn.setText(Messages.getString("AbstractKeyDialog.tblclmnValueColumn.text")); //$NON-NLS-1$
+        tableViewer.setContentProvider(getContentProvider());
+
+        tableViewer.setInput(treeNode);
+
+        Label lblTableLabel = new Label(area, SWT.NONE);
+        lblTableLabel.setText(Messages.getString("AbstractKeyDialog.lblTableLabel.text")); //$NON-NLS-1$
+        GroupLayout gl_area = new GroupLayout(area);
+        gl_area.setHorizontalGroup(gl_area.createParallelGroup(GroupLayout.LEADING).add(
+                gl_area.createSequentialGroup()
+                        .addContainerGap()
+                        .add(gl_area.createParallelGroup(GroupLayout.LEADING).add(lblTableLabel)
+                                .add(composite, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)).addContainerGap()));
+        gl_area.setVerticalGroup(gl_area.createParallelGroup(GroupLayout.LEADING).add(
+                gl_area.createSequentialGroup().addContainerGap().add(lblTableLabel)
+                        .addPreferredGap(LayoutStyle.RELATED)
+                        .add(composite, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE).addContainerGap()));
+        area.setLayout(gl_area);
+
+        return area;
+    }
+
+    /**
+     * Create contents of the button bar.
+     * 
+     * @param parent
+     */
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CLOSE_LABEL, true);
+    }
+
+}

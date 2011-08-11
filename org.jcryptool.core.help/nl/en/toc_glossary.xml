@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Glossary" topic="$nl$/help/glossary/toc.html">
+    <anchor id="glossary" />
+    <topic label="Ciphertext" href="$nl$/help/glossary/ciphertext.html" />
+    <topic label="Decryption" href="$nl$/help/glossary/decryption.html" />
+    <topic label="Digital Certificates"
+        href="$nl$/help/glossary/certificates.html" />
+    <topic label="Encryption" href="$nl$/help/glossary/encryption.html" />
+    <topic label="Hash Functions"
+        href="$nl$/help/glossary/hashfunction.html" />
+    <topic label="Key" href="$nl$/help/glossary/key.html" />
+    <topic label="Plaintext" href="$nl$/help/glossary/plaintext.html" />
+    <topic label="Signature" href="$nl$/help/glossary/signature.html" />
+</toc>

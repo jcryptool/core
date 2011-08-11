@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JDOM Plug-in
+Bundle-SymbolicName: org.jdom;singleton:=true
+Bundle-Version: 1.1.1
+Bundle-Vendor: jdom.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jdom,
+ org.jdom.adapters,
+ org.jdom.filter,
+ org.jdom.input,
+ org.jdom.output,
+ org.jdom.transform,
+ org.jdom.xpath
+Bundle-ActivationPolicy: lazy

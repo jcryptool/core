@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Konsole</h1>
+
+    <p>Die JCrypTool <strong>Konsole</strong> ermöglicht die direkte Eingabe von kryptografischen Befehlen innerhalb JCrypTools.
+    Klicken Sie zum Aufruf der Sicht auf das Konsole Icon in der Toolbar oder verwenden Sie den üblichen Weg über das Menü
+    <strong>Fenster -&gt; Sicht anzeigen</strong>.</p>
+
+    <div class="screenshot">
+		<img src="images/view_icon.png" width="220" height="31" alt="Konsole Icon"/>
+	</div>
+
+	<p>Die Konsole wird standardmäßig am unteren Rand des JCrypTool Fensters angezeigt. Sie können direkt mit der Eingabe von
+	Befehlen beginnen, in der Art der Windows Eingabeaufforderung oder einem Terminal unter Linux bzw. Mac OS X.</p>
+
+    <div class="screenshot">
+		<img src="images/view_console.png" width="600" height="147" alt="Konsole"/>
+	</div>
+
+	<h2>Bedienung</h2>
+
+	<p>Die Konsole ist textorientiert und verfügt nur über eine minimale Toolbar. Hier können Sie ausschließlich den Inhalt der aktiven Konsole
+	löschen. Alle weiteren Befehle können nur über Kommandos direkt eingegeben werden.</p>
+
+	<p>Das Kommando <strong>help</strong> hilft Ihnen hier immer weiter. Ohne weiteren Parameter erhalten Sie damit einen Überblick über
+	alle verfügbaren Befehle. Das schließt Algorithmen mit ein. Die Anzahl der verfügbaren Befehle hängt von den bei Ihnen installierten
+	Plug-ins ab (Plug-ins können ihre eigenen Kommandos beisteuern und die Konsole erweitern).</p>
+
+	<p>Umfangreichere Hilfe zu einem der verfügbaren Kommandos erhalten Sie mit <strong>help Kommandoname</strong>, z.b. <strong>help caesar</strong>.
+	Hiermit wird Ihnen die Syntax samt aller möglichen Parameter/ Optionen des Befehls angezeigt. Die Befehle und mögliche Parameter/ Optionen
+	unterscheiden sich in den einzelnen Krypto Plug-ins. Manche Kommandos sind nicht überall verfügbar, oder sie lösen verschiedene Aktionen aus.
+	Verwenden Sie daher Kommandohilfe über <strong>help Kommandoname</strong> um diese Informationen anzuzeigen.</p>
+
+	<h2>Befehlsübersicht</h2>
+
+	<p>Beachten Sie, dass die Befehle immer auf Englisch eingegeben werden müssen, auch wenn die Beschreibungen möglicherweise
+	auf Deutsch angezeigt werden.</p>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Befehl</th>
+				<th>Beschreibung</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>help <em>[Kommando]</em></td>
+				<td>Ohne weiteres Kommando oder Parameter (d.h. nur Eingabe von <strong>help</strong>) werden alle vorhandenen Befehle
+				aufgelistet (auch die vorhandenen Algorithmen). Mit weiterem Kommando bzw. Parameter (z.B. <strong>help caesar</strong>) wird
+				die Syntax samt der möglichen Parameter und Optionen für dieses spezielle Kommando angezeigt.</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<h2>Einschränkungen</h2>
+
+	<p>Nicht jedes Krypto Plug-in kann über die Konsole aufgerufen werden. Nur Algorithmen Plug-ins (von klassisch bis modern)
+	unterstützen prinzipiell die Konsole. Analysen, Spiele und Visualisierungen werden nicht unterstützt. Damit der Algorithmus
+	eines Plug-ins über die Konsole ausgeführt werden können, müssen bestimmte Erweiterungen vom Plug-in zur Verfügung gestellt werden. D.h.
+	der Plug-in Entwickler muss einen sogenannten <a href="dev.html">Erweiterungspunkt</a> (Extension Point) mit seinem Plug-in erweitern.
+	Diese Erweiterung ist optional, d.h. auch wenn ein Krypto Plug-in in den Menüs oder der
+	<a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/view_algorithms.html">Krypto Explorer</a> Sicht auftaucht
+	ist die	Erweiterung der Konsole davon unabhängig.</p>
+</body>
+</html>

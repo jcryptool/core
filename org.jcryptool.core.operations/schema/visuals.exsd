@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.jcryptool.core.operations" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.jcryptool.core.operations" id="visuals" name="Visualizations extension point"/>
+      </appInfo>
+      <documentation>
+         This is one of the most important extension points available in JCrypTool. It is used to add new visualizations plug-ins to JCrypTool. This extension point must be consumed by every analysis plug-in that wants to contribute to the JCrypTool Visuals menu or the Algorithms view on the Visuals tab.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="Visual"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="Visual">
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The internationalized name of the view.
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="viewId" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The view id of the view to display.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="contextHelpId" type="string">
+            <annotation>
+               <documentation>
+                  The context help id for the help page to display.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         JCrypTool 1.0.0 Milestone 6 (0.6.0)
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         The following is an example of a &lt;b&gt;visuals&lt;/b&gt; extension definition:
+
+&lt;p&gt;
+&lt;pre&gt;
+&lt;extension point=&quot;org.jcryptool.core.operations.visuals&quot;&gt;
+  &lt;Visual
+    name=&quot;Ant Colony Optimization&quot;
+    viewId=&quot;org.jcryptool.visual.aco.view&quot;
+    contextHelpId=&quot;org.jcryptool.visual.aco.view&quot;&gt;
+  &lt;/Visual&gt;
+&lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="apiinfo"/>
+      </appInfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="implementation"/>
+      </appInfo>
+      <documentation>
+         JCrypTool visualization plug-ins add several visualizations to the platform. Visualizations registered through this extension will be added according to their category information.
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         (c) 2010 JCrypTool Core team
+      </documentation>
+   </annotation>
+
+</schema>

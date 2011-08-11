@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="KeystoreView" title="Schlüsselspeicher">
+      <description>Im Schlüsselspeicher werden die verschiedenen, existierenden Schlüssel abgespeichert. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. 
+      </description>
+   </context>
+</contexts>

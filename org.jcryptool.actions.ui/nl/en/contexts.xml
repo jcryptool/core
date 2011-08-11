@@ -1,0 +1,11 @@
+<contexts>
+	<context id="actionView" title="Actions View">
+		<description>The &lt;b&gt;Actions&lt;/b&gt; view can record different cryptographic operations on a selected file. To start recording simply open the desired file in one of the JCrypTool editors (hex or text) and activate the &lt;b&gt;Record&lt;/b&gt; button. After that all cryptographic operations will be recorded (if supported by the crypto plug-in). Automatically opened editor files will be included in the record too. To stop/ pause recording simply deactivate the &lt;b&gt;Record&lt;/b&gt; button.</description>
+  <topic href="nl/en/help/view.html" label="Actions"/>
+  <topic href="nl/en/help/preferences.html" label="Actions Preferences"/>
+	</context>
+ <context id="generalPreferences" title="Actions Preferences">
+    <description>You can define whether or not the filename should be visible in the view. Additionally you can select that passwords should be stored in the &lt;b&gt;action cascade&lt;/b&gt; (as well as in the exported XML document). In this case all passwords, e.g. of cryptographic keystores, are stored in plaintext. In case you do not store passwords you or any other user has to enter the corresponding password during executing your &lt;b&gt;action cascade&lt;/b&gt;.</description>
+    <topic href="nl/en/help/preferences.html" label="Actions Preferences"/>
+ </context>
+</contexts>

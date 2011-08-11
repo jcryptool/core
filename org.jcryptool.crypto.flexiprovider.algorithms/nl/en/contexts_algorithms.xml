@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+  <context id="AsymmetricCiphers" title="Asymmetric Block Ciphers">
+   <description>An &lt;b&gt;asymmetric block cipher&lt;/b&gt; is a cipher, where the key for the decryption is different from the key for the encryption. The key for the decryption is called private key and must be kept secret at all circumstances. Instead the key for the encryption, called public key, can be published without affecting the security. </description>
+  </context>
+  
+  <context id="HybridCiphers" title="Hybrid Ciphers">
+   <description>Asymmetric block ciphers are compared to symmetric block ciphers usually very slow.  Because of this there exist &lt;b&gt;hybrid ciphers&lt;/b&gt;, which is a combination of an asymmetric and a symmetric cipher. The asymmetric cipher is usually used to encrypt a randomly generated key (session key). This session key is then used with the much faster symmetric cipher to encrypt the message or file.
+
+To decrypt the cipher text, the receiver first decrypts the session key, using its private key, to receive the session key. With the session key the receiver is then able to decrypt the message. 
+   </description>
+  </context>
+  
+  <context id="BlockCiphers" title="Block Ciphers">
+   <description>A &lt;b&gt;block cipher&lt;/b&gt; divides a message into blocks of a fixed size, e.g. 16 bytes, and then encrypts each message block individual with the same key. 
+
+For decryption the cipher text is again divided into message block and the decryption method is applied to each block individual. 
+   </description>
+  </context>
+  
+  <context id="passwordBasedEncryption" title="Password-Based Ciphers">
+   <description>&lt;b&gt;Password-Based Ciphers&lt;/b&gt; (or password-based encryption) uses a key derivation function to derive from a password or a pass phrase a key which can then be used with a symmetric block cipher. This derived key is then be used to encrypt and decrypt data.
+ 
+FlexiProvider implements the PKCS #5 version 2.0-Standard. Because this standard uses DES for PBES1 and Triple-DES for PBES2, respectively, it is no longer recommended to use these algorithms for real purpose applications.
+   </description>
+  </context>
+  
+  <context id="MAC" title="Message Authentication Codes">
+   <description>&lt;b&gt;Message Authentication Codes&lt;/b&gt; are used to authenticate messages and ensures that a document or a file has not being altered in transit. 
+
+Unlike digital signatures, message authentication codes are based on symmetric cryptography. Therefore, the same key is used for the generation and for the verification of a message authentication code. The sender and the receiver of data must agree on a shared, secret key, before they are able to generate and exchange message authentication codes.
+   </description>
+  </context>
+  
+  <context id="MessageDigests" title="Message Digests">
+   <description>A cryptographic hash function maps an arbitrary long input string to a fixed sized output string, which is call hash value or &lt;b&gt;message digest&lt;/b&gt;. 
+
+A cryptographic hash-function must have several security properties. For example it must be infeasible to find a message that has a given hash value (preimage resistance). Also it must be infeasible to find two different messages with the same hash value (collision resistance).
+
+Hash functions have a many applications, notably in digital signatures and the secure storage of passwords.    
+   </description>
+  </context>
+  
+  <context id="PRNG" title="Pseudo Random Number Generators">
+   <description>&lt;b&gt;Random number generators&lt;/b&gt; play an important role in cryptography and are used in any larger cryptosystem. For example they are used to generate the session key, used by hybrid ciphers.
+
+Because a usual computer cannot easily generate truly random numbers, so called &lt;b&gt;Pseudo Random Number Generators&lt;/b&gt; are used. The underlying algorithm computes a sequence of numbers, which appear to be random.
+
+The security of a pseudo random number generator is based on a secret internal state, from which the number sequence is computed. This internal state is initialized with data which is hard to guess for an attacker, like the current time including milliseconds or which processes are currently running and how much memory each process has allocated.    
+   </description>
+  </context>
+
+  <context id="Signatures" title="Signatures">
+  	<description>A &lt;b&gt;digital signature&lt;/b&gt; is used to demonstrate the authenticity of a digital message or document. A valid digital signature gives the recipient the guarantee, that the message or document was not altered in transit.   
+
+A digital signature does not ensure the secrecy of the message. Instead a separate encryption scheme must be applied.
+
+Unlike message authentication codes, digital signatures are usually based on asymmetric cryptography. This means, that there is a key for generation of the key (commonly called private key), which must be kept secret, and a different key for the validation of a received signature (called public key), which can be published.
+  	</description>
+  </context>
+  
+  
+  
+  
+  <context id="CMSSSignature" title="CMSSSignature">
+	<description>&lt;b&gt;CMSS&lt;/b&gt; is an extension of the Merkle Signature Scheme. The Merkle Signature Scheme is based on a one-time-signature scheme (OTS), which is in case of CMSS the Winternitz OTS.
+
+A one-time-signature scheme allows only creating a single signature with a generated key pair.  For each further message a new key pair must be generated. To solve this drawback, the Merkle Signature Scheme allows storing multiple key pairs in a binary tree structure and only the value of the root must be distributed as the public key. By this up to 2^20 (ca. 1 million) signatures can be created effectively. 
+CMSS uses a two-layer binary tree, allowing to create a tree for up to 2^40 (ca. 1 trillion) signatures without changing the key.
+
+The key length of a created CMSS key pair in the JCrypTool keystore indicates the depth of the created binary tree. A key length of 10 corresponds to 2^(2*10) possible signatures.
+
+Contrary to RSA or DSA, CMSS resists also attacks by a quantum computer. 
+	</description> 
+  </context>
+  
+  <context id="GMSSSignature" title="GMSSSignature">
+	<description>The Generalized Merkle Signature Scheme (&lt;b&gt;GMSS&lt;/b&gt;) is an extension of the Merkle Signature Scheme. The Merkle Signature Scheme is based on a one-time-signature scheme (OTS), which is in case of CMSS the Winternitz OTS.
+
+A one-time-signature scheme allows only creating a single signature with a generated key pair.  For each further message a new key pair must be generated. To solve this drawback, the Merkle Signature Scheme allows storing multiple key pairs in a binary tree structure and only the value of the root must be distributed as the public key. By this a tree which allows up to 2^20 (ca. 1 million) signatures can be created effectively. 
+
+In contrast to CMSS, where a two-layer binary tree is used, GMSS allows to create arbitrary mutli-layer binary trees.  By this a tree which will allows up to 2^80 signatures can be created effectively. 
+CMSS uses a two-layer binary tree, allowing to create up to 2^40 (ca. 1 trillion) signatures without changing the key.
+
+Creating a GMSS key pair in the JCrypTool keystore allows selecting a key length of 10, 20, and 40, respectively. A key length of 20 corresponds to a tree allowing up to 2^20 signatures.
+
+Contrary to RSA or DSA, GMSS resists also attacks by a quantum computer. 
+	</description> 
+  </context>
+  
+</contexts>

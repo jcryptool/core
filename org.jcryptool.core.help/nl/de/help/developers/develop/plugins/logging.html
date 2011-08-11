@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Logging</h1>
+
+	<p>Um das Logging für Entwickler so einfach wie möglich zu halten und für Anwender nur ein einziges Log anzuzeigen, gibt es das
+	<strong>org.jcryptool.core.logging</strong> Plug-in. Alle Logmeldungen werden dabei in das Workspace-Log geschrieben und können
+	über die Fehlermeldungen Sicht angezeigt werden. Welches Loglevel verwendet wird kann der Anwender in den Benutzereinstellungen
+	festlegen. Nur Meldungen ab diesem Level werden protokolliert, diese Einstellung wirkt sich somit nicht auf den Filter der Sicht aus.
+	Standardeinstellung ist das Level Fehler (Error).</p>
+
+	<p>Entwickler können damit einfach die <strong>LogUtil</strong> Methoden aufrufen und müssen keine Prüfung auf das gerade
+	aktive Loglevel vornehmen. Ob eine Meldung protokolliert wird oder nicht entscheidet sich damit alleine im Logging Plug-in.</p>
+
+	<p>Um für ein Plug-in das Logging zu aktivieren muss über das <strong>MANIFEST.MF</strong> das Package
+	<strong>org.jcryptool.core.logging.utils</strong> zu den <strong>Required Bundles</strong> hinzugefügt werden. Anschließend kann
+	auf die verschiedenen statischen Logmethoden über die Klasse <strong>LogUtil</strong> zugegriffen werden:</p>
+
+	<div class="code">
+		LogUtil.logError(bundleId, message, exception);
+	</div>
+
+	<p>Da es sich hier um eine technische Fehlermeldung handelt sollte diese ausschließlich in Englisch protokolliert werden (und nicht
+	internationalisiert sein). Diese Fehlermeldung dient nur dem Logging und soll die spätere Fehlersuche erleichtern.</p>
+
+	<p>Ausnahme hiervon ist die mit vier Parametern aufzurufende logError Methode:</p>
+
+	<div class="code">
+		LogUtil.logError(bundleId, message, exception, true);
+	</div>
+
+	<p>Hier steuert der letzte boolean Parameter, ob dem Anwender mit der Protokollierung gleichzeitig ein Fehlerdialog angezeigt werden
+	soll. Für diese Methode müssen alle Parameter angegeben werden. Da die Fehlermeldung nun sowohl im Log als auch im Dialog für den Anwender
+	angezeigt wird, muss diese internationalisiert werden! Des Weiteren muss die Fehlermeldung auch für normale Anwender verständlich sein,
+	und einen Hinweis zur Behebung des Fehlers beinhalten (sofern möglich). Die Verwendung dieser Methode wird empfohlen, um überall in
+	JCrypTool einheitliche Fehlerdialoge anzuzeigen.</p>
+</body>
+</html>

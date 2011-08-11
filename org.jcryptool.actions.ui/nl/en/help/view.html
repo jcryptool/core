@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Actions</h1>
+
+    <p><strong>Actions</strong> enables you to record and replay cryptographic operations. Like a <em>macro recorder</em>, every executed
+   	cryptographic operation is recorded. All information is automatically added to a protocol which can be accessed via the Actions view.
+   	This view can start the replay of all cryptographic operations in the order recorded before. Normally no additional action is required
+   	by you, the cascade is replayed fully automatically. With the export and import functionality, cascades can be shared with other users
+   	and cascades of other users can be replayed.</p>
+
+   	<p>Keep in mind that the cascade is not saved automatically! After restarting JCrypTool the old cascade will not be available any more. In case
+   	you want to persist your cascade use the <a href="#export">Export</a> functionality to save it into an XML file.</p>
+
+    <div class="screenshot">
+		<img src="images/view_actions.png" width="235" height="292" alt="Actions"/>
+	</div>
+
+	<p>The active editor is always the starting point when replaying a cascade. The editors content will be changed cryptographically by the
+	action cascades items. In order to generate identical output with a cascade you need to provide identical input. However, this is not strictly
+	required, a cascade can be applied to any editor content.</p>
+
+	<p>Click on any item in the view for additional information in the details area. Details shown here are for example the used alphabet, key
+	length and various other parameters. The shown parameters depend on the selected entry type (e.g. classic and modern algorithms do have
+	different parameters).</p>
+
+	<p>It doesn't matter how you call the algorithm wizards. All operations started via the Crypto Explorer view or via the Algorithms menu will be
+	recorded.</p>
+
+    <h2>Terms</h2>
+
+    <h3>Item</h3>
+
+    <p>An item corresponds to one entry in the Actions view, e.g. an AES encryption. Every item therefore stands for a cryptographic operation.
+    An XOR decryption in the sample shown above would be another item.</p>
+
+    <h3>Cascade</h3>
+
+    <p>A cascade contains at least one entry (there is no upper limit). The order is important: During replay the items will be executed in the
+    given order and will be applied to the corresponding editor content. A cascade contains a name in the form <strong>[Filename]Cascade.xml</strong>.
+    The filename will be the name of the initial editor used. The cascades' name is only important when using import or export functionality.</p>
+
+    <p>The screenshot shown above contains a cascade with two entries (cryptographic operations): a Caesar encryption and a XOR encryption.</p>
+
+    <h2>Usage</h2>
+
+    <p>All actions will be executed via the toolbar or the identical menu of the view. Depending on the situation some entries may be deactivated.</p>
+
+    <div class="screenshot">
+			<img src="images/view_menu.png" width="180" height="23" alt="Actions Toolbar and Menu"/>
+		</div>
+
+    <p>An entry can be deleted or moved up/ down via the context menu in the view (right click on one entry).</p>
+
+    <h3>New</h3>
+
+    <p>Clicking on <strong>New</strong> creates a new cascade. You have to confirm this action in case the view does already contain entries (those
+    entries will be lost!).</p>
+
+    <h3>Record</h3>
+
+    <p>A click on the <strong>Record</strong> icon starts recording a cascade. In case the cascade already contains entries the new ones will be appended
+    to it. To stop (pause) or to continue the recording you'll have to click on the icon again. You can stop and continue the recording at any point.
+    During a paused recording it is possible to execute (or try) cryptographic operations which will not be included in the recording.</p>
+
+    <p>The editor content is not contained in the recorded information. The file name shown in the Actions view therefore is for your convenience only.
+    Recorded are the action type (like encryption, signature, hash) and the used algorithm. The details for a classic algorithm for example contain information
+    on the used alphabet and the key. Modern algorithms do contain the corresponding key information.</p>
+
+    <p>It is important to know that during a recording session all cryptographic actions applied to any opened editor are recorded.</p>
+
+    <h3>Play</h3>
+
+    <p>You can execute your own or any imported cascade. Simply open the file you want to manipulate with the cascade in one of the JCrypTool
+	<a href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/editors.html">editors</a> and click on <strong>Play</strong>. The cascade
+	will be executed from start to end and all cryptographic operations will be applied to the active editor. Like during a normal (manual) cryptographic
+	operation a new editor will be opened with the result of the cryptographic operation. This editor content will be used as input for the next step.</p>
+
+	<p>The sample above would open two editor windows: the first editor contains the Caesar encrypted content of the selected source (the active editor). The
+	second editor would contain the XOR encryption of the first result (the Caesar encryption). So the result of the previous operation creates the input
+	for the following cryptographic operation. Applying a cascade on the same editor content therefore would create the same output.</p>
+
+    <p>Normally you do not have to enter any additional information during executing a cascade. Simply lie back and let JCrypTool do all the work. Primarily with
+    imported cascades some <a href="#possibleProblems">Problems</a> may occur. For that matter have a look at the <a href="#hints">Hints</a> too.</p>
+
+    <h3>Remove</h3>
+
+    <p>Single entries can be removed from every cascade. Simply select the desired entry an call the <strong>Remove</strong> command via the menu or the context
+    menu.</p>
+
+    <h3>Import</h3>
+
+    <p>With <strong>Import</strong> it is possible to import foreign cascades and to execute them in your JCrypTool. You can even add (record) other entries to
+    this cascade and you can edit them as you like.</p>
+
+    <h3><a name="export"></a>Export</h3>
+
+    <p>Use <strong>Export</strong> to export the active cascade from your Actions view. The cascade will be stored in an XML file and can be exchanged with other
+    users. The filename complies with the selected file that started this cascade and the file extension XML. You can change the filename to any name you like.<br/>
+    In principle and with enough XML knowledge you can edit this XML file in any (XML) editor. For security reasons, JCrypTool validates any XML file during import,
+    and rejects any invalid file.</p>
+
+    <h2>Extension of the File Explorer view</h2>
+
+	<p>Actions extends the context menu of the <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">File Explorer</a> view with the entry
+	<strong>Import Action Cascade</strong>. This menu entry is active if an XML file is selected in the File Explorer view. Clicking on the menu item opens
+	the selected <strong>Action Cascade</strong> in the <strong>Action view</strong> where it can be executed like any other action cascade.</p>
+
+	<p>If you have selected a normal XML file and not a valid XML cascade, an error message will be presented and the file won't be opened in the
+	Actions view.</p>
+
+    <h2><a name="possibleProblems"></a>Possible Problems</h2>
+
+    <p>There shouldn't be any problems when executing your own cascade. However when executing a cascade of another user it may be possible, that not all items
+    can be executed. This can have different reasons. One reason might be JCrypTools' modularity. Other users can have a different installation, with different
+    plug-ins that are not available in your installation. The cryptographic operation cannot be executed in this case. Furthermore it might be possible that
+    not all cryptographic algorithms are available on every system in the desired length. Finally in case of modern operations it might be possible that the key
+    or the keystore is missing.</p>
+
+    <p>These problems can be avoided if you are using identical JCrypTool installations (and versions) and if all systems do contain the same keystores and keys.
+    In case this doesn't help either try to reduce the key length.</p>
+
+    <p>In order to integrate a crypto plug-in into the Action view some points have to be kept in mind during
+    <a href="dev.html">development</a>. So even a crypto plug-in may be integrated into JCrypTool it is not guaranteed that this
+    plug-in integrates as well into the Actions view.</p>
+
+    <h2><a name="hints"></a>Additional Hints</h2>
+
+    <p>In case you have activated the checkbox in the <a href="preferences.html">Preferences</a> all passwords and other data of a cryptographic operation will be
+    stored as plaintext. When exchanging a cascade with another user this user will see all included passwords and every other sensitive data. Since JCrypTool is
+    an eLearning tool this is not a security problem. Instead this makes exchanging cascade much easier. In case you do not want to store passwords in the cascade
+    simply deactivate the option in the <a href="preferences.html">Preferences</a>. This requires that you or the user re-enter the password during replay.</p>
+</body>
+</html>

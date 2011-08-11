@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="commands" name="Integrate with Console View" schema="schema/commands.exsd"/>
+   <extension
+         point="org.jcryptool.commands.core.commands">
+      <command
+            commandImpl="org.jcryptool.commands.core.HelpCommand"
+            description="%command.description"
+            name="help"
+            syntax="help  |  help &lt;COMMAND_NAME&gt; [-x]  |  help -l">
+         <alias
+               alias="?">
+         </alias>
+         <example
+               commandline="#commandname# vigenere"
+               explanation="%example.explanation_0">
+         </example>
+         <example
+               commandline="#commandname# -l"
+               explanation="%example.explanation_1">
+         </example>
+         <example
+               commandline="#commandname#"
+               explanation="%example.explanation_2">
+         </example>
+      </command>
+      <command
+            commandImpl="org.jcryptool.commands.core.HELP_Command"
+            description="%command2.description"
+            name="HELP"
+            syntax="HELP &lt;COMMAND_NAME&gt; [-x]  |  HELP [-l]&gt;] -l]&gt;] ;] -l]&gt;] ">
+         <example
+               commandline="#commandname# vigenere"
+               explanation="%example.explanation_0">
+         </example>
+         <example
+               commandline="#commandname# -l"
+               explanation="%example.explanation_1">
+         </example>
+         <example
+               commandline="#commandname#"
+               explanation="%example.explanation_2">
+         </example>
+         <alias
+               alias="??">
+         </alias>
+      </command>
+   </extension>
+
+</plugin>

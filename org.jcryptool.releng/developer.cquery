@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cq:componentQuery xmlns:cq="http://www.eclipse.org/buckminster/CQuery-1.0" resourceMap="jcryptool.rmap" shortDesc="Developer CQUERY to get all source for JCrypTool.">
+    <cq:documentation xmlns="http://www.w3.org/1999/xhtml">This CQUERY delivers all source for JCrypTool, including all required core plug-ins and all optional crypto plug-ins (that is everything available in both JCrypTool repositories). Eclipse Buckminster is required to use this configuration file.</cq:documentation>
+    <cq:rootRequest name="org.jcryptool.product.feature" componentType="eclipse.feature" versionDesignator="0.9.5.qualifier"/>
+</cq:componentQuery>

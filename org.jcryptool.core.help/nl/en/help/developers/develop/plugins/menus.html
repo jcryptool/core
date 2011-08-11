@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Menus and Toolbars</h1>
+
+	<p>Use the JCrypTool <a href="../extensionpoints.html">Extension Points</a>, which automatically extend the main menu (like
+	Algorithms) and the <a href="../../../users/general/view_algorithms.html">Crypto Explorer</a> view. JCrypTool is using a
+	<em>pull mechanism</em> for all crypto plug-ins, meaning that JCrypTool is searching for all crypto plug-ins and automatically
+	integrates them into the matching category. This is a major difference from the normal Eclipse mechanism where plug-ins normally
+	define themselves where they extend menus, toolbars or other parts of the GUI.</p>
+
+	<p>In principle JCrypTool can be extended everywhere. The pull mechanism described above only works for crypto plug-ins (no
+	matter for which category). In case you want to extend JCrypTool with another plug-in (e.g. a view or an editor) the normal
+	Eclipse mechanism must be used.</p>
+
+	<h2>Extending the File Explorer View</h2>
+
+	<p>The <a href="PLUGINS_ROOT/org.jcryptool.fileexplorer/$nl$/help/view.html">File Explorer</a> view can be extended in a lot of different areas. Besides the context menu the view menu
+	and the view toolbar can be extended as well.</p>
+
+	<h3>Context menu</h3>
+
+	<p>The context menu (popup menu) ID is <strong>org.jcryptool.fileexplorer.popup</strong>. Besides the context menu the views menu
+	and the views toolbar can be extended as well.</p>
+
+	<ul>
+	    <li>crypto</li>
+	    <li>edit</li>
+	    <li>delete</li>
+	    <li>rename</li>
+	    <li>additions</li>
+	</ul>
+
+	<p>Crypto plug-ins are placed in the <strong>crypto</strong> area. To extend this area with an additional entry the following
+	Location URI (for Eclipse Commands) must be used: <strong>popup:org.jcryptool.fileexplorer.popup?before=crypto</strong>.
+	Besides <strong>before</strong> it is possible to use <strong>after</strong> as well. Contributions without an exact position
+	specification are added at the end of the menu (in the area <strong>additions</strong>).</p>
+
+	<p>Cryptographic plug-ins that are using the <strong>algorithms</strong> <a href="../extensionpoints.html">Extension Point</a>
+	in the <strong>org.jcryptool.core.operations</strong> plug-in are automatically added to the
+	<strong>Encryption/ Decryption</strong> menu. Such a plug-in may not extend the context menu with another entry!</p>
+
+	<h3>Menu</h3>
+
+	<p>To extend the menu of the File Explorer view use the Location URI
+	<strong>menu:org.jcryptool.fileexplorer.views.FileExplorerView</strong>.</p>
+
+	<h3>Toolbar</h3>
+
+	<p>To extend the toolbar of the Explorer View use the Location URI
+	<strong>toolbar:org.jcryptool.fileexplorer.views.FileExplorerView</strong>.</p>
+</body>
+</html>

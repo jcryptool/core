@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Actions Benutzervorgaben</h1>
+
+    <p>In den <a href="view.html">Actions</a> Benutzervorgaben können Sie verschiedene Einstellungen für die Sicht selbst und das Speichern
+    von Kaskaden festlegen.</p>
+
+    <div class="screenshot">
+			<img src="images/preferences_actions.png" width="400" height="352" alt="Actions Benutzervorgaben"/>
+		</div>
+
+    <h2>Aussehen</h2>
+
+    <p>Standardmäßig wird der Name der durch die kryptografische Operation bearbeitete Datei in der Actions Sicht angezeigt. Dieser Name dient
+    nur zu Ihrer Orientierung/ Information während der Aufzeichnung und hat keine Bedeutung bei einer späteren Wiedergabe. Sofern Sie diese Anzeige
+    stört können Sie sie hier ausblenden lassen.</p>
+
+    <h2>Sicherheit</h2>
+
+    <p>Hier können Sie festlegen, ob Passwörter im Klartext gespeichert werden sollen. Während der Aufzeichnung sind diese Passwörter wie alle
+    anderen Daten auch im Hauptspeicher vorhanden. Beim Export einer Kaskade werden diese mit den anderen Daten im Klartext in die XML-Datei
+    geschrieben. Beim Austausch mit anderen Anwendern erfahren diese so Ihre Passwörter. Bei klassischen Algorithmen ist das natürlich weniger
+    kritisch als bei modernen.</p>
+
+    <p>Dies stellt kein Sicherheitsloch dar, aber ein mögliches Sicherheitsrisiko. In der Regel werden Sie für JCrypTool speziell erstellte
+    Schlüsselspeicher/ Schlüssel verwenden (Sie sollten keinesfalls produktiv verwendete Schlüsselinformationen an andere weitergeben). Durch
+    die Weitergabe von Passwörtern (und den entsprechenden Schlüsseln/ Schlüsselspeicher) an andere Anwender machen Sie es diesen leichter, Ihre
+    aufgezeichnete Kaskade selbst abzuspielen. Ohne die entsprechenden Passwörter müssen diese erneut vom Anwender eingegeben werden oder es
+    müssen andere Schlüssel ausgewählt werden.</p>
+
+    <h2>Fehlerbehandlung</h2>
+
+    <p>Während der Ausführung einer Action Kaskade kann es zu Fehlern kommen, zum Beispiel, weil ein Plug-in für einen verwendeten Algorithmus nicht
+    vorhanden ist. Über diese Einstellungen lässt sich steuern, wie im Falle eines solchen Fehlers reagiert werden soll.</p>
+
+    <p>Über die Einstellung <strong>Bei Fehler Schritt überspringen und Kaskade fortsetzen</strong> wird gesteuert, ob beim Auftreten eines solchen Fehlers
+    gestoppt wird oder nicht. Mit der zweiten Einstellung kann festgelegt werden, ob die zugehörigen Fehlermeldungen an der Oberfläche angezeigt
+    werden sollen. In jedem Fall werden die aufgetretenen Fehler im Error-Log aufgezeichnet.</p>
+</body>
+</html>

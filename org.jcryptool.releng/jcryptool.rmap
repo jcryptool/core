@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rmap
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.eclipse.org/buckminster/RMap-1.0"
+	xmlns:bc="http://www.eclipse.org/buckminster/Common-1.0"
+	xmlns:mp="http://www.eclipse.org/buckminster/MavenProvider-1.0"
+	xmlns:pp="http://www.eclipse.org/buckminster/PDEMapProvider-1.0">
+
+	<searchPath name="core">
+		<provider readerType="svn" componentTypes="osgi.bundle,eclipse.feature" mutable="true" source="true">
+			<uri
+				format="https://anonymous:anonymous@jcryptool.svn.sourceforge.net/svnroot/jcryptool/{0}/trunk?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+			</uri>
+		</provider>
+	</searchPath>
+
+	<searchPath name="plugins">
+		<provider readerType="svn" componentTypes="osgi.bundle,eclipse.feature" mutable="true" source="true">
+			<uri
+				format="https://anonymous:anonymous@jctplugins.svn.sourceforge.net/svnroot/jctplugins/{0}/trunk?moduleAfterTag&amp;moduleAfterBranch">
+				<bc:propertyRef key="buckminster.component" />
+			</uri>
+		</provider>
+	</searchPath>
+
+	<locator searchPathRef="core" pattern="^com\.thoughtworks\.qdox"/>
+	<locator searchPathRef="core" pattern="^de\.flexiprovider"/>
+	<locator searchPathRef="core" pattern="^net\.sourceforge(\..+)?"/>
+	<locator searchPathRef="core" pattern="^org\.bouncycastle"/>
+	<locator searchPathRef="core" pattern="^org\.jcryptool(\..+)?"/>
+	<locator searchPathRef="core" pattern="^org\.apache\.commons\-cli"/>
+	<locator searchPathRef="core" pattern="^org\.jdom"/>
+
+	<locator searchPathRef="plugins" pattern="^com\.lowagie\.itext"/>
+	<locator searchPathRef="plugins" pattern="^com\.thoughtworks\.xstream"/>
+	<locator searchPathRef="plugins" pattern="^org\.jcryptool\.analysis(\..+)?"/>
+	<locator searchPathRef="plugins" pattern="^org\.jcryptool\.crypto\.classic(\..+)?"/>
+	<locator searchPathRef="plugins" pattern="^org\.jcryptool\.crypto\.modern(\..+)?"/>
+	<locator searchPathRef="plugins" pattern="^org\.jcryptool\.games(\..+)?"/>
+	<locator searchPathRef="plugins" pattern="^org\.jcryptool\.visual(\..+)?"/>
+
+	<locator searchPathRef="org.eclipse.galileo" failOnError="false" />
+	<locator searchPathRef="orbit" />
+</rmap>
+

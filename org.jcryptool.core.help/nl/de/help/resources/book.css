@@ -1,0 +1,70 @@
+h1 {
+  font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+  font-size: 1.3em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h3 {
+  font-size: 1.2em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+  font-size: 1.1em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p, ul, ol, a {
+  font-size: 1em;
+  font-family: Verdana, Geneva, serif;
+}
+
+a {
+  text-decoration: none;
+  color: #00F;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #009;
+}
+
+div.code {
+  background-color: #fff;
+  border-left-width: 8px;
+  border-left-color: #ccc;
+  border-left-style: solid;
+  padding-left: 15px;
+  margin-left: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.1em;
+}
+
+div.screenshot {
+  background-color: #fff;
+  text-align: center;
+}
+
+ul {
+  list-style-type: square;
+}
+
+th {
+  background-color: #666;
+  text-align: left;
+  font-size: 1em;
+  font-family: Verdana, Geneva, serif;
+}
+
+tr {
+  vertical-align: top;
+}
+
+td {
+  font-size: 1em;
+  font-family: Verdana, Geneva, serif;
+}

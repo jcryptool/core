@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jcryptool.preferences.general"
+            class="org.jcryptool.core.logging.preferences.pages.LoggerPage"
+            id="org.jcryptool.core.logging.preferences.logger"
+            name="%preference.page.logger">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

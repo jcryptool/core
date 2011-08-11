@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.jcryptool.crypto.flexiprovider.operations.performFlexiProviderOperation">
+      <performOperation
+            listenerClass="org.jcryptool.crypto.flexiprovider.engines.listener.PerformOperationListener">
+      </performOperation>
+   </extension>
+
+</plugin>

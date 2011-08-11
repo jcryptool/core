@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+    <h1>Actions Preferences</h1>
+
+    <p>In the <a href="view.html">Actions</a> preferences it is possible to set different options for the view itself and the data to store
+    in a cascade.</p>
+
+    <div class="screenshot">
+		<img src="images/preferences_actions.png" width="400" height="352" alt="Actions Preferences"/>
+	</div>
+
+    <h2>Layout</h2>
+
+    <p>By default, the name of the cryptographically changed file is shown in the Actions view. This name is only useful for your orientation/
+    information during recording and has no impact during replay. In case you are irritated by this name you can select to hide it by deselecting
+    the checkbox.</p>
+
+    <h2>Security</h2>
+
+    <p>You can select to store passwords in plaintext here. During recording these passwords are stored in your computers' memory. When exporting
+    the cascade all this information will be written in plaintext into the XML file. In case you are exchanging cascades with other users they
+    will find out your passwords. With classic algorithms this is not as critical as with modern algorithms.</p>
+
+    <p>However this is not a security issue, but it might be a problem in case you are reusing your passwords or are using your productive keys
+    inside JCrypTool. As a rule of thumb always create new keystores and keys for JCrypTool, never reuse any important key. Exchanging keystores
+    and keys with other users makes it much easier to replay any cascade in another environment. Without exchanging the passwords the user will be
+    prompted for the keystore and the key password during executing the cascade.</p>
+
+    <h2>Exception Handling</h2>
+
+    <p>During the execution of an action cascade it might be possible, that some problems occur, e.g. if a algorithm plug-in that
+    should be used is not available in the installation. With these settings you can define how the cascade should behave in case of such errors.</p>
+
+    <p>If the preference <strong>Skip error on action and continue cascade</strong> is set, the execution of the cascade is continued after an exception has
+    occurred. Otherwise the execution is stopped. With the preference <strong>Don't display error messages</strong> you can manage whether the error should be shown
+    in a dialog. In all cases the occurring errors are written to the ErrorLog.</p>
+</body>
+</html>
