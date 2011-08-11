@@ -1,0 +1,1 @@
+The JCrypTool crypto project contains all crypto plug-ins for JCrypTool: Algorithms (classic and modern), Analysis, Games and Visualizations. Crypto features are included in this repository too.
