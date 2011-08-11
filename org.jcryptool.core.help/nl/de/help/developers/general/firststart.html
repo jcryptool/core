@@ -35,37 +35,28 @@
     <h3>Zugriff auf die JCrypTool Sourcen</h3>
 
     <p>JCrypTool besteht aus zwei Git Repositories auf GitHub: <strong>Core</strong> und <strong>Crypto</strong>. Auf beide kann per
-    anonymen Benutzer (User <strong>anonymous</strong>) lesend zugegriffen werden.</p>
+    anonymen Benutzer lesend zugegriffen werden.</p>
 
     <p>Sofern Sie nur an der Krypto Plug-in Entwicklung interessiert sind können Sie Ihr Plug-in auch ohne das Auschecken der JCrypTool Sourcen entwickeln.
     Laden Sie sich einfach eine Binärvariante für Ihr Betriebssystem von JCrypTool herunter. Entwickeln Sie Ihr Plug-in ganz normal in Eclipse. Für die
-    JCrypTool Integration (bzw. den Test Ihres Plug-ins) kopieren Sie Ihr neues Plug-in entweder in das JCrypTool <strong>plugins</strong> oder
-    <strong>dropins</strong> (empfohlen) Verzeichnis und starten JCrypTool wie gewohnt. Auf diese Weise sparen Sie sich das im Folgenden beschriebene
-    umfangreiche Setup, verwenden zur Entwicklung allerdings veraltete Sourcen (ein JCrypTool Release erscheint alle paar Monate, die Sourcen ändern sich
-    teilweise aber wöchentlich oder gar täglich).</p>
+    JCrypTool Integration (bzw. den Test Ihres Plug-ins) kopieren Sie Ihr neues Plug-in entweder in das JCrypTool <strong>dropins</strong> Verzeichnis
+    und starten JCrypTool wie gewohnt. Auf diese Weise sparen Sie sich das im Folgenden beschriebene umfangreiche Setup, verwenden zur Entwicklung allerdings
+    veraltete Sourcen (ein JCrypTool Release erscheint alle paar Monate, die Sourcen ändern sich teilweise aber wöchentlich oder gar täglich).</p>
 
     <p>Um mit der Entwicklung zu beginnen empfehlen wir das Auschecken unserer Sourcen. Alle Plug-ins aus dem JCrypTool Core Repository sind notwendig. Diese
-    Projekte enthalten die Basis JCrypTool Plattform und einige allgemein notwendige Plug-ins. Die Projekte im JCrypTool Plug-ins Repository sind optional.
-    Wir empfehlen das Auschecken aller Plug-ins aus beiden Subversion Repositories.</p>
+    Projekte enthalten die Basis JCrypTool Plattform und einige allgemein notwendige Plug-ins. Die Projekte im JCrypTool Crypto Repository sind optional.
+    Wir empfehlen das Auschecken aller Plug-ins aus beiden Git Repositories.</p>
 
     <h4>Auschecken der JCrypTool Sourcen</h4>
 
     <ul>
-        <li>JCrypTool Core <a href="https://jcryptool.svn.sourceforge.net/svnroot/jcryptool">https://jcryptool.svn.sourceforge.net/svnroot/jcryptool</a></li>
-        <li>JCrypTool Plug-ins <a href="https://jctplugins.svn.sourceforge.net/svnroot/jctplugins">https://jctplugins.svn.sourceforge.net/svnroot/jctplugins</a></li>
+        <li>JCrypTool Core <a href="https://github.com/jcryptool/core">https://github.com/jcryptool/core</a></li>
+        <li>JCrypTool Crypto <a href="https://github.com/jcryptool/crypto">https://github.com/jcryptool/crypto</a></li>
     </ul>
 
-    <p>Weitere Informationen rund um den Subversion Zugriff finden Sie unter</p>
+    <p>Weitere Informationen rund um den Git Zugriff finden Sie auf den entsprechenden Repository Seiten.</p>
 
-    <ul>
-        <li><a href="https://sourceforge.net/svn/?group_id=186495">JCrypTool Core</a></li>
-        <li><a href="https://sourceforge.net/svn/?group_id=213279">JCrypTool Plug-ins</a></li>
-    </ul>
-
-    <p><strong>Wichtig:</strong> Sie müssen unbedingt das <strong>trunk</strong> Verzeichnis jedes Projektes auschecken! Alle anderen Verzeichnisse
-    werden zu einem nicht funktionsfähigen JCrypTool führen. Beachten Sie, dass bei JCrypTool jedes Plug-in einen eigenen branches, tags und trunk
-    Ordner besitzt.<br/>
-    Ein gelbes Ausrufezeichen in einem Feature Projekt (diese Projekte enden auf den Namen <em>.feature</em>) zeigt normalerweise an, dass ein
+    <p>Ein gelbes Ausrufezeichen in einem Feature Projekt (diese Projekte enden auf den Namen <em>.feature</em>) zeigt normalerweise an, dass ein
     oder mehrere notwendige Plug-ins fehlen. In diesem Fall öffnen Sie den Feature Manifest Editor, wechseln auf das Plug-ins Tab und überprüfen,
     welches Plug-in in Ihrem Workspace nicht vorhanden ist. Anschließend checken Sie auch diese(s) Plug-in aus dem jeweiligen JCrypTool Repository aus.
     Erscheint diese Warnung im Dependency Feature (<strong>org.jcryptool.core.dependencies.feature</strong>) fehlt ein notwendiges Eclipse Plug-in. In
