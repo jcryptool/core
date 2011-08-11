@@ -1,2 +1,3 @@
 *.class
 */bin*
+.DS_Store
