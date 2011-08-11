@@ -1,0 +1,19 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<h3>The Friedman test</h3>
+<p>The Friedman test is a method to analyze a <b>Vigen&egrave;re-encrypted</b> ciphertext. Its approach is, to shift the ciphertext against itself, and count the coincidences of characters standing on top of each other. If the shift is the keylength we're looking for (or a multiple of it), the coincidence sum, or <b>coincidence index</b> is a larger number than normal.</p>
+<p>A click on the main button (on the top) analyzes the text in your opened editor and shows you a graph. You can drag the graph with the mouse and zoom with right / left mouseclicks on it.</p>
+
+<p><img src="friedman1.png" alt="Bild: Friedman-Test"/></p>
+
+<p>You have to look out for peaks in the graph, which shows you the sum of coincidence indices over the shifts (x-axis). These peaks should occur recurringly, because the length of the key, or its multiples matter, as said; thus, the period of these peak occurrences is the keylength we were looking for. </p>
+<p>The search for the keylength is often the first step to decipher a Vigen&egrave;re-encrypted ciphertext. The Friedman plug-in integrates with the Vigen&egrave;re-helper-plug-in, which helps you to decipher a Vigen&egrave;re-ciphertext in simple steps. To make use of this feature, click the button below the graph to save your result into the Vigen&egrave;re-helper.</p>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="heview" title="Demonstration of Homomorphic Encryption Schemes">
+      <description>This visualization demonstrates fully and partially homomorphic encryption schemes</description>
+      <topic href="nl/en/help/content/index.html" label="Homomorphic Encryption"/>
+   </context>
+</contexts>

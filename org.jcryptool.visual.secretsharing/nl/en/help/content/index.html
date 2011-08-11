@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1>Shamir's Secret Sharing</h1>
+
+<p>The demonstration is to show the functioning of the <b>Shamir's Secret Sharing plug-in</b>.</p>
+You can start the <b>Shamir's Secret Sharing</b> plug-in using the menu visualizations and maximize his view.
+
+<p><img src="sss_plugin.jpg" width="866" height="687"></p>
+
+The plug-in is divided into three sections: the <b>header</b>, the <b>graphic</b> or <b>numeric</b> field and the Settings area.
+In the <b>header</b> is a short description of the plug-in. In the <b>graphic</b> or <b>numeric</b> field shows the visualization and in the <b>settings</b> area the parameters are set. First the user decides whether a <b>graphical</b> or <b>numerical</b> representation of the plug-in like. He can in the do this in the <b>settings</b> area under the <b>select mode</b> area.
+<p><img src="sss_modus.jpg" width="298" height="59"></p>
+
+Depending on which mode the user chooses to change, except for the adjustable parameters in the <b>Settings</b> area, the view of the view area.  Here is shown the <b>numerical</b> mode.
+<p><img src="sss_numerical.jpg" width="868" height="619"></p>
+
+<h3>Defining the parameters for the calculation</h3>
+Regardless of which mode is selected, you can set parameters in the <b>Select parameters</b> area necessary for the conduct of the algorithm. You select the <b>number of persons</b> to be distributed to the <b>Shares</b> and the <b>number of persons needed for reconstruction</b>. Futhermore you choose a prime <b>p</b> as module and a secret <b>s</b> which is smaller than the module for the calculation.
+<p><img src="sss_parameter.jpg" width="298" height="235"></p>
+
+By pressing the <b>Select</b> button opens a dialog box where you can select the coefficients of the polynomial. The coefficient <i >a0</i> is the selected secret and can not be changed.  Allowable values for the coefficients are only positive numbers with the zero to the upper limit <i >p-1</i>.  It is also possible by pressing the buttons <b>generate</b> coefficients to generate valid values.
+<p><img src="sss_coefficients.jpg" width="344" height="403"></p>
+
+Press the <b>OK</b> button the dialog box is closed and the polynomial represented as a formula.  If the value for the module parameter <b>p</b>, should not be a prime number, opens a dialog box where you can correct the input.
+<p><img src="sss_prime_dialog.jpg" width="437" height="259"></p>
+
+The invalid value is shown in the color <b>red</b>. The user has now the opportunity There to generate a prime number, starting from the number that was entered or to enter their own number. If you generate a number by the program the button <b>input verify</b> disables because the proposed value is valid and the verification is not necessary. You can now generated more numbers by pressing the <b>next prime</b> button.  If the user makes an entry, the number is first shown in <b>black</b> in color. The user have to verify the entered number by the program. He presses the <b<verify</b> button. If it is a prime number, the number is highlighted in <b>green</b> and activates the <b>Ok</b> button, otherwise the number is colored <b>red</b> and the user must either enter a different number or the program can generate a valid primes. Once a valid prime number is entered, the user can leave the dialog with the <b>OK</b> button..
+<p></p>
+
+Now it may be that the secret <b>s</b> either less than before the verification dialog or meanwhile, through the user's input is smaller now than the module. In this case, opens another dialog to the condition that the secret <b>s</b> is strictly less than the modulus <b>p</b> must be fulfilled, too. The user can now change the secret <b>s</b>, in which he enters a smaller number than the modulus <b>p</b>. For a better overview of the module is shown above. The user input must be verified by pressing the <b>check input</b> button.
+ If the value of the secret s is smaller than the modulus p, the value is shown in <b>green</b>, otherwise in color <b>red</b>. If it is a valid value, the <b>Ok</b> button is activated and the user can leave the dialog with the <b>OK</b> button.
+<p><img src="sss_secret_dialog.jpg" width="344" height="258"></p>
+
+Now you can press the <b>compute shares</b> button to calculate the shares to be distributed to the people.
+<p><img src="sss_polynom.jpg" width="284" height="76"></p>
+
+<h3>The graphics mode</h3>
+The calculated shares are displayed in the region shares.
+<p><img src="sss_shares.jpg" width="303" height="147"></p>
+
+On the left side the corresponding graph of the polynomial is represented in the <b>graph</b> area. The individual shares are shown in the graph as points in the color <b>magenta</b>.
+<p><img src="sss_graph.jpg" width="548" height="506"></p>
+
+You can select the <b>shares</b> that you want to use for the reconstruction with the checkbox. The selected shares are represented in a different color for better navigation. You must select at least two shares, thus the <b>Reconstruct</b> button is activated.  To select or deselect all shares, you can also use the buttons <b>Select all</b> or <b>Deselect all</b>.
+<p></p>
+
+After this selection performed by the <b>reconstruction</b> button the reconstruction of the polynomial is calculated.
+In the area of reconstruction, the interim results of the calculation are displayed.
+<p><img src="sss_reconstruction.jpg" width="297" height="119"></p>
+
+In the lower part of the graph polynomial of the reconstructed area is shown. This results in the color is <b>green</b>, if the polynomial has been fully reconstructed and selected the color <b>red</b>, if not enough points were selected for reconstruction.
+<p><img src="sss_ergebnis.jpg" width="538" height="74"></p>
+
+n the event that the polynomial was not properly restored, the two polynomials represented as a graph in different colors.
+<p><img src="sss_graph_reconstruct.jpg" width="544" height="503"></p>
+
+You can go any time with the mouse cursor over the dots, allowing to display the current share. Course, the share appears when the mouse is over the point in the graph, and if not disappear.
+<p><img src="sss_share_point.jpg" width="549" height="502"></p>
+
+<h3>The numeric mode</h3>
+The numeric mode is suitable for large numbers.  the Select Parameter field is identical to the graphics mode and has been described above. On the right side down is the notification area is shown in which the calculation formula and the respective final result after the calculation.
+<p><img src="sss_info.jpg" width="298" height="185"></p>
+
+The left side is divided into two areas the shares and the reconstruction area. In the shres ares the calculated share are shown. The area is well suited for large values.
+<p><img src="sss_shares_big.jpg" width="552" height="283"></p>
+
+Again you can select by checkbox, the respective shares for the reconstruction. To deselect all or to select all you can use the buttons <b>deselect all</b> or <b>select all</b>. Again, you must select at least two shares, so you can press the <b>Reconstruct</b> button.
+<p></p>
+
+Thereafter, the intermediate results are shown in the <b>reconstruction</b> area. The reconstructed polynomial is including <b>green</b> in color, if the reconstruction was successful and <b>red</b> in color, if too few shares were selecting appropriate.
+<p><img src="sss_reconstruction_big.jpg" width="550" height="199"></p>
+
+Also spent an information in the notification area in addition to the final result.
+<p><img src="sss_info_ergebnis.jpg" width="282" height="44"></p>
+
+</body>
+</html>

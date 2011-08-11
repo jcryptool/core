@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Grille Plug-in
+Bundle-SymbolicName: org.jcryptool.visual.grille;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.crypto.classic.grille.GrillePlugin
+Bundle-Vendor: jcryptool.org, by Patricia Quellmalz
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Localization: plugin
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.fonts

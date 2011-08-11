@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html xml:lang="en" >
+<head>
+<link rel="stylesheet" type="text/css" href="crtAlgorithm.css">
+</head><body
+>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a
+ id="x1-10001"></a>The Chinese Remainder Theorem Algorithm</h3>
+<!--l. 30--><p class="noindent" >The <span
+class="cmbx-10">Chinese Remainder Theorem </span>Algorithm  is a solution method to solve simultaneous congruences.
+It will for example used to speed up the RSA algorithm, especially for the generation of digital signatures and decryption.
+Another application of the <span
+class="cmbx-10">Chinese Remainder Theorem</span> is to calculate the root of the <span
+class="cmbx-10">Fiat-Shamir</span> method.
+
+<p>
+ We have equations of the form<br
+class="newline" />
+<!--l. 33--><p class="indent" >   <span
+class="cmmi-10">x </span><span
+class="cmsy-10">&#x2261; </span><span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">0</span></sub><span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,      x </span><span
+class="cmsy-10">&#x2261; </span><span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">2</span></sub><span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">2</span></sub><span
+class="cmmi-10">,</span>      <span
+class="cmmi-10">&#x2026;</span>     <span
+class="cmmi-10">x </span><span
+class="cmsy-10">&#x2261; </span><span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">n</span></sub><span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmmi-7">n</span></sub>
+<!--l. 39--><p class="noindent" >available with <span
+class="cmmi-10">m</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">,m</span><sub><span
+class="cmmi-7">n</span></sub> natural numbers which are paired coprime
+and <span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">n</span></sub> integers. Now <br
+class="newline" />
+<!--l. 43--><p class="indent" >   <span
+class="cmmi-10">m </span>= <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">m</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      M</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">m&#x2215;m</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      </span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>
+<!--l. 47--><p class="indent" >   is calculated. There is a clear solution of the simultaneous congruences.It is
+the equation<br
+class="newline" />
+<!--l. 50--><p class="indent" >   <span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">m</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,M</span><sub><span
+class="cmmi-7">i</span></sub>) = 1<span
+class="cmmi-10">,      </span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>
+<!--l. 54--><p class="indent" >   because of <span
+class="cmmi-10">m</span><sub><span
+class="cmmi-7">i</span></sub> the values are paired coprime. We use <span
+class="cmbx-10">extended Euclidean</span>,
+to calculate the numbers <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmsy-10">&#x2208; </span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">,</span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n </span>with<br
+class="newline" />
+<!--l. 58--><p class="indent" >   <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      </span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n.</span>
+<!--l. 62--><p class="indent" >   Now we can use<br
+class="newline" />
+<!--l. 64--><p class="indent" >   <span
+class="cmmi-10">x </span>= (<span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m     </span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>
+<!--l. 68--><p class="indent" >   and get a solution <span
+class="cmmi-10">x </span> of the simultaneous congruence. We assume the following theorem <span class="cite">[<a
+href="#XJBu">1</a>]</span>
+   <div class="newtheorem">
+<!--l. 71--><p class="noindent" ><span class="head">
+<span
+class="cmbx-10">Theorem</span><span
+class="cmbx-10">&#x00A0;1.1</span> </span><a
+ id="x1-10011"></a> <span
+class="cmti-10">Let </span><span
+class="cmmi-10">m</span><sub><span
+class="cmr-7">0</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">,m</span><sub><span
+class="cmmi-7">n</span></sub> <span
+class="cmti-10">be paired coprime natural numbers and</span>
+<span
+class="cmti-10">let </span><span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">0</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">n</span></sub> <span
+class="cmti-10">integer numbers. Then the simulantious congruences hat a solution <span
+class="cmmi-10">x</span><span
+class="cmti-10">,</span>
+<span
+class="cmti-10">which is clearly mod </span><span
+class="cmmi-10">m </span>= <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">m</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      </span>0 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n.</span>
+   </div>
+<!--l. 78--><p class="indent" >   The proof of this can be seen in <span class="cite">[<a
+href="#XJBu">1</a>]</span> nachlesen. We want to show the algorithm with an example. <br
+class="newline" />
+<!--l. 81--><p class="noindent" ><span
+class="cmbx-10">Example  </span>We want to solve the simultaneous congruence
+<!--l. 84--><p class="noindent" ><span
+class="cmmi-10">x </span><span
+class="cmsy-10">&#x2261; </span>2<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>4<span
+class="cmmi-10">,      x </span><span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>3<span
+class="cmmi-10">,      x </span><span
+class="cmsy-10">&#x2261; </span>4<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>5<span
+class="cmmi-10">,      x </span><span
+class="cmsy-10">&#x2261; </span>3<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>7<br
+class="newline" />
+
+<!--l. 88--><p class="noindent" >So is <span
+class="cmmi-10">m</span><sub><span
+class="cmr-7">0</span></sub> = 4<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">1</span></sub> = 3<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">2</span></sub> = 5<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">3</span></sub> = 7<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;a</span><sub><span
+class="cmr-7">0</span></sub> = 2<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;a</span><sub><span
+class="cmr-7">1</span></sub> = 1<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;a</span><sub><span
+class="cmr-7">2</span></sub> = 4<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;a</span><sub><span
+class="cmr-7">3</span></sub> = 3. Then is <span
+class="cmmi-10">m </span>= 420<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;M</span><sub><span
+class="cmr-7">0</span></sub> = 420<span
+class="cmmi-10">&#x2215;</span>4 = 105<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;M</span><sub><span
+class="cmr-7">1</span></sub> = 420<span
+class="cmmi-10">&#x2215;</span>3 = 140<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;M</span><sub><span
+class="cmr-7">2</span></sub> = 420<span
+class="cmmi-10">&#x2215;</span>5 = 84<span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;M</span><sub><span
+class="cmr-7">3</span></sub> = 420<span
+class="cmmi-10">&#x2215;</span>7 = 60.
+We solve <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">0</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmr-7">0</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;d.h.</span><span
+class="cmmi-10">&#x00A0;</span><span
+class="cmsy-10">-</span><span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>4. The smallest non-negative solution
+is <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">0</span></sub> = 1. We solve <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmr-7">1</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;d.h.</span><span
+class="cmmi-10">&#x00A0;</span><span
+class="cmsy-10">-</span><span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>3<span
+class="cmmi-10">. </span>The smallest absolute
+Solution is <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub> = <span
+class="cmsy-10">-</span>1. We solve <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">2</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmr-7">2</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">2</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;d.h.</span><span
+class="cmsy-10">-</span><span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">2</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>5<span
+class="cmmi-10">. </span>The smallest absolute
+Solution <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">2</span></sub> = <span
+class="cmsy-10">-</span>1. Finally we solve <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">3</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmr-7">3</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m</span><sub><span
+class="cmr-7">3</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x00A0;d.h.</span><span
+class="cmsy-10">-</span><span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">3</span></sub> <span
+class="cmsy-10">&#x2261; </span>1<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>7<span
+class="cmmi-10">.</span>
+The smallest non-negative solution is <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">3</span></sub> = 2. Therefore, we obtain
+<span
+class="cmmi-10">x </span><span
+class="cmsy-10">&#x2261; </span>210 <span
+class="cmsy-10">- </span>140 <span
+class="cmsy-10">- </span>336 + 360 <span
+class="cmsy-10">&#x2261; </span>94<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>420<span
+class="cmmi-10">. </span>A solution of the simultaneous congruence is
+<span
+class="cmmi-10">x </span>= 94. <br
+class="newline" />
+<!--l. 102--><p class="indent" >   Note that in the described algorithm, the numbers <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> and <span
+class="cmmi-10">M</span><sub><span
+class="cmmi-7">i</span></sub> does not depend on the numbers <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">i</span></sub>. If the values <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> und <span
+class="cmmi-10">M</span><sub><span
+class="cmmi-7">i</span></sub> are calculated, then you can use
+the formula <span
+class="cmmi-10">x </span>= (<span
+class="cmex-10">&#x2211;</span>
+  <sub><span
+class="cmmi-7">i</span><span
+class="cmr-7">=0</span></sub><sup><span
+class="cmmi-7">n</span></sup><span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">M</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;m </span>, to solve the simultaneous congruence for every
+values of <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">i</span></sub> .
+<!--l. 212--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a
+ id="x1-20002"></a>Literature</h3>
+<!--l. 212--><p class="noindent" >
+       <div class="thebibliography">
+       <p class="bibitem" ><span class="biblabel">
+     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a
+ id="XJBu"></a>Johannes   Buchmann,   Einführung   in   die   Kryptographie,   4.,
+       erweiterte Auflage 2008, Kapitel 3.15, Seite 43
+</p>
+       </div>
+
+</body></html>
+
+
+

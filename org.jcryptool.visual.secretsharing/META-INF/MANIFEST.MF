@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.jcryptool.visual.secretsharing; singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.visual.secretsharing.SecretSharingPlugin
+Bundle-Vendor: %Bundle-Vendor.0
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
+Import-Package: org.jcryptool.core.util.fonts

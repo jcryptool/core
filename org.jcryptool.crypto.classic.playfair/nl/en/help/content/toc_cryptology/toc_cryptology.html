@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<h2>Playfair cipher</h2>
+<p>
+	The Playfair cipher is a well-known monoalphabetic digraph substitution cipher, which was mainly used by the British military in World War I.
+</p>
+
+<h3 id="classification">Classification</h3>
+<p>
+	The Playfair cipher is the most well-known digraph monoalphabetic substitution cipher.
+</p>
+
+<h3 id="scheme">Input and output scheme</h3>
+<img src="in_out_scheme.png" />
+<h3 id="algorithm">The en- and decryption algorithm</h3>
+<p>Eine 5x5-Matrix (Playfair-Matrix) wird mit dem Alphabet
+gefüllt, z.B. erst mit den verschiedenen Zeichen eines Schlüsselwortes,
+dann mit den restlichen Buchstaben des Alphabets. Der Klartext wird in Buchstabenpaare
+unterteilt: Diese Paare werden dann nach folgenden Regeln durch andere Paare
+ersetzt:</p>
+
+<ul>
+<li>Befinden sich die Buchstaben in derselben Spalte, werden sie
+durch die Buchstaben ersetzt, die direkt darunter stehen.</li>
+
+<li>Befinden sich die Buchstaben in derselben Zeile, nimmt man
+jeweils den Buchstaben rechts vom Klartextzeichen.</li>
+
+<li>Befinden sich die Buchstaben in unterschiedlichen Spalten
+und Zeilen, nimmt man jeweils den Buchstaben, der zwar in derselben Zeile, aber
+in der Spalte des anderen Buchstabens steht.</li>
+
+<li>Falls ein Paar aus denselben zwei Buchstaben besteht, werden
+sie durch ein Trennzeichen getrennt.</li>
+</ul>
+
+<p>Als Beispiel wird der Text „SIMONIEX“ („X“ als Füller wegen
+der Aufteilung in Paare) mit dem Schlüsselwort „ZOELIBAT“ verschlüsselt. Die
+Playfair-Matrix sieht dann folgendermaßen aus:</p>
+
+<p><img src="square.png"
+alt=square.png></p>
+
+<p>Aus „SIMONIEX“ wird „SI &nbsp;MO &nbsp;NI &nbsp;EX“. Z. B.
+wird nun „SI“ nach der ersten Regel zu „YD“. Der komplette verschlüsselte Text
+ist dann „YD&nbsp; GI&nbsp; SZ&nbsp; LW“.</p>
+
+<h4>Entschlüsselung</h4>
+
+<p>Bei der Rücksubstitution der Buchstabenpaarsubstitutionen
+muss dieselbe Playfair-Matrix verwendet werden und die Regeln umgekehrt werden
+(trivial).</p>
+
+<h3 id="furtherreading">Further reading</h3>
+<ul>
+  <li>
+  	<a class="external" href="http://en.wikipedia.org/w/index.php?title=Playfair_cipher&printable=yes">
+  		The Wikipedia article on the Playfair cipher
+  	</a>
+  </li>
+</ul>
+
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Sudoku Plug-in
+Bundle-SymbolicName: org.jcryptool.games.sudoku; singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.games.sudoku.SudokuPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: jcryptool.org, by Coen Ramaekers
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.directories,
+ org.jcryptool.core.util.fonts

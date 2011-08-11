@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-10646-UCS-2">
+	<title>Reference</title>
+	<meta name="Markus Schu, M. Schu" content="Taxman, Number Shark" lang="en" content="Zahlenhai" lang="de">
+</head>
+
+<body>
+<h1>Discussion of good and optimal strategies for the Number Shark game</h1>
+
+<p>This chapter dives into a more mathematical and strategic discussion of the Number Shark game.</p>
+
+<h2>1. Definitions</h2>
+
+<p><b>Number set:</b>
+<br>The Number Shark game is played with a given amount of numbers. This amount of numbers is called number set.
+For further discussion, if not mentioned explicitly, it is assumed,
+that the number set is identical to {1,...,N} with N is element of |N.
+</p>
+
+<p><b>Path or Move Sequence:</b>
+<br>A path or move sequence is a sequence of numbers from the number set, which solves the game for a given N
+according to the rules. The move sequence contains only the numbers of the player.
+<br><br>e.g. (19,15,14,20,16,12,18)(20) or (19,10,15,20,12,14,18,16)(20) are possible move sequences for N=20.
+<br><br>In general a move sequence for N is defined as (a(m))(N) = (n1, n2,...,nm)(N), with m, N is element of |N, N>=2, 
+m<=N-1, i,j is element of {1,...,m}, ni is element of the number set, ni != nj for i != j.
+</p>
+
+<p><b>Score or Optimal Score:</b>
+<br>The sum of all members of a move sequence for N determines the score((a(m))(N)).
+<br><br>e.g.
+<br>The score((19,15,14,20,16,12,18)(20)) is identical to 19+15+14+20+16+12+18=114.
+<br>The score((19,10,15,20,12,14,18,16)(20)) is identical to 19+10+15+20+12+14+18+16=124.
+<br><br>In general the score for a move sequence (a(m))(N)= (n1, n2,...,nm)(N) is defined
+as score((a(m))(N)) = Sum(i=1 to m)ni.
+<br><br>For each N exists per definition an optimal score defined by
+<br>optimal score = optimal score({1,...,N}) = optimal score(N) = Maximum((score((a(m))(N))), for all (a(m))(N))
+<br>e.g. optimal score(20) = 124.
+</p>
+
+<p><b>"Optimal Path" or "Optimal Move Sequence:</b>
+<br>If optimal score(N) = score((a(m))(N)) for a move sequence ((a(m))(N)), so it is called optimal path or optimal move sequence.
+</p>
+
+
+<h2>2. Theorems and Observations</h2>
+
+<h3>Theorem 1</h3>
+<p><b>The optimal move sequence is not always unambiguous.</b></p>
+
+<p><b>Proof by example:</b>
+<br>See the different move sequences for N=20 or N=158 in the <a href="NumberSharkHelp-Appendix.html">Appendix</a>. q.e.d.
+</p>
+
+<p> Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a> mentioned:
+<cite>The game can be played on an arbitrary vertex-labeled directed graph,
+and graph-theoretical constraints are useful in reducing the search
+space.  For instance, after several moves are made, the divisibility
+graph on the remaining choices often becomes disconnected, and the
+components can be optimised independently of one another.</cite>
+<br>In other words the sequencing of the components can be arbitrary, which leads to multiple optimal move sequences.</p>
+
+<p>Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a> already outlined, that the best choice for the first
+move is always the highest prime not exceeding N. He gave also a not strict proof. Let me do it in some strict mathematical way.
+</p>
+
+<h3>Theorem 2</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. hp is the highest prime of the number set,
+means hp = Maximum(i), i is element of {1,...N} and hp is prime.
+<b>Then the first move to get an optimal score(N) must be always the highest prime hp.</b></p>
+
+<p><b>Example:</b>
+<br> Let {1,2,3,4} the number set. hp=3 is the highest prime. For this example it can be easily seen,
+if you don't take the 3 as first move, that the 3 is lost to the Number Shark. Thus if you start with the 3
+as first move, you can secure this number for your score. </p>
+
+<p><b>Proof by contradiction:</b>
+<br>Assume (a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence and
+n1 as the number for the first move is not a prime.
+<br>That means, optimal score(N) = score((n1,n2,...,nm)(N)).
+<br>As composite number, n1 has at least two real divisors. One of these divisors is 1.
+<br>Thus the score of ((n1,n2,...,nm)(N)) can be increased by the move sequence
+<br>((p,n1,n2,...,nm)(N)), with
+score((p,n1,n2,...,nm)(N)) = p + score((n1,n2,...,nm)(N))) and p is prime and element of the number set.
+<br>Finally the score((hp,n1,n2,...,nm)(N)) > score((p,n1,n2,...,nm)(N)) with hp as the highest prime in the number set.
+<br>But this is in contradiction to our assumption. q.e.d.
+</p>
+
+<p>Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a> calculated optimal scores up to N=158. He mentioned, that
+the optimal move sequence in case of N is a prime is simply identical to the optimal move sequence of N-1, whereby the
+leading prime in the move sequence for N-1 is replaced by N. This hint leads us to Theroem 3.
+</p>
+
+<h3>Theorem 3</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. (a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence.
+<b>If N+1 is a prime, then an optimal move sequence for the number set {1,...N+1} is given by (N+1,n2,...,nm)(N+1).
+</b></p>
+
+<p><b>Example:</b>
+<br> Let {1,2,3,4} the number set. The optimal move sequence is (3,4)(4). 5=4+1 is a prime.
+In this case the optimal move sequence is (5,4)(5).</p>
+
+<p><b>Proof:</b>
+<br>(a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence.
+<br>The optimal score is: score(N) = Sum(i=1 to m)ni = n1 + Sum(i=2 to m)ni.
+<br>Theorem 2 says, n1 is the highest prime in the number set {1,...,N}.
+<br>So n1 takes away the real divisor 1 from the number set and thus the remaining move sequence (n2,...,nm)
+could be interpreted as an optimal move sequence for the number set {2,...,N}\{n1}.
+<br>Theorem 2 says, that the first move for the number set {1,...,N,N+1} is the highest prime, thus N+1.
+<br>The remaining numbers form the number set {2,...,N}.
+<br>On page 34 in <a href="NumberSharkHelp-Bibliography.html">[5]</a> it is proofed, that for all n > 1, n is element of |N,
+at least one prime p exists, with n < p < 2n.
+<br>Thus it exists a prime p between floor(N/2) and N.
+<br>Furthermore is floor(N/2)+1 <= p, which means 2*floor(N/2)+2 <= 2p.
+<br>In addition can it be seen easily, that N < 2*floor(N/2)+2, which means N/2-1 < floor(N/2).
+<br>This means with n1 >= p, n1 can not contribute to the optimal score of {2,...,N}, because n1 is not a divisor
+for a number in the a number set and n1 has only 1 as divisor, which is not in the number set.
+<br>So the optimal score({2,...,N}) = optimal score({2,...,N}\{n1}).
+<br>Thus the optimal score(N+1) = N+1 + optimal score({2,...,N}\{n1}) = score((N+1,n2,...,nm)(N+1)). q.e.d.
+</p>
+
+<h3>Theorem 4</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. (a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence.
+<b>Then the optimal score((n1,n2,...,nm)(N)) <= N(N+1)/2 - sum(i=1 to N, i is prime, i!=hp)i - 1, with hp as highest prime.
+</b></p>
+
+<p><b>Example:</b>
+<br> Let {1,...,20} the number set. If you take the largest prime 19, thus 1 as free divisor of 19 will
+be taken by the Number Shark. The primes 2,3,5,7,11,13,17 are still in the number set. If you select
+one of them, this number will contribute to the score of the Number Shark. But they (only 2,3,5 and 7) could be still a free divisor
+of an other composite number. But even in this case, they will contribute to the Number Sharks score.</p>
+
+<p><b>Proof:</b>
+<br>For the given number set {1,...,N} the sum of all numbers according to C.F.Gauss is N(N+1)/2.
+<br>After the last move, all numbers are either distributed to the player or to the Number Shark,
+<br>thus optimal score(N) + Number Shark score = N(N+1)/2.
+<br>According to Theorem 2 to get the optimal score, the first move must be the highest prime hp.
+<br>So hp contributes to the optimal score, 1 as real divisor to the Number Shark score.
+<br>All other prime numbers have now no real divisors any more, that means, they contribute all to the Number Shark score.
+If you select one of them, the prime number will be added to the Number Shark score. Is the prime number a real divisor
+of an other number, this number will also contribute to the Number Sharks score. Thus all prime numbers will contribute
+to the Number Sharks score.
+<br>Thus the optimal is score((n1,n2,...,nm)(N)) <= N(N+1)/2 - sum(i=1 to N, i is prime, i!= hp)i - 1. q.e.d.
+</p>
+
+<p>Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a> mentioned, that the second move is usually the highest
+square of a prime not exceeding N. He argued, that this uses up only one more factor. If you analyse his optimal move sequences,
+it seems usually correct. But unfortunately this is not correct in all cases.
+</p>
+
+<h3>Theorem 5</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. (a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence.
+<b>Then the second move n2 is not always the highest square of a prime not exceeding N.
+</b></p>
+
+<p><b>Proof:</b>
+<br>The figure below shows a divisibility graph (<a href="NumberSharkHelp-Bibliography.html">[5], page 25</a>) of N=8.
+<br>With Theorem 2 the first move must be the highest prime, thus 7. After this move, the graph
+can be modified. The 1 as divisor from 7 and the prime numbers 5 and 7 can be removed from the graph.
+If the second move is the highest square of a prime not exceeding 8, it must be 4.
+If you select 4, divisor 2 of 4 can be removed from the graph and it remains
+the 8, 6 and 4. Only the 6 has still a free, real divisor left. Therefore the 8 can also be deleted from the graph.
+Thus the last move is the 6 and the move sequence is (7,4,6), which leads to the score 17.
+<br>But for N=8, the optimal score is 21 and an optimal move sequence is (7,8,6). q.e.d.
+</p>
+
+<img src="Appendix_Theorem5.jpg"
+	alt="State Diagram of the Number Shark program"></img>
+
+<p>Other examples are the cases N=20 and N=120. The corresponding optimal move sequences are listed below. In the case of N=20,
+even the highest square of a prime not exceeding 20, which is 9, is not part of the optimal move sequence. For N=120, 25 is the
+second move instead of 49. For this move sequences I have no proof. They are based on results of
+Dan Hoey <a href="NumberSharkHelp-Bibliography.html">[2]</a>.
+<br>N=20: 19,15,10,20,16,14,12,18,
+<br>N=120: 113,25,115,95,85,119,91,77,69,111,93,87,75,74,118,106,94,86,82,50,45,117,99,81,63,105,70,98,42,78,66,110,52,116,104,
+100,92,88,76,114,68,102,56,112,84,80,64,60,120,96,90,72,108,
+</p>
+
+<p>During my investigations, I observed some behaviour of the move sequences, which motivated me for some ideas.
+So far I could not proof these observations, but at least I would like to mention them.</p>
+
+<h3>Observation 1</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. (a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence.
+Then the optimal score((n1,n2,...,nm)(N)) >= hp + sum(i=K to N, i is not prime), with hp as highest prime. The selection
+of K is done in this way, that hp + sum(i=K to N, i is not prime) >= N(N+1)/4 and
+hp + sum(i=K+1 to N, i is not prime)i < N(N+1)/4. Or with other words, an optimal move sequence must at least contain all
+numbers i, i is element {K,...,N} and i is not prime and hp.
+</p>
+
+<p>The Number Shark contains a function to check the observation. The result will be printed
+to the console after executing one of the mentioned strategies below.</p>
+
+<h3>Observation 2</h3>
+<p>Assume {1,...N}, with N is element of |N, is a given number set. For N>3 exists always a move sequence
+(a(m))(N)) = (n1,n2,...,nm)(N) with score((n1,n2,...,nm)(N)) > N(N+1)/4. In other words, you can always
+win against the Number Shark. My support feature generates always such a move sequence. Details can be found
+in the next chapter.
+</p>
+
+<h3>Observation 3</h3>
+<p>Assume {1,...N+1}, with N+1 is element of |N, is a given number set. a(m))(N)) = (n1,n2,...,nm)(N) is an optimal move sequence
+for the number set {1,...N}. Then
+<br>a(m))(N+1)) = (N+1,n2,...,nm)(N) is a optimal move, if N+1 is prime, else f((n1,n2,...,nm)(N))
+<br>with f:(n1,n2,...,nm)(N)->(n1,n2,...,nm')(N+1) as not yet known algorithm or function.
+<br>If N+1 is prime, Theorem 3 proofs the first part of the recursive algorithm.
+<br>My findings for a function f can be find in the next chapter.
+</p>
+
+<h3>Observation 4</h3>
+<p>The prime numbers play a dominant role to get the optimal score. Give the Number Shark the prime numbers as
+slowly as possible. As slowly as possible means only one or two for each move.
+During the game it will happen, that composite numbers will become pseudo primes.
+I will call composite numbers, which have no free, real divisors any more, pseudo primes.
+<br>E.g. at the begin of a game, 12 has the real, free divisors 6,4,3,2 and 1. After playing a while, 12 may have only the
+free, real divisors 6 and 4 left. Due to the fact, that 3,2 and 1 are gone, 6 and 4 has no free, real divisors any more,
+thus 6 and 4 will be pseudo primes according to my definition.
+<br>For larger sizes of the number set pseudo primes has to be taken into account too. So my previous statement could
+be changed to try to give the Number Shark as slowly as possible prime and pseudo prime numbers.</p>
+
+<h3>Observation 5</h3>
+<p>For the length l of the optimal move sequence the following equation is valid:
+<br> l >= floor(N/2) - (pi(N)-pi(ceil(N/2)) + 1, pi(N) is the amount of primes <= N
+<br> e.g. N=3, floor(3/2)=1, ceil(3/2)=2, -> l >= 1-(2-1)+1 = 1
+<br> e.g. N=10, floor(10/2)=ceil(10/2)=5, -> l >= 5-(4-3)+1 = 5
+<br> e.g. N=20, floor(20/2)=ceil(20/2)=10, -> l >= 10-(8-4)+1 = 7
+<br> e.g. N=51, floor(51/2)=25, ceil(51/2)=26, -> l >= 25-(15-9)+1 = 20
+<br> e.g. N=79, floor(79/2)=39, ceil(79/2)=40, -> l >= 39-(22-12)+1 = 30
+<br> e.g. N=100, floor(100/2)=ceil(100/2)=50, -> l >= 50-(25-15)+1 = 41
+<br> e.g. N=158, flor(158/2)=ceil(158/2)=79, -> l >= 79-(37-22)+1 = 65
+<br> e.g. N=256, l >= 106
+<br> e.g. N=512, l >= 214
+<br> e.g. N=1024 l >= 438
+</p>
+
+<p>The Number Shark contains a function to calculate the estimation of the length. The result will be printed
+to the console after executing one of the mentioned strategies below.</p>
+
+<h2>3. Strategies</h2>
+
+<p>If you play a little bit around with the game, you will somehow draw conclusion, that the optimal move sequence
+<cite>hinge on using up the obligatory factors as slowly as possible <a href="NumberSharkHelp-Bibliography.html">[2]</a>.</cite>
+A good overview of some strategies can be found in <a href="NumberSharkHelp-Bibliography.html">[3]</a>. I found similar
+strategies independently. I will explain the most interesting strategies out of the paper in the next chapter.</p>
+
+<h3>Trono's strategy #3, #7 and #9 (Winner strategy or Support feature)</h3>
+
+<p>In <a href="NumberSharkHelp-Bibliography.html">[3]</a> John Trono mentioned some strategies to calculate a move
+course to win the game and to reach a score as high as possible. I tried to implement his strategy #7. With this strategy
+he calculated the largest scores for N=256 and N=512 (<a href="NumberSharkHelp-Appendix.html">Appendix</a>).
+His strategy is defined as follows.</p>
+<p><cite>Use 3 steps: choose the largest prime; then choose the odd numbers, starting with the largest and working
+downward until N/2 is reached; and finally choose the even numbers starting at N/2+1 and working upwards towards
+N.</cite></p>
+
+<p>Unfortunately I could not reproduce his results. Therefore I decided to implement his strategy #3. This
+strategy is defined as follows:</p>
+<p><cite>Take always the largest active integer with only one active divisor (smaller than it).</cite></p>
+
+<p>This strategy performs very well for larger number set sizes. You can calculate very fast move sequences with
+high scores.</p>
+
+<p>A modification of this strategy is to look only for the largest active integer with the fewest divisors.
+This strategy can be modified in the way, that you look for the largest active integer with the fewest divisors,
+larger than a certain border value. Trono's strategy #9 uses exactly this strategy with the border N/2-1.
+In fact this was my first strategy too. In my case the border value is N/2+1.
+By the way, this strategy is implemented for the support feature. My approach was,
+to find an always winning strategy, which means to find for each number set a move sequence, which let you win against the
+Number Shark. Obviously this strategy solves the problem. For further discussion I will call this the "Winner" strategy.</p>
+
+<h3>Schu's random strategy 1</h3>
+
+<p>My next step was to find a strategy, which could find an optimal score or at least a score as near as possible to an optimal score.
+I found out, that the results of my previous "Winner" strategy depends on a clever selected border value. Let's have a look to
+an example:
+<br>The size N of the number set is 20. In this case my border value would be calculated to 20/2+1 = 11, exactly 12, because
+11 is a prime number, which has no effect. Thus my algorithm would not find the optimal score, because 10 is needed (compare
+also Theorem 5 or <a href="NumberSharkHelp-Appendix.html">Appendix</a>). But also Trono's strategies would fail, because
+the border value would be 20/2-1=9. Thus Trono's strategies would take the 9 as second move, which does not lead to an optimal
+score. For N=20 the border value 10 would lead my strategy to an optimal score. In contrast to that for N=21 or N=19, this border
+is not optimal. Here again the border value 9 would be the optimal choice.
+<br>So the first idea based on this finding may be to run for a given number set the algorithm with different border values
+form 0 to N/2+1 to get a score as high as possible. But if you move further to larger number sets, you will see,
+that this is not sufficient. Somehow the border value should change even during playing the game.
+<br>My second approach was to change randomly the border value from 0 to N/2+1 during the game after each move. This leads already
+to better results. But to get better results for larger sizes of the number set pseudo primes have to be taken into account.
+Pseudo primes seem to be used seldom, but sometimes they are used. Pseudo primes are located in the interval N to N/2+1.
+So I introduced a second border, which will also change randomly in the interval N to N/2+1. So finally my strategy can be
+expressed as follows:
+</p>
+<p>
+Step 1: Calculate randomly a first border value out of the interval N/2+1 down to 0.
+<br>Step 2: Take the largest active integer with the fewest divisors in the interval N down to a first border value.
+<br>Step 3: Calculate randomly a second border value out of the interval N down to N/2+1.
+<br>Step 4: Take the largest pseudo prime in the interval N down to a second border value.
+<br>Step 5: As your current move take randomly one number out of the numers calculated in step 2 and 4
+<br>Step 6: Repeat from step 1 as long as there are still free numbers. 
+</p>
+
+<h3>Schu's random strategy 2</h3>
+
+<p>This strategy is similar to strategy 1. The modification is based on the fact, that
+at least the largest integer with the fewest divisors in the interval from N down to N/2+1 should be taken
+into account. Only if there are numbers in the interval N/2+1 down to 0 with smaller amount of divisors, they are
+also from interest. So the strategy 2 can be described as follows:
+</p>
+<p>
+Step 1: Take the largest active integer with the fewest divisor out of the interval N down to N/2+1.
+<br>Step 1: Calculate randomly a first border value out of the interval N/2+1 down to 0.
+<br>Step 2: Take all active integers in the interval N down to a first border value,
+<br>whose amount of divisors are smaller as the amount of divisors from the number in step 1.
+<br>Step 3: Calculate randomly a second border value out of the interval N down to N/2+1.
+<br>Step 4: Take the largest pseudo prime in the interval N down to a second border value.
+<br>Step 5: As your current move take randomly one number out of the numbers calculated in step 1, 2 and 4
+<br>Step 6: Repeat from step 1 as long as there are still free numbers.
+</p>
+
+<h3>Schu's recursive strategy</h3>
+
+<p>Based on observation 3 I implemented a recursive algorithm. To define a proper function f, I analysed
+all optimal move sequences. I observed, that during the transition from the optimal move sequence from N to N+1 only
+a part of the numbers are changing. Very often one of the three different cases below occurred:
+</p>
+<p>
+Case 1: Only the new number N+1 was added and the rest of the move sequence from N is kept.
+<br>Case 2: The new number N+1 was added and the rest of the move sequence N is kept beside one.
+<br>Case 3: The new number was added and the rest of the move sequence N is kept beside one, which was replaced by a new number.
+</p>
+<p>
+In general it can be observed, that from N -> N+1 either the length of the move sequence is kept or increased by one.
+Always the new number N+1 is kept plus the rest of the move sequence N is kept beside r numbers, with r is element of
+{0,...,R}, R is element of |N and R >=7. I listed the differences from N->N+1 below. There are only differences with
+r > 2 mentioned. All others differences are 1 or 2. At least up to N=158, the transition from 127 to 128 showed the largest difference 7.
+That's why I defined R>=7.
+</p>
+<p>
+N= number set size (differences of the optimal move sequence from N->N+1)
+<br>N=20(3), N=34(3), N=44(3), N=53(5), N=69(3), N=76(4), N=77(3), N=80(5), N=83(4), N=104(3), N=119(5), N=125(4), N=127(7)
+</p>
+
+<p>They current version of the Number Shark program has implemented a function f, which tries to realise the three cases
+mentioned above. Other functions will be implemented in future versions.</p>
+
+</body>
+</html>

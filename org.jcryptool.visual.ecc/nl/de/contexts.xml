@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+ <context id="eccview" title="Elliptic curve calculations tutorial">
+    <description>This visualization demonstrates the calculations that can be performed on elliptic curves</description>
+    <topic href="help/content/index.html" label="Elliptic curve calculations tutorial"/>
+ </context>
+</contexts>

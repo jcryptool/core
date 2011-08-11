@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="heview" title="Demonstration von homomorphen Verschlüsselungsschemas">
+      <description>Diese Visualisierung demonstriert zwei partiell-homomorphe Verschlüsselunsschemas und ein voll-homomorphes Verschlüsselungsschema.</description>
+      <topic href="nl/de/help/content/index.html" label="Homomorphic Encryption (auf english)"/>
+   </context>
+</contexts>

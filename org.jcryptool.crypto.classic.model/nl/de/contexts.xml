@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Texttransformation">
+		<description>Vor der Verschlüsselung können folgende Transformationen am Text vorgenommen werden:&lt;br&gt;
+&lt;b&gt;Groß-/Kleinbuchstaben ersetzen:&lt;/b&gt; Wandelt den Text in Groß- oder Kleinschreibung um.&lt;br&gt;
+&lt;b&gt;Umlaute ersetzen:&lt;/b&gt; Wandelt die Umlaute ä, ö, ü und ß (Groß- und Kleinschreibung) in ae, oe, ue und ss um.&lt;br&gt;
+&lt;b&gt;Leerzeichen und Zeilenumbrüche löschen:&lt;/b&gt; Entfernt alle Zeichen aus dem Text, die wie Leerzeichen aussehen, und Zeilenumbrüche.&lt;br&gt;
+&lt;b&gt;Text mit einem Alphabet filtern:&lt;/b&gt; Entfernt alle Zeichen aus dem Text, die nicht im ausgewählten Alphabet enthalten sind.
+</description>
+	</context>>
+</contexts>

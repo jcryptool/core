@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Shamir&apos;s Secret Sharing">
+      <description>Shamir&apos;s Secret Sharing is a secret sharing algorithm for distributing a secret. The secret is divided into parts, giving each participant its own unique part where some of the parts or all of them are needed in order to reconstruct the secret. The secret is reconstructed with the Lagrage polynomial.</description>
+      <topic href="nl/en/help/content/index.html" label="Shamir&apos;s Secret Sharing"/>
+   </context>
+</contexts>

@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+
+<h2>ADFGVX cipher</h2>
+<p>
+	The ADFGVX cipher consists of digraph substitution and transposition. This cipher was used by the Germans in World War I, but deciphered by French analytics soon after its deployment in the German communication.
+</p>
+
+<h3 id="classification">Classification</h3>
+<p>
+	The ADFGVX cipher is a compound algorithm and consists of digraph substitution and transposition.
+</p>
+
+<h3 id="scheme">Input and output scheme</h3>
+<img src="in_out_scheme.png" />
+<h3 id="algorithm">The en- and decryption algorithm</h3>
+<h4>Verschlüsselung</h4>
+
+<p>The ADFGVX cipher is a monoalphabetic
+substitution cipher in its main part (the other part is a simple transposition).
+The substitution alphabet contains all pairs of the letters “A, D, F, G, V, X”,
+thus contains exactly 36 Elements. This means, that the plain text alphabet cannot
+contain more than 36 elements, and, that every character from the plain text
+will be replaced by two characters at the encryption.</p>
+
+<p>As in every substitution algorithm, the
+substitution alphabet is the key. To create the alphabet, the so-called
+ADFGVX-Matrix is filled with the content of the plain text alphabet (or with a
+more or less short key word and then with the rest of the alphabet – in the
+example it is the keyword “KEY”):</p>
+
+<p><img id="Grafik 0"
+src="substitution_alphabet.png" alt="substitution_alphabet.png"></p>
+
+<p>&nbsp;</p>
+
+<p>Example of the encryption of the text „ATTACKATMIDNIGHT“
+with the keyword „KEY“ (see ADFGVX matrix / substitution table above)</p>
+
+<p><img id="Grafik 1"
+src="encryption_example.png" alt="encryption_example.png"></p>
+
+<p>After the substitution, there is often a
+transposition step with a separate key, to strengthen the cipher even more.</p>
+
+<h4>Decryption:</h4>
+
+<p>If a transposition, additionally to the
+ADFGVX-substitution, has been undertaken, then this was like a complete
+separate encryption step (even with a separate key), which has be undone first.
+See the article on the transposition cipher for this.</p>
+
+<p>The substitution alphabet can be created from
+the key with the ADFGVX matrix again, and the ciphertext can be substituted
+back. This has to be done by splitting the text into blocks of two, and
+substituting each block of two (A/D/F/G/V/X-Pair) back to the former plain text
+alphabet.</p>
+<h3 id="furtherreading">Further reading</h3>
+<ul>
+  <li>
+  	<a class="external" href="http://en.wikipedia.org/w/index.php?title=ADFGVX_cipher&printable=yes">
+  		The Wikipedia article on the ADFGVX cipher
+  	</a>
+  </li>
+</ul>
+
+
+</body>
+</html>

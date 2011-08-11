@@ -1,0 +1,122 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+<h1>Demonstration of Point Addition over Elliptic Curves (EC)</h1>
+
+<p>This demonstration shows the basic operations on elliptic curves in cryptography.
+It's possible to select an elliptic curve and perform calculations with it.</p>
+
+<h2>Types of curve</h2>
+<img src="curveType.PNG">
+<p>There are three types of curves:<br>
+<b>1. Curves in the real number space</b><br>
+<b>2. Curves in the field F(p)</b><br>
+<b>3. Curves in the field F(2^m)</b><br></p>
+
+<h3>1. Curves in the real number space</h3>
+<h4>General</h4>
+  <p>An elliptic curve in real number space has the form of <i>y^2 = x^3 + a*x + b</i> where <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> are real numbers.<br>
+  In the real number space, there are infinitly many points on the curve. For every point on the curve there is a negative value where y = -y (except for y = 0).<br><br>
+  Adding two points on the curve is simple:<br>
+  <table>
+  <tr><td>1)</td><td>Select a point <i>P</i> and a point <i>Q</i>.</td></tr>
+  <tr><td valign="TOP">2)</td><td>Draw a line through <i>P</i> and <i>Q</i> and continue until you cross the curve for the third time (<i>P</i> and <i>Q</i> being the first two times). This point is <i>-R</i>.</td></tr>
+  <tr><td>3)</td><td>Point <i>R</i> is the point <i>-R</i> with inverted y value.</td></tr>
+  </table></p>
+
+<table cellpadding=0 cellspacing=0>
+	<tr><td><img src="EC.PNG"></td></tr>
+	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² = x³ - 10x + 15</i></td></tr>
+</table>
+
+<h4>Calculations</h4>
+  <h5>Point addition</h5>
+    When <i>P</i> = <i>-Q</i> point <i>R</i> is <i>O</i> (the point of infinity). In this situation, the line through <i>P</i> and <i>Q</i> will never cross the curve for a third time.<br><br>
+    When <i>P</i> != <i>Q</i>:<br>
+    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)<br>
+    <i>Xr</i> = <i>s</i>^2 - <i>Xp</i> - <i>Xq</i><br>
+    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)
+
+  <h5>Point multiplication</h5>
+    If <i>Yp</i> = 0 then <i>R</i> = <i>O</i>.<br><br>
+    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
+    <i>s</i> = (3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)<br>
+    <i>Xr</i> = <i>s</i>^2 - 2<i>Xp</i><br>
+    <i>Yr</i> = -<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)<br><br>
+
+<h3>2. Curves in the field F(p)</h3>
+<h4>General</h4>
+  <p>When the curve is in the field <i>F(p)</i> the curve is as follows: <i>(y^2) mod(p) = (x^3 + a*x + b) mod (p)</i><br>
+  <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> are all elements of <i>F(p)</i> and <i>p</i> is prime. The number of points in <i>F(p)</i> is limited by at most <i>p*p</i> (finite field).<br><br>
+<table cellpadding=0 cellspacing=0>
+	<tr><td><img src="ECFp.PNG"></td></tr>
+	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y²</i> mod <i>29 = (x³ + 14x + 15)</i> mod <i>29</i></td></tr>
+</table>
+<h4>Calculations</h4>
+  <h5>Point addition</h5>
+    <p>When <i>P</i> = <i>-Q</i> point <i>R</i> is <i>O</i>.<br><br>
+    When <i>P</i> != <i>Q</i>:<br>
+    <i>s</i> = ((<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> - <i>Xq</i>)) mod <i>p</i><br>
+    <i>Xr</i> = (<i>s</i>^2 - <i>Xp</i> - <i>Xq</i>) mod <i>p</i><br>
+    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br></p>
+
+  <h5>Point multiplication</h5>
+    If <i>Yp</i> = 0 then <i>R</i> = <i>O</i>.<br><br>
+    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
+    <i>s</i> = ((3<i>Xp</i>^2 + <i>a</i>) / (2<i>Yp</i>)) mod <i>p</i><br>
+    <i>Xr</i> = (<i>s</i>^2 - 2<i>Xp</i>) mod <i>p</i><br>
+    <i>Yr</i> = (-<i>Yp</i> + <i>s</i>(<i>Xp</i> - <i>Xr</i>)) mod <i>p</i><br><br>
+
+
+<h3>3. Curves in the field F(2^m)</a></h3>
+<h4>General</h4>
+  <p>Elements of the field <i>F(2^m)</i> are <i>m</i>-bit strings. Calculations can be performed by using the rules for polynomial arrithmetic.<br>
+  Since <i>F(2^m)</i> operates on bit-strings, computers can perform the calculations very efficiently.<br>
+  The binary representation of an elliptic curve is <i>y^2 + xy = x^3 + ax^2 + b</i><br>
+  <i>a</i>, <i>b</i>, <i>x</i> and <i>y</i> are all elements of <i>F(2^m)</i>.<br>
+  The field <i>F(2^m)</i> is defined using a generator <i>G</i>.<i>G</i> is an irreducible primary polynomial of bit-length <i>m</i> + 1.<br>
+  The negative of point <i>P</i> = (<i>Xp</i>, <i>Yp</i>) is <i>-P</i> = (<i>Xp</i>, <i>Xp</i> + <i>Yp</i>).<br>
+<br>
+
+<table cellpadding=0 cellspacing=0>
+	<tr><td><img src="ECFm.PNG"></td><td><img src="ECFmElements.PNG"></td></tr>
+	<tr><td align="CENTER" bgcolor="#E0DFE3"><i>y² + xy = x³ + g9*x² + g3</i> ; generator G = 110111 ; m = 5</td></tr>
+</table>
+
+<h4>Calculations</h4>
+  <h5>Polynomial calculations</h5>
+    In order to understand calculations over <i>F(2^m)</i>, it's important to understand how to perform calculations with polynomials.<br>
+    All polynomials will be represented as bit strings (e.g. for m=5 : x^4 + x^2 + x + 1 = 10111)<br><br>
+    <b>Add (uses XOR)</b><br>
+    1011 + 0101 = 1110<br><br>
+    <b>Multiply</b><br>
+    1011 * 1 = 1011<br>
+    1011 * 10 = 10110<br>
+    1011 * 11 = 10110 + 1011 = 11101<br><br>
+    <b>Divide</b><br>
+    <img src="polyDivide.PNG"><br>
+
+  <h5>Point addition</h5>
+    <p>When <i>P</i> = <i>-Q</i> point <i>R</i> is <i>O</i>.<br><br>
+    When <i>P</i> != <i>Q</i>:<br>
+    <i>s</i> = (<i>Yp</i> - <i>Yq</i>) / (<i>Xp</i> + <i>Xq</i>)<br>
+    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>Xp</i> + <i>Xq</i> + <i>a</i><br>
+    <i>Yr</i> = <i>s</i>(<i>Xp</i> + <i>Xr</i>) + <i>Xr</i> + <i>Yp</i><br></p>
+
+  <h5>Point multiplication</h5>
+    <p>If <i>Xp</i> = 0 then <i>R</i> = <i>O</i><br><br>
+    2<i>P</i> = <i>P</i> + <i>P</i> = <i>R</i><br>
+    <i>s</i> = <i>Xp</i> + <i>Yp</i> / <i>Xp</i><br>
+    <i>Xr</i> = <i>s</i>^2 + <i>s</i> + <i>a</i><br>
+    <i>Yr</i> = <i>Xp</i>^2 + (<i>s</i> + 1) *<i>Xr</i><br></p>
+
+<br><br><br>
+For more information about elliptic curves visit <a href="http://en.wikipedia.org/wiki/Elliptic_curves">http://en.wikipedia.org/wiki/Elliptic_curves</a>.
+</body>
+</html>
+
+<i></i>

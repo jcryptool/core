@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Text transformation">
+		<description>&lt;b&gt;Upper-/lowercase transformation:&lt;/b&gt;Transforms the text into upper or lower case.&lt;br&gt;
+&lt;b&gt;Replacement of umlauts:&lt;/b&gt; Transforms the umlauts ä, ö, ü and ß plus uppercase versions (common in the German language), into ae, oe, ue and ss.&lt;br&gt;
+&lt;b&gt;Delete blanks and line breaks:&lt;/b&gt; Removes all blanks and line breaks from the text.&lt;br&gt;
+&lt;b&gt;Filter characters by an alphabet:&lt;/b&gt; Removes all characters from the text that are not contained in the selected alphabet.
+</description>
+	</context>
+</contexts>

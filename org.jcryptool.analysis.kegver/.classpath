@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.jcryptool.visual.rsa"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.jcryptool.core.operations"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/de.flexiprovider"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.jcryptool.crypto"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.jcryptool.core.logging"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

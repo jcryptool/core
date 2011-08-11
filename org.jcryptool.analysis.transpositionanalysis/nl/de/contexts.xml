@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="transpositionanalysis" title="Transpositions-Analyse">
+      <description>Die Transpositions-Analyse hilft bei der manuellen Analyse einer Transpositionschiffre durch Anordnen des Textes in Spalten. Die Spalten können per Drag and Drop verschoben werden&lt;br&gt;
+Zur Entschlüsselung, versuchen Sie, Wortstücke im Text zu finden, und durch Verschieben der Spalten richtig anzuordnen. Dabei versuchen sie, die richtige Spaltenanzahl zu finden, um so schließlich den Text zu entschlüsseln. &lt;br&gt;Wenn in dem Vorschau-Textfeld (rechts unten) ein lesbarer Text steht, so können Sie die Chiffre durch Klick auf den Button darüber entschlüsseln.</description>
+      <topic href="$nl$/content/index.html" label="Transpositions-Analyse" />
+   </context>
+	<context id="wizard" title="Load text">
+		<description>Alle Änderungen in diesem Assistent werden unten im &quot;Vorschau&quot;-Feld so angezeigt, wie sie sich auch im Hauptfenster auswirken werden.&lt;br&gt;
+Anfänglich ist immer der gerade geöffnete Editor-Text geladen, es lässt sich jedoch der Text jedes Editors im Dropdown Menü unter dem Haupt-Textfeld auswählen.&lt;br&gt;
+In der Gruppe &lt;b&gt;Text kürzen [...]&lt;/b&gt; kann festgelegt werden, ob der ganze Text in der Tabelle untersucht werden soll, oder nur ein Teil davon. Für die meisten Fälle muss hier nichts verändert werden, die Einstellungen in dieser Gruppe passen sich automatisch den anderen Einstellungen an (es ist jedoch nicht falsch, diese Einstellung zu ändern).&lt;br&gt;
+In der Gruppe &lt;b&gt;Transpositionsspalten&lt;/b&gt; wird festgelegt, wie lang jeder Textblock in der Tabelle sein soll. Effektiv also, welche Schlüssellänge anfangs  bei der Analyse angenommen werden soll. Natürlich ist diese Einstellung jederzeit veränderbar, auch außerhalb dieses Assistenten.
+</description>
+		<topic href="$nl$/content/index.html" label="Transpositionsanalyse"/>
+	</context>
+
+</contexts>

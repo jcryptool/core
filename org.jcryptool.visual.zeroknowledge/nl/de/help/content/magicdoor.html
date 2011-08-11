@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+	<h1>Magische Tür</h1>
+
+	<h2>Zweck</h2>
+
+	<p>Das Magische Tür Szenario ist ein einfach zu verstehendes Beispiel
+	für einen Zero Knowledge Beweis. Alice möchte Bob beweisen, dass
+	sie ein Geheimnis kennt, nämlich den geheimen Code einer Sicherheitstür
+	in einem Gebäude. Diese Tür verbindet zwei nebeneinander liegende Räume
+	(markiert mit 'Left' and 'Right'),
+	die ansonsten nur jeweils einen anderen Ausgang auf den gleichen Flur
+	haben. Im Rahmen des Beweises möchte Alice nichts über den geheimen Code
+	selber an Bob oder eine andere Person verraten.</p>
+
+	<h2>Anwendung</h2>
+
+	<p>Alice wählt zufällig einen der beiden Räume aus und betritt diesen.
+	Bob weiß nicht, für welchen sie sich entschieden hat, aber er weiß,
+	dass sie die Räume nur wechseln kann, indem sie die Sicherheitstür mit
+	dem geheimen Code öffnet. Falls sie versucht die Räume durch den Flur
+	zu wechseln würde sie hierbei von Bob gesehen werden.</p>
+
+	<p>Bob entscheidet sich nun auch zufällig für einen der beiden Räume und
+	bleibt vor der entsprechenden (geschlossenen) Tür stehen.
+	Alice weiß für welchen er sich entschieden hat (z.B. weil sie ihn
+	durch ein nur von innen durchsichtbares Fenster sehen kann).</p>
+
+	<p>Es existieren nun zwei verschiedene Szenarien:
+	<br><b>1)</b> Alice befindet sich schon in dem Raum vor dem Bob steht,
+	dann muss sie lediglich diesen Raum durch die Tür auf dem Flur verlassen.
+	<br><b>2)</b> Alice befindet sich in dem anderen Raum, dies bedeutet sie
+	muss den aktuellen Raum durch die Sicherheitstür verlassen wofür sie
+	den geheimen Code eingeben muss. Da sie den Code kennt kann sie hiermit
+	erfolgreich aus dem Raum den Bob gewählt hat heraustreten.</p>
+
+	<p>In beiden Szenarien wurde der Zero Knowledge Beweis verifiziert.
+	Alice brauchte ihr Geheimnis nicht an Bob zu verraten um den Test
+	zu bestehen.</p>
+
+	<h2>Verwundbarkeit</h2>
+
+	<p>Carol, ein Angreifer der das Geheimnis nicht kennt, will Bob betrügen
+	und behauptet das Geheimnis zu kennen.
+	Sie hat eine mathematische Chance von 50% den gleichen Raum wie Bob
+	auszuwählen, dies bedeutet das eine einzige Iteration des Verfahrens
+	nicht hinreichend sicher für Bob ist.
+	Aus diesem Grund wird in einer praktischen Anwendung dieses Protokolls
+	nicht nur eine Iteration sondern mehrere hintereinander ausgeführt.
+	Nur wenn jeder dieser Runden erfolgreich verläuft, vertraut Bob dem
+	Beweiser.
+	Die Chance Bob betrügen zu können nimmt exponentiell mit der Anzahl
+	der Iterationen k ab.</p>
+
+	<p>Chance alle Iterationen zu beantworten, ohne das Geheimnis zu kennen:
+	Chance = p<sup>k</sup>, mit p = Wahrscheinlichkeit und k = Anzahl der Iterationen</p>
+
+	<p>Für das Magische Tür Protokoll haben wir ein p = 0.5. Nach nur zehn
+	aufeinanderfolgenden Iterationen liegt die Chance Bob betrügen zu können
+	bei weniger als 0.1% (0.5<sup>10</sup>). Dies sollte in den
+	meisten Fällen ausreichende Sicherheit bieten.</p>
+
+	<p>Ein Protokolldurchlauf von 1 <= k <= 20 Iterationen kann simuliert werden durch einen Klick auf den Button &quot;mehrmals durchführen&quot;.</p>
+
+</BODY>
+</HTML>

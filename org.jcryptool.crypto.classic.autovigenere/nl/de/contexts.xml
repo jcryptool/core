@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Autokey-Vigenère">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. &lt;br&gt;
+Der Schlüssel darf nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Autokey-Vigenère-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Autokey-Vigenère">
+    <description>Die Autokey-Vigenère-Verschlüsselung arbeitet wie die Vigenère-Verschlüsselung, hängt jedoch den Klartext an das Schlüsselwort an, anstatt es nur auf Klartextlänge zu vervielfachen (wie bei Vigenère).
+&lt;br&gt;Durch dieses Einbeziehen des Klartextes in den Schlüssel wird die Kryptoanalyse bei unbekanntem Klartext weitaus schwerer als beim normalen Vigenère-Algorithmus.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Autokey-Vigenère-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

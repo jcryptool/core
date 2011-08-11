@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Entropy-Analysis">
+      <description>The Entropy Analysis gives knowledge of the information content on the syntactical level. This tool calculates the entropy (and conditional entropy) in terms of Claude E. Shannon. Consequential effects like the redundancy of the encoding will also be calculated. The input for the analysis is the actual selected text editor. The calculation considers stochastical dependencies between the characters of an editable length n.</description>
+      <topic href="nl/en/help/content/entropy_userguide.html" label="Entropy-Analysis" />
+   </context>
+
+</contexts>

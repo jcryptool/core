@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Graphtools Plug-in
+Bundle-SymbolicName: org.jcryptool.analysis.graphtools;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.swt.graphics,
+ org.eclipse.swt.widgets
+Export-Package: org.jcryptool.analysis.graphtools, org.jcryptool.analysis.graphtools.derivates
+Bundle-Vendor: jcryptool.org
+Bundle-ActivationPolicy: lazy

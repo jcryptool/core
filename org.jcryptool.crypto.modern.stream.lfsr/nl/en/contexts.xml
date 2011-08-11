@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="LFSR">
+    <description>A linear feedback shift register (LFSR) is a sequential shift register with combinational logic which causes it to pseudo-randomly cycle through a sequence of binary values.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="LFSR Cipher"/>
+	</context>
+</contexts>

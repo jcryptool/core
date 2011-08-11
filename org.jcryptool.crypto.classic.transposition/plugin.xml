@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.jcryptool.crypto.classic.transposition.algorithm"
+         point="org.jcryptool.core.operations.algorithms">
+      <algorithm
+            actionClass="org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmAction"
+            class="org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm"
+            contextHelpId="org.jcryptool.crypto.classic.transposition.algorithm"
+            engineClass="org.jcryptool.crypto.classic.transposition.algorithm.TranspositionEngine"
+            id="org.jcryptool.crypto.classic.transposition.algorithm"
+            name="%algorithm.name"
+            type="classic"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false"/>
+      <toc
+            file="$nl$/toc_cryptology.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.jcryptool.commands.core.commands">
+      <command
+            commandImpl="org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmCmd"
+            description="%command.description"
+            name="transposition">
+         <alias
+               alias="transp">
+         </alias>
+         <example
+               commandline="#commandname# -E -ed -k akey"
+               explanation="%example.explanation">
+         </example>
+         <example
+               commandline="#commandname# -E -ed -k akey -k2 keyTwo"
+               explanation="%example.explanation.0">
+         </example>	
+         <example
+               commandline="#commandname# -D -ed -k akey -k2 keyTwo"
+               explanation="%example.explanation.1">
+         </example>
+         <example
+               commandline="#commandname# -E -ed -k akey -t1ReadIn cw -t1ReadOut rw"
+               explanation="%example.explanation.2">
+         </example>
+         <example
+               commandline="#commandname# -D -ed -k akey -t1ReadIn cw -t1ReadOut rw"
+               explanation="%example.explanation.3">
+         </example>
+         <example
+               commandline="#commandname# -E -a A-Z -t &quot;TEST TEXT&quot; -k AKEY"
+               explanation="%example.explanation.4">
+         </example>
+      </command>
+   </extension>
+
+</plugin>

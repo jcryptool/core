@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>H&auml;ufigkeitsanalyse</h1>
+
+	<p>Die H&auml;ufigkeitsanalyse z&auml;hlt die Anzahl des Auftretens aller Buchstaben im analysierten Text. Sie k&ouml;nnen dieses Plug-in in
+	zweierlei Weise nutzen:</p>
+
+	<p><b>einfache Ansicht</b> ("zeige einfaches Diagramm an"): Die H&auml;ufigkeitsanalyse wird als Graph dargestellt, der mit der Maus verschoben und
+	durch die Filter-Einstellungen von ungew&uuml;nschten Buchstaben befreit und verschiedenen anderen Transformationen unterzogen werden kann.</p>
+
+	<p>Die <b>erweiterte Ansicht</b> stellt mehr Analyseoptionen zur Verf&uuml;gung, die im zweiten Tab der Einstellungen zu finden sind:</p>
+
+	<p><img src="freqanalysis1.png" alt="Bild: Erweiterte Ansicht"/></p>
+
+	<p>Die erste M&ouml;glichkeit, den Text besser zu analysieren, ist die M&ouml;glichkeit, ein <b>Overlay</b> &uuml;ber den Graphen legen zu lassen,
+	welches eine Referenzverteilung anzeigt. Die Quelle dieser Referenzverteilung kann im darunter angezeigten Dropdown-Feld ausgew&auml;hlt werden.</p>
+
+	<p>Im zweiten Dropdown-Feld haben Sie die M&ouml;glichkeit festzulegen, <b>in welchem Bereich</b> das Overlay angezeigt werden soll. Dieses Feld wird
+	bei jeder Analyse automatisch auf ein passendes Alphabet eingestellt, aber Sie k&ouml;nnen auch ein anderes Alphabet festlegen. <b> Wichtig:</b> Das
+	Verwenden eines Alphabets, welches m&auml;chtiger als das Alphabet (unterschiedlichen Buchstaben) des untersuchten Textes, wird die Entzifferung
+	(Feld darunter) h&ouml;chst wahrscheinlich fehlschlagen lassen.</p>
+
+	<p>Die <b>Entzifferungswerkzeuge</b> helfen bei der Entzifferung eines Vigen&egrave;re-verschl&uuml;sselten Geheimtextes. Finden Sie die
+	Schl&uuml;ssell&auml;nge des Schl&uuml;ssels heraus, der den Geheimtext erzeugt hat, und stellen Sie diese L&auml;nge in den allgemeinen Einstellungen
+	bei "Polyalphabetisch" ein. Verschieben Sie nun bei eingeschaltetem Overlay den Graphen so, dass er gut mit dem Overlay zusammenzupassen scheint.
+	Sie haben damit einen Buchstaben des Schl&uuml;ssels an der gerade eingestellten Position (Allgemeine Einstellungen-Poyalphabetisch-Position)
+	ermittelt. Speichern Sie diese Position mit dem entsprechenden Button darunter, und fahren Sie dadurch automatisch bei der n&auml;chsten Position
+	fort. Schritt f&uuml;r Schritt wird so der Schl&uuml;ssel ermittelt. Dieser wird im Feld unterhalb der Buttons angezeigt, kann aber auch per Klick
+	darauf manuell gesetzt werden.</p>
+
+	<p><img src="freqanalysis2.png" alt="Bild: Entzifferung"/></p>
+
+	<p>Wie das Friedman-Test-Plug-in ist auch die H&auml;ufigkeitsanalyse in den Vigen&egrave;re Helper integriert. Sie k&ouml;nnen den gefundenen
+	Schl&uuml;ssel per Klick auf den untersten Button in "Entzifferungswerkzeuge" dorthin exportieren.</p>
+
+</body>
+</html>

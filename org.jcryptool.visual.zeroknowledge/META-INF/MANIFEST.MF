@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Zeroknowledge Plug-in
+Bundle-SymbolicName: org.jcryptool.visual.zeroknowledge; singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.visual.zeroknowledge.ZeroKnowledgePlugin
+Bundle-Vendor: jcryptool.org, by Mareike Paul
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text;bundle-version="3.5.2"
+Bundle-ActivationPolicy: lazy
+Export-Package: org.jcryptool.visual.zeroknowledge,
+ org.jcryptool.visual.zeroknowledge.algorithm,
+ org.jcryptool.visual.zeroknowledge.algorithm.feigefiatshamir,
+ org.jcryptool.visual.zeroknowledge.algorithm.fiatshamir,
+ org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie,
+ org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.math,
+ org.jcryptool.visual.zeroknowledge.algorithm.magischetuer,
+ org.jcryptool.visual.zeroknowledge.ui,
+ org.jcryptool.visual.zeroknowledge.ui.feigefiatshamir,
+ org.jcryptool.visual.zeroknowledge.ui.fiatshamir,
+ org.jcryptool.visual.zeroknowledge.ui.graphenisomorphie,
+ org.jcryptool.visual.zeroknowledge.ui.magischetuer,
+ org.jcryptool.visual.zeroknowledge.views
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Localization: plugin
+Import-Package: org.jcryptool.core.util.fonts

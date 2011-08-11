@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jcryptool.analysis.textmodify.actionSet"
+            label="%actionSet.label"
+            visible="true">
+         <action
+               class="org.jcryptool.analysis.textmodify.actions.TransformAction"
+               icon="icons/transform.png"
+               id="org.jcryptool.analysis.textmodify.actions.SampleAction"
+               label="%transformMenuEntry.label"
+               menubarPath="edit/"
+               tooltip="%transformMenuEntry.tooltip">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

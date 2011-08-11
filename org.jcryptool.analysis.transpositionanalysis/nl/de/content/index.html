@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<html>
+<body>
+<h1>Hilfe f&uuml;r die Transpositions-Analyse</h1>
+
+<p>Das Plugin &quot;Transpositions-Analyse&quot; soll bei der Entzifferung eines Geheimtextes helfen, welcher mit dem einfachen Transpositionsverfahren verschl&uuml;sselt wurde.</p>
+
+<h3>Transpositions-Verschl&uuml;sselung</h3>
+
+<p>Die einfache Transpositions-Verschl&uuml;sselung ben&ouml;tigt einen Schl&uuml;ssel der L&auml;nge n, welcher eine Vorschrift zur Umsortierung der der Zeichen in einem Text derselben L&auml;nge n beschreibt. Typischerweise schreibt man einen solchen Schl&uuml;ssel als Reihenfolge der umsortierten Zeichen. 
+Beispielsweise:<br />
+
+Schl&uuml;ssel = &quot;1 | 4 | 3 | 2 |&quot;<br />
+Klartextwort = &quot;TEST&quot;<br />
+Verschl&uuml;sseltes Wort = &quot;TTSE&quot;</p>
+
+<p>Diese Umsortierung wird auf einen ganzen Text angewandt, indem dieser in Bl&ouml;cke der L&auml;nge n geteilt wird, und jeder Block einzeln verschl&uuml;sselt wird.</p>
+
+<p>Mehr zur Transpositions-Verschl&uuml;sselung enth&auml;lt das Kryptologie-Anwenderhandbuch.</p>
+
+<h3>Kryptoanalyse</h3>
+
+<p>Die Blockl&auml;nge ist also gleich der Schl&uuml;ssell&auml;nge. Da jeder Block des Geheimtextes gleichlang ist, und in gleicher Weise verschl&uuml;sselt wird, ist es hilfreich, die Block- bzw. Schl&uuml;ssell&auml;nge zu wissen. Ist diese bekannt, so schreibt man den Text in diesen Bl&ouml;cken untereinander, und versucht, die Reihenfolge der Zeichen wiederherzustellen. Hat man die richtige Reihenfolge f&uuml;r eine Zeile des untereinandergeschriebenen Textes gefunden, so hat man sie f&uuml;r alle Zeilen gefunden - jede Zeile repr&auml;sentiert einen Block, und jeder Block wird gleicherma&szlig;en verschl&uuml;sselt.</p>
+<p>Neben dieser rein manuellen Herangehensweise gibt es eine Zahl an algorithmischen Methoden, um die Schl&uuml;ssell&auml;nge oder einzelne Schl&uuml;sselpositionen zu ermitteln. Zum Beispiel werden bei der Unterteilung des Textes in Bl&ouml;cke die letzten Stellen meist aufgef&uuml;llt, da der Text in dem meisten F&auml;llen nicht genau auf die Blockl&auml;nge passt. Diese auff&uuml;llenden Zeichen nennt man das Padding des Klartextes. Dieses Padding kann Aufschluss &uuml;ber Schl&uuml;sselpositionen geben, und &uuml;ber die Schl&uuml;ssell&auml;nge, denn die L&auml;nge des Geheimtextes muss ein Vielfaches der Schl&uuml;ssell&auml;nge (=Blockl&auml;nge) sein. Weitere Herangehensweisen: H&auml;ufigste Zeichenpaare/Zeichentripel finden, Mehrfaches Auftreten desselben Geheimtextst&uuml;ckes, etc.</p>
+
+<h3>Die Rolle des Transpositions-Analyse-Plugins</h3>
+
+<p>Das Transpositions-Analyse-Plugin &uuml;bernimmt die Aufteilung des Geheimtextes in Spalten und Zeilen, und erm&ouml;glicht die Umsortierung der Spalten des Textes. Der Text wird in einer Tabelle angeordnet, deren Spalten sich umsortieren lassen. Damit ist das Austesten veschiedener Blockl&auml;ngen und Schl&uuml;sselworte ein Leichtes, und das Ziel ist, in der Tabelle schl&uuml;ssendlich den Klartext stehen zu sehen.</p>
+
+<p>Das Transpositions-Plugin bietet zur Zeit die rein manuelle Entzifferung - Umsortierung der Spalten, bis ein &quot;sinnmachender&quot; Text in der Tabelle steht. Es sind jedoch auch halbautomatische und automatische Analysem&ouml;glichkeiten in Arbeit.</p>
+
+<h2>Bedienung der Benutzeroberfl&auml;che</h2>
+
+<p>Die Hauptansicht der Transpositions-Analyse besteht aus zwei Spalten. Auf der linken Seite sind die Steuerelemente. Auf der rechten Seite sind einige Instruktionen, und die Zusammenfassung der durch die Analyse erreichten Ergebnisse.</p>
+
+<h3>Text laden</h3>
+<p>Zu Beginn muss der verschl&uuml;sselte Text geladen werden. Nach einem Klick auf den Button &ouml;ffnet sich ein Assistent daf&uuml;r. Alle &Auml;nderungen in diesem Assistent werden unten im &quot;Vorschau&quot;-Feld so angezeigt, wie sie sich auch im Hauptfenster auswirken werden.</p>
+
+<p>Zwar ist standardm&auml;&szlig;ig der gerade ge&ouml;ffnete Editor-Text geladen, es l&auml;sst sich jedoch der Text jedes Editors im Dropdown Men&uuml; unter dem Haupt-Textfeld ausw&auml;hlen.</p>
+
+<p>In der Gruppe &quot;Text k&uuml;rzen [...]&quot; kann festgelegt werden, ob der ganze Text in der Tabelle untersucht werden soll, oder nur ein Teil davon. F&uuml;r die meisten F&auml;lle muss hier nichts ver&auml;ndert werden, die Einstellungen in dieser Gruppe passen sich automatisch den anderen Einstellungen folgenderma&szlig;en an:</p>
+<p> * Ist die Unterteilung in Spalten ausgew&auml;hlt (Blockl&auml;nge ungleich 0, s. u.), so wird der volle Text genommen.<br />
+ * Wird jedoch eingestellt, dass erst einmal keine Einteilung des Textes in Spalten vorgenommen werden soll (alles in einer Zeile in der Tabelle), so ist es meistens sinnvoll, nur einen Teil des Textes zu betrachten, und das entsprechende H&auml;ckchen wird gesetzt.</p>
+
+<p>In der n&auml;chsten Gruppe, &quot;Transpositionsspalten&quot;, wird festgelegt, wie lang jeder Textblock in der Tabelle sein soll. Effektiv also, welche Schl&uuml;ssell&auml;nge anfangs  bei der Analyse angenommen werden soll. Nat&uuml;rlich ist diese Einstellung jederzeit ver&auml;nderbar, auch au&szlig;erhalb dieses Assistenten.</p>
+
+<h3>Analysieren</h3>
+
+<p>Die theoretische Analyse eines verschl&uuml;sselten Textes mithilfe der Tabelle, die nun mit dem Text gef&uuml;llt sein sollte, wurde oben beschrieben. Das nachfolgende Beispiel soll dies anhand einiger Schritte verdeutlichen:</p>
+
+<p>Wir betrachten den verschl&uuml;sselten Text</p>
+<p><pre>Dei  itsdJi eCTrpyoBo leiipsetladeiiS.ee okn nnedeise eDtaie ufrn ieecns hlnleetnS amr tiCtJ r</pre></p>
+<p>und laden diesen in das Plugin. Zu Anfang haben wir keinen Anhaltspunkt f&uuml;r das Einstellen einer bestimmten Schl&uuml;ssell&auml;nge, also lassen wir als Anzahl der Spalten in der Tabelle den Wert &quot;0&quot; eingestellt, das bedeutet, wir sehen den Text in einer Zeile. Wir erhalten:</p>
+<p><img src="1.png" /></p>
+<p>Offensichtlich steht der Buchstabe &quot;D&quot; f&uuml;r den Beginn eines Wortes, oder (wahrscheinlicher) f&uuml;r den Beginn des Satzes. Die zwei Leerzeichen deuten darauf hin, dass hier relativ kurze W&ouml;rter stehen, da zwei Leerzeichen auf 8 Buchstaben kommen. Genug Anhaltspunkte f&uuml;r einen Versuch: Wir raten die Blockl&auml;nge als 4 (Anpassen im Feld &quot;Spaltenzahl[...]&quot; &uuml;ber der Tabelle) und sortieren die Spalten (Drag'n'drop) wie folgt:</p>
+<p><img src="2.png" /></p>
+<p>Offensichtlich kann man in der ersten Zeile das Wort &quot;Dies&quot; zurechtr&uuml;cken. Alles andere ergibt keinen Sinn. Jedoch steht in den anderen Zeilen dann kein sinnvoller Text. Offensichtlich haben wir hier die falsche Spaltenzahl geraten. Wir versuchen weiter, und passen die Spaltenzahl auf 5 an, und stellen das Wort &quot;Dies&quot; wieder in der ersten Zeile her. Wir bekommen:</p>
+<p><img src="3.png" /></p>
+<p>Anscheinend war das ein Treffer, denn wir k&ouml;nnen den Text in der Tabelle Zeilenweise korrekt lesen (&quot;Dies ist die JCrypTool Beispieldatei[...]&quot;). Damit haben wir den richtigen Schl&uuml;ssel gefunden, welcher rechts von der Tabelle steht:</p>
+<p><img src="4.png" /></p>
+
+<p>Beachten Sie, dass der Text, wie er durch die Spalten-Umsortierung aussehen w&uuml;rde, auch im Vorschau-Textfeld (rechts unten) zu sehen ist, welches oft leichter zu lesen ist, als die Zeilen der Tabelle. Der Inhalt der Tabellenzeilen und der des Vorschau-Textfeldes ist jedoch immer derselbe.</p>
+
+<h3>Nach der Analyse</h3>
+<p><img src="after1_de.png" /></p>
+<p>Wenn es nun so aussieht, als ob Sie den richten Schl&uuml;ssel gefunden haben, ist der n&auml;chste Schritt die Entschl&uuml;sselung des Textes f&uuml;r den Gebrauch außerhalb des Analyseplugins. Der Button gerade &uuml;berhalb des Vorschau-Textfeldes kann genau das mit einem Klick erledingen. Allerdings k&ouml;nnen Sie auch den Schl&uuml;ssel kopieren (siehe unten: kryptographisch nutzbare Version) und den Transpositions-Verschl&uuml;sselung-Assistent aufrufen (Algorithmen-Ansicht). Damit k&ouml;nnen Sie den Text dann manuell entschl&uuml;sseln. W&auml;hlen Sie dazu &quot;Entschl&uuml;sseln&quot;, kopieren Sie den Schl&uuml;ssel in das erste Schl&uuml;sselfeld, und beenden Sie den Assistent.</p>
+<p>Der gefundene Schl&uuml;ssel ist zwar in der Gruppe "Ergebnisse" zu sehen, jedoch bietet der Link "Export" neben dem Schl&uuml;sselfeld noch einige wichtige Funktionen:</p>
+<p><img src="keyviewer_de.png" /></p>
+<p>Die &quot;H&uuml;bsche Version&quot;, die auch in der Hauptansicht zu sehen ist, kann in einen Text o. &auml;. kopiert werden, kann jedoch meist nicht als Eingabe f&uuml;r kryptographische Verfahren dienen.</p>
+<p>Die zweite Ausgabe des Schl&uuml;ssels behebt dieses Problem, denn diese Form des Schl&uuml;ssels kann in kryptographischen Verfahren verwendet werden (ist jedoch nicht so gut zu lesen wie die erste).</p>
+<p>Die Invertierung des Schl&uuml;ssels wird eher selten gebraucht. F&uuml;r jeden Schl&uuml;ssel gibt es genau einen inversen Schl&uuml;ssel, welcher die exakte Gegenoperation des Gegenst&uuml;cks ausf&uuml;hrt. Im Grunde ist eine Entschl&uuml;sselung mit einem Schl&uuml;ssel nichts anderes, als die Verschl&uuml;sselung mit dem inversen Schl&uuml;ssel. Manchmal erweist es sich jedoch als n&uuml;tzlich, den inversen Schl&uuml;ssel zu kennen.</p>
+
+<h3>Erweiterte Analyse</h3>
+
+<p>Bald soll es m&ouml;glich sein, &uuml;ber den Link auf in der rechten Spalte der Hauptansicht, &quot;Halbautomatische Analyse&quot;, automatische oder halbautomatische Analysen zur Unterst&uuml;tzung in der Analyse eines Geheimtextes zu nutzen.</p>
+</body/>
+</html>

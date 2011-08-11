@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Transposition">
+		<description>Select the operation (encrypt or decrypt), and decide whether to do one, or two encryption steps.&lt;br&gt;
+The <b>keys</b> of the transpositions consist of characters of the specified alphabet.  &lt;br&gt;&lt;br&gt;The <b>read-in and -out methods (column-wise and row-wise)</b> are explained in the following articles.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The transposition cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Transposition">
+    <description>The transposition cipher relocates the letters of the plaintext based on an order generated from the keyword.
+&lt;br&gt;Transposition ciphers are one of the oldest cryptographic algorithms. A well-known example is the Scytale, which was documented first in the Pelleponesian war, 431 BC.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The transposition cipher (cryptology manual)"/>
+	</context>
+</contexts>

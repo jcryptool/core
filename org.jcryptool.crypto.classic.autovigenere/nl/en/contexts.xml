@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Autokey-Vigenère">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key.&lt;br&gt;
+The key must only contain characters, that are contained in the alphabet selected above.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Autokey-Vigenère cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Autokey-Vigenère">
+    <description>The Autokey-Vigenère cipher works like the Vigenère cipher, but appends the plaintext to the keyword instead of just extending the keyword to plaintext length (as in Vigenère).
+&lt;br&gt;By incorporating the plaintext into the keyword, the ciphertext-only analysis is a lot harder than the analysis of the normal Vigenère algorithm.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Autokey-Vigenère cipher (cryptology manual)"/>
+	</context>
+</contexts>

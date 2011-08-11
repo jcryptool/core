@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+    name="testsuite"
+    default="run"
+    basedir=".">
+
+    <!--
+         =====================================================
+         There should be no need to change what's above.
+         (if there is, let us know if the script can be improved.)
+         =====================================================
+    -->
+
+    <!--
+         Every suite needs to specify three thing:
+             plugin-name,
+             classname - that provides the suite to test, and
+             testType - either core-test, or ui-test.
+         There is an optional extraVMargs property that some tests need to use in order to specify
+         extra, non-standard properties to the VM when it runs. If not need, no need to specify it.
+    -->
+    <property
+        name="plugin-name"
+        value="org.eclipse.wst.xml.security.core.tests" />
+    <property
+        name="classname"
+        value="org.eclipse.wst.xml.security.core.tests.AllTestsSuite" />
+    <property
+        name="testType"
+        value="ui-test" />
+
+    <!-- some test suites need to add special vm arguments when they run. This is just an example.
+    <property
+        name="extraVMargs"
+        value="-DjsfRuntimeJarsDirectoryV1.1=${testDir}/${jsf1.1Dir}" />
+    <echo
+        message="extraVMargs ${extraVMargs}" />
+    -->
+
+    <!--
+         =====================================================
+         There should be no need to change what's below.
+         (if there is, let us know if the script can be improved.)
+         =====================================================
+    -->
+
+    <!--
+         There are some properties that must be provided by caller.
+    -->
+    <fail
+        message="Error: missing property. eclipse-home must be proved"
+        unless="eclipse-home" />
+    <fail
+        message="Error: missing property. buildDirectory must be proved"
+        unless="buildDirectory" />
+    <fail
+        message="Error: missing property. buildLabel must be proved"
+        unless="buildLabel" />
+    <echo
+        message="basedir: ${basedir}" />
+    <echo
+        message="eclipse-home: ${eclipse-home}" />
+    <echo
+        message="buildDirectory: ${buildDirectory}" />
+    <echo
+        message="plugin-name: ${plugin-name}" />
+    <echo
+        message="classname: ${classname}" />
+    <echo
+        message="testType ${testType}" />
+    <property
+        name="library-file"
+        value="${eclipse-home}/plugins/org.eclipse.test_3.1.0/library.xml" />
+    <property
+        name="workspace"
+        value="${eclipse-home}/junitworkspaces/${plugin-name}" />
+
+      <!--
+    This init target holds all initialization code that needs to be done for
+      all tests that are to be run. Initialization for individual tests
+      should be done within the body of the suite target. Here it's a good idea
+    to delete things that might have been created if the test has already been
+    ran, just in case the test is being re-ran.
+    -->
+    <target
+        name="init">
+        <tstamp />
+        <delete>
+            <fileset
+                dir="${eclipse-home}"
+                includes="${plugin-name}.*xml" />
+        </delete>
+
+            <!--
+         make the workspace directory, in case path doesn't exist yet
+         but delete to make sure fresh contents, if it does exist
+        -->
+        <delete
+            dir="${workspace}"
+            quiet="true" />
+        <mkdir
+            dir="${workspace}" />
+    </target>
+
+    <!--
+      This suite target defines the tests that need to be run.
+    -->
+    <target
+        name="suite">
+        <ant
+            target="${testType}"
+            antfile="${library-file}"
+            dir="${eclipse-home}">
+            <property
+                name="data-dir"
+                value="${workspace}" />
+            <property
+                name="plugin-name"
+                value="${plugin-name}" />
+            <property
+                name="classname"
+                value="${classname}" />
+            <property
+                name="plugin-path"
+                value="${eclipse-home}/plugins/${plugin-name}" />
+        </ant>
+        <copy
+            failonerror="false"
+            file="${workspace}/.metadata/.log"
+            tofile="${buildDirectory}/${buildLabel}/testResults/consolelogs/${plugin-name}.consolelog.txt" />
+    </target>
+
+     <!--
+     This clean target holds code to cleanup the testing environment after
+     after all of the tests have been run. You can use this target to
+     delete temporary files that have been created, if required. But,
+     it's usually best to leave it all, in case you'd like to inspect it
+     after a failed run. It will be deleted eventually by the next clean build.
+    -->
+    <target
+        name="cleanup">
+
+    </target>
+
+    <!--
+       This run target is the master target that get's all the work done.
+       Most activity is actually done in the 'depends' tasks, but any
+       actions that need to happen after all the tests have been run
+       should go here, such as copying the results to a common 'save'
+       directory.
+    -->
+    <target
+        name="run"
+        depends="init,suite,cleanup">
+        <ant
+            target="collect"
+            antfile="${library-file}"
+            dir="${eclipse-home}">
+            <property
+                name="includes"
+                value="${plugin-name}.*xml" />
+            <property
+                name="output-file"
+                value="${plugin-name}.xml" />
+        </ant>
+    </target>
+</project>

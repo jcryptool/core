@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Fiat Shamir Protokoll</h1>
+
+	<h2>Zweck</h2>
+
+	<p>Dieses Zero Knowledge Verfahren wurde entwickelt um Bob zu beweisen,	dass Alice ein Geheimnis besitzt ohne dieses jedoch im Laufe des
+	Protokolls zu offenbaren. Es arbeitet auf dem Körper der ganzen Zahlen Modulo n. N ist ein Produkt zweier Primzahlen, die unbedingt von
+	Alice geheim zu halten sind.</p>
+
+	<h2>Anwendung</h2>
+
+	<p>Alice wählt eine zufällige Nummer s aus dem Körper Modulo n mit <span style="white-space:nowrap"><code>gcd(s, n) = 1</code></span> und
+	berechnet <span style="white-space:nowrap"><code>v = s<sup>2</sup> mod n.</code></span> S ist das Geheimnis, v ist öffentlich und wird
+	benutzt während des Protokolldurchlaufs.<p>
+
+	<ol>
+		<li>Für die Iterationen des Protokolls wählt Alice ein zufälliges r im Körper Modulo n und berechnet
+		<span style="white-space:nowrap"><code>x = r<sup>2</sup> mod n.</code></span> Bob erhält x.</li>
+		<li>Bob wählt nach Erhalt von x ein zufälliges Bit b, dieses kann entweder 0 oder 1 sein. Anschließend schickt er dieses an Alice.</li>
+		<li>Alice berechnet <span style="white-space:nowrap"><code>y = rs<sup>b</sup> mod n</code></span> und sendet wiederum y an Bob.</li>
+		<li>Bob überprüft, ob die folgende Gleichung zu keinem Widerspruch führt:
+		<span style="white-space:nowrap"><code>y<sup>2</sup> mod n = xv<sup>b</sup> mod n</code></span></li>
+	</ol>
+
+	<p>Falls er keinen Fehler findet ist eine Iteration des Protokolls erfolgreich bestanden.</p>
+
+	<h2>Verwundbarkeit</h2>
+
+	<p>Carol, der Angreifer, kennt weder p und q noch s. Sie kann selbst wählen, wie sie das x konstruiert das an Bob geschickt wird, hat jedoch
+	keinen Einfluss auf b, da dieses von Bob erstellt wird. Es können nun zwei verschiedene Fälle eintreten:</p>
+
+	<p>1) b=0<br>
+	Wenn b null ist, kann man die Überprüfungs-Gleichung vereinfachen:<br/>
+	<span style="white-space:nowrap"><code>y = rs<sup>b</sup> mod n = rs<sup>0</sup> mod n = r mod n</code></span>.<br>
+	Dies würde bedeuten, falls sie einfach ein zufälliges r generiert und dann quadriert hat um ein beliebiges x zu erstellen,
+	kann sie dieses einfach an Bob senden und hätte diese Runde gewonnen.</p>
+
+	<p>2) b=1<br>
+	Wenn b eins ist, folgt daraus diese Gleichung:<br/>
+	<span style="white-space:nowrap"><code>y = rs<sup>b</sup> mod n = rs mod n</code></span><br>
+	Da es für Carol unmöglich ist s aus v zu berechnen müsste sie
+	x von vornherein so konstruiert haben, so dass der Test von Bob nicht fehlschlägt.
+	Dies kann sie erreichen durch Berechnung von <span style="white-space:nowrap"><code>x = r<sup>2</sup> * v<sup>-1</sup> mod n</code></span> und
+	<span style="white-space:nowrap"><code>y = r mod n.</code></span>
+	Bei Konstruierung der Nummern nach diesem Schema wird sie für den Fall b=1 in der Lage
+	sein den Test von Bob zu bestehen.</p>
+
+	<p>Um Bob in beiden Fällen zu betrügen müsste sie ein spezielles
+	<span style="white-space:nowrap"><code>x (=r<sup>2</sup> * v<sup>-1</sup>)</code></span> konstruieren,
+	aber zusätzlich noch eine Nummer r' wissen, welche die Gleichung <span style="white-space:nowrap"><code>
+	r'<sup>2</sup> = x.</code></span> erfüllt. Weil dies für sie nicht möglich ist kann sie Bob nur
+	betrügen falls sie das richtige b rät bevor Bob es an sie sendet.</p>
+
+	<p>Da Bob b zufällig wählt liegt die Wahrscheinlichkeit, dass Carol den richtigen
+	Wert errät bei 50%. Wenn zehn aufeinanderfolgende Iterationen des Protokolls
+	durchlaufen werden hätten wir somit eine Betrugswahrscheinlichkeit von weniger
+	als 0.1% (0.5<sup>10</sup>). Dies sollte für die meisten Fälle eine hinreichende
+	Sicherheit bieten.</p>
+
+	<p>Ein Protokolldurchlauf von 1 <= k <= 20 Iterationen kann simuliert werden durch einen Klick auf den Button &quot;mehrmals durchführen&quot;.</p>
+
+</BODY>
+</HTML>

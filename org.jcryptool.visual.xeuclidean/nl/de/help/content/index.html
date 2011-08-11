@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1>Extended Euclidean</h1>
+
+<p>Die Demonstration soll die Funktionsweise des <b>Extended
+Euclidean</b> Plugins zeigen.</p>
+Über das Menü
+<b>Visualisierungen</b>
+kann das
+<b>Extended Euclidean</b>
+Plugin ausgewählt werden. Dadurch wird das Plugin geladen und in seiner
+Ansicht maximiert.
+<p><img src="xeuclideanGUI.jpg" width="624" height="308"></img></p>
+In die Eingabemaske
+<b>p</b>
+und
+<b>q</b>
+können zwei beliebige große positive Zahlen eingegeben werden.
+<p><img src="xeuclideanEingabe.jpg" width="243" height="116"></img></p>
+Danach stehen verschiedene Auswahlmöglichkeiten zur Verfügung.
+<p><img src="xeuclideanAuswahl.jpg" width="611" height="38"></img></p>
+<ul>
+	<li><b>Clear</b> - löscht die aktuelle Eingabe.</li>
+	<li><b>Reset table</b> - löscht nur die Tabelle, die aktuelle
+	Eingabe bleibt erhalten (zu Beginn noch nicht auswählbar).</li>
+	<li><b>Compute</b> - führt die Berechnung aus.</li>
+	<li><b>Stepwise...</b> - die Berechnung wird schrittweise
+	durchgeführt. Es wird der nächste Schritt in der Berechnung durchführt.</li>
+	<li><b>Back stepwise...</b> - die Berechnung wird schrittweise
+	durchgeführt. Es wird der vorhergehende Schritt ausgeführt (zu Beginn
+	noch nicht auswählbar).</li>
+</ul>
+Das Ergebnis der Berechnung wird in dem Bereich
+<b>Berechnungstabelle</b>
+dargestellt.
+<p><img src="xeuclideanErgebnisVisual.jpg" width="257" height="35"></img></p>
+Ferner werden im
+<b>Visualisierungsblock</b>
+alle Teilschritte der Berechnung vollständig als Tabelle angezeigt
+sofern man sich für die
+<b>Compute</b>
+Variante entschieden hat.
+<p><img src="xeuclideanTabelle.jpg" width="485" height="262"></img></p>
+Die Tabelle hat 5 Spalten,
+<b>Index, Quotient, Remainder, X und Y.</b>
+Das Endergebnis ist
+<b>blau</b>
+dargestellt. Zusätzlich wird unten die Berechnungsvorschrift:
+<cite>gcd(p,q) = p * x + q * y</cite>
+und die dazugehörige Berechnung angezeigt.
+<p><img src="xeuclideanErgebnis.jpg" width="445" height="94"></img></p>
+Falls man sich für die
+<b>stepwise...</b>
+Variante entschieden hat, wird in der
+<b>Berechnungstabelle</b>
+die aktuell durchzuführende Berechnung farbig angezeigt.
+<p><img src="xeuclideanErgebnisVisualStepwise.jpg" width="169" height="32"></img></p>
+Zusätzlich wird im
+<b>Visualisierungsblock</b>
+, abhängig vom der aktuellen Position der Berechnung, die Tabelle
+schritweise ausgefüllt. Dabei stimmen die Farben mit den Farben der
+<b>Berechnungstabelle</b>
+überein. Mit der Farbe
+<b>blau</b>
+wird immer das Ergebnis der aktuellen Berechnung dargestellt.
+<p><img src="xeuclideanTabelleStepwise.jpg" width="403" height="123"></img></p>
+Nun kann die Berechnung schrittweise mit dem Button
+<b>Stepwise...</b>
+sowohl vorwärts als auch mit dem Button
+<b>Back stepwise...</b>
+rückwärts durchlaufen werden. Falls das Ende der der Berechnung erreicht
+ist, wird die Schaltfläche
+<b>Stepweise...</b>
+deaktiviert und das Endergebnis sowohl unten als auch in der
+<b>Berechnungstabelle</b>
+angezeigt. Es ist auch möglich während man die Berechnung schrittweise
+duchläuft auf den Butten
+<b>Compute</b>
+zu klicken, um die schrittweise Berechnung abzubrechen und die
+Berechnung vollständig bis zum Ende durchzuführen.
+<p></p>
+Nach Durchlauf einer Berechnung kann man das Ergebnis in drei
+Formaten(PDF, Latex und CSV) exportieren.
+<p><img src="xeuclideanExport.jpg" width="194" height="110"></img></p>
+Der Export ist nur möglich falls eine Berechnung vollständig durchlaufen wurde.
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Bifid">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key.&lt;br&gt;
+The key must only contain characters, that are contained in the alphabet selected above.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Bifid cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Bifid">
+    <description>The Bifid cipher is a substitution cipher, which splits off the square-substituted letters, arranges them in a line and pairs them up again finally.
+&lt;br&gt;The cipher is also known as Delastelle cipher, after its inventor, Felix Delastelle.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Bifid cipher (cryptology manual)"/>
+	</context>
+</contexts>

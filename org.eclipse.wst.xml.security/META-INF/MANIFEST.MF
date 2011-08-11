@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %bundleName
+Bundle-SymbolicName: org.eclipse.wst.xml.security
+Bundle-Version: 0.5.0.qualifier
+Bundle-Vendor: %bundleProvider
+Bundle-Localization: plugin

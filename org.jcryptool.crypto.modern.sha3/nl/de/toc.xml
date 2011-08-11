@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="SHA3" link_to="../org.jcryptool.core.help/$nl$/toc_cryptology.xml#hashAlgorithms"> 
+    <topic href="nl/de/help/content/Tutorial.html" label="SHA3">
+       <topic href="nl/de/help/content/ECHOTutorial.html" label="SHA3 - ECHO">
+       </topic>
+       <topic href="nl/de/help/content/JHTutorial.html" label="SHA3 - JH">
+       </topic>
+       <topic href="nl/de/help/content/SkeinTutorial.html" label="SHA3 - Skein">
+       </topic>
+    </topic> 
+</toc>

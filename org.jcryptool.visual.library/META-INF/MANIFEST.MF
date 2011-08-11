@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Libary Plug-in
+Bundle-SymbolicName: org.jcryptool.visual.library;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jcryptool.visual.library
+Require-Bundle: org.eclipse.ui
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: jcryptool.org, by Michael Gaber
+Import-Package: org.jcryptool.core.logging.utils

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%view.name"
+            icon="icons/view.gif"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.sidechannelattack.spa.views.SPAView"
+            id="org.jcryptool.visual.sidechannelattack.spaview">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            contextHelpId="org.jcryptool.visual.sidechannelattack.spa.spaview"
+            name="%view.name"
+            viewId="org.jcryptool.visual.sidechannelattack.spaview">
+      </Visual>
+   </extension>
+
+</plugin>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.jcryptool.crypto.modern.stream.dragon.algorithm"
+         point="org.jcryptool.core.operations.algorithms">
+      <algorithm
+            actionClass="org.jcryptool.crypto.modern.stream.dragon.algorithm.DragonAlgorithmAction"
+            class="org.jcryptool.crypto.modern.stream.dragon.algorithm.DragonAlgorithm"
+            contextHelpId="org.jcryptool.crypto.modern.stream.dragon.wizard"
+            id="org.jcryptool.crypto.modern.stream.dragon.algorithm"
+            name="%algorithm.name"
+            type="symmetric"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+      <toc
+            file="$nl$/tocUI.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

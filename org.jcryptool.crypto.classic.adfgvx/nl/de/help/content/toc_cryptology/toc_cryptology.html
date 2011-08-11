@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+
+<h2>ADFGVX-Verschlüsselung</h2>
+<p>
+	Das ADFGVX-Verfahren besteht aus bigraphischer Substitution und Transformation. ADFGVX wurde von den Deutschen im ersten Weltkrieg eingesetzt, aber schon nach kurzer Zeit von den Franzosen gebrochen.
+</p>
+
+<h3 id="classification">Klassifikation</h3>
+<p>
+	Das ADFGVX-Verfahren ist ein zusammengesetztes Verfahren, aus  bigraphischer Substitution und spaltenweiser Transformation.
+</p>
+
+<h3 id="scheme">Ein- und Ausgabeschema</h3>
+<img src="in_out_scheme.png" />
+<h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
+<h4>Verschlüsselung</h4>
+
+<p>Die ADFGVX-Verschlüsselung ist zum einen Teil eine monoalphabetische
+Subsitutionsverschlüsselung, bei der jedem Element aus dem Klartextalphabet ein
+Element aus dem Substitutionsalphabet zugeordnet wird. Die Besonderheit ist,
+dass nur Paare aus den Buchstaben A, D, F, G, V und X die Elemente des
+Substitutionsalphabets bilden. Da bei einer Substitutionsverschlüsselung die
+Anzahl der Elemente des Substitutionsalphabets nicht kleiner sein darf als die
+des Klartextalphabets, kann das Klartextalphabet höchstens 6x6 = 36 Zeichen
+enthalten.</p>
+
+<p>Das Substitutionsalphabet wird durch das Ausfüllen der ADFGVX-Matrix
+dargestellt (s. Abb.). Anstelle der Angabe des gesamten Matrixinhaltes, kann
+wie bei der normalen monoalphabetischen Substitution, ein Schlüsselwort
+angegeben werden, an welches dann das restliche Alphabet angehängt wird (unter
+Löschung von doppelt auftretenden Buchstaben). Im Beispiel wurde das
+Schlüsselwort „KEY“ verwendet:</p>
+
+<p><img id="Grafik 0"
+src="substitution_alphabet.png" alt="substitution_alphabet.png"></p>
+
+<p>Eine beispielhafte Substitution des Textes „ATTACKATMIDNIGHT“
+und dem Schlüsselwort „KEY“ (s. obige Substitutionsmatrix/-tabelle)</p>
+
+<p><img id="Grafik 1"
+src="encryption_example.png" alt="encryption_example.png"></p>
+
+<p>Anschließend wird meistens noch eine einfache Transposition
+(s. Artikel: spaltenweise Transposition) auf den substituierten Text
+angewendet, welche durch einen extra angegebenen Schlüssel bestimmt wird.</p>
+
+<h4>Entschlüsselung:</h4>
+
+<p>Falls eine Transposition durchgeführt wurde, muss diese rückgängig
+gemacht werden. Danach wird der Geheimtext in Zweierblöcke aufgeteilt, und
+diese werden anhand der aus dem Schlüsselwort erstellten ADFGVX-Matrix
+zurück-substituiert.</p>
+<h3 id="furtherreading">Weiterführende Lektüre</h3>
+<ul>
+  <li>
+  	<a class="external" href="http://de.wikipedia.org/w/index.php?title=ADFGX&printable=yes">
+  		Der Wikipedia-Artikel zur ADFGVX-Verschlüsselung
+  	</a>
+  </li>
+</ul>
+
+
+</body>
+</html>

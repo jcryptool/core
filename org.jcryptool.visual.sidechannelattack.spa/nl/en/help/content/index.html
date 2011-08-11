@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Simple Power Analysis(SPA) against RSA</h1>
+
+	<p>Simple power analysis (SPA) involves visually interpreting power traces, or graphs of electrical activity over time. <br></p>
+
+	<h2>RSA parameter explanation</h2>
+
+	<img src="rsa_parameter.jpg">
+
+	<p>Ciphertext c(e.g. 5454): demonstrates the encrypted ciphertext by using the secret private key d(e.g. 101).</p>
+
+	<p>P and Q are two copime numbers and the module n = P*Q.</p>
+
+	<p>R = c<sup>d</sup> mod n is the decrypted plaintext. Square and Multiply algorithm is normally used to execute the exponentiation result of c<sup>d</sup>
+	mod n. It is an efficient algorithm used for the fast computation of large integer powers of a number. However, it is also vulnerable to Power Analysis.</p>
+
+	<h2>Insecure "Square and Multiply" algorithm explanation</h2>
+
+	<img src="square_and_multiply.jpg">
+
+	<p>"Square and Multiply" algorithm is used to execute the exponentiation of the private key and public key during the encryption and decryption process of
+	RSA algorithm.</p>
+
+	<img src="executeprocessofsaq.jpg">
+
+	<p>As shown above, the private key in decimal will first be transformed into binary form.(e.g. 101(dec.) = 1100101(bin.)). After that we calculate the
+	exponentiation result according to the current bit from left to right: if the current bit is 1, a multiplication operation (Res = Res*c mod n) will be
+	carried out after a squaring operation (Res = Res<sup>2</sup> mod n), otherwise we perform only the squaring operation without following a multiplication
+	operation.</p>
+
+	<h2>SPA against RSA demonstration</h2>
+
+	<p>Since the presence of the if statement in the algorithm, "Square and Multiply" is vulnerable to "Power Analysis Attack".</p>
+
+	<img src="visual_of_sam.jpg">
+
+	<p>The power traces between "squaring and multiplication" and "squaring" are different. "Simple Power Analysis" can recover every bit of the secure private
+	key d through comparison and analysis of the power traces in each turn. Shown in the figure above, the private key is 1100101.</p>
+
+	<h2>Secure improved "Square and Multiply always" algorithm explanation</h2>
+
+	<p>The original "Square and Multiply" algorithm could be improved through adding a dummy multiplication operation in the branch of bit "0".</p>
+
+	<img src="square_and_multiply_always.jpg"> <img src="processofsama.jpg">
+
+	<p>No matter the current bit is "1" or "0", squaring and multiplication operation will always be carried out. We just according the current bit to choose
+	Res_<sub>0</sub> or Res_<sub>1</sub> as the result in next turn.</p>
+
+	<img src="powertraceofsama.jpg">
+
+	<p>Obviously, there are no more distinguished difference between the branches of bit "1" and bit "0", so recovering each bit of private key by comparison the
+	power traces using SPA is no more feasible.</p>
+
+	<p>For more information on elliptic curve calculations, see the sub section "Simple Power Analysis" in "Power analysis" or
+	<a href="http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis">http://en.wikipedia.org/wiki/Power_analysis#Simple_Power_Analysis</a>.</p>
+
+</body>
+</html>

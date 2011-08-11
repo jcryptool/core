@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="alphabets"
+         name="Alphabets"
+         point="org.jcryptool.core.operations.alphabets">
+      <alphabets class="org.jcryptool.crypto.classic.alphabets.tools.AlphabetStore"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jcryptool.preferences.crypto"
+            class="org.jcryptool.crypto.classic.alphabets.preferences.AlphabetsPreferencePage"
+            id="org.jcryptool.crypto.classic.alphabets.preferences"
+            name="%Label.alphabets"/>
+      <page
+            category="org.jcryptool.crypto.classic.alphabets.preferences"
+            class="org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage"
+            id="org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPage"
+            name="%page.name">
+      </page>
+   </extension>
+
+</plugin>

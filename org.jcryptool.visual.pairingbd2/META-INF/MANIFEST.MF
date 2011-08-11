@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.jcryptool.visual.PairingBDII;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.visual.PairingBDII.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.flexiprovider,
+ org.jcryptool.webbrowser;bundle-version="0.6.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: %Bundle-Vendor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.directories,
+ org.jcryptool.core.util.fonts

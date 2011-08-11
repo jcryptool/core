@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h2>SHA 3 - JH</h2>
+
+	<p>
+	JH is a very efficient algorithm; the design is based on coherent round functions.
+	A compression function is used to reduce the input out of a big permutation (bijective function).
+	JH is applied on the general AES design SPN (Substitution-Permutation-Network) and MDS (Maximum Distance Separable).
+	JH uses a array with 8 dimensions. This design combines the characteristics of AES (SPN + MDS) and Serpent (SPN + bitslice).
+	</p>
+	<b>The following bitlength are supported:</b>
+	<ul>
+		<li>224 Bit</li>
+		<li>256 Bit</li>
+		<li>384 Bit</li>
+		<li>512 Bit</li>
+	</ul>
+	<br/>
+	<p><b>JH compression function:</b></p>
+		<img src="JHfigure1.png" alt="compression function">
+		<br/>
+	<p><b>bijective function E (EDP):</b></p>
+		<img src="JHfigure2.png" alt="bijective function">
+		<br/>
+	<p><b>Truncate:</b></p>
+	Last the final hash is truncated from 1024 Bit to 224, 256, 384 or 512 Bit.
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Dragon">
+    <description>Dragon ist eine wort-basierte Stromverschlüsselung und basiert auf einem nicht linear rückgekoppelten Schieberegister  und einer nicht linearen Filterfunktion mit Gedächtnis.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Dragon Cipher"/>
+	</context>
+</contexts>

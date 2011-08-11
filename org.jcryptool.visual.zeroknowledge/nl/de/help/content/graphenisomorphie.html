@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+	<h1>Graphen Isomorphie</h1>
+
+	<h2>Zweck</h2>
+
+	<p>Alice will Bob beweisen, dass sie einen Isomorphismus f der den
+	Graphen G_0 in den Graphen G_1 transferiert, kennt. Der Beweis soll
+	ablaufen, ohne dass Alice ihr Geheimnis oder Teile davon verrät.</p>
+
+	<h2>Anwendung</h2>
+
+	<ol>
+		<li>Alice wählt zufällig ein Bit a (0 oder 1) und erstellt einen neuen Isomorphismus
+		g welcher als Ergebnis den neuen Graphen H erhält wenn sie g(G_a) berechnet.
+		H wird dann an Bob gesendet.</li>
+		<li>Bob wählt nun seinerseits zufällig ein Bit b (0 oder 1) und sendet dieses
+		an Alice. Er fragt sie nach einem Isomorphismus h welcher folgende Gleichung
+		erfüllt:<br>
+		<span style="white-space:nowrap"><code>H = h(G_[b])</code></span></li>
+		<li>Falls a = b gilt, erhalten wir folgende vereinfachte Gleichung:<br>
+		<span style="white-space:nowrap"><code>g(G_b) = H = h(G_b)</code></span><br>
+		In diesem Fall kann Alice einfach ihren vorher generierten Isomorphismus g an Bob
+		senden.<br/>
+		Falls a != b gilt, kann Alice nicht einfach g an Bob senden weil die beiden
+		Isomorphismen in diesem Fall unterschiedlich sein müssen (<span style="white-space:nowrap"><code>g(G_a) = H = g(G_b)</code></span>
+		ist nicht erfüllbar falls <span style="white-space:nowrap"><code>G_a != G_b</code></span>).
+		Sie ist des Weiteren nicht in der Lage, direkt einen Isomorphismus h von G_b nach H zu erstellen, weil
+		dies ein NP Problem darstellt.<br>
+		Jedoch kennt Alice einen Isomorphismus f von G_0 nach G_1, diesen kann sie anwenden um
+		<span style="white-space:nowrap"><code>f(G_b) = G_a (when a != b)</code></span> zu erhalten.
+		Über diesem Umweg ist es ihr möglich die gewünschte Funktion zu liefern:<br>
+		<span style="white-space:nowrap"><code>h(G_b) = H = g(f(G_b))</code></span>.
+		</li>
+		<li>Bob erhält und überprüft <span style="white-space:nowrap"><code>H = h(G_b)</code></span>.</li>
+	</ol>
+
+	<h2>Verwundbarkeit</h2>
+
+	<p>Carol, der Angreifer, kennt den Isomorphismus f, welcher G_0 in G_1
+	überführt, nicht. Aus diesem Grund ist sie nicht in der Lage Bob
+	einen Isomorphismus zu liefern wenn a != b ist (Punkt Nummer 3 weiter
+	oben für die Herleitung beachten).
+	Aber falls a = b gilt wäre h = g, da sie g selber wählen kann, kann sie
+	in diesem Fall erfolgreich den Test bestehen. Hierfür muss sie erraten
+	welchen Wert Bob für b wählt.</p>
+
+	<p>Die Wahscheinlichkeit richtig zu raten liegt bei 50% (0 oder 1).
+	Wenn zehn aufeinanderfolgende Iterationen des Protokolls
+	durchlaufen werden hätten wir somit eine Betrugswahrscheinlichkeit von weniger
+	als 0.1% (0.5<sup>10</sup>). Dies sollte für die meisten Fälle eine hinreichende
+	Sicherheit bieten.</p>
+
+	<p>Ein Protokolldurchlauf von 1 <= k <= 20 Iterationen kann simuliert werden
+	durch einen Klick auf den Button &quot;mehrmals durchführen&quot;.</p>
+
+</BODY>
+</HTML>

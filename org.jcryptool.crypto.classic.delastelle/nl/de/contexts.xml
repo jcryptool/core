@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Bifid">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. &lt;br&gt;
+Der Schlüssel darf nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Bifid-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Bifid">
+    <description>Die Bifid-Verschl&#252;sselung ist ein Substitutionsverfahren mit Transpositionsmechanismus, der substituierte Buchstaben aufspaltet, in einer Reihe anordnet, und als Paare zusammenf&#252;hrt.
+&lt;br&gt;Diese Verschl&#252;sselung ist auch als Delastelle-Verschl&#252;sselung bekannt, nach ihrem Erfinder, Felix Delastelle.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Bifid-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

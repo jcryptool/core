@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Dragon">
+    <description>Dragon is a word-based stream cipher, based on a nonlinear feedback shift register and a nonlinear filter function with memory.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Dragon Cipher"/>
+	</context>
+</contexts>

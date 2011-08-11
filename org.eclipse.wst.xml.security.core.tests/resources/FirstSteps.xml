@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice>
+ <ID>IN 2008/00645</ID>
+ <IssueDate>2008-03-30</IssueDate>
+ <BuyerParty>
+  <ID>458746</ID>
+  <name>John Doe</name>
+ </BuyerParty>
+ <PaymentMeans>
+  <PayeeFinancialAccount>
+   <ID>07044961</ID>
+   <Name>The Specialists Company</Name>
+   <AccountTypeCode>Credit</AccountTypeCode>
+   <FinancialInstitutionBranch>
+    <ID>776631</ID>
+    <Institution>LOYDGB852</Institution>
+   </FinancialInstitutionBranch>
+  </PayeeFinancialAccount>
+ </PaymentMeans>
+ <TotalAmount currencyID="EUR">382.00</TotalAmount>
+ <!-- item 1 -->
+ <InvoiceLine id="1">
+  <Quantity>2</Quantity>
+  <LineAmount currencyID="EUR">205.00</LineAmount>
+  <Item id="236WV">
+   <BasePrice currencyID="EUR">102.50</BasePrice>
+  </Item>
+ </InvoiceLine>
+ <!-- item 2 -->
+ <InvoiceLine id="2">
+  <Quantity>1</Quantity>
+  <LineAmount currencyID="EUR">177.00</LineAmount>
+  <Item id="193DX">
+   <BasePrice currencyID="EUR">177.00</BasePrice>
+  </Item>
+ </InvoiceLine>
+</Invoice>

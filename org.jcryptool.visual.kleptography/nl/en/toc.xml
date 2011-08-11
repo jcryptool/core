@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Kleptography" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
+    <topic href="$nl$/help/content/index.html" label="Kleptography">
+       <topic href="$nl$/help/content/honest.html" label="Getting started: honest key generation">
+       </topic>
+       <topic href="$nl$/help/content/fixedp.html" label="Using a fixed prime P">
+       </topic>
+       <topic href="$nl$/help/content/prf.html" label="Generating P via a pseudo-random function">
+       </topic>
+       <topic href="$nl$/help/content/prg.html" label="Generating P via a pseudo-random generator">
+       </topic>
+       <topic href="$nl$/help/content/setup.html" label="SETUP attack">
+       </topic>
+    </topic>
+</toc>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Substitution">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. &lt;br&gt;
+Der Schlüssel darf nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Substitutionsverschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Substitution">
+    <description>Die (monoalphabetische) Substitutionsverschlüsselung ersetzt jeden Buchstaben im Klartext durch einen anderen, basierend auf einem Schlüsselalphabet (normalerweise generiert durch den Schlüssel).
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Substitutionsverschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

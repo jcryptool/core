@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Vigenère" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#classicAlgorithmPlugins">
+    <topic label="Vigenère cipher" href="$nl$/help/content/tutorial.html" />
+</toc>

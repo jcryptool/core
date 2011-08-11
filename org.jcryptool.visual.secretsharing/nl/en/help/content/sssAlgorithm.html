@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html xml:lang="en" >
+<head>
+<link rel="stylesheet" type="text/css" href="sssAlgorithm.css">
+</head><body
+>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a
+ id="x1-10001"></a>The Shamir&#8217;s Secret Sharing Algorithm</h3>
+
+<span class="cmbx-10">Shamir&#8217;s Secret Sharing</span> Algorithm is a developed in 1979 by Adi Shamir secret sharing method which it is possible to keep a secret among several people with a certain subset of these individuals needed to reconstruct the secret.
+ <p>
+<!--l. 29--><p class="noindent" >Let <span
+class="cmmi-10">n </span>and <span
+class="cmmi-10">t </span>be natural numbers. In a (<span
+class="cmmi-10">n,t</span>)-Secret-Sharing-Protocol is shared the secret to <span
+class="cmmi-10">n </span>people. Every person has a share of the secret.
+If <span
+class="cmmi-10">t </span>of these people get together they can reconstruct the secret.
+If less than <span
+class="cmmi-10">t </span>together this part secret information they can not obtain relevant information about the secret. This principle can be compared with a treasure map that is distributed to several people.Only when all parts are merged the treasure map then you will find the treasure.<br
+class="newline" />
+<!--l. 38--><p class="noindent" >Shamir's algorithm is based on the Lagrage-polynomial and is an
+ein (<span
+class="cmmi-10">n,t</span>)-(n, t)-Secret Sharing Protocol.  All calculations are carried out in
+<span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124; </span>.<br
+class="newline" />
+<!--l. 43--><p class="indent" >   The dealer wants to distribute a secret <span
+class="cmmi-10">s </span><span
+class="cmsy-10">&#x2208; </span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124; </span>.
+<!--l. 45--><p class="indent" >
+     <ol  class="enumerate1" >
+     <li
+  class="enumerate" id="x1-1002x1">He chooses secret elements <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">&#x2208; </span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1 and generated the polynomial form<br
+class="newline" />
+     <!--l. 49--><p class="noindent" ><span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmmi-10">s </span>+ <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">j</span></sub><span
+class="cmmi-10">X</span><sup><span
+class="cmmi-7">j</span></sup><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1<span
+class="cmmi-10">.</span><a
+ id="x1-10011"></a>
+     <!--l. 54--><p class="noindent" >The polynomial of degree <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1.
+     </li>
+     <li
+  class="enumerate" id="x1-1004x2">The dealer calculated the shares <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>.
+     </li>
+     <li
+  class="enumerate" id="x1-1006x3">The dealer gives every <span
+class="cmmi-10">i</span>-th Shareholder its Share <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,</span>1  <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>. The secret is the constant term <span
+class="cmmi-10">a</span>(0) of the polynomial <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>).</li></ol>
+<!--l. 60--><p class="indent" >  To reconstruct the secret, we assume that <span
+class="cmmi-10">t </span>Shareholder
+work together. Their shares were <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t</span>. Here <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) is the polynomial form (<a
+href="#x1-10011">1<!--tex4ht:ref: polynom --></a>). It is<br
+class="newline" />
+<!--l. 64--><p class="indent" >   <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">X</span>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 70--><p class="indent" >   and<br
+class="newline" />
+<!--l. 72--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t.</span>
+
+<!--l. 76--><p class="indent" >   Displayed in a formula<br
+class="newline" />
+<!--l. 78--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">X</span>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 84--><p class="indent" >   Since the coefficient <span
+class="cmmi-10">a</span>(0) is the secret we calculate<br
+class="newline" />
+<!--l. 86--><p class="indent" >   <span
+class="cmmi-10">s </span>= <span
+class="cmmi-10">a</span>(0) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 92--><p class="indent" >   This formula is used by the shareholders in order to construct the secret.<br
+class="newline" />
+<!--l. 95--><p class="indent" >   We want to show this with an example.<br
+class="newline" />
+<!--l. 97--><p class="noindent" ><span
+class="cmbx-10">Example  </span>Let <span
+class="cmmi-10">n </span>= 5<span
+class="cmmi-10">,t </span>= 3. The dealer choose <span
+class="cmmi-10">p </span>= 17<span
+class="cmmi-10">,x</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">i,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span>5. Let the secret <span
+class="cmmi-10">s </span>= 5. The dealer chooses the secret coefficients <span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">1</span></sub> = 7<span
+class="cmmi-10">,a</span><sub><span
+class="cmr-7">2</span></sub> = 11. Thus we obtain the polynomial<br
+class="newline" />
+<!--l. 102--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = 5 + 7<span
+class="cmmi-10">X </span>+ 11<span
+class="cmmi-10">X</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">.</span>
+<!--l. 106--><p class="indent" >   The shares are therefore <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub> = <span
+class="cmmi-10">a</span>(1) = 6<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">2</span></sub> = <span
+class="cmmi-10">a</span>(2) = 12<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">3</span></sub> = <span
+class="cmmi-10">a</span>(3) = 6<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">4</span></sub> = <span
+class="cmmi-10">a</span>(4) = 5<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">5</span></sub> = <span
+class="cmmi-10">a</span>(5) = 9.
+These are now being distributed to the shareholders. The shareholder 1,2 and 3 are now used to reconstruct the secret. It is calculated the Lagrange polynomial, and the shares were multipled with <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <br
+class="newline" />
+<!--l. 112--><p class="indent" >   <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)      1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span>3<span
+class="cmmi-10">,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 117--><p class="indent" >   It is clear for <span
+class="cmmi-10">w</span><sub><span
+class="cmr-7">1</span></sub> = 4 + 9<span
+class="cmmi-10">x </span>+ 6<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,w</span><sub><span
+class="cmr-7">2</span></sub> = 3 + 2<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,w</span><sub><span
+class="cmr-7">3</span></sub> = 15 + 13<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup>.
+Now we compute the sum of the <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub>s and so we get the original polynomial<br
+class="newline" />
+<!--l. 120--><p class="indent" >   <span
+class="cmex-10">&#x2211;</span>
+     <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = 5 + 7<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span>3<span
+class="cmmi-10">.</span>
+<!--l. 124--><p class="noindent" >The coefficient <span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">0</span></sub> = 5 is our sought secret <span
+class="cmmi-10">s</span>. <br
+class="newline" />
+<!--l. 231--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a
+ id="x1-20002"></a>Literature</h3>
+<!--l. 231--><p class="noindent" >
+       <div class="thebibliography">
+       <p class="bibitem" ><span class="biblabel">
+     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a
+ id="XJBu"></a>Johannes   Buchmann,   Einführung   in   die   Kryptographie,   4.,
+       erweiterte Auflage 2008, Kapitel 16, Seite 243
+</p>
+
+       </div>
+
+</body></html>
+
+
+

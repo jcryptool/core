@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Double Box">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter two keys.&lt;br&gt;
+The keys must only contain characters, that are contained in the alphabet selected above, that means A-Z, but not J.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Double Box cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Double Box">
+    <description>The Double Box cipher is a digraph substitution technique, which works basically like the well-known Playfair algorithm (replacing each letter pair with another), but introduces several improvements, like double encryption and splitting of plaintext.
+&lt;br&gt;The Double box cipher was used by the German forces in World War II and was broken in Bletchley Park until 1944.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Double Box cipher (cryptology manual)"/>
+	</context>
+</contexts>

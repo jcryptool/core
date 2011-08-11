@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.games"
+            class="org.jcryptool.games.numbershark.views.NumberSetView"
+            icon="icons/icon.gif"
+            id="org.jcryptool.games.numbershark.View"
+            name="%view.name.0">
+      </view>
+   </extension>
+   <extension
+         id="NumberSharkHelp"
+         name="NumberSharkHelp"
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="true">
+      </toc>
+      <toc
+            file="$nl$/tocgettingstarted.xml">
+      </toc>
+      <toc
+            file="$nl$/tocreference.xml">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jcryptool.preferences.games"
+            class="org.jcryptool.games.numbershark.preferences.PreferencePage"
+            id="org.jcryptool.games.numbershark.preferences.NumberSharkPage"
+            name="%page.name.0">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.jcryptool.games.numbershark.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.games">
+      <Game
+            name="%Game.Name.0"
+            viewId="org.jcryptool.games.numbershark.View"
+            contextHelpId="org.jcryptool.games.numbershark.ConIDNumberShark">
+      </Game>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

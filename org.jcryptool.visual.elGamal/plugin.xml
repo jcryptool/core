@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.elGamal.ui.ElGamalView"
+            icon="icons/view.gif"
+            id="org.jcryptool.visual.elGamal.view"
+            name="%view.name"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%Visual.name"
+            viewId="org.jcryptool.visual.elGamal.view">
+      </Visual>
+   </extension>
+
+</plugin>

@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Feige Fiat Shamir Protocol</h1>
+
+	<h2>Intention</h2>
+
+	<p>This mathematical protocol is designed to prove to Bob that Alice
+	knows a secret without revealing it. It runs in the number space
+	that is build up on the modulo n field, with n being the product of
+	two prime numbers, p and q. P and q are only known to Alice and must
+	not be made public.
+	Feige Fiat Shamir is an improved Fiat Shamir protocol which is less
+	vulnerable to attacks, meaning that the chance of guessing the right
+	numbers for an attacker is not 50% but 6.25%.</p>
+
+	<h2>Appliance</h2>
+	<p>Alice creates a set of numbers <span style="white-space:nowrap"><code>s<sub>1</sub>, s<sub>2</sub>, ..., s<sub>k</sub></code></span> with
+	<span style="white-space:nowrap"><code>gcd(s<sub>x</sub>), n) = 1</code></span> and calculates
+	corresponding numbers <span style="white-space:nowrap"><code>v<sub>x</sub> = s<sub>x</sub><sup>2</sup> mod n</code></span>.
+	In our example <span style="white-space:nowrap"><code>1 >= k <= 4</code></span>.
+	The <span style="white-space:nowrap"><code>s<sub>x</sub></code></span> numbers are secret whereby
+	the <span style="white-space:nowrap"><code>v<sub>x</sub></code></span> numbers are public and
+	known by Bob.</p>
+
+	<ol>
+		<li>For the iterations she chooses a randomly generated number r in the
+		same number space and calculates <span style="white-space:nowrap"><code>x = r<sup>2</sup> mod n</code></span>.
+		X is sent to Bob.</li>
+
+		<li>Bob then chooses randomly <span style="white-space:nowrap"><code>b<sub>1</sub> ... b<sub>k</sub></code></span>
+		which are either 0 or 1 and sends them to Alice.</li>
+
+		<li>Alice calculates <span style="white-space:nowrap"><code>y = rs<sub>1</sub><sup>b<sub>1</sub></sup> * s<sub>2</sub>
+		<sup>b<sub>2</sub></sup> * ... * s<sub>k</sub><sup>b<sub>k</sub></sup> mod n</code></span> and sends the result to Bob.</li>
+
+		<li>Bob checks if <span style="white-space:nowrap"><code>y<sup>2</sup> = xv<sub>1</sub><sup>b<sub>1</sub></sup> * v<sub>2</sub>b<sub>2</sub>
+		* ... * v<sub>k</sub><sup>b<sub>k</sub></sup></code></span> holds true.</li>
+	</ol>
+
+	<p>If the equation holds, one iteration of the protocol is a success.</p>
+
+	<h2>Vulnerability</h2>
+	<p>Carol, the attacker, does not know p, q and s.
+	She can choose on which x to send to Bob but has no influence on the
+	vector b which she receives. Therefore she would have to guess all
+	b's right to calculate <span style="white-space:nowrap"><code>v()<sup>b()</sup></code></span>.
+	To match the equation <span style="white-space:nowrap"><code>y<sup>2</sup> = xv()<sup>b()</sup></code></span>,
+	x can be set to <span style="white-space:nowrap"><code>v()<sup>b()</sup></code></span>
+	which will lead to <span style="white-space:nowrap"><code>y<sup>2</sup> = x<sup>2</sup></code></span>.
+	This is true for x = y.
+	The probability to guess all k b's right is <span style="white-space:nowrap"><code>0.5<sup>k</sup></code></span>.</p>
+</body>
+</html>
+

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%view.name.0"
+            icon="icons/view.gif"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.crt.views.ChineseRemainderTheoremView"
+            id="org.jcryptool.visual.cr.views.ChineseRemainderView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/help/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%Visual.name.0"
+            viewId="org.jcryptool.visual.cr.views.ChineseRemainderView">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/help/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

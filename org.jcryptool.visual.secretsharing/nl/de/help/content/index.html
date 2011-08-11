@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<h1>Shamir's Secret Sharing</h1>
+
+<p>Die Demonstration soll die Funktionsweise des <b>Shamir's Secret Sharing</b> Plug-ins zeigen.</p>
+Das <b >Shamir's Secret Sharing</b> Plug-in lässt sich über das Menü Visualisierungen oder über die View
+<b >Algorithmen</b> im Tab <b >Visualisierungen</b> starten und in seiner Ansicht maximieren.
+
+<p><img src="sss_plugin.jpg" width="866" height="687"></p>
+
+Das Plug-in gliedert sich in drei Bereiche: Den <b>Header</b>, den <b>Grafik-</b> oder <b>Numerik</b>-Bereich und den <b>Settings</b> Bereich.
+Im <b>Header</b> ist eine kurze Beschreibung über das Plug-in angezeigt. In dem <b>Grafik-</b> bzw. <b>Numerik-</b>Bereich wird die Visualisierung
+dargestellt und in dem <b>Settings</b> Bereich werden die Parameter für den Ablauf festgelegt. Zuerst entscheidet der
+Benutzer, ob er eine <b>graphische-</b> oder <b>numerische-</b>Darstellung des Plug-ins möchte. Dazu kann er im <b>Settings</b> Bereich
+unter dem Punkt <b>Select Modus</b> den Modus einstellen.
+<p><img src="sss_modus.jpg" width="298" height="59"></p>
+
+Je nachdem für welchen Modus der Benutzer sich entscheidet, ändert sich, bis auf die im <b>Settings</b> Bereich einstellbaren
+Parameter, die Ansicht der View. Hier ist der <b>Numerical</b> Modus dargestellt.
+<p><img src="sss_numerical.jpg" width="868" height="619"></p>
+
+<h3>Festlegung der Parameter für die Berechnung</h3>
+Unabhängig davon welcher Modus ausgewählt ist, kann man in dem Bereich <b>Select Parameter</b> die nötigen Parameter
+für den Ablauf des Algorithmuses einstellen. Man wählt die Anzahl der Personen aus, an die die <b>Shares</b> verteilt werden
+und die Anzahl der Personen, die für die Rekonstruktion nötig sind. Desweiteren wählt man eine Primzahl <b>p</b> als Modul
+und ein Geheimnis <b>s</b>, das kleiner als der Modul ist für die Berechnung aus.
+<p><img src="sss_parameter.jpg" width="298" height="235"></p>
+
+Durch Drücken des <b>Select</b> Buttons, öffnet sich ein Dialogfeld, in dem man die Koeffizienten des Polynoms auswählen
+kann. Dabei ist der Koeffizient <i >a0</i> das gewählte Geheimnis und kann nicht verändert werden. Zulässige Werte für die
+Koeffizienten sind nur positive Zahlen mit der Null bis zu der oberen Grenze <i >p-1</i>. Es ist auch möglich durch Betätigen
+des Buttons generate coefficients sich gültige Werte generieren zu lassen.
+<p><img src="sss_coefficients.jpg" width="344" height="403"></p>
+
+Durch Drücken des <b>Ok</b> Buttons wird das Dialogfeld geschlossen und das Polynom als Formel dargestellt. Falls der Wert,
+für den Modul Parameter <b>p</b>, keine Primzahl sein sollte, öffnet sich ein Dialogfeld, in dem man die Eingabe korrigieren
+kann.
+<p><img src="sss_prime_dialog.jpg" width="437" height="259"></p>
+
+Dabei wird der ungültige Wert in der Farbe <b>rot</b> dargestellt. Es gibt nun die Möglichkeit sich eine
+Primzahl, ausgehend von der Zahl die eingegeben wurde, generieren zulassen oder der Benutzer kann eine eigene Zahl
+eingeben. Falls man sich eine Zahl durch das Programm generieren läßt, wird der Button <b>Verify input</b> deaktiviert, da
+der vorgeschlagene Wert gültig und die Verifikation nicht nötig ist. Es können nun weitere Zahlen durch Drücken des
+<b>Generate next prime</b> Buttons berechnet werden. Falls der Benutzer eine Eingabe tätigt, wird die Zahl zuerst in der Farbe <b>schwarz</b>
+dargestellt. Der Benutzer muss nun die eingegebene Zahl durch das Programm verifizieren lassen. Dabei Drückt er den
+<b>Verify input</b> Button. Falls es sich um eine Primzahl handelt, wird die Zahl in <b>grün</b> dargestellt und der <b>Ok</b> Button aktiviert,
+andernfalls wird die Zahl <b>rot</b> gefärbt und der Benutzer muss entweder eine andere Zahl eingeben oder sich vom
+Programm eine gültige Primzahl generieren lassen. Sobald eine gültige Primzahl eingegeben wurde, kann der Benutzer
+den Dialog mit dem <b>Ok</b> Button verlassen.
+<p></p>
+
+Nun kann es sein, dass das Geheimnis s entweder schon vor dem Verifikationsdialog kleiner als das Modul <b>p</b> war oder
+währendessen durch die Eingabe des Benutzers kleiner als das Modul geworden ist. Für diesen Fall öffnet sich ein weiterer
+Dialog, um die Bedingung, dass das Geheimnis <b>s</b> echt kleiner als das Modul <b>p</b> sein muss, zuerfüllen. Der Benutzer
+kann nun das Geheimnis <b>s</b> ändern, in dem er eine kleiner Zahl als das Modul <b>p</b> eingibt. Zur besseren Übersicht wird der
+Modul oben angezeigt. Die Eingabe des Benutzers muss verifiziert werden, dazu wird der <b>check input</b> Button gedrückt.
+Wenn der Wert für das Geheimnis <b>s</b> kleiner als das Modul <b>p</b> ist, wird der Wert in <b>grün</b> dargestellt, andernfalls in der
+Farbe <b>rot</b>. Falls es sich um einen gültigen Wert handelt, wird der <b>Ok</b> Button aktiviert und der Benutzer kann den Dialog
+mit dem <b>Ok</b> Button verlassen.
+<p><img src="sss_secret_dialog.jpg" width="344" height="258"></p>
+
+Nun kann man mit Betätigen des Buttons compute shares die Shares berechnen, die an die Personen verteilt werden.
+<p><img src="sss_polynom.jpg" width="284" height="76"></p>
+
+<h3>Der Grafik-Modus</h3>
+Die berechneten Shares werden in dem Bereich Shares angezeigt.
+<p><img src="sss_shares.jpg" width="303" height="147"></p>
+
+Auf der linken Seite wird der dazugehörige Graph des Polynoms im <b>Graph</b> Bereich dargestellt. Die einzelnen Shares werden
+im Graphen als Punkte in der Farbe <b>magenta</b> angezeigt.
+<p><img src="sss_graph.jpg" width="548" height="506"></p>
+
+In dem <b>Shares</b> Bereich kann man die
+Shares, die man für die Rekonstruktion verwenden will per Checkbox auswählen. Dabei werden die augewählten Shares
+zur besseren Übersicht im Graphen in einer anderen Farbe dargestellt. Es müssen mindestens zwei Shares ausgewählt
+werden, damit der Button <b>Reconstruct</b> aktiviert wird. Um alle Shares aus- oder abzuwählen, kann man auch die Buttons
+<b>Select all</b> oder <b>Deselect all</b> benutzen.
+<p></p>
+
+Nach dieser Auswahl wird durch den Button <b>Reconstruct</b> die Berechnung der <b>Rekonstruktion</b> des Polynoms durchgeführt.
+Im Bereich Reconstruction werden die Zwischenergebnisse der Berechnung angezeigt.
+<p><img src="sss_reconstruction.jpg" width="297" height="119"></p>
+
+Im unteren Teil des <b>Graph</b> Bereichs wird das rekonstruierte Polynom angezeigt. Dabei wird das Ergebnis in der Farbe <b>grün</b>
+angezeigt, falls das Polynom vollständig rekonstruiert wurde und die Farbe <b>rot</b> gewählt, falls nicht genug Punkte für die
+Rekonstruktion ausgewählt wurden.
+<p><img src="sss_ergebnis.jpg" width="538" height="74"></p>
+
+Für den Fall, dass das Polynom nicht richtig rekonstruiert wurde, werden beide Polynome als Graph in unterschiedlichen Farben
+dargestellt.
+<p><img src="sss_graph_reconstruct.jpg" width="544" height="503"></p>
+
+Man kann jeder Zeit mit dem Mauszeiger über die Punkte fahren, um sich die den aktuellen Share anzeigen zulassen. Dabei wir der
+Share eingeblendet, wenn der Mauszeiger sich über den Punkt im Graphen befindet und ausgeblendet falls nicht.
+<p><img src="sss_share_point.jpg" width="549" height="502"></p>
+
+<h3>Der Numerik-Modus</h3>
+Der <b>Numerik-</b>Modus eignet sich für große Zahlen. Dabei ist der Bereich <b>Select Parameter</b> identisch mit dem <b>Graphik-</b>
+Modus und wurde bereits oben beschrieben. Auf der rechten Seite unten befindet sich der <b>Info</b> Bereich, in
+dem die Berechnungsvorschrift und das jeweilige Endergebnis nach der Berechnung angezeigt wird.
+<p><img src="sss_info.jpg" width="298" height="185"></p>
+
+Die linke Seite wird in zwei Bereiche unterteilt, den <b>Shares</b> Bereich und den <b>Reconstruction</b> Bereich. In dem <b>Shares</b>
+Bereich werden die berechneten Shares angezeigt. Der Bereich ist für große Werte gut geeignet.
+<p><img src="sss_shares_big.jpg" width="552" height="283"></p>
+ Auch
+hier kann man per Checkbox die jeweiligen Shares für die Rekonstruktion auswählen. Um alle aus- bzw abzuwählen kann
+man die Buttons <b>Select all</b> bzw <b>Deselect all</b> benutzen. Wiederum muss man mindestens zwei Shares auswählen, damit
+man den <b>Reconstruct</b> Button betätigen kann.
+<p></p>
+
+Danach werden die Zwischenergebnisse in dem Bereich <b>Reconstruction</b> angezeigt. Das rekonstruierte Polynom wird
+darunter in der Farbe <b>grün</b>, falls die Rekonstruktion erfolgreich war und in der Farbe <b>rot</b>, falls zu wenige Shares
+auswählt wurden, angezeigt.
+<p><img src="sss_reconstruction_big.jpg" width="550" height="199"></p>
+
+Desweiteren wird zusätzlich im Info Bereich eine Information zum Endergebnis ausgegeben.
+<p><img src="sss_info_ergebnis.jpg" width="282" height="44"></p>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+<h1>Demonstration of Diffie-Hellman key exchange over elliptic curves (ECDH)</h1>
+
+<p>The Diffie-Hellman key exchange is a protocol that allows two parties to establish a shared secret key over an insecure communications channel.<br>
+The Diffie-Hellman protocol is possible over  mathematical functions, like the multiplicative group of integers mod p or over elliptic curves. Here we use elliptic curves.</p>
+<h2>Protocol explanation</h2>
+  <h3>Step 1. Establish public parameters</h3>
+    <p>Alice and Bob agree on an elliptic curve and a generator <i>G</i> which is a point on the curve.</p>
+  <h3>Step 2. Create secret keys</h3>
+    <p>Alice an Bob both choose a secret key <i>d</i> which they will keep to themselves.</p>
+  <h3>Step 3. Create shared keys</h3>
+    <p>Alice and Bob will now multiply <i>G</i> by their own secret keys (scalar multiplication).</p>
+  <h3>Step 4. Exchange shared keys</h3>
+    <p>Alice and Bob will exchange their shared keys.</p>
+  <h3>Step 5. Create session key</h3>
+    <p>Alice and Bob will now both multiply each others shared key with their own secret key.<br>
+       The session key is the X-value of the calculated key-point.</p>
+
+<h2>Curve demands for cryptography</h2>
+  <p>In order to use elliptic curves for (safe) cryptography, the curve needs to meet some demands.<br>
+  In the demonstration it's possible to perform the exchange using small elliptic curves. This form is not safe for the actual key exchange because small elliptic curves cannot meet these demands.<br>
+  These demands are described in e.g. "SEC 1: Elliptic Curve Cryptography" from Certicom Research (<a href="http://www.secg.org/collateral/sec1_final.pdf">download here</a>).</p>
+  <h3>E(Fp):</h3>
+    <b>E(Fp):</b> the curve itself.<br>
+    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
+    <b>p:</b> is prime such that [log2(<i>p</i>)] = 2<i>t</i> if <i>t</i> != 256 and such that [log2(<i>p</i>)] = 521 if <i>t</i> = 256.<br>
+    <b>G:</b> a point on the curve used as base.<br>
+    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
+    <b>h:</b> the cofactor. <i>h</i> = #<i>E(Fp)</i> / <i>n</i>.<br><br>
+    - #<i>E(Fp)</i> != <i>p</i><br>
+    - <i>p</i>^B != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
+    - <i>h</i> is a whole number<br>
+    - <i>h</i> is <= 4
+
+  <h3>E(F2^m):</h3>
+    <b>E(F2^m):</b> the curve itself.<br>
+    <b>t:</b> the desired security level in bits. <i>t</i> can be {56, 64, 80, 96, 112, 128, 192, 256}<br>
+    <b>'t:</b> the smallest integer in the set {64, 80, 96, 112, 128, 192, 256, 512} that is greater than <i>t</i><br>
+    <b>m:</b> an integer in the set {113, 131, 163, 193, 233, 239, 283, 409, 571} so that 2<i>t</i> < m < 2<i>'t</i>.<br>
+    <b>f(x):</b> an irreducible polynomial to act as generator of <i>F(2^m)</i>.<br>
+    <b>G:</b> a base point on the curve.<br>
+    <b>n:</b> a prime number which is the order of <i>G</i>.<br>
+    <b>h:</b> the cofactor. <i>h</i> = #<i>E(F2^m)</i> / <i>n</i>.<br><br>
+    - <i>b</i> is not 0<br>
+    - #<i>E(F2^m)</i> != <i>2^m</i><br>
+    - <i>2^mB</i> != 1 mod(<i>n</i>) for any 1 <= B < 20<br>
+    - <i>h</i> is a whole number<br>
+    - <i>h</i> is <= 4
+
+<h2>The ECDH demonstration</h2>
+<p>The demonstration shows how Alice and Bob establish a shared key using the Diffie-Hellman key exchange protocol over elliptic curves.<br>
+It's possible to perform the protocol with small or large elliptic curves.<br><br>
+By pressing each large button in the demonstration, the protocol will proceed to its next step.<br>
+It's possible to get a description for each action by selecting the "Show information dialogs" checkbox in the Options panel.<br>
+<img src="showInfo.PNG">
+<br><br>
+After pressing the button "Set public parameters" it's possible to select an elliptic curve and a generator point <i>G</i>.<br>
+<img src="setParameters.PNG"><br><br>
+When the parameters are set, they will appear in the "Public parameters" panel.<br>
+<img src="parameters.PNG"><br><br>
+By selecting each active button, other buttons will become active. When a step is completed the outline of the button will change from red to green.<br>
+<img src="greenButton.PNG"><br><br>
+When every step is completed, and Alice and Bob successfully created a session key, a key will appear at the bottom of the screen.<br>
+<img src="key.PNG"><br><br>
+To start over, press the "Reset" button in the right corner of the demonstration and all the settings will be erased.<br>
+To save the results of the demonstration, select  to where you want to save the results and press "Save".<br>
+<img src="save.PNG"><br><br>
+
+
+<p>For more information on elliptic curve calculations, see the "Demonstration of point addition over elliptic curves (EC)" or <a href="http://en.wikipedia.org/wiki/Elliptic_curves">http://en.wikipedia.org/wiki/Elliptic_curves</a>.</p><br>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>Entropie-Analyse</h1>
+
+	<p>Das Entropie-Analyse Plug-in berechnet den Wert der <b>Entropie</b> nach <b>Claude Elwood Shannon</b> [1].</p>
+
+	<p>Es benutzt den Texteditor als Nachrichtenquelle. Nach Eingabe einer Zeichenfolge im Editor kann die Berechnung &uuml;ber den Tab
+	"Konfiguration und Start" begonnen werden. Die Ergebnisse befinden sich nach erfolgreicher Berechnung in den Tabs "Ergebnis" und "Wertetabelle".</p>
+
+	<h2>Tab "Konfiguration und Start"</h2>
+
+	<p>Um die Berechnung zu starten, sind folgende drei Schritte n&ouml;tig:</p>
+
+	<ol>
+		<li>Einstellen der zu ber&uuml;cksichtigenden Zeichen (Alphabet)</li>
+		<li>Auswahl des Analyse-Modus (Standard oder tief)</li>
+		<li>Beginn der Berechnung mit den getroffenen Einstellungen</li>
+	</ol>
+
+	<img src="tab1.jpg" alt="The configuration and start tab.">
+
+	<h3>Analyse-Modus</h3>
+
+	<ul>
+        <li><i>Standard-Analyse:</i><br/>
+        Es werden statistische Abh&auml;ngigkeiten zwischen den Zeichen bis maximal zur vorgegebenen Tupell&auml;nge n ber&uuml;cksichtigt.<br/>
+		<u>Abbruchkriterium:</u> Die Analyse wird beendet, wenn <i>eine</i> der folgenden Bedingungen erfüllt ist: Die vorgegebene Tupellänge n wurde erreicht,
+		 oder das eingestellte Signifikanzniveau wurde unterschritten.<br/></li>
+        <li><i>Tiefen-Analyse:</i><br/>
+        Die zu ber&uuml;cksichtigende Tupell&auml;nge wird automatisch nach jedem Durchlauf um eins inkrementiert bis der Zuwachs der Entropie das
+		vorzugebende Signifikanzniveau unterschreitet.<br/>
+		<u>Abbruchkriterium:</u> Die Analyse wird erst dann beendet, wenn das Signifikanzniveau unterschritten wird.
+		</li>
+	</ul>
+
+	<h2>Tab "Ergebnis"</h2>
+
+	<p>Dieses Tab zeigt eine Zusammenfassung der errechneten Werte. Der folgende Screenshot zeigt ein Beispiel.</p>
+
+	<img src="tab2.jpg" alt="Das Ergenis Tab.">
+
+	<h3>Erl&auml;uterung der Kennzahlen</h3>
+	<ol>
+		<li><i>Abbruchkriterium:</i> Hier wird angegeben, welches Kriterium zur Beendigung der Analyse gef&uuml;hrt hat. Dabei gibt es zwei
+		M&ouml;glichkeiten: Entweder
+wurde die vorgegebene Tupell&auml;nge n erreicht, oder das Signifikanzniveau wurde
+beim Zuwachs der Entropie unterschritten.</li>
+ <li><i>Anzahl der Zeichen:</i> Die Werte beziehen sich auf die Anzahl der Zeichen,
+nachdem die eingestellten Filterkriterien angewandt wurden. Der erste Wert
+gibt die Anzahl der unterschiedlichen Zeichen, der zweite Werte die gesamte
+Anzahl der Zeichen an.</li>
+ <li><i>Maximale Entropie:</i> Der Wert der maximalen Entropie (unter Annahme von Gleichverteilung der Zeichen).</li>
+ <li><i>Entropie:</i> Hier werden zwei Werte geliefert. Zum Einen die Entropie unter
+Ber&uuml;cksichtigung der Auftrittswahrscheinlichkeiten der einzelnen Zeichen,
+und zum Anderen die Entropie unter Ber&uuml;cksichtigung von Abh&auml;ngigkeiten
+der maximalen L&auml;nge n.</li>
+ </ol>
+
+ <h2>"Wertetabelle"</h2>
+ <p>Diese Tabelle zeigt alle errechneten Werte unter Ber&uuml;cksichtigung der statistischen Abh&auml;ngigkeiten beginnend bei einzelnen Zeichen bis hin zu n-Tupeln. </p>
+ <img src="tab3.jpg" alt="Die Wertetabelle">
+ <p><i>G(n)</i> ist die (absolute) Entropie unter Ber&uuml;cksichtigung von n-Tupeln.</p>
+ <p><i>F(n)</i> ist die bedingte Entropie der n-ten Zeichen unter Bedingung des vorangegangenen (n-1)-Tupels.</p>
+ <p><br/></p>
+ <p>Quellen:<br/>
+ <ul>
+ <li>[1]<br/>Shannon, Claude E. ; Weaver, Warren: The mathematical theory of communication. Urbana and Chicago : University of Illinois Press, 1998. ISBN 0-252-72548-4</li>
+ </ul> 
+ </p>
+</body>
+</html>

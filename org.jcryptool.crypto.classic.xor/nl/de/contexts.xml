@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="XOR">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. Alternativ kann auch eine Datei als Schlüssel gewählt werden &lt;br&gt;
+Der eingegebene Schlüssel darf nur Zeichen aus dem ausgewählten Alphabet enthalten. Nichtalphabet-Zeichen werden ignoriert.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die XOR-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="XOR">
+    <description>Das XOR-Verfahren f&#252;hrt eine logische XOR-Verkn&#252;pfung des Klartextes und des Schl&#252;ssels durch. Eine erneute Verschl&#252;sselung des Geheimtextes mit demselben Schl&#252;ssel f&#252;hrt zur Entschl&#252;sselung des Textes.
+&lt;br&gt;XOR ist eines der einfachsten Verfahren und findet heute Anwendung in modernen Blockchiffren.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die XOR-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

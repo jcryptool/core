@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h2>SHA 3 - Skein</h2>
+
+	<p>
+	Skein ist ein einfach strukturiertes und schnelles Hashverfahren das auf die
+	Blockchiffre Threefish aufbaut. Zusätzlich enthält es einen UBI(Unique Block Interaction) mit Tweak.
+	<br>
+	Threefish ist eine n-bit Blockchiffre mit einem 128-bit Tweak, daher ergibt sich für n: 256, 512, 1024 bit.
+	<br>
+	Skein verwendet einfache Operationen(add, rotate, xor) und arbeitet mit
+	64-bit Worten. Die Blockchiffre beinhaltet Zusatzinformationen (Tweak), welche
+	ein Byte Zähler(der bereits verarbeiteten) und ein Typ Feld beinhalten.
+	<ul>
+	<li>Der UBI Modus für "Tweakable" Blockchiffren</li>
+	<li>Berechnen eines internen Hashwertes</li>
+	</ul>
+	<img src="Skeinfigure1.png" alt="interner Hash"><br/>
+	<ul>
+	<li>Berechnen des eigentlichen Hashwertes</li>
+	</ul>
+	<img src="Skeinfigure2.png" alt="eigentlicher Hash"><br/>
+	<ul><li>Threefish beinhaltet:</li>
+	<li>MIX - Operation</li>
+	<li>Rundenstruktur (7280 Runden, alle 4 Runden wird ein Rundenschlüssel addiert)</li>
+	<li>der Key Schedule (aus n-bit Schlüssel und 128-bit Tweak werden 1921 n-bit Rundenschlüssel generiert)</li><br>
+	<br/>
+	<ul>
+	<li>Die MIX - Operation</li>
+	</ul>
+	<img src="Skeinfigure3.png" alt="MIX Operation">
+	<ul>
+	<li>Rechnet auf 64-bit Worten</li>
+	<li>amortisiert 1 Taktzyklus auf Referenzplattform</li>
+	<li>Rotation um einen von den Daten unabhängigen Wert (1 bis 63)</li>
+	</ul>
+	<br/>
+
+	<ul><li>4 Runden von Threefish-512</li></ul>
+	<img src="Skeinfigure4.png" alt="4 Runden von Threefish-512"><br/>
+</body>
+</html>
+

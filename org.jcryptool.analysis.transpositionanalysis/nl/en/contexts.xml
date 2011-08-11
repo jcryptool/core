@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="transpositionanalysis" title="Transposition Analysis">
+      <description>The transposition analysis helps at analyzing a transposition cipher, by taking care of the arrangement of the ciphertext into a table with reorderable columns. The columns can be reordered, and the column count can adapted freely, making the analysis relatively painless.&lt;br&gt;
+Try to find parts of words into the cipher, and move the columns to arrange the text in the right order. While doing this, try to find the right column count/block length, until the text in the table/in the preview text field (bottom right) seems to make sense. If so, you can click on the button above the preview text field, to decrypt the cipher into a new editor.</description>
+      <topic href="$nl$/content/index.html" label="Transposition Analysis" />
+   </context>
+	<context id="wizard" title="Text Selection">
+		<description>In this wizard, every setting you change will be previewed on the bottom, just like it will look in the main view after finishing the wizard.&lt;br&gt;
+At first, the currently opened editor&apos;s text is loaded, but with the dropdown menu under the text field, you can choose whatever (opened) editor&apos;s content you like.&lt;br&gt;
+In the group &lt;b&gt;Shorten the text [...]&lt;/b&gt; you can choose whether you want to have the whole text, or just a part of it in the table. In most cases, this setting adjusts itself into your best choice (although there is nothing wrong if you change it, though)&lt;br&gt;
+In the group, &lt;b&gt;Transposition columns&lt;/b&gt;, you can choose the blocklength of the blocks written in the table under each other. Effectively, this is your analyzed key length. Of course, you can change this important setting every time, outside the wizard, too.
+</description>
+		<topic href="$nl$/content/index.html" label="Transposition Analysis"/>
+	</context>
+
+</contexts>

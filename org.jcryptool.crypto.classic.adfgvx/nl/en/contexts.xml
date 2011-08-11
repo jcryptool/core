@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Vigenère">
+		<description>Select the operation (encrypt or decrypt), an alphabet, and enter two keys. &lt;br&gt;
+The two keys must only contain characters, that are contained in the alphabet selected above.
+		</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The ADFGVX cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="ADFGVX">
+    <description>The ADFGVX cipher consists of digraph substitution (replace each pair of letters with another) and transposition. The substitution is based on a 6x6 square, which sides are labeled with A, D, F, G, V and X.
+    &lt;br&gt;This cipher was used by the Germans in World War I, but deciphered by French analytics soon after its deployment in the German communication.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The ADFGVX cipher (cryptology manual)"/>
+	</context>
+</contexts>

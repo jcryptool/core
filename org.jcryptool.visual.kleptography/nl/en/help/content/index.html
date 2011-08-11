@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<h1>Understanding kleptographic attacks</h1>
+
+<p>This guide provides a more in-depth explanation of the key generation attacks
+offered by the <i>org.jcryptool.visual.kleptography</i> plug-in. Although kleptographic attacks
+can be designed for any asymmetric cryptographic algorithm, this plug-in is based on RSA.
+It is assumed that the user is familiar with the mathematics behind RSA encryption.
+The ideas and algorithms used in the plug-in are largely based on those from the thorough
+and unique book [<a href="#YY04">YY04</a>]. That book is highly recommended for an even more in-depth
+analysis of kleptography, as well as cryptovirology in general. A FAQ for cryptovirology
+is offered by the authors of the book at [<a href="#Yo06">Yo06</a>].</p>
+
+<p>Kleptography is "the study of stealing information securely and subliminally", as defined by
+the authors of [<a href="#Yo06">Yo06</a>], who in fact coined the word.
+The idea is to introduce an asymmetric backdoor into a black-box cryptosystem such that
+an implementation of this system will appear to function normally for all users except
+the individual attacker that can use some special information to aid in decrypting some
+or all of the generated key pairs. Even if the black box device were to be opened and investigated,
+it would only be possible to notice that an attack is underway, but it would still be
+impossible to make use of the backdoor without the attacker's special information.</p>
+
+<p>The authors of [<a href="#YY04">YY04</a>] describe an attack on RSA that meets these criteria.
+They call it a secretly embedded trapdoor with universal protection (SETUP) attack.
+This plug-in includes</p>
+
+<ul>
+<li>a slightly simplified version of the SETUP attack,
+<li>three other, less secure attacks, and
+<li>honest key generation (for comparison).
+</ul>
+
+<p>Each of these attacks assume either that the manufacturer is dishonest and has introduced
+some sort of weakness or backdoor into the given cryptographic device, or that an outside attacker has
+somehow infected the device and altered it to suit his or her needs.</p>
+
+<p>For more information about these key generation methods and their implementations in this plug-in,
+please refer to the pages for each specific algorithm:</p>
+
+<ul>
+<li><a href="honest.html">Getting started: honest key generation</a>
+<li><a href="fixedp.html">Using a fixed prime P</a>
+<li><a href="prf.html">Generating P via a pseudo-random function</a>
+<li><a href="prg.html">Generating P via a pseudo-random generator</a>
+<li><a href="setup.html">SETUP attack</a>
+</ul>
+
+<p>The purpose of demonstrating these attacks in a contained environment is to indicate that it is
+essentially impossible to know that your keys are entirely secure. Even the strictest statistical
+tests may not reveal the presence of a well-hidden backdoor. You must be able to completely
+trust the manufacturer of the cryptosystem implementation and also trust that it has not been
+attacked and altered to contain a vulnerability.</p>
+
+<p>[YY04]<a id="YY04"></a> A. Young, M. Yung, <i>Malicious Cryptography: Exposing Cryptovirology</i>,
+John Wiley & Sons, 2004.</p>
+<p>[Yo06]<a id="Yo06"></a> A. Young, <i>Cryptovirology FAQ</i>, Version 1.31,
+<a href="http://www.cryptovirology.com/">http://www.cryptovirology.com/</a>.</p>
+
+</body>
+</html>

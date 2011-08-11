@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis; singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.eclipse.help.ui;bundle-version="3.4.1",
+ org.jcryptool.util
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.jcryptool.analysis.textmodify.wizard,
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.crypto.classic.model.ui.wizard,
+ org.jcryptool.crypto.classic.transposition.algorithm
+Bundle-Vendor: %Bundle-Vendor

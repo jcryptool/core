@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="magicdoorView" title="Magische Tür">
+    <description>Das Magische Tür Szenario ist ein einfach zu verstehendes Beispiel für einen Zero Knowledge Beweis. Alice möchte Bob beweisen, dass sie ein Geheimnis kennt, nämlich den geheimen Code einer Sicherheitstür in einem Gebäude. Diese Tür verbindet zwei nebeneinander liegende Räume (markiert mit &apos;Links&apos; und &apos;Rechts&apos;), die ansonsten nur jeweils einen anderen Ausgang auf den gleichen Flur haben. Im Rahmen des Beweises möchte Alice nichts über den geheimen Code selber an Bob oder eine andere Person verraten.</description>
+		<topic href="$nl$/help/content/magicdoor.html" label="Magische Tür"/>
+	</context>
+ <context id="fiatshamirView" title="Fiat Shamir Protokoll">
+    <description>Dieses Zero Knowledge Verfahren wurde entwickelt um Bob zu beweisen, dass Alice ein Geheimnis besitzt ohne dieses jedoch im Laufe des Protokolls zu offenbaren. Es arbeitet auf dem Körper der ganzen Zahlen Modulo n. N ist ein Produkt zweier Primzahlen, die unbedingt von Alice geheim zu halten sind.</description>
+    <topic href="$nl$/help/content/fiatshamir.html" label="Fiat Shamir Protokoll"/>
+ </context>
+ <context id="feigefiatshamirView" title="Feige Fiat Shamir Protokoll">
+    <description>Dieses mathematische Protokoll wird benutzt um Bob zu beweisen, dass Alice ein Geheimnis kennt, ohne dies oder Teile davon während des Beweisprozesses zu verraten. Es arbeitet auf dem Körper der ganzen Zahlen Modulo n. N ist ein Produkt zweier Primzahlen p und q, die unbedingt von Alice geheim zu halten sind. Das Feige Fiat Shamir Protokoll ist eine Verbesserung des Fiat Shamir Protokolls und nicht so anfällig gegen Attacken. Bei einem Standard-Vektor mit vier Elementen liegt die Chance eines Angreifers Bob zu betrügen bei nur noch 6.25% pro Iteration.</description>
+    <topic href="$nl$/help/content/feigefiatshamir.html" label="Feige Fiat Shamir Protokoll"/>
+ </context>
+ <context id="graphenisomorphieView" title="Graphenisomorphie">
+    <description>Alice will Bob beweisen, dass sie einen Isomorphismus f der den Graphen G_0 in den Graphen G_1 transferiert, kennt. Der Beweis soll ablaufen, ohne dass Alice ihr Geheimnis oder Teile davon verrät.</description>
+    <topic href="$nl$/help/content/graphenisomorphie.html" label="Graphenisomorphie"/>
+ </context>
+</contexts>

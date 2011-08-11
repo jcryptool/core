@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+<h1>Magic Door</h1>
+
+<h4>Intention:</h4>
+<p>
+The Magic Door scenario is an easy to understand example for a zero
+knowledge proof. Here Alice wants to prove to Bob that she knows the
+secret code for the door between two rooms (marked with 'Left' and
+'Right'). But she does not want to disclose any information about
+the secret itself to Bob or any third party.
+</p>
+
+<h4>Appliance:</h4>
+<p>
+Alice decides randomly on a room and enters it. Bob does not know
+which room Alice chooses, but he knows that once she entered the room
+the only way to change to the other room is by knowing the secret
+code between the security door of the two adjacent rooms.
+</p>
+
+<p>
+Bob then also decides randomly on one room and stands in front of it.
+Alice knows which room Bob has chosen (because she can see him through a one-way window)
+and now has to leave through the door of his choice.
+</p>
+
+<p>
+Now there are two possible situations applicable:
+<br><b>1)</b> Alice is already in the room Bob has chosen, she only has to
+leave the room through the door she came in.
+<br><b>2)</b> Alice is in the other room; she has to change rooms through the
+security door. As she knows the secret code she is able to do so
+and can come out through the door Bob has chosen.
+</p>
+
+<p>
+In both situations the zero knowledge protocol is successful. Alice
+did show to Bob that she knows the secret code without sharing any
+information about the code itself.
+</p>
+
+<h4>Vulnerability:</h4>
+<p>
+Carol, the attacker, wants to deceive Bob by pretending to know
+the secret code of the security door without actually possessing it.
+She has a mathematical chance of 50% to guess the same room like
+Bob, therefore a single round of the protocol is not sufficient to
+ensure with a satisfying probability that the prover really knows
+the secret code.
+Therefore in a practical appliance of this protocol, several rounds
+have to be iterated consecutively. The chance for deceiving Bob
+will exponentially decrease with the number of iterations.
+</p>
+
+<p>
+Chance to deceive Bob without knowledge of the secret:
+Chance = p<sup>k</sup>, with p = probability and k = number of iterations
+</p>
+
+<p>
+For the Magic Door protocol we have p = 0.5. By running ten consecutive
+iterations we have a chance to deceive Bob of less than 0.1% (0.5<sup>10</sup>),
+which should be safe enough for most considerations.
+</p>
+
+<p>
+By clicking on the "run several times" button in the main interface,
+a Magic Door protocol with adjustable iterations can be simulated
+from provers and attackers view.
+</p>
+
+</BODY>
+</HTML>

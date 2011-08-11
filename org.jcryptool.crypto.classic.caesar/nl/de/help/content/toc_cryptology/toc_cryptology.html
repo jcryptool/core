@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+
+<h2>Caesar-Verschlüsselung</h2>
+<p>
+	Die Caesar-Verschlüsselung ist eine der einfachsten und bekanntesten Verschlüsselungstechniken. Sie ist nach Julius Caesar benannt, der sie zur Kommunikation mit seinen Generälen benutzte.
+</p>
+
+<h3 id="classification">Klassifikation</h3>
+<p>
+	Die Caesar-Verschlüsselung ist ein monalphabetisches Substitutionsverfahren.
+</p>
+
+<h3 id="scheme">Ein- und Ausgabeschema</h3>
+
+<img src="in_out_scheme.png" />
+
+<h3 id="algorithm">Der Ver- und Entschlüsselungsalgorithmus</h3>
+
+<h4>Verschlüsselung</h4>
+
+<p>Bei der Caesar-<b>Verschlüsselung</b> wird jedes Zeichen des
+Textes um eine bestimmte Anzahl von Stellen im Alphabet verschoben. Der
+Schlüssel k ist die Schiebeweite, ist also eigentlich eine Zahl, wird jedoch
+meistens als Buchstabe des Alphabets dargestellt (Die Zahl k ergibt sich dann
+als Position dieses Buchstaben im Alphabet, 1-relativ)</p>
+
+<p>Diese Verschiebung kann man als monalphabetische Substitution
+derart darstellen, dass das Substitutionsalphabet das ursprüngliche Alphabet
+ist, um k Stellen verschoben. Ein Beispiel (k=4):</p>
+
+<p><img width=647 height=80 id="Grafik 0"
+src="alphabet_transformation.png" alt="alphabet_transformation.png"></p>
+
+<p>So wird aus jedem Buchstaben a des Klartextes der Buchstabe
+a‘, welcher an der Position, die a im Klartextalphabet einnahm, im verschobenen
+(Geheimtext-) Alphabet steht.</p>
+
+<p>Als Beispiel hierfür wird nun das Wort „CHIFFRE“ mit dem
+Schlüssel „D“ über dem Alphabet der Großbuchstaben ohne Umlaute oder
+Sonderzeichen (26 Zeichen) verschlüsselt.</p>
+
+<p><i>Klartext:</i> “CHIFFRE”; Schlüssel: “D” (d. h. k=4)</p>
+
+<p><i>Verschlüsselungsergebnis:</i> „GLMJJVI“ (C+4 = <b>G</b>,
+H+4 = <b>L</b>, …; siehe auch die Alphabet-Abbildung oben, welche ebenfalls für
+k=4 gilt)</p>
+
+<h4>Entschlüsselung</h4>
+
+<p>Die <b>Entschlüsselung</b> erfolgt intuitiv durch eine
+Rückverschiebung der Buchstaben um k. Anders ausgedrückt, wird der inverse
+Schlüssel i gebildet mit i = Größe(Alphabet) – k, und mit diesem zur
+Entschlüsselung „verschlüsselt“.</p>
+
+</div>
+
+</body>
+
+<h3 id="furtherreading">Weiterführende Lektüre</h3>
+<ul>
+  <li>
+  	<a class="external" href="http://de.wikipedia.org/w/index.php?title=Caesar-Verschl%C3%BCsselung&printable=yes">
+  		Der Wikipedia-Artikel zur Caesar-Verschlüsselung
+  	</a>
+  </li>
+</ul>
+
+
+</body>
+</html>

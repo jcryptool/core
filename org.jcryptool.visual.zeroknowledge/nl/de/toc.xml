@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Zero Knowledge" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins"> 
+	<topic label="Zero Knowledge"  href="$nl$/help/content/index.html"> 
+
+   		<topic label="Magische Tür"
+        	href="$nl$/help/content/magicdoor.html" />
+   		<topic label="Fiat Shamir Protokoll"
+        	href="$nl$/help/content/fiatshamir.html" />
+   		<topic label="Feige Fiat Shamir Protokoll"
+        	href="$nl$/help/content/feigefiatshamir.html" />
+   		<topic label="Graphen Isomorphie"
+        	href="$nl$/help/content/graphenisomorphie.html" />
+
+	</topic>
+</toc>

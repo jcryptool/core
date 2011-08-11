@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.jcryptool.crypto.classic.playfair.algorithm"
+         point="org.jcryptool.core.operations.algorithms">
+      <algorithm
+            actionClass="org.jcryptool.crypto.classic.playfair.algorithm.PlayfairAlgorithmAction"
+            class="org.jcryptool.crypto.classic.playfair.algorithm.PlayfairAlgorithm"
+            contextHelpId="org.jcryptool.crypto.classic.playfair.algorithm"
+            engineClass="org.jcryptool.crypto.classic.playfair.algorithm.PlayfairEngine"
+            id="org.jcryptool.crypto.classic.playfair.algorithm"
+            name="%algorithm.name"
+            type="classic"/>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false"/>
+      <toc
+            file="$nl$/toc_cryptology.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.jcryptool.commands.core.commands">
+      <command
+            commandImpl="org.jcryptool.crypto.classic.playfair.algorithm.PlayfairCmd"
+            description="%command.description"
+            name="playfair">
+         <example
+               commandline="#commandname# -E -ed -k AKEY"
+               explanation="%example.explanation">
+         </example>
+         <example
+               commandline="#commandname# -D -ed -k AKEY"
+               explanation="%example.explanation.0">
+         </example>
+         <example
+               commandline="#commandname# -E -t &quot;TEST TEXT&quot; -k AKEY"
+               explanation="%example.explanation.1">
+         </example>
+      </command>
+   </extension>
+
+</plugin>

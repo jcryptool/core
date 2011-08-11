@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Caesar">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key.&lt;br&gt;
+The key consists of exactly one character, that has to be contained in the selected alphabet.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.htmltoc_cryptology/toc_cryptology.html" label="The Caesar cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Caesar">
+    <description>The Caesar cipher is one of the simplest and most widely known encryption techniques. It is a classical type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet.
+&lt;br&gt;The Caesar cipher is named after Julius Caesar, who used it to communicate with his generals.
+    </description>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Caesar cipher (cryptology manual)"/>
+	</context>
+</contexts>

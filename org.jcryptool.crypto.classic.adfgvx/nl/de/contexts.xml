@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="ADFGVX">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie zwei Schlüssel an.&lt;br&gt;
+Beide Schlüssel dürfen nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die ADFGVX-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="ADFGVX">
+    <description>Das ADFGVX-Verfahren besteht aus bigraphischer Substitution (Ersetzen jedes Buchstabenpaares durch ein anderes) und Transformation.
+Die Substitution basiert auf einem 6x6-Quadrat, dessen Seiten mit A, D, F, G, V, X beschriftet sind.
+&lt;br&gt;ADFGVX wurde von den Deutschen im ersten Weltkrieg eingesetzt, aber schon nach kurzer Zeit von den Franzosen gebrochen.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die ADFGVX-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

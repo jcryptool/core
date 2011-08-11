@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension
+			id="org.jcryptool.crypto.modern.sha3"
+			point="org.jcryptool.core.operations.algorithms">
+		<algorithm
+        actionClass="org.jcryptool.crypto.modern.sha3.SHA3Action"
+        class="org.jcryptool.crypto.modern.sha3.skein.algorithm.SkeinAlgorithm"
+        contextHelpId="org.jcryptool.crypto.modern.sha3.wizardhelp"
+        id="org.jcryptool.crypto.modern.sha3."
+        isFlexiProviderAlgorithm="false"
+        name="%algorithm.name"
+        type="hash">
+		</algorithm>
+	</extension>
+	<extension
+			point="org.eclipse.help.toc">
+		<toc
+			file="$nl$/toc.xml"
+			primary="false">
+		</toc>
+		<toc
+			file="$nl$/tocUI.xml"
+			primary="false">
+		</toc>
+	</extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts
+			file="$nl$/contexts.xml">
+		</contexts>
+	</extension>
+</plugin>

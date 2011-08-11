@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.jcryptool.analysis.textmodify;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.analysis.textmodify.TextmodifyPlugin
+Require-Bundle: org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.eclipse.ui,
+ org.eclipse.help
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jcryptool.analysis.textmodify.wizard;uses:="org.eclipse.jface.wizard,org.jcryptool.core.operations.alphabets,org.eclipse.swt.widgets"
+Bundle-Vendor: jcryptool.org
+Import-Package: org.jcryptool.core.logging.dialogs,
+ org.jcryptool.core.logging.utils

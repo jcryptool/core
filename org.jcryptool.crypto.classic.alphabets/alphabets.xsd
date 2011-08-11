@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- definition of simple elements -->
+<xs:element name="name" type="xs:string"/>
+<xs:element name="shortName" type="xs:string"/>
+<xs:element name="substituteCharacter" type="xs:string"/>
+<xs:element name="displayMissingCharacters" type="xs:integer"/>
+<xs:element name="characterSet" type="xs:string"/>
+<xs:element name="defaultAlphabet" type="xs:boolean"/>
+<xs:element name="basic" type="xs:boolean"/>
+
+<!-- definition of attributes -->
+<!-- alphabet id
+<xs:attribute name="alphabetid" type="xs:string"/>
+-->
+
+<!-- definition of complex elements -->
+
+<xs:element name="alphabet">
+ <xs:complexType>
+  <xs:sequence>
+   <xs:element ref="name"/>
+   <xs:element ref="substituteCharacter"/>
+   <xs:element ref="displayMissingCharacters"/>
+   <xs:element ref="characterSet"/>
+   <xs:element ref="defaultAlphabet"/>
+   <xs:element ref="basic"/>
+   <xs:element ref="shortName"/>
+  </xs:sequence>
+  <!--
+  <xs:attribute ref="alphabetid" use="required"/>
+  -->
+ </xs:complexType>
+</xs:element>
+
+<xs:element name="alphabets">
+ <xs:complexType>
+   <xs:sequence>
+     <xs:element ref="alphabet" maxOccurs="unbounded"/>
+   </xs:sequence>
+ </xs:complexType>
+</xs:element>
+
+</xs:schema>

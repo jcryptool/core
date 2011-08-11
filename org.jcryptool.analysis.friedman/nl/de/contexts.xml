@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="friedman" title="Friedman-Test">
+      <description>Der &lt;b&gt;Friedman-Test&lt;/b&gt; dient zur Ermittlung der Schlüssellänge des Schlüssels, welcher einen Vigenère-Geheimtext verschlüsselt hat.&lt;br&gt;
+Nach dem Klick auf den Hauptbutton erscheint ein Graph, welcher allen Erwartungen nach wiederkehrende Spitzen aufweist, die in einer Periode n auftreten. Die gesuchte Schlüssellänge entspricht n.&lt;br&gt;
+Der Graph lässt Zoomen (linker und rechter Mausklick) und Verschieben mit der Maus zu.</description>
+      <topic href="$nl$/content/index.html" label="Friedman-Test" />
+   </context>
+
+</contexts>

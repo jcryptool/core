@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Entropie-Analyse">
+      <description>Die Entropieberechnung liefert Erkenntnisse über den Informationsgehalt von Zeichenfolgen auf syntaktischer Ebene. Hier lässt sich die absolute und bedingte Entropie nach Claude E. Shannon berechnen und die damit einhergehende Redundanz der Kodierung bestimmen. Als Eingabe für die Berechnung dient das ausgewählte Textfenster. Bei der Berechnung werden statistische Abhängigkeiten zwischen den Zeichen bis zu einer einstellbaren Länge n berücksichtigt.</description>
+      <topic href="nl/de/help/content/entropy_userguide.html" label="Entropie-Analyse" />
+   </context>
+
+</contexts>

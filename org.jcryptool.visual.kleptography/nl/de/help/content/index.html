@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<h3>Kleptographische Angriffe</h3>
+
+<p>Dieses Handbuch stellt eine tierfergehendere Erklärung der Schlüsselerzeugungssangriffe
+in dem Plug-in <i>org.jcryptool.visual.kleptography</i> bereit. Dieses Plug-in nutzt
+RSA, obwohl kleptographische Angriffe auf jeden asymmetrischen
+Kryptoalgorithmus angewandt werden können. Es wird angenommen, dass der Leser
+sich mit der Mathematik der RSA-Verschlüsselung auskennt. Die Ideen und Algorithmen, die
+in diesem Plug-in verwendet werden, basieren zum größten Teil auf dem ausführlichen und einzigartigen Buch
+[<a href="#YY04">YY04</a>]. Dieses Buch ist sehr empfehlenswert für jeden, der noch mehr
+über Kleptographie und Kryptovirologie im Allgemeinen erfahren will. Eine FAQ zu
+Kryptovirologie wird von den Autoren des Buches angeboten unter [<a href="#Yo06">Yo06</a>].</p>
+
+<p>Kleptographie ist ein Verfahren, mit dem der Angreifer sicher und verdeckt
+Informationen stiehlt, laut der Autoren von [<a href="#Yo06">Yo06</a>], die den
+Begriff auch erfunden haben. Eine asymmetrische Backdoor wird in eine Implementierung
+eines Black-Box-Kryptosystems eingebaut, wodurch das System anscheinend komplett normal
+für alle Benutzer funktioniert, außer dem speziellen Angreifer, der mithilfe von besonderen
+Informationen manche oder alle generierten Schlüsselpaare leichter entschlüsseln kann.
+Auch wenn das Black-Box-Gerät geöffnet und untersucht würde, könnte man nur merken, 
+dass ein Angriff in Gang ist, doch wäre es immer noch unmöglich, die Backdoor selbst
+zu nutzen, ohne die besondere Information des Angreifers zu kennen.</p>
+
+<p>Die Autoren von [<a href="#YY04">YY04</a>] beschreiben einen Angriff auf RSA, der diese
+Kriterien erfüllt. Sie nannten den Angriff einen geheim eingebauten, universal geschützten Falltürangriff
+(auf Englisch, "secretly embedded trapdoor with universal protection (SETUP) attack"). Dieses
+Plug-in beinhaltet</p>
+
+<ul>
+<li>eine etwas vereinfachte Version dieses SETUP-Angriffs, neben
+<li>drei anderen weniger sicheren Angriffen und 
+<li>eine unmanipulierte Schlüsselerzeugungsimplementierung zum Vergleich.
+</ul>
+
+<p>Jeder dieser Angriffe nimmt an, dass entweder der Hersteller unehrlich ist und folglich irgendwelche
+Schwächen oder Backdoors in dem gegebenen kryptographischen Gerät eingebaut hat, oder ein Angreifer
+von außen das Gerät irgendwie infiziert hat und es dadurch nach seinem Willen änderte.</p>
+
+<p>Nähere Infos zu diesen Schlüsselerzeugungsverfahren und ihren Implementierungen in
+diesem Plug-in finden Sie mit den Links zu jedem einzelnen Algorithmus: </p>
+
+<ul>
+<li><a href="honest.html">Erster Schritt: unmanipulierte Schlüsselerzeugung</a>
+<li><a href="fixedp.html">Nutzung einer festen Primzahl P</a>
+<li><a href="prf.html">Erzeugung von P durch eine pseudozufällige Funktion</a>
+<li><a href="prg.html">Erzeugung von P durch einen pseudozufälligen Generator</a>
+<li><a href="setup.html">SETUP-Angriff</a>
+</ul>
+
+Der Zweck einer Demonstration dieser Angriffe in einer begrenzten Umgebung ist zu zeigen,
+dass es praktisch unmöglich zu wissen ist, dass erzeugte Schlüssel komplett sicher sind.
+Sogar die genausten statistischen Prüfungen können eine gut versteckte Backdoor nicht
+definitiv entdecken. Man muss den Entwickler der Implementierung des Kryptosystems ganz
+vertrauen, sowie dass das Gerät nicht angegriffen und modifiziert wurde, um eine Schwäche
+zu beinhalten.
+
+<p>[YY04]<a id="YY04"></a> A. Young, M. Yung, <i>Malicious Cryptography: Exposing Cryptovirology</i>,
+John Wiley & Sons, 2004.</p>
+<p>[Yo06]<a id="Yo06"></a> A. Young, <i>Cryptovirology FAQ</i>, Version 1.31,
+<a href="http://www.cryptovirology.com/">http://www.cryptovirology.com/</a>.</p>
+
+</body>
+</html>

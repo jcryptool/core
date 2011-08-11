@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+	<h1>Feige Fiat Shamir Protokoll</h1>
+
+	<h2>Zweck</h2>
+
+	<p>Dieses mathematische Protokoll wird benutzt um Bob zu beweisen, dass Alice ein Geheimnis kennt, ohne dies oder Teile davon während des
+	Beweisprozesses zu verraten. Es arbeitet auf dem Körper der ganzen Zahlen Modulo n. N ist ein Produkt zweier Primzahlen p und q, die unbedingt
+	von Alice geheim zu halten sind. Das Feige Fiat Shamir Protokoll ist eine Verbesserung des Fiat Shamir Protokolls und nicht so anfällig gegen
+	Attacken. Bei einem Standard-Vektor mit vier Elementen liegt die Chance eines Angreifers Bob zu betrügen bei nur noch 6.25% pro Iteration.</p>
+
+	<h2>Anwendung</h2>
+
+	<p>Alice erstellt eine Menge von Zahlen <span style="white-space:nowrap"><code>s<sub>1</sub>, s<sub>2</sub>, ..., s<sub>k</sub></code></span> mit
+	<span style="white-space:nowrap"><code>gcd(s<sub>x</sub>, n) = 1</code></span> und berechnet entsprechend
+	<span style="white-space:nowrap"><code>v<sub>x</sub> = s<sub>x</sub><sup>2</sup> mod n</code></span>. In unserem Beispiel gilt
+	<span style="white-space:nowrap"><code>1 >= k <= 4</code></span>. Alle <span style="white-space:nowrap"><code>s<sub>x</sub></code></span> Werte sind
+	geheim, die <span style="white-space:nowrap"><code>v<sub>x</sub></code></span> Werte sind öffentlich.</p>
+
+	<ol>
+		<li>Für die Iterationen des Protokolls wählt sie eine zufällige Nummer r aus dem Körper Modulo n aus und berechnet
+		<span style="white-space:nowrap"><code>x = r<sup>2</sup> mod n</code></span>. Bob erhält x.</li>
+		<li>Bob wählt nun seinerseits zufällig eine Bitfolge <span style="white-space:nowrap"><code>b<sub>1</sub> ... b<sub>k</sub></code></span>,
+		gültige Werte sind entweder 0 oder 1. Diese sendet er an Alice.</li>
+		<li>Alice berechnet <span style="white-space:nowrap"><code>y = rs<sub>1</sub><sup>b<sub>1</sub></sup> * s<sub>2</sub><sup>b<sub>2</sub></sup>
+		* ... * s<sub>k</sub><sup>b<sub>k</sub></sup> mod n</code></span> und sendet das Ergebnis an Bob.</li>
+		<li>Bob überprüft ob die folgende Gleichung gilt:<br>
+		<span style="white-space:nowrap"><code>y<sup>2</sup> = xv<sub>1</sub><sup>b<sub>1</sub></sup> * v<sub>2</sub>b<sub>2</sub> * ... * v
+		<sub>k</sub><sup>b<sub>k</sub></sup></code></span></li>
+	</ol>
+
+	<p>Falls er keinen Fehler findet hat Alice diese Iteration erfolgreich bestanden.</p>
+
+	<h2>Verwundbarkeit</h2>
+
+	<p>Carol, der Angreifer, kennt weder p und q noch s. Sie kann x willkürlich wählen oder berechnen, jedoch hat sie keinen Einfluss auf den Bitvektor b
+	den sie von Bob erhält. Um den Test zu bestehen müsste sie alle b's richtig erraten und damit
+	<span style="white-space:nowrap"><code>v()<sup>b()</sup></code></span> berechnen. Um die Gleichung
+	<span style="white-space:nowrap"><code>y<sup>2</sup> = xv()<sup>b()</sup></code></span> zu erfüllen, kann sie x auf
+	<span style="white-space:nowrap"><code>v()<sup>b()</sup></code></span> setzen. Dies führt zu
+	<span style="white-space:nowrap"><code>y<sup>2</sup> = x<sup>2</sup></code></span>, was für x = y gilt. Die Wahrscheinlichkeit alle k b's richtig zu erraten
+	liegt bei <span style="white-space:nowrap"><code>0.5<sup>k</sup></code></span>.</p>
+</body>
+</html>
+

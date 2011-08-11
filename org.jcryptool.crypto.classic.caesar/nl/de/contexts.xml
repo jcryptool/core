@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Caesar">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. &lt;br&gt;
+Der Schlüssel besteht aus genau einem Zeichen, welches im ausgewählten Alphabet enthalten sein muss.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten"/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Caesar-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Caesar">
+    <description>Die Caesar-Verschl&#252;sselung ist eine der einfachsten bekanntesten Verschl&#252;sselungstechniken. Es handelt sich um eine klassische Substitutionschiffre in der jeder Buchstabe des Klartexts durch einen anderen Buchstaben weiter hinten im Alphabet ersetzt wird.
+&lt;br&gt;Die Caesar Verschl&#252;sselung ist nach Julius Caesar benannt, der sie zur Kommunikation mit seinen Gener&#228;len benutzte.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Caesar-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

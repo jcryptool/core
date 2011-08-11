@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Doppelkasten">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie zwei Schlüssel ein. &lt;br&gt;
+Die Schlüssel dürfen nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind, d. h. A bis Z, aber nicht J.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Doppelkasten-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Doppelkasten">
+    <description>Das Doppelkasten-Verfahren ist im Grunde eine bigraphische Substitutionschiffre, wie Playfair. Es werden zwei, statt eines Playfair-Quadrates benutzt, und einige Verbesserungen wie Zweifachverschl&#252;sselung und die Aufspaltung des Klartextes (Seriation).
+&lt;br&gt;Das Verfahren wurde im zweiten Weltkrieg von den Deutschen eingesetzt und im Bletchley Park bis 1944 von den Briten entschl&#252;sselt.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Doppelkasten-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

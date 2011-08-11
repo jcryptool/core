@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="freqanalysis" title="Häufigkeitsanalyse">
+      <description>Die Häufigkeitsanalyse verfügt über eine Vielzahl von Möglichkeiten, einen Text auf seine Häufigkeitsverteilung zu untersuchen; dabei bietet sie eine einfache und eine erweiterte Ansicht für verschieden komplexe Analysebedürfnisse.</description>
+      <topic href="$nl$/content/index.html" label="Häufigkeitsanalyse" />
+   </context>
+
+</contexts>

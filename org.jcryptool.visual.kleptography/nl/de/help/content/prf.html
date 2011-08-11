@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<h3>Erzeugung von P durch eine Pseudozufallsfunktion</h3>
+
+<p>Um die Feststellbarkeit des <a href="fixedp.html">festen-P-Angriffs</a> zu überwinden, haben
+die Autoren des Buches [<a href="#YY04">YY04</a>] in Absatz 11.2.2 vorgeschlagen, dass die Primzahl P
+vielleicht besser durch pseudozufällige Werte erzeugt werden sollte, die auf einem geheimen Startwert
+("Seed") basieren, der nur dem Kryptosystem und dem Angreifer bekannt ist. Die Idee ist, dass
+jedes infizierte Gerät eine eindeutige, 160-Bit ID und einen auf null initialisierten Zähler hat.
+Jedes Mal, wenn ein Schlüssel erzeugt wird, wird aus der ID und dem Zähler ein Hashwert gebildet,
+der als Startwert bei der Erzeugung von P benutzt wird. Das Ergebnis wird zufällig aussehen,
+die Module werden keinen gemeinsamen Nenner größer als eins haben, und der Angreifer
+muss bloß die IDs und Zähler im Auge behalten und die gleichen Funktionen benutzen, um
+den privaten Schlüssel nachbilden zu können.</p>
+
+<p>Die Sache hat einen Haken: Falls es gelingt, die Implementierung per Reverse
+Engineerung offenzulegen oder die Black Box zu eröffnen, wird man die ID im Datenspeicher
+unmittelbar finden, und durch Veränderung dieses Wertes kann man jeden Wert nachrechnen,
+den die Implementierung je ergeben hat bzw. ergeben wird. Obwohl das Gerät für normale
+Benutzer immer noch sicher scheint, wird es für diesen Beobachter (und jeden anderen Beobachter
+mit dem gleichen Fähigkeiten) völlig kompromittiert.</p>
+
+<p>Die Implementierung der pseudozufälligen Funktion-Angriff in diesem Plug-in nutzt MD5, um über die ID
+und den Zähler einen Hashwert zu bilden, die als Startwert benutzt wird. Um die Zufälligkeit und
+Sicherheit dieser Implementierung weiter zu verbessern, wird dieser Startwert schrittweise mithilfe
+von mehreren Hashwerten gebildet. In jedem Fall wird das niedrigstwertige Byte des Hashwertes gespeichert
+und der Zähler inkrementiert, um für den nächsten Hashwert vorzubereiten. Nachdem sechs
+Bytes auf diese Weise erzeugt wurde, werden diese kombiniert, um einen Startwert für die normale
+Java Random-Klasse zu erzeugen, der dann benutzt wird, die Primzahl P zu erzeugen.
+Die zweite Primzahl Q und alle anderen kryptographischen Zahlen werden normal
+erzeugt. (Man darf den Wert von Q wählen oder das Gerät den Wert wählen lassen.)</p>
+
+<p>Die Benutzeroberfläche soll ähnlich wie bei der nicht manipulierten Schlüsselerzeugung aussehen, mit
+Ausnahme des Buttons "ID und Index zurücksetzen" und den entsprechenden Textfeldern.
+Bevor die Primzahlen erzeugt werden können, müssen diese Werte initialisiert werden, aber danach
+während der Simulation des Arbeitsablaufs eines bestimmten Geräts darf es einfach so gelassen werden.
+Zurücksetzung der ID und des Indexes simuliert effektiv den Arbeitsablauf eines anderen infizierten
+Geräts.</p>
+
+<img src="prf.png">
+
+<p>Es gibt keine Simulation der Perspektive des Angreifers für diesen Angriff, denn die Reihenfolge
+wäre fast genau dieselbe, die das Gerät selbst durchführte: Der Angreifer würde die gleiche ID und
+den gleichen Index als Eingabe zu der gleichen Hashfunktion nutzen, um den gleichen Startwert für die
+gleiche pseudozufällige Funktion zu erzeugen, um die gleiche Primzahl P zu erzeugen. Weil das
+Modul N ein Teil des öffentlichen Schlüssels ist, kann die zweite Primzahl Q mittels
+Division von N durch P gefunden werden, und der private Exponent D kann mithilfe des öffentlichen
+Exponenten E berechnet werden.</p>
+
+<p>Klicken Sie <a href="index.html">hier</a>, um zurück zum Kleptographie-Index zu gehen, oder
+<a href="prg.html">hier</a>, um zur nächsten Seite (Erzeugung von P durch einen
+Pseudozufallsgenerator) zu gehen.</p>
+
+<p>[YY04]<a id="YY04"></a> A. Young, M. Yung, <i>Malicious Cryptography: Exposing Cryptovirology</i>,
+John Wiley & Sons, 2004.</p>
+
+</body>
+</html>

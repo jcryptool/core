@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</head>
+<body>
+<h1>Extended Euclidean</h1>
+
+<p>The demonstration is to show the functioning of the <b>Extended Euclidean</b> plug-in.</p>
+You can start the plug-in by using the menu <b>visualization</b>. The plug-in is loaded and maximizes his view.
+
+<p><img src="xeuclideanGUI.jpg" width="624" height="308"></img></p>
+You can enter in the form
+<b>p</b>
+and
+<b>q</b>
+two arbitrary large positive numbers.
+<p><img src="xeuclideanEingabe.jpg" width="243" height="116"></img></p>
+After that various choices available.
+<p><img src="xeuclideanAuswahl.jpg" width="611" height="38"></img></p>
+<ul>
+	<li><b>Clear</b> - deletes the current entry.</li>
+	<li><b>Reset table</b> - removes only the table, the current
+Entry is maintained (at the beginning not selectable).</li>
+	<li><b>Compute</b> - performs the calculation.</li>
+	<li><b>Stepwise...</b> - The calculation is carried out gradually. It will perform the next step in the calculation.</li>
+	<li><b>Back stepwise...</b> - the calculation is being gradually
+performed. It will run the previous step (at the beginning
+not selectable).</li>
+</ul>
+The result of the calculation is shown in the area of calculation..
+<p><img src="xeuclideanErgebnisVisual.jpg" width="257" height="35"></img></p>
+In addition to the visualization block every single step of calculating fully displayed as a table unless you've opted for the compute option..
+<p><img src="xeuclideanTabelle.jpg" width="485" height="262"></img></p>
+The table has 5 columns <b>index, Quotient, Remainder, X and Y</b>. The final result is displayed in blue.
+In addition, the calculation rule below:
+<cite>gcd(p,q) = p * x + q * y</cite>
+and the corresponding calculation appears.
+<p><img src="xeuclideanErgebnis.jpg" width="445" height="94"></img></p>
+If you choose the <b>stepwise ...</b> Variant then the actual calculation is displayed in color in the calculation table.
+<p><img src="xeuclideanErgebnisVisualStepwise.jpg" width="169" height="32"></img></p>
+In addition, the <b>visualization</b> block, depending progressively filled in by the current position of the calculation table. These colors match the colors of the calculation table. The <b>blue</b> color is always shown in the result of the current calculation.
+<p><img src="xeuclideanTabelleStepwise.jpg" width="403" height="123"></img></p>
+Now the calculation can be progressive pass through with the button <b>Stepwise ...</b> forward and backward with the button <b>back stepwise ...</b>. If the end of the calculation is reached, the button <b>Stepweise ...</b> disabled and the end result of both the bottom and in the calculation table shown. It is also possible to calculate while progressively through on the button <b>compute</b> button to stop the progressive calculation and the calculation carried out completely until the end.
+<p></p>
+After passing a calculation you can export the result in three formats (PDF, latex, and CSV).
+<p><img src="xeuclideanExport.jpg" width="194" height="110"></img></p>
+The export is only possible if a calculation has been fully traversed.
+
+</body>
+</html>

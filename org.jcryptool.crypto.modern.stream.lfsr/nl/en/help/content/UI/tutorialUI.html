@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>LFSR</h1>
+
+	<p>This tutorial will guide you through an encryption and a decryption with a modern stream cipher,
+	the Linear Feedback Shift Register (LFSR), which is provided by the
+	org.jcryptool.crypto.modern.stream.lfsr plug-in.<br>
+	<b>Note:</b> As with all algorithms, you can only perform the following steps when you have an opened
+	editor window.</p>
+
+	<img src="figure1.png">
+
+	<p>Select the size of the LFSR (restricted to a value between 1 and 25
+	for presentation purposes). You then have to select which bits are tapped and the value of the seed
+	(the LFSR's initial state). In our example we have an LFSR of length 21. The 5th, 14th, 17th, 18th
+	and 21st bits are tapped (note that the final bit is always considered to be tapped). The LFSR's seed
+	is 100100100010001000110. Clicking on the Finish button will start the encryption/ decryption
+	process.</p>
+
+	<img src="figure2.png">
+
+	<p>The resulting ciphertext (in output001.bin) can be decrypted, by selecting identical settings and
+	values in the same wizard that was used for encryption. (Note: The output is opened in a hex editor
+	rather than a text editor. This is because modern algorithms are based on bytes, not characters; as
+	such, opening a text editor would be inappropriate.)</p>
+
+	<img src="figure3.png">
+
+	<p>Clicking on the Finish button will now start the decryption of the ciphertext and yield the correct
+	plaintext which will be displayed in a new editor (output002.bin in the screenshot below).</p>
+
+	<img src="figure4.png">
+
+	<h2>Outputting the keystream</h2>
+
+	<p>Selecting the Display output file with keystream in a separate hex editor radio button will open a
+	second file containing the generated keystream from that encryption/ decryption process. A
+	comparison of the keystream from the encryption process to that of the decryption process will
+	show that given identical inputs, an identical keystream is produced.</p>
+
+	<img src="figure5.png">
+
+	<p>The keystream is displayed in a new editor (output004.bin above), with the plaintext being
+	displayed as usual (output003.bin).<br>
+	Selecting the Display keystream only (of specified number of bytes): radio button will open a file
+	containing a specified number of bytes of generated keystream. The number of bytes of keystream
+	to generate is specified in a textbox which is enabled when the Display keystream only button is
+	selected.</p>
+
+	<img src="figure6.png">
+
+	<p>Our example shows the keystream generated, given the same seed and tap settings input as earlier,
+	up to 100 bytes.</p>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.analysis"
+            class="org.jcryptool.analysis.entropy.views.EntropyAnalysisView"
+            icon="icons/view.gif"
+            id="org.jcryptool.analysis.entropy.views.EntropyAnalysisView"
+            name="%view.name">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.analysis">
+      <analysis
+            name="%analysis.name"
+            viewId="org.jcryptool.analysis.entropy.views.EntropyAnalysisView">
+      </analysis>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

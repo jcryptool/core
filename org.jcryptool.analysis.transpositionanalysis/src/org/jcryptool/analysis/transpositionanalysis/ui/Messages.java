@@ -1,0 +1,46 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2010 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
+package org.jcryptool.analysis.transpositionanalysis.ui;
+
+import org.eclipse.osgi.util.NLS;
+
+public class Messages extends NLS {
+	private static final String BUNDLE_NAME = "org.jcryptool.analysis.transpositionanalysis.ui.messages"; //$NON-NLS-1$
+	public static String KeyViewer_cryptoversion;
+	public static String KeyViewer_invertback;
+	public static String KeyViewer_invertdescription;
+	public static String KeyViewer_invertone;
+	public static String KeyViewer_prettyversion;
+	public static String ReadDirectionChooser_0;
+	public static String ReadDirectionChooser_1;
+	public static String TranspAnalysisUI_adjustcolumncount;
+	public static String TranspAnalysisUI_decipher;
+	public static String TranspAnalysisUI_Export;
+	public static String TranspAnalysisUI_findtherightblocklengthandtry;
+	public static String TranspAnalysisUI_furtheranalysislink;
+	public static String TranspAnalysisUI_keyfound;
+	public static String TranspAnalysisUI_keypreview_zerocolumns;
+	public static String TranspAnalysisUI_keyviewer;
+	public static String TranspAnalysisUI_loadedfile;
+	public static String TranspAnalysisUI_loadtext;
+	public static String TranspAnalysisUI_manualinput;
+	public static String TranspAnalysisUI_nofileloaded;
+	public static String TranspAnalysisUI_preview;
+	public static String TranspAnalysisUI_read_out_mode_label;
+	public static String TranspAnalysisUI_Results;
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+	}
+
+	private Messages() {
+	}
+}

@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html xml:lang="de" >
+<head>
+<link rel="stylesheet" type="text/css" href="sssAlgorithm.css">
+</head><body
+>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a
+ id="x1-10001"></a>Der Shamir&#8217;s Secret Sharing Algorithmus</h3>
+
+<span class="cmbx-10">Shamir&#8217;s Secret Sharing</span> Algorithmus ist ein von Adi Shamir 1979
+entwickeltes Secret Sharing Verfahren, mit dem es möglich ist, ein Geheimnis auf mehrere Personen
+aufzuteilen, wobei eine gewisse Untermenge dieser Personen erforderlich ist, um das Geheimnis zu rekonstruieren.
+ <p>
+<!--l. 29--><p class="noindent" >Seien <span
+class="cmmi-10">n </span>und <span
+class="cmmi-10">t </span>natürliche Zahlen. In einem (<span
+class="cmmi-10">n,t</span>)-Secret-Sharing-Protokoll wird das
+Geheimnis auf <span
+class="cmmi-10">n </span>Personen aufgeteilt. Jede Person hat einen Share des Geheimnisses.
+Wenn sich <span
+class="cmmi-10">t </span>dieser Personen zusammentun, können sie das Geheimnis rekonstruieren.
+Wenn sich aber weniger als <span
+class="cmmi-10">t </span>dieser Teilgeheimnisträger zusammentun, können sie
+keine relevante Informationen über das Geheimnis erhalten. Dieses Prinzip kann man
+mit einer Schatzkarte vergleichen, die auf mehrere Personen verteilt wird. Nur wenn
+alle Teile der Schatzkarte zusammengelegt werden, dann man den Schatz
+finden.<br
+class="newline" />
+<!--l. 38--><p class="noindent" >Der Algorithmus von Shamir basiert auf der Lagrage-Polynominterpolation und ist
+ein (<span
+class="cmmi-10">n,t</span>)-Secret-Sharing-Protokoll. Alle Berechnungen werden im Ganzzahlkörper
+<span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124; </span>durchgeführt.<br
+class="newline" />
+<!--l. 43--><p class="indent" >   Der Dealer will ein Geheimnis <span
+class="cmmi-10">s </span><span
+class="cmsy-10">&#x2208; </span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124; </span>verteilen.
+<!--l. 45--><p class="indent" >
+     <ol  class="enumerate1" >
+     <li
+  class="enumerate" id="x1-1002x1">Er wählt geheime Elemente <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">&#x2208; </span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">&#x2215;p</span><span
+class="msbm-10">&#x2124;</span><span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1 und konstruiert
+     daraus das Polynom<br
+class="newline" />
+     <!--l. 49--><p class="noindent" ><span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmmi-10">s </span>+ <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">a</span><sub><span
+class="cmmi-7">j</span></sub><span
+class="cmmi-10">X</span><sup><span
+class="cmmi-7">j</span></sup><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1<span
+class="cmmi-10">.</span><a
+ id="x1-10011"></a>
+     <!--l. 54--><p class="noindent" >Das Polynom ist vom Grad <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t </span><span
+class="cmsy-10">- </span>1.
+     </li>
+     <li
+  class="enumerate" id="x1-1004x2">Der Dealer berechnet die Shares <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>.
+     </li>
+     <li
+  class="enumerate" id="x1-1006x3">Der Dealer gibt dem <span
+class="cmmi-10">i</span>-ten Shareholder den Share <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,</span>1  <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n</span>. Das
+     Geheimnis ist der konstante Term <span
+class="cmmi-10">a</span>(0) des Polynoms <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>).</li></ol>
+<!--l. 60--><p class="indent" >   Um das Geheimnis rekonstruieren zu können, nehmen wir an, dass <span
+class="cmmi-10">t </span>Shareholder
+zusammen arbeiten. Ihre Shares seien <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t</span>. Dabei ist <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) das
+Polynom aus (<a
+href="#x1-10011">1<!--tex4ht:ref: polynom --></a>). Es gilt<br
+class="newline" />
+<!--l. 64--><p class="indent" >   <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">X</span>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 70--><p class="indent" >   und<br
+class="newline" />
+<!--l. 72--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t.</span>
+
+<!--l. 76--><p class="indent" >   Dargestellt in einer Formel<br
+class="newline" />
+<!--l. 78--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">X</span>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 84--><p class="indent" >   Da der Koeffizient <span
+class="cmmi-10">a</span>(0) das Geheimnis ist, berechnen wir<br
+class="newline" />
+<!--l. 86--><p class="indent" >   <span
+class="cmmi-10">s </span>= <span
+class="cmmi-10">a</span>(0) = <span
+class="cmex-10">&#x2211;</span>
+  <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)<span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">t,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 92--><p class="indent" >   Diese Formel wird von den Shareholdern benutzt, um das Geheimnis zu
+konstruieren.<br
+class="newline" />
+<!--l. 95--><p class="indent" >   Wir wollen dies an einem Beispiel zeigen.<br
+class="newline" />
+<!--l. 97--><p class="noindent" ><span
+class="cmbx-10">Beispiel  </span>Sei <span
+class="cmmi-10">n </span>= 5<span
+class="cmmi-10">,t </span>= 3. Der Dealer wählt <span
+class="cmmi-10">p </span>= 17<span
+class="cmmi-10">,x</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">i,</span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span>5. Das Geheimnis
+sei <span
+class="cmmi-10">s </span>= 5. Der Dealer wählt die geheimen Koeffizienten <span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">1</span></sub> = 7<span
+class="cmmi-10">,a</span><sub><span
+class="cmr-7">2</span></sub> = 11. Damit
+erhalten wir das Polynom<br
+class="newline" />
+<!--l. 102--><p class="indent" >   <span
+class="cmmi-10">a</span>(<span
+class="cmmi-10">X</span>) = 5 + 7<span
+class="cmmi-10">X </span>+ 11<span
+class="cmmi-10">X</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">.</span>
+<!--l. 106--><p class="indent" >   Die Shares sind damit <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">1</span></sub> = <span
+class="cmmi-10">a</span>(1) = 6<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">2</span></sub> = <span
+class="cmmi-10">a</span>(2) = 12<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">3</span></sub> = <span
+class="cmmi-10">a</span>(3) = 6<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">4</span></sub> = <span
+class="cmmi-10">a</span>(4) = 5<span
+class="cmmi-10">,y</span><sub><span
+class="cmr-7">5</span></sub> = <span
+class="cmmi-10">a</span>(5) = 9.
+Diese werden nun an die Shareholder verteilt. Die Shareholder 1<span
+class="cmmi-10">,</span>2 und 3 werden nun
+benutzt, um das Geheimnis zu rekonstruieren. Es wird das Lagrange-Polynom
+berechnet und mit den Shares <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> gewichtet<br
+class="newline" />
+<!--l. 112--><p class="indent" >   <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">i</span></sub> <span
+class="cmex-10">&#x220F;</span>
+  <span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub>)<span
+class="cmmi-10">&#x00A0;&#x2215;</span><span
+class="cmmi-10">&#x00A0;</span>(<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">j</span></sub> <span
+class="cmsy-10">- </span><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">i</span></sub>)      1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i,j </span><span
+class="cmsy-10">&#x2264; </span>3<span
+class="cmmi-10">,j</span><span
+class="cmmi-10">&#x2260;</span><span
+class="cmmi-10">i.</span>
+<!--l. 117--><p class="indent" >   Es ergibt sich für <span
+class="cmmi-10">w</span><sub><span
+class="cmr-7">1</span></sub> = 4 + 9<span
+class="cmmi-10">x </span>+ 6<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,w</span><sub><span
+class="cmr-7">2</span></sub> = 3 + 2<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,w</span><sub><span
+class="cmr-7">3</span></sub> = 15 + 13<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup>.
+Nun bildet man die Summe der <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub>s und erhält das Ausgangspolynom<br
+class="newline" />
+<!--l. 120--><p class="indent" >   <span
+class="cmex-10">&#x2211;</span>
+     <span
+class="cmmi-10">w</span><sub><span
+class="cmmi-7">i</span></sub> = 5 + 7<span
+class="cmmi-10">x </span>+ 11<span
+class="cmmi-10">x</span><sup><span
+class="cmr-7">2</span></sup><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">i </span><span
+class="cmsy-10">&#x2264; </span>3<span
+class="cmmi-10">.</span>
+<!--l. 124--><p class="noindent" >Der Koeffizient <span
+class="cmmi-10">a</span><sub><span
+class="cmr-7">0</span></sub> = 5 ist unser gesuchtes Geheimnis <span
+class="cmmi-10">s</span>. <br
+class="newline" />
+<!--l. 231--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a
+ id="x1-20002"></a>Literatur</h3>
+<!--l. 231--><p class="noindent" >
+       <div class="thebibliography">
+       <p class="bibitem" ><span class="biblabel">
+     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a
+ id="XJBu"></a>Johannes   Buchmann,   Einführung   in   die   Kryptographie,   4.,
+       erweiterte Auflage 2008, Kapitel 16, Seite 243
+</p>
+
+       </div>
+
+</body></html>
+
+
+

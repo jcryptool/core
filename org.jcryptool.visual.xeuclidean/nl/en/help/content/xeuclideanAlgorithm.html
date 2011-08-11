@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html xml:lang="en" >
+<head>
+<link rel="stylesheet" type="text/css" href="xeuclideanAlgorithm.css">
+</head><body
+>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a
+ id="x1-10001"></a>The Extended Euclidean Algorithm</h3>
+<!--l. 25--><p class="noindent" >The <span
+class="cmbx-10">Extended Euclidean </span>Algorithm computes the greatest common divisor of two
+integers <span
+class="cmmi-10">p </span>and <span
+class="cmmi-10">q</span>. In addition, the algorithm returns two integers
+<span
+class="cmmi-10">x,y</span>, so <span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">p,q</span>) = <span
+class="cmmi-10">px </span>+ <span
+class="cmmi-10">qy </span>. The <span
+class="cmbx-10">Extended Euclidean</span> Algorithm is one of the basic algorithms used in cryptography.  The algorithm is for example used for the RSA encryption. Furthermore, the algorithm is used in the <span
+class="cmbx-10">Chinese Remainder Theroem</span>. Further applications of the Extended Euclidean algorithm include key generation, prime number generator and the primality testing.
+<p>
+The algorithm was taken from the book <span class="cite">[<a
+href="#XJBu">1</a>]</span>
+and adapted for <span
+class="cmtt-10">BigInteger </span>. The proof that it may well have a greatest common divisor of two integers p, q there, we read in  <span class="cite">[<a
+href="#XJBu">1</a>]</span>. For completeness, the greatest common divisor of 0 and 0 is set to 0, so is <span
+class="cmmi-10">gcd</span>(0<span
+class="cmmi-10">,</span>0) = 0. Thus, the greatest common divisor of two integers is never negative. We take from <span class="cite">[<a
+href="#XJBu">1</a>]</span> the following theorem.
+   <div class="newtheorem">
+<!--l. 35--><p class="noindent" ><span class="head">
+<span
+class="cmbx-10">Theorem</span><span
+class="cmbx-10">&#x00A0;1.1</span> </span> <a
+ id="x1-10011"></a> <span
+class="cmti-10">1. If </span><span
+class="cmmi-10">q </span>= 0 <span
+class="cmti-10">then, the </span><span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">p,q</span>) = <span
+class="cmsy-10">|</span><span
+class="cmmi-10">p</span><span
+class="cmsy-10">|</span><span
+class="cmti-10">.</span><br
+class="newline" /><span
+class="cmti-10">2. If </span><span
+class="cmmi-10">b</span><span
+class="cmmi-10">&#x2260;</span>0 <span
+class="cmti-10">then, the </span><span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">p,q</span>) = <span
+class="cmmi-10">gcd</span>(<span
+class="cmsy-10">|</span><span
+class="cmmi-10">q</span><span
+class="cmsy-10">|</span><span
+class="cmmi-10">,p</span><span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span><span
+class="cmsy-10">|</span><span
+class="cmmi-10">q</span><span
+class="cmsy-10">|</span>)<span
+class="cmti-10">.</span>
+   </div>
+<!--l. 41--><p class="noindent" >The algorithm is explained with an example.<br
+class="newline" />
+<!--l. 43--><p class="noindent" ><span
+class="cmbx-10">Example  </span>We want to compute the <span
+class="cmmi-10">gcd</span>(123<span
+class="cmmi-10">,</span>23). According to Theorem 1.1 <a
+href="#x1-10011">1.1<!--tex4ht:ref: xeuclideanTheorem --></a> we obtain
+<span
+class="cmmi-10">gcd</span>(123<span
+class="cmmi-10">,</span>23) = <span
+class="cmmi-10">gcd</span>(23<span
+class="cmmi-10">,</span>123<span
+class="cmmi-10">&#x00A0;mod</span><span
+class="cmmi-10">&#x00A0;</span>23) = <span
+class="cmmi-10">gcd</span>(23<span
+class="cmmi-10">,</span>8) = <span
+class="cmmi-10">gcd</span>(8<span
+class="cmmi-10">,</span>7) = <span
+class="cmmi-10">gcd</span>(7<span
+class="cmmi-10">,</span>1) = <span
+class="cmmi-10">gcd</span>(1<span
+class="cmmi-10">,</span>0) = 1.
+<br
+class="newline" />
+<br
+class="newline" />
+<!--l. 50--><p class="noindent" >First, check which of the two numbers is larger. The larger number is declared as a parameter one, the smaller one as parameter two. If both numbers are identical, no change is made, as specified in this case, gcd (p, p) = p have a clear. The function is called with <span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">p,q</span>). Now, unless the number divided by the number p modulo q, and counted up the number q is zero. For the next iteration, the new p and q is the new q is the rest of the modul calculation q = p mod q. Since q is always the rest of the modul calculation and eventually this will be zero, will ensure that the algorithm terminates. We can compactly write the calculation in a table.
+ <div class="table">
+
+<!--l. 62--><p class="indent" >   <hr class="float"><div class="float"
+>
+
+<div class="center"
+>
+<!--l. 63--><p class="noindent" >
+<div class="tabular"> <table id="TBL-1" class="tabular"
+cellspacing="0" cellpadding="0" rules="groups"
+><colgroup id="TBL-1-1g"><col
+id="TBL-1-1"></colgroup><colgroup id="TBL-1-2g"><col
+id="TBL-1-2"></colgroup><colgroup id="TBL-1-3g"><col
+id="TBL-1-3"></colgroup><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-1"
+class="td11"><span
+class="cmbx-10">Index</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-2"
+class="td11"><span
+class="cmbx-10">Quotient</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-1-3"
+class="td11"><span
+class="cmbx-10">Remainder</span></td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-1"
+class="td11">   0    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-2"
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-2-3"
+class="td11">    123      </td></tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-1"
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-2"
+class="td11"> 5 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-3-3"
+class="td11"> 23</td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-1"
+class="td11">   2    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-2"
+class="td11">    2      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-4-3"
+class="td11">     8        </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-1"
+class="td11">   3    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-2"
+class="td11">    1      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-5-3"
+class="td11">     7        </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-1"
+class="td11">   4    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-2"
+class="td11">    7      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-6-3"
+class="td11">     1        </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-1"
+class="td11">   5    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-2"
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-1-7-3"
+class="td11">     0        </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-1-8-"><td  style="white-space:nowrap; text-align:center;" id="TBL-1-8-1"
+class="td11">      </td></tr></table></div></div>
+
+   </div><hr class="endfloat" />
+   </div>
+<!--l. 84--><p class="noindent" >To obtain the values for <span
+class="cmmi-10">X </span>and <span
+class="cmmi-10">Y </span>to be calculated, we initialize the first two iterations follow:<br
+class="newline" />
+<!--l. 88--><p class="indent" >   <span
+class="cmmi-10">x</span><sub><span
+class="cmr-7">0</span></sub> = 0<span
+class="cmmi-10">,      x</span><sub><span
+class="cmr-7">1</span></sub> = 1       and       <span
+class="cmmi-10">y</span><sub><span
+class="cmr-7">0</span></sub> = 1<span
+class="cmmi-10">,      y</span><sub><span
+class="cmr-7">1</span></sub> = 0<span
+class="cmmi-10">.</span>
+<!--l. 91--><p class="noindent" >With <span
+class="cmmi-10">r</span><sub><span
+class="cmr-7">0</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">,r</span><sub><span
+class="cmmi-7">n</span><span
+class="cmr-7">+1</span></sub> we signify the remainder sequence and with <span
+class="cmmi-10">q</span><sub><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,</span><span
+class="cmmi-10">&#x2026;</span><span
+class="cmmi-10">,q</span><sub><span
+class="cmmi-7">n</span></sub> the sequence of quotients that arise when applying the <span
+class="cmbx-10">extended Euclidean </span>Algorithm on <span
+class="cmmi-10">p,q</span>. The of construction of the two sequences (<span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">k</span></sub>) and (<span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">k</span></sub>) such that <span
+class="cmmi-10">x </span>= (<span
+class="cmsy-10">-</span>1)<sup><span
+class="cmmi-7">n</span></sup><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">n</span></sub> und <span
+class="cmmi-10">y </span>= (<span
+class="cmsy-10">-</span>1)<sup><span
+class="cmmi-7">n</span><span
+class="cmr-7">+1</span></sup><span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">n</span></sub> is described by the following formulas.<br
+class="newline" />
+<!--l. 99--><p class="indent" >   <span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">k</span><span
+class="cmr-7">+1</span></sub> = <span
+class="cmmi-10">q</span><sub><span
+class="cmmi-7">k</span></sub><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">k</span></sub> + <span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">k</span><span
+class="cmsy-7">-</span><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,      y</span><sub><span
+class="cmmi-7">k</span><span
+class="cmr-7">+1</span></sub> = <span
+class="cmmi-10">q</span><sub><span
+class="cmmi-7">k</span></sub><span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">k</span></sub> + <span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">k</span><span
+class="cmsy-7">-</span><span
+class="cmr-7">1</span></sub><span
+class="cmmi-10">,      </span>1 <span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">k </span><span
+class="cmsy-10">&#x2264; </span><span
+class="cmmi-10">n.</span>
+<!--l. 102--><p class="noindent" >This can turn to our main example <span
+class="cmmi-10">gcd</span>(123<span
+class="cmmi-10">,</span>23) converted into a table. <div class="table">
+
+<!--l. 105--><p class="indent" >   <hr class="float"><div class="float"
+>
+
+<div class="center"
+>
+<!--l. 106--><p class="noindent" >
+<div class="tabular"> <table id="TBL-2" class="tabular"
+cellspacing="0" cellpadding="0" rules="groups"
+><colgroup id="TBL-2-1g"><col
+id="TBL-2-1"></colgroup><colgroup id="TBL-2-2g"><col
+id="TBL-2-2"></colgroup><colgroup id="TBL-2-3g"><col
+id="TBL-2-3"></colgroup><colgroup id="TBL-2-4g"><col
+id="TBL-2-4"></colgroup><colgroup id="TBL-2-5g"><col
+id="TBL-2-5"></colgroup><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-1"
+class="td11"><span
+class="cmbx-10">Index</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-2"
+class="td11"><span
+class="cmbx-10">Quotient</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-3"
+class="td11"><span
+class="cmbx-10">Remainder</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-4"
+class="td11"><span
+class="cmbx-10">X</span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-1-5"
+class="td11"> <span
+class="cmbx-10">Y </span></td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-1"
+class="td11">   0    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-2"
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-3"
+class="td11">    123      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-4"
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-2-5"
+class="td11"> 0  </td></tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-1"
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-2"
+class="td11"> 5 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-3"
+class="td11"> 23 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-4"
+class="td11"> 0 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-3-5"
+class="td11"> 1</td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-4-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-1"
+class="td11">   2    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-2"
+class="td11">    2      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-3"
+class="td11">     8        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-4"
+class="td11"> 1 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-4-5"
+class="td11"> 5  </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-5-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-1"
+class="td11">   3    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-2"
+class="td11">    1      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-3"
+class="td11">     7        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-4"
+class="td11"> 2 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-5-5"
+class="td11"> 11 </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-6-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-1"
+class="td11">   4    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-2"
+class="td11">    7      </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-3"
+class="td11">     1        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-4"
+class="td11"> 3 </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-6-5"
+class="td11"> 16 </td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-7-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-1"
+class="td11">   5    </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-2"
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-3"
+class="td11">     0        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-4"
+class="td11">23</td><td  style="white-space:nowrap; text-align:center;" id="TBL-2-7-5"
+class="td11">123</td>
+</tr><tr
+class="hline"><td><hr></td><td><hr></td><td><hr></td><td><hr></td><td><hr></td></tr><tr
+ style="vertical-align:baseline;" id="TBL-2-8-"><td  style="white-space:nowrap; text-align:center;" id="TBL-2-8-1"
+class="td11">      </td></tr></table></div></div>
+
+   </div><hr class="endfloat" />
+   </div>
+<!--l. 128--><p class="indent" >   You can pose the greatest common divisor of <span
+class="cmmi-10">p </span>and <span
+class="cmmi-10">q </span>as linear combination of <span
+class="cmmi-10">p </span>and <span
+class="cmmi-10">q </span>.<br
+class="newline" />
+<!--l. 132--><p class="indent" >   <span
+class="cmmi-10">gcd</span>(123<span
+class="cmmi-10">,</span>23) = 1 = 123 <span
+class="cmsy-10">* </span>3 + 23 <span
+class="cmsy-10">* </span>(<span
+class="cmsy-10">-</span>16)
+<!--l. 135--><p class="noindent" >The <span
+class="cmbx-10">extended Euclidean </span>gives us next to the greatest common divisor
+<span
+class="cmmi-10">gcd</span>(<span
+class="cmmi-10">p,q</span>) the coefficients
+class="newline" />
+<!--l. 139--><p class="indent" >   <span
+class="cmmi-10">x </span>= (<span
+class="cmsy-10">-</span>1)<sup><span
+class="cmmi-7">n</span></sup><span
+class="cmmi-10">x</span><sub><span
+class="cmmi-7">n</span></sub>      <span
+class="cmmi-10">y </span>= (<span
+class="cmsy-10">-</span>1)<sup><span
+class="cmmi-7">n</span><span
+class="cmr-7">+1</span></sup><span
+class="cmmi-10">y</span><sub><span
+class="cmmi-7">n</span></sub>
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a
+ id="x1-20002"></a>Literature</h3>
+<!--l. 142--><p class="noindent" >
+       <div class="thebibliography">
+       <p class="bibitem" ><span class="biblabel">
+     [1]<span class="bibsp">&#x00A0;&#x00A0;&#x00A0;</span></span><a
+ id="XJBu"></a>Johannes   Buchmann,   Einführung   in   die   Kryptographie,   4.,
+       erweiterte Auflage 2008, Kapitel 2.7, Seite 9
+</p>
+       </div>
+
+</body></html>

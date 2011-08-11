@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#FF0000" alink="#FF0000" vlink="#FF0000">
+ <h3>The Entropy Analysis</h3>
+ <p>The Entropy Analysis Plugin calculates the measure of <b>entropy</b> referring to <b>Claude Elwood Shannon</b> [1].</p>
+ <p>It uses the texteditor as message source. After opening a text in the editor, you can start the calculation in the "Configuration and Start" tab. The results are shown in the tabs "Result summary" and "entropy table". </p>
+
+ <h4>"Configuration and Start"</h4>
+<p>
+To get the calculation running do the following three steps:
+<ol>
+ <li>Modify the filter settings,</li>
+ <li>Select the analysis mode ("deep" or "standard", see below)</li>
+ <li>Click "begin calculation"</li>
+</ol>
+</p>
+<img src="tab1.jpg" alt="The configuration and start tab.">
+
+<p>
+<h5>The analysis mode</h5>
+<dl>
+        <dt><i>Standard--Analysis:</i></dt>
+        <dd>the calculation regards statistical dependencies between maximal <i>n</i> letters. The <i>n</i> is defined by the user.<br/>
+		<u>break criterion:</u> The calculation ends, when <i>one</i> of the following is satisfied: the length n is reached or the level of significance is undershot.</dd>
+        <dt><i>Deep-Analysis:</i></dt>
+        <dd>the program automatically increments the number of letters which are used to calculate the statistical dependencies. The calculation stops when the growth in the entropy undershots the defined significance level.</dd>
+</dl>
+</p>
+
+<h4>"Result summary"</h4>
+<p>This tab shows a summary of the finished analysis. The following screenshot shows an example followed by an explanation of the values:</p>
+ <img src="tab2.jpg" alt="The configuration and start tab.">
+ <ol>
+ <li><i>Termination criterion:</i> Here is shown because of what criterion the calculation terminated. There are two possibilities: either the defined tupellength is reached, or the level of significance is undershot by the growth of entropy.</li>
+ <li><i>Number of letters:</i> The values refer to the number of letters <i>after</i> the text has been filtered. The first value gives the number of different letters, the second value the number of all letters.</li>
+ <li><i>Maximum Entropy:</i> The value of the maximum entropy under the assumption of uniform distribution.</li>
+ <li><i>Entropy:</i> Two entropy values: The Entropy resulting of statistical dependencies of length 1 (single letters only) and the entropy regarding a maximum length of n letters (n-tupel).</li>
+ </ol>
+
+ <h4>"entropy table"</h4>
+ <p>This tabular shows all the calculated values regarding statistical dependencies from single letters up to n-tupel. </p>
+ <img src="tab3.jpg" alt="The configuration and start tab.">
+ <p><i>G(n)</i> is the entropy regarding n-tupels.</p>
+ <p><i>F(n)</i> is the conditional entropy of the n-th letter considering the preceding (n-1) letters.</p>
+ <p><br/></p>
+ <p>sources:<br/>
+ <ul>
+ <li>[1]<br/>Shannon, Claude E. ; Weaver, Warren: The mathematical theory of communication. Urbana and Chicago : University of Illinois Press, 1998. ISBN 0-252-72548-4</li>
+ </ul>
+ </p>
+
+</body>
+</html>

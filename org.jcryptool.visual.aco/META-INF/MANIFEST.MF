@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Acodecrypt Plug-in
+Bundle-SymbolicName: org.jcryptool.visual.aco;singleton:=true
+Bundle-Version: 0.9.5.qualifier
+Bundle-Activator: org.jcryptool.visual.aco.ACOPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: jcryptool.org, by Philipp Blohm
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.jcryptool.core.logging.utils

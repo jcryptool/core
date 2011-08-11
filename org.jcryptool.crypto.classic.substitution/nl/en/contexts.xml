@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Substitution">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key.&lt;br&gt;
+The key must only contain characters, that are contained in the alphabet selected above.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The substitution cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Substitution">
+    <description>The (monoalphabetic) substitution cipher replaces each letter in the text with another, based on an key alphabet (generated from a keyword).</description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The substitution cipher (cryptology manual)"/>
+	</context>
+</contexts>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.xeuclidean.views.XEuclideanView"
+            icon="icons/view.gif"
+          	id="org.jcryptool.visual.xeuclidean.views.XEuclideanView"
+            name="%view.name.0">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/help/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            contextHelpId="org.jcryptool.visual.xeuclidean.view"
+            name="%Visual.name.0"
+            viewId="org.jcryptool.visual.xeuclidean.views.XEuclideanView">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/help/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

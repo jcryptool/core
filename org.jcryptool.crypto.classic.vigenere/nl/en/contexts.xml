@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Vigenère">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key.&lt;br&gt;
+The key must only contain characters, that are contained in the alphabet selected above.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Vigenère cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="Vigenère">
+    <description>The Vigen&#232;re cipher is one of the most widely known substitution techniques. It is a polyalphabetic substitution, and shifts letters of the plaintext down the alphabet, according to the Caesar cipher. The difference is that the key can contain multiple letters, and so the letters are shifted not only by one offset.
+&lt;br&gt;The Vigen&#232;re cipher was considered unbreakable a long time, until Charles Babbage succeeded in deciphering it first in 1854.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The Vigenère cipher (cryptology manual)"/>
+	</context>
+</contexts>

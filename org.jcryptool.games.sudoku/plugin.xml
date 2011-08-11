@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Sudoku-Solver"
+            icon="icons/view.gif"
+            category="org.jcryptool.games"
+            class="org.jcryptool.games.sudoku.views.SudokuView"
+            id="org.jcryptool.games.sudoku.views.SudokuView">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.games">
+      <Game
+            name="Sudoku-Solver"
+            viewId="org.jcryptool.games.sudoku.views.SudokuView">
+      </Game>
+   </extension>
+
+</plugin>

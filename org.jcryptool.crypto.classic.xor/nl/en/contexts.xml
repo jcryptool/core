@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="XOR">
+		<description>Select the operation (encrypt or decrypt), an alphabet and enter a key. You can select a file as key as well.&lt;br&gt;
+If you choose to enter a key, this key must only contain characters, that are contained in the alphabet selected above.</description>
+		<topic href="$nl$/help/content/tutorial.html" label="More about using this wizard..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The XOR cipher (cryptology manual)"/>
+	</context>
+	<context id="algorithm" title="XOR">
+    <description>The XOR cipher executes exclusive conjunction (logic XOR) bitwise with the plaintext and the keyword. Another encryption with the same key results in the plaintext again, due to the symmetric nature of the XOR conjunction.
+&lt;br&gt;XOR is one of the simplest bit ciphers, and is widely used in modern cryptographic block ciphers.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="The XOR cipher (cryptology manual)"/>
+	</context>
+</contexts>

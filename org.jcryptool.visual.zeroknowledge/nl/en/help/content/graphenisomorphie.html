@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+
+<h1>Graph Isomorphism</h1>
+
+<p>
+<h4>Intention:</h4>
+Alice wants to prove to Bob that she knows an isomorphism f from
+G_0 to G_1 without revealing f.
+</p>
+
+<p>
+1)
+Alice chooses a random bit a (0 or 1) and creates a new isomorphism g
+which results to the graph H when calculating <span style="white-space:nowrap"><code>g(G_[a])</code></span>.
+She sends H to Bob.
+</p>
+
+<p>
+2)
+Bob also chooses randomly a bit b (0 or 1) and sends it to Alice. She
+should now provide Bob with an isomorphism h which equates to:
+<span style="white-space:nowrap"><code>H = h(G_[b])</code></span>.
+</p>
+
+<p>
+3)
+If a = b then the equation <span style="white-space:nowrap"><code>g(G_b) = H = h(G_b)</code></span>
+holds true, therefore Alice can just send her before generated isomorphism g to Bob.
+</p>
+
+<p>
+If a != b then Alice can not simply just send g to Bob because the two
+isomorphisms must be different (<span style="white-space:nowrap"><code>g(G_a) = H = g(G_b)</code></span>
+can never be true when <span style="white-space:nowrap"><code>G_a != G_b</code></span>).
+She is also not able to calculate an isomorphism h which translates
+G_b to H because this is a NP problem.
+But Alice knows an isomorphism f from G_0 to G_1, therefore she can
+apply this to get <span style="white-space:nowrap"><code>f(G_b) = G_a (when a != b)</code></span>.
+By using this knowledge she can create the desired isomorphism with
+<span style="white-space:nowrap"><code>h(G_b) = H = g(f(G_b))</code></span>.
+</p>
+
+<p>
+4)
+Bob receives h and verifies <span style="white-space:nowrap"><code>H = h(G_b)</code></span>.
+</p>
+
+<p>
+<h4>Vulnerability:</h4>
+Carol, the attacker, does not know the isomorphism f which translates
+G_0 to G_1 and vice versa. Therefore she would not be able to provide
+Bob with an isomorphism h if a != b holds true (see point 3 in the
+protocol flow for calculating h when a != b).
+But if a = b then h would be the same isomorphism like g, which she
+can create by herself. This concludes that she can successfully answer
+Bob's request only if she guessed the same bit like he did.
+</p>
+
+<p>
+The probability of this, with two valid bit values (0 and 1), is 50%.
+By running ten consecutive iterations we have a chance to deceive Bob
+of less than 0.1% (0.5<sup>10</sup>), which should be safe enough for most
+considerations.
+</p>
+
+<p>
+By clicking on the "run several times" button in the main interface,
+a protocol run with adjustable number of iterations can be simulated
+from provers and attackers view.
+</p>
+
+</BODY>
+</HTML>

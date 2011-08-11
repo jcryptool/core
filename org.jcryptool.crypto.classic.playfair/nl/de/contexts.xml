@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="Playfair">
+		<description>Wählen Sie die Operation (Verschlüsseln oder Entschlüsseln), ein Alphabet und geben Sie einen Schlüssel ein. &lt;br&gt;
+Der Schlüssel darf nur Zeichen enthalten, die im ausgewählten Alphabet enthalten sind, also A-Z ohne J.
+</description>
+		<topic href="$nl$/help/content/tutorial.html" label="Mehr zur Benutzung dieses Assistenten..."/>
+  <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Playfair-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+	<context id="algorithm" title="Playfair">
+    <description>Die Playfair-Verschl&#252;sselung ist ein bigraphisches Substitutionsverfahren, bei dem jedes Buchstabenpaar durch ein anderes Buchstabenpaar ersetzt wird. Die Buchstabenpaare werden durch ein 5x5-Quadrat (Playfair-Quadrat) erzeugt in dem ein Alphabet, in der Reihenfolge durch das Schl&#252;sselwort modifiziert, steht.
+&lt;br&gt;Das Playfair-Verfahren wurde haupts&#228;chlich im ersten Weltkrieg vom britischen Milit&#228;r eingesetzt.
+    </description>
+    <topic href="$nl$/help/content/toc_cryptology/toc_cryptology.html" label="Die Playfair-Verschlüsselung (Kryptologie-Handbuch)"/>
+	</context>
+</contexts>

@@ -1,0 +1,50 @@
+package org.jcryptool.crypto.classic.model.ui.wizard;
+
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.crypto.classic.model.algorithm.InputVerificationResultKeyNotInAlphabet;
+import org.jcryptool.util.input.InputVerificationResult;
+import org.jcryptool.util.input.TextfieldInput;
+
+public abstract class KeyInput<T> extends TextfieldInput<T> {
+	
+	protected boolean canAutocorrect(InputVerificationResult result) {
+		// offers autocorrection for chars which are not accepted lowercase, but uppercase, or the other way round
+		if(result instanceof InputVerificationResultKeyNotInAlphabet) {
+			InputVerificationResultKeyNotInAlphabet resultKNIA = (InputVerificationResultKeyNotInAlphabet) result;
+			if(getAlphabet().contains(Character.toUpperCase(resultKNIA.getErroneusChar()))) {
+				return true;
+			}
+			if(getAlphabet().contains(Character.toLowerCase(resultKNIA.getErroneusChar()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@SuppressWarnings("static-method")
+	protected void autocorrect(InputVerificationResult result) {
+		if(result instanceof InputVerificationResultKeyNotInAlphabet) {
+			String correctedKey = getTextfield().getText();
+			
+			InputVerificationResultKeyNotInAlphabet resultKNIA = (InputVerificationResultKeyNotInAlphabet) result;
+			correctedKey = getTextfield().getText().substring(0, ((InputVerificationResultKeyNotInAlphabet) result).getPosition());
+			if(getAlphabet().contains(Character.toUpperCase(resultKNIA.getErroneusChar()))) {
+				correctedKey += Character.toUpperCase(resultKNIA.getErroneusChar());
+			} else if(getAlphabet().contains(Character.toLowerCase(resultKNIA.getErroneusChar()))) {
+				correctedKey += Character.toLowerCase(resultKNIA.getErroneusChar());
+			}
+			if(resultKNIA.getPosition() < getTextfield().getText().length()-1) {
+				correctedKey += getTextfield().getText().substring(resultKNIA.getPosition()+1);
+			}
+			
+			setTextfieldTextExternal(correctedKey);
+		}
+	}
+	
+
+	/**
+	 * @return the alphabet for the plain text
+	 */
+	public abstract AbstractAlphabet getAlphabet();
+
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Getting Started" link_to="../org.jcryptool.games.numbershark/$nl$/toc.xml#gettingstarted"> 
+	<topic label="Rules"  href="$nl$/help/gettingstarted/NumberSharkHelp-Rules.html"> 
+	</topic>
+	<topic label="Tutorial"  href="$nl$/help/gettingstarted/NumberSharkHelp-Tutorial.html"> 
+	</topic>
+	<topic label="Manual"  href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html"> 
+	</topic>
+</toc>

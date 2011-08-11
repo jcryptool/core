@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="view" title="Number Shark">
+		<description> Goal of the Number Shark Game:
+You win, if the sum of your numbers is greater than the sum of the Number Shark numbers. Try to maximize your sum as much as you can.</description>
+		<topic href="$nl$/help/toc.html" label="Number Shark"/>
+  <topic href="nl/en/help/gettingstarted/NumberSharkHelp-Manual.html" label="Preferences"/>
+	</context>
+</contexts>

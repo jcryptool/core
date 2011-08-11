@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="magicdoorView" title="Magic Door">
+    <description>The Magic Door scenario is an easy to understand example for a zero knowledge proof. Here Alice wants to prove to Bob that she knows the secret code for the door between two rooms (marked with &apos;Left&apos; and &apos;Right&apos;). But she does not want to disclose any information about the secret itself to Bob or any third party.</description>
+		<topic href="help/content/magicdoor.html" label="Magic Door"/>
+	</context>
+ <context id="fiatshamirView" title="Fiat Shamir Protocol">
+    <description>This mathematical protocol is designed to prove to Bob that Alice knows a secret without revealing it. It runs in the number space that is build up on the modulo n field, with n being the product of two prime numbers, p and q. P and q are only known to Alice and must not be made public.</description>
+    <topic href="help/content/fiatshamir.html" label="Fiat Shamir Protocol"/>
+ </context>
+ <context id="feigefiatshamirView" title="Feige Fiat Shamir Protocol">
+    <description>This mathematical protocol is designed to prove to Bob that Alice knows a secret without revealing it. It runs in the number space that is build up on the modulo n field, with n being the product of two prime numbers, p and q. P and q are only known to Alice and must not be made public. Feige Fiat Shamir is an improved Fiat Shamir protocol which is less vulnerable to attacks, meaning that the chance of guessing the right numbers for an attacker is not 50% but 6.25%.</description>
+    <topic href="help/content/feigefiatshamir.html" label="Feige Fiat Shamir Protocol"/>
+ </context>
+ <context id="graphenisomorphieView" title="Graph Isomorphism">
+    <description>Alice wants to prove to Bob that she knows an isomorphism f from G_0 to G_1 without revealing f.</description>
+    <topic href="help/content/graphenisomorphie.html" label="Graph Isomorphism"/>
+ </context>
+</contexts>

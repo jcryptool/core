@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice>
+	<ID>IN 2004/00645</ID>
+	<IssueDate>2004-02-25</IssueDate>
+	<BuyerParty>
+		<ID>458746</ID>
+		<xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="myEncryptionA" Type="http://www.w3.org/2001/04/xmlenc#Element">
+			<xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<xenc:EncryptedKey>
+					<xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#kw-aes128"/>
+					<xenc:CipherData>
+						<xenc:CipherValue>4tqyuL8k+VABEPwb43uE1tG/4mpHsOmN</xenc:CipherValue>
+					</xenc:CipherData>
+				</xenc:EncryptedKey>
+			</ds:KeyInfo>
+			<xenc:CipherData>
+				<xenc:CipherValue>LoubEbTWKvs1Plgkv6hEZHi29eqqdd6l2eqgyHhcDHuTATCKaTA61/jw262Oab28</xenc:CipherValue>
+			</xenc:CipherData>
+		</xenc:EncryptedData>
+	</BuyerParty>
+	<PaymentMeans>
+		<PayeeFinancialAccount>
+			<ID>07044961</ID>
+			<Name>Specialist Windows pc</Name>
+			<AccountTypeCode>Credit</AccountTypeCode>
+			<FinancialInstitutionBranch>
+				<xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="myEncryptionB" Type="http://www.w3.org/2001/04/xmlenc#Element">
+					<xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+					<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+						<xenc:EncryptedKey>
+							<xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#kw-aes128"/>
+							<xenc:CipherData>
+								<xenc:CipherValue>yCXISETiig7J+NiS0tF4Okz5FsctAIPC</xenc:CipherValue>
+							</xenc:CipherData>
+						</xenc:EncryptedKey>
+					</ds:KeyInfo>
+					<xenc:CipherData>
+						<xenc:CipherValue>SazfImuO9IX2hfQX9jb5Yu6JD6cLF5w26f5UUJzC3gk=</xenc:CipherValue>
+					</xenc:CipherData>
+				</xenc:EncryptedData>
+				<Institution>LOYDGB852</Institution>
+			</FinancialInstitutionBranch>
+		</PayeeFinancialAccount>
+	</PaymentMeans>
+	<TotalAmount currencyID="GBP">505.00</TotalAmount>
+	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#" Id="mySignature">
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+			<ds:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#dsa-sha1"/>
+			<ds:Reference URI="#InvoiceLine">
+				<ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<ds:DigestValue>OWF21Tt4x9//vclwm4cS4vxORBo=</ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>G0yCEgGA0kJwddeSOmQutEunEf0fOmjeetaC0G0vnOZw0Nl31+ESTQ==</ds:SignatureValue>
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate>
+MIICvzCCAn0CBEC1zkEwCwYHKoZIzjgEAwUAMEUxCzAJBgNVBAYTAkRFMRYwFAYDVQQKEw1GSCBG
+dXJ0d2FuZ2VuMQswCQYDVQQLEwJXSTERMA8GA1UEAxMISm9obiBEb2UwHhcNMDQwNTI3MTExNzIx
+WhcNMDkxMTIyMTExNzIxWjBFMQswCQYDVQQGEwJERTEWMBQGA1UEChMNRkggRnVydHdhbmdlbjEL
+MAkGA1UECxMCV0kxETAPBgNVBAMTCEpvaG4gRG9lMIIBuDCCASwGByqGSM44BAEwggEfAoGBAP1/
+U4EddRIpUt9KnC7s5Of2EbdSPO9EAMMeP4C2USZpRV1AIlH7WT2NWPq/xfW6MPbLm1Vs14E7gB00
+b/JmYLdrmVClpJ+f6AR7ECLCT7up1/63xhv4O1fnxqimFQ8E+4P208UewwI1VBNaFpEy9nXzrith
+1yrv8iIDGZ3RSAHHAhUAl2BQjxUjC8yykrmCouuEC/BYHPUCgYEA9+GghdabPd7LvKtcNrhXuXmU
+r7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3zwkyjMim4TwWeotUfI0o4KOu
+HiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKLZl6Ae1UlZAFMO/7PSSoDgYUA
+AoGBAOekbZ3JLR8OlE+oczaeWLlkZiiU0gRVUfaqJkhX2aFJ810t5A+g0pK6GxZG4xR4CeZ2nLFb
+ruM3XivZnsE5w8Dr3fHZb2MhuzrppES/f9Kqwj+HuTERPs4W0JE+JAAXHCYbvEiVZuwuD5HJXLtA
+Jha8hYfOjinAoyebp6vAS7rGMAsGByqGSM44BAMFAAMvADAsAhRt1fNJLZPF6s5q2tNFyW4zlbDu
+3AIUZAfEEJrBMBAklR0Hjq5In+mOjCw=
+</ds:X509Certificate>
+			</ds:X509Data>
+			<ds:KeyValue>
+				<ds:DSAKeyValue>
+					<ds:P>
+/X9TgR11EilS30qcLuzk5/YRt1I870QAwx4/gLZRJmlFXUAiUftZPY1Y+r/F9bow9subVWzXgTuA
+HTRv8mZgt2uZUKWkn5/oBHsQIsJPu6nX/rfGG/g7V+fGqKYVDwT7g/bTxR7DAjVUE1oWkTL2dfOu
+K2HXKu/yIgMZndFIAcc=
+</ds:P>
+					<ds:Q>l2BQjxUjC8yykrmCouuEC/BYHPU=</ds:Q>
+					<ds:G>
+9+GghdabPd7LvKtcNrhXuXmUr7v6OuqC+VdMCz0HgmdRWVeOutRZT+ZxBxCBgLRJFnEj6EwoFhO3
+zwkyjMim4TwWeotUfI0o4KOuHiuzpnWRbqN/C/ohNWLx+2J6ASQ7zKTxvqhRkImog9/hWuWfBpKL
+Zl6Ae1UlZAFMO/7PSSo=
+</ds:G>
+					<ds:Y>
+56RtncktHw6UT6hzNp5YuWRmKJTSBFVR9qomSFfZoUnzXS3kD6DSkrobFkbjFHgJ5nacsVuu4zde
+K9mewTnDwOvd8dlvYyG7OumkRL9/0qrCP4e5MRE+zhbQkT4kABccJhu8SJVm7C4Pkclcu0AmFryF
+h86OKcCjJ5unq8BLusY=
+</ds:Y>
+				</ds:DSAKeyValue>
+			</ds:KeyValue>
+		</ds:KeyInfo>
+		<ds:Object Id="InvoiceLine">
+			<InvoiceLine>
+				<ID>1</ID>
+				<InvoicedQuantity>2</InvoicedQuantity>
+				<LineAmount currencyID="GBP">205.00</LineAmount>
+				<Item>
+					<SellersItemID>236WV</SellersItemID>
+					<BasePrice currencyID="GBP">102.50</BasePrice>
+				</Item>
+				<ID>2</ID>
+				<InvoicedQuantity>3</InvoicedQuantity>
+				<LineAmount currencyID="GBP">300.00</LineAmount>
+				<Item>
+					<SellersItemID>500WV</SellersItemID>
+					<BasePrice currencyID="GBP">100.00</BasePrice>
+				</Item>
+			</InvoiceLine>
+		</ds:Object>
+	</ds:Signature>
+</Invoice>

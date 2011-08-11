@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%Visual.name.0"
+            viewId="org.jcryptool.visual.grille.view">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.crypto.classic.grille.ui.View"
+            icon="icons/view.gif"
+            id="org.jcryptool.visual.grille.view"
+            name="%view.name.0"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
