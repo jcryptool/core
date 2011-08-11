@@ -1,0 +1,5 @@
+instructions.configure=\
+  addRepository(type:0,location:http${#58}//www.cryptool.org/jcryptool/update);\
+  addRepository(type:1,location:http${#58}//www.cryptool.org/jcryptool/update);
+
+instructions.install=mkdir(path:${installFolder}/dropins);

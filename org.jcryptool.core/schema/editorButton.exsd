@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="org.jcryptool.core" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appInfo>
+         <meta.schema plugin="org.jcryptool.core" id="editorButton" name="EditorButton"/>
+      </appInfo>
+      <documentation>
+         This extension point is only responsible for the default action of the New Editor icon. This extension point must be implemented by the default editor that should be opened when clicking on the New Editor icon in the main toolbar. This does not affect the entry in the editors drop down menu.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appInfo>
+            <meta.element />
+         </appInfo>
+         <documentation>
+            Handles the on click part of the editor button
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="OnClick"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute translatable="true"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="OnClick">
+      <complexType>
+         <attribute name="OnClickClass" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ui.IActionDelegate"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="since"/>
+      </appInfo>
+      <documentation>
+         1.0.0 Milestone 4
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appInfo>
+         <meta.section type="examples"/>
+      </appInfo>
+      <documentation>
+         Following is an example of an application declaration:
+&lt;p&gt;
+&lt;pre&gt;
+   &lt;extension point=&quot;org.jcryptool.core.editorButton&quot;&gt;
+      &lt;OnClick OnClickClass=&quot;org.jcryptool.editor.text.action.NewFileJCTTextEditorAction&quot;&gt; &lt;/OnClick&gt;
+   &lt;/extension&gt;
+&lt;/pre&gt;
+&lt;/p&gt;
+      </documentation>
+   </annotation>
+
+
+
+   <annotation>
+      <appInfo>
+         <meta.section type="copyright"/>
+      </appInfo>
+      <documentation>
+         Copyright (c) 2010 JCrypTool Core Team - http://jcryptool.sourceforge.net
+      </documentation>
+   </annotation>
+
+</schema>
