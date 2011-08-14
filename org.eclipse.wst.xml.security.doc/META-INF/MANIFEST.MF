@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.eclipse.wst.xml.security.doc;singleton:=true
-Bundle-Version: 0.5.0.qualifier
+Bundle-Version: 0.9.5.qualifier
 Bundle-Vendor: %bundleProvider
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui.cheatsheets
+Require-Bundle: org.eclipse.ui.cheatsheets;bundle-version="3.4.100"
