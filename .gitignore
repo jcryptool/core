@@ -1,3 +1,4 @@
 *.class
 */bin*
 .DS_Store
+workspace
