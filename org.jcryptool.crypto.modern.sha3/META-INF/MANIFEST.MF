@@ -6,9 +6,9 @@ Bundle-SymbolicName: org.jcryptool.crypto.modern.sha3;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %BundleVendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.ui;bundle-version="3.5.0",
- org.eclipse.core.runtime;bundle-version="3.5.0",
- org.jcryptool.core.operations;bundle-version="0.9.2"
+Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.jcryptool.core.operations;bundle-version="0.9.5"
 Import-Package: org.jcryptool.core.logging.utils
 
 
