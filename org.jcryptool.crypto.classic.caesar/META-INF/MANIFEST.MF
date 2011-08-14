@@ -5,17 +5,17 @@ Bundle-SymbolicName: org.jcryptool.crypto.classic.caesar;singleton:=true
 Bundle-Version: 0.9.5.qualifier
 Bundle-Activator: org.jcryptool.crypto.classic.caesar.CaesarPlugin
 Bundle-Vendor: %Bundle-Vendor
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.jcryptool.core.operations,
- org.jcryptool.util,
- org.jcryptool.crypto.classic.model
+Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.jcryptool.core.operations;bundle-version="0.9.5",
+ org.jcryptool.util;bundle-version="0.9.5",
+ org.jcryptool.crypto.classic.model;bundle-version="0.9.5",
+ org.jcryptool.commands.core;bundle-version="0.9.5",
+ org.apache.commons.cli;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.caesar,
  org.jcryptool.crypto.classic.caesar.algorithm,
  org.jcryptool.crypto.classic.caesar.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.apache.commons.cli;version="1.2.0",
- org.jcryptool.commands.core.api,
- org.jcryptool.core.logging.utils,
+Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

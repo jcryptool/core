@@ -5,13 +5,12 @@ Bundle-SymbolicName: org.jcryptool.crypto.classic.delastelle;singleton:=true
 Bundle-Version: 0.9.5.qualifier
 Bundle-Activator: org.jcryptool.crypto.classic.delastelle.DelastellePlugin
 Bundle-Vendor: %bundleVendor
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.jcryptool.crypto.classic.alphabets,
- org.jcryptool.core.operations,
- org.jcryptool.crypto.classic.model,
- org.jcryptool.commands.core,
- org.apache.commons.cli
+Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.jcryptool.core.operations;bundle-version="0.9.5",
+ org.jcryptool.crypto.classic.model;bundle-version="0.9.5",
+ org.jcryptool.commands.core;bundle-version="0.9.5",
+ org.apache.commons.cli;bundle-version="1.2.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.delastelle,
  org.jcryptool.crypto.classic.delastelle.algorithm,

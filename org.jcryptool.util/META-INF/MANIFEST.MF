@@ -4,9 +4,8 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.util
 Bundle-Version: 0.9.5.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.swt,
- org.jcryptool.core.operations,
- org.eclipse.jface
+Require-Bundle: org.eclipse.jface;bundle-version="3.7.0",
+ org.jcryptool.core.operations;bundle-version="0.9.5"
 Export-Package: org.jcryptool.util.input,
  org.jcryptool.util.input.handler,
  org.jcryptool.util.ui
