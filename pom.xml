@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+  	<groupId>org.jcryptool</groupId>
+  	<artifactId>product</artifactId>
+  	<version>0.9.5-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jcryptool</groupId>
+  <artifactId>core.parent</artifactId>
+  <version>0.9.5-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>JCrypTool Core</name>
+  <properties>
+    <tycho.version>0.11.0</tycho.version>
+  </properties>
+  <modules>
+    <module>com.thoughtworks.qdox</module>
+    <module>de.flexiprovider</module>
+    <module>net.sourceforge.codec</module>
+    <module>net.sourceforge.javahexeditor</module>
+    <module>org.apache.commons.cli</module>
+    <module>org.bouncycastle</module>
+    <module>org.jcryptool.actions.core</module>
+    <module>org.jcryptool.actions.ui</module>
+    <module>org.jcryptool.commands.core</module>
+    <module>org.jcryptool.commands.ui</module>
+    <module>org.jcryptool.core</module>
+    <module>org.jcryptool.core.action</module>
+    <module>org.jcryptool.core.dependencies.feature</module>
+    <module>org.jcryptool.core.feature</module>
+    <module>org.jcryptool.core.help</module>
+    <module>org.jcryptool.core.logging</module>
+    <module>org.jcryptool.core.nl</module>
+    <module>org.jcryptool.core.operations</module>
+    <module>org.jcryptool.core.util</module>
+    <module>org.jcryptool.core.views</module>
+    <module>org.jcryptool.crypto</module>
+    <module>org.jcryptool.crypto.feature</module>
+    <module>org.jcryptool.crypto.flexiprovider</module>
+    <module>org.jcryptool.crypto.flexiprovider.algorithms</module>
+    <module>org.jcryptool.crypto.flexiprovider.engines</module>
+    <module>org.jcryptool.crypto.flexiprovider.feature</module>
+    <module>org.jcryptool.crypto.flexiprovider.integrator</module>
+    <module>org.jcryptool.crypto.flexiprovider.keystore</module>
+    <module>org.jcryptool.crypto.flexiprovider.operations</module>
+    <module>org.jcryptool.crypto.keystore</module>
+    <module>org.jcryptool.editor.text</module>
+    <module>org.jcryptool.editors.feature</module>
+    <module>org.jcryptool.fileexplorer</module>
+    <module>org.jcryptool.providers.feature</module>
+    <module>org.jcryptool.views.feature</module>
+    <module>org.jcryptool.webbrowser</module>
+  </modules>
+</project>
