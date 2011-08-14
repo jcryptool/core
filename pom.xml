@@ -29,6 +29,7 @@
     <module>org.jcryptool.core</module>
     <module>org.jcryptool.core.action</module>
     <module>org.jcryptool.core.dependencies.feature</module>
+    <module>org.jcryptool.core.dependencies.nl_de.feature</module>
     <module>org.jcryptool.core.feature</module>
     <module>org.jcryptool.core.help</module>
     <module>org.jcryptool.core.logging</module>
