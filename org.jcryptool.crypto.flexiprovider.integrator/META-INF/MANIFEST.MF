@@ -26,5 +26,5 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keys,
  org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend,
- org.jcryptool.util.ui
+ org.jcryptool.core.util.ui
 Export-Package: org.jcryptool.crypto.flexiprovider.integrator

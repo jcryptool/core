@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.ui.HexTextbox;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaMode;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaPaddingScheme;
 import org.jcryptool.crypto.flexiprovider.keystore.KeyStoreHelper;
@@ -61,7 +62,6 @@ import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.util.ui.HexTextbox;
 
 /**
  * The wizard page for the FlexiProvider ciphers.

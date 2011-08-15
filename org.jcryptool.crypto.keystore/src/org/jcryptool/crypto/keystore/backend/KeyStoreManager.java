@@ -44,12 +44,12 @@ import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.providers.ProviderManager2;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.ui.PasswordPrompt;
 import org.jcryptool.crypto.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
-import org.jcryptool.util.ui.PasswordPrompt;
 
 import de.flexiprovider.api.keys.Key;
 
