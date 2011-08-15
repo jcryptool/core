@@ -19,11 +19,11 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
-import org.jcryptool.util.input.AbstractUIInput;
-import org.jcryptool.util.input.KeyVerificator;
 
 /**
  * The wizard page for the Autokey-Vigenere wizard.

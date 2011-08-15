@@ -1,9 +1,9 @@
 package org.jcryptool.crypto.classic.model.ui.wizard;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.algorithm.InputVerificationResultKeyNotInAlphabet;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.TextfieldInput;
 
 public abstract class KeyInput<T> extends TextfieldInput<T> {
 	

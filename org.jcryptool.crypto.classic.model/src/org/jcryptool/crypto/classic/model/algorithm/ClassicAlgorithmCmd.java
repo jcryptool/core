@@ -28,8 +28,8 @@ import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.InputVerificationResult;
 
 /**
  * This class provides a template for creating a console command for a classic algorithm.

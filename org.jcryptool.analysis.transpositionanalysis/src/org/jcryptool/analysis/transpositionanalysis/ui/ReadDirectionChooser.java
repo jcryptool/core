@@ -17,9 +17,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.util.input.AbstractUIInput;
-import org.jcryptool.util.input.ButtonInput;
-import org.jcryptool.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
 
 
 

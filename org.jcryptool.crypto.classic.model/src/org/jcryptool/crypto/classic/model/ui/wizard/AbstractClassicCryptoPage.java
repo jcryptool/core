@@ -35,14 +35,14 @@ import org.eclipse.swt.widgets.Widget;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
-import org.jcryptool.util.input.AbstractUIInput;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
-import org.jcryptool.util.input.TextfieldInput;
 
 
 /**
@@ -89,10 +89,10 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	protected WidgetBubbleUIInputHandler verificationDisplayHandler;
 	protected Widget operationLastSelected;
 	protected AbstractUIInput<Boolean> transformationInput;
-	
+
 	protected ClassicAlgorithmSpecification specification = new ClassicAlgorithmSpecification();
 
-	
+
 
 	/**
 	 * Observes every change made to the page, for setting the next page/can finish status.
@@ -142,7 +142,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		};
 		setTitleBarMessage(normalStatusMsg);
 	}
-	
+
 	public void setAlgorithmSpecification(ClassicAlgorithmSpecification spec) {
 		this.specification = spec;
 	}
@@ -347,7 +347,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 				setTextfieldTextExternal(stringBuilder.toString());
 				reread(inputWhichCausedThis);
 			}
-			
+
 			@Override
 			public AbstractAlphabet getAlphabet() {
 				return alphabetInput.getContent();
@@ -455,7 +455,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	protected List<KeyVerificator> getKeyVerificatorsDelegate() {
 		return getKeyVerificators();
 	}
-	
+
 	/**
 	 * Provides the key verificators for the standard implementation of the KeyInput.
 	 * This method is meant for usage when nothing else but key verificators have to be
@@ -500,7 +500,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
 				result.add(a);
 			}
-	
+
 			return result;
 		} else {
 			return specification.getAvailablePlainTextAlphabets();
@@ -522,7 +522,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		} else {
 			return specification.getDefaultPlainTextAlphabet();
 		}
-		
+
 	}
 
 	/**

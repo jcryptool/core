@@ -1,6 +1,7 @@
 package org.jcryptool.analysis.kegver.perf;
 
 import static org.junit.Assert.assertEquals;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 

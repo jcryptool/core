@@ -18,9 +18,9 @@ import java.util.Set;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
 
 /**
  * 

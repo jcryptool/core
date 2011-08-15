@@ -23,10 +23,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.util.input.ButtonInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.xor.XorPlugin;
-import org.jcryptool.util.input.ButtonInput;
-import org.jcryptool.util.input.InputVerificationResult;
 
 /**
  * The XorWizardPage for the Xor cipher.

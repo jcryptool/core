@@ -19,14 +19,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.doppelkasten.DoppelkastenPlugin;
 import org.jcryptool.crypto.classic.doppelkasten.algorithm.DoppelkastenAlgorithm;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
-import org.jcryptool.util.input.AbstractUIInput;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
-import org.jcryptool.util.input.TextfieldInput;
 
 /**
  * The wizard page for the Autokey-Vigenere wizard.

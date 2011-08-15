@@ -28,6 +28,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.adfgvx.AdfgvxPlugin;
 import org.jcryptool.crypto.classic.adfgvx.algorithm.AdfgvxAlgorithmSpecification;
 import org.jcryptool.crypto.classic.adfgvx.algorithm.AdfgvxFactory;
@@ -35,10 +39,6 @@ import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecificatio
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
-import org.jcryptool.util.input.AbstractUIInput;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
-import org.jcryptool.util.input.TextfieldInput;
 
 /**
  * Wizard page for the ADFGVX cipher.
@@ -82,7 +82,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 	private TextfieldInput<List<Character>> substitutionKeyInput;
 	private TextfieldInput<String> transpositionKeyInput;
 
-	
+
 
 	/**
 	 * Creates a new instance of AdfgvxWizardPage.

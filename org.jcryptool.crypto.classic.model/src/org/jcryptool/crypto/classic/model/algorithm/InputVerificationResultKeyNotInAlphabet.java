@@ -1,7 +1,7 @@
 package org.jcryptool.crypto.classic.model.algorithm;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.InputVerificationResult;
 
 public class InputVerificationResultKeyNotInAlphabet extends
 		InputVerificationResult {

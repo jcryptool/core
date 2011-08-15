@@ -16,8 +16,8 @@ import java.util.List;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.InputVerificationResult;
 
 /**
  * Specifies aspects of classic algorithms like plain text and cipher text combinations. Implementations

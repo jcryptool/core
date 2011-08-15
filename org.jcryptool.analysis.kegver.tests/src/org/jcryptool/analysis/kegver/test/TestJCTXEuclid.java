@@ -6,9 +6,9 @@ import static org.junit.Assert.assertSame;
 
 import java.math.BigInteger;
 
+import org.jcryptool.visual.xeuclidean.algorithm.XEuclid;
 import org.junit.Before;
 import org.junit.Test;
-import org.jcryptool.visual.xeuclidean.algorithm.XEuclid;
 
 
 public class TestJCTXEuclid {

@@ -15,9 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
-import org.jcryptool.util.input.InputVerificationResult;
-import org.jcryptool.util.input.KeyVerificator;
 
 /**
  * 

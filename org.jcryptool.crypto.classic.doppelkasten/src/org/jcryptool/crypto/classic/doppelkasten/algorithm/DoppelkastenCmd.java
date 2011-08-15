@@ -19,9 +19,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmCmd;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
-import org.jcryptool.util.input.KeyVerificator;
 
 /**
  * 

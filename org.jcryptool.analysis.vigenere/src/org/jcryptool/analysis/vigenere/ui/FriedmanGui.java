@@ -31,7 +31,7 @@ import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.analysis.vigenere.lang.Messages;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.util.ui.SingleVanishTooltipLauncher;
+import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI

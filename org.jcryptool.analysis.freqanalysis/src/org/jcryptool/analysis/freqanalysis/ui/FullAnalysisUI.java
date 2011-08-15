@@ -42,8 +42,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorsManager;
-
-import org.jcryptool.util.ui.SingleVanishTooltipLauncher;
+import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
