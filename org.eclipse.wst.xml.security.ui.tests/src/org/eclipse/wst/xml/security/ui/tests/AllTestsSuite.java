@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.wst.xml.security.ui.tests;
 
+import junit.framework.TestSuite;
+
 import org.eclipse.wst.xml.security.ui.tests.verify.SignatureViewTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import junit.framework.TestSuite;
 
 /**
  * This class specifies all the bundles of this component that provide a test suite to run during

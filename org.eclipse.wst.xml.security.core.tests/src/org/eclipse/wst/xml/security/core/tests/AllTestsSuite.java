@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.wst.xml.security.core.tests;
 
+import junit.framework.TestSuite;
+
 import org.eclipse.wst.xml.security.core.tests.sign.CreateSignatureTest;
 import org.eclipse.wst.xml.security.core.tests.utils.CertificateTest;
 import org.eclipse.wst.xml.security.core.tests.utils.KeystoreTest;
@@ -18,8 +20,6 @@ import org.eclipse.wst.xml.security.core.tests.utils.XmlSecurityConstantsTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import junit.framework.TestSuite;
 
 /**
  * This class specifies all the bundles of this component that provide a test suite to run during
