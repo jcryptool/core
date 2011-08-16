@@ -3,6 +3,16 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <script type="text/javascript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+      <style type="text/css">
+		a.command-link {
+		}
+		a.command-link img {
+		    border-width: 0px;
+		    border-style: none;
+		    vertical-align: middle;
+		}
+	  </style>
 </head>
 
 <body>
@@ -14,7 +24,7 @@
     Kaskade bearbeiten oder wiedergeben und alle kryptografischen Operationen der Reihe nach beliebig oft auf beliebigen
     Inhalt ausführen lassen. Im Normalfall ist bei der Wiedergabe keine weitere Aktion von Ihnen erforderlich, die Kaskade wird vollständig
     automatisch ausgeführt. Über die Export- und Import-Funktionalität können Sie Kaskaden mit anderen Benutzern austauschen oder auch
-    fremde Kaskaden wiedergeben.</p>
+    fremde Kaskaden wiedergeben. Sie können die Actions auch anhand von <a href="#examples">Beispielen</a> kennenlernen.</p>
 
     <p>Beachten Sie, dass eine Kaskade nicht automatisch gespeichert wird! Nach einem JCrypTool Neustart steht somit die aufgezeichnete Kaskade
     nicht mehr zur Verfügung. Wenn Sie eine Kaskade zur weiteren Verwendung sichern wollen müssen Sie daher die <a href="#export">Export</a>
@@ -154,5 +164,29 @@
     Stattdessen wird der Austausch von Kaskaden damit erleichtert. Sofern Sie Passwörter nicht in der Kaskade speichern möchten
     können Sie dies explizit in den <a href="preferences.html">Benutzervorgaben</a> deaktivieren. Bei der Wiedergabe werden dann Sie
     und jeder andere Benutzer zur Eingabe des jeweiligen Passworts aufgefordert.</p>
+
+	<h2><a name="examples"></a>Beispiele</h2>
+	
+	<h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar2.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 1-Schritt-Caesar </a></h3>
+
+	<p>Beschreibung:</p>
+	<ol>
+		<li>JCT Beispieldatei als Eingabe</li>
+		<li>Verschlüsseln mit dem Schlüssel H</li>
+		<li>Entschlüsseln mit dem Schlüssel H</li>
+	</ol>
+
+	<h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar1.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 2-Schritte-Caesar </a></h3>
+	
+	<p>Beschreibung:</p>
+	<ol>
+		<li>JCT Beispieldatei als Eingabe</li>
+		<li>Verschlüsseln mit dem Schlüssel E</li>
+		<li>Ergebnis des Verschlüsselns dient als Eingabe für den nächsten Schritt</li>
+		<li>Zweites Verschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel E</li>
+	</ol>
+
 </body>
 </html>

@@ -3,6 +3,16 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <script type="text/javascript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+      <style type="text/css">
+		a.command-link {
+		}
+		a.command-link img {
+		    border-width: 0px;
+		    border-style: none;
+		    vertical-align: middle;
+		}
+	  </style>
 </head>
 
 <body>
@@ -12,7 +22,7 @@
    	cryptographic operation is recorded. All information is automatically added to a protocol which can be accessed via the Actions view.
    	This view can start the replay of all cryptographic operations in the order recorded before. Normally no additional action is required
    	by you, the cascade is replayed fully automatically. With the export and import functionality, cascades can be shared with other users
-   	and cascades of other users can be replayed.</p>
+   	and cascades of other users can be replayed. You can study Actions by looking at the provided <a href="#examples">examples</a>.</p>
 
    	<p>Keep in mind that the cascade is not saved automatically! After restarting JCrypTool the old cascade will not be available any more. In case
    	you want to persist your cascade use the <a href="#export">Export</a> functionality to save it into an XML file.</p>
@@ -135,5 +145,38 @@
     stored as plaintext. When exchanging a cascade with another user this user will see all included passwords and every other sensitive data. Since JCrypTool is
     an eLearning tool this is not a security problem. Instead this makes exchanging cascade much easier. In case you do not want to store passwords in the cascade
     simply deactivate the option in the <a href="preferences.html">Preferences</a>. This requires that you or the user re-enter the password during replay.</p>
+    
+    <h2><a name="examples"></a>Examples</h2>
+    
+    <h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar2.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 1-Step-Caesar </a></h3>
+
+	<p>Description:</p>
+		
+	<p>Beschreibung:</p>
+	<ol>
+		<li>JCT sample file as input</li>
+		<li>Encryption with key H</li>
+		<li>Decryption with key H</li>
+	</ol>
+
+	<h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar1.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 2-Steps-Caesar </a></h3>
+	
+	<p>Description:</p>
+	
+	<ol>
+		<li>Verschlüsseln mit dem Schlüssel E</li>
+		<li>Ergebnis des Verschlüsselns dient als Eingabe für den nächsten Schritt</li>
+		<li>Zweites Verschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel E</li>
+		
+		<li>JCT sample file as input</li>
+		<li>First encryption with the key E</li>
+		<li>The result of the encryption is the next input</li>
+		<li>Second encryption with key C</li>
+		<li>Decrypt with key C, then</li>
+		<li>Decrypt with key E</li>
+	</ol>
+	
 </body>
 </html>
