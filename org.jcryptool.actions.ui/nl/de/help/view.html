@@ -166,14 +166,27 @@
     und jeder andere Benutzer zur Eingabe des jeweiligen Passworts aufgefordert.</p>
 
 	<h2><a name="examples"></a>Beispiele</h2>
-
-	<h3>Caesar1</h3>
 	
-	<p><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(sampleFilename=Caesar1.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> Caeser1 laden </a></p>
+	<h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar2.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 1-Schritt-Caesar </a></h3>
 
-	<h3>Caesar2</h3>
+	<p>Beschreibung:</p>
+	<ol>
+		<li>JCT Beispieldatei als Eingabe</li>
+		<li>Verschlüsseln mit dem Schlüssel H</li>
+		<li>Entschlüsseln mit dem Schlüssel H</li>
+	</ol>
 
-	<p><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(sampleFilename=Caesar2.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> Caeser1 laden </a></p>
+	<h3><a class="command-link" href='javascript:executeCommand("org.jcryptool.actions.ImportSampleCommand(cascadeFilename=Caesar1.xml)")'><img src="PLUGINS_ROOT/org.eclipse.help/command_link.png"> 2-Schritte-Caesar </a></h3>
+	
+	<p>Beschreibung:</p>
+	<ol>
+		<li>JCT Beispieldatei als Eingabe</li>
+		<li>Verschlüsseln mit dem Schlüssel E</li>
+		<li>Ergebnis des Verschlüsselns dient als Eingabe für den nächsten Schritt</li>
+		<li>Zweites Verschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel C</li>
+		<li>Entschlüsseln mit dem Schlüssel E</li>
+	</ol>
 
 </body>
 </html>
