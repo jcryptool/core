@@ -9,6 +9,11 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.actions.ui.views;
 
+import java.util.List;
+
+import org.eclipse.core.databinding.observable.list.IListChangeListener;
+import org.eclipse.core.databinding.observable.list.ListChangeEvent;
+import org.eclipse.core.databinding.observable.list.ListDiffEntry;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -19,6 +24,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -50,7 +56,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
  * @author Dominik Schadow
  * @version 0.9.3
  */
-public class ActionView extends ViewPart {
+public class ActionView extends ViewPart implements IListChangeListener {
     public static final String ID = "org.jcryptool.actions.views.ActionView"; //$NON-NLS-1$
     private static final Color colorLightShadow =
             Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
@@ -162,6 +168,8 @@ public class ActionView extends ViewPart {
         });
 
         viewer.setInput(ActionCascadeService.getInstance().observeActionItems());
+        
+        ActionCascadeService.getInstance().observeActionItems().addListChangeListener(this);
 
         getSite().setSelectionProvider(viewer);
     }
@@ -240,4 +248,33 @@ public class ActionView extends ViewPart {
     public String getImportPath() {
         return importPath;
     }
+
+	@Override
+	public void handleListChange(ListChangeEvent event) {
+		
+		// list changes are either additions or removals
+		
+		ListDiffEntry[] listDiffs = event.diff.getDifferences();
+		for (ListDiffEntry listDiffEntry : listDiffs) {
+			if(listDiffEntry.isAddition()) handleAddition();
+			else handleRemoval();
+		}
+	}
+
+	private void selectFirstActionItem() {
+		List<ActionItem> actionItems =  ActionCascadeService.getInstance().getActionItems();
+        if(actionItems != null && actionItems.size() > 0)
+        {
+            ActionItem firstItem = actionItems.get(0);
+            viewer.setSelection(new StructuredSelection(firstItem), true);
+        }
+	}
+
+	private void handleAddition() {
+		selectFirstActionItem();
+	}
+	
+	private void handleRemoval() {
+		selectFirstActionItem();
+	}
 }
