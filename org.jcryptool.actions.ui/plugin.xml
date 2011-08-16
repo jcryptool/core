@@ -91,6 +91,14 @@
             id="org.jcryptool.action.importActionCascadeCommand"
             name="%command.name">
       </command>
+      <command
+            description="%importsample.description"
+            id="org.jcryptool.actions.ImportSampleCommand"
+            name="%importsample.name">
+            <commandParameter name="sampleFilename" optional="false"
+                  id="sampleFilename">
+            </commandParameter>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -470,6 +478,14 @@
                </iterate>
             </with>
             </activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.actions.ui.handler.ImportActionCascadeHandler"
+            commandId="org.jcryptool.action.importActionCascadeCommand">
+      </handler>
+      <handler
+            class="org.jcryptool.actions.ui.handler.ImportSampleHandler"
+            commandId="org.jcryptool.actions.ImportSampleCommand">
       </handler>
    </extension>
    <extension
