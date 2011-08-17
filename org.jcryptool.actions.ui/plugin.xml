@@ -95,8 +95,8 @@
             description="%importsample.description"
             id="org.jcryptool.actions.ImportSampleCommand"
             name="%importsample.name">
-            <commandParameter name="sampleFilename" optional="false"
-                  id="sampleFilename">
+            <commandParameter name="cascadeFilename" optional="false"
+                  id="cascadeFilename">
             </commandParameter>
       </command>
    </extension>
