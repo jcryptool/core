@@ -1,4 +1,5 @@
 package org.jcryptool.crypto.classic.transposition.ui;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -14,16 +15,16 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.core.operations.keys.KeyVerificator;
-import org.jcryptool.core.util.input.AbstractUIInput;
-import org.jcryptool.core.util.input.ButtonInput;
-import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.TextfieldInput;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -107,31 +108,61 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 		}
 	}
 
+	//TODO: !provisory replace with Atomalphabet later
+	public static AbstractAlphabet createAlphabet(final String alphabetContent) {
+		return new AbstractAlphabet() {
+			List<Character> content = stringToList(alphabetContent);
+			
+			public void setShortName(String shortName) {}
+			public void setName(String name) {}
+			public void setDefaultAlphabet(boolean b) {}
+			public void setCharacterSet(char[] characterSet) {}
+			public void setBasic(boolean basic) {}
+			public boolean isDefaultAlphabet() {return false;}
+			public boolean isBasic() {return false;}
+			public char getSubstituteCharacter() {return Character.MAX_VALUE;}
+			public int getDisplayMissingCharacters() {return Integer.MAX_VALUE;}
+
+			private List<Character> stringToList(String characters) {
+				List<Character> l = new LinkedList<Character>();
+				for(char c: characters.toCharArray()) l.add(c);
+				return l;
+			}
+			
+			
+			private String listToString(List<Character> input) {
+				StringBuffer result = new StringBuffer();
+				for(Character c: input) result.append(c);
+				return result.toString();
+			}
+			
+			private char[] toCharArray(List<Character> input) {
+				char[] result = new char[input.size()];
+				for(int i=0; i<input.size(); i++) result[i] = input.get(i);
+				return result;
+			}
+
+			public String getShortName() {return listToString(content);} //$NON-NLS-1$
+			public String getName() {return "AtomAlphabet="+listToString(content);} //$NON-NLS-1$
+			public char[] getCharacterSet() {
+				return toCharArray(content);
+			}
+			public boolean contains(char e) {
+				return content.contains(e);
+			}
+			
+			@Override
+			public String toString() {
+				return listToString(content);
+			}
+		};
+	}
+	
 	private AbstractAlphabet internalGetCurrentAlphabet() {
 		if(alphabetInput != null) {
 			return alphabetInput.getContent();
 		} else {
-			return new AbstractAlphabet() {
-				String content = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß1234567890!§$%&/()=?*+#,.-;:_"; //$NON-NLS-1$
-				public void setShortName(String shortName) {}
-				public void setName(String name) {}
-				public void setDefaultAlphabet(boolean b) {}
-				public void setCharacterSet(char[] characterSet) {}
-				public void setBasic(boolean basic) {}
-				public boolean isDefaultAlphabet() {return false;}
-				public boolean isBasic() {return false;}
-				public char getSubstituteCharacter() {return Character.MAX_VALUE;}
-				public String getShortName() {return "Default";} //$NON-NLS-1$
-				public String getName() {return "Default transposition currentAlphabet";} //$NON-NLS-1$
-				public int getDisplayMissingCharacters() {return Integer.MAX_VALUE;}
-				public char[] getCharacterSet() {
-					return content.toCharArray();
-				}
-				@Override
-				public boolean contains(char e) {
-					return content.contains(String.valueOf(e));
-				}
-			};
+			return createAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß1234567890!§$%&/()=?*+#,.-;:_");
 		}
 	}
 
@@ -312,7 +343,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 			@Override
 			protected void changeTooltipDurationAtCleaninputButNotHidden(
 					AbstractUIInput input) {
-				// vanish instantly when it isthe "not changing the encryption" tooltip
+				// vanish instantly when it is the "not changing the encryption" tooltip
 				if(getLastDisplayedResultType(input) == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { //$NON-NLS-1$
 					tooltipMap.get(input).setTimeToVanish(-1);
 				} else if(getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { //$NON-NLS-1$
