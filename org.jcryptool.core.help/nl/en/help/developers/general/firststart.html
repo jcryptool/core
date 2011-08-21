@@ -144,6 +144,23 @@
 
 	<p><strong>At this point ignore any warning in the feature projects org.jcryptool.core.dependencies.feature and org.jcryptool.core.dependencies.nl_de.feature. We will fix that later.</strong></p>
 
+	<h2>Updating the push to upstream configuration</h2>
+
+	<p>EGit 1.0 pushes all branches, included all local branches, by default when there is no explicit push to upstream configuration. To avoid that, you must update your push to upstream configuration
+	individually for both (<strong>core and crypto</strong>) repositories.</p>
+
+	<p>To do that, right click on one of the projects residing in the <strong>core</strong> repository (like <em>org.jcryptool.core</em>) in the <em>Package Explorer</em>. Choose
+	<strong>Team - Remote - Configure Push to Upstream...</strong>. A dialog opens. Click <strong>Advanced</strong> in the <strong>Ref mapping</strong> section at the bottom to make the
+	<strong>Edit (Advanced)</strong> button visible. Click this button and wait for the dialog to initialize. Simply select <strong>master [branch]</strong> in the first drop down box
+	<strong>Source ref</strong> at the top. This automatically updates the <strong>Destination ref</strong> drop down box with <strong>refs/heads/master</strong>. Click the <strong>Add spec</strong>
+	button next to this drop down box, then <strong>Finish</strong> and finally <strong>Save</strong> to close the other dialog as well.</p>
+
+	<p>Repeat these steps exactly for one of the <strong>crypto</strong> repository projects (like <em>org.jcryptool.analysis</em>).</p>
+
+    <div class="screenshot">
+    	<img src="images/configure_push_to_upstream.png" width="267" height="283" alt="Configuring push to upstream"/>
+    </div>
+
 	<h2>Setting up a target platform</h2>
 
 	<p>At this point, JCrypTool might already work/run in your environment. However, we strongly recommend setting up a <a href="targetplatform.html">Target Platform</a>. This optional process
