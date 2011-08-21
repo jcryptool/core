@@ -505,7 +505,6 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
 	 * @param result the InputVerificationResult which caused the autocorrection.
 	 * @return
 	 */
-	@SuppressWarnings("static-method")
 	protected void autocorrect(InputVerificationResult result) {
 
 	}
