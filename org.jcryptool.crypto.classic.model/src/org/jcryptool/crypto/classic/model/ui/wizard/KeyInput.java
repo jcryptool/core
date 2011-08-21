@@ -21,7 +21,6 @@ public abstract class KeyInput<T> extends TextfieldInput<T> {
 		return false;
 	}
 	
-	@SuppressWarnings("static-method")
 	protected void autocorrect(InputVerificationResult result) {
 		if(result instanceof InputVerificationResultKeyNotInAlphabet) {
 			String correctedKey = getTextfield().getText();

@@ -21,11 +21,11 @@ import java.util.Timer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.crypto.classic.model.ui.wizard.Messages;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.handler.WidgetRelatedUIInputResultHandler;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
-import org.jcryptool.crypto.classic.model.ui.wizard.Messages;
 
 /**
  * UIInputhandler which shows Bubbles as informations about verifications beneath
@@ -169,7 +169,7 @@ public class WidgetBubbleUIInputHandler implements
 			if(displayBalloon)
 			{
 				displayBalloonFor(origin, result);
-				lastDisplayedResultTypes.put(origin, result.getMessageType());
+				lastDisplayedResultTypes.put(origin, result.getResultType());
 			} else {
 				changeTooltipDurationAtCleaninputButNotHidden(origin);
 			}
