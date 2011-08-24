@@ -18,7 +18,7 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<encoding>UTF-8</encoding>
+					<encoding>${source.encoding}</encoding>
 				</configuration>
 			</plugin>
 			<plugin>

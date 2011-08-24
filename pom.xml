@@ -12,9 +12,6 @@
   <version>0.9.5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JCrypTool Crypto</name>
-  <properties>
-    <tycho.version>0.11.0</tycho.version>
-  </properties> 
   <modules>  
     <module>com.lowagie.itext</module>
 	<module>com.thoughtworks.xstream</module>
