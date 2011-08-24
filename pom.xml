@@ -12,9 +12,6 @@
   <version>0.9.5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JCrypTool Core</name>
-  <properties>
-    <tycho.version>0.11.0</tycho.version>
-  </properties>
   <modules>
     <module>com.thoughtworks.qdox</module>
     <module>de.flexiprovider</module>

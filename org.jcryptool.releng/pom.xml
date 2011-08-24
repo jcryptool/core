@@ -9,10 +9,11 @@
 	<name>JCrypTool</name>
 	<properties>
 		<tycho.version>0.11.0</tycho.version>
+		<source.encoding>UTF-8</source.encoding>
 	</properties>
 	<modules>
-		<module>../../core</module>
-		<module>../../crypto</module>
+		<module>core</module>
+		<module>crypto</module>
 	</modules>
 	<repositories>
 		<repository>
@@ -95,26 +96,7 @@
 						</environment>
 					</environments>
 				</configuration>
-			</plugin><!--
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>tycho-p2-director-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<executions>
-					<execution>
-						<id>materialize-products</id>
-						<goals>
-							<goal>materialize-products</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>archive-products</id>
-						<goals>
-							<goal>archive-products</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -148,4 +130,5 @@
 		</pluginManagement>
 	</build>
 	<url>https://github.com/jcryptool</url>
+	<description>This is the parent pom for the JCrypTool product. Copy this file one level above the core and crypto repositories and execute &quot;mvn clean install&quot; to generate the JCrypTool release.</description>
 </project>
