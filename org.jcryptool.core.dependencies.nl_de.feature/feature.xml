@@ -224,6 +224,13 @@ litigation.
       <update label="JCrypTool.org" url="http://www.cryptool.org/jcryptool/update"/>
    </url>
 
+   <requires>
+      <import feature="org.jcryptool.core.dependencies" version="0.9.5.qualifier"/>
+      <import feature="org.eclipse.equinox.p2.user.ui" version="2.1.1.v20110526-6-Bg9JXOePwKUTU7X0teV1RtDu-e"/>
+      <import feature="org.eclipse.help" version="1.3.0.v20110327-7i7uFFiFFt6ZqnbOrMXLd1"/>
+      <import feature="org.eclipse.rcp" version="3.7.0.v20110216-9DB5Fm1FpBGy_AaVz-mFamgY"/>
+   </requires>
+
    <plugin
          id="org.eclipse.core.databinding.beans.nl_de"
          download-size="0"
