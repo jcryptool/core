@@ -50,5 +50,7 @@
     <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.webbrowser</module>
+    <module>org.jcryptool.releng</module>
+    <module>org.jcryptool.repository</module>
   </modules>
 </project>
