@@ -18,27 +18,28 @@
 
     <h2>Anforderungen</h2>
 
-    <p>In order to develop for the <strong>JCrypTool Core</strong> or <strong>Plug-ins</strong> project you need</p>
+    <p>Um für das <strong>JCrypTool Core</strong> oder <strong>JCrypTool Crypto</strong> Projekt entwickeln zu können benötigen Sie</p>
 
     <ul>
-        <li>A <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Runtime Environment</a> (or Java SE Development Kit)
-        in version 1.6 or newer.</li>
-        <li><a href="http://www.eclipse.org/">Eclipse Indigo</a>- download the <strong>Eclipse Classic</strong> or <strong>Eclipse for RCP and RAP Developers</strong>
-        package (other packages are not suitable for plug-in development without downloading additional plug-ins) in version 3.7.x.</li>
-        <li>Use the Eclipse update manager to install <strong>EGit/JGit</strong> via the Indigo update site as Git plug-in.</li>
+        <li>Das <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Runtime Environment</a> (oder Java SE Development Kit)
+        in Version 1.6 oder neuer.</li>
+        <li><a href="http://www.eclipse.org/">Eclipse Indigo</a>- laden Sie das <strong>Eclipse Classic</strong> oder <strong>Eclipse for RCP and RAP Developers</strong>
+        Package (die anderen Packages können nicht ohne zusätzliche Erweiterungen zur Plug-in-Entwicklung verwendet werden) in Version 3.7.x herunter.</li>
+        <li>Das <strong>EGit/JGit</strong> Plug-in, das Sie per Update Manager über die Indigo Update Site installieren können.</li>
     </ul>
 
-    <p>Install the Java Runtime, Eclipse and the EGit plug-in. No other plug-ins are required for JCrypTool development.</p>
+    <p>Installieren Sie die Java Runtime, Eclipse und das EGit Plug-in. Weitere Plug-ins sind zur JCrypTool Entwicklung keine erforderlich.</p>
 
-    <p><strong>Important:</strong> You can use a newer Java version as 1.6, but all JCrypTool Core plug-ins have to be Java 1.6 compatible (set JavaSE-1.6 as
-    Execution-Environment in the plug-in manifest as shown below). Plug-ins that require Java 1.7 or higher will not be shipped with the core release but will
-    be available through our update site. So we recommend using Java 1.6 and to set Java 1.6 as minimum execution environment for your plug-in as shown below.</p>
+    <p><strong>Wichtig:</strong> Sie können eine neuere Version als Java 1.6 zur Entwicklung verwenden, aber alle JCrypTool Core Plug-ins müssen Java 1.6 kompatibel sein
+    (setzen Sie dazu JavaSE-1.6 als Execution-Environment im Plug-in Manifest wie weiter unten gezeigt). Plug-ins, die Java 1.7 oder neuer erfordern werden nicht mit dem
+    JCrypTool Release ausgeliefert, sondern nur über unsere Update Site zur Verfügung gestellt werden. Daher empfehlen wir die Verwendung von Java 1.6 als
+    Execution-Environment.</p>
 
     <div class="screenshot">
         <img src="images/manifest_execution_environment.png" width="383" height="232" alt="Execution Environment"/>
     </div>
 
-    <h2>Setting up your workspace</h2>
+    <h2>Einrichten des Workspaces</h2>
 
     <p>JCrypTool is developed on different platforms. It is important that all platforms use a common workspace encoding: which is <strong>UTF-8</strong>. Since this is not the Eclipse default you
     need to change this right away once for your workspace. Open the Eclipse <strong>Preferences</strong> and look for the <strong>Workspace</strong> page in the <strong>General</strong> section.
@@ -48,14 +49,14 @@
         <img src="images/setup_workspace_encoding.png" width="624" height="537" alt="Setting up the workspace encoding"/>
     </div>
 
-    <h2>Obtaining the JCrypTool sources</h2>
+    <h2>Auschecken der JCrypTool Sourcen</h2>
 
     <p>As JCrypTool actually consists of two projects, we do have two different repositories as well: JCrypTool Core and JCrypTool Crypto. Both offer anonymous
     read access. When setting up Eclipse for JCrypTool development for the first time, start your Eclipse IDE with a new (empty) workspace.</p>
 
     <p>In case of any GitHub trouble have a look at the <a href="http://help.github.com/">GitHub help pages</a>.</p>
 
-    <h3>Creating a GitHub user</h3>
+    <h3>Erstellen eines GitHub Benutzers</h3>
 
     <p>In case you want to use a named user with or without write access you need to create an account on <a href="https://github.com">GitHub</a>. And you need
     to provide a public key for this user.</p>
@@ -69,7 +70,7 @@
         <img src="images/git_create_key.png" width="340" height="360" alt="Creating a SSH2 key"/>
     </div>
 
-    <h3>Preparing your Git environment</h3>
+    <h3>Vorbereiten der Git Umgebung</h3>
 
     <p>Open the Eclipse preferences again and switch to the <strong>Team - Git - Configuration</strong> page. Stay on the first tab <strong>User setting</strong>.
     Create two new entries with the <strong>New Entry...</strong> button on the bottom. The first entry should be <strong>user.name</strong> as key with your real name
@@ -79,7 +80,7 @@
         <img src="images/git_config_environment.png" width="322" height="206" alt="Preparing the Git environment"/>
     </div>
 
-    <h3>Checking out the sources</h3>
+    <h3>Auschecken der Sourcen</h3>
 
     <p>In order to start your development, you need to check out the JCrypTool sources from the Git repositories. All JCrypTool Core projects are required.
     Those projects contain the JCrypTool platform as well as some basic plug-ins required by the JCrypTool platform. All JCrypTool Crypto projects in the second repository
@@ -145,7 +146,7 @@
 
     <p><strong>At this point ignore any warning in the feature projects org.jcryptool.core.dependencies.feature and org.jcryptool.core.dependencies.nl_de.feature. We will fix that later.</strong></p>
 
-    <h2>Updating the push to upstream configuration</h2>
+    <h2>Aktualisieren der push to upstream Konfiguration</h2>
 
     <p>EGit 1.0 pushes all branches, included all local branches, by default when there is no explicit push to upstream configuration. To avoid that, you must update your push to upstream configuration
     individually for both (<strong>core and crypto</strong>) repositories.</p>
@@ -162,7 +163,7 @@
         <img src="images/configure_push_to_upstream.png" width="267" height="283" alt="Configuring push to upstream"/>
     </div>
 
-    <h2>Setting up a target platform</h2>
+    <h2>Konfigurieren der Target Platform</h2>
 
     <p>At this point, JCrypTool might already work/run in your environment. However, we strongly recommend setting up a <a href="targetplatform.html">Target Platform</a>. This optional process
     requires only some manual steps.</p>
@@ -185,7 +186,7 @@
     <p>At this point, no build errors should be left. The two features <strong>org.jcryptool.core.dependencies.feature</strong> and <strong>org.jcryptool.core.dependencies.nl_de.feature</strong>
     should be clear, no warnings left. Otherwise redo the first two steps from the list above.</p>
 
-    <h2>Starting JCrypTool in your Eclipse environment (IDE)</h2>
+    <h2>Starten von JCrypTool in der Eclipse Entwicklungsumgebung (IDE)</h2>
 
     <p>Open the file <strong>jcryptool.product</strong> file located in the <strong>org.jcryptool.repository</strong> project with the <strong>Product Configuration Editor</strong>. Simply click on the
     <strong>Launch an Eclipse application</strong> link in the lower left on the first page. This starts JCrypTool and creates a run menu entry.</p>
