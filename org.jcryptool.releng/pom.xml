@@ -130,5 +130,5 @@
 		</pluginManagement>
 	</build>
 	<url>https://github.com/jcryptool</url>
-	<description>This is the parent pom for the JCrypTool product. Copy this file one level above the core and crypto repositories and execute &quot;mvn clean install&quot; to generate the JCrypTool release.</description>
+	<description>This is the parent pom for the JCrypTool product. Copy this file one level above the core and crypto repositories and execute &quot;mvn clean install&quot; to generate the JCrypTool release. Java 1.6 is required for this build, Java 1.7 won't work.</description>
 </project>
