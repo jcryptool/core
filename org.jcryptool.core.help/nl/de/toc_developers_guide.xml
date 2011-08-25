@@ -5,7 +5,7 @@
     topic="$nl$/help/developers/toc.html">
     <topic label="Allgemeine Informationen"
         href="$nl$/help/developers/general/general.html">
-	    <topic label="Erster Start"
+	    <topic label="Erste Schritte"
 	        href="$nl$/help/developers/general/firststart.html" />
         <topic href="$nl$/help/developers/general/conventions.html" label="Konventionen">
         </topic>
