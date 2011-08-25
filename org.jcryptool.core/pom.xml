@@ -11,7 +11,7 @@
 	<groupId>org.jcryptool</groupId>
 	<artifactId>core</artifactId>
 	<version>0.9.5-SNAPSHOT</version>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>eclipse-application</packaging>
 	<build>
 		<plugins>
 			<plugin>
