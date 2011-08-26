@@ -7,7 +7,6 @@
 <unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.1.1.v20110526-6-Bg9JXOePwKUTU7X0teV1RtDu-e"/>
 <unit id="org.eclipse.rcp.sdk.id" version="3.7.0.I20110613-1736"/>
 <unit id="org.eclipse.sdk.ide" version="3.7.0.I20110613-1736"/>
-<unit id="org.eclipse.draw2d.sdk.feature.group" version="3.7.0.v20110425-2050-7A7I-8yF4F18BBI4E8L558F38x42"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.7.0.v20110425-2050-7G7W-A5WNg9RDcRXDHeSRSTUiNLI"/>
 <repository location="http://download.eclipse.org/releases/indigo"/>
 </location>
