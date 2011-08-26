@@ -29,7 +29,7 @@
                                 <artifact>
                                     <file>jcryptool.target</file>
                                     <type>target</type>
-                                    <classifier>jcryptool</classifier>
+                                    <classifier>indigo</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>
