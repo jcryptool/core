@@ -3,15 +3,15 @@
 
 <target name="JCrypTool RCP" sequenceNumber="0">
 <locations>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.1.1.v20110526-6-Bg9JXOePwKUTU7X0teV1RtDu-e"/>
-<unit id="org.eclipse.rcp.sdk.id" version="3.7.0.I20110613-1736"/>
-<unit id="org.eclipse.sdk.ide" version="3.7.0.I20110613-1736"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.7.0.v20110425-2050-7G7W-A5WNg9RDcRXDHeSRSTUiNLI"/>
+<location includeAllPlatforms="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rcp.sdk.id" version="0.0.0"/>
+<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/releases/indigo"/>
 </location>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="3.7.0.v20110723043401"/>
+<location includeAllPlatforms="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo"/>
 </location>
 <location path="${eclipse_home}/../../delta/eclipse" type="Directory"/>
