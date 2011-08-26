@@ -12,8 +12,6 @@
 </location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="3.7.0.v20110723043401"/>
-<unit id="org.eclipse.babel.nls_rt.equinox_de.feature.group" version="3.7.0.v20110723043401"/>
-<unit id="org.eclipse.babel.nls_rt.equinox.p2_de.feature.group" version="3.7.0.v20110723043401"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo"/>
 </location>
 <location path="${eclipse_home}/../../delta/eclipse" type="Directory"/>
