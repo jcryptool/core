@@ -45,20 +45,15 @@ public class XmlSecurityCertificate extends X509Certificate {
 
     @Override
     public void checkValidity() throws CertificateExpiredException, CertificateNotYetValidException {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void checkValidity(Date date) throws CertificateExpiredException,
             CertificateNotYetValidException {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public int getBasicConstraints() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
@@ -69,13 +64,11 @@ public class XmlSecurityCertificate extends X509Certificate {
 
     @Override
     public boolean[] getIssuerUniqueID() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean[] getKeyUsage() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -97,7 +90,6 @@ public class XmlSecurityCertificate extends X509Certificate {
 
     @Override
     public BigInteger getSerialNumber() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -108,19 +100,16 @@ public class XmlSecurityCertificate extends X509Certificate {
 
     @Override
     public String getSigAlgOID() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public byte[] getSigAlgParams() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public byte[] getSignature() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -131,7 +120,6 @@ public class XmlSecurityCertificate extends X509Certificate {
 
     @Override
     public boolean[] getSubjectUniqueID() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -163,30 +151,23 @@ public class XmlSecurityCertificate extends X509Certificate {
     @Override
     public void verify(PublicKey key) throws CertificateException, NoSuchAlgorithmException,
             InvalidKeyException, NoSuchProviderException, SignatureException {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void verify(PublicKey key, String sigProvider) throws CertificateException,
             NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException,
             SignatureException {
-        // TODO Auto-generated method stub
-
     }
 
     public Set<String> getCriticalExtensionOIDs() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public byte[] getExtensionValue(String oid) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     public Set<String> getNonCriticalExtensionOIDs() {
-        // TODO Auto-generated method stub
         return null;
     }
 
