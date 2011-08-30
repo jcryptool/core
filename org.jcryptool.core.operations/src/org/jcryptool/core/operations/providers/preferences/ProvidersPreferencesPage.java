@@ -91,8 +91,6 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
         createGroup(pageComposite);
         pageComposite.setLayout(new GridLayout());
 
-        // not directly ui related, but it sets the scope for the data we work
-        // on...
         initProviderHierarchy();
 
         fillProvidersTable();
@@ -239,15 +237,6 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
         setProviderHierarchy();
         save();
         super.updateApplyButton();
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see org.eclipse.jface.preference.PreferencePage#performHelp()
-     */
-    public void performHelp() {
-        // TODO implement help support for this PreferencePage
     }
 
     /**
