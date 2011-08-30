@@ -358,7 +358,7 @@ public class PolynomialMod {
     }
 
     // public PolynomialMod Negate(){
-    //		
+    //
     // }
 
     public PolynomialMod ExtendSizeBy(int n) {
@@ -653,14 +653,12 @@ public class PolynomialMod {
         }
 
         currentpos = this;
-        int i = 1;
 
         if (powdec.get(powdec.size() - 1).compareTo(FlexiBigInt.ONE) == 0) {
             result = this;
         }
 
         for (int j = powdec.size() - 2; j >= 0; j--) {
-            i++;
             currentpos = currentpos.MultiplyMod(currentpos, pol);
 
             if (powdec.get(j).compareTo(FlexiBigInt.ONE) == 0) {
