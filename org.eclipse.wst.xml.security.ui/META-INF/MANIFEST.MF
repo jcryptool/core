@@ -33,6 +33,7 @@ Import-Package: org.eclipse.wst.xml.security.core.canonicalize,
  org.eclipse.wst.xml.security.core.sign,
  org.eclipse.wst.xml.security.core.utils,
  org.eclipse.wst.xml.security.core.verify,
+ org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories

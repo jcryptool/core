@@ -10,12 +10,15 @@ package org.eclipse.wst.xml.security.ui.commands;
 import java.io.InputStream;
 
 import org.apache.xml.security.c14n.Canonicalizer;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.wst.xml.security.core.canonicalize.CreateCanonicalization;
 import org.eclipse.wst.xml.security.ui.XSTUIPlugin;
 import org.eclipse.wst.xml.security.ui.preferences.PreferenceConstants;
 import org.eclipse.wst.xml.security.ui.utils.IXMLSecurityConstants;
+import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
@@ -50,8 +53,14 @@ public class NewCanonicalizationRemoveCommand extends AbstractAlgorithmAction {
 
             if (editorContent != null) {
                 byte[] outputBytes = canonicalize(editorContent);
-                IEditorInput output = AbstractEditorService.createOutputFile(outputBytes, IConstants.XML_FILE_TYPE_EXTENSION);
-                getActiveWorkbenchWindow().getActivePage().openEditor(output, IOperationsConstants.ID_TEXT_EDITOR);
+
+                if (outputBytes != null && outputBytes.length > 0) {
+	                IEditorInput output = AbstractEditorService.createOutputFile(outputBytes, IConstants.XML_FILE_TYPE_EXTENSION);
+	                getActiveWorkbenchWindow().getActivePage().openEditor(output, IOperationsConstants.ID_TEXT_EDITOR);
+                } else {
+                	IStatus info = new Status(Status.WARNING, XSTUIPlugin.getId(), Messages.NewCanonicalizationRemoveCommand_0);
+                	JCTMessageDialog.showInfoDialog(info);
+                }
             }
         } catch (Exception ex) {
             LogUtil.logError(XSTUIPlugin.getId(), Messages.ErrorDuringCanonicalization, ex, true);

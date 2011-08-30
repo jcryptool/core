@@ -21,7 +21,9 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.wst.xml.security.ui.commands.messages"; //$NON-NLS-1$
     public static String ErrorDuringCanonicalization;
-    public static String NewDecryptionCommand_0;
+    public static String NewCanonicalizationMaintainCommand_0;
+	public static String NewCanonicalizationRemoveCommand_0;
+	public static String NewDecryptionCommand_0;
     public static String NewDecryptionCommand_1;
     public static String NewDecryptionCommand_2;
     public static String NewEncryptionCommand_0;
