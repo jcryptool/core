@@ -14,53 +14,51 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 public class GHKeyGen {
 
 	/** bitsize of coefficients in generating polynomial */
-	public int t; 
-	
+	public int t;
+
 	/** dimension */
-	public int n; 
-	
+	public int n;
+
 	/** lattice determinant */
 	public BigInteger det;
-	
+
 	/** the root */
 	public BigInteger root;
-	
+
 	/** secret key w, one odd coefficient of w(x) */
 	public BigInteger w;
-	
+
 	/** the polynomial w(x)*/
-	public BigInteger[] W; 
-	
+	public BigInteger[] W;
+
 	/** the encryption of the secret vector sigma */
 	public BigInteger[] ctxts;
-	
+
 	/** the public key blocks */
 	public BigInteger[] pkBlocksX;
-	
+
 	/** random generator */
 	public Random r = new Random(System.currentTimeMillis());
-	
+
 	/** the polynomial which generats the lattice */
 	public Polynomial v;
-		
+
 	/**
 	 * Generates a new key pair given the parameters in fheparams, stores the key locally and in the keypair parameter
 	 * @param fheparams the scheme parameters
 	 * @param keyPair holds the keypair
 	 */
-	public GHKeyGen(FHEParams fheparams, GHKeyPair keyPair, IProgressMonitor monitor, int work) {	
+	public GHKeyGen(FHEParams fheparams, GHKeyPair keyPair, IProgressMonitor monitor, int work) {
 		t = fheparams.t;
 		n = 1 << fheparams.logn;
-		
-		int nTrials = 0;
+
 		SubProgressMonitor sm = new SubProgressMonitor(monitor, work/3);
 		sm.beginTask("", work/3);
 		do { //try until HNF has the desired form, i.e. determinant is odd and lattice contains the vector (-r,1,0,...,0)
-			nTrials++;
-			
+
 			//generate random polynomial with coefficients uniformly random in [-2^t,2^t]
 			v = Polynomial.randomPolynomial(n-1,t);
-			
+
 			//verify whether the coefficient sum is odd, otherwise add 1
 			int parity = 0;
 			for (int i = 0; i < n; i++) {
@@ -68,24 +66,23 @@ public class GHKeyGen {
 			}
 			if (parity == 0) v.coeffs[0].add(new BigInteger("1"));
 			if (sm.isCanceled()) return;
-			
+
 		} while (!invModFx(v,fheparams.logn));
-		sm.done();	
+		sm.done();
 		sm.beginTask("", work/3);
 		BigInteger sum = new BigInteger("0");
 		BigInteger factor;
 		//the public key blocks that squash the decryption scheme
-		pkBlocksX = new BigInteger[fheparams.s]; 
+		pkBlocksX = new BigInteger[fheparams.s];
 		 //the correct power such that \sum_pkBlocksX[i]*R^pkBlocksIdX[i] = w mod d
 		int[] pkBlocksIdX = new int[fheparams.s];
 		//make sure the sum is correct
-		boolean sumtest = false; 
-		int nTrials2 = 0;
-		
+		boolean sumtest = false;
+
 		while (!sumtest) {
 			sum = new BigInteger("0");
 			//generate the first s-1 randomly
-			for (int i = 0; i < fheparams.s-1; i++) { 
+			for (int i = 0; i < fheparams.s-1; i++) {
 				byte[] temp = new byte[det.bitLength()/8];
 				r.nextBytes(temp);
 				pkBlocksX[i] = (new BigInteger(temp)).abs().mod(det);
@@ -96,16 +93,15 @@ public class GHKeyGen {
 			}
 			sum = w.subtract(sum).mod(det);
 			//calculate the last x_i from the first s-1, try until the sum is invertible
-			while (pkBlocksX[fheparams.s-1] == null) { 
+			while (pkBlocksX[fheparams.s-1] == null) {
 				try {
-					nTrials2++;
 					//if(nTrials2%100==0) System.out.println("trials: " + nTrials2);
 					pkBlocksIdX[fheparams.s-1] = r.nextInt(fheparams.S);
 					factor = new BigInteger("2").modPow((new BigInteger(Integer.toString(pkBlocksIdX[fheparams.s-1]))).multiply(new BigInteger(Integer.toString(fheparams.logR))),det);
 					factor = factor.modInverse(det);
 					pkBlocksX[fheparams.s-1] = sum.multiply(factor).mod(det);
 				} catch (ArithmeticException e) {
-					
+
 				}
 				if (sm.isCanceled()) return;
 			}
@@ -121,9 +117,9 @@ public class GHKeyGen {
 			}
 			if (sm.isCanceled()) return;
 		}
-		sm.done();	
+		sm.done();
 		// Compute the number of ciphertext for each progression,
-		// i.e., an integer N such that N(N-1)/2 > S 
+		// i.e., an integer N such that N(N-1)/2 > S
 		sm.beginTask("", work/3);
 		int nCtxts = (int) Math.ceil(2*Math.sqrt(fheparams.S));
 		int[] bits = new int[nCtxts*fheparams.s];
@@ -135,12 +131,12 @@ public class GHKeyGen {
 		    j2 = temp[1];
 		    bits[i*nCtxts + j1] = bits[i*nCtxts + j2] = 1; // set these two bits to one
 		    if (sm.isCanceled()) return;
-		}	
+		}
 		sm.done();
 		ctxts = GHEncrypt.encrypt(fheparams, this, bits);
 		keyPair.setKeyPair(det, root, w, ctxts, pkBlocksX);
 	}
-	
+
 	/**
 	 * Calculates the i'th pair in (m choose 2).
 	 * @param i the pair number
@@ -162,7 +158,7 @@ public class GHKeyGen {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Verifies whether the polynomial q yields a lattice with the correct HNF and odd resultant,
 	 * computes the determinant (or resultant), root and inverse polynomial w(x)
@@ -212,8 +208,8 @@ public class GHKeyGen {
 		    return false; // verify that w0^{-1} exists
 	  	}
 	  	root = w1.multiply(inv).divideAndRemainder(res)[1];	// root= w1 * w0^{-1} mod res
-	  	     
-	  	BigInteger tmp = root.modPow(new BigInteger(Integer.toString(N)), res); 
+
+	  	BigInteger tmp = root.modPow(new BigInteger(Integer.toString(N)), res);
 	  	//it should hold that root^n = -1 mod res
 	  	if (!tmp.add(new BigInteger("1")).equals(res)) {
 	  		return false;
@@ -237,17 +233,17 @@ public class GHKeyGen {
 	  				if ( ((w1.compareTo(res.shiftRight(1)) <= 0)&&Functions.isOdd(w1)) || ((w1.compareTo(res.shiftRight(1)) > 0)&&Functions.isEven(w1)) ) {
 	  					wi = w1;
 	  					break;
-	  				}		
+	  				}
 	  			}
 	  		}
 	  	}
-	  	
+
 	  	det = res;
 	  	w = wi;
 	  	return ((i==N) ? false : true); // We get i==N only if all the wi's are even
 	}
 	 /**
-	  * Method based on FFT to find the determinant and the first coefficient of w(x) 
+	  * Method based on FFT to find the determinant and the first coefficient of w(x)
 	  * this suffices to find w(x) completely
 	  * @param q the polynomial
 	  * @param n the degree
@@ -256,10 +252,10 @@ public class GHKeyGen {
 	static BigInteger[] gzModZ2(Polynomial q, int n) {
 		int i;
 	  	int N = 1 << n;
-	  	
+
 	  	Polynomial V = new Polynomial(q.coeffs);					// V = q
 	  	Polynomial U = new Polynomial(1);	// U = 1
-	  	U.setCoeff(0, new BigInteger("1"));					
+	  	U.setCoeff(0, new BigInteger("1"));
 	  	Polynomial F = new Polynomial(N);	// F(x) = x^N +1
 	  	F.setCoeff(0, new BigInteger("1"));
 	  	F.setCoeff(N, new BigInteger("1"));
@@ -272,12 +268,12 @@ public class GHKeyGen {
 	  		}
 	  		V = Polynomial.mod(Polynomial.mult(V, V2), F);// V := V(x) * V(-x) mod f(x)
 	  		U = Polynomial.mod(Polynomial.mult(U, V2), F);// U := U(x) * V(-x) mod f(x)
-	  		
+
   			// Sanity-check: verify that the odd coefficients in V are zero
 	  		for (i=1; i <= V.degree; i+=2) if (!V.coeffs[i].equals(new BigInteger("0"))) {
 	  			return null;
 	  		}
-	   
+
 	  		// "Compress" the non-zero coefficients of V
 	  		for (i = 1; i <= V.degree/2; i++) V.coeffs[i] = V.coeffs[2*i];
 	  		for (   ;   i <= V.degree;   i++) V.coeffs[i] = new BigInteger("0");
@@ -294,8 +290,8 @@ public class GHKeyGen {
 	  		F.coeffs[N] = new BigInteger("1");
 	  		F.normalize();
 	  	}
-	  	
+
 	  	return new BigInteger[]{V.coeffs[0],U.coeffs[0]};
-	  	
+
 	}
 }
