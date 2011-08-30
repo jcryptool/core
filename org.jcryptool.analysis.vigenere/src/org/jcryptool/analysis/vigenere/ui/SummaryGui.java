@@ -32,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
-import org.jcryptool.analysis.vigenere.lang.Messages;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;

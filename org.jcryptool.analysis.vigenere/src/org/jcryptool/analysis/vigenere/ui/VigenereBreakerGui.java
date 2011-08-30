@@ -16,7 +16,6 @@ import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
-import org.jcryptool.analysis.vigenere.lang.Messages;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
 import org.jcryptool.core.util.fonts.FontService;
 

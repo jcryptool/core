@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalActionException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
-import org.jcryptool.analysis.vigenere.lang.Messages;
 import org.jcryptool.core.util.fonts.FontService;
 
 /**

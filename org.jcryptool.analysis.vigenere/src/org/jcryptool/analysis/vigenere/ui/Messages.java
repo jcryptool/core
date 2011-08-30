@@ -1,10 +1,9 @@
-package org.jcryptool.analysis.vigenere.lang;
+package org.jcryptool.analysis.vigenere.ui;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.analysis.vigenere"
-            + ".lang.properties.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.jcryptool.analysis.vigenere.ui.messages"; //$NON-NLS-1$
     public static String DecryptionGui_button_back;
     public static String DecryptionGui_button_finish;
     public static String DecryptionGui_group_results;
