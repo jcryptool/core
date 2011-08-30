@@ -52,8 +52,6 @@ public class FileTransferManager {
      */
     private int token;
 
-    private int position = 0;
-
     private int eof = 0;
 
     /**
@@ -152,7 +150,6 @@ public class FileTransferManager {
         try {
             while (eof != -1 && charPos < FileTransferManager.BUFFER_SIZE) {
                 eof = in.read(readArray, charPos, 1);
-                position++;
                 charPos++;
             }
             if (charPos < FileTransferManager.BUFFER_SIZE - 1) {
