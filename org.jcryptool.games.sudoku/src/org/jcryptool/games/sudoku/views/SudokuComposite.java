@@ -5365,7 +5365,7 @@ public class SudokuComposite extends Composite {
     }
 
     private class Area {
-        final private int SUBTRACTION = 1, DIVISION = 3;
+//        final private int SUBTRACTION = 1, DIVISION = 3;
         private int operator, value;
         private List<Point> points;
 
