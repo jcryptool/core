@@ -23,7 +23,7 @@
     <ul>
         <li>Das <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Runtime Environment</a> (oder Java SE Development Kit)
         in Version 1.6 oder neuer.</li>
-        <li><a href="http://www.eclipse.org/">Eclipse Indigo</a>- laden Sie das <strong>Eclipse Classic</strong> oder <strong>Eclipse for RCP and RAP Developers</strong>
+        <li><a href="http://www.eclipse.org/">Eclipse Indigo</a> - laden Sie das <strong>Eclipse Classic</strong> oder <strong>Eclipse for RCP and RAP Developers</strong>
         Package (die anderen Packages können nicht ohne zusätzliche Erweiterungen zur Plug-in-Entwicklung verwendet werden) in Version 3.7.x herunter.</li>
         <li>Das <strong>EGit/JGit</strong> Plug-in, das Sie per Update Manager über die Indigo Update Site installieren können.</li>
     </ul>
@@ -41,169 +41,171 @@
 
     <h2>Einrichten des Workspaces</h2>
 
-    <p>JCrypTool is developed on different platforms. It is important that all platforms use a common workspace encoding: which is <strong>UTF-8</strong>. Since this is not the Eclipse default you
-    need to change this right away once for your workspace. Open the Eclipse <strong>Preferences</strong> and look for the <strong>Workspace</strong> page in the <strong>General</strong> section.
-    Locate the <strong>Text file encoding</strong> group, select <strong>Other</strong> and choose <strong>UTF-8</strong> in the drop down box. Leave the preferences (click on <strong>OK</strong>).</p>
+    <p>JCrypTool wird auf unterschiedlichen Plattformen entwickelt. Darum ist es wichtig, dass ein für alle Plattformen gemeinsames Workspace-Encoding verwendet wird: <strong>UTF-8</strong>. Da dieses
+    Encoding nicht der Eclipse-Standard ist, muss es explizit für Ihren Workspace ausgewählt werden. Öffnen Sie die Eclipse <strong>Preferences</strong> und dort in der <strong>General</strong> Gruppe die
+    Seite <strong>Workspace</strong>. Hier finden Sie die Optionen zu <strong>Text file encoding</strong>, in dem Sie zunächst <strong>Other</strong> auswählen und dann auf <strong>UTF-8</strong> klicken.
+    Anschließend können Sie den Dialog mit Klick auf <strong>OK</strong> verlassen.</p>
 
     <div class="screenshot">
-        <img src="images/setup_workspace_encoding.png" width="624" height="537" alt="Setting up the workspace encoding"/>
+        <img src="images/setup_workspace_encoding.png" width="624" height="537" alt="Workspace Encoding festlegen"/>
     </div>
 
     <h2>Auschecken der JCrypTool Sourcen</h2>
 
-    <p>As JCrypTool actually consists of two projects, we do have two different repositories as well: JCrypTool Core and JCrypTool Crypto. Both offer anonymous
-    read access. When setting up Eclipse for JCrypTool development for the first time, start your Eclipse IDE with a new (empty) workspace.</p>
+    <p>Da JCrypTool aus zwei unterschiedlichen Projekten besteht, verwenden wir auch zwei unterschiedliche Git Repositories: JCrypTool Core und JCrypTool Crypto. Beide bieten anonymen Lesezugriff an.
+    Wenn Sie Eclipse zum ersten Mal für die JCrypTool Entwicklung einrichten, sollten Sie die Eclipse IDE mit einem neuen (leeren) Workspace starten.</p>
 
-    <p>In case of any GitHub trouble have a look at the <a href="http://help.github.com/">GitHub help pages</a>.</p>
+    <p>Sollten Sie irgendwelche Probleme mit GitHub haben, helfen Ihnen vielleicht die <a href="http://help.github.com/">GitHub Hilfeseiten</a> weiter.</p>
 
     <h3>Erstellen eines GitHub Benutzers</h3>
 
-    <p>In case you want to use a named user with or without write access you need to create an account on <a href="https://github.com">GitHub</a>. And you need
-    to provide a public key for this user.</p>
+    <p>Sofern Sie einen benannten Benutzer mit oder ohne Schreibzugriff auf unsere Repositories verwenden möchten, müssen Sie sich ein Konto auf <a href="https://github.com">GitHub</a>
+    anlegen. Außerdem müssen Sie für diesen Benutzer einen öffentlichen Schlüssel zur Verfügung stellen.</p>
 
-    <p>To create a new public key, open the Eclipse preferences and switch to the <strong>General - Network Connections - SSH2</strong> page. Click the
-    <strong>Generate RSA Key...</strong> button on the second tab. Feel free to enter any optional comment, but you must provide a passphrase! Do not use
-    blanks in your passphrase. After that click on <strong>Save Private Key...</strong> and store the keys in the given directory. Copy the public key from
-    the large text box and add it to your user on your <a href="http://help.github.com/mac-set-up-git/">GitHub account page</a>.</p>
+    <p>Um einen neuen öffentlichen Schlüssel zu erzeugen, öffnen Sie die Eclipse Preferences und wechseln auf die Seite <strong>General - Network Connections - SSH2</strong>. Klicken Sie
+    dort auf den <strong>Generate RSA Key...</strong> Button auf dem zweiten Tab. Sie können einen optionalen Kommentar angeben, müssen aber eine Passphrase eingeben! In dieser Passphrase
+    keine Leerzeichen verwenden. Anschließend klicken Sie auf <strong>Save Private Key...</strong> und speichern die Schlüssel (öffentlich und privat) in dem angegebenen Verzeichnis.
+    Kopieren Sie den öffentlichen Schlüssel aus dem großen Textfeld und fügen Sie dieses zu Ihrem <a href="http://help.github.com/mac-set-up-git/">GitHub Konto</a> hinzu.</p>
 
     <div class="screenshot">
-        <img src="images/git_create_key.png" width="340" height="360" alt="Creating a SSH2 key"/>
+        <img src="images/git_create_key.png" width="340" height="360" alt="Erstellen eines SSH2 Schlüssels"/>
     </div>
 
     <h3>Vorbereiten der Git Umgebung</h3>
 
-    <p>Open the Eclipse preferences again and switch to the <strong>Team - Git - Configuration</strong> page. Stay on the first tab <strong>User setting</strong>.
-    Create two new entries with the <strong>New Entry...</strong> button on the bottom. The first entry should be <strong>user.name</strong> as key with your real name
-    (first and last name), the second key <strong>user.email</strong> with the email address you used when creating your GitHub user.</p>
+    <p>Öffnen Sie erneut die Eclipse Preferences und wechseln Sie auf die Seite <strong>Team - Git - Configuration</strong>. Auf dem ersten Tab <strong>User setting</strong> erstellen Sie
+    zwei neue Einträge mit dem <strong>New Entry...</strong> Button. The erste Eintrag muss <strong>user.name</strong> als Schlüssel verwenden und Ihren Namen (Vor- und Nachname) als Wert.
+    Der zweite Eintrag <strong>user.email</strong> muss Ihre Email-Adresse beinhalten, die Sie bei der Erstellung Ihres GitHub Benutzers angegeben haben.</p>
 
     <div class="screenshot">
-        <img src="images/git_config_environment.png" width="322" height="206" alt="Preparing the Git environment"/>
+        <img src="images/git_config_environment.png" width="322" height="206" alt="Vorbereiten der Git Umgebung"/>
     </div>
 
     <h3>Auschecken der Sourcen</h3>
 
-    <p>In order to start your development, you need to check out the JCrypTool sources from the Git repositories. All JCrypTool Core projects are required.
-    Those projects contain the JCrypTool platform as well as some basic plug-ins required by the JCrypTool platform. All JCrypTool Crypto projects in the second repository
-    are optional. Those projects contain the crypto plug-ins. We strongly recommend checking out both repositories and all contained projects.</p>
+    <p>Um mit Ihrer Entwicklungsarbeit zu beginnen, müssen Sie zunächst die JCrypTool Sourcen aus den Git Repositories auschecken. Alle JCrypTool Core Projekte sind notwendig. Diese Projekte
+    beinhalten die JCrypTool Plattform sowie einige Plug-ins, die grundlegende Funktionalität für JCrypTool zur Verfügung stellen. Alle JCrypTool Crypto Projekte dagegen sind optional. Diese
+    Projekte beinhalten die Krypto-Plug-ins. Wir empfehlen, auch diese Projekte vollständig auszuchecken und bei Ihrer Entwicklung als Beispielprojekte zu verwenden.</p>
 
-    <p>To check out all JCrypTool projects you have to create new repository locations for both repository URLs in the <strong>Git Repository Exploring</strong> perspective.
-    Switch to this perspective and add the two URLs with the help of the <strong>Clone a Git repository and add the clone to this view</strong> wizard in the
-    <strong>Git Repositories</strong> view.</p>
+    <p>Um alle JCrypTool Projekte auszuchecken müssen Sie für beide Repositories entsprechende Einträge mit den Repository URLs in der <strong>Git Repository Exploring</strong> Perspektive
+    anlegen. Wechseln Sie in diese Perspektive und fügen Sie die beiden URLs mit Hilfe des <strong>Clone a Git repository and add the clone to this view</strong> Wizards in der
+    <strong>Git Repositories</strong> Sicht hinzu.</p>
 
-    <p>The first page of the wizard requires only the URI of the Git repository:</p>
+    <p>Auf der ersten Seite werden Sie nur nach der URI für das entsprechende Git Repository gefragt:</p>
 
     <ul>
         <li>Core: git@github.com:jcryptool/core.git</li>
         <li>Crypto: git@github.com:jcryptool/crypto.git</li>
     </ul>
 
-    <p>Simply copy and paste one of the URIs into the URI textfield, all the other fields are extracted automatically from this information. Do not change any of the values
-    automatically generated, even keep the User git! The only thing you have to do is to deselect the <strong>Store in Secure Store</strong> checkbox on the bottom of the page.
-    Do not provide any password here and click on <strong>Next</strong> to continue to the next page.</p>
+    <p>Kopieren Sie einfach die URI und fügen Sie diese in das URI Textfeld ein. Alle weiteren Felder werden automatisch basierend auf diesen Informationen gefüllt. Ändern Sie keine der
+    automatisch erzeugten Angaben, behalten Sie auch den Benutzer git bei! Sie müssen einzig und allein den Haken in der Checkbox bei <strong>Store in Secure Store</strong> entfernen. Ein
+    Passwort dürfen Sie hier keines angeben. Klicken Sie anschließend auf <strong>Next</strong>.</p>
 
     <div class="screenshot">
         <img src="images/git_clone_wizard_1.png" width="263" height="250" alt="Clone Git Repository (1)"/>
     </div>
 
-    <p>Now a dialog will pop up, asking for your GitHub password. This is the passphrase you provided for your SSH2 key, <strong>not</strong> your GitHub password. Simply enter it.
-    The branches textfield will be updated with our branch information. Keep the selections and click on <strong>Next</strong> to continue.</p>
+    <p>Es erscheint ein Dialog, in dem Sie nach Ihrem GitHub Passwort gefragt werden. Hier müssen Sie die Passphrase eingeben, die Sie bei der Erstellung des SSH2 Schlüssels angegeben haben,
+    <strong>nicht</strong> Ihr GitHub Passwort. Nach der Eingabe wird das Textfeld mit allen Branches aktualisiert. Behalten Sie alle automatisch getroffenen Einstellungen bei und klicken Sie
+    erneut auf <strong>Next</strong>.</p>
 
     <div class="screenshot">
         <img src="images/git_clone_wizard_2.png" width="263" height="250" alt="Clone Git Repository (2)"/>
     </div>
 
-    <p>The third page asks for the directory to store the Git repository on your computer. You can keep the suggested default or change it. Do not use your current Eclipse workspace
-    as Git repository; always store it in a different directory. Keep the other information and click on <strong>Finish</strong>.
+    <p>Auf der dritten Seite werden Sie nach dem Verzeichnis gefragt, in dem Sie das Git Repository auf Ihrem PC speichern möchten. Sie können den vorgeschlagenen Ort akzeptieren oder einen
+    neuen eingeben. Geben Sie hier keinesfalls Ihren Eclipse Workspace an, das Git Repository sollte immer außerhalb liegen. Die anderen Werte können auf den Standards bleiben. Klicken Sie
+    anschließend auf <strong>Finish</strong>.</p>
 
     <div class="screenshot">
         <img src="images/git_clone_wizard_3.png" width="263" height="250" alt="Clone Git Repository (3)"/>
     </div>
 
-    <p>This updates the <strong>Git Repositories</strong> view with the repository just added. Simply right click on the created entry and select <strong>Import Projects...</strong>.</p>
+    <p>Damit wird die <strong>Git Repositories</strong> Sicht aktualisiert und enthält das soeben hinzugefügte Git Repository. Öffnen Sie das Kontextmenü auf diesem Repository und wählen dort
+    den Eintrag <strong>Import Projects...</strong> aus.</p>
 
     <div class="screenshot">
-        <img src="images/git_import_projects_1.png" width="229" height="414" alt="Importing projects (1)"/>
+        <img src="images/git_import_projects_1.png" width="229" height="414" alt="Importieren der Projekte (1)"/>
     </div>
 
-    <p>Keep all information on the first wizard page and click on <strong>Next</strong> to continue.</p>
+    <p>Behalten Sie alle Einstellungen auf der ersten Wizard Seite bei und klicken Sie auf <strong>Next</strong>.</p>
 
     <div class="screenshot">
-        <img src="images/git_import_projects_2.png" width="276" height="254" alt="Importing projects (2)"/>
+        <img src="images/git_import_projects_2.png" width="276" height="254" alt="Importieren der Projekte (2)"/>
     </div>
 
-    <p>The second page lists all discovered projects. Since we need all of them click on <strong>Finish</strong> to start the import process.</p>
+    <p>Die zweite Seite zeigt alle gefundenen Projekte an. Da alle notwendig sind können Sie direkt auf <strong>Finish</strong> klicken um den Import Prozess zu starten.</p>
+    <div class="screenshot">
+        <img src="images/git_import_projects_3.png" width="276" height="254" alt="Importieren der Projekte (3)"/>
+    </div>
+
+    <p>Das war's. Alle Projekte sind nun in Ihrem lokalen Workspace verfügbar. Sofern Sie an beiden JCrypTool Repositories interessiert sind müssen das andere Repository ebenfalls klonen.
+    Wiederholen Sie dazu einfach alle in <strong>Auschecken der Sourcen</strong> beschriebenen Schritte.</p>
+
+    <p>Nach Abschluss des Klonens sollten Sie Ihren Workspace überprüfen: ein gelbes Ausrufenzeichen in einem der Feature Projekte (diese enden normalerweise auf <strong>.feature</strong>)
+    zeigt ein, dass ein oder mehrere der notwendigen Plug-ins fehlen. Öffnen Sie in diesem Fall die feature.xml im <strong>Feature Manifest Editor</strong> und wechseln auf den
+    <strong>Plug-ins</strong> Tab. Stellen Sie sicher, dass alle dort aufgeführten Plug-ins in Ihrem Workspace verfügbar sind.</p>
+
+    <p><strong>Ignorieren Sie alle Warnungen in den Feature Projekten org.jcryptool.core.dependencies.feature und org.jcryptool.core.dependencies.nl_de.feature. Diese Probleme werden wir später beheben.</strong></p>
+
+    <h2>Aktualisieren der Push to Upstream Konfiguration</h2>
+
+    <p>Mit EGit 1.0 werden alle Branches, auch die lokalen, standardmäßig gepusht sofern keine explizite Push to Upstream Konfiguration angegeben wurde. Um dies zu verhindern müssen Sie Ihre Push to Upstream
+    Konfiguration individuell für beide Repositories (<strong>core und crypto</strong>) aktualisieren.</p>
+
+    <p>Klicken Sie dazu mit der rechten Maustaste auf eines der Projekte aus dem <strong>Core</strong> Repository (z.B. <em>org.jcryptool.core</em>) im <em>Package Explorer</em>. Wählen Sie dort
+    <strong>Team - Remote - Configure Push to Upstream...</strong> aus. Ein Dialog öffnet sich. Klicken Sie auf <strong>Advanced</strong> in der <strong>Ref mapping</strong> Gruppe im unteren
+    Bereich und machen so den <strong>Edit (Advanced)</strong> Button sichtbar. Klicken Sie auf diesen Button und warten Sie auf die Initialisierung des Dialogs. Wählen Sie anschließend
+    <strong>master [branch]</strong> in der ersten Drop Down Box <strong>Source ref</strong> aus. Dadurch wird in der <strong>Destination ref</strong> Drop Down Box automatisch
+    <strong>refs/heads/master</strong> ausgewählt. Klicken Sie auf den <strong>Add spec</strong> Button neben dieser Drop Down Box. Anschließend auf <strong>Finish</strong> und zum Schluss auf
+    <strong>Save</strong> um den anderen Dialog ebenfalls zu schließen.</p>
+
+    <p>Wiederholen Sie diese Schritte anschließend für eines der Projekte aus dem <strong>Crypto</strong> Repository (z.B. <em>org.jcryptool.analysis</em>).</p>
 
     <div class="screenshot">
-        <img src="images/git_import_projects_3.png" width="276" height="254" alt="Importing projects (3)"/>
+        <img src="images/configure_push_to_upstream.png" width="267" height="283" alt="Konfigurieren von Push to Upstream"/>
     </div>
 
-    <p>That's it; all projects are now available in your local workspace. In case you are interested in both JCrypTool repositories you need to clone the other repository as well;
-    simply repeat all the steps described in the <strong>Checking out the sources</strong> section above.</p>
+    <h2>Einrichten der Target Platform</h2>
 
-    <p>When you are done you should check your workspace: a yellow exclamation mark in a feature project (these projects normally end with <strong>.feature</strong>) indicates that one
-    or more (required) plug-ins are missing. In this case open the feature in the <strong>Feature Manifest Editor</strong>, switch to the <strong>Plug-ins</strong> tab and make sure that
-    all listed JCrypTool plug-ins are available in your workspace.</p>
+    <p>JCrypTool kann zu diesem Zeitpunkt bereits in Ihrer Umgebung funktionieren. Dennoch empfehlen wir die Einrichtung einer <a href="targetplatform.html">Target Platform</a>. Dieser optionale
+    Prozess benötigt nur einige zusätzliche Schritte.</p>
 
-    <p><strong>At this point ignore any warning in the feature projects org.jcryptool.core.dependencies.feature and org.jcryptool.core.dependencies.nl_de.feature. We will fix that later.</strong></p>
-
-    <h2>Aktualisieren der push to upstream Konfiguration</h2>
-
-    <p>EGit 1.0 pushes all branches, included all local branches, by default when there is no explicit push to upstream configuration. To avoid that, you must update your push to upstream configuration
-    individually for both (<strong>core and crypto</strong>) repositories.</p>
-
-    <p>To do that, right click on one of the projects residing in the <strong>core</strong> repository (like <em>org.jcryptool.core</em>) in the <em>Package Explorer</em>. Choose
-    <strong>Team - Remote - Configure Push to Upstream...</strong>. A dialog opens. Click <strong>Advanced</strong> in the <strong>Ref mapping</strong> section at the bottom to make the
-    <strong>Edit (Advanced)</strong> button visible. Click this button and wait for the dialog to initialize. Simply select <strong>master [branch]</strong> in the first drop down box
-    <strong>Source ref</strong> at the top. This automatically updates the <strong>Destination ref</strong> drop down box with <strong>refs/heads/master</strong>. Click the <strong>Add spec</strong>
-    button next to this drop down box, then <strong>Finish</strong> and finally <strong>Save</strong> to close the other dialog as well.</p>
-
-    <p>Repeat these steps exactly for one of the <strong>crypto</strong> repository projects (like <em>org.jcryptool.analysis</em>).</p>
-
-    <div class="screenshot">
-        <img src="images/configure_push_to_upstream.png" width="267" height="283" alt="Configuring push to upstream"/>
-    </div>
-
-    <h2>Konfigurieren der Target Platform</h2>
-
-    <p>At this point, JCrypTool might already work/run in your environment. However, we strongly recommend setting up a <a href="targetplatform.html">Target Platform</a>. This optional process
-    requires only some manual steps.</p>
-
-    <p>In case you do not want to setup a target platform you might continue with the next step <strong>Setting up your workspace</strong>. This however requires that a version of
-    <a href="http://www.eclipse.org/gef/">Eclipse GEF</a>, the <strong>Graphical Editing Framework</strong>, including <strong>Draw2d</strong> is included in your Eclipse installation.
-    GEF is included in the <strong>Eclipse for RCP and RAP Developers</strong> package, but might be missing in other editions. In this case use the Indigo Update Site to add GEF
-    (and automatically its dependencies) to your environment. You do need GEF to compile/ run JCrypTool. Besides that, without a target platform JCrypTool will not be fully translated
-    since all the Eclipse translations will not be available in your environment.</p>
-
+    <p>Sofern Sie keine Target Platform einrichten möchten können Sie mit dem nächsten Schritt fortfahren. Dazu ist es dann aber erforderlich, dass <a href="http://www.eclipse.org/gef/">Eclipse GEF</a>,
+    das <strong>Graphical Editing Framework</strong>, inklusive <strong>Draw2d</strong>, in Ihrer Eclipse Installation zur Verfügung steht. GEF ist im <strong>Eclipse for RCP and RAP Developers</strong>
+    Package enthalten, fehlt aber möglicherweise in anderen Ausgaben. In diesem Fall können Sie GEF (und automatisch seine Abhängigkeiten) über die Indigo Update Site hinzufügen. GEF ist zum Kompilieren/Ausführen
+    von JCrypTool unbedingt erforderlich. Außerdem werden ohne eine Target Platform die JCrypTool Menüs nicht vollständig übersetzt werden.</p>
     <ol>
-        <li>Open the <strong>jcryptool.target</strong> file in the <strong>org.jcryptool.releng</strong> project. This will take some time since all our target plug-ins must be resolved first.</li>
-        <li>After all plug-ins are resolved (see the progress indicator in the lower right), simply click the <strong>Set as Target Platform</strong> link in the upper right. This again will take some time.</li>
+        <li>Öffnen Sie die <strong>jcryptool.target</strong> Datei im <strong>org.jcryptool.releng</strong> Projekt. Dies benötigt einige Zeit, da die Plug-in Abhängigkeiten direkt aufgelöst werden müssen.</li>
+        <li>Nachdem dies abgeschlossen wurde (beachten Sie die Fortschrittsanzeige unten rechts) klicken Sie einfach auf den <strong>Set as Target Platform</strong> Link oben links. Auch dies wird einige Zeit
+        dauern.</li>
     </ol>
 
     <div class="screenshot">
-        <img src="images/setup_target_platform.png" width="604" height="621" alt="Setting up the target platform"/>
+        <img src="images/setup_target_platform.png" width="604" height="621" alt="Einrichten der Target Platform"/>
     </div>
 
-    <p>At this point, no build errors should be left. The two features <strong>org.jcryptool.core.dependencies.feature</strong> and <strong>org.jcryptool.core.dependencies.nl_de.feature</strong>
-    should be clear, no warnings left. Otherwise redo the first two steps from the list above.</p>
+    <p>Zu diesem Zeitpunkt sollten keine Buildfehler mehr vorhanden sein. Auch die beiden Features <strong>org.jcryptool.core.dependencies.feature</strong> und
+    <strong>org.jcryptool.core.dependencies.nl_de.feature</strong> dürfen keine Warnungen mehr beinhalten. Andernfalls sollten Sie die beiden zuvor beschriebenen Schritte nochmals wiederholen.</p>
 
     <h2>Starten von JCrypTool in der Eclipse Entwicklungsumgebung (IDE)</h2>
 
-    <p>Open the file <strong>jcryptool.product</strong> file located in the <strong>org.jcryptool.repository</strong> project with the <strong>Product Configuration Editor</strong>. Simply click on the
-    <strong>Launch an Eclipse application</strong> link in the lower left on the first page. This starts JCrypTool and creates a run menu entry.</p>
+    <p>Öffnen Sie die <strong>jcryptool.product</strong> Datei aus dem <strong>org.jcryptool.repository</strong> Projekt mit dem <strong>Product Configuration Editor</strong>. Klicken Sie hier einfach
+    auf den <strong>Launch an Eclipse application</strong> Link unten links auf der ersten Seite. Dies startet JCrypTool und erstellt einen Eintrag im Run Menü.</p>
 
     <div class="screenshot">
-        <img src="images/setup_product_configuration.png" width="400" height="360" alt="Setting up the product configuration]"/>
+        <img src="images/setup_product_configuration.png" width="400" height="360" alt="Starten von JCrypTool in der Eclipse Entwicklungsumgebung (IDE)"/>
     </div>
 
-    <p><strong>This first run might stop with an error message.</strong> To fix this, open the run menu and select the created run menu entry (normally named <strong>jcryptool.product</strong>).
-    Switch to the <strong>Plug-ins</strong> tab and click the <strong>Add required plug-ins</strong> button. This will add the platform dependent plug-ins to your configuration. This step is only
-    required the first time.</p>
+    <p><strong>Dieser erste Start kann mit einer Fehlermeldung abbrechen.</strong> Um dies zu beheben öffnen Sie den eben erstellen Run Menü Eintrag (dieser heißt normalerweise <strong>jcryptool.product</strong>).
+    Wechseln Sie auf den <strong>Plug-ins</strong> Tab und klicken Sie auf den <strong>Add required plug-ins</strong> Button. Damit werden möglicherweise fehlende Plug-ins zu Ihrer Konfiguration hinzugefügt. Dieser
+    Schritt ist daher nur ein einziges Mal notwendig.</p>
 
-    <p>JCrypTool will be launched in the language defined in your operating systems regional settings. Follow the instructions provided <a href="../develop/plugins/internationalization.html">here</a>
-    to switch the active language.</p>
+    <p>JCrypTool startet immer in der Sprache, die in Ihren Betriebssystem-Regionaleinstellungen festgelegt ist. Folgen Sie der Anleitung <a href="../develop/plugins/internationalization.html">hier</a> um dies
+    anzupassen.</p>
 
-    <p><strong>Important:</strong> From time to time, new plug-ins or features will be added to the default JCrypTool configuration. After checking out those projects and/ or updating the corresponding
-    features, you must use the <strong>Launch an Eclipse application</strong> link again to update your run entry configuration (otherwise the projects will be available in your workspace but won't
-    be available during JCrypTool runtime). Remember to click the <strong>Add required plug-ins</strong> button after that.</p>
-</body>
+    <p><strong>Wichtig:</strong> Von Zeit zu Zeit kommen neue Plug-ins oder Features zur JCrypTool Konfiguration hinzu. Nach dem Auschecken dieser Projekte bzw. Aktualisieren der dazugehörigen Features müssen
+    Sie den <strong>Launch an Eclipse application</strong> Link verwenden, um Ihren Run Menü Eintrag zu aktualisieren. Andernfalls stehen die neuen Projekte zwar in Ihrem Workspace zur Verfügung, werden aber
+    zur Laufzeit nicht in JCrypTool angezeigt. An dieser Stelle sollten Sie auch den <strong>Add required plug-ins</strong> nochmals verwenden.</p></body>
 </html>
