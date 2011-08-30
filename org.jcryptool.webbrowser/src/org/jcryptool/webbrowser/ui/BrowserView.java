@@ -32,7 +32,7 @@ import org.eclipse.ui.part.ViewPart;
  *
  */
 public class BrowserView extends ViewPart {
-    protected static final String BROWSER_HOME = "http://jcryptool.sourceforge.net"; //$NON-NLS-1$
+    protected static final String BROWSER_HOME = "http://www.cryptool.org"; //$NON-NLS-1$
     private static Browser browser;
     private Controls controls;
     private Text status;
