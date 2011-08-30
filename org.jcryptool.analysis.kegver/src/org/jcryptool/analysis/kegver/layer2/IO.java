@@ -93,7 +93,6 @@ public class IO {
 
 	@Override
 	public void finalize() {
-		System.out.println("PANIINININ");
 		try {
 			this.getBufferedWriter().flush();
 			this.getBufferedWriter().close();

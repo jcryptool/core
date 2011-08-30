@@ -5381,8 +5381,8 @@ public class SudokuComposite extends Composite {
             this.value = value;
             for (int i = 0; i < points.size(); i++)
                 this.points.add(points.get(i));
-            if ((operator == SUBTRACTION || operator == DIVISION) && points.size() != 2)
-                System.out.println("More than 2 points for sub/div!");
+//            if ((operator == SUBTRACTION || operator == DIVISION) && points.size() != 2)
+//                System.out.println("More than 2 points for sub/div!");
         }
 
         public void addPoint(Point point) {
