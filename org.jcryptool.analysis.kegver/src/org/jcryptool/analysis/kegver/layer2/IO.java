@@ -111,13 +111,6 @@ public class IO {
 	}
 
 	private File getFile() {
-		if (this.aFile == null) {
-			try {
-				throw new SetMethodFailedException();
-			} catch (SetMethodFailedException ex) {
-				LogUtil.logError(KegverPlugin.PLUGIN_ID, ex);
-			}
-		}
 		return this.aFile;
 	}
 
