@@ -123,7 +123,6 @@ public class CreateSignatureTest extends TestCase {
             signatures = verify.verify(signedFilename, "wrongID");
             assertEquals("unknown", (signatures.get(0)).getStatus());
         } catch (Exception ex) {
-            ex.printStackTrace();
             fail(ex.getLocalizedMessage());
         }
     }
