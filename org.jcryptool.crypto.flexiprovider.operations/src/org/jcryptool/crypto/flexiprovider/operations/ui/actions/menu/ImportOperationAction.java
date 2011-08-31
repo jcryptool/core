@@ -14,6 +14,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
@@ -28,8 +29,8 @@ public class ImportOperationAction extends Action {
     public void run() {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] {"*.*"});
-        dialog.setFilterNames(new String[] {"All Files (*.*)"});
+        dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION});
+        dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME});
         dialog.setOverwrite(true);
 
         String fileName = dialog.open();

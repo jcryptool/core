@@ -16,7 +16,9 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.algorithm,
  org.jcryptool.core.operations.dataobject,
  org.jcryptool.core.operations.editors,
+ org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
+ org.jcryptool.core.util.ui,
  org.jcryptool.crypto.flexiprovider.descriptors,
  org.jcryptool.crypto.flexiprovider.descriptors.algorithms,
  org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces,
@@ -25,6 +27,5 @@ Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.flexiprovider.xml,
  org.jcryptool.crypto.keys,
  org.jcryptool.crypto.keystore,
- org.jcryptool.crypto.keystore.backend,
- org.jcryptool.core.util.ui
+ org.jcryptool.crypto.keystore.backend
 Export-Package: org.jcryptool.crypto.flexiprovider.integrator

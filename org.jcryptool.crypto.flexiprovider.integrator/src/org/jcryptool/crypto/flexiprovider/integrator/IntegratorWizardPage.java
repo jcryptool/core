@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.ui.HexTextbox;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaMode;
@@ -526,14 +527,14 @@ public class IntegratorWizardPage extends WizardPage {
         	hideObject(createNewKeyComposite, true);
         }
     }
-    
+
     private void enableControls() {
         if(createNewKeyButton != null) createNewKeyButton.setEnabled(true);
         if(keyCombo != null) keyCombo.setEnabled(true);
         if(encryptButton != null) encryptButton.setEnabled(true);
         if(decryptButton != null) decryptButton.setEnabled(true);
     }
-    
+
     private void disableControls() {
         if(createNewKeyButton != null) createNewKeyButton.setEnabled(false);
         if(keyCombo != null) keyCombo.setEnabled(false);
@@ -547,7 +548,7 @@ public class IntegratorWizardPage extends WizardPage {
             decryptButton.setEnabled(true);
             if(encryptButton != null) encryptButton.setEnabled(false);
         }
-        
+
     }
 
     protected void makeNewKey() {
@@ -782,7 +783,7 @@ public class IntegratorWizardPage extends WizardPage {
 //        	if(keyFromKeystoreButton != null) keyFromKeystoreButton.setEnabled(false);
 //            this.setErrorMessage(Messages.getString("DummyWizardPage.23") + " " + showKeyGroup + " " + Messages.getString("DummyWizardPage.232")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 //        }
-    	
+
     	selectCurrentKey(previousSelection);
     }
 
@@ -791,7 +792,7 @@ public class IntegratorWizardPage extends WizardPage {
      * @param previousSelection
      */
     private void selectCurrentKey(KeyStoreAlias previousSelection) {
-        
+
         comboKeyMap.addAll(encrypt ? publicKeyMap : privateKeyMap);
         keyCombo.setItems(getKeyItems());
 
@@ -802,7 +803,7 @@ public class IntegratorWizardPage extends WizardPage {
             keyStoreAlias = null;
         } else {
             keyCombo.setEnabled(true);
-            
+
             if(previousSelection == null) {
                 keyCombo.select(0);
             } else {
@@ -811,7 +812,7 @@ public class IntegratorWizardPage extends WizardPage {
                 } else {
                     keyCombo.select(0);
                     String prevHash = previousSelection.getHashValue();
-                    
+
                     for(KeyStoreAlias alias : comboKeyMap)
                     {
                         if(alias.getHashValue().equals(prevHash))
@@ -937,8 +938,8 @@ public class IntegratorWizardPage extends WizardPage {
         chooseFile.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
                 FileDialog dialog = new FileDialog(new Shell(), openFile ? SWT.OPEN : SWT.SAVE);
-                dialog.setFilterExtensions(new String[] {"*.*"}); //$NON-NLS-1$
-                dialog.setFilterNames(new String[] {Messages.getString("IntegratorWizardPage.8")}); //$NON-NLS-1$
+                dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION});
+                dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
                 dialog.setOverwrite(true);
 

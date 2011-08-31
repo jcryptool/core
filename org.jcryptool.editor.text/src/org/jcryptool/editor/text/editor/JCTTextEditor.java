@@ -105,8 +105,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	private String queryFilePath() {
 		FileDialog dialog = new FileDialog(getSite().getShell(), SWT.SAVE);
 		dialog.setFilterExtensions(new String[] { IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION });
-		dialog.setFilterNames(new String[] { Messages.JCTTextEditor_2,
-				Messages.JCTTextEditor_3 });
+		dialog.setFilterNames(new String[] { IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME });
 		dialog.setFilterPath(DirectoryService.getUserHomeDir());
 		dialog.setOverwrite(true);
 		return dialog.open();

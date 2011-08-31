@@ -15,8 +15,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.editor.text.editor.messages"; //$NON-NLS-1$
     public static String JCTTextEditor_1;
-    public static String JCTTextEditor_2;
-    public static String JCTTextEditor_3;
     public static String JCTTextEditor_10;
     public static String JCTTextEditor_13;
     public static String JCTTextEditor_16;
