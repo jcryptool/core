@@ -15,7 +15,7 @@
             name="%xmlSignatureView">
       </view>
       <category
-            id="org.eclipse.wst.xml.security" name="XML Security">
+            id="org.eclipse.wst.xml.security" name="%category.name">
       </category>
    </extension>
    <!-- Preference Pages -->
@@ -159,7 +159,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.canonicalization"
             id="org.eclipse.wst.xml.security.ui.newCanonWithoutComments"
             isFlexiProviderAlgorithm="false"
-            name="Canonicalization (remove comments)"
+            name="%algorithm.name"
             type="xml">
       </algorithm>
    </extension>
@@ -172,7 +172,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.canonicalizationcomments"
             id="org.eclipse.wst.xml.security.ui.newCanonWithComments"
             isFlexiProviderAlgorithm="false"
-            name="Canonicalization (maintain comments)"
+            name="%algorithm.name.0"
             type="xml">
       </algorithm>
    </extension>
@@ -185,7 +185,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.signature"
             id="org.eclipse.wst.xml.security.ui.newSignature"
             isFlexiProviderAlgorithm="false"
-            name="Signature"
+            name="%algorithm.name.1"
             type="xml">
       </algorithm>
    </extension>
@@ -198,7 +198,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.verification"
             id="org.eclipse.wst.xml.security.ui.newVerification"
             isFlexiProviderAlgorithm="false"
-            name="Verification"
+            name="%algorithm.name.2"
             type="xml">
       </algorithm>
    </extension>
@@ -211,7 +211,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.encryption"
             id="org.eclipse.wst.xml.security.ui.newEncryption"
             isFlexiProviderAlgorithm="false"
-            name="Encryption"
+            name="%algorithm.name.3"
             type="xml">
       </algorithm>
    </extension>
@@ -224,7 +224,7 @@
             contextHelpId="org.eclipse.wst.xml.security.doc.decryption"
             id="org.eclipse.wst.xml.security.ui.newDecryption"
             isFlexiProviderAlgorithm="false"
-            name="Decryption"
+            name="%algorithm.name.4"
             type="xml">
       </algorithm>
    </extension>
