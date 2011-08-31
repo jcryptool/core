@@ -175,7 +175,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
             canvas.setLayoutData(gridData);
             canvas.addPaintListener(new PaintListener(){
                 public void paintControl(PaintEvent e) {
-                    e.gc.drawImage(ViewsPlugin.getImageDescriptor("icons/search_reset.gif").createImage(), 1, 1); //$NON-NLS-1$
+                    e.gc.drawImage(ViewsPlugin.getImageDescriptor("icons/clear.gif").createImage(), 1, 1); //$NON-NLS-1$
                 }
             });
 
