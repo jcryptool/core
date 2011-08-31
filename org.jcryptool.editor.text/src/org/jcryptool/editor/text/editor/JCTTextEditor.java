@@ -52,9 +52,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	public static final String ID = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
 	private boolean isDirty = false;
 	private boolean isHot = false;
-	private static final String OUTPUT_TXT_REGEX = "out\\d\\d\\d.txt"; //$NON-NLS-1$
-	private static final String OUTPUT_BIN_REGEX = "out\\d\\d\\d.bin"; //$NON-NLS-1$
-	private static final String OUTPUT_XML_REGEX = "out\\d\\d\\d.xml"; //$NON-NLS-1$
+	private static final String OUTPUT_REGEXP = "out\\d\\d\\d.((xml)|(bin)|(txt))"; //$NON-NLS-1$
 
 	/**
 	 * constructor which sets the key bindings' scopes and process an internal
@@ -117,9 +115,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	public void doSave(IProgressMonitor monitor) {
 		final String name = getEditorInput().getName();
 
-		if (Pattern.matches(Messages.JCTTextEditor_4, name)
-				|| Pattern.matches(OUTPUT_TXT_REGEX, name)
-				|| Pattern.matches(OUTPUT_BIN_REGEX, name)) {
+		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(OUTPUT_REGEXP, name)) {
 			doSaveAs();
 		} else {
 			super.doSave(monitor);
@@ -138,9 +134,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 				path.toOSString()));
 		final String name = getEditorInput().getName();
 
-		if (Pattern.matches(Messages.JCTTextEditor_4, name)
-				|| Pattern.matches(OUTPUT_TXT_REGEX, name)
-				|| Pattern.matches(OUTPUT_BIN_REGEX, name)) {
+		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(OUTPUT_REGEXP, name)) {
 			// we need the isDirty flag true to follow the default property changed order
 			isDirty = true;
 		}
@@ -264,9 +258,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 			final String name = getEditorInput().getName();
 
 			// sets the editor to dirty for generated output files
-			if (Pattern.matches(OUTPUT_TXT_REGEX, name)
-					|| Pattern.matches(OUTPUT_BIN_REGEX, name)
-					|| Pattern.matches(OUTPUT_XML_REGEX, name)) {
+			if (Pattern.matches(OUTPUT_REGEXP, name)) {
 				isHot = true;
 			}
 		}
