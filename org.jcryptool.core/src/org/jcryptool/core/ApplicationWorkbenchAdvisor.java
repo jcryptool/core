@@ -23,6 +23,7 @@ import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * The ApplicationWorkbenchAdvisor class is used for configuring the workbench.
@@ -98,8 +99,6 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
      */
     public boolean preShutdown() {
         String unsavedRegex = Messages.ApplicationWorkbenchAdvisor_4 + "\\d\\d\\d.txt"; //$NON-NLS-1$
-        String outputTxtRegex = "out\\d\\d\\d.txt"; //$NON-NLS-1$
-        String outputBinRegex = "out\\d\\d\\d.bin"; //$NON-NLS-1$
         String name;
         IEditorReference[] editorReferences = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
         LogUtil.logInfo("no of editor references: " + editorReferences.length); //$NON-NLS-1$
@@ -107,8 +106,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
             try {
                 name = editorReferences[i].getEditorInput().getName();
                 LogUtil.logInfo("Name: " + name); //$NON-NLS-1$
-                if (Pattern.matches(unsavedRegex, name) || Pattern.matches(outputTxtRegex, name)
-                        || Pattern.matches(outputBinRegex, name)) {
+                if (Pattern.matches(unsavedRegex, name) || Pattern.matches(IConstants.OUTPUT_REGEXP, name)) {
                     PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().closeEditor(
                             editorReferences[i].getEditor(false), false);
                 }

@@ -19,4 +19,9 @@ public interface IConstants {
     String BIN_FILE_TYPE_EXTENSION = ".bin"; //$NON-NLS-1$
     String TXT_FILE_TYPE_EXTENSION = ".txt"; //$NON-NLS-1$
     String XML_FILE_TYPE_EXTENSION = ".xml"; //$NON-NLS-1$
+    String OUTPUT_REGEXP = "out\\d\\d\\d.((xml)|(bin)|(txt))"; //$NON-NLS-1$
+    String TXT_FILTER_EXTENSION = "*.txt"; //$NON-NLS-1$
+    String ALL_FILTER_EXTENSION = "*.*"; //$NON-NLS-1$
+    String TXT_FILTER_NAME = Messages.IConstants_0;
+    String ALL_FILTER_NAME = Messages.IConstants_1;
 }

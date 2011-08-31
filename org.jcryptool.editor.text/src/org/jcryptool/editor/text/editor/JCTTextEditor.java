@@ -37,6 +37,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
@@ -52,7 +53,6 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	public static final String ID = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
 	private boolean isDirty = false;
 	private boolean isHot = false;
-	private static final String OUTPUT_REGEXP = "out\\d\\d\\d.((xml)|(bin)|(txt))"; //$NON-NLS-1$
 
 	/**
 	 * constructor which sets the key bindings' scopes and process an internal
@@ -104,7 +104,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 
 	private String queryFilePath() {
 		FileDialog dialog = new FileDialog(getSite().getShell(), SWT.SAVE);
-		dialog.setFilterExtensions(new String[] { "*.txt", "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
+		dialog.setFilterExtensions(new String[] { IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION });
 		dialog.setFilterNames(new String[] { Messages.JCTTextEditor_2,
 				Messages.JCTTextEditor_3 });
 		dialog.setFilterPath(DirectoryService.getUserHomeDir());
@@ -115,7 +115,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	public void doSave(IProgressMonitor monitor) {
 		final String name = getEditorInput().getName();
 
-		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(OUTPUT_REGEXP, name)) {
+		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(IConstants.OUTPUT_REGEXP, name)) {
 			doSaveAs();
 		} else {
 			super.doSave(monitor);
@@ -134,7 +134,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 				path.toOSString()));
 		final String name = getEditorInput().getName();
 
-		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(OUTPUT_REGEXP, name)) {
+		if (Pattern.matches(Messages.JCTTextEditor_4, name) || Pattern.matches(IConstants.OUTPUT_REGEXP, name)) {
 			// we need the isDirty flag true to follow the default property changed order
 			isDirty = true;
 		}
@@ -258,7 +258,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 			final String name = getEditorInput().getName();
 
 			// sets the editor to dirty for generated output files
-			if (Pattern.matches(OUTPUT_REGEXP, name)) {
+			if (Pattern.matches(IConstants.OUTPUT_REGEXP, name)) {
 				isHot = true;
 			}
 		}

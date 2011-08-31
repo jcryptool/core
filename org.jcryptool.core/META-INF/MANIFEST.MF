@@ -16,4 +16,5 @@ Bundle-Localization: plugin
 Export-Package: org.jcryptool.core,
  org.jcryptool.core.actions
 Import-Package: org.jcryptool.core.logging.utils,
- org.jcryptool.core.operations
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util.constants

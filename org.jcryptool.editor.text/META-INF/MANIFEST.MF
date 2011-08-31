@@ -21,5 +21,6 @@ Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.operations.util,
+ org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.views
