@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.ecc.ECCPlugin;
 import org.jcryptool.visual.ecc.Messages;
@@ -188,9 +189,8 @@ public class ECView extends ViewPart {
 
     public void selectFileLocation() {
         FileDialog dialog = new FileDialog(layout.topControl.getShell(), SWT.SAVE);
-        dialog.setFilterNames(new String[] {
-                        Messages.getString("ECView.TextFiles"), Messages.getString("ECView.AllFiles") + " (*.*)"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        dialog.setFilterExtensions(new String[] {"*.txt", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
+        dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
+        dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
         dialog.setFilterPath(DirectoryService.getUserHomeDir()); //$NON-NLS-1$
         dialog.setFileName("calculations.txt"); //$NON-NLS-1$
         dialog.setOverwrite(true);

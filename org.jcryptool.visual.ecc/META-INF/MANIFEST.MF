@@ -13,5 +13,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: jcryptool.org, by Geert-Jan Smulders, Hochschule Utrecht
 Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts

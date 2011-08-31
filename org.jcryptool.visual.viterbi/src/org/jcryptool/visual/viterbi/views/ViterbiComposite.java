@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.viterbi.ViterbiPlugin;
@@ -189,8 +190,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-                dialog.setFilterNames(new String[] {"Text Files (*.txt)", "All Files (*.*)"});
-                dialog.setFilterExtensions(new String[] {"*.txt", "*.*"});
+                dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
+                dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
 
                 String filename = dialog.open();
@@ -521,8 +522,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFilterNames(new String[] {"All Files (*.*)"});
-                dialog.setFilterExtensions(new String[] {"*.*"});
+                dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME});
+                dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
                 dialog.setOverwrite(true);
 

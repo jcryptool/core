@@ -44,6 +44,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.ECDH.ECDHPlugin;
@@ -930,9 +931,8 @@ public class ECDHComposite extends Composite implements PaintListener {
 
     private void selectFileLocation() {
         FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
-        dialog.setFilterNames(new String[] {
-                Messages.getString("ECDHView.textFiles") + "( *.txt)", Messages.getString("ECDHView.allFiles") + " (*.*)"}); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-        dialog.setFilterExtensions(new String[] {"*.txt", "*.*"}); //$NON-NLS-1$ //$NON-NLS-2$
+        dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
+        dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFileName("ECDH.txt"); //$NON-NLS-1$
         dialog.setOverwrite(true);
