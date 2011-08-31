@@ -3,7 +3,7 @@
 
 <toc label="Kleptographie" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
     <topic href="$nl$/help/content/index.html" label="Kleptographie">
-       <topic href="$nl$/help/content/honest.html" label="Erster Schritt: unmanipulierte SchlÃ¼sselerzeugung">
+       <topic href="$nl$/help/content/honest.html" label="Erster Schritt: unmanipulierte Schlüsselerzeugung">
        </topic>
        <topic href="$nl$/help/content/fixedp.html" label="Nutzung einer festen Primzahl P">
        </topic>
