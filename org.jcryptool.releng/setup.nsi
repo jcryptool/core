@@ -49,7 +49,7 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE German
 
 # Installer attributes
-OutFile "JCrypTool Setup 32bit.exe"
+OutFile "JCrypTool ${VERSION} Setup win32.exe"
 InstallDir $PROGRAMFILES\JCrypTool
 CRCCheck on
 XPStyle on
