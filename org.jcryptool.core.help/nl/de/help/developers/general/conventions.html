@@ -12,6 +12,10 @@
 	Daraus folgt zwangsläufig, dass die Plug-ins gewisse (qualitative) Unterschiede aufweisen. Um diese Unterschiede
 	zu minimieren, geben wir eine Reihe von Konventionen und Empfehlungen vor, an die sich alle Entwickler halten sollten.</p>
 
+	<p>Gleichzeitig stellen wir in Form des <strong>org.jcryptool.core.util</strong> Plug-ins ein Utility-Plug-in zur Verfügung,
+	mit dem Plug-in Entwickler häufig wiederkehrende Tasks einfach und ohne eigenen Implementierungsarbeit erledigen können. Die
+	hier angebotene Funktionalität können Sie jederzeit in Ihren eigenen Plug-ins verwenden.</p>
+
 	<h2>Workspace</h2>
 
 	<p>Die wohl wichtigste Einstellung überhaupt betrifft Ihren Workspace. Da JCrypTool auf verschiedenen Plattformen - Linux,
@@ -20,6 +24,40 @@
 	unter <strong>General</strong> die Seite <strong>Workspace</strong>. Hier müssen Sie bei <strong>Text file encoding</strong> unter
 	<strong>Other</strong> den Eintrag <strong>UTF-8</strong> auswählen. Ohne diese Einstellung werden deutsche Umlaute und andere
 	Sonderzeichen auf anderen Betriebssystemen nicht korrekt angezeigt.</p>
+
+	<h2>Wiederverwendung von Code</h2>
+
+	<p>Sofern ein Plug-in einen Extension Point anbietet, kann dieser ohne weiteres im eigenen Plug-in verwendet werden. Aber auch abseits
+	von Extension Points bietet JCrypTool viele Methoden und Services an, die die eigene Entwicklungsarbeit abkürzen. Hierfür ist
+	speziell das Plug-in <strong>org.jcryptool.core.util</strong> interessant. Neben den in der folgenden Tabelle beschriebenen Services
+	enthält das Interface <strong>IConstants</strong> zahlreiche in JCrypTool global gültige Konstanten. Neben der Vereinfachung
+    der Entwicklungsarbeit sorgen diese Methoden und Services auch für ein einheitlicheres Look &amp; Feel von JCrypTool.</p>
+
+	<table style="width: 98%">
+      <thead>
+        <tr>
+          <th style="width:50%">Service</th>
+          <th style="width:50%">Beschreibung</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>CalendarService</td>
+          <td>Services rund um die Transformation eines Datums in andere Formate.</td>
+        </tr>
+        <tr>
+          <td>DirectoryService</td>
+          <td>Bietet einfachen Zugriff auf das vom Anwender festgelegte Home-Verzeichnis, den JCrypTool Workspace sowie das
+          Standard-Temp-Verzeichnis.</td>
+        </tr>
+        <tr>
+          <td>FontService</td>
+          <td>Bietet Zugriff auf die in JCrypTool zu verwendenden Schriften in Wizards und Views,
+          ohne dass sich der Entwickler um das Aufräumen der Ressourcen kümmern muss.</td>
+        </tr>
+      </tbody>
+    </table>
 
 	<h2>Plug-in Kategorien</h2>
 

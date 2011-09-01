@@ -12,6 +12,41 @@
 	many differences in plug-in development. To minimize those differences we do give some conventions and recommendations,
 	which all developers should keep in mind.</p>
 
+	<p>At the same time, we provide the <strong>org.jcryptool.core.util</strong> plug-in which represents a utility plug-in,
+	to make JCrypTool development easier and faster. Feel free to use the functionality provided here in your plug-in.</p>
+
+    <h2>Reusing Code</h2>
+
+    <p>Every extension point offered by a plug-in can be used (consumed) in your own code. But even outside of extension points, JCrypTool
+    offers various methods and services that should make your development easier and faster. You should especially have a look at the
+    <strong>org.jcryptool.core.util</strong> plug-in. Besides the described services in the next table, this plug-in offers the
+    interface <strong>IConstants</strong>, which provides different global constants usable all over JCrypTool. Apart from making the
+    development easier, these methods and services take care of a more unique look &amp; feel of JCrypTool.</p>
+
+    <table style="width: 98%">
+      <thead>
+        <tr>
+          <th style="width:50%">Service</th>
+          <th style="width:50%">Description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>CalendarService</td>
+          <td>Services around date transformation in various other formats.</td>
+        </tr>
+        <tr>
+          <td>DirectoryService</td>
+          <td>Offers access to the user configured home directory, the JCrypTool workspace as well as the default temp directory.</td>
+        </tr>
+        <tr>
+          <td>FontService</td>
+          <td>Offers easy access on used fonts in JCrypTool wizards and views, without requiring to clean up used resources after usage.</td>
+        </tr>
+      </tbody>
+    </table>
+
 	<h2>Categories</h2>
 
 	<p>Normally interested developers do contribute crypto plug-ins. The official JCrypTool Plug-ins in this category
