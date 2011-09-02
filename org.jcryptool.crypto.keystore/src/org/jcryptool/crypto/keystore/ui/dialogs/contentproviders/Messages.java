@@ -24,9 +24,6 @@ public class Messages extends NLS {
     public static String AbstractKeyNodeContentProvider_CipherKeySize;
     public static String AbstractKeyNodeContentProvider_ContactName;
     public static String AbstractKeyNodeContentProvider_Encoded;
-    public static String AbstractKeyNodeContentProvider_ExAccessKeystore;
-    public static String AbstractKeyNodeContentProvider_ExAccessKeystorePassword;
-    public static String AbstractKeyNodeContentProvider_ExKeyTypeUnsupported;
     public static String AbstractKeyNodeContentProvider_Format;
     public static String AbstractKeyNodeContentProvider_InitVector;
     public static String AbstractKeyNodeContentProvider_KeyLength;
@@ -48,13 +45,13 @@ public class Messages extends NLS {
     public static String ContentProvider_curseed;
     public static String ContentProvider_curstack;
     public static String ContentProvider_curtreehash;
-    public static String ContentProvider_detailledname;
+    public static String ContentProvider_detailedname;
     public static String ContentProvider_d;
     public static String ContentProvider_discriminant;
     public static String ContentProvider_doclength;
     public static String ContentProvider_dp;
     public static String ContentProvider_dq;
-    public static String ContentProvider_elipticcurve;
+    public static String ContentProvider_ellipticcurve;
     public static String ContentProvider_e;
     public static String ContentProvider_einvp;
     public static String ContentProvider_encodedw;

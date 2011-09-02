@@ -50,7 +50,7 @@ public class ECPrivateKeyContentProvider extends AbstractKeyNodeContentProvider 
         paramElements.add(new TableEntry(Messages.ContentProvider_k, "" + params.getK())); //$NON-NLS-2$
         paramElements.add(new TableEntry(Messages.ContentProvider_r, "" + params.getR())); //$NON-NLS-2$
         paramElements.add(new TableEntry(Messages.ContentProvider_oidstring, "" + params.getOID())); //$NON-NLS-2$
-        paramElements.add(new TableEntry(Messages.ContentProvider_elipticcurve, "" + params.getE())); //$NON-NLS-2$
+        paramElements.add(new TableEntry(Messages.ContentProvider_ellipticcurve, "" + params.getE())); //$NON-NLS-2$
         paramElements.add(new TableEntry(Messages.ContentProvider_g, "" + params.getG())); //$NON-NLS-2$
         paramElements.add(new TableEntry(Messages.ContentProvider_q, "" + params.getQ())); //$NON-NLS-2$
         return paramElements;

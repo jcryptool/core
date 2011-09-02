@@ -40,7 +40,7 @@ public class GMSSPrivateKeyContentProvider extends AbstractKeyNodeContentProvide
             if (key == null)
                 return null;
 
-            paramElements.add(new TableEntry(Messages.ContentProvider_detailledname, Arrays.toString(key.getName())));
+            paramElements.add(new TableEntry(Messages.ContentProvider_detailedname, Arrays.toString(key.getName())));
 
         } catch (ClassCastException e) {
             return null;
