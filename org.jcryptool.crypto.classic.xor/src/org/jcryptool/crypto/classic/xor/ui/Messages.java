@@ -11,10 +11,7 @@ public class Messages extends NLS {
 	public static String XorWizardPage_inputname_keymethod;
 	public static String XorWizardPage_keys;
 	public static String XorWizardPage_manualkeylabel;
-	public static String XorWizardPage_openfile;
 	public static String XorWizardPage_orders;
-	public static String XorWizardPage_selectedfile;
-	public static String XorWizardPage_selectedfileNone;
 	public static String XorWizardPage_selectfileforvernam;
 	static {
 		// initialize resource bundle

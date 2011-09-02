@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -18,7 +18,6 @@ public class Messages extends NLS {
     public static String ModifyWizard_textmodifyoptions;
     public static String ModifyWizardPage_alltolower;
     public static String ModifyWizardPage_alltoupper;
-    public static String ModifyWizardPage_apply;
     public static String ModifyWizardPage_filteralpha;
     public static String ModifyWizardPage_hint1;
     public static String ModifyWizardPage_replaceblanks;

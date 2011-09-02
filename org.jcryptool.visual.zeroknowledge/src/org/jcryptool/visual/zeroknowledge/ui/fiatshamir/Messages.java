@@ -27,7 +27,6 @@ public class Messages extends NLS {
     public static String FS_ParamsAliceCarol_6;
     public static String FS_ParamsAliceCarol_7;
     public static String FS_ParamsAliceCarol_8;
-    public static String FS_ParamsAliceCarol_9;
     public static String FS_ParamsBob_0;
     public static String FS_ParamsBob_1;
     public static String FS_ParamsBob_2;

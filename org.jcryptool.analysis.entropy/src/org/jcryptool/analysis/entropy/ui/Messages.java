@@ -13,14 +13,11 @@ public class Messages extends NLS {
 	public static String EntropyUIconfig_11;
 	public static String EntropyUIconfig_12;
 	public static String EntropyUIconfig_13;
-	public static String EntropyUIconfig_14;
 	public static String EntropyUIconfig_15;
 	public static String EntropyUIconfig_16;
 	public static String EntropyUIconfig_17;
 	public static String EntropyUIconfig_18;
-	public static String EntropyUIconfig_19;
 	public static String EntropyUIconfig_2;
-	public static String EntropyUIconfig_20;
 	public static String EntropyUIconfig_21;
 	public static String EntropyUIconfig_22;
 	public static String EntropyUIconfig_23;
@@ -35,7 +32,6 @@ public class Messages extends NLS {
 	public static String EntropyUIconfig_8;
 	public static String EntropyUIconfig_9;
 	public static String EntropyUIresults_0;
-	public static String EntropyUIresults_1;
 	public static String EntropyUIresults_10;
 	public static String EntropyUIresults_11;
 	public static String EntropyUIresults_12;
@@ -44,7 +40,6 @@ public class Messages extends NLS {
 	public static String EntropyUIresults_15;
 	public static String EntropyUIresults_16;
 	public static String EntropyUIresults_17;
-	public static String EntropyUIresults_2;
 	public static String EntropyUIresults_21;
 	public static String EntropyUIresults_22;
 	public static String EntropyUIresults_23;

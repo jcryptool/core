@@ -53,7 +53,6 @@ public class Messages extends NLS {
 	public static String ElGamalComposite_start_calc;
 	public static String ElGamalComposite_step;
 	public static String ElGamalComposite_step1;
-	public static String ElGamalComposite_step_popup;
 	public static String ElGamalComposite_stepresult;
     public static String ElGamalComposite_sure;
 	public static String ElGamalComposite_text;
@@ -132,7 +131,7 @@ public class Messages extends NLS {
 	public static String SavePublicKeyPage_save_pubkey;
 	public static String TextEntryWizard_textentry;
 	public static String UniqueKeyWizard_unique_param;
-    
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
