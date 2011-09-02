@@ -15,16 +15,13 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.transpositionanalysis.ui.wizards.messages"; //$NON-NLS-1$
 	public static String AnalysisWizard_advancedanalysissteps;
-	public static String AnalysisWizard_index;
 	public static String AnalysisWizardIndexPage_actualsituation;
 	public static String AnalysisWizardIndexPage_adopttomainwindow;
 	public static String AnalysisWizardIndexPage_analysisindex;
 	public static String AnalysisWizardIndexPage_analysisoptions;
 	public static String AnalysisWizardIndexPage_calculatedcolcount;
 	public static String AnalysisWizardIndexPage_calculatedkey;
-	public static String AnalysisWizardIndexPage_columncount;
 	public static String AnalysisWizardIndexPage_columncountmain;
-	public static String AnalysisWizardIndexPage_key;
 	public static String AnalysisWizardIndexPage_keyinmainwindow;
 	public static String AnalysisWizardIndexPage_nomethodsavailable;
 	public static String AnalysisWizardIndexPage_pagedescr;

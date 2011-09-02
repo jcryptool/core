@@ -17,12 +17,6 @@ public class Messages extends NLS {
     public static String VigenereAlgorithmAction_0;
     public static String VigenereAlgorithmAction_1;
     public static String VigenereAlgorithmAction_2;
-    public static String VigenereCmd_0;
-    public static String VigenereCmd_1;
-    public static String VigenereCmd_2;
-    public static String VigenereCmd_3;
-    public static String VigenereCmd_4;
-    public static String VigenereCmd_5;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -17,12 +17,6 @@ public class Messages extends NLS {
     public static String CaesarAlgorithmAction_0;
 	public static String CaesarAlgorithmAction_1;
 	public static String CaesarAlgorithmAction_2;
-	public static String CaesarCmd_0;
-    public static String CaesarCmd_1;
-    public static String CaesarCmd_2;
-    public static String CaesarCmd_3;
-    public static String CaesarCmd_4;
-    public static String CaesarCmd_5;
 	public static String CaesarCmd_keydetail;
     static {
         // initialize resource bundle

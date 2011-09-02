@@ -49,7 +49,6 @@ public class Messages extends NLS {
 	public static String NewKeypairPage_error_n_lt_256;
 	public static String NewKeypairPage_error_p_not_prime;
 	public static String NewKeypairPage_error_q_not_prime;
-	public static String NewKeypairPage_hard_calculations;
 	public static String NewKeypairPage_hard_calculations_text;
 	public static String NewKeypairPage_n_result;
 	public static String NewKeypairPage_save_keypair;
@@ -96,7 +95,6 @@ public class Messages extends NLS {
     public static String RSAComposite_options;
 	public static String RSAComposite_reset;
 	public static String RSAComposite_result;
-	public static String RSAComposite_run_calc;
 	public static String RSAComposite_show_dialogs;
 	public static String RSAComposite_sign;
 	public static String RSAComposite_start;
@@ -123,7 +121,7 @@ public class Messages extends NLS {
 	public static String SavePublicKeyPage_enter_name;
 	public static String SavePublicKeyPage_enter_params;
 	public static String SavePublicKeyPage_save_pubkey;
-    
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

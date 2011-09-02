@@ -37,8 +37,7 @@ public class Messages extends NLS {
 	public static String GHNewKeyPage_Yes;
 	public static String GHSaveKeyPage_Title;
 	public static String HEComposite_Add_Job_Name;
-	public static String HEComposite_Add_Task_Name;	
-	public static String HEComposite_Button_Area;
+	public static String HEComposite_Add_Task_Name;
 	public static String HEComposite_Decrypt_Select;
 	public static String HEComposite_Decrypt_Tooltip;
 	public static String HEComposite_GentryHalevi;
@@ -49,7 +48,6 @@ public class Messages extends NLS {
 	public static String HEComposite_GH_KeyArea_Public_Key_Blocks;
 	public static String HEComposite_GH_KeyArea_Root;
 	public static String HEComposite_GH_KeyArea_Secret_Vector;
-	public static String HEComposite_GH_KeyArea_Secret_W;
 	public static String HEComposite_Homomorphic_Add_Select;
 	public static String HEComposite_Homomorphic_Data;
 	public static String HEComposite_Homomorphic_Mult_Select;
@@ -67,11 +65,8 @@ public class Messages extends NLS {
 	public static String HEComposite_Key;
 	public static String HEComposite_Key_Tooltip;
 	public static String HEComposite_KeyArea_Public_Key;
-	public static String HEComposite_KeyArea_Secret_Key;
 	public static String HEComposite_KeyGen_Job_Name;
 	public static String HEComposite_Keysel;
-	public static String HEComposite_Keyselection;
-	public static String HEComposite_Keyselection_Message;
 	public static String HEComposite_Modulus;
 	public static String HEComposite_Modulus_Tooltip;
 	public static String HEComposite_Multiply_Job_Name;
@@ -99,7 +94,6 @@ public class Messages extends NLS {
 	public static String HEComposite_RSA_Description;
 	public static String HEComposite_RSA_Title;
 	public static String HEComposite_Scheme;
-	public static String HEComposite_Title;
 	public static String InitialTextWizard_Title;
 	public static String KeySelectionWizard_Title;
 	public static String NewKeyPage_Title;
@@ -111,7 +105,7 @@ public class Messages extends NLS {
 	public static String RSAChooseKeytypePage_new_keypair;
 	public static String RSAChooseKeytypePage_new_keypair_popup;
 	public static String RSAChooseKeytypePage_new_pubkey;
-	public static String RSAChooseKeytypePage_new_pubkey_popup;	
+	public static String RSAChooseKeytypePage_new_pubkey_popup;
 	public static String RSADecryptSignPage_choose_action;
 	public static String RSADecryptSignPage_choose_action_text;
 	public static String RSADecryptSignPage_existing_keypair;
@@ -121,7 +115,6 @@ public class Messages extends NLS {
 	public static String RSAEncryptVerifyPage_existing_key_popup;
 	public static String RSAEncryptVerifyPage_manual_entry;
 	public static String RSAEncryptVerifyPage_manual_entry_popup;
-	public static String RSAComposite_key;
 	public static String RSAData_inherit_password_text;
 	public static String RSAData_inherit_password_title;
 	public static String RSAData_ExAccessKeystorePassword;
@@ -140,7 +133,6 @@ public class Messages extends NLS {
 	public static String RSANewKeypairPage_error_n_lt_256;
 	public static String RSANewKeypairPage_error_p_not_prime;
 	public static String RSANewKeypairPage_error_q_not_prime;
-	public static String RSANewKeypairPage_hard_calculations;
 	public static String RSANewKeypairPage_hard_calculations_text;
 	public static String RSANewKeypairPage_n_result;
 	public static String RSANewKeypairPage_save_keypair;
@@ -169,8 +161,8 @@ public class Messages extends NLS {
 	public static String RSASavePublicKeyPage_enter_params;
 	public static String RSASavePublicKeyPage_save_pubkey;
 	public static String Wrong_Password;
-	
-	
+
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

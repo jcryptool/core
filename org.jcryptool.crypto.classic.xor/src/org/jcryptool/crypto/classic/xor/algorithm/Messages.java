@@ -4,7 +4,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.xor.algorithm.messages"; //$NON-NLS-1$
-	public static String ClassicAlgorithmCmd_specifyKeyMsg;
 	public static String XorAlgorithmAction_0;
 	public static String XorAlgorithmAction_1;
 	public static String XorAlgorithmAction_2;
