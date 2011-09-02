@@ -12,5 +12,6 @@ Require-Bundle: org.apache.commons.cli;bundle-version="1.2.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.ui;bundle-version="3.7.0"
 Import-Package: org.jcryptool.core.logging.utils,
- org.jcryptool.core.operations.editors
+ org.jcryptool.core.operations.editors,
+ org.jcryptool.core.util.constants
 Bundle-Activator: org.jcryptool.commands.core.CommandsCorePlugin

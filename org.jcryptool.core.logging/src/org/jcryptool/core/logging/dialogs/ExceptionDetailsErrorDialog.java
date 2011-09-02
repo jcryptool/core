@@ -604,7 +604,7 @@ public class ExceptionDetailsErrorDialog extends IconAndMessageDialog {
      */
     private void repopulateList() {
         if (text != null && !text.isDisposed()) {
-	        text.setText("");
+	        text.setText(""); //$NON-NLS-1$
 	        populateList(text);
         }
     }

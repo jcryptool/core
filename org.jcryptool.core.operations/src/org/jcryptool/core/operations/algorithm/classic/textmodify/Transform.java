@@ -127,30 +127,30 @@ public class Transform {
      */
     public static String umlautTransformation(String text) {
         String text2;
-        String replaceThis = "Ä";
+        String replaceThis = "Ä"; //$NON-NLS-1$
         String withThis = "AE"; //$NON-NLS-1$
         text2 = text.replaceAll(replaceThis, withThis); //
-        replaceThis = "ä";
+        replaceThis = "ä"; //$NON-NLS-1$
         withThis = "ae"; //$NON-NLS-1$
         text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "Ö";
+        replaceThis = "Ö"; //$NON-NLS-1$
         withThis = "OE"; //$NON-NLS-1$
         text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "ö";
+        replaceThis = "ö"; //$NON-NLS-1$
         withThis = "oe"; //$NON-NLS-1$
         text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "Ü";
+        replaceThis = "Ü"; //$NON-NLS-1$
         withThis = "UE"; //$NON-NLS-1$
         text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "ü";
+        replaceThis = "ü"; //$NON-NLS-1$
         withThis = "ue"; //$NON-NLS-1$
         text2 = text2.replace(replaceThis, withThis); //
         if (text.toUpperCase().equals(text)) { // For not writing two small caps 's' into a text full of capitals
-            replaceThis = "ß";
+            replaceThis = "ß"; //$NON-NLS-1$
             withThis = "SS"; //$NON-NLS-1$
             text2 = text2.replace(replaceThis, withThis); //
         } else if (text2.toUpperCase().equals(text2)) {
-            replaceThis = "ß";
+            replaceThis = "ß"; //$NON-NLS-1$
             withThis = "ss"; //$NON-NLS-1$
             text2 = text2.replace(replaceThis, withThis); //
         }

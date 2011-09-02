@@ -25,7 +25,7 @@ public class CalendarService {
      */
     public static String getDate(long milliseconds) {
         Date d = new Date(milliseconds);
-        return new SimpleDateFormat("dd. MMMM yyyy").format(d);
+        return new SimpleDateFormat("dd. MMMM yyyy").format(d); //$NON-NLS-1$
     }
 
     /**
@@ -33,14 +33,14 @@ public class CalendarService {
      */
     public static String getTime(long milliseconds) {
         Date d = new Date(milliseconds);
-        return new SimpleDateFormat("HH:mm:ss").format(d);
+        return new SimpleDateFormat("HH:mm:ss").format(d); //$NON-NLS-1$
     }
 
     /**
      * @return date and time, e.g.: 23. February 1983 16:17:33
      */
     public static String getDateAndTime(long milliseconds) {
-        return CalendarService.getDate(milliseconds) + " " + CalendarService.getTime(milliseconds);
+        return CalendarService.getDate(milliseconds) + " " + CalendarService.getTime(milliseconds); //$NON-NLS-1$
     }
 
 }

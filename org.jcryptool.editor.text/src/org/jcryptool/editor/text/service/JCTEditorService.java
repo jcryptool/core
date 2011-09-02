@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 import org.eclipse.ui.IEditorPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 import org.jcryptool.editor.text.editor.JCTTextEditor;
 
@@ -63,7 +64,7 @@ public class JCTEditorService extends AbstractEditorService {
     public InputStream getContentOfEditorAsInputStream(IEditorPart editorPart) {
         JCTTextEditor editor = (JCTTextEditor) editorPart;
         try {
-            return new BufferedInputStream(new ByteArrayInputStream(editor.getDocument().get().getBytes("UTF-8")));
+            return new BufferedInputStream(new ByteArrayInputStream(editor.getDocument().get().getBytes(IConstants.UTF8_ENCODING)));
         } catch (UnsupportedEncodingException e) {
             LogUtil.logError(JCTTextEditorPlugin.PLUGIN_ID, e);
         }

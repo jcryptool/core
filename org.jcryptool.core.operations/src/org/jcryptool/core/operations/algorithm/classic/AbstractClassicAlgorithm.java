@@ -28,6 +28,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphaConverter;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
+import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * The base class for a classic algorithm.
@@ -73,7 +74,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         this.dataObject.setKey(key);
         this.dataObject.setOpmode(opmode);
     }
-    
+
     /**
      * Initializes the Algorithm with its key parameters
      *
@@ -236,7 +237,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
     private String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
         } catch (UnsupportedEncodingException e1) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, e1);
         }
@@ -258,7 +259,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
     private InputStream StringToInputStream(String in) {
         byte[] bytes = null;
         try {
-            bytes = in.getBytes("UTF-8");
+            bytes = in.getBytes(IConstants.UTF8_ENCODING);
         } catch (UnsupportedEncodingException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
         }

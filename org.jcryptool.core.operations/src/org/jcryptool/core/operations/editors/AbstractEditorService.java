@@ -255,7 +255,7 @@ public abstract class AbstractEditorService {
             byte[] buffer = new byte[1024];
             int read = 0;
             while ((read = fis.read(buffer)) > -1) {
-                s = Charset.forName("UTF-8").decode(ByteBuffer.wrap(buffer, 0, read)).toString(); //$NON-NLS-1$
+                s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
                 fos.write(s.getBytes());
             }
         } catch (IOException e) {
@@ -303,7 +303,7 @@ public abstract class AbstractEditorService {
             byte[] buffer = new byte[4];
             int read = 0;
             while ((read = fis.read(buffer)) > -1) {
-                s = Charset.forName("UTF-8").decode(ByteBuffer.wrap(buffer, 0, read)).toString(); //$NON-NLS-1$
+                s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
                 fos.write(s.getBytes());
             }
         } catch (IOException e) {

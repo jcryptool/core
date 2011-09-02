@@ -57,10 +57,10 @@ public class ImportSampleHandler extends AbstractHandler {
 
 	private String getCascadeFilename(ExecutionEvent event) {
 		
-		String cascadeFilename = event.getParameter("cascadeFilename");
+		String cascadeFilename = event.getParameter("cascadeFilename"); //$NON-NLS-1$
     	if(cascadeFilename == null)
     	{
-    		throw new InvalidParameterException("command parameter cascadeFilename is required");
+    		throw new InvalidParameterException("command parameter cascadeFilename is required"); //$NON-NLS-1$
     	}
     	
     	URL bundleUrl = null;
@@ -74,7 +74,7 @@ public class ImportSampleHandler extends AbstractHandler {
                     + cascadeFilename); //$NON-NLS-1$
             
         } catch (Exception ex) {
-            LogUtil.logError("Error loading sample file " + cascadeFilename + " from plugin.", ex); //$NON-NLS-1$
+            LogUtil.logError("Error loading sample file " + cascadeFilename + " from plugin.", ex); //$NON-NLS-1$ //$NON-NLS-2$
         }
         
     	ActionCascadeService service = ActionCascadeService.getInstance();

@@ -79,21 +79,21 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
 
             Comparator<IConfigurationElement> comp = new Comparator<IConfigurationElement>() {
                 public int compare(IConfigurationElement o1, IConfigurationElement o2) {
-                    String l1 = o1.getAttribute("label");
-                    String l2 = o2.getAttribute("label");
-                    String c1 = o1.getAttribute("category");
-                    String c2 = o2.getAttribute("category");
+                    String l1 = o1.getAttribute("label"); //$NON-NLS-1$
+                    String l2 = o2.getAttribute("label"); //$NON-NLS-1$
+                    String c1 = o1.getAttribute("category"); //$NON-NLS-1$
+                    String c2 = o2.getAttribute("category"); //$NON-NLS-1$
 
                     int cat = c1.compareTo(c2);
                     int label = l1.compareTo(l2);
                     if (cat != 0)
                         return cat;
                     else {
-                        if (o1.getAttribute("id").contains("org.jcryptool.editor.text")
-                                && !o2.getAttribute("id").contains("org.jcryptool.editor.text"))
+                        if (o1.getAttribute("id").contains("org.jcryptool.editor.text") //$NON-NLS-1$ //$NON-NLS-2$
+                                && !o2.getAttribute("id").contains("org.jcryptool.editor.text")) //$NON-NLS-1$ //$NON-NLS-2$
                             return -1;
-                        if (!o1.getAttribute("id").contains("org.jcryptool.editor.text")
-                                && o2.getAttribute("id").contains("org.jcryptool.editor.text"))
+                        if (!o1.getAttribute("id").contains("org.jcryptool.editor.text") //$NON-NLS-1$ //$NON-NLS-2$
+                                && o2.getAttribute("id").contains("org.jcryptool.editor.text")) //$NON-NLS-1$ //$NON-NLS-2$
                             return 1;
 
                         if (label != 0)
@@ -113,11 +113,11 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
                 }
             }
 
-            String currentCat = entries.size() > 0 ? entries.iterator().next().getAttribute("category") : null;
+            String currentCat = entries.size() > 0 ? entries.iterator().next().getAttribute("category") : null; //$NON-NLS-1$
             for (IConfigurationElement element : entries) {
-                if (!currentCat.equals(element.getAttribute("category"))) {
+                if (!currentCat.equals(element.getAttribute("category"))) { //$NON-NLS-1$
                     new MenuItem(menu, SWT.SEPARATOR);
-                    currentCat = element.getAttribute("category");
+                    currentCat = element.getAttribute("category"); //$NON-NLS-1$
                 }
 
                 final MenuItem menuItem = new MenuItem(menu, SWT.PUSH);

@@ -308,7 +308,7 @@ public class EditorsManager {
 
 		if (0 == pages.length) {
 			throw new EditorNotFoundException(
-					"Could not find active workbench page.");
+					"Could not find active workbench page."); //$NON-NLS-1$
 		}
 
 		IEditorReference[] refs = pages[0].getEditorReferences();
@@ -338,7 +338,7 @@ public class EditorsManager {
 
 		if (0 == pages.length) {
 			throw new EditorNotFoundException(
-					"Could not find active workbench page.");
+					"Could not find active workbench page."); //$NON-NLS-1$
 		}
 
 		IEditorReference[] refs = pages[0].getEditorReferences();

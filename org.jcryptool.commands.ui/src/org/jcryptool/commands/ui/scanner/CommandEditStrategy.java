@@ -54,7 +54,7 @@ final class CommandEditStrategy implements IAutoEditStrategy {
             commandString = commandString.replace("JCrypTool=> ", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
             StringBuilder result = new StringBuilder();
-            result.append("\n" + getEvaluator().evaluate(commandString).getResult()+"\n");
+            result.append("\n" + getEvaluator().evaluate(commandString).getResult()+"\n"); //$NON-NLS-1$ //$NON-NLS-2$
             result.append("\nJCrypTool=> "); //$NON-NLS-1$
 
             return result.toString();

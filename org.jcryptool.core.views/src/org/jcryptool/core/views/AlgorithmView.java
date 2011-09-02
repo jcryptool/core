@@ -277,7 +277,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
                 extensionPointId).getConfigurationElements();
         for (IConfigurationElement element : elements) {
             if (element.getAttribute("name").equals(name)) { //$NON-NLS-1$
-                final String contextHelpId = element.getAttribute("contextHelpId");
+                final String contextHelpId = element.getAttribute("contextHelpId"); //$NON-NLS-1$
                 if (contextHelpId != null && !"".equals(contextHelpId)) { //$NON-NLS-1$
                     PlatformUI.getWorkbench().getHelpSystem().displayHelp(contextHelpId);
                 } else {

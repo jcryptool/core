@@ -52,7 +52,7 @@ public class ProviderManager2 {
         
         if(extensionPoint == null)
         {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "extension point " + IOperationsConstants.PL_PROVIDERS2 + " not available", new NullPointerException(), true);
+            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "extension point " + IOperationsConstants.PL_PROVIDERS2 + " not available", new NullPointerException(), true); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 

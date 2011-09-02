@@ -32,6 +32,7 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.texteditor.AbstractDocumentProvider;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
 /**
@@ -99,7 +100,7 @@ public class SimpleDocumentProvider extends AbstractDocumentProvider {
      * @throws IOException if reading fails
      */
     private void setDocumentContent(IDocument document, FileInputStream reader) throws IOException {
-        InputStreamReader isr = new InputStreamReader(reader, System.getProperty("file.encoding", "UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$
+        InputStreamReader isr = new InputStreamReader(reader, System.getProperty("file.encoding", IConstants.UTF8_ENCODING)); //$NON-NLS-1$
         Reader in = new BufferedReader(isr);
         StringBuffer buffer = new StringBuffer();
 

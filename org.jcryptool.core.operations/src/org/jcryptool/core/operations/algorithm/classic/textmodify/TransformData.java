@@ -28,11 +28,11 @@ public class TransformData {
 	private boolean umlautTransformationON = true;
 	private boolean leerTransformationON = true;
 
-	private final static String UPPERLOWERCASE_LABEL = "upper/lowercase";
-	private final static String ALPHABET_LABEL = "filterByAlphabet";
-	private final static String UMLAUTS_LABEL = "filterUmlauts";
-	private final static String BLANKS_LABEL = "filterBlanks";
-	private final static String SEPARATOR = ", ";
+	private final static String UPPERLOWERCASE_LABEL = "upper/lowercase"; //$NON-NLS-1$
+	private final static String ALPHABET_LABEL = "filterByAlphabet"; //$NON-NLS-1$
+	private final static String UMLAUTS_LABEL = "filterUmlauts"; //$NON-NLS-1$
+	private final static String BLANKS_LABEL = "filterBlanks"; //$NON-NLS-1$
+	private final static String SEPARATOR = ", "; //$NON-NLS-1$
 
 	/**
 	 * Creates the class, setting all variables such, that a Transformation with
@@ -149,10 +149,10 @@ public class TransformData {
 				if (split[i].contains(UPPERLOWERCASE_LABEL)) {
 					result.setUppercaseTransformationOn(true);
 					String value = split[i]
-							.substring(split[i].indexOf("=") + 1);
+							.substring(split[i].indexOf("=") + 1); //$NON-NLS-1$
 
 					result.setDoUppercase(true);
-					if (value.equals("lowercase")) {
+					if (value.equals("lowercase")) { //$NON-NLS-1$
 						result.setDoUppercase(false);
 					}
 				}
@@ -160,7 +160,7 @@ public class TransformData {
 				if (split[i].contains(ALPHABET_LABEL)) {
 					result.setAlphabetTransformationON(true);
 					String value = split[i]
-							.substring(split[i].indexOf("=") + 1);
+							.substring(split[i].indexOf("=") + 1); //$NON-NLS-1$
 
 					result.setSelectedAlphabetName(value);
 				}
@@ -175,7 +175,7 @@ public class TransformData {
 			}
 		} catch (Exception e) {
 			LogUtil.logError(OperationsPlugin.PLUGIN_ID,
-					"Error when parsing TransformData from String");
+					"Error when parsing TransformData from String"); //$NON-NLS-1$
 		}
 
 		return result;
@@ -183,44 +183,44 @@ public class TransformData {
 
 	@Override
 	public String toString() {
-		StringBuilder result = new StringBuilder("");
+		StringBuilder result = new StringBuilder(""); //$NON-NLS-1$
 
 		if (uppercaseTransformationOn) {
-			String value = "lowercase";
+			String value = "lowercase"; //$NON-NLS-1$
 			String separator = SEPARATOR;
 			if (doUppercase)
-				value = "uppercase";
-			if (result.toString().equals(""))
-				separator = "";
+				value = "uppercase"; //$NON-NLS-1$
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
 
-			result.append(separator + UPPERLOWERCASE_LABEL + "=" + value);
+			result.append(separator + UPPERLOWERCASE_LABEL + "=" + value); //$NON-NLS-1$
 		}
 
 		if (alphabetTransformationON) {
 			String value = selectedAlphabetName;
 			String separator = SEPARATOR;
-			if (result.toString().equals(""))
-				separator = "";
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
 
-			result.append(separator + ALPHABET_LABEL + "=" + value);
+			result.append(separator + ALPHABET_LABEL + "=" + value); //$NON-NLS-1$
 		}
 
 		if (leerTransformationON) {
-			String value = "on";
+			String value = "on"; //$NON-NLS-1$
 			String separator = SEPARATOR;
-			if (result.toString().equals(""))
-				separator = "";
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
 
-			result.append(separator + BLANKS_LABEL + "=" + value);
+			result.append(separator + BLANKS_LABEL + "=" + value); //$NON-NLS-1$
 		}
 
 		if (umlautTransformationON) {
-			String value = "on";
+			String value = "on"; //$NON-NLS-1$
 			String separator = SEPARATOR;
-			if (result.toString().equals(""))
-				separator = "";
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
 
-			result.append(separator + UMLAUTS_LABEL + "=" + value);
+			result.append(separator + UMLAUTS_LABEL + "=" + value); //$NON-NLS-1$
 		}
 
 		return result.toString();

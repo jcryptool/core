@@ -89,7 +89,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private static IAction[] algorithmActions;
 
     private static final String OS_MAC_OS_X = "macosx"; //$NON-NLS-1$
-    private static final String OS = System.getProperty("osgi.os");
+    private static final String OS = System.getProperty("osgi.os"); //$NON-NLS-1$
     private MenuManager hiddenMenu = new MenuManager("Hidden", "org.jcryptool.core.hidden"); //$NON-NLS-1$ //$NON-NLS-2$
 
     private static Comparator<String> menuStringsComparator = new Comparator<String>() {

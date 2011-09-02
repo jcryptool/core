@@ -58,4 +58,6 @@ public interface IConstants {
     String XML_FILTER_NAME = Messages.IConstants_5;
 	/** Constant internationalized filter name for <b>all</b> files. Use in file dialogs. */
     String ALL_FILTER_NAME = Messages.IConstants_6;
+    /** UTF-8 encoding identifier (value is {@value}).*/
+    String UTF8_ENCODING = "UTF-8"; //$NON-NLS-1$
 }

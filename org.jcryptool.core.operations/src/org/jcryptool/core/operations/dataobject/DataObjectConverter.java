@@ -32,9 +32,9 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
  */
 public class DataObjectConverter {
 
-    final static String TRANSFORM_UPPERCASE = "uppercase";
-    final static String TRANSFORM_LOWERCASE = "lowercase";
-    final static String TRANSFORM_SEPARATOR = " | ";
+    final static String TRANSFORM_UPPERCASE = "uppercase"; //$NON-NLS-1$
+    final static String TRANSFORM_LOWERCASE = "lowercase"; //$NON-NLS-1$
+    final static String TRANSFORM_SEPARATOR = " | "; //$NON-NLS-1$
 
     /**
      * Converting dataObject to Hashtable

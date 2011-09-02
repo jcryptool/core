@@ -91,7 +91,7 @@ public class ActionView extends ViewPart implements IListChangeListener {
 
     @Override
     public void saveState(IMemento memento) {
-        memento.putString("path", importPath);
+        memento.putString("path", importPath); //$NON-NLS-1$
 
         super.saveState(memento);
     }

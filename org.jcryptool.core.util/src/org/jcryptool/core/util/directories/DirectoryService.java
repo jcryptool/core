@@ -19,8 +19,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
  * @version 0.9.5
  */
 public class DirectoryService {
-    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir");
-    private static String userHome = System.getProperty("user.home");
+    private static final String TEMP_DIR = System.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+    private static String userHome = System.getProperty("user.home"); //$NON-NLS-1$
     private static final String WORKSPACE_DIR = ResourcesPlugin.getWorkspace().getRoot().getLocation().toString();
 
     /**
