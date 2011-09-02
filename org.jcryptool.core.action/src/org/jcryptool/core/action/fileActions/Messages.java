@@ -13,8 +13,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.core.action.fileActions.messages"; //$NON-NLS-1$
-    public static String OpenFileAction_0;
-    public static String OpenFileAction_1;
     public static String OpenFileAction_message_assign_editor;
     public static String OpenFileAction_message_could_not_open;
     public static String OpenFileAction_title_could_not_open;

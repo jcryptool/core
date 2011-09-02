@@ -22,17 +22,13 @@ public class Messages extends NLS {
     public static String DeleteHandler_0;
     public static String DeleteHandler_1;
     public static String DeleteHandler_2;
-    public static String DeleteHandler_3;
     public static String DeleteHandler_4;
     public static String DeleteHandler_5;
     public static String DeleteHandler_6;
-    public static String InvisibleToggleHandler_invis_files_not_shown_tip;
-	public static String InvisibleToggleHandler_invis_files_shown_tip;
 	public static String PasteHandler_0;
     public static String PasteHandler_1;
     public static String RenameHandler_0;
     public static String RenameHandler_1;
-    public static String RenameHandler_3;
     public static String RenameHandler_4;
     static {
         // initialize resource bundle

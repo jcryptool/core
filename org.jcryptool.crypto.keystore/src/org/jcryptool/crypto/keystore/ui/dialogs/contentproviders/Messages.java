@@ -24,9 +24,6 @@ public class Messages extends NLS {
     public static String AbstractKeyNodeContentProvider_CipherKeySize;
     public static String AbstractKeyNodeContentProvider_ContactName;
     public static String AbstractKeyNodeContentProvider_Encoded;
-    public static String AbstractKeyNodeContentProvider_ExAccessKeystore;
-    public static String AbstractKeyNodeContentProvider_ExAccessKeystorePassword;
-    public static String AbstractKeyNodeContentProvider_ExKeyTypeUnsupported;
     public static String AbstractKeyNodeContentProvider_Format;
     public static String AbstractKeyNodeContentProvider_InitVector;
     public static String AbstractKeyNodeContentProvider_KeyLength;
