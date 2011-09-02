@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-	<context id="canonicalization" title="XML Canonicalization (remove comments)">
+	<context id="canonicalization" title="XML Kanonisierung (Kommentare entfernen)">
+    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Elementen entfernt und Attribute in eine alphabetische Reihenfolge gebracht. XML-Kommentare werden entfernt und durch Leerzeichen ersetzt.</description>
 	</context>
-	<context id="canonicalizationcomments" title="XML Canonicalization (maintain comments)">
+	<context id="canonicalizationcomments" title="XML Kanonisierung (Kommentare erhalten)">
+    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Elementen entfernt und Attribute in eine alphabetische Reihenfolge gebracht. XML-Kommentare bleiben erhalten und werden auch in der kanonisierten Form angezeigt.</description>
 	</context>
-	<context id="signature" title="XML Signature">
+	<context id="signature" title="XML Signatur">
 	</context>
-	<context id="verification" title="XML Verification">
+	<context id="verification" title="XML Verifizierung">
 	</context>
-	<context id="encryption" title="XML Encryption">
+	<context id="encryption" title="XML Verschlüsselung">
 	</context>
-    <context id="decryption" title="XML Decryption">
+    <context id="decryption" title="XML Entschlüsselung">
     </context>
 	<context id="wizard_signature_resource">
 		<description>Select a &lt;b&gt;resource&lt;/b&gt; to sign (the complete document or a fragment of it), the &lt;b&gt;signature type&lt;/b&gt; (enveloping, enveloped or detached) and a &lt;b&gt;key option&lt;/b&gt; (create a new one or use an existing one). The &lt;b&gt;Basic Security Profile&lt;/b&gt; option increases interoperability of Web Service Security.</description>
