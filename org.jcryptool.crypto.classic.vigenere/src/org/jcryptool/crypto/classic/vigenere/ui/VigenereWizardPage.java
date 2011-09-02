@@ -29,7 +29,7 @@ public class VigenereWizardPage extends AbstractClassicCryptoPage{
 
     @Override
     protected void setHelpAvailable() {
-    	PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), VigenerePlugin.PLUGIN_ID + ".wizard");
+    	PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), VigenerePlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }
 
 

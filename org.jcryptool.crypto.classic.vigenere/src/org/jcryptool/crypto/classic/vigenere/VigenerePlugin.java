@@ -23,7 +23,7 @@ public class VigenerePlugin extends AbstractUIPlugin {
 	/**
 	 * The plug-in ID
 	 */
-	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.vigenere";
+	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.vigenere"; //$NON-NLS-1$
 
 	/**
 	 * The shared instance
