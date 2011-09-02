@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.xeuclidean.XEuclideanPlugin;
@@ -43,16 +44,21 @@ public class XEuclideanView extends ViewPart {
 	private Action exportToCSVAction;
 	private Action exportToPdfAction;
 
-    private Composite parent;
+	private Composite parent;
 
 	private static final String MESSAGE_X_VISUAL = "X: "; //$NON-NLS-1$
 	private static final String MESSAGE_Y_VISUAL = "Y: "; //$NON-NLS-1$
 
-	private static final Color BLACK_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-	private static final Color RED_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-	private static final Color GREEN_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
-	private static final Color BLUE_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
-	private static final Color VIOLET_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_MAGENTA);
+	private static final Color BLACK_COLOR = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_BLACK);
+	private static final Color RED_COLOR = Display.getCurrent().getSystemColor(
+			SWT.COLOR_RED);
+	private static final Color GREEN_COLOR = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_GREEN);
+	private static final Color BLUE_COLOR = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_BLUE);
+	private static final Color VIOLET_COLOR = Display.getCurrent()
+			.getSystemColor(SWT.COLOR_MAGENTA);
 
 	private Text resultText;
 	private StyledText visualizeStyledText;
@@ -94,18 +100,19 @@ public class XEuclideanView extends ViewPart {
 
 	@Override
 	public void dispose() {
-//	    RESULT_FONT.dispose();
+		// RESULT_FONT.dispose();
 
-	    super.dispose();
+		super.dispose();
 	}
 
 	/**
 	 * Create contents of the view part
+	 *
 	 * @param parent
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
-	    this.parent = parent;
+		this.parent = parent;
 
 		xeuclid = new XEuclid();
 
@@ -126,7 +133,8 @@ public class XEuclideanView extends ViewPart {
 		gridLayout.makeColumnsEqualWidth = true;
 
 		// Create scrollable composite and composite within it
-		ScrolledComposite scroll = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		ScrolledComposite scroll = new ScrolledComposite(parent, SWT.H_SCROLL
+				| SWT.V_SCROLL | SWT.BORDER);
 		scroll.setExpandHorizontal(true);
 		scroll.setExpandVertical(true);
 		scroll.setLayoutData(gridData);
@@ -148,7 +156,8 @@ public class XEuclideanView extends ViewPart {
 		action.setLayoutData(gridData);
 
 		final Label pLabel = new Label(action, SWT.NONE);
-		final GridData gd_pLabel = new GridData(SWT.LEFT, SWT.CENTER, false, true, 2, 1);
+		final GridData gd_pLabel = new GridData(SWT.LEFT, SWT.CENTER, false,
+				true, 2, 1);
 		gd_pLabel.widthHint = 206;
 		pLabel.setLayoutData(gd_pLabel);
 		pLabel.setText(Messages.XEuclideanView_Message_P);
@@ -161,29 +170,33 @@ public class XEuclideanView extends ViewPart {
 		pTextOnlyNumbers = new VerifyListener() {
 			public void verifyText(VerifyEvent e) {
 				/*
-				 * keyCode == 8 is BACKSPACE and keyCode == 48 and keyCode == 128 is DEL
+				 * keyCode == 8 is BACKSPACE and keyCode == 48 and keyCode ==
+				 * 128 is DEL
 				 */
-				if (e.text.matches("[0-9]*") || e.keyCode == SWT.BS || e.keyCode == SWT.DEL){ //$NON-NLS-1$
-					if (pText.getText().length() == 0 && e.text.compareTo("0") == 0){ //$NON-NLS-1$
+				if (e.text.matches("[0-9]*") || e.keyCode == SWT.BS || e.keyCode == SWT.DEL) { //$NON-NLS-1$
+					if (pText.getText().length() == 0
+							&& e.text.compareTo("0") == 0) { //$NON-NLS-1$
 						e.doit = false;
-					} else if(pText.getSelection().x == 0 && e.keyCode == 48){
+					} else if (pText.getSelection().x == 0 && e.keyCode == 48) {
 						e.doit = false;
-					}else {
+					} else {
 						e.doit = true;
 					}
-				}else{
+				} else {
 					e.doit = false;
 				}
 			}
 		};
 		pText.addVerifyListener(pTextOnlyNumbers);
 
-		final GridData gd_pText = new GridData(SWT.FILL, SWT.CENTER, false, true, 6, 1);
+		final GridData gd_pText = new GridData(SWT.FILL, SWT.CENTER, false,
+				true, 6, 1);
 		gd_pText.widthHint = 445;
 		pText.setLayoutData(gd_pText);
 
 		final Label qLabel = new Label(action, SWT.NONE);
-		qLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 2, 1));
+		qLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, true, 2,
+				1));
 		qLabel.setText(Messages.XEuclideanView_Message_Q);
 		new Label(action, SWT.NONE);
 		new Label(action, SWT.NONE);
@@ -193,25 +206,29 @@ public class XEuclideanView extends ViewPart {
 		qText = new Text(action, SWT.BORDER);
 		qTextOnlyNumbers = pTextOnlyNumbers;
 		qText.addVerifyListener(qTextOnlyNumbers);
-		final GridData gd_qText = new GridData(SWT.FILL, SWT.CENTER, false, true, 6, 1);
+		final GridData gd_qText = new GridData(SWT.FILL, SWT.CENTER, false,
+				true, 6, 1);
 		gd_qText.widthHint = 465;
 		qText.setLayoutData(gd_qText);
 
 		final Button clearButton = new Button(action, SWT.NONE);
-		final GridData gd_clearButton = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
+		final GridData gd_clearButton = new GridData(SWT.RIGHT, SWT.CENTER,
+				false, true);
 		gd_clearButton.widthHint = 125;
 		clearButton.setLayoutData(gd_clearButton);
 		clearButton.setText(Messages.XEuclideanView_Clear_Button);
 
 		final Button resetTableButton = new Button(action, SWT.NONE);
 		resetTableButton.setEnabled(false);
-		final GridData gd_resetTableButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
+		final GridData gd_resetTableButton = new GridData(SWT.LEFT, SWT.CENTER,
+				false, true);
 		gd_resetTableButton.widthHint = 125;
 		resetTableButton.setLayoutData(gd_resetTableButton);
 		resetTableButton.setText(Messages.XEuclideanView_ResetTable_Button);
 
 		final Button computeButton = new Button(action, SWT.NONE);
-		final GridData gd_computeButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
+		final GridData gd_computeButton = new GridData(SWT.LEFT, SWT.CENTER,
+				false, true);
 		gd_computeButton.widthHint = 125;
 		computeButton.setLayoutData(gd_computeButton);
 		computeButton.setText(Messages.XEuclideanView_Compute_Button);
@@ -286,7 +303,8 @@ public class XEuclideanView extends ViewPart {
 						tableItem.setText(4, yTmp.get(i).toString());
 
 						/*
-						 * autoscroll the table. the second line is for deselection the TableItem.
+						 * autoscroll the table. the second line is for
+						 * deselection the TableItem.
 						 */
 						table.setSelection(table.getItems().length - 1);
 						table.setSelection(table.getItems().length);
@@ -295,7 +313,8 @@ public class XEuclideanView extends ViewPart {
 					String yTmpLastElement = yTmp.lastElement().toString();
 					String xTmpLastElement = xTmp.lastElement().toString();
 					/*
-					 * if the value for x or y is negative, then the sign have to be in parenthesis
+					 * if the value for x or y is negative, then the sign have
+					 * to be in parenthesis
 					 */
 					if (xTmp.lastElement().compareTo(BigInteger.ZERO) < 0) {
 						xTmpLastElement = "( " + xTmpLastElement + " )"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -320,18 +339,21 @@ public class XEuclideanView extends ViewPart {
 					/*
 					 * visualization block
 					 */
-					String result = Messages.XEuclideanView_GCD_Text + " " + value.toString(); //$NON-NLS-1$
+					String result = Messages.XEuclideanView_GCD_Text
+							+ " " + value.toString(); //$NON-NLS-1$
 
 					visualizeStyledText.setText(result);
 					StyleRange parameterA = new StyleRange();
 					parameterA.start = 0;
-					parameterA.length = Messages.XEuclideanView_GCD_Text.length();
+					parameterA.length = Messages.XEuclideanView_GCD_Text
+							.length();
 					parameterA.foreground = BLACK_COLOR;
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
 					StyleRange parameterB = new StyleRange();
-					parameterB.start = Messages.XEuclideanView_GCD_Text.length() + 1;
+					parameterB.start = Messages.XEuclideanView_GCD_Text
+							.length() + 1;
 					parameterB.length = value.toString().length();
 					parameterB.foreground = BLUE_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
@@ -411,16 +433,22 @@ public class XEuclideanView extends ViewPart {
 						tableItemTmp = new TableItem(table, SWT.BORDER);
 						tableItemTmp.setText(0, String.valueOf(stepwiseCounter));
 						tableItemTmp.setText(1, ""); //$NON-NLS-1$
-						tableItemTmp.setText(2, rTmp.get(stepwiseCounter).toString());
-						tableItemTmp.setText(3, xTmp.get(stepwiseCounter).toString());
-						tableItemTmp.setText(4, yTmp.get(stepwiseCounter).toString());
+						tableItemTmp.setText(2, rTmp.get(stepwiseCounter)
+								.toString());
+						tableItemTmp.setText(3, xTmp.get(stepwiseCounter)
+								.toString());
+						tableItemTmp.setText(4, yTmp.get(stepwiseCounter)
+								.toString());
 						stepwiseCounter++;
 
 						tableItem0 = new TableItem(table, SWT.BORDER);
 						tableItem0.setText(0, String.valueOf(stepwiseCounter));
-						tableItem0.setText(2, rTmp.get(stepwiseCounter).toString());
-						tableItem0.setText(3, xTmp.get(stepwiseCounter).toString());
-						tableItem0.setText(4, yTmp.get(stepwiseCounter).toString());
+						tableItem0.setText(2, rTmp.get(stepwiseCounter)
+								.toString());
+						tableItem0.setText(3, xTmp.get(stepwiseCounter)
+								.toString());
+						tableItem0.setText(4, yTmp.get(stepwiseCounter)
+								.toString());
 						stepwiseCounter++;
 
 						tableItem1 = null;
@@ -428,11 +456,13 @@ public class XEuclideanView extends ViewPart {
 						/*
 						 * visualization block
 						 */
-						visualizeStyledText.setText(Messages.XEuclideanView_Initialization);
+						visualizeStyledText
+								.setText(Messages.XEuclideanView_Initialization);
 						StyleRange styleInit = new StyleRange();
 						styleInit.foreground = BLACK_COLOR;
 						styleInit.start = 0;
-						styleInit.length = Messages.XEuclideanView_Initialization.length();
+						styleInit.length = Messages.XEuclideanView_Initialization
+								.length();
 						styleInit.fontStyle = SWT.BOLD;
 						visualizeStyledText.setStyleRange(styleInit);
 
@@ -443,7 +473,8 @@ public class XEuclideanView extends ViewPart {
 					break;
 				case QUOTIENT:
 					/*
-					 * tableItemTmp is the first row tableItem0 is the second row tableItam1 is the third row
+					 * tableItemTmp is the first row tableItem0 is the second
+					 * row tableItam1 is the third row
 					 */
 					backStepwiseButton.setEnabled(true);
 
@@ -463,7 +494,8 @@ public class XEuclideanView extends ViewPart {
 					tableItemTmp.setForeground(2, RED_COLOR);
 					tableItem0.setForeground(2, GREEN_COLOR);
 
-					tableItem0.setText(1, qTmp.get(stepwiseCounter - 1).toString());
+					tableItem0.setText(1, qTmp.get(stepwiseCounter - 1)
+							.toString());
 					tableItem0.setForeground(1, BLUE_COLOR);
 
 					/*
@@ -473,28 +505,33 @@ public class XEuclideanView extends ViewPart {
 					tmpB = tableItem0.getText(2);
 					tmpC = qTmp.get(stepwiseCounter - 1).toString();
 
-					String result = Messages.XEuclideanView_Quotient + tmpA + " / " + tmpB + " = " + tmpC; //$NON-NLS-1$ //$NON-NLS-2$
+					String result = Messages.XEuclideanView_Quotient + tmpA
+							+ " / " + tmpB + " = " + tmpC; //$NON-NLS-1$ //$NON-NLS-2$
 
 					visualizeStyledText.setText(result);
 					parameterM.start = 0;
-					parameterM.length = Messages.XEuclideanView_Quotient.length();
+					parameterM.length = Messages.XEuclideanView_Quotient
+							.length();
 					parameterM.foreground = BLACK_COLOR;
 					parameterM.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterM);
 
-					parameterA.start = Messages.XEuclideanView_Quotient.length();
+					parameterA.start = Messages.XEuclideanView_Quotient
+							.length();
 					parameterA.length = tmpA.length();
 					parameterA.foreground = RED_COLOR;
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
-					parameterB.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3;
+					parameterB.start = Messages.XEuclideanView_Quotient
+							.length() + tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
-					parameterC.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = Messages.XEuclideanView_Quotient
+							.length() + tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = BLUE_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
@@ -527,12 +564,14 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setText(result);
 					parameterA = new StyleRange();
 					parameterA.start = 0;
-					parameterA.length = Messages.XEuclideanView_Remainder.length();
+					parameterA.length = Messages.XEuclideanView_Remainder
+							.length();
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = Messages.XEuclideanView_Remainder.length();
+					parameterB.start = Messages.XEuclideanView_Remainder
+							.length();
 					parameterB.length = tmpA.length();
 					parameterB.foreground = BLUE_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
@@ -542,7 +581,8 @@ public class XEuclideanView extends ViewPart {
 					previousState = visualMode.QUOTIENT;
 
 					/*
-					 * autoscroll the table. the second line is for deselection the TableItem.
+					 * autoscroll the table. the second line is for deselection
+					 * the TableItem.
 					 */
 					table.setSelection(table.getItems().length - 1);
 					table.setSelection(table.getItems().length);
@@ -573,7 +613,8 @@ public class XEuclideanView extends ViewPart {
 					tmpC = xTmp.get(stepwiseCounter - 2).toString();
 					tmpD = xTmp.get(stepwiseCounter).toString();
 
-					result = MESSAGE_X_VISUAL + tmpA + " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					result = MESSAGE_X_VISUAL + tmpA
+							+ " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 					visualizeStyledText.setText(result);
 					parameterM = new StyleRange();
@@ -591,21 +632,24 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3;
+					parameterB.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
 					parameterC = new StyleRange();
-					parameterC.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = RED_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterC);
 
 					parameterD = new StyleRange();
-					parameterD.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+					parameterD.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3
 							+ tmpC.length() + 3;
 					parameterD.length = tmpD.length();
 					parameterD.foreground = BLUE_COLOR;
@@ -640,7 +684,8 @@ public class XEuclideanView extends ViewPart {
 					tmpC = yTmp.get(stepwiseCounter - 2).toString();
 					tmpD = yTmp.get(stepwiseCounter).toString();
 
-					result = MESSAGE_Y_VISUAL + tmpA + " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					result = MESSAGE_Y_VISUAL + tmpA
+							+ " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 					visualizeStyledText.setText(result);
 					parameterM = new StyleRange();
@@ -658,21 +703,24 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3;
+					parameterB.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
 					parameterC = new StyleRange();
-					parameterC.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = RED_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterC);
 
 					parameterD = new StyleRange();
-					parameterD.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+					parameterD.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3
 							+ tmpC.length() + 3;
 					parameterD.length = tmpD.length();
 					parameterD.foreground = BLUE_COLOR;
@@ -691,7 +739,8 @@ public class XEuclideanView extends ViewPart {
 
 				case RESULT:
 					/*
-					 * clear the three rows and set the color of the result value to blue
+					 * clear the three rows and set the color of the result
+					 * value to blue
 					 */
 					clearTableItem(tableItemTmp);
 					clearTableItem(tableItem0);
@@ -711,7 +760,8 @@ public class XEuclideanView extends ViewPart {
 							+ " * " + xTmpLastElement; //$NON-NLS-1$
 					resultText.setText(value.toString() + tmpValue);
 
-					if (new BigInteger(pValue).compareTo(new BigInteger(qValue)) < 0) {
+					if (new BigInteger(pValue)
+							.compareTo(new BigInteger(qValue)) < 0) {
 						resultLabel.setText("gcd(q,p) = q * x + p * y"); //$NON-NLS-1$
 					} else {
 						resultLabel.setText("gcd(p,q) = p * x + q * y"); //$NON-NLS-1$
@@ -720,18 +770,21 @@ public class XEuclideanView extends ViewPart {
 					/*
 					 * visualization block
 					 */
-					result = Messages.XEuclideanView_GCD_Text + " " + value.toString(); //$NON-NLS-1$
+					result = Messages.XEuclideanView_GCD_Text
+							+ " " + value.toString(); //$NON-NLS-1$
 
 					visualizeStyledText.setText(result);
 					parameterA = new StyleRange();
 					parameterA.start = 0;
-					parameterA.length = Messages.XEuclideanView_GCD_Text.length();
+					parameterA.length = Messages.XEuclideanView_GCD_Text
+							.length();
 					parameterA.foreground = BLACK_COLOR;
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = Messages.XEuclideanView_GCD_Text.length() + 1;
+					parameterB.start = Messages.XEuclideanView_GCD_Text
+							.length() + 1;
 					parameterB.length = value.toString().length();
 					parameterB.foreground = BLUE_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
@@ -750,7 +803,8 @@ public class XEuclideanView extends ViewPart {
 				}
 			}
 		});
-		final GridData gd_stepwiseButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
+		final GridData gd_stepwiseButton = new GridData(SWT.LEFT, SWT.CENTER,
+				false, true);
 		gd_stepwiseButton.widthHint = 125;
 		stepwiseButton.setLayoutData(gd_stepwiseButton);
 		stepwiseButton.setText(Messages.XEuclideanView_Stepwise_Button);
@@ -796,11 +850,13 @@ public class XEuclideanView extends ViewPart {
 					/*
 					 * visualization block
 					 */
-					visualizeStyledText.setText(Messages.XEuclideanView_Initialization);
+					visualizeStyledText
+							.setText(Messages.XEuclideanView_Initialization);
 					StyleRange styleInit = new StyleRange();
 					styleInit.foreground = BLACK_COLOR;
 					styleInit.start = 0;
-					styleInit.length = Messages.XEuclideanView_Initialization.length();
+					styleInit.length = Messages.XEuclideanView_Initialization
+							.length();
 					styleInit.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(styleInit);
 
@@ -816,28 +872,33 @@ public class XEuclideanView extends ViewPart {
 					tmpB = tableItem0.getText(2);
 					tmpC = qTmp.get(stepwiseCounter - 1).toString();
 
-					result = Messages.XEuclideanView_Quotient + tmpA + " / " + tmpB + " = " + tmpC; //$NON-NLS-1$ //$NON-NLS-2$
+					result = Messages.XEuclideanView_Quotient + tmpA
+							+ " / " + tmpB + " = " + tmpC; //$NON-NLS-1$ //$NON-NLS-2$
 
 					visualizeStyledText.setText(result);
 					parameterM.start = 0;
-					parameterM.length = Messages.XEuclideanView_Quotient.length();
+					parameterM.length = Messages.XEuclideanView_Quotient
+							.length();
 					parameterM.foreground = BLACK_COLOR;
 					parameterM.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterM);
 
-					parameterA.start = Messages.XEuclideanView_Quotient.length();
+					parameterA.start = Messages.XEuclideanView_Quotient
+							.length();
 					parameterA.length = tmpA.length();
 					parameterA.foreground = RED_COLOR;
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
-					parameterB.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3;
+					parameterB.start = Messages.XEuclideanView_Quotient
+							.length() + tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
-					parameterC.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = Messages.XEuclideanView_Quotient
+							.length() + tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = BLUE_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
@@ -845,7 +906,7 @@ public class XEuclideanView extends ViewPart {
 
 					table.remove(stepwiseCounter);
 
-//					currentState = visualMode.QUOTIENT;
+					// currentState = visualMode.QUOTIENT;
 					nextState = visualMode.REMAINDER;
 					if (previousState != null) {
 						previousState = visualMode.Y_EVAL;
@@ -880,12 +941,14 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setText(result);
 					parameterA = new StyleRange();
 					parameterA.start = 0;
-					parameterA.length = Messages.XEuclideanView_Remainder.length();
+					parameterA.length = Messages.XEuclideanView_Remainder
+							.length();
 					parameterA.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = Messages.XEuclideanView_Remainder.length();
+					parameterB.start = Messages.XEuclideanView_Remainder
+							.length();
 					parameterB.length = tmpA.length();
 					parameterB.foreground = BLUE_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
@@ -917,7 +980,8 @@ public class XEuclideanView extends ViewPart {
 					tmpC = xTmp.get(stepwiseCounter - 2).toString();
 					tmpD = xTmp.get(stepwiseCounter).toString();
 
-					result = MESSAGE_X_VISUAL + tmpA + " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					result = MESSAGE_X_VISUAL + tmpA
+							+ " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 					visualizeStyledText.setText(result);
 					parameterM = new StyleRange();
@@ -935,21 +999,24 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3;
+					parameterB.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
 					parameterC = new StyleRange();
-					parameterC.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = RED_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterC);
 
 					parameterD = new StyleRange();
-					parameterD.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+					parameterD.start = MESSAGE_X_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3
 							+ tmpC.length() + 3;
 					parameterD.length = tmpD.length();
 					parameterD.foreground = BLUE_COLOR;
@@ -991,7 +1058,8 @@ public class XEuclideanView extends ViewPart {
 					resultLabel.setText(""); //$NON-NLS-1$
 					resultText.setText(""); //$NON-NLS-1$
 
-					result = MESSAGE_Y_VISUAL + tmpA + " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+					result = MESSAGE_Y_VISUAL + tmpA
+							+ " * " + tmpB + " + " + tmpC + " = " + tmpD; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 					visualizeStyledText.setText(result);
 					parameterM = new StyleRange();
@@ -1009,21 +1077,24 @@ public class XEuclideanView extends ViewPart {
 					visualizeStyledText.setStyleRange(parameterA);
 
 					parameterB = new StyleRange();
-					parameterB.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3;
+					parameterB.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3;
 					parameterB.length = tmpB.length();
 					parameterB.foreground = GREEN_COLOR;
 					parameterB.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterB);
 
 					parameterC = new StyleRange();
-					parameterC.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3;
+					parameterC.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3;
 					parameterC.length = tmpC.length();
 					parameterC.foreground = RED_COLOR;
 					parameterC.fontStyle = SWT.BOLD;
 					visualizeStyledText.setStyleRange(parameterC);
 
 					parameterD = new StyleRange();
-					parameterD.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+					parameterD.start = MESSAGE_Y_VISUAL.length()
+							+ tmpA.length() + 3 + tmpB.length() + 3
 							+ tmpC.length() + 3;
 					parameterD.length = tmpD.length();
 					parameterD.foreground = BLUE_COLOR;
@@ -1046,7 +1117,8 @@ public class XEuclideanView extends ViewPart {
 
 			}
 		});
-		final GridData gd_backStepwiseButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
+		final GridData gd_backStepwiseButton = new GridData(SWT.LEFT,
+				SWT.CENTER, false, true);
 		gd_backStepwiseButton.widthHint = 125;
 		backStepwiseButton.setLayoutData(gd_backStepwiseButton);
 		backStepwiseButton.setText(Messages.XEuclideanView_BackStepwise_Button);
@@ -1064,7 +1136,8 @@ public class XEuclideanView extends ViewPart {
 		table = new Table(info, SWT.BORDER);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		final GridData gd_table = new GridData(SWT.FILL, SWT.CENTER, true, true, 2, 1);
+		final GridData gd_table = new GridData(SWT.FILL, SWT.CENTER, true,
+				true, 2, 1);
 		gd_table.widthHint = 466;
 		gd_table.heightHint = 198;
 		table.setLayoutData(gd_table);
@@ -1078,7 +1151,8 @@ public class XEuclideanView extends ViewPart {
 		quotientTableColumn.setWidth(100);
 		quotientTableColumn.setText("Quotient"); //$NON-NLS-1$
 
-		final TableColumn remainderrTableColumn = new TableColumn(table, SWT.NONE);
+		final TableColumn remainderrTableColumn = new TableColumn(table,
+				SWT.NONE);
 		remainderrTableColumn.setWidth(100);
 		remainderrTableColumn.setText(Messages.XEuclideanView_Remainder_Table);
 
@@ -1091,7 +1165,8 @@ public class XEuclideanView extends ViewPart {
 		yTableColumn.setText("Y"); //$NON-NLS-1$
 
 		final Label gcdLabel = new Label(info, SWT.NONE);
-		final GridData gd_gcdLabel = new GridData(SWT.FILL, SWT.FILL, false, true);
+		final GridData gd_gcdLabel = new GridData(SWT.FILL, SWT.FILL, false,
+				true);
 		gd_gcdLabel.heightHint = 24;
 		gd_gcdLabel.widthHint = 154;
 		gd_gcdLabel.verticalIndent = 15;
@@ -1099,7 +1174,8 @@ public class XEuclideanView extends ViewPart {
 		gcdLabel.setText(Messages.XEuclideanView_GCD_Text);
 
 		resultLabel = new Label(info, SWT.NONE);
-		final GridData gd_resultLabel = new GridData(SWT.FILL, SWT.FILL, false, true);
+		final GridData gd_resultLabel = new GridData(SWT.FILL, SWT.FILL, false,
+				true);
 		gd_resultLabel.widthHint = 396;
 		gd_resultLabel.verticalIndent = 15;
 		resultLabel.setLayoutData(gd_resultLabel);
@@ -1108,7 +1184,8 @@ public class XEuclideanView extends ViewPart {
 
 		resultText = new Text(info, SWT.H_SCROLL | SWT.BORDER);
 		resultText.setEditable(false);
-		final GridData gd_resultText = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		final GridData gd_resultText = new GridData(SWT.FILL, SWT.FILL, true,
+				false, 2, 1);
 		resultText.setLayoutData(gd_resultText);
 
 		clearButton.addMouseListener(new MouseAdapter() {
@@ -1126,8 +1203,8 @@ public class XEuclideanView extends ViewPart {
 				exportToCSVAction.setEnabled(false);
 
 				/*
-				 * we have to remove the verifyListener first to display the changed value for the parameters, then we
-				 * added again
+				 * we have to remove the verifyListener first to display the
+				 * changed value for the parameters, then we added again
 				 */
 				pText.removeVerifyListener(pTextOnlyNumbers);
 				qText.removeVerifyListener(qTextOnlyNumbers);
@@ -1148,20 +1225,27 @@ public class XEuclideanView extends ViewPart {
 		});
 
 		final Label dummyLabel = new Label(action, SWT.NONE);
-		final GridData gd_dummyLabel = new GridData(SWT.LEFT, SWT.CENTER, true, false);
+		final GridData gd_dummyLabel = new GridData(SWT.LEFT, SWT.CENTER, true,
+				false);
 		dummyLabel.setLayoutData(gd_dummyLabel);
 		dummyLabel.setText("dummy"); //$NON-NLS-1$
 		dummyLabel.setVisible(false);
 
-		visualizeStyledText = new StyledText(action, SWT.SINGLE | SWT.READ_ONLY | SWT.BORDER);
+		visualizeStyledText = new StyledText(action, SWT.SINGLE | SWT.READ_ONLY
+				| SWT.BORDER);
 		visualizeStyledText.setEnabled(false);
 		visualizeStyledText.setEditable(false);
 		visualizeStyledText.setAlignment(SWT.CENTER);
-		final GridData gd_visualizeStyledText = new GridData(SWT.FILL, SWT.CENTER, false, false, 6, 1);
+		final GridData gd_visualizeStyledText = new GridData(SWT.FILL,
+				SWT.CENTER, false, false, 6, 1);
 		gd_visualizeStyledText.widthHint = 400;
 		visualizeStyledText.setLayoutData(gd_visualizeStyledText);
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), XEuclideanPlugin.PLUGIN_ID + ".viewer");
+		PlatformUI
+				.getWorkbench()
+				.getHelpSystem()
+				.setHelp(parent.getShell(),
+						XEuclideanPlugin.PLUGIN_ID + ".viewer");
 		createActions();
 		initializeMenu();
 	}
@@ -1175,10 +1259,10 @@ public class XEuclideanView extends ViewPart {
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFilterPath(DirectoryService.getUserHomeDir());
-				dialog.setFilterExtensions(new String[] { "*.pdf" }); //$NON-NLS-1$
-		        dialog.setFilterNames(new String[] {"PDF Files (*.pdf)"});
-		        dialog.setOverwrite(true);
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setFilterExtensions(new String[] { IConstants.PDF_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.PDF_FILTER_NAME });
+				dialog.setOverwrite(true);
 
 				String filename = dialog.open();
 
@@ -1194,10 +1278,10 @@ public class XEuclideanView extends ViewPart {
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFilterPath(DirectoryService.getUserHomeDir());
-                dialog.setFilterExtensions(new String[] { "*.csv" }); //$NON-NLS-1$
-                dialog.setFilterNames(new String[] {"CSV Files (*.csv)"});
-                dialog.setOverwrite(true);
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setFilterExtensions(new String[] { IConstants.CSV_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.CSV_FILTER_NAME });
+				dialog.setOverwrite(true);
 
 				String filename = dialog.open();
 
@@ -1209,19 +1293,21 @@ public class XEuclideanView extends ViewPart {
 		};
 		exportToCSVAction.setEnabled(false);
 
-		exportToLatexAction = new Action(Messages.XEuclideanView_ExportLatex_Menu) {
+		exportToLatexAction = new Action(
+				Messages.XEuclideanView_ExportLatex_Menu) {
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFilterPath(DirectoryService.getUserHomeDir());
-                dialog.setFilterExtensions(new String[] { "*.tex" }); //$NON-NLS-1$
-                dialog.setFilterNames(new String[] {"Latex Files (*.tex)"});
-                dialog.setOverwrite(true);
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setFilterExtensions(new String[] { IConstants.TEX_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.TEX_FILTER_NAME });
+				dialog.setOverwrite(true);
 
 				String filename = dialog.open();
 
 				if (filename != null) {
-					FileExporter latexExport = new FileExporter(xeuclid, filename);
+					FileExporter latexExport = new FileExporter(xeuclid,
+							filename);
 					latexExport.exportToLatex();
 				}
 
@@ -1235,7 +1321,8 @@ public class XEuclideanView extends ViewPart {
 	 * Initialize the menu
 	 */
 	private void initializeMenu() {
-		IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+		IMenuManager menuManager = getViewSite().getActionBars()
+				.getMenuManager();
 
 		menuManager.add(exportToPdfAction);
 
@@ -1246,7 +1333,7 @@ public class XEuclideanView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-	    parent.setFocus();
+		parent.setFocus();
 	}
 
 	/**

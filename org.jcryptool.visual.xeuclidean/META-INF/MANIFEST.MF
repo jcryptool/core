@@ -14,5 +14,6 @@ Bundle-ClassPath: .
 Export-Package: org.jcryptool.visual.xeuclidean.algorithm
 Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts

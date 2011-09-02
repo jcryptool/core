@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.crt.export.FileExporter;
 
@@ -53,8 +54,8 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-				dialog.setFilterExtensions(new String[] { "*.pdf" });
-		        dialog.setFilterNames(new String[] {"PDF Files (*.pdf)"});
+				dialog.setFilterExtensions(new String[] {IConstants.PDF_FILTER_EXTENSION});
+		        dialog.setFilterNames(new String[] {IConstants.PDF_FILTER_NAME});
 		        dialog.setFilterPath(DirectoryService.getUserHomeDir());
 		        dialog.setOverwrite(true);
 				String filename = dialog.open();
@@ -72,8 +73,8 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-				dialog.setFilterExtensions(new String[] { "*.csv" });
-                dialog.setFilterNames(new String[] {"CSV Files (*.csv)"});
+				dialog.setFilterExtensions(new String[] {IConstants.CSV_FILTER_EXTENSION});
+                dialog.setFilterNames(new String[] {IConstants.CSV_FILTER_NAME});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
                 dialog.setOverwrite(true);
 				String filename = dialog.open();
@@ -90,9 +91,9 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 			@Override
 			public void run() {
 				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-                dialog.setFilterNames(new String[] {"Latex Files (*.tex)"});
+				dialog.setFilterExtensions(new String[] {IConstants.TEX_FILTER_EXTENSION});
+                dialog.setFilterNames(new String[] {IConstants.TEX_FILTER_NAME});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
-				dialog.setFilterExtensions(new String[] { "*.tex" });
 		        dialog.setOverwrite(true);
 				String filename = dialog.open();
 
