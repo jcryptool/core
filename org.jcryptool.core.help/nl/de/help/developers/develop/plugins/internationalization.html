@@ -9,31 +9,33 @@
 	<h1>Internationalisierung</h1>
 
 	<p>JCrypTool ist durchgängig in zwei Sprachen verfügbar: <strong>Englisch</strong> (die Standardsprache) und
-	<strong>Deutsch</strong>. Es ist daher empfehlenswert, bereits bei der Entwicklung eines Plug-ins an die
+	<strong>Deutsch</strong>. Es ist daher sehr empfehlenswert, bereits bei der Entwicklung eines Plug-ins an die
 	Internationalisierung zu denken. Dies gilt auch, wenn das Plug-in nur in einer Sprache zur Verfügung gestellt
 	werden soll. Sofern nur eine Sprache unterstützt werden soll muss das Englisch sein. Das zusätzliche Erstellen
-	einer deutschen Version wird aber sehr empfohlen.</p>
+	einer deutschen Version wird aber dringend empfohlen.</p>
 
 	<h2>Eclipse Unterstützung</h2>
 
-	<p>Eclipse bietet eine weitreichende und einfach zu nutzende Möglichkeiten an, mehrsprachige Plug-ins zu erstellen. Dabei gilt
-	es, einige wenige Punkte zu beachten.</p>
+	<p>Eclipse bietet eine weitreichende und einfach zu nutzende Möglichkeiten an, mehrsprachige Plug-ins zu erstellen. Dabei gibt
+	es nur einige wenige Punkte zu beachten:</p>
 
 	<ol>
 	    <li>Alle Texte aus der <strong>plugin.xml</strong> müssen in <strong>bundle.properties</strong>
 	    (Englisch, Standard) und <strong>bundle_de.properties</strong> (für Deutsch) ausgelagert werden. Dazu klicken Sie mit
-	    der rechten Maustaste auf die <strong>plugin.xml</strong> und wählen <strong>PDE Tools -&gt; Externalize Strings</strong> aus.
+	    der rechten Maustaste auf die <strong>plugin.xml</strong> und wählen <strong>PDE Tools -&gt; Externalize Strings...</strong> aus.
 	    Damit wird die englische Datei erstellt. Kopieren Sie nun einfach die <strong>bundle.properties</strong> Datei
 	    und benennen Sie diese für die deutsche Version in <strong>bundle_de.properties</strong> um. Anschließend können
 	    Sie die Inhalte übersetzen. Stellen Sie sicher, dass beide Dateien in den <strong>build.properties</strong>
 	    enthalten sind (nur die automatisch generierte Datei bundle.properties wird von Eclipse hinzugefügt, die deutsche Übersetzung
 	    in der bundle_de.properties Datei fehlt damit im Binary Build).</li>
 	    <li><strong>Externalize strings</strong> (wie Nachrichten und Titel) in allen Ihren Java Klassen. Dazu wählen Sie den
-	    <strong>src</strong> Ordner Ihres Plug-ins und wählen <strong>Source -&gt; Externalize Strings</strong>
-	    im Menü aus. Wichtig: Benutzen Sie unbedingt den <strong>Eclipse mechanism</strong> (aktivieren Sie die Checkbox).
-	    Der Assistent erstellt pro Package eine <strong>messages.properties</strong> Datei, die alle Texte aus Ihren Java-Klassen
-	    enthält. Diese Datei muss die englischen Texte enthalten. Kopieren Sie diese Datei und benennen Sie sie nach
-	    <strong>messages_de.properties</strong> für die deutsche Version um.</li>
+	    <strong>src</strong> Ordner Ihres Plug-ins und wählen <strong>Source -&gt; Externalize Strings...</strong>
+	    im Kontextmenü aus. Wichtig: Benutzen Sie unbedingt den <strong>Eclipse Mechanismus</strong>. Aktivieren Sie dazu im Wizard die Checkbox
+	    <strong>Use Eclipse's string externalization mechanism</strong>. Der Assistent erstellt pro Package eine <strong>messages.properties</strong>
+	    Datei, die alle Texte aus den Java-Klassen dieses Packages enthält. Verzichten Sie darauf, eine gemeinsame super-messages.properties Datei für alle
+	    Packages zusammen zu erstellen. Jedes Package muss seine eigenen Property-Dateien besitzen. Die englischen Texte sind dabei immer in der Datei
+	    messages.properties enthalten. Kopieren Sie diese Datei und fügen Sie sie im selben Package wieder ein. Benennen Sie sie dabei nach
+	    <strong>messages_de.properties</strong> für die deutsche Version um und übersetzen Sie die englischen Texte.</li>
 	    <li>Das <strong>nl</strong> Verzeichnis enthält zwei (oder mehr) Sprachen <strong>de</strong> und <strong>en</strong>,
 	    wobei jedes Verzeichnis dieselben Dateien enthalten muss. <strong>toc.xml</strong> enthält das Inhaltsverzeichnis der Hilfe,
 	    <strong>contexts.xml</strong> (optional) die kontextsensitive Hilfe. Diese beiden Dateien müssen in den jeweiligen Wurzelverzeichnissen
@@ -41,6 +43,9 @@
 	    Verzeichnissen (z.B. nl/de) weitere Unterverzeichnisse angelegt werden. Große Ressourcen die in allen Sprachen identisch sind bitte
 	    nicht doppelt ablegen. Stattdessen auf eine gemeinsame Version verlinken.</li>
 	</ol>
+
+	<p>Beide Sprachdateien, also sowohl die bundle.properties bzw. bundle_de.properties und die messages.properties bzw. messages_de.properties,
+	müssen immer exakt die gleichen Keys enthalten. So können Sie sehr leicht vergleichen, ob Sie in einer Sprache einen Key vergessen haben.</p>
 
 	<p>Beachten Sie die Kodierung, deutsche Umlaute müssen in der jeweiligen Properties Datei durch die Unicode Variante ersetzt werden.
 	Ein vollständiges Beispiel dazu finden Sie im <strong>org.jcryptool.crypto.classic.vigenere</strong> Plug-in.</p>
