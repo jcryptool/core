@@ -42,7 +42,8 @@ public class ExportCertificateAction extends Action {
 	public void run() {
 		FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] {"*.cer"});
+        dialog.setFilterExtensions(new String[] {Messages.getString("ExportCertificateAction.0")}); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] {Messages.getString("ExportCertificateAction.1")}); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
 		String filename = dialog.open();

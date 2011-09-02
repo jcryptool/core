@@ -52,6 +52,7 @@ public class ExportSecretKeyAction extends Action {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFilterExtensions(new String[] {"*.sec"});
+        dialog.setFilterNames(new String[] {"Secret Keys (*.sec)"});
         dialog.setOverwrite(true);
 
         String filename = dialog.open();
