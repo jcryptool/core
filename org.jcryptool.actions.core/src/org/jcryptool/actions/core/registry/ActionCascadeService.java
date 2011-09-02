@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -20,13 +19,14 @@ import org.jcryptool.actions.core.types.ActionCascade;
 import org.jcryptool.actions.core.types.ActionItem;
 
 /**
- * <p><code>ActionCascadeService</code> object class. Contains the currently opened
- * <code>ActionCascade</code>.</p>
+ * <p>
+ * <code>ActionCascadeService</code> object class. Contains the currently opened <code>ActionCascade</code>.
+ * </p>
  *
  * @author Thomas Wiese
  * @version 0.5.0
  */
-public class ActionCascadeService {
+public final class ActionCascadeService {
     private static ActionCascadeService service = null;
 
     private IObservableList actionItems = new WritableList();
@@ -36,7 +36,7 @@ public class ActionCascadeService {
         currentActionCascade = null;
     }
 
-    public synchronized static ActionCascadeService getInstance() {
+    public static synchronized ActionCascadeService getInstance() {
         if (service == null) {
             service = new ActionCascadeService();
         }

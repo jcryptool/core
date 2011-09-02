@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -20,21 +20,19 @@ import org.jdom.output.XMLOutputter;
 
 /**
  * <p>
- * <code>ActionCascade</code> object class. Contains one to many <code>ActionItem</code> objects. At
- * least the starting ActionItem is always contained in an ActionCascade, so an empty ActionCascade
- * is impossible.
+ * <code>ActionCascade</code> object class. Contains one to many <code>ActionItem</code> objects. At least the starting
+ * ActionItem is always contained in an ActionCascade, so an empty ActionCascade is impossible.
  * </p>
  *
  * <p>
- * An ActionCascade should be named like the initial file name with a suffix
- * <strong>Cascade</strong>.
+ * An ActionCascade should be named like the initial file name with a suffix <strong>Cascade</strong>.
  * </p>
  *
  * @author Dominik Schadow
  * @version 0.5.0
  */
 public class ActionCascade {
-	private final static String NAMESPACE_URI = "http://www.jcryptool.org/actioncascade";  //$NON-NLS-1$
+    private static final String NAMESPACE_URI = "http://www.jcryptool.org/actioncascade"; //$NON-NLS-1$
     private String name;
     private ArrayList<ActionItem> items = null;
     private boolean savePasswords = false;
@@ -50,14 +48,14 @@ public class ActionCascade {
     }
 
     public boolean isSavePasswords() {
-		return savePasswords;
-	}
+        return savePasswords;
+    }
 
-	public void setSavePasswords(boolean savePasswords) {
-		this.savePasswords = savePasswords;
-	}
+    public void setSavePasswords(boolean savePasswords) {
+        this.savePasswords = savePasswords;
+    }
 
-	public ArrayList<ActionItem> addItem(final ActionItem item) {
+    public ArrayList<ActionItem> addItem(final ActionItem item) {
         items.add(item);
         return items;
     }
@@ -120,26 +118,26 @@ public class ActionCascade {
             Element parameters = new Element("Parameters", NAMESPACE_URI); //$NON-NLS-1$
             parameters.setAttribute("dataobjecttype", item.getDataObjectType()); //$NON-NLS-1$
             Enumeration<String> e = item.getParams().keys();
-            while (e.hasMoreElements()){
-            	String paramKey = e.nextElement();
+            while (e.hasMoreElements()) {
+                String paramKey = e.nextElement();
 
-            	if (!isSavePasswords() && "key password".equals(paramKey)) { //$NON-NLS-1$
-            	    if (e.hasMoreElements()) {
-            	        paramKey = e.nextElement();
-            	    } else {
-            	        break;
-            	    }
-            	}
+                if (!isSavePasswords() && "key password".equals(paramKey)) { //$NON-NLS-1$
+                    if (e.hasMoreElements()) {
+                        paramKey = e.nextElement();
+                    } else {
+                        break;
+                    }
+                }
 
-            	String paramValue = item.getParam(paramKey);
-            	Element parameter = new Element("Parameter", NAMESPACE_URI); //$NON-NLS-1$
-            	Element key = new Element("Key", NAMESPACE_URI); //$NON-NLS-1$
-            	key.setText(paramKey);
-            	Element value = new Element("Value", NAMESPACE_URI); //$NON-NLS-1$
-            	value.setText(paramValue);
-            	parameter.addContent(key);
-            	parameter.addContent(value);
-            	parameters.addContent(parameter);
+                String paramValue = item.getParam(paramKey);
+                Element parameter = new Element("Parameter", NAMESPACE_URI); //$NON-NLS-1$
+                Element key = new Element("Key", NAMESPACE_URI); //$NON-NLS-1$
+                key.setText(paramKey);
+                Element value = new Element("Value", NAMESPACE_URI); //$NON-NLS-1$
+                value.setText(paramValue);
+                parameter.addContent(key);
+                parameter.addContent(value);
+                parameters.addContent(parameter);
             }
             actionItem.addContent(parameters);
             actionItems.addContent(actionItem);

@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -50,10 +50,8 @@ public class ImportUtils {
         URL schemaUrl = null;
 
         try {
-            schemaUrl =
-                    FileLocator.toFileURL((ActionsCorePlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
-            File schemaFile = new File(schemaUrl.getFile()
-                    + "resources" + File.separatorChar //$NON-NLS-1$
+            schemaUrl = FileLocator.toFileURL((ActionsCorePlugin.getDefault().getBundle().getEntry("/"))); //$NON-NLS-1$
+            File schemaFile = new File(schemaUrl.getFile() + "resources" + File.separatorChar //$NON-NLS-1$
                     + "actioncascade.xsd"); //$NON-NLS-1$
             schema = factory.newSchema(schemaFile);
         } catch (Exception ex) {
@@ -82,10 +80,8 @@ public class ImportUtils {
         }
 
         ActionCascade ac =
-                new ActionCascade(
-                        doc.getDocumentElement().getAttributes().getNamedItem("name").getTextContent()); //$NON-NLS-1$
-        ac.setSavePasswords(Boolean.parseBoolean(doc.getDocumentElement().getAttributes().getNamedItem(
-                "passwords").getTextContent())); //$NON-NLS-1$
+                new ActionCascade(doc.getDocumentElement().getAttributes().getNamedItem("name").getTextContent()); //$NON-NLS-1$
+        ac.setSavePasswords(Boolean.parseBoolean(doc.getDocumentElement().getAttributes().getNamedItem("passwords").getTextContent())); //$NON-NLS-1$
 
         NodeList nList = doc.getElementsByTagName("ActionItem"); //$NON-NLS-1$
         for (int i = 0; i < nList.getLength(); i++) {
@@ -102,8 +98,7 @@ public class ImportUtils {
                     filename = values.item(j).getTextContent();
                 } else if (nodeName.equals("ActionName")) { //$NON-NLS-1$
                     actionname = values.item(j).getTextContent();
-                    pluginId =
-                            values.item(j).getAttributes().getNamedItem("plugin").getTextContent(); //$NON-NLS-1$
+                    pluginId = values.item(j).getAttributes().getNamedItem("plugin").getTextContent(); //$NON-NLS-1$
                 } else if (nodeName.equals("ActionType")) { //$NON-NLS-1$
                     actionType = values.item(j).getTextContent();
                 } else if (nodeName.equals("Alphabet")) { //$NON-NLS-1$
@@ -118,8 +113,7 @@ public class ImportUtils {
             for (int j = 0; j < values.getLength(); j++) {
                 String nodeName = values.item(j).getNodeName();
                 if (nodeName.equals("Parameters")) { //$NON-NLS-1$
-                    dataObjectType =
-                            values.item(j).getAttributes().getNamedItem("dataobjecttype").getTextContent(); //$NON-NLS-1$
+                    dataObjectType = values.item(j).getAttributes().getNamedItem("dataobjecttype").getTextContent(); //$NON-NLS-1$
                     ai.setDataObjectType(dataObjectType);
                     NodeList params = values.item(j).getChildNodes();
 

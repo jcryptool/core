@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -22,20 +21,20 @@ import java.util.Hashtable;
  * @version 0.6.0
  */
 public class ActionItem {
-    private final String CRLF = System.getProperty("line.separator"); //$NON-NLS-1$
+    private static final String CRLF = System.getProperty("line.separator"); //$NON-NLS-1$
     /** The executed actions name. */
     private String actionName;
     /** The filename of the created file. */
     private String filename;
     /** The plug-in ID of the plug-in that executed the action, maybe empty. */
     private String pluginId = ""; //$NON-NLS-1$
-    /** The class of the used data object */
+    /** The class of the used data object. */
     private String dataObjectType = ""; //$NON-NLS-1$
-    /** The type of the action */
+    /** The type of the action. */
     private String actionType;
-    /** The name of the alphabet */
+    /** The name of the alphabet. */
     private String alphabet;
-    /** Table containing defined parameters */
+    /** Table containing defined parameters. */
     private Hashtable<String, String> params;
 
     public String getAlphabet() {
@@ -85,8 +84,9 @@ public class ActionItem {
     }
 
     public void addParam(final String key, final String value) {
-        if (value != null && key != null)
+        if (value != null && key != null) {
             this.params.put(key, value);
+        }
     }
 
     public String getParam(final String key) {
