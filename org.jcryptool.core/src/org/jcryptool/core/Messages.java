@@ -40,7 +40,6 @@ public class Messages extends NLS {
     public static String applicationActionBarAdvisor_Menu_Algorithms_Mac;
     public static String applicationActionBarAdvisor_Menu_Edit;
     public static String applicationActionBarAdvisor_Menu_File;
-    public static String applicationActionBarAdvisor_Menu_Help;
     public static String applicationActionBarAdvisor_Menu_New_File;
     public static String applicationActionBarAdvisor_Menu_Open_Perspective;
     public static String applicationActionBarAdvisor_Menu_Show_View;
