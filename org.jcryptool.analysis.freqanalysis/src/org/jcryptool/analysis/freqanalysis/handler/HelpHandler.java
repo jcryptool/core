@@ -24,7 +24,7 @@ import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
  */
 public class HelpHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        PlatformUI.getWorkbench().getHelpSystem().displayHelp(FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis");
+        PlatformUI.getWorkbench().getHelpSystem().displayHelp(FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
         return null;
     }
 }

@@ -49,6 +49,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 
@@ -422,7 +423,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
                             		GridData readoutDirChooserLData = new GridData();
                             		readoutDirChooser.setLayoutData(readoutDirChooserLData);
                             		readoutDirChooser.setDirection(false);
-                            		
+
                             		readoutDirChooser.getInput().addObserver(new Observer() {
 										public void update(Observable o, Object arg) {
 											if(arg==null) previewPlaintext();
@@ -495,7 +496,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
     private String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(in, "UTF-8")); //$NON-NLS-1$
+            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
         } catch (UnsupportedEncodingException e1) {
             LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e1);
         }
@@ -539,7 +540,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
         } else {
             if (manualInputState == 1)
                 result += " + " + Messages.TranspAnalysisUI_manualinput; //$NON-NLS-1$
-            else 
+            else
             if (manualInputState == 2)
                 result = Messages.TranspAnalysisUI_manualinput; //$NON-NLS-1$
         }
@@ -578,7 +579,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
             transpTable.setReadInOrder(readInMode, false);
             transpTable.setText(text, blocklength, !crop, croplength);
-            
+
             columnsReordered(transpTable.getColumnOrder());
 
             if (textWizard.getEditorFileName() != null) {
@@ -588,7 +589,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
                 hideObject(loadedFileLabel, false);
                 loadedFileLabel.setText(Messages.TranspAnalysisUI_loadedfile
                         + buildFileName(this.fileName, this.manualInputState));
-                
+
                 //because label wrapping could occur.
                 this.layout(true);
             }
@@ -711,7 +712,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
                 myDO.setKey(key);
                 myDO.setKey2("".toCharArray()); //$NON-NLS-1$
                 try {
-                    myDO.setInputStream(new BufferedInputStream(new ByteArrayInputStream(text.getBytes("UTF-8")))); //$NON-NLS-1$
+                    myDO.setInputStream(new BufferedInputStream(new ByteArrayInputStream(text.getBytes(IConstants.UTF8_ENCODING))));
                 } catch (UnsupportedEncodingException e) {
                     LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e);
                 }

@@ -34,19 +34,19 @@ public class MColor {
         buf[3] = (byte) ((x & 0x000000ff)) & 0xFF;
 
         if (Integer.toHexString(buf[0]).length() < 2)
-            out += "0" + Integer.toHexString(buf[0]);
+            out += "0" + Integer.toHexString(buf[0]); //$NON-NLS-1$
         else
             out += Integer.toHexString(buf[0]); //$NON-NLS-1$
         if (Integer.toHexString(buf[1]).length() < 2)
-            out += "0" + Integer.toHexString(buf[1]);
+            out += "0" + Integer.toHexString(buf[1]); //$NON-NLS-1$
         else
             out += Integer.toHexString(buf[1]); //$NON-NLS-1$
         if (Integer.toHexString(buf[2]).length() < 2)
-            out += "0" + Integer.toHexString(buf[2]);
+            out += "0" + Integer.toHexString(buf[2]); //$NON-NLS-1$
         else
             out += Integer.toHexString(buf[2]); //$NON-NLS-1$
         if (Integer.toHexString(buf[3]).length() < 2)
-            out += "0" + Integer.toHexString(buf[3]);
+            out += "0" + Integer.toHexString(buf[3]); //$NON-NLS-1$
         else
             out += Integer.toHexString(buf[3]); //$NON-NLS-1$
 

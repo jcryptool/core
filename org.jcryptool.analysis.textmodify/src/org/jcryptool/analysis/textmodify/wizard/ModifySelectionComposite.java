@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -33,6 +33,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
@@ -43,7 +44,7 @@ import org.jcryptool.core.operations.editors.EditorsManager;
  */
 /**
  * @author Simon
- * 
+ *
  */
 
 public class ModifySelectionComposite extends Composite implements Listener {
@@ -216,7 +217,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * This method initializes operationGroup
-     * 
+     *
      */
     private void createUppercaseGroup(final Composite parent) {
         GridData uppercaseButtonGridData = new GridData();
@@ -276,7 +277,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * This method initializes operationGroup
-     * 
+     *
      */
     private void createLeerGroup(final Composite parent) {
         GridLayout singleTransformationBoxLayout = new GridLayout();
@@ -314,7 +315,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * This method initializes operationGroup
-     * 
+     *
      */
     private void createUmlautGroup(final Composite parent) {
 
@@ -353,7 +354,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * This method initializes alphabetGroup
-     * 
+     *
      */
     private void createAlphabetGroup(final Composite parent) {
         GridData filterComboGridData = new GridData();
@@ -403,7 +404,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * This method initializes alphabetGroup
-     * 
+     *
      */
     private void createTryComposite(final Composite parent) {
 
@@ -449,7 +450,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * reads the current value from an input stream
-     * 
+     *
      * @param in the input stream
      */
     private String InputStreamToString(InputStream in) {
@@ -457,7 +458,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
             return null;
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
         } catch (UnsupportedEncodingException e1) {
             LogUtil.logError(TextmodifyPlugin.PLUGIN_ID, e1);
         }
@@ -486,7 +487,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     /**
      * Sets the example String which will be used in the "Preview transformation"
-     * 
+     *
      * @param pTryString the example text
      */
     public void setTryString(String pTryString) {

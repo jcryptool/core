@@ -365,6 +365,6 @@ public class EntropyUIresults extends Composite {
 		labelRed1.setText(twoD.format(entMatrix[0][8]*100)+" %"); //$NON-NLS-1$
 		labelEntn.setText("G("+(actual_n)+") = "+twoD.format(entMatrix[actual_n-1][6])); //$NON-NLS-1$ //$NON-NLS-2$
 		labelRedn.setText(twoD.format(entMatrix[actual_n-1][8]*100)+" %"); //$NON-NLS-1$
-		labelCond.setText("F("+actual_n+") = "+twoD.format(entMatrix[actual_n-1][0]));
+		labelCond.setText("F("+actual_n+") = "+twoD.format(entMatrix[actual_n-1][0])); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

@@ -25,12 +25,13 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AlphaConverter;
 import org.jcryptool.core.operations.dataobject.IDataObject;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.adfgvx.AdfgvxPlugin;
 
 public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
-	
+
 	public static final AdfgvxAlgorithmSpecification specification = new AdfgvxAlgorithmSpecification();
-	
+
 	public AdfgvxAlgorithm() {
         engine = new AdfgvxEngine();
     }
@@ -142,7 +143,7 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
 	private InputStream StringToInputStream(String in) {
         byte[] bytes = null;
         try {
-            bytes = in.getBytes("UTF-8");
+            bytes = in.getBytes(IConstants.UTF8_ENCODING);
         } catch (UnsupportedEncodingException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
         }
@@ -152,7 +153,7 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
 	private String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
         } catch (UnsupportedEncodingException e1) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, e1);
         }

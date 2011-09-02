@@ -22,13 +22,13 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
  * Calss for Frequency Analysis
  */
 public class FreqAnalysisCalc {
-	private String text = "";
+	private String text = ""; //$NON-NLS-1$
 	private FreqAnalysisData[] analysisAllchars = new FreqAnalysisData[0];
 	private FreqAnalysisData[] analysisArray = new FreqAnalysisData[0];
 
-	private String outputAnalysis = "";
+	private String outputAnalysis = ""; //$NON-NLS-1$
 	private int textlength = 0;
-	private DecimalFormat twoDigits = new DecimalFormat("#0.00");
+	private DecimalFormat twoDigits = new DecimalFormat("#0.00"); //$NON-NLS-1$
 
 
 	/** rotates a text by a specified length and filters characters at recurring positions
@@ -39,7 +39,7 @@ public class FreqAnalysisCalc {
 	 */
 	private String getOffsetCharString(final String text, final int offset, final int periodL)
 	{
-		String myText="";
+		String myText=""; //$NON-NLS-1$
 		if(periodL > 1)
 		{
 			for(int i=0; i<text.length(); i++)
@@ -73,7 +73,7 @@ public class FreqAnalysisCalc {
 	/** removes a character from the text
 	 */
 	private static String removeChar(final String s, final char c) {
-		   String r = "";
+		   String r = ""; //$NON-NLS-1$
 		   for (int i = 0; i < s.length(); i ++) {
 		      if (s.charAt(i) != c) {
 				r += s.charAt(i);
@@ -115,7 +115,7 @@ public class FreqAnalysisCalc {
 	{
 		String myText = inputText;
 
-		if(!"".equals(myText) || text == null)
+		if(!"".equals(myText) || text == null) //$NON-NLS-1$
 		{
 			text = getOffsetCharString(myText, offset, length);
 			if(tModifySettings != null)
@@ -138,20 +138,20 @@ public class FreqAnalysisCalc {
 	public final String charToReprString(final char input)
 	{
 	    if((int)input == 9) {
-	        return "TAB";
+	        return "TAB"; //$NON-NLS-1$
 	    }else if((int)input == 10) {
-	        return "LF";
+	        return "LF"; //$NON-NLS-1$
 	    }else if ((int)input == 13) {
-	        return "CR";
+	        return "CR"; //$NON-NLS-1$
 	    }else if((int)input < 32) {
-			return "."+(int)input;
+			return "."+(int)input; //$NON-NLS-1$
 		}else if((int)input == 32) {
-			return " ";
+			return " "; //$NON-NLS-1$
 		}
 		else if((int)input > 32) {
 			return String.valueOf(input);
 		}
-		return "UNKNOWN";
+		return "UNKNOWN"; //$NON-NLS-1$
 	}
 
 	/** finds a character's index in the specified analysis data set.
@@ -208,7 +208,7 @@ public class FreqAnalysisCalc {
 		// Relative frequency
 		for(int i=0; i<analysisAllchars.length; i++) analysisAllchars[i].relOcc = ((double)analysisAllchars[i].absOcc/(double)absoluteHits);
 		// outputString
-		for(int i=0; i<analysisAllchars.length; i++) outputAnalysis = outputAnalysis.concat(String.valueOf((char)(byte)(i)) + ":\t" + analysisAllchars[i].absOcc + "\n\t" + twoDigits.format(analysisAllchars[i].relOcc*100) + "%\n");
+		for(int i=0; i<analysisAllchars.length; i++) outputAnalysis = outputAnalysis.concat(String.valueOf((char)(byte)(i)) + ":\t" + analysisAllchars[i].absOcc + "\n\t" + twoDigits.format(analysisAllchars[i].relOcc*100) + "%\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		//there should be no zero weighted fields
 		//int elementCount = calcNonzeroElements(analysisAllchars);
 		int elementCount = analysisAllchars.length;

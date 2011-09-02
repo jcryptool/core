@@ -32,6 +32,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.core.util.constants.IConstants;
 
 public class TransformAction implements IWorkbenchWindowActionDelegate {
     /**
@@ -50,7 +51,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
         if (in != null) {
             BufferedReader reader = null;
             try {
-                reader = new BufferedReader(new InputStreamReader(in, "UTF-8")); //$NON-NLS-1$
+                reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
             } catch (UnsupportedEncodingException e1) {
                 LogUtil.logError(TextmodifyPlugin.PLUGIN_ID, e1);
             }
@@ -109,7 +110,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
                 IEditorInput customEditorInput = AbstractEditorService.createOutputFile(is);
                 ((PathEditorInput) customEditorInput).setTooltip(Messages.TransformAction_tooltip1
                         + oldEditorName
-                        + "; " + Messages.TransformAction_tooltip2 + transform.toString()); //$NON-NLS-2$
+                        + "; " + Messages.TransformAction_tooltip2 + transform.toString()); //$NON-NLS-2$ //$NON-NLS-1$
 
                 try {
                     EditorsManager.getInstance().openNewTextEditor(customEditorInput);

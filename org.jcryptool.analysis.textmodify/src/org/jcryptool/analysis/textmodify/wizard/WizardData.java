@@ -15,7 +15,7 @@ package org.jcryptool.analysis.textmodify.wizard;
  * saving the transformation wizard settings / configuring the transformation class
  */
 public class WizardData {
-	private String selectedAlphabetName = "";
+	private String selectedAlphabetName = ""; //$NON-NLS-1$
 	private boolean doUppercase = true;
 	private boolean uppercaseTransformationOn = true;
 	private boolean alphabetTransformationON = false;
@@ -99,7 +99,7 @@ public class WizardData {
 	 */
 	public final void setUnmodified()
 	{
-		selectedAlphabetName = "";
+		selectedAlphabetName = ""; //$NON-NLS-1$
 		doUppercase = true;
 		uppercaseTransformationOn = false;
 		alphabetTransformationON = false;

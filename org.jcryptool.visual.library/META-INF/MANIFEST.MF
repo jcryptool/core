@@ -5,7 +5,8 @@ Bundle-SymbolicName: org.jcryptool.visual.library;singleton:=true
 Bundle-Version: 0.9.5.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.visual.library
-Require-Bundle: org.eclipse.ui
+Require-Bundle: org.eclipse.ui;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: jcryptool.org, by Michael Gaber
-Import-Package: org.jcryptool.core.logging.utils
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants

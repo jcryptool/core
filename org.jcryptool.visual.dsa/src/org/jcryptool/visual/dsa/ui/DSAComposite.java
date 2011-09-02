@@ -52,6 +52,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.dsa.Action;
 import org.jcryptool.visual.dsa.DSAData;
@@ -533,7 +534,7 @@ public class DSAComposite extends Composite {
 			MessageDigest md;
 			try {
 				md = MessageDigest.getInstance("SHA-1");
-				rv = new BigInteger(md.digest(text.getBytes("UTF-8")));
+				rv = new BigInteger(md.digest(text.getBytes(IConstants.UTF8_ENCODING)));
 			} catch (final NoSuchAlgorithmException e) {
 			    LogUtil.logError(e);
 			} catch (final UnsupportedEncodingException e) {

@@ -29,6 +29,7 @@ import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.calc.FriedmanCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -209,11 +210,11 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
     private String InputStreamToString(InputStream in) {
     	BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
 		} catch (UnsupportedEncodingException e1) {
 			LogUtil.logError(FriedmanPlugin.PLUGIN_ID, e1);
 		}
-    	
+
     	StringBuffer myStrBuf = new StringBuffer();
         int charOut = 0;
         String output = ""; //$NON-NLS-1$

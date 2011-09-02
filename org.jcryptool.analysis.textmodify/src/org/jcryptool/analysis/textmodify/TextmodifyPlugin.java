@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class TextmodifyPlugin extends Plugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.analysis.textmodify";
+	public static final String PLUGIN_ID = "org.jcryptool.analysis.textmodify"; //$NON-NLS-1$
 
 	// The shared instance
 	private static TextmodifyPlugin plugin;

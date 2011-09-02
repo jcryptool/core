@@ -17,12 +17,12 @@ import java.text.DecimalFormat;
  * Class for Friedman-analysing a text
  */
 public class FriedmanCalc {
-	private String text = "";
-	private DecimalFormat twoDigits = new DecimalFormat("#0.0000");
+	private String text = ""; //$NON-NLS-1$
+	private DecimalFormat twoDigits = new DecimalFormat("#0.0000"); //$NON-NLS-1$
 	private int textlength = 0;
 	private double[] analysis;
 	private int maxShift = 0;
-	String outputAnalysis = "";
+	String outputAnalysis = ""; //$NON-NLS-1$
 		//(double)myAnalysis.analysis[realIndex]/(double)myAnalysis.getTextLength()
 
 
@@ -101,7 +101,7 @@ public class FriedmanCalc {
 	{
 
 	 	analysis = friedmantest(text, maxShift);
-	 	for(int i=0; i<analysis.length; i++) outputAnalysis = outputAnalysis.concat((int)(i+1) + ":\t" + twoDigits.format(analysis[i]) + "\n");
+	 	for(int i=0; i<analysis.length; i++) outputAnalysis = outputAnalysis.concat((int)(i+1) + ":\t" + twoDigits.format(analysis[i]) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 

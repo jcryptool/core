@@ -29,6 +29,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.constants.IConstants;
 
 public class Lib {
 
@@ -554,7 +555,7 @@ public class Lib {
 			MessageDigest md;
 			try {
 				md = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
-				rv = new BigInteger(md.digest(text.getBytes("UTF-8"))); //$NON-NLS-1$
+				rv = new BigInteger(md.digest(text.getBytes(IConstants.UTF8_ENCODING)));
 			} catch (final NoSuchAlgorithmException e) {
 				LogUtil.logError(e);
 			} catch (final UnsupportedEncodingException e) {

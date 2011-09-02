@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
 import java.io.BufferedReader;
@@ -42,6 +41,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 import com.cloudgarden.resource.SWTResourceManager;
@@ -89,8 +89,8 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
     private String reftext;
     private Vector<Reftext> reftexts;
     private FreqAnalysisCalc myLimitedAnalysis;
-	private SingleVanishTooltipLauncher tipLauncher;
-	private boolean appropriateAlphabetToBeDetected = false;
+    private SingleVanishTooltipLauncher tipLauncher;
+    private boolean appropriateAlphabetToBeDetected = false;
 
     /**
      * Contains reference texts for overlays
@@ -142,10 +142,10 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                 public void mouseDown(final MouseEvent evt) {
                     if (checkEditor()) {
                         text = getEditorText();
-                        if(btnReferenceTools.getSelection()) {
-                        	selectAppropriateAlphabet();
+                        if (btnReferenceTools.getSelection()) {
+                            selectAppropriateAlphabet();
                         } else {
-                        	appropriateAlphabetToBeDetected = true;
+                            appropriateAlphabetToBeDetected = true;
                         }
                         recalcGraph();
                     }
@@ -321,16 +321,13 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                                 btnReferenceTools.setText(Messages.FullAnalysisUI_enabledecrOverlay);
                                 btnReferenceTools.addMouseListener(new MouseAdapter() {
                                     public void mouseDown(MouseEvent evt) {
-                                        if (!btnReferenceTools.getSelection())
-                                            {
-                                        		myGraph.setAnalysis(myLimitedAnalysis);
-                                        		enableReferenceTools(true);
-                                            }
-                                        else
-                                            {
-                                        		myGraph.setAnalysis(myAnalysis);
-                                        		enableReferenceTools(false);
-                                            }
+                                        if (!btnReferenceTools.getSelection()) {
+                                            myGraph.setAnalysis(myLimitedAnalysis);
+                                            enableReferenceTools(true);
+                                        } else {
+                                            myGraph.setAnalysis(myAnalysis);
+                                            enableReferenceTools(false);
+                                        }
                                         myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
                                         myGraph.redraw();
                                     }
@@ -346,18 +343,12 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                                 combo1.setLayoutData(combo1LData1);
 
                                 // add reftexts
-                                reftexts
-                                        .add(new Reftext(
-                                                Messages.FullAnalysisUI_germanreftextname1,
-                                                org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_0)); //$NON-NLS-2$
-                                reftexts
-                                        .add(new Reftext(
-                                                Messages.FullAnalysisUI_germanreftextname2,
-                                                org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_1)); //$NON-NLS-2$
-                                reftexts
-                                        .add(new Reftext(
-                                                Messages.FullAnalysisUI_englishreftextname1,
-                                                org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_2)); //$NON-NLS-2$
+                                reftexts.add(new Reftext(Messages.FullAnalysisUI_germanreftextname1,
+                                        Messages.FullAnalysisUI_0)); //$NON-NLS-2$
+                                reftexts.add(new Reftext(Messages.FullAnalysisUI_germanreftextname2,
+                                        Messages.FullAnalysisUI_1)); //$NON-NLS-2$
+                                reftexts.add(new Reftext(Messages.FullAnalysisUI_englishreftextname1,
+                                        Messages.FullAnalysisUI_2)); //$NON-NLS-2$
 
                                 for (int i = 0; i < reftexts.size(); i++)
                                     combo1.add(reftexts.get(i).name);
@@ -388,15 +379,13 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                                     }
                                 });
 
-                                AbstractAlphabet[] alphas = AlphabetsManager.getInstance()
-                                        .getAlphabets();
+                                AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
                                 for (int i = 0; i < alphas.length; i++) {
                                     combo2.add(alphas[i].getName());
                                     if (alphas[i].isDefaultAlphabet()) {
                                         // combo2.setText(alphas[i].getName());
                                         combo2.select(i);
-                                        myOverlayAlphabet = String.valueOf(alphas[i]
-                                                .getCharacterSet());
+                                        myOverlayAlphabet = String.valueOf(alphas[i].getCharacterSet());
                                     }
                                 }
                             }
@@ -415,24 +404,23 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
         } catch (Exception e) {
             LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
         }
-        
+
         tipLauncher = new SingleVanishTooltipLauncher(this.getShell());
         enableReferenceTools(false);
     }
 
-
     protected void enableReferenceTools(boolean b) {
-    	combo1.setEnabled(b);
-    	combo2.setEnabled(b);
-    	label3.setEnabled(b);
-    	if(appropriateAlphabetToBeDetected ) {
-    		selectAppropriateAlphabet();
-    		appropriateAlphabetToBeDetected = false;
-    	}
-//    	btnReferenceTools.setSelection(b);
-	}
+        combo1.setEnabled(b);
+        combo2.setEnabled(b);
+        label3.setEnabled(b);
+        if (appropriateAlphabetToBeDetected) {
+            selectAppropriateAlphabet();
+            appropriateAlphabetToBeDetected = false;
+        }
+        // btnReferenceTools.setSelection(b);
+    }
 
-	/**
+    /**
      * opens a resource file stream
      *
      * @param filename the file path
@@ -526,19 +514,19 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
      * @param in the input stream
      */
     private String InputStreamToString(InputStream in) {
-    	BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		} catch (UnsupportedEncodingException e1) {
-			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
-		}
-    	
-    	StringBuffer myStrBuf = new StringBuffer();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
+        } catch (UnsupportedEncodingException e1) {
+            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
+        }
+
+        StringBuffer myStrBuf = new StringBuffer();
         int charOut = 0;
         String output = ""; //$NON-NLS-1$
         try {
             while ((charOut = reader.read()) != -1) {
-            	myStrBuf.append(String.valueOf((char) charOut));
+                myStrBuf.append(String.valueOf((char) charOut));
             }
         } catch (IOException e) {
             LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
@@ -546,7 +534,6 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
         output = myStrBuf.toString();
         return output;
     }
-
 
     /**
      * executes the necessary calculations when Vigenère parameters were changed
@@ -585,18 +572,15 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
         return r;
     }
 
-
     /**
-     * Returns a String which contains each character and control sequence the text contains only
-     * and only once.
+     * Returns a String which contains each character and control sequence the text contains only and only once.
      */
     private String countDifferentChars(final String text) {
 
         int i = 0;
         String myText = text;
         while (i < myText.length()) {
-            myText = myText.substring(0, i + 1).concat(
-                    removeChar(myText.substring(i + 1), myText.charAt(i)));
+            myText = myText.substring(0, i + 1).concat(removeChar(myText.substring(i + 1), myText.charAt(i)));
             i++;
         }
         return myText;
@@ -642,13 +626,12 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
     private void selectAppropriateAlphabet() {
         AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
         String prevAlpha = myOverlayAlphabet;
-        
+
         double bestrating = -99999;
         int bestindex = 0;
         double actualrating = 0;
         for (int i = 0; i < alphas.length; i++) {
-            actualrating = rateAlphabetTextDifference(String.valueOf(alphas[i].getCharacterSet()),
-                    text);
+            actualrating = rateAlphabetTextDifference(String.valueOf(alphas[i].getCharacterSet()), text);
             if (actualrating > bestrating) {
                 bestrating = actualrating;
                 bestindex = i;
@@ -656,12 +639,14 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
         }
 
         String bestAlphaString = String.valueOf(alphas[bestindex].getCharacterSet());
-        if(bestAlphaString != null && !bestAlphaString.equals(prevAlpha)) {
-        	if(combo2.isVisible() && combo2.isEnabled()) {
-        		tipLauncher.showNewTooltip(combo2.toDisplay(new Point((int)Math.round((double)(combo2.getSize().x)*0.612), combo2.getSize().y)), 9000, "", "The alphabet has been selected automatically.\nIf this alphabet does not seem appropriate, you may select another one.");
-        	}
+        if (bestAlphaString != null && !bestAlphaString.equals(prevAlpha)) {
+            if (combo2.isVisible() && combo2.isEnabled()) {
+                tipLauncher.showNewTooltip(combo2.toDisplay(new Point(
+                        (int) Math.round((double) (combo2.getSize().x) * 0.612), combo2.getSize().y)), 9000,
+                        "", Messages.FullAnalysisUI_5); //$NON-NLS-1$
+            }
         }
-        
+
         combo2.select(bestindex);
         combo2WidgetSelected(null);
     }
@@ -669,15 +654,13 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
     /**
      * analyses the selected overlay text.
      *
-     * @param alphabet limits the overlay analysis to a specific alphabet (each character only to be
-     *        contained once!)
+     * @param alphabet limits the overlay analysis to a specific alphabet (each character only to be contained once!)
      */
     private void analyzeOverlay(final String alphabet) {
         String overlayText = reftext;
         overlayAnalysis = new FreqAnalysisCalc(overlayText, 1, 0, null, alphabet);
-        if (text != null && text != "") {
-            myLimitedAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null,
-                    myOverlayAlphabet);
+        if (text != null && !text.isEmpty()) {
+            myLimitedAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null, myOverlayAlphabet);
             if (btnReferenceTools.getSelection())
                 myGraph.setAnalysis(myLimitedAnalysis);
             // else myGraph.setAnalysis(myAnalysis);
@@ -712,9 +695,8 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
 
     }
 
-    public final void execute(final int keyLength, final int keyPos, final int overlayIndex,
-            final boolean resetShift, final boolean executeCalc, final boolean whichTab,
-            final boolean activateOverlay) {
+    public final void execute(final int keyLength, final int keyPos, final int overlayIndex, final boolean resetShift,
+            final boolean executeCalc, final boolean whichTab, final boolean activateOverlay) {
         if (keyLength > 0) {
             if (keyLength == 1) {
                 button3.setSelection(true);
@@ -728,7 +710,7 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
             spinner1.setSelection(keyLength);
             changedVigOptions();
             if (keyPos < 0) {
-            	text = getEditorText();
+                text = getEditorText();
                 recalcGraph();
             }
         }
@@ -753,7 +735,7 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                 recalcGraph();
             }
 
-        }// System.out
+        }
 
         if (whichTab) {
             tabFolder1.setSelection(0);

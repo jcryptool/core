@@ -58,6 +58,7 @@ import org.jcryptool.analysis.transpositionanalysis.ui.ReadDirectionChooser;
 import org.jcryptool.analysis.transpositionanalysis.ui.TranspositionTableComposite;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo
@@ -540,7 +541,7 @@ public class TranspTextWizardPage extends WizardPage implements Listener {
 	private String InputStreamToString(InputStream in) {
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8")); //$NON-NLS-1$
+			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
 		} catch (UnsupportedEncodingException e1) {
 			LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e1);
 		}

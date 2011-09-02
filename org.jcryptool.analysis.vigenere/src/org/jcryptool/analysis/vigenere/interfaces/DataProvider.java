@@ -44,6 +44,7 @@ import org.jcryptool.core.operations.dataobject.classic.IClassicDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.vigenere.algorithm.VigenereAlgorithm;
 
 /**
@@ -132,7 +133,7 @@ public class DataProvider {
 	private String InputStreamToString(InputStream in) {
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8")); //$NON-NLS-1$
+			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
 		} catch (UnsupportedEncodingException e1) {
 			LogUtil.logError(VigenereBreakerPlugin.PLUGIN_ID, e1);
 		}
@@ -216,7 +217,7 @@ public class DataProvider {
                 throw new IllegalInputException("Could not find input stream.");
             }
 
-            InputStreamReader isr = new InputStreamReader(content, "UTF-8");
+            InputStreamReader isr = new InputStreamReader(content, IConstants.UTF8_ENCODING);
             BufferedReader br = new BufferedReader(isr);
             StringBuffer buffer = new StringBuffer();
             String line = br.readLine();
@@ -315,7 +316,7 @@ public class DataProvider {
             final String alphabet) {
         try {
             InputStream cis = new ByteArrayInputStream(
-                    chiffre.getBytes("UTF-8"));
+                    chiffre.getBytes(IConstants.UTF8_ENCODING));
             AbstractClassicAlgorithm algorithm = new VigenereAlgorithm();
 
             AbstractAlphabet alpha = AlphabetsManager.getInstance()
@@ -530,7 +531,7 @@ public class DataProvider {
             URL url = new URL(FreqAnalysisPlugin.getDefault().getBundle()
                     .getEntry("/"), name);
             InputStream in = url.openStream();
-            InputStreamReader isr = new InputStreamReader(in, "UTF-8");
+            InputStreamReader isr = new InputStreamReader(in, IConstants.UTF8_ENCODING);
             BufferedReader br = new BufferedReader(isr);
             StringBuffer buffer = new StringBuffer();
 
@@ -582,7 +583,7 @@ public class DataProvider {
     public void openEditor(final String content) throws IllegalActionException {
         try {
             InputStream cis = new ByteArrayInputStream(
-                    content.getBytes("UTF-8"));
+                    content.getBytes(IConstants.UTF8_ENCODING));
             IEditorInput output = AbstractEditorService.createOutputFile(cis);
             EditorsManager.getInstance().openNewTextEditor(output);
         } catch (UnsupportedEncodingException usEx) {

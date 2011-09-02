@@ -19,6 +19,7 @@ import java.util.Vector;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.alphabets.tools.AlphabetPersistence;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
@@ -116,7 +117,7 @@ public class AlphabetsPlugin extends Plugin {
 
 	public void performStoreAlphabets(Vector<Alphabet> alphabets, String path) throws IOException {
 		AlphabetPersistence.saveAlphabetsToXML(alphabets, new OutputStreamWriter(new FileOutputStream(path),
-		        Charset.forName("UTF-8"))); //$NON-NLS-1$
+		        Charset.forName(IConstants.UTF8_ENCODING)));
 	}
 
 	public static String getFolderPath(){

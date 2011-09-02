@@ -41,6 +41,7 @@ import org.jcryptool.analysis.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.core.util.constants.IConstants;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -298,7 +299,7 @@ public class EntropyUIconfig extends Composite {
     private String InputStreamToString(InputStream in) {
     	BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(in, "UTF-8")); //$NON-NLS-1$
+			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
 		} catch (UnsupportedEncodingException e1) {
 			LogUtil.logError(EntropyPlugin.PLUGIN_ID, e1);
 		}

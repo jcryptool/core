@@ -12,4 +12,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.analysis.textmodify.wizard;uses:="org.eclipse.jface.wizard,org.jcryptool.core.operations.alphabets,org.eclipse.swt.widgets"
 Bundle-Vendor: jcryptool.org
 Import-Package: org.jcryptool.core.logging.dialogs,
- org.jcryptool.core.logging.utils
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants

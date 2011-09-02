@@ -37,7 +37,7 @@ public class FriedmanView extends ViewPart implements IFriedmanAccess {
     public void createPartControl(Composite parent) {
         myUI = new FriedmanGraphUI(parent, SWT.NONE);
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
-                "org.jcryptool.analysis.friedman.friedman");
+                "org.jcryptool.analysis.friedman.friedman"); //$NON-NLS-1$
 
         hookActionBar();
     }

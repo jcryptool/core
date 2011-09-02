@@ -26,6 +26,7 @@ import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.modern.sha3.echo.ECHOAction;
 import org.jcryptool.crypto.modern.sha3.jh.JHAction;
 import org.jcryptool.crypto.modern.sha3.skein.algorithm.SkeinAction;
@@ -151,7 +152,7 @@ public class SHA3Action extends AbstractAlgorithmAction {
     public String convertStreamToString(InputStream stream) {
     	BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(stream, IConstants.UTF8_ENCODING));
 		} catch (UnsupportedEncodingException e1) {
 			LogUtil.logError(SHA3Plugin.PLUGIN_ID, e1);
 		}

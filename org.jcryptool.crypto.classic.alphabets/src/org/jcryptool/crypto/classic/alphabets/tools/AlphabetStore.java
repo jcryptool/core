@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabetStore;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.classic.alphabets.Alphabet;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
@@ -277,7 +278,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
     public void storeAlphabets() throws IOException {
         if (alphaPath == null || new File(alphaPath).canWrite()) {
             AlphabetPersistence.saveAlphabetsToXML(alphabets, new OutputStreamWriter(new FileOutputStream(alphaPath),
-                    Charset.forName("UTF-8"))); //$NON-NLS-1$
+                    Charset.forName(IConstants.UTF8_ENCODING)));
         } else {
             throw new IOException("Either no alphabet path was initialized or writing access is denied."); //$NON-NLS-1$
         }
@@ -285,7 +286,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
 
     private void loadAlphabets(File file) throws IOException {
         InputStreamReader isw = new InputStreamReader(new FileInputStream(file),
-                Charset.forName("UTF-8")); //$NON-NLS-1$
+                Charset.forName(IConstants.UTF8_ENCODING));
 
         alphabets = new Vector<Alphabet>(new AlphabetPersistence().loadAlphabetsFromXML(isw));
 

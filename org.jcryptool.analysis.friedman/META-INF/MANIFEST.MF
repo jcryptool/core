@@ -15,4 +15,5 @@ Export-Package: org.jcryptool.analysis.friedman,
 Bundle-Localization: plugin
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
- org.jcryptool.core.logging.utils
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants

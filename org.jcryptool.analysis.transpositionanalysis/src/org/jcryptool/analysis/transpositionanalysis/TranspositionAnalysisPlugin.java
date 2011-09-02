@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.analysis.transpositionanalysis";
+	public static final String PLUGIN_ID = "org.jcryptool.analysis.transpositionanalysis"; //$NON-NLS-1$
 
 	// The shared instance
 	private static TranspositionAnalysisPlugin plugin;

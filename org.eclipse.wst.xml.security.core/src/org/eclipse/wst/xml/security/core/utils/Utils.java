@@ -38,6 +38,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.wst.xml.security.core.XmlSecurityPlugin;
+import org.jcryptool.core.util.constants.IConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
@@ -517,7 +518,7 @@ public final class Utils {
         StreamResult result = new StreamResult(xmlAsWriter);
         TransformerFactory.newInstance().newTransformer().transform(source, result);
 
-        return new ByteArrayInputStream(xmlAsWriter.toString().getBytes("UTF-8"));
+        return new ByteArrayInputStream(xmlAsWriter.toString().getBytes(IConstants.UTF8_ENCODING));
     }
 
     /**
