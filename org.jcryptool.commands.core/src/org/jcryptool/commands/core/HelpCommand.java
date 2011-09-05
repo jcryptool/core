@@ -79,7 +79,7 @@ public class HelpCommand extends AbstractCommand {
     	return createStaticOptions();
     }
 
-    public static HashMap<String, Command> getCommands() {
+    public static synchronized HashMap<String, Command> getCommands() {
         if (commands == null) {
             commands = new HashMap<String, Command>();
             for (Command command : CommandFactory.loadExtensions()) {

@@ -70,7 +70,7 @@ public class CommandEvaluator {
 		}
 	}
 
-	public class EvaluationResult {
+	public static class EvaluationResult {
 		public EvaluationResult(String result, ResultType returnType) {
 			super();
 			this.result = result;
