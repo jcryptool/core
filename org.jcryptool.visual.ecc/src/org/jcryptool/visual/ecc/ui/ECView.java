@@ -183,6 +183,7 @@ public class ECView extends ViewPart {
                     fw.close();
                 }
             } catch (Exception ex) {
+                LogUtil.logError(ECCPlugin.PLUGIN_ID, ex);
             }
         }
     }

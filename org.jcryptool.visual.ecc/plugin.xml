@@ -27,7 +27,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="%Visual.name.0"
+            name="%view.name.0"
             viewId="org.jcryptool.visual.ecc.views.view"
             contextHelpId="org.jcryptool.visual.ecc.eccview">
       </Visual>
