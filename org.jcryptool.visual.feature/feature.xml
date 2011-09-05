@@ -6,12 +6,12 @@
       provider-name="jcryptool.org"
       plugin="org.jcryptool.visual">
 
-   <description url="http://sourceforge.net/projects/jcryptool">
+   <description url="https://github.com/jcryptool/crypto">
       The JCrypTool Visual Feature contains all available crypto visualizations of JCrypTool.
    </description>
 
-   <copyright url="http://sourceforge.net/projects/jctplugins">
-      Copyright (c) 2010 JCrypTool team and contributors
+   <copyright url="https://github.com/jcryptool/crypto">
+      Copyright (c) 2011 JCrypTool team and contributors
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License
 v1.0 which accompanies this distribution, and is available at

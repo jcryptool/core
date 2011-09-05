@@ -15,8 +15,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>net.sf.eclipsensis.installoptions.InstallOptionsBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.pde.PluginNature</nature>
+		<nature>net.sf.eclipsensis.installoptions.InstallOptionsNature</nature>
 	</natures>
 </projectDescription>
