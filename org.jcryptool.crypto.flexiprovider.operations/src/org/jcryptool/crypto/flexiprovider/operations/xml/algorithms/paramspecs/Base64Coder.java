@@ -1,16 +1,25 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.operations.xml.algorithms.paramspecs;
 
 /**
  * A Base64 Encoder/Decoder.
- * 
+ *
  * <p>
  * This class is used to encode and decode data in Base64 format as described in RFC 1521.
- * 
+ *
  * <p>
  * Home page: <a href="http://www.source-code.biz">www.source-code.biz</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
  * Multi-licensed: EPL/LGPL/AL.
- * 
+ *
  * <p>
  * Version history:<br>
  * 2003-07-22 Christian d'Heureuse (chdh): Module created.<br>
@@ -48,7 +57,7 @@ public class Base64Coder {
 
     /**
      * Encodes a string into Base64 format. No blanks or line breaks are inserted.
-     * 
+     *
      * @param s a String to be encoded.
      * @return A String with the Base64 encoded data.
      */
@@ -58,7 +67,7 @@ public class Base64Coder {
 
     /**
      * Encodes a byte array into Base64 format. No blanks or line breaks are inserted.
-     * 
+     *
      * @param in an array containing the data bytes to be encoded.
      * @return A character array with the Base64 encoded data.
      */
@@ -68,7 +77,7 @@ public class Base64Coder {
 
     /**
      * Encodes a byte array into Base64 format. No blanks or line breaks are inserted.
-     * 
+     *
      * @param in an array containing the data bytes to be encoded.
      * @param iLen number of bytes to process in <code>in</code>.
      * @return A character array with the Base64 encoded data.
@@ -99,7 +108,7 @@ public class Base64Coder {
 
     /**
      * Decodes a string from Base64 format.
-     * 
+     *
      * @param s a Base64 String to be decoded.
      * @return A String containing the decoded data.
      * @throws IllegalArgumentException if the input is not valid Base64 encoded data.
@@ -110,7 +119,7 @@ public class Base64Coder {
 
     /**
      * Decodes a byte array from Base64 format.
-     * 
+     *
      * @param s a Base64 String to be decoded.
      * @return An array containing the decoded data bytes.
      * @throws IllegalArgumentException if the input is not valid Base64 encoded data.
@@ -122,7 +131,7 @@ public class Base64Coder {
     /**
      * Decodes a byte array from Base64 format. No blanks or line breaks are allowed within the
      * Base64 encoded data.
-     * 
+     *
      * @param in a character array containing the Base64 encoded data.
      * @return An array containing the decoded data bytes.
      * @throws IllegalArgumentException if the input is not valid Base64 encoded data.

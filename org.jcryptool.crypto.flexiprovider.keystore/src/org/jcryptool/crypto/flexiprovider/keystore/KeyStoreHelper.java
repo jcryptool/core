@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.keystore;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,13 +48,13 @@ import de.flexiprovider.api.keys.SecretKeyGenerator;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 
 public class KeyStoreHelper {
-	
+
 	public static final String KEYSTOREHELPER_FAMILY = "keystorehelper-family";
 
 	public static class KeyStoreAliasNotifier extends Observable {
 		private KeyStoreAlias toNotifyAlias;
 		private boolean makeNotificationAtFirstObserver = false;
-		
+
 		@Override
 		public synchronized void addObserver(Observer o) {
 			super.addObserver(o);
@@ -53,7 +62,7 @@ public class KeyStoreHelper {
 				notifyAboutAlias(toNotifyAlias);
 			}
 		}
-		
+
 		public void notifyAboutAlias(KeyStoreAlias alias) {
 			toNotifyAlias = alias;
 			if(this.countObservers() > 0) {
@@ -65,7 +74,7 @@ public class KeyStoreHelper {
 			}
 		}
 	}
-	
+
 	public static KeyStoreAliasNotifier makeKeyPairByWizard(String keyType) {
 		LogUtil.logInfo("NewKeyPairAction"); //$NON-NLS-1$
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
@@ -74,7 +83,7 @@ public class KeyStoreHelper {
 		dialog.setMinimumPageSize(300, 350);
 
 		final KeyStoreAliasNotifier resultAlias = new KeyStoreAliasNotifier();
-		
+
 		int result = dialog.open();
 		if (result == Window.OK) {
 			if (wizard instanceof INewKeyWizard) {
@@ -144,7 +153,7 @@ public class KeyStoreHelper {
 						}
 						return Status.OK_STATUS;
 					}
-					
+
 					@Override
 					public boolean belongsTo(Object family) {
 						return family == KEYSTOREHELPER_FAMILY;
@@ -157,10 +166,10 @@ public class KeyStoreHelper {
 		} else {
 			resultAlias.notifyAboutAlias(null);
 		}
-		
+
 		return resultAlias;
 	}
-	
+
 	public static KeyStoreAliasNotifier makeSymmetricKeyByWizard(String keyType) {
 		LogUtil.logInfo("NewSymmetricKeyAction"); //$NON-NLS-1$
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
@@ -169,7 +178,7 @@ public class KeyStoreHelper {
 		dialog.setMinimumPageSize(300, 350);
 
 		final KeyStoreAliasNotifier resultAlias = new KeyStoreAliasNotifier();
-		
+
 		int result = dialog.open();
 		if (result == Window.OK) {
 			if (wizard instanceof INewKeyWizard) {
@@ -235,7 +244,7 @@ public class KeyStoreHelper {
 						}
 						return Status.OK_STATUS;
 					}
-					
+
 					@Override
 					public boolean belongsTo(Object family) {
 						return family == KEYSTOREHELPER_FAMILY;
@@ -248,14 +257,14 @@ public class KeyStoreHelper {
 		} else {
 			resultAlias.notifyAboutAlias(null);
 		}
-		
+
 		return resultAlias;
 	}
 
 	public static void makeKeyPairByWizard() {
 		makeKeyPairByWizard(KeyStoreAlias.EVERYTHING_MATCHER);
 	}
-	
+
 	public static void makeSymmetricKeyByWizard() {
 		makeSymmetricKeyByWizard(KeyStoreAlias.EVERYTHING_MATCHER);
 	}

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.commands.ui.eclipseconsole;
 
 import java.io.IOException;
@@ -62,21 +71,21 @@ public class CommandsUiStartup implements IStartup {
 		Observer monitorObserver = new Observer() {
 			public void update(Observable o, Object arg) {
 				String line = monitor.getLine();
-				
+
 				String result = Messages.CommandsUiStartup_eval_error;
 				try {
 					result = evaluator.evaluate(line).getResult();
 				} catch (ParseException e) {
 					LogUtil.logError(CommandsUIPlugin.PLUGIN_ID, e);
 				}
-				
+
 				IOConsoleOutputStream outStream = ioConsole.newOutputStream();
 				try {
 					outStream.write(result + "\n\n"); //$NON-NLS-1$
 				} catch (IOException e) {
 					LogUtil.logError(CommandsUIPlugin.PLUGIN_ID, e);
 				}
-				
+
 				try {
 					outStream.close();
 				} catch (IOException e) {

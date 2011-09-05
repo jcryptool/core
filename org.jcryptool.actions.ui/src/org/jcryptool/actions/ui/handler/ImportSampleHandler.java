@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.actions.ui.handler;
 
 import java.io.File;
@@ -26,25 +35,25 @@ import org.jcryptool.editor.text.action.StartUp;
  *
  */
 public class ImportSampleHandler extends AbstractHandler {
-	 
+
     /* (non-Javadoc)
      * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
      */
     public Object execute(ExecutionEvent event) throws ExecutionException {
-    	
+
         String filename = getCascadeFilename(event);
-        
+
         if (filename != null && filename.length() > 0) {
-        	
+
             ImportUtils importUtil = new ImportUtils(filename);
             boolean isValid = importUtil.validateActionCascade();
 
             if (isValid) {
-            	
+
             	openDefaultPerspective();
             	openActionView();
             	openSamplefileInEditor();
-            	
+
             	ActionCascadeService.getInstance().setCurrentActionCascade(importUtil.createActionCascade());
             } else {
                 MessageDialog.openInformation(HandlerUtil.getActiveShell(event), Messages.ImportHandler_2,
@@ -56,13 +65,13 @@ public class ImportSampleHandler extends AbstractHandler {
     }
 
 	private String getCascadeFilename(ExecutionEvent event) {
-		
+
 		String cascadeFilename = event.getParameter("cascadeFilename"); //$NON-NLS-1$
     	if(cascadeFilename == null)
     	{
     		throw new InvalidParameterException("command parameter cascadeFilename is required"); //$NON-NLS-1$
     	}
-    	
+
     	URL bundleUrl = null;
     	File cascadeFile = null;
 
@@ -72,11 +81,11 @@ public class ImportSampleHandler extends AbstractHandler {
             cascadeFile = new File(bundleUrl.getFile()
                     + "templates" + File.separatorChar //$NON-NLS-1$
                     + cascadeFilename); //$NON-NLS-1$
-            
+
         } catch (Exception ex) {
             LogUtil.logError("Error loading sample file " + cascadeFilename + " from plugin.", ex); //$NON-NLS-1$ //$NON-NLS-2$
         }
-        
+
     	ActionCascadeService service = ActionCascadeService.getInstance();
 
     	if (service.getCurrentActionCascade() != null && service.getCurrentActionCascade().getSize()>0){
@@ -98,7 +107,7 @@ public class ImportSampleHandler extends AbstractHandler {
 	private void openDefaultPerspective() {
 		IWorkbench workbench = PlatformUI.getWorkbench();
     	IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-    	
+
     	try {
     		// open the default perspective
 			workbench.showPerspective(org.jcryptool.core.Perspective.PERSPECTIVE_ID, window);
@@ -108,10 +117,10 @@ public class ImportSampleHandler extends AbstractHandler {
 	}
 
 	private void openActionView() {
-		
+
 		IWorkbench workbench = PlatformUI.getWorkbench();
     	IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-    	
+
     	try {
 			// open the action view
 			window.getActivePage().showView(ActionView.ID);

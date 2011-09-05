@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.integrator;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
@@ -22,8 +31,8 @@ import com.cloudgarden.resource.SWTResourceManager;
 
 /**
  * Displays a key pair, and offers two methods to control whether this
- * should be labeled the "public" or the "private" part. 
- * 
+ * should be labeled the "public" or the "private" part.
+ *
  * @author Simon L
  */
 public class NewKeyPairComposite extends NewKeyComposite {
@@ -33,16 +42,16 @@ public class NewKeyPairComposite extends NewKeyComposite {
 		//handle the obtaining and disposing of resources
 		SWTResourceManager.registerResourceUser(this);
 	}
-	
+
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
-	*/	
+	*/
 	protected void checkSubclass() {
 	}
-	
+
 	/**
 	 * Creates a NewKeyPairComposite, with the key pair that is represented by it's public part
-	 * 
+	 *
 	 * @param parent the parent control
 	 * @param publicKeyAlias the public key alias of the key pair
 	 */
@@ -62,16 +71,16 @@ public class NewKeyPairComposite extends NewKeyComposite {
 	protected String getKeyLabel() {
 		return Messages.getString("NewKeyComposite.keypair"); //$NON-NLS-1$
 	}
-	
+
 	@Override
 	protected void removeKeyFromKeystore() {
 		KeyStoreManager.getInstance().delete(KeyStoreManager.getInstance().getPrivateForPublic(this.getPublicKeyAlias()));
 		getRemoveObserver().notifyObservers(null);
 	}
-	
+
 	@Override
 	protected ImageDescriptor getKeyImageDescriptor() {
 		return KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key2.png");
 	}
-	
+
 }
