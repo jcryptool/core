@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import org.jcryptool.analysis.kegver.layer3.U;
 
 public class GaloisField {
-	
+
 	private BigInteger order = U.ZERO;
 	private BigInteger orderSuper = U.ZERO;
 	private GaloisField aGF_g = null;
@@ -15,20 +15,20 @@ public class GaloisField {
 	public GaloisField(BigInteger inOrder){
 		this.setOrder(inOrder);
 	}
-	
+
 	public GaloisField(BigInteger inOrder, BigInteger inOrderSuper){
 		this.setOrder(inOrder);
 //		this.setElements();
 		this.setOrderSuper(inOrderSuper);
 	}
-	
+
 	private BigInteger setOrderSuper(BigInteger inOrderSuper) {
 		this.orderSuper = inOrderSuper;
 		return this.getOrderSuper();
 	}
 
 	private BigInteger getOrderSuper() {
-		return this.getOrderSuper();
+		return orderSuper;
 	}
 
 	public GaloisField calcGF_h(){
