@@ -103,13 +103,14 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
         String bigrammneu;
         char zufallsbuchstabe;
         int x_1, y_1, x_2, y_2;
-        String keyString = "", rohtext = "";
+        StringBuilder keyString = new StringBuilder();
+        StringBuilder rohtext = new StringBuilder();
 
         for (int i = 0; i < key.length; i++)
-            keyString += alphaChars[key[i]];
+            keyString.append(alphaChars[key[i]]);
         for (int i = 0; i < input.length; i++)
-            rohtext += alphaChars[input[i]];
-        int[][] keySquare = getKeySquare(keyString);
+            rohtext.append(alphaChars[input[i]]);
+        int[][] keySquare = getKeySquare(keyString.toString());
         int[][] keyList = readKey(keySquare);
 
         // durch zwei teilbare Textlänge erzielen
@@ -120,7 +121,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
-            rohtext = rohtext + zufallsbuchstabe;
+            rohtext.append(zufallsbuchstabe);
         }
 
         // der eigentliche Ver-/Entschlüsselungsschritt
@@ -170,13 +171,14 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
         String bigrammneu;
         char zufallsbuchstabe;
         int x_1, y_1, x_2, y_2;
-        String keyString = "", rohtext = "";
+        StringBuilder keyString = new StringBuilder();
+        StringBuilder rohtext = new StringBuilder();
 
         for (int i = 0; i < key.length; i++)
-            keyString += alphaChars[key[i]];
+            keyString.append(alphaChars[key[i]]);
         for (int i = 0; i < input.length; i++)
-            rohtext += alphaChars[input[i]];
-        int[][] keySquare = getKeySquare(keyString);
+            rohtext.append(alphaChars[input[i]]);
+        int[][] keySquare = getKeySquare(keyString.toString());
         int[][] keyList = readKey(keySquare);
 
         // durch zwei teilbare Textlänge erzielen
@@ -187,7 +189,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
-            rohtext = rohtext + zufallsbuchstabe;
+            rohtext.append(zufallsbuchstabe);
         }
 
         // der eigentliche Ver-/Entschlüsselungsschritt

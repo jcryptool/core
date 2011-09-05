@@ -215,15 +215,17 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         String chiffre;
         String bigrammneu;
         char zufallsbuchstabe;
-        String origKeyString = "", keyString1 = "", keyString2 = "", rohtext = "";
+        StringBuilder origKeyString = new StringBuilder();
+        String keyString1 = "", keyString2 = "";
+        StringBuilder rohtext = new StringBuilder();
 
         for (int i = 0; i < key.length; i++)
-            origKeyString += alphaChars[key[i]];
-        keyString1 = origKeyString.split("SLGFLBSDFGKSDFGSDFGLK")[0];
-        keyString2 = origKeyString.split("SLGFLBSDFGKSDFGSDFGLK")[1];
+            origKeyString.append(alphaChars[key[i]]);
+        keyString1 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[0];
+        keyString2 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[1];
 
         for (int i = 0; i < input.length; i++)
-            rohtext += alphaChars[input[i]];
+            rohtext.append(alphaChars[input[i]]);
         int[][] keySquare1 = getKeySquare(keyString1);
         int[][] keySquare2 = getKeySquare(keyString2);
         int[][] keyList1 = new int[91][2];// = readKey(keySquare1);
@@ -261,7 +263,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
-            rohtext = rohtext + zufallsbuchstabe;
+            rohtext.append(zufallsbuchstabe);
         }
 
         // der eigentliche Entschlüsselungsschritt
@@ -302,15 +304,17 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         String chiffre;
         String bigrammneu;
         char zufallsbuchstabe;
-        String origKeyString = "", keyString1 = "", keyString2 = "", rohtext = "";
+        StringBuilder origKeyString = new StringBuilder();
+        String keyString1 = "", keyString2 = "";
+        StringBuilder rohtext = new StringBuilder();
 
         for (int i = 0; i < key.length; i++)
-            origKeyString += alphaChars[key[i]];
-        keyString1 = origKeyString.split("SLGFLBSDFGKSDFGSDFGLK")[0];
-        keyString2 = origKeyString.split("SLGFLBSDFGKSDFGSDFGLK")[1];
+            origKeyString.append(alphaChars[key[i]]);
+        keyString1 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[0];
+        keyString2 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[1];
 
         for (int i = 0; i < input.length; i++)
-            rohtext += alphaChars[input[i]];
+            rohtext.append(alphaChars[input[i]]);
         int[][] keySquare1 = getKeySquare(keyString1);
         int[][] keySquare2 = getKeySquare(keyString2);
         int[][] keyList1 = new int[91][2];// = readKey(keySquare1);
@@ -348,7 +352,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
-            rohtext = rohtext + zufallsbuchstabe;
+            rohtext.append(zufallsbuchstabe);
         }
 
         // der eigentliche Verschlüsselungsschritt

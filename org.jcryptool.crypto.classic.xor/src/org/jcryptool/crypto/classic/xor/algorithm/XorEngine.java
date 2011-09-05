@@ -42,7 +42,7 @@ public class XorEngine implements IClassicAlgorithmEngine {
         }
         int y = -1;
         for (int i = 0; y <= alphaLength; i++) {
-            y = new Double(java.lang.Math.pow(2, i)).intValue();
+            y = (int) (java.lang.Math.pow(2, i));
             if (alphaLength == y) {
                 alphaLengthIsPowerOfTwo = true;
             }
@@ -87,7 +87,7 @@ public class XorEngine implements IClassicAlgorithmEngine {
 
         int y = -1;
         for (int i = 0; y <= alphaLength; i++) {
-            y = new Double(java.lang.Math.pow(2, i)).intValue();
+            y = (int) (java.lang.Math.pow(2, i));
             if (alphaLength == y) {
                 alphaLengthIsPowerOfTwo = true;
             }
@@ -108,15 +108,12 @@ public class XorEngine implements IClassicAlgorithmEngine {
     private String readInput(String path) {
         FileTransferManager ftm = new FileTransferManager(path);
         char[] key = null;
-        String keyString = ""; //$NON-NLS-1$
-        // TODO this is quick and dirty: try to avoid use of Strings
-        // with this way of use buffering is useless, it is not necessary to
-        // read in more characters than plain-/ciphertext length
+        StringBuilder keyString = new StringBuilder();
         while (ftm.getEof() != -1) {
             key = ftm.readInput();
-            keyString = keyString + new String(key);
+            keyString.append(String.valueOf(key));
         }
         ftm.closeInputStream();
-        return keyString;
+        return keyString.toString();
     }
 }

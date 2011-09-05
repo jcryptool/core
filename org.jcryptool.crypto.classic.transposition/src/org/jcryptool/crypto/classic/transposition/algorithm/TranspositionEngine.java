@@ -45,23 +45,24 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
 
-    	String key1String = "", key2String = ""; //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder key1String = new StringBuilder();
+        StringBuilder key2String = new StringBuilder();
         TranspositionKey tKey1, tKey2;
 
         boolean firstReadInOrder = getReadOrderFromChar(alphaChars[key[0]], alphaChars);
         boolean firstReadOutOrder = getReadOrderFromChar(alphaChars[key[1]], alphaChars);
         //Reading the first key (first two chars are order instructions)
         for (int i = 2; i < key.length; i++)
-            key1String += alphaChars[key[i]];
-        tKey1 = new TranspositionKey(key1String, alphaChars).getReverseKey();
+            key1String.append(alphaChars[key[i]]);
+        tKey1 = new TranspositionKey(key1String.toString(), alphaChars).getReverseKey();
 
 
         boolean secondReadInOrder = getReadOrderFromChar(alphaChars[key[0]], alphaChars);
         boolean secondReadOutOrder = getReadOrderFromChar(alphaChars[key[1]], alphaChars);
         //Reading the second key (first two chars are order instructions)
         for(int i = 2; i < key2.length; i++)
-            key2String += String.valueOf((key2[i]));
-        tKey2 = new TranspositionKey(key2String, alphaChars).getReverseKey();
+            key2String.append(String.valueOf((key2[i])));
+        tKey2 = new TranspositionKey(key2String.toString(), alphaChars).getReverseKey();
 
         char[] text = new char[input.length];
         for (int i = 0; i < input.length; i++) text[i] = alphaChars[input[i]];
@@ -144,22 +145,23 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
 
-        String key1String = "", key2String = ""; //$NON-NLS-1$ //$NON-NLS-2$
+        StringBuilder key1String = new StringBuilder();
+        StringBuilder key2String = new StringBuilder();
         TranspositionKey tKey1, tKey2;
 
         boolean firstReadInOrder = getReadOrderFromChar(alphaChars[key[0]], alphaChars);
         boolean firstReadOutOrder = getReadOrderFromChar(alphaChars[key[1]], alphaChars);
         //Reading the first key (first two chars are order instructions)
         for (int i = 2; i < key.length; i++)
-            key1String += alphaChars[key[i]];
-        tKey1 = new TranspositionKey(key1String, alphaChars);
+            key1String.append(alphaChars[key[i]]);
+        tKey1 = new TranspositionKey(key1String.toString(), alphaChars);
 
         boolean secondReadInOrder = getReadOrderFromChar(alphaChars[key[0]], alphaChars);
         boolean secondReadOutOrder = getReadOrderFromChar(alphaChars[key[1]], alphaChars);
         //Reading the second key (first two chars are order instructions)
         for(int i = 2; i < key2.length; i++)
-            key2String += String.valueOf((key2[i]));
-        tKey2 = new TranspositionKey(key2String, alphaChars);
+            key2String.append(String.valueOf((key2[i])));
+        tKey2 = new TranspositionKey(key2String.toString(), alphaChars);
 
         char[] text = new char[input.length];
         for (int i = 0; i < input.length; i++) text[i] = alphaChars[input[i]];
