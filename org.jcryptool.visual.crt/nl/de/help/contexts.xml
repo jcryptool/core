@@ -2,6 +2,6 @@
 <contexts>
    <context id="view" title="Chinese Remainder Theorem">
       <description>TODO</description>
-      <topic href="nl/de/help/content/index.html" label="Topic"/>
+      <topic href="nl/de/help/content/index.html" label="Chinese Remainder Theorem"/>
    </context>
 </contexts>
