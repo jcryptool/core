@@ -343,15 +343,15 @@ public class EntropyUIresults extends Composite {
 	}
 
 	public void printSummary(EntropyCalc eC) {
-		Integer actual_n = new Integer(eC.getActualN());
-		Integer n = new Integer(eC.getN());
-		Integer diffChars = new Integer(eC.getMyData().getLengthAlphabet());
-		Integer totalChars = new Integer(eC.getMyData().getLengthFilteredText());
+		Integer actualN = Integer.valueOf(eC.getActualN());
+		Integer n = Integer.valueOf(eC.getN());
+		Integer diffChars = Integer.valueOf(eC.getMyData().getLengthAlphabet());
+		Integer totalChars = Integer.valueOf(eC.getMyData().getLengthFilteredText());
 		double signiveau = eC.getSigniveau();
 		double[][] entMatrix = eC.getResultMatrix();
 
-		if (actual_n == n) {
-			sTcriteria.setText(Messages.EntropyUIresults_24+ (actual_n+1) +Messages.EntropyUIresults_25);
+		if (actualN.equals(n)) {
+			sTcriteria.setText(Messages.EntropyUIresults_24+ (actualN+1) +Messages.EntropyUIresults_25);
 		} else {
 			sTcriteria.setText(Messages.EntropyUIresults_26+twoD.format(signiveau * 100)+Messages.EntropyUIresults_27);
 		}
@@ -363,8 +363,8 @@ public class EntropyUIresults extends Composite {
 		labelMaxent.setText(twoD.format(entMatrix[0][4]));
 		labelEnt1.setText("G(1) = "+twoD.format(entMatrix[0][6])); //$NON-NLS-1$
 		labelRed1.setText(twoD.format(entMatrix[0][8]*100)+" %"); //$NON-NLS-1$
-		labelEntn.setText("G("+(actual_n)+") = "+twoD.format(entMatrix[actual_n-1][6])); //$NON-NLS-1$ //$NON-NLS-2$
-		labelRedn.setText(twoD.format(entMatrix[actual_n-1][8]*100)+" %"); //$NON-NLS-1$
-		labelCond.setText("F("+actual_n+") = "+twoD.format(entMatrix[actual_n-1][0])); //$NON-NLS-1$ //$NON-NLS-2$
+		labelEntn.setText("G("+(actualN)+") = "+twoD.format(entMatrix[actualN-1][6])); //$NON-NLS-1$ //$NON-NLS-2$
+		labelRedn.setText(twoD.format(entMatrix[actualN-1][8]*100)+" %"); //$NON-NLS-1$
+		labelCond.setText("F("+actualN+") = "+twoD.format(entMatrix[actualN-1][0])); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

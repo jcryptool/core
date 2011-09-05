@@ -226,12 +226,12 @@ public class EntropyData {
     }
 
     private static String removeChar(String text, char c) {
-        String result = ""; //$NON-NLS-1$
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             if (text.charAt(i) != c)
-                result += text.charAt(i);
+                result.append(text.charAt(i));
         }
-        return result;
+        return result.toString();
     }
 
     /**
