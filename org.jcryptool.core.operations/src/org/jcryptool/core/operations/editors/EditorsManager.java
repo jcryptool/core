@@ -62,7 +62,7 @@ public class EditorsManager {
 	private Set<IEditorReference> lastEditorRefs;
 	private IEditorReference lastActiveEditorRef;
 
-	private class ChangeableObservable extends Observable {
+	private static class ChangeableObservable extends Observable {
 		public void setChanged() {
 			super.setChanged();
 		}
