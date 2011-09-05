@@ -73,13 +73,13 @@ public class FreqAnalysisCalc {
 	/** removes a character from the text
 	 */
 	private static String removeChar(final String s, final char c) {
-		   String r = ""; //$NON-NLS-1$
+        StringBuilder result = new StringBuilder();
 		   for (int i = 0; i < s.length(); i ++) {
 		      if (s.charAt(i) != c) {
-				r += s.charAt(i);
+				result.append(s.charAt(i));
 			}
 		      }
-		   return r;
+		   return result.toString();
 		}
 
 	/**
