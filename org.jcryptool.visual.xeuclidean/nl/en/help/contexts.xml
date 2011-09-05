@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="viewer" title="Extended Euclidean tutorial">
-      <description>This visualization demonstrates the calculations that can be performed on</description>
+   <context id="view" title="Extended Euclidean">
+      <description>TODO</description>
       <topic href="nl/de/help/content/index.html" label="Extended Euclidean tutorial"/>
    </context>
 </contexts>

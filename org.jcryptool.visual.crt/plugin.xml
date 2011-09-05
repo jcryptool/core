@@ -9,7 +9,7 @@
             icon="icons/view.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.crt.views.ChineseRemainderTheoremView"
-            id="org.jcryptool.visual.cr.views.ChineseRemainderView">
+            id="org.jcryptool.visual.crt.view">
       </view>
    </extension>
    <extension
@@ -22,8 +22,9 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
+            contextHelpId="org.jcryptool.visual.crt.view"
             name="%Visual.name.0"
-            viewId="org.jcryptool.visual.cr.views.ChineseRemainderView">
+            viewId="org.jcryptool.visual.crt.view">
       </Visual>
    </extension>
    <extension

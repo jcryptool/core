@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="friedman" title="Friedman-Test">
-      <description>Use the &lt;b&gt;Friedman-test&lt;/b&gt; to find the length of the key used to encrypt a Vigenère-encrypted text.&lt;br&gt;
+   <context id="friedman" title="Friedman Test">
+      <description>Use the &lt;b&gt;Friedman Test&lt;/b&gt; to find the length of the key used to encrypt a Vigenère-encrypted text.&lt;br&gt;
 After analyzing a text with a click on the main button, a graph should appear, which, by expectation, shows recurring peaks with a period of n. Find out n, which is the key length.&lt;br&gt;
 It is possible to interact with the graph by zooming (in: left mouse button click; out: right mouse button click) and dragging.</description>
       <topic href="$nl$/content/index.html" label="Friedman-test" />

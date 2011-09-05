@@ -46,7 +46,7 @@
       <Game
             name="%Game.Name.0"
             viewId="org.jcryptool.games.numbershark.View"
-            contextHelpId="org.jcryptool.games.numbershark.ConIDNumberShark">
+            contextHelpId="org.jcryptool.games.numbershark.view">
       </Game>
    </extension>
    <extension point="org.eclipse.help.contexts">
