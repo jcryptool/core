@@ -15,6 +15,7 @@
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
+            contextHelpId="org.jcryptool.analysis.entropy.view"
             name="%analysis.name"
             viewId="org.jcryptool.analysis.entropy.views.EntropyAnalysisView">
       </analysis>

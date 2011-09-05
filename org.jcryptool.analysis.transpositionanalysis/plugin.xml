@@ -19,6 +19,7 @@
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
+            contextHelpId="org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"
             name="%analysis.name"
             viewId="org.jcryptool.analysis.transpositionanalysis.views.TranspAnalysisView">
       </analysis>
