@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="freqanalysis" title="Frequency analysis">
-      <description>
-The Frequency Analysis provides various possibilities to work with a character occurrence distribution shown as a graph providing a simple and an extended view for different sets of options and analysis.
-</description>
+      <description>The Frequency Analysis provides various possibilities to work with a character occurrence distribution shown as a graph providing a simple and an extended view for different sets of options and analysis.</description>
       <topic href="$nl$/content/index.html" label="Frequency Analysis" />
    </context>
 
