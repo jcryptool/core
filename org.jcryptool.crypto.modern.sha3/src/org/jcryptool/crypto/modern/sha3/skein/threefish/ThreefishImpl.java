@@ -28,7 +28,7 @@ public class ThreefishImpl {
             final int counter, final long[] block) {
         StringBuilder sb = new StringBuilder();
         if (counterType == null) {
-            sb.append(String.format(" --- %s --- %n", identifier, counterType, counter));
+            sb.append(String.format(" --- %s --- %n", identifier, counter));
         } else {
             sb.append(String.format(" --- %s (%s = %d) --- %n", identifier, counterType, counter));
         }
