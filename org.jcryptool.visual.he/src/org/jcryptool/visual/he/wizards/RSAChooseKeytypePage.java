@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
@@ -14,7 +23,7 @@ import org.jcryptool.visual.he.Messages;
 
 /**
  * Page for choosing whether to create a public key or a private keypair.
- * 
+ *
  * @author Michael Gaber
  */
 public class RSAChooseKeytypePage extends WizardPage {
@@ -42,7 +51,7 @@ public class RSAChooseKeytypePage extends WizardPage {
 
     /**
      * sets up all the UI stuff.
-     * 
+     *
      * @param parent the parent composite.
      */
     public final void createControl(Composite parent) {
@@ -76,7 +85,7 @@ public class RSAChooseKeytypePage extends WizardPage {
 
     /**
      * getter for the pagename
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -85,7 +94,7 @@ public class RSAChooseKeytypePage extends WizardPage {
 
     /**
      * getter for the selection status of the keypair button.
-     * 
+     *
      * @return whether the user wants a keypair
      */
     public final boolean keypair() {

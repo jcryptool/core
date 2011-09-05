@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 import java.util.Stack;
@@ -11,19 +20,19 @@ import java.util.Stack;
 public class GHReCrypt {
 	/** the lattice determinant */
 	public static BigInteger det;
-	
+
 	/** the lattice root */
 	public static BigInteger root;
-	
+
 	/** the scheme parameters*/
 	public static FHEParams fheparams;
-	
+
 	/** the public key blocks */
 	public static BigInteger[] pkBlocksX;
-	
+
 	/** the encryption of the secret vector sigma */
 	public static BigInteger[] ctxts;
-	
+
 	/**
 	 * Returns the recrypted version of the encrypted number c, this recrypted version has smaller error so that
 	 * the homomorphic property is safeguarded.
@@ -35,7 +44,7 @@ public class GHReCrypt {
 	 * @param ctxts the encrypted secret vector sigma
 	 * @return The recrypted version of the encrypted number c.
 	 */
-	public static BigInteger recrypt(FHEParams fheparams, BigInteger c, BigInteger det, BigInteger root, 
+	public static BigInteger recrypt(FHEParams fheparams, BigInteger c, BigInteger det, BigInteger root,
 			BigInteger[] pkBlocksX, BigInteger[] ctxts) {
 		GHReCrypt.fheparams = fheparams;
 		GHReCrypt.det = det;
@@ -43,25 +52,25 @@ public class GHReCrypt {
 		GHReCrypt.pkBlocksX = pkBlocksX;
 		GHReCrypt.ctxts = ctxts;
 		BigInteger[][] vars = new BigInteger[fheparams.s][fheparams.p+1];
-		
+
 		for (int i = 0; i < fheparams.s; i++) {
 			for (int j = 0; j < fheparams.p+1; j++) {
 				vars[i][j] = new BigInteger("0");
 			}
 		}
-		
+
 		for (int i = 0; i < fheparams.s; i++) {
 			vars[i] = processBlock(vars[i], c, i);
 		}
-				
+
 		// Use the grade-school algorithm to add up these s (p+1)-bit numbers,
 		// return in c the encryption of the XOR of the two left bits
 		c = gradeSchoolAdd(vars, det);
 		return c;
 	}
-	
+
 	/**
-	 * Returns the recrypted version of the array of encrypted numbers c, this recrypted version 
+	 * Returns the recrypted version of the array of encrypted numbers c, this recrypted version
 	 * has smaller error so that the homomorphic property is safeguarded.
 	 * @param fheparams the scheme parameters
 	 * @param c the ciphertext
@@ -71,18 +80,18 @@ public class GHReCrypt {
 	 * @param ctxts the encrypted secret vector sigma
 	 * @return The recrypted version of the array of encrypted numbers c.
 	 */
-	public static BigInteger[] recrypt(FHEParams fheparams, BigInteger[] c, BigInteger det, BigInteger root, 
+	public static BigInteger[] recrypt(FHEParams fheparams, BigInteger[] c, BigInteger det, BigInteger root,
 			BigInteger[] pkBlocksX, BigInteger[] ctxts) {
-		
+
 		BigInteger[] out = new BigInteger[c.length];
 		for (int i = 0; i < c.length; i++) {
 			out[i] = recrypt(fheparams, c[i], det, root, pkBlocksX, ctxts);
 		}
 		return out;
 	}
-	
+
 	/**
-	 * Processes the public key blocks using the homomorphic property returns an 
+	 * Processes the public key blocks using the homomorphic property returns an
 	 * array of length p+1 containing the encryptions of the corresponding bits
 	 * @param vars holds the encryptions of the bits
 	 * @param c the ciphertext
@@ -92,15 +101,15 @@ public class GHReCrypt {
 	public static BigInteger[] processBlock(BigInteger[] vars, BigInteger c, int i) {
 		int nCtxts = (int) Math.ceil(2*Math.sqrt(fheparams.S));
 		int baseIdX = i*nCtxts;
-		
+
 		BigInteger factor = pkBlocksX[i];
 		factor = factor.multiply(c).mod(det);
-		
+
 		BigInteger[] psums = new BigInteger[vars.length]; //partial sums
 		for (int k = 0; k < vars.length; k++) vars[k]= new BigInteger("0") ; // initialize to zero
-		
+
 		int j,j1,j2;
-			
+
 		for (j = j1 =0; j1 < nCtxts-1; j1++) {       // sk-bits indexed by (j1,*) pairs
 		    for (int k = 0; k < psums.length; k++) psums[k] = new BigInteger("0");  // initialize to zero
 
@@ -110,12 +119,12 @@ public class GHReCrypt {
 		    	long binary = getBinaryRep(factor, det, vars.length);
 		    	if (factor.testBit(0)) {    // "xor" the LSB to column 0
 		    		binary ^= (1 << fheparams.p);
-		    	}	
+		    	}
 		    	// For every 1 bit, add the current ciphertext to the partial sums
 		    	for (int k = 0; k < psums.length; k++) if (((binary>>k)&1) == 1) {
 	    		 	int k2 = psums.length - k - 1;
 	    			psums[k2] = psums[k2].add(ctxts[baseIdX + j2]).mod(det);
-		    		
+
 		    	}
 		    	j++;              // done with this element
 		    	if (j < fheparams.S) { // compute next element = current * R mod det
@@ -128,14 +137,14 @@ public class GHReCrypt {
 		    	psums[k] = psums[k].multiply(ctxts[baseIdX + j1]).mod(det);
 		    	vars[k] = vars[k].add(psums[k]).mod(det);
 		    }
-		
+
 		    if (j >= fheparams.S) break;
 		}
 		// Sanity-check: j should be at least S, else we've missed some terms
 		if (j < fheparams.S) return null;
 		return vars;
 	}
-	
+
 	/**
 	 * Calculates n/d with nBits precision
 	 * @param n the numerator
@@ -149,42 +158,42 @@ public class GHReCrypt {
 		// integer division implies truncation
 		BigInteger temp  = (n.shiftLeft(nBits)).divide(d);
 		long sn = temp.longValue(); // a single precision variant
-		sn = (sn >> 1) + (sn & 1);     
+		sn = (sn >> 1) + (sn & 1);
 		return sn;
 	}
-	
+
 	/**
 	 * Use the grade-school algorithm to add up these s (p+1)-bit numbers.
 	 * @param vars the s (p+1)-bit numbers
-	 * @param det the determinant 
+	 * @param det the determinant
 	 * @return The sum of the s (p+1)-bit numbers modulo the determinant.
 	 */
-	static BigInteger gradeSchoolAdd(BigInteger[][] vars, BigInteger det) {				
+	static BigInteger gradeSchoolAdd(BigInteger[][] vars, BigInteger det) {
 		int i,j;
 		BigInteger out;
 		// Below it is more convenient to have each column of the matrix in
 		// a separate stack (since we would want to push carry bits on top)
 		@SuppressWarnings("unchecked")
 		Stack<BigInteger>[] stack = new Stack[vars[0].length];
-		
+
 		for(j = 0; j < vars[0].length; j++) {
 			stack[j] = new Stack<BigInteger>();
 			for (i = vars.length-1; i >= 0; i--) {
 				stack[j].push(vars[i][j]);
 			}
 		}
-		
+
 		BigInteger[] sp = null;
 
 		// add columns from right to left, upto column -1
-		for (j = vars[0].length - 1; j > 0; j--) { 
+		for (j = vars[0].length - 1; j > 0; j--) {
 			int s = stack[j].size();
 			int log = Functions.nextPowerOfTwo(s); // (log of) # of carry bits to compute
 			if (log > j) log = j;     // no more carry than what can reach col 0
 			if ((1<<log) > s) log--; // no more carry than what s bits can produce
 
 			sp = evalSymPolys(stack[j], 1<<log, det); // evaluate symmetric polys
-			
+
 			// The carry bits from this column are sp[2],sp[4],sp[8]... The result
 			// for that column is in sp[1] (but for most columns we don't need it)
 			int k = 2;
@@ -207,7 +216,7 @@ public class GHReCrypt {
 	 * Evaluates symmetric polynomials to be used in the grade school addition.
 	 * @param vars the stack containing the column of the matrix
 	 * @param deg the degree of the polynomial
-	 * @param det the lattice determinant 
+	 * @param det the lattice determinant
 	 * @return The symmetric polynomial evaluation of the column of the matrix.
 	 */
 	private static BigInteger[] evalSymPolys(Stack<BigInteger> vars, int deg, BigInteger det) {

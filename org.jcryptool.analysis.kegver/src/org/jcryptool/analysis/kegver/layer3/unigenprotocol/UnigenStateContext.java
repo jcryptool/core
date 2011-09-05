@@ -1,20 +1,29 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.unigenprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.CABehavior;
 import org.jcryptool.analysis.kegver.layer3.UserBehavior;
 
 public class UnigenStateContext{
-	
+
 	/*
 	 * Class variables
 	 */
-	
+
 	private static BothSetup bothSetup = null;
-	private static UserChecksPOK_1 userChecksPOK_1 = null;	
-	private static UserAbortsPOK_1 userAbortsPOK_1 = null;	
-	private static UserSends_Cv userSends_Cv = null;	
-	private static CaSends_u caSends_u = null;	
-	private static UserChecks_u userChecks_u = null;	
+	private static UserChecksPOK_1 userChecksPOK_1 = null;
+	private static UserAbortsPOK_1 userAbortsPOK_1 = null;
+	private static UserSends_Cv userSends_Cv = null;
+	private static CaSends_u caSends_u = null;
+	private static UserChecks_u userChecks_u = null;
 	private static UserAborts_u userAborts_u = null;
 	private static UserSends_Co userSends_Co = null;
 	private static UserExecutesPOK_o userExecutesPOK_o = null;
@@ -24,11 +33,11 @@ public class UnigenStateContext{
 	private static CaVerifiesPOK_z caVerifiesPOK_z = null;
 	private static CaAbortsPOK_z caAbortsPOK_z = null;
 	private static BothAreHappy bothAreHappy = null;
-	
+
 	/*
 	 * Class getter
 	 */
-	
+
 	public static BothSetup getBothSetup() {
 		return bothSetup;
 	}
@@ -88,11 +97,11 @@ public class UnigenStateContext{
 	public static BothAreHappy getBothAreHappy() {
 		return bothAreHappy;
 	}
-	
+
 	/*
 	 * Instance variables
 	 */
-	
+
 	private CABehavior aCA = null;
 	private UserBehavior aUser = null;
 	private UnigenData aUnigenData = null;
@@ -101,10 +110,10 @@ public class UnigenStateContext{
 	/*
 	 * Constructor
 	 */
-	
+
 	public UnigenStateContext(CABehavior inCA, UserBehavior inUser){
 		// Setup
-		this.initStates();	
+		this.initStates();
 		this.setCA(inCA);
 		this.setUser(inUser);
 		this.setState(UnigenStateContext.bothSetup);
@@ -112,11 +121,11 @@ public class UnigenStateContext{
 
 	private void initStates() {
 		UnigenStateContext.bothSetup = new BothSetup(this);
-		UnigenStateContext.userChecksPOK_1 = new UserChecksPOK_1(this);	
-		UnigenStateContext.userAbortsPOK_1 = new UserAbortsPOK_1(this);	
-		UnigenStateContext.userSends_Cv = new UserSends_Cv(this);	
-		UnigenStateContext.caSends_u = new CaSends_u(this);	
-		UnigenStateContext.userChecks_u = new UserChecks_u(this);	
+		UnigenStateContext.userChecksPOK_1 = new UserChecksPOK_1(this);
+		UnigenStateContext.userAbortsPOK_1 = new UserAbortsPOK_1(this);
+		UnigenStateContext.userSends_Cv = new UserSends_Cv(this);
+		UnigenStateContext.caSends_u = new CaSends_u(this);
+		UnigenStateContext.userChecks_u = new UserChecks_u(this);
 		UnigenStateContext.userAborts_u = new UserAborts_u(this);
 		UnigenStateContext.userSends_Co = new UserSends_Co(this);
 		UnigenStateContext.userExecutesPOK_o = new UserExecutesPOK_o(this);
@@ -127,11 +136,11 @@ public class UnigenStateContext{
 		UnigenStateContext.caAbortsPOK_z = new CaAbortsPOK_z(this);
 		UnigenStateContext.bothAreHappy = new BothAreHappy(this);
 	}
-	
+
 	/*
 	 * State switches
 	 */
-	
+
 	public void bothSetup() {
 		this.getState().bothSetup();
 	}
@@ -191,11 +200,11 @@ public class UnigenStateContext{
 	public void bothAreHappy() {
 		this.getState().bothAreHappy();
 	}
-	
+
 	/*
 	 * Getter and setter
 	 */
-	
+
 	public UserBehavior getUser() {
 		return this.aUser;
 	}
@@ -207,11 +216,11 @@ public class UnigenStateContext{
 		this.aUser = inUser;
 		return this.getUser();
 	}
-	
+
 	public CABehavior getCA(){
 		return this.aCA;
 	}
-	
+
 	private CABehavior setCA(CABehavior inCA) {
 		if (inCA == null){
 			throw new NullPointerException();
@@ -219,11 +228,11 @@ public class UnigenStateContext{
 		this.aCA = inCA;
 		return this.getCA();
 	}
-	
+
 	public UnigenStateBehavior getState() {
 		return this.aState;
 	}
-	
+
 	protected UnigenStateBehavior setState(UnigenStateBehavior inState) {
 		this.aState = inState;
 		return this.getState();

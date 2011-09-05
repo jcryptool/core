@@ -1,10 +1,19 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography.algorithm;
 
 import java.math.BigInteger;
 
 /**
  * Features the tools necessary to analyze the outputs of a
- * kleptographically compromised RSAMain implementation. 
+ * kleptographically compromised RSAMain implementation.
  * @author Patrick Vacek
  */
 public class RSAAttack {
@@ -64,7 +73,7 @@ public class RSAAttack {
 	}
 	public byte[] getSavedCipherBytes2() {
 		return savedCipherBytes2;
-	}	
+	}
 	public void setN1(BigInteger n1) {
 		this.n1 = n1;
 	}
@@ -88,13 +97,13 @@ public class RSAAttack {
 	}
 	public BigInteger getE2() {
 		return e2;
-	}	
+	}
 	public void setFactoredP(BigInteger factoredP) {
 		this.factoredP = factoredP;
 	}
 	public BigInteger getFactoredP() {
 		return factoredP;
-	}	
+	}
 	public void setQ1(BigInteger q1) {
 		this.q1 = q1;
 	}
@@ -118,7 +127,7 @@ public class RSAAttack {
 	}
 	public BigInteger getD2() {
 		return d2;
-	}	
+	}
 	public void setP2(BigInteger p2) {
 		this.p2 = p2;
 	}
@@ -136,7 +145,7 @@ public class RSAAttack {
 	public Integer getFixedTextsSaved() {
 		return fixedTextsSaved;
 	}
-	
+
 	/**
 	 * Constructor: initialize all numbers to zero and texts to empty.
 	 * @param klepto A reference to the kleptography driver class.
@@ -188,7 +197,7 @@ public class RSAAttack {
 
 	/**
 	 * Used in Fixed P attack only.
-	 * Decrypts the saved ciphertexts with the calculated private keys. 
+	 * Decrypts the saved ciphertexts with the calculated private keys.
 	 */
 	public void decryptFixed() {
 		setSavedDeciphered1(klepto.functions.decrypt(getSavedCipherBytes1(), getD1(), getN1()));
@@ -221,7 +230,7 @@ public class RSAAttack {
 		setFactoredP(encryptedP.modPow(attackerD, attackerN));
 		setP2(adjustedP.modPow(attackerD, attackerN));
 	}
-	
+
 	/**
 	 * Used in SETUP attack only.
 	 * Try to calculate private keys based on P and P'.
@@ -255,13 +264,13 @@ public class RSAAttack {
 	public void decryptSETUP() {
 		// Try to decipher; if it doesn't work, leave the result blank.
 		try {
-			setSavedDeciphered1(klepto.functions.decrypt(getSavedCipherBytes1(), getD1(), getN1()));	
+			setSavedDeciphered1(klepto.functions.decrypt(getSavedCipherBytes1(), getD1(), getN1()));
 		}
 		catch(ArithmeticException e) {
 			setSavedDeciphered1(""); //$NON-NLS-1$
 		}
 		try {
-			setSavedDeciphered2(klepto.functions.decrypt(getSavedCipherBytes1(), getD2(), getN1()));	
+			setSavedDeciphered2(klepto.functions.decrypt(getSavedCipherBytes1(), getD2(), getN1()));
 		}
 		catch(ArithmeticException e) {
 			setSavedDeciphered2(""); //$NON-NLS-1$

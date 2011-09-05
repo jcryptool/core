@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.crt.views;
 
 import java.math.BigInteger;
@@ -123,9 +132,9 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 						if (textfieldM.getText().length() == 0 && e.text.compareTo("0") == 0){
 							e.doit = false;
 						}else if(textfieldM.getSelection().x == 0 && e.keyCode == 48){
-							e.doit = false;	
+							e.doit = false;
 						}else{
-							e.doit = true;	
+							e.doit = true;
 						}
 					}else{
 						e.doit = false;
@@ -282,7 +291,7 @@ public class CheckingEquationDialog extends TitleAreaDialog implements Constants
 
 	/**
 	 * checks if all verifyButtons are disabled
-	 * @return true if all verifyButtons are disabled 
+	 * @return true if all verifyButtons are disabled
 	 */
 	private boolean checkVerifyButtons() {
 		boolean value = true;

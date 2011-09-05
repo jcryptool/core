@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.transposition.ui;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,7 +121,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 	public static AbstractAlphabet createAlphabet(final String alphabetContent) {
 		return new AbstractAlphabet() {
 			List<Character> content = stringToList(alphabetContent);
-			
+
 			public void setShortName(String shortName) {}
 			public void setName(String name) {}
 			public void setDefaultAlphabet(boolean b) {}
@@ -128,14 +137,14 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 				for(char c: characters.toCharArray()) l.add(c);
 				return l;
 			}
-			
-			
+
+
 			private String listToString(List<Character> input) {
 				StringBuffer result = new StringBuffer();
 				for(Character c: input) result.append(c);
 				return result.toString();
 			}
-			
+
 			private char[] toCharArray(List<Character> input) {
 				char[] result = new char[input.size()];
 				for(int i=0; i<input.size(); i++) result[i] = input.get(i);
@@ -150,14 +159,14 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 			public boolean contains(char e) {
 				return content.contains(e);
 			}
-			
+
 			@Override
 			public String toString() {
 				return listToString(content);
 			}
 		};
 	}
-	
+
 	private AbstractAlphabet internalGetCurrentAlphabet() {
 		if(alphabetInput != null) {
 			return alphabetInput.getContent();
@@ -317,7 +326,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 
 	/**
 	 * Sets the verificators that will be used within key string verification
-	 * 
+	 *
 	 * @param verificators the list of KeyInputVerificators
 	 */
 	public void setVerificators(List<KeyVerificator> verificators) {
@@ -331,7 +340,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 			protected int calcTooltipDuration(AbstractUIInput origin,
 					InputVerificationResult result) {
 				if(! isActiveInput.getContent()) return 0;
-				
+
 				// set infinite duration for the "not changing the encryption" tooltip
 				if(result.getResultType() == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { //$NON-NLS-1$
 					return Integer.MAX_VALUE;

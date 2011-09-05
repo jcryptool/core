@@ -1,9 +1,18 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3;
 
 import java.math.BigInteger;
 
 public class RSAData{
-	
+
 	/*
 	 * Instance variables
 	 */
@@ -29,16 +38,16 @@ public class RSAData{
 	private BigInteger get_d() {
 		return this.d;
 	}
-	
+
 	private BigInteger set_d(BigInteger in_d) {
 		this.d = in_d;
 		return this.get_d();
 	}
-	
+
 	private BigInteger get_e() {
 		return this.e;
 	}
-	
+
 	private BigInteger set_e(BigInteger in_e) {
 		this.e = in_e;
 		return this.get_e();
@@ -55,11 +64,11 @@ public class RSAData{
 		this.N = in_N;
 		return this.get_N();
 	}
-	
+
 	public BigInteger get_q() {
 		return this.q;
 	}
-	
+
 	private BigInteger set_q(BigInteger in_q) {
 		if(in_q == null || in_q.compareTo(BigInteger.ZERO) < 0){
 			throw new IllegalArgumentException();
@@ -67,7 +76,7 @@ public class RSAData{
 		this.q = in_q;
 		return this.get_q();
 	}
-	
+
 	public BigInteger get_p(){
 		return this.p;
 	}

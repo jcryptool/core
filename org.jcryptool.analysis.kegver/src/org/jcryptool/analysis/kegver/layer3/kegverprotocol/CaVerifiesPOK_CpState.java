@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.kegverprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.U;
@@ -57,15 +66,15 @@ public class CaVerifiesPOK_CpState extends KegverStateSuper implements KegverSta
 	}
 
 	public void caVerifiesPOK_Cp() {
-		
+
 		// Report
 		U.verbose(new Throwable(), "entered");
-		
+
 		// Execute this state
 		boolean isPOK_CpVerified = this.getKegver().getCA().verifyPOK_Cp();
 
 		// Report
-		U.verbose(new Throwable(), 
+		U.verbose(new Throwable(),
 				"CA: " + this.getKegver().getCA().toString_() +
 				", User: " + this.getKegver().getUser().toString_() +
 				", KegverData: " + this.getKegver().getKegverData() +
@@ -73,14 +82,14 @@ public class CaVerifiesPOK_CpState extends KegverStateSuper implements KegverSta
 				", isPOK_CpVerified: " + isPOK_CpVerified);
 		U.verbose(new Throwable(), "Assume isPOK_CpVerified was true");
 		isPOK_CpVerified = true;
-		
+
 		// Trigger next state
 		if (isPOK_CpVerified){
 			this.getKegver().setState(KegverStateContext.getUserSends_Cq());
-			this.getKegver().userSends_Cq();				
+			this.getKegver().userSends_Cq();
 		} else {
 			this.getKegver().setState(KegverStateContext.getCaAborts_Cp());
-			this.getKegver().caAborts_Cp();	
+			this.getKegver().caAborts_Cp();
 		}
 
 	}

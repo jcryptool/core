@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.grille.algorithm;
 
 public class KeySchablone extends Schablone implements Cloneable {
@@ -12,7 +21,7 @@ public class KeySchablone extends Schablone implements Cloneable {
     /**
      * setzt an der genannten Stelle ein Loch und sperrt die durch Rotation belegten 3 weiteren Positionen in der
      * Schablone
-     * 
+     *
      * @param row Zeilenkoordinate des Loches
      * @param column Spaltenkoordinate des Loches
      */
@@ -50,7 +59,7 @@ public class KeySchablone extends Schablone implements Cloneable {
 
     /**
      * prüft ob ein Feld der Schablone unbeschrieben bleibt
-     * 
+     *
      * @return falsch, wenn durch den schlüssel nicht alle felder beschrieben werden; wahr, wenn schlüssel zulässig ist
      */
     public boolean isValid() {

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 import static org.junit.Assert.fail;
@@ -9,7 +18,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class CyclicGroupTest {
-	
+
 //	private static int prime = 31;
 
 	@BeforeClass
@@ -28,11 +37,11 @@ public class CyclicGroupTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test	
+	@Test
 	public void testPrepareGenerators() {
-//		CyclicGroup.prepareGenerators(prime);		
+//		CyclicGroup.prepareGenerators(prime);
 	}
-	
+
 	@Test
 	public void test() {
 		int p = 5;
@@ -43,7 +52,7 @@ public class CyclicGroupTest {
 		int i = CyclicGroup.getGenerator();
 		System.out.println(i);
 	}
-	
+
 	@Test
 	public void testGetGenerator() {
 		fail("Not yet implemented");

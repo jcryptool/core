@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.kegverprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.CABehavior;
@@ -11,7 +20,7 @@ public class KegverStateContext{
 	/*
 	 * Class variables
 	 */
-	
+
 	private static BothSetupState bothSetup = null;
 	private static BothUnigen_rState bothUnigen_r = null;
 	private static CaAbortsUnigen_rState caAbortsUnigen_r = null;
@@ -36,11 +45,11 @@ public class KegverStateContext{
 	private static CaExecutesBlum_nState caExecutesBlum_n = null;
 	private static CaAbortsBlum_nState caAbortsBlum_n = null;
 	private static BothAreHappyState bothAreHappy = null;
-	
+
 	/*
 	 * Class getter
 	 */
-	
+
 	public static BothSetupState getBothSetup() {
 		return bothSetup;
 	}
@@ -136,23 +145,23 @@ public class KegverStateContext{
 	public static BothAreHappyState getBothAreHappy() {
 		return bothAreHappy;
 	}
-	
+
 	/*
 	 * Instance variables
 	 */
-	
+
 	private CABehavior aCA = null;
 	private UserBehavior aUser = null;
 	private KegverData aKegVerData = null;
 	private KegverStateBehavior aState = null;
-	
+
 	/*
 	 * Constructor
 	 */
-	
+
 	public KegverStateContext(CABehavior inCA, UserBehavior inUser){
 		// Setup
-		this.initStates();	
+		this.initStates();
 		this.setCA(inCA);
 		this.setUser(inUser);
 		this.setState(KegverStateContext.bothSetup);
@@ -184,7 +193,7 @@ public class KegverStateContext{
 		KegverStateContext.caAbortsBlum_n = new CaAbortsBlum_nState (this);
 		KegverStateContext.bothAreHappy = new BothAreHappyState (this);
 	}
-	
+
 	/*
 	 * State switches
 	 */
@@ -288,7 +297,7 @@ public class KegverStateContext{
 	/*
 	 * Getters and Setters
 	 */
-	
+
 	public UserBehavior getUser() {
 		return this.aUser;
 	}
@@ -300,11 +309,11 @@ public class KegverStateContext{
 		this.aUser = inUser;
 		return this.getUser();
 	}
-	
+
 	public CABehavior getCA(){
 		return this.aCA;
 	}
-	
+
 	private CABehavior setCA(CABehavior inCA) {
 		if (inCA == null){
 			inCA = new DummyCA();
@@ -312,20 +321,20 @@ public class KegverStateContext{
 		this.aCA = inCA;
 		return this.getCA();
 	}
-	
+
 	private KegverStateBehavior getState() {
 		return this.aState;
 	}
-	
+
 	/**
-	 * Protected so only callable from inside this package. 
-	 * 
+	 * Protected so only callable from inside this package.
+	 *
 	 */
 	protected KegverStateBehavior setState(KegverStateBehavior inState) {
 		this.aState = inState;
 		return this.getState();
 	}
-	
+
 	public KegverData getKegverData() {
 		return this.aKegVerData;
 	}

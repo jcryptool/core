@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal;
 
 import java.math.BigInteger;
@@ -17,7 +26,7 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
 
 /**
  * Shared data object for everything related to the ElGamal encryption.
- * 
+ *
  * @author Michael Gaber
  */
 public class ElGamalData {
@@ -75,7 +84,7 @@ public class ElGamalData {
 
     /**
      * constructor, setting {@link #action}
-     * 
+     *
      * @param action the {@link Action} to set to {@link #action}
      */
     public ElGamalData(final Action action) {
@@ -84,7 +93,7 @@ public class ElGamalData {
 
     /**
      * inherits all possible data from another data object
-     * 
+     *
      * @param oldData the other {@link ElGamalData} to copy data from
      */
     public void inherit(final ElGamalData oldData) {
@@ -132,7 +141,7 @@ public class ElGamalData {
 
     /**
      * extracts the parameters of the private key from the keystore via the {@link #privateAlias}
-     * 
+     *
      * @throws Exception if something went wrong while accessing the keystore
      */
     private void getPrivateParams() throws Exception {
@@ -147,7 +156,7 @@ public class ElGamalData {
 
     /**
      * whether this data object is from a standalone wizard
-     * 
+     *
      * @return the {@link #standalone}
      */
     public final boolean isStandalone() {
@@ -156,7 +165,7 @@ public class ElGamalData {
 
     /**
      * setter for the standalone property of this data-object.
-     * 
+     *
      * @param standalone the standalone property
      */
     public final void setStandalone(final boolean standalone) {
@@ -165,7 +174,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #modulus}
-     * 
+     *
      * @return the {@link #modulus}
      */
     public BigInteger getModulus() {
@@ -174,7 +183,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #generator}
-     * 
+     *
      * @return the {@link #generator}
      */
     public BigInteger getGenerator() {
@@ -183,7 +192,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #publicA}
-     * 
+     *
      * @return the {@link #publicA}
      */
     public BigInteger getPublicA() {
@@ -192,7 +201,7 @@ public class ElGamalData {
 
     /**
      * getter for the private {@link #a}
-     * 
+     *
      * @return the private {@link #a}
      */
     public BigInteger getA() {
@@ -201,7 +210,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #plainText}
-     * 
+     *
      * @return the {@link #plainText} or an empty string if none is set
      */
     public String getPlainText() {
@@ -214,7 +223,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #cipherText}
-     * 
+     *
      * @return the {@link #cipherText} or an empty string if none is set
      */
     public String getCipherText() {
@@ -227,7 +236,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #signature}
-     * 
+     *
      * @return the {@link #signature} or an empty string if none is set
      */
     public String getSignature() {
@@ -240,7 +249,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #simpleHash} property
-     * 
+     *
      * @return the {@link #simpleHash} property
      */
     public boolean getSimpleHash() {
@@ -249,7 +258,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #privateAlias}
-     * 
+     *
      * @return the {@link #privateAlias}
      */
     public KeyStoreAlias getPrivateAlias() {
@@ -258,7 +267,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #password}
-     * 
+     *
      * @return the {@link #password}
      */
     public String getPassword() {
@@ -267,7 +276,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #modulus}
-     * 
+     *
      * @param modulus the new {@link #modulus}
      */
     public void setModulus(final BigInteger modulus) {
@@ -276,7 +285,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #generator}
-     * 
+     *
      * @param generator the new {@link #generator}
      */
     public void setGenerator(final BigInteger generator) {
@@ -285,7 +294,7 @@ public class ElGamalData {
 
     /**
      * setter for the private {@link #a}
-     * 
+     *
      * @param a the new private {@link #a}
      */
     public void setA(final BigInteger a) {
@@ -294,7 +303,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #publicA}
-     * 
+     *
      * @param publicA the new {@link #publicA}
      */
     public void setPublicA(final BigInteger publicA) {
@@ -303,7 +312,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #publicAlias}
-     * 
+     *
      * @return the {@link #publicAlias}
      */
     public KeyStoreAlias getPublicAlias() {
@@ -312,7 +321,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #contactName}
-     * 
+     *
      * @return the {@link #contactName}
      */
     public String getContactName() {
@@ -321,7 +330,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #plainText}
-     * 
+     *
      * @param plainText the new {@link #plainText}
      */
     public void setPlainText(final String plainText) {
@@ -330,7 +339,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #cipherText}
-     * 
+     *
      * @param cipherText the new {@link #cipherText}
      */
     public void setCipherText(final String cipherText) {
@@ -339,7 +348,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #signature}
-     * 
+     *
      * @param signature the new {@link #signature}
      */
     public void setSignature(final String signature) {
@@ -348,7 +357,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #simpleHash} property
-     * 
+     *
      * @param simplehash the new {@link #simpleHash}
      */
     public void setSimpleHash(final boolean simplehash) {
@@ -357,7 +366,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #privateAlias}
-     * 
+     *
      * @param privateAlias the new {@link #privateAlias}
      */
     public void setPrivateAlias(final KeyStoreAlias privateAlias) {
@@ -366,7 +375,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #publicAlias}
-     * 
+     *
      * @param publicAlias the new {@link #publicAlias}
      */
     public void setPublicAlias(final KeyStoreAlias publicAlias) {
@@ -375,7 +384,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #contactName}
-     * 
+     *
      * @param contactName the new {@link #contactName}
      */
     public void setContactName(final String contactName) {
@@ -384,7 +393,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #action}
-     * 
+     *
      * @return the {@link #action}
      */
     public Action getAction() {
@@ -393,7 +402,7 @@ public class ElGamalData {
 
     /**
      * calculates {@link #generator}^{@link #b} mod {@link #modulus}
-     * 
+     *
      * @return {@link #generator}^{@link #b} mod {@link #modulus}
      */
     public BigInteger getGPowB() {
@@ -402,7 +411,7 @@ public class ElGamalData {
 
     /**
      * setter for the new {@link #password}
-     * 
+     *
      * @param password the {@link #password} to set
      */
     public void setPassword(final String password) {
@@ -411,7 +420,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #r}
-     * 
+     *
      * @return the {@link #r}
      */
     public BigInteger getR() {
@@ -420,7 +429,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #r}
-     * 
+     *
      * @param r the new {@link #r} to set
      */
     public void setR(final BigInteger r) {
@@ -429,7 +438,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #k}
-     * 
+     *
      * @return the {@link #k}
      */
     public BigInteger getK() {
@@ -438,7 +447,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #k}
-     * 
+     *
      * @param k the new {@link #k} to set
      */
     public void setK(final BigInteger k) {
@@ -447,7 +456,7 @@ public class ElGamalData {
 
     /**
      * getter for the {@link #b}
-     * 
+     *
      * @return the {@link #b}
      */
     public BigInteger getB() {
@@ -456,7 +465,7 @@ public class ElGamalData {
 
     /**
      * setter for the {@link #b}
-     * 
+     *
      * @param b the new {@link #b} to set
      */
     public void setB(final BigInteger b) {

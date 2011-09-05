@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography.ui;
 
 import org.eclipse.swt.SWT;
@@ -21,7 +30,7 @@ public class KleptoView extends ViewPart {
 	public Kleptography klepto;
 	public RSAKeyView keyView;
 	public RSAAttackView attackView;
-	
+
 	private TabFolder tabFolder;
 	private TabItem tabKeys;
 	private TabItem tabAttacks;
@@ -37,7 +46,7 @@ public class KleptoView extends ViewPart {
 	public enum PrimeGenSetting { HONEST, FIXED, PRF, PRG, SETUP };
 	/** The current prime generation setting. */
 	public PrimeGenSetting currentSetting;
-	
+
 	/**
 	 * The current step in the sequence of the key generation/attack.
 	 * 1. Default/intro. Honest/Fixed: explain PQ; PRF/PRG/SETUP: explain ID/index/seed/attacker keys
@@ -60,10 +69,10 @@ public class KleptoView extends ViewPart {
 	 * 16. Second text saved. Explain GCD/factorization.
 	 * 17. P factored. Explain calculating private keys.
 	 * 18. Private keys calculated. Explain decrypting texts.
-	 * 19. Texts decrypted. 
+	 * 19. Texts decrypted.
 	 */
 	public Integer currentStep;
-	
+
 	// Define all the colors at once.
 	public static final Color WHITE;
 	public static final Color BACKGROUND_GRAY;
@@ -83,7 +92,7 @@ public class KleptoView extends ViewPart {
 	public void createPartControl(final Composite parent) {
 		klepto = new Kleptography();
 		setUpGUI(parent);
-	}	
+	}
 
 	/**
 	 * Sets up the entire GUI, including the tab folder.
@@ -93,21 +102,21 @@ public class KleptoView extends ViewPart {
 	private void setUpGUI(Composite viewParent) {
 		// Start with a tabFolder to hold everything.
 		tabFolder = new TabFolder(viewParent, SWT.TOP);
-		
+
 		// Start with a tab and a scrolledComposite and then put the
-		// key generation and encryption composite within it. 
+		// key generation and encryption composite within it.
 		tabKeys = new TabItem(tabFolder, SWT.NONE);
 		tabKeys.setText(Messages.KleptoView_Keygen);
 		scKeys = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL);
 		scKeys.setExpandHorizontal(true);
 		scKeys.setExpandVertical(true);
-		
+
 		keyView = new RSAKeyView(scKeys, SWT.None, this);
-		
+
 		scKeys.setContent(keyView);
 		scKeys.setMinSize(keyView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		tabKeys.setControl(scKeys);
-		
+
 		// Start with a tab and a scrolledComposite and then put the
 		// attack composite within it. Note that the tab itself is left
 		// uninitialized until the user selects either Fixed P or SETUP.
@@ -116,9 +125,9 @@ public class KleptoView extends ViewPart {
 		scAttack = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL);
 		scAttack.setExpandHorizontal(true);
 		scAttack.setExpandVertical(true);
-		
+
 		attackView = new RSAAttackView(scAttack, SWT.None, this);
-		
+
 		scAttack.setContent(attackView);
 		scAttack.setMinSize(attackView.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 //		tabAttacks.setControl(scAttack);
@@ -136,7 +145,7 @@ public class KleptoView extends ViewPart {
 	public void setTabSelection(int tab) {
 		tabFolder.setSelection(tab);
 	}
-	
+
 	/**
 	 * Hides or shows the attack tab.
 	 * This is no hide tab function, so we have to try to dispose it instead.

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.rsa.ui.wizards.wizardpages;
 
 import static org.jcryptool.visual.library.Lib.isPrime;
@@ -29,14 +38,14 @@ import org.jcryptool.visual.rsa.RSAData;
 
 /**
  * Wizardpage for entering the parameters of a new Public Key.
- * 
+ *
  * @author Michael Gaber
  */
 public class NewPublicKeyPage extends WizardPage implements ModifyListener, VerifyListener {
 
     /**
      * Runnable for setting the calculated N in {@link NewPublicKeyPage#modifyText(ModifyEvent)}
-     * 
+     *
      * @author Michael Gaber
      */
     private class CalcRunnable implements Runnable {
@@ -67,7 +76,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /**
      * getter for the pagename constant for easy access.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -91,7 +100,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /**
      * Constructor for a new wizardpage getting the data object.
-     * 
+     *
      * @param data the data object
      */
     public NewPublicKeyPage(RSAData data) {
@@ -103,7 +112,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /**
      * Set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(Composite parent) {
@@ -121,7 +130,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         label.setLayoutData(gd2);
         label.setText(Messages.NewPublicKeyPage_choose_rsa_mod);
 
-        
+
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(gd3);
         label.setText(Messages.NewPublicKeyPage_suggestion);
@@ -288,7 +297,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /**
      * checks whether a number is a composite of exactly two prime numbers and is not a square.
-     * 
+     *
      * @param number the number to check
      * @return <code>true</code> if and only if the number is
      *         <ol>
@@ -331,7 +340,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /**
      * getter for the status of the save button to be accessed externally.
-     * 
+     *
      * @return whether the user wants to save the key
      */
     public final boolean wantSave() {

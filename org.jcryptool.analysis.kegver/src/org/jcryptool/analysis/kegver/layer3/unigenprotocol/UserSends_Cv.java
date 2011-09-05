@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.unigenprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.U;
@@ -24,23 +33,23 @@ public class UserSends_Cv extends UnigenStateSuper implements
 	public void userSends_Cv() {
 		// Report
 		U.verbose(new Throwable(), "entered");
-		
+
 		// Execute this state
-		
+
 		this.getUnigen().getUnigenData().setCommitment_Cv(
-				this.getUnigen().getUser().calcCommitment_Cv());		
-		
+				this.getUnigen().getUser().calcCommitment_Cv());
+
 		// Report
-		U.verbose(new Throwable(), 
+		U.verbose(new Throwable(),
 				"CA: " + this.getUnigen().getCA().toString_() +
 				", User: " + this.getUnigen().getUser().toString_() +
-				", UnigenData: " + this.getUnigen().getUnigenData() + 
-				", POK_1: " + this.getUnigen().getUnigenData().toString() + 
+				", UnigenData: " + this.getUnigen().getUnigenData() +
+				", POK_1: " + this.getUnigen().getUnigenData().toString() +
 				", Commitment_Cv: " + this.getUnigen().getUnigenData().getCommitment_Cv().toString());
 
 		// Trigger next state
 		this.getUnigen().setState(UnigenStateContext.getCaSends_u());
-		this.getUnigen().caSends_u();			
+		this.getUnigen().caSends_u();
 	}
 
 	public void caSends_u() {

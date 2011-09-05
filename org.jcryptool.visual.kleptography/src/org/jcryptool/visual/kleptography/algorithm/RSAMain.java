@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography.algorithm;
 
 import java.math.BigInteger;
@@ -188,7 +197,7 @@ public class RSAMain {
 	public BigInteger getNPrime() {
 		return nPrime;
 	}
-	
+
 	/**
 	 * Constructor: initialize all BigInts to zero and init flags to false.
 	 * @param klepto A reference to the kleptography driver class.
@@ -249,7 +258,7 @@ public class RSAMain {
 	private void genHonestQ() {
 		setQ(BigInteger.probablePrime(klepto.functions.getBitCount() / 2, klepto.functions.getRandom()));
 	}
-		
+
 	/**
 	 * Verifies that a given number actually is prime.
 	 * @param number The number to check.
@@ -258,7 +267,7 @@ public class RSAMain {
 	public boolean verifyPrime(BigInteger number) {
 		return number.isProbablePrime(100);
 	}
-	
+
 	/**
 	 * Verifies that a given number is long enough (bit length / 2).
 	 * @param num The number to check.
@@ -267,7 +276,7 @@ public class RSAMain {
 	public boolean verifyHalfBitLength(BigInteger num) {
 		return num.bitLength() == klepto.functions.getBitCount() / 2;
 	}
-	
+
 	/**
 	 * Verifies that two numbers are not equal.
 	 * @param num1 The first number.
@@ -277,7 +286,7 @@ public class RSAMain {
 	public boolean verifyNotEqual(BigInteger num1, BigInteger num2) {
 		return !num1.equals(num2);
 	}
-	
+
 	/**
 	 * The first time through generates honest primes P and Q, and
 	 * each call thereafter only generates a new (honest) prime Q,
@@ -635,7 +644,7 @@ public class RSAMain {
 	public void generateRandomE() {
 		setE(klepto.functions.generateE(getPhi()));
 	}
-	
+
 	/**
 	 * Sets a default value for E. The standard value is 2^16+1 = 65537x10 = 10001x16.
 	 * However, if the bit length is over 16, this value will be greater than Phi, which is less
@@ -656,7 +665,7 @@ public class RSAMain {
 	public boolean verifyESize(BigInteger e) {
 		return e.compareTo(BigInteger.ONE) >= 1 && e.compareTo(phi) <= -1;
 	}
-	
+
 	/**
 	 * Verifies that a given number is relatively prime to Phi.
 	 * @param e The number to check.

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 import static org.junit.Assert.assertFalse;
@@ -15,7 +24,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class UTest_ {
-	
+
 	private static int inDividend2 = 3;
 	private static int inDivisor = 4;
 	private static BigInteger SEVEN = null;
@@ -44,7 +53,7 @@ public class UTest_ {
 	/*
 	 * Test
 	 */
-	
+
 	@Test
 	public void testConstants(){
 		assertSame(BigInteger.ZERO, U.ZERO);
@@ -62,7 +71,7 @@ public class UTest_ {
 		assertFalse(U.isCongruent(U.bi(4), inDividend2, inDivisor));
 		assertFalse(U.isCongruent(U.bi(1), inDividend2, inDivisor));
 	}
-	
+
 	@Test(expected=IllegalArgumentException.class)
 	public void testIsCongruent2(){
 		assertFalse(U.isCongruent(U.bi(0), inDividend2, inDivisor));
@@ -84,8 +93,8 @@ public class UTest_ {
 		boolean allGood = true;
 		for ( int i = 0 ; i < 1000 ; i ++ ) {
 			b = U.selectUniformlyFrom0To(max);
-			if( 
-					b.compareTo(U.ZERO) < 0 
+			if(
+					b.compareTo(U.ZERO) < 0
 					|| b.compareTo(max) > 0){
 				allGood = false;
 				break;
@@ -93,7 +102,7 @@ public class UTest_ {
 		}
 		assertTrue(allGood);
 	}
-	
+
 	@Test (expected=IllegalArgumentException.class)
 	public void testSelectBigInteger2() {
 		U.probablePrime(1);
@@ -144,7 +153,7 @@ public class UTest_ {
 		BigInteger in_q = U.probablePrime(512);
 		BigInteger in_e = U.probablePrime(512);
 		RSAData aRSAData = U.keygen(in_p, in_q, in_e);
-		
+
 		assertSame(in_p, aRSAData.get_p());
 		assertSame(in_q, aRSAData.get_q());
 		assertTrue(in_p.multiply(in_q).equals(aRSAData.get_N()));
@@ -164,23 +173,23 @@ public class UTest_ {
 		int k = 512;
 		BigInteger e = U.probablePrime(k);
 		double t = Math.pow(2, -101);
-		RSAData aRSAData = U.keygen(k, e, t);	
+		RSAData aRSAData = U.keygen(k, e, t);
 		assertTrue(aRSAData.get_p().bitLength() == k+1); // TODO: muss p.bitlength = k sein? oder reicht >k
 	}
 
 	@Test
 	public void testOffset(){
-		int k = 1; 
+		int k = 1;
 		final BigInteger _2powkminus1 = U.TWO.pow(k - 1);
 		final BigInteger _2powk_minus1 = (((U.TWO).pow(k)).subtract(U.ONE)).negate();
-		
+
 		BigInteger r = U.selectUniformlyFromXTo(_2powkminus1, _2powk_minus1);
 		for ( int i = 0 ; i < 100; i++){
 			r = U.selectUniformlyFromXTo(_2powkminus1, _2powk_minus1);
 			assertTrue(r.bitLength() <= 2); // TODO Offset falsch, Range 2^k-1 -1, offset 2^k-1
 		}
 	}
-	
+
 	@Test
 	public void testJacobi() {
 		assertTrue(U.jacobi(EIGHT, SEVEN) == 1);

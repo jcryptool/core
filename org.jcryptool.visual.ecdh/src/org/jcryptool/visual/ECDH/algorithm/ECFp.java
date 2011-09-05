@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.ECDH.algorithm;
 
 import java.util.ArrayList;
@@ -5,7 +14,7 @@ import java.util.ArrayList;
 public class ECFp extends EC{
 	public static final int ECFp = 1;
 	private int P;
-	
+
 	public ECFp() {
 		 A = -1;
 		 B = -1;
@@ -19,7 +28,7 @@ public class ECFp extends EC{
 	public int getP() {
 		return P;
 	}
-	
+
 	@Override
 	public int getType() {
 		return ECFp;
@@ -36,7 +45,7 @@ public class ECFp extends EC{
 		P = (p > 3 ? p : 3); //P cannot be lower than 3
 		updateCurve();
 	}
-	
+
 	@Override
 	protected void updateCurve() {
 		if(A < 0 || A > P || B < 0 || B > P || -16 * (4 * Math.pow(A, 3) + 27 * Math.pow(B, 2)) == 0) {
@@ -47,7 +56,7 @@ public class ECFp extends EC{
 		}
 		ArrayList<ECPoint> list = new ArrayList<ECPoint>();
 		numPoints = 1;
-		
+
 		//search the curve for points
 		for(int x = 0; x < P; x++) {
 			for(int y = 0; y < P; y++) {
@@ -56,7 +65,7 @@ public class ECFp extends EC{
 				if(left == right) {
 					list.add(new ECPoint(x, y));
 					numPoints++;
-					
+
 					// When y != 0, the point is mirrored on the x-axis
 					if(y != 0) {
 						list.add(new ECPoint(x, P - y));
@@ -70,13 +79,13 @@ public class ECFp extends EC{
 				}
 			}
 		}
-		
+
 		//set the points to the array
 		points = new ECPoint[list.size()];
 		for(int i = 0; i < points.length; i++)
 			points[i] = list.get(i);
 	}
-	
+
 	public ECPoint addPoints(ECPoint p, ECPoint q) {
 		if(p == null)
 			return q;
@@ -102,8 +111,8 @@ public class ECFp extends EC{
 	}
 
 	/**
-	 * Calculates i%p within 0 <= i%p < p 
-	 * @param i - the integer  
+	 * Calculates i%p within 0 <= i%p < p
+	 * @param i - the integer
 	 * @param p - the modulo
 	 * @return the value of i%p there the result >= 0
 	 */
@@ -113,7 +122,7 @@ public class ECFp extends EC{
 			ret += p;
 		return ret;
 	}
-	
+
 	/**
 	 * Calculates the modular multiplicative inverse
 	 * @param n
@@ -123,7 +132,7 @@ public class ECFp extends EC{
 	public int mmi(int m, int n) {
 		int[] a = {1, 0, m};
 		int[] b = {0, 1, n};
-		
+
 		while(b[2] != 1 && b[2] != 0) {
 			int q = a[2] / b[2];
 			int[] t = {a[0] - q * b[0], a[1] - q * b[1], a[2] - q * b[2]};
@@ -138,7 +147,7 @@ public class ECFp extends EC{
 		else
 			return b[1];
 	}
-	
+
 	public String toString() {
 		String s = "(y^2) mod " + P + " = (x^3"; //$NON-NLS-1$ //$NON-NLS-2$
 		if(A == 1)

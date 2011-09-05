@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography.algorithm;
 
 import java.math.BigInteger;
@@ -21,13 +30,13 @@ public class RSAFunctions {
 	 * (Only valid input is accepted, though!)
 	 */
 	private int bitCount = 64;
-	
+
 	/**
 	 * bitCount / 8, rounded down. This is the number of bytes that count as one
-	 * block of the message and thus are calculated as one unit. 
+	 * block of the message and thus are calculated as one unit.
 	 */
 	private int blockSizeMessage = 8;
-	
+
 	/**
 	 * bitCount / 8, rounded up. This is the number of bytes that count as one
 	 * block of the ciphertext and thus are calculated as one unit.
@@ -39,7 +48,7 @@ public class RSAFunctions {
 	 * input message into bytes and the deciphered encrypted text back
 	 * into plaintext. Changing this may require additional changes to
 	 * the encryption/decryption methods. I have found UTF-16 to work
-	 * best since it handles most special characters without a problem. 
+	 * best since it handles most special characters without a problem.
 	 */
 	public static final String charEncoding = "UTF-16BE"; //$NON-NLS-1$
 
@@ -71,7 +80,7 @@ public class RSAFunctions {
 	 * pair is (11,13) and N = 143, which will still cause problems for non ASCII-7 characters.
 	 * To be able to encrypt all UTF-16 characters, the minimum bit length is 18.
 	 * (For SETUP attacks, though, bitCount must be divisible by 4, thus the minimum is then 20.
-	 * @param bitCount The key bit size. 
+	 * @param bitCount The key bit size.
 	 */
 	public void setBitCount(int bitCount) {
 		this.bitCount = bitCount;
@@ -95,7 +104,7 @@ public class RSAFunctions {
 	public final int getBlockSizeCipher() {
 		return blockSizeCipher;
 	}
-	
+
 	public Random getRandom() {
 		return random;
 	}
@@ -139,7 +148,7 @@ public class RSAFunctions {
 	/**
 	 * Calculates D by means of solving for the modular inverse of E mod Phi.
 	 * Can be solved via the extended Euclidean algorithm or the easier
-	 * BigInteger.modInverse() method. 
+	 * BigInteger.modInverse() method.
 	 * D * E should be congruent to 1 mod Phi.
 	 * @param e The public key exponent.
 	 * @param phi Euler's totient of the source primes.
@@ -154,7 +163,7 @@ public class RSAFunctions {
 	 * @param bytes The original byte array to convert
 	 * @return The converted string representing the byte array in hex.
 	 */
-	public static final String convertBytesToHex(byte[] bytes) {	
+	public static final String convertBytesToHex(byte[] bytes) {
 		StringBuilder hex = new StringBuilder(2 * bytes.length);
 		for (final byte b : bytes) {
 			hex.append(RSAFunctions.HEXES.charAt((b & 0xF0) >> 4)).
@@ -188,7 +197,7 @@ public class RSAFunctions {
 			lastx = temp;
 			temp = y;
 			y = lasty.subtract(quotient.multiply(y));
-			lasty = temp;               
+			lasty = temp;
 		}
 		return a;
 	}
@@ -220,7 +229,7 @@ public class RSAFunctions {
 			for(int j = 0; j < getBlockSizeMessage(); j++) {
 				// This if is necessary for the last block, in case it is not full.
 				if(j + i * getBlockSizeMessage() < messageBytes.length) {
-					messageBlock[j] = messageBytes[j + i * getBlockSizeMessage()];	
+					messageBlock[j] = messageBytes[j + i * getBlockSizeMessage()];
 				}
 			}
 			// The essential algorithmic equation of the encryption process.
@@ -236,10 +245,10 @@ public class RSAFunctions {
 			// this byte should only be removed if the block is longer than it should be.
 			if(cipherBlock[0] == (byte) 0 && cipherBlock.length > getBlockSizeCipher()) {
 				for(int j = 0; j < getBlockSizeCipher(); j++) {
-					cipherBytes[j + i * getBlockSizeCipher()] = cipherBlock[j + 1];	
+					cipherBytes[j + i * getBlockSizeCipher()] = cipherBlock[j + 1];
 				}
 			}
-			// Sometimes the result obtained from the modInverse() method is 
+			// Sometimes the result obtained from the modInverse() method is
 			// a bit smaller than normal, and the converted byte array will be
 			// too short. This must be corrected by adding one or more empty
 			// elements at the beginning.
@@ -256,7 +265,7 @@ public class RSAFunctions {
 			// block was so easy to take care of!
 			else {
 				for(int j = 0; j < getBlockSizeCipher(); j++) {
-					cipherBytes[j + i * getBlockSizeCipher()] = cipherBlock[j];	
+					cipherBytes[j + i * getBlockSizeCipher()] = cipherBlock[j];
 				}
 			}
 		}
@@ -266,7 +275,7 @@ public class RSAFunctions {
 		// but the presence of unprintable characters in every existing character set
 		// cause too many problems - and not because they can't be printed, but because
 		// Java converts them all automatically to something else, screwing up the cipher.
-		return cipherBytes;	
+		return cipherBytes;
 	}
 
 	/**

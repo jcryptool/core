@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.math.BigInteger;
@@ -20,7 +29,7 @@ import org.jcryptool.visual.library.Lib;
 
 /**
  * Page for entering a signature. Optionally the plaintext can be entered , too and
- * 
+ *
  * @author Michael Gaber
  */
 public class EnterSignaturePage extends TextWizardPage {
@@ -39,7 +48,7 @@ public class EnterSignaturePage extends TextWizardPage {
 
     /**
      * Constructor storing the data-object for further usage, setting title, description, and page complete status.
-     * 
+     *
      * @param data the data-object
      */
     public EnterSignaturePage(final ElGamalData data) {
@@ -51,7 +60,7 @@ public class EnterSignaturePage extends TextWizardPage {
 
     /**
      * Set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(final Composite parent) {
@@ -120,7 +129,7 @@ public class EnterSignaturePage extends TextWizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -129,7 +138,7 @@ public class EnterSignaturePage extends TextWizardPage {
 
     /**
      * getter for the contents of the plaintextfield.
-     * 
+     *
      * @return the content of the plaintextfield as string or the empty string if not set
      */
     public final String getPlaintext() {

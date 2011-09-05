@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3;
 
 import java.math.BigInteger;
@@ -6,7 +15,7 @@ public class KegverData {
 
 	private int k = -1337; // key-size parameter
 	private BigInteger l = null; // soundness and security parameter
-	private int m = -1337; // security parameter 
+	private int m = -1337; // security parameter
 	private int t = -1337; // soundness parameter
 	private BigInteger N = null; // RSA modulus N
 	private Commitment aCommitment_Cp = null;
@@ -15,7 +24,7 @@ public class KegverData {
 	/*
 	 * Constructor
 	 */
-	
+
 	public KegverData(
 			int in_k,
 			BigInteger in_l,
@@ -26,18 +35,18 @@ public class KegverData {
 		this.set_l(in_l);
 		this.set_m(in_m);
 		this.set_t(in_t);
-		this.set_N(in_N); 
+		this.set_N(in_N);
 	}
-	
+
 	/*
 	 * Getter and setter
 	 */
 
 	public BigInteger set_N(BigInteger in_N) {
 		if(
-				in_N == null 
+				in_N == null
 				|| in_N.compareTo(BigInteger.ZERO) <= 0
-//				|| this.get_k() <= in_N.bitLength() 
+//				|| this.get_k() <= in_N.bitLength()
 				){
 			throw new IllegalArgumentException();
 		}
@@ -96,19 +105,19 @@ public class KegverData {
 	public int get_k() {
 		return this.k;
 	}
-	
+
 	/*
 	 * Override
 	 */
-	
+
 	@Override
 	public String toString(){
 		StringBuilder aStringBuilder = new StringBuilder();
-		aStringBuilder.append( 
+		aStringBuilder.append(
 				"k: " + this.get_k() +
-				", m: " + this.get_m() + 
-				", t: " + this.get_t() + 
-				", l: " + this.get_l() + 
+				", m: " + this.get_m() +
+				", t: " + this.get_t() +
+				", l: " + this.get_l() +
 				", N: " + this.get_N());
 		return aStringBuilder.toString();
 	}

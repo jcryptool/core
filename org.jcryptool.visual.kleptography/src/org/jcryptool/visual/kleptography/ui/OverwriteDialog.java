@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.kleptography.ui;
 
 import org.eclipse.swt.SWT;
@@ -34,7 +43,7 @@ public class OverwriteDialog extends Dialog {
 		super (parent, style);
 		setText(Messages.OverwriteDialog_Overwrite_Saved_Data);
 	}
-	
+
 	/**
 	 * Constructor with default style.
 	 * @param parent The active shell from which this dialog should be sourced.
@@ -79,7 +88,7 @@ public class OverwriteDialog extends Dialog {
 		bFirst.setText(Messages.OverwriteDialog_First_Set);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		bFirst.setLayoutData(data);
-		
+
 		bFirst.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(1);
@@ -91,7 +100,7 @@ public class OverwriteDialog extends Dialog {
 		bSecond.setText(Messages.OverwriteDialog_Second_Set);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		bSecond.setLayoutData(data);
-		
+
 		bSecond.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(2);
@@ -103,7 +112,7 @@ public class OverwriteDialog extends Dialog {
 		bCancel.setText(Messages.OverwriteDialog_Cancel);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		bCancel.setLayoutData(data);
-		
+
 		bCancel.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {
 				setSelection(-1);

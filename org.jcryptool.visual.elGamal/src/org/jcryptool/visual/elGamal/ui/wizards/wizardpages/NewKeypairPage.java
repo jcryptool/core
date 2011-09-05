@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import static java.math.BigInteger.ONE;
@@ -27,7 +36,7 @@ import org.jcryptool.visual.library.Lib;
 
 /**
  * Wizardpage for creating a new RSA public-private-keypair.
- * 
+ *
  * @author Michael Gaber
  */
 public class NewKeypairPage extends WizardPage {
@@ -60,7 +69,7 @@ public class NewKeypairPage extends WizardPage {
 
     /**
      * getter for the pagename constant for easy access.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -90,7 +99,7 @@ public class NewKeypairPage extends WizardPage {
 
     /**
      * Constructor, setting description completeness-status and data-object.
-     * 
+     *
      * @param data the data object to store the entered values
      */
     public NewKeypairPage(final ElGamalData data) {
@@ -102,7 +111,7 @@ public class NewKeypairPage extends WizardPage {
 
     /**
      * set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(final Composite parent) {
@@ -278,7 +287,7 @@ public class NewKeypairPage extends WizardPage {
 
     /**
      * getter for the selection-status of the save-button.
-     * 
+     *
      * @return the selection-status
      */
     public final boolean wantSave() {

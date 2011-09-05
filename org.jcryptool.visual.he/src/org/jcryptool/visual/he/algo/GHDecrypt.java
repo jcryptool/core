@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 
@@ -6,7 +15,7 @@ import java.math.BigInteger;
  * @author Coen Ramaekers
  *
  */
-public class GHDecrypt {	
+public class GHDecrypt {
 	/**
 	 * Decrypts the ciphertext c
 	 * @param fheparams the paramters of the scheme
@@ -23,7 +32,7 @@ public class GHDecrypt {
 		if (e.compareTo(det) > 0) temp^= 1;
 		return temp;
 	}
-	
+
 	/**
 	 * Decrypts the ciphertext array c
 	 * @param fheparams the paramters of the scheme

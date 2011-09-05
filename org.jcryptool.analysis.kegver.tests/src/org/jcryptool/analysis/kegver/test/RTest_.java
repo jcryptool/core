@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 import static org.junit.Assert.assertFalse;
@@ -36,8 +45,8 @@ public class RTest_ {
 	public void testProbablePrime() {
 		int k = 4;
 		for (int i = 0 ; i < Math.pow(2, k) ; i++){
-			BigInteger p = R.probablePrime(k); 
-			assertTrue(k == p.bitLength());			
+			BigInteger p = R.probablePrime(k);
+			assertTrue(k == p.bitLength());
 		}
 	}
 
@@ -45,7 +54,7 @@ public class RTest_ {
 	public void testT() {
 		assertTrue(Math.pow(2, -100) == R.T());
 	}
-	
+
 	@Test
 	public void testIsLessProbable(){
 		assertTrue(R.isLessProbable(Math.pow(2, -99)));
@@ -54,11 +63,11 @@ public class RTest_ {
 
 	@Test
 	public void testResetRandom() {
-		Random R1 = R.resetRandom();	
+		Random R1 = R.resetRandom();
 		Random R2 = R.resetRandom();
 		assertNotSame(R1,R2);
 	}
-	
+
 	@Test
 	public void testNextInt() {
 		int n = 5;

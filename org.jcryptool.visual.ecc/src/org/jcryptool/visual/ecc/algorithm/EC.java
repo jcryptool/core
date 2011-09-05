@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.ecc.algorithm;
 
 import java.util.ArrayList;
@@ -14,7 +23,7 @@ public class EC {
 	protected double[] pointsX;
 	protected double[] pointsY;
 	private Point canvasSize;
-	
+
 	/**
 	 * Standard constructor which sets A to 1 and B to 0
 	 */
@@ -22,7 +31,7 @@ public class EC {
 		A = 1;
 		B = 0;
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param a- A
@@ -39,7 +48,7 @@ public class EC {
 		canvasSize = cs;
 		updateCurve();
 	}
-	
+
 	public int getA() {
 		return A;
 	}
@@ -47,7 +56,7 @@ public class EC {
 	public int getB() {
 		return B;
 	}
-	
+
 	public int getType() {
 		return EC;
 	}
@@ -56,12 +65,12 @@ public class EC {
 		A = a;
 		updateCurve();
 	}
-	
+
 	public void setB(int b) {
 		B = b;
 		updateCurve();
 	}
-	
+
 	public void updateCurve(int a, int b, int g, Point size) {
 		A = a;
 		B = b;
@@ -69,11 +78,11 @@ public class EC {
 		canvasSize = size;
 		updateCurve();
 	}
-	
+
 	protected void setPoints(FpPoint[] p) {
 		points = p;
 	}
-	
+
 	private void updateCurve() {
 		if(4 * Math.pow(A, 3) + 27 * Math.pow(B, 2) == 0) {
 			points = null;
@@ -93,21 +102,21 @@ public class EC {
 			double ans = Math.pow(xVal, 3) + A * xVal + B;
 			if(ans >= 0) {//found point
 				yVal = Math.sqrt(ans);
-				
+
 				if((x!=-(canvasSize.x / 2) && numPoints == 1) || (numPoints > 1 && !lastPoint)) {
 					double xV = (x - 1) * xStep;
 					listX.add(xV);
 					listY.add(0.0);
 					numPoints++;
 				}
-				
+
 				if (yVal != 0) {
 					listX.add(xVal);
 					listY.add(yVal);
 					listX.add(xVal);
 					listY.add(-yVal);
 					numPoints += 2;
-				} 
+				}
 				lastPoint = true;
 			} else if (lastPoint) {
 				listX.add(xVal);
@@ -116,7 +125,7 @@ public class EC {
 				lastPoint = false;
 			}
 		}
-		
+
 		pointsX = new double[listX.size()];
 		pointsY = new double[listY.size()];
 		points =  new FpPoint[listX.size()];
@@ -128,11 +137,11 @@ public class EC {
 			}
 		}
 	}
-	
+
 	public FpPoint[] getPoints() {
 		return points;
 	}
-	
+
 	public FpPoint addPoints(FpPoint p, FpPoint q) {
 		if(q == null || p == null)
 			return null;
@@ -142,7 +151,7 @@ public class EC {
 			return p;
 		if((p.x == q.x && p.y + q.y < 10 && p.y + q.y > -10) || points == null)
 			return new FpPoint();
-		
+
 		double pX = -1;
 		double pY = -1;
 		double qX = -1;
@@ -170,7 +179,7 @@ public class EC {
 				/*pY = Math.sqrt(Math.pow(pX, 3) + pX * A + B);
 			}*/
 		}
-		
+
 		int indexQ = -1;
 		for (int i =0; i < points.length; i++) {
 			if(points[i] == q) {
@@ -194,7 +203,7 @@ public class EC {
 				/*qY = Math.sqrt(Math.pow(qX, 3) + qX * A + B);
 			}*/
 		}
-		
+
 		double i;
 		if(p.equals(q))
 			i = (3 * Math.pow(pX, 2) + A) / (2 * pY);
@@ -205,7 +214,7 @@ public class EC {
 		if(y != 0.0) {
 			y = Math.sqrt(Math.pow(x, 3) + A * x + B) * (y < 0 ? -1 : 1);
 		}
-		
+
 		/*i = -1;
 		for(int j = 0; j < points.length && i < 0; j++) {
 			if(pointsX[j] == x && pointsY[j] == y)
@@ -215,23 +224,23 @@ public class EC {
 			tempX.add(x);
 			tempY.add(y);
 		}*/
-		
+
 		return new FpPoint((int)(x * 100), (int)(y * 100));
 	}
-	
+
 	public FpPoint multiplyPoint(FpPoint p, int m) {
 		if(p == null)
 			return null;
 		if(p.isInfinite() || m < 1 || points == null)
 			return new FpPoint();
-		
+
 		FpPoint r = p;
 		/*if(m == 1) {
 			r = p;
 		} else if (m == 2) {
 			r = addPoints(p, p);
 		} else if(m % 2 == 0) {
-			r = addPoints(multiplyPoint(p, m / 2), multiplyPoint(p, m / 2)); 
+			r = addPoints(multiplyPoint(p, m / 2), multiplyPoint(p, m / 2));
 		} else {
 			r = addPoints(multiplyPoint(p, m / 2), multiplyPoint(p, (m / 2) + 1));
 		}*/
@@ -239,7 +248,7 @@ public class EC {
 			r = addPoints(p, r);
 		return r;
 	}
-	
+
 	public String toString() {
 		String s = "y\u00b2 = x\u00b3"; //$NON-NLS-1$
 		if(A == 1)

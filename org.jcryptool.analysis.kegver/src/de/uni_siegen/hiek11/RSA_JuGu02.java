@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package de.uni_siegen.hiek11;
 
 import java.math.BigInteger;
@@ -8,22 +17,22 @@ public class RSA_JuGu02 extends RSA42 {
 	private static final int theT = 99/100 * Integer.MAX_VALUE;
 
 	private int t = 0;
-	
+
 	public RSA_JuGu02() {
 		this(RSA42.theK, RSA42.theE, RSA_JuGu02.theT, new SecureRandom());
 	}
-	
+
 	public RSA_JuGu02(int inK, BigInteger inE) {
 		this(inK, inE, RSA_JuGu02.theT, new SecureRandom());
 	}
-	
+
 	public RSA_JuGu02(int inK, BigInteger inE, int inT, SecureRandom inSecureRandom) {
 		super.setK(inK);
 		super.setE(inE);
 		super.setSecureRandom(inSecureRandom);
 		this.setT(inT);
 	}
-	
+
 	public RSA_JuGu02(int inK, SecureRandom inSecureRandom) {
 		this(inK, RSA_JuGu02.theE, RSA_JuGu02.theT, inSecureRandom);
 	}
@@ -39,7 +48,7 @@ public class RSA_JuGu02 extends RSA42 {
 	public BigInteger chooseE() {
 		return this.getE();
 	}
-	
+
 	public BigInteger findPrimeP() {
 		BigInteger r = new BigInteger(this.getK(), this.getT(),
 				this.getSecureRandom());

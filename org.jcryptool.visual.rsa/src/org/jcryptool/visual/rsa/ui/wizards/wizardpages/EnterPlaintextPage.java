@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.rsa.ui.wizards.wizardpages;
 
 import org.eclipse.swt.SWT;
@@ -19,7 +28,7 @@ import org.jcryptool.visual.rsa.RSAData;
 
 /**
  * Page for entering a plaintext to sign or encrypt.
- * 
+ *
  * @author Michael Gaber
  */
 public class EnterPlaintextPage extends TextWizardPage {
@@ -44,7 +53,7 @@ public class EnterPlaintextPage extends TextWizardPage {
 
     /**
      * Constructor setting the data and the action.
-     * 
+     *
      * @param action the cryptographic action
      * @param data the shared data object
      */
@@ -58,7 +67,7 @@ public class EnterPlaintextPage extends TextWizardPage {
 
     /**
      * sets up all the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(Composite parent) {
@@ -131,7 +140,7 @@ public class EnterPlaintextPage extends TextWizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {

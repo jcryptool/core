@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 import java.util.Random;
@@ -11,13 +20,13 @@ import java.util.Random;
 public class Polynomial  {
 	/**holds the degree */
 	public int degree;
-	
+
 	/** holds the coefficients, 0 for x^0, etc.*/
 	public BigInteger[] coeffs;
-	
+
 	/** random generator */
 	public static Random r = new Random(System.currentTimeMillis());
-	
+
 	/**
 	 * Creates a new polynomial with all coefficients 0
 	 * @param deg the degree
@@ -29,7 +38,7 @@ public class Polynomial  {
 			coeffs[i] = new BigInteger("0");
 		}
 	}
-	
+
 	/**
 	 * Creates a polynomial with the given coefficients, the degree is deduced from the coefficient array
 	 * @param coeffs the coefficients
@@ -41,7 +50,7 @@ public class Polynomial  {
 			this.coeffs[i] = coeffs[i];
 		}
 	}
-	
+
 	/**
 	 * Changes the coefficients and if necessary adapts the degree
 	 * @param coeffs the new coefficients
@@ -50,14 +59,14 @@ public class Polynomial  {
 		if (degree != coeffs.length-1) {
 			this.coeffs = new BigInteger[coeffs.length];
 			this.degree = coeffs.length-1;
-		} 
+		}
 		for (int i = 0; i < coeffs.length; i++) {
 			this.coeffs[i] = coeffs[i];
 		}
 	}
-	
+
 	/**
-	 * Change a single coefficient 
+	 * Change a single coefficient
 	 * @param i the coefficient index
 	 * @param c the new coefficient
 	 */
@@ -66,7 +75,7 @@ public class Polynomial  {
 			this.coeffs[i] = c;
 		}
 	}
-	
+
 	/**
 	 * Gets rid of leading zero coeffients, adapts degree
 	 */
@@ -83,11 +92,11 @@ public class Polynomial  {
 			coeffs = new BigInteger[i+1];
 			for (int j = 0; j <= i; j++) {
 				coeffs[j] = temp[j];
-			}				
+			}
 			degree = i;
 		}
 	}
-	
+
 	/**
 	 * Generate random polynomial with coefficients in the range [-2^bitsize,2^bitsize]
 	 * @param deg the polynomial degree
@@ -115,7 +124,7 @@ public class Polynomial  {
 		Polynomial p = new Polynomial(cffs);
 		return p;
 	}
-	
+
 	/**
 	 * Add two polynomials
 	 * @param p the first polynomial
@@ -131,7 +140,7 @@ public class Polynomial  {
 			} else {
 				pmax = true;
 			}
-		} 
+		}
 		Polynomial r = new Polynomial(deg);
 		for (int i = 0; i <= (equal ? deg : (pmax ? q.degree : p.degree)); i++) {
 			r.coeffs[i] = q.coeffs[i].add(p.coeffs[i]);
@@ -140,17 +149,17 @@ public class Polynomial  {
 			if (pmax) {
 				for (int i = q.degree+1; i <= p.degree; i++) {
 					r.coeffs[i] = p.coeffs[i];
-				} 
+				}
 			} else {
 				for (int i = p.degree+1; i <= q.degree; i++) {
 					r.coeffs[i] = q.coeffs[i];
-				} 
+				}
 			}
 		}
 		r.normalize();
 		return r;
 	}
-	
+
 	/**
 	 * Subtract two polynomials
 	 * @param p the positive polynomial
@@ -162,7 +171,7 @@ public class Polynomial  {
 		Polynomial s = add(p,r);
 		return s;
 	}
-	
+
 	/**
 	 * Negates a polynomial
 	 * @param p
@@ -175,7 +184,7 @@ public class Polynomial  {
 		}
 		return q;
 	}
-	
+
 	/**
 	 * Multiplies to polynomials
 	 * @param p the first polynomial
@@ -186,7 +195,7 @@ public class Polynomial  {
 		int deg = p.degree + q.degree;
 		BigInteger temp = new BigInteger("0");
 		Polynomial r = new Polynomial(deg);
-		
+
 		for (int i = 0; i <= deg; i++) {
 			temp = new BigInteger("0");
 			for (int j = 0; j <= i; j++) {
@@ -198,11 +207,11 @@ public class Polynomial  {
 		}
 		return r;
 	}
-	
+
 	/**
 	 * Multiplies a polynomial with a factor
 	 * @param p the polynomial
-	 * @param q the factor 
+	 * @param q the factor
 	 * @return q*p(x)
 	 */
 	public static Polynomial mult(Polynomial p, BigInteger q) {
@@ -212,14 +221,14 @@ public class Polynomial  {
 		}
 		return r;
 	}
-	
+
 	/**
 	 * Multiplies a polynomial with a power of x
-	 * @param p the polynomial 
+	 * @param p the polynomial
 	 * @param q the power of x
 	 * @return x^q * p(x)
 	 */
-	public static Polynomial xmult(Polynomial p, int q) { 
+	public static Polynomial xmult(Polynomial p, int q) {
 		if (q == 0) {
 			return p;
 		}
@@ -231,9 +240,9 @@ public class Polynomial  {
 		Polynomial s = Polynomial.mult(p,r);
 		return s;
 	}
-	
+
 	/**
-	 * Calculates p mod q, only allows integer modular arithmetic this is fine for our purposes, 
+	 * Calculates p mod q, only allows integer modular arithmetic this is fine for our purposes,
 	 * since it is always modulo x^(2^m)+1
 	 * @param p the polynomial
 	 * @param q the modulo

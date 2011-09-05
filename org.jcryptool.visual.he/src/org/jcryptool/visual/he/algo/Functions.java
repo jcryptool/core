@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 
@@ -16,8 +25,8 @@ public class Functions {
 	 * @param m
 	 * @return the least k >= 0 such that 2^k >= m
 	 */
-	public static int nextPowerOfTwo(int m) { 
-	   int k; 
+	public static int nextPowerOfTwo(int m) {
+	   int k;
 	   int n, um;
 
 	   if (m < 0) return 0;
@@ -30,10 +39,10 @@ public class Functions {
 	      n = n << 1;
 	      k++;
 	   }
-	   
+
 	   return k;
 	}
-	
+
 	/**
 	 * negation
 	 * @param n
@@ -42,7 +51,7 @@ public class Functions {
 	public static long negate(long n) {
 		return -n;
 	}
-	
+
 	/**
 	 * negation
 	 * @param n
@@ -51,7 +60,7 @@ public class Functions {
 	public static double negate(double n) {
 		return -n;
 	}
-	
+
 	/**
 	 * Tries to find the multiplicative inverse of p mod q
 	 * @param p
@@ -59,7 +68,7 @@ public class Functions {
 	 * @return p^{-1} if p is invertible, null otherwise
 	 */
 	public static BigInteger xgcd(BigInteger p, BigInteger q) {
-		BigInteger temp = new BigInteger(p.toString()); 
+		BigInteger temp = new BigInteger(p.toString());
 		BigInteger temp2 = new BigInteger(q.toString());
 		try {
 			return new BigInteger(temp.modInverse(temp2).toString());
@@ -67,7 +76,7 @@ public class Functions {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Converts a string to an array of binary integers
 	 * @param s
@@ -85,8 +94,8 @@ public class Functions {
 			temp1[i] = temp4;
 		}
 		return temp1;
-	}	
-	
+	}
+
 	/**
 	 * Odd checker
 	 * @param a
@@ -95,7 +104,7 @@ public class Functions {
 	public static boolean isOdd(BigInteger a) {
 		return (Math.abs(a.intValue())%2) == 1;
 	}
-	
+
 	/**
 	 * Even checker
 	 * @param a
@@ -104,7 +113,7 @@ public class Functions {
 	public static boolean isEven(BigInteger a) {
 		return !isOdd(a);
 	}
-	
+
 	/**
 	 * Zero checker
 	 * @param a
@@ -113,7 +122,7 @@ public class Functions {
 	public static boolean isZero(long a) {
 		return (a == 0);
 	}
-	
+
 	/**
 	 * Zero checker
 	 * @param a
@@ -122,7 +131,7 @@ public class Functions {
 	public static boolean isZero(double a) {
 		return (a == 0);
 	}
-	
+
 	/**
 	 * Converts an integer to a polynomial
 	 * @param num the integer to generate the coefficients
@@ -145,7 +154,7 @@ public class Functions {
 		}
 		return new Polynomial(coeff);
 	}
-	
+
 	/**
 	 * Convert an integer to a binary integer stored in an integer array
 	 * @param num
@@ -168,7 +177,7 @@ public class Functions {
 		}
 		return coeff;
 	}
-	
+
 	/**
 	 * Convert an integer array to a string
 	 * @param bits
@@ -179,10 +188,10 @@ public class Functions {
 		for (int i = bits.length-1; i >= 0; i--) {
 			temp = temp + Integer.toString(bits[i]);
 			if (i != 0) temp = temp + ",";
-		}		
+		}
 		return temp;
 	}
-	
+
 	/**
 	 * Convert a polynomial to a binary integer
 	 * @param p
@@ -200,7 +209,7 @@ public class Functions {
 		int i = Integer.parseInt(temp,2);
 		return i;
 	}
-	
+
 	/**
 	 * Convert a binary integer stored in an integer array to an integer
 	 * @param bits
@@ -218,7 +227,7 @@ public class Functions {
 		int i = Integer.parseInt(temp,2);
 		return i;
 	}
-	
+
 	/**
 	 * Add two ciphertexts, uses the fact that in the scheme multiplication represents an AND-gate
 	 * and addition represents an XOR-gate. The AND-gate gives the carry, the XOR-gate the sum.
@@ -233,11 +242,11 @@ public class Functions {
 	 * @param work the amount of work to be done
 	 * @return The encrypted sum of the two given ciphertexts, evaluated homomorphically
 	 */
-	public static BigInteger[] addCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams, 
-								BigInteger det, BigInteger root, BigInteger[] pkBlocksX, 
-								BigInteger[] ctxts, IProgressMonitor monitor, int work) {		
+	public static BigInteger[] addCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams,
+								BigInteger det, BigInteger root, BigInteger[] pkBlocksX,
+								BigInteger[] ctxts, IProgressMonitor monitor, int work) {
 		int max = Math.max(a.length, b.length);
-		BigInteger[] out = new BigInteger[max];	
+		BigInteger[] out = new BigInteger[max];
 		BigInteger temp1 = BigInteger.ZERO;
 		BigInteger temp2 = BigInteger.ZERO;
 		BigInteger temp3 = BigInteger.ZERO;
@@ -252,7 +261,7 @@ public class Functions {
 						temp2 = GHReCrypt.recrypt(fheparams, temp2, det, root, pkBlocksX, ctxts);
 						if (i != 0) {
 							//if the previous index resulted in a carry and the current sum is 1 this results in a new carry
-							temp3 = temp1.multiply(out[i]).mod(det); 
+							temp3 = temp1.multiply(out[i]).mod(det);
 							temp3 = GHReCrypt.recrypt(fheparams, temp3, det, root, pkBlocksX, ctxts);
 							//XOR the possible current carry and the new carry, should never both be set
 							temp2 = temp2.add(temp3).mod(det);
@@ -280,10 +289,10 @@ public class Functions {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Multiplies two cihpertexts, uses a sort of grade-school multiplication. The second ciphertext is
-	 * multiplied with the least significant bit of the first ciphertext. The result is saved and the 
+	 * multiplied with the least significant bit of the first ciphertext. The result is saved and the
 	 * first ciphertext is shifted to the right. Again the second ciphertext is multiplied with the least
 	 * significant bit of the first ciphertext, the result is added to the previous result and the first
 	 * ciphertext is again shifted to the right. This is done as many times as number of bits of the first
@@ -300,8 +309,8 @@ public class Functions {
 	 * @param work the amount of work to be done
 	 * @return the ciphertexts multiplied, evaluated homomorphically
 	 */
-	public static BigInteger[] mulCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams, 
-						BigInteger det, BigInteger root, BigInteger[] pkBlocksX, 
+	public static BigInteger[] mulCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams,
+						BigInteger det, BigInteger root, BigInteger[] pkBlocksX,
 						BigInteger[] ctxts, GHKeyPair key, IProgressMonitor monitor, int work) {
 		int max = Math.max(a.length, b.length);
 		BigInteger[] aTemp = new BigInteger[a.length];

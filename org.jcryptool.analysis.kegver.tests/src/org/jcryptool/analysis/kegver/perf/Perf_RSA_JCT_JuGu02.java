@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.perf;
 
 import static org.junit.Assert.assertEquals;
@@ -14,11 +23,11 @@ import de.uni_siegen.hiek11.RSA_JCT;
 
 
 public class Perf_RSA_JCT_JuGu02 {
-	
+
 	/*
 	 * Performance
 	 */
-	
+
 	private static final int messageK = 1024;
 	private static final int startK = 512;
 	private static final int maxK = 512;
@@ -40,7 +49,7 @@ public class Perf_RSA_JCT_JuGu02 {
 		}
 		aIO.close();
 	}
-		
+
 //	@Test
 //	public void test_performance_JuGu02(){
 //		// Setup
@@ -49,7 +58,7 @@ public class Perf_RSA_JCT_JuGu02 {
 //		SecureRandom aSecureRandom = new SecureRandom();
 //		// RSA_JuGu02
 //		aAlice = null;
-//		aIO = IO.useFactory("Perf_RSA_JuGu02");		
+//		aIO = IO.useFactory("Perf_RSA_JuGu02");
 //		aIO.writeln("Performing tests on RSA_JuGu02");
 //		aIO.writeln("k;findP;findQ;calcN;chooseE;calcD;get message; encrypt message;decrypt message");
 //		for ( int i = startK; i <= maxK ; i = i*i ){
@@ -57,8 +66,8 @@ public class Perf_RSA_JCT_JuGu02 {
 //			System.out.println(aIO.bufferln(this.performerStats(aAlice, i, iteration)));
 //		}
 //		aIO.close();
-//	}	
-	
+//	}
+
 	private static StringBuilder theSB = null;
 	private static double[] theDOUBLES = new double[18];
 
@@ -86,11 +95,11 @@ public class Perf_RSA_JCT_JuGu02 {
 		theSB.append(theDOUBLES[14] / inIteration + ";"  );			//Average time needed for calcD;
 		theSB.append(theDOUBLES[15] / inIteration + ";"  );			//Average time needed for getting message;
 		theSB.append(theDOUBLES[16] / inIteration + ";"  );			//Average time needed for encrypting message;
-		theSB.append(theDOUBLES[17] / inIteration + ";"  );			//Average time needed for decrypting message;		
+		theSB.append(theDOUBLES[17] / inIteration + ";"  );			//Average time needed for decrypting message;
 		// Return
 		return theSB.toString();
 	}
-	
+
 	private double[] performer(RSA42 aAlice){
 		// Execute		// Perform Keygen
 		Perf_RSA_JCT_JuGu02.measure();									//Setup measurement;
@@ -98,28 +107,28 @@ public class Perf_RSA_JCT_JuGu02 {
 		theDOUBLES[2] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for findP;
 		aAlice.findPrimeQ();
 		theDOUBLES[3] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for findQ;
-		aAlice.calcN();		
+		aAlice.calcN();
 		theDOUBLES[4] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for calcN;
 		aAlice.chooseE();
 		theDOUBLES[5] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for chooseE;
 		aAlice.calcD();
 		theDOUBLES[6] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for calcD;
-		
+
 		// Execute		// Perform cipher and back
 		Perf_RSA_JCT_JuGu02.measure();									//Setup measurement
-		BigInteger message = aAlice.getPrime(Perf_RSA_JCT_JuGu02.messageK);	
+		BigInteger message = aAlice.getPrime(Perf_RSA_JCT_JuGu02.messageK);
 		theDOUBLES[7] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for getting message;
-		BigInteger cipher = aAlice.encrypt(message, aAlice.getPublicKey()); 
-		theDOUBLES[8] = Perf_RSA_JCT_JuGu02.measure();				 	
+		BigInteger cipher = aAlice.encrypt(message, aAlice.getPublicKey());
+		theDOUBLES[8] = Perf_RSA_JCT_JuGu02.measure();
 		assertEquals(message, aAlice.decrypt(cipher));
 		theDOUBLES[9] = Perf_RSA_JCT_JuGu02.measure();				 	//Time needed for decrypting message;
 		//Return
 		return theDOUBLES;
 	}
-	
+
 	private static long theT0 = 0;
 	private static long temp = 0;
-	
+
 	private static long measure(){
 		temp = System.currentTimeMillis();
 		long measure = temp - theT0;

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.unigenprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.U;
@@ -32,19 +41,19 @@ public class UserChecks_u extends UnigenStateSuper implements
 	public void userChecks_u() {
 		// Report
 		U.verbose(new Throwable(), "entered");
-		
+
 		// Execute this state
 		boolean isCheckPassed = this.getUnigen().getUser().check_u(
 				this.getUnigen().getUnigenData().get_u());
-		
+
 		// Report
-		U.verbose(new Throwable(), 
+		U.verbose(new Throwable(),
 				"CA: " + this.getUnigen().getCA().toString_() +
 				", User: " + this.getUnigen().getUser().toString_() +
-				", UnigenData: " + this.getUnigen().getUnigenData() + 
-				", POK_1: " + this.getUnigen().getUnigenData().toString() + 
+				", UnigenData: " + this.getUnigen().getUnigenData() +
+				", POK_1: " + this.getUnigen().getUnigenData().toString() +
 				", Commitment_Cv: " + this.getUnigen().getUnigenData().getCommitment_Cv().toString() +
-				", u: " + this.getUnigen().getUnigenData().get_u() + 
+				", u: " + this.getUnigen().getUnigenData().get_u() +
 				", isCheckPassed: " + isCheckPassed);
 		U.verbose(new Throwable(), "Assume check passed");
 		isCheckPassed = true;
@@ -52,7 +61,7 @@ public class UserChecks_u extends UnigenStateSuper implements
 		// Trigger next state
 		if(isCheckPassed){
 			this.getUnigen().setState(UnigenStateContext.getUserSends_Co());
-			this.getUnigen().userSends_Co();			
+			this.getUnigen().userSends_Co();
 		} else {
 			this.getUnigen().setState(UnigenStateContext.getUserAborts_u());
 			this.getUnigen().userAborts_u();

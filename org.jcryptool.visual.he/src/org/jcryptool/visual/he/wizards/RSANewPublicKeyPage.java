@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards;
 
 import static org.jcryptool.visual.library.Lib.isPrime;
@@ -29,14 +38,14 @@ import org.jcryptool.visual.library.Constants;
 
 /**
  * Wizardpage for entering the parameters of a new Public Key.
- * 
+ *
  * @author Michael Gaber
  */
 public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, VerifyListener {
 
     /**
      * Runnable for setting the calculated N in {@link RSANewPublicKeyPage#modifyText(ModifyEvent)}
-     * 
+     *
      * @author Michael Gaber
      */
     private class CalcRunnable implements Runnable {
@@ -67,7 +76,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
 
     /**
      * getter for the pagename constant for easy access.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -91,7 +100,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
 
     /**
      * Constructor for a new wizardpage getting the data object.
-     * 
+     *
      * @param data the data object
      */
     public RSANewPublicKeyPage(RSAData data) {
@@ -103,7 +112,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
 
     /**
      * Set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(Composite parent) {
@@ -287,7 +296,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
 
     /**
      * checks whether a number is a composite of exactly two prime numbers and is not a square.
-     * 
+     *
      * @param number the number to check
      * @return <code>true</code> if and only if the number is
      *         <ol>
@@ -330,7 +339,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
 
     /**
      * getter for the status of the save button to be accessed externally.
-     * 
+     *
      * @return whether the user wants to save the key
      */
     public final boolean wantSave() {

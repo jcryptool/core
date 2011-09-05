@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 /**
@@ -49,7 +58,7 @@ class Calculations {
                 return p;
         }
     }
-    
+
     /** Calculate x^2 mod n **/
     BigInteger squareMod(BigInteger x, BigInteger n) {
 	return x.multiply(x).mod(n);
@@ -96,7 +105,7 @@ public class Toss implements ActionListener, CaretListener {
     JLabel resultLabel, pLabel, qLabel, x2Label;
     JTextField kField, nField, xField, x2modField;
     JButton makeN;
-    
+
     /** There will be roughly KEYLENGTH*2/3 decimal digits. **/
     final int DEFAULT_KEYLENGTH = 10;
     int KEYLENGTH = DEFAULT_KEYLENGTH;
@@ -112,8 +121,8 @@ public class Toss implements ActionListener, CaretListener {
         coinFrame = new JFrame("Coin Toss");
         coinFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	coinFrame.setLocation(200, 200);
-	
-        // Build the user interface inside of the window - separated 
+
+        // Build the user interface inside of the window - separated
 	// because it's long and messy
         buildUserInterface();
 
@@ -138,7 +147,7 @@ public class Toss implements ActionListener, CaretListener {
         coinPanel = new JPanel(new GridLayout(6, 1));
 
 	JPanel temp;
-	
+
         // Create the fields, buttons, and labels we need
 	pLabel = new JLabel("    p = ?");
 	qLabel = new JLabel("    q = ?");
@@ -155,19 +164,19 @@ public class Toss implements ActionListener, CaretListener {
 	temp.add(kField);
 	temp.add(makeN);
 	coinPanel.add(temp);
-	
+
 	// The P and Q indicators
 	temp = new JPanel(new GridLayout(1, 2));
 	temp.add(pLabel);
 	temp.add(qLabel);
 	coinPanel.add(temp);
-	
+
 	// N
 	temp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 	temp.add(new JLabel("N = ", SwingConstants.RIGHT));
 	temp.add(nField);
 	coinPanel.add(temp);
-	
+
 	// X
 	temp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 	temp.add(new JLabel("X = ", SwingConstants.RIGHT));
@@ -189,7 +198,7 @@ public class Toss implements ActionListener, CaretListener {
 	bigPanel = new JPanel(new BorderLayout());
 	bigPanel.add(coinPanel, BorderLayout.NORTH);
     }
-    
+
     /** Listen for text movements in the N & X fields **/
     public void caretUpdate(CaretEvent e) {
 
@@ -202,9 +211,9 @@ public class Toss implements ActionListener, CaretListener {
 	    qLabel.setText("    q = ?");
 	}
     }
-    
+
     /** Listen for Button events. **/
-    public void actionPerformed(ActionEvent event) { 
+    public void actionPerformed(ActionEvent event) {
 	// Make a new n - set p, q, n, and labels.
 	if (event.getSource() == makeN) {
 	    try {
@@ -216,14 +225,14 @@ public class Toss implements ActionListener, CaretListener {
 	    p = calc.makeBlumInt(KEYLENGTH);
 	    q = calc.makeBlumInt(KEYLENGTH);
 	    n = p.multiply(q);
-	    
+
 	    pLabel.setText("    p = " + p);
 	    qLabel.setText("    q = " + q);
 
 	    nField.removeCaretListener(this);
 	    nField.setText(n.toString());
 	    nField.addCaretListener(this);
-	    
+
 	    xField.setText("");
 	    clearResidueAndJacobi();
 	}
@@ -235,16 +244,16 @@ public class Toss implements ActionListener, CaretListener {
     void clearResidueAndJacobi() {
 	    resultLabel.setText("");
 	    x2Label.setText("");
-    }	
+    }
 
     /** Calculate the residue and the jacobi number **/
     void calculateResidueAndJacobi() {
 	try {
 	    BigInteger n = new BigInteger(nField.getText());
 	    BigInteger x = new BigInteger(xField.getText());
-	
+
 	    x2Label.setText(calc.squareMod(x,n).toString());
-	
+
 	    resultLabel.setText("" + calc.jacobi(x, n));
 	} catch (NumberFormatException e) {
 	    clearResidueAndJacobi();

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.algo;
 import java.math.BigInteger;
 
@@ -8,7 +17,7 @@ import java.math.BigInteger;
  *
  */
 public class GHEncrypt {
-	
+
 	/**
 	 * Encrypts the plain bit b
 	 * @param fheparams the scheme parameters
@@ -23,7 +32,7 @@ public class GHEncrypt {
 		long n = 1<<(fheparams.logn); // the dimension
 		double p = ((double)fheparams.noise)/n;  // # of expected nonzero coefficients
 		if (p>0.5) p = 0.5;
-	
+
 		// Evaluate all the polynomials together at root mod det
 		BigInteger[] vals = evalRandPoly(num, n, p, key.root, key.det);
 		BigInteger[] out = new BigInteger[num];
@@ -38,7 +47,7 @@ public class GHEncrypt {
 		}
 		return out[0];
 	}
-	
+
 	/**
 	 * Encrypts a bit array
 	 * @param fheparams the scheme parameters
@@ -51,7 +60,7 @@ public class GHEncrypt {
 		long n = 1<<(fheparams.logn); // the dimension
 		double p = ((double)fheparams.noise)/n;  // # of expected nonzero coefficients
 		if (p>0.5) p = 0.5;
-	
+
 		// Evaluate all the polynomials together at root mod det
 		BigInteger[] vals = evalRandPoly(num, n, p, key.root, key.det);
 		BigInteger[] out = new BigInteger[num];
@@ -66,7 +75,7 @@ public class GHEncrypt {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Encrypts the plain bit b
 	 * @param fheparams the scheme parameters
@@ -81,7 +90,7 @@ public class GHEncrypt {
 		long n = 1<<(fheparams.logn); // the dimension
 		double p = ((double)fheparams.noise)/n;  // # of expected nonzero coefficients
 		if (p>0.5) p = 0.5;
-	
+
 		// Evaluate all the polynomials together at root mod det
 		BigInteger[] vals = evalRandPoly(num, n, p, key.root, key.det);
 		BigInteger[] out = new BigInteger[num];
@@ -96,7 +105,7 @@ public class GHEncrypt {
 		}
 		return out[0];
 	}
-	
+
 	/**
 	 * Encrypts a bit array
 	 * @param fheparams the scheme parameters
@@ -109,7 +118,7 @@ public class GHEncrypt {
 		long n = 1<<(fheparams.logn); // the dimension
 		double p = ((double)fheparams.noise)/n;  // # of expected nonzero coefficients
 		if (p>0.5) p = 0.5;
-	
+
 		// Evaluate all the polynomials together at root mod det
 		BigInteger[] vals = evalRandPoly(num, n, p, key.root, key.det);
 		BigInteger[] out = new BigInteger[num];
@@ -124,7 +133,7 @@ public class GHEncrypt {
 		}
 		return out;
 	}
-	
+
 	/**
 	 * Evaluates n random polynomials at root mod det, coefficients are 1, -1 with respective probability p/2
 	 * and 0 with probability 1-p. Splits up the evaluation (into two parts) if the number of polynomials
@@ -143,21 +152,21 @@ public class GHEncrypt {
 			vals = evalRandPoly(2*n, m/2, p, root, det); // returns {root^{m/2},c0,c1,...}
 		    for (int i = 1; i <= n; i++) { // vals[i] += root^{m/2} * vals[i+n] mod det
 		    	// If m is odd then add another random 0/1 coefficient
-		    	if (((m&1) == 1) && ((q = Math.random()) < p)) { 		
+		    	if (((m&1) == 1) && ((q = Math.random()) < p)) {
 		    		vals[i+n] = ((q < p/2) ? vals[i+n].add(vals[0]).mod(det) : vals[i+n].subtract(vals[0]).mod(det));
-		    	} 
+		    	}
 		    	BigInteger tmp = vals[i+n].multiply(vals[0]).mod(det); // multiply "top half" by root^{d/2}
 		    	vals[i] = vals[i].add(tmp);
 		    }
-		    
+
 		    vals[0] = vals[0].modPow(new BigInteger("2"), det); // compute root^m for the next level
 		    if ((m&1) == 1) vals[0] = vals[0].multiply(root).mod(det); // if m is odd, multiply by r again
 		} else {
 			vals = basicRandPoly(n, m, p, root, det);
 		}
-		return vals;	
+		return vals;
 	}
-	
+
 	/**
 	 * Evaluates n random polynomials at root mod det, coefficients are 1, -1 with respective probability p/2
 	 * and 0 with probability 1-p.
@@ -181,25 +190,25 @@ public class GHEncrypt {
 			vals[0] = root;
 			return vals;
 		}
-		  
+
 		BigInteger rSqr = root.modPow(new BigInteger("2"), det); // holds the value root^2 mod det
 		BigInteger rPowm;
 		// Handle the powers 1,2,4,... separately (saves maybe 1-2 mults)
 		for (i = 1; i <= n; i++) {
 			if ((q = Math.random()) < p) {
 				// add r (no need for modular reduction) or subtract r mod det
-				vals[i] = (q < p/2) ? vals[i].add(root) : vals[i].subtract(root).mod(det);   
+				vals[i] = (q < p/2) ? vals[i].add(root) : vals[i].subtract(root).mod(det);
 			}
 			if (m > 2 && ((q = Math.random()) < p)) {
 				// add or subtract root^2
-				vals[i] = (q < p/2) ? vals[i].add(rSqr).mod(det) : vals[i].subtract(rSqr).mod(det);  
+				vals[i] = (q < p/2) ? vals[i].add(rSqr).mod(det) : vals[i].subtract(rSqr).mod(det);
 			}
 		}
 		if (m>4) {
 			rPowm = rSqr;
 			for (j = 4; j < m; j *= 2) {
 				rPowm = rPowm.modPow(new BigInteger("2"), det); // r^j mod det
-				for (i = 1; i <= n; i++) {      
+				for (i = 1; i <= n; i++) {
 					if ((q = Math.random()) < p) {
 						// add or subtract the correct power of root mod det
 						vals[i] = (q < p/2) ? vals[i].add(rPowm).mod(det) : vals[i].subtract(rPowm).mod(det);
@@ -210,7 +219,7 @@ public class GHEncrypt {
 			vals[0] = ((m == 2) ? rSqr : rSqr.multiply(root).mod(det));
 			return vals;
 		}
-		
+
 		// Handle all the other powers of r
 		// compute r^j,r^{2j},r^{4j},..., and add to all values
 		BigInteger rOddPow = root;
@@ -229,7 +238,7 @@ public class GHEncrypt {
 				rPowm = rPowm.modPow(new BigInteger("2"), det); // r^k := (previous-r^k)^2 mod det
 			}
 		}
-		
+
 		// r_odd_power is r^{m-1} or r^{m-2}, depending  on whether m is even or odd
 		vals[0] = (((m&1) == 1) ? rOddPow.multiply(rSqr).mod(det) : rOddPow.multiply(root).mod(det));
 		return vals;

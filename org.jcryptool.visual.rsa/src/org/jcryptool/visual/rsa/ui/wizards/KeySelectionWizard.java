@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.rsa.ui.wizards;
 
 import java.math.BigInteger;
@@ -31,7 +40,7 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
 
 /**
  * wizard for key selection and creation.
- * 
+ *
  * @author Michael Gaber
  */
 public class KeySelectionWizard extends Wizard {
@@ -43,7 +52,7 @@ public class KeySelectionWizard extends Wizard {
 
     /**
      * Constructor, setting title, action and data.
-     * 
+     *
      * @param action the cryptographic action
      * @param data the data object
      * @param standalone selects whether this wizard is stand-alone. If it is there is no setting of any variables.
@@ -191,7 +200,7 @@ public class KeySelectionWizard extends Wizard {
 
     /**
      * Saves the keypair or private key this wizard constructs to the platform keystore.
-     * 
+     *
      * @param keypair <code>true</code> if the key to save is a keypair or <code>false</code> if it's only a public key.
      */
     private void save(final boolean keypair) {

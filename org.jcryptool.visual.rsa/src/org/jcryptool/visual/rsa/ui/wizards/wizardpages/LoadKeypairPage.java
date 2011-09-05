@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.rsa.ui.wizards.wizardpages;
 
 import java.security.KeyStoreException;
@@ -29,7 +38,7 @@ import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
 /**
  * Page for loading a Keypair.
- * 
+ *
  * @author Michael Gaber
  */
 public class LoadKeypairPage extends WizardPage {
@@ -63,7 +72,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * Constructor for a new page. sets the data object, description and inits the keystore connection
-     * 
+     *
      * @param data the data object
      */
     public LoadKeypairPage(RSAData data) {
@@ -136,7 +145,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * gets the matching public entry for a private one.
-     * 
+     *
      * @return the {@link KeyStoreAlias} for the public key
      */
     private KeyStoreAlias getPublicForPrivate() {
@@ -172,7 +181,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {

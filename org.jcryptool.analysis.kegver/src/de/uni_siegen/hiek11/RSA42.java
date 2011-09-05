@@ -1,13 +1,22 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package de.uni_siegen.hiek11;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public abstract class RSA42 implements RSAable {
-	
+
 	protected static final BigInteger theE = BigInteger.valueOf(8);
 	protected static final int theK = 4;
-	
+
 	private SecureRandom aSecureRandom = null;
 	private BigInteger d = null;
 	private BigInteger e = null;
@@ -15,31 +24,31 @@ public abstract class RSA42 implements RSAable {
 	private BigInteger n = null;
 	private BigInteger p = null;
 	private BigInteger q = null;
-	
+
 	public abstract BigInteger calcD();
-	
+
 	public final BigInteger calcN() {
 		// n = p * q
 		return this.setN(this.getP().multiply(this.getQ()));
 	}
-	
+
 	public abstract BigInteger chooseE();
-	
+
 	public final void create(){
 		this.findPrimeP();
 		this.findPrimeQ();
-		this.calcN();		
+		this.calcN();
 		this.chooseE();
 		this.calcD();
 	}
-	
+
 	public BigInteger decrypt(BigInteger inC) {
 		return inC.modPow(this.getD(), this.getN());
 	}
 
 	/**
 	 * Note: Iteration in use.
-	 * 
+	 *
 	 * @param inE
 	 *            Note: If this object is Alice, this is Bob's public key:
 	 *            (n,e). inE[0] is therefore Bob's n and inE[1] is Bob's e. And
@@ -48,7 +57,7 @@ public abstract class RSA42 implements RSAable {
 	public final BigInteger encrypt(BigInteger inM, BigInteger[] inE) {
 		return inM.modPow(inE[1], inE[0]);
 	}
-	
+
 	@Override
 	public final boolean equals(Object inObj){
 		// Setup
@@ -62,9 +71,9 @@ public abstract class RSA42 implements RSAable {
 		// Return
 		return isEqual;
 	}
-	
+
 	public abstract BigInteger  findPrimeP();
-	
+
 	public abstract BigInteger findPrimeQ();
 
 	protected final boolean gcdEqual1(BigInteger a, BigInteger b) {
@@ -87,23 +96,23 @@ public abstract class RSA42 implements RSAable {
 	public final BigInteger getN() {
 		return this.n;
 	}
-	
+
 	protected final BigInteger getP() {
 		return this.p;
 	}
-	
+
 	public final BigInteger getPrime() {
 		return BigInteger.probablePrime(this.getK(), this.getSecureRandom());
 	}
-	
+
 	public final BigInteger getPrime(int inK) {
 		return BigInteger.probablePrime(inK, this.getSecureRandom());
 	}
-	
+
 	/**
 	 * Note: This is Bob's public key: (n,e). inE[0] is therefore Bob's n and
 	 * inE[1] is Bob's e. And yes, Alice uses them to encrypt the message.
-	 * 
+	 *
 	 */
 	public final BigInteger[] getPublicKey() {
 		return new BigInteger[] { this.getN(), this.getE() };
@@ -113,7 +122,7 @@ public abstract class RSA42 implements RSAable {
 		return this.q;
 	}
 
-	
+
 	public final SecureRandom getSecureRandom() {
 		return this.aSecureRandom;
 	}
@@ -122,12 +131,12 @@ public abstract class RSA42 implements RSAable {
 	public final int hashCode(){
 		return this.getD().hashCode();
 	}
-	
+
 	protected final BigInteger setD(BigInteger inD) {
 		this.d = inD;
 		return this.getD();
 	}
-	
+
 	public final BigInteger setE(BigInteger inE) {
 		this.e = inE;
 		return this.getE();
@@ -164,12 +173,12 @@ public abstract class RSA42 implements RSAable {
 		}
 		return this.getQ();
 	}
-	
+
 	protected final SecureRandom setSecureRandom(SecureRandom inSecureRandom) {
 		this.aSecureRandom = inSecureRandom;
 		return this.getSecureRandom();
 	}
-	
+
 	@Override
 	/*
 	 * Note: Secret part of private key, d, is published!

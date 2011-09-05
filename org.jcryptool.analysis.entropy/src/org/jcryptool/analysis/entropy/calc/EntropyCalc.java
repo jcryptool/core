@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.entropy.calc;
 
 import org.jcryptool.analysis.entropy.ui.EntropyUI;
@@ -58,15 +67,15 @@ public class EntropyCalc implements Runnable {
 	public EntropyUI getEntropyUIpointer() {
 		return entropyUIpointer;
 	}
-	
+
 	public String getEditorname(){
 		return editorname;
 	}
-	
+
 	public void setEditorname(String s){
 		editorname = s;
 	}
-	
+
 	public EntropyCalc(String source, int depth, double significance, TransformData modifySettings, EntropyUI pointer, String textname) {
 		entropyUIpointer = pointer;
 		inputText = source;

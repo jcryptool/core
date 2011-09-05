@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.math.BigInteger;
@@ -24,7 +33,7 @@ import org.jcryptool.visual.library.Lib;
 
 /**
  * Wizardpage for entering the parameters of a new Public Key.
- * 
+ *
  * @author Michael Gaber
  */
 public class NewPublicKeyPage extends WizardPage {
@@ -37,7 +46,7 @@ public class NewPublicKeyPage extends WizardPage {
 
     /**
      * getter for the pagename constant for easy access.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {
@@ -77,7 +86,7 @@ public class NewPublicKeyPage extends WizardPage {
 
     /**
      * Constructor for a new wizardpage getting the data object.
-     * 
+     *
      * @param data the data object
      */
     public NewPublicKeyPage(final ElGamalData data) {
@@ -89,7 +98,7 @@ public class NewPublicKeyPage extends WizardPage {
 
     /**
      * Set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(final Composite parent) {
@@ -194,7 +203,7 @@ public class NewPublicKeyPage extends WizardPage {
         }
         setPageComplete(getErrorMessage() == null);
     }
-    
+
     /* (non-Javadoc)
      * @see org.eclipse.jface.wizard.WizardPage#setPageComplete(boolean)
      */
@@ -228,7 +237,7 @@ public class NewPublicKeyPage extends WizardPage {
 
     /**
      * getter for the status of the save button to be accessed externally.
-     * 
+     *
      * @return whether the user wants to save the key
      */
     public final boolean wantSave() {

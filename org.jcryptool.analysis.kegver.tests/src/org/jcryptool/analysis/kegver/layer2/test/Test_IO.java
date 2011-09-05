@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer2.test;
 
 
@@ -6,7 +15,7 @@ import org.junit.Test;
 
 
 public class Test_IO {
-		
+
 	private String getStrFile(Throwable inT){
 		return inT.getStackTrace()[0].getMethodName();
 	}
@@ -16,7 +25,7 @@ public class Test_IO {
 		IO aIO = IO.useFactory(this.getStrFile(new Throwable()));
 		aIO.delete();
 	}
-	
+
 //	@Test
 	public void test2(){
 		IO aIO = IO.useFactory(this.getStrFile(new Throwable()));
@@ -26,7 +35,7 @@ public class Test_IO {
 		aIO.write(strText);
 		aIO.delete();
 	}
-	
+
 //	@Test
 	public void test3(){
 		IO aIO = IO.useFactory(this.getStrFile(new Throwable()));
@@ -36,14 +45,14 @@ public class Test_IO {
 		aIO.close();
 		aIO.delete();
 	}
-	
+
 //	@Test
 	public void test4(){
 		IO aIO = IO.useFactory(this.getStrFile(new Throwable()));
 		String strText = "Hello worlddede!";
 		aIO.write(strText);
 	}
-	
+
 	@Test
 	public void test5(){
 		IO aIO = IO.useFactory();

@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.grille.ui;
 
 import org.eclipse.swt.SWT;
@@ -138,7 +147,7 @@ public class View extends ViewPart {
         new Label(typeSelection, SWT.NONE);
         new Label(typeSelection, SWT.NONE);
         new Label(typeSelection, SWT.NONE);
-        
+
                 button_okay = new Button(typeSelection, SWT.NONE);
                 button_okay.setImage(GrillePlugin.getImageDescriptor("icons/run_exc.gif").createImage());
                 GridData gd_button_okay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -185,7 +194,7 @@ public class View extends ViewPart {
                     }
 
                 });
-        
+
         button_stepwise = new Button(typeSelection, SWT.RADIO);
         button_stepwise.setText(Messages.getString("View.stepwise")); //$NON-NLS-1$
                 new Label(typeSelection, SWT.NONE);
@@ -202,11 +211,11 @@ public class View extends ViewPart {
     }
 
     private void createSteps(Composite execType) {
-        
+
         Group steps = new Group(execType, SWT.NONE);
         steps.setText(Messages.getString("View.steps"));
         steps.setLayout(new GridLayout(1, true));
-        
+
         Group step1 = new Group(steps, SWT.NONE);
 
         step1.setLayout(new GridLayout(2, false));

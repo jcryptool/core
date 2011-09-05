@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.games.sudoku.views;
 
 
@@ -29,17 +38,17 @@ import org.jcryptool.games.sudoku.Messages;
  */
 
 public class SudokuView extends ViewPart {
-	
+
     public SudokuView() {
-   
+
     }
 
     public final int NORMAL = 1, KILLER = 2, HEX = 3;
-    
+
 	@Override
 	public void createPartControl(final Composite parent) {
 		final TabFolder tf = new TabFolder(parent, SWT.TOP);
-		
+
 		// Gentry & Halevi
         TabItem ti = new TabItem(tf, SWT.NONE);
         ti.setText(Messages.NormalTabTitle);
@@ -50,7 +59,7 @@ public class SudokuView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
-        
+
         // RSA
         ti = new TabItem(tf, SWT.NONE);
         ti.setText(Messages.KillerTabTitle);
@@ -61,7 +70,7 @@ public class SudokuView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
-        
+
         // Paillier
         ti = new TabItem(tf, SWT.NONE);
         ti.setText(Messages.HexTabTitle);
@@ -72,14 +81,14 @@ public class SudokuView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
-        
-        
-        
+
+
+
 	}
 
 	@Override
 	public void setFocus() {
 	}
-	
+
 
 }

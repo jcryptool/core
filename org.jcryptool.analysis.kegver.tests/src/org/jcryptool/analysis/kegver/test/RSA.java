@@ -1,12 +1,21 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 /*************************************************************************
  *  Compilation:  javac RSA.java
  *  Execution:    java RSA N
- *  
+ *
  *  Generate an N-bit public and private RSA key and use to encrypt
  *  and decrypt a random message.
- * 
+ *
  *  % java RSA 50
  *  public  = 65537
  *  private = 553699199426609
@@ -29,7 +38,7 @@ package org.jcryptool.analysis.kegver.test;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-    
+
 
 public class RSA {
    private final static BigInteger one      = new BigInteger("1");
@@ -45,7 +54,7 @@ public class RSA {
       BigInteger q = BigInteger.probablePrime(N/2, random);
       BigInteger phi = (p.subtract(one)).multiply(q.subtract(one));
 
-      modulus    = p.multiply(q);                                  
+      modulus    = p.multiply(q);
       e  = new BigInteger("65537");     // common value in practice = 2^16 + 1
       d = e.modInverse(phi);
    }
@@ -66,12 +75,12 @@ public class RSA {
       s += "modulus = " + modulus;
       return s;
    }
- 
+
    public static void main(String[] args) {
       int N = Integer.parseInt(args[0]);
       RSA key = new RSA(N);
       System.out.println(key);
- 
+
       // create random message, encrypt and decrypt
       BigInteger message = new BigInteger(N-1, random);
 

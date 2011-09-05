@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards;
 
 import java.security.KeyStoreException;
@@ -26,7 +35,7 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
 
 /**
  * Page for loading a public Key.
- * 
+ *
  * @author Michael Gaber
  */
 public class RSALoadPublicKeyPage extends WizardPage {
@@ -51,7 +60,7 @@ public class RSALoadPublicKeyPage extends WizardPage {
 
     /**
      * Constructor setting the data object and some stuff.
-     * 
+     *
      * @param data the {@link #data}
      */
     public RSALoadPublicKeyPage(RSAData data) {
@@ -87,7 +96,7 @@ public class RSALoadPublicKeyPage extends WizardPage {
 
     /**
      * Set up the UI stuff.
-     * 
+     *
      * @param parent the parent composite.
      */
     public final void createControl(Composite parent) {
@@ -118,7 +127,7 @@ public class RSALoadPublicKeyPage extends WizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {

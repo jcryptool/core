@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.layer3.kegverprotocol;
 
 import org.jcryptool.analysis.kegver.layer3.U;
@@ -37,31 +46,31 @@ public class UserGenerates_pState extends KegverStateSuper implements KegverStat
 	}
 
 	public void userGenerates_p() {
-		
+
 		// Report
 		U.verbose(new Throwable(), "entered");
-		
+
 		// Execute this state
 		boolean aGeneratedP = this.getKegver().getUser().generate_p();
 
 		// Report
-		U.verbose(new Throwable(), 
+		U.verbose(new Throwable(),
 				"CA: " + this.getKegver().getCA().toString_() +
 				", User: " + this.getKegver().getUser().toString_() +
 				", KegverData: " + this.getKegver().getKegverData() +
 				", aGeneratedP: " + aGeneratedP);
 		U.verbose(new Throwable(), "Assume aGeneratedP true");
 		aGeneratedP = true;
-		
+
 		// Trigger next state
 		if(aGeneratedP){
 			this.getKegver().setState(KegverStateContext.getUserGenerates_q());
 			this.getKegver().userGenerates_q();
 		} else {
 			this.getKegver().setState(KegverStateContext.getUserAborts_p());
-			this.getKegver().userAborts_p();			
+			this.getKegver().userAborts_p();
 		}
-		
+
 	}
 
 	public void userAborts_p() {

@@ -1,14 +1,23 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 /**
  * This class has been bluntly copied from http://www.cs.princeton.edu/introcs/92symbolic/Polynomial.java
  * the 29th of December 2010 by hkh.
- * 
- * JCrypTool provides org.jcryptool.visual.PairingBDII.basics.Polynomial which does *NOT* evaluate f(x), 
- * hence is not usable for kegver. 
- * 
- * Suggestion: 
+ *
+ * JCrypTool provides org.jcryptool.visual.PairingBDII.basics.Polynomial which does *NOT* evaluate f(x),
+ * hence is not usable for kegver.
+ *
+ * Suggestion:
  * add this.evaluate(int x) to org.jcryptool.visual.PairingBDII.basics.Polynomial
- * 
+ *
  * @author hkh
  *
  */
@@ -118,7 +127,7 @@ public class Polynomial {
     }
 
     // test client
-    public static void main(String[] args) { 
+    public static void main(String[] args) {
         Polynomial zero = new Polynomial(0, 0);
 
         Polynomial p1   = new Polynomial(4, 3);

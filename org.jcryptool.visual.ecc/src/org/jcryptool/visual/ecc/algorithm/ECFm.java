@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.ecc.algorithm;
 
 import java.util.ArrayList;
@@ -14,21 +23,21 @@ public class ECFm extends EC{
 	private int indexB;
 	//private int numPoints;
 	private final int[][] irreduciblePolynomials = {{11, 13}, {19, 25}, {37, 41, 47, 55, 59, 61}, {67, 91, 97, 103, 109, 115}};
-	
+
 	public ECFm() {
 		A = -1;
 		B = -1;
 		M = -1;
 		G = -1;
 	}
-	
+
 	public ECFm(int m) {
 		A = -1;
 		B = -1;
 		G = -1;
 		setM(m);
 	}
-	
+
 	public FpPoint addPoints(FpPoint p, FpPoint q) {
 		if(p == null || q == null)
 			return null;
@@ -42,7 +51,7 @@ public class ECFm extends EC{
 		int qY = (q.y == elements.length ? 0 : elements[q.y]);
 		if((pX == pY && (pX ^ pY) == elements[q.y]) || points == null)
 			return null;
-		
+
 		int rX = 0;
 		int rY = 0;
 		FpPoint r = new FpPoint(-1, -1);
@@ -61,7 +70,7 @@ public class ECFm extends EC{
 			rX = (((multiply(lambda, lambda, true) ^ lambda) ^ pX) ^ qX) ^ A;
 			rY = (multiply(lambda, pX ^ rX, true) ^ rX) ^ pY;
 		}
-		
+
 		for(int i = 0; i < elements.length; i++) {
 			if(rX == elements[i])
 				r.x = i;
@@ -74,7 +83,7 @@ public class ECFm extends EC{
 			r.y = elements.length;
 		return r;
 	}
-	
+
 	public int[] getElements() {
 		return elements;
 	}
@@ -82,7 +91,7 @@ public class ECFm extends EC{
 	public int getG() {
 		return G;
 	}
-	
+
 	public int[] getIrreduciblePolinomials() {
 		return irreduciblePolynomials[M - 3];
 	}
@@ -90,7 +99,7 @@ public class ECFm extends EC{
 	public int getM() {
 		return M;
 	}
-	
+
 	public int getType() {
 		return ECFm;
 	}
@@ -136,7 +145,7 @@ public class ECFm extends EC{
 		}
 		calculatePoints();
 	}
-	
+
 	public void setF(int g, boolean index) {
 		if(index)
 			G = irreduciblePolynomials[M - 3][g];
@@ -144,7 +153,7 @@ public class ECFm extends EC{
 			G = g;
 		calculateElements();
 	}
-	
+
 	public void setM(int m) {
 		M = m;
 		calculateElements();
@@ -193,7 +202,7 @@ public class ECFm extends EC{
 						left = 0;
 					else
 						left = elements[(y * 2) % elements.length] ^ elements[(y + x) % elements.length];
-					
+
 					if(x == (int) Math.pow(2, M) - 1) { // the last X value = 0
 						right = (indexB < elements.length ?elements[indexB] : 0);
 						left = elements[(y * 2) % elements.length];
@@ -204,30 +213,30 @@ public class ECFm extends EC{
 						if(indexB < elements.length)
 							right ^= elements[indexB];
 					}
-					
+
 					if(left == right && (y != (int) Math.pow(2, M) - 1 || x != (int) Math.pow(2, M) - 1)) { // (0, 0) is the point of infinity, and will be added elsewhere
 						list.add(new FpPoint(x, y));
 						numPoints++;
 					}
 				}
 			}
-			
+
 			points = new FpPoint[numPoints];
 			for(int i = 0; i < points.length; i++) {
 				points[i] = list.get(i);
 			}
 		}
 	}
-	
+
 	private int divide(int i, int j) {
 		if(i == 0 || j == 0)
 			return 0;
-		
+
 		int lbI;
 		for(lbI = 0; i >> lbI != 0; lbI++) ;
 		int lbJ;
 		for(lbJ = 0; j >> lbJ != 0; lbJ++) ;
-		
+
 		if(lbI < lbJ)
 			return 0;
 		if(lbI == lbJ)
@@ -235,11 +244,11 @@ public class ECFm extends EC{
 		else
 			return (1 << (lbI - lbJ)) + divide(i ^ (j << (lbI - lbJ)), j);
 	}
-	
+
 	private int multiply(int i, int j, boolean mod) {
 		if(i == 0 || j == 0)
 			return 0;
-		
+
 		int count = 0;
 		int ans = 0;
 		for(int k = j; k > 0; k = k >> 1) {
@@ -247,19 +256,19 @@ public class ECFm extends EC{
 				ans = ans ^ (i << count);
 			count++;
 		}
-		
+
 		if(mod)
 			return mod(ans, G);
 		else
 			return ans;
 	}
-	
+
 	private int mod(int i, int p) {
 		int lbI;
 		for(lbI = 0; i >> lbI != 0; lbI++);
 		int lbP;
 		for(lbP = 0; p >> lbP != 0; lbP++);
-		
+
 		if(lbI < lbP)
 			return i;
 		if(lbI == lbP)
@@ -267,7 +276,7 @@ public class ECFm extends EC{
 		else
 			return mod(i ^ (p << (lbI - lbP)), p);
 	}
-	
+
 	/**
 	 * Calculates the modular multiplicative inverse
 	 * @param n
@@ -277,7 +286,7 @@ public class ECFm extends EC{
 	public int mmi(int m, int n) {
 		int[] a = {1, 0, m};
 		int[] b = {0, 1, n};
-		
+
 		while(b[2] != 1 && b[2] != 0) {
 			int q = divide(a[2], b[2]);
 			int[] t = {	a[0] ^ multiply(q, b[0], false),
@@ -292,7 +301,7 @@ public class ECFm extends EC{
 		else
 			return b[1];
 	}
-	
+
 	public String toString() {
 		String s = "y\u00b2 + xy = x\u00b3 + "; //$NON-NLS-1$
 		if(indexA == 0)
@@ -302,7 +311,7 @@ public class ECFm extends EC{
 		else if (indexA < elements.length)
 			s += "g" + indexA + "*x\u00b2"; //$NON-NLS-1$ //$NON-NLS-2$
 		else s += "0x\u00b2"; //$NON-NLS-1$
-		
+
 		if(indexB == 0)
 			s += " + 1"; //$NON-NLS-1$
 		else if (indexB == 1)
@@ -310,17 +319,17 @@ public class ECFm extends EC{
 		else if (indexB < elements.length)
 			s += " + g" + indexB; //$NON-NLS-1$
 		else s += "0"; //$NON-NLS-1$
-		
+
 		s += " ; Polynom f = " + intToBitString(G) + " ; m = " + M; //$NON-NLS-1$ //$NON-NLS-2$
 		return s;
 	}
-	
+
 	public String toFunctionString(){
 		String s = toString();
 		s = s.replace(intToBitString(G), bits2Function(intToBitString(G)));
 		return s;
 	}
-	
+
 	private String intToBitString(int i) {
 		String s = ""; //$NON-NLS-1$
 		int j = i;
@@ -331,7 +340,7 @@ public class ECFm extends EC{
 		s = (j % 2) + s;
 		return s;
 	}
-	
+
 	private String bits2Function(String bitString) {
 		String s = "";
 		for(int i=0; i<bitString.length(); i++){

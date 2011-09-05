@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.games.sudoku;
 
 import org.eclipse.osgi.util.NLS;
@@ -42,15 +51,15 @@ public class Messages extends NLS {
 	public static String SudokuComposite_OnePossibleButton;
 	public static String SudokuComposite_OnePossibleButton_Tooltip;
 	public static String SudokuComposite_SaveButton;
-	public static String SudokuComposite_SaveButton_Tooltip;	
+	public static String SudokuComposite_SaveButton_Tooltip;
 	public static String SudokuComposite_ShowPossibleButton;
 	public static String SudokuComposite_ShowPossibleButton_Tooltip;
 	public static String SudokuComposite_SolveButton;
 	public static String SudokuComposite_SolveButton_Tooltip;
-	
-	
-	
-	
+
+
+
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

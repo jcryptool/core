@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.ui;
 
 import java.io.BufferedOutputStream;
@@ -13,19 +22,19 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 /**
- * 
+ *
  * Original source: http://www.java2s.com/Tutorial/Java/0490__Security/PBEFileEncrypt.htm
  * Last viewed on March 30th, 2011
  *
  */
 
 public class FileCrypto {
-	
+
 	public FileCrypto(String inFile, String outFile, String passwd, int mode) throws Exception {
 		Cipher cipher = createCipher(passwd, mode);
 		applyCipher(inFile, outFile, cipher);
 	}
-	
+
 	static Cipher createCipher(String passwd, int mode) throws Exception {
 	    PBEKeySpec keySpec = new PBEKeySpec(passwd.toCharArray());
 	    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");

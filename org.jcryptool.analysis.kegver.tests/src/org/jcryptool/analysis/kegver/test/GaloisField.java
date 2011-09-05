@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 import java.math.BigInteger;
@@ -5,7 +14,7 @@ import java.math.BigInteger;
 import org.jcryptool.analysis.kegver.layer3.U;
 
 public class GaloisField {
-	
+
 	private BigInteger order = U.ZERO;
 	private BigInteger orderSuper = U.ZERO;
 	private GaloisField aGF_g = null;
@@ -15,13 +24,13 @@ public class GaloisField {
 	public GaloisField(BigInteger inOrder){
 		this.setOrder(inOrder);
 	}
-	
+
 	public GaloisField(BigInteger inOrder, BigInteger inOrderSuper){
 		this.setOrder(inOrder);
 //		this.setElements();
 		this.setOrderSuper(inOrderSuper);
 	}
-	
+
 	private BigInteger setOrderSuper(BigInteger inOrderSuper) {
 		this.orderSuper = inOrderSuper;
 		return this.getOrderSuper();

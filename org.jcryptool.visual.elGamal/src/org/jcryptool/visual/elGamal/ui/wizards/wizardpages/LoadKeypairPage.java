@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import java.security.KeyStoreException;
@@ -29,7 +38,7 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
 
 /**
  * Page for loading a Keypair.
- * 
+ *
  * @author Michael Gaber
  */
 public class LoadKeypairPage extends WizardPage {
@@ -63,7 +72,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * Constructor setting pagename, description, data and completion status and initializes the keystore connection
-     * 
+     *
      * @param data {@link #data}
      */
     public LoadKeypairPage(final ElGamalData data) {
@@ -137,7 +146,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * gets the matching public entry for a private one.
-     * 
+     *
      * @return the {@link KeyStoreAlias} for the public key
      */
     protected KeyStoreAlias getPublicForPrivate() {
@@ -174,7 +183,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {

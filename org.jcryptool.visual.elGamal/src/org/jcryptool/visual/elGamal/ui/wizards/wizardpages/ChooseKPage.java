@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import static java.math.BigInteger.ONE;
@@ -18,7 +27,7 @@ import org.jcryptool.visual.elGamal.Messages;
 
 /**
  * Page for entering the unique parameter k
- * 
+ *
  * @author Michael Gaber
  */
 public class ChooseKPage extends WizardPage {
@@ -37,7 +46,7 @@ public class ChooseKPage extends WizardPage {
 
     /**
      * Constructor setting the description, title, ... and the data object
-     * 
+     *
      * @param data {@link #data}
      */
     public ChooseKPage(final ElGamalData data) {
@@ -68,7 +77,7 @@ public class ChooseKPage extends WizardPage {
 
     /**
      * fills the provided combo with valid values
-     * 
+     *
      * @param combo the combo to fill
      */
     private void fill(final Combo combo) {

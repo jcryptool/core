@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -19,26 +28,26 @@ import org.jcryptool.visual.library.Lib;
  *
  */
 public class RSAChooseInitialTextPage extends WizardPage{
-    
+
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "Choose initial text Page";
-    
+
     /** title of this page, displayed in the head of the wizard. */
     private static final String TITLE = Messages.GHChooseIntialTextPage_Title;
-    
+
     /** holds the entered text */
     private Text text;
-    
+
     /** hols the data */
     private RSAData data;
-    
+
     public RSAChooseInitialTextPage(RSAData data) {
     	super(PAGENAME, TITLE, null);
     	this.data = data;
     	this.setDescription(Messages.GHChooseIntialTextPage_Description);
     	this.setPageComplete(false);
     }
-    
+
     public final void createControl(final Composite parent) {
     	final Composite composite = new Composite(parent, SWT.NONE);
         composite.setLayout(new GridLayout());
@@ -55,10 +64,10 @@ public class RSAChooseInitialTextPage extends WizardPage{
             }
         });
         text.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));
-        
+
         setControl(composite);
     }
-    
+
     public static String getPagename() {
         return PAGENAME;
     }

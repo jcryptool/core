@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
 import org.eclipse.jface.wizard.IWizardPage;
@@ -14,7 +23,7 @@ import org.jcryptool.visual.elGamal.Messages;
 
 /**
  * page for saving a keypair.
- * 
+ *
  * @author Michael Gaber
  */
 public class SaveKeypairPage extends SaveWizardPage {
@@ -58,7 +67,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 
     /**
      * Constructor, sets page incomplete and calls super and sets the description.
-     * 
+     *
      * @param data the data object
      */
     public SaveKeypairPage(final ElGamalData data) {
@@ -70,7 +79,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 
     /**
      * Set up UI stuff.
-     * 
+     *
      * @param parent the parent composite
      */
     public final void createControl(final Composite parent) {
@@ -109,7 +118,7 @@ public class SaveKeypairPage extends SaveWizardPage {
 
     /**
      * getter for the pagename.
-     * 
+     *
      * @return the pagename
      */
     public static String getPagename() {

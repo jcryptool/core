@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.analysis.kegver.test;
 
 import static org.junit.Assert.fail;
@@ -12,9 +21,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class KegVerGroupTest {
-	
+
 	private static KegverGroup aKegVerGroup = null;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -22,7 +31,7 @@ public class KegVerGroupTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-	
+
 	@Before
 	public void setUp() throws Exception {
 	}
