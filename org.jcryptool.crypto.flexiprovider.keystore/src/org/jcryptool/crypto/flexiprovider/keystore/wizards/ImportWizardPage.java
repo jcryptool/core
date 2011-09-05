@@ -201,14 +201,14 @@ public class ImportWizardPage extends WizardPage implements Listener {
         String[] filters = null;
         if (secretKeyRadioButton.getSelection()) {
             filters = new String[1];
-            filters[0] = new String("*.sec"); //$NON-NLS-1$
+            filters[0] = "*.sec"; //$NON-NLS-1$
         } else if (keyPairRadioButton.getSelection()) {
             filters = new String[2];
-            filters[0] = new String("*.p12"); //$NON-NLS-1$
-            filters[1] = new String("*.pfx"); //$NON-NLS-1$
+            filters[0] = "*.p12"; //$NON-NLS-1$
+            filters[1] = "*.pfx"; //$NON-NLS-1$
         } else if (certificateRadioButton.getSelection()) {
             filters = new String[1];
-            filters[0] = new String("*.cer"); //$NON-NLS-1$
+            filters[0] = "*.cer"; //$NON-NLS-1$
         }
 
         dialog.setFilterExtensions(filters);

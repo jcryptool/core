@@ -124,8 +124,6 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         showLengths(tmp);
     }
 
-    List<IContactDescriptor> contacts;
-
     private void initContactCombo() {
         int size = ContactManager.getInstance().getContactSize();
         if (size > 0) {
@@ -160,12 +158,12 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
                 allNames += namesIt.next() + ", "; //$NON-NLS-1$
             }
             allNames = allNames.substring(0, allNames.length() - 2);
-            
+
             String generatorId = allNames;
             if (current.getOID() != null) {
             	generatorId += " (OID: " + current.getOID().getStringOID() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
             }
-            
+
             if(KeyStoreAlias.isOperationMatchingKeyId(generatorId, keyType)) {
             	generators.add(generatorId);
             }

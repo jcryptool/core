@@ -63,7 +63,7 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
     private Label confirmPasswordLabel;
     private Text confirmPasswordText;
 	private String keyType;
-    
+
     protected NewKeyPairWizardPage() {
         this(KeyStoreAlias.EVERYTHING_MATCHER);
     }
@@ -215,8 +215,6 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
         setControl(pageComposite);
     }
 
-    List<IContactDescriptor> contacts;
-
     private List<IMetaKeyGenerator> keyPairGenerators;
 
     private void initContactCombo() {
@@ -259,12 +257,12 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
                 allNames += namesIt.next() + ", "; //$NON-NLS-1$
             }
             allNames = allNames.substring(0, allNames.length() - 2);
-            
+
             String generatorId = allNames;
             if (current.getOID() != null) {
             	generatorId += " (OID: " + current.getOID().getStringOID() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
             }
-            
+
             if(KeyStoreAlias.isOperationMatchingKeyId(generatorId, keyType)) {
             	generators.add(generatorId);
             }

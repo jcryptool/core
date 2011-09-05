@@ -35,7 +35,7 @@ import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import de.flexiprovider.api.keys.Key;
 
 public abstract class FlexiProviderEngine {
-	protected class KeyObject{
+	protected static class KeyObject{
 		private final Key key;
 		private final char[] password;
 		public KeyObject(Key key, char[] password) {

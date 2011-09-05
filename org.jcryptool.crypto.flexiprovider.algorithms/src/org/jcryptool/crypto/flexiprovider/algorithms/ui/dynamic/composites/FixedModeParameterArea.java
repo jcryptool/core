@@ -96,7 +96,7 @@ public class FixedModeParameterArea implements IInputArea, Listener {
                     page.setComplete(false);
                 }
                 if (e.character != SWT.BS && e.character != SWT.DEL) {
-                    String origInput = new String(ivText.getText());
+                    String origInput = ivText.getText();
                     LogUtil.logInfo("origInputLength: " + origInput.length()); //$NON-NLS-1$
                     LogUtil.logInfo("size*2         : " + size * 2); //$NON-NLS-1$
                     if (!codeManipulation) {

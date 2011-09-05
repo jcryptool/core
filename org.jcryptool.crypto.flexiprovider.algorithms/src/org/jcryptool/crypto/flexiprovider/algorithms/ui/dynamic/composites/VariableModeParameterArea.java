@@ -1,7 +1,7 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
 * Copyright (c) 2008 JCrypTool Team and Contributors
-* 
+*
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -101,10 +101,10 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 				if (page != null) {
 					page.setComplete(false);
 				}
-				if (e.character != SWT.BS && e.character != SWT.DEL) {					
+				if (e.character != SWT.BS && e.character != SWT.DEL) {
 					if (!random) {
-						String origInput = new String(ivText.getText());
-						
+						String origInput = ivText.getText();
+
 						e.text = e.text.toUpperCase();
 						if ( (origInput.length()) == (size*2) ) {
 							if (page != null) {
@@ -121,8 +121,8 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 							if (page != null) {
 								page.setComplete(true);
 							}
-						}							
-					}					
+						}
+					}
 				}
 			}
 
@@ -170,24 +170,24 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		if (ivText == null || ivText.getText().equals("")) { //$NON-NLS-1$
 			return new byte[0];
 		} else {
-			return ByteUtils.fromHexString(ivText.getText());	
-		}		
+			return ByteUtils.fromHexString(ivText.getText());
+		}
 	}
 
 	public void setValue(Object value) {
 		if (value instanceof IMetaAlgorithm) {
 			LogUtil.logInfo("setting the algorithm"); //$NON-NLS-1$
-			this.algorithm = (IMetaAlgorithm)value;	
+			this.algorithm = (IMetaAlgorithm)value;
 			initLengthCombo();
 		} else {
 			LogUtil.logInfo("wrong type"); //$NON-NLS-1$
-		}		
+		}
 	}
 
 	/**
 	 * Generates a random value of the given byte length.<br>
 	 * Uses this plugin's standard secure random instance.
-	 * 
+	 *
 	 * @param length	The byte length of the random value
 	 * @return			The random value as a byte array
 	 */
