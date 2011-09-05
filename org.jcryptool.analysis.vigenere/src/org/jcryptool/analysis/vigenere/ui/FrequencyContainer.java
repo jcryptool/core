@@ -239,8 +239,8 @@ public class FrequencyContainer {
         int c = 0;
         int l = 0;
         String s = chiffre.trim();
-        String formatted = new String();
-        String temp = new String();
+        String formatted = "";
+        String temp = "";
 
         while ((c * length) < s.length()) {
             int t0 = (c + 1) * length;
@@ -318,10 +318,10 @@ public class FrequencyContainer {
     }
 
     protected String guessPass() {
-        String whole = new String();
+        String whole = "";
 
         for (int i = 0; i < passlenght; i++) {
-            String good = new String();
+            String good = "";
 
             FrequencyData[] dta = countCharacters(chiffretext, passlenght, i);
 
@@ -348,8 +348,7 @@ public class FrequencyContainer {
                 }
             }
 
-            whole = whole.concat(String.valueOf(good));
-            good = new String();
+            whole = whole.concat(good);
         }
 
         return whole;

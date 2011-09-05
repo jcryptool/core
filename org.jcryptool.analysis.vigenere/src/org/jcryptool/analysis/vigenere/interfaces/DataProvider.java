@@ -261,7 +261,7 @@ public class DataProvider {
     private String replaceWhitespaces(final String with) {
         Pattern pattern = Pattern.compile("\\SX*?");
         Matcher matcher = pattern.matcher(with);
-        String without = new String();
+        String without = "";
 
         while (matcher.find()) {
             without = without.concat(matcher.group());

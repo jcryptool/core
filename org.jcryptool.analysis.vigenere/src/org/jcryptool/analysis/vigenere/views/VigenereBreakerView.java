@@ -49,7 +49,7 @@ public class VigenereBreakerView extends ViewPart {
         scroll.setMinSize(780, 620);
         scroll.layout();
     }
-    
+
     public void scrollToTop() {
     	if(scroll != null && !scroll.isDisposed()) {
     		if(scroll.getVerticalBar() != null && !scroll.getVerticalBar().isDisposed()) {
@@ -57,11 +57,6 @@ public class VigenereBreakerView extends ViewPart {
     			scroll.setOrigin(0, 0);
     		}
     	}
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
     }
 
     @Override

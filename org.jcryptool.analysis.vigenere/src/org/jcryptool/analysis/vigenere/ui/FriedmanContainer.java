@@ -1,9 +1,9 @@
 /* *****************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License
- * v1.0 which accompanies this distribution, and is available at 
+ * v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * ****************************************************************************/
 package org.jcryptool.analysis.vigenere.ui;
@@ -39,7 +39,7 @@ public class FriedmanContainer {
     /**
      * Converts all characters of this text to upper case and replaces all
      * special character afterwards.
-     * 
+     *
      * @param text
      *            the text to convert.
      * @return the converted text.
@@ -63,7 +63,7 @@ public class FriedmanContainer {
 
     /**
      * Analyzes this chiffre text and looks for the length of the pass phrase.
-     * 
+     *
      * @param chiffre
      *            the chiffre text to analyze.
      * @return the estimated length of the pass phrase.
@@ -131,7 +131,7 @@ public class FriedmanContainer {
     /**
      * Creates a sample set. Uses this percentages to create sample of the
      * original data set.
-     * 
+     *
      * @param perc
      *            the percentage to create sample set with.
      * @param data
@@ -159,7 +159,7 @@ public class FriedmanContainer {
      * that occurs the most frequently in a data set. For example in the set {2,
      * 6, 9, 5, 3, 1, 5, 4, 2, 5} the mode is 5. Returns a list of modes because
      * it's possible a most frequently does not occur.
-     * 
+     *
      * @param data
      *            a set of integer to check for the mode.
      * @return a collection of found modes.
@@ -187,7 +187,7 @@ public class FriedmanContainer {
                 high = t;
                 modi.clear();
                 modi.add(i);
-            } else if (high == t) {
+            } else if (high.equals(t)) {
                 modi.add(i);
             }
         }
