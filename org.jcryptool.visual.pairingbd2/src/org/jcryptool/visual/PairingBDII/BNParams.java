@@ -1,19 +1,29 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII;
 
 /**
  * BNParams.java
- * 
+ *
  * Parameters for Barreto-Naehrig (BN) pairing-friendly elliptic curves.
- * 
+ *
  * Copyright (C) Paulo S. L. M. Barreto.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
@@ -42,11 +52,11 @@ public class BNParams {
 
     /**
      * BN index -- the curve BN(u) is defined by the following parameters:
-     * 
+     *
      * t = 6*u^2 + 1 p = 36*u^4 + 36*u^3 + 24*u^2 + 6*u + 1 n = 36*u^4 + 36*u^3 + 18*u^2 + 6*u + 1
-     * 
+     *
      * BN(u)/GF(p): y^2 = x^3 + b, #BN(u)(GF(p)) = n, n = p + 1 - t.
-     * 
+     *
      * Restrictions: p = 3 (mod 4) and p = 4 (mod 9).
      */
     BigInteger u;
@@ -97,15 +107,15 @@ public class BNParams {
 
     /**
      * Compute BN parameters for a given field size, which must be a multiple of 8 between 56 and 512 (inclusive).
-     * 
+     *
      * The BN parameter u is the largest one with the smallest possible Hamming weight, leading to a field prime p
      * satisfying both p = 3 (mod 4) and p = 4 (mod 9), speeding up the computation of square and cube roots in both F_p
      * and F_{p^2}. Besides, for i \in F_{p^2} such that i^2 + 1 = 0, the element v = 1 + i is neither a square nor a
      * cube, so that one can represent F_{p^2m} as F_{p^2}[z]/(z^m - 1/v) or F_{p^2}[z]/(z^m - v) for m = 2, 3, 6.
-     * 
+     *
      * The standard curve is E(F_p): y^2 = x^3 + 3, whose default generator is G = (1, 2). Its (sextic) twist is
      * E'(F_{p^2}): y'^2 = x'^3 + 3v, whose default generator has the form G' = [p-1+t]*(1, y') for some y'.
-     * 
+     *
      * The standard isomorphism psi: E'(F_{p^2}) -> E(F_{p^12}) is defined as psi(x', y') = (x'*z^2, y'*z^3) for the
      * first representation of F_{p^12} above, and as psi(x', y') = (x'/z^2, y'/z^3) = (x'*z^4/v, y'*z^3/v) for the
      * second representation.
@@ -399,9 +409,9 @@ public class BNParams {
 
     /**
      * Compute a cube root of v (mod p) where p = 4 (mod 9).
-     * 
+     *
      * @return a cube root of v (mod p) if one exists, or null otherwise.
-     * 
+     *
      * @exception IllegalArgumentException if the size p of the underlying finite field does not satisfy p = 4 (mod 9).
      */
     BigInteger cbrt(BigInteger v) {
@@ -444,9 +454,9 @@ public class BNParams {
 
     /**
      * Compute a square root of v (mod p) where p = 3 (mod 4).
-     * 
+     *
      * @return a square root of v (mod p) if one exists, or null otherwise.
-     * 
+     *
      * @exception IllegalArgumentException if the size p of the underlying finite field does not satisfy p = 3 (mod 4).
      */
     BigInteger sqrt(BigInteger v) {

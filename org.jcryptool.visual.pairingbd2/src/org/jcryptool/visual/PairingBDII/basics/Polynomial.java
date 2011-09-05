@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII.basics;
 
 import java.util.Vector;
@@ -279,13 +289,13 @@ public class Polynomial {
     // result.setSize(2);
     // Polynomial quot, rem, intermed;
     // int currpos, degrem;
-    //		
+    //
     // int deg1 = this.deg;
     // int deg2 = q.deg;
-    //		
+    //
     // int size1 = this.size;
     // int size2 = q.size;
-    //		
+    //
     // if (deg1 < deg2){
     // result.set(0, new Polynomial(0));
     // result.set(1, this);
@@ -293,15 +303,15 @@ public class Polynomial {
     // else{
     // degrem = deg1;
     // intermed = this;
-    //			
+    //
     // quot = new Polynomial(deg1 - deg2);
-    //			
+    //
     // while(degrem>=deg2){
-    //				
+    //
     // }
     // }
-    //		
-    //		
+    //
+    //
     // return result;
     // }
 

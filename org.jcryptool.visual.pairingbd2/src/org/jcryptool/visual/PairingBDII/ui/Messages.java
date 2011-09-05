@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII.ui;
 
 import org.eclipse.osgi.util.NLS;
@@ -72,7 +82,6 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_17;
 	public static String IntroductionAndParameters_18;
 	public static String IntroductionAndParameters_19;
-	public static String IntroductionAndParameters_2;
 	public static String IntroductionAndParameters_20;
 	public static String IntroductionAndParameters_21;
 	public static String IntroductionAndParameters_22;
@@ -83,7 +92,6 @@ public class Messages extends NLS {
 	public static String IntroductionAndParameters_27;
 	public static String IntroductionAndParameters_28;
 	public static String IntroductionAndParameters_29;
-	public static String IntroductionAndParameters_3;
 	public static String IntroductionAndParameters_49;
 	public static String IntroductionAndParameters_50;
 	public static String IntroductionAndParameters_51;

@@ -1,10 +1,18 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII.ui;
 
 import java.math.BigInteger;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -17,7 +25,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.webbrowser.remote.WebBrowserRemote;
 
 public class IntroductionAndParameters {
 	private static final int PARAMETER_u = 0;
@@ -67,89 +74,9 @@ public class IntroductionAndParameters {
 		label.setBackground(white);
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
-		final Composite wiki = new Composite(compositeIntro, SWT.NONE);
-		wiki.setLayout(new GridLayout(2, false));
-		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, true);
-		//gridData.heightHint = 20;
-		gridData.verticalIndent = -10	;
-		wiki.setLayoutData(gridData);
-		wiki.setBackground(white);
-		label = new Label(wiki, SWT.NONE);
-		label.setBackground(white);
-		gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-		gridData.horizontalIndent = -5;
-		label.setLayoutData(gridData);
-		label.setText(Messages.IntroductionAndParameters_2);
-		label = new Label(wiki, SWT.NONE);
-		gridData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
-		gridData.horizontalIndent = -5;
-		label.setLayoutData(gridData);
-		label.setText(Messages.IntroductionAndParameters_3);
-		label.setBackground(white);
-		label.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
-		label.addMouseListener(new MouseListener() {
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			public void mouseDown(MouseEvent e) {
-			}
-
-			public void mouseUp(MouseEvent e) {
-				final WebBrowserRemote remote = new WebBrowserRemote();
-				remote.showBrowser();
-				remote.openUrl(Messages.IntroductionAndParameters_3);
-			}
-		});
-
-//		final Group groupSituation = new Group(parent, SWT.NONE);
-//		groupSituation.setText(Messages.IntroductionAndParameters_0);
-//		groupSituation.setLayout(new GridLayout(2, false));
-//		groupSituation.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-//
-//		label = new Label(groupSituation, SWT.WRAP);
-//		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
-//		label.setText(Messages.IntroductionAndParameters_1);
-//		final Composite wiki = new Composite(groupSituation, SWT.NONE);
-//		wiki.setLayout(new GridLayout(2, false));
-//		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-//		//gridData.heightHint = 20;
-//		gridData.verticalIndent = -10;
-//		wiki.setLayoutData(gridData);
-//		label = new Label(wiki, SWT.NONE);
-//		gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-//		gridData.horizontalIndent = -5;
-//		label.setLayoutData(gridData);
-//		label.setText(Messages.IntroductionAndParameters_2);
-//		label = new Label(wiki, SWT.NONE);
-//		gridData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
-//		gridData.horizontalIndent = -5;
-//		label.setLayoutData(gridData);
-//		label.setText(Messages.IntroductionAndParameters_3);
-//		label.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLUE));
-//		label.addMouseListener(new MouseListener() {
-//			public void mouseDoubleClick(MouseEvent e) {
-//			}
-//
-//			public void mouseDown(MouseEvent e) {
-//			}
-//
-//			public void mouseUp(MouseEvent e) {
-//				final WebBrowserRemote remote = new WebBrowserRemote();
-//				remote.showBrowser();
-//				remote.openUrl(Messages.IntroductionAndParameters_3);
-//			}
-//		});
-//		label = new Label(groupSituation, SWT.WRAP);
-//		gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
-//		gridData.verticalIndent = -8;
-//		label.setLayoutData(gridData);
-//		label.setText(Messages.IntroductionAndParameters_5);
-
-
-
 		Group groupParameters = new Group(parent, SWT.NONE);
 		groupParameters.setLayout(new GridLayout(1, false));
-		gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, false, false);
 		gridData.minimumWidth = SWT.DEFAULT;
 		groupParameters.setLayoutData(gridData);
 		groupParameters.setText(Messages.IntroductionAndParameters_6);

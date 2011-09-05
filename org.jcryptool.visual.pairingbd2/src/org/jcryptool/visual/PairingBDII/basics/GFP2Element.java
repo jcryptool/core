@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII.basics;
 
 import java.util.Vector;
@@ -8,7 +18,7 @@ import de.flexiprovider.common.math.finitefields.GFPElement;
 public class GFP2Element {
     // private FlexiBigInt Xcoord;
     // private FlexiBigInt Const;
-    //	
+    //
     // private Vector<FlexiBigInt> El = new Vector<FlexiBigInt>(2);
 
     public FlexiBigInt p;

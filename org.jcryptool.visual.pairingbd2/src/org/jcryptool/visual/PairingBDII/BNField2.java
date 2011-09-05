@@ -1,19 +1,29 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII;
 
 /**
  * BNField2.java
- * 
+ *
  * Arithmetic in the finite extension field GF(p^2) with p = 3 (mod 4) and p = 4 (mod 9).
- * 
+ *
  * Copyright (C) Paulo S. L. M. Barreto and Pedro d'Aquino F. F. de Sa' Barbuda.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
@@ -94,7 +104,7 @@ public class BNField2 {
 
     /**
      * Compute a cube root of this.
-     * 
+     *
      * @return a cube root of this if one exists, or null otherwise.
      */
     public BNField2 cbrt() {
@@ -254,7 +264,7 @@ public class BNField2 {
 
     /**
      * Compute a square root of this.
-     * 
+     *
      * @return a square root of this if one exists, or null otherwise.
      */
     public BNField2 sqrt() {

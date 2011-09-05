@@ -1,19 +1,29 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII;
 
 /**
  * BNCurve.java
- * 
+ *
  * Barreto-Naehrig (BN) pairing-friendly elliptic curves.
- * 
+ *
  * Copyright (C) Paulo S. L. M. Barreto.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
@@ -55,9 +65,9 @@ public class BNCurve {
 
     /**
      * Build the standard BN curve BN(u): y^2 = x^3 + 3.
-     * 
+     *
      * @param bn BN parameters of the curve
-     * 
+     *
      * @return the desired curve, or null if the given index does not define suitable parameters
      */
     public BNCurve(BNParams bn) {
@@ -86,9 +96,9 @@ public class BNCurve {
 
     /**
      * Check whether this curve contains a given point (i.e. whether that point satisfies the curve equation)
-     * 
+     *
      * @param P the point whose pertinence or not to this curve is to be determined
-     * 
+     *
      * @return true if this curve contains P, otherwise false
      */
     public boolean contains(BNPoint P) {
@@ -121,13 +131,13 @@ public class BNCurve {
 
     /**
      * Compute k*G
-     * 
+     *
      * @param k scalar by which the base point G is to be multiplied
-     * 
+     *
      * @return k*G
-     * 
+     *
      *         References:
-     * 
+     *
      *         Alfred J. Menezes, Paul C. van Oorschot, Scott A. Vanstone, "Handbook of Applied Cryptography", CRC Press
      *         (1997), section 14.6 (Exponentiation)
      */
@@ -152,9 +162,9 @@ public class BNCurve {
 
     /**
      * Get a random nonzero point on this curve, given a fixed base point.
-     * 
+     *
      * @param rand a cryptographically strong PRNG
-     * 
+     *
      * @return a random nonzero point on this curve
      */
     public BNPoint pointFactory(SecureRandom rand) {

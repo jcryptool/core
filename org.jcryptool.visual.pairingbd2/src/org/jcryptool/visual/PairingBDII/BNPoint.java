@@ -1,23 +1,33 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII;
 
 /**
  * BNPoint.java
- * 
+ *
  * Arithmetic in the group of points on a BN elliptic curve over GF(p).
- * 
+ *
  * A point of an elliptic curve is only meaningful when suitably attached to some curve. Hence, there must be no public
  * means to create a point by itself (i.e. concrete subclasses of BNPoint shall have no public constructor); the proper
  * way to do this is to invoke the factory method pointFactory() of the desired BNCurve subclass.
- * 
+ *
  * Copyright (C) Paulo S. L. M. Barreto.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
@@ -69,7 +79,7 @@ public class BNPoint {
 
     /**
      * Create an instance of the BNCurve point at infinity on curve E.
-     * 
+     *
      * @param E the elliptic curve where the created point is located.
      */
     BNPoint(BNCurve E) {
@@ -86,7 +96,7 @@ public class BNPoint {
 
     /**
      * Create a normalized BNCurve point from given affine coordinates and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate (mod p).
      * @param y the affine y-coordinate (mod p).
@@ -105,7 +115,7 @@ public class BNPoint {
 
     /**
      * Create an BNCurve point from given projective coordinates and a curve.
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate (mod p).
      * @param y the affine y-coordinate (mod p).
@@ -129,7 +139,7 @@ public class BNPoint {
 
     /**
      * Create an BNCurve point from a given affine x-coordinate, a y-bit, and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate (mod p).
      * @param yBit the least significant bit of the y-coordinate.
@@ -157,7 +167,7 @@ public class BNPoint {
 
     /**
      * Create an BNCurve point from a given x-trit, an affine y-coordinate, and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param xTrit the least significant trit of the x-coordinate.
      * @param y the affine y-coordinate (mod p).
@@ -199,9 +209,9 @@ public class BNPoint {
 
     /**
      * Compute this + Q.
-     * 
+     *
      * @return this + Q.
-     * 
+     *
      * @param Q an elliptic curve point.
      */
     public BNPoint add(BNPoint Q) {
@@ -264,9 +274,9 @@ public class BNPoint {
 
     /**
      * Compare this point to a given object.
-     * 
+     *
      * @param Q the elliptic curve point to be compared to this.
-     * 
+     *
      * @return true if this point and Q are equal, otherwise false.
      */
     @Override
@@ -303,9 +313,9 @@ public class BNPoint {
 
     /**
      * Check whether Q lays on the same curve as this point.
-     * 
+     *
      * @param Q an elliptic curve point.
-     * 
+     *
      * @return true if Q lays on the same curve as this point, otherwise false.
      */
     public boolean isOnSameCurve(BNPoint Q) {
@@ -316,7 +326,7 @@ public class BNPoint {
 
     /**
      * Check whether this is the point at infinity (i.e. the BNCurve group zero element).
-     * 
+     *
      * @return true if this is the point at infinity, otherwise false.
      */
     public boolean isZero() {
@@ -325,9 +335,9 @@ public class BNPoint {
 
     /**
      * Compute k*this
-     * 
+     *
      * @param k scalar by which the base point G is to be multiplied
-     * 
+     *
      * @return k*this
      */
     public BNPoint multiply(BigInteger k) {
@@ -359,7 +369,7 @@ public class BNPoint {
 
     /**
      * Compute -this.
-     * 
+     *
      * @return -this.
      */
     public BNPoint negate() {
@@ -368,7 +378,7 @@ public class BNPoint {
 
     /**
      * Normalize this point.
-     * 
+     *
      * @return a normalized point equivalent to this.
      */
     public BNPoint normalize() {
@@ -404,9 +414,9 @@ public class BNPoint {
 
     /**
      * Compute a random point on the same curve as this.
-     * 
+     *
      * @param rand a cryptographically strong pseudo-random number generator.
-     * 
+     *
      * @return a random point on the same curve as this.
      */
     public BNPoint randomize(SecureRandom rand) {
@@ -416,11 +426,11 @@ public class BNPoint {
     /**
      * Compute ks*this + kr*Y. This is useful in the verification part of several signature algorithms, and (hopely)
      * faster than two scalar multiplications.
-     * 
+     *
      * @param ks scalar by which this point is to be multiplied.
      * @param kr scalar by which Y is to be multiplied.
      * @param Y a curve point.
-     * 
+     *
      * @return ks*this + kr*Y
      */
     public BNPoint simultaneous(BigInteger ks, BigInteger kr, BNPoint Y) {
@@ -453,10 +463,10 @@ public class BNPoint {
 
     /**
      * Convert this curve point to a byte array. This is the ANSI X9.62 Point-to-Octet-String Conversion primitive
-     * 
+     *
      * @param formFlags the desired form of the octet string representation (BNPoint.COMPRESSED, BNPoint.EXPANDED,
      *        BNPoint.HYBRID)
-     * 
+     *
      * @return this point converted to a byte array using the algorithm defined in section 4.3.6 of ANSI X9.62
      */
     public byte[] toByteArray(int formFlags) {
@@ -494,9 +504,9 @@ public class BNPoint {
 
     /**
      * Left-shift this point by a given distance n, i.e. compute (2^^n)*this.
-     * 
+     *
      * @param n the shift amount.
-     * 
+     *
      * @return (2^^n)*this.
      */
     public BNPoint twice(int n) {

@@ -1,23 +1,33 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2011 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.PairingBDII;
 
 /**
  * BNPoint2.java
- * 
+ *
  * Arithmetic in the group of points on the sextic twist a BN elliptic curve over GF(p^2).
- * 
+ *
  * A point of an elliptic curve is only meaningful when suitably attached to some curve. Hence, there must be no public
  * means to create a point by itself (i.e. concrete subclasses of BNPoint2 shall have no public constructor); the proper
  * way to do this is to invoke the factory method pointFactory() of the desired BNCurve subclass.
- * 
+ *
  * Copyright (C) Paulo S. L. M. Barreto.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public
  * License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later
  * version.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License along with this program; if not, write to the Free
  * Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
@@ -63,7 +73,7 @@ public class BNPoint2 {
 
     /**
      * Create an instance of the BNCurve point at infinity on curve E.
-     * 
+     *
      * @param E the elliptic curve where the created point is located.
      */
     BNPoint2(BNCurve2 E) {
@@ -80,7 +90,7 @@ public class BNPoint2 {
 
     /**
      * Create a normalized twist point from given affine coordinates and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate.
      * @param y the affine y-coordinate.
@@ -98,7 +108,7 @@ public class BNPoint2 {
 
     /**
      * Create an BNCurve point from given projective coordinates and a curve.
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate.
      * @param y the affine y-coordinate.
@@ -122,7 +132,7 @@ public class BNPoint2 {
 
     /**
      * Create an BNCurve point from a given affine x-coordinate, a y-bit and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param x the affine x-coordinate.
      * @param yBit the least significant bit of the y-coordinate.
@@ -149,7 +159,7 @@ public class BNPoint2 {
 
     /**
      * Create an BNCurve point from a given x-trit, an affine y-coordinate, and a curve
-     * 
+     *
      * @param E the underlying elliptic curve.
      * @param xTrit the least significant trit of the x-coordinate.
      * @param y the affine y-coordinate.
@@ -190,9 +200,9 @@ public class BNPoint2 {
 
     /**
      * Compute this + Q.
-     * 
+     *
      * @return this + Q.
-     * 
+     *
      * @param Q an elliptic curve point.
      */
     public BNPoint2 add(BNPoint2 Q) {
@@ -254,9 +264,9 @@ public class BNPoint2 {
 
     /**
      * Compare this point to a given object.
-     * 
+     *
      * @param Q the elliptic curve point to be compared to this.
-     * 
+     *
      * @return true if this point and Q are equal, otherwise false.
      */
     @Override
@@ -310,9 +320,9 @@ public class BNPoint2 {
 
     /**
      * Check whether Q lays on the same curve as this point.
-     * 
+     *
      * @param Q an elliptic curve point.
-     * 
+     *
      * @return true if Q lays on the same curve as this point, otherwise false.
      */
     public boolean isOnSameCurve(BNPoint2 Q) {
@@ -323,7 +333,7 @@ public class BNPoint2 {
 
     /**
      * Check whether this is the point at infinity (i.e. the BNCurve group zero element).
-     * 
+     *
      * @return true if this is the point at infinity, otherwise false.
      */
     public boolean isZero() {
@@ -332,9 +342,9 @@ public class BNPoint2 {
 
     /**
      * Compute k*this
-     * 
+     *
      * @param k scalar by which the base point G is to be multiplied
-     * 
+     *
      * @return k*this
      */
     public BNPoint2 multiply(BigInteger k) {
@@ -366,7 +376,7 @@ public class BNPoint2 {
 
     /**
      * Compute -this.
-     * 
+     *
      * @return -this.
      */
     public BNPoint2 negate() {
@@ -375,7 +385,7 @@ public class BNPoint2 {
 
     /**
      * Normalize this point.
-     * 
+     *
      * @return a normalized point equivalent to this.
      */
     public BNPoint2 normalize() {
@@ -400,9 +410,9 @@ public class BNPoint2 {
 
     /**
      * Compute a random point on the same curve as this.
-     * 
+     *
      * @param rand a cryptographically strong pseudo-random number generator.
-     * 
+     *
      * @return a random point on the same curve as this.
      */
     public BNPoint2 randomize(SecureRandom rand) {
@@ -414,11 +424,11 @@ public class BNPoint2 {
     /**
      * Compute ks*this + kr*Y. This is useful in the verification part of several signature algorithms, and (hopely)
      * faster than two scalar multiplications.
-     * 
+     *
      * @param ks scalar by which this point is to be multiplied.
      * @param kr scalar by which Y is to be multiplied.
      * @param Y a curve point.
-     * 
+     *
      * @return ks*this + kr*Y
      */
     public BNPoint2 simultaneous(BigInteger ks, BigInteger kr, BNPoint2 Y) {
@@ -454,9 +464,9 @@ public class BNPoint2 {
 
     /**
      * Left-shift this point by a given distance n, i.e. compute (2^^n)*this.
-     * 
+     *
      * @param n the shift amount.
-     * 
+     *
      * @return (2^^n)*this.
      */
     public BNPoint2 twice(int n) {
