@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="canonicalization" title="XML Canonicalization (remove comments)">
+    <description>During canonicalization, the XML document is being normalized. This e.g. includes the removal of unnecessary whitespaces in tags, alphabetic ordering of attributes and UTF-8 as encoding. This variant will remove any XML comment and replace it with empty lines.</description>
 	</context>
 	<context id="canonicalizationcomments" title="XML Canonicalization (maintain comments)">
+    <description>During canonicalization, the XML document is being normalized. This e.g. includes the removal of unnecessary whitespaces in tags, alphabetic ordering of attributes and UTF-8 as encoding. This variant keeps all XML comment.</description>
 	</context>
 	<context id="signature" title="XML Signature">
+    <description>Creates a new XML Signature for the selected XML document. You can sign the complete document or a fragment of it. Three signature variants - &lt;b&gt;enveloping&lt;/b&gt;, &lt;b&gt;enveloped&lt;/b&gt; and &lt;b&gt;detached&lt;/b&gt; - are available.</description>
 	</context>
 	<context id="verification" title="XML Verification">
+      <description>During verification, all XML Signatures in the active XML document are verified. The result is displayed in the <b>XML Signatures</b> view.</description>
 	</context>
 	<context id="encryption" title="XML Encryption">
+    <description>Creates a new XML Encryption for the selected XML document. You can encrypt the complete XML document or a fragment.</description>
 	</context>
     <context id="decryption" title="XML Decryption">
+       <description>Decrypts a chosen encryption in the active XML document and restores its plaintext.</description>
     </context>
 	<context id="wizard_signature_resource">
 		<description>Select a &lt;b&gt;resource&lt;/b&gt; to sign (the complete document or a fragment of it), the &lt;b&gt;signature type&lt;/b&gt; (enveloping, enveloped or detached) and a &lt;b&gt;key option&lt;/b&gt; (create a new one or use an existing one). The &lt;b&gt;Basic Security Profile&lt;/b&gt; option increases interoperability of Web Service Security.</description>

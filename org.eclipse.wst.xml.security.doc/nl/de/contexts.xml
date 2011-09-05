@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
 	<context id="canonicalization" title="XML Kanonisierung (Kommentare entfernen)">
-    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Elementen entfernt und Attribute in eine alphabetische Reihenfolge gebracht. XML-Kommentare werden entfernt und durch Leerzeichen ersetzt.</description>
+    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Tags entfernt, Attribute in eine alphabetische Reihenfolge gebracht und UTF-8 als Encoding gesetzt. Bei dieser Variante werden XML-Kommentare entfernt und durch Leerzeilen ersetzt.</description>
 	</context>
 	<context id="canonicalizationcomments" title="XML Kanonisierung (Kommentare erhalten)">
-    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Elementen entfernt und Attribute in eine alphabetische Reihenfolge gebracht. XML-Kommentare bleiben erhalten und werden auch in der kanonisierten Form angezeigt.</description>
+    <description>Bei der Kanonisierung wird das XML-Dokument normalisiert. Beispielsweise werden dabei überflüssige Leerzeichen in Tags entfernt, Attribute in eine alphabetische Reihenfolge gebracht und UTF-8 als Encoding gesetzt. Bei dieser Variante bleiben XML-Kommentare erhalten und werden auch in der kanonisierten Form angezeigt.</description>
 	</context>
 	<context id="signature" title="XML Signatur">
+    <description>Hiermit erstellen Sie eine neue XML Signatur für das aktive XML-Dokument. Sie können das gesamte Dokument signieren oder nur ein Fragment. Dabei stehen Ihnen die drei Signaturvarianten &lt;b&gt;enveloping&lt;/b&gt;, &lt;b&gt;enveloped&lt;/b&gt; und &lt;b&gt;detached&lt;/b&gt; zur Verfügung.</description>
 	</context>
 	<context id="verification" title="XML Verifizierung">
+    <description>Bei der Verifizierung werden die im aktiven XML-Dokument vorhandenen XML Signaturen überprüft. Das Ergebnis wird in der &lt;b&gt;XML Signaturen&lt;/b&gt; Sicht angezeigt.</description>
 	</context>
 	<context id="encryption" title="XML Verschlüsselung">
+    <description>Hiermit erstellen Sie eine neue XML Verschlüsselung für das aktive XML-Dokument. Sie können das gesamte aktive XML-Dokument verschlüsseln oder nur ein Fragment.</description>
 	</context>
     <context id="decryption" title="XML Entschlüsselung">
+       <description>Entschlüsselt eine ausgewählte Verschlüsselung im aktiven XML-Dokument und stellt den Klartext wieder her.</description>
     </context>
 	<context id="wizard_signature_resource">
 		<description>Select a &lt;b&gt;resource&lt;/b&gt; to sign (the complete document or a fragment of it), the &lt;b&gt;signature type&lt;/b&gt; (enveloping, enveloped or detached) and a &lt;b&gt;key option&lt;/b&gt; (create a new one or use an existing one). The &lt;b&gt;Basic Security Profile&lt;/b&gt; option increases interoperability of Web Service Security.</description>
