@@ -167,41 +167,32 @@ public class CoefficientDialog extends TitleAreaDialog implements Constants {
 	 */
 	private String convertToSubset(int id) {
 		char[] data = String.valueOf(id).toCharArray();
-		String result = "";
+		StringBuilder result = new StringBuilder();
 
 		for (int i = 0; i < data.length; i++) {
 			if (data[i] == '0')
-				result += uZero;
-
-			if (data[i] == '1')
-				result += uOne;
-
-			if (data[i] == '2')
-				result += uTwo;
-
-			if (data[i] == '3')
-				result += uThree;
-
-			if (data[i] == '4')
-				result += uFour;
-
-			if (data[i] == '5')
-				result += uFive;
-
-			if (data[i] == '6')
-				result += uSix;
-
-			if (data[i] == '7')
-				result += uSeven;
-
-			if (data[i] == '8')
-				result += uEight;
-
-			if (data[i] == '9')
-				result += uNine;
+				result.append(uZero);
+			else if (data[i] == '1')
+				result.append(uOne);
+			else if (data[i] == '2')
+				result.append(uTwo);
+			else if (data[i] == '3')
+				result.append(uThree);
+			else if (data[i] == '4')
+				result.append(uFour);
+			else if (data[i] == '5')
+				result.append(uFive);
+			else if (data[i] == '6')
+				result.append(uSix);
+			else if (data[i] == '7')
+				result.append(uSeven);
+			else if (data[i] == '8')
+				result.append(uEight);
+			else if (data[i] == '9')
+				result.append(uNine);
 		}
 
-		return result;
+		return result.toString();
 	}
 
 	/**

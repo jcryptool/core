@@ -26,7 +26,7 @@ import org.jcryptool.visual.PairingBDII.basics.DHECKeyPair2;
 import de.flexiprovider.common.math.FlexiBigInt;
 
 public class BDIIBNP {
-    private final int numBits = 160;
+    private static final int numBits = 160;
     private final BNCurve E;
     private final BNPoint P;
     private final BNPoint2 Q;

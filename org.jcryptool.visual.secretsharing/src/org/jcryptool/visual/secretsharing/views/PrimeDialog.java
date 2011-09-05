@@ -65,7 +65,7 @@ public class PrimeDialog extends TitleAreaDialog implements Constants {
 		primeText = new StyledText(container, SWT.BORDER);
 		primeText.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(final DisposeEvent e) {
-				result[0] = new String(primeText.getText());
+				result[0] = primeText.getText();
 			}
 		});
 

@@ -3,17 +3,17 @@ package org.jcryptool.crypto.classic.grille.algorithm;
 import java.util.Arrays;
 
 
-public class Schablone {	
-	
+public class Schablone {
+
 	char [][]schablone;
- 
+
 	public Schablone(int size){
 		schablone = new char[size][size];
 		for(int i = 0; i < size; i++) // init to '0'
 		{
 		    Arrays.fill(schablone[i], '0');
 		}
-		
+
 	}
 	/**
 	 * gibt Wert der Schablone an der jeweiligen Position an
@@ -29,14 +29,14 @@ public class Schablone {
 	}
 	@Override
 	public String toString() {
-		String s = "";
+	    StringBuilder s = new StringBuilder();
 		for(int r = 0; r < schablone.length; r++){
 			for(int c = 0; c < schablone[r].length; c++){
-				s = s + get (r,c);
-			} 
-			s = s + "\n";
+				s.append(get(r,c));
+			}
+			s.append("\n");
 		}
-		return s;
+		return s.toString();
 	}
 	/**
 	 * gibt die Größe der Schablone zurück

@@ -26,7 +26,7 @@ public class ECDL {
     private Vector<DHECKeyPair> UserKeys;
     private final int keysize;
     private final GFPElement a;
-    private final int windowsize = 3;
+    private static final int windowsize = 3;
 
     private FlexiBigInt p;
     private FlexiBigInt l;

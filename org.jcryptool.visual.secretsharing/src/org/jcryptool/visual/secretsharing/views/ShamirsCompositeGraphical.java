@@ -1003,38 +1003,31 @@ public class ShamirsCompositeGraphical extends Composite implements Constants {
      */
     private String convertToSuperscript(int id) {
         char[] data = String.valueOf(id).toCharArray();
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         if (id == 0 || id == 1)
-            return result;
+            return "";
 
         for (int i = 0; i < data.length; i++) {
             if (data[i] == '2')
-                result += sTwo;
-
-            if (data[i] == '3')
-                result += sThree;
-
-            if (data[i] == '4')
-                result += sFour;
-
-            if (data[i] == '5')
-                result += sFive;
-
-            if (data[i] == '6')
-                result += sSix;
-
-            if (data[i] == '7')
-                result += sSeven;
-
-            if (data[i] == '8')
-                result += sEight;
-
-            if (data[i] == '9')
-                result += sNine;
+                result.append(sTwo);
+            else if (data[i] == '3')
+                result.append(sThree);
+            else if (data[i] == '4')
+                result.append(sFour);
+            else if (data[i] == '5')
+                result.append(sFive);
+            else if (data[i] == '6')
+                result.append(sSix);
+            else if (data[i] == '7')
+                result.append(sSeven);
+            else if (data[i] == '8')
+                result.append(sEight);
+            else if (data[i] == '9')
+                result.append(sNine);
         }
 
-        return result;
+        return result.toString();
     }
 
     /**

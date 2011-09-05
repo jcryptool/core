@@ -18,9 +18,6 @@ import java.security.spec.ECPoint;
 
 public class ECCAdd {
 
-	ECPoint a;
-	ECPoint b;
-
 //  this class is used to carry out ECAddtion operation with the given parameter Point a, b and Prime field ecf
 	public ECPoint ecAddition(ECPoint a, ECPoint b, ECFieldFp ecf){
 

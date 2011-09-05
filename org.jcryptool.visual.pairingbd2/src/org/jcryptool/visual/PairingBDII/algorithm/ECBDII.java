@@ -27,7 +27,7 @@ public class ECBDII {
     private final Vector<DHECKeyPair> UserKeys;
     private final int keysize;
     private final GFPElement a;
-    private final int windowsize = 3;
+    private static final int windowsize = 3;
     private FlexiBigInt order;
     private FlexiBigInt p;
     private PointGFP1 P;

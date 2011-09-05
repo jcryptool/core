@@ -22,8 +22,8 @@ import com.lowagie.text.pdf.PdfWriter;
  */
 public class FileExporter {
 
-	private final String cr = "\n";
-	private final String seperator = ";";
+	private static final String CR = "\n";
+	private static final String SEPARATOR = ";";
 
 	private ChineseRemainderTheorem crt;
 	private Document document;
@@ -222,60 +222,60 @@ public class FileExporter {
 			valueInverse = crt.getInverse();
 
 			osw.write("Chinese Remainder Theorem");
-			osw.write(seperator);
-			osw.write(cr);
+			osw.write(SEPARATOR);
+			osw.write(CR);
 			osw.write("Equations:");
-			osw.write(seperator);
-			osw.write(cr);
+			osw.write(SEPARATOR);
+			osw.write(CR);
 
 			for (int i = 0; i < valueA.length; i++) {
 				osw.write("x");
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write("=");
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write(valueA[i].toString());
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write("mod");
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write(valueModuli[i].toString());
-				osw.write(seperator);
-				osw.write(cr);
+				osw.write(SEPARATOR);
+				osw.write(CR);
 			}
 
-			osw.write(cr);
-			osw.write(cr);
+			osw.write(CR);
+			osw.write(CR);
 			osw.write("Inverse:");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("m");
-			osw.write(seperator);
+			osw.write(SEPARATOR);
 			osw.write("=");
-			osw.write(seperator);
+			osw.write(SEPARATOR);
 			osw.write(crt.getModulus().toString());
-			osw.write(seperator);
-			osw.write(cr);
-			osw.write(cr);
+			osw.write(SEPARATOR);
+			osw.write(CR);
+			osw.write(CR);
 
 			for (int i = 0; i < valueInverse.length; i++) {
 				osw.write("M_" + i);
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write("=");
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write(valueBigM[i].toString());
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write("y_" + i);
-				osw.write(seperator);
+				osw.write(SEPARATOR);
 				osw.write(valueInverse[i].toString());
-				osw.write(seperator);
-				osw.write(cr);
+				osw.write(SEPARATOR);
+				osw.write(CR);
 			}
 
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("One solution of the simultaneous congruences is:");
-			osw.write(seperator);
+			osw.write(SEPARATOR);
 			osw.write(crt.getFinalResult().toString());
-			osw.write(seperator);
+			osw.write(SEPARATOR);
 
-			osw.write(cr);
+			osw.write(CR);
 			osw.flush();
 			osw.close();
 		} catch (FileNotFoundException e) {
@@ -302,86 +302,86 @@ public class FileExporter {
 			osw = writeLatexHeader(osw);
 
 			osw.write("\\textbf{Chinese Remainder Theorem}");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("Equations:");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			for (int i = 0; i < valueA.length; i++) {
 				osw.write("$x = " + valueA[i] + " ~mod ~" + valueModuli[i] + "$");
-				osw.write(cr);
+				osw.write(CR);
 				osw.write("\\newline");
-				osw.write(cr);
+				osw.write(CR);
 			}
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("Compute");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("$m = \\prod \\limits_{i=i}^{n} m_i, \\qquad M_i = m / m_i, \\qquad 0 \\le i < n.$");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("$m = " + crt.getModulus() + "$");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			for (int i = 0; i < valueBigM.length; i++) {
 				osw.write("$m_" + i + " = " + valueBigM[i] + "$");
-				osw.write(cr);
+				osw.write(CR);
 				osw.write("\\newline");
-				osw.write(cr);
+				osw.write(CR);
 			}
-			osw.write(cr);
-			osw.write(cr);
+			osw.write(CR);
+			osw.write(CR);
 			osw.write("To get the inverse you can use the extended euclidean.");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
 			osw.write("$y_iM_i \\equiv 1 ~mod ~m_i, ~0 \\le i < n.$");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			for (int i = 0; i < valueInverse.length; i++) {
 				osw.write("$y_" + i + " = " + valueInverse[i] + "$");
-				osw.write(cr);
+				osw.write(CR);
 				osw.write("\\newline");
-				osw.write(cr);
+				osw.write(CR);
 
 			}
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("To get one solution of the simultaneous congruences");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("$x = \\sum \\limits_{i=1}^{n} a_iy_iM_i ~mod ~m.$");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\newline");
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("One solution is: $" + crt.getFinalResult() + "$");
-			osw.write(cr);
+			osw.write(CR);
 
-			osw.write(cr);
+			osw.write(CR);
 			osw.write("\\end{document}");
 
 			osw.flush();
@@ -402,11 +402,11 @@ public class FileExporter {
 		try {
 
 			osw.write("\\documentclass{article}");
-			osw.write(cr);
-			osw.write(cr);
+			osw.write(CR);
+			osw.write(CR);
 			osw.write("\\begin{document}");
-			osw.write(cr);
-			osw.write(cr);
+			osw.write(CR);
+			osw.write(CR);
 
 		} catch (Exception e) {
 		}

@@ -23,9 +23,9 @@ import com.lowagie.text.pdf.PdfWriter;
  * @version 1.0.0
  */
 public class FileExporter {
-	private final String cr = "\n";
-	private final String tab = "\t";
-	private final String seperator = ";";
+	private static final String cr = "\n";
+	private static final String tab = "\t";
+	private static final String seperator = ";";
 
 	com.lowagie.text.Font fontValues = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 8,
 			com.lowagie.text.Font.NORMAL);

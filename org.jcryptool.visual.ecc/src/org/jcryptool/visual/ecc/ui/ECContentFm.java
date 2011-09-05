@@ -87,8 +87,6 @@ public class ECContentFm extends Composite{
 	private Button rbtnReal = null;
 	private Button rbtnLarge = null;
 	private Slider sliderZoom = null;
-	private Spinner spnrA = null;
-	private Spinner spnrB = null;
 	private Spinner spnrK = null;
 	private Spinner spnrM = null;
 	private StyledText stDescription = null;
@@ -184,7 +182,7 @@ public class ECContentFm extends Composite{
 			public void widgetSelected(SelectionEvent e) {
 				points = null;
 				fillTablePoints();
-				curve.updateCurve(spnrA.getSelection(), spnrB.getSelection(), 50 - sliderZoom.getSelection(), canvasCurve.getSize());
+				curve.updateCurve(0, 0, 50 - sliderZoom.getSelection(), canvasCurve.getSize());
 				points = curve.getPoints();
 				if(points == null)
 					groupPoints.setText(Messages.getString("ECView.Points")); //$NON-NLS-1$

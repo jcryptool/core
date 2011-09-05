@@ -55,18 +55,13 @@ public class SPAView extends ViewPart implements Constants {
     private Text result;
     private Combo exponent;
     private Text basis;
-    int res, counter = 1;
-    int exp_selected = 0;
-    boolean powertraceflag = false;
-    boolean visualisation_SaM = true;
+    private int counter = 1;
+    private int exp_selected = 0;
     private StyledText indicationOfVulnerabilityText;
     // this is the ....
-    int q_selected = 0;
-    int p_selected = 0;
+    private int q_selected = 0;
+    private int p_selected = 0;
     private StyledText rsaProcessText;
-    boolean counterflag = false;
-    int counterPIndex = 0;
-    int counterQIndex = 0;
 
     // declare a object of SquareandMultiply, which is used to process the "square and multiply" algorithm
     SquareandMultiply squareandMultiply = new SquareandMultiply();
@@ -179,7 +174,7 @@ public class SPAView extends ViewPart implements Constants {
 
         basis.setToolTipText(TOOL_TIP_TEXT_BASIS);
         basis.setBounds(10, 45, 75, 25);
-        
+
         // the verifylistener on basis is used to verify the correctness of input
         basis.addVerifyListener(new VerifyListener() {
             public void verifyText(VerifyEvent e) {
@@ -219,7 +214,7 @@ public class SPAView extends ViewPart implements Constants {
             dataElementIndexExponent++;
         }
 
-        
+
 
         // it's a cue label
         final Label theModularLabel = new Label(parameterOfRSAGroup, SWT.NONE);
@@ -242,7 +237,7 @@ public class SPAView extends ViewPart implements Constants {
         pSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
         pSelectCombo.setToolTipText(TOOL_TIP_TEXT_P_SELECTION);
         pSelectCombo.setBounds(10, 145, 55, 25);
-        
+
 
         qSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
         qSelectCombo.setToolTipText(TOOL_TIP_TEXT_Q_SELECTION);
@@ -261,14 +256,14 @@ public class SPAView extends ViewPart implements Constants {
         data_length = primeData.length;
         data_element_index = 0;
         while (data_length > 0) {
-            
+
             pSelectCombo.add(String.valueOf(primeData[data_element_index]));
             data_length--;
             data_element_index++;
-            
+
         }
 
-        
+
         // the selectionlistener is used to determine which prime number has been chosen
         qSelectCombo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
@@ -368,91 +363,91 @@ public class SPAView extends ViewPart implements Constants {
         final Button executeButton = new Button(parameterOfRSAGroup, SWT.NONE);
         executeButton.setEnabled(false);
         executeButton.setToolTipText(TOOL_TIP_TEXT_INSECURE_EXECUTEBUTTON);
-        
+
         // executeButton is used to start the process of "square and multiply" algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
-            
+
             public void widgetSelected(final SelectionEvent e) {
-                
+
                 visualTableandPowerTraceGroup.setVisible(true);
-                
+
                 recordTable.removeAll();
-                
+
                 counter = 1;
-                
+
                 cue_label.setVisible(false);
-                
+
                 StackLayout stacklayout = new StackLayout();
                 powerTraceVisualizationGroup.setLayout(stacklayout);
-                
+
                 int exp_in_decimal = Integer.parseInt(exponent.getText());
                 int[] tempresult = new int[Integer.toBinaryString(Integer.parseInt(exponent.getText())).length()];
                 int count = 0;
                 long res = 1;
                 String exp_in_binary = Integer.toBinaryString(exp_in_decimal);
                 int exp_in_binar_length = exp_in_binary.length();
-                
+
                 final TableItem initialTableItemBasis = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemBasis.setText(0, INPUT_BASIS_ENG);
                 initialTableItemBasis.setText(1, RES_AFTER_SQUARE_ENG);
                 initialTableItemBasis.setText(2, RES_AFTER_MUL_ENG);
-                
+
                 final TableItem initialTableItemInput = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemInput.setText(0, INITIAL_ITEM_TEXT_1_IN_TABLE + basis.getText() + INPUT_RES_1_ENG);
-                
+
                 final TableItem initialTableItemExponent = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemExponent.setText(0, EXP_ENG + exponent.getText() + DEC_ENG);
-                
+
                 final TableItem initialTableItemExponent_binary = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemExponent_binary.setText(0, INITIAL_ITEM_TEXT_2_IN_TABLE + exp_in_binary + BIN_ENG);
-                
+
                 final TableItem initialTableItemModul = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemModul.setText(0, "  " + MODUL_ENG + mod.getText());
-                
+
                 final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
                 initialTableItemProcess.setText(0, INITIAL_ITEM_TEXT_3_IN_TABLE);
                 int achse_x = 30;
-                
+
                 final ScrolledComposite powerTraceVisualScrollComposite = new ScrolledComposite(powerTraceVisualizationGroup, SWT.NONE
                         | SWT.H_SCROLL);
-                
+
                 stacklayout.topControl = powerTraceVisualScrollComposite;
                 powerTraceVisualizationGroup.layout();
-                
+
                 final Composite powerTraceComposite = new Composite(powerTraceVisualScrollComposite, SWT.NONE);
-                
+
                 powerTraceComposite.setSize(1250, 160);
                 powerTraceVisualScrollComposite.setContent(powerTraceComposite);
-                
+
                 final Label achseY_squareLabel = new Label(powerTraceComposite, SWT.NONE);
                 achseY_squareLabel.setBounds(achse_x, 10, 85, 110);
                 achseY_squareLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADRESSE_Y_ACHSE_ENG).createImage());
-                
+
                 achse_x = achse_x + 85;
-                
+
                 while (exp_in_binar_length > 0) {
                     final TableItem tempTableItems = new TableItem(recordTable, SWT.BORDER);
                     tempTableItems.setText(0, "  " + counter + HIGHEST_BIT_ENG + exp_in_binary.charAt(count));
-                    
+
                     long tempres_byExp = res;
-                    
+
                     res = (long) Math.pow(res, 2) % Integer.parseInt(mod.getText());
                     tempTableItems.setText(1, RES_EQUAL_ENG + tempres_byExp + HOCH_2_MOD_ENG + mod.getText() + " = "
                             + res);
-                    
+
                     if (exp_in_binary.charAt(count) == '1') {
                         long tempres_byMul = res;
                         res = (res * Integer.parseInt(basis.getText()) % Integer.parseInt(mod.getText()));
                         tempTableItems.setText(2, RES_EQUAL_ENG + tempres_byMul + " * " + basis.getText() + " mod "
                                 + mod.getText() + " = " + res);
-                        
+
                         final Label powertrace_sqMulLabel = new Label(powerTraceComposite, SWT.NONE);
                         powertrace_sqMulLabel.setBounds(achse_x, 10, 85, 110);
                         powertrace_sqMulLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADDRESSE_SQMUL_ENG).createImage());
                         achse_x = achse_x + 85;
                     } else {
                         final Label powertrace_squareLabel = new Label(powerTraceComposite, SWT.NONE);
-                        
+
                         powertrace_squareLabel.setBounds(achse_x, 10, 42, 110);
                         powertrace_squareLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADDRESSE_SQ_ENG).createImage());
                         achse_x = achse_x + 42;
@@ -461,28 +456,28 @@ public class SPAView extends ViewPart implements Constants {
                     counter++;
                     exp_in_binar_length--;
                 }
-                
+
                 final Label achseX_squareLabel = new Label(powerTraceComposite, SWT.NONE);
                 achseX_squareLabel.setBounds(achse_x, 10, 85, 110);
                 achseX_squareLabel.setImage(SPAPlugIn.getImageDescriptor(IMGADDRESSE_X_ACHSE_ENG).createImage());
-                
+
                 final TableItem outPutTableItems = new TableItem(recordTable, SWT.BORDER);
                 outPutTableItems.setText(0, OUTPUT_TABLE_ITEM_TEXT);
-                
+
                 final TableItem finalTableItems = new TableItem(recordTable, SWT.BORDER);
-                
+
                 finalTableItems.setText(0, "  " + FINAL_RESULT_ENG + res);
                 result.setText("" + res);
-                
+
                 res = squareandMultiply.sqmulExcution(Integer.parseInt(basis.getText()), Integer.parseInt(exponent.getText()), Integer.parseInt(mod.getText()));
-                
+
                 indicationGroup.setText(INDICATION_GROUP_SQUARE_MLUTI_TITLE);
                 //
                 indicationOfVulnerabilityText.setText(INDICATION_OF_VULNERABILITY_TEXT);
                 indicationOfVulnerabilityText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
                 indicationOfVulnerabilityText.setEditable(false);
                 indicationOfVulnerabilityText.setBounds(5, 15, 645, 100);
-                
+
                 String str = "(" + tempresult[--count];
                 while (count != 0) {
                     str = str + "*" + tempresult[--count];
@@ -490,9 +485,9 @@ public class SPAView extends ViewPart implements Constants {
                 cue_label.setText("");
                 cue_label.setForeground(SWTResourceManager.getColor(255, 0, 0));
                 cue_label.setVisible(true);
-                
+
             }
-            
+
         });
         // the samaExecuteButton here is used to start the more vulnerably algorithm "Square and Multiply Always"(sama)
         final Button samaExecuteButton = new Button(parameterOfRSAGroup, SWT.NONE);
@@ -530,7 +525,7 @@ public class SPAView extends ViewPart implements Constants {
 
             }
         });
-        
+
         // clearButton is used to clear the table
         final Button clearButton = new Button(parameterOfRSAGroup, SWT.NONE);
         clearButton.addSelectionListener(new SelectionAdapter() {
@@ -562,7 +557,7 @@ public class SPAView extends ViewPart implements Constants {
         mod.setToolTipText(TOOL_TIP_TEXT_MODULE_N);
         mod.setBounds(160, 145, 60, 25);
         mod.setEditable(false);
-        
+
         mod.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {
 
@@ -576,7 +571,7 @@ public class SPAView extends ViewPart implements Constants {
             }
         });
 
-        
+
         // result is used to save the result R in R = c^d mod n
         result = new Text(parameterOfRSAGroup, SWT.BORDER);
         result.setToolTipText(TOOL_TIP_TEXT_RESULT);
@@ -584,7 +579,7 @@ public class SPAView extends ViewPart implements Constants {
         result.setEditable(false);
 
 
-        
+
         final Label theModuleMLabel = new Label(parameterOfRSAGroup, SWT.NONE);
         theModuleMLabel.setBounds(160, 125, 65, 20);
         theModuleMLabel.setText(MODULE_LABEL_TEXT);

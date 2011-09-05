@@ -3,16 +3,16 @@ package org.jcryptool.crypto.classic.grille.algorithm;
 
 /**
  * Ver- und entschlüsselt einen Text mit der Grille-Verschlüsselung
- * 
+ *
  * @author Patricia
- * 
+ *
  */
 public class Grille {
     private KeySchablone key;
 
     /**
      * prüft ob der zu verschlüsselnde Text in die Schablone passt
-     * 
+     *
      * @param key der verwendete Schlüssel
      * @param plaintext der zu verschlüsselnde Text
      * @return den Plaintext an die Schablonenlänge angepasst
@@ -36,20 +36,20 @@ public class Grille {
 
     /**
      * Verschlüsselt den Plaintext.
-     * 
+     *
      * @param key der verwendete Schlüssel
      * @param plaintext der zu verschlüsselnde Text
      * @return der verschlüsselte Text
      */
     public String encrypt(String plaintext) {
         KeySchablone encKey = key;
-        String cipher = "";
+        StringBuilder cipher = new StringBuilder();
         for (int i = 0; i < plaintext.length(); i += encKey.getSize() * encKey.getSize() - encKey.getSize() % 2) {
-            cipher += encryptSingleBlock(plaintext, i);
+            cipher.append(encryptSingleBlock(plaintext, i));
         }
         encKey.rotateClockwise();
 
-        return cipher;
+        return cipher.toString();
     }
 
     public String encryptSingleBlock(String plaintext, int plaintextBlockPosition) {
@@ -61,14 +61,14 @@ public class Grille {
         }
         if (encKey.getSize() % 2 == 1)
             crypt.set(encKey.getSize() / 2, encKey.getSize() / 2, generateRandomChar(plaintext));
-        String ciphertext = "";
+        StringBuilder ciphertext = new StringBuilder();
         for (int r = 0; r < crypt.getSize(); r++) {
             for (int c = 0; c < crypt.getSize(); c++) {
-                ciphertext = ciphertext + crypt.get(r, c);
+                ciphertext.append(crypt.get(r, c));
             }
         }
 
-        return ciphertext;
+        return ciphertext.toString();
     }
 
     public int encryptAndTurn(String plaintext, int plaintextBlockPosition, Schablone crypt) {
@@ -87,26 +87,24 @@ public class Grille {
 
     /**
      * Entschlüsselt den Ciphertext
-     * 
+     *
      * @param key verwendeter Schlüssel
      * @param ciphertext zu entschlüsselnder Text
      * @return der entschlüsselte Text
      */
     public String decrypt(String ciphertext) {
         KeySchablone decKey = key;
-        String plain = "";
+        StringBuilder plain = new StringBuilder();
         for (int i = 0; i < ciphertext.length(); i += decKey.getSize() * decKey.getSize() - decKey.getSize() % 2) {
-
-            plain += decryptSingleBlock(ciphertext, i);
-
+            plain.append(decryptSingleBlock(ciphertext, i));
         }
 
-        return plain;
+        return plain.toString();
     }
 
     public String decryptSingleBlock(String ciphertext, int ciphertextBlockPosition) {
         KeySchablone decKey = key;
-        String plaintext = "";
+        StringBuilder plaintext = new StringBuilder();
         Schablone decrypt = new Schablone(decKey.getSize());
         for (int i = 0; i < decrypt.getSize() * decrypt.getSize(); i++) {
             decrypt.set(i / decrypt.getSize(), i % decrypt.getSize(), ciphertext.charAt(ciphertextBlockPosition + i));
@@ -117,13 +115,13 @@ public class Grille {
             for (int r = 0; r < decKey.getSize(); r++) {
                 for (int c = 0; c < decKey.getSize(); c++) {
                     if (decKey.get(r, c) == '1') {
-                        plaintext += decrypt.get(r, c);
+                        plaintext.append(decrypt.get(r, c));
                     }
                 }
             }
 
         }
-        return plaintext;
+        return plaintext.toString();
     }
 
     public void setKey(KeySchablone key) {

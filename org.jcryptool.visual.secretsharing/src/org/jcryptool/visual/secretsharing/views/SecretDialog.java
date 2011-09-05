@@ -89,7 +89,7 @@ public class SecretDialog extends TitleAreaDialog implements Constants {
 		});
 		secretText.addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(final DisposeEvent e) {
-				result[1] = new String(secretText.getText());
+				result[1] = secretText.getText();
 			}
 		});
 
