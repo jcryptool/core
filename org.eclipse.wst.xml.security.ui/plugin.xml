@@ -10,7 +10,7 @@
             allowMultiple="false"
             category="org.eclipse.wst.xml.security"
             class="org.eclipse.wst.xml.security.ui.verify.SignatureView"
-            icon="icons/new_verify.gif"
+            icon="icons/view.gif"
             id="org.eclipse.wst.xml.security.ui.SignatureView"
             name="%xmlSignatureView">
       </view>
