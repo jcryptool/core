@@ -12,6 +12,7 @@ package org.jcryptool.fileexplorer.popup.contributions;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -60,7 +61,7 @@ public class CryptoContributionItem extends ContributionItem {
         };
 
         SortedMap<String, Menu> typeMap = new TreeMap<String, Menu>(menuStringsComparator);
-        SortedMap<String, IAction> actionMap = new TreeMap<String, IAction>(menuStringsComparator);
+        SortedMap<String, HashMap<String, IAction>> actionMap = new TreeMap<String, HashMap<String, IAction>>(menuStringsComparator);
         IAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
 
         for (final IAction action : algorithmActions) {
@@ -70,7 +71,10 @@ public class CryptoContributionItem extends ContributionItem {
                 typeMap.put(translatedType, new Menu(algorithmsMenu));
             }
 
-            actionMap.put(action.getText(), action);
+            HashMap<String, IAction> map = new HashMap<String, IAction>(1);
+            map.put(translatedType, action);
+
+            actionMap.put(action.getText(), map);
         }
 
         for (String subMenuKey : typeMap.keySet()) {
@@ -79,9 +83,9 @@ public class CryptoContributionItem extends ContributionItem {
             item.setMenu(typeMap.get(subMenuKey));
         }
 
-        for (String algorithmItems : actionMap.keySet()) {
-            final IAction action = actionMap.get(algorithmItems);
-            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
+        for (HashMap<String, IAction> algorithmItems : actionMap.values()) {
+            String translatedType = algorithmItems.keySet().iterator().next();
+            final IAction action = algorithmItems.get(translatedType);
 
             // get the menu
             Menu typeMenu = typeMap.get(translatedType);
