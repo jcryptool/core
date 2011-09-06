@@ -480,10 +480,6 @@
             </activeWhen>
       </handler>
       <handler
-            class="org.jcryptool.actions.ui.handler.ImportActionCascadeHandler"
-            commandId="org.jcryptool.action.importActionCascadeCommand">
-      </handler>
-      <handler
             class="org.jcryptool.actions.ui.handler.ImportSampleHandler"
             commandId="org.jcryptool.actions.ImportSampleCommand">
       </handler>
