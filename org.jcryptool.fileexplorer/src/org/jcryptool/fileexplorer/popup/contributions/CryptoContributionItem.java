@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2011 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,9 @@
 package org.jcryptool.fileexplorer.popup.contributions;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Comparator;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -37,7 +39,7 @@ import org.jcryptool.fileexplorer.views.FileExplorerView;
  * installed cryptographic algorithms that do extend the <code>AlgorithmsManager</code>.
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 0.9.5
  */
 public class CryptoContributionItem extends ContributionItem {
     private Menu encMenu;
@@ -52,39 +54,50 @@ public class CryptoContributionItem extends ContributionItem {
     public void fill(Menu menu, int index) {
         encMenu = new Menu(menu);
         MenuItem item;
-        Menu typeMenu = null;
-        HashMap<String, Menu> typeMap = new HashMap<String, Menu>();
+        Comparator<String> menuStringsComparator = new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                return o1.toLowerCase().compareTo(o2.toLowerCase());
+            }
+        };
+
+        SortedMap<String, Menu> typeMap = new TreeMap<String, Menu>(menuStringsComparator);
+        SortedMap<String, IAction> actionMap = new TreeMap<String, IAction>(menuStringsComparator);
         IAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
 
-        for (int i = 0; i < algorithmActions.length; i++) {
-            String type = OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(algorithmActions[i]);
+        for (final IAction action : algorithmActions) {
+            String entry = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
 
-            // create menu if necessary
-            if (typeMap.get(type) == null) {
-                typeMap.put(type, new Menu(encMenu));
-
-                // create corresponding menu item to occupy the menu
-                item = new MenuItem(encMenu, SWT.CASCADE);
-                item.setText(ApplicationActionBarAdvisor.getTypeTranslation(type));
-                item.setMenu(typeMap.get(type));
+            if (!typeMap.containsKey(entry)) {
+                typeMap.put(entry, new Menu(encMenu));
             }
 
-            // get the menu
-            typeMenu = typeMap.get(type);
+            actionMap.put(action.getText(), action);
+        }
 
-            final IAction cryptoAction = algorithmActions[i];
+        for (String subMenuKey : typeMap.keySet()) {
+            item = new MenuItem(encMenu, SWT.CASCADE);
+            item.setText(subMenuKey);
+            item.setMenu(typeMap.get(subMenuKey));
+        }
+
+        for (String algorithmItems : actionMap.keySet()) {
+            final IAction action = actionMap.get(algorithmItems);
+            String entry = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
+
+            // get the menu
+            Menu typeMenu = typeMap.get(entry);
 
             // create an item for the algorithm
             item = new MenuItem(typeMenu, SWT.CASCADE);
-            item.setText(algorithmActions[i].getText());
+            item.setText(action.getText());
             item.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(SelectionEvent e) {
-                    run(cryptoAction);
+                    run(action);
                 }
             });
 
             // update the menu
-            typeMap.put(type, typeMenu);
+            typeMap.put(entry, typeMenu);
         }
 
         item = new MenuItem(menu, SWT.CASCADE, index);
