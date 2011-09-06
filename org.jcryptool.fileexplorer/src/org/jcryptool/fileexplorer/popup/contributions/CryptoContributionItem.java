@@ -42,7 +42,7 @@ import org.jcryptool.fileexplorer.views.FileExplorerView;
  * @version 0.9.5
  */
 public class CryptoContributionItem extends ContributionItem {
-    private Menu encMenu;
+    private Menu algorithmsMenu;
     private final FileExplorerView view;
     private IHandler handler;
 
@@ -52,8 +52,7 @@ public class CryptoContributionItem extends ContributionItem {
     }
 
     public void fill(Menu menu, int index) {
-        encMenu = new Menu(menu);
-        MenuItem item;
+        algorithmsMenu = new Menu(menu);
         Comparator<String> menuStringsComparator = new Comparator<String>() {
             public int compare(String o1, String o2) {
                 return o1.toLowerCase().compareTo(o2.toLowerCase());
@@ -65,30 +64,30 @@ public class CryptoContributionItem extends ContributionItem {
         IAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
 
         for (final IAction action : algorithmActions) {
-            String entry = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
+            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
 
-            if (!typeMap.containsKey(entry)) {
-                typeMap.put(entry, new Menu(encMenu));
+            if (!typeMap.containsKey(translatedType)) {
+                typeMap.put(translatedType, new Menu(algorithmsMenu));
             }
 
             actionMap.put(action.getText(), action);
         }
 
         for (String subMenuKey : typeMap.keySet()) {
-            item = new MenuItem(encMenu, SWT.CASCADE);
+            MenuItem item = new MenuItem(algorithmsMenu, SWT.CASCADE);
             item.setText(subMenuKey);
             item.setMenu(typeMap.get(subMenuKey));
         }
 
         for (String algorithmItems : actionMap.keySet()) {
             final IAction action = actionMap.get(algorithmItems);
-            String entry = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
+            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
 
             // get the menu
-            Menu typeMenu = typeMap.get(entry);
+            Menu typeMenu = typeMap.get(translatedType);
 
             // create an item for the algorithm
-            item = new MenuItem(typeMenu, SWT.CASCADE);
+            MenuItem item = new MenuItem(typeMenu, SWT.CASCADE);
             item.setText(action.getText());
             item.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(SelectionEvent e) {
@@ -97,12 +96,12 @@ public class CryptoContributionItem extends ContributionItem {
             });
 
             // update the menu
-            typeMap.put(entry, typeMenu);
+            typeMap.put(translatedType, typeMenu);
         }
 
-        item = new MenuItem(menu, SWT.CASCADE, index);
+        MenuItem item = new MenuItem(menu, SWT.CASCADE, index);
         item.setText(Messages.CryptoContributionItem_0);
-        item.setMenu(encMenu);
+        item.setMenu(algorithmsMenu);
     }
 
     public void run(IAction cryptoAction) {
