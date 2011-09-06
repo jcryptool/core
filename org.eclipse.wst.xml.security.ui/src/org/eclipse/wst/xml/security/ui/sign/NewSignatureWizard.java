@@ -13,13 +13,11 @@ package org.eclipse.wst.xml.security.ui.sign;
 import java.io.InputStream;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wst.xml.security.core.sign.Signature;
 import org.eclipse.wst.xml.security.core.utils.Utils;
 import org.eclipse.wst.xml.security.ui.XSTUIPlugin;
@@ -57,9 +55,6 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
         signature = new Signature();
         setWindowTitle(Messages.signatureWizard);
         setDialogSettings(getSignatureWizardSettings());
-        ImageDescriptor image = AbstractUIPlugin.imageDescriptorFromPlugin(XSTUIPlugin.getId(),
-                "icons/wiz_sig.gif");
-        setDefaultPageImageDescriptor(image);
         setNeedsProgressMonitor(true);
     }
 

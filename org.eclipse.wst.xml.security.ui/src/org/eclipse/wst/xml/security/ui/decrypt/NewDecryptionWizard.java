@@ -17,7 +17,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wst.xml.security.core.decrypt.Decryption;
 import org.eclipse.wst.xml.security.ui.XSTUIPlugin;
 
@@ -50,8 +49,6 @@ public class NewDecryptionWizard extends Wizard implements INewWizard {
         decryption = new Decryption();
         setWindowTitle(Messages.decryptionWizard);
         setDialogSettings(getDecryptionWizardSettings());
-        setDefaultPageImageDescriptor(AbstractUIPlugin.imageDescriptorFromPlugin(XSTUIPlugin.getId(),
-            "icons/wiz_dec.gif"));
         setNeedsProgressMonitor(true);
     }
 
