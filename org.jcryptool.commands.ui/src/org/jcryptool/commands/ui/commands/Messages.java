@@ -14,7 +14,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.commands.ui.commands.messages"; //$NON-NLS-1$
-    public static String ClearConsole_1;
     public static String ShowConsoleView_0;
     static {
         // initialize resource bundle

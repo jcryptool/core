@@ -22,12 +22,6 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="$nl$/contexts.xml">
-      </contexts>
-   </extension>
-   <extension
          point="org.eclipse.help.toc">
       <toc
             file="$nl$/toc.xml"
@@ -44,11 +38,6 @@
             description="%command.description"
             id="org.jcryptool.commands.ui.showConsoleView"
             name="%command.name">
-      </command>
-      <command
-            description="%command.description.0"
-            id="org.jcryptool.commands.ui.clearConsole"
-            name="%command.name.0">
       </command>
    </extension>
    <extension
@@ -72,10 +61,6 @@
                </equals>
             </with>
          </enabledWhen>
-      </handler>
-      <handler
-            class="org.jcryptool.commands.ui.commands.ClearConsole"
-            commandId="org.jcryptool.commands.ui.clearConsole">
       </handler>
    </extension>
    <extension
@@ -101,15 +86,6 @@
                name="org.jcryptool.commands.ui.separator1"
                visible="true">
          </separator>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.jcryptool.commands.ui.views.ConsoleView">
-         <command
-               commandId="org.jcryptool.commands.ui.clearConsole"
-               icon="icons/clear.gif"
-               style="push"
-               tooltip="%command.tooltip.0">
-         </command>
       </menuContribution>
    </extension>
    <extension

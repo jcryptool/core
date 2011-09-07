@@ -1,15 +1,13 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
  *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-//-----END DISCLAIMER-----
+// -----END DISCLAIMER-----
 package org.jcryptool.commands.core;
-
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -29,13 +27,13 @@ import org.jcryptool.commands.core.api.IllegalCommandException;
  */
 public class ProxiedCommand implements Command {
     private static final String SYNTAX_EXPT_DEFAULT_VALUE = ""; //$NON-NLS-1$
-	protected static final String COMMAND_NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
+    protected static final String COMMAND_NAME_ATTRIBUTE = "name"; //$NON-NLS-1$
     private static final String COMMAND_SYNTAX_ATTRIBUTE = "syntax"; //$NON-NLS-1$
     private static final String DESCRIPTION_ATTRIBUTE = "description"; //$NON-NLS-1$
     private static final String COMMAND_IMPL = "commandImpl"; //$NON-NLS-1$
 
-    protected String commandName=""; //$NON-NLS-1$
-    
+    protected String commandName = ""; //$NON-NLS-1$
+
     protected IConfigurationElement configurationElement = null;
     private Command proxiedObject = null;
 
@@ -48,7 +46,7 @@ public class ProxiedCommand implements Command {
         return getProxiedObject().createOptions();
     }
 
-    public void execute(CommandLine commandLine) throws IllegalCommandException{
+    public void execute(CommandLine commandLine) throws IllegalCommandException {
         getProxiedObject().execute(commandLine);
     }
 
@@ -61,23 +59,22 @@ public class ProxiedCommand implements Command {
     }
 
     public String getCommandSyntax() {
-    	if(getAttribute(COMMAND_SYNTAX_ATTRIBUTE, SYNTAX_EXPT_DEFAULT_VALUE).equals(SYNTAX_EXPT_DEFAULT_VALUE)) {
-    		return getSyntaxTerm(this.getCommandName(), this.createOptions());
-    	}
-        
-    	return getAttribute(COMMAND_SYNTAX_ATTRIBUTE, null);
-        
+        if (getAttribute(COMMAND_SYNTAX_ATTRIBUTE, SYNTAX_EXPT_DEFAULT_VALUE).equals(SYNTAX_EXPT_DEFAULT_VALUE)) {
+            return getSyntaxTerm(this.getCommandName(), this.createOptions());
+        }
+
+        return getAttribute(COMMAND_SYNTAX_ATTRIBUTE, null);
+
     }
 
     public String getDescription() {
         return getAttribute(DESCRIPTION_ATTRIBUTE, SYNTAX_EXPT_DEFAULT_VALUE); //$NON-NLS-1$
     }
-    
+
     private Command getProxiedObject() {
         try {
             if (proxiedObject == null) {
-                proxiedObject = (Command) configurationElement
-                        .createExecutableExtension(COMMAND_IMPL);
+                proxiedObject = (Command) configurationElement.createExecutableExtension(COMMAND_IMPL);
                 proxiedObject.setCommandName(getCommandName());
                 proxiedObject.setCommandSyntax(getCommandSyntax());
                 proxiedObject.setDescription(getDescription());
@@ -88,19 +85,19 @@ public class ProxiedCommand implements Command {
                     + configurationElement.getAttribute(COMMAND_IMPL), e);
         }
     }
-    
+
     /**
      * Generates a syntax term for a command
-     * 
+     *
      * @param commandName the name of the command
      * @param options the options of this command
-     * @return 
+     * @return
      */
     private static String getSyntaxTerm(String commandName, Options options) {
-		HelpFormatter formatter = new HelpFormatter();
-		StringWriter writer = new StringWriter();
-		formatter.printUsage(new PrintWriter(writer), HelpCommand.CONSOLE_WIDTH, commandName, options);
-		return writer.toString().replaceAll("\\Ausage:?( )*", "").trim(); //$NON-NLS-1$ //$NON-NLS-2$
+        HelpFormatter formatter = new HelpFormatter();
+        StringWriter writer = new StringWriter();
+        formatter.printUsage(new PrintWriter(writer), HelpCommand.CONSOLE_WIDTH, commandName, options);
+        return writer.toString().replaceAll("\\Ausage:?( )*", "").trim(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     protected String getAttribute(String name, String defaultValue) {
@@ -115,7 +112,7 @@ public class ProxiedCommand implements Command {
     }
 
     public final void setCommandName(String commandName) {
-    	this.commandName = commandName;
+        this.commandName = commandName;
     }
 
     public final void setDescription(String description) {
