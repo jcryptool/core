@@ -9,7 +9,7 @@
             visible="true">
          <action
                class="org.jcryptool.analysis.textmodify.actions.TransformAction"
-               icon="icons/transform.png"
+               icon="icons/transform.gif"
                id="org.jcryptool.analysis.textmodify.actions.SampleAction"
                label="%transformMenuEntry.label"
                menubarPath="edit/"

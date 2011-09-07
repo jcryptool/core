@@ -10,7 +10,7 @@
       </category>
       <view
             name="%view.name"
-            icon="icons/icon.gif"
+            icon="icons/view.gif"
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.kegver.layer5.KegverView"
             id="org.jcryptool.analysis.kegver.layer5.views.KegverView">

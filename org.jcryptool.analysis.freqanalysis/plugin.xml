@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             name="%view.name.0"
-            icon="icons/icon.gif"
+            icon="icons/view.gif"
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView"
             id="org.jcryptool.analysis.freqanalysis.views.FreqAnalysisView">

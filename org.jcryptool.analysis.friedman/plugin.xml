@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             name="%extViewName"
-            icon="icons/icon.gif"
+            icon="icons/view.gif"
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.friedman.views.FriedmanView"
             id="org.jcryptool.analysis.friedman.views.FriedmanView">
