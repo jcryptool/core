@@ -368,7 +368,7 @@
          </separator>
          <command
                commandId="org.jcryptool.fileexplorer.invisibleToggle"
-               icon="icons/read_obj.png"
+               icon="icons/read_obj.gif"
                style="toggle"
                tooltip="%invisiblefilescommand.tooltip">
          </command>
