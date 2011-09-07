@@ -20,11 +20,13 @@ import org.jcryptool.fileexplorer.views.FileExplorerView;
  * Collapse handler. Collapses all tree elements in the <b>File Explorer</b> view.
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 0.9.5
  */
 public class CollapseHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        ((FileExplorerView) HandlerUtil.getActivePart(event)).getViewer().collapseAll();
+        if (HandlerUtil.getActivePart(event) instanceof FileExplorerView) {
+            ((FileExplorerView) HandlerUtil.getActivePart(event)).getViewer().collapseAll();
+        }
 
         return null;
     }
