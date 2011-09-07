@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.editor.text.action;
 
-import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -19,7 +18,6 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 import org.jcryptool.editor.text.editor.JCTTextEditor;
-import org.jcryptool.editor.text.preferences.PreferenceConstants;
 import org.jcryptool.editor.text.service.JCTEditorService;
 
 /**
@@ -29,7 +27,7 @@ import org.jcryptool.editor.text.service.JCTEditorService;
  *
  * @author mwalthart
  * @author Dominik Schadow
- * @version 0.9.2
+ * @version 0.9.5
  */
 public class StartUp implements IStartup {
     /**
@@ -42,9 +40,6 @@ public class StartUp implements IStartup {
                 if (!isCryptoViewOpen(page) && page.getEditorReferences().length == 0) {
                     try {
                         page.openEditor(JCTEditorService.createTemporaryFile(), JCTTextEditor.ID);
-                        IPreferenceStore store = JCTTextEditorPlugin.getDefault().getPreferenceStore();
-                        store.setDefault(PreferenceConstants.FONT_FAMILY, "");
-                        store.setDefault(PreferenceConstants.FONT_SIZE, 10);                        
                     } catch (PartInitException e) {
                         LogUtil.logError(JCTTextEditorPlugin.PLUGIN_ID, Messages.NewFileJCTTextEditorAction_0, e, true);
                     }

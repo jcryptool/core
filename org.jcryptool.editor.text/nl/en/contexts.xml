@@ -5,9 +5,5 @@
       <topic href="../org.jcryptool.core.help/nl/en/help/users/general/editor_text.html" label="Texteditor"/>
       <topic href="../org.jcryptool.core.help/nl/en/help/users/general/editor_hex.html" label="Hexeditor"/>
    </context>
-   <context id="preferences">
-   	  <description>You can determine different options for the &lt;b&gt;Texteditor&lt;/b&gt; on this page.</description>
-   	  <topic href="../org.jcryptool.core.help/nl/en/help/users/general/editor_text.html" label="Texteditor"/>
-   </context>
 
 </contexts>

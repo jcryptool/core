@@ -62,10 +62,6 @@
       </service>
    </extension>
    <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer class="org.jcryptool.editor.text.preferences.PreferencesInitializer"/>
-   </extension>
-   <extension
          point="org.eclipse.ui.editorActions">
       <editorContribution
             id="org.jcryptool.editor.text.editorContribution.JCTTextEditor"
@@ -141,20 +137,4 @@
          </command>
       </menuContribution>
    </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.jcryptool.preferences.editors"
-            class="org.jcryptool.editor.text.preferences.PreferencesPage"
-            id="org.jcryptool.editor.text.preferences"
-            name="%page.name">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="org.jcryptool.editor.text.preferences.PreferencesInitializer">
-      </initializer>
-   </extension>
-
 </plugin>

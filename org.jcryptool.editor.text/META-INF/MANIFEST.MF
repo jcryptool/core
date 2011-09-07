@@ -15,7 +15,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.editor.text,
  org.jcryptool.editor.text.action,
  org.jcryptool.editor.text.editor,
- org.jcryptool.editor.text.preferences,
  org.jcryptool.editor.text.service
 Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
