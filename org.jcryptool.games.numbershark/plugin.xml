@@ -6,7 +6,7 @@
       <view
             category="org.jcryptool.games"
             class="org.jcryptool.games.numbershark.views.NumberSetView"
-            icon="icons/icon.gif"
+            icon="icons/view.gif"
             id="org.jcryptool.games.numbershark.View"
             name="%view.name.0">
       </view>
