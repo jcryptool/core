@@ -29,18 +29,6 @@
             id="org.eclipse.wst.xml.security.ui.preferences.XmlSecurity"
             name="%xmlSecurityPreferencePage">
       </page>
-      <page
-            category="org.eclipse.wst.xml.security.ui.preferences.XmlSecurity"
-            class="org.eclipse.wst.xml.security.ui.preferences.PreferencePageSignature"
-            id="org.eclipse.wst.xml.security.ui.preferences.Signature"
-            name="%xmlSignaturePreferencePage">
-      </page>
-      <page
-      		category="org.eclipse.wst.xml.security.ui.preferences.XmlSecurity"
-            name="%xmlEncryptionPreferencePage"
-            class="org.eclipse.wst.xml.security.ui.preferences.PreferencePageEncryption"
-            id="org.eclipse.wst.xml.security.ui.preferences.Encryption">
-      </page>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.ui.preferenceinitializer"

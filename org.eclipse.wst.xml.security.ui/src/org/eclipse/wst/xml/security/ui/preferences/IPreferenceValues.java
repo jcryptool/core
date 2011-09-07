@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Dominik Schadow - http://www.xml-sicherheit.de
+ * Copyright (c) 2011 Dominik Schadow - http://www.xml-sicherheit.de
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,15 +18,9 @@ package org.eclipse.wst.xml.security.ui.preferences;
  * </p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 0.9.5
  */
 public interface IPreferenceValues {
     /** Canonicalization types. */
     String[][] CANON_TYPES = { {"&Exclusive", "exclusive"}, {"&Inclusive", "inclusive"}};
-    /** Canonicalization targets. */
-    String[][] CANON_TARGETS = { {"&Same Document", "internal"}, {"&New Document", "external"}};
-    /** Signature types. */
-    String[][] SIGNATURE_TYPES = { {"Enveloping", "enveloping"}, {"Enveloped", "enveloped"}};
-    /** Encryption types. */
-    String[][] ENCRYPTION_TYPES = {{"Enveloping", "enveloping"}};
 }

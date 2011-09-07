@@ -33,14 +33,6 @@ public final class Messages extends NLS {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }
 
-    /** Signatures preference page externalized strings. */
-    public static String signaturePrefsAlgoCanon, signaturePrefsAlgoMD, signaturePrefsAlgoSign,
-            signaturePrefsAlgoTransform, signaturePrefsDesc;
     /** General preference page externalized strings. */
-    public static String algorithms, resource, type, id, keystoreAndKey, keystore, key, open,
-            xmlSecurityPrefsCanonTarget, xmlSecurityPrefsCanonType, xmlSecurityPrefsDesc, document,
-            selection, xpath, xpathExpression;
-    /** Encryption preference page externalized strings. */
-    public static String encryptionPrefsAlgoKeyWrap, encryptionPrefsDesc,
-            encryptionPrefsEncryptionAlgorithm;
+    public static String xmlSecurityPrefsCanonType, xmlSecurityPrefsDesc;
 }

@@ -24,15 +24,13 @@ import org.eclipse.wst.xml.security.ui.utils.IContextHelpIds;
 
 /**
  * <p>This class represents the first general preference page of the XML Security Tools.</p>
- * 
+ *
  * @author Dominik Schadow
  * @version 0.5.0
  */
 public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbenchPreferencePage {
     /** Canonicalization type radio buttons. */
     private RadioGroupFieldEditor canonType = null;
-    /** Canonicalization document radio buttons. */
-    private RadioGroupFieldEditor canonDocument = null;
 
     /**
      * Constructor.
@@ -43,7 +41,7 @@ public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbe
 
     /**
      * Initializes the preference page.
-     * 
+     *
      * @param iWorkbench The current workbench
      */
     public void init(IWorkbench iWorkbench) {
@@ -53,7 +51,7 @@ public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbe
 
     /**
      * Fills this preference page with content.
-     * 
+     *
      * @param parent Parent composite
      * @return The Control
      */
@@ -74,19 +72,12 @@ public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbe
         canonType.setPreferenceStore(this.getPreferenceStore());
         canonType.load();
 
-        canonDocument = new RadioGroupFieldEditor(PreferenceConstants.CANON_TARGET,
-                Messages.xmlSecurityPrefsCanonTarget, PreferenceConstants.SMALL_GROUP,
-                IPreferenceValues.CANON_TARGETS, top, true);
-        canonDocument.setPage(this);
-        canonDocument.setPreferenceStore(this.getPreferenceStore());
-        canonDocument.load();
-
         return top;
     }
 
     /**
      * Adds context sensitive help to this preference page.
-     * 
+     *
      * @param parent The parent composite
      */
     public void createControl(Composite parent) {
@@ -100,7 +91,6 @@ public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbe
      */
     protected void performDefaults() {
         canonType.loadDefault();
-        canonDocument.loadDefault();
         super.performDefaults();
     }
 
@@ -113,12 +103,11 @@ public class PreferencePageXmlSecurity extends PreferencePage implements IWorkbe
 
     /**
      * Stores the current settings of the page.
-     * 
+     *
      * @return Result of store process
      */
     public boolean performOk() {
         canonType.store();
-        canonDocument.store();
         return super.performOk();
     }
 }

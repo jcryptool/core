@@ -39,26 +39,5 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     IPreferenceStore store = XSTUIPlugin.getDefault().getPreferenceStore();
     // Canonicalization
     store.setDefault(PreferenceConstants.CANON_TYPE, "exclusive");
-    store.setDefault(PreferenceConstants.CANON_TARGET, "internal");
-    // Encryption
-    store.setDefault(PreferenceConstants.ENCRYPT_RESOURCE, "document");
-    store.setDefault(PreferenceConstants.ENCRYPT_XPATH, "");
-    store.setDefault(PreferenceConstants.ENCRYPT_TYPE, "enveloping");
-    store.setDefault(PreferenceConstants.ENCRYPT_ENCRYPTION, "AES 128");
-    store.setDefault(PreferenceConstants.ENCRYPT_KEY_WRAP, "AES-128 Key Wrap");
-    store.setDefault(PreferenceConstants.ENCRYPT_ID, "myEncryption");
-    store.setDefault(PreferenceConstants.ENCRYPT_KEY_STORE, "");
-    store.setDefault(PreferenceConstants.ENCRYPT_KEY_NAME, "");
-    // Signature
-    store.setDefault(PreferenceConstants.SIGN_RESOURCE, "document");
-    store.setDefault(PreferenceConstants.SIGN_XPATH, "");
-    store.setDefault(PreferenceConstants.SIGN_TYPE, "enveloped");
-    store.setDefault(PreferenceConstants.SIGN_ID, "mySignature");
-    store.setDefault(PreferenceConstants.SIGN_CANON, "Exclusive without comments");
-    store.setDefault(PreferenceConstants.SIGN_TRANS, "None");
-    store.setDefault(PreferenceConstants.SIGN_MDA, "SHA 1");
-    store.setDefault(PreferenceConstants.SIGN_SA, "DSA with SHA 1 (DSS)");
-    store.setDefault(PreferenceConstants.SIGN_KEYSTORE_FILE, "");
-    store.setDefault(PreferenceConstants.SIGN_KEY_NAME, "");
   }
 }
