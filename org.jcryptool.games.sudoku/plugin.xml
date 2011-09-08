@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Sudoku-Solver"
+            name="%view.name"
             icon="icons/view.gif"
             category="org.jcryptool.games"
             class="org.jcryptool.games.sudoku.views.SudokuView"
@@ -14,7 +14,7 @@
    <extension
          point="org.jcryptool.core.operations.games">
       <Game
-            name="Sudoku-Solver"
+            name="%Game.name"
             viewId="org.jcryptool.games.sudoku.views.SudokuView">
       </Game>
    </extension>

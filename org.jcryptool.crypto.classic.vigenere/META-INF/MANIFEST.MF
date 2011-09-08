@@ -16,6 +16,5 @@ Export-Package: org.jcryptool.crypto.classic.vigenere,
  org.jcryptool.crypto.classic.vigenere.algorithm,
  org.jcryptool.crypto.classic.vigenere.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

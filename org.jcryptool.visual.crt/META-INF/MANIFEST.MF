@@ -11,8 +11,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  com.lowagie.itext;bundle-version="2.1.7"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,

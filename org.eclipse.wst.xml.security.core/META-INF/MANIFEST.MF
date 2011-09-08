@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.apache.xml.security;bundle-version="1.4.5",
  org.jcryptool.core.operations;bundle-version="0.9.5"
 Bundle-ActivationPolicy: lazy
-Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.wst.xml.security.core,
  org.eclipse.wst.xml.security.core.canonicalize,

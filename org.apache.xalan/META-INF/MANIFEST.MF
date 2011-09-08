@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Apache Xalan
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.apache.xalan
 Bundle-Version: 2.7.1
-Bundle-Vendor: apache.org
+Bundle-Vendor: %Bundle-Vendor
 Export-Package: java_cup.runtime,
  org.apache.bcel,
  org.apache.bcel.classfile,

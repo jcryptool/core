@@ -11,10 +11,6 @@
             class="org.jcryptool.analysis.friedman.views.FriedmanView"
             id="org.jcryptool.analysis.friedman.views.FriedmanView">
       </view>
-      <category
-            id="org.jcryptool.analysis"
-            name="%categoryName">
-      </category>
    </extension>
    <extension
          point="org.jcryptool.core.operations.analysis">

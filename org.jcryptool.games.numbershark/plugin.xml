@@ -12,8 +12,6 @@
       </view>
    </extension>
    <extension
-         id="NumberSharkHelp"
-         name="NumberSharkHelp"
          point="org.eclipse.help.toc">
       <toc
             file="$nl$/toc.xml"

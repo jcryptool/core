@@ -5,4 +5,3 @@ Bundle-SymbolicName: org.jcryptool.crypto.classic;singleton:=true
 Bundle-Version: 0.9.5.qualifier
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin

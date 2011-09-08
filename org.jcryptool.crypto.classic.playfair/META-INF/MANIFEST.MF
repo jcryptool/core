@@ -16,6 +16,5 @@ Export-Package: org.jcryptool.crypto.classic.playfair,
  org.jcryptool.crypto.classic.playfair.algorithm,
  org.jcryptool.crypto.classic.playfair.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

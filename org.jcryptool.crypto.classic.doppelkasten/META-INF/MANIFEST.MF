@@ -17,6 +17,5 @@ Export-Package: org.jcryptool.crypto.classic.doppelkasten,
  org.jcryptool.crypto.classic.doppelkasten.algorithm,
  org.jcryptool.crypto.classic.doppelkasten.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

@@ -16,7 +16,6 @@ Export-Package: org.jcryptool.crypto.classic.alphabets,
  org.jcryptool.crypto.classic.alphabets.tools,
  org.jcryptool.crypto.classic.alphabets.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.analysis.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories

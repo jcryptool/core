@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Apache Xerces
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.apache.xerces
 Bundle-Version: 2.9.1
-Bundle-Vendor: apache.org
+Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.apache.html.dom,
  org.apache.wml,
  org.apache.wml.dom,

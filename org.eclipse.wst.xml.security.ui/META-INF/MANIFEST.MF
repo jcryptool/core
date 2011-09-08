@@ -16,7 +16,6 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.core.expressions;bundle-version="3.4.300",
  org.jcryptool.core.operations;bundle-version="0.9.5"
 Bundle-Activator: org.eclipse.wst.xml.security.ui.XSTUIPlugin
-Bundle-Localization: plugin
 Export-Package: org.eclipse.wst.xml.security.ui,
  org.eclipse.wst.xml.security.ui.cheatsheets,
  org.eclipse.wst.xml.security.ui.decrypt,

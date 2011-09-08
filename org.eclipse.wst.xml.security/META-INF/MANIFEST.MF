@@ -4,4 +4,3 @@ Bundle-Name: %bundleName
 Bundle-SymbolicName: org.eclipse.wst.xml.security
 Bundle-Version: 0.9.5.qualifier
 Bundle-Vendor: %bundleProvider
-Bundle-Localization: plugin

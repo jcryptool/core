@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: iText
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.lowagie.itext;singleton:=true
 Bundle-Version: 2.1.7
-Bundle-Vendor: lowagie
+Bundle-Vendor: %Bundle-Vendor
 Export-Package: com.lowagie.text,
  com.lowagie.text.exceptions,
  com.lowagie.text.factories,

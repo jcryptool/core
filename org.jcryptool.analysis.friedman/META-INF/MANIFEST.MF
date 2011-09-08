@@ -12,7 +12,6 @@ Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.analysis.friedman,
  org.jcryptool.analysis.friedman.calc,
  org.jcryptool.analysis.friedman.ui
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
  org.jcryptool.core.logging.utils,

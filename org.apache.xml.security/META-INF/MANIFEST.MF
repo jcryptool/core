@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Apache XML Security
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.apache.xml.security;singleton:=true
 Bundle-Version: 1.4.5
-Bundle-Vendor: apache.org
+Bundle-Vendor: %Bundle-Vendor
 Export-Package: javax.xml.crypto,
  javax.xml.crypto.dom,
  javax.xml.crypto.dsig,

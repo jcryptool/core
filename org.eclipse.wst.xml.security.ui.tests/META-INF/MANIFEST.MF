@@ -11,7 +11,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.4.0",
  org.junit;bundle-version="4.8.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.wst.xml.security.ui.tests.XMLSecurityToolsUITestPlugin
 Export-Package: org.eclipse.wst.xml.security.ui.cheatsheets,
  org.eclipse.wst.xml.security.ui.tests,
