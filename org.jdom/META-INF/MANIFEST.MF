@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JDOM Plug-in
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jdom;singleton:=true
 Bundle-Version: 1.1.1
-Bundle-Vendor: jdom.org
+Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jdom,
  org.jdom.adapters,

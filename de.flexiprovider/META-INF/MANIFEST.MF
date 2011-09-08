@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Flexiprovider Plug-in
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: de.flexiprovider;singleton:=true
 Bundle-Version: 1.7.0.p1
 Bundle-Activator: de.flexiprovider.FlexiProviderPlugin
@@ -13,7 +13,6 @@ Bundle-ClassPath: .,
  src/de/flexiprovider/,
  libs/FlexiProvider-1.7p1.signed.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
 Export-Package: de.flexiprovider,

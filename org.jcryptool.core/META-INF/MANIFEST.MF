@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Export-Package: org.jcryptool.core,
  org.jcryptool.core.actions
 Import-Package: org.jcryptool.core.logging.utils,

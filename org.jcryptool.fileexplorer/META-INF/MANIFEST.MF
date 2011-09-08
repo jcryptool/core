@@ -22,4 +22,3 @@ Bundle-Activator: org.jcryptool.fileexplorer.FileExplorerPlugin
 Export-Package: org.jcryptool.fileexplorer.tester,
  org.jcryptool.fileexplorer.views,
  org.jcryptool.fileexplorer.views.factories;uses:="org.eclipse.core.filesystem,org.eclipse.jface.resource,org.eclipse.core.runtime"
-Bundle-Localization: plugin

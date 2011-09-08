@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Qdox Plug-in
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: com.thoughtworks.qdox;singleton:=true
 Bundle-Version: 1.6.1
-Bundle-Vendor: THOUGHTWORKS
+Bundle-Vendor: %Bundle-Vendor
 Export-Package: com.thoughtworks.qdox,
  com.thoughtworks.qdox.ant,
  com.thoughtworks.qdox.directorywalker,

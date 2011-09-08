@@ -30,7 +30,6 @@ Export-Package: org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.ui.views.providers,
  org.jcryptool.crypto.keystore.ui.wizards,
  org.jcryptool.crypto.keystore.ui
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers,

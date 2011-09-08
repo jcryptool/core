@@ -22,6 +22,10 @@
             id="org.jcryptool.visual"
             name="%views.category3">
       </category>
+      <category
+            id="org.jcryptool.analysis"
+            name="%views.category4">
+      </category>
       <view
             allowMultiple="false"
             category="org.jcryptool.core.views"

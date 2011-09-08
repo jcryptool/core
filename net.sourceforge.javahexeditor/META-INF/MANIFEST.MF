@@ -15,7 +15,6 @@ Export-Package: net.sourceforge.javahexeditor,
  net.sourceforge.javahexeditor.plugin,
  net.sourceforge.javahexeditor.plugin.editors,
  net.sourceforge.javahexeditor.service
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.operations.util

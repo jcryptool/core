@@ -23,7 +23,6 @@ Export-Package: org.jcryptool.core.views;
    org.eclipse.swt.widgets,
    org.eclipse.core.runtime"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core,
  org.jcryptool.core.actions,
  org.jcryptool.core.logging.utils,

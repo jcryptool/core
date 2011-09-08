@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.flexiprovider.algorithms.listeners
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.flexiprovider.algorithms.listeners,
  org.jcryptool.crypto.flexiprovider.descriptors.algorithms,

@@ -16,7 +16,6 @@ Export-Package: org.jcryptool.editor.text,
  org.jcryptool.editor.text.action,
  org.jcryptool.editor.text.editor,
  org.jcryptool.editor.text.service
-Bundle-Localization: plugin
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.operations.util,
