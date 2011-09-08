@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+	<h1>DSA Visualization</h1>
+
+	<p>This visualization shows the DSA Signature algorithm as described in the DSS found <a href="http://www.itl.nist.gov/fipspubs/fip186.htm">here</a> and
+	<a href="http://csrc.nist.gov/publications/fips/">here</a>.</p>
+
+	<p>This algorithm is one of the standard algorithms for digital signatures and it's visualization was derived from the common dummy-visualization which in
+	turn was derived from the look and feel of the ECDH Visualization.</p>
+
+	<h2>Main Parts</h2>
+
+	<p>The main window is divided into four main parts, where the third one is the most important one.</p>
+
+	<h3>Title</h3>
+
+	<p>The first part is the title of the visualization with a short description of the algorithm itself and a hint where it's security comes from.</p>
+
+	<h3>Action</h3>
+
+	<p>This part has two radio-buttons to choose between the available actions for this visualization which are &quot;sign&quot; and &quot;verify&quot;.</p>
+
+	<h3>Algorithm</h3>
+
+	<p>The algorithm section is the place where most of the action takes place. It is again divided into four parts.</p>
+
+	<p>The left quarter of the screen is reserved for some large buttons which are used to control the main flow through the visualization &quot;key-selection&quot;,
+	&quot;text-entry&quot;, &quot;choose parameters&quot; and &quot;calculate&quot; which spawn a wizard each which is used to enter the corresponding values.</p>
+
+	<ul>
+	  <li>Key selection offers a way to enter the key parameters or generate a new key, as well as loading a key from the JCT-Keystore. Examples of this can be
+	  seen in the following pictures.<br />
+
+	    <table width="75%" border="0" align="center">
+	      <tr>
+	        <td width="33%"><img src="Screenshot_schluesselerzeugung_keypair_dsa.png" alt="DSA keypair generation mask"></td>
+	        <td width="33%"><img src="Screenshot_schluesselerzeugung_pubkey_dsa.png" alt="DSA public key generation mask"></td>
+	        <td width="33%"><img src="Screenshot_schluessel_laden.png" alt="DSA Load key dialog"></td>
+	      </tr>
+	    </table>
+	  </li>
+	  <li>Text-entry offers the possibility to enter the text which should be signed or the signature with or without the corresponding plaintext as shown below.<br>
+	    <table width="75%" border="0" align="center">
+	      <tr>
+	        <td width="50%"><img src="Screenshot_plaintexteingabe_ElGamal.png" alt="plaintext entry mask"></td>
+	        <td width="50%"><img src="screenshot_ciphertext.png" alt="ciphertext entry mask"></td>
+	      </tr>
+	    </table>
+	  </li>
+	  <li>Choose parameters asks the user to select a signature parameter if the chosen action is to sign a plaintext. This parameter is used to make sure that
+	  signing the same message twice doesn't result in the same signature.<br>
+	  </li>
+	</ul>
+	<p>The other parts are for the following:</p>
+	<ul>
+	  <li>Displaying the key, which consists of five values &quot;p&quot;, &quot;q&quot;, &quot;g&quot;, &quot;y&quot; and &quot;x&quot; where the tuple
+	  (p, q, g, y) is the public part of the key and x is the private key. This box stays empty if the chosen action is to verify a given signature since only the
+	  public key is known and needed for this action.</li>
+	  <li></li>
+	</ul>
+	<h3>Options</h3>
+	<p>The options area contains a basic set of three buttons which are used to start a separate key-generation wizard, to toggle dialogs at every button press and
+	to reset the visualization to start it from scratch.</p>
+</body>
+</html>

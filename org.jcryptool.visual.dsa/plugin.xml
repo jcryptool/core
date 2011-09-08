@@ -22,7 +22,7 @@
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="toc.xml"
+            file="$nl$/toc.xml"
             primary="false">
       </toc>
    </extension>
