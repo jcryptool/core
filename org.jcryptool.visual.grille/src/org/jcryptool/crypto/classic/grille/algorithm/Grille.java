@@ -68,7 +68,7 @@ public class Grille {
         for (int rotation = 0; rotation < 4; rotation++) {
             plaintextBlockPosition = encryptAndTurn(plaintext, plaintextBlockPosition, crypt);
         }
-        if (encKey.getSize() % 2 == 1)
+        if (encKey.getSize() % 2 != 0)
             crypt.set(encKey.getSize() / 2, encKey.getSize() / 2, generateRandomChar(plaintext));
         StringBuilder ciphertext = new StringBuilder();
         for (int r = 0; r < crypt.getSize(); r++) {

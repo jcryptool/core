@@ -19,6 +19,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.PaillierData;
@@ -85,8 +86,8 @@ public class PaillierKeySelectionWizard extends Wizard {
                 out.write(("Type%Paillier Key Pair%").getBytes());
                 out.write(("n%" + data.getPubKey()[0].toString() + "%").getBytes());
                 out.write(("g%" + data.getPubKey()[1].toString() + "%").getBytes());
-            } catch (Exception e) {
-
+            } catch (Exception ex) {
+                LogUtil.logError(ex);
             }
         }
         if (getPage(PaillierLoadKeyPage.getPagename()).isPageComplete()) {
@@ -152,8 +153,8 @@ public class PaillierKeySelectionWizard extends Wizard {
                     new File(filename.replace(".papub", ".tmp")).delete();
                     return false;
                 }
-            } catch (Exception e) {
-
+            } catch (Exception ex) {
+                LogUtil.logError(ex);
             }
 
         }

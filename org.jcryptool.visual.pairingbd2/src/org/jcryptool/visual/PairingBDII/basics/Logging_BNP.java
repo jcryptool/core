@@ -37,30 +37,67 @@ public class Logging_BNP {
     }
 
     public String printLog() {
-        String s = ""; //$NON-NLS-1$
-        s = s + Messages.Logging_BNP_1 + "\n" + "\n"; //$NON-NLS-2$ //$NON-NLS-3$
-        s = s + Messages.Logging_BNP_4 + nusers + Messages.Logging_BNP_5 + "\n" + Messages.Logging_BNP_7 + "\n"; //$NON-NLS-3$ //$NON-NLS-5$
-        s = s + Messages.Logging_BNP_9 + "\n"; //$NON-NLS-2$
-        s = s + "u = " + u + Messages.Logging_BNP_12 + "\n"; //$NON-NLS-1$ //$NON-NLS-3$
-        s = s + "p = 36u^4 + 36u\u00b3 + 24u\u00b2 + 6u + 1" + p + Messages.Logging_BNP_15 + "\n"; //$NON-NLS-1$ //$NON-NLS-3$
-        s = s + "l = 36u^4 + 36u\u00b3 + 18u\u00b2 + 6u + 1" + n + " = #E(GF(p));" + "\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        s = s + "t = 6u + 1" + t + Messages.Logging_BNP_21 + "\n"; //$NON-NLS-1$ //$NON-NLS-3$
-        s = s + Messages.Logging_BNP_23 + "\n"; //$NON-NLS-2$
-        s = s + Messages.Logging_BNP_25;
-        s = s + "P = " + protocol.GetE().getG() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
-        s = s + "Q'= " + protocol.GetEp().getGt() + "\n" + "\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        s = s + Messages.Logging_BNP_31 + "\n"; //$NON-NLS-2$
+        StringBuilder s = new StringBuilder();
+        s.append(Messages.Logging_BNP_1);
+        s.append("\n\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_4);
+        s.append(nusers); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_5);
+        s.append("\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_7);
+        s.append("\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_9);
+        s.append("\n"); //$NON-NLS-1$
+        s.append("u = "); //$NON-NLS-1$
+        s.append(u);
+        s.append(Messages.Logging_BNP_12);
+        s.append("\n"); //$NON-NLS-1$
+        s.append("p = 36u^4 + 36u\u00b3 + 24u\u00b2 + 6u + 1"); //$NON-NLS-1$
+        s.append(p);
+        s.append(Messages.Logging_BNP_15);
+        s.append("\n"); //$NON-NLS-1$
+        s.append("l = 36u^4 + 36u\u00b3 + 18u\u00b2 + 6u + 1"); //$NON-NLS-1$
+        s.append(n);
+        s.append(" = #E(GF(p));"); //$NON-NLS-1$
+        s.append("\n"); //$NON-NLS-1$
+        s.append("t = 6u + 1"); //$NON-NLS-1$
+        s.append(t);
+        s.append(Messages.Logging_BNP_21);
+        s.append("\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_23);
+        s.append("\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_25);
+        s.append("P = "); //$NON-NLS-1$
+        s.append(protocol.GetE().getG());
+        s.append("\n"); //$NON-NLS-1$
+        s.append("Q'= "); //$NON-NLS-1$
+        s.append(protocol.GetEp().getGt());
+        s.append("\n"); //$NON-NLS-1$
+        s.append("\n"); //$NON-NLS-1$
+        s.append(Messages.Logging_BNP_31);
+        s.append("\n"); //$NON-NLS-1$
 
         for (int i = 0; i < nusers; i++) {
-            s += Messages.Logging_BNP_33 + (i + 1) + ": " + "\n"; //$NON-NLS-2$ //$NON-NLS-3$
-            s += udata.get(i).toString() + "\n" + "\n"; //$NON-NLS-1$ //$NON-NLS-2$
+            s.append(Messages.Logging_BNP_33);
+            s.append((i + 1));
+            s.append(": "); //$NON-NLS-1$
+            s.append("\n"); //$NON-NLS-1$
+            s.append(udata.get(i).toString());
+            s.append("\n\n"); //$NON-NLS-1$
         }
 
         if (timepbduser != 0 || timepubduser != 0) {
-            s = s + Messages.Logging_BNP_38 + "\n" + Messages.Logging_BNP_40 + timepbduser + " ms."; //$NON-NLS-2$ //$NON-NLS-4$
-            s = s + "\n" + Messages.Logging_BNP_43 + timepubduser + " ms."; //$NON-NLS-1$ //$NON-NLS-3$
+            s.append(Messages.Logging_BNP_38);
+            s.append("\n"); //$NON-NLS-1$
+            s.append(Messages.Logging_BNP_40);
+            s.append(timepbduser);
+            s.append(" ms."); //$NON-NLS-1$
+            s.append("\n"); //$NON-NLS-1$
+            s.append(Messages.Logging_BNP_43);
+            s.append(timepubduser);
+            s.append(" ms."); //$NON-NLS-1$
         }
-        return s;
+        return s.toString();
 
     }
 

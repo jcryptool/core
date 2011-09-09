@@ -19,6 +19,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.FHEParams;
@@ -189,8 +190,8 @@ public class GHKeySelectionWizard extends Wizard {
                     ((GHLoadKeyPage) getPage(GHLoadKeyPage.getPagename())).setErrorMessage(Messages.Wrong_Password);
                     return false;
                 }
-            } catch (Exception e) {
-
+            } catch (Exception ex) {
+                LogUtil.logError(ex);
             }
         }
         return true;

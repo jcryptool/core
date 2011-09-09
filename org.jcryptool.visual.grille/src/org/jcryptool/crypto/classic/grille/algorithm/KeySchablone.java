@@ -13,7 +13,7 @@ public class KeySchablone extends Schablone implements Cloneable {
 
     public KeySchablone(int size) {
         super(size);
-        if (size % 2 == 1) {
+        if (size % 2 != 0) {
             set(size / 2, size / 2, '2');
         }
     }

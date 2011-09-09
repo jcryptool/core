@@ -885,7 +885,7 @@ public class PublicParametersComposite extends Composite {
     }
 
     private void fillCSelection() {
-        String[] s = {};
+        String[] s;
         if (rbtnFP.getSelection()) {
             s = LargeCurves.standardFp;
         } else {
@@ -897,7 +897,7 @@ public class PublicParametersComposite extends Composite {
     }
 
     private void fillCCurve() {
-        String[] s = {};
+        String[] s;
         if (rbtnFP.getSelection()) {
             s = LargeCurves.getNamesFp(cStandard.getSelectionIndex());
         } else {

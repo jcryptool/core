@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.he.Messages;
 
@@ -101,8 +102,8 @@ public class GHLoadKeyPage extends WizardPage {
                     String[] contents = fileData.toString().split("%");
                     own.setText(Messages.GHLoadKeyPage_Owner + ": " + contents[1]);
                     desc.setText(Messages.GHLoadKeyPage_Description + ": " + contents[3]);
-                } catch (Exception e1) {
-
+                } catch (Exception ex) {
+                    LogUtil.logError(ex);
                 }
             }
         });

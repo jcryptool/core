@@ -68,7 +68,7 @@ public class Demonstration {
 
 	public void showStep6() {
 		currentStep = 6;
-		if (key.getSize()%2 == 1)
+		if (key.getSize()%2 != 0)
 			crypt.set(key.getSize()/2, key.getSize()/2, model.generateRandomChar(input+padding));
 
 		// TODO continue block encryption
