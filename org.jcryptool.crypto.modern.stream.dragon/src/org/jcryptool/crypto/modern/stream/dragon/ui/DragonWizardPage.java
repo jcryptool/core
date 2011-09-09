@@ -229,7 +229,7 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 		keyText = new Text(keyValueGroup, SWT.BORDER | SWT.SINGLE);
 		keyText.setLayoutData(keyTextGridData);
-		String temp = ""; //$NON-NLS-1$
+        StringBuilder temp = new StringBuilder();
 		int max = 0;
 		if(is128Bit){
 			if(keyFormatIsHexadecimal)
@@ -244,8 +244,8 @@ public class DragonWizardPage extends WizardPage implements Listener {
 				max = 256;
 		}
 		for(int i=0; i<max; i++)
-			temp += "0"; //$NON-NLS-1$
-		keyText.setText(temp); //$NON-NLS-1$
+			temp.append("0"); //$NON-NLS-1$
+		keyText.setText(temp.toString()); //$NON-NLS-1$
 		keyText.addListener(SWT.Modify, this);
 		keyText.addVerifyListener(new VerifyListener() {
 
@@ -341,7 +341,7 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 		ivText = new Text(ivValueGroup, SWT.BORDER | SWT.SINGLE);
 		ivText.setLayoutData(ivTextGridData);
-		String temp = ""; //$NON-NLS-1$
+        StringBuilder temp = new StringBuilder();
 		int max = 0;
 		if(is128Bit){
 			if(ivFormatIsHexadecimal)
@@ -356,8 +356,8 @@ public class DragonWizardPage extends WizardPage implements Listener {
 				max = 256;
 		}
 		for(int i=0; i<max; i++)
-			temp += "0"; //$NON-NLS-1$
-		ivText.setText(temp); //$NON-NLS-1$
+			temp.append("0"); //$NON-NLS-1$
+		ivText.setText(temp.toString()); //$NON-NLS-1$
 		ivText.addListener(SWT.Modify, this);
 		ivText.addVerifyListener(new VerifyListener() {
 
@@ -558,7 +558,7 @@ public class DragonWizardPage extends WizardPage implements Listener {
 
 	private void clearKey() {
 		CLEARING_FLAG = true;
-		String temp = ""; //$NON-NLS-1$
+		StringBuilder temp = new StringBuilder();
 		int max = 0;
 		if(is128Bit){
 			if(keyFormatIsHexadecimal)
@@ -573,15 +573,15 @@ public class DragonWizardPage extends WizardPage implements Listener {
 				max = 256;
 		}
 		for(int i=0; i<max; i++)
-			temp += "0"; //$NON-NLS-1$
-		keyText.setText(temp);
+			temp.append("0"); //$NON-NLS-1$
+		keyText.setText(temp.toString());
 		CLEARING_FLAG = false;
 		keyValue = ""; //$NON-NLS-1$
 	}
 
 	private void clearIV() {
 		CLEARING_FLAG = true;
-		String temp = ""; //$NON-NLS-1$
+		StringBuilder temp = new StringBuilder();
 		int max = 0;
 		if(is128Bit){
 			if(ivFormatIsHexadecimal)
@@ -596,8 +596,8 @@ public class DragonWizardPage extends WizardPage implements Listener {
 				max = 256;
 		}
 		for(int i=0; i<max; i++)
-			temp += "0"; //$NON-NLS-1$
-		ivText.setText(temp);
+			temp.append("0"); //$NON-NLS-1$
+		ivText.setText(temp.toString());
 		CLEARING_FLAG = false;
 		ivValue = ""; //$NON-NLS-1$
 	}
