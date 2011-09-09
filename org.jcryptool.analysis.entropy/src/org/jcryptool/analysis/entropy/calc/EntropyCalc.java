@@ -15,9 +15,9 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 /**
  * @author Matthias Mensch
  */
-public class EntropyCalc implements Runnable {
+public class EntropyCalc {
 
-	static final int MATRIXCOLUMS = 10;
+	public static final int MATRIXCOLUMS = 10;
 
 	private EntropyUI entropyUIpointer;
 
@@ -86,18 +86,9 @@ public class EntropyCalc implements Runnable {
 	}
 
 	public void startCalculator() {
-		entropyUIpointer.getCompositeConfig().blockStartButton();
 		myData = new EntropyData(inputText, myModifySettings);
 		actualN = 1;
 		calcResultMatrix(n);
-		entropyUIpointer.getCompositeResults().printSummary(this);
-		entropyUIpointer.getCompositeTable().printEntropyMatrix(this);
-		entropyUIpointer.getCMainTabFolder().setSelection(1);
-		entropyUIpointer.getCompositeConfig().freeStartButton();
-	}
-
-	public void run() {
-		startCalculator();
 	}
 
 	/**
