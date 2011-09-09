@@ -27,6 +27,7 @@ import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.analysis.vigenere.interfaces.FrequencyData;
 import org.jcryptool.analysis.vigenere.interfaces.FrequencyGraphAdapter;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -516,9 +517,8 @@ public class FrequencyContainer {
 
         try {
             preferences.flush();
-        } catch (BackingStoreException bsEx) {
-            String s = "Unable to save new preferences for Vigenère breaker.";
-            DataProvider.getInstance().logWarning(s);
+        } catch (BackingStoreException ex) {
+            LogUtil.logError(ex);
         }
     }
 

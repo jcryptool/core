@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 
 /**
@@ -319,7 +320,7 @@ public class FrequencyGui extends Content {
             prepare();
             this.layout();
         } catch (Exception ex) {
-            DataProvider.getInstance().logError(ex);
+            LogUtil.logError(ex);
         }
     }
 

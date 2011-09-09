@@ -100,8 +100,8 @@ public class GHKeySelectionWizard extends Wizard {
                 for (int i = 0; i < keyPair.pkBlocksX.length; i++)
                     out.write((Integer.toString(i) + "%" + keyPair.pkBlocksX[i].toString() + "%").getBytes());
                 out.write("END".getBytes());
-            } catch (Exception e) {
-
+            } catch (Exception ex) {
+                LogUtil.logError(ex);
             }
         }
         if (getPage(GHLoadKeyPage.getPagename()).isPageComplete()) {

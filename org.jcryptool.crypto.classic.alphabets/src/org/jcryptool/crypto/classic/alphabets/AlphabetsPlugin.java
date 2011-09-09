@@ -19,6 +19,7 @@ import java.util.Vector;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.alphabets.tools.AlphabetPersistence;
 import org.osgi.framework.BundleContext;
@@ -62,7 +63,8 @@ public class AlphabetsPlugin extends Plugin {
 		alphabets.putBoolean(FILTER_CHARS, filterChars);
 		try {
 			alphabets.flush();
-		} catch (BackingStoreException e) {
+		} catch (BackingStoreException ex) {
+            LogUtil.logError(ex);
 		}
 	}
 
@@ -78,7 +80,8 @@ public class AlphabetsPlugin extends Plugin {
 		alphabets.putBoolean(FILTER_CHARS, true);
 		try {
 			alphabets.flush();
-		} catch (BackingStoreException e) {
+		} catch (BackingStoreException ex) {
+            LogUtil.logError(ex);
 		}
 	}
 

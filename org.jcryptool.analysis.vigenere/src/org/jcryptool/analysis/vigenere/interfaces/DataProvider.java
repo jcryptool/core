@@ -550,11 +550,7 @@ public class DataProvider {
         }
     }
 
-    public void logError(final Exception ex) {
+    private void logError(final Exception ex) {
         LogUtil.logError(ex);
-    }
-
-    public void logWarning(final String message) {
-        LogUtil.logWarning(message);
     }
 }

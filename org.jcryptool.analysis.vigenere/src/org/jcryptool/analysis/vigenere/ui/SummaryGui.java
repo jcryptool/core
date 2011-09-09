@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorNotFoundException;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.fonts.FontService;
@@ -235,7 +236,7 @@ public class SummaryGui extends Content {
             this.layout();
             pack();
         } catch (Exception ex) {
-            DataProvider.getInstance().logError(ex);
+            LogUtil.logError(ex);
         }
 
         registerEditorListeners();
