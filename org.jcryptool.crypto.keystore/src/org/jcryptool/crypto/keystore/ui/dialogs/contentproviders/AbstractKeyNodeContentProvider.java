@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.ui.dialogs.TableEntry;
@@ -30,9 +31,9 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 
 /**
  * an abstract class for classes which make use of AbstractKeyNode (e.g. CertificateNode, SecretKeyNode)
- * 
+ *
  * @author Anatoli Barski
- * 
+ *
  */
 public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
@@ -120,7 +121,8 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
             try {
                 cipherElements.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_CipherKeySize, Integer
                         .toString(cipher.getKeySize(key))));
-            } catch (InvalidKeyException e) {
+            } catch (InvalidKeyException ex) {
+                LogUtil.logError(ex);
             }
         } catch (NoSuchAlgorithmException e) {
             return cipherElements;
@@ -149,7 +151,7 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
         AbstractKeyNode abstractKeyNode = (AbstractKeyNode) inputElement;
         KeyStoreAlias alias = abstractKeyNode.getAlias();
-        
+
         return KeyStoreManager.getInstance().getKey(alias);
     }
 }

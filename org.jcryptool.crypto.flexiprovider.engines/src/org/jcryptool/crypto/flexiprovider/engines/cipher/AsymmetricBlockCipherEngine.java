@@ -92,7 +92,8 @@ public class AsymmetricBlockCipherEngine extends FlexiProviderEngine {
 		} catch (UnrecoverableEntryException e) {
             JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                     Messages.ExAccessKeystorePassword, e));
-		} catch (Exception e) {
+		} catch (Exception ex) {
+            LogUtil.logError(ex);
 		}
 		return new KeyObject(key, password);
 	}
