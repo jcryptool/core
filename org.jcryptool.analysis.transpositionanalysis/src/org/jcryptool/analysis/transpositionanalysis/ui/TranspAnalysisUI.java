@@ -91,8 +91,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
     private int croplength = 80;
     private int blocklength = 0;
 
-    private int[] actualKey;
-
     private boolean doAutoCrop = true;
 
     private AnalysisWizard analysisWizard;
@@ -649,13 +647,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
         if (arg1 instanceof int[]) {
             columnsReordered((int[]) arg1);
         }
-    }
-
-    /**
-     * @return the actualKey
-     */
-    public int[] getActualKey() {
-        return actualKey;
     }
 
     /**
