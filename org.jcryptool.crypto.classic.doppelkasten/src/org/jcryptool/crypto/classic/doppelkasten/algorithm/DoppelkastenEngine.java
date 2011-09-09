@@ -211,8 +211,6 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
     public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
-
-        String chiffre;
         String bigrammneu;
         char zufallsbuchstabe;
         StringBuilder origKeyString = new StringBuilder();
@@ -267,7 +265,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         }
 
         // der eigentliche Entschlüsselungsschritt
-        chiffre = "";
+        StringBuilder chiffre = new StringBuilder();
         for (int i = 0; i < rohtext.length(); i++)
             if (i % 2 == 0) {
                 // Bigramm herausnehmen
@@ -275,7 +273,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 // Bigramm durch verschlüsseltes Bigramm ersetzen
                 bigrammneu = substitute(false, bigrammalt, keyList1, keyList2, keySquare1, keySquare2);
                 // Zum Chiffretext hinzufügen
-                chiffre = chiffre + bigrammneu;
+                chiffre.append(bigrammneu);
             }
 
         int[] plaintext = new int[chiffre.length()];
@@ -300,8 +298,6 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
     public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
-
-        String chiffre;
         String bigrammneu;
         char zufallsbuchstabe;
         StringBuilder origKeyString = new StringBuilder();
@@ -356,7 +352,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         }
 
         // der eigentliche Verschlüsselungsschritt
-        chiffre = "";
+        StringBuilder chiffre = new StringBuilder();
         for (int i = 0; i < rohtext.length(); i++)
             if (i % 2 == 0) {
                 // Bigramm herausnehmen
@@ -364,7 +360,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 // Bigramm durch verschlüsseltes Bigramm ersetzen
                 bigrammneu = substitute(true, bigrammalt, keyList1, keyList2, keySquare1, keySquare2);
                 // Zum Chiffretext hinzufügen
-                chiffre = chiffre + bigrammneu;
+                chiffre.append(bigrammneu);
             }
 
         int[] ciphertext = new int[chiffre.length()];

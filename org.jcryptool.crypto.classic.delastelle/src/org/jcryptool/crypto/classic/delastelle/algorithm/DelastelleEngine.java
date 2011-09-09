@@ -98,7 +98,6 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
 
-        String chiffre;
         char bigrammalt1, bigrammalt2;
         String bigrammneu;
         char zufallsbuchstabe;
@@ -125,7 +124,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
         }
 
         // der eigentliche Ver-/Entschlüsselungsschritt
-        chiffre = "";
+        StringBuilder chiffre = new StringBuilder();
         for (int i = 0; i < rohtext.length(); i++)
             if (i % 2 == 1) {
                 // Bigramm herausnehmen und Koordinaten einlesem
@@ -140,7 +139,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 bigrammneu = String.valueOf((char) (byte) keySquare[y_2][y_1]).concat(
                         String.valueOf((char) (byte) keySquare[x_2][x_1]));
                 // Zum Chiffretext hinzufügen
-                chiffre = chiffre + bigrammneu;
+                chiffre.append(bigrammneu);
             }
 
         int[] ciphertext = new int[chiffre.length()];
@@ -165,8 +164,6 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
     public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
-
-        String chiffre;
         char bigrammalt1, bigrammalt2;
         String bigrammneu;
         char zufallsbuchstabe;
@@ -193,7 +190,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
         }
 
         // der eigentliche Ver-/Entschlüsselungsschritt
-        chiffre = "";
+        StringBuilder chiffre = new StringBuilder();
         for (int i = 0; i < rohtext.length(); i++)
             if (i % 2 == 1) {
                 // Bigramm herausnehmen und Koordinaten einlesem
@@ -208,7 +205,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 bigrammneu = String.valueOf((char) (byte) keySquare[y_2][y_1]).concat(
                         String.valueOf((char) (byte) keySquare[x_2][x_1]));
                 // Zum Chiffretext hinzufügen
-                chiffre = chiffre + bigrammneu;
+                chiffre.append(bigrammneu);
             }
 
         int[] ciphertext = new int[chiffre.length()];
