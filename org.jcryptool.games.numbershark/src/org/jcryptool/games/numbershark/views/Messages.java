@@ -25,17 +25,10 @@ public class Messages extends NLS {
     public static String NumberSetView_19;
     public static String NumberSetView_2;
     public static String NumberSetView_20;
-    public static String NumberSetView_25;
-    public static String NumberSetView_28;
     public static String NumberSetView_3;
-    public static String NumberSetView_30;
-    public static String NumberSetView_4;
     public static String NumberSetView_40;
     public static String NumberSetView_43;
     public static String NumberSetView_46;
-    public static String NumberSetView_5;
-    public static String NumberSetView_6;
-    public static String NumberSetView_7;
     public static String NumberSetView_8;
     public static String NumberSetView_9;
     static {
