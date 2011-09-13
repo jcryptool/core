@@ -79,11 +79,11 @@ public class UndoHandler extends AbstractHandler {
             // set the previous score
             if (scoreTable.getItemCount() > 0) {
                 TableItem previousRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
-                view.setSharkPtsText(previousRow.getText(4));
-                view.setYourPtsText(previousRow.getText(2));
+                view.setSharkScore(previousRow.getText(4));
+                view.setPlayerScore(previousRow.getText(2));
             } else {
-                view.setSharkPtsText(NumberSharkView.ZERO_SCORE);
-                view.setYourPtsText(NumberSharkView.ZERO_SCORE);
+                view.setSharkScore(NumberSharkView.ZERO_SCORE);
+                view.setPlayerScore(NumberSharkView.ZERO_SCORE);
             }
         }
 

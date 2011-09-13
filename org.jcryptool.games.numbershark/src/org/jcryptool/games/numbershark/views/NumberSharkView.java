@@ -50,9 +50,9 @@ public class NumberSharkView extends ViewPart {
     private CLabel[] numbers = new CLabel[numberOfFields];
     private boolean[] activeNumbers = new boolean[numberOfFields];
     private Number[] numNum;
-    private StyledText sharkPts;
-    private StyledText yourPts;
-    private StyledText minToWinPts;
+    private StyledText sharkScore;
+    private StyledText playerScore;
+    private StyledText requiredScore;
     private Composite parent;
     public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
     private TabFolder numberTabs = null;
@@ -75,35 +75,31 @@ public class NumberSharkView extends ViewPart {
         score.setLayout(new RowLayout());
         score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
-        RowData fieldData = new RowData(60, 15);
-        RowData textData = new RowData(120, 15);
+        RowData fieldData = new RowData(60, 13);
 
-        Label minToWinLabel = new Label(score, SWT.RIGHT);
-        minToWinLabel.setText(Messages.NumberSetView_10);
-        minToWinLabel.setLayoutData(textData);
-        minToWinLabel.setFont(FontService.getNormalBoldFont());
+        Label playerScoreLabel = new Label(score, SWT.RIGHT);
+        playerScoreLabel.setText(Messages.NumberSetView_13);
+        playerScoreLabel.setFont(FontService.getNormalBoldFont());
 
-        minToWinPts = new StyledText(score, SWT.READ_ONLY);
-        minToWinPts.setLayoutData(fieldData);
-        minToWinPts.setIndent(5);
+        playerScore = new StyledText(score, SWT.READ_ONLY);
+        playerScore.setLayoutData(fieldData);
+        playerScore.setLeftMargin(5);
 
-        Label sharkPtsLabel = new Label(score, SWT.RIGHT);
-        sharkPtsLabel.setText(Messages.NumberSetView_12);
-        sharkPtsLabel.setLayoutData(textData);
-        sharkPtsLabel.setFont(FontService.getNormalBoldFont());
+        Label sharkScoreLabel = new Label(score, SWT.RIGHT);
+        sharkScoreLabel.setText(Messages.NumberSetView_12);
+        sharkScoreLabel.setFont(FontService.getNormalBoldFont());
 
-        sharkPts = new StyledText(score, SWT.READ_ONLY);
-        sharkPts.setLayoutData(fieldData);
-        sharkPts.setIndent(5);
+        sharkScore = new StyledText(score, SWT.READ_ONLY);
+        sharkScore.setLayoutData(fieldData);
+        sharkScore.setLeftMargin(5);
 
-        Label yourPtsLabel = new Label(score, SWT.RIGHT);
-        yourPtsLabel.setText(Messages.NumberSetView_13);
-        yourPtsLabel.setLayoutData(textData);
-        yourPtsLabel.setFont(FontService.getNormalBoldFont());
+        Label requiredScoreLabel = new Label(score, SWT.RIGHT);
+        requiredScoreLabel.setText(Messages.NumberSetView_10);
+        requiredScoreLabel.setFont(FontService.getNormalBoldFont());
 
-        yourPts = new StyledText(score, SWT.READ_ONLY);
-        yourPts.setLayoutData(fieldData);
-        yourPts.setIndent(5);
+        requiredScore = new StyledText(score, SWT.READ_ONLY);
+        requiredScore.setLayoutData(fieldData);
+        requiredScore.setLeftMargin(5);
 
         Group detailedScore = new Group(playingField, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
@@ -190,7 +186,7 @@ public class NumberSharkView extends ViewPart {
         lostScore += lostSum;
         item.setText(4, String.valueOf(lostScore));
         item.setText(5, String.valueOf(remainingNumbers));
-        sharkPts.setText(String.valueOf(lostScore));
+        sharkScore.setText(String.valueOf(lostScore));
 
         if (remainingNumbers == 0) {
             String msg;
@@ -251,7 +247,7 @@ public class NumberSharkView extends ViewPart {
 
                 TableItem lastRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
 
-                yourPts.setText(lastRow.getText(2));
+                playerScore.setText(lastRow.getText(2));
             }
         };
     }
@@ -275,9 +271,9 @@ public class NumberSharkView extends ViewPart {
         this.numberOfFields = numberOfFields;
 
         int minPtsToWin = numberOfFields * (numberOfFields + 1) / 4;
-        minToWinPts.setText(String.valueOf(minPtsToWin));
-        sharkPts.setText(ZERO_SCORE);
-        yourPts.setText(ZERO_SCORE);
+        requiredScore.setText(String.valueOf(minPtsToWin));
+        sharkScore.setText(ZERO_SCORE);
+        playerScore.setText(ZERO_SCORE);
 
         numNum = new Number[numberOfFields];
         activeNumbers = new boolean[numberOfFields];
@@ -344,12 +340,12 @@ public class NumberSharkView extends ViewPart {
         numbers[number].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
     }
 
-    public void setSharkPtsText(String text) {
-        sharkPts.setText(text);
+    public void setSharkScore(String text) {
+        sharkScore.setText(text);
     }
 
-    public void setYourPtsText(String text) {
-        yourPts.setText(text);
+    public void setPlayerScore(String text) {
+        playerScore.setText(text);
     }
 
     public int getNumberOfFields() {
