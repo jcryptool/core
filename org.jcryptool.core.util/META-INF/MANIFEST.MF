@@ -18,5 +18,6 @@ Export-Package: org.jcryptool.core.util,
  org.jcryptool.core.util.fonts;uses:="org.eclipse.swt.graphics",
  org.jcryptool.core.util.input,
  org.jcryptool.core.util.input.handler,
+ org.jcryptool.core.util.numbers,
  org.jcryptool.core.util.ui,
  org.jcryptool.core.util.units
