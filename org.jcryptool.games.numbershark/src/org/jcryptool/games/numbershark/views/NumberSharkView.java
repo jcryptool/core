@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,10 +26,8 @@ import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -62,26 +60,20 @@ public class NumberSharkView extends ViewPart {
     private TabFolder numberTabs = null;
     private MouseListener numberSelectedListener;
 
-    // TODO dispose takes too long, everything cleaned up correctly?
-
     @Override
     public void createPartControl(final Composite parent) {
         this.parent = parent;
 
-        final Composite rightCol = new Composite(parent, SWT.NONE);
-        rightCol.setLayout(new GridLayout(1, false));
-        rightCol.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        Composite playingField = new Composite(parent, SWT.NONE);
+        playingField.setLayout(new GridLayout(1, false));
+        playingField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
-        Group playButtons = new Group(rightCol, SWT.NONE);
-        playButtons.setText(Messages.NumberSetView_8);
-        playButtons.setLayout(new GridLayout(1, false));
-        playButtons.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        numberTabs = new TabFolder(playingField, SWT.NONE);
 
-        numberTabs = new TabFolder(playButtons, SWT.NONE);
-
+        initNumberSelectionListener();
         createPlayingField(numberOfFields);
 
-        Group score = new Group(rightCol, SWT.NONE);
+        Group score = new Group(playingField, SWT.NONE);
         score.setText(Messages.NumberSetView_9);
         RowLayout scoreRowLay = new RowLayout();
         scoreRowLay.justify = true;
@@ -114,7 +106,7 @@ public class NumberSharkView extends ViewPart {
         yourPts = new StyledText(score, SWT.BORDER);
         yourPts.setLayoutData(fieldData);
 
-        Group detailedScore = new Group(rightCol, SWT.NONE);
+        Group detailedScore = new Group(playingField, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
         detailedScore.setLayout(new GridLayout());
 
@@ -141,8 +133,7 @@ public class NumberSharkView extends ViewPart {
             column[i].pack();
         }
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
-                NumberSharkPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
 
         hookActionBar();
     }
@@ -206,85 +197,18 @@ public class NumberSharkView extends ViewPart {
             } else {
                 msg = NLS.bind(Messages.NumberSetView_43, new Object[] {score, lostScore});
             }
-            MessageBox mb =
-                    new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_INFORMATION
-                            | SWT.OK);
+            MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_INFORMATION | SWT.OK);
             mb.setText(Messages.NumberSetView_46);
             mb.setMessage(msg);
             mb.open();
 
         }
-
     }
 
     /**
-     * Called when clicking on new game, the field of number is recreated.
-     *
-     * @param numberOfFields
+     * Creates the listener for each number on the playing field.
      */
-    public void createPlayingField(int numberOfFields) {
-        this.numberOfFields = numberOfFields;
-
-        for (int i = 0; i < numbers.length; i++) {
-            if (numbers[i] != null && !numbers[i].isDisposed()) {
-                numbers[i].dispose();
-            }
-        }
-
-        numNum = new Number[numberOfFields];
-        activeNumbers = new boolean[numberOfFields];
-
-        for (int i = 1; i <= numberOfFields; i++) {
-            numNum[i - 1] = new Number(i);
-            activeNumbers[i - 1] = true;
-        }
-
-        for (int i = numberTabs.getItemCount() - 1; i >= 0; i--) {
-            numberTabs.getItem(i).dispose();
-        }
-
-        numberTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-        GridLayout numbersLayout = new GridLayout();
-        numbersLayout.numColumns = 10;
-        numbersLayout.makeColumnsEqualWidth = true;
-
-        GridData numbersData = new GridData(GridData.FILL, GridData.FILL, true, true);
-        numbers = new CLabel[numberOfFields];
-        int numOfTabs = (numberOfFields - 1) / 40 + 1;
-        int k = 1;
-
-        TabItem[] tab = new TabItem[numOfTabs];
-        Composite compTabs = new Composite(numberTabs, SWT.NONE);
-        compTabs.setLayout(numbersLayout);
-        compTabs.setLayoutData(numbersData);
-
-        for (int j = 0; j < numOfTabs; j++) {
-
-            tab[j] = new TabItem(numberTabs, SWT.NONE);
-            tab[j].setText(j * 40 + 1 + "-" + (j + 1) * 40); //$NON-NLS-1$
-
-            tab[j].setData(numbersData);
-        }
-
-        tab[numOfTabs - 1].setText((numOfTabs - 1) * 40 + 1 + "-" + numberOfFields); //$NON-NLS-1$
-
-        for (int i = 0; i < 40; i++) {
-            if (k <= numberOfFields) {
-                numbers[k - 1] = new CLabel(compTabs, SWT.CENTER | SWT.SHADOW_OUT);
-                numbers[k - 1].setText(String.valueOf(k));
-                numbers[k - 1].setLayoutData(numbersData);
-                numbers[k - 1].setFont(FontService.getHugeBoldFont());
-                numbers[k - 1].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-                numbers[k - 1].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-                k++;
-            }
-        }
-
-        numberTabs.getItem(0).setData(numbersData);
-        numberTabs.getItem(0).setControl(compTabs);
-        compTabs.layout();
-
-        // listener for each button on the playing field
+    private void initNumberSelectionListener() {
         numberSelectedListener = new MouseAdapter() {
             public void mouseDown(MouseEvent me) {
                 ArrayList<Integer> lostNumbers = new ArrayList<Integer>();
@@ -327,35 +251,70 @@ public class NumberSharkView extends ViewPart {
                 yourPts.setText(lastRow.getText(2));
             }
         };
+    }
 
-        for (int i = 0; i < 40; i++) {
-            numbers[i].addMouseListener(numberSelectedListener);
+    /**
+     * Called when clicking on new game, the field of number is recreated.
+     *
+     * @param numberOfFields
+     */
+    public void createPlayingField(int numberOfFields) {
+        this.numberOfFields = numberOfFields;
+
+        numNum = new Number[numberOfFields];
+        activeNumbers = new boolean[numberOfFields];
+        numbers = new CLabel[numberOfFields];
+
+        for (int i = 0; i < numberOfFields; i++) {
+            numNum[i] = new Number(i + 1);
+            activeNumbers[i] = true;
         }
 
-        Listener tabsSelect = new Listener() {
-            public void handleEvent(Event event) {
-                if (event.type == SWT.Selection) {
-                    TabFolder numberTabs = (TabFolder) event.widget;
-                    int j = numberTabs.getSelectionIndex();
-                    GridData numbersData = new GridData(GridData.FILL, GridData.FILL, true, true);
-                    Composite compTabs = new Composite(numberTabs, SWT.NONE);
+        for (int i = numberTabs.getItemCount() - 1; i >= 0; i--) {
+            numberTabs.getItem(i).dispose();
+        }
 
-                    GridLayout numbersLayout = new GridLayout();
-                    numbersLayout.numColumns = 10;
-                    numbersLayout.makeColumnsEqualWidth = true;
+        numberTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        GridLayout numbersLayout = new GridLayout();
+        numbersLayout.numColumns = 10;
+        numbersLayout.makeColumnsEqualWidth = true;
 
-                    compTabs.setLayout(numbersLayout);
-                    compTabs.setLayoutData(numbersData);
+        int numOfTabs = (numberOfFields - 1) / 40 + 1;
 
-                    numberTabs.getItem(j).setData(numbersData);
-                    numberTabs.getItem(j).setControl(compTabs);
-                }
+        TabItem[] tabItems = new TabItem[numOfTabs];
+        Composite compTabs = new Composite(numberTabs, SWT.NONE);
+        compTabs.setLayout(numbersLayout);
+        compTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
+        for (int tabNumber = 0; tabNumber < numOfTabs; tabNumber++) {
+            tabItems[tabNumber] = new TabItem(numberTabs, SWT.NONE);
+            tabItems[tabNumber].setText(tabNumber * 40 + 1 + "-" + (tabNumber + 1) * 40); //$NON-NLS-1$
+            tabItems[tabNumber].setData(new GridData(GridData.FILL, GridData.FILL, true, true));
+        }
+
+        tabItems[numOfTabs - 1].setText((numOfTabs - 1) * 40 + 1 + "-" + numberOfFields); //$NON-NLS-1$
+
+        for (int tabCounter = 0, fieldNumber = 0; fieldNumber < numberOfFields; fieldNumber++) {
+            numbers[fieldNumber] = new CLabel(compTabs, SWT.CENTER | SWT.SHADOW_OUT);
+            numbers[fieldNumber].setText(String.valueOf(fieldNumber + 1));
+            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+            numbers[fieldNumber].setFont(FontService.getHugeBoldFont());
+            numbers[fieldNumber].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+            numbers[fieldNumber].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+            numbers[fieldNumber].addMouseListener(numberSelectedListener);
+
+            if (fieldNumber == numberOfFields - 1 || (fieldNumber + 1) % 40 == 0) {
+                compTabs.layout();
+
+                numberTabs.getItem(tabCounter).setControl(compTabs);
+
+                compTabs = new Composite(numberTabs, SWT.NONE);
+                compTabs.setLayout(numbersLayout);
+                compTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+
+                tabCounter++;
             }
-
-        };
-
-        numberTabs.addListener(SWT.Selection, tabsSelect);
+        }
     }
 
     @Override
