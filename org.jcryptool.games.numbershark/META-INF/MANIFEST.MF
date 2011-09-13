@@ -8,4 +8,5 @@ Require-Bundle: org.eclipse.help.ui;bundle-version="3.5.100"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.jcryptool.core.util.fonts
+Import-Package: org.jcryptool.core.util.fonts,
+ org.jcryptool.core.util.numbers

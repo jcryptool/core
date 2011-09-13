@@ -27,6 +27,7 @@ public class Messages extends NLS {
     public static String NumberSetView_43;
     public static String NumberSetView_46;
     public static String NumberSetView_9;
+    public static String NumberSharkView_0;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

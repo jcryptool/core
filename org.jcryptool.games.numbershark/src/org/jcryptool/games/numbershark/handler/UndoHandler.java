@@ -17,6 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.games.numbershark.views.Messages;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
@@ -67,7 +68,11 @@ public class UndoHandler extends AbstractHandler {
             String takenNumberString = row.getText(1);
 
             if (!"-".equals(takenNumberString)) { //$NON-NLS-1$
-                int takenNumber = Integer.parseInt(row.getText(1));
+                String temp = row.getText(1);
+                if (temp.endsWith(Messages.NumberSharkView_0)) {
+                    temp = temp.substring(0, temp.indexOf(Messages.NumberSharkView_0));
+                }
+                int takenNumber = Integer.parseInt(temp);
                 view.setStatus(toEnable - 1, true);
                 if (tabFolderIndex * 40 < takenNumber && takenNumber < (tabFolderIndex + 1) * 40 + 1) {
                     view.enableNumber(takenNumber - 1);

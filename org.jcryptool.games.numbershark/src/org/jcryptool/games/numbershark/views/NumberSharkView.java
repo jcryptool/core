@@ -37,6 +37,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.core.util.numbers.NumberService;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 /**
@@ -153,10 +154,17 @@ public class NumberSharkView extends ViewPart {
         int lostScore = 0;
         int remainingNumbers = numberOfFields - 2;
 
+        boolean isPrime = takenNumber == 0 ? false : NumberService.isPrime(takenNumber);
+
         TableItem item = new TableItem(scoreTable, SWT.NONE);
         int numberOfRows = scoreTable.getItemCount();
         item.setText(0, String.valueOf(numberOfRows));
-        item.setText(1, String.valueOf(takenNumber));
+
+        if (isPrime) {
+            item.setText(1, String.valueOf(takenNumber) + Messages.NumberSharkView_0);
+        } else {
+            item.setText(1, String.valueOf(takenNumber));
+        }
 
         if (numberOfRows > 1) {
             score = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(2));
