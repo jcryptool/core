@@ -10,10 +10,15 @@
 package org.jcryptool.games.numbershark.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -24,21 +29,23 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
+import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 public class NewGameDialog extends TitleAreaDialog {
     private int numberOfFields = 40;;
 
     public NewGameDialog(Shell shell) {
         super(shell);
-        setShellStyle(SWT.TITLE);
-
-        // TODO set to smaller size
+        setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
     }
 
     @Override
     protected Control createDialogArea(Composite parent) {
         setTitle(Messages.NewGameDialog_0);
-        setMessage(Messages.NewGameDialog_1);
+        setMessage(Messages.NewGameDialog_1, IMessageProvider.INFORMATION);
+        LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
+        ImageDescriptor title = NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"); //$NON-NLS-1$
+        setTitleImage(resources.createImage(title));
 
         Composite area = (Composite) super.createDialogArea(parent);
 
@@ -70,6 +77,17 @@ public class NewGameDialog extends TitleAreaDialog {
         });
 
         return area;
+    }
+
+    @Override
+    protected Point getInitialSize() {
+        return new Point(425, 250);
+    }
+
+    @Override
+    protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(Messages.NewGameDialog_4);
     }
 
     /**
