@@ -277,7 +277,13 @@ public class NumberSharkView extends ViewPart {
 
         numNum = new Number[numberOfFields];
         activeNumbers = new boolean[numberOfFields];
-        numbers = new CLabel[numberOfFields];
+        int evenNumberOfFields = numberOfFields;
+
+        if (numberOfFields % 40 != 0) {
+            evenNumberOfFields = numberOfFields + (40 - (numberOfFields % 40));
+        }
+
+        numbers = new CLabel[evenNumberOfFields];
 
         for (int i = 0; i < numberOfFields; i++) {
             numNum[i] = new Number(i + 1);
@@ -304,7 +310,7 @@ public class NumberSharkView extends ViewPart {
 
         tabItems[numOfTabs - 1].setText((numOfTabs - 1) * 40 + 1 + "-" + numberOfFields); //$NON-NLS-1$
 
-        for (int tabCounter = 0, fieldNumber = 0; fieldNumber < numberOfFields; fieldNumber++) {
+        for (int fieldNumber = 0, tabCounter = 0; fieldNumber < numberOfFields; fieldNumber++) {
             numbers[fieldNumber] = new CLabel(compTabs, SWT.CENTER | SWT.SHADOW_OUT);
             numbers[fieldNumber].setText(String.valueOf(fieldNumber + 1));
             numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
@@ -314,6 +320,18 @@ public class NumberSharkView extends ViewPart {
             numbers[fieldNumber].addMouseListener(numberSelectedListener);
 
             if (fieldNumber == numberOfFields - 1 || (fieldNumber + 1) % 40 == 0) {
+                if (fieldNumber == numberOfFields - 1) {
+                    // add empty (invisible) fields on the last page to create the same page layout as on all other tabs
+                    int emptyFields = ((tabCounter + 1) * 40) - numberOfFields;
+
+                    if (emptyFields > 0) {
+                        for (int i = 0; i < emptyFields; i++, fieldNumber++) {
+                            numbers[fieldNumber] = new CLabel(compTabs, SWT.NONE);
+                            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+                        }
+                    }
+                }
+
                 numberTabs.getItem(tabCounter).setControl(compTabs);
 
                 compTabs = new Composite(numberTabs, SWT.NONE);
