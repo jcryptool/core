@@ -112,6 +112,7 @@ public class NumberSharkView extends ViewPart {
         scoreTable.setLinesVisible(true);
         scoreTable.setHeaderVisible(true);
         scoreTable.setLayoutData(gridDataDetScore);
+        scoreTable.setFocus();
 
         TableColumn[] columns = new TableColumn[6];
 
@@ -192,6 +193,9 @@ public class NumberSharkView extends ViewPart {
         lostScore += lostSum;
         item.setText(4, String.valueOf(lostScore));
         item.setText(5, String.valueOf(remainingNumbers));
+
+        scoreTable.setSelection(numberOfRows - 1);
+
         sharkScore.setText(String.valueOf(lostScore));
 
         if (remainingNumbers == 0) {
