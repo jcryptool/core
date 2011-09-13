@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 public class NewGameDialog extends TitleAreaDialog {
@@ -73,6 +74,8 @@ public class NewGameDialog extends TitleAreaDialog {
                 numberOfFields = numSlider.getSelection();
             }
         });
+
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".newGameDialog"); //$NON-NLS-1$
 
         return area;
     }

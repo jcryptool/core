@@ -5,4 +5,7 @@
 		<topic href="$nl$/help/toc.html" label="Zahlenhai"/>
   <topic href="nl/de/help/gettingstarted/NumberSharkHelp-Manual.html" label="Einstellungen"/>
 	</context>
+ <context id="newGameDialog" title="Neues Spiel">
+    <description>Started ein neues Spiel mit der angegebenen Zahl an Feldern. Das aktive Spiel wird dabei verworfen.</description>
+ </context>
 </contexts>
