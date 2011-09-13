@@ -12,7 +12,6 @@ package org.jcryptool.games.numbershark.dialogs;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.swt.SWT;
@@ -44,8 +43,7 @@ public class NewGameDialog extends TitleAreaDialog {
         setTitle(Messages.NewGameDialog_0);
         setMessage(Messages.NewGameDialog_1, IMessageProvider.INFORMATION);
         LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
-        ImageDescriptor title = NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"); //$NON-NLS-1$
-        setTitleImage(resources.createImage(title));
+        setTitleImage(resources.createImage(NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"))); //$NON-NLS-1$
 
         Composite area = (Composite) super.createDialogArea(parent);
 
