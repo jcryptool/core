@@ -75,7 +75,7 @@ public class NumberSharkView extends ViewPart {
         score.setLayout(new RowLayout());
         score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
-        RowData fieldData = new RowData(60, 15);
+        RowData fieldData = new RowData(60, 20);
 
         Label playerScoreLabel = new Label(score, SWT.RIGHT);
         playerScoreLabel.setText(Messages.NumberSetView_13);
