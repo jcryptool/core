@@ -42,13 +42,11 @@ import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 /**
  * @author Johannes Späth
- * @author jojospaeth@gmx.de
- * @version 0.1.2, 04.04.2011 Calculation of optimal strategy / help
+ * @version 0.9.5
  */
 public class NumberSharkView extends ViewPart {
     private int numberOfFields = 40;
     private Table scoreTable;
-    private TableColumn[] column = new TableColumn[6];
     private CLabel[] numbers = new CLabel[numberOfFields];
     private boolean[] activeNumbers = new boolean[numberOfFields];
     private Number[] numNum;
@@ -71,40 +69,41 @@ public class NumberSharkView extends ViewPart {
         numberTabs = new TabFolder(playingField, SWT.NONE);
 
         initNumberSelectionListener();
-        createPlayingField(numberOfFields);
 
         Group score = new Group(playingField, SWT.NONE);
         score.setText(Messages.NumberSetView_9);
-        RowLayout scoreRowLay = new RowLayout();
-        scoreRowLay.justify = true;
-        score.setLayout(scoreRowLay);
+        score.setLayout(new RowLayout());
         score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
         RowData fieldData = new RowData(60, 15);
         RowData textData = new RowData(120, 15);
 
-        Label minToWin = new Label(score, SWT.RIGHT);
-        minToWin.setText(Messages.NumberSetView_10);
-        minToWin.setLayoutData(textData);
+        Label minToWinLabel = new Label(score, SWT.RIGHT);
+        minToWinLabel.setText(Messages.NumberSetView_10);
+        minToWinLabel.setLayoutData(textData);
+        minToWinLabel.setFont(FontService.getNormalBoldFont());
 
-        minToWinPts = new StyledText(score, SWT.BORDER);
-        minToWinPts.setText("410"); //$NON-NLS-1$
+        minToWinPts = new StyledText(score, SWT.READ_ONLY);
         minToWinPts.setLayoutData(fieldData);
+        minToWinPts.setIndent(5);
 
         Label sharkPtsLabel = new Label(score, SWT.RIGHT);
         sharkPtsLabel.setText(Messages.NumberSetView_12);
         sharkPtsLabel.setLayoutData(textData);
+        sharkPtsLabel.setFont(FontService.getNormalBoldFont());
 
-        sharkPts = new StyledText(score, SWT.BORDER);
-        sharkPts.setText(ZERO_SCORE);
+        sharkPts = new StyledText(score, SWT.READ_ONLY);
         sharkPts.setLayoutData(fieldData);
+        sharkPts.setIndent(5);
 
         Label yourPtsLabel = new Label(score, SWT.RIGHT);
         yourPtsLabel.setText(Messages.NumberSetView_13);
         yourPtsLabel.setLayoutData(textData);
+        yourPtsLabel.setFont(FontService.getNormalBoldFont());
 
-        yourPts = new StyledText(score, SWT.BORDER);
+        yourPts = new StyledText(score, SWT.READ_ONLY);
         yourPts.setLayoutData(fieldData);
+        yourPts.setIndent(5);
 
         Group detailedScore = new Group(playingField, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
@@ -118,20 +117,25 @@ public class NumberSharkView extends ViewPart {
         scoreTable.setHeaderVisible(true);
         scoreTable.setLayoutData(gridDataDetScore);
 
-        for (int i = 0; i < 6; i++) {
-            column[i] = new TableColumn(scoreTable, SWT.NONE);
-        }
 
-        column[0].setText(Messages.NumberSetView_15);
-        column[1].setText(Messages.NumberSetView_16);
-        column[2].setText(Messages.NumberSetView_17);
-        column[3].setText(Messages.NumberSetView_18);
-        column[4].setText(Messages.NumberSetView_19);
-        column[5].setText(Messages.NumberSetView_20);
+        TableColumn[] columns = new TableColumn[6];
 
         for (int i = 0; i < 6; i++) {
-            column[i].pack();
+            columns[i] = new TableColumn(scoreTable, SWT.NONE);
         }
+
+        columns[0].setText(Messages.NumberSetView_15);
+        columns[1].setText(Messages.NumberSetView_16);
+        columns[2].setText(Messages.NumberSetView_17);
+        columns[3].setText(Messages.NumberSetView_18);
+        columns[4].setText(Messages.NumberSetView_19);
+        columns[5].setText(Messages.NumberSetView_20);
+
+        for (int i = 0; i < 6; i++) {
+            columns[i].pack();
+        }
+
+        createPlayingField(numberOfFields);
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
 
@@ -156,15 +160,14 @@ public class NumberSharkView extends ViewPart {
         int remainingNumbers = numberOfFields - 2;
 
         TableItem item = new TableItem(scoreTable, SWT.NONE);
-        int l = scoreTable.getItemCount();
-        item.setText(0, "" + l); //$NON-NLS-1$
+        int numberOfRows = scoreTable.getItemCount();
+        item.setText(0, String.valueOf(numberOfRows));
+        item.setText(1, String.valueOf(takenNumber));
 
-        item.setText(1, "" + takenNumber); //$NON-NLS-1$
-
-        if (l > 1) {
-            score = Integer.parseInt(scoreTable.getItem(l - 2).getText(2));
-            lostScore = Integer.parseInt(scoreTable.getItem(l - 2).getText(4));
-            remainingNumbers = Integer.parseInt(scoreTable.getItem(l - 2).getText(5)) - 2;
+        if (numberOfRows > 1) {
+            score = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(2));
+            lostScore = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(4));
+            remainingNumbers = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(5)) - 2;
         }
 
         if (takenNumber == 0) {
@@ -172,9 +175,9 @@ public class NumberSharkView extends ViewPart {
             remainingNumbers++;
         }
 
-        item.setText(2, "" + (score + takenNumber)); //$NON-NLS-1$
+        item.setText(2, String.valueOf((score + takenNumber)));
 
-        String lostNum = "" + lostNumbers[0]; //$NON-NLS-1$
+        String lostNum = String.valueOf(lostNumbers[0]);
         int lostSum = lostNumbers[0];
         for (int k = 1; k < lostNumbers.length; k++) {
             lostNum += ", " + lostNumbers[k]; //$NON-NLS-1$
@@ -185,9 +188,9 @@ public class NumberSharkView extends ViewPart {
         item.setText(3, lostNum);
 
         lostScore += lostSum;
-        item.setText(4, "" + lostScore); //$NON-NLS-1$
-        item.setText(5, "" + remainingNumbers); //$NON-NLS-1$
-        sharkPts.setText("" + lostScore); //$NON-NLS-1$
+        item.setText(4, String.valueOf(lostScore));
+        item.setText(5, String.valueOf(remainingNumbers));
+        sharkPts.setText(String.valueOf(lostScore));
 
         if (remainingNumbers == 0) {
             String msg;
@@ -197,11 +200,11 @@ public class NumberSharkView extends ViewPart {
             } else {
                 msg = NLS.bind(Messages.NumberSetView_43, new Object[] {score, lostScore});
             }
+
             MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_INFORMATION | SWT.OK);
             mb.setText(Messages.NumberSetView_46);
             mb.setMessage(msg);
             mb.open();
-
         }
     }
 
@@ -234,7 +237,7 @@ public class NumberSharkView extends ViewPart {
                 activeNumbers[numToDeactivate - 1] = false;
 
                 int[] lostNumbersInt = new int[lostNumbers.size()];
-                if (lostNumbers.size() > 0) {
+                if (!lostNumbers.isEmpty()) {
                     lostNumbersInt = new int[lostNumbers.size()];
                     for (int i = 0; i < lostNumbers.size(); i++) {
                         lostNumbersInt[i] = lostNumbers.get(i);
@@ -253,6 +256,16 @@ public class NumberSharkView extends ViewPart {
         };
     }
 
+    public void cleanPlayingField() {
+        for (int i = numberTabs.getItemCount() - 1; i >= 0; i--) {
+            numberTabs.getItem(i).dispose();
+        }
+
+        for (int i = scoreTable.getItemCount(); i > 0; i--) {
+            scoreTable.getItem(i - 1).dispose();
+        }
+    }
+
     /**
      * Called when clicking on new game, the field of number is recreated.
      *
@@ -261,6 +274,11 @@ public class NumberSharkView extends ViewPart {
     public void createPlayingField(int numberOfFields) {
         this.numberOfFields = numberOfFields;
 
+        int minPtsToWin = numberOfFields * (numberOfFields + 1) / 4;
+        minToWinPts.setText(String.valueOf(minPtsToWin));
+        sharkPts.setText(ZERO_SCORE);
+        yourPts.setText(ZERO_SCORE);
+
         numNum = new Number[numberOfFields];
         activeNumbers = new boolean[numberOfFields];
         numbers = new CLabel[numberOfFields];
@@ -268,10 +286,6 @@ public class NumberSharkView extends ViewPart {
         for (int i = 0; i < numberOfFields; i++) {
             numNum[i] = new Number(i + 1);
             activeNumbers[i] = true;
-        }
-
-        for (int i = numberTabs.getItemCount() - 1; i >= 0; i--) {
-            numberTabs.getItem(i).dispose();
         }
 
         numberTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
@@ -304,8 +318,6 @@ public class NumberSharkView extends ViewPart {
             numbers[fieldNumber].addMouseListener(numberSelectedListener);
 
             if (fieldNumber == numberOfFields - 1 || (fieldNumber + 1) % 40 == 0) {
-                compTabs.layout();
-
                 numberTabs.getItem(tabCounter).setControl(compTabs);
 
                 compTabs = new Composite(numberTabs, SWT.NONE);
@@ -338,10 +350,6 @@ public class NumberSharkView extends ViewPart {
 
     public void setYourPtsText(String text) {
         yourPts.setText(text);
-    }
-
-    public void setMinToWinPtsText(String text) {
-        minToWinPts.setText(text);
     }
 
     public int getNumberOfFields() {

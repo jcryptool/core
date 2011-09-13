@@ -13,7 +13,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.games.numbershark.dialogs.NewGameDialog;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
@@ -33,19 +32,9 @@ public class NewGameHandler extends AbstractHandler {
 
             if (newGame.getReturnCode() == IDialogConstants.OK_ID) {
                 NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
-                int numberOfFields = newGame.getNumberOfFields();
 
-                Table scoreTable = view.getTable();
-                int minPtsToWin = numberOfFields * (numberOfFields + 1) / 4;
-                view.setMinToWinPtsText(String.valueOf(minPtsToWin));
-                view.setSharkPtsText(NumberSharkView.ZERO_SCORE);
-                view.setYourPtsText(NumberSharkView.ZERO_SCORE);
-
-                for (int i = scoreTable.getItemCount(); i > 0; i--) {
-                    scoreTable.getItem(i - 1).dispose();
-                }
-
-                view.createPlayingField(numberOfFields);
+                view.cleanPlayingField();
+                view.createPlayingField(newGame.getNumberOfFields());
             }
         }
 
