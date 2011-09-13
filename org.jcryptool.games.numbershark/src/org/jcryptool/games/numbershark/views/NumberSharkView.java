@@ -16,7 +16,6 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
@@ -50,9 +49,9 @@ public class NumberSharkView extends ViewPart {
     private CLabel[] numbers = new CLabel[numberOfFields];
     private boolean[] activeNumbers = new boolean[numberOfFields];
     private Number[] numNum;
-    private StyledText sharkScore;
-    private StyledText playerScore;
-    private StyledText requiredScore;
+    private Label sharkScore;
+    private Label playerScore;
+    private Label requiredScore;
     private Composite parent;
     public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
     private TabFolder numberTabs = null;
@@ -75,31 +74,31 @@ public class NumberSharkView extends ViewPart {
         score.setLayout(new RowLayout());
         score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
-        RowData fieldData = new RowData(60, 13);
+        RowData fieldData = new RowData(60, 15);
 
         Label playerScoreLabel = new Label(score, SWT.RIGHT);
         playerScoreLabel.setText(Messages.NumberSetView_13);
-        playerScoreLabel.setFont(FontService.getNormalBoldFont());
+        playerScoreLabel.setFont(FontService.getLargeBoldFont());
 
-        playerScore = new StyledText(score, SWT.READ_ONLY);
+        playerScore = new Label(score, SWT.LEFT);
         playerScore.setLayoutData(fieldData);
-        playerScore.setLeftMargin(5);
+        playerScore.setFont(FontService.getLargeBoldFont());
 
         Label sharkScoreLabel = new Label(score, SWT.RIGHT);
         sharkScoreLabel.setText(Messages.NumberSetView_12);
-        sharkScoreLabel.setFont(FontService.getNormalBoldFont());
+        sharkScoreLabel.setFont(FontService.getLargeBoldFont());
 
-        sharkScore = new StyledText(score, SWT.READ_ONLY);
+        sharkScore = new Label(score, SWT.LEFT);
         sharkScore.setLayoutData(fieldData);
-        sharkScore.setLeftMargin(5);
+        sharkScore.setFont(FontService.getLargeBoldFont());
 
         Label requiredScoreLabel = new Label(score, SWT.RIGHT);
         requiredScoreLabel.setText(Messages.NumberSetView_10);
-        requiredScoreLabel.setFont(FontService.getNormalBoldFont());
+        requiredScoreLabel.setFont(FontService.getLargeBoldFont());
 
-        requiredScore = new StyledText(score, SWT.READ_ONLY);
+        requiredScore = new Label(score, SWT.LEFT);
         requiredScore.setLayoutData(fieldData);
-        requiredScore.setLeftMargin(5);
+        requiredScore.setFont(FontService.getLargeBoldFont());
 
         Group detailedScore = new Group(playingField, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
@@ -112,7 +111,6 @@ public class NumberSharkView extends ViewPart {
         scoreTable.setLinesVisible(true);
         scoreTable.setHeaderVisible(true);
         scoreTable.setLayoutData(gridDataDetScore);
-
 
         TableColumn[] columns = new TableColumn[6];
 
