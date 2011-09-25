@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="XML Security Tools" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#algorithmPlugins">
+   <topic href="nl/de/help/contents.html" label="XML Security Tools">
+	   <topic href="nl/de/help/overview/overview.html" label="Übersicht">
+	   </topic>
+	   <topic href="nl/de/help/overview/tasks.html" label="Tasks">
+			<topic label="Signature Wizard" href="nl/de/help/signature/sign.html">
+		        <topic label="Resource and Signature Type" href="nl/de/help/signature/page_resource.html"/>
+		        <topic label="Keystores and Keys" href="nl/de/help/signature/page_keys.html">
+		            <topic label="Use a Key from an existing Keystore" href="nl/de/help/signature/page_open_key.html"/>
+		            <topic label="Insert a new Key in an existing Keystore" href="nl/de/help/signature/page_create_key.html"/>
+		            <topic label="Create a new Key and a new Keystore" href="nl/de/help/signature/page_create_keystore.html"/>
+		        </topic>
+		        <topic label="Algorithms and Signature Properties" href="nl/de/help/signature/page_algorithms.html"/>
+		    </topic>
+		    <topic label="Signatures View" href="nl/de/help/verification/verify.html"/>
+		    <topic label="Encryption Wizard" href="nl/de/help/encryption/encrypt.html">
+		        <topic label="Resource and Encryption Type" href="nl/de/help/encryption/page_resource.html"/>
+		        <topic label="Keystores and Keys" href="nl/de/help/encryption/page_keys.html">
+		            <topic label="Use a Key from an existing Keystore" href="nl/de/help/encryption/page_open_key.html"/>
+		            <topic label="Insert a new Key in an existing Keystore" href="nl/de/help/encryption/page_create_key.html"/>
+		            <topic label="Create a new Key and a new Keystore" href="nl/de/help/encryption/page_create_keystore.html"/>
+		        </topic>
+		        <topic label="Algorithms and Encryption Properties" href="nl/de/help/encryption/page_algorithms.html"/>
+		    </topic>
+		    <topic label="Decryption Wizard" href="nl/de/help/decryption/decrypt.html">
+		        <topic label="Resource and Decryption Type" href="nl/de/help/decryption/page_resource.html"/>
+	         <topic href="nl/de/help/decryption/page_open_a_key.html" label="Open a Key">
+	         </topic>
+		    </topic>
+		    <topic label="Canonicalization" href="nl/de/help/canonicalization/canonicalize.html"/>
+		    <topic label="Quick Functions" href="nl/de/help/quickfunctions/quickfunctions.html"/>
+		</topic>
+	    <topic label="Preferences" href="nl/de/help/preferences/general.html">
+	        <topic label="Encryption" href="nl/de/help/preferences/encryption.html"/>
+	        <topic label="Signature" href="nl/de/help/preferences/signature.html"/>
+	    </topic>
+   </topic>
+</toc>

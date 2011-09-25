@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="XML Encryption">
+   <intro href="/org.eclipse.wst.xml.security.doc/html/encryption/encrypt.html">
+      <description>
+         Welcome to the <b>XML Encryption</b> tutorial for the <b>XML Security Tools</b>.<br/>
+This tutorial will show you step by step how to encrypt an arbitrary XML document using the <b>XML Encryption Wizard</b>.<br/>
+You will create a project and an XML document to encrypt. To start this tutorial click the <b>Click to Begin</b> button below. You can skip the first step if you already have a project and an opened XML document.<br/>
+By the way, this tutorial shows only some possibilities of the XML Encryption Wizard. You can find more information in the extensive online help.
+      </description>
+   </intro>
+   <item title="Create a new project and sample document" dialog="true" skip="true" href="/org.eclipse.platform.doc.user/tasks/tasks-42.htm">
+      <description>
+         The first step is to create a new project (your XML documents must be part of a project to work properly with the XML Security Tools). It doesn&apos;t matter what type of project, the best type is of course an XML project. After that create a new XML document with arbitrary elements, attributes and everything you want to encrypt.<br/>
+It is advisable to start with a small XML document and to extend it step by step. You can create a sample project and a sample XML document automatically by clicking on the <b>Click to perform</b> link below. You can skip this step (<b>Click to skip</b> link) if you already have a project and a contained XML document.
+      </description>
+      <action class="org.eclipse.wst.xml.security.ui.cheatsheets.CreateSampleProject" pluginId="org.eclipse.wst.xml.security.ui" confirm="false">
+      </action>
+   </item>
+   <item title="Resource and Encryption Type" dialog="true" skip="false" href="/org.eclipse.wst.xml.security.doc/html/encryption/page_resource.html">
+      <description>
+         Now it&apos;s time to actually encrypt your XML document. Start the <b>XML Encryption Wizard</b> by clicking on <b>New Encryption...</b> in the context menu <b>XML Security</b>. The wizard consists of three pages.<br/>
+On the first page you have to select the resource you want to encrypt (the complete document, a text selection or a node defined by an XPath expression). In order to encrypt a text selection you must select a well-formed part of your XML document before you start the wizard.<br/>
+Select the encryption type: Enveloping or detached. Enveloping encrypts the active document, whereas detached encrypts the specified document in the textfield.<br/>
+Finally choose a keystore and key option: The wizard enables you to use an existing key, create a new one or even create a new keystore together with a new key. The following wizard page depends on your selection here and will either require to select a keystore/ key or to enter the necessary information to create a new one.
+      </description>
+   </item>
+   <item title="Keystore and Key" dialog="true" skip="false" href="/org.eclipse.wst.xml.security.doc/html/encryption/page_keys.html">
+      <description>
+         You can use an existing key in a Java Keystore (*.jks) and continue the encryption process with it. To create a new key enter all data, select a key type and click the <b>Generate</b> button.<br/>
+In future encryption sessions you can reuse this keystore and key and must only enter the keystore and key passwords. A newly generated keystore is stored in the current project folder and any new key will be used in the active encryption process.
+      </description>
+   </item>
+   <item title="Algorithms and Encryption Properties" dialog="true" skip="false" href="/org.eclipse.wst.xml.security.doc/html/encryption/page_algorithms.html">
+      <description>
+         On the last page of the Encryption Wizard you have to select different algorithms and some optional properties.<br/>
+By activating &apos;Encrypt only element content&apos; the root element of your document (or selection) will remain as plain text. Finally you can enter an id to identify your encryption (recommended).<br/>
+By selecting the &apos;Start XML Signature Wizard afterwards&apos; checkbox the XML Signature Wizard will be called after the signature is created.<br/>
+The document will be encrypted after clicking on &apos;Finish&apos;.
+      </description>
+   </item>
+</cheatsheet>

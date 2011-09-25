@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="XML Verification">
+   <intro href="/org.eclipse.wst.xml.security.doc/html/verification/verify.html">
+      <description>
+         Welcome to the <b>XML Verification</b> tutorial for the <b>XML Security Tools</b>.<br/>
+This tutorial will show you step by step how to verify one or more XML signatures using the <b>XML Signatures View</b>.<br/>
+In this cheat sheet you will open a signed XML document and then verify all contained signatures in this document. To start this tutorial click the <b>Click to Begin</b> link below.<br/>
+By the way, this tutorial shows only some possibilities of the XML Signatures View. You can find more information in the extensive online help.
+      </description>
+   </intro>
+   <item title="Open a signed XML document" dialog="true" skip="true" href="/org.eclipse.platform.doc.user/tasks/tasks-46.htm">
+      <description>
+         Open an arbitrary XML document containing at least one signature (you may have created with the <b>XML Signature Wizard</b> before). You can skip this item if your signed XML document is already opened in an editor.
+      </description>
+   </item>
+   <item title="Verify the signatures" dialog="true" skip="false" href="/org.eclipse.wst.xml.security.doc/html/verification/verify.html">
+      <description>
+         Open the <b>XML Signatures View</b>: right click in the (XML) editor, select <b>XML Security</b> in the context menu and click on <b>New Verification...</b>. A new view <b>XML Signatures</b> appears containing various numbers of entries (depending on the amount of signatures in your XML document).<br/>
+This view contains four columns: The first one indicates the signature status by color. Green is a valid signature, red an invalid. A yellow marked signature could not be verified. The following columns contain the signature id, the certificate type and the certificate algorithm.<br/>
+You can show additional information on the selected signature by selecting the corresponding signature and clicking on the <b>Properties</b> (icon or menu of the view). The top status line in the view informs you about the number of signatures found in the selected XML document and their status.
+      </description>
+   </item>
+</cheatsheet>
