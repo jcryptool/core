@@ -108,12 +108,12 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <feature id="org.jcryptool.crypto.classic" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.crypto.flexiprovider" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.crypto.modern" version="0.9.5.qualifier"/>
-      <feature id="org.eclipse.wst.xml.security.feature" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.editors" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.games" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.providers" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.views" version="0.9.5.qualifier"/>
       <feature id="org.jcryptool.visual" version="0.9.5.qualifier"/>
+      <feature id="org.jcryptool.crypto.xml.feature" version="0.9.5.qualifier"/>
    </features>
 
    <configurations>
