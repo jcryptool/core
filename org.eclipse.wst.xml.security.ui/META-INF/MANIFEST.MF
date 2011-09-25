@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
-Bundle-SymbolicName: org.eclipse.wst.xml.security.ui;singleton:=true
+Bundle-SymbolicName: org.jcryptool.crypto.xml.ui;singleton:=true
 Bundle-Version: 0.9.5.qualifier
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

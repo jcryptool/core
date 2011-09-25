@@ -8,8 +8,8 @@
 		<version>0.9.5-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.wst</groupId>
+	<groupId>org.jcryptool</groupId>
 	<version>0.9.5-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
-	<artifactId>xml.security.core</artifactId>
+	<artifactId>crypto.xml.core</artifactId>
 </project>
