@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: %bundleName
-Bundle-SymbolicName: org.jcryptool.crypto.xml
-Bundle-Version: 0.9.5.qualifier
-Bundle-Vendor: %bundleProvider
