@@ -63,4 +63,5 @@ public class AlphabetPersistence  {
 		Vector<Alphabet> vector = (Vector <Alphabet>)xstream.fromXML(reader);
 		return vector;
 	}
+	
 }
