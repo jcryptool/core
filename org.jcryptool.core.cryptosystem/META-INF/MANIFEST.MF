@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cryptosystem
+Bundle-SymbolicName: org.jcryptool.core.cryptosystem
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.jcryptool.core.cryptosystem.CryptosystemPlugin
+Require-Bundle: org.eclipse.core.runtime
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jcryptool.core.cryptosystem.core,
+ org.jcryptool.core.cryptosystem.core.text
