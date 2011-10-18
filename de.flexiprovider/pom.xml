@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.flexiprovider</groupId>
-	<version>1.7.0.p1</version>
+	<version>1.7.0.p2</version>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>flexiprovider</artifactId>
 </project>
