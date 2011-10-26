@@ -100,20 +100,20 @@ Agreement more than one year after the cause of action arose. Each party waives 
    </plugins>
 
    <features>
-      <feature id="org.jcryptool.core" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.core.dependencies" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.core.dependencies.nl_de" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.analysis" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.crypto" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.crypto.classic" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.crypto.flexiprovider" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.crypto.modern" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.editors" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.games" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.providers" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.views" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.visual" version="0.9.5.qualifier"/>
-      <feature id="org.jcryptool.crypto.xml.feature" version="0.9.5.qualifier"/>
+      <feature id="org.jcryptool.core"/>
+      <feature id="org.jcryptool.core.dependencies"/>
+      <feature id="org.jcryptool.core.dependencies.nl_de"/>
+      <feature id="org.jcryptool.analysis"/>
+      <feature id="org.jcryptool.crypto"/>
+      <feature id="org.jcryptool.crypto.classic"/>
+      <feature id="org.jcryptool.crypto.flexiprovider"/>
+      <feature id="org.jcryptool.crypto.modern"/>
+      <feature id="org.jcryptool.editors"/>
+      <feature id="org.jcryptool.games"/>
+      <feature id="org.jcryptool.providers"/>
+      <feature id="org.jcryptool.views"/>
+      <feature id="org.jcryptool.visual"/>
+      <feature id="org.jcryptool.crypto.xml.feature"/>
    </features>
 
    <configurations>

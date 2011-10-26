@@ -233,7 +233,7 @@ litigation.
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.equinox.p2.user.ui"
+         id="org.eclipse.equinox.p2.rcp.feature"
          version="0.0.0"/>
 
    <plugin
