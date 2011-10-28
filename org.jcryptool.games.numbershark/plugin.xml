@@ -48,7 +48,7 @@
                tooltip="%command.tooltip.2">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator5"
+               name="org.jcryptool.games.numbershark.separator1"
                visible="true">
          </separator>
          <command
@@ -57,16 +57,26 @@
                style="push"
                tooltip="%command.tooltip.0">
          </command>
+         <command
+               commandId="org.jcryptool.games.numbershark.redoCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               style="push"
+               tooltip="%command.tooltip.3">
+         </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator3"
+               name="org.jcryptool.games.numbershark.separator2"
                visible="true">
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.sharkMealCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               icon="icons/shark-icon.png"
                style="push"
                tooltip="%command.tooltip">
          </command>
+         <separator
+               name="org.jcryptool.games.numbershark.separator3"
+               visible="true">
+         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
@@ -74,7 +84,7 @@
                tooltip="%command.tooltip.1">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator2"
+               name="org.jcryptool.games.numbershark.separator4"
                visible="true">
          </separator>
          <command
@@ -92,7 +102,7 @@
                style="push">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator6"
+               name="org.jcryptool.games.numbershark.separator5"
                visible="true">
          </separator>
          <command
@@ -100,22 +110,31 @@
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.gif"
                style="push">
          </command>
-         <separator
-               name="org.jcryptool.games.numbershark.separator4"
-               visible="true">
-         </separator>
          <command
-               commandId="org.jcryptool.games.numbershark.sharkMealCommand"
+               commandId="org.jcryptool.games.numbershark.redoCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
                style="push">
          </command>
+         <separator
+               name="org.jcryptool.games.numbershark.separator6"
+               visible="true">
+         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
                style="push">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator1"
+               name="org.jcryptool.games.numbershark.separator7"
+               visible="true">
+         </separator>
+         <command
+               commandId="org.jcryptool.games.numbershark.sharkMealCommand"
+               icon="icons/shark-icon.png"
+               style="push">
+         </command>
+         <separator
+               name="org.jcryptool.games.numbershark.separator8"
                visible="true">
          </separator>
          <command
@@ -147,6 +166,10 @@
             id="org.jcryptool.games.numbershark.newGameCommand"
             name="%command.name.2">
       </command>
+      <command
+            id="org.jcryptool.games.numbershark.redoCommand"
+            name="%command.name.3">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -169,6 +192,10 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.NewGameHandler"
             commandId="org.jcryptool.games.numbershark.newGameCommand">
+      </handler>
+      <handler
+            class="org.jcryptool.games.numbershark.handler.RedoHandler"
+            commandId="org.jcryptool.games.numbershark.redoCommand">
       </handler>
    </extension>
 

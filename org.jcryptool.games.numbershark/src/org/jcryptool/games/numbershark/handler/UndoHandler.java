@@ -10,13 +10,13 @@
 package org.jcryptool.games.numbershark.handler;
 
 import java.util.ArrayList;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.games.numbershark.util.ScoreTableRow;
 import org.jcryptool.games.numbershark.views.Messages;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
@@ -31,18 +31,17 @@ public class UndoHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
+                                    
+            Table scoreTableView = view.getTable();
 
-            Table scoreTable = view.getTable();
-
-            int lastRow = scoreTable.getItemCount();
-
-            if (lastRow < 1) {
+            if (view.getActualPlayerMove() < 1) {
                 return null;
             }
 
+            ScoreTableRow scoreTableRow =  view.getScoreTableRowByActualPlayerPosition();
+            
             ArrayList<Integer> undoNumbers = new ArrayList<Integer>();
-            TableItem row = scoreTable.getItem(lastRow - 1);
-            String undoLostNumbers = row.getText(3);
+            String undoLostNumbers =  scoreTableRow.getLostNumbers(); // row.getText(3);
             int iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
 
             int tabFolderIndex = view.getSelectedTabFolderIndex();
@@ -65,10 +64,10 @@ public class UndoHandler extends AbstractHandler {
                 view.enableNumber(toEnable - 1);
             }
 
-            String takenNumberString = row.getText(1);
+            String takenNumberString = scoreTableRow.getTakenNumbers(); // row.getText(1);
 
             if (!"-".equals(takenNumberString)) { //$NON-NLS-1$
-                String temp = row.getText(1);
+                String temp = scoreTableRow.getTakenNumbers(); // row.getText(1);
                 if (temp.endsWith(Messages.NumberSharkView_0)) {
                     temp = temp.substring(0, temp.indexOf(Messages.NumberSharkView_0));
                 }
@@ -79,19 +78,23 @@ public class UndoHandler extends AbstractHandler {
                 }
             }
 
-            scoreTable.getItem(lastRow - 1).dispose();
+            scoreTableView.getItem(view.getLastPlayerMove()).dispose();
 
             // set the previous score
-            if (scoreTable.getItemCount() > 0) {
-                TableItem previousRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
+            if (scoreTableView.getItemCount() > 0) {
+                TableItem previousRow = scoreTableView.getItem(scoreTableView.getItemCount() - 1);
                 view.setSharkScore(previousRow.getText(4));
                 view.setPlayerScore(previousRow.getText(2));
             } else {
                 view.setSharkScore(NumberSharkView.ZERO_SCORE);
                 view.setPlayerScore(NumberSharkView.ZERO_SCORE);
             }
-        }
-
+        
+        
+            //PlayerPosition um eins zurücksetzen
+            view.decreasePlayerMove();
+        }    
+        
         return null;
     }
 }
