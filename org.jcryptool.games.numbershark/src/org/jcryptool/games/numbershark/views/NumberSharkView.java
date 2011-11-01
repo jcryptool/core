@@ -166,12 +166,9 @@ public class NumberSharkView extends ViewPart {
         scoreTableRow = new ScoreTableRow();
         
         int numberOfRows = scoreTable.getItemCount();
-
-        //col 1 RowIndex
-        //item.setText(0, String.valueOf(numberOfRows));
-        scoreTableRow.setMove(String.valueOf(numberOfRows+1));
         
-        // col 2 value of takenNumbers
+        scoreTableRow.setMove(String.valueOf(numberOfRows+1));
+
         if (isPrime) {        	
             scoreTableRow.setTakenNumbers(String.valueOf(takenNumber) + Messages.NumberSharkView_0);
         } else {
@@ -273,7 +270,7 @@ public class NumberSharkView extends ViewPart {
                     numToDeactivate = 0;
                 }
                 addMoveToTable(numToDeactivate, lostNumbersInt);
-
+                int i = scoreTable.getItemCount();
                 TableItem lastRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
 
                 playerScore.setText(lastRow.getText(2));
@@ -358,7 +355,7 @@ public class NumberSharkView extends ViewPart {
                             numbers[fieldNumber] = new CLabel(compTabs, SWT.NONE);
                             numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
                         }
-                    }
+                    } 	
                 }
 
                 numberTabs.getItem(tabCounter).setControl(compTabs);
@@ -473,8 +470,7 @@ public class NumberSharkView extends ViewPart {
 	}
 	
 	/**
-	 * Function remove all elements from ScoreTableRowList 
-	 * higher than PlayerPosition 
+	 * Function remove elements from ScoreTableRowList  
 	 */
 	private void removeElementsFromScoreTableRowList(){      
         
