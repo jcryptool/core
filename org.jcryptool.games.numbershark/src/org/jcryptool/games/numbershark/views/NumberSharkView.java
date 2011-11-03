@@ -346,17 +346,15 @@ public class NumberSharkView extends ViewPart {
             numbers[fieldNumber].addMouseListener(numberSelectedListener);
 
             if (fieldNumber == numberOfFields - 1 || (fieldNumber + 1) % 40 == 0) {
-                if (fieldNumber == numberOfFields - 1) {
+            	fieldNumber++;
                     // add empty (invisible) fields on the last page to create the same page layout as on all other tabs
                     int emptyFields = ((tabCounter + 1) * 40) - numberOfFields;
-
                     if (emptyFields > 0) {
                         for (int i = 0; i < emptyFields; i++, fieldNumber++) {
                             numbers[fieldNumber] = new CLabel(compTabs, SWT.NONE);
-                            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+                            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));                            
                         }
-                    } 	
-                }
+                    }
 
                 numberTabs.getItem(tabCounter).setControl(compTabs);
 

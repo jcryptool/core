@@ -40,30 +40,22 @@ public class RedoHandler extends AbstractHandler {
             view.setSharkScore(scoreTableRow.getLostScore());                     
             view.setPlayerScore(scoreTableRow.getPoints());
             
-            //deactivate numbers an buttons
-            ArrayList<Integer> redoNumbers = new ArrayList<Integer>();
+            //activate numbers an buttons            
             String redoLostNumbers =  scoreTableRow.getLostNumbers();
             int iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
 
-            int tabFolderIndex = view.getSelectedTabFolderIndex();
-
-            // reactivate numbers and buttons
+            // activate numbers and buttons
             while (iterator != -1) {
                 int toDisable = Integer.parseInt(redoLostNumbers.substring(iterator + 2, redoLostNumbers.length()));
-                redoLostNumbers = redoLostNumbers.substring(0, iterator);
-                redoNumbers.add(toDisable);
+                redoLostNumbers = redoLostNumbers.substring(0, iterator);               
                 view.setStatus(toDisable - 1, false);
                 iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
-                if (tabFolderIndex * 40 < toDisable && toDisable < (tabFolderIndex + 1) * 40 + 1) {
-                    view.disableNumber(toDisable - 1);
-                }
+                view.disableNumber(toDisable - 1);
             }
 
             int toDisable = Integer.parseInt(redoLostNumbers);
             view.setStatus(toDisable - 1, true);
-            if (tabFolderIndex * 40 < toDisable && toDisable < (tabFolderIndex + 1) * 40 + 1) {
-                view.disableNumber(toDisable - 1);
-            }
+            view.disableNumber(toDisable - 1);
 
             String takenNumberString = scoreTableRow.getTakenNumbers(); // row.getText(1);
 
@@ -74,9 +66,7 @@ public class RedoHandler extends AbstractHandler {
                 }
                 int takenNumber = Integer.parseInt(temp);
                 view.setStatus(toDisable - 1, true);
-                if (tabFolderIndex * 40 < takenNumber && takenNumber < (tabFolderIndex + 1) * 40 + 1) {
-                    view.disableNumber(takenNumber - 1);
-                }              
+                view.disableNumber(takenNumber - 1);              
             }
 
             view.increasePlayerMove();            

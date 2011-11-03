@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
-import java.util.ArrayList;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -31,7 +30,7 @@ public class UndoHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
-                                    
+
             Table scoreTableView = view.getTable();
 
             if (view.getActualPlayerMove() < 1) {
@@ -40,29 +39,21 @@ public class UndoHandler extends AbstractHandler {
 
             ScoreTableRow scoreTableRow =  view.getScoreTableRowByActualPlayerPosition();
             
-            ArrayList<Integer> undoNumbers = new ArrayList<Integer>();
             String undoLostNumbers =  scoreTableRow.getLostNumbers(); // row.getText(3);
             int iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
-
-            int tabFolderIndex = view.getSelectedTabFolderIndex();
 
             // reactivate numbers and buttons
             while (iterator != -1) {
                 int toEnable = Integer.parseInt(undoLostNumbers.substring(iterator + 2, undoLostNumbers.length()));
                 undoLostNumbers = undoLostNumbers.substring(0, iterator);
-                undoNumbers.add(toEnable);
                 view.setStatus(toEnable - 1, true);
-                iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
-                if (tabFolderIndex * 40 < toEnable && toEnable < (tabFolderIndex + 1) * 40 + 1) {
-                    view.enableNumber(toEnable - 1);
-                }
+                iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$  
+                view.enableNumber(toEnable - 1);               
             }
 
             int toEnable = Integer.parseInt(undoLostNumbers);
             view.setStatus(toEnable - 1, true);
-            if (tabFolderIndex * 40 < toEnable && toEnable < (tabFolderIndex + 1) * 40 + 1) {
-                view.enableNumber(toEnable - 1);
-            }
+            view.enableNumber(toEnable - 1);
 
             String takenNumberString = scoreTableRow.getTakenNumbers(); // row.getText(1);
 
@@ -72,10 +63,8 @@ public class UndoHandler extends AbstractHandler {
                     temp = temp.substring(0, temp.indexOf(Messages.NumberSharkView_0));
                 }
                 int takenNumber = Integer.parseInt(temp);
-                view.setStatus(toEnable - 1, true);
-                if (tabFolderIndex * 40 < takenNumber && takenNumber < (tabFolderIndex + 1) * 40 + 1) {
-                    view.enableNumber(takenNumber - 1);
-                }
+                view.setStatus(takenNumber - 1, true);
+                view.enableNumber(takenNumber - 1);
             }
 
             scoreTableView.getItem(view.getLastPlayerMove()).dispose();
@@ -89,9 +78,7 @@ public class UndoHandler extends AbstractHandler {
                 view.setSharkScore(NumberSharkView.ZERO_SCORE);
                 view.setPlayerScore(NumberSharkView.ZERO_SCORE);
             }
-        
-        
-            //PlayerPosition um eins zurücksetzen
+       
             view.decreasePlayerMove();
         }    
         
