@@ -7,14 +7,21 @@
 	<version>0.9.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
 	<properties>
 		<tycho.version>0.13.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
 	<modules>
 		<module>../../../core</module>
 		<module>../../../crypto</module>
 	</modules>
+
 	<repositories>
 		<repository>
 			<id>eclipse-indigo</id>
@@ -27,6 +34,7 @@
 			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo</url>
 		</repository>
 	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
