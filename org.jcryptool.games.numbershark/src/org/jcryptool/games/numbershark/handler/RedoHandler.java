@@ -1,7 +1,5 @@
 package org.jcryptool.games.numbershark.handler;
 
-import java.util.ArrayList;
-
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -24,30 +22,30 @@ public class RedoHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
-            
+
             Table scoreTableView = view.getTable();
-            
+
             if (view.hasScoreTableRowListNextEntry() == false){
             	return null;
             }
-           
+
             //gets the next ScoreTableRow from actual point of view
             ScoreTableRow scoreTableRow = view.getNextScoreTableRow();
-            
+
             view.addScoreTableRow2ScoreTableView(scoreTableRow);
-           
+
             scoreTableView.setSelection(view.getActualPlayerMove());
-            view.setSharkScore(scoreTableRow.getLostScore());                     
+            view.setSharkScore(scoreTableRow.getLostScore());
             view.setPlayerScore(scoreTableRow.getPoints());
-            
-            //activate numbers an buttons            
+
+            //activate numbers an buttons
             String redoLostNumbers =  scoreTableRow.getLostNumbers();
             int iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
 
             // activate numbers and buttons
             while (iterator != -1) {
                 int toDisable = Integer.parseInt(redoLostNumbers.substring(iterator + 2, redoLostNumbers.length()));
-                redoLostNumbers = redoLostNumbers.substring(0, iterator);               
+                redoLostNumbers = redoLostNumbers.substring(0, iterator);
                 view.setStatus(toDisable - 1, false);
                 iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
                 view.disableNumber(toDisable - 1);
@@ -66,10 +64,10 @@ public class RedoHandler extends AbstractHandler {
                 }
                 int takenNumber = Integer.parseInt(temp);
                 view.setStatus(toDisable - 1, true);
-                view.disableNumber(takenNumber - 1);              
+                view.disableNumber(takenNumber - 1);
             }
 
-            view.increasePlayerMove();            
+            view.increasePlayerMove();
         }
         return null;
 	}

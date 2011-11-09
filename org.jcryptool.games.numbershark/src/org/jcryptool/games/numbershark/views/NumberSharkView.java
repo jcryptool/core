@@ -59,11 +59,11 @@ public class NumberSharkView extends ViewPart {
     public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
     private TabFolder numberTabs = null;
     private MouseListener numberSelectedListener;
-        
+
     private ScoreTableRow scoreTableRow;
-    private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();    
+    private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();
     private int playerMove;
-        
+
     @Override
     public void createPartControl(final Composite parent) {
         this.parent = parent;
@@ -160,16 +160,16 @@ public class NumberSharkView extends ViewPart {
         int score = 0;
         int lostScore = 0;
         int remainingNumbers = numberOfFields - 2;
-            
+
         boolean isPrime = takenNumber == 0 ? false : NumberService.isPrime(takenNumber);
-                
+
         scoreTableRow = new ScoreTableRow();
-        
+
         int numberOfRows = scoreTable.getItemCount();
-        
+
         scoreTableRow.setMove(String.valueOf(numberOfRows+1));
 
-        if (isPrime) {        	
+        if (isPrime) {
             scoreTableRow.setTakenNumbers(String.valueOf(takenNumber) + Messages.NumberSharkView_0);
         } else {
             scoreTableRow.setTakenNumbers(String.valueOf(takenNumber));
@@ -177,8 +177,8 @@ public class NumberSharkView extends ViewPart {
 
         if (numberOfRows > 1) {
             score = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(2));
-            lostScore = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(4));            
-            remainingNumbers = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(5)) - 2;            
+            lostScore = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(4));
+            remainingNumbers = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(5)) - 2;
         }
 
         if (takenNumber == 0) {
@@ -196,9 +196,9 @@ public class NumberSharkView extends ViewPart {
             lostSum += lostNumbers[k];
             remainingNumbers--;
         }
-        
+
         scoreTableRow.setLostNumbers(lostNum);
-                
+
         lostScore += lostSum;
         scoreTableRow.setLostScore(String.valueOf(lostScore));
         scoreTableRow.setRemainingNumbers(String.valueOf(remainingNumbers));
@@ -220,16 +220,16 @@ public class NumberSharkView extends ViewPart {
             mb.setMessage(msg);
             mb.open();
         }
-               
+
         this.setPlayerMove(numberOfRows + 1);
         this.removeElementsFromScoreTableRowList();
-        
-        //scoreTableRowList kepp the moves from the player. 
+
+        //scoreTableRowList kepp the moves from the player.
         //scoreTableRowList is used from undo-/ redo-function for navigating
-        this.scoreTableRowList.put(numberOfRows + 1, this.scoreTableRow);               
+        this.scoreTableRowList.put(numberOfRows + 1, this.scoreTableRow);
         this.addScoreTableRow2ScoreTableView(scoreTableRow);
     }
-  
+
 	/**
      * Creates the listener for each number on the playing field.
      */
@@ -270,7 +270,6 @@ public class NumberSharkView extends ViewPart {
                     numToDeactivate = 0;
                 }
                 addMoveToTable(numToDeactivate, lostNumbersInt);
-                int i = scoreTable.getItemCount();
                 TableItem lastRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
 
                 playerScore.setText(lastRow.getText(2));
@@ -352,7 +351,7 @@ public class NumberSharkView extends ViewPart {
                     if (emptyFields > 0) {
                         for (int i = 0; i < emptyFields; i++, fieldNumber++) {
                             numbers[fieldNumber] = new CLabel(compTabs, SWT.NONE);
-                            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));                            
+                            numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
                         }
                     }
 
@@ -413,34 +412,34 @@ public class NumberSharkView extends ViewPart {
     public Number[] getNumNum() {
         return numNum;
     }
-	
+
 	public void increasePlayerMove(){
 		this.playerMove ++ ;
 	}
-	
+
 	public void decreasePlayerMove(){
 		this.playerMove -- ;
 	}
 
 	public int getActualPlayerMove (){
-		return this.playerMove;		
+		return this.playerMove;
 	}
-	
+
 	public int getNextPlayerMove (){
-		return this.playerMove + 1;		
+		return this.playerMove + 1;
 	}
-	
+
 	public int getLastPlayerMove (){
-		return this.playerMove - 1;		
+		return this.playerMove - 1;
 	}
-		
+
 	public void setPlayerMove(int playerPosition) {
 		this.playerMove = playerPosition;
 	}
-		
+
 	public void addScoreTableRow2ScoreTableView (ScoreTableRow scoreTableRow) {
-		TableItem item = new TableItem(scoreTable, SWT.NONE);		
-		item.setText(0, scoreTableRow.getMove());		
+		TableItem item = new TableItem(scoreTable, SWT.NONE);
+		item.setText(0, scoreTableRow.getMove());
 		item.setText(1, scoreTableRow.getTakenNumbers());
 		item.setText(2, scoreTableRow.getPoints());
 		item.setText(3, scoreTableRow.getLostNumbers());
@@ -455,30 +454,30 @@ public class NumberSharkView extends ViewPart {
 		 return false;
 	}
 
-	public ScoreTableRow getScoreTableRowByActualPlayerPosition() {		
+	public ScoreTableRow getScoreTableRowByActualPlayerPosition() {
 		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove);
 	}
-	
-	public ScoreTableRow getNextScoreTableRow() {		
-		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove + 1);		
+
+	public ScoreTableRow getNextScoreTableRow() {
+		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove + 1);
 	}
 
 	public ScoreTableRow getLastScoreTableRow() {
-		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove - 1);		
+		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove - 1);
 	}
-	
+
 	/**
-	 * Function remove elements from ScoreTableRowList  
+	 * Function remove elements from ScoreTableRowList
 	 */
-	private void removeElementsFromScoreTableRowList(){      
-        
-        if (scoreTableRowList.size() > this.playerMove){        	
+	private void removeElementsFromScoreTableRowList(){
+
+        if (scoreTableRowList.size() > this.playerMove){
         	int listSize = scoreTableRowList.size();
         	for (int i = this.playerMove; i <= listSize; i++ ){
-            	scoreTableRowList.remove(i);            	
-            }	
+            	scoreTableRowList.remove(i);
+            }
         }
 	}
-	
-	
+
+
 }
