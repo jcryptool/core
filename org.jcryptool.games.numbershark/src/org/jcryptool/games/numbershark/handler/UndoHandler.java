@@ -15,6 +15,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.games.numbershark.util.CommandState;
+import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.util.ScoreTableRow;
 import org.jcryptool.games.numbershark.views.Messages;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
@@ -78,9 +80,22 @@ public class UndoHandler extends AbstractHandler {
                 view.setSharkScore(NumberSharkView.ZERO_SCORE);
                 view.setPlayerScore(NumberSharkView.ZERO_SCORE);
             }
-       
+        
+            
             view.decreasePlayerMove();
-        }    
+            
+            if (view.getActualPlayerMove() < 1){                
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE, CommandState.State.UNDO_DISABLED);
+            }
+            
+            if (view.hasScoreTableRowListNextEntry()){                
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_ENABLED);
+            }      
+            
+        } 
+        
         
         return null;
     }

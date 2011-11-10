@@ -122,7 +122,7 @@
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
-               style="push">
+               style="push">               
          </command>
          <separator
                name="org.jcryptool.games.numbershark.separator7"
@@ -180,6 +180,15 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.UndoHandler"
             commandId="org.jcryptool.games.numbershark.undoCommand">
+            
+            <activeWhen>
+      			<with
+      			variable="org.jcryptool.games.numbershark.commands.undoState">
+          			<equals
+                    	value="UNDO_ENABLED">
+                  	</equals>
+      			</with>
+      		</activeWhen>      		
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.HintHandler"
@@ -196,7 +205,30 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.RedoHandler"
             commandId="org.jcryptool.games.numbershark.redoCommand">
+      		<activeWhen>
+      			<with
+      			variable="org.jcryptool.games.numbershark.commands.redoState">
+          			<equals
+                    	value="REDO_ENABLED">
+                  	</equals>
+      			</with>
+      		</activeWhen>      		
       </handler>
+      
+   </extension>   
+   <extension
+   	point="org.eclipse.ui.services">
+    <sourceProvider
+    	provider="org.jcryptool.games.numbershark.util.CommandState">
+        	<variable
+               name="org.jcryptool.games.numbershark.commands.undoState"
+               priorityLevel="workbench">
+         	</variable>
+         	<variable
+               name="org.jcryptool.games.numbershark.commands.redoState"
+               priorityLevel="workbench">
+         	</variable>
+      </sourceProvider>
    </extension>
 
 </plugin>

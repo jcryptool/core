@@ -15,6 +15,8 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.games.numbershark.dialogs.NewGameDialog;
+import org.jcryptool.games.numbershark.util.CommandState;
+import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
@@ -38,6 +40,12 @@ public class NewGameHandler extends AbstractHandler {
             }
         }
 
+        //Change UndoCommandState 2 enable because more than 1 Entry in ScoreTableRowList
+        //Change RedoCommandState 2 disable because no Entry for RedoCommand in ScoreTableRowList  
+        CommandStateChanger commandStateChanger = new CommandStateChanger();
+        commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE, CommandState.State.UNDO_DISABLED);                
+        commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_DISABLED);  
+             
         return null;
     }
 }
