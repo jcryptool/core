@@ -276,7 +276,7 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
      */
     public void handleEvent(Event event) {
         if (event.widget.equals(this.availableAlphabetsTable)) {
-
+            
             TableItem item = getSelectedTableItem(this.availableAlphabetsTable.getSelection());
 
             if (item != null) {
@@ -537,6 +537,13 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
         // saving
         savePreferences();
         super.updateApplyButton();
+    }
+
+    /**
+     * @see org.eclipse.jface.preference.PreferencePage#performHelp()
+     */
+    public void performHelp() {
+        // TODO: AnyMember implement help support for this PreferencePage
     }
 
     /**

@@ -16,11 +16,10 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.Vector;
 
-import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.constants.IConstants;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jcryptool.crypto.classic.alphabets.tools.AlphabetPersistence;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.prefs.BackingStoreException;
@@ -29,7 +28,7 @@ import org.osgi.service.prefs.Preferences;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class AlphabetsPlugin extends Plugin {
+public class AlphabetsPlugin extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.alphabets";
 
@@ -63,8 +62,7 @@ public class AlphabetsPlugin extends Plugin {
 		alphabets.putBoolean(FILTER_CHARS, filterChars);
 		try {
 			alphabets.flush();
-		} catch (BackingStoreException ex) {
-            LogUtil.logError(ex);
+		} catch (BackingStoreException e) {
 		}
 	}
 
@@ -80,8 +78,7 @@ public class AlphabetsPlugin extends Plugin {
 		alphabets.putBoolean(FILTER_CHARS, true);
 		try {
 			alphabets.flush();
-		} catch (BackingStoreException ex) {
-            LogUtil.logError(ex);
+		} catch (BackingStoreException e) {
 		}
 	}
 
@@ -120,11 +117,22 @@ public class AlphabetsPlugin extends Plugin {
 
 	public void performStoreAlphabets(Vector<Alphabet> alphabets, String path) throws IOException {
 		AlphabetPersistence.saveAlphabetsToXML(alphabets, new OutputStreamWriter(new FileOutputStream(path),
-		        Charset.forName(IConstants.UTF8_ENCODING)));
+		        Charset.forName("UTF-8"))); //$NON-NLS-1$
 	}
 
 	public static String getFolderPath(){
 		return getDefault().getBundle().getLocation();
+	}
+	
+	/**
+	 * Returns an image descriptor for the image file at the given
+	 * plug-in relative path
+	 *
+	 * @param path the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
 }
