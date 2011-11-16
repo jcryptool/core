@@ -3,7 +3,6 @@ package org.jcryptool.core.cryptosystem.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,12 +65,13 @@ public class Alphabet<C> {
 	 */
 	public void filterByAlphabet(List<C> toFilter) {
 		for (Iterator<C> iterator = toFilter.iterator(); iterator.hasNext();) {
-			C element = (C) iterator.next();
+			C element = iterator.next();
 			if (!getContent().contains(element))
 				iterator.remove();
 		}
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		for (C element : alphabetElements) {
@@ -91,7 +91,6 @@ public class Alphabet<C> {
 	 * @return whether the set of elements of this alphabet is a subset of the other alphabet's element set.
 	 */
 	public boolean isSubsetOf(Alphabet<? extends C> otherAlpha) {
-		List<C> found = new ArrayList<C>();
 		for(C thisAlphaElem: getContent()) {
 			if(otherAlpha.getContent().contains(thisAlphaElem)) {
 			} else {
@@ -115,7 +114,7 @@ public class Alphabet<C> {
 	private static void removeDoublesInplace(Collection<?> coll) {
 		List<Object> found = new ArrayList<Object>();
 		for (Iterator<?> iterator = coll.iterator(); iterator.hasNext();) {
-			Object collElem = (Object) iterator.next();
+			Object collElem = iterator.next();
 			if(!found.contains(collElem)) {
 				found.add(collElem);
 			} else {
