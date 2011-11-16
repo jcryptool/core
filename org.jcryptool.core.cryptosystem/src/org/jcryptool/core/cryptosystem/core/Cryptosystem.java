@@ -67,10 +67,10 @@ public abstract class Cryptosystem<P, C, K extends Key> {
 	 * @param plainTextAlphabet the plaintext alphabet
 	 * @param cipherTextAlphabet the ciphertext alphabet
 	 */
-	public Cryptosystem(Alphabet<P> plainTextAlphabet,
-			Alphabet<C> cipherTextAlphabet) {
-		this.plainTextAlphabet = plainTextAlphabet;
-		this.cipherTextAlphabet = cipherTextAlphabet;
+	public Cryptosystem(Alphabet<? extends P> plainTextAlphabet,
+			Alphabet<? extends C> cipherTextAlphabet) {
+		this.plainTextAlphabet = new Alphabet<P>(plainTextAlphabet.getContent());
+		this.cipherTextAlphabet = new Alphabet<C>(cipherTextAlphabet.getContent());
 	}
 
 	/**

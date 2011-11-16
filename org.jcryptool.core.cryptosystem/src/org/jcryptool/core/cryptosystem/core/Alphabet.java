@@ -1,7 +1,9 @@
 package org.jcryptool.core.cryptosystem.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
  * 
  * @author Simon L
  */
-public abstract class Alphabet<C> {
+public class Alphabet<C> {
 
 	List<C> alphabetElements;
 
@@ -80,6 +82,74 @@ public abstract class Alphabet<C> {
 		}
 
 		return builder.toString();
+	}
+	
+	/**
+	 * returns true, if every element that is contained in this alphabet is contained in the other alphabet, too.
+	 * 
+	 * @param otherAlpha the other alphabet
+	 * @return whether the set of elements of this alphabet is a subset of the other alphabet's element set.
+	 */
+	public boolean isSubsetOf(Alphabet<? extends C> otherAlpha) {
+		List<C> found = new ArrayList<C>();
+		for(C thisAlphaElem: getContent()) {
+			if(otherAlpha.getContent().contains(thisAlphaElem)) {
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * returns true, if this and the other alphabet have exactly the same elements sotred.
+	 * (alphabets can be permuted, still, thus not be equal)
+	 * 
+	 * @param otherAlpha the other alphabet
+	 */
+	public boolean isSetEqualTo(Alphabet<? extends C> otherAlpha) {
+		return isSubsetOf(otherAlpha) && otherAlpha.getContent().size() == this.getContent().size();
+	}
+	
+	//TODO:!utils
+	private static void removeDoublesInplace(Collection<?> coll) {
+		List<Object> found = new ArrayList<Object>();
+		for (Iterator<?> iterator = coll.iterator(); iterator.hasNext();) {
+			Object collElem = (Object) iterator.next();
+			if(!found.contains(collElem)) {
+				found.add(collElem);
+			} else {
+				iterator.remove();
+			}
+		}
+	}
+	
+	//TODO:!utils
+	private static <EType> List<EType> removeDoubles(Collection<EType> coll) {
+		List<EType> found = new ArrayList<EType>();
+		for (Iterator iterator = coll.iterator(); iterator.hasNext();) {
+			EType collElem = (EType) iterator.next();
+			if(!found.contains(collElem)) {
+				found.add(collElem);
+			}
+		}
+		
+		return found;
+	}
+	
+	public static <EType> List<EType> createFilledAlphabetlistFromKeyword(List<EType> keyword, Alphabet<? extends EType> plainTextAlphabet) {
+		// remove doublets
+		List<EType> result = removeDoubles(keyword);
+		// fill subsequently with alphabet elements
+		for(EType alphaElem: plainTextAlphabet.getContent()) {
+			if(! result.contains(alphaElem)) result.add(alphaElem);
+		}
+		
+		return result;
+	}
+	
+	public static <EType> Alphabet<EType> createFilledAlphabetFromKeyword(List<EType> keyword, Alphabet<? extends EType> plainTextAlphabet) {
+		return new Alphabet<EType>(createFilledAlphabetlistFromKeyword(keyword, plainTextAlphabet));
 	}
 
 }
