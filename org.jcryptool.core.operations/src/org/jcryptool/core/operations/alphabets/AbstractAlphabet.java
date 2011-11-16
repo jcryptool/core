@@ -10,6 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.operations.alphabets;
 
+
 /**
  * Abstract superclass for an Alphabet.
  * 
@@ -26,6 +27,9 @@ public abstract class AbstractAlphabet {
 
 	public static final int HIGHLIGHT = 3;
 
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract boolean isDefaultAlphabet();
 
 	/**
@@ -33,14 +37,16 @@ public abstract class AbstractAlphabet {
 	 * @author Robin Welsch
 	 * @version 0.01
 	 * @since 0.01
+	 * @deprecated soon to be replaced by List<Character> getCharacterSet() 
 	 */
 	public abstract char[] getCharacterSet();
-
+	
 	/**
 	 * returns method missing characters are displayed by the alphabet
 	 * @author Robin Welsch
 	 * @version 0.01
 	 * @since 0.01
+	 * @deprecated functionality to be moved to the AlphabetManager
 	 */
 	public abstract int getDisplayMissingCharacters();
 
@@ -49,9 +55,14 @@ public abstract class AbstractAlphabet {
 	 * @author Robin Welsch
 	 * @version 0.01
 	 * @since 0.01
+	 * @deprecated functionality to be moved to the AlphabetManager
 	 */
 	public abstract String getName();
 	
+	/**
+	 * @return the short name
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract String getShortName();
 
 	/**
@@ -60,19 +71,38 @@ public abstract class AbstractAlphabet {
 	 * @author Robin Welsch
 	 * @version 0.01
 	 * @since 0.01
+	 * @deprecated functionality to be removed
 	 */
 	public abstract char getSubstituteCharacter();
 
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract void setDefaultAlphabet(boolean b);
 
+	/**
+	 * @deprecated alphabets will be immutable
+	 */
 	public abstract void setCharacterSet(char[] characterSet);
 
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract boolean isBasic();
 
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract void setBasic(boolean basic);
 	
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract void setName(String name);
 	
+	/**
+	 * @deprecated functionality to be moved to the AlphabetManager
+	 */
 	public abstract void setShortName(String shortName);
 	
 	public abstract boolean contains(char e);
