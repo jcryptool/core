@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jcryptool.crypto.xml.feature"
+      id="org.jcryptool.crypto.xml"
       label="JCrypTool XML Security Feature"
       version="0.9.5.qualifier"
       provider-name="jcryptool.org"
@@ -249,7 +249,8 @@ litigation.
          id="org.jcryptool.crypto.xml"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.jcryptool.crypto.xml.core"
@@ -262,7 +263,8 @@ litigation.
          id="org.jcryptool.crypto.xml.help"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
          id="org.jcryptool.crypto.xml.ui"
