@@ -14,5 +14,18 @@
 
 	<p>Beachten Sie dabei auf alle Fälle die Hinweise zur <a href="internationalization.html">Internationalisierung</a> und zur
 	<a href="persistence.html">Persistenz</a>.</p>
+
+	<h2>Erste Schritte</h2>
+
+	<p>JCrypTool besitzt grundsätzlich dieselben Erweiterungsmöglichkeiten wie Eclipse auch (z.B. für Sichten). Allerdings
+	genügt das Erweitern dieser Extension Points nicht, um ein neues Crypto Plug-in in JCrypTool auch sichtbar zu machen. Damit
+	z.B. eine neue Visualisierung im <a href="../../../users/general/view_algorithms.html">Krypto Explorer</a> (und gleichzeitig
+	auch dem <a href="menus.html">Menü</a>) angezeigt wird, muss zusätzlich der JCrypTool
+	<a href="../extensionpoints.html">eigene Extension Point</a> <em>org.jcryptool.core.operations.visuals</em> erweitert werden
+	(für Analysen und andere kryptografische Operationen gelten die entsprechenden Erweiterungspunkte).</p>
+
+	<p>Anschließend muss die Runtime Konfiguration (der Eintrag im Run Menü) auf dem Tab <em>Plug-ins</em> um das neue Plug-in
+	erweitert werden. Damit auch ein Export das neue Plug-in enthält, muss das entsprechende <a href="../features/toc.html">Feature</a>
+	aktualisiert und das neue Plug-in dort hinzugefügt werden.</p>
 </body>
 </html>
