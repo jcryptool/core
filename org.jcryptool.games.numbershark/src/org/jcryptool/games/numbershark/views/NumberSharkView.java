@@ -111,15 +111,13 @@ public class NumberSharkView extends ViewPart {
 
         Group detailedScore = new Group(playingField, SWT.NONE);
         detailedScore.setText(Messages.NumberSetView_14);
-        detailedScore.setLayout(new GridLayout());
-
-        GridData gridDataDetScore = new GridData(GridData.FILL, GridData.FILL, true, true);
-        detailedScore.setLayoutData(gridDataDetScore);
+        detailedScore.setLayout(new GridLayout(1, false));
+        detailedScore.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
         scoreTable = new Table(detailedScore, SWT.BORDER);
         scoreTable.setLinesVisible(true);
         scoreTable.setHeaderVisible(true);
-        scoreTable.setLayoutData(gridDataDetScore);
+        scoreTable.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
         scoreTable.setFocus();
 
         TableColumn[] columns = new TableColumn[6];
