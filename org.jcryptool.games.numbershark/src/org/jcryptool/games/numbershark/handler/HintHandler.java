@@ -31,35 +31,14 @@ public class HintHandler extends AbstractHandler {
         if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
             NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
 
-            boolean stop = false;
             String msg;
-            int hint = 0;
             int gameNMax = view.getNumberOfFields();
             boolean[] activeNumbers = view.getActiveNumbers();
             Number[] numNum = view.getNumNum();
 
-            // calculate number for the hint
-            for (int i = gameNMax; i > gameNMax / 2; i--) {
-                if (activeNumbers[i - 1]) {
-                    int counter = 0;
+            int hint = calculateHint(gameNMax, activeNumbers, numNum);
 
-                    for (int j = 0; j < numNum[i - 1].getDivisors().size(); j++) {
-                        int n = numNum[i - 1].getDivisors().get(j);
-                        if (activeNumbers[n - 1]) {
-                            counter++;
-                        }
-
-                    }
-                    if (counter == 1) {
-                        hint = i;
-                        stop = true;
-                        break;
-                    }
-
-                }
-            }
-
-            if (stop) {
+            if (hint > 0) {
                 msg = NLS.bind(Messages.HintHandler_0, new Object[] {hint, gameNMax / 2});
             } else {
                 msg = NLS.bind(Messages.HintHandler_1, new Object[] {gameNMax / 2});
@@ -72,5 +51,35 @@ public class HintHandler extends AbstractHandler {
         }
 
         return null;
+    }
+
+    /**
+     * Calculate number for the hint.
+     *
+     * @param gameNMax
+     * @param activeNumbers
+     * @param numNum
+     * @return
+     */
+    private int calculateHint(int gameNMax, boolean[] activeNumbers, Number[] numNum) {
+        for (int i = gameNMax; i > gameNMax / 2; i--) {
+            if (activeNumbers[i - 1]) {
+                int counter = 0;
+
+                for (int j = 0; j < numNum[i - 1].getDivisors().size(); j++) {
+                    int n = numNum[i - 1].getDivisors().get(j);
+                    if (activeNumbers[n - 1]) {
+                        counter++;
+                    }
+
+                }
+                if (counter == 1) {
+                    return i;
+                }
+
+            }
+        }
+
+        return 0;
     }
 }
