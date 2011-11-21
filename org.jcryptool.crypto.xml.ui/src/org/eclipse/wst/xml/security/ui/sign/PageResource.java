@@ -37,6 +37,7 @@ import org.eclipse.wst.xml.security.core.utils.IGlobals;
 import org.eclipse.wst.xml.security.core.utils.Utils;
 import org.eclipse.wst.xml.security.ui.dialogs.XpathDialog;
 import org.eclipse.wst.xml.security.ui.utils.IContextHelpIds;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.w3c.dom.Document;
 
@@ -52,15 +53,13 @@ import org.w3c.dom.Document;
  * @author Dominik Schadow
  * @version 0.5.0
  */
-// TODO detached signature with file list to sign (from one to many)
-// TODO checkbox for manifest generation (only active if detached selected?)
 public class PageResource extends WizardPage implements Listener {
     /** Wizard page name. */
     public static final String PAGE_NAME = "SignPageResource"; //$NON-NLS-1$
     /** Select detached file button. */
-    private Button bSelectDetachedFile = null;
+    private Button selectDetachedFile = null;
     /** Browse XPath button. */
-    private Button bBrowseXpath = null;
+    private Button selectXPath = null;
     /** Activate BSP checkbox. */
     private Button bBsp = null;
     /** Radio to sign the complete document. */
@@ -224,13 +223,13 @@ public class PageResource extends WizardPage implements Listener {
         data.width = IGlobals.MEDIUM_TEXT_WIDTH;
         tXpath.setLayoutData(data);
 
-        bBrowseXpath = new Button(gResource, SWT.PUSH);
-        bBrowseXpath.setText(Messages.browse);
-        bBrowseXpath.setEnabled(false);
+        selectXPath = new Button(gResource, SWT.PUSH);
+        selectXPath.setText(Messages.browse);
+        selectXPath.setEnabled(false);
         data = new FormData();
         data.top = new FormAttachment(bXpath, 0, SWT.CENTER);
         data.left = new FormAttachment(tXpath, IGlobals.MARGIN);
-        bBrowseXpath.setLayoutData(data);
+        selectXPath.setLayoutData(data);
 
         // Elements for group "Signature Type"
         bEnveloping = new Button(gType, SWT.RADIO);
@@ -263,13 +262,13 @@ public class PageResource extends WizardPage implements Listener {
         data.width = IGlobals.MEDIUM_TEXT_WIDTH;
         tDetachedFile.setLayoutData(data);
 
-        bSelectDetachedFile = new Button(gType, SWT.PUSH);
-        bSelectDetachedFile.setText(Messages.select);
-        bSelectDetachedFile.setEnabled(false);
+        selectDetachedFile = new Button(gType, SWT.PUSH);
+        selectDetachedFile.setText(Messages.select);
+        selectDetachedFile.setEnabled(false);
         data = new FormData();
         data.top = new FormAttachment(bDetached, 0, SWT.CENTER);
         data.left = new FormAttachment(tDetachedFile, IGlobals.MARGIN);
-        bSelectDetachedFile.setLayoutData(data);
+        selectDetachedFile.setLayoutData(data);
 
         // Elements for group "Certificate"
         bOpenCertificate = new Button(gKey, SWT.RADIO);
@@ -307,8 +306,8 @@ public class PageResource extends WizardPage implements Listener {
      * Adds all listeners for the current wizard page.
      */
     private void addListeners() {
-        bSelectDetachedFile.addListener(SWT.Selection, this);
-        bBrowseXpath.addListener(SWT.Selection, this);
+        selectDetachedFile.addListener(SWT.Selection, this);
+        selectXPath.addListener(SWT.Selection, this);
         bBsp.addListener(SWT.Selection, this);
         bDocument.addListener(SWT.Selection, this);
         bDetached.addListener(SWT.Selection, this);
@@ -336,10 +335,10 @@ public class PageResource extends WizardPage implements Listener {
             return;
         }
 
-        if (bXpath.getSelection() && tXpath.getText().length() == 0) {
+        if (bXpath.getSelection() && tXpath.getText().isEmpty()) {
             updateStatus(Messages.enterXPath, DialogPage.INFORMATION);
             return;
-        } else if (bXpath.getSelection() && tXpath.getText().length() > 0) {
+        } else if (bXpath.getSelection() && !tXpath.getText().isEmpty()) {
             String xpathValidator = Utils.validateXPath(doc, tXpath.getText());
             if (xpathValidator.equals("none")) { //$NON-NLS-1$
                 updateStatus(Messages.xpathNoElement, DialogPage.ERROR);
@@ -352,10 +351,10 @@ public class PageResource extends WizardPage implements Listener {
                 return;
             }
         }
-        if (bDetached.getSelection() && tDetachedFile.getText().length() == 0) {
+        if (bDetached.getSelection() && tDetachedFile.getText().isEmpty()) {
             updateStatus(Messages.detachedFile, DialogPage.INFORMATION);
             return;
-        } else if (bDetached.getSelection() && tDetachedFile.getText().length() > 0) {
+        } else if (bDetached.getSelection() && !tDetachedFile.getText().isEmpty()) {
             File tempFile = new File(tDetachedFile.getText());
             if (!tempFile.exists()) {
                 updateStatus(Messages.verifyDetachedFile, DialogPage.ERROR);
@@ -402,10 +401,10 @@ public class PageResource extends WizardPage implements Listener {
     private void selectDetachedFile() {
         FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterNames(IGlobals.DETACHED_FILE_EXTENSION_NAME);
-        dialog.setFilterExtensions(IGlobals.DETACHED_FILE_EXTENSION);
+        dialog.setFilterNames(new String[] {IConstants.XML_FILTER_NAME, IConstants.ALL_FILTER_NAME});
+        dialog.setFilterExtensions(new String[] {IConstants.XML_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
         String filename = dialog.open();
-        if (filename != null && filename.length() > 0) {
+        if (filename != null && !filename.isEmpty()) {
             tDetachedFile.setText(filename);
         }
     }
@@ -420,14 +419,14 @@ public class PageResource extends WizardPage implements Listener {
         if (e.widget == bDocument || e.widget == bSelection) { // Radios Complete document or Selection
             tXpath.setEnabled(false);
             tXpath.setText(EMPTY);
-            bBrowseXpath.setEnabled(false);
+            selectXPath.setEnabled(false);
         } else if (e.widget == bXpath) { // Radio XPath
             tXpath.setEnabled(true);
-            bBrowseXpath.setEnabled(true);
-        } else if (e.widget == bBrowseXpath) { // Button Browse XPath
+            selectXPath.setEnabled(true);
+        } else if (e.widget == selectXPath) { // Button Browse XPath
             openXPathDialog();
         } else if (e.widget == bEnveloping || e.widget == bEnveloped) { // Radio Enveloping and Enveloped
-            bSelectDetachedFile.setEnabled(false);
+            selectDetachedFile.setEnabled(false);
             tDetachedFile.setEnabled(false);
             tDetachedFile.setText(EMPTY);
             bXpath.setEnabled(true);
@@ -443,10 +442,10 @@ public class PageResource extends WizardPage implements Listener {
             bXpath.setEnabled(false);
             tXpath.setText(EMPTY);
             tXpath.setEnabled(false);
-            bBrowseXpath.setEnabled(false);
+            selectXPath.setEnabled(false);
             tDetachedFile.setEnabled(true);
-            bSelectDetachedFile.setEnabled(true);
-        } else if (e.widget == bSelectDetachedFile) { // Button Select detached file
+            selectDetachedFile.setEnabled(true);
+        } else if (e.widget == selectDetachedFile) { // Button Select detached file
             selectDetachedFile();
         } else if (e.widget == bBsp) { // Checkbox BSP
             if (bBsp.getSelection()) {
@@ -458,7 +457,7 @@ public class PageResource extends WizardPage implements Listener {
                 tXpath.setText(EMPTY);
                 tXpath.setEnabled(false);
                 tDetachedFile.setEnabled(true);
-                bSelectDetachedFile.setEnabled(true);
+                selectDetachedFile.setEnabled(true);
                 bEnveloping.setEnabled(false);
                 bEnveloping.setSelection(false);
                 bEnveloped.setSelection(false);

@@ -37,6 +37,7 @@ import org.eclipse.wst.xml.security.core.utils.IGlobals;
 import org.eclipse.wst.xml.security.core.utils.Utils;
 import org.eclipse.wst.xml.security.ui.dialogs.XpathDialog;
 import org.eclipse.wst.xml.security.ui.utils.IContextHelpIds;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.w3c.dom.Document;
 
@@ -386,8 +387,8 @@ public class PageResource extends WizardPage implements Listener {
     private void selectDetachedFile() {
         FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterNames(IGlobals.DETACHED_FILE_EXTENSION_NAME);
-        dialog.setFilterExtensions(IGlobals.DETACHED_FILE_EXTENSION);
+        dialog.setFilterNames(new String[] {IConstants.XML_FILTER_NAME});
+        dialog.setFilterExtensions(new String[] {IConstants.XML_FILTER_EXTENSION});
         String filename = dialog.open();
         if (filename != null && filename.length() > 0) {
             tDetachedFile.setText(filename);

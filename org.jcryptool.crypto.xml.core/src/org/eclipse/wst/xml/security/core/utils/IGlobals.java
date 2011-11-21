@@ -63,10 +63,6 @@ public interface IGlobals {
     String[] KEY_STORE_EXTENSION_NAME = {"Java Keystore (*.jks)", "All Files (*.*)"};
     /** Default extension for Keystore dialog. */
     String[] KEY_STORE_EXTENSION = {"*.jks", "*.*"};
-    /** Default extensions for detached file dialog. */
-    String[] DETACHED_FILE_EXTENSION = {"*.xml"};
-    /** Default extension names for detached file dialog. */
-    String[] DETACHED_FILE_EXTENSION_NAME = {"XML document (*.xml)"};
     /**
      * The Java Keystore type, JCEKS is required, since JKS (the Java default) does not support secret keys without a
      * certificate.
