@@ -2,12 +2,16 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Number Shark" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#gamePlugins" topic="$nl$/help/toc.html">
-  <topic href="$nl$/help/toc.html" label="Number Shark" topic="$nl$/help/toc.html"> 
+  <topic href="$nl$/help/toc.html" label="Number Shark" topic="$nl$/help/toc.html">
      <topic href="$nl$/help/toc.html" label="Getting Started">
-        <anchor id="gettingstarted"/>
+        <topic label="Rules" href="$nl$/help/gettingstarted/NumberSharkHelp-Rules.html" />
+        <topic label="Tutorial" href="$nl$/help/gettingstarted/NumberSharkHelp-Tutorial.html" />
+        <topic label="Manual"  href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html" />
      </topic>
      <topic href="$nl$/help/toc.html" label="Reference">
-        <anchor id="reference"/>
+        <topic label="Discussion" href="$nl$/help/reference/NumberSharkHelp-Discussion.html" />
+        <topic label="Bibliography" href="$nl$/help/reference/NumberSharkHelp-Bibliography.html" />
+        <topic label="Appendix" href="$nl$/help/reference/NumberSharkHelp-Appendix.html" />
      </topic>
    </topic>
 </toc>

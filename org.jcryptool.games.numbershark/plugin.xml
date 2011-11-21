@@ -15,13 +15,7 @@
          point="org.eclipse.help.toc">
       <toc
             file="$nl$/toc.xml"
-            primary="true">
-      </toc>
-      <toc
-            file="$nl$/tocgettingstarted.xml">
-      </toc>
-      <toc
-            file="$nl$/tocreference.xml">
+            primary="false">
       </toc>
    </extension>
    <extension
@@ -122,7 +116,7 @@
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
-               style="push">               
+               style="push">
          </command>
          <separator
                name="org.jcryptool.games.numbershark.separator7"
@@ -180,7 +174,7 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.UndoHandler"
             commandId="org.jcryptool.games.numbershark.undoCommand">
-            
+
             <activeWhen>
       			<with
       			variable="org.jcryptool.games.numbershark.commands.undoState">
@@ -188,7 +182,7 @@
                     	value="UNDO_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>      		
+      		</activeWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.HintHandler"
@@ -212,10 +206,10 @@
                     	value="REDO_ENABLED">
                   	</equals>
       			</with>
-      		</activeWhen>      		
+      		</activeWhen>
       </handler>
-      
-   </extension>   
+
+   </extension>
    <extension
    	point="org.eclipse.ui.services">
     <sourceProvider
