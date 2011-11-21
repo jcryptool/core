@@ -177,10 +177,10 @@ public class NumberSharkView extends ViewPart {
             scoreTableRow.setTakenNumbers(String.valueOf(takenNumber));
         }
 
-        if (numberOfRows > 1) {
-            score = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(2));
-            lostScore = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(4));
-            remainingNumbers = Integer.parseInt(scoreTable.getItem(numberOfRows - 2).getText(5)) - 2;
+        if (numberOfRows > 0) {
+            score = Integer.parseInt(scoreTable.getItem(numberOfRows - 1).getText(2));
+            lostScore = Integer.parseInt(scoreTable.getItem(numberOfRows - 1).getText(4));
+            remainingNumbers = Integer.parseInt(scoreTable.getItem(numberOfRows - 1).getText(5)) - 2;
         }
 
         if (takenNumber == 0) {
@@ -356,7 +356,7 @@ public class NumberSharkView extends ViewPart {
             numbers[fieldNumber].addMouseListener(numberSelectedListener);
 
             if (fieldNumber == numberOfFields - 1 || (fieldNumber + 1) % 40 == 0) {
-            	fieldNumber++;
+                if (fieldNumber == numberOfFields - 1) {
                     // add empty (invisible) fields on the last page to create the same page layout as on all other tabs
                     int emptyFields = ((tabCounter + 1) * 40) - numberOfFields;
                     if (emptyFields > 0) {
@@ -365,6 +365,7 @@ public class NumberSharkView extends ViewPart {
                             numbers[fieldNumber].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
                         }
                     }
+                }
 
                 numberTabs.getItem(tabCounter).setControl(compTabs);
 
@@ -477,7 +478,6 @@ public class NumberSharkView extends ViewPart {
 		return (ScoreTableRow) this.scoreTableRowList.get(this.playerMove - 1);
 	}
 
-
 	/**
 	 * Function remove elements from ScoreTableRowList
 	 */
@@ -490,7 +490,4 @@ public class NumberSharkView extends ViewPart {
             }
         }
 	}
-
-
-
 }
