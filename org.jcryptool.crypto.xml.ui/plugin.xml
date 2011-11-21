@@ -42,12 +42,12 @@
          point="org.eclipse.ui.commands">
       <command
             description="%command.description.9"
-            id="org.eclipse.wst.xml.security.ui.refreshSignatures"
+            id="org.jcryptool.crypto.xml.ui.refreshSignatures"
             name="%command.name.9">
       </command>
       <command
             description="%command.description.10"
-            id="org.eclipse.wst.xml.security.ui.showProperties"
+            id="org.jcryptool.crypto.xml.ui.showProperties"
             name="%command.name.10">
       </command>
    </extension>
@@ -55,11 +55,11 @@
          point="org.eclipse.ui.handlers">
       <handler
             class="org.jcryptool.crypto.xml.ui.commands.RefreshSignaturesCommand"
-            commandId="org.eclipse.wst.xml.security.ui.refreshSignatures">
+            commandId="org.jcryptool.crypto.xml.ui.refreshSignatures">
       </handler>
       <handler
             class="org.jcryptool.crypto.xml.ui.commands.ShowPropertiesCommand"
-            commandId="org.eclipse.wst.xml.security.ui.showProperties">
+            commandId="org.jcryptool.crypto.xml.ui.showProperties">
          <enabledWhen>
             <with
                   variable="selection">
@@ -81,13 +81,13 @@
       <menuContribution
             locationURI="toolbar:org.jcryptool.crypto.xml.ui.SignatureView">
          <command
-               commandId="org.eclipse.wst.xml.security.ui.showProperties"
+               commandId="org.jcryptool.crypto.xml.ui.showProperties"
                icon="icons/properties.gif"
                style="push"
                tooltip="%command.tooltip.9">
          </command>
          <command
-               commandId="org.eclipse.wst.xml.security.ui.refreshSignatures"
+               commandId="org.jcryptool.crypto.xml.ui.refreshSignatures"
                icon="icons/refresh.gif"
                style="push"
                tooltip="%command.tooltip.10">
@@ -96,14 +96,14 @@
       <menuContribution
             locationURI="menu:org.jcryptool.crypto.xml.ui.SignatureView">
          <command
-               commandId="org.eclipse.wst.xml.security.ui.showProperties"
+               commandId="org.jcryptool.crypto.xml.ui.showProperties"
                icon="icons/properties.gif"
                label="%command.label"
                style="push"
                tooltip="%command.tooltip.11">
          </command>
          <command
-               commandId="org.eclipse.wst.xml.security.ui.refreshSignatures"
+               commandId="org.jcryptool.crypto.xml.ui.refreshSignatures"
                icon="icons/refresh.gif"
                label="%command.label.0"
                style="push"
@@ -113,14 +113,14 @@
       <menuContribution
             locationURI="popup:org.jcryptool.crypto.xml.ui.SignatureView">
          <command
-               commandId="org.eclipse.wst.xml.security.ui.showProperties"
+               commandId="org.jcryptool.crypto.xml.ui.showProperties"
                icon="icons/properties.gif"
                label="%command.label.1"
                style="push"
                tooltip="%command.tooltip.13">
          </command>
          <command
-               commandId="org.eclipse.wst.xml.security.ui.refreshSignatures"
+               commandId="org.jcryptool.crypto.xml.ui.refreshSignatures"
                icon="icons/refresh.gif"
                label="%command.label.2"
                style="push"
@@ -135,7 +135,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationRemoveCommand"
             class="org.eclipse.wst.xml.security.core.canonicalize.CreateCanonicalization"
             contextHelpId="org.jcryptool.crypto.xml.help.canonicalization"
-            id="org.eclipse.wst.xml.security.ui.newCanonWithoutComments"
+            id="org.jcryptool.crypto.xml.ui.newCanonWithoutComments"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name"
             type="xml">
@@ -148,7 +148,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationMaintainCommand"
             class="org.eclipse.wst.xml.security.core.canonicalize.CreateCanonicalization"
             contextHelpId="org.jcryptool.crypto.xml.help.canonicalizationcomments"
-            id="org.eclipse.wst.xml.security.ui.newCanonWithComments"
+            id="org.jcryptool.crypto.xml.ui.newCanonWithComments"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.0"
             type="xml">
@@ -161,7 +161,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewSignatureCommand"
             class="org.eclipse.wst.xml.security.core.sign.CreateSignature"
             contextHelpId="org.jcryptool.crypto.xml.help.signature"
-            id="org.eclipse.wst.xml.security.ui.newSignature"
+            id="org.jcryptool.crypto.xml.ui.newSignature"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.1"
             type="xml">
@@ -174,7 +174,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewVerificationCommand"
             class="org.eclipse.wst.xml.security.core.verify.VerifyDocument"
             contextHelpId="org.jcryptool.crypto.xml.help.verification"
-            id="org.eclipse.wst.xml.security.ui.newVerification"
+            id="org.jcryptool.crypto.xml.ui.newVerification"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.2"
             type="xml">
@@ -187,7 +187,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewEncryptionCommand"
             class="org.eclipse.wst.xml.security.core.encrypt.CreateEncryption"
             contextHelpId="org.jcryptool.crypto.xml.help.encryption"
-            id="org.eclipse.wst.xml.security.ui.newEncryption"
+            id="org.jcryptool.crypto.xml.ui.newEncryption"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.3"
             type="xml">
@@ -200,7 +200,7 @@
             actionClass="org.jcryptool.crypto.xml.ui.commands.NewDecryptionCommand"
             class="org.eclipse.wst.xml.security.core.decrypt.CreateDecryption"
             contextHelpId="org.jcryptool.crypto.xml.help.decryption"
-            id="org.eclipse.wst.xml.security.ui.newDecryption"
+            id="org.jcryptool.crypto.xml.ui.newDecryption"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.4"
             type="xml">
