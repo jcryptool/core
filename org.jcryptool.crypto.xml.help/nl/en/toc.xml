@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="XML Security Tools" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#algorithmPlugins">
-   <topic href="nl/en/help/contents.html" label="XML Security Tools">
+<toc label="XML Security" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#algorithmPlugins">
+   <topic href="nl/en/help/contents.html" label="XML Security">
 	   <topic href="nl/en/help/overview/overview.html" label="Overview">
 	   </topic>
-	   <topic href="nl/en/help/overview/tasks.html" label="Tasks">
+	   <topic href="nl/en/help/overview/tasks.html" label="Operations">
 			<topic label="Signature Wizard" href="nl/en/help/signature/sign.html">
 		        <topic label="Resource and Signature Type" href="nl/en/help/signature/page_resource.html"/>
 		        <topic label="Keystores and Keys" href="nl/en/help/signature/page_keys.html">
@@ -31,11 +31,8 @@
 	         </topic>
 		    </topic>
 		    <topic label="Canonicalization" href="nl/en/help/canonicalization/canonicalize.html"/>
-		    <topic label="Quick Functions" href="nl/en/help/quickfunctions/quickfunctions.html"/>
 		</topic>
 	    <topic label="Preferences" href="nl/en/help/preferences/general.html">
-	        <topic label="Encryption" href="nl/en/help/preferences/encryption.html"/>
-	        <topic label="Signature" href="nl/en/help/preferences/signature.html"/>
 	    </topic>
    </topic>
 </toc>
