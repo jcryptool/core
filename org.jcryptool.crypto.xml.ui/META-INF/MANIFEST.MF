@@ -15,16 +15,16 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.apache.xml.security;bundle-version="1.4.5",
  org.eclipse.core.expressions;bundle-version="3.4.300",
  org.jcryptool.core.operations;bundle-version="0.9.5"
-Bundle-Activator: org.eclipse.wst.xml.security.ui.XSTUIPlugin
-Export-Package: org.eclipse.wst.xml.security.ui,
- org.eclipse.wst.xml.security.ui.cheatsheets,
- org.eclipse.wst.xml.security.ui.decrypt,
- org.eclipse.wst.xml.security.ui.dialogs,
- org.eclipse.wst.xml.security.ui.encrypt,
- org.eclipse.wst.xml.security.ui.preferences,
- org.eclipse.wst.xml.security.ui.sign,
- org.eclipse.wst.xml.security.ui.utils,
- org.eclipse.wst.xml.security.ui.verify
+Bundle-Activator: org.jcryptool.crypto.xml.ui.XSTUIPlugin
+Export-Package: org.jcryptool.crypto.xml.ui,
+ org.jcryptool.crypto.xml.ui.cheatsheets,
+ org.jcryptool.crypto.xml.ui.decrypt,
+ org.jcryptool.crypto.xml.ui.dialogs,
+ org.jcryptool.crypto.xml.ui.encrypt,
+ org.jcryptool.crypto.xml.ui.preferences,
+ org.jcryptool.crypto.xml.ui.sign,
+ org.jcryptool.crypto.xml.ui.utils,
+ org.jcryptool.crypto.xml.ui.verify
 Import-Package: org.eclipse.wst.xml.security.core.canonicalize,
  org.eclipse.wst.xml.security.core.cryptography,
  org.eclipse.wst.xml.security.core.decrypt,
