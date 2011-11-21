@@ -15,11 +15,11 @@ import org.apache.xml.security.signature.XMLSignatureException;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
-import org.eclipse.wst.xml.security.core.verify.VerifyDocument;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
 import org.jcryptool.core.operations.dataobject.IDataObject;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerifyDocument;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 import org.jcryptool.crypto.xml.ui.verify.SignatureView;
 

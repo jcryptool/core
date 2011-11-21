@@ -20,7 +20,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.ui.dialogs.VerificationDialog;
 
 /**

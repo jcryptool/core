@@ -13,7 +13,7 @@ package org.jcryptool.crypto.xml.ui.dialogs;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 
 /**

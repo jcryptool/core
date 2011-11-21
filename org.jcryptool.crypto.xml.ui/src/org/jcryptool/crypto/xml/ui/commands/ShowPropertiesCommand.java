@@ -15,7 +15,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.ui.verify.Verification;
 
 /**

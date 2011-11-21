@@ -30,10 +30,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.security.core.cryptography.Keystore;
-import org.eclipse.wst.xml.security.core.decrypt.Decryption;
-import org.eclipse.wst.xml.security.core.utils.IGlobals;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.crypto.xml.core.cryptography.Keystore;
+import org.jcryptool.crypto.xml.core.decrypt.Decryption;
+import org.jcryptool.crypto.xml.core.utils.IGlobals;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 

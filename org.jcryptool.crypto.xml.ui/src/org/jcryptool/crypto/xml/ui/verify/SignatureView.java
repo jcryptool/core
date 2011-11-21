@@ -35,7 +35,7 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 
 /**

@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
-import org.eclipse.wst.xml.security.core.utils.Utils;
+import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 import org.w3c.dom.Document;

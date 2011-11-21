@@ -24,9 +24,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.security.core.decrypt.Decryption;
-import org.eclipse.wst.xml.security.core.utils.IGlobals;
-import org.eclipse.wst.xml.security.core.utils.Utils;
+import org.jcryptool.crypto.xml.core.decrypt.Decryption;
+import org.jcryptool.crypto.xml.core.utils.IGlobals;
+import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 
 /**

@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.4.0",
  org.jcryptool.core.operations;bundle-version="0.9.5"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Activator: org.eclipse.wst.xml.security.core.tests.XMLSecurityToolsCoreTestPlugin
-Export-Package: org.eclipse.wst.xml.security.core.tests,
- org.eclipse.wst.xml.security.core.tests.sign,
- org.eclipse.wst.xml.security.core.tests.utils
+Bundle-Activator: org.jcryptool.crypto.xml.core.tests.XMLSecurityToolsCoreTestPlugin
+Export-Package: org.jcryptool.crypto.xml.core.tests,
+ org.jcryptool.crypto.xml.core.tests.sign,
+ org.jcryptool.crypto.xml.core.tests.utils

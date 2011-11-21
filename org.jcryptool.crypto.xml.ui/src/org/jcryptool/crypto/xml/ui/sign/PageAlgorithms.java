@@ -46,11 +46,11 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.wst.xml.security.core.sign.DigitalSignatureProperty;
-import org.eclipse.wst.xml.security.core.sign.Signature;
-import org.eclipse.wst.xml.security.core.utils.IAlgorithms;
-import org.eclipse.wst.xml.security.core.utils.IGlobals;
-import org.eclipse.wst.xml.security.core.utils.Utils;
+import org.jcryptool.crypto.xml.core.sign.DigitalSignatureProperty;
+import org.jcryptool.crypto.xml.core.sign.Signature;
+import org.jcryptool.crypto.xml.core.utils.IAlgorithms;
+import org.jcryptool.crypto.xml.core.utils.IGlobals;
+import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 
 /**

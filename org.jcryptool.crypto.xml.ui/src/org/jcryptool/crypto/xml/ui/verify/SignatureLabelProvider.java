@@ -13,7 +13,7 @@ package org.jcryptool.crypto.xml.ui.verify;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 
 /**

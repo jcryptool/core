@@ -24,10 +24,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.wst.xml.security.core.verify.VerificationResult;
-import org.eclipse.wst.xml.security.core.verify.VerifyDocument;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
+import org.jcryptool.crypto.xml.core.verify.VerificationResult;
+import org.jcryptool.crypto.xml.core.verify.VerifyDocument;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 import org.jcryptool.crypto.xml.ui.verify.SignatureView;
 
