@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.des.view.DesView"
+          	id="org.jcryptool.visual.des.view.DesView"
+            name="DES Visualization">
+      </view>
+      <view
+            class="org.jcryptool.visual.des.view.DesView"
+            id="org.jcryptool.visual.des.view.DesView"
+            name="DES Visualization">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="DES Visualization"
+            viewId="org.jcryptool.visual.des.view.DesView">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+   </extension>
+</plugin>
