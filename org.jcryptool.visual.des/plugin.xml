@@ -25,8 +25,15 @@
    </extension>
    <extension
          point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
    </extension>
    <extension
          point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
    </extension>
 </plugin>
