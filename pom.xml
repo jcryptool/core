@@ -58,6 +58,7 @@
 	<module>org.jcryptool.visual</module>
 	<module>org.jcryptool.visual.aco</module>
 	<module>org.jcryptool.visual.crt</module>
+	<module>org.jcryptool.visual.des</module>
 	<module>org.jcryptool.visual.ecc</module>
 	<module>org.jcryptool.visual.ecdh</module>
 	<module>org.jcryptool.visual.elGamal</module>
