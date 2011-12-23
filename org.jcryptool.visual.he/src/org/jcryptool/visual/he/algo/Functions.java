@@ -242,16 +242,52 @@ public class Functions {
 	 * @param work the amount of work to be done
 	 * @return The encrypted sum of the two given ciphertexts, evaluated homomorphically
 	 */
-	public static BigInteger[] addCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams,
-								BigInteger det, BigInteger root, BigInteger[] pkBlocksX,
-								BigInteger[] ctxts, IProgressMonitor monitor, int work) {
+	public static BigInteger[] addCiphertexts(String step, BigInteger[] a, BigInteger[] b, FHEParams fheparams, 
+								BigInteger det, BigInteger root, BigInteger[] pkBlocksX, 
+								BigInteger[] ctxts, IProgressMonitor monitor, int work, GHData data) {		
 		int max = Math.max(a.length, b.length);
-		BigInteger[] out = new BigInteger[max];
-		BigInteger temp1 = BigInteger.ZERO;
-		BigInteger temp2 = BigInteger.ZERO;
-		BigInteger temp3 = BigInteger.ZERO;
-		for (int i = 0; i < max; i++) out[i] = BigInteger.ZERO;
+		BigInteger[] out = new BigInteger[max];	
+		//BigInteger temp1 = BigInteger.ZERO;
+		//BigInteger temp2 = BigInteger.ZERO;
+		//BigInteger temp3 = BigInteger.ZERO;
+		BigInteger[] XOR = new BigInteger[max];
+		BigInteger[] AND = new BigInteger[max];
+		BigInteger[] CARRY = new BigInteger[max];
 		for (int i = 0; i < max; i++) {
+			
+		}
+		monitor.subTask(step + "Computing XOR, AND and carries");
+		for (int i = 0; i < max; i++) out[i] = BigInteger.ZERO;
+		XOR[0] = a[0].add(b[0]).mod(det);
+		AND[0] = BigInteger.ZERO;
+		CARRY[0] = BigInteger.ZERO;
+		int mults = 1;
+		for (int i = 1; i < max; i++) {
+			XOR[i] = a[i].add(b[i]).mod(det);
+			AND[i] = a[i-1].multiply(b[i-1]).mod(det);
+			CARRY[i] = XOR[i-1].multiply(AND[i-1].add(CARRY[i-1])).mod(det);
+			mults++;
+			if (mults >= data.getMaxMult()) {
+				CARRY[i] = GHReCrypt.recrypt(fheparams, CARRY[i], det, root, pkBlocksX, ctxts);
+				mults = 1;
+			}
+			if (monitor.isCanceled()) {
+				return null;
+			}
+		}
+		monitor.internalWorked(work/(max+1));
+		boolean test = (step.length() > 1);
+		for (int i = 0; i < max; i++) {
+			if (!test) step = "Step " + (i+1) + " of " + max + ", ";
+			monitor.subTask(step + "Recrypting results");
+			out[i] = XOR[i].add(AND[i]).add(CARRY[i]).mod(det);
+			out[i] = GHReCrypt.recrypt(fheparams, out[i], det, root, pkBlocksX, ctxts);
+			if (monitor.isCanceled()) {
+				return null;
+			}
+			monitor.internalWorked(work/(max+1));
+		}
+		/*for (int i = 0; i < max; i++) {
 			if (i < a.length) {
 				if (i < b.length) {
 					temp1 = a[i].add(b[i]).mod(det); //XOR gives the sum without carries
@@ -261,7 +297,7 @@ public class Functions {
 						temp2 = GHReCrypt.recrypt(fheparams, temp2, det, root, pkBlocksX, ctxts);
 						if (i != 0) {
 							//if the previous index resulted in a carry and the current sum is 1 this results in a new carry
-							temp3 = temp1.multiply(out[i]).mod(det);
+							temp3 = temp1.multiply(out[i]).mod(det); 
 							temp3 = GHReCrypt.recrypt(fheparams, temp3, det, root, pkBlocksX, ctxts);
 							//XOR the possible current carry and the new carry, should never both be set
 							temp2 = temp2.add(temp3).mod(det);
@@ -286,7 +322,7 @@ public class Functions {
 				return null;
 			}
 			monitor.internalWorked(work/max);
-		}
+		}*/
 		return out;
 	}
 
@@ -309,9 +345,9 @@ public class Functions {
 	 * @param work the amount of work to be done
 	 * @return the ciphertexts multiplied, evaluated homomorphically
 	 */
-	public static BigInteger[] mulCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams,
-						BigInteger det, BigInteger root, BigInteger[] pkBlocksX,
-						BigInteger[] ctxts, GHKeyPair key, IProgressMonitor monitor, int work) {
+	public static BigInteger[] mulCiphertexts(BigInteger[] a, BigInteger[] b, FHEParams fheparams, 
+						BigInteger det, BigInteger root, BigInteger[] pkBlocksX, 
+						BigInteger[] ctxts, GHKeyPair key, IProgressMonitor monitor, int work, GHData data) {
 		int max = Math.max(a.length, b.length);
 		BigInteger[] aTemp = new BigInteger[a.length];
 		BigInteger[] bTemp = new BigInteger[b.length];
@@ -319,16 +355,25 @@ public class Functions {
 		for (int i = 0; i < b.length; i++) bTemp[i] = b[i];
 		BigInteger[] temp = new BigInteger[max];
 		BigInteger[] temp2 = new BigInteger[max];
+		String step;
 		for (int i = 0; i < max; i++) {
-			temp[i] = GHEncrypt.encrypt(fheparams, key, 0);
+			temp[i] = BigInteger.ZERO;//GHEncrypt.encrypt(fheparams, key, 0);
 		}
 		for (int i = 0; i < aTemp.length; i++) {
+			step = "Step " + (i+1) + " of " + aTemp.length + ", ";
+			monitor.subTask(step + "Multiplying first operand with bit " + (i+1) + " of second operand.");
+			for (int j = 0; j < bTemp.length; j++) temp2[j] = bTemp[j].multiply(aTemp[0]).mod(det);
+			monitor.subTask(step + "Recrypting results");
 			for (int j = 0; j < bTemp.length; j++) {
-				temp2[j] = GHReCrypt.recrypt(fheparams, bTemp[j].multiply(aTemp[0]).mod(det), det, root, pkBlocksX, ctxts);
+				//temp2[j] = GHReCrypt.recrypt(fheparams, temp2[j], det, root, pkBlocksX, ctxts);
 			}
 			SubProgressMonitor sm = new SubProgressMonitor(monitor, work/aTemp.length);
 			sm.beginTask("", work/aTemp.length);
-			temp = addCiphertexts(temp, temp2, fheparams, det, root, pkBlocksX, ctxts, sm, work/aTemp.length);
+			if (i == 0) {
+				for (int j = 0; j < temp2.length; j++) temp[j] = temp2[j];
+			} else {
+				temp = addCiphertexts(step, temp, temp2, fheparams, det, root, pkBlocksX, ctxts, sm, work/aTemp.length, data);
+			}
 			if (sm.isCanceled()) return null;
 			sm.done();
 			for (int k = 0; k < aTemp.length-1; k++) {

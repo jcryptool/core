@@ -24,6 +24,9 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.PaillierData;
 import org.jcryptool.visual.he.ui.FileCrypto;
+import org.jcryptool.visual.he.wizards.pages.PaillierChooseKeySelGenPage;
+import org.jcryptool.visual.he.wizards.pages.PaillierLoadKeyPage;
+import org.jcryptool.visual.he.wizards.pages.PaillierNewKeyPage;
 
 import de.flexiprovider.api.Cipher;
 

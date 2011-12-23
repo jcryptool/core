@@ -12,6 +12,7 @@ package org.jcryptool.visual.he.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.RSAData;
+import org.jcryptool.visual.he.wizards.pages.RSAChooseOperationTextPage;
 
 /**
  * Wizard to enter an operation number for Paillier homomorphic visualization
