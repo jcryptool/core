@@ -416,7 +416,7 @@ public class DESModel {                                                         
                         
 			for (int i=2; i<18; i++) {
 				int[] input_SBoxes = exclusive_or(expand_32bit(DES_cipher_sequence[i-1]), K[i-2]);
-                                int J = i-1;
+                                //int J = i-1;
                                 /*System.out.println("Input SBoxes in Round[" + J + "]");
                                 for(int r=1; r<=8; r++)
                                 {       System.out.print("SBox[" + r + "]: ");
