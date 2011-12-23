@@ -11,11 +11,6 @@
             name="Data Encryption Standard"
             icon="icons/view.gif"> 
       </view>
-      <view
-            class="org.jcryptool.visual.des.view.DesView"
-            id="org.jcryptool.visual.des.view.DesView"
-            name="Data Encryption Standard">
-      </view>
    </extension>
    <extension
          point="org.jcryptool.core.operations.visuals">
