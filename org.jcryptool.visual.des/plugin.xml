@@ -7,19 +7,15 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.des.view.DesView"
-          	id="org.jcryptool.visual.des.view.DesView"
-            name="DES Visualization">
-      </view>
-      <view
-            class="org.jcryptool.visual.des.view.DesView"
+            icon="icons/view.gif"
             id="org.jcryptool.visual.des.view.DesView"
-            name="DES Visualization">
+            name="DES">
       </view>
    </extension>
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="DES Visualization"
+            name="DES"
             viewId="org.jcryptool.visual.des.view.DesView">
       </Visual>
    </extension>
