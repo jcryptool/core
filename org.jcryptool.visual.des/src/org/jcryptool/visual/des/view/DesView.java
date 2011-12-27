@@ -5,6 +5,8 @@ package org.jcryptool.visual.des.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -118,7 +120,7 @@ public class DesView extends ViewPart {
 	//Label lblAlgInfoTableCDMatrix = null;
 	//Label lblAlgInfoTableM0M17 = null;
 	//Label lblAlgInfoTableDeskpei = null;
-	Text txtAlgInformation = null;
+	StyledText txtAlgInformation = null;
 	
 	// FPoints Study
 	TabItem tabFPoints = null;
@@ -160,7 +162,7 @@ public class DesView extends ViewPart {
 	//Label lblFPointsInfoKey = null;
 	//Label lblFPointsInfoM8 = null;
 	//Label lblFPointsInfoTable = null;
-	Text txtFPointsInformation = null;
+	StyledText txtFPointsInformation = null;
 	
 	//SBox Study
 	TabItem tabSBox = null;
@@ -205,7 +207,7 @@ public class DesView extends ViewPart {
 	//Label lblSBoxInfoYBox = null;
 	//Label lblSBoxInfoRBox = null;
 	Label lblFPointsInputM8cur = null;
-	Text txtSBoxInformation = null;
+	StyledText txtSBoxInformation = null;
 	
 	public DesView() {
 	}
@@ -557,7 +559,7 @@ public class DesView extends ViewPart {
 		tfAlgOutput = new TabFolder(grpAlgOutput, SWT.NONE);
 		
 		tbtmAlgM0M17 = new TabItem(tfAlgOutput, SWT.NONE);
-		tbtmAlgM0M17.setText("RoundCiphers");
+		tbtmAlgM0M17.setText("Roundciphers");
 		
 		Composite comAlgOutputM0M17 = new Composite(tfAlgOutput, SWT.NONE);
 		tbtmAlgM0M17.setControl(comAlgOutputM0M17);
@@ -786,7 +788,7 @@ public class DesView extends ViewPart {
 		}	
 				
 		// Information Tab		
-		txtAlgInformation = new Text(grpAlgInformation, SWT.READ_ONLY | SWT.MULTI);
+		txtAlgInformation = new StyledText(grpAlgInformation, SWT.READ_ONLY | SWT.MULTI);
 		FormData fd_txtAlgInformation = new FormData();
 		fd_txtAlgInformation.right = new FormAttachment(100,-10);
 		fd_txtAlgInformation.top = new FormAttachment(0,10);
@@ -798,7 +800,7 @@ public class DesView extends ViewPart {
 				  				"decryption process of DES are visualized.\n\n" +
 				  				"Key:\nThe key k used to encrypt or decrypt\n" +
 				  				"the data.\n\n"+
-				  				"Output table \"RoundCiphers\":\n" +
+				  				"Output table \"Roundciphers\":\n" +
 				  				"The table shows the intermediate round\n" +
 				  				"ciphers m[0]-m[17] for the process\n" +
 				  				"(en-/decryption).\n" +
@@ -833,9 +835,42 @@ public class DesView extends ViewPart {
 			}
 		});
 		
-		System.out.println(td.toString());
+		StyleRange srAlg1 = new StyleRange();
+		srAlg1.start = 82;
+		srAlg1.length = 4;
+		srAlg1.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg1);
 		
-					
+		StyleRange srAlg2 = new StyleRange();
+		srAlg2.start = 133;
+		srAlg2.length = 30;
+		srAlg2.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg2);
+		
+		StyleRange srAlg3 = new StyleRange();
+		srAlg3.start = 332;
+		srAlg3.length = 29;
+		srAlg3.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg3);
+		
+		StyleRange srAlg4 = new StyleRange();
+		srAlg4.start = 540;
+		srAlg4.length = 30;
+		srAlg4.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg4);
+		
+		StyleRange srAlg5 = new StyleRange();
+		srAlg5.start = 750;
+		srAlg5.length = 27;
+		srAlg5.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg5);
+			
+		StyleRange srAlg6 = new StyleRange();
+		srAlg6.start = 810;
+		srAlg6.length = 29;
+		srAlg6.fontStyle = SWT.BOLD;
+		txtAlgInformation.setStyleRange(srAlg6);
+		
 		/*
 		lblAlgInfoDes = new Label(grpAlgInformation,SWT.NONE);
 		FormData fd_lblAlgInfoDes = new FormData();
@@ -956,7 +991,7 @@ public class DesView extends ViewPart {
 				}	
 				
 				
-				txtAlgStatus.append(getCurrentTime()+" Data Reset\n");
+				txtAlgStatus.append("\n"+getCurrentTime()+" Data Reset");
 				    
 			}
 		});
@@ -1040,7 +1075,7 @@ public class DesView extends ViewPart {
 					fillTable(tblAlgOutputHamming1, 0, 7, 0, 7, DESCon.Alg_Out_DistMatrix1);
 					fillTable(tblAlgOutputHamming2, 0, 7, 0, 7, DESCon.Alg_Out_DistMatrix2);
 					
-					txtAlgStatus.append(getCurrentTime()+" Data Evaluation: Mode="+sMode+", Key="+sKey+", Data="+txtAlgInputData.getText() +"\n");
+					txtAlgStatus.append("\n"+getCurrentTime()+" Data Evaluation: Mode="+sMode+", Key="+sKey+", Data="+txtAlgInputData.getText());
 				} else {
 					for (int i=0;i<DESCon.errMsg.length;i++){
 						if (i!=DESCon.errMsg.length-1){
@@ -1049,7 +1084,7 @@ public class DesView extends ViewPart {
 							err += DESCon.errMsg[i];
 						}
 					}
-					txtAlgStatus.append(getCurrentTime() + " "+ err+"\n");
+					txtAlgStatus.append("\n"+getCurrentTime() + " "+ err);
 				}
 			}
 		});
@@ -1160,7 +1195,7 @@ public class DesView extends ViewPart {
 		
 		btnFPointsFixedpoint = new Button(comFPointsInputTarget, SWT.RADIO);
 		btnFPointsFixedpoint.setBounds(0, 20, 87, 22);
-		btnFPointsFixedpoint.setText("Fixed-point");
+		btnFPointsFixedpoint.setText("Fixed point");
 		btnFPointsFixedpoint.setSelection(true);
 		
 		btnFPointsFixedpoint.addSelectionListener(new SelectionAdapter(){
@@ -1169,7 +1204,7 @@ public class DesView extends ViewPart {
 				btnFPointsK1.setText("k[10]");
 				btnFPointsK2.setText("k[5]");
 				btnFPointsK3.setText("k[15]");
-				lblFPointsOutputAFPoint.setText("Fixed-point: x");
+				lblFPointsOutputAFPoint.setText("Fixed point: x");
 				
 			}
 		});
@@ -1177,7 +1212,7 @@ public class DesView extends ViewPart {
 		
 		btnFPointsAntifixedPoint = new Button(comFPointsInputTarget, SWT.RADIO);
 		btnFPointsAntifixedPoint.setBounds(0, 40, 108, 22);
-		btnFPointsAntifixedPoint.setText("Anti-fixed-point");
+		btnFPointsAntifixedPoint.setText("Anti-fixed point");
 		
 		btnFPointsAntifixedPoint.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
@@ -1185,7 +1220,7 @@ public class DesView extends ViewPart {
 				btnFPointsK1.setText("k[9]");
 				btnFPointsK2.setText("k[6]");
 				btnFPointsK3.setText("k[11]");
-				lblFPointsOutputAFPoint.setText("Anti-fixed-point: x");
+				lblFPointsOutputAFPoint.setText("Anti-fixed point: x");
 				
 			}
 		});
@@ -1275,7 +1310,7 @@ public class DesView extends ViewPart {
 		FormData fd_comFPointsOutput = new FormData();
 		fd_comFPointsOutput.left = new FormAttachment(0, 10);
 		fd_comFPointsOutput.top = new FormAttachment(0,10);
-		fd_comFPointsOutput.bottom = new FormAttachment(0, 240);
+		fd_comFPointsOutput.bottom = new FormAttachment(0, 250);
 		fd_comFPointsOutput.right = new FormAttachment(100,-10);
 		comFPointsOutput.setLayoutData(fd_comFPointsOutput);
 		
@@ -1318,7 +1353,7 @@ public class DesView extends ViewPart {
 		lblFPointsOutputAFPoint.setText("Fixed point: x");
 		
 		// Information Tab
-		txtFPointsInformation = new Text(grpFPointsInformation,SWT.READ_ONLY | SWT.MULTI);
+		txtFPointsInformation = new StyledText(grpFPointsInformation,SWT.READ_ONLY | SWT.MULTI);
 		FormData fd_txtFPointsInformation = new FormData();
 		fd_txtFPointsInformation.right = new FormAttachment(100,-10);
 		fd_txtFPointsInformation.top = new FormAttachment(0,10);
@@ -1326,13 +1361,13 @@ public class DesView extends ViewPart {
 		fd_txtFPointsInformation.bottom = new FormAttachment(100, -10);
 		txtFPointsInformation.setLayoutData(fd_txtFPointsInformation);
 		
-		txtFPointsInformation.setText("A fixed-point F with a key k is defined by\n" +
-				  					"DES(k;F) = F, whereas an anti-fixed-point\n"+
+		txtFPointsInformation.setText("A fixed point F with a key k is defined by\n" +
+				  					"DES(k;F) = F, whereas an anti-fixed point\n"+
 				  					"A with a key k is defined by \n" +
 				  					"DES(k;A) = com_A. The result com_A is\n" + 
 				  					"the bitwise complement of A.\n\n" +
 				  					"Key:\n" +
-				  					"So far, known fixed-points (and\n" +
+				  					"So far, known fixed points (and\n" +
 				  					"anti-fixed points) only exist with respect\n" +
 				  					"to the special keys k[0],k[5],k[10], and\n" +
 				  					"k[15] (resp. k[3],k[6],k[9], and k[11]).\n\n" + 
@@ -1347,7 +1382,7 @@ public class DesView extends ViewPart {
 				  					"round ciphers from m[8] to m[17],\n" +
 				  					"since missing m[i] can be retrieved\n" +
 				  					"using the relation m[i] = m[17-i] for\n" +
-				  					"fixed-points (resp. m[i] = com_m[17-i]\n" +
+				  					"fixed points (resp. m[i] = com_m[17-i]\n" +
 				  					"for anti-fixed points).\n" +
 				  					"For each column:\n" +
 				  					"Adjacent bit colors change if their\n" +
@@ -1366,6 +1401,25 @@ public class DesView extends ViewPart {
 			
 		});
 					
+		StyleRange srFPoints1 = new StyleRange();
+		srFPoints1.start = 182;
+		srFPoints1.length = 5;
+		srFPoints1.fontStyle = SWT.BOLD;
+		txtFPointsInformation.setStyleRange(srFPoints1);
+		
+		StyleRange srFPoints2 = new StyleRange();
+		srFPoints2.start = 346;
+		srFPoints2.length = 5;
+		srFPoints2.fontStyle = SWT.BOLD;
+		txtFPointsInformation.setStyleRange(srFPoints2);
+		
+		StyleRange srFPoints3 = new StyleRange();
+		srFPoints3.start = 522;
+		srFPoints3.length = 15;
+		srFPoints3.fontStyle = SWT.BOLD;
+		txtFPointsInformation.setStyleRange(srFPoints3);
+		
+		
 		
 		/*
 		lblFPointsInfoDes = new Label(grpFPointsInformation,SWT.NONE);
@@ -1445,14 +1499,14 @@ public class DesView extends ViewPart {
 				btnFPointsK3.setText("K[15]");
 				txtFPointsInputM8.setText("");
 				cleanTable(tblFPointsOutputAFP);
-				lblFPointsOutputAFPoint.setText("Fixed Point: x");
+				lblFPointsOutputAFPoint.setText("Fixed point: x");
 				
 				TableItem[] tblItems = tblFPointsOutputAFP.getItems();
 				for (int i=0;i<10;i++){
 					tblItems[i].setText(0, "m["+(i+8)+"]");
 				}
 				
-				txtFPointsStatus.append(getCurrentTime()+" Data Reset\n");
+				txtFPointsStatus.append("\n"+getCurrentTime()+" Data Reset");
 			}
 		});
 		
@@ -1488,12 +1542,12 @@ public class DesView extends ViewPart {
 				}
 				 
 				if (DESCon.FPointsStudy()==0){
-					txtFPointsStatus.append(getCurrentTime()+" Anti-/Fixed Point Calculations with m[8]="+txtFPointsInputM8.getText()+"\n");
+					txtFPointsStatus.append("\n"+getCurrentTime()+" Anti- / fixed point calculations with m[8]="+txtFPointsInputM8.getText());
 					fillTable(tblFPointsOutputAFP,0,9, 1, 32, DESCon.FPoints_Out_M8M17);
 					if (btnFPointsFixedpoint.getSelection()){
-						lblFPointsOutputAFPoint.setText("Fixed Point: "+DESCon.FPoints_Out_AFpoints);
+						lblFPointsOutputAFPoint.setText("Fixed point: "+DESCon.FPoints_Out_AFpoints);
 					} else {
-						lblFPointsOutputAFPoint.setText("Anti-Fixed Point: "+DESCon.FPoints_Out_AFpoints);
+						lblFPointsOutputAFPoint.setText("Anti-fixed point: "+DESCon.FPoints_Out_AFpoints);
 					}
 					colorTable(tblFPointsOutputAFP,1);
 					for (int i=1;i<tblFPointsOutputAFP.getItemCount();i++){
@@ -1507,7 +1561,7 @@ public class DesView extends ViewPart {
 							err += DESCon.errMsg[i];
 						}
 					}
-					txtFPointsStatus.append(getCurrentTime()+" "+err+"\n");
+					txtFPointsStatus.append("\n"+getCurrentTime()+" "+err);
 					
 				}
 			}
@@ -1732,7 +1786,7 @@ public class DesView extends ViewPart {
 		
 		// Information Tab
 		
-		txtSBoxInformation = new Text(grpSBoxInformation,SWT.READ_ONLY | SWT.MULTI);
+		txtSBoxInformation = new StyledText(grpSBoxInformation,SWT.READ_ONLY | SWT.MULTI);
 		FormData fd_txtSBoxInformation = new FormData();
 		fd_txtSBoxInformation.right = new FormAttachment(100,-10);
 		fd_txtSBoxInformation.top = new FormAttachment(0,10);
@@ -1755,8 +1809,8 @@ public class DesView extends ViewPart {
 				"of the input difference Delta_p over\n" +
 				"the whole encryption process.\n\n" +
 				"Delta_p:\nDifference between the two inputs.\n\n" +
-				"Random p:\nA randomly choosen plaintext\n\n" +
-				"Random k:\nA randomly choosen key.\n\n" +
+				"Random p:\nA randomly chosen plaintext\n\n" +
+				"Random k:\nA randomly chosen key.\n\n" +
 				"Yellow S-Box:\nS-Box with the same input feeds.\n\n"+
 				"Red S-Box:\nS-Box with different input feeds.\n\n"+
 				"Output table:\nThe 16 x 8 matrix represents the\n"+
@@ -1772,6 +1826,41 @@ public class DesView extends ViewPart {
 			}
 		});
 		
+		StyleRange srSBox1 = new StyleRange();
+		srSBox1.start = 500;
+		srSBox1.length = 9;
+		srSBox1.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox1);
+		
+		StyleRange srSBox2 = new StyleRange();
+		srSBox2.start = 544;
+		srSBox2.length = 12;
+		srSBox2.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox2);
+		
+		StyleRange srSBox3 = new StyleRange();
+		srSBox3.start = 584;
+		srSBox3.length = 11;
+		srSBox3.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox3);
+		
+		StyleRange srSBox4 = new StyleRange();
+		srSBox4.start = 618;
+		srSBox4.length = 15;
+		srSBox4.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox4);
+		
+		StyleRange srSBox5 = new StyleRange();
+		srSBox5.start = 664;
+		srSBox5.length = 14;
+		srSBox5.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox5);
+		
+		StyleRange srSBox6 = new StyleRange();
+		srSBox6.start = 711;
+		srSBox6.length = 15;
+		srSBox6.fontStyle = SWT.BOLD;
+		txtSBoxInformation.setStyleRange(srSBox6);
 				
 		/*
 		lblSBoxInfoDes = new Label(grpSBoxInformation,SWT.NONE);
@@ -1847,7 +1936,7 @@ public class DesView extends ViewPart {
 		btnSBoxReset.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				
-				txtSBoxStatus.append(getCurrentTime()+" Data reset\n");
+				txtSBoxStatus.append("\n"+getCurrentTime()+" Data reset");
 				txtSBoxInputDeltap.setText("");
 				lblSBoxOutputCurStep.setText("Current step: 0");
 				intSBoxOutputCurStep = 0;
@@ -1881,7 +1970,7 @@ public class DesView extends ViewPart {
 				String err = "";
 				
 				if (DESCon.SBoxStudy()==0){
-					txtSBoxStatus.append(getCurrentTime()+" S-Box Evaluation: Delta_p="+txtSBoxInputDeltap.getText()+"\n");
+					txtSBoxStatus.append("\n"+getCurrentTime()+" S-Box Evaluation: Delta_p="+txtSBoxInputDeltap.getText());
 					txtSBoxInputDeltap.setEnabled(false);
 					intSBoxOutputCurStep++;
 					lblSBoxOutputCurStep.setText("Current step: "+intSBoxOutputCurStep);
@@ -1897,7 +1986,7 @@ public class DesView extends ViewPart {
 							err += DESCon.errMsg[i];
 						}
 					}
-					txtSBoxStatus.append(getCurrentTime()+" "+err+"\n");
+					txtSBoxStatus.append("\n"+getCurrentTime()+" "+err);
 					
 				}
 			}
@@ -1919,7 +2008,7 @@ public class DesView extends ViewPart {
 				Display curdis = Display.getCurrent();
 							
 				if (DESCon.SBoxStudy()==0){
-					txtSBoxStatus.append(getCurrentTime()+" S-Box Evaluation Series: Delta_p="+txtSBoxInputDeltap.getText()+", Steps="+slSBoxInputSeriesCount.getSelection()+", Time="+slSBoxInputSeriesTime.getSelection()+"\n");
+					txtSBoxStatus.append("\n"+getCurrentTime()+" S-Box Evaluation Series: Delta_p="+txtSBoxInputDeltap.getText()+", Steps="+slSBoxInputSeriesCount.getSelection()+", Time="+slSBoxInputSeriesTime.getSelection());
 					txtSBoxInputDeltap.setEnabled(false);
 					slSBoxInputSeriesTime.setEnabled(false);
 					slSBoxInputSeriesCount.setEnabled(false);
@@ -1961,7 +2050,7 @@ public class DesView extends ViewPart {
 							err += DESCon.errMsg[i];
 						}
 					}
-					txtSBoxStatus.append(getCurrentTime()+" "+err+"\n");
+					txtSBoxStatus.append("\n"+getCurrentTime()+" "+err);
 				}
 		
 			}

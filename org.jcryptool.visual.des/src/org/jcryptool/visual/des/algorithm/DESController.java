@@ -205,7 +205,7 @@ public class DESController {
 		if (this.Alg_In_selectedKey==16){
 			this.Alg_In_manualKey=DESMod.cleanTheString(this.Alg_In_manualKey);
 			if (this.Alg_In_manualKey.length()!=16){
-				errList.add("Input manual key has not 16 hexdecimal digits)");
+				errList.add("Input manual key has not 16 hexdecimal digits");
 				err++;
 			}
 			if (DESMod.check_key_for_parity(this.Alg_In_manualKey.toCharArray())==false){
@@ -284,29 +284,6 @@ public class DESController {
 		return err;
 	}
 	
-	/*
-	private int[] hexStringToIntBoolArray(String hexstr){
-		String c;
-		int j = 0;
-		int nr = 0;
-		int[] res = new int[hexstr.length()*4];
-		
-		for (int i=0;i<hexstr.length();i++){
-			c = hexstr.substring(i, i);
-			nr = Integer.parseInt(c, 16);
-			j = nr;
-			res[4*i]= j >> 29;
-			j = nr; j = j << 29; j = j >> 31;
-			res[4*i+1]= j;
-			j = nr; j = j << 30; j = j >> 31;
-			res[4*i+2]= j;
-			j = nr; j = j << 31; j = j >> 31;
-			res[4*i+3]= j;
-		}
-		
-		return res;
-	}
-	*/
 	// Helper Functions
 	
 	// Function is Based on isHexDigit in GUIMain.java of Wolfgang Baltes 
