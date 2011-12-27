@@ -12,6 +12,7 @@ package org.jcryptool.visual.he.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.RSAData;
+import org.jcryptool.visual.he.wizards.pages.RSAChooseInitialTextPage;
 
 /**
  * Wizard to enter an initial number for RSA homomorphic visualization

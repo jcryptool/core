@@ -16,7 +16,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
- org.jcryptool.core.util.fonts
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.visual.he.wizards
 Export-Package: org.jcryptool.visual.he,
  org.jcryptool.visual.he.ui,
  org.jcryptool.visual.he.wizards

@@ -57,14 +57,16 @@ public class GHKeyGen {
 	 * @param fheparams the scheme parameters
 	 * @param keyPair holds the keypair
 	 */
-	public GHKeyGen(FHEParams fheparams, GHKeyPair keyPair, IProgressMonitor monitor, int work) {
+	public GHKeyGen(FHEParams fheparams, GHKeyPair keyPair, IProgressMonitor monitor, int work) {	
 		t = fheparams.t;
 		n = 1 << fheparams.logn;
-
+		
+		int nTrials = 0;
 		SubProgressMonitor sm = new SubProgressMonitor(monitor, work/3);
 		sm.beginTask("", work/3);
 		do { //try until HNF has the desired form, i.e. determinant is odd and lattice contains the vector (-r,1,0,...,0)
-
+			nTrials++;
+			
 			//generate random polynomial with coefficients uniformly random in [-2^t,2^t]
 			v = Polynomial.randomPolynomial(n-1,t);
 
@@ -86,8 +88,9 @@ public class GHKeyGen {
 		 //the correct power such that \sum_pkBlocksX[i]*R^pkBlocksIdX[i] = w mod d
 		int[] pkBlocksIdX = new int[fheparams.s];
 		//make sure the sum is correct
-		boolean sumtest = false;
-
+		boolean sumtest = false; 
+		int nTrials2 = 0;
+		
 		while (!sumtest) {
 			sum = new BigInteger("0");
 			//generate the first s-1 randomly
@@ -104,6 +107,7 @@ public class GHKeyGen {
 			//calculate the last x_i from the first s-1, try until the sum is invertible
 			while (pkBlocksX[fheparams.s-1] == null) {
 				try {
+					nTrials2++;
 					//if(nTrials2%100==0) System.out.println("trials: " + nTrials2);
 					pkBlocksIdX[fheparams.s-1] = r.nextInt(fheparams.S);
 					factor = new BigInteger("2").modPow((new BigInteger(Integer.toString(pkBlocksIdX[fheparams.s-1]))).multiply(new BigInteger(Integer.toString(fheparams.logR))),det);

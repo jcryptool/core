@@ -25,6 +25,9 @@ import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.FHEParams;
 import org.jcryptool.visual.he.algo.GHKeyPair;
 import org.jcryptool.visual.he.ui.FileCrypto;
+import org.jcryptool.visual.he.wizards.pages.GHChooseKeySelGenPage;
+import org.jcryptool.visual.he.wizards.pages.GHLoadKeyPage;
+import org.jcryptool.visual.he.wizards.pages.GHNewKeyPage;
 
 import de.flexiprovider.api.Cipher;
 

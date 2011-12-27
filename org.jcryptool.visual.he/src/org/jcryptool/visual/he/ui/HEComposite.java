@@ -54,7 +54,9 @@ import org.jcryptool.visual.he.algo.RSAData;
 import org.jcryptool.visual.he.rsa.Action;
 import org.jcryptool.visual.he.wizards.GHInitialTextWizard;
 import org.jcryptool.visual.he.wizards.GHKeySelectionWizard;
+import org.jcryptool.visual.he.wizards.GHModulusWizard;
 import org.jcryptool.visual.he.wizards.GHOperationTextWizard;
+import org.jcryptool.visual.he.wizards.GHSettingsWizard;
 import org.jcryptool.visual.he.wizards.PaillierInitialTextWizard;
 import org.jcryptool.visual.he.wizards.PaillierKeySelectionWizard;
 import org.jcryptool.visual.he.wizards.PaillierOperationTextWizard;
@@ -83,7 +85,8 @@ public class HEComposite extends Composite {
 	private Button keySel;
 
 	/** Combo box to select field size */
-	private Combo modulus;
+	//private Combo modulus;
+	private Button modulusSel;
 
 	/** Button for running initial text selection wizard */
 	private Button initTextSel;
@@ -96,6 +99,9 @@ public class HEComposite extends Composite {
 
 	/** Reset buttons */
 	private Button resetNumButton, resetAllButton;
+	
+	/** Settings button */
+	private Button settingsButton;
 
 	/** Keypair which is to be used */
 	private GHKeyPair keyPair = new GHKeyPair();
@@ -124,6 +130,8 @@ public class HEComposite extends Composite {
 	/** Will hold Paillier data in wizards */
 	private PaillierData paillierData = new PaillierData();
 
+	private Text modulus;
+	
 	/** Textboxes to display initial number and encryption */
 	private Text initialPlain, initialPlainBits, initialEncryptedBits;
 
@@ -259,7 +267,7 @@ public class HEComposite extends Composite {
 					monitor.beginTask(Messages.HEComposite_Multiply_Task_Name, 1000);
 					BigInteger[] result = Functions.mulCiphertexts(data.getArray1(), data.getArray2(),
 							fheParams, keyPair.det, keyPair.root, keyPair.pkBlocksX,
-							keyPair.ctxts, keyPair, monitor, 1000);
+							keyPair.ctxts, keyPair, monitor, 1000, data);
 					if (result == null) {
 						HEComposite.this.getDisplay().asyncExec(jobCanceled);
 						return Status.CANCEL_STATUS;
@@ -285,9 +293,9 @@ public class HEComposite extends Composite {
 			public IStatus run(final IProgressMonitor monitor) {
 				try {
 					monitor.beginTask(Messages.HEComposite_Add_Task_Name, 100);
-					BigInteger[] result = Functions.addCiphertexts(data.getArray1(), data.getArray2(),
+					BigInteger[] result = Functions.addCiphertexts("", data.getArray1(), data.getArray2(),
 							fheParams, keyPair.det, keyPair.root, keyPair.pkBlocksX,
-							keyPair.ctxts, monitor, 100);
+							keyPair.ctxts, monitor, 100, data);
 					if (result == null) {
 						HEComposite.this.getDisplay().asyncExec(jobCanceled);
 						return Status.CANCEL_STATUS;
@@ -398,6 +406,34 @@ public class HEComposite extends Composite {
         		}
         	}
         });
+        
+        Composite spacerComposite = new Composite(mainComposite, SWT.NONE);
+        Label spacerLabel = new Label(spacerComposite, SWT.NONE);
+        switch (tabChoice) {
+        	case GENTRY_HALEVI: spacerLabel.setSize(130, 82); break; // spacerLabel.setSize(130, 139); break; 
+        	case RSA: spacerLabel.setSize(130, 12); break;
+        	case PAILLIER: spacerLabel.setSize(130, 12); break;
+        }
+             
+        if (tabChoice == GENTRY_HALEVI) {
+        	subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
+    		subComposite.setText(Messages.HEComposite_Modulus);
+    		subComposite.setLayout(mrl);
+        	this.modulusSel = new Button(subComposite, SWT.PUSH);
+            this.modulusSel.setLayoutData(buttonrd);
+            this.modulusSel.setBackground(RED);
+            this.modulusSel.setEnabled(false);
+            this.modulusSel.setText(Messages.HEComposite_Keysel);
+            this.modulusSel.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
+            this.modulusSel.addSelectionListener(new SelectionAdapter() {
+            	@Override
+    			public void widgetSelected(final SelectionEvent e) {
+            		/** Every scheme has a different type of key, so requires his own wizard */
+            		if (new WizardDialog(HEComposite.this.getShell(),
+            					new GHModulusWizard(data)).open() == Window.OK) modulusSelected();
+            	}
+            });
+        }
 
         /**
          * Only the scheme by Gentry and Halevi requires the modulus to be manually set,
@@ -440,13 +476,7 @@ public class HEComposite extends Composite {
 	        });
         }*/
 
-        Composite spacerComposite = new Composite(mainComposite, SWT.NONE);
-        Label spacerLabel = new Label(spacerComposite, SWT.NONE);
-        switch (tabChoice) {
-        	case GENTRY_HALEVI: spacerLabel.setSize(130, 139); break; //spacerLabel.setSize(130, 34); break;
-        	case RSA: spacerLabel.setSize(130, 12); break;
-        	case PAILLIER: spacerLabel.setSize(130, 12); break;
-        }
+        
 
 
 
@@ -478,9 +508,9 @@ public class HEComposite extends Composite {
         spacerComposite = new Composite(mainComposite, SWT.NONE);
         spacerLabel = new Label(spacerComposite, SWT.NONE);
         switch (tabChoice) {
-	    	case GENTRY_HALEVI: spacerLabel.setSize(130, 82); break;
-	    	case RSA: spacerLabel.setSize(130, 93); break;
-	    	case PAILLIER: spacerLabel.setSize(130, 93); break;
+	    	case GENTRY_HALEVI: spacerLabel.setSize(130, 96); break;
+	    	case RSA: spacerLabel.setSize(130, 106); break;
+	    	case PAILLIER: spacerLabel.setSize(130, 106); break;
 	    }
 
         subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
@@ -534,6 +564,10 @@ public class HEComposite extends Composite {
 	        	}
 	        });
 		}
+		
+		spacerLabel = new Label(subComposite, SWT.NONE);
+		spacerLabel.setSize(130,10);
+		
         this.decryptButton = new Button(subComposite, SWT.PUSH);
         this.decryptButton.setLayoutData(buttonrd);
         this.decryptButton.setToolTipText(Messages.HEComposite_Decrypt_Tooltip);
@@ -569,9 +603,9 @@ public class HEComposite extends Composite {
         spacerComposite = new Composite(mainComposite, SWT.NONE);
         spacerLabel = new Label(spacerComposite, SWT.NONE);
         switch (tabChoice) {
-	    	case GENTRY_HALEVI: spacerLabel.setSize(130, 114); break;
-	    	case RSA: spacerLabel.setSize(130, 253); break;
-	    	case PAILLIER: spacerLabel.setSize(130, 253); break;
+	    	case GENTRY_HALEVI: spacerLabel.setSize(130, 78); break;
+	    	case RSA: spacerLabel.setSize(130, 281); break;
+	    	case PAILLIER: spacerLabel.setSize(130, 281); break;
 	    }
 
         subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
@@ -606,7 +640,26 @@ public class HEComposite extends Composite {
 
         });
 
+		if (tabChoice == GENTRY_HALEVI) {
+			subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
+			subComposite.setText(Messages.HEComposite_Settings_Group);
+			subComposite.setLayout(mrl);
+			
+			this.settingsButton = new Button(subComposite, SWT.PUSH);
+			this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
+			this.settingsButton.setLayoutData(buttonrd);
+			this.settingsButton.setText(Messages.HEComposite_Settings);
+			this.settingsButton.addSelectionListener(new SelectionAdapter() {
 
+	        	@Override
+				public void widgetSelected(final SelectionEvent e) {
+	        		new WizardDialog(HEComposite.this.getShell(),
+        					new GHSettingsWizard(data)).open();
+	        	}
+
+	        });
+			
+		}
 	}
 
 	/**
@@ -621,7 +674,8 @@ public class HEComposite extends Composite {
 		this.resetAllButton.setEnabled(true);
 		switch(tabChoice) {
 			case GENTRY_HALEVI: {
-				this.modulus.setEnabled(true);
+				this.modulusSel.setEnabled(true);
+				//this.modulus.setEnabled(true);
 				detText.setText(keyPair.det.toString());
 				rootText.setText(keyPair.root.toString());
 				//wText.setText(keyPair.w.toString());
@@ -681,6 +735,30 @@ public class HEComposite extends Composite {
 		plainOperations.setBackground(LIGHTGREY);
 
 	}
+	
+	private void modulusSelected() {
+		this.modulusSel.setBackground(GREEN);
+		logMod = data.getModulus();
+		data.initCount(logMod);
+		modulus.setText(Integer.toString((int)Math.pow(2,logMod)));
+		detText.setBackground(LIGHTGREY);
+		rootText.setBackground(LIGHTGREY);
+		cText.setBackground(LIGHTGREY);
+		pkBlockText.setBackground(LIGHTGREY);
+		modulus.setBackground(YELLOW);
+		initialPlain.setBackground(LIGHTGREY);
+		initialPlainBits.setBackground(LIGHTGREY);
+		initialEncryptedBits.setBackground(LIGHTGREY);
+		homomorphPlain.setBackground(LIGHTGREY);
+		homomorphPlainBits.setBackground(LIGHTGREY);
+		homomorphEncryptedBits.setBackground(LIGHTGREY);
+		homomorphResultPlain.setBackground(LIGHTGREY);
+		homomorphResultPlainBits.setBackground(LIGHTGREY);
+		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
+		plainResult.setBackground(LIGHTGREY);
+		plainOperations.setBackground(LIGHTGREY);
+		initTextSel.setEnabled(true);
+	}
 
 	/**
 	 * The initial number is selected and encrypted, both being displayed in the algorithm area
@@ -709,6 +787,7 @@ public class HEComposite extends Composite {
 				rootText.setBackground(LIGHTGREY);
 				cText.setBackground(LIGHTGREY);
 				pkBlockText.setBackground(LIGHTGREY);
+				modulus.setBackground(LIGHTGREY);
 				initialPlainBits.setBackground(YELLOW);
 				homomorphPlainBits.setBackground(LIGHTGREY);
 				homomorphResultPlainBits.setBackground(LIGHTGREY);
@@ -942,6 +1021,7 @@ public class HEComposite extends Composite {
 				this.initialPlain.setText("");
 				this.initialPlainBits.setText("");
 				this.initialEncryptedBits.setText("");
+				this.modulus.setText("");
 				this.homomorphPlain.setText("");
 				this.homomorphPlainBits.setText("");
 				this.homomorphEncryptedBits.setText("");
@@ -955,7 +1035,8 @@ public class HEComposite extends Composite {
 				this.decryptButton.setEnabled(false);
 				this.homomorphMult.setEnabled(false);
 				this.homomorphAdd.setEnabled(false);
-				this.modulus.select(0);
+				this.modulusSel.setBackground(RED);
+				//this.modulus.select(0);
 				this.initTextSel.setEnabled(false);
 				this.initTextSel.setBackground(RED);
 				initialPlainBits.setBackground(LIGHTGREY);
@@ -1013,7 +1094,7 @@ public class HEComposite extends Composite {
 		switch(tabChoice) {
 			case GENTRY_HALEVI: {
 				this.resetAllButton.setEnabled(false);
-				this.modulus.setEnabled(false);
+				this.modulusSel.setEnabled(false);
 				this.detText.setText("");
 				//this.wText.setText("");
 				this.rootText.setText("");
@@ -1066,20 +1147,32 @@ public class HEComposite extends Composite {
 			case GENTRY_HALEVI: {
 				this.createGHKeyArea(g);
 				this.createGHModulusArea(g);
-				this.createGHInitialArea(g);
-				this.createGHHomomorphicArea(g);
+				Group mainComposite = new Group(g, SWT.SHADOW_NONE);
+				final RowLayout mrl = new RowLayout(SWT.VERTICAL);
+				mainComposite.setText(Messages.HEComposite_HomomorphicArea);
+				mainComposite.setLayout(mrl);
+				this.createGHInitialArea(mainComposite);
+				this.createGHHomomorphicArea(mainComposite);
 				this.createGHPlainArea(g);
 			} break;
 			case RSA: {
 				this.createRSAKeyArea(g);
-				this.createRSAInitialArea(g);
-				this.createRSAHomomorphicArea(g);
+				Group mainComposite = new Group(g, SWT.SHADOW_NONE);
+				final RowLayout mrl = new RowLayout(SWT.VERTICAL);
+				mainComposite.setText(Messages.HEComposite_HomomorphicArea);
+				mainComposite.setLayout(mrl);
+				this.createRSAInitialArea(mainComposite);
+				this.createRSAHomomorphicArea(mainComposite);
 				this.createRSAPlainArea(g);
 			} break;
 			case PAILLIER: {
 				this.createPaillierKeyArea(g);
-				this.createPaillierInitialArea(g);
-				this.createPaillierHomomorphArea(g);
+				Group mainComposite = new Group(g, SWT.SHADOW_NONE);
+				final RowLayout mrl = new RowLayout(SWT.VERTICAL);
+				mainComposite.setText(Messages.HEComposite_HomomorphicArea);
+				mainComposite.setLayout(mrl);
+				this.createPaillierInitialArea(mainComposite);
+				this.createPaillierHomomorphArea(mainComposite);
 				this.createPaillierPlainArea(g);
 			} break;
 		}
@@ -1098,7 +1191,8 @@ public class HEComposite extends Composite {
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(110,30);
+		final RowData labelrd = new RowData(104,30);
+		final RowData labelrd2 = new RowData(110,30);
 		final RowData textrd = new RowData(307,18);
 		final RowData textmultirdSmall = new RowData(290,50);
 
@@ -1110,11 +1204,14 @@ public class HEComposite extends Composite {
 		detText.setEditable(false);
 
 		label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_GH_KeyArea_Root);
 		rootText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		rootText.setLayoutData(textrd);
 		rootText.setEditable(false);
+		
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(4,30));
 
 		subComposite = new Composite(mainComposite, SWT.NONE);
 		subComposite.setLayout(srl);
@@ -1126,7 +1223,7 @@ public class HEComposite extends Composite {
 		pkBlockText.setEditable(false);
 
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_GH_KeyArea_Secret_Vector);
 		cText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		cText.setLayoutData(textmultirdSmall);
@@ -1160,6 +1257,9 @@ public class HEComposite extends Composite {
         l.setLayoutData(labelrd);
         nText = new Text(subComposite, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         nText.setLayoutData(textrd);
+        
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(3,18));
     }
 
 	/**
@@ -1176,10 +1276,10 @@ public class HEComposite extends Composite {
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
 		final RowData labelrd = new RowData(145,18);
-		final RowData textrd = new RowData(265,18);
+		final RowData textrd = new RowData(256,18);
 
         Label l = new Label(subComposite, SWT.RIGHT);
-        l.setText("n  "); //$NON-NLS-1$
+        l.setText("N  "); //$NON-NLS-1$
         l.setLayoutData(labelrd);
         nText = new Text(subComposite, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         nText.setLayoutData(textrd);
@@ -1188,6 +1288,9 @@ public class HEComposite extends Composite {
         l.setLayoutData(labelrd);
         gText = new Text(subComposite, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         gText.setLayoutData(textrd);
+        
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(3,18));
 	}
 
 	private void createGHModulusArea(final Composite parent) {
@@ -1200,15 +1303,17 @@ public class HEComposite extends Composite {
         if (tabChoice == GENTRY_HALEVI) {
 	        Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
 	        final RowLayout mrl = new RowLayout();
-	        final RowData textrd = new RowData(288,20);
-	        final RowData labelrd = new RowData(110,30);
+	        final RowData labelrd = new RowData(104,30);
 	        mainComposite.setText(Messages.HEComposite_Modulus);
 	        mainComposite.setLayout(mrl);
 
 	        Label textLabel = new Label(mainComposite, SWT.RIGHT);
 	        textLabel.setLayoutData(labelrd);
-	        textLabel.setText(Messages.HEComposite_Modulus);
-	        this.modulus = new Combo(mainComposite, SWT.NONE);
+	        textLabel.setText(Messages.HEComposite_Modulus_Label);
+	        this.modulus = new Text(mainComposite, SWT.NONE);
+	        this.modulus.setLayoutData(new RowData(741,18));
+	        this.modulus.setEditable(false);
+	        /*this.modulus = new Combo(mainComposite, SWT.NONE);
 	        this.modulus.setLayoutData(textrd);
 	        this.modulus.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
 	        this.modulus.add("32",0);
@@ -1238,10 +1343,10 @@ public class HEComposite extends Composite {
 					plainOperations.setBackground(LIGHTGREY);
 	        		initTextSel.setEnabled(true);
 	        	}
-	        });
+	        });*/
 
 	        Label spacerLabel = new Label(mainComposite, SWT.NONE);
-	        spacerLabel.setLayoutData(new RowData(430,30));
+	        spacerLabel.setLayoutData(new RowData(7,30));
         }
 	}
 
@@ -1258,7 +1363,8 @@ public class HEComposite extends Composite {
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(110,30);
+		final RowData labelrd1 = new RowData(98,30);
+		final RowData labelrd2 = new RowData(110,30);
 		//final RowData labelrd = new RowData(150,18);
 		//final RowData biglabelrd = new RowData(210,18);
 		final RowData textrd = new RowData(307,18);
@@ -1266,14 +1372,14 @@ public class HEComposite extends Composite {
 		final RowData textmultird = new RowData(720,50);
 
 		Label label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Initial_Number);
 		initialPlain = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		initialPlain.setLayoutData(textrd);
 		initialPlain.setEditable(false);
 
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_Initial_Number_As_Bits);
 		initialPlainBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		initialPlainBits.setLayoutData(textrd);
@@ -1282,7 +1388,7 @@ public class HEComposite extends Composite {
 		subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Initial_Number_As_Enc_Vec);
 		initialEncryptedBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		initialEncryptedBits.setLayoutData(textmultird);
@@ -1302,8 +1408,8 @@ public class HEComposite extends Composite {
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(659,50);
+		final RowData labelrd = new RowData(139,18);
+		final RowData textmultird = new RowData(660,50);
 
         Label l = new Label(subComposite, SWT.RIGHT);
         l.setText(Messages.HEComposite_Initial_Number);
@@ -1336,8 +1442,8 @@ public class HEComposite extends Composite {
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(678,50);
+		final RowData labelrd = new RowData(139,18);
+		final RowData textmultird = new RowData(660,50);
 
         Label l = new Label(subComposite, SWT.RIGHT);
         l.setText(Messages.HEComposite_Initial_Number);
@@ -1364,13 +1470,14 @@ public class HEComposite extends Composite {
 	private void createGHHomomorphicArea(final Composite parent) {
 		Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		mainComposite.setText(Messages.HEComposite_Homomorphic_Data);
+		mainComposite.setText(Messages.HEComposite_Operation_Area);
 		mainComposite.setLayout(mrl);
 
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(110,40);
+		final RowData labelrd1 = new RowData(98,30);
+		final RowData labelrd2 = new RowData(110,30);
 		//final RowData labelrd = new RowData(150,18);
 		//final RowData biglabelrd = new RowData(210,18);
 		final RowData textrd = new RowData(307,18);
@@ -1378,14 +1485,14 @@ public class HEComposite extends Composite {
 		final RowData textmultird = new RowData(720,50);
 
 		Label label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Operation_Number);
 		homomorphPlain = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		homomorphPlain.setLayoutData(textrd);
 		homomorphPlain.setEditable(false);
 
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_Operation_Number_As_Bits);
 		homomorphPlainBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		homomorphPlainBits.setLayoutData(textrd);
@@ -1394,16 +1501,23 @@ public class HEComposite extends Composite {
 		subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Operation_Number_As_Enc_Vec);
 		homomorphEncryptedBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		homomorphEncryptedBits.setLayoutData(textmultird);
 		homomorphEncryptedBits.setEditable(false);
 
+		mainComposite = new Group(parent, SWT.SHADOW_NONE);
+		mainComposite.setText(Messages.HEComposite_Result_Area);
+		mainComposite.setLayout(mrl);
+		
+		subComposite = new Composite(mainComposite, SWT.NONE);
+		subComposite.setLayout(srl);
+		
 		subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Result_Number_As_Enc_Vec);
 		homomorphResultEncryptedBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		homomorphResultEncryptedBits.setLayoutData(textmultird);
@@ -1412,14 +1526,14 @@ public class HEComposite extends Composite {
 		subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd1);
 		label.setText(Messages.HEComposite_Result_Number);
 		homomorphResultPlain = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		homomorphResultPlain.setLayoutData(textrd);
 		homomorphResultPlain.setEditable(false);
 
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_Result_Number_As_Bits);
 		homomorphResultPlainBits = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		homomorphResultPlainBits.setLayoutData(textrd);
@@ -1433,14 +1547,14 @@ public class HEComposite extends Composite {
 	private void createRSAHomomorphicArea(final Composite parent) {
 		Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		mainComposite.setText(Messages.HEComposite_Homomorphic_Data);
+		mainComposite.setText(Messages.HEComposite_Operation_Area);
 		mainComposite.setLayout(mrl);
 
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(659,50);
+		final RowData labelrd = new RowData(139,18);
+		final RowData textmultird = new RowData(660,50);
 
         Label l = new Label(subComposite, SWT.RIGHT);
         l.setText(Messages.HEComposite_Operation_Number);
@@ -1457,6 +1571,10 @@ public class HEComposite extends Composite {
         homomorphEncryptedBits = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         homomorphEncryptedBits.setLayoutData(textmultird);
 
+        mainComposite = new Group(parent, SWT.SHADOW_NONE);
+		mainComposite.setText(Messages.HEComposite_Result_Area);
+		mainComposite.setLayout(mrl);
+		
         subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
 
@@ -1483,14 +1601,14 @@ public class HEComposite extends Composite {
 	private void createPaillierHomomorphArea(final Composite parent) {
 		Group mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		mainComposite.setText(Messages.HEComposite_Homomorphic_Data);
+		mainComposite.setText(Messages.HEComposite_Operation_Area);
 		mainComposite.setLayout(mrl);
 
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(678,50);
+		final RowData labelrd = new RowData(139,18);
+		final RowData textmultird = new RowData(660,50);
 
         Label l = new Label(subComposite, SWT.RIGHT);
         l.setText(Messages.HEComposite_Operation_Number);
@@ -1507,6 +1625,10 @@ public class HEComposite extends Composite {
         homomorphEncryptedBits = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         homomorphEncryptedBits.setLayoutData(textmultird);
 
+        mainComposite = new Group(parent, SWT.SHADOW_NONE);
+		mainComposite.setText(Messages.HEComposite_Result_Area);
+		mainComposite.setLayout(mrl);
+		
         subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
 
@@ -1539,7 +1661,8 @@ public class HEComposite extends Composite {
 		Composite subComposite = new Composite(mainComposite, SWT.NONE);
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
-		final RowData labelrd = new RowData(110,30);
+		final RowData labelrd = new RowData(104,30);
+		final RowData labelrd2 = new RowData(110,30);
 		//final RowData labelrd = new RowData(150,18);
 		final RowData textrd = new RowData(307,18);
 		//final RowData textrd = new RowData(282,18);
@@ -1552,11 +1675,14 @@ public class HEComposite extends Composite {
 		plainOperations.setEditable(false);
 
         label = new Label(subComposite, SWT.RIGHT);
-		label.setLayoutData(labelrd);
+		label.setLayoutData(labelrd2);
 		label.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		plainResult.setLayoutData(textrd);
 		plainResult.setEditable(false);
+		
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(4,30));
 	}
 
 	/**
@@ -1573,7 +1699,7 @@ public class HEComposite extends Composite {
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
 		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(659,50);
+		final RowData textmultird = new RowData(660,50);
 
 		Label label = new Label(subComposite, SWT.RIGHT);
 		label.setLayoutData(labelrd);
@@ -1589,6 +1715,9 @@ public class HEComposite extends Composite {
 		label.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		plainResult.setLayoutData(textmultird);
+		
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(3,18));
     }
 
 	/**
@@ -1605,7 +1734,7 @@ public class HEComposite extends Composite {
 		final RowLayout srl = new RowLayout();
 		subComposite.setLayout(srl);
 		final RowData labelrd = new RowData(145,18);
-		final RowData textmultird = new RowData(678,50);
+		final RowData textmultird = new RowData(660,50);
 
 		Label label = new Label(subComposite, SWT.RIGHT);
 		label.setLayoutData(labelrd);
@@ -1621,5 +1750,8 @@ public class HEComposite extends Composite {
 		label.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		plainResult.setLayoutData(textmultird);
+		
+        Label spacerLabel = new Label(subComposite, SWT.NONE);
+        spacerLabel.setLayoutData(new RowData(3,18));
 	}
 }
