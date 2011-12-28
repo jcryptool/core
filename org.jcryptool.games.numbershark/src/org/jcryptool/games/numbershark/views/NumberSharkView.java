@@ -11,9 +11,6 @@ package org.jcryptool.games.numbershark.views;
 
 import static java.lang.Math.min;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -31,11 +28,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -52,7 +47,6 @@ import org.jcryptool.games.numbershark.dialogs.EndOfGameDialog;
 import org.jcryptool.games.numbershark.util.CommandState;
 import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.util.ScoreTableRow;
-import org.jcryptool.games.numbershark.util.TableToString;
 
 /**
  * @author Johannes Späth
@@ -251,59 +245,7 @@ public class NumberSharkView extends ViewPart {
 		if (remainingNumbers == 0) {
 			Shell shell = Display.getCurrent().getActiveShell();
 			EndOfGameDialog dialog = new EndOfGameDialog(shell, this);
-
-			if (dialog.open() == SWT.YES) {
-				FileDialog saveFile = new FileDialog(shell, SWT.SAVE);
-				saveFile.setFilterNames(new String[] { "CSV-File",
-						"All Files (*.*)" });
-				saveFile.setFilterExtensions(new String[] { "*.csv", "*.*" });
-				saveFile.setFileName("log_numberShark.csv");
-				String fileName = null;
-
-				boolean done = false;
-				while (!done) {
-					fileName = saveFile.open();
-					if (fileName == null) {
-						// User has cancelled, so quit and return
-						done = true;
-					} else {
-						// User has selected a file; see if it already exists
-						File file = new File(fileName);
-						if (file.exists()) {
-							// The file already exists; asks for confirmation
-							MessageBox fileExists = new MessageBox(shell,
-									SWT.ICON_WARNING | SWT.YES | SWT.NO);
-
-							// We really should read this string from a
-							// resource bundle
-							fileExists.setText(Messages.EndOfGameDialog_5);
-							fileExists.setMessage(fileName
-									+ Messages.EndOfGameDialog_6);
-
-							// If they click Yes, we're done and we drop out. If
-							// they click No, we redisplay the File Dialog
-							done = fileExists.open() == SWT.YES;
-						} else {
-							// File does not exist, so drop out
-							done = true;
-						}
-					}
-				}
-
-				if (fileName != null) {
-					TableToString converter = new TableToString(scoreTable);
-					try {
-						FileWriter writer = new FileWriter(fileName);
-
-						writer.append(converter.getContentToCSV());
-
-						writer.flush();
-						writer.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
+			dialog.open();
 		}
 
 	}

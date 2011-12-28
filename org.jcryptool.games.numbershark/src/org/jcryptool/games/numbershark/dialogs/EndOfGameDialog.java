@@ -9,14 +9,21 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.dialogs;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.games.numbershark.util.TableToString;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 public class EndOfGameDialog{
 	private MessageBox mb = null;
+	private NumberSharkView view;
 	private int[] optValues = { 0, 2, 3, 7, 9, 15, 17, 21, 30, 40, 44, 50, 52,
 			66, 81, 89, 93, 111, 113, 124, 144, 166, 170, 182, 198, 224, 251,
 			279, 285, 301, 303, 319, 352, 386, 418, 442, 448, 486, 503, 525,
@@ -54,6 +61,7 @@ public class EndOfGameDialog{
 
 
     public EndOfGameDialog(Shell shell, NumberSharkView view) {
+    	this.view  = view;
 		mb = new MessageBox (shell, SWT.ICON_INFORMATION | SWT.YES | SWT.NO);
     	int playerScore = view.getPlayerScore();
     	int sharkScore  = view.getSharkScore();
@@ -81,7 +89,59 @@ public class EndOfGameDialog{
 		mb.setMessage(msg);
     }
 
-    public int open(){
-    	return mb.open();
+    public void open(){
+    	int answer = mb.open();
+		if (answer == SWT.YES) {
+			FileDialog saveFile = new FileDialog(mb.getParent(), SWT.SAVE);
+			saveFile.setFilterNames(new String[] { "CSV-File",
+					"All Files (*.*)" });
+			saveFile.setFilterExtensions(new String[] { "*.csv", "*.*" });
+			saveFile.setFileName("log_numberShark.csv");
+			String fileName = null;
+
+			boolean done = false;
+			while (!done) {
+				fileName = saveFile.open();
+				if (fileName == null) {
+					// User has cancelled, so quit and return
+					done = true;
+				} else {
+					// User has selected a file; see if it already exists
+					File file = new File(fileName);
+					if (file.exists()) {
+						// The file already exists; asks for confirmation
+						MessageBox fileExists = new MessageBox(mb.getParent(),
+								SWT.ICON_WARNING | SWT.YES | SWT.NO);
+
+						// We really should read this string from a
+						// resource bundle
+						fileExists.setText(Messages.EndOfGameDialog_5);
+						fileExists.setMessage(fileName
+								+ Messages.EndOfGameDialog_6);
+
+						// If they click Yes, we're done and we drop out. If
+						// they click No, we redisplay the File Dialog
+						done = fileExists.open() == SWT.YES;
+					} else {
+						// File does not exist, so drop out
+						done = true;
+					}
+				}
+			}
+
+			if (fileName != null) {
+				TableToString converter = new TableToString(view.getTable());
+				try {
+					FileWriter writer = new FileWriter(fileName);
+
+					writer.append(converter.getContentToCSV());
+
+					writer.flush();
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
     }
 }
