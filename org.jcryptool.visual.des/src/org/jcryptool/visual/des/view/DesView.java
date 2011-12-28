@@ -406,7 +406,7 @@ public class DesView extends ViewPart {
 		FormData fd_comAlgInputKey = new FormData();
 		fd_comAlgInputKey.top = new FormAttachment(0);
 		fd_comAlgInputKey.bottom = new FormAttachment(100);
-		fd_comAlgInputKey.left = new FormAttachment(comAlgInputMode);
+		fd_comAlgInputKey.left = new FormAttachment(comAlgInputMode,25);
 		comAlgInputKey.setLayoutData(fd_comAlgInputKey);
 				
 		btnAlgK0 = new Button(comAlgInputKey, SWT.RADIO);
@@ -491,7 +491,7 @@ public class DesView extends ViewPart {
 		FormData fd_comAlgInputData = new FormData();
 		fd_comAlgInputData.top = new FormAttachment(0);
 		fd_comAlgInputData.bottom = new FormAttachment(100);
-		fd_comAlgInputData.left = new FormAttachment(comAlgInputKey, 10);
+		fd_comAlgInputData.left = new FormAttachment(comAlgInputKey, 25);
 		comAlgInputData.setLayoutData(fd_comAlgInputData);
 				
 		lblAlgInputData = new Label(comAlgInputData, SWT.NONE);
@@ -798,7 +798,7 @@ public class DesView extends ViewPart {
 		
 		txtAlgInformation.setText("Different aspects of the encryption or\n" +
 				  				"decryption process of DES are visualized.\n\n" +
-				  				"Key:\nThe key k used to encrypt or decrypt\n" +
+				  				"Key:\nThe key k is used to encrypt or decrypt\n" +
 				  				"the data.\n\n"+
 				  				"Output table \"Roundciphers\":\n" +
 				  				"The table shows the intermediate round\n" +
@@ -812,18 +812,17 @@ public class DesView extends ViewPart {
 				  				"Each DES(k; p+e_i) is presented and\n" +
 				  				"compared with DES(k,p) using the\n" +
 				  				"Hamming distance DIST as measure.\n\n"+
-				  				"Output table \"DES(k,p+e_i)\":\n" +
-				  				"For i = 1, ..., 64: Plaintexts p and p+e_i\n" +
-				  				"differ at position i by one bit.\n" +
-				  				"Each DES(k; p+e_i) is presented and\n" +
-				  				"compared with DES(k,p) using the\n" +
-				  				"Hamming distance DIST as measure.\n\n" +
+				  				"Output table \"Distance Matrix\":\n" +
+				  				"Two matrices visualize Hamming distances\n" +
+				  				"More information can be found on the tab.\n\n" +
 				  				"Output Table \"Roundkeys\":\n" +
 				  				"The table shows the 16 round keys.\n\n" +
 				  				"Output table \"CD Matrix\":\n" +
 				  				"Round key k_i is generated from C[i], D[i]\n" +
 				  				"by cyclic operations combined with\n" +
-								"specific bit-elections.");
+								"specific bit-elections.\n\n" +
+								"For more information please consult the\n" +
+								"documentation.");
 		
 		FontData[] td = txtAlgInformation.getFont().getFontData();
 		td[0].setHeight(8);
@@ -842,32 +841,32 @@ public class DesView extends ViewPart {
 		txtAlgInformation.setStyleRange(srAlg1);
 		
 		StyleRange srAlg2 = new StyleRange();
-		srAlg2.start = 133;
+		srAlg2.start = 136;
 		srAlg2.length = 30;
 		srAlg2.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg2);
 		
 		StyleRange srAlg3 = new StyleRange();
-		srAlg3.start = 332;
+		srAlg3.start = 335;
 		srAlg3.length = 29;
 		srAlg3.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg3);
 		
 		StyleRange srAlg4 = new StyleRange();
-		srAlg4.start = 540;
-		srAlg4.length = 30;
+		srAlg4.start = 543;
+		srAlg4.length = 33;
 		srAlg4.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg4);
 		
 		StyleRange srAlg5 = new StyleRange();
-		srAlg5.start = 750;
-		srAlg5.length = 27;
+		srAlg5.start = 661;
+		srAlg5.length = 26;
 		srAlg5.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg5);
 			
 		StyleRange srAlg6 = new StyleRange();
-		srAlg6.start = 810;
-		srAlg6.length = 29;
+		srAlg6.start = 721;
+		srAlg6.length = 28;
 		srAlg6.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg6);
 		
@@ -1388,7 +1387,9 @@ public class DesView extends ViewPart {
 				  					"Adjacent bit colors change if their\n" +
 				  					"bit values change. The column DIST\n" +
 				  					"reflects the Hamming distance between\n" +
-									"rows m[i-1] and m[i].");
+									"rows m[i-1] and m[i].\n\n" +
+									"For more information please consult the\n" +
+									"documentation.");
 		
 		FontData[] fd = txtFPointsInformation.getFont().getFontData();
 		fd[0].setHeight(8);
@@ -1794,27 +1795,27 @@ public class DesView extends ViewPart {
 		fd_txtSBoxInformation.bottom = new FormAttachment(100, -10);
 		txtSBoxInformation.setLayoutData(fd_txtSBoxInformation);
 		
-		txtSBoxInformation.setText("A (randomly selected) plaintext p\n" +
-				"and another plaintext p + Delta_p\n" +
-				"undergo an encryption under the\n" +
-				"same (randomly selected) key k.\n" +
-				"Each of these plaintexts generate\n" +
-				"inputs in each of the 16 rounds for the 8\n" +
-				"S-Boxes S1, ..., S8. The 16 x 8 matrix\n" +
-				"visualizes by its cell colors whether\n" +
-				"these inputs are (per round and per\n" +
-				"S-Box) the same (yellow) or not the\n" +
-				"same (red). Hence the overall color\n" +
-				"pattern reflects the spread (avalanche)\n" +
-				"of the input difference Delta_p over\n" +
-				"the whole encryption process.\n\n" +
-				"Delta_p:\nDifference between the two inputs.\n\n" +
-				"Random p:\nA randomly chosen plaintext\n\n" +
+		txtSBoxInformation.setText("A (randomly selected) plaintext p and\n" +
+				"another plaintext p + Delta_p undergo an\n" +
+				"encryption under the same (randomly\n" +
+				"selected) key k. Each of these plaintexts\n" +
+				"generate inputs in each of the 16 rounds\n" +
+				"for the 8 S-Boxes S1, ..., S8. The 16 x 8\n" +
+				"matrix visualizes by its cell colors whether\n" +
+				"these inputs are (per round and per S-Box)\n" +
+				"the same (yellow) or not the same (red).\n" +
+				"Hence the overall color pattern reflects the\n" +
+				"spread (avalanche) of the input difference\n" +
+				"Delta_p over the whole encryption process.\n\n" +
+				"Delta_p:\nBitwise difference between the two inputs.\n\n" +
+				"Random p:\nA randomly chosen plaintext.\n\n" +
 				"Random k:\nA randomly chosen key.\n\n" +
-				"Yellow S-Box:\nS-Box with the same input feeds.\n\n"+
-				"Red S-Box:\nS-Box with different input feeds.\n\n"+
+				"Yellow S-Box:\nS-Box with the same input.\n\n"+
+				"Red S-Box:\nS-Box with different input.\n\n"+
 				"Output table:\nThe 16 x 8 matrix represents the\n"+
-				"8 S-Boxes in each of the 16 rounds.");
+				"8 S-Boxes in each of the 16 rounds.\n\n" +
+				"For more information please consult the\n" +
+				"documentation.");
 		
 		FontData[] fd_info = txtSBoxInformation.getFont().getFontData();
 		fd_info[0].setHeight(8);
@@ -1833,32 +1834,32 @@ public class DesView extends ViewPart {
 		txtSBoxInformation.setStyleRange(srSBox1);
 		
 		StyleRange srSBox2 = new StyleRange();
-		srSBox2.start = 544;
+		srSBox2.start = 552;
 		srSBox2.length = 12;
 		srSBox2.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox2);
 		
 		StyleRange srSBox3 = new StyleRange();
-		srSBox3.start = 584;
+		srSBox3.start = 592;
 		srSBox3.length = 11;
 		srSBox3.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox3);
 		
 		StyleRange srSBox4 = new StyleRange();
-		srSBox4.start = 618;
+		srSBox4.start = 626;
 		srSBox4.length = 15;
 		srSBox4.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox4);
 		
 		StyleRange srSBox5 = new StyleRange();
-		srSBox5.start = 664;
-		srSBox5.length = 14;
+		srSBox5.start = 670;
+		srSBox5.length = 11;
 		srSBox5.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox5);
 		
 		StyleRange srSBox6 = new StyleRange();
-		srSBox6.start = 711;
-		srSBox6.length = 15;
+		srSBox6.start = 710;
+		srSBox6.length = 14;
 		srSBox6.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox6);
 				
