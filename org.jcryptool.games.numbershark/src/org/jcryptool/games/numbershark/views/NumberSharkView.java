@@ -17,6 +17,9 @@ import java.util.Hashtable;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -66,7 +69,7 @@ public class NumberSharkView extends ViewPart {
 	private TabFolder numberTabs = null;
 	private TabItem[] tab;
 	final private int MAX_NUM_PER_TAB = 40;
-	private Button[] buttons = new Button[MAX_NUM_PER_TAB];
+	private CLabel[] buttons = new CLabel[MAX_NUM_PER_TAB];
 
 	private ScoreTableRow scoreTableRow;
 	private Hashtable<Integer, ScoreTableRow> scoreTableRowList = new Hashtable<Integer, ScoreTableRow>();
@@ -219,9 +222,20 @@ public class NumberSharkView extends ViewPart {
 		lostScore += lostSum;
 		scoreTableRow.setLostScore(String.valueOf(lostScore));
 		scoreTableRow.setRemainingNumbers(String.valueOf(remainingNumbers));
-
+		
+		if(score + takenNumber == lostScore){
+			sharkScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_YELLOW));
+			playerScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_YELLOW));
+		} else if  (score + takenNumber > lostScore) {
+			sharkScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+			playerScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
+		} else {
+			sharkScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GREEN));
+			playerScore.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_RED));
+		}
+		
 		sharkScore.setText(String.valueOf(lostScore));
-
+		playerScore.setText(String.valueOf(score + takenNumber));
 		this.setPlayerMove(numberOfRows + 1);
 		this.removeElementsFromScoreTableRowList();
 
@@ -303,40 +317,63 @@ public class NumberSharkView extends ViewPart {
 	public void initTab(int selectedTab) {
 
 		Composite compTabs = new Composite(numberTabs, SWT.NONE);
-
-		GridData numbersData = new GridData(GridData.FILL, GridData.FILL, true,
-				true);
 		GridLayout numbersLayout = new GridLayout();
 		numbersLayout.numColumns = 10;
 		numbersLayout.makeColumnsEqualWidth = true;
 		compTabs.setLayout(numbersLayout);
-		compTabs.setLayoutData(numbersData);
+		compTabs.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
 		for (int i = selectedTab * MAX_NUM_PER_TAB + 1; i <=
 				(selectedTab + 1) * MAX_NUM_PER_TAB; i++) {
 			int translation = selectedTab * MAX_NUM_PER_TAB + 1;
 			if (i <= numberOfFields) {
-				buttons[i - translation] = new Button(compTabs, SWT.PUSH);
+				buttons[i - translation] = new CLabel(compTabs, SWT.CENTER | SWT.SHADOW_OUT | SWT.PUSH);
 				buttons[i - translation].setText("" + i);
-				buttons[i - translation].setLayoutData(numbersData);
-				buttons[i - translation].setEnabled(numberField[i - 1]
-						.isEnabled());
-				buttons[i - translation].addSelectionListener(buttonsListener);
+				buttons[i - translation].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
+				buttons[i - translation].setEnabled(numberField[i - 1].isEnabled());
+				buttons[i - translation].setFont(FontService.getHugeBoldFont());
+				buttons[i - translation].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+				buttons[i - translation].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+
+				buttons[i - translation].addMouseListener(mouseListener);
 			} else {
-				buttons[i - translation] = new Button(compTabs, SWT.PUSH);
+				buttons[i - translation] = new CLabel(compTabs, SWT.PUSH);
 				buttons[i - translation].setVisible(false);
 				buttons[i - translation].setText("" + i);
-				buttons[i - translation].setLayoutData(numbersData);
+				buttons[i - translation].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 			}
 		}
 
-		buttonsRefresh();
+		refreshButtons();
 
-		numberTabs.getItem(selectedTab).setData(numbersData);
+		numberTabs.getItem(selectedTab).setData(new GridData(GridData.FILL, GridData.FILL, true, true));
 		numberTabs.getItem(selectedTab).setControl(compTabs);
 		compTabs.layout();
 	}
 
+	MouseListener mouseListener = new MouseListener() {
+
+		@Override
+		public void mouseDoubleClick(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseDown(MouseEvent e) {
+			CLabel pressedButton = (CLabel) e.getSource();
+			int numToDeactivate = Integer.parseInt(pressedButton.getText());
+
+			pressedButton.setToolTipText(null);
+			deactivateNumber(numToDeactivate);
+		}
+
+		@Override
+		public void mouseUp(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 	/**
 	 * Calculates the ToolTip for the number i.
 	 * 
@@ -400,6 +437,7 @@ public class NumberSharkView extends ViewPart {
 			deactivateNumber(numToDeactivate);
 		}
 	};
+	
 
 	/**
 	 * deactivate a certain number in the game
@@ -433,22 +471,26 @@ public class NumberSharkView extends ViewPart {
 			numToDeactivate = 0;
 		}
 
-		buttonsRefresh();
+		refreshButtons();
 
 		addMoveToTable(numToDeactivate, lostNumbersInt);
-		TableItem lastRow = scoreTable.getItem(scoreTable.getItemCount() - 1);
-		playerScore.setText(lastRow.getText(2));
 	}
 
 	/**
 	 * refreshes the disabled/enabled status of all playing Buttons
 	 */
-	public void buttonsRefresh() {
+	public void refreshButtons() {
 		for (int i = 0; i < min(numberOfFields, MAX_NUM_PER_TAB); i++) {
 			int m = Integer.parseInt(buttons[i].getText());
 			if(m <= numberOfFields){
-				buttons[i].setEnabled(numberField[m-1].isEnabled());
-				buttons[i].setToolTipText(calcToolTip(m));
+				if(numberField[m-1].isEnabled()){
+					buttons[i].setEnabled(true);
+				    buttons[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+					buttons[i].setToolTipText(calcToolTip(m));
+				} else {
+					buttons[i].setEnabled(false);
+				    buttons[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+				}
 			}
 		}
 		numberTabs.layout();
@@ -461,12 +503,12 @@ public class NumberSharkView extends ViewPart {
 
 	public void disableNumber(int number) {
 		numberField[number].setEnabled(false);
-		buttonsRefresh();
+		refreshButtons();
 	}
 
 	public void enableNumber(int number) {
 		numberField[number].setEnabled(true);
-		buttonsRefresh();
+		refreshButtons();
 	}
 
 	public void setSharkScore(String text) {
