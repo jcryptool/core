@@ -33,21 +33,24 @@ public class HintHandler extends AbstractHandler {
 
             String msg;
             int gameNMax = view.getNumberOfFields();
-            boolean[] activeNumbers = view.getActiveNumbers();
-            Number[] numNum = view.getNumNum();
+            Number[] numberField = view.getNumberField();
 
-            int hint = calculateHint(gameNMax, activeNumbers, numNum);
-
+            int hint = calculateHint(gameNMax, numberField);
+			int style = SWT.YES | SWT.NO;
             if (hint > 0) {
                 msg = NLS.bind(Messages.HintHandler_0, new Object[] {hint, gameNMax / 2});
             } else {
                 msg = NLS.bind(Messages.HintHandler_1, new Object[] {gameNMax / 2});
+                style = SWT.OK;
             }
 
-            MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_INFORMATION | SWT.OK);
+            MessageBox mb = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_INFORMATION | style);
             mb.setText(Messages.HintHandler_2);
             mb.setMessage(msg);
-            mb.open();
+            int answer = mb.open();
+			if (answer == SWT.YES) {
+				view.deactivateNumber(hint);
+			}
         }
 
         return null;
@@ -61,14 +64,14 @@ public class HintHandler extends AbstractHandler {
      * @param numNum
      * @return
      */
-    private int calculateHint(int gameNMax, boolean[] activeNumbers, Number[] numNum) {
+    private int calculateHint(int gameNMax, Number[] numberField) {
         for (int i = gameNMax; i > gameNMax / 2; i--) {
-            if (activeNumbers[i - 1]) {
+            if (numberField[i - 1].isEnabled()) {
                 int counter = 0;
 
-                for (int j = 0; j < numNum[i - 1].getDivisors().size(); j++) {
-                    int n = numNum[i - 1].getDivisors().get(j);
-                    if (activeNumbers[n - 1]) {
+                for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
+                    int n = numberField[i - 1].getDivisors().get(j);
+                    if (numberField[n - 1].isEnabled()) {
                         counter++;
                     }
 

@@ -31,7 +31,7 @@ public class CommandStateChanger {
         	commandStateService.setUndoEnabled();
         }
         else if(state.equals(State.REDO_ENABLED)){
-        	commandStateService.setRedoEneabled();
+        	commandStateService.setRedoEnabled();
         }
         else if(state.equals(State.UNDO_DISABLED)){
         	commandStateService.setUndoDisabled();
@@ -41,7 +41,7 @@ public class CommandStateChanger {
         }
         else if (state.equals(State.ENABLED)){
         	commandStateService.setUndoEnabled();
-        	commandStateService.setRedoEneabled();
+        	commandStateService.setRedoEnabled();
         }
         else if (state.equals(State.DISABLED)){
         	commandStateService.setUndoDisabled();

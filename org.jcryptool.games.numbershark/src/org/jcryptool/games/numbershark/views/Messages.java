@@ -28,6 +28,13 @@ public class Messages extends NLS {
     public static String NumberSetView_46;
     public static String NumberSetView_9;
     public static String NumberSharkView_0;
+	public static Object NumberSetView_34;
+	public static Object NumberSetView_35;
+	public static Object NumberSetView_31;
+	public static Object NumberSetView_32;
+	public static Object NumberSetView_33;
+	public static String EndOfGameDialog_5;	
+	public static String EndOfGameDialog_6;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
