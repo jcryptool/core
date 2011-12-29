@@ -39,9 +39,6 @@
    <feature url="features/org.jcryptool.editors_0.9.5.qualifier.jar" id="org.jcryptool.editors" version="0.9.5.qualifier">
       <category name="org.jcryptool.editors"/>
    </feature>
-   <feature url="features/org.jcryptool.crypto.xml.feature_0.9.5.qualifier.jar" id="org.jcryptool.crypto.xml.feature" version="0.9.5.qualifier">
-      <category name="org.jcryptool.crypto"/>
-   </feature>
    <category-def name="org.jcryptool.core" label="JCrypTool Core">
       <description>
          JCrypTool Core contains all base plug-ins required to run JCrypTool.
