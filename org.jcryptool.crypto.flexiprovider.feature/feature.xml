@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.flexiprovider"
       label="JCrypTool Flexiprovider Feature"
-      version="0.9.5.qualifier"
+      version="0.9.6.qualifier"
       provider-name="Technische Universitaet Darmstadt"
       plugin="org.jcryptool.crypto.flexiprovider">
 
