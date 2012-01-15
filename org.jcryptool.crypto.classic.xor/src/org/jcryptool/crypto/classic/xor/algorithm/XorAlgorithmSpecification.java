@@ -59,8 +59,8 @@ public class XorAlgorithmSpecification extends ClassicAlgorithmSpecification {
 					public boolean isStandaloneMessage() {
 						return true;
 					}
-					public int getMessageType() {
-						return InputVerificationResult.ERROR;
+					public MessageType getMessageType() {
+						return InputVerificationResult.MessageType.ERROR;
 					}
 					public String getMessage() {
 						return "The key file does not exist.";

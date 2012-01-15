@@ -41,7 +41,7 @@ public class TranspositionAlgorithmSpecification extends
 		protected InputVerificationResult getFailResult(final String key, final AbstractAlphabet alphabet) {
 			return new InputVerificationResult() {
 				public boolean isStandaloneMessage() {return true;}
-				public int getMessageType() {return INFORMATION;}
+				public MessageType getMessageType() {return InputVerificationResult.MessageType.INFORMATION;}
 				public boolean isValid() {return true;}
 				public String getMessage() {
 					String mask = org.jcryptool.crypto.classic.transposition.ui.Messages.TranspositionWizardPage_firstnotalter;
