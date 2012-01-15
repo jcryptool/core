@@ -34,18 +34,13 @@ public abstract class KeyVerificator {
 	static Comparator<InputVerificationResult> severityComparator = new Comparator<InputVerificationResult>() {
 		public int compare(InputVerificationResult o1,
 				InputVerificationResult o2) {
-			if(o1.getMessageType() != o2.getMessageType()) {
-				if(o2.getMessageType() == InputVerificationResult.NONE) {
-					return -1;
-				} else if(o2.getMessageType() == InputVerificationResult.INFORMATION) {
-					if(o1.getMessageType() != InputVerificationResult.NONE) return -1; else return 1;
-				} else if(o2.getMessageType() == InputVerificationResult.WARNING) {
-					if(o1.getMessageType() == InputVerificationResult.ERROR) return -1; else return 1;
-				} else return 1;
-			} else if (o1.getMessage().length() != o2.getMessage().length()){
-				return o1.getMessage().length() >= o2.getMessage().length() ? -1 : 1;
+			if(o1.getMessageType().equals(o2.getMessageType())) {
+				return Integer.valueOf(o1.hashCode()).compareTo(o2.hashCode());
+			} else {
+				return o1.getMessageType().compareTo(o2.getMessageType());
 			}
-			return 0;
+			
+			//-
 		}
 	};
 

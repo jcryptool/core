@@ -156,7 +156,7 @@ public class EditorsManager {
 	 * @return whether an text editor is currently opened
 	 */
 	public boolean isEditorOpen() {
-		return getActiveEditorReference() != null;
+		return getEditorReferences().size()>0;
 	}
 
 	/**
@@ -181,10 +181,14 @@ public class EditorsManager {
 	public List<IEditorReference> getEditorReferences() {
 		if (getActivePage() == null)
 			return new LinkedList<IEditorReference>();
-		IEditorReference[] refs = getActivePage().getEditorReferences();
-		if (refs == null)
-			return new LinkedList<IEditorReference>();
-		return Arrays.asList(refs);
+		if(getActivePage() != null) {
+			IEditorReference[] refs = getActivePage().getEditorReferences();
+			if (refs == null)
+				return new LinkedList<IEditorReference>();
+			return Arrays.asList(refs);
+		} else {
+			return null; 
+		}
 	}
 
 	/**

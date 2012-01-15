@@ -218,8 +218,8 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
 			public boolean isStandaloneMessage() {
 				return true;
 			}
-			public int getMessageType() {
-				return INFORMATION;
+			public MessageType getMessageType() {
+				return MessageType.INFORMATION;
 			}
 			public String getMessage() {
 				String mask = mask_external_reset;
