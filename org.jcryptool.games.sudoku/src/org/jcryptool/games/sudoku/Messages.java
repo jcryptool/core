@@ -21,12 +21,21 @@ public class Messages extends NLS {
 	public static String HexTabTitle;
 	public static String KillerTabTitle;
 	public static String NormalTabTitle;
+	public static String SudokuComposite_ActionsAreaTitle;
+	public static String SudokuComposite_AdditionButton;
+	public static String SudokuComposite_AdditionButton_Tooltip;
 	public static String SudokuComposite_AutoFillOneButton;
 	public static String SudokuComposite_AutoFillOneButton_Tooltip;
 	public static String SudokuComposite_BlockAndCRButton;
 	public static String SudokuComposite_BlockAndCRButton_Tooltip;
+	public static String SudokuComposite_BoxRuleButton;
+	public static String SudokuComposite_BoxRuleButton_Tooltip;
 	public static String SudokuComposite_CandidateLineButton;
 	public static String SudokuComposite_CandidateLineButton_Tooltip;
+	public static String SudokuComposite_ClearButton;
+	public static String SudokuComposite_ClearButton_Tooltip;
+	public static String SudokuComposite_DivisionButton;
+	public static String SudokuComposite_DivisionButton_Tooltip;
 	public static String SudokuComposite_DoublePairButton;
 	public static String SudokuComposite_DoublePairButton_Tooltip;
 	public static String SudokuComposite_Hex_Desc;
@@ -37,11 +46,13 @@ public class Messages extends NLS {
 	public static String SudokuComposite_Killer_Title;
 	public static String SudokuComposite_LoadButton;
 	public static String SudokuComposite_LoadButton_Tooltip;
-	public static String SudokuComposite_loadStandardPuzzle;
-	public static String SudokuComposite_loadStandardPuzzle_Tooltip;
+	public static String SudokuComposite_LoadStandardPuzzle;
+	public static String SudokuComposite_LoadStandardPuzzle_Tooltip;
 	public static String SudokuComposite_MainGroup_Title;
 	public static String SudokuComposite_MultipleLinesButton;
 	public static String SudokuComposite_MultipleLinesButton_Tooltip;
+	public static String SudokuComposite_MultiplicationButton;
+	public static String SudokuComposite_MultiplicationButton_Tooltip;
 	public static String SudokuComposite_NakedSingleButton;
 	public static String SudokuComposite_NakedSingleButton_Tooltip;
 	public static String SudokuComposite_NakedSubsetButton;
@@ -50,12 +61,16 @@ public class Messages extends NLS {
 	public static String SudokuComposite_Normal_Title;
 	public static String SudokuComposite_OnePossibleButton;
 	public static String SudokuComposite_OnePossibleButton_Tooltip;
+	public static String SudokuComposite_OperatorsAreaTitle;
 	public static String SudokuComposite_SaveButton;
 	public static String SudokuComposite_SaveButton_Tooltip;
 	public static String SudokuComposite_ShowPossibleButton;
 	public static String SudokuComposite_ShowPossibleButton_Tooltip;
 	public static String SudokuComposite_SolveButton;
 	public static String SudokuComposite_SolveButton_Tooltip;
+	public static String SudokuComposite_StrategiesAreaTitle;
+	public static String SudokuComposite_SubtractionButton;
+	public static String SudokuComposite_SubtractionButton_Tooltip;
 
 
 
