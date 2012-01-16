@@ -32,17 +32,16 @@ public class SharkMealHandler extends AbstractHandler {
             ArrayList<Integer> sharkMealList = new ArrayList<Integer>();
             int[] lostNumbers;
             int gameNMax = view.getNumberOfFields();
-            Number[] numNum = view.getNumNum();
-            boolean[] activeNumbers = view.getActiveNumbers();
+            Number[] numberField = view.getNumberField();
 
             // calculate numbers to be eaten by the shark
             for (int i = gameNMax; i > gameNMax / 2; i--) {
-                if (activeNumbers[i - 1]) {
+                if (numberField[i - 1].isEnabled()) {
                     int counter = 0;
                     boolean stop = false;
-                    for (int j = 0; j < numNum[i - 1].getDivisors().size(); j++) {
-                        int n = numNum[i - 1].getDivisors().get(j);
-                        if (activeNumbers[n - 1]) {
+                    for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
+                        int n = numberField[i - 1].getDivisors().get(j);
+                        if (numberField[n - 1].isEnabled()) {
                             counter++;
                             if (counter > 0) {
                                 stop = true;
@@ -52,8 +51,7 @@ public class SharkMealHandler extends AbstractHandler {
                     }
                     if (!stop) {
                         sharkMealList.add(i);
-                        activeNumbers[i - 1] = false;
-                        numNum[i - 1].setEnabled(false);
+                        numberField[i - 1].setEnabled(false);
 
                         int tabFolderIndex = view.getSelectedTabFolderIndex();
 

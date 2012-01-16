@@ -95,7 +95,7 @@ public class CommandState extends AbstractSourceProvider    {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.UNDO_STATE), stateVal(State.UNDO_DISABLED));
 	}
 	
-	public void setRedoEneabled() {
+	public void setRedoEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.REDO_STATE), stateVal(State.REDO_ENABLED));
 	}
 

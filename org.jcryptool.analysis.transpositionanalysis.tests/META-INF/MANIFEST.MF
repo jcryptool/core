@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Transposition Analysis Tests
 Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis.tests;singleton:=true
-Bundle-Version: 0.9.5.qualifier
+Bundle-Version: 0.9.6.qualifier
 Bundle-Vendor: jcryptool.org
 Fragment-Host: org.jcryptool.analysis.transpositionanalysis;bundle-version="0.9.5"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
