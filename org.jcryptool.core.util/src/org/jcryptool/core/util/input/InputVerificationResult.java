@@ -99,5 +99,52 @@ public abstract class InputVerificationResult {
 	 *         InputVerificationResult which returns false here, are rejected.
 	 */
 	public abstract boolean isValid();
+	
+	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage) {
+		return new InputVerificationResult() {
+			@Override
+			public String getMessage() {
+				return message;
+			}
+			@Override
+			public MessageType getMessageType() {
+				return messageType;
+			}
+			@Override
+			public boolean isStandaloneMessage() {
+				return isStandaloneMessage;
+			}
+
+			@Override
+			public boolean isValid() {
+				return isValid;
+			}
+		};
+	}
+	
+	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage, final Object resultType) {
+		return new InputVerificationResult() {
+			@Override
+			public String getMessage() {
+				return message;
+			}
+			@Override
+			public MessageType getMessageType() {
+				return messageType;
+			}
+			@Override
+			public Object getResultType() {
+				return resultType;
+			}
+			@Override
+			public boolean isStandaloneMessage() {
+				return isStandaloneMessage;
+			}
+			@Override
+			public boolean isValid() {
+				return isValid;
+			}
+		};
+	}
 
 }
