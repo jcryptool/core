@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
@@ -25,9 +25,9 @@ import com.cloudgarden.resource.SWTResourceManager;
 public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 
 	/**
-	* Auto-generated main method to display this
-	* org.eclipse.swt.widgets.Composite inside a new Shell.
-	*/
+	 * Auto-generated main method to display this
+	 * org.eclipse.swt.widgets.Composite inside a new Shell.
+	 */
 
 	private Button analysis1check;
 	private Composite analysis1CompTextual;
@@ -37,15 +37,16 @@ public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 	private TranspositionAnalysis analysis;
 
 	/**
-	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
-	*/
+	 * Overriding checkSubclass allows this class to extend
+	 * org.eclipse.swt.widgets.Composite
+	 */
 	protected void checkSubclass() {
 	}
 
 	/**
-	* Auto-generated method to display this
-	* org.eclipse.swt.widgets.Composite inside a new Shell.
-	*/
+	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite
+	 * inside a new Shell.
+	 */
 
 	public AnalysisSelectItem(org.eclipse.swt.widgets.Composite parent, TranspositionAnalysis analysis) {
 		super(parent, SWT.BORDER);
@@ -104,7 +105,7 @@ public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 
 			this.layout();
 		} catch (Exception e) {
-            LogUtil.logError(e);
+			LogUtil.logError(e);
 		}
 	}
 

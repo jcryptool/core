@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis;
 
@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Label;
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model.TranspositionAnalysis;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard.SingleAnalysisPage;
 
-public class InitializationPage extends SingleAnalysisPage implements TranspositionAnalysisInitializationInput{
+public class InitializationPage extends SingleAnalysisPage implements TranspositionAnalysisInitializationInput {
 
 	private Group compMaxLengthSelect;
 	private Label labelMaxlengthSelect;
@@ -46,7 +46,8 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 			labelExplanationLData.grabExcessHorizontalSpace = true;
 			labelExplanationLData.widthHint = 300;
 			labelExplanation.setLayoutData(labelExplanationLData);
-			labelExplanation.setText("For the initialization, it is important to know, up to which block lengths (key lengths) the different analyses may search:");
+			labelExplanation
+				.setText("For the initialization, it is important to know, up to which block lengths (key lengths) the different analyses may search:");
 		}
 		{
 			compMaxLengthSelect = new Group(parent, SWT.NONE);
@@ -73,9 +74,10 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 				comboMaxLength = new Combo(compMaxLengthSelect, SWT.NONE);
 				GridData comboMaxLengthLData = new GridData();
 				comboMaxLength.setLayoutData(comboMaxLengthLData);
-				for(int i=3; i<30; i++) comboMaxLength.add(""+i);
+				for (int i = 3; i < 30; i++)
+					comboMaxLength.add("" + i);
 
-				comboMaxLength.select(18-3);
+				comboMaxLength.select(18 - 3);
 			}
 
 		}
@@ -86,7 +88,8 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 			labelMaxlengthAdviceLData.grabExcessHorizontalSpace = true;
 			labelMaxlengthAdviceLData.widthHint = 300;
 			labelMaxlengthAdvice.setLayoutData(labelMaxlengthAdviceLData);
-			labelMaxlengthAdvice.setText("Please keep in mind, that too big keylengths can lead to very time-consumptive algorithm behaviour.");
+			labelMaxlengthAdvice
+				.setText("Please keep in mind, that too big keylengths can lead to very time-consumptive algorithm behaviour.");
 		}
 	}
 

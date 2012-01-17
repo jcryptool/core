@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
@@ -29,7 +29,7 @@ public class ConclusionPage extends WizardPage {
 	protected ConclusionPage(TranspositionAnalysisDataobject dataobject, boolean justStoredPageAtBeginning) {
 		super("Conclusion");
 		this.setTitle("Conclusion");
-		if(! justStoredPageAtBeginning) {
+		if (!justStoredPageAtBeginning) {
 			this.setDescription("This page shows the results of all analysis combined, and the results of each single analysis.");
 		} else {
 			this.setDescription("This page shows the results of the last analysis. Go to the next page to start a fresh new analysis.");
@@ -48,31 +48,32 @@ public class ConclusionPage extends WizardPage {
 			pageCompositeLData.grabExcessVerticalSpace = true;
 			pageCompositeLayout.makeColumnsEqualWidth = true;
 			pageComposite.setLayout(pageCompositeLayout);
-//			{
-//				labelExplanationFirst = new Label(pageComposite, SWT.NONE);
-//				GridData labelExplanationFirstLData = new GridData();
-//				labelExplanationFirstLData.grabExcessHorizontalSpace = true;
-//				labelExplanationFirstLData.horizontalAlignment = SWT.FILL;
-//				labelExplanationFirstLData.widthHint = 300;
-//				labelExplanationFirst.setLayoutData(labelExplanationFirstLData);
-//				labelExplanationFirst.setText("");
-//			}
+			// {
+			// labelExplanationFirst = new Label(pageComposite, SWT.NONE);
+			// GridData labelExplanationFirstLData = new GridData();
+			// labelExplanationFirstLData.grabExcessHorizontalSpace = true;
+			// labelExplanationFirstLData.horizontalAlignment = SWT.FILL;
+			// labelExplanationFirstLData.widthHint = 300;
+			// labelExplanationFirst.setLayoutData(labelExplanationFirstLData);
+			// labelExplanationFirst.setText("");
+			// }
 			{
-				//Resumee
+				// Resumee
 				resumee = new ConclusionItem(pageComposite, dataobject.resumeeAnalysis);
 				GridData resumeeLData = new GridData();
 				resumeeLData.horizontalAlignment = SWT.FILL;
 				resumeeLData.grabExcessHorizontalSpace = true;
 				resumee.setLayoutData(resumeeLData);
 			}
-//			{
-//				Label separator = new Label(pageComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
-//				GridData serparatorLData = new GridData();
-//				serparatorLData.widthHint = 300;
-//				serparatorLData.horizontalAlignment = SWT.CENTER;
-//				serparatorLData.grabExcessHorizontalSpace = true;
-//				separator.setLayoutData(serparatorLData);
-//			}
+			// {
+			// Label separator = new Label(pageComposite, SWT.SEPARATOR |
+			// SWT.HORIZONTAL);
+			// GridData serparatorLData = new GridData();
+			// serparatorLData.widthHint = 300;
+			// serparatorLData.horizontalAlignment = SWT.CENTER;
+			// serparatorLData.grabExcessHorizontalSpace = true;
+			// separator.setLayoutData(serparatorLData);
+			// }
 			{
 				labelExplanationFirst = new Label(pageComposite, SWT.NONE);
 				GridData labelExplanationFirstLData = new GridData();
@@ -84,8 +85,10 @@ public class ConclusionPage extends WizardPage {
 				labelExplanationFirst.setText("Conclusions of what each single analysis found:");
 			}
 			{
-				for(TranspositionAnalysis analysis: dataobject.getListOfAnalyses()) { //other analysis
-					if(analysis != dataobject.iniAnalysis && analysis != dataobject.resumeeAnalysis && analysis.getConclusion() != null) {
+				for (TranspositionAnalysis analysis : dataobject.getListOfAnalyses()) { // other
+																						// analysis
+					if (analysis != dataobject.iniAnalysis && analysis != dataobject.resumeeAnalysis
+						&& analysis.getConclusion() != null) {
 						ConclusionItem analysisConclusionItem = new ConclusionItem(pageComposite, analysis);
 						GridData analysisConclusionItemLData = new GridData();
 						analysisConclusionItemLData.horizontalAlignment = SWT.FILL;

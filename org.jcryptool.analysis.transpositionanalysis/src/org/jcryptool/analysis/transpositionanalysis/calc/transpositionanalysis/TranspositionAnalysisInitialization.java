@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis;
 
@@ -26,35 +26,34 @@ public class TranspositionAnalysisInitialization extends TranspositionAnalysis {
 	private int beginLength;
 	private int endLength;
 	private TranspositionAnalysisConclusion conclusion;
-	
+
 	private static final int MAX_LENGTH = 20;
 
 	@Override
 	public void analyze() {
 		beginLength = 1;
-		int setLength = in.getMaxKeylength() == -1? MAX_LENGTH:in.getMaxKeylength();
+		int setLength = in.getMaxKeylength() == -1 ? MAX_LENGTH : in.getMaxKeylength();
 		endLength = Math.min(setLength, in.getCiphertext().length());
 		calcConclusion();
 	}
 
 	private void calcConclusion() {
 		conclusion = new TranspositionAnalysisConclusion(
-				"The analysis was initialized with the search range for keys with" +
-				"a length between " + beginLength + " and " + endLength + ".", 
-				new LinkedList<TranspositionAnalysisResultAtom>());
+			"The analysis was initialized with the search range for keys with" + "a length between " + beginLength
+				+ " and " + endLength + ".", new LinkedList<TranspositionAnalysisResultAtom>());
 	}
 
 	@Override
 	public void combineResultsWithOutput() {
 		PolledPositiveInteger lengthPoll = new PolledPositiveInteger();
 		Map<Integer, PolledTranspositionKey> keys = new HashMap<Integer, PolledTranspositionKey>();
-		for(int i=beginLength; i<=endLength; i++) {
+		for (int i = beginLength; i <= endLength; i++) {
 			lengthPoll.addChoice(i);
 			PolledTranspositionKey key = new PolledTranspositionKey();
 			key.setLength(i);
 			keys.put(i, key);
 		}
-		
+
 		out.setKeylengthPoll(lengthPoll);
 		out.setKeyPolls(keys);
 	}
@@ -67,7 +66,7 @@ public class TranspositionAnalysisInitialization extends TranspositionAnalysis {
 	public void setInput(TranspositionAnalysisInitializationInput in) {
 		this.in = in;
 	}
-	
+
 	@Override
 	public boolean allowUserEstimatedRating() {
 		return false;

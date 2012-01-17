@@ -47,8 +47,7 @@ public class CalculationPage extends WizardPage {
 	}
 
 	public void setProgress(double progress) {
-		progressBar1.setSelection((int) Math.round(progress
-				* (double) (progressBar1.getMaximum())));
+		progressBar1.setSelection((int) Math.round(progress * (double) (progressBar1.getMaximum())));
 	}
 
 	public void createControl(Composite parent) {
@@ -97,8 +96,7 @@ public class CalculationPage extends WizardPage {
 				labelContinueNowLData.grabExcessHorizontalSpace = true;
 				labelContinueNowLData.horizontalAlignment = GridData.CENTER;
 				labelContinueNow.setLayoutData(labelContinueNowLData);
-				labelContinueNow
-						.setText("Analysis complete! You may now continue to the conclusion.");
+				labelContinueNow.setText("Analysis complete! You may now continue to the conclusion.");
 				labelContinueNow.setVisible(false);
 			}
 		}

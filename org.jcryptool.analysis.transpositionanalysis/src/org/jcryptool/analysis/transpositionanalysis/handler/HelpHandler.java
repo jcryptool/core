@@ -17,14 +17,16 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 
 /**
- * This handler displays the dynamic help identified by the given context help id.
- *
+ * This handler displays the dynamic help identified by the given context help
+ * id.
+ * 
  * @author Dominik Schadow
  * @version 0.9.2
  */
 public class HelpHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        PlatformUI.getWorkbench().getHelpSystem().displayHelp(TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis");
-        return null;
-    }
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		PlatformUI.getWorkbench().getHelpSystem()
+			.displayHelp(TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis");
+		return null;
+	}
 }

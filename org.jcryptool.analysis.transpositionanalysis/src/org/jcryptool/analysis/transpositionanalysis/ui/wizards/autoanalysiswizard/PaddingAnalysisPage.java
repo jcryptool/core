@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
@@ -24,19 +24,16 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.TranspositionAnalysisPadding;
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.TranspositionAnalysisPaddingInput;
 
-
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 public class PaddingAnalysisPage extends SingleAnalysisPage implements TranspositionAnalysisPaddingInput {
 	private Label labelTest;
 	private Group compPaddingSelect;
@@ -59,8 +56,9 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 			labelTestLData.grabExcessHorizontalSpace = true;
 			labelTestLData.widthHint = 350;
 			labelTest.setLayoutData(labelTestLData);
-			labelTest.setText("The padding of a cipher is a filling at the end of the text, used for fitting the blocklength. A padding often consists of just easily-distinguishable character, like '#', '0'." +
-					"\nPlease try to find the padding characters in the end of the cipher. Example: In 'biu##dl#', mark the last five characters.");
+			labelTest
+				.setText("The padding of a cipher is a filling at the end of the text, used for fitting the blocklength. A padding often consists of just easily-distinguishable character, like '#', '0'."
+					+ "\nPlease try to find the padding characters in the end of the cipher. Example: In 'biu##dl#', mark the last five characters.");
 		}
 		{
 			compPaddingSelect = new Group(parent, SWT.NONE);
@@ -77,8 +75,8 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 			{
 				labelPaddingSelect = new Label(compPaddingSelect, SWT.WRAP);
 				GridData labelPaddingSelectLData = new GridData();
-//				labelPaddingSelectLData.horizontalAlignment = GridData.FILL;
-//				labelPaddingSelectLData.grabExcessHorizontalSpace = false;
+				// labelPaddingSelectLData.horizontalAlignment = GridData.FILL;
+				// labelPaddingSelectLData.grabExcessHorizontalSpace = false;
 				labelPaddingSelectLData.widthHint = 150;
 				labelPaddingSelect.setLayoutData(labelPaddingSelectLData);
 				labelPaddingSelect.setText("Mark the smallest interval of padding occurence:");
@@ -88,7 +86,8 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				GridData text1LData = new GridData();
 				text1LData.horizontalIndent = 5;
 				textPaddingSelector.setLayoutData(text1LData);
-				textPaddingSelector.setText(TranspositionAnalysisPadding.getPaddingExcerpt(((AnalysisWizard)getWizard()).getInitializationInput().getMaxKeylength(), getCiphertext()));
+				textPaddingSelector.setText(TranspositionAnalysisPadding.getPaddingExcerpt(
+					((AnalysisWizard) getWizard()).getInitializationInput().getMaxKeylength(), getCiphertext()));
 			}
 			{
 				separatorAutoExplanation = new Label(compPaddingSelect, SWT.SEPARATOR | SWT.VERTICAL);
@@ -103,7 +102,8 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				labelAutoDescriptionLData.grabExcessHorizontalSpace = true;
 				labelAutoDescriptionLData.widthHint = 200;
 				labelAutoDescription.setLayoutData(labelAutoDescriptionLData);
-				labelAutoDescription.setText("The automatical detection of the padding is just a rough approach and is often not correct.");
+				labelAutoDescription
+					.setText("The automatical detection of the padding is just a rough approach and is often not correct.");
 			}
 			{
 				buttonAutoDetect = new Button(compPaddingSelect, SWT.PUSH | SWT.CENTER);
@@ -112,7 +112,11 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				buttonAutoDetect.setText("Try to autodetect the padding");
 				buttonAutoDetect.addSelectionListener(new SelectionAdapter() {
 					public void widgetSelected(SelectionEvent evt) {
-						textPaddingSelector.setSelection(textPaddingSelector.getText().length() - TranspositionAnalysisPadding.guessPaddingDistanceFromEndOfSampletext(textPaddingSelector.getText()), textPaddingSelector.getText().length());
+						textPaddingSelector.setSelection(
+							textPaddingSelector.getText().length()
+								- TranspositionAnalysisPadding
+									.guessPaddingDistanceFromEndOfSampletext(textPaddingSelector.getText()),
+							textPaddingSelector.getText().length());
 						hideObject(buttonAutoDetect, true);
 						hideObject(labelAutoDescription, false);
 					}
@@ -124,7 +128,8 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 	}
 
 	public int getSelectedPaddingLengthFromEnd() {
-		if(textPaddingSelector.getSelection().y != textPaddingSelector.getSelection().x) return textPaddingSelector.getText().length()-Math.min(textPaddingSelector.getSelection().x, textPaddingSelector.getSelection().y);
+		if (textPaddingSelector.getSelection().y != textPaddingSelector.getSelection().x) return textPaddingSelector
+			.getText().length() - Math.min(textPaddingSelector.getSelection().x, textPaddingSelector.getSelection().y);
 		return 0;
 	}
 
@@ -135,19 +140,16 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 
 	/**
 	 * Excludes a control from Layout calculation
-	 *
+	 * 
 	 * @param that
 	 * @param hideit
 	 */
 	private void hideObject(final Control that, final boolean hideit) {
-	    GridData GData = (GridData) that.getLayoutData();
-	    GData.exclude = hideit;
-	    that.setVisible(!hideit);
-	    Control[] myArray = {that};
-	    pageComposite.layout(myArray);
+		GridData GData = (GridData) that.getLayoutData();
+		GData.exclude = hideit;
+		that.setVisible(!hideit);
+		Control[] myArray = { that };
+		pageComposite.layout(myArray);
 	}
-
-
-
 
 }

@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards;
 
@@ -45,6 +45,13 @@ public class Messages extends NLS {
 	public static String TranspTextWizardPage_textwizardtitle;
 	public static String TranspTextWizardPage_valuezerodescription;
 	public static String TranspTextWizardPage_whatiscolumncount;
+	public static String TranspTextWizardPage_grpText_text;
+	public static String TranspTextWizardPage_lblLadenDesTextes_text;
+	public static String TranspTextWizardPage_btnJcteditor_text;
+	public static String TranspTextWizardPage_btnDatei_text;
+	public static String TranspTextWizardPage_btnZwischenablageeigeneEingabe_text;
+	public static String TranspTextWizardPage_lblFilenametxt_text;
+	public static String TranspTextWizardPage_link_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

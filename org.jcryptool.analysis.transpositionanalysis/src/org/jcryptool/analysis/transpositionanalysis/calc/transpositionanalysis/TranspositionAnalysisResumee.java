@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis;
 
@@ -34,7 +34,8 @@ public class TranspositionAnalysisResumee extends TranspositionAnalysis {
 		int bestLength = out.getKeylengthPoll().getBestValue();
 		TranspositionKey bestKey = out.getKeyPolls().get(bestLength).getBestChoice();
 
-		buffer.append("Based on all executed analysis methods, the first key to try would be: " + TranspositionAnalysisConclusion.PLACEHOLDER + ".");
+		buffer.append("Based on all executed analysis methods, the first key to try would be: "
+			+ TranspositionAnalysisConclusion.PLACEHOLDER + ".");
 		atoms.add(new TranspositionAnalysisResultAtom(bestKey, false));
 
 		conclusion = new TranspositionAnalysisConclusion(buffer.toString(), atoms);
