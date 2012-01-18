@@ -21,14 +21,7 @@ package org.jcryptool.analysis.transpositionanalysis.ui.wizards;
  *******************************************************************************/
 //-----END DISCLAIMER-----
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -57,13 +50,12 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.ReadDirectionChooser;
 import org.jcryptool.analysis.transpositionanalysis.ui.TranspositionTableComposite;
-import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextWithSourceInput;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextonlyInput;
 import org.jcryptool.core.operations.editors.EditorsManager;
-import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.input.AbstractUIInput;
-import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
-import org.jcryptool.core.util.input.TextfieldInput;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo
@@ -132,7 +124,6 @@ public class TranspTextWizardPage extends WizardPage {
 		}
 	}
 
-	private static final String NOBALLOON_RESULTTYPE = "NOBALLOON";
 	private Group group1;
 	private Spinner blocklengthSpinner;
 	private Label label1;
@@ -182,13 +173,13 @@ public class TranspTextWizardPage extends WizardPage {
 	 * "select text from file" radiobutton
 	 */
 	protected File fileTextInput;
-	private AbstractUIInput<TextInputWithSource> textInput;
-	private TextfieldInput<String> textOnlyInput;
+	private TextWithSourceInput textInput;
 	private TextInputWithSource initTextObject;
 	private Composite compFileInputDetails;
 	private Label lblFilenametxt;
 	private Link linkChangeFile;
 	private PageConfiguration lastPreviewedPageConfig;
+	private TextonlyInput textOnlyInput;
 
 	/**
 	 * Creates a new instance of TranspTextWizardPage.
@@ -540,138 +531,75 @@ public class TranspTextWizardPage extends WizardPage {
 
 		editorRefs = EditorsManager.getInstance().getEditorReferences();
 		if (editorRefs.size() > 0) {
+			// TODO: rename method (no loading here!)
 			loadEditorsAndFillEditorChooser();
 		}
 
-		textOnlyInput = new TextfieldInput<String>() {
+		textOnlyInput = new TextonlyInput() {
 			@Override
 			protected Text getTextfield() {
 				return txtInputText;
 			}
+		};
 
+		textInput = new TextWithSourceInput(editorRefs) {
 			@Override
-			protected InputVerificationResult verifyUserChange() {
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+			protected Button getFileRadioButton() {
+				return btnDatei;
 			}
 
 			@Override
-			public String readContent() {
-				return txtInputText.getText();
+			protected Button getBtnJctEditorOption() {
+				return btnJcteditor;
 			}
 
 			@Override
-			protected String getDefaultContent() {
-				return "";
+			protected Button getBtnOwninput() {
+				return btnZwischenablageeigeneEingabe;
 			}
 
 			@Override
-			public String getName() {
-				return "Text";
+			protected File getSelectedFile() {
+				return fileTextInput;
+			}
+
+			@Override
+			protected Combo getComboEditors() {
+				return comboEditorInputSelector;
+			}
+
+			@Override
+			protected Text getTextFieldForTextInput() {
+				return txtInputText;
+			}
+
+			@Override
+			protected IEditorReference getSelectedEditor() {
+				return getCurrentlySelectedEditor();
+			}
+
+			@Override
+			protected void setUIState(TextInputWithSource content, boolean b) {
+				setTextInputUIState(content, b);
+			}
+
+			@Override
+			protected TextInputWithSource getInitialTextObject() {
+				return initTextObject;
+			}
+
+			@Override
+			protected List<IEditorReference> getEditorsNotNecessarilyFresh() {
+				return editorRefs;
+			}
+
+			@Override
+			protected AbstractUIInput<String> getTextOnlyInput() {
+				return textOnlyInput;
 			}
 		};
 
-		textInput = new AbstractUIInput<TextInputWithSource>() {
-
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				if (btnDatei.getSelection() && fileTextInput == null) {
-					// msg not meant to be displayed
-					return InputVerificationResult.generateIVR(false, "no file was selected", MessageType.INFORMATION,
-						false, NOBALLOON_RESULTTYPE);
-				}
-				if (btnDatei.getSelection() && !fileTextInput.exists()) {
-					// msg not meant to be displayed
-					return InputVerificationResult.generateIVR(false, "input file does not exist",
-						MessageType.INFORMATION, false);
-				}
-				if (btnJcteditor.getSelection() && getEditorsNotNecessarilyFresh().size() == 0) {
-					// msg not meant to be displayed
-					return InputVerificationResult.generateIVR(false, "no editors are available",
-						MessageType.INFORMATION, false, NOBALLOON_RESULTTYPE);
-				}
-				if (btnJcteditor.getSelection() && comboEditorInputSelector.getSelectionIndex() < 0) {
-					// should never appear
-					return InputVerificationResult.generateIVR(true, "no editor selected", MessageType.INFORMATION,
-						false, NOBALLOON_RESULTTYPE);
-				}
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-			}
-
-			@Override
-			public TextInputWithSource readContent() {
-				if (btnZwischenablageeigeneEingabe.getSelection()) {
-					String text = textOnlyInput.getContent();
-					return new TextInputWithSource(text);
-				} else if (btnDatei.getSelection()) {
-					try {
-						return new TextInputWithSource(getTextFromFile(fileTextInput), fileTextInput);
-					} catch (FileNotFoundException e) {
-						// should not happen since existance of file has been
-						// tested
-						e.printStackTrace();
-						return null;
-					}
-				} else if (btnJcteditor.getSelection()) {
-					if (comboEditorInputSelector.getSelectionIndex() < 0) {
-						IEditorReference bestEditor = getBestEditorReference();
-						return new TextInputWithSource(retrieveTextForEditor(bestEditor), bestEditor);
-					} else {
-						IEditorReference currentlySelectedEditor = getCurrentlySelectedEditor();
-						return new TextInputWithSource(retrieveTextForEditor(currentlySelectedEditor),
-							currentlySelectedEditor);
-					}
-				} else {
-					throw new RuntimeException("Not all input method cases covered at reading input text!");
-				}
-			}
-
-			@Override
-			public void writeContent(TextInputWithSource content) {
-				if (content.getSourceType().equals(TextSourceType.FILE)) {
-					setTextInputUIState(content, true);
-				} else if (content.getSourceType().equals(TextSourceType.JCTEDITOR)) {
-					setTextInputUIState(content, true);
-				} else if (content.getSourceType().equals(TextSourceType.USERINPUT)) {
-					setTextInputUIState(content, true);
-				} else {
-					throw new RuntimeException("not all cases covered in writeContent");
-				}
-			}
-
-			@Override
-			protected TextInputWithSource getDefaultContent() {
-				if (initTextObject != null) { // preset from out of the wizard
-												// exists
-					if (!isEditorAvailable()) {
-						if (initTextObject.getSourceType().equals(TextSourceType.JCTEDITOR)) {
-							// mh... has to load text from editor, but it is not
-							// available. what to do?
-							// just default.
-							return new TextInputWithSource(initTextObject.getText());
-						} else {
-							return initTextObject;
-						}
-					} else {
-						return initTextObject;
-					}
-				} else { // no preset from out of the wizard
-					if (!isEditorAvailable()) {
-						return new TextInputWithSource("");
-					} else {
-						IEditorReference bestEditor = getBestEditorReference();
-						return new TextInputWithSource(retrieveTextForEditor(bestEditor), bestEditor);
-					}
-				}
-			}
-
-			@Override
-			public String getName() {
-				return "Text";
-			}
-		};
-
-		btnJcteditor.setEnabled(isEditorAvailable());
-
+		btnJcteditor.setEnabled(editorRefs.size() > 0);
 		btnDatei.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -715,15 +643,12 @@ public class TranspTextWizardPage extends WizardPage {
 				setTextInputUIState(textInput.getContent(), true);
 			}
 		});
-
-		textOnlyInput.addObserver(textInput);
 		textInput.addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
 				preview();
 			}
 		});
-
 	}
 
 	/**
@@ -750,8 +675,12 @@ public class TranspTextWizardPage extends WizardPage {
 		btnJcteditor.setSelection(sourceType.equals(TextSourceType.JCTEDITOR));
 		btnZwischenablageeigeneEingabe.setSelection(sourceType.equals(TextSourceType.USERINPUT));
 		if (writeText) {
-			textOnlyInput.writeContent(textString);
-			textOnlyInput.synchronizeWithUserSide();
+			if (textInput != null) {
+				textOnlyInput.writeContent(textString);
+				textOnlyInput.synchronizeWithUserSide();
+			} else {
+				txtInputText.setText(textString);
+			}
 		}
 
 		showLoadFromEditorComponents(sourceType.equals(TextSourceType.JCTEDITOR));
@@ -781,32 +710,8 @@ public class TranspTextWizardPage extends WizardPage {
 		return editorRefs.get(index);
 	}
 
-	protected String getTextFromFile(File file) throws FileNotFoundException {
-		FileInputStream is = new FileInputStream(file);
-		return inputStreamToString(is);
-	}
-
-	private String retrieveTextForEditor(IEditorReference bestEditor) {
-		InputStream is = EditorsManager.getInstance().getContentInputStream(bestEditor.getEditor(false));
-		return inputStreamToString(is);
-	}
-
 	protected List<IEditorReference> getEditorsNotNecessarilyFresh() {
 		return editorRefs;
-	}
-
-	private static IEditorReference getBestEditorReference() {
-		List<IEditorReference> editorReferences = EditorsManager.getInstance().getEditorReferences();
-		if (editorReferences.size() > 0) {
-			IEditorReference activeEditor = EditorsManager.getInstance().getActiveEditorReference();
-			if (activeEditor != null) {
-				return activeEditor;
-			} else {
-				return editorReferences.get(0);
-			}
-		} else {
-			return null;
-		}
 	}
 
 	private void showLoadFromFileComponents(boolean b, String fileName) {
@@ -838,10 +743,6 @@ public class TranspTextWizardPage extends WizardPage {
 		}
 	}
 
-	private boolean isEditorAvailable() {
-		return editorRefs.size() > 0;
-	}
-
 	protected void textFieldChanged(String previousText, String actualText) {
 		if (manualInputState != 2) {
 			manualInputState = 1;
@@ -852,6 +753,10 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	private void preview() {
+		// if(textInput != null) {
+		// setMessage("Origin: " +
+		// (textInput.getContent().userInputOrigin==null?"null":textInput.getContent().userInputOrigin.toString()));
+		// }
 		if (lastPreviewedPageConfig != null) {
 			if (!getPageConfiguration().equalsNeglectingTextsource(lastPreviewedPageConfig)) {
 				// if there is 'real' change in the previewed data, preview..
@@ -871,34 +776,6 @@ public class TranspTextWizardPage extends WizardPage {
 		transpositionTable1.setText(pageConfig.getText().getText(), pageConfig.getColumnCount(), !pageConfig.isCrop(),
 			pageConfig.getCropLength());
 		lastPreviewedPageConfig = pageConfig;
-	}
-
-	/**
-	 * reads the current value from an input stream
-	 * 
-	 * @param in
-	 *            the input stream
-	 */
-	private String inputStreamToString(InputStream in) {
-		BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-		} catch (UnsupportedEncodingException e1) {
-			LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e1);
-		}
-
-		StringBuffer myStrBuf = new StringBuffer();
-		int charOut = 0;
-		String output = ""; //$NON-NLS-1$
-		try {
-			while ((charOut = reader.read()) != -1) {
-				myStrBuf.append(String.valueOf((char) charOut));
-			}
-		} catch (IOException e) {
-			LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e);
-		}
-		output = myStrBuf.toString();
-		return output;
 	}
 
 	private void setReadInDirection(boolean dir) {

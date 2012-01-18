@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.transpositionanalysis.ui.wizards;
+package org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs;
 
 import java.io.File;
 
@@ -16,6 +16,7 @@ public class TextInputWithSource {
 	public File file;
 	public IEditorReference editorReference;
 	private String text;
+	public TextInputWithSource userInputOrigin;
 
 	private TextInputWithSource(String text, TextSourceType sourceType) {
 		super();
@@ -31,6 +32,11 @@ public class TextInputWithSource {
 	 */
 	public TextInputWithSource(String text) {
 		this(text, TextSourceType.USERINPUT);
+	}
+
+	public TextInputWithSource(String text, TextInputWithSource userInputOrigin) {
+		this(text, TextSourceType.USERINPUT);
+		this.userInputOrigin = userInputOrigin;
 	}
 
 	public TextInputWithSource(String text, File file) {
@@ -58,7 +64,25 @@ public class TextInputWithSource {
 	public boolean equals(TextInputWithSource o2) {
 		return getText().equals(o2.getText()) && getSourceType().equals(o2.getSourceType())
 			&& (file == null ? (o2.file == null) : (file.equals(o2.file)))
-			&& (editorReference == null ? (o2.editorReference == null) : (editorReference.equals(o2.editorReference)));
+			&& (editorReference == null ? (o2.editorReference == null) : (editorReference.equals(o2.editorReference)))
+			&& (userInputOrigin == null ? (o2.userInputOrigin == null) : (userInputOrigin.equals(o2.userInputOrigin)));
+	}
+
+	@Override
+	public String toString() {
+		if (getSourceType().equals(TextSourceType.USERINPUT)) {
+			if (userInputOrigin == null) {
+				return "User input";
+			} else {
+				return "User input; Source: " + userInputOrigin.toString();
+			}
+		} else if (getSourceType().equals(TextSourceType.JCTEDITOR)) {
+			return "Editor: " + editorReference == null ? "nonexistent" : editorReference.getTitle();
+		} else if (getSourceType().equals(TextSourceType.FILE)) {
+			return file.getName();
+		} else {
+			return super.toString();
+		}
 	}
 
 }
