@@ -75,7 +75,7 @@ public class SudokuComposite extends Composite {
 
     public Color WHITE, GREEN, GRAY, RED, BLACK, BLUE;
 
-    public Button solveButton, showPossibleButton, autoFillOneButton, loadButton, saveButton,
+    public Button solveButton, showPossibleButton, autoFillOneButton, loadButton, saveButton, clearButton,
             boxRuleButton, loadStandardPuzzle;
     public Button onePossibleButton, nakedSingleButton, hiddenSingleButton, blockAndCRButton,
             nakedSubsetButton, candidateLineButton, doublePairButton, multipleLinesButton;
@@ -102,7 +102,7 @@ public class SudokuComposite extends Composite {
     public Composite playField;
 
     public boolean showPossible, autoFillOne, solved, loading, solving, boxRule,
-            killerFirstPossible;
+            killerFirstPossible, loadedKiller;
 
     public Runnable refresh;
 
@@ -126,6 +126,7 @@ public class SudokuComposite extends Composite {
         this.killerFirstPossible = false;
         this.autoFillOne = false;
         this.solved = false;
+        this.loadedKiller = false;
         this.loading = false;
         this.rnd = new Random(System.currentTimeMillis());
 
@@ -304,7 +305,7 @@ public class SudokuComposite extends Composite {
         final RowData buttonrd = new RowData(130, 30);
 
         Group subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-        subComposite.setText("Actions");
+        subComposite.setText(Messages.SudokuComposite_ActionsAreaTitle);
         subComposite.setLayout(mrl);
 
         this.solveButton = new Button(subComposite, SWT.PUSH);
@@ -343,8 +344,8 @@ public class SudokuComposite extends Composite {
             this.boxRuleButton.setLayoutData(buttonrd);
             this.boxRuleButton.setBackground(GREEN);
             this.boxRuleButton.setEnabled(true);
-            this.boxRuleButton.setText("BoxRule");
-            this.boxRuleButton.setToolTipText("BoxRule");
+            this.boxRuleButton.setText(Messages.SudokuComposite_BoxRuleButton);
+            this.boxRuleButton.setToolTipText(Messages.SudokuComposite_BoxRuleButton_Tooltip);
             this.boxRuleButton.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent e) {
                     if (SudokuComposite.this.boxRule) {
@@ -413,8 +414,8 @@ public class SudokuComposite extends Composite {
 
         this.loadStandardPuzzle = new Button(subComposite, SWT.PUSH);
         this.loadStandardPuzzle.setLayoutData(buttonrd);
-        this.loadStandardPuzzle.setText(Messages.SudokuComposite_loadStandardPuzzle);
-        this.loadStandardPuzzle.setToolTipText(Messages.SudokuComposite_loadStandardPuzzle_Tooltip);
+        this.loadStandardPuzzle.setText(Messages.SudokuComposite_LoadStandardPuzzle);
+        this.loadStandardPuzzle.setToolTipText(Messages.SudokuComposite_LoadStandardPuzzle_Tooltip);
         this.loadStandardPuzzle.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
             	int puzzle;
@@ -490,10 +491,40 @@ public class SudokuComposite extends Composite {
                 }
             }
         });
+        
+        this.clearButton = new Button(subComposite, SWT.PUSH);
+        this.clearButton.setLayoutData(buttonrd);
+        this.clearButton.setEnabled(true);
+        this.clearButton.setText(Messages.SudokuComposite_ClearButton);
+        this.clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
+        this.clearButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(final SelectionEvent e) {
+            	loading = true;
+                switch (tabChoice) {
+                    case NORMAL:
+                        clearPuzzleNormal();
+                        break;
+                    case KILLER:
+                        clearPuzzleKiller();
+
+                        loadedKiller = false;
+                        additionButton.setEnabled(true);
+                        subtractionButton.setEnabled(true);
+                        multiplicationButton.setEnabled(true);
+                        divisionButton.setEnabled(true);
+                        break;
+                    case HEX:
+                        clearPuzzleHex();
+                        break;
+                }
+                loading = false;
+                refresh();
+            }
+        });
 
         if (tabChoice == HEX) {
             subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-            subComposite.setText("Strategies");
+            subComposite.setText(Messages.SudokuComposite_StrategiesAreaTitle);
             subComposite.setLayout(mrl);
             this.onePossibleButton = new Button(subComposite, SWT.PUSH);
             this.onePossibleButton.setLayoutData(buttonrd);
@@ -594,13 +625,13 @@ public class SudokuComposite extends Composite {
 
         if (tabChoice == KILLER) {
             subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-            subComposite.setText("Operators");
+            subComposite.setText(Messages.SudokuComposite_OperatorsAreaTitle);
             subComposite.setLayout(mrl);
             this.additionButton = new Button(subComposite, SWT.PUSH);
             this.additionButton.setLayoutData(buttonrd);
             this.additionButton.setEnabled(true);
-            this.additionButton.setText("Addition");
-            this.additionButton.setToolTipText("Addition");
+            this.additionButton.setText(Messages.SudokuComposite_AdditionButton);
+            this.additionButton.setToolTipText(Messages.SudokuComposite_AdditionButton_Tooltip);
             this.additionButton.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
@@ -640,8 +671,8 @@ public class SudokuComposite extends Composite {
             this.subtractionButton = new Button(subComposite, SWT.PUSH);
             this.subtractionButton.setLayoutData(buttonrd);
             this.subtractionButton.setEnabled(true);
-            this.subtractionButton.setText("Subtraction");
-            this.subtractionButton.setToolTipText("Subtraction");
+            this.subtractionButton.setText(Messages.SudokuComposite_SubtractionButton);
+            this.subtractionButton.setToolTipText(Messages.SudokuComposite_SubtractionButton_Tooltip);
             this.subtractionButton.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
@@ -683,8 +714,8 @@ public class SudokuComposite extends Composite {
             this.multiplicationButton = new Button(subComposite, SWT.PUSH);
             this.multiplicationButton.setLayoutData(buttonrd);
             this.multiplicationButton.setEnabled(true);
-            this.multiplicationButton.setText("Multiplication");
-            this.multiplicationButton.setToolTipText("Multiplication");
+            this.multiplicationButton.setText(Messages.SudokuComposite_MultiplicationButton);
+            this.multiplicationButton.setToolTipText(Messages.SudokuComposite_MultiplicationButton_Tooltip);
             this.multiplicationButton.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
@@ -724,8 +755,8 @@ public class SudokuComposite extends Composite {
             this.divisionButton = new Button(subComposite, SWT.PUSH);
             this.divisionButton.setLayoutData(buttonrd);
             this.divisionButton.setEnabled(true);
-            this.divisionButton.setText("Division");
-            this.divisionButton.setToolTipText("Division");
+            this.divisionButton.setText(Messages.SudokuComposite_DivisionButton);
+            this.divisionButton.setToolTipText(Messages.SudokuComposite_DivisionButton_Tooltip);
             this.divisionButton.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
@@ -977,6 +1008,12 @@ public class SudokuComposite extends Composite {
 
         updateInitialPossibilitiesKiller();
         updatePossibilitiesKiller();
+        
+        loadedKiller = true;
+        additionButton.setEnabled(false);
+        subtractionButton.setEnabled(false);
+        multiplicationButton.setEnabled(false);
+        divisionButton.setEnabled(false);
     }
 
     public void savePuzzleKiller() {
@@ -1435,18 +1472,22 @@ public class SudokuComposite extends Composite {
                     public void handleEvent(Event event) {
                         Composite composite = (Composite) event.widget;
                         Point point = compositeBoxesKiller.get(composite);
-                        if (selected.contains(point)) {
-                            composite.setBackground(WHITE);
-                            boardTextKiller[point.x][point.y].setBackground(WHITE);
-                            selected.remove(point);
-
+                        if (!loadedKiller) {
+	                        if (selected.contains(point)) {
+	                            composite.setBackground(WHITE);
+	                            boardTextKiller[point.x][point.y].setBackground(WHITE);
+	                            selected.remove(point);
+	
+	                        } else {
+	                            composite.setBackground(RED);
+	                            boardTextKiller[point.x][point.y].setBackground(RED);
+	                            selected.add(point);
+	                        }
                         } else {
-                            composite.setBackground(RED);
-                            boardTextKiller[point.x][point.y].setBackground(RED);
-                            selected.add(point);
+                            boardTextKiller[point.x][point.y].setFocus();
                         }
                     }
-
+                    
                 });
 
                 if (i + 1 != 9 && j + 1 != 9) {
