@@ -220,7 +220,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JCrypTool.org" url="http://www.cryptool.org/jcryptool/update"/>
+      <update label="JCrypTool.org" url="http://www.cryptool.org/jct/update"/>
    </url>
 
    <plugin
