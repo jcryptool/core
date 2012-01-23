@@ -126,6 +126,7 @@ public class AnalysisWizard extends Wizard implements TranspositionAnalysisInput
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public final void addPages() {
 		if (!firstAnalysis) {
 			addPage(new ConclusionPage(dataobject, true));
@@ -142,14 +143,17 @@ public class AnalysisWizard extends Wizard implements TranspositionAnalysisInput
 		return true;
 	}
 
+	@Override
 	public String getCiphertext() {
 		return ciphertext;
 	}
 
+	@Override
 	public double getUserEstimatedAnalysisWeight() {
 		return 1.0;
 	}
 
+	@Override
 	public boolean isUserEstimatedAnalysisWeight() {
 		return false;
 	}

@@ -24,7 +24,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 
 	private static final double THRESHHOLD_DELETE_DISCONNECT_TEXT_PERCENTILE = 0.85;
 
-	private static final String NOBALLOON_RESULTTYPE = "NOBALLOON";
+	private static final String NOBALLOON_RESULTTYPE = "NOBALLOON"; //$NON-NLS-1$
 
 	private Integer lastTextLength;
 	private Double lastPercentageOfTextSelected;
@@ -73,22 +73,22 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 	protected InputVerificationResult verifyUserChange() {
 		if (getFileRadioButton().getSelection() && getSelectedFile() == null) {
 			// msg not meant to be displayed
-			return InputVerificationResult.generateIVR(false, "no file was selected", MessageType.INFORMATION, false,
+			return InputVerificationResult.generateIVR(false, "no file was selected", MessageType.INFORMATION, false, //$NON-NLS-1$
 				NOBALLOON_RESULTTYPE);
 		}
 		if (getFileRadioButton().getSelection() && !getSelectedFile().exists()) {
 			// msg not meant to be displayed
-			return InputVerificationResult.generateIVR(false, "input file does not exist", MessageType.INFORMATION,
+			return InputVerificationResult.generateIVR(false, "input file does not exist", MessageType.INFORMATION, //$NON-NLS-1$
 				false);
 		}
 		if (getBtnJctEditorOption().getSelection() && getEditorsNotNecessarilyFresh().size() == 0) {
 			// msg not meant to be displayed
-			return InputVerificationResult.generateIVR(false, "no editors are available", MessageType.INFORMATION,
+			return InputVerificationResult.generateIVR(false, "no editors are available", MessageType.INFORMATION, //$NON-NLS-1$
 				false, NOBALLOON_RESULTTYPE);
 		}
 		if (getBtnJctEditorOption().getSelection() && getComboEditors().getSelectionIndex() < 0) {
 			// should never appear
-			return InputVerificationResult.generateIVR(true, "no editor selected", MessageType.INFORMATION, false,
+			return InputVerificationResult.generateIVR(true, "no editor selected", MessageType.INFORMATION, false, //$NON-NLS-1$
 				NOBALLOON_RESULTTYPE);
 		}
 		return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
@@ -125,7 +125,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 					currentlySelectedEditor);
 			}
 		} else {
-			throw new RuntimeException("Not all input method cases covered at reading input text!");
+			throw new RuntimeException("Not all input method cases covered at reading input text!"); //$NON-NLS-1$
 		}
 	}
 
@@ -138,7 +138,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 		} else if (content.getSourceType().equals(TextSourceType.USERINPUT)) {
 			setUIState(content, true);
 		} else {
-			throw new RuntimeException("not all cases covered in writeContent");
+			throw new RuntimeException("not all cases covered in writeContent"); //$NON-NLS-1$
 		}
 	}
 
@@ -160,7 +160,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 			}
 		} else { // no preset from out of the wizard
 			if (!isEditorAvailable()) {
-				return new TextInputWithSource("");
+				return new TextInputWithSource(""); //$NON-NLS-1$
 			} else {
 				IEditorReference bestEditor = getBestEditorReference();
 				return new TextInputWithSource(EditorUtils.retrieveTextForEditor(bestEditor), bestEditor);
@@ -170,7 +170,7 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 
 	@Override
 	public String getName() {
-		return "Text";
+		return "Text"; //$NON-NLS-1$
 	}
 
 	protected abstract Button getFileRadioButton();

@@ -52,6 +52,7 @@ public class TranspositionAnalysisConclusion {
 		this.resultAtoms = resultAtoms;
 	}
 
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		String[] splitConclusion = conclusion.split(PLACEHOLDER);

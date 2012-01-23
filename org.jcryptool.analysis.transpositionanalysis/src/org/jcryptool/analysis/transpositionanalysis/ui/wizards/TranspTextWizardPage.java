@@ -36,8 +36,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -189,7 +187,7 @@ public class TranspTextWizardPage extends WizardPage {
 	 * 
 	 **/
 	public TranspTextWizardPage() {
-		super(Messages.TranspTextWizardPage_textwizardtitle, "", null); //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+		super(Messages.TranspTextWizardPage_textwizardtitle, "", null); //$NON-NLS-1$ 
 		setTitle(Messages.TranspTextWizardPage_pagetitle);
 		setMessage(Messages.TranspTextWizardPage_pagedescription);
 
@@ -205,6 +203,7 @@ public class TranspTextWizardPage extends WizardPage {
 	/**
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public final void createControl(final Composite parent) {
 		GridData pageCompositeLayoutData = new GridData();
 		GridLayout pageCompositeLayout = new GridLayout();
@@ -240,7 +239,9 @@ public class TranspTextWizardPage extends WizardPage {
 					}
 					{
 						comboEditorInputSelector = new Combo(composite, SWT.NONE) {
+							@Override
 							protected void checkSubclass() {};
+							@Override
 							public org.eclipse.swt.graphics.Point computeSize(int wHint, int hHint, boolean changed) {
 								Point result = super.computeSize(wHint, hHint, changed);
 								return new Point(getAppropriateXValue(result.x, 160), result.y);
@@ -346,6 +347,7 @@ public class TranspTextWizardPage extends WizardPage {
 					parttextCheck.setSelection(init_croptext);
 
 					parttextCheck.addSelectionListener(new SelectionAdapter() {
+						@Override
 						public void widgetSelected(SelectionEvent evt) {
 							parttextCheckWidgetSelected(evt);
 						}
@@ -361,6 +363,7 @@ public class TranspTextWizardPage extends WizardPage {
 					parttextCount.setMinimum(1);
 					parttextCount.setMaximum(200);
 					parttextCount.addSelectionListener(new SelectionAdapter() {
+						@Override
 						public void widgetSelected(SelectionEvent evt) {
 							parttextCountWidgetSelected(evt);
 						}
@@ -410,6 +413,7 @@ public class TranspTextWizardPage extends WizardPage {
 				blocklengthSpinner = new Spinner(group1, SWT.NONE);
 				blocklengthSpinner.setMinimum(1);
 				blocklengthSpinner.addSelectionListener(new SelectionAdapter() {
+					@Override
 					public void widgetSelected(SelectionEvent evt) {
 						blocklengthSpinnerWidgetSelected(evt);
 					}
@@ -444,6 +448,7 @@ public class TranspTextWizardPage extends WizardPage {
 				directionChooserIn.setDirection(iniDirection);
 
 				directionChooserIn.getInput().addObserver(new Observer() {
+					@Override
 					public void update(Observable o, Object arg) {
 						if (arg == null) preview();
 					}

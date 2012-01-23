@@ -110,6 +110,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 
 		// revert selection highlighting
 		transpTable.addSelectionListener(new SelectionAdapter() {
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				transpTable.setSelection(-1);
 			}
@@ -449,6 +450,10 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	public int[] getColumnOrder() {
 		return transpTable.getColumnOrder();
 	}
+	
+	public void setColumnOrder(int[] order) {
+		transpTable.setColumnOrder(order);
+	}
 
 	/**
 	 * @param colReorderObserver
@@ -480,6 +485,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 		if (changed && refresh) refresh();
 	}
 
+	@Override
 	public void controlMoved(ControlEvent e) {
 
 		if (Math.abs(e.time - colMovedTime) > 200) {
@@ -489,6 +495,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 
 	}
 
+	@Override
 	public void controlResized(ControlEvent e) {
 	}
 

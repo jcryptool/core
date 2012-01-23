@@ -195,6 +195,7 @@ public class KeyViewer extends org.eclipse.swt.widgets.Dialog {
 					button1LData.horizontalAlignment = GridData.FILL;
 					button1.setLayoutData(button1LData);
 					button1.addSelectionListener(new SelectionAdapter() {
+						@Override
 						public void widgetSelected(SelectionEvent evt) {
 							switchInverted();
 						}

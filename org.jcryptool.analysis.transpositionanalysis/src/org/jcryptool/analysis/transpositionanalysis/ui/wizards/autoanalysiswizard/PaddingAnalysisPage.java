@@ -111,6 +111,7 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 				buttonAutoDetect.setLayoutData(buttonAutoDetectLData);
 				buttonAutoDetect.setText("Try to autodetect the padding");
 				buttonAutoDetect.addSelectionListener(new SelectionAdapter() {
+					@Override
 					public void widgetSelected(SelectionEvent evt) {
 						textPaddingSelector.setSelection(
 							textPaddingSelector.getText().length()
@@ -127,6 +128,7 @@ public class PaddingAnalysisPage extends SingleAnalysisPage implements Transposi
 		hideObject(labelAutoDescription, true);
 	}
 
+	@Override
 	public int getSelectedPaddingLengthFromEnd() {
 		if (textPaddingSelector.getSelection().y != textPaddingSelector.getSelection().x) return textPaddingSelector
 			.getText().length() - Math.min(textPaddingSelector.getSelection().x, textPaddingSelector.getSelection().y);

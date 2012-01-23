@@ -24,6 +24,7 @@ import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
  * @version 0.9.2
  */
 public class HelpHandler extends AbstractHandler {
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		PlatformUI.getWorkbench().getHelpSystem()
 			.displayHelp(TranspositionAnalysisPlugin.PLUGIN_ID + ".transpositionanalysis");

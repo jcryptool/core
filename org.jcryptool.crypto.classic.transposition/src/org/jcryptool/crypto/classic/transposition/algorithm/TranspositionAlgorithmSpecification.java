@@ -40,15 +40,20 @@ public class TranspositionAlgorithmSpecification extends
 		@Override
 		protected InputVerificationResult getFailResult(final String key, final AbstractAlphabet alphabet) {
 			return new InputVerificationResult() {
+				@Override
 				public boolean isStandaloneMessage() {return true;}
+				@Override
 				public MessageType getMessageType() {return InputVerificationResult.MessageType.INFORMATION;}
+				@Override
 				public boolean isValid() {return true;}
+				@Override
 				public String getMessage() {
 					String mask = org.jcryptool.crypto.classic.transposition.ui.Messages.TranspositionWizardPage_firstnotalter;
 					return String.format(mask, new TranspositionKey(key, alphabet.getCharacterSet()).toStringOneRelative());
 				}
+				@Override
 				public Object getResultType() {
-					return RESULT_TYPE_KEY_NOEFFECT; //$NON-NLS-1$
+					return RESULT_TYPE_KEY_NOEFFECT; 
 				}
 			};
 		}
@@ -58,7 +63,8 @@ public class TranspositionAlgorithmSpecification extends
 	public AbstractAlphabet getDefaultPlainTextAlphabet() {
 		List<AbstractAlphabet> availableAlphabets = getAvailablePlainTextAlphabets();
         Collections.sort(availableAlphabets, new Comparator<AbstractAlphabet>() {
-            public int compare(AbstractAlphabet o1, AbstractAlphabet o2) {
+            @Override
+			public int compare(AbstractAlphabet o1, AbstractAlphabet o2) {
                 return Integer.valueOf(o1.getCharacterSet().length).compareTo(
                         Integer.valueOf(o2.getCharacterSet().length));
             }

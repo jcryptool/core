@@ -50,6 +50,7 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 	 * Overriding checkSubclass allows this class to extend
 	 * org.eclipse.swt.widgets.Composite
 	 */
+	@Override
 	protected void checkSubclass() {
 	}
 
@@ -65,6 +66,7 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 
 	private void initGUI() {
 		radioGroup = new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				Button b = (Button) event.widget;
 				if (b.getSelection() == false) {

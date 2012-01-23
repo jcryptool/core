@@ -30,18 +30,22 @@ public class TranspositionAnalysisDataobject implements TranspositionAnalysisOut
 	public TranspositionAnalysisPadding paddingAnalysis;
 	public TranspositionAnalysisResumee resumeeAnalysis;
 
+	@Override
 	public Map<Integer, PolledTranspositionKey> getKeyPolls() {
 		return keyPolls;
 	}
 
+	@Override
 	public PolledPositiveInteger getKeylengthPoll() {
 		return keylengthPoll;
 	}
 
+	@Override
 	public void setKeyPolls(Map<Integer, PolledTranspositionKey> keys) {
 		this.keyPolls = keys;
 	}
 
+	@Override
 	public void setKeylengthPoll(PolledPositiveInteger keylength) {
 		this.keylengthPoll = keylength;
 	}

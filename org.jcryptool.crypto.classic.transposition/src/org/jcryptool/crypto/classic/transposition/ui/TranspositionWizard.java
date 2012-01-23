@@ -15,7 +15,7 @@ import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicWizard;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm;
 
 /**
- * The wizard for the Autokey-Vigenère-Chiffre.
+ * The wizard for the Transposition-Chiffre.
  * 
  * @author SLeischnig
  *
@@ -32,6 +32,7 @@ public class TranspositionWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new TranspositionWizardPage();
 		page.setAlgorithmSpecification(TranspositionAlgorithm.specification);

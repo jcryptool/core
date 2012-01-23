@@ -47,9 +47,10 @@ public class CalculationPage extends WizardPage {
 	}
 
 	public void setProgress(double progress) {
-		progressBar1.setSelection((int) Math.round(progress * (double) (progressBar1.getMaximum())));
+		progressBar1.setSelection((int) Math.round(progress * (progressBar1.getMaximum())));
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		{
 			pageComposite = new Composite(parent, SWT.NONE);
@@ -73,6 +74,7 @@ public class CalculationPage extends WizardPage {
 				button1.setLayoutData(button1LData);
 				button1.setText("Perform analysis");
 				button1.addSelectionListener(new SelectionAdapter() {
+					@Override
 					public void widgetSelected(SelectionEvent evt) {
 						((AnalysisWizard) getWizard()).analyze();
 					}

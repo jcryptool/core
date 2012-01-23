@@ -77,6 +77,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 		initPage();
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		{
@@ -95,6 +96,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 				nonfunctionalHintLabel.setLayoutData(nonfunctionalHintLabelLData);
 				nonfunctionalHintLabel.setText(Messages.AnalysisWizardIndexPage_nomethodsavailable);
 				nonfunctionalHintLabel.addMouseListener(new MouseAdapter() {
+					@Override
 					public void mouseDown(MouseEvent evt) {
 						setPageComplete(true);
 					}

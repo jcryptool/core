@@ -93,6 +93,7 @@ public class InitializationPage extends SingleAnalysisPage implements Transposit
 		}
 	}
 
+	@Override
 	public int getMaxKeylength() {
 		return Integer.parseInt(comboMaxLength.getText());
 	}

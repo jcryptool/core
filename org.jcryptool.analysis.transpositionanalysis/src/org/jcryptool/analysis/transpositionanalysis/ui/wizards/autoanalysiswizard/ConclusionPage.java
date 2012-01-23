@@ -37,6 +37,7 @@ public class ConclusionPage extends WizardPage {
 		this.dataobject = dataobject;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		{
 			pageComposite = new Composite(parent, SWT.NONE);

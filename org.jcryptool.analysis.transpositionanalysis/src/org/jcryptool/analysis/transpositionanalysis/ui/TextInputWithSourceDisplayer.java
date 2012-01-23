@@ -5,9 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Cursor;
@@ -20,28 +19,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.IOperationsConstants;
-import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.algorithm.Messages;
-import org.jcryptool.core.operations.editors.AbstractEditorService;
-import org.jcryptool.core.operations.util.PathEditorInput;
-import org.jcryptool.editor.text.JCTTextEditorPlugin;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.IOperationsConstants;
+import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.core.operations.editors.AbstractEditorService;
+import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
 public class TextInputWithSourceDisplayer extends Composite {
-	private static final String FILE_BY_CLICKING_ON_THE_ICON = "By clicking on the icon, you can open the file in an editor";
-	private static final String EDITOR_BY_CLICKING_ON_THE_ICON = "By clicking on the icon, you can open the original editor for the text";
-	private static final String USERINPUT_BY_CLICKING_ON_THE_ICON = "By clicking on the icon, you can open your input in an editor";
+	private static final String FILE_BY_CLICKING_ON_THE_ICON = Messages.TextInputWithSourceDisplayer_fileOpenHint;
+	private static final String EDITOR_BY_CLICKING_ON_THE_ICON = Messages.TextInputWithSourceDisplayer_editorOpenHint;
+	private static final String USERINPUT_BY_CLICKING_ON_THE_ICON = Messages.TextInputWithSourceDisplayer_userinputOpenHint;
 	private static ImageRegistry imageRegistry;
 	private Label lblPrimaryInputDescription;
 	private TextInputWithSource text;
@@ -108,7 +105,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 			lblPrimaryInputDescriptionLData.horizontalSpan = 1;
 			lblPrimaryInputDescriptionLData.horizontalIndent = 5;
 			lblPrimaryInputDescription.setLayoutData(lblPrimaryInputDescriptionLData);
-			lblPrimaryInputDescription.setText("");
+			lblPrimaryInputDescription.setText(""); //$NON-NLS-1$
 		}
 		// more than one nesting is not allowed (hence this private constructor)
 		if (nesting) {
@@ -124,7 +121,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 			{
 				lblOriginCaption = new Label(originComposite, SWT.NONE);
 				lblOriginCaption.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-				lblOriginCaption.setText("(Origin: ");
+				lblOriginCaption.setText(Messages.TextInputWithSourceDisplayer_originLabelBeginning);
 			}
 			{
 				// displaying the manual input origin composite
@@ -138,7 +135,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 			{
 				lblOriginCaptionEnd = new Label(originComposite, SWT.NONE);
 				lblOriginCaptionEnd.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-				lblOriginCaptionEnd.setText(")");
+				lblOriginCaptionEnd.setText(")"); //$NON-NLS-1$
 			}
 		}
 
@@ -181,7 +178,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 		while ((index = residualName.indexOf('.')) > 0) {
 			residualName = residualName.substring(index + 1);
 		}
-		if (residualName.equals(filename)) return "";
+		if (residualName.equals(filename)) return ""; //$NON-NLS-1$
 		return residualName;
 
 	}
@@ -225,16 +222,16 @@ public class TextInputWithSourceDisplayer extends Composite {
 			if (textInput.file != null) { // text file set -> opening possible
 				String filepath = textInput.file.getAbsolutePath();
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, filepath, openFileHintString);
 				} else {
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, filepath);
 				}
 			} else { // no file set (but text must always be set -> opening
 						// possible still)
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, openFileHintString);
 				} else {
 					return null; // no tooltip here ^^ cause no path found.
@@ -251,16 +248,16 @@ public class TextInputWithSourceDisplayer extends Composite {
 				// possible
 				String editorTitle = textInput.editorReference.getTitle();
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, editorTitle, openEditorHintString);
 				} else {
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, editorTitle);
 				}
 			} else { // no file set (but text must always be set -> opening
 						// possible still)
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, openEditorHintString);
 				} else {
 					return null; // no tooltip here ^^ cause no editor found
@@ -272,18 +269,18 @@ public class TextInputWithSourceDisplayer extends Composite {
 		String openUserInputHintString = USERINPUT_BY_CLICKING_ON_THE_ICON;
 		if (textInput.getSourceType() == TextSourceType.USERINPUT) {
 			String descriptionTooltipMask;
-			String title = "Manual input";
+			String title = Messages.TextInputWithSourceDisplayer_manualinput;
 			if (textInput.userInputOrigin != null) { // origin exists
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, title, openUserInputHintString);
 				} else {
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, title);
 				}
 			} else { // no origin exists
 				if (displayStyle.images) { // images -> clickbtn
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, title, openUserInputHintString);
 				} else {
 					return null; // no tooltip here ^^ origin not found and no
@@ -308,16 +305,16 @@ public class TextInputWithSourceDisplayer extends Composite {
 			if (text.file != null) { // text file set -> opening possible
 				String filepath = text.file.getAbsolutePath();
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, filepath, openFileHintString);
 				} else {
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, filepath);
 				}
 			} else { // no file set (but text must always be set -> opening
 						// possible still)
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, openFileHintString);
 				} else {
 					return null; // no tooltip here ^^ cause no path found.
@@ -334,7 +331,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 												// possible
 				String editorTitle = text.editorReference.getTitle();
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, editorTitle, openEditorHintString);
 				} else {
 					// here is only to display the editor title which is already
@@ -347,7 +344,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 			} else { // no file set (but text must always be set -> opening
 						// possible still)
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s";
+					descriptionTooltipMask = "%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, openEditorHintString);
 				} else {
 					return null; // no tooltip here ^^ cause no editor found
@@ -359,10 +356,10 @@ public class TextInputWithSourceDisplayer extends Composite {
 		String openUserInputHintString = USERINPUT_BY_CLICKING_ON_THE_ICON;
 		if (text.getSourceType() == TextSourceType.USERINPUT) {
 			String descriptionTooltipMask;
-			String title = "Manual input";
+			String title = Messages.TextInputWithSourceDisplayer_manualinput;
 			if (text.userInputOrigin != null) { // origin exists
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, title, openUserInputHintString);
 				} else {
 					// would only show "manual input"
@@ -372,7 +369,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 				}
 			} else { // no origin exists
 				if (displayStyle.images) { // there is a click btn next to this
-					descriptionTooltipMask = "%s\n%s";
+					descriptionTooltipMask = "%s\n%s"; //$NON-NLS-1$
 					return String.format(descriptionTooltipMask, title, openUserInputHintString);
 				} else {
 					return null; // no tooltip here ^^ origin not found and no
@@ -386,34 +383,34 @@ public class TextInputWithSourceDisplayer extends Composite {
 	}
 
 	private static String generatePrimarySourceTypeString(TextInputWithSource textInput) {
-		return generateGeneralInputTypeString(textInput.getSourceType()) + ":";
+		return generateGeneralInputTypeString(textInput.getSourceType()) + ":"; //$NON-NLS-1$
 	}
 
 	private static String generatePrimaryDescriptionString(TextInputWithSource textInput) {
 		if (textInput.getSourceType() == TextSourceType.USERINPUT) {
-			return "Manual input";
+			return Messages.TextInputWithSourceDisplayer_manualinput;
 		} else if (textInput.getSourceType() == TextSourceType.JCTEDITOR) {
 			if (textInput.editorReference != null) {
 				return textInput.editorReference.getTitle();
 			} else {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		} else { // if(textInput.getSourceType() == TextSourceType.FILE) {
 			if (textInput.file != null) {
 				return textInput.file.getName();
 			} else {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 		}
 	}
 
 	private static String generateGeneralInputTypeString(TextSourceType sourceType) {
 		if (sourceType == TextSourceType.USERINPUT) {
-			return "manual input";
+			return "Manual input"; //$NON-NLS-1$
 		} else if (sourceType == TextSourceType.JCTEDITOR) {
-			return "editor";
+			return "editor"; //$NON-NLS-1$
 		} else { // if(textInput.getSourceType() == TextSourceType.FILE) {
-			return "file";
+			return "file"; //$NON-NLS-1$
 		}
 	}
 
@@ -426,7 +423,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 		List<Control> controlsToLayout = new LinkedList<Control>();
 		lblPrimaryInputType.setToolTipText(null);
 		lblPrimaryInputDescription.setToolTipText(null);
-		lblPrimaryInputType.setText("");
+		lblPrimaryInputType.setText(""); //$NON-NLS-1$
 		lblPrimaryInputType.setImage(null);
 		lblPrimaryInputType.setCursor(null);
 
@@ -435,7 +432,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 
 		if (displayStyle.images) {
 			lblPrimaryInputType.setCursor(new Cursor(this.getDisplay(), SWT.CURSOR_HAND));
-			lblPrimaryInputType.setText("");
+			lblPrimaryInputType.setText(""); //$NON-NLS-1$
 			lblPrimaryInputType.setToolTipText(generateTooltipForPrimaryTypeLabel(text, displayStyle));
 			lblPrimaryInputType.setImage(generateImageFor(text));
 
@@ -520,13 +517,13 @@ public class TextInputWithSourceDisplayer extends Composite {
 					openTextInEditor(text.getText(), text.editorReference.getTitle());
 				}
 			} else {
-				openTextInEditor(text.getText(), "new");
+				openTextInEditor(text.getText(), "new"); //$NON-NLS-1$
 			}
 		} else if (text.getSourceType() == TextSourceType.USERINPUT) {
 			if (text.userInputOrigin != null && text.userInputOrigin.getText().equals(text.getText())) {
 				doPrimaryClickActionFor(text.userInputOrigin);
 			} else {
-				openTextInEditor(text.getText(), "new");
+				openTextInEditor(text.getText(), "new"); //$NON-NLS-1$
 			}
 		}
 	}
@@ -573,6 +570,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 	 */
 	protected static void performOpenEditor(final IEditorInput input, final String editorId) {
 		Display.getDefault().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					getActiveWorkbenchWindow().getActivePage().openEditor(input, editorId);
@@ -583,9 +581,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 					} catch (PartInitException e) {
 						LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
 
-						MessageDialog.openError(getActiveWorkbenchWindow().getShell(),
-							Messages.AbstractAlgorithmAction_1,
-							NLS.bind(Messages.AbstractAlgorithmAction_2, new Object[] { editorId }));
+						System.err.println("could not open editor in " + editorId);//$NON-NLS-1$
 					}
 				}
 			}

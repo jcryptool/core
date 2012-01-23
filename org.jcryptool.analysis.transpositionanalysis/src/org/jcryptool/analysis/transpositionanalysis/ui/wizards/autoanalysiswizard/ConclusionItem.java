@@ -40,6 +40,7 @@ public class ConclusionItem extends org.eclipse.swt.widgets.Composite {
 	 * Overriding checkSubclass allows this class to extend
 	 * org.eclipse.swt.widgets.Composite
 	 */
+	@Override
 	protected void checkSubclass() {
 	}
 

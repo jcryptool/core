@@ -177,6 +177,7 @@ public class PolledValue<T> {
 
 		// sort from high to low!
 		Comparator<Entry<T, Double>> entryComparator = new Comparator<Entry<T, Double>>() {
+			@Override
 			public int compare(Entry<T, Double> o1, Entry<T, Double> o2) {
 				if (o1.getValue() > o2.getValue()) return -1;
 				if (o2.getValue() > o1.getValue()) return 1;
@@ -225,10 +226,12 @@ public class PolledValue<T> {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return getSortedEntries().toString();
 	}
 
+	@Override
 	public PolledValue<T> clone() {
 		Map<T, Double> internalRepresentationClone;
 		internalRepresentationClone = new HashMap<T, Double>(internalRepresentation);

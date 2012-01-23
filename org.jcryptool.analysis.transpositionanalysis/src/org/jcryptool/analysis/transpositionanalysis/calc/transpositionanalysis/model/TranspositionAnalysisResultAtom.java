@@ -47,6 +47,7 @@ public class TranspositionAnalysisResultAtom {
 		this.onlyAboutLength = onlyAboutLength;
 	}
 
+	@Override
 	public String toString() {
 		if (onlyAboutLength) {
 			return String.valueOf(result.getLength());

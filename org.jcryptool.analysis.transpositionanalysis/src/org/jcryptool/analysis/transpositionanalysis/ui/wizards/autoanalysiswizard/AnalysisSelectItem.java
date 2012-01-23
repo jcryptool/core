@@ -40,6 +40,7 @@ public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 	 * Overriding checkSubclass allows this class to extend
 	 * org.eclipse.swt.widgets.Composite
 	 */
+	@Override
 	protected void checkSubclass() {
 	}
 
@@ -117,6 +118,7 @@ public class AnalysisSelectItem extends org.eclipse.swt.widgets.Composite {
 		analysis1check.addListener(SWT.Selection, selectionListener);
 	}
 
+	@Override
 	public void setEnabled(boolean enabled) {
 		analysis1check.setEnabled(enabled);
 	}

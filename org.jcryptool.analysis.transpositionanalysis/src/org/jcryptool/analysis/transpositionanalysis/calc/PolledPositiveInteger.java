@@ -37,6 +37,7 @@ public class PolledPositiveInteger extends PolledValue<Integer> {
 		return true;
 	}
 
+	@Override
 	public PolledPositiveInteger clone() {
 		Map<Integer, Double> internalRepresentationClone;
 		internalRepresentationClone = new HashMap<Integer, Double>(internalRepresentation);
@@ -48,6 +49,7 @@ public class PolledPositiveInteger extends PolledValue<Integer> {
 		return clone;
 	}
 
+	@Override
 	public PolledPositiveInteger cloneWithDefaultPossibilities() {
 		PolledPositiveInteger result = clone();
 		result.setAllChoicesDefaultPossible();

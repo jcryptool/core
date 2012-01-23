@@ -39,6 +39,7 @@ public class TranspTextWizard extends Wizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public final void addPages() {
 		addPage(firstPage);
 		addPage(page2);

@@ -43,7 +43,7 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 	}
 
 	private double smallValueFunction(double x) {
-		double a = (PolledValue.POSSIBILITY_DEFAULT - PolledValue.POSSIBILITY_HIGHLY_UNLIKELY) / (double) (4 - 1);
+		double a = (PolledValue.POSSIBILITY_DEFAULT - PolledValue.POSSIBILITY_HIGHLY_UNLIKELY) / (4 - 1);
 		double b = PolledValue.POSSIBILITY_HIGHLY_UNLIKELY - a;
 
 		return Math.min(1, a * x + b);
@@ -73,7 +73,7 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 			if (counter >= 4) break;
 		}
 
-		return sum / (double) counter;
+		return sum / counter;
 	}
 
 	private PolledPositiveInteger calculatePossibilitiesIntoOutputFromLengthAndDividers(List<Integer> dividers,

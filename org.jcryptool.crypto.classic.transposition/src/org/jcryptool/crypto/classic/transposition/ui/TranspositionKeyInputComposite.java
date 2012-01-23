@@ -24,16 +24,16 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.keys.KeyVerificator;
+import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
-import org.jcryptool.core.util.input.AbstractUIInput;
-import org.jcryptool.core.util.input.ButtonInput;
-import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.core.operations.keys.KeyVerificator;
-import org.jcryptool.core.util.input.TextfieldInput;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -122,14 +122,23 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 		return new AbstractAlphabet() {
 			List<Character> content = stringToList(alphabetContent);
 
+			@Override
 			public void setShortName(String shortName) {}
+			@Override
 			public void setName(String name) {}
+			@Override
 			public void setDefaultAlphabet(boolean b) {}
+			@Override
 			public void setCharacterSet(char[] characterSet) {}
+			@Override
 			public void setBasic(boolean basic) {}
+			@Override
 			public boolean isDefaultAlphabet() {return false;}
+			@Override
 			public boolean isBasic() {return false;}
+			@Override
 			public char getSubstituteCharacter() {return Character.MAX_VALUE;}
+			@Override
 			public int getDisplayMissingCharacters() {return Integer.MAX_VALUE;}
 
 			private List<Character> stringToList(String characters) {
@@ -151,11 +160,15 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 				return result;
 			}
 
-			public String getShortName() {return listToString(content);} //$NON-NLS-1$
+			@Override
+			public String getShortName() {return listToString(content);} 
+			@Override
 			public String getName() {return "AtomAlphabet="+listToString(content);} //$NON-NLS-1$
+			@Override
 			public char[] getCharacterSet() {
 				return toCharArray(content);
 			}
+			@Override
 			public boolean contains(char e) {
 				return content.contains(e);
 			}
@@ -259,6 +272,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 			}
 		};
 		isActiveInput.addObserver(new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 //				hideObject(compInputCtrls, ! isActiveInput.getContent());
 				updateForEnabledState(isActiveInput.getContent());
@@ -312,6 +326,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 		};
 
 		keyInput.addObserver(new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 				if(arg == null) {
 					textPreview.setText(keyInput.getContent().toStringOneRelative());
@@ -342,7 +357,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 				if(! isActiveInput.getContent()) return 0;
 
 				// set infinite duration for the "not changing the encryption" tooltip
-				if(result.getResultType() == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { //$NON-NLS-1$
+				if(result.getResultType() == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { 
 					return Integer.MAX_VALUE;
 				}
 
@@ -353,9 +368,9 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 			protected void changeTooltipDurationAtCleaninputButNotHidden(
 					AbstractUIInput input) {
 				// vanish instantly when it is the "not changing the encryption" tooltip
-				if(getLastDisplayedResultType(input) == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { //$NON-NLS-1$
+				if(getLastDisplayedResultType(input) == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { 
 					tooltipMap.get(input).setTimeToVanish(-1);
-				} else if(getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { //$NON-NLS-1$
+				} else if(getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { 
 					tooltipMap.get(input).setTimeToVanish(-1);
 				} else {
 					super.changeTooltipDurationAtCleaninputButNotHidden(input);

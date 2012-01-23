@@ -41,7 +41,8 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the decrypted data as an int array.
      */
-    public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet,
+    @Override
+	public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet,
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
 
@@ -141,7 +142,8 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the encrypted data as an int array.
      */
-    public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet,
+    @Override
+	public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet,
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
 

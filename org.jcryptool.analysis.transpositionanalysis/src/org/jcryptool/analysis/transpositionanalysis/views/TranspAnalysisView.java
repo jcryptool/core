@@ -36,6 +36,7 @@ public class TranspAnalysisView extends ViewPart {
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
+	@Override
 	public void setFocus() {
 		myUI.setFocus();
 

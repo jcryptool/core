@@ -33,6 +33,7 @@ public class SWTResourceManager {
 	private static SWTResourceManager instance = new SWTResourceManager();
 
 	private static DisposeListener disposeListener = new DisposeListener() {
+		@Override
 		public void widgetDisposed(DisposeEvent e) {
 			users.remove(e.getSource());
 			if (users.size() == 0)

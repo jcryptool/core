@@ -72,14 +72,14 @@ public class TextInputWithSource {
 	public String toString() {
 		if (getSourceType().equals(TextSourceType.USERINPUT)) {
 			if (userInputOrigin == null) {
-				return "manual input";
+				return Messages.TextInputWithSource_manualInput;
 			} else {
-				return "manual input; Source: " + userInputOrigin.toString();
+				return Messages.TextInputWithSource_manualInput_source + userInputOrigin.toString();
 			}
 		} else if (getSourceType().equals(TextSourceType.JCTEDITOR)) {
-			return "Editor: " + editorReference == null ? (editorReference.getTitle()+" (not opened anymore)") : editorReference.getTitle();
+			return Messages.TextInputWithSource_editor + editorReference == null ? (editorReference.getTitle()+Messages.TextInputWithSource_notopenedanymore) : editorReference.getTitle();
 		} else if (getSourceType().equals(TextSourceType.FILE)) {
-			return "File: " + file.getName();
+			return Messages.TextInputWithSource_file + file.getName();
 		} else {
 			return super.toString();
 		}

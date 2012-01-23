@@ -48,6 +48,7 @@ public abstract class SingleAnalysisPage extends WizardPage implements Transposi
 		this.analysis = analysis;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		{
@@ -134,14 +135,17 @@ public abstract class SingleAnalysisPage extends WizardPage implements Transposi
 		}
 	}
 
+	@Override
 	public String getCiphertext() {
 		return ((TranspositionAnalysisInput) getWizard()).getCiphertext();
 	}
 
+	@Override
 	public double getUserEstimatedAnalysisWeight() {
 		return Double.parseDouble(comboDefineOwnWeight.getText());
 	}
 
+	@Override
 	public boolean isUserEstimatedAnalysisWeight() {
 		return true;
 	}

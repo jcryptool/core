@@ -17,11 +17,11 @@ public abstract class TextonlyInput extends TextfieldInput<String> {
 
 	@Override
 	protected String getDefaultContent() {
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
 	public String getName() {
-		return "Text";
+		return "Text"; //$NON-NLS-1$
 	}
 }

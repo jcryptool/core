@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -53,6 +54,7 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 		analysesList = analyses;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		{
@@ -106,6 +108,7 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 		return null;
 	}
 
+	@Override
 	public void handleEvent(Event event) {
 		calcPageComplete();
 	}
@@ -146,17 +149,17 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 		}
 
 		if (!onePlusIniSelected) {
-			setMessage("Just the initialization of the analysis is selected.", DialogPage.WARNING);
+			setMessage("Just the initialization of the analysis is selected.", IMessageProvider.WARNING);
 		}
 		if (!oneSelected) {
 			setPageComplete(false);
-			setMessage("Select at least one analysis.", DialogPage.ERROR);
+			setMessage("Select at least one analysis.", IMessageProvider.ERROR);
 		}
 
 	}
 
 	private void setNormalMessage() {
-		setMessage(normalMessage, DialogPage.NONE);
+		setMessage(normalMessage, IMessageProvider.NONE);
 	}
 
 }
