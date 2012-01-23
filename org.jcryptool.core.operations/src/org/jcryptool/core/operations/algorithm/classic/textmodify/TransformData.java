@@ -225,4 +225,17 @@ public class TransformData {
 
 		return result.toString();
 	}
+	
+	@Override
+	protected TransformData clone() throws CloneNotSupportedException {
+		TransformData clone = new TransformData();
+		clone.selectedAlphabetName = selectedAlphabetName;
+		clone.doUppercase = doUppercase;
+		clone.uppercaseTransformationOn = uppercaseTransformationOn;
+		clone.alphabetTransformationON = alphabetTransformationON;
+		clone.umlautTransformationON = umlautTransformationON;
+		clone.leerTransformationON = leerTransformationON;
+		return clone;
+	}
+	
 }
