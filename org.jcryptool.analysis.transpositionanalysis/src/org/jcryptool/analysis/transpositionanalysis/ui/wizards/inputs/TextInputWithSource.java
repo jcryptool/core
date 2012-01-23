@@ -23,7 +23,7 @@ public class TextInputWithSource {
 		this.text = text;
 		this.sourceType = sourceType;
 	}
-
+	
 	/**
 	 * Source type will be {@link TextSourceType#USERINPUT}
 	 * 
@@ -72,14 +72,14 @@ public class TextInputWithSource {
 	public String toString() {
 		if (getSourceType().equals(TextSourceType.USERINPUT)) {
 			if (userInputOrigin == null) {
-				return "User input";
+				return "manual input";
 			} else {
-				return "User input; Source: " + userInputOrigin.toString();
+				return "manual input; Source: " + userInputOrigin.toString();
 			}
 		} else if (getSourceType().equals(TextSourceType.JCTEDITOR)) {
-			return "Editor: " + editorReference == null ? "nonexistent" : editorReference.getTitle();
+			return "Editor: " + editorReference == null ? (editorReference.getTitle()+" (not opened anymore)") : editorReference.getTitle();
 		} else if (getSourceType().equals(TextSourceType.FILE)) {
-			return file.getName();
+			return "File: " + file.getName();
 		} else {
 			return super.toString();
 		}

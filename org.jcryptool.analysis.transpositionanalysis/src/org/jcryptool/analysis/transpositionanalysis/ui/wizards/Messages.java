@@ -30,9 +30,6 @@ public class Messages extends NLS {
 	public static String TranspTextModifyPage_textmodifydescription;
 	public static String TranspTextWizard_textwizard;
 	public static String TranspTextWizardPage_columns;
-	public static String TranspTextWizardPage_inputowntext;
-	public static String TranspTextWizardPage_loadtextfromeditor;
-	public static String TranspTextWizardPage_or;
 	public static String TranspTextWizardPage_pagedescription;
 	public static String TranspTextWizardPage_pagetitle;
 	public static String TranspTextWizardPage_preview;
@@ -43,8 +40,7 @@ public class Messages extends NLS {
 	public static String TranspTextWizardPage_takeonlyapartofthetext;
 	public static String TranspTextWizardPage_text;
 	public static String TranspTextWizardPage_textwizardtitle;
-	public static String TranspTextWizardPage_valuezerodescription;
-	public static String TranspTextWizardPage_whatiscolumncount;
+	public static String TranspTextWizardPage_windowsfiledialogtitle;
 	public static String TranspTextWizardPage_grpText_text;
 	public static String TranspTextWizardPage_lblLadenDesTextes_text;
 	public static String TranspTextWizardPage_btnJcteditor_text;
@@ -52,6 +48,9 @@ public class Messages extends NLS {
 	public static String TranspTextWizardPage_btnZwischenablageeigeneEingabe_text;
 	public static String TranspTextWizardPage_lblFilenametxt_text;
 	public static String TranspTextWizardPage_link_text;
+	public static String TranspTextWizardPage_lblIfTheText_text;
+	public static String TranspTextWizardPage_lblCharacters_text;
+	public static String TranspTextWizardPage_lblyouCanChange_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

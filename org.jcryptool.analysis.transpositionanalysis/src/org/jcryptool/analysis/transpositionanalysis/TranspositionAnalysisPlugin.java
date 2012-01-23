@@ -11,6 +11,7 @@
 package org.jcryptool.analysis.transpositionanalysis;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -18,6 +19,10 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle
  */
 public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
+
+	public static final String FILE_INPUT_ICON = "fileInputIcon";
+
+	public static final String KEYBOARD_INPUT_ICON = "keyboardInputIcon";
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jcryptool.analysis.transpositionanalysis"; //$NON-NLS-1$
@@ -74,5 +79,13 @@ public class TranspositionAnalysisPlugin extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+	
+	@Override
+	protected void initializeImageRegistry(ImageRegistry reg) {
+		ImageDescriptor imageDescriptorKeys = getImageDescriptor("icons/keys.png");
+		reg.put(KEYBOARD_INPUT_ICON, imageDescriptorKeys.createImage());
+		ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/file.png");
+		reg.put(FILE_INPUT_ICON, imageDescriptorFile.createImage());
 	}
 }

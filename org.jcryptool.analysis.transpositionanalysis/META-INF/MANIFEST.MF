@@ -6,7 +6,8 @@ Bundle-Version: 0.9.6.qualifier
 Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin
 Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.eclipse.help.ui;bundle-version="3.5.100",
- org.jcryptool.core.util;bundle-version="0.9.5"
+ org.jcryptool.core.util;bundle-version="0.9.5",
+ org.jcryptool.editor.text
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.analysis.textmodify.wizard,

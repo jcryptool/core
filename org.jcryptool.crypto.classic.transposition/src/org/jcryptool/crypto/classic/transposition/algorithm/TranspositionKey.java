@@ -59,7 +59,6 @@ public class TranspositionKey {
 		this.fromString(stringRepresentation, alphabet);
 	}
 
-
 	/**
 	 * Clears all content.
 	 */

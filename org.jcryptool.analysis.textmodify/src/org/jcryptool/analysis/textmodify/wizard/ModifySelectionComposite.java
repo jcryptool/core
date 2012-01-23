@@ -87,6 +87,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     private String tryString;
     private PreviewViewer myExampleViewer;
+	private boolean isPageBuilt;
 
     /**
      * @param parent the parent composite
@@ -136,7 +137,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
     }
 
     public void setTransformData(TransformData data) {
-        alphabetYESNO.setSelection(data.isAlphabetTransformationON());
+    	alphabetYESNO.setSelection(data.isAlphabetTransformationON());
         alphabetTransformationON = data.isAlphabetTransformationON();
         uppercaseYESNO.setSelection(data.isUppercaseTransformationOn());
         uppercaseTransformationOn = data.isUppercaseTransformationOn();
@@ -154,7 +155,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
         alphabetCombo.setEnabled(alphabetYESNO.getSelection());
     }
 
-    /**
+	/**
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
     private void initAlphabetComposites(String selectAlphabetName) {

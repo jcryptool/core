@@ -492,4 +492,8 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	public void controlResized(ControlEvent e) {
 	}
 
+	public boolean getReadInOrder() {
+		return readInOrder;
+	}
+
 }

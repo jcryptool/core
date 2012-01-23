@@ -36,6 +36,18 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_preview;
 	public static String TranspAnalysisUI_read_out_mode_label;
 	public static String TranspAnalysisUI_Results;
+	public static String TranspAnalysisUI_lblLoadA_text;
+	public static String TranspAnalysisUI_btnOpenTextWizard_text;
+	public static String TranspAnalysisUI_lblTryTo_text;
+	public static String TranspAnalysisUI_lblTryToRecover_text;
+	public static String TranspAnalysisUI_lblThisCanBe_text;
+	public static String TranspAnalysisUI_lblHoweverTheColumn_text;
+	public static String TranspAnalysisUI_lblColumnCount_text;
+	public static String TranspAnalysisUI_lblColumnCount_text_1;
+	public static String TranspAnalysisUI_label_text;
+	public static String TranspAnalysisUI_lblYouHaveSelected_text;
+	public static String TranspAnalysisUI_link_text;
+	public static String TranspAnalysisUI_label_1_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

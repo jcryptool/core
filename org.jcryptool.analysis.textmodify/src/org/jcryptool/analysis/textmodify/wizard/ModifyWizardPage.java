@@ -25,6 +25,7 @@ public class ModifyWizardPage extends WizardPage{
 
 	private TransformData predefinedData = new TransformData();
 	private ModifySelectionComposite composite1;
+	private TransformData initTransformData;
 
 	/**
 	 * Creates a new instance of CaesarWizardPage.
@@ -88,7 +89,11 @@ public class ModifyWizardPage extends WizardPage{
 	}
 
 	public final void setSelectedData(final TransformData myWizardData) {
-		composite1.setTransformData(myWizardData);
+		if(composite1!=null && !composite1.isDisposed()) {
+			composite1.setTransformData(myWizardData);
+		} else {
+			setPredefinedData(myWizardData);
+		}
 	}
 
 	public final TransformData getSelectedData() {
