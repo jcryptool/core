@@ -535,7 +535,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 
 	private static void openTextInEditor(String text, String name) {
 		IEditorPart editorPart = getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		final String editorId = editorPart.getSite().getId();
+		final String editorId = editorPart==null?"org.jcryptool.editor.text.editor.JCTTextEditor":editorPart.getSite().getId();
 
 		IEditorInput editorInput = AbstractEditorService.createOutputFile(text);
 		performOpenEditor(editorInput, editorId);
@@ -543,7 +543,7 @@ public class TextInputWithSourceDisplayer extends Composite {
 
 	private static void openFileInEditor(File file) {
 		IEditorPart editorPart = getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		final String editorId = editorPart.getSite().getId();
+		final String editorId = editorPart==null?"org.jcryptool.editor.text.editor.JCTTextEditor":editorPart.getSite().getId();;
 		File outputFile = file;
 
 		// try {

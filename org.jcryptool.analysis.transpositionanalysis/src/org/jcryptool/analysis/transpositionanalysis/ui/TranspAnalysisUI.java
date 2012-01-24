@@ -398,7 +398,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 									@Override
 									public void widgetSelected(SelectionEvent e) {
 										TranspositionKeyInputWizard wiz = new TranspositionKeyInputWizard();
-										dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wiz);
+										dialog = new WizardDialog(TranspAnalysisUI.this.getShell(), wiz);
 
 										TranspositionKey oldKey = getKeyUsedToEncrypt();
 										wiz.setPageConfig(new TranspositionKeyInputWizardPage.PageConfiguration(oldKey));
@@ -553,7 +553,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private void setTableTextWithWizard() {
 		textWizard = new TranspTextWizard();
-		dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), textWizard);
+		dialog = new WizardDialog(this.getShell(), textWizard);
 
 		if (textPageConfiguration != null) { // if not initial state (already
 												// have loaded a text)
