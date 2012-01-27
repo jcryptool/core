@@ -1,5 +1,7 @@
 package org.jcryptool.games.numbershark.handler;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -42,6 +44,9 @@ public class RedoHandler extends AbstractHandler {
             
             //activate numbers an buttons            
             String redoLostNumbers =  scoreTableRow.getLostNumbers();
+            redoLostNumbers = redoLostNumbers.replaceAll("prim", "");
+            redoLostNumbers = redoLostNumbers.replaceAll(" \\(", "");
+            redoLostNumbers = redoLostNumbers.replaceAll("\\)", "");
             int iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
 
             // activate numbers and buttons
@@ -85,6 +90,28 @@ public class RedoHandler extends AbstractHandler {
             	CommandStateChanger commandStateChanger = new CommandStateChanger();
                 commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_DISABLED);
             }
+            
+    		ArrayList<Integer> sharkMealList = view.getSharkMealList();
+    		if(sharkMealList.isEmpty()){
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+    					CommandState.State.SHARKMEAL_DISABLED);
+    		} else {
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+    					CommandState.State.SHARKMEAL_ENABLED);
+    		}
+    		
+    		int hint = view.getHint();
+    		if(hint != 0 ){
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+    						CommandState.State.HINT_ENABLED);
+    		} else {
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+    					CommandState.State.HINT_DISABLED);
+    		}
             	
         }
         

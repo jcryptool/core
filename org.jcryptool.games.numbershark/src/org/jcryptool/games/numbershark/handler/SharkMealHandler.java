@@ -15,63 +15,54 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.games.numbershark.util.CommandState;
+import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.views.Number;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler creates a shark meal.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.5
  */
 public class SharkMealHandler extends AbstractHandler {
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
-            NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
+	public Object execute(ExecutionEvent event) throws ExecutionException {
+		if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
+			NumberSharkView view = ((NumberSharkView) HandlerUtil
+					.getActivePart(event));
 
-            ArrayList<Integer> sharkMealList = new ArrayList<Integer>();
-            int[] lostNumbers;
-            int gameNMax = view.getNumberOfFields();
-            Number[] numberField = view.getNumberField();
+			ArrayList<Integer> sharkMealList = view.getSharkMealList();
+			int[] lostNumbers;
+			Number[] numberField = view.getNumberField();
 
-            // calculate numbers to be eaten by the shark
-            for (int i = gameNMax; i > gameNMax / 2; i--) {
-                if (numberField[i - 1].isEnabled()) {
-                    int counter = 0;
-                    boolean stop = false;
-                    for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
-                        int n = numberField[i - 1].getDivisors().get(j);
-                        if (numberField[n - 1].isEnabled()) {
-                            counter++;
-                            if (counter > 0) {
-                                stop = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!stop) {
-                        sharkMealList.add(i);
-                        numberField[i - 1].setEnabled(false);
+			// calculate numbers to be eaten by the shark
+			for (int k = 0; k < sharkMealList.size(); k++) {
+				int i = sharkMealList.get(k);
+				numberField[i - 1].setEnabled(false);
 
-                        int tabFolderIndex = view.getSelectedTabFolderIndex();
+				int tabFolderIndex = view.getSelectedTabFolderIndex();
 
-                        if (tabFolderIndex * 40 < i && i < (tabFolderIndex + 1) * 40 + 1) {
-                            view.disableNumber(i - 1);
-                        }
-                    }
-                }
-            }
+				if (tabFolderIndex * 40 < i
+						&& i < (tabFolderIndex + 1) * 40 + 1) {
+					view.disableNumber(i - 1);
+				}
+			}
 
-            if (sharkMealList.size() > 0) {
-                lostNumbers = new int[sharkMealList.size()];
-                for (int i = 0; i < lostNumbers.length; i++) {
-                    lostNumbers[i] = sharkMealList.get(i);
-                }
+			lostNumbers = new int[sharkMealList.size()];
+			for (int i = 0; i < lostNumbers.length; i++) {
+				lostNumbers[i] = sharkMealList.get(i);
+			}
 
-                view.addMoveToTable(0, lostNumbers);
-            }
-        }
+			view.addMoveToTable(0, lostNumbers);
 
-        return null;
-    }
+		}
+
+		CommandStateChanger commandStateChanger = new CommandStateChanger();
+		commandStateChanger.chageCommandState(
+				CommandState.Variable.SHARKMEAL_STATE,
+				CommandState.State.SHARKMEAL_DISABLED);
+
+		return null;
+	}
 }

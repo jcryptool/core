@@ -9,8 +9,6 @@ public class Messages extends NLS {
 	public static String EndOfGameDialog_2;
 	public static String EndOfGameDialog_3;
 	public static String EndOfGameDialog_4;
-	public static String EndOfGameDialog_5;
-	public static String EndOfGameDialog_6;
     public static String NewGameDialog_0;
     public static String NewGameDialog_1;
     public static String NewGameDialog_2;

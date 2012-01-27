@@ -11,6 +11,11 @@ package org.jcryptool.games.numbershark.views;
 
 import java.util.ArrayList;
 
+/**
+ * @author Johannes Spaeth
+ * @version 0.9.5
+ */
+
 public class Number {
     private int value;
     private ArrayList<Integer> divisors = new ArrayList<Integer>();

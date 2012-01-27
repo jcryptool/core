@@ -47,5 +47,17 @@ public class CommandStateChanger {
         	commandStateService.setUndoDisabled();
         	commandStateService.setRedoDisabled();
         }
+        else if (state.equals(State.SHARKMEAL_DISABLED)){
+        	commandStateService.setSharkMealDisabled();
+        }
+        else if (state.equals(State.SHARKMEAL_ENABLED)){
+        	commandStateService.setSharkMealEnabled();
+        }
+        else if (state.equals(State.HINT_DISABLED)){
+        	commandStateService.setHintDisabled();
+        }
+        else if (state.equals(State.HINT_ENABLED)){
+        	commandStateService.setHintEnabled();
+        }
 	}
 }

@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.dialogs;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,7 +17,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.jcryptool.games.numbershark.util.TableToString;
+import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.games.numbershark.util.CSVConverter;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 public class EndOfGameDialog{
@@ -92,45 +92,18 @@ public class EndOfGameDialog{
     public void open(){
     	int answer = mb.open();
 		if (answer == SWT.YES) {
-			FileDialog saveFile = new FileDialog(mb.getParent(), SWT.SAVE);
-			saveFile.setFilterNames(new String[] { "CSV-File",
+			FileDialog saveDialog = new FileDialog(mb.getParent(), SWT.SAVE);
+			saveDialog.setFilterPath(DirectoryService.getUserHomeDir());
+			saveDialog.setFilterNames(new String[] { "CSV-File",
 					"All Files (*.*)" });
-			saveFile.setFilterExtensions(new String[] { "*.csv", "*.*" });
-			saveFile.setFileName("log_numberShark.csv");
-			String fileName = null;
+			saveDialog.setFilterExtensions(new String[] { "*.csv", "*.*" });
+			saveDialog.setFileName("log_numberShark.csv");
+			saveDialog.setOverwrite(true);
+			String fileName = saveDialog.open();
 
-			boolean done = false;
-			while (!done) {
-				fileName = saveFile.open();
-				if (fileName == null) {
-					// User has cancelled, so quit and return
-					done = true;
-				} else {
-					// User has selected a file; see if it already exists
-					File file = new File(fileName);
-					if (file.exists()) {
-						// The file already exists; asks for confirmation
-						MessageBox fileExists = new MessageBox(mb.getParent(),
-								SWT.ICON_WARNING | SWT.YES | SWT.NO);
-
-						// We really should read this string from a
-						// resource bundle
-						fileExists.setText(Messages.EndOfGameDialog_5);
-						fileExists.setMessage(fileName
-								+ Messages.EndOfGameDialog_6);
-
-						// If they click Yes, we're done and we drop out. If
-						// they click No, we redisplay the File Dialog
-						done = fileExists.open() == SWT.YES;
-					} else {
-						// File does not exist, so drop out
-						done = true;
-					}
-				}
-			}
 
 			if (fileName != null) {
-				TableToString converter = new TableToString(view.getTable());
+				CSVConverter converter = new CSVConverter(view.getTable());
 				try {
 					FileWriter writer = new FileWriter(fileName);
 

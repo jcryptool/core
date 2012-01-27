@@ -17,7 +17,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jcryptool.games.numbershark.views.Number;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
@@ -33,9 +32,8 @@ public class HintHandler extends AbstractHandler {
 
             String msg;
             int gameNMax = view.getNumberOfFields();
-            Number[] numberField = view.getNumberField();
 
-            int hint = calculateHint(gameNMax, numberField);
+            int hint = view.getHint();
 			int style = SWT.YES | SWT.NO;
             if (hint > 0) {
                 msg = NLS.bind(Messages.HintHandler_0, new Object[] {hint, gameNMax / 2});
@@ -56,33 +54,5 @@ public class HintHandler extends AbstractHandler {
         return null;
     }
 
-    /**
-     * Calculate number for the hint.
-     *
-     * @param gameNMax
-     * @param activeNumbers
-     * @param numNum
-     * @return
-     */
-    private int calculateHint(int gameNMax, Number[] numberField) {
-        for (int i = gameNMax; i > gameNMax / 2; i--) {
-            if (numberField[i - 1].isEnabled()) {
-                int counter = 0;
-
-                for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
-                    int n = numberField[i - 1].getDivisors().get(j);
-                    if (numberField[n - 1].isEnabled()) {
-                        counter++;
-                    }
-
-                }
-                if (counter == 1) {
-                    return i;
-                }
-
-            }
-        }
-
-        return 0;
-    }
+   
 }

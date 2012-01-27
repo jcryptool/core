@@ -2,9 +2,14 @@ package org.jcryptool.games.numbershark.util;
 
 import org.eclipse.swt.widgets.Table;
 
-public class TableToString {
+/**
+ * @author Johannes Spaeth
+ * @version 1.0
+ */
+
+public class CSVConverter {
 	StringBuffer content = new StringBuffer();
-	public TableToString(Table table){
+	public CSVConverter(Table table){
 		int numOfColumns = table.getColumnCount();
 		int numOfRows = table.getItemCount();
 		for(int i = 0; i < numOfColumns - 1; i++){
@@ -25,4 +30,5 @@ public class TableToString {
 	public void print(){
 		System.out.print(content.toString());
 	}
+	
 }
