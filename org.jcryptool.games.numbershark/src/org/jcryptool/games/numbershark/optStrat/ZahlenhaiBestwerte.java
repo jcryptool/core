@@ -277,8 +277,6 @@ public class ZahlenhaiBestwerte {
    // eine nuetzliche Abkuerzung:
    static class L extends LinkedList<Integer> { }
 
-
-
    /* Nach der Auswahl der groessten Primzahl in Schritt 1A werden saemtliche 
       restliche Primzahlen groesser g/2 und alle Pseudoprimzahlen aus dem Spiel 
       genommen. Wesentlich ist hierfuer die vorherige Markierung durch die 

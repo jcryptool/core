@@ -18,6 +18,8 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.games.numbershark.optStrat.OptimalStrategyDialog;
 import org.jcryptool.games.numbershark.optStrat.ResultDialog;
+import org.jcryptool.games.numbershark.util.CommandState;
+import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
@@ -69,7 +71,10 @@ public class OptimalStrategyHandler extends AbstractHandler {
                     }
 
                 	view.addMoveToTable(0, lostNumbers);
-                    
+            		CommandStateChanger commandStateChanger = new CommandStateChanger();
+            		commandStateChanger.chageCommandState(
+            				CommandState.Variable.SHARKMEAL_STATE,
+            				CommandState.State.SHARKMEAL_DISABLED);
             	}
             	
             }

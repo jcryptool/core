@@ -65,8 +65,7 @@ public class ResultDialog extends TitleAreaDialog {
 		final Shell shell = parent.getShell();
 		if (calculate) {
 			try {
-				new ProgressMonitorDialog(shell).run(true, true,
-						calculateSequences);
+				new ProgressMonitorDialog(shell).run(true, true,calculateSequences);
 
 			} catch (InvocationTargetException e) {
 			} catch (InterruptedException e) {

@@ -15,7 +15,7 @@ public class CalculationThread implements IRunnableWithProgress {
 	private int max = 100;
 	private int stoppedAt;
 	private String[][] outputTable;
-	
+	private boolean taskRunning = true;
 	public CalculationThread(int min, int max){
 		this.min = min;
 		this.max = max;
@@ -34,7 +34,7 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
 		e.printStackTrace();
 	}
     monitor.done();
-
+    taskRunning = false;
     if (monitor.isCanceled()){
         throw new InterruptedException("The long running operation was cancelled");
     }
@@ -46,5 +46,9 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
 	
 	public int getStoppedAt(){
 		return stoppedAt;
+	}
+	
+	public boolean isTaskRunning(){
+		return taskRunning;
 	}
 }
