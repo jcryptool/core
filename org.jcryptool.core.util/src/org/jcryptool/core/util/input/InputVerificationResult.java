@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.util.input;
 
-import org.eclipse.jface.dialogs.IMessageProvider;
 
 /**
  * Contains the results of an input verification. the main indicator is

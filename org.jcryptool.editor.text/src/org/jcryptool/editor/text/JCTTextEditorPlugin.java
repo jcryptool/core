@@ -9,12 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.editor.text;
 
-import java.net.URL;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
