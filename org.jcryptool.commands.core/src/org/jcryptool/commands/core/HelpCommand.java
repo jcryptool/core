@@ -525,8 +525,9 @@ public class HelpCommand extends AbstractCommand {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-        } catch (UnsupportedEncodingException e1) {
-            LogUtil.logError(CommandsCorePlugin.PLUGIN_ID, e1);
+        } catch (UnsupportedEncodingException ex) {
+            reader = new BufferedReader(new InputStreamReader(in));
+            LogUtil.logError(CommandsCorePlugin.PLUGIN_ID, ex);
         }
 
         StringBuffer myStrBuf = new StringBuffer();
