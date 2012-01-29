@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.integrator;
 
 import java.io.BufferedInputStream;
@@ -71,24 +70,22 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
  */
 public class IntegratorWizardPage extends WizardPage {
 
+    private static final String KEY_FROM_KEYSTORE_MODE_CREATED_KEY = "createdKey"; //$NON-NLS-1$
+    private static final String KEY_FROM_KEYSTORE_MODE_CREATED_PAIR = "createdPair"; //$NON-NLS-1$
+    private static final String KEY_FROM_KEYSTORE_MODE_SELECT = "select"; //$NON-NLS-1$
+    // Key-source group
+    private boolean useCustomKey = false;
+    private boolean showKeySourceGroup;
+    private Button useCustomKeyButton;
+    private Button keyFromKeystoreButton;
 
+    // Custom key group
+    private Group keyByHandGroup;
+    private HexTextbox customKeyTextbox;
+    private int[] validKeyLengths;
 
-	private static final String KEY_FROM_KEYSTORE_MODE_CREATED_KEY = "createdKey"; //$NON-NLS-1$
-	private static final String KEY_FROM_KEYSTORE_MODE_CREATED_PAIR = "createdPair"; //$NON-NLS-1$
-	private static final String KEY_FROM_KEYSTORE_MODE_SELECT = "select"; //$NON-NLS-1$
-	//Key-source group
-	private boolean useCustomKey = false;
-	private boolean showKeySourceGroup;
-	private Button useCustomKeyButton;
-	private Button keyFromKeystoreButton;
-
-	//Custom key group
-	private Group keyByHandGroup;
-	private HexTextbox customKeyTextbox;
-	private int[] validKeyLengths;
-
-	//Key from keystore group
-	private Group keyFromKeystoreGroup;
+    // Key from keystore group
+    private Group keyFromKeystoreGroup;
     private KeyStoreAlias keyStoreAlias;
     private Vector<KeyStoreAlias> publicKeyMap;
     private Vector<KeyStoreAlias> privateKeyMap;
@@ -127,11 +124,9 @@ public class IntegratorWizardPage extends WizardPage {
     private Button alphabet_padding_button;
     private Text messageDigest_text;
     private String expectedChecksum;
-	private Group paddingGroup;
-	private Vector<KeyStoreAlias> comboKeyMap;
-	private int algorithmType;
-
-
+    private Group paddingGroup;
+    private Vector<KeyStoreAlias> comboKeyMap;
+    private int algorithmType;
 
     /**
      * constructor
@@ -147,8 +142,8 @@ public class IntegratorWizardPage extends WizardPage {
      * @param showMessageDigestGroup show/hide signature group
      * @param algorithmType
      */
-    public IntegratorWizardPage(String page_title, String title, String header_description,
-            boolean showOperationGroup, boolean showPaddingGroup, String showKeyGroup, boolean showKeySourceGroup, int[] validKeyLengths,
+    public IntegratorWizardPage(String page_title, String title, String header_description, boolean showOperationGroup,
+            boolean showPaddingGroup, String showKeyGroup, boolean showKeySourceGroup, int[] validKeyLengths,
             boolean showSignatureGroup, boolean showRandomGroup, int showMessageDigestGroup, int algorithmType) {
         super(page_title, title, null);
         setMessage(header_description);
@@ -182,9 +177,9 @@ public class IntegratorWizardPage extends WizardPage {
         if (showOperationGroup)
             createOperationGroup(masterComp);
 
-        if(showKeySourceGroup) {
-        	createKeySourceSelectionGroup(masterComp);
-        	createKeyByHandGroup(masterComp);
+        if (showKeySourceGroup) {
+            createKeySourceSelectionGroup(masterComp);
+            createKeyByHandGroup(masterComp);
         }
         encrypt = true;
 
@@ -197,40 +192,40 @@ public class IntegratorWizardPage extends WizardPage {
         if (showRandomGroup)
             createRandomGroup(masterComp);
 
-        if(showMessageDigestGroup > 0) {
-        	createMessageDigestHintGroup(masterComp);
+        if (showMessageDigestGroup > 0) {
+            createMessageDigestHintGroup(masterComp);
         }
-//        This group is rather unnecessary and confusing
-//        if (showMessageDigestGroup > 0)
-//            createMessageDigestGroup(masterComp);
+        // This group is rather unnecessary and confusing
+        // if (showMessageDigestGroup > 0)
+        // createMessageDigestGroup(masterComp);
         showMessageDigestGroup = 0;
 
-        if(showKeySourceGroup) {
-        	setKeySource(false);
+        if (showKeySourceGroup) {
+            setKeySource(false);
         }
 
         setControl(masterComp);
         setOperationMode(true);
         calcAndSetPageCompletion();
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
-                IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard"); //$NON-NLS-1$ //$NON-NLS-2$
+        PlatformUI.getWorkbench().getHelpSystem()
+                .setHelp(getControl(), IntegratorPlugin.PLUGIN_ID + "." + getTitle() + "Wizard"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-	private void createMessageDigestHintGroup(Composite masterComp) {
-		Label labelDigestHint = new Label(masterComp, SWT.WRAP);
-		GridData labelDigestHintLData = new GridData(SWT.CENTER, SWT.BEGINNING, true, false);
-		labelDigestHintLData.verticalIndent = 40;
-		labelDigestHint.setLayoutData(labelDigestHintLData);
-		labelDigestHint.setText(Messages.getString("IntegratorWizardPage.noFurtherInputNeeded")); //$NON-NLS-1$
-		labelDigestHint.setAlignment(SWT.CENTER);
-	}
+    private void createMessageDigestHintGroup(Composite masterComp) {
+        Label labelDigestHint = new Label(masterComp, SWT.WRAP);
+        GridData labelDigestHintLData = new GridData(SWT.CENTER, SWT.BEGINNING, true, false);
+        labelDigestHintLData.verticalIndent = 40;
+        labelDigestHint.setLayoutData(labelDigestHintLData);
+        labelDigestHint.setText(Messages.getString("IntegratorWizardPage.noFurtherInputNeeded")); //$NON-NLS-1$
+        labelDigestHint.setAlignment(SWT.CENTER);
+    }
 
-	private int calculateHeightHintForPage() {
-		return 300;
-	}
+    private int calculateHeightHintForPage() {
+        return 300;
+    }
 
-	/**
+    /**
      * Returns <code>true</code>, if the desired operation is <i>Encrypt</i>.
      *
      * @return <code>true</code>, if the desired operation is <i>Encrypt</i>
@@ -239,18 +234,17 @@ public class IntegratorWizardPage extends WizardPage {
         return encrypt;
     }
 
-
     public void calcAndSetPageCompletion() {
-    	if(showKeyGroup == null || useCustomKey) {
-    		setPageComplete(true);
-    		return;
-    	}
-    	if(showKeyGroup != null && keyStoreAlias != null) {
-    		setPageComplete(true);
-    		return;
-    	}
-    	setPageComplete(false);
-		return;
+        if (showKeyGroup == null || useCustomKey) {
+            setPageComplete(true);
+            return;
+        }
+        if (showKeyGroup != null && keyStoreAlias != null) {
+            setPageComplete(true);
+            return;
+        }
+        setPageComplete(false);
+        return;
     }
 
     /**
@@ -258,72 +252,72 @@ public class IntegratorWizardPage extends WizardPage {
      *
      */
     private void createKeySourceSelectionGroup(Composite parent) {
-    	GridData keystoreButtonGridData = new GridData();
-    	keystoreButtonGridData.horizontalAlignment = GridData.FILL;
-    	keystoreButtonGridData.grabExcessHorizontalSpace = true;
-    	keystoreButtonGridData.verticalAlignment = GridData.CENTER;
+        GridData keystoreButtonGridData = new GridData();
+        keystoreButtonGridData.horizontalAlignment = GridData.FILL;
+        keystoreButtonGridData.grabExcessHorizontalSpace = true;
+        keystoreButtonGridData.verticalAlignment = GridData.CENTER;
 
-    	GridLayout keySelectionGridLayout = new GridLayout();
-    	keySelectionGridLayout.numColumns = 2;
+        GridLayout keySelectionGridLayout = new GridLayout();
+        keySelectionGridLayout.numColumns = 2;
 
-    	Group keySelectionGroup = new Group(parent, SWT.NONE);
-    	keySelectionGroup.setLayoutData(keystoreButtonGridData);
-    	keySelectionGroup.setLayout(keySelectionGridLayout);
-    	keySelectionGroup.setText(Messages.getString("KeySelectionGroup.KeySource")); //$NON-NLS-1$
+        Group keySelectionGroup = new Group(parent, SWT.NONE);
+        keySelectionGroup.setLayoutData(keystoreButtonGridData);
+        keySelectionGroup.setLayout(keySelectionGridLayout);
+        keySelectionGroup.setText(Messages.getString("KeySelectionGroup.KeySource")); //$NON-NLS-1$
 
+        Listener sourceBtnListener = new Listener() {
+            // @Override
+            public void handleEvent(Event event) {
+                setKeySource(event.widget == useCustomKeyButton);
+            }
+        };
 
+        useCustomKeyButton = new Button(keySelectionGroup, SWT.RADIO);
+        useCustomKeyButton.setText(Messages.getString("KeySelectionGroup.CustomKey")); //$NON-NLS-1$
+        useCustomKeyButton.setLayoutData(keystoreButtonGridData);
+        useCustomKeyButton.setSelection(true);
+        useCustomKeyButton.addListener(SWT.Selection, sourceBtnListener);
 
-    	Listener sourceBtnListener = new Listener() {
-//			@Override
-			public void handleEvent(Event event) {
-				setKeySource(event.widget == useCustomKeyButton);
-			}
-		};
-
-    	useCustomKeyButton = new Button(keySelectionGroup, SWT.RADIO);
-    	useCustomKeyButton.setText(Messages.getString("KeySelectionGroup.CustomKey")); //$NON-NLS-1$
-    	useCustomKeyButton.setLayoutData(keystoreButtonGridData);
-    	useCustomKeyButton.setSelection(true);
-    	useCustomKeyButton.addListener(SWT.Selection, sourceBtnListener);
-
-    	keyFromKeystoreButton = new Button(keySelectionGroup, SWT.RADIO);
-    	keyFromKeystoreButton.setText(Messages.getString("KeySelectionGroup.KeyFromKeystore")); //$NON-NLS-1$
-    	keyFromKeystoreButton.setLayoutData(keystoreButtonGridData);
-		keyFromKeystoreButton.addListener(SWT.Selection, sourceBtnListener);
+        keyFromKeystoreButton = new Button(keySelectionGroup, SWT.RADIO);
+        keyFromKeystoreButton.setText(Messages.getString("KeySelectionGroup.KeyFromKeystore")); //$NON-NLS-1$
+        keyFromKeystoreButton.setLayoutData(keystoreButtonGridData);
+        keyFromKeystoreButton.addListener(SWT.Selection, sourceBtnListener);
     }
 
     protected void setKeySource(boolean useCustomKey) {
-    	this.useCustomKey = useCustomKey;
-		hideObject(keyByHandGroup, !useCustomKey);
-		hideObject(keyFromKeystoreGroup, useCustomKey);
+        this.useCustomKey = useCustomKey;
+        hideObject(keyByHandGroup, !useCustomKey);
+        hideObject(keyFromKeystoreGroup, useCustomKey);
 
-		useCustomKeyButton.setSelection(useCustomKey);
-		keyFromKeystoreButton.setSelection(!useCustomKey);
-		calcAndSetPageCompletion();
-	}
+        useCustomKeyButton.setSelection(useCustomKey);
+        keyFromKeystoreButton.setSelection(!useCustomKey);
+        calcAndSetPageCompletion();
+    }
 
-	private void setOperationMode(boolean encryptMode) {
-    	this.encrypt = encryptMode;
+    private void setOperationMode(boolean encryptMode) {
+        this.encrypt = encryptMode;
 
-    	if(createNewKeyButton != null) {
-    		if(algorithmType != IntegratorAction.TYPE_SIGNATURE) {
-    			createNewKeyButton.setEnabled(encryptMode);
-    		} else {
-    			createNewKeyButton.setEnabled(!encryptMode);
-    		}
-    	}
+        if (createNewKeyButton != null) {
+            if (algorithmType != IntegratorAction.TYPE_SIGNATURE) {
+                createNewKeyButton.setEnabled(encryptMode);
+            } else {
+                createNewKeyButton.setEnabled(!encryptMode);
+            }
+        }
 
-        if(showKeyGroup != null) refreshKeysFromKeystore(keyStoreAlias);
-        if(keyFromKeystoreMode == KEY_FROM_KEYSTORE_MODE_CREATED_PAIR) {
-        	setAliasFromKeyPairAndCombo();
+        if (showKeyGroup != null)
+            refreshKeysFromKeystore(keyStoreAlias);
+
+        if (keyFromKeystoreMode.equals(KEY_FROM_KEYSTORE_MODE_CREATED_PAIR)) {
+            setAliasFromKeyPairAndCombo();
         }
 
         if (showMessageDigestGroup > 0) {
-            messageDigest_text.setEnabled(! encryptMode);
+            messageDigest_text.setEnabled(!encryptMode);
         }
 
-        if(encryptMode) {
-        	if (showSignatureGroup) {
+        if (encryptMode) {
+            if (showSignatureGroup) {
                 CHOOSE_SIGNATURE_FILE_LABEL = Messages.getString("DummyWizardPage.6"); //$NON-NLS-1$
                 openFile = true;
                 signatureText.setText(CHOOSE_SIGNATURE_FILE_LABEL);
@@ -331,7 +325,7 @@ public class IntegratorWizardPage extends WizardPage {
                 setPageComplete(false);
             }
         } else {
-        	if (showSignatureGroup) {
+            if (showSignatureGroup) {
                 CHOOSE_SIGNATURE_FILE_LABEL = Messages.getString("DummyWizardPage.9"); //$NON-NLS-1$
                 openFile = false;
                 signatureText.setText(CHOOSE_SIGNATURE_FILE_LABEL);
@@ -380,8 +374,8 @@ public class IntegratorWizardPage extends WizardPage {
         encryptButton.setLayoutData(encryptButtonGridData);
         encryptButton.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
-            	if ((((Button) event.widget).getSelection()) && (!encrypt)) {
-            		setOperationMode(true);
+                if ((((Button) event.widget).getSelection()) && (!encrypt)) {
+                    setOperationMode(true);
                 }
             }
         });
@@ -398,20 +392,22 @@ public class IntegratorWizardPage extends WizardPage {
         decryptButton.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
                 if (((Button) event.widget).getSelection() && (encrypt)) {
-                	setOperationMode(false);
+                    setOperationMode(false);
                 }
             }
         });
     }
 
-    String keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT; // other possible values: KEY_FROM_KEYSTORE_MODE_CREATED_KEY, KEY_FROM_KEYSTORE_MODE_CREATED_PAIR;
-	private Button createNewKeyButton;
-	private Composite masterComp;
-	private NewKeyComposite createdKeyViewer;
-	private Composite normalKeyFromKeystoreComposite;
-	private Composite showcaseKeyFromKeystoreComposite;
-	private KeyStoreAlias createdKeyPairAlias;
-	private String buttonTextBeforeJobrunningMsg;
+    String keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT; // other possible values:
+                                                                // KEY_FROM_KEYSTORE_MODE_CREATED_KEY,
+                                                                // KEY_FROM_KEYSTORE_MODE_CREATED_PAIR;
+    private Button createNewKeyButton;
+    private Composite masterComp;
+    private NewKeyComposite createdKeyViewer;
+    private Composite normalKeyFromKeystoreComposite;
+    private Composite showcaseKeyFromKeystoreComposite;
+    private KeyStoreAlias createdKeyPairAlias;
+    private String buttonTextBeforeJobrunningMsg;
 
     /**
      * This method initializes the 'Key from keystore'-group
@@ -435,12 +431,12 @@ public class IntegratorWizardPage extends WizardPage {
         GridLayout normalKeyFromKeystoreCompositeLayout = new GridLayout(2, false);
         normalKeyFromKeystoreCompositeLayout.marginWidth = 0;
         normalKeyFromKeystoreCompositeLayout.marginHeight = 0;
-		normalKeyFromKeystoreComposite.setLayout(normalKeyFromKeystoreCompositeLayout);
-		normalKeyFromKeystoreComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        normalKeyFromKeystoreComposite.setLayout(normalKeyFromKeystoreCompositeLayout);
+        normalKeyFromKeystoreComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-//		Button btnKeystoreGrp1 = new Button(keyFromKeystoreGroup, SWT.RADIO);
-//		btnKeystoreGrp1.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, false, false));
-//		btnKeystoreGrp1.setText("Schlüsselspeicher")
+        // Button btnKeystoreGrp1 = new Button(keyFromKeystoreGroup, SWT.RADIO);
+        // btnKeystoreGrp1.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, false, false));
+        // btnKeystoreGrp1.setText("Schlüsselspeicher")
 
         Label label = new Label(normalKeyFromKeystoreComposite, SWT.WRAP);
         label.setText(Messages.getString("DummyWizardPage.17")); //$NON-NLS-1$
@@ -468,43 +464,44 @@ public class IntegratorWizardPage extends WizardPage {
         GridLayout createNewCompositeLayout = new GridLayout(1, false);
         createNewCompositeLayout.marginWidth = 0;
         createNewCompositeLayout.marginHeight = 0;
-		createNewKeyComposite.setLayout(createNewCompositeLayout );
+        createNewKeyComposite.setLayout(createNewCompositeLayout);
         createNewKeyComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-        Image btnImg = isAlgorithmTypeAsymmetric() ?
-        		KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key2.png").createImage() : //$NON-NLS-1$
-        		KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key1.png").createImage(); //$NON-NLS-1$
-        String newKeyBtnLabel = isAlgorithmTypeAsymmetric() ?
-        		Messages.getString("IntegratorWizardPage.createNewKeypairButton") :  //$NON-NLS-1$
-        		Messages.getString("IntegratorWizardPage.newSymmetricKeyButtonlabel"); //$NON-NLS-1$
-		String newKeyBtnTooltip = isAlgorithmTypeAsymmetric() ?
-				Messages.getString("IntegratorWizardPage.willRemainInKeystore") : //$NON-NLS-1$
-        		Messages.getString("IntegratorWizardPage.newSymmetricKeyButtontip"); //$NON-NLS-1$
+        Image btnImg = isAlgorithmTypeAsymmetric() ? KeyStorePlugin
+                .getImageDescriptor("/icons/16x16/kgpg_key2.png").createImage() : //$NON-NLS-1$
+                KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key1.png").createImage(); //$NON-NLS-1$
+        String newKeyBtnLabel = isAlgorithmTypeAsymmetric() ? Messages
+                .getString("IntegratorWizardPage.createNewKeypairButton") : //$NON-NLS-1$
+                Messages.getString("IntegratorWizardPage.newSymmetricKeyButtonlabel"); //$NON-NLS-1$
+        String newKeyBtnTooltip = isAlgorithmTypeAsymmetric() ? Messages
+                .getString("IntegratorWizardPage.willRemainInKeystore") : //$NON-NLS-1$
+                Messages.getString("IntegratorWizardPage.newSymmetricKeyButtontip"); //$NON-NLS-1$
         createNewKeyButton = new Button(createNewKeyComposite, SWT.NONE);
         createNewKeyButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
-		createNewKeyButton.setImage(btnImg); //$NON-NLS-1$
+        createNewKeyButton.setImage(btnImg); //$NON-NLS-1$
         createNewKeyButton.setText(newKeyBtnLabel);
         createNewKeyButton.setToolTipText(newKeyBtnTooltip);
         createNewKeyButton.addSelectionListener(new SelectionAdapter() {
-        	@Override
-        	public void widgetSelected(SelectionEvent e) {
-//        		preAddContacts = KeyStoreManager.getInstance().
-        		if(algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID) {
-        			makeNewKeypair();
-        		} else if(algorithmType == IntegratorAction.TYPE_CIPHER || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK || algorithmType==IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
-        			makeNewKey();
-        		}
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // preAddContacts = KeyStoreManager.getInstance().
+                if (algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK
+                        || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID) {
+                    makeNewKeypair();
+                } else if (algorithmType == IntegratorAction.TYPE_CIPHER
+                        || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK
+                        || algorithmType == IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
+                    makeNewKey();
+                }
 
-
-        	}
+            }
         });
 
-
-//        Button createSecretKeyButton = new Button(createNewKeyComposite, SWT.NONE);
-//        createSecretKeyButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-//        createSecretKeyButton.setImage(KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key1.png").createImage());
-//        createSecretKeyButton.setText("new secret key");
-//        createSecretKeyButton.setEnabled(false);
+        // Button createSecretKeyButton = new Button(createNewKeyComposite, SWT.NONE);
+        // createSecretKeyButton.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+        // createSecretKeyButton.setImage(KeyStorePlugin.getImageDescriptor("/icons/16x16/kgpg_key1.png").createImage());
+        // createSecretKeyButton.setText("new secret key");
+        // createSecretKeyButton.setEnabled(false);
 
         showcaseKeyFromKeystoreComposite = new Composite(keyFromKeystoreGroup, SWT.NONE);
         GridLayout showcaseKeyFromKeystoreCompositeLayout = new GridLayout(1, false);
@@ -517,219 +514,248 @@ public class IntegratorWizardPage extends WizardPage {
         showcaseLabel.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
         showcaseLabel.setText(Messages.getString("IntegratorWizardPage.youChoseNewKeyLabel")/*+"\nRemove it for selecting an already existing key."*/); //$NON-NLS-1$
 
-
-//        createdKeyViewer = new NewKeyComposite(showcaseKeyFromKeystoreComposite);
-//        createdKeyViewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+        // createdKeyViewer = new NewKeyComposite(showcaseKeyFromKeystoreComposite);
+        // createdKeyViewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
 
         setKeyForShowcase(null);
-        if(! (isAlgorithmTypeAsymmetric() || isAlgorithmTypeSymmetric() || algorithmType == IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE || algorithmType == IntegratorAction.TYPE_SIGNATURE) ) {
-        	hideObject(createNewKeyLabel, true);
-        	hideObject(createNewKeyComposite, true);
+        if (!(isAlgorithmTypeAsymmetric() || isAlgorithmTypeSymmetric()
+                || algorithmType == IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE || algorithmType == IntegratorAction.TYPE_SIGNATURE)) {
+            hideObject(createNewKeyLabel, true);
+            hideObject(createNewKeyComposite, true);
         }
     }
 
     private void enableControls() {
-        if(createNewKeyButton != null) createNewKeyButton.setEnabled(true);
-        if(keyCombo != null) keyCombo.setEnabled(true);
-        if(encryptButton != null) encryptButton.setEnabled(true);
-        if(decryptButton != null) decryptButton.setEnabled(true);
+        if (createNewKeyButton != null)
+            createNewKeyButton.setEnabled(true);
+        if (keyCombo != null)
+            keyCombo.setEnabled(true);
+        if (encryptButton != null)
+            encryptButton.setEnabled(true);
+        if (decryptButton != null)
+            decryptButton.setEnabled(true);
     }
 
     private void disableControls() {
-        if(createNewKeyButton != null) createNewKeyButton.setEnabled(false);
-        if(keyCombo != null) keyCombo.setEnabled(false);
-        if(encrypt && encryptButton != null)
-        {
+        if (createNewKeyButton != null)
+            createNewKeyButton.setEnabled(false);
+        if (keyCombo != null)
+            keyCombo.setEnabled(false);
+        if (encrypt && encryptButton != null) {
             encryptButton.setEnabled(true);
-            if(decryptButton != null) decryptButton.setEnabled(false);
+            if (decryptButton != null)
+                decryptButton.setEnabled(false);
         }
-        if(!encrypt && decryptButton != null)
-        {
+        if (!encrypt && decryptButton != null) {
             decryptButton.setEnabled(true);
-            if(encryptButton != null) encryptButton.setEnabled(false);
+            if (encryptButton != null)
+                encryptButton.setEnabled(false);
         }
 
     }
 
     protected void makeNewKey() {
-    	Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
-		int preJobCount = preJobs.length;
-		KeyStoreHelper.makeSymmetricKeyByWizard(showKeyGroup).addObserver(new Observer() {
-			public void update(Observable o, final Object arg) {
-				if(arg != null) {
-					keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-						public void run() {
-							KeyStoreAlias ref = (KeyStoreAlias) arg;
-							setKeyForShowcase(ref);
-						}
-					});
-				}
-			}
-		});
+        Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
+        int preJobCount = preJobs.length;
+        KeyStoreHelper.makeSymmetricKeyByWizard(showKeyGroup).addObserver(new Observer() {
+            public void update(Observable o, final Object arg) {
+                if (arg != null) {
+                    keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            KeyStoreAlias ref = (KeyStoreAlias) arg;
+                            setKeyForShowcase(ref);
+                        }
+                    });
+                }
+            }
+        });
 
-		Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
-		if(jobs.length > preJobCount) {
-			createNewKeyButton.getDisplay().syncExec(new Runnable() {
-				public void run() {
-					buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
-					createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
-					disableControls();
-				}
+        Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
+        if (jobs.length > preJobCount) {
+            createNewKeyButton.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
+                    createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
+                    disableControls();
+                }
 
-			});
-			Job job = jobs[jobs.length-1];
-			IJobChangeListener listener = new IJobChangeListener() {
-				public void sleeping(IJobChangeEvent event) {}
-				public void done(IJobChangeEvent event) {
-					createNewKeyButton.getDisplay().syncExec(new Runnable() {
-						public void run() {
-							createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
-							enableControls();
-						}
-					});
-				}
-				public void awake(IJobChangeEvent event) {}
-				public void aboutToRun(IJobChangeEvent event) {}
-				public void running(IJobChangeEvent event) {}
-				public void scheduled(IJobChangeEvent event) {}
-			};
-			if(job.getState() != Job.NONE) job.addJobChangeListener(listener);
-			else {
-				listener.done(null);
-			}
-		}
-	}
+            });
+            Job job = jobs[jobs.length - 1];
+            IJobChangeListener listener = new IJobChangeListener() {
+                public void sleeping(IJobChangeEvent event) {
+                }
 
-	protected void makeNewKeypair() {
-    	Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
-		int preJobCount = preJobs.length;
-		KeyStoreHelper.makeKeyPairByWizard(showKeyGroup).addObserver(new Observer() {
-			public void update(Observable o, final Object arg) {
-				if(arg != null) {
-					keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-						public void run() {
-							KeyStoreAlias ref = (KeyStoreAlias) arg;
-							setKeyForShowcase(ref);
-						}
-					});
-				}
-			}
-		});
+                public void done(IJobChangeEvent event) {
+                    createNewKeyButton.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
+                            enableControls();
+                        }
+                    });
+                }
 
-		Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
-		if(jobs.length > preJobCount) {
-			createNewKeyButton.getDisplay().syncExec(new Runnable() {
-				public void run() {
-					buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
-					createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
-					disableControls();
-				}
-			});
-			Job job = jobs[jobs.length-1];
-			IJobChangeListener listener = new IJobChangeListener() {
-				public void sleeping(IJobChangeEvent event) {}
-				public void done(IJobChangeEvent event) {
-					createNewKeyButton.getDisplay().syncExec(new Runnable() {
-						public void run() {
-							createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
-							enableControls();
-						}
-					});
-				}
-				public void awake(IJobChangeEvent event) {}
-				public void aboutToRun(IJobChangeEvent event) {}
-				public void running(IJobChangeEvent event) {}
-				public void scheduled(IJobChangeEvent event) {}
-			};
-			if(job.getState() != Job.NONE) job.addJobChangeListener(listener);
-			else {
-				listener.done(null);
-			}
-		}
-	}
+                public void awake(IJobChangeEvent event) {
+                }
 
-	private boolean isAlgorithmTypeAsymmetric() {
-		return algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID;
-	}
+                public void aboutToRun(IJobChangeEvent event) {
+                }
 
-	private boolean isAlgorithmTypeSymmetric() {
-		return algorithmType == IntegratorAction.TYPE_CIPHER || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK;
-	}
+                public void running(IJobChangeEvent event) {
+                }
 
-	private void setKeyForShowcase(KeyStoreAlias publicKeyAlias) {
-//    	String oldMode = keyFromKeystoreMode;
-    	this.createdKeyPairAlias = publicKeyAlias;
-    	if(publicKeyAlias != null) {
-    		if(createdKeyViewer != null) {
-				if(! createdKeyViewer.isDisposed()) {
-					createdKeyViewer.dispose();
-				}
-			}
-    		if(isAlgorithmTypeAsymmetric()) {
-				keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_CREATED_PAIR;
-				createdKeyViewer = new NewKeyPairComposite(showcaseKeyFromKeystoreComposite, publicKeyAlias);
-			} else /*if(isAlgorithmTypeSymmetric())*/ {
-				keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_CREATED_KEY;
-				createdKeyViewer = new NewKeyComposite(showcaseKeyFromKeystoreComposite, publicKeyAlias);
-			}
+                public void scheduled(IJobChangeEvent event) {
+                }
+            };
+            if (job.getState() != Job.NONE)
+                job.addJobChangeListener(listener);
+            else {
+                listener.done(null);
+            }
+        }
+    }
 
-		    createdKeyViewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
-		    createdKeyViewer.getRemoveObserver().addObserver(new Observer() {
-				public void update(Observable o, Object arg) {
-					keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
-						public void run() {
-							setKeyForShowcase(null);
-						}
-					});
-				}
-			});
-//			if(oldMode.equals(KEY_FROM_KEYSTORE_MODE_SELECT)) {
-			hideObject(normalKeyFromKeystoreComposite, true);
-			hideObject(showcaseKeyFromKeystoreComposite, false);
-//    		}
-    	} else {
-    		keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT;
-    		if(createdKeyViewer != null) {
-				if(! createdKeyViewer.isDisposed()) {
-					createdKeyViewer.dispose();
-				}
-			}
-    		createdKeyViewer = null;
-//    		if(! oldMode.equals(KEY_FROM_KEYSTORE_MODE_SELECT)) {
-    			hideObject(normalKeyFromKeystoreComposite, false);
-    			hideObject(showcaseKeyFromKeystoreComposite, true);
-//    		}
-    	}
-    	setAliasFromKeyPairAndCombo();
-    	calcAndSetPageCompletion();
+    protected void makeNewKeypair() {
+        Job[] preJobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
+        int preJobCount = preJobs.length;
+        KeyStoreHelper.makeKeyPairByWizard(showKeyGroup).addObserver(new Observer() {
+            public void update(Observable o, final Object arg) {
+                if (arg != null) {
+                    keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            KeyStoreAlias ref = (KeyStoreAlias) arg;
+                            setKeyForShowcase(ref);
+                        }
+                    });
+                }
+            }
+        });
+
+        Job[] jobs = Job.getJobManager().find(KeyStoreHelper.KEYSTOREHELPER_FAMILY);
+        if (jobs.length > preJobCount) {
+            createNewKeyButton.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    buttonTextBeforeJobrunningMsg = createNewKeyButton.getText();
+                    createNewKeyButton.setText(Messages.getString("IntegratorWizardPage.generatingButtonHint")); //$NON-NLS-1$
+                    disableControls();
+                }
+            });
+            Job job = jobs[jobs.length - 1];
+            IJobChangeListener listener = new IJobChangeListener() {
+                public void sleeping(IJobChangeEvent event) {
+                }
+
+                public void done(IJobChangeEvent event) {
+                    createNewKeyButton.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            createNewKeyButton.setText(buttonTextBeforeJobrunningMsg);
+                            enableControls();
+                        }
+                    });
+                }
+
+                public void awake(IJobChangeEvent event) {
+                }
+
+                public void aboutToRun(IJobChangeEvent event) {
+                }
+
+                public void running(IJobChangeEvent event) {
+                }
+
+                public void scheduled(IJobChangeEvent event) {
+                }
+            };
+            if (job.getState() != Job.NONE)
+                job.addJobChangeListener(listener);
+            else {
+                listener.done(null);
+            }
+        }
+    }
+
+    private boolean isAlgorithmTypeAsymmetric() {
+        return algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK
+                || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID;
+    }
+
+    private boolean isAlgorithmTypeSymmetric() {
+        return algorithmType == IntegratorAction.TYPE_CIPHER || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK;
+    }
+
+    private void setKeyForShowcase(KeyStoreAlias publicKeyAlias) {
+        // String oldMode = keyFromKeystoreMode;
+        this.createdKeyPairAlias = publicKeyAlias;
+        if (publicKeyAlias != null) {
+            if (createdKeyViewer != null) {
+                if (!createdKeyViewer.isDisposed()) {
+                    createdKeyViewer.dispose();
+                }
+            }
+            if (isAlgorithmTypeAsymmetric()) {
+                keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_CREATED_PAIR;
+                createdKeyViewer = new NewKeyPairComposite(showcaseKeyFromKeystoreComposite, publicKeyAlias);
+            } else /* if(isAlgorithmTypeSymmetric()) */{
+                keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_CREATED_KEY;
+                createdKeyViewer = new NewKeyComposite(showcaseKeyFromKeystoreComposite, publicKeyAlias);
+            }
+
+            createdKeyViewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
+            createdKeyViewer.getRemoveObserver().addObserver(new Observer() {
+                public void update(Observable o, Object arg) {
+                    keyFromKeystoreGroup.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            setKeyForShowcase(null);
+                        }
+                    });
+                }
+            });
+            // if(oldMode.equals(KEY_FROM_KEYSTORE_MODE_SELECT)) {
+            hideObject(normalKeyFromKeystoreComposite, true);
+            hideObject(showcaseKeyFromKeystoreComposite, false);
+            // }
+        } else {
+            keyFromKeystoreMode = KEY_FROM_KEYSTORE_MODE_SELECT;
+            if (createdKeyViewer != null) {
+                if (!createdKeyViewer.isDisposed()) {
+                    createdKeyViewer.dispose();
+                }
+            }
+            createdKeyViewer = null;
+            // if(! oldMode.equals(KEY_FROM_KEYSTORE_MODE_SELECT)) {
+            hideObject(normalKeyFromKeystoreComposite, false);
+            hideObject(showcaseKeyFromKeystoreComposite, true);
+            // }
+        }
+        setAliasFromKeyPairAndCombo();
+        calcAndSetPageCompletion();
     }
 
     private void setAliasFromKeyPairAndCombo() {
-		if(createdKeyPairAlias == null) {
-			if(keyCombo.getSelectionIndex() >= 0 &&
-					keyCombo.getSelectionIndex() < comboKeyMap.size() &&
-					comboKeyMap.get(keyCombo.getSelectionIndex()) != null ) {
-				keyStoreAlias = comboKeyMap.get(keyCombo.getSelectionIndex());
-			} else {
-				keyStoreAlias = null;
-			}
-		} else {
-			if(isAlgorithmTypeAsymmetric()) {
-				keyStoreAlias = this.encrypt ? createdKeyPairAlias : KeyStoreManager.getInstance().getPrivateForPublic(createdKeyPairAlias);
-				if(createdKeyViewer != null && !createdKeyViewer.isDisposed()) {
-					if(this.encrypt) {
-						((NewKeyPairComposite)createdKeyViewer).setPublicMode();
-					} else {
-						((NewKeyPairComposite)createdKeyViewer).setPrivateMode();
-					}
-				}
-			} else {
-				keyStoreAlias = createdKeyPairAlias;
-			}
-		}
-	}
+        if (createdKeyPairAlias == null) {
+            if (keyCombo.getSelectionIndex() >= 0 && keyCombo.getSelectionIndex() < comboKeyMap.size()
+                    && comboKeyMap.get(keyCombo.getSelectionIndex()) != null) {
+                keyStoreAlias = comboKeyMap.get(keyCombo.getSelectionIndex());
+            } else {
+                keyStoreAlias = null;
+            }
+        } else {
+            if (isAlgorithmTypeAsymmetric()) {
+                keyStoreAlias = this.encrypt ? createdKeyPairAlias : KeyStoreManager.getInstance().getPrivateForPublic(
+                        createdKeyPairAlias);
+                if (createdKeyViewer != null && !createdKeyViewer.isDisposed()) {
+                    if (this.encrypt) {
+                        ((NewKeyPairComposite) createdKeyViewer).setPublicMode();
+                    } else {
+                        ((NewKeyPairComposite) createdKeyViewer).setPrivateMode();
+                    }
+                }
+            } else {
+                keyStoreAlias = createdKeyPairAlias;
+            }
+        }
+    }
 
-	/**
+    /**
      * Excludes a control from Layout calculation
      *
      * @param that
@@ -741,32 +767,29 @@ public class IntegratorWizardPage extends WizardPage {
         that.setVisible(!hideit);
         Control[] myArray = {that};
         masterComp.getShell().layout(myArray);
-		masterComp.layout();
-		masterComp.getShell().layout();
+        masterComp.layout();
+        masterComp.getShell().layout();
     }
 
     private void refreshKeysFromKeystore(KeyStoreAlias previousSelection) {
-    	publicKeyMap.clear();
-    	privateKeyMap.clear();
-    	comboKeyMap.clear();
-    	try {
+        publicKeyMap.clear();
+        privateKeyMap.clear();
+        comboKeyMap.clear();
+        try {
             KeyStore keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
-            keyStore.load(new BufferedInputStream(new FileInputStream(new File(KeyStorePlugin
-                    .getPlatformKeyStoreURI()))), "jcryptool".toCharArray()); //$NON-NLS-1$
+            keyStore.load(new BufferedInputStream(
+                    new FileInputStream(new File(KeyStorePlugin.getPlatformKeyStoreURI()))), "jcryptool".toCharArray()); //$NON-NLS-1$
             Enumeration<String> aliases = keyStore.aliases();
             KeyStoreAlias localKeyStoreAlias = null;
             while (aliases.hasMoreElements()) {
                 localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
-//                String op = localKeyStoreAlias.getOperation();
+                // String op = localKeyStoreAlias.getOperation();
                 if (localKeyStoreAlias.isOperationMatchingKeyId(showKeyGroup)) { //$NON-NLS-1$
-                    if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(
-                            KeyType.KEYPAIR.getType())) { // asymmetric
-                        if (localKeyStoreAlias.getKeyStoreEntryType().equals(
-                                KeyType.KEYPAIR_PUBLIC_KEY)) {
+                    if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
+                        if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
                             publicKeyMap.add(localKeyStoreAlias);
                         }
-                        if (localKeyStoreAlias.getKeyStoreEntryType().equals(
-                                KeyType.KEYPAIR_PRIVATE_KEY)) {
+                        if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
                             privateKeyMap.add(localKeyStoreAlias);
                         }
                     } else { // symmetric
@@ -779,16 +802,17 @@ public class IntegratorWizardPage extends WizardPage {
             LogUtil.logError(e);
         }
 
-//        if (publicKeyMap.isEmpty() || privateKeyMap.isEmpty()) {
-//        	if(keyFromKeystoreButton != null) keyFromKeystoreButton.setEnabled(false);
-//            this.setErrorMessage(Messages.getString("DummyWizardPage.23") + " " + showKeyGroup + " " + Messages.getString("DummyWizardPage.232")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-//        }
+        // if (publicKeyMap.isEmpty() || privateKeyMap.isEmpty()) {
+        // if(keyFromKeystoreButton != null) keyFromKeystoreButton.setEnabled(false);
+        //            this.setErrorMessage(Messages.getString("DummyWizardPage.23") + " " + showKeyGroup + " " + Messages.getString("DummyWizardPage.232")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        // }
 
-    	selectCurrentKey(previousSelection);
+        selectCurrentKey(previousSelection);
     }
 
     /**
      * selects current key in the key combo according to previousSelection
+     *
      * @param previousSelection
      */
     private void selectCurrentKey(KeyStoreAlias previousSelection) {
@@ -796,7 +820,7 @@ public class IntegratorWizardPage extends WizardPage {
         comboKeyMap.addAll(encrypt ? publicKeyMap : privateKeyMap);
         keyCombo.setItems(getKeyItems());
 
-        if(keyCombo.getItemCount() == 0) {
+        if (keyCombo.getItemCount() == 0) {
             keyCombo.add(Messages.getString("IntegratorWizardPage.noKeyFound")); //$NON-NLS-1$
             keyCombo.select(0);
             keyCombo.setEnabled(false);
@@ -804,19 +828,17 @@ public class IntegratorWizardPage extends WizardPage {
         } else {
             keyCombo.setEnabled(true);
 
-            if(previousSelection == null) {
+            if (previousSelection == null) {
                 keyCombo.select(0);
             } else {
-                if(comboKeyMap.contains(previousSelection)) {
+                if (comboKeyMap.contains(previousSelection)) {
                     keyCombo.select(comboKeyMap.indexOf(previousSelection));
                 } else {
                     keyCombo.select(0);
                     String prevHash = previousSelection.getHashValue();
 
-                    for(KeyStoreAlias alias : comboKeyMap)
-                    {
-                        if(alias.getHashValue().equals(prevHash))
-                        {
+                    for (KeyStoreAlias alias : comboKeyMap) {
+                        if (alias.getHashValue().equals(prevHash)) {
                             keyCombo.select(comboKeyMap.indexOf(alias));
                             break;
                         }
@@ -832,7 +854,7 @@ public class IntegratorWizardPage extends WizardPage {
      * Creates the 'key by hand' group
      */
     private void createKeyByHandGroup(Composite parent) {
-    	GridLayout keyGroupGridLayout = new GridLayout();
+        GridLayout keyGroupGridLayout = new GridLayout();
         keyGroupGridLayout.numColumns = 2;
 
         GridData keyGroupGridData = new GridData();
@@ -845,41 +867,35 @@ public class IntegratorWizardPage extends WizardPage {
         keyByHandGroup.setLayout(keyGroupGridLayout);
         keyByHandGroup.setText(Messages.getString("CustomKey.Title")); //$NON-NLS-1$
 
-    	Label label = new Label(keyByHandGroup, SWT.LEFT);
+        Label label = new Label(keyByHandGroup, SWT.LEFT);
         label.setText(Messages.getString("CustomKey.KeyLength")); //$NON-NLS-1$
 
-    	final Combo keylengthCombo = new Combo(keyByHandGroup, SWT.READ_ONLY);
-    	keylengthCombo.setLayoutData(keyByHandGroup.getLayoutData());
+        final Combo keylengthCombo = new Combo(keyByHandGroup, SWT.READ_ONLY);
+        keylengthCombo.setLayoutData(keyByHandGroup.getLayoutData());
 
-    	for(int validKeyLength : validKeyLengths)
-    		keylengthCombo.add(Integer.toString(validKeyLength));
+        for (int validKeyLength : validKeyLengths)
+            keylengthCombo.add(Integer.toString(validKeyLength));
 
+        keylengthCombo.select(0);
 
-    	keylengthCombo.select(0);
+        label = new Label(keyByHandGroup, SWT.LEFT);
+        label.setText(Messages.getString("DummyWizardPage.16") + ":"); //$NON-NLS-1$ //$NON-NLS-2$
 
-
-    	label = new Label(keyByHandGroup, SWT.LEFT);
-        label.setText(Messages.getString("DummyWizardPage.16")+":"); //$NON-NLS-1$ //$NON-NLS-2$
-
-
-        customKeyTextbox = new HexTextbox(keyByHandGroup, SWT.BORDER, validKeyLengths[0]/8, '0');
+        customKeyTextbox = new HexTextbox(keyByHandGroup, SWT.BORDER, validKeyLengths[0] / 8, '0');
         customKeyTextbox.setLayoutData(keyByHandGroup.getLayoutData());
 
-
-    	keylengthCombo.addListener(SWT.Selection, new Listener() {
+        keylengthCombo.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event event) {
-               String keyLen = keylengthCombo.getItem(keylengthCombo.getSelectionIndex());
-               int numBytes = (new Integer(keyLen))/8;
-               customKeyTextbox.setNumBytes(numBytes);
+                String keyLen = keylengthCombo.getItem(keylengthCombo.getSelectionIndex());
+                int numBytes = (new Integer(keyLen)) / 8;
+                customKeyTextbox.setNumBytes(numBytes);
             }
         });
-
-
 
     }
 
     @SuppressWarnings("unused")
-	private void createMessageDigestGroup(Composite pageComposite) {
+    private void createMessageDigestGroup(Composite pageComposite) {
         Group messageDigestGroup = new Group(pageComposite, SWT.NONE);
         messageDigestGroup.setLayout(new GridLayout(2, false));
         messageDigestGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -999,7 +1015,7 @@ public class IntegratorWizardPage extends WizardPage {
      *
      */
     private void createModeCombo(Group paddingGroup, GridData gridData) {
-    	final Vector<IMetaMode> modeMap = new Vector<IMetaMode>();
+        final Vector<IMetaMode> modeMap = new Vector<IMetaMode>();
         modeCombo = new Combo(paddingGroup, SWT.READ_ONLY);
         modeCombo.setLayoutData(gridData);
         modeCombo.addListener(SWT.Selection, new Listener() {
@@ -1025,7 +1041,7 @@ public class IntegratorWizardPage extends WizardPage {
      *
      */
     private void createPaddingCombo(Group paddingGroup, GridData gridData) {
-    	final Vector<IMetaPaddingScheme> paddingMap = new Vector<IMetaPaddingScheme>();
+        final Vector<IMetaPaddingScheme> paddingMap = new Vector<IMetaPaddingScheme>();
         paddingCombo = new Combo(paddingGroup, SWT.READ_ONLY);
         paddingCombo.setLayoutData(gridData);
         paddingCombo.addListener(SWT.Selection, new Listener() {
@@ -1074,9 +1090,8 @@ public class IntegratorWizardPage extends WizardPage {
         randomText.setText("128"); //$NON-NLS-1$
         randomText.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
-                if ((Character.getType(e.character) != Character.DECIMAL_DIGIT_NUMBER)
-                        && (e.keyCode != SWT.ARROW_LEFT) && (e.keyCode != SWT.ARROW_RIGHT)
-                        && (e.character != SWT.DEL) && (e.character != SWT.BS))
+                if ((Character.getType(e.character) != Character.DECIMAL_DIGIT_NUMBER) && (e.keyCode != SWT.ARROW_LEFT)
+                        && (e.keyCode != SWT.ARROW_RIGHT) && (e.character != SWT.DEL) && (e.character != SWT.BS))
                     e.doit = false;
             }
 
@@ -1124,7 +1139,6 @@ public class IntegratorWizardPage extends WizardPage {
 
         });
 
-
         // Filter chars
         gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1);
 
@@ -1147,7 +1161,6 @@ public class IntegratorWizardPage extends WizardPage {
             }
 
         });
-
 
         gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         label = new Label(alphabetGroup, SWT.LEFT);
@@ -1191,7 +1204,6 @@ public class IntegratorWizardPage extends WizardPage {
             }
 
         });
-
 
         gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         label = new Label(alphabetGroup, SWT.LEFT);
@@ -1294,19 +1306,18 @@ public class IntegratorWizardPage extends WizardPage {
         return null;
     }
 
-
     /**
      * Enables/disables a group and all it's child controls
      */
     protected void setEnableForGroup(Composite group, boolean enabled) {
-    	Control[] childs = group.getChildren();
-    	for(Control child : childs)
-    		if(child instanceof Composite) {
-    			setEnableForGroup((Composite) child, enabled);
-    		} else if(!(child instanceof Label)) {
-    			child.setEnabled(enabled);
-    		}
-    	group.setEnabled(enabled);
+        Control[] childs = group.getChildren();
+        for (Control child : childs)
+            if (child instanceof Composite) {
+                setEnableForGroup((Composite) child, enabled);
+            } else if (!(child instanceof Label)) {
+                child.setEnabled(enabled);
+            }
+        group.setEnabled(enabled);
     }
 
     private String[] getKeyItems() {
@@ -1343,8 +1354,6 @@ public class IntegratorWizardPage extends WizardPage {
         if (type.equals("secret"))return Messages.getString("DummyWizardPage.key.secret"); //$NON-NLS-1$ //$NON-NLS-2$
         return Messages.getString("DummyWizardPage.key.key"); //$NON-NLS-1$
     }
-
-
 
     /**
      * returns the selected keystore alias
@@ -1413,21 +1422,21 @@ public class IntegratorWizardPage extends WizardPage {
         return expectedChecksum;
     }
 
-
     /**
      * Returns whether a custom key should be used
      *
      * @return whether a custom key should be used
      */
     public boolean useCustomKey() {
-    	return useCustomKey;
+        return useCustomKey;
     }
 
     /**
      * Returns the bytes entered in the custom key textbox
+     *
      * @return the bytes entered in the custom key textbox
      */
     public byte[] getCustomKey() {
-    	return customKeyTextbox.getBytes();
+        return customKeyTextbox.getBytes();
     }
 }
