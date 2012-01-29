@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,8 +25,7 @@ import org.jcryptool.core.operations.OperationsPlugin;
 
 /**
  * Central point of access to the alphabets. <br>
- * Suports adding, editing and removing custom alphabets and provides access to
- * the basic platform alphabets.
+ * Suports adding, editing and removing custom alphabets and provides access to the basic platform alphabets.
  *
  *
  * @author t-kern, sleischnig
@@ -47,12 +45,10 @@ public class New_AlphabetsManager {
      * Creates a new instance of AlphabetsManager and initializes the store.
      */
     private New_AlphabetsManager() {
-        if (store == null) {
-            loadAlphabetPlugin();
+        loadAlphabetPlugin();
 
-            if (store != null) {
-                store.init();
-            }
+        if (store != null) {
+            store.init();
         }
     }
 
@@ -89,7 +85,8 @@ public class New_AlphabetsManager {
                             store = (New_AbstractAlphabetStore) configElements[j]
                                     .createExecutableExtension(IOperationsConstants.ATT_CLASS);
                         } catch (CoreException e) {
-                            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while loading the AlphabetStore", e, true); //$NON-NLS-1$
+                            LogUtil.logError(OperationsPlugin.PLUGIN_ID,
+                                    "Exception while loading the AlphabetStore", e, true); //$NON-NLS-1$
                         }
                     }
                 }
@@ -97,21 +94,22 @@ public class New_AlphabetsManager {
         }
     }
 
-//    /**
-//     * Returns the names of the custom alphabets.
-//     *
-//     * @return The names of the custom alphabets
-//     */
-//    public String[] getSelfCreatedAlphaList() {
-//        return store.getSelfCreatedAlphaList();
-//    }
+    // /**
+    // * Returns the names of the custom alphabets.
+    // *
+    // * @return The names of the custom alphabets
+    // */
+    // public String[] getSelfCreatedAlphaList() {
+    // return store.getSelfCreatedAlphaList();
+    // }
 
     /**
      * Adds an Alphabet to the store.
      *
      * @param alphabet The Alphabet that will be added
      */
-    public void addAlphabet(Alphabet<Character> alphabet, String name, String shortName, boolean isDefault, boolean isIntegral) {
+    public void addAlphabet(Alphabet<Character> alphabet, String name, String shortName, boolean isDefault,
+            boolean isIntegral) {
         store.addAlphabet(alphabet, name, shortName, isDefault, isIntegral);
     }
 
@@ -159,9 +157,8 @@ public class New_AlphabetsManager {
      * Returns the first Alphabet of the given name.
      *
      * @param name The name of the Alphabet
-     * @return The Alphabet
-     * TODO: deprecation
-     * deprecated since alphabets will soon be internationalized, unique identifiers will be used.
+     * @return The Alphabet TODO: deprecation deprecated since alphabets will soon be internationalized, unique
+     *         identifiers will be used.
      */
     public Alphabet<Character> getAlphabetByName(String name) {
         return store.getAlphabetByName(name);
@@ -176,19 +173,19 @@ public class New_AlphabetsManager {
     public Alphabet<Character> getAlphabetByShortName(String name) {
         return store.getAlphabetByShortName(name);
     }
-    
+
     public Alphabet<Character> getAlphabet(AlphabetReference alphabetReference) {
-    	return store.getAlphabet(alphabetReference);
+        return store.getAlphabet(alphabetReference);
     }
 
     public AbstractAlphabet getDefaultAlphabet() {
-//    	Alphabet<Character>[] alphas = store.getAlphabets();
-//        for (int i = 0; i < alphas.length; i++) {
-//            if (alphas[i].isDefaultAlphabet()) {
-//                return alphas[i];
-//            }
-//        }
-    	//TODO: what to do with this function
+        // Alphabet<Character>[] alphas = store.getAlphabets();
+        // for (int i = 0; i < alphas.length; i++) {
+        // if (alphas[i].isDefaultAlphabet()) {
+        // return alphas[i];
+        // }
+        // }
+        // TODO: what to do with this function
         return null;
     }
 
