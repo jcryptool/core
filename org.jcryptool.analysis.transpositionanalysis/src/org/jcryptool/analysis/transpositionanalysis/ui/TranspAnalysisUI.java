@@ -17,7 +17,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -33,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizard;
