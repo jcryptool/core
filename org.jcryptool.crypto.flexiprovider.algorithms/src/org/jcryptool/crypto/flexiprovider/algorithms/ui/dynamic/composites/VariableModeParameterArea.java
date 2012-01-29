@@ -80,8 +80,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 		Label descriptionLabel = new Label(parent, SWT.NONE);
 		descriptionLabel.setText(Messages.VariableModeParameterArea_0);
 		descriptionLabel.setLayoutData(gridData1);
-		@SuppressWarnings("unused")
-		Label filler2 = new Label(parent, SWT.NONE);
+		new Label(parent, SWT.NONE);
 		Label lengthLabel = new Label(parent, SWT.NONE);
 		lengthLabel.setText(Messages.VariableModeParameterArea_1);
 		parent.setLayout(gridLayout1);
@@ -90,8 +89,7 @@ public class VariableModeParameterArea implements IInputArea, Listener {
 
 		Label bitsLabel = new Label(parent, SWT.NONE);
 		bitsLabel.setText(Messages.VariableModeParameterArea_2);
-		@SuppressWarnings("unused")
-		Label filler1 = new Label(parent, SWT.NONE);
+		new Label(parent, SWT.NONE);
 		ivText = new Text(parent, SWT.BORDER);
 		ivText.setLayoutData(gridData21);
 		ivText.addListener(SWT.Modify, this);
