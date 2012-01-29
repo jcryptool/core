@@ -31,12 +31,12 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * @author t-kern, sleischnig
  *
  */
-public class New_AlphabetsManager {
+public class AlphabetsManager2 {
     /** Singleton instance */
-    private static New_AlphabetsManager instance;
+    private static AlphabetsManager2 instance;
 
     /** The AlphabetStore (loaded on demand) */
-    private New_AbstractAlphabetStore store = null;
+    private AbstractAlphabetStore2 store = null;
 
     /** The name of the factory-default alphabet */
     public static final String FACTORY_DEFAULT_ALPHABET = "Upper and lower Latin (A-Z,a-z)"; //$NON-NLS-1$
@@ -44,7 +44,7 @@ public class New_AlphabetsManager {
     /**
      * Creates a new instance of AlphabetsManager and initializes the store.
      */
-    private New_AlphabetsManager() {
+    private AlphabetsManager2() {
         loadAlphabetPlugin();
 
         if (store != null) {
@@ -57,9 +57,9 @@ public class New_AlphabetsManager {
      *
      * @return The singleton instance
      */
-    public static New_AlphabetsManager getInstance() {
+    public static AlphabetsManager2 getInstance() {
         if (instance == null)
-            instance = new New_AlphabetsManager();
+            instance = new AlphabetsManager2();
         return instance;
     }
 
@@ -82,7 +82,7 @@ public class New_AlphabetsManager {
                 for (int j = 0; j < configElements.length; j++) {
                     if (configElements[j].getName().equals(IOperationsConstants.PL_ALPHABETS)) {
                         try {
-                            store = (New_AbstractAlphabetStore) configElements[j]
+                            store = (AbstractAlphabetStore2) configElements[j]
                                     .createExecutableExtension(IOperationsConstants.ATT_CLASS);
                         } catch (CoreException e) {
                             LogUtil.logError(OperationsPlugin.PLUGIN_ID,

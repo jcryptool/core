@@ -23,7 +23,7 @@ import org.jcryptool.core.cryptosystem.core.Alphabet;
  * @author t-kern, sleischnig
  *
  */
-public abstract class New_AbstractAlphabetStore {
+public abstract class AbstractAlphabetStore2 {
 
 	public abstract void init();
 	

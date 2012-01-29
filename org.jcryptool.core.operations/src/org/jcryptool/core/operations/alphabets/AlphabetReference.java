@@ -39,7 +39,7 @@ public class AlphabetReference {
 		this.integral = integral;
 	}
 
-	public New_AbstractAlphabetStore getOriginStore() {
+	public AbstractAlphabetStore2 getOriginStore() {
 		return originStore;
 	}
 
@@ -47,11 +47,11 @@ public class AlphabetReference {
 	String shortAlphabetName;
 	boolean defaultAlphabet;
 	boolean integral;
-	New_AbstractAlphabetStore originStore;
+	AbstractAlphabetStore2 originStore;
 	
 	public AlphabetReference(String alphabetName, String shortAlphabetName,
 			boolean defaultAlphabet, boolean integral,
-			New_AbstractAlphabetStore originStore) {
+			AbstractAlphabetStore2 originStore) {
 		super();
 		this.alphabetName = alphabetName;
 		this.shortAlphabetName = shortAlphabetName;
