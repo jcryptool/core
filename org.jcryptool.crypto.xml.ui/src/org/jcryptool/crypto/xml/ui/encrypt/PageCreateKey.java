@@ -15,8 +15,8 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.SecretKey;
 
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
@@ -328,21 +328,21 @@ public class PageCreateKey extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if (tKeystore.getText().length() == 0) {
-            updateStatus(Messages.selectKeystoreFileToExtend, DialogPage.INFORMATION);
+            updateStatus(Messages.selectKeystoreFileToExtend, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeystorePassword.getText().length() == 0) {
-            updateStatus(Messages.enterKeystorePassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterKeystorePassword, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyName.getText().length() < IGlobals.KEY_NAME_MIN_SIZE
             || tKeyName.getText().length() > IGlobals.KEY_NAME_MAX_SIZE) {
-            updateStatus(Messages.enterNewKeyName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyName, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyPassword.getText().length() < IGlobals.KEY_PASSWORD_MIN_SIZE
             || tKeyPassword.getText().length() > IGlobals.KEY_PASSWORD_MAX_SIZE) {
-            updateStatus(Messages.enterNewKeyPassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyPassword, IMessageProvider.INFORMATION);
             return;
         }
 
@@ -351,15 +351,15 @@ public class PageCreateKey extends WizardPage implements Listener {
             keystore.load();
 
             if (keystore.containsKey(tKeyName.getText())) {
-                updateStatus(Messages.existingKeyName, DialogPage.NONE);
+                updateStatus(Messages.existingKeyName, IMessageProvider.NONE);
                 return;
             }
         } catch (Exception ex) {
-            updateStatus(Messages.verifyAll, DialogPage.NONE);
+            updateStatus(Messages.verifyAll, IMessageProvider.NONE);
             return;
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**
@@ -388,7 +388,7 @@ public class PageCreateKey extends WizardPage implements Listener {
             openKeystore();
         } else if (e.widget == bGenerate) {
             createKey();
-            updateStatus(null, DialogPage.NONE);
+            updateStatus(null, IMessageProvider.NONE);
         } else if (e.widget == bEchoKeystorePassword) {
             echoPassword(e);
         } else if (e.widget == bEchoKeyPassword) {
@@ -477,7 +477,7 @@ public class PageCreateKey extends WizardPage implements Listener {
         if (generated) {
             String keystoreName = tKeystore.getText().substring(tKeystore.getText().lastIndexOf(File.separator) + 1);
         	lResult.setText(NLS.bind(Messages.keyGenerated, new Object[] {tKeyName.getText(), keystoreName}));
-            updateStatus(null, DialogPage.NONE);
+            updateStatus(null, IMessageProvider.NONE);
         }
     }
 

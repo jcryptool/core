@@ -7,8 +7,8 @@
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.encrypt;
 
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -247,11 +247,11 @@ public class PageAlgorithms extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if (cEncryptionAlgorithm.getText().equals("")) {
-            updateStatus(Messages.selectEncryptionAlgorithm, DialogPage.INFORMATION);
+            updateStatus(Messages.selectEncryptionAlgorithm, IMessageProvider.INFORMATION);
             return;
         }
         if (cKeyWrapAlgorithm.getText().equals("")) {
-            updateStatus(Messages.selectKeyWrapAlgorithm, DialogPage.INFORMATION);
+            updateStatus(Messages.selectKeyWrapAlgorithm, IMessageProvider.INFORMATION);
             return;
         }
         if (!tID.getText().equals("")) {
@@ -259,13 +259,13 @@ public class PageAlgorithms extends WizardPage implements Listener {
                 boolean uniqueId = Utils.ensureIdIsUnique(tID.getText(), ids);
 
                 if (!uniqueId) {
-                    updateStatus(Messages.ambiguousEncryptionId, DialogPage.ERROR);
+                    updateStatus(Messages.ambiguousEncryptionId, IMessageProvider.ERROR);
                     return;
                 }
             }
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

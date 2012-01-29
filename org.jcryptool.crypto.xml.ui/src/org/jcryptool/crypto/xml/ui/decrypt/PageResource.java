@@ -9,7 +9,7 @@ package org.jcryptool.crypto.xml.ui.decrypt;
 
 import java.io.InputStream;
 
-import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -194,11 +194,11 @@ public class PageResource extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if ("".equals(cEncryptionId.getText())) {
-            updateStatus(Messages.missingEncryptionId, DialogPage.INFORMATION);
+            updateStatus(Messages.missingEncryptionId, IMessageProvider.INFORMATION);
             return;
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

@@ -34,7 +34,7 @@ public class RSA_JuGu02 extends RSA42 {
 	}
 
 	public RSA_JuGu02(int inK, SecureRandom inSecureRandom) {
-		this(inK, RSA_JuGu02.theE, RSA_JuGu02.theT, inSecureRandom);
+		this(inK, RSA42.theE, RSA_JuGu02.theT, inSecureRandom);
 	}
 
 	public BigInteger calcD() {

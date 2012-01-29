@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.PaintEvent;
@@ -491,7 +492,7 @@ public class SudokuComposite extends Composite {
                 }
             }
         });
-        
+
         this.clearButton = new Button(subComposite, SWT.PUSH);
         this.clearButton.setLayoutData(buttonrd);
         this.clearButton.setEnabled(true);
@@ -653,7 +654,7 @@ public class SudokuComposite extends Composite {
                                                 return toReturn;
                                             }
                                         }));
-                        if (dlg.open() == InputDialog.OK) {
+                        if (dlg.open() == Window.OK) {
                             int value = Integer.parseInt(dlg.getValue());
                             areas.add(new Area(ADDITION, selected, value));
                         }
@@ -695,7 +696,7 @@ public class SudokuComposite extends Composite {
                                                     return toReturn;
                                                 }
                                             }));
-                            if (dlg.open() == InputDialog.OK) {
+                            if (dlg.open() == Window.OK) {
                                 int value = Integer.parseInt(dlg.getValue());
                                 areas.add(new Area(SUBTRACTION, selected, value));
                             }
@@ -737,7 +738,7 @@ public class SudokuComposite extends Composite {
                                                 return toReturn;
                                             }
                                         }));
-                        if (dlg.open() == InputDialog.OK) {
+                        if (dlg.open() == Window.OK) {
                             int value = Integer.parseInt(dlg.getValue());
                             areas.add(new Area(MULTIPLICATION, selected, value));
                         }
@@ -779,7 +780,7 @@ public class SudokuComposite extends Composite {
                                                     return toReturn;
                                                 }
                                             }));
-                            if (dlg.open() == InputDialog.OK) {
+                            if (dlg.open() == Window.OK) {
                                 int value = Integer.parseInt(dlg.getValue());
                                 areas.add(new Area(DIVISION, selected, value));
                             }
@@ -1008,7 +1009,7 @@ public class SudokuComposite extends Composite {
 
         updateInitialPossibilitiesKiller();
         updatePossibilitiesKiller();
-        
+
         loadedKiller = true;
         additionButton.setEnabled(false);
         subtractionButton.setEnabled(false);
@@ -1477,7 +1478,7 @@ public class SudokuComposite extends Composite {
 	                            composite.setBackground(WHITE);
 	                            boardTextKiller[point.x][point.y].setBackground(WHITE);
 	                            selected.remove(point);
-	
+
 	                        } else {
 	                            composite.setBackground(RED);
 	                            boardTextKiller[point.x][point.y].setBackground(RED);
@@ -1487,7 +1488,7 @@ public class SudokuComposite extends Composite {
                             boardTextKiller[point.x][point.y].setFocus();
                         }
                     }
-                    
+
                 });
 
                 if (i + 1 != 9 && j + 1 != 9) {

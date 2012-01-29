@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.SecretKey;
 
-import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
@@ -326,29 +326,29 @@ public class PageCreateKeystore extends WizardPage implements Listener {
 
             File tempFile = new File(keystorePath);
             if (tempFile.exists()) {
-                updateStatus(Messages.keystoreAlreadyExists, DialogPage.ERROR);
+                updateStatus(Messages.keystoreAlreadyExists, IMessageProvider.ERROR);
                 return;
             }
         } else {
-            updateStatus(Messages.enterNewKeystoreName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeystoreName, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeystorePassword.getText().length() < IGlobals.KEYSTORE_PASSWORD_MIN_SIZE) {
-            updateStatus(Messages.enterNewKeystorePassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeystorePassword, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyName.getText().length() < IGlobals.KEY_NAME_MIN_SIZE
             || tKeyName.getText().length() > IGlobals.KEY_NAME_MAX_SIZE) {
-            updateStatus(Messages.enterNewKeyName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyName, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyPassword.getText().length() < IGlobals.KEY_PASSWORD_MIN_SIZE
             || tKeyPassword.getText().length() > IGlobals.KEY_PASSWORD_MAX_SIZE) {
-            updateStatus(Messages.enterNewKeyPassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyPassword, IMessageProvider.INFORMATION);
             return;
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**
@@ -375,7 +375,7 @@ public class PageCreateKeystore extends WizardPage implements Listener {
     public void handleEvent(final Event e) {
         if (e.widget == bGenerate) {
             createKeystore();
-            updateStatus(null, DialogPage.NONE);
+            updateStatus(null, IMessageProvider.NONE);
         } else if (e.widget == bEchoKeystorePassword) {
             echoPassword(e);
         } else if (e.widget == bEchoKeyPassword) {
@@ -453,7 +453,7 @@ public class PageCreateKeystore extends WizardPage implements Listener {
 
         if (generated) {
         	lResult.setText(NLS.bind(Messages.keystoreGenerated, new Object[] {tKeyName.getText(), keystoreName}));
-            updateStatus(null, DialogPage.NONE);
+            updateStatus(null, IMessageProvider.NONE);
         }
     }
 

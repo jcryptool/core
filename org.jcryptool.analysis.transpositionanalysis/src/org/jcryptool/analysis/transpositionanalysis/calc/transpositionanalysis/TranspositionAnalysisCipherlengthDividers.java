@@ -97,13 +97,13 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 		 * Fälle: * -1- Primzahl * 0 - keine Ergebnisse * 4 - nur 1 Ergebnis! *
 		 * 1 - klares Ergebnis: nur 2-3 Ergebnisse * 2 - eher unklares Ergebnis:
 		 * 4-oo Ergebnisse
-		 * 
-		 * 
+		 *
+		 *
 		 * Text: * Eigentlich alle Längen gleich wahrscheinlich, jedoch: hohe
 		 * Schlüssellängen unsicher, niedrige Schlüssellängen ebenfalls. Längen
 		 * von 1-10 immer aufzählen. Grundsätzlich möglich sind ebenfalls: <alle
 		 * in @alsoStarring>
-		 * 
+		 *
 		 */
 
 		PolledPositiveInteger resultOnlyLikely = result.clone();
@@ -203,7 +203,7 @@ public class TranspositionAnalysisCipherlengthDividers extends TranspositionAnal
 				first = false;
 			}
 			text.append(". \n");
-			if (alsoStarring != null && alsoStarring.size() > 0) {
+			if (!alsoStarring.isEmpty()) {
 				text.append("Also possible:");
 				first = true;
 				for (Integer length : alsoStarring) {

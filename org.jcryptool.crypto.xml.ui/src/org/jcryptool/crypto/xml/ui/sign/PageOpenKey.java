@@ -12,8 +12,8 @@ package org.jcryptool.crypto.xml.ui.sign;
 
 import java.io.File;
 
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -263,19 +263,19 @@ public class PageOpenKey extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if (tKeystore.getText().length() == 0) {
-            updateStatus(Messages.selectKeyFile, DialogPage.INFORMATION);
+            updateStatus(Messages.selectKeyFile, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeystorePassword.getText().length() == 0) {
-            updateStatus(Messages.enterKeystorePassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterKeystorePassword, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyName.getText().length() == 0) {
-            updateStatus(Messages.enterKeyName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterKeyName, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyPassword.getText().length() == 0) {
-            updateStatus(Messages.enterKeyPassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterKeyPassword, IMessageProvider.INFORMATION);
             return;
         }
 
@@ -287,27 +287,27 @@ public class PageOpenKey extends WizardPage implements Listener {
                 if (loaded) {
                     if (keystore.containsKey(tKeyName.getText())) {
                         if (keystore.getPrivateKey(tKeyName.getText(), tKeyPassword.getText().toCharArray()) == null) {
-                            updateStatus(Messages.verifyKeyPassword, DialogPage.ERROR);
+                            updateStatus(Messages.verifyKeyPassword, IMessageProvider.ERROR);
                             return;
                         }
                     } else {
-                        updateStatus(Messages.verifyKeyName, DialogPage.ERROR);
+                        updateStatus(Messages.verifyKeyName, IMessageProvider.ERROR);
                         return;
                     }
                 } else {
-                    updateStatus(Messages.verifyKeystorePassword, DialogPage.ERROR);
+                    updateStatus(Messages.verifyKeystorePassword, IMessageProvider.ERROR);
                     return;
                 }
             } catch (Exception ex) {
-                updateStatus(Messages.verifyAll, DialogPage.ERROR);
+                updateStatus(Messages.verifyAll, IMessageProvider.ERROR);
                 return;
             }
         } else {
-            updateStatus(Messages.keystoreNotFound, DialogPage.ERROR);
+            updateStatus(Messages.keystoreNotFound, IMessageProvider.ERROR);
             return;
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

@@ -16,8 +16,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -85,7 +85,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
                 new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
                         wizard);
 
-        if (dialog.open() == Dialog.OK) {
+        if (dialog.open() == Window.OK) {
             return wizard.getWizardData();
         } else {
             return null;

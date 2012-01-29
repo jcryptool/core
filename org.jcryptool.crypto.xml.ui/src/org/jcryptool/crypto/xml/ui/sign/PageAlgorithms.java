@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ICellModifier;
@@ -457,16 +457,16 @@ public class PageAlgorithms extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if (cCanon.getText().equals("")) { //$NON-NLS-1$
-            updateStatus(Messages.selectCanonicalization, DialogPage.INFORMATION);
+            updateStatus(Messages.selectCanonicalization, IMessageProvider.INFORMATION);
             return;
         } else if (cTransform.getText().equals("")) { //$NON-NLS-1$
-            updateStatus(Messages.selectTransformation, DialogPage.INFORMATION);
+            updateStatus(Messages.selectTransformation, IMessageProvider.INFORMATION);
             return;
         } else if (cMDA.getText().equals("")) { //$NON-NLS-1$
-            updateStatus(Messages.selectMessageDigest, DialogPage.INFORMATION);
+            updateStatus(Messages.selectMessageDigest, IMessageProvider.INFORMATION);
             return;
         } else if (cSign.getText().equals("")) { //$NON-NLS-1$
-            updateStatus(Messages.selectSignature, DialogPage.INFORMATION);
+            updateStatus(Messages.selectSignature, IMessageProvider.INFORMATION);
             return;
         }
         if (!tId.getText().equals("")) {
@@ -474,13 +474,13 @@ public class PageAlgorithms extends WizardPage implements Listener {
                 boolean uniqueId = Utils.ensureIdIsUnique(tId.getText(), ids);
 
                 if (!uniqueId) {
-                    updateStatus(Messages.ambiguousSignatureId, DialogPage.ERROR);
+                    updateStatus(Messages.ambiguousSignatureId, IMessageProvider.ERROR);
                     return;
                 }
             }
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

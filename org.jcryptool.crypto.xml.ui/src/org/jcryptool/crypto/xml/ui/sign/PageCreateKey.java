@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
 import java.util.HashMap;
 
-import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.osgi.util.NLS;
@@ -471,7 +471,7 @@ public class PageCreateKey extends WizardPage implements Listener {
             lPreview.setText("CN=" + tCommonName.getText()); //$NON-NLS-1$
         } else {
             lPreview.setText(""); //$NON-NLS-1$
-            updateStatus(Messages.enterCommonName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterCommonName, IMessageProvider.INFORMATION);
             return;
         }
         if (tOrganizationalUnit.getText().length() > 0) {
@@ -505,23 +505,23 @@ public class PageCreateKey extends WizardPage implements Listener {
                     + ", C=" + tCountry.getText()); //$NON-NLS-1$
         }
         if (tKeyName.getText().length() < IGlobals.KEY_NAME_MIN_SIZE) {
-            updateStatus(Messages.enterNewKeyName, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyName, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeyPassword.getText().length() < IGlobals.KEY_PASSWORD_MIN_SIZE) {
-            updateStatus(Messages.enterNewKeyPassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterNewKeyPassword, IMessageProvider.INFORMATION);
             return;
         }
         if (cKeyAlgorithm.getSelectionIndex() < 0) {
-            updateStatus(Messages.selectKeyAlgorithm, DialogPage.INFORMATION);
+            updateStatus(Messages.selectKeyAlgorithm, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeystore.getText().length() == 0) {
-            updateStatus(Messages.selectKeystoreForInsert, DialogPage.INFORMATION);
+            updateStatus(Messages.selectKeystoreForInsert, IMessageProvider.INFORMATION);
             return;
         }
         if (tKeystorePassword.getText().length() == 0) {
-            updateStatus(Messages.enterKeystorePassword, DialogPage.INFORMATION);
+            updateStatus(Messages.enterKeystorePassword, IMessageProvider.INFORMATION);
             return;
         }
 
@@ -536,20 +536,20 @@ public class PageCreateKey extends WizardPage implements Listener {
 
                 if (loaded) {
                     if (keystore.containsKey(tKeyName.getText())) {
-                        updateStatus(Messages.keyExistsInKeystore, DialogPage.ERROR);
+                        updateStatus(Messages.keyExistsInKeystore, IMessageProvider.ERROR);
                         return;
                     }
                 } else {
-                    updateStatus(Messages.verifyKeystorePassword, DialogPage.ERROR);
+                    updateStatus(Messages.verifyKeystorePassword, IMessageProvider.ERROR);
                     return;
                 }
             } catch (Exception e) {
-                updateStatus(Messages.verifyAll, DialogPage.ERROR);
+                updateStatus(Messages.verifyAll, IMessageProvider.ERROR);
                 return;
             }
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**
@@ -579,9 +579,9 @@ public class PageCreateKey extends WizardPage implements Listener {
         } else if (e.widget == bGenerate) {
             try {
                 createKey();
-                updateStatus(null, DialogPage.NONE);
+                updateStatus(null, IMessageProvider.NONE);
             } catch (Exception e1) {
-                updateStatus(Messages.keyGenerationFailed, DialogPage.ERROR);
+                updateStatus(Messages.keyGenerationFailed, IMessageProvider.ERROR);
             }
         } else if (e.widget == bEchoKeystorePassword || e.widget == bEchoKeyPassword) {
             echoPassword(e);
@@ -661,7 +661,7 @@ public class PageCreateKey extends WizardPage implements Listener {
 
         if (generated) {
             lResult.setText(NLS.bind(Messages.keyGenerated, keystoreName));
-            updateStatus(null, DialogPage.NONE);
+            updateStatus(null, IMessageProvider.NONE);
         }
     }
 

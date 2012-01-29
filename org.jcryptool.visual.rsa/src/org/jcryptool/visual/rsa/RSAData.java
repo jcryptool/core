@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
@@ -396,10 +397,10 @@ public class RSAData {
                     this.getPrivateParams();
                 }
                 catch (UnrecoverableKeyException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, RSAPlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
                             Messages.RSAData_ExAccessKeystorePassword, e));
                 } catch (final NullPointerException e) {
-                    JCTMessageDialog.showErrorDialog(new Status(Status.ERROR, RSAPlugin.PLUGIN_ID,
+                    JCTMessageDialog.showErrorDialog(new Status(IStatus.ERROR, RSAPlugin.PLUGIN_ID,
                             e.getMessage(), e), Messages.RSAData_failedInitPrivParams);
                 } catch (final Exception e) {
                     LogUtil.logError(e);
