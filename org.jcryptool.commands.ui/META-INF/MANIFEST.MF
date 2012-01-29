@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.commands.core.evaluator,
- org.jcryptool.core.logging.utils
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.constants

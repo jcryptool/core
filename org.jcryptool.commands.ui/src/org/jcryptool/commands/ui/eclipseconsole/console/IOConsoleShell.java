@@ -24,6 +24,7 @@ import org.eclipse.ui.console.IOConsoleInputStream;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 import org.jcryptool.commands.ui.CommandsUIPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * Class for monitoring at a given IOConsole, and notifying the observers, when new input from the input stream is
@@ -116,7 +117,7 @@ public class IOConsoleShell extends Observable {
         IOConsoleInputStreamWrapper wrapperStream = new IOConsoleInputStreamWrapper(in);
         BufferedReader bufReader = null;
         try {
-            bufReader = new BufferedReader(new InputStreamReader(wrapperStream, "utf-8")); //$NON-NLS-1$
+            bufReader = new BufferedReader(new InputStreamReader(wrapperStream, IConstants.UTF8_ENCODING));
         } catch (UnsupportedEncodingException ex) {
             LogUtil.logError(CommandsUIPlugin.PLUGIN_ID, ex);
         }
