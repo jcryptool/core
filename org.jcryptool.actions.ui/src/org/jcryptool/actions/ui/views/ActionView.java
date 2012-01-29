@@ -106,8 +106,6 @@ public class ActionView extends ViewPart implements IListChangeListener {
         viewer.getTable().setHeaderVisible(true);
 
         TableViewerColumn column = new TableViewerColumn(viewer, SWT.LEFT);
-
-        column = new TableViewerColumn(viewer, SWT.LEFT);
         column.getColumn().setText(Messages.ActionView_5);
         column.getColumn().setToolTipText(Messages.ActionView_6);
         column.getColumn().setWidth(50);
@@ -168,7 +166,7 @@ public class ActionView extends ViewPart implements IListChangeListener {
         });
 
         viewer.setInput(ActionCascadeService.getInstance().observeActionItems());
-        
+
         ActionCascadeService.getInstance().observeActionItems().addListChangeListener(this);
 
         getSite().setSelectionProvider(viewer);
@@ -251,9 +249,9 @@ public class ActionView extends ViewPart implements IListChangeListener {
 
 	@Override
 	public void handleListChange(ListChangeEvent event) {
-		
+
 		// list changes are either additions or removals
-		
+
 		ListDiffEntry[] listDiffs = event.diff.getDifferences();
 		for (ListDiffEntry listDiffEntry : listDiffs) {
 			if(listDiffEntry.isAddition()) handleAddition();
@@ -273,7 +271,7 @@ public class ActionView extends ViewPart implements IListChangeListener {
 	private void handleAddition() {
 		selectFirstActionItem();
 	}
-	
+
 	private void handleRemoval() {
 		selectFirstActionItem();
 	}
