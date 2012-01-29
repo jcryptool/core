@@ -59,7 +59,7 @@ public class ExportSecretKeyAction extends Action {
 
         if (filename != null) {
             IPath iPath = new Path(filename);
-            if (iPath != null && info != null) {
+            if (info != null) {
                 char[] password = promptPassword();
                 try {
                     ImportExportManager.getInstance().exportSecretKey(

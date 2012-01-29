@@ -96,7 +96,7 @@ public class ProxiedCommand implements Command {
     private static String getSyntaxTerm(String commandName, Options options) {
         HelpFormatter formatter = new HelpFormatter();
         StringWriter writer = new StringWriter();
-        formatter.printUsage(new PrintWriter(writer), HelpCommand.CONSOLE_WIDTH, commandName, options);
+        formatter.printUsage(new PrintWriter(writer), Command.CONSOLE_WIDTH, commandName, options);
         return writer.toString().replaceAll("\\Ausage:?( )*", "").trim(); //$NON-NLS-1$ //$NON-NLS-2$
     }
 

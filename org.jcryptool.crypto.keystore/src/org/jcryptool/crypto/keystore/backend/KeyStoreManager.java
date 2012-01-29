@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -55,7 +55,7 @@ import de.flexiprovider.api.keys.Key;
 
 /**
  * @author t-kern
- * 
+ *
  */
 public class KeyStoreManager {
     /** Hard-coded standard password for the platform keystore */
@@ -183,7 +183,7 @@ public class KeyStoreManager {
 
     /**
      * extracts the private alias matching the known {@link #publicAlias}
-     * 
+     *
      * @return the private alias or <code>null</code> if none is found or there was a problem accessing the keystore
      */
     public KeyStoreAlias getPrivateForPublic(final KeyStoreAlias publicAlias) {
@@ -306,11 +306,11 @@ public class KeyStoreManager {
 
         return null;
     }
-    
+
     /**
      * tries to retrieve the key from keystore using the default password if the operation succeeds, the default
      * password will be updated, if it fails, the user have to enter a password into a prompt window
-     * 
+     *
      * @param alias
      * @return
      */
@@ -324,7 +324,7 @@ public class KeyStoreManager {
             char[] prompt_password = PasswordPrompt.prompt(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getShell());
             if (prompt_password == null) {
-                JCTMessageDialog.showInfoDialog(new Status(Status.INFO, KeyStorePlugin.PLUGIN_ID,
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
                         Messages.getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
                 return null;
             }
@@ -332,7 +332,7 @@ public class KeyStoreManager {
                 Key key = KeyStoreManager.getInstance().getKey(alias, prompt_password);
                 return key;
             } catch (UnrecoverableEntryException ex) {
-                JCTMessageDialog.showInfoDialog(new Status(Status.INFO, KeyStorePlugin.PLUGIN_ID,
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
                         Messages.getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
                 return null;
             } catch (Exception ex) {
@@ -456,7 +456,7 @@ public class KeyStoreManager {
 
     /**
      * Loads a keystore from the filesystem.
-     * 
+     *
      * @param fullyQualifiedName The full name of the keystore file, including path information
      * @param password The password with which the keystore is protected
      */

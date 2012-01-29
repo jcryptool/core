@@ -12,6 +12,7 @@ package org.jcryptool.crypto.flexiprovider.operations.ui.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -32,7 +33,7 @@ import org.jcryptool.crypto.keystore.ui.dialogs.SelectKeyDialog;
 
 /**
  * @author Anatoli Barski
- * 
+ *
  */
 public class SelectKeyHandler extends AbstractHandler {
 
@@ -71,7 +72,7 @@ public class SelectKeyHandler extends AbstractHandler {
                 }
 
                 if (selectionFromDialog == null) {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderOperationsPlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderOperationsPlugin.PLUGIN_ID,
                             Messages.SelectKeyHandler_WrongKey));
                     return null;
                 }
@@ -100,7 +101,7 @@ public class SelectKeyHandler extends AbstractHandler {
         SelectKeyDialog dialog = new SelectKeyDialog(window.getShell(), new Style(options), algorithm);
         dialog.create();
         dialog.open();
-        
+
         IKeyStoreAlias selectionFromDialog = null;
         switch(dialog.getReturnCode())
         {

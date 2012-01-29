@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -38,10 +38,14 @@ import org.jcryptool.core.CorePlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
- * <p>General preference page. On this page the language can be changed between English and German. If
- * the language is changed the application needs to be restarted.</p>
+ * <p>
+ * General preference page. On this page the language can be changed between English and German. If the language is
+ * changed the application needs to be restarted.
+ * </p>
  *
- * <p><b>This feature has no effect, if you start the application directly from an Eclipse IDE.</b></p>
+ * <p>
+ * <b>This feature has no effect, if you start the application directly from an Eclipse IDE.</b>
+ * </p>
  *
  * @author Dominik Schadow
  * @version 0.9.0
@@ -58,14 +62,12 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         super(GRID);
         setPreferenceStore(CorePlugin.getDefault().getPreferenceStore());
         setDescription(Messages.General_0);
-        IExtensionPoint p = Platform.getExtensionRegistry().getExtensionPoint(
-                "org.jcryptool.core.platformLanguage"); //$NON-NLS-1$
+        IExtensionPoint p = Platform.getExtensionRegistry().getExtensionPoint("org.jcryptool.core.platformLanguage"); //$NON-NLS-1$
         IExtension[] ext = p.getExtensions();
         nl = new String[ext.length];
         nlText = new String[ext.length];
         for (int i = 0; i < ext.length; i++) {
-            IConfigurationElement element = (IConfigurationElement) ext[i]
-                    .getConfigurationElements()[0];
+            IConfigurationElement element = (IConfigurationElement) ext[i].getConfigurationElements()[0];
             nl[i] = element.getAttribute("languageCode"); //$NON-NLS-1$
             nlText[i] = element.getAttribute("languageDescription"); //$NON-NLS-1$
         }
@@ -131,8 +133,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     }
 
     /**
-     * Sets the language in the <b>JCrypTool.ini</b>. This file is located in a different
-     * folder on Mac OS X.
+     * Sets the language in the <b>JCrypTool.ini</b>. This file is located in a different folder on Mac OS X.
      *
      * @param language
      * @throws Exception
@@ -196,10 +197,8 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
             throw (ieo);
         } finally {
             try {
-                if (in != null)
-                    in.close();
-                if (out != null)
-                    out.close();
+                in.close();
+                out.close();
             } catch (IOException ioe) {
                 LogUtil.logError(ioe);
             }
@@ -207,8 +206,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     }
 
     private void restartApp() {
-        MessageBox mbox = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_QUESTION
-                | SWT.YES | SWT.NO);
+        MessageBox mbox = new MessageBox(Display.getDefault().getActiveShell(), SWT.ICON_QUESTION | SWT.YES | SWT.NO);
         mbox.setText(Messages.MessageTitleRestart);
         mbox.setMessage(Messages.MessageRestart);
         if (mbox.open() == SWT.YES) {

@@ -51,7 +51,7 @@ public class ExportCertificateAction extends Action {
 		if (filename != null) {
     		IPath iPath = new Path(filename);
 
-    		if (iPath != null && info != null) {
+    		if (info != null) {
     			ImportExportManager.getInstance().exportCertificate(iPath,
     					KeyStoreManager.getInstance().getPublicKey(info.getSelectedKeyAlias())
     			);

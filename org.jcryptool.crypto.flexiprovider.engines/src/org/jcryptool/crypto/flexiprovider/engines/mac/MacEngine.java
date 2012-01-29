@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.UnrecoverableEntryException;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
@@ -62,7 +63,7 @@ public class MacEngine extends FlexiProviderEngine {
                         password);
                 operation.setPassword(password); // save in the operation if no exception occurred
             } catch (UnrecoverableEntryException e) {
-                JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.ExAccessKeystorePassword, e));
             } catch (Exception e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,

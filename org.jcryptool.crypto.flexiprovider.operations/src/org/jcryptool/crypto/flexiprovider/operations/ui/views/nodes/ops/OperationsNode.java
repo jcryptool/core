@@ -26,7 +26,7 @@ public class OperationsNode extends TreeNode {
 
 	public void setOperation(OperationType type) {
 		this.type = type;
-		if (type.equals(OperationType.UNKNOWN) || type == null) {
+		if (OperationType.UNKNOWN.equals(type)) {
 			super.setName(Messages.OperationsNode_1);
 		} else {
 			super.setName(NLS.bind(Messages.OperationsNode_2, this.type.getTypeName()));

@@ -18,6 +18,7 @@ import java.security.UnrecoverableEntryException;
 
 import javax.crypto.SecretKeyFactory;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
@@ -83,7 +84,7 @@ public class BlockCipherEngine extends FlexiProviderEngine {
 							operation.getKeyStoreAlias(), password);
 					operation.setPassword(password); // save in the operation if no exception occurred
 				} catch (UnrecoverableEntryException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                             Messages.ExAccessKeystorePassword, e));
 				} catch (Exception e) {
 					LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
@@ -173,7 +174,7 @@ public class BlockCipherEngine extends FlexiProviderEngine {
 //			    LogUtil.logError(
 //                        FlexiProviderEnginesPlugin.PLUGIN_ID,
 //                        "BadPaddingException while performing a block cipher", e, false); //$NON-NLS-1$
-                JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.ExBadPadding, e));
 			} catch (PartInitException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "Failed to open the Hexeditor", e, true); //$NON-NLS-1$

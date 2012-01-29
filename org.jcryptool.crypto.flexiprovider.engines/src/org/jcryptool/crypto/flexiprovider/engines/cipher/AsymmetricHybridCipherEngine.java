@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.PartInitException;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
@@ -78,7 +79,7 @@ public class AsymmetricHybridCipherEngine extends FlexiProviderEngine {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                     "InvalidAlgorithmParameterException while initializing a cipher engine", e, true); //$NON-NLS-1$
         } catch (UnrecoverableEntryException e) {
-            JCTMessageDialog.showInfoDialog(new Status(Status.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
+            JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                     Messages.ExAccessKeystorePassword, e));
         } catch (Exception e) {
             LogUtil.logError(e);

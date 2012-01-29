@@ -9,7 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core;
 
-import org.eclipse.jface.preference.PreferenceDialog;
+import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
@@ -63,7 +63,7 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
     @Override
     public void postWindowOpen() {
-        PreferenceDialog.setDialogHelpAvailable(true);
+        TrayDialog.setDialogHelpAvailable(true);
 
         super.postWindowOpen();
     }

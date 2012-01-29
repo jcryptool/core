@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -39,7 +39,7 @@ import de.flexiprovider.api.exceptions.NoSuchAlgorithmException;
 
 /**
  * This class provides the actions for FlexiProvider algorithms.
- * 
+ *
  * @author mwalthart
  * @version 0.9.0
  */
@@ -76,21 +76,21 @@ public abstract class IntegratorAction extends AbstractAlgorithmAction {
 
     /**
      * returns the name of the algorithms as the FlexiProvider refers to it
-     * 
+     *
      * @return the name of the algorithms as the FlexiProvider refers to it
      */
     protected abstract String getFlexiProviderAlgorithmName();
 
     /**
      * returns the human readable name of the algorithm
-     * 
+     *
      * @return the human readable name of the algorithm
      */
     protected abstract String getReadableAlgorithmName();
 
     /**
      * returns the key id needed for this algorithms
-     * 
+     *
      * @return the key id needed for this algorithms
      */
     protected abstract String getShowKey();
@@ -139,12 +139,11 @@ public abstract class IntegratorAction extends AbstractAlgorithmAction {
 
     private AlgorithmDescriptor getAlgorithmDescriptor(String name) {
         AlgorithmDescriptor descriptor = null;
-        if (descriptor == null) {
-            descriptor = searchList(name, AlgorithmsXMLManager.getInstance().getAsymmetricBlockCiphers());
-            if (descriptor != null) {
-                algorithmType = TYPE_ASYMMETRIC_BLOCK;
-            }
+        descriptor = searchList(name, AlgorithmsXMLManager.getInstance().getAsymmetricBlockCiphers());
+        if (descriptor != null) {
+            algorithmType = TYPE_ASYMMETRIC_BLOCK;
         }
+
         if (descriptor == null) {
             descriptor = searchList(name, AlgorithmsXMLManager.getInstance().getAsymmetricHybridCiphers());
             if (descriptor != null) {
@@ -209,7 +208,8 @@ public abstract class IntegratorAction extends AbstractAlgorithmAction {
      */
     @Override
     public void run() {
-        if(!KeyStorePlugin.isInitialized()) KeyStorePlugin.initialize();
+        if (!KeyStorePlugin.isInitialized())
+            KeyStorePlugin.initialize();
 
         AlgorithmDescriptor descriptor = getAlgorithmDescriptor(FLEXIPROVIDER_ALGORITHM_NAME);
         if (descriptor == null) {
@@ -260,7 +260,7 @@ public abstract class IntegratorAction extends AbstractAlgorithmAction {
         dialog.setHelpAvailable(true);
 
         switch (dialog.open()) {
-            case Dialog.OK:
+            case Window.OK:
                 if (algorithmType == TYPE_CIPHER_BLOCK) {
                     descriptor = new BlockCipherDescriptor(descriptor.getAlgorithmName(), AlgorithmsXMLManager
                             .getInstance().getMode(wizard.getMode().getDescription()).getID(), AlgorithmsXMLManager
@@ -350,7 +350,7 @@ public abstract class IntegratorAction extends AbstractAlgorithmAction {
                     LogUtil.logError(ex);
                 }
                 break;
-            case Dialog.CANCEL:
+            case Window.CANCEL:
                 break;
         }
     }

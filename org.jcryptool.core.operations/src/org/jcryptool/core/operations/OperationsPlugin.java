@@ -129,7 +129,7 @@ public class OperationsPlugin extends AbstractUIPlugin {
 			return null;
 		} else {
 			StringTokenizer tokenizer = new StringTokenizer(providerHierarchy, "|"); //$NON-NLS-1$
-			while (tokenizer != null && tokenizer.hasMoreElements()) {
+			while (tokenizer.hasMoreElements()) {
 				String t = tokenizer.nextToken();
 				if (t != null && !t.equals("")) { //$NON-NLS-1$
 					result.add(t);

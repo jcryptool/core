@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs.contentproviders;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
@@ -161,7 +162,7 @@ public class ContentProviderFactory {
                 else if (className.equals(RainbowPrivateKey.class.getName()))
                     return new RainbowPrivateKeyContentProvider();
                 else {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, KeyStorePlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
                             Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
                     return new AbstractKeyNodeContentProvider();
                 }
@@ -201,7 +202,7 @@ public class ContentProviderFactory {
                 else if (className.equals(RainbowPublicKey.class.getName()))
                     return new RainbowPublicKeyContentProvider();
                 else {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, KeyStorePlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
                             Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
                     return new CertificateContentProvider();
                 }

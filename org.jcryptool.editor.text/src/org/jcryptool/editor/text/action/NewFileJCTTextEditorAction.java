@@ -18,9 +18,9 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 import org.jcryptool.editor.text.editor.JCTTextEditor;
-import org.jcryptool.editor.text.service.JCTEditorService;
 
 /**
  * This NewFileJCTTextEditorAction class opens a new text file with the JCT Texteditor.
@@ -51,7 +51,7 @@ public class NewFileJCTTextEditorAction implements IWorkbenchWindowActionDelegat
     public void run(IAction action) {
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         try {
-            page.openEditor(JCTEditorService.createTemporaryFile(), JCTTextEditor.ID);
+            page.openEditor(AbstractEditorService.createTemporaryFile(), JCTTextEditor.ID);
         } catch (PartInitException e) {
             LogUtil.logError(JCTTextEditorPlugin.PLUGIN_ID, Messages.NewFileJCTTextEditorAction_0, e, true);
         }

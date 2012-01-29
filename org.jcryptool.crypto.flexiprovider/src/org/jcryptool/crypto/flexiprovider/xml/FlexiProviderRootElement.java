@@ -1,7 +1,7 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
 * Copyright (c) 2008 JCrypTool Team and Contributors
-* 
+*
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -48,7 +48,7 @@ class FlexiProviderRootElement {
 	private static List<IMetaAlgorithm> macs = new ArrayList<IMetaAlgorithm>();
 	private static List<IMetaAlgorithm> blockCiphers = new ArrayList<IMetaAlgorithm>();
 	private static List<IMetaAlgorithm> asymmetricBlockCiphers = new ArrayList<IMetaAlgorithm>();
-	private static List<IMetaAlgorithm> asymmetricHybridCiphers = new ArrayList<IMetaAlgorithm>();	
+	private static List<IMetaAlgorithm> asymmetricHybridCiphers = new ArrayList<IMetaAlgorithm>();
 	private static List<IMetaSpec> parameterSpecs = new ArrayList<IMetaSpec>();
 	private static List<IMetaPaddingScheme> paddingSchemes = new ArrayList<IMetaPaddingScheme>();
 	private static List<IMetaMode> modes = new ArrayList<IMetaMode>();
@@ -115,32 +115,32 @@ class FlexiProviderRootElement {
 			IMetaOID oid = null;
 			if (current.getAttributeValue(AlgorithmsXMLConstants._oid) != null) {
 				oid = new MetaOID(current.getAttributeValue(AlgorithmsXMLConstants._oid));
-			}				
+			}
 			List<String> names = new ArrayList<String>();
 			if (current.getChild(AlgorithmsXMLConstants._Names) !=null) {
 				if (current.getChild(AlgorithmsXMLConstants._Names).getText().contains(",")) { //$NON-NLS-1$
 					StringTokenizer tokenizer = new StringTokenizer(current.getChild(AlgorithmsXMLConstants._Names).getText(), ","); //$NON-NLS-1$
-					while (tokenizer != null && tokenizer.hasMoreTokens()) {
+					while (tokenizer.hasMoreTokens()) {
 						names.add(tokenizer.nextToken());
 					}
 				} else {
 					names.add(current.getChild(AlgorithmsXMLConstants._Names).getText());
-				}					
-			}			
+				}
+			}
 			IMetaAlgorithm meta = new MetaAlgorithm(type, oid, names, className);
 //			// parameter specs
 			if (current.getChild(AlgorithmsXMLConstants._ParameterSpec) != null) {
 				meta.setParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
 				if (current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttribute(AlgorithmsXMLConstants._disabled) == null) {
 					meta.setParameterSpecDisabled(true);
-				}				
-			}			
+				}
+			}
 			// parameter generators
 			if (current.getChild(AlgorithmsXMLConstants._ParameterGenerator) != null) {
 				meta.setParameterGeneratorClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getAttributeValue(AlgorithmsXMLConstants._class));
 				meta.setParamGenParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
 			}
-			
+
 			if (current.getChild(AlgorithmsXMLConstants._StandardParameters) != null) {
 				StringTokenizer standardParams = new StringTokenizer(current.getChildText(AlgorithmsXMLConstants._StandardParameters), ","); //$NON-NLS-1$
 				while (standardParams.hasMoreTokens()) {
@@ -149,8 +149,8 @@ class FlexiProviderRootElement {
 			}
 
 			if (current.getAttribute(AlgorithmsXMLConstants._disabled) == null) {
-				add(type, meta);	
-			}			
+				add(type, meta);
+			}
 		}
 	}
 
@@ -167,18 +167,18 @@ class FlexiProviderRootElement {
 			if (current.getAttributeValue(AlgorithmsXMLConstants._oid) != null) {
 				oid = new MetaOID(current.getAttributeValue(AlgorithmsXMLConstants._oid));
 				meta.setOID(oid);
-			}				
+			}
 			// names
 			List<String> names = new ArrayList<String>();
 			if (current.getChild(AlgorithmsXMLConstants._Names) !=null) {
 				if (current.getChild(AlgorithmsXMLConstants._Names).getText().contains(",")) { //$NON-NLS-1$
 					StringTokenizer tokenizer = new StringTokenizer(current.getChild(AlgorithmsXMLConstants._Names).getText(), ","); //$NON-NLS-1$
-					while (tokenizer != null && tokenizer.hasMoreTokens()) {
+					while (tokenizer.hasMoreTokens()) {
 						names.add(tokenizer.nextToken());
 					}
 				} else {
 					names.add(current.getChild(AlgorithmsXMLConstants._Names).getText());
-				}					
+				}
 			}
 			meta.setNames(names);
 			// parameter spec
@@ -226,17 +226,17 @@ class FlexiProviderRootElement {
 			IMetaOID oid = null;
 			if (current.getAttributeValue(AlgorithmsXMLConstants._oid) != null) {
 				oid = new MetaOID(current.getAttributeValue(AlgorithmsXMLConstants._oid));
-			}				
+			}
 			List<String> names = new ArrayList<String>();
 			if (current.getChild(AlgorithmsXMLConstants._Names) !=null) {
 				if (current.getChild(AlgorithmsXMLConstants._Names).getText().contains(",")) { //$NON-NLS-1$
 					StringTokenizer tokenizer = new StringTokenizer(current.getChild(AlgorithmsXMLConstants._Names).getText(), ","); //$NON-NLS-1$
-					while (tokenizer != null && tokenizer.hasMoreTokens()) {
+					while (tokenizer.hasMoreTokens()) {
 						names.add(tokenizer.nextToken());
 					}
 				} else {
 					names.add(current.getChild(AlgorithmsXMLConstants._Names).getText());
-				}					
+				}
 			}
 			IMetaAlgorithm meta = new MetaAlgorithm(type, oid, names, className);
 			// parameter specs
@@ -244,23 +244,23 @@ class FlexiProviderRootElement {
 				meta.setParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
 				if (current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttribute(AlgorithmsXMLConstants._disabled) == null) {
 					meta.setParameterSpecDisabled(true);
-				}				
-			}			
+				}
+			}
 			// parameter generators
 			if (current.getChild(AlgorithmsXMLConstants._ParameterGenerator) != null) {
 				meta.setParameterGeneratorClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getAttributeValue(AlgorithmsXMLConstants._class));
 				meta.setParamGenParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
 			}
-			
+
 			if (current.getChild(AlgorithmsXMLConstants._StandardParameters) != null) {
 				StringTokenizer standardParams = new StringTokenizer(current.getChildText(AlgorithmsXMLConstants._StandardParameters), ","); //$NON-NLS-1$
 				while (standardParams.hasMoreTokens()) {
 					meta.addStandardParams(standardParams.nextToken());
 				}
 			}
-			
+
 			if (current.getAttribute(AlgorithmsXMLConstants._disabled) == null) {
-				add(type, meta);	
+				add(type, meta);
 			}
 		}
 	}
@@ -315,7 +315,7 @@ class FlexiProviderRootElement {
 					String desc = currentParameter.getText();
 					IMetaParameter metaParameter = new MetaParameter(type, name, desc);
 					parameters.add(metaParameter);
-				}				
+				}
 				IMetaConstructor metaConstructor = new MetaConstructor(className, parameters);
 				constructors.add(metaConstructor);
 			}
@@ -335,34 +335,34 @@ class FlexiProviderRootElement {
 			IMetaOID oid = null;
 			if (current.getAttributeValue(AlgorithmsXMLConstants._oid) != null) {
 				oid = new MetaOID(current.getAttributeValue(AlgorithmsXMLConstants._oid));
-			}				
+			}
 			List<String> names = new ArrayList<String>();
 			if (current.getChild(AlgorithmsXMLConstants._Names) !=null) {
 				if (current.getChild(AlgorithmsXMLConstants._Names).getText().contains(",")) { //$NON-NLS-1$
 					StringTokenizer tokenizer = new StringTokenizer(current.getChild(AlgorithmsXMLConstants._Names).getText(), ","); //$NON-NLS-1$
-					while (tokenizer != null && tokenizer.hasMoreTokens()) {
+					while (tokenizer.hasMoreTokens()) {
 						names.add(tokenizer.nextToken());
 					}
 				} else {
 					names.add(current.getChild(AlgorithmsXMLConstants._Names).getText());
-				}					
-			}				
+				}
+			}
 			IMetaAlgorithm meta = new MetaAlgorithm(type, oid, names, className);
 			// parameter specs
 			if (current.getChild(AlgorithmsXMLConstants._ParameterSpec) != null) {
 				meta.setParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
 				if (current.getChild(AlgorithmsXMLConstants._ParameterSpec).getAttribute(AlgorithmsXMLConstants._disabled) == null) {
 					meta.setParameterSpecDisabled(true);
-				}				
-			}			
+				}
+			}
 			// parameter generators
 			if (current.getChild(AlgorithmsXMLConstants._ParameterGenerator) != null) {
 				meta.setParameterGeneratorClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getAttributeValue(AlgorithmsXMLConstants._class));
 				meta.setParamGenParameterSpecClassName(current.getChild(AlgorithmsXMLConstants._ParameterGenerator).getChild(AlgorithmsXMLConstants._ParameterSpec).getAttributeValue(AlgorithmsXMLConstants._class));
-			}	
+			}
 
 			if (current.getChild(AlgorithmsXMLConstants._BlockLengths) != null) {
-				meta.setDefaultBlockLength(Integer.valueOf(current.getChild(AlgorithmsXMLConstants._BlockLengths).getAttributeValue(AlgorithmsXMLConstants._default)));				
+				meta.setDefaultBlockLength(Integer.valueOf(current.getChild(AlgorithmsXMLConstants._BlockLengths).getAttributeValue(AlgorithmsXMLConstants._default)));
 				if (current.getChild(AlgorithmsXMLConstants._BlockLengths).getText() != null) {
 					List<Integer> blockLengths = new ArrayList<Integer>(0);
 					StringTokenizer tokenizer = new StringTokenizer(current.getChild(AlgorithmsXMLConstants._BlockLengths).getText(), ","); //$NON-NLS-1$
@@ -372,14 +372,14 @@ class FlexiProviderRootElement {
 					meta.setBlockLengths(blockLengths);
 				}
 			}
-			
+
 			if (current.getChild(AlgorithmsXMLConstants._StandardParameters) != null) {
 				StringTokenizer standardParams = new StringTokenizer(current.getChildText(AlgorithmsXMLConstants._StandardParameters), ","); //$NON-NLS-1$
 				while (standardParams.hasMoreTokens()) {
 					meta.addStandardParams(standardParams.nextToken());
 				}
 			}
-			
+
 			if (type.equals(RegistryType.MAC)) {
 				if (current.getChild(AlgorithmsXMLConstants._BlockCipherReference) != null) {
 					meta.setBlockCipherName(current.getChild(AlgorithmsXMLConstants._BlockCipherReference).getAttributeValue(AlgorithmsXMLConstants._name));
@@ -389,9 +389,9 @@ class FlexiProviderRootElement {
 					meta.setBlockCipherMode(current.getChild(AlgorithmsXMLConstants._BlockCipherReference).getAttributeValue(AlgorithmsXMLConstants._mode));
 				}
 			}
-			
+
 			if (current.getAttribute(AlgorithmsXMLConstants._disabled) == null) {
-				add(type, meta);	
+				add(type, meta);
 			}
 		}
 	}
