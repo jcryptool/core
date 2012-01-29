@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
  * @author simlei
  *
  */
-public class New_AddAlphabetWizardPage extends WizardPage {
+public class AddAlphabetWizardPage2 extends WizardPage {
 
 	private Group alphabetCharsGroup;
 	private Label charsLabel;
@@ -47,7 +47,7 @@ public class New_AddAlphabetWizardPage extends WizardPage {
 	/**
 	 * Creates a new instance of AddAlphabetWizardPage.
 	 */
-	public New_AddAlphabetWizardPage() {
+	public AddAlphabetWizardPage2() {
 		super("page_name", Messages.getString("AddAlphabetWizardPage.1"), null);	 //$NON-NLS-1$ //$NON-NLS-2$
 		setPageComplete(false);
 		setDescription(Messages.getString("AddAlphabetWizardPage.2")); //$NON-NLS-1$
