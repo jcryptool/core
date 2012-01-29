@@ -75,7 +75,7 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 	private Label label_3;
 	private Composite comp_blocks_hull;
 	private Label lblA;
-	
+
 	private List<Button> blockButtonsAvailable = new LinkedList<Button>();
 	private List<Button> blockButtonsSelected = new LinkedList<Button>();
 
@@ -88,29 +88,22 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 	 * maintains the correct order of the selected alphabets
 	 */
 	private List<BlockAlphabet> selectedBlockAlphabetsInOrder = new LinkedList<BlockAlphabet>();
-	
-	
+
+
 	private AbstractUIInput<Boolean> showExistingAlphasAsBlocks;
 	private GridData gd_compBlocks;
 	private Composite grpBlockResult;
 	private Label lblHierErscheinenDie;
 	private Label lblAusgewhlteBlcke;
-	/**
-	* Auto-generated main method to display this 
-	* org.eclipse.swt.widgets.Composite inside a new Shell.
-	*/
-	public static void main(String[] args) {
-		showGUI();
-	}
-	
+
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
-	*/	
+	*/
 	protected void checkSubclass() {
 	}
-	
+
 	/**
-	* Auto-generated method to display this 
+	* Auto-generated method to display this
 	* org.eclipse.swt.widgets.Composite inside a new Shell.
 	*/
 	public static void showGUI() {
@@ -144,26 +137,26 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			GridLayout thisLayout = new GridLayout();
 			thisLayout.makeColumnsEqualWidth = true;
 			this.setLayout(thisLayout);
-			
+
 			compMain = new Composite(this, SWT.NONE);
 			compMain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			compMain.setLayout(new GridLayout(1, false));
-			
+
 			grpBausteine = new Composite(compMain, SWT.NONE);
 			grpBausteine.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			GridLayout gl_grpBausteine = new GridLayout(1, false);
 			gl_grpBausteine.marginHeight = 0;
 			gl_grpBausteine.marginWidth = 0;
 			grpBausteine.setLayout(gl_grpBausteine);
-			
+
 			lblKlickenSieDie = new Label(grpBausteine, SWT.WRAP);
 			lblKlickenSieDie.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 			lblKlickenSieDie.setText("Klicken Sie die verschiedenen Bausteine an, um ein Alphabet zusammenzusetzen:");
-			
+
 			comp_blocks_hull = new Composite(grpBausteine, SWT.BORDER);
 			comp_blocks_hull.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			comp_blocks_hull.setLayout(new GridLayout(1, false));
-			
+
 			compBlocks = new Composite(comp_blocks_hull, SWT.NONE);
 			RowLayout rl_compBlocks = new RowLayout(SWT.HORIZONTAL);
 			rl_compBlocks.marginTop = 0;
@@ -179,22 +172,22 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 //			gd_compBlocks.minimumWidth = 1;
 //			gd_compBlocks.widthHint = 1;
 			compBlocks.setLayoutData(gd_compBlocks);
-			
+
 			lblA = new Label(comp_blocks_hull, SWT.SEPARATOR | SWT.HORIZONTAL);
 			GridData gd_lblA = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 			gd_lblA.verticalIndent = 10;
 			lblA.setLayoutData(gd_lblA);
-			
+
 //			label = new Label(grpBausteine, SWT.SEPARATOR | SWT.HORIZONTAL);
 //			label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
+
 			comp_block_controls = new Composite(comp_blocks_hull, SWT.NONE);
 			comp_block_controls.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			GridLayout gl_comp_block_controls = new GridLayout(2, false);
 			gl_comp_block_controls.marginWidth = 0;
 			gl_comp_block_controls.marginHeight = 0;
 			comp_block_controls.setLayout(gl_comp_block_controls);
-			
+
 			btnVorhandeneAlphabeteAls = new Button(comp_block_controls, SWT.CHECK);
 			btnVorhandeneAlphabeteAls.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 			btnVorhandeneAlphabeteAls.setText("Vorhandene Alphabete als Bausteine zeigen");
@@ -218,7 +211,7 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 					return btnVorhandeneAlphabeteAls;
 				}
 			};
-			
+
 			btnNeuerBaustein = new Button(comp_block_controls, SWT.NONE);
 			btnNeuerBaustein.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -229,13 +222,13 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			btnNeuerBaustein.setText("Neuer Baustein");
 			Image addImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
 			btnNeuerBaustein.setImage(addImg);
-			
+
 			lblAusgewhlteBlcke = new Label(grpBausteine, SWT.NONE);
 			GridData gd_lblAusgewhlteBlcke = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 			gd_lblAusgewhlteBlcke.verticalIndent = 5;
 			lblAusgewhlteBlcke.setLayoutData(gd_lblAusgewhlteBlcke);
 			lblAusgewhlteBlcke.setText("Ausgewählte Blöcke:");
-			
+
 			grpBlockResult = new Composite(grpBausteine, SWT.NONE);
 			RowLayout rl_grpBlockResult = new RowLayout(SWT.HORIZONTAL);
 			rl_grpBlockResult.marginTop = 0;
@@ -246,88 +239,88 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			rl_grpBlockResult.marginLeft = 0;
 			grpBlockResult.setLayout(rl_grpBlockResult);
 			grpBlockResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
+
 			lblHierErscheinenDie = new Label(grpBlockResult, SWT.NONE);
 			lblHierErscheinenDie.setLayoutData(new RowData());
 			lblHierErscheinenDie.setEnabled(false);
 			lblHierErscheinenDie.setText("Hier erscheinen die Blöcke, aus denen das Alphabet zusammengesetzt wird");
-			
+
 			Composite composite_3 = new Composite(this, SWT.NONE);
 			composite_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			composite_3.setLayout(new GridLayout());
-			
+
 			Link link = new Link(composite_3, SWT.NONE);
 			link.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					
+
 				}
 			});
 			link.setText("<a>mehr Optionen anzeigen...</a>");
-			
+
 			label_3 = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
 			label_3.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
+
 			compResult = new Composite(this, SWT.NONE);
 			compResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			compResult.setLayout(new GridLayout(1, false));
-			
+
 			lblAlphabetinhaltergebnis = new Label(compResult, SWT.NONE);
 			GridData gd_lblAlphabetinhaltergebnis = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 			gd_lblAlphabetinhaltergebnis.verticalIndent = 5;
 			lblAlphabetinhaltergebnis.setLayoutData(gd_lblAlphabetinhaltergebnis);
 			lblAlphabetinhaltergebnis.setText("Alphabetinhalt (Ergebnis):");
-			
+
 			composite = new Composite(compResult, SWT.NONE);
 			composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			composite.setLayout(new GridLayout(2, false));
-			
+
 			lblBuchstaben_1 = new Label(composite, SWT.NONE);
 			lblBuchstaben_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 			lblBuchstaben_1.setText("Buchstaben: ");
-			
+
 			text_ResultCharacters = new Text(composite, SWT.BORDER);
 			text_ResultCharacters.setEditable(false);
 			text_ResultCharacters.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
+
 			lblLnge = new Label(composite, SWT.NONE);
 			lblLnge.setText("Länge: ");
-			
+
 			lbl_ResultLength = new Label(composite, SWT.NONE);
 			lbl_ResultLength.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			lbl_ResultLength.setText("0");
-			
+
 			spacer_footer = new Composite(this, SWT.NONE);
 			spacer_footer.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 1));
 			GridLayout gl_spacer_footer = new GridLayout(1, false);
 			gl_spacer_footer.marginHeight = 0;
 			gl_spacer_footer.marginWidth = 0;
 			spacer_footer.setLayout(gl_spacer_footer);
-			
+
 			label_1 = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
 			label_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			
+
 			Composite compViewHint = new Composite(this, SWT.NONE);
 			GridLayout gl_compViewHint = new GridLayout(1, false);
 			gl_compViewHint.marginHeight = 0;
 			gl_compViewHint.marginWidth = 0;
 			compViewHint.setLayout(gl_compViewHint);
 			compViewHint.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-			
+
 			linkViewHint = new Link(compViewHint, SWT.NONE);
 			linkViewHint.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL));
 			linkViewHint.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
 			linkViewHint.setText("<a>zur manuellen Eingabe wecheln</a>");
-			
-			
+
+
 			this.layout();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		initializeAvailableBlocks();
 	}
-	
+
 	private void initializeAvailableBlocks() {
 		addAvailableBlockAlphabets(getDefaultBlocks(), BlockType.DEFAULT);
 		gd_compBlocks.minimumWidth = compBlocks.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
@@ -337,28 +330,28 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			addAvailableBlockAlphabets(getExistingAlphabetBlocks(), BlockType.PREEXISTING);
 		}
 	}
-	
+
 	private List<BlockAlphabet> getDefaultBlocks() {
 		RangeBlockAlphabet A_Z = new RangeBlockAlphabet('A', 'Z');
 		RangeBlockAlphabet a_z = new RangeBlockAlphabet('a', 'z');
 		RangeBlockAlphabet digits = new RangeBlockAlphabet('0', '9');
-		
+
 		BlockAlphabet umlaute = new BlockAlphabet("äöüß");
 		BlockAlphabet UMLAUTE = new BlockAlphabet("AÖÜ");
-		
+
 		BlockAlphabet space = new BlockAlphabet(" ", "[Leerzeichen");
 		BlockAlphabet linebreak = new BlockAlphabet("\r\n", "Zeilenumbruch (Unix/Windows)");
 		BlockAlphabet punctuation = new BlockAlphabet(".:,;-!?");
 		BlockAlphabet asciiVisibles = new BlockAlphabet("\"#$%&'()*+/0123456789<=>@[\\]^_`{|}~", "Sichtbare ASCII-Sonderzeichen");
-		
+
 		return Arrays.asList(new BlockAlphabet[]{A_Z, a_z, digits, umlaute, UMLAUTE, space, linebreak, punctuation, asciiVisibles});
 	}
-	
+
 	private List<BlockAlphabet> getExistingAlphabetBlocks() {
 		List<BlockAlphabet> currentBlocks = blockAlphabetsAvailable;
 		List<BlockAlphabet> result = new LinkedList<BlockAlphabet>();
 		List<AbstractAlphabet> existingAlphas = Arrays.asList(AlphabetsManager.getInstance().getAlphabets());
-		
+
 		for(AbstractAlphabet existingAlpha: existingAlphas) {
 			boolean alreadyExistsAsBlock = false;
 			for(BlockAlphabet existingBlock: currentBlocks) {
@@ -371,16 +364,16 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	enum BlockType {
 		DEFAULT, PREEXISTING, SELFCREATED;
-		
+
 		public List<BlockAlphabet> blocks = new LinkedList<BlockAlphabet>();
 	}
-	
+
 	private void addButtonToSelectedSection(BlockAlphabet alpha) {
 		final Button newButton = new Button(grpBlockResult, SWT.PUSH);
 		newButton.setLayoutData(new RowData(SWT.DEFAULT, 33));
@@ -391,11 +384,11 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			RowData l = (RowData) lblHierErscheinenDie.getLayoutData();
 			l.exclude = true;
 		}
-		
+
 		grpBlockResult.pack();
 		grpBlockResult.layout();
 		this.layout();
-		
+
 		blockButtonsSelected.add(newButton);
 	}
 
@@ -404,13 +397,13 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 		if(b != null) {
 			blockButtonsSelected.remove(b);
 			b.dispose();
-			
+
 			if(grpBlockResult.getChildren().length <= 1) {
 				lblHierErscheinenDie.setVisible(true);
 				RowData l = (RowData) lblHierErscheinenDie.getLayoutData();
 				l.exclude = false;
 			}
-			
+
 			grpBlockResult.layout();
 			this.layout();
 		}
@@ -430,18 +423,18 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			if(selection) {
 				selectedBlockAlphabetsInOrder.add(alpha);
 				selectedBlockAlphabets.put(alpha, alpha);
-				
+
 				addButtonToSelectedSection(alpha);
 			} else {
 				removeButtonFromSelectedSection(alpha);
-				
+
 				selectedBlockAlphabetsInOrder.remove(alpha);
 				selectedBlockAlphabets.remove(alpha);
 			}
 		} else {
 			throw new RuntimeException("Tried to select or unselect an alphabet which was already in this state");
 		}
-		
+
 		refreshResultAlphabet();
 	}
 
@@ -462,16 +455,16 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 		}
 		return null;
 	}
-	
+
 	private BlockAlphabet getAvailableBlockAlphaForButton(Button btn) {
 		return blockAlphabetsAvailable.get(blockButtonsAvailable.indexOf(btn));
 	}
-	
+
 	private Button getButtonForAvailableBlockAlphabet(BlockAlphabet alpha) {
 		return blockButtonsAvailable.get(blockAlphabetsAvailable.indexOf(alpha));
 	}
-	
-	
+
+
 	//-3-methods for removing block alphabets that are available for selection
 	private void removeAvailableBlockAlphabet(BlockAlphabet blockAlpha, boolean layout) {
 		selectAvailableAlphabet(blockAlpha, false);
@@ -496,16 +489,16 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 			counter++;
 		}
 	}
-	
+
 	private void addAvailableBlockAlphabet(BlockAlphabet blockAlphabet, BlockType type, boolean layout) {
 		final Button newButton = new Button(compBlocks, SWT.TOGGLE);
 		newButton.setLayoutData(new RowData(SWT.DEFAULT, 33));
 		newButton.setText(blockAlphabet.getBlockName());
-		
+
 		blockAlphabetsAvailable.add(blockAlphabet);
 		blockButtonsAvailable.add(newButton);
 		type.blocks.add(blockAlphabet);
-		
+
 		newButton.addSelectionListener(new SelectionAdapter() {
 			Button father = newButton;
 			@Override
@@ -514,7 +507,7 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 				selectAvailableAlphabet(correspondingAvailableAlphabet, father.getSelection());
 			}
 		});
-		
+
 		if(layout) {
 			compBlocks.layout();
 			this.layout();
@@ -543,5 +536,5 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 	private boolean isBlockAlphabetSelected(BlockAlphabet a) {
 		return selectedBlockAlphabetsInOrder.contains(a);
 	}
-	
+
 }
