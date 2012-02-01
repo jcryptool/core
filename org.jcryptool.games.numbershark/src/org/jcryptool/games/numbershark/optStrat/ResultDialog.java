@@ -42,6 +42,7 @@ import org.jcryptool.games.numbershark.util.CSVConverter;
  * @author Johannes Spaeth
  * @version 0.9.5
  */
+
 public class ResultDialog extends TitleAreaDialog {
 	private int min = 2;
 	private int max = 100;
@@ -63,10 +64,10 @@ public class ResultDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		CalculationThread calculateSequences = new CalculationThread(min, max);
 		final Shell shell = parent.getShell();
+
 		if (calculate) {
 			try {
 				new ProgressMonitorDialog(shell).run(true, true,calculateSequences);
-
 			} catch (InvocationTargetException e) {
 			} catch (InterruptedException e) {
 			}

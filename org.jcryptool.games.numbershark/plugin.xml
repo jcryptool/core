@@ -139,7 +139,7 @@
          </separator>
          <command
                commandId="org.jcryptool.games.numbershark.optStrategyCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               icon="icons/wizard-icon.png"
                style="push">
          </command>
          <command
