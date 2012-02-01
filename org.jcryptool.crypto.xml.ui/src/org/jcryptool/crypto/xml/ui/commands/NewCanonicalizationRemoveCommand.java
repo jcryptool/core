@@ -58,7 +58,7 @@ public class NewCanonicalizationRemoveCommand extends AbstractAlgorithmAction {
 	                IEditorInput output = AbstractEditorService.createOutputFile(outputBytes, IConstants.XML_FILE_TYPE_EXTENSION);
 	                getActiveWorkbenchWindow().getActivePage().openEditor(output, IOperationsConstants.ID_TEXT_EDITOR);
                 } else {
-                	IStatus info = new Status(Status.WARNING, XSTUIPlugin.getId(), Messages.NewCanonicalizationRemoveCommand_0);
+                	IStatus info = new Status(IStatus.WARNING, XSTUIPlugin.getId(), Messages.NewCanonicalizationRemoveCommand_0);
                 	JCTMessageDialog.showInfoDialog(info);
                 }
             }

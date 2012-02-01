@@ -37,6 +37,7 @@ import org.apache.xml.security.utils.EncryptionConstants;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.osgi.util.NLS;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.xml.core.XmlSecurityPlugin;
 import org.w3c.dom.Document;
@@ -192,7 +193,7 @@ public final class Utils {
      */
     public static String[] getIds(final InputStream content, final String type) {
         StringBuilder ids = new StringBuilder();
-        ids.append(Messages.bind(Messages.Utils_0, type));
+        ids.append(NLS.bind(Messages.Utils_0, type));
 
         try {
             Document doc = parse(content);

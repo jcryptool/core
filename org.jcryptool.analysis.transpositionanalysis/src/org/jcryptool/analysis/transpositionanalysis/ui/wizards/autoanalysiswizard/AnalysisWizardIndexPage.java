@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
 
@@ -25,17 +25,15 @@ import org.eclipse.swt.widgets.Link;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.Messages;
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 public class AnalysisWizardIndexPage extends WizardPage {
 	private Label label1;
 	private Label nonfunctionalHintLabel;
@@ -74,12 +72,12 @@ public class AnalysisWizardIndexPage extends WizardPage {
 		initPage();
 	}
 
-	public AnalysisWizardIndexPage(String pageName, String title,
-			ImageDescriptor titleImage) {
+	public AnalysisWizardIndexPage(String pageName, String title, ImageDescriptor titleImage) {
 		super(pageName, title, titleImage);
 		initPage();
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		{
@@ -98,6 +96,7 @@ public class AnalysisWizardIndexPage extends WizardPage {
 				nonfunctionalHintLabel.setLayoutData(nonfunctionalHintLabelLData);
 				nonfunctionalHintLabel.setText(Messages.AnalysisWizardIndexPage_nomethodsavailable);
 				nonfunctionalHintLabel.addMouseListener(new MouseAdapter() {
+					@Override
 					public void mouseDown(MouseEvent evt) {
 						setPageComplete(true);
 					}
@@ -185,7 +184,6 @@ public class AnalysisWizardIndexPage extends WizardPage {
 							takeColumnCountValueBtn.setEnabled(false);
 						}
 					}
-
 
 				}
 				{
@@ -301,7 +299,8 @@ public class AnalysisWizardIndexPage extends WizardPage {
 						analysis1descriptionlabelLData.horizontalAlignment = GridData.FILL;
 						analysis1descriptionlabel.setLayoutData(analysis1descriptionlabelLData);
 						analysis1descriptionlabelLData.widthHint = 300;
-						analysis1descriptionlabel.setText(Messages.AnalysisWizardIndexPage_simpleColumnAnalysisDescription);
+						analysis1descriptionlabel
+							.setText(Messages.AnalysisWizardIndexPage_simpleColumnAnalysisDescription);
 					}
 				}
 			}
@@ -315,8 +314,5 @@ public class AnalysisWizardIndexPage extends WizardPage {
 	public String getText() {
 		return label2.getText();
 	}
-
-
-
 
 }

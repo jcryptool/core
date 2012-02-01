@@ -13,8 +13,8 @@ package org.jcryptool.crypto.xml.ui.encrypt;
 import java.io.File;
 import java.io.InputStream;
 
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -109,7 +109,7 @@ public class PageResource extends WizardPage implements Listener {
             doc = Utils.parse(data);
             ids = Utils.getAllIds(doc);
         } catch (Exception ex) {
-            updateStatus(Messages.documentInvalid, DialogPage.ERROR);
+            updateStatus(Messages.documentInvalid, IMessageProvider.ERROR);
             globalError = true;
         }
     }
@@ -320,33 +320,33 @@ public class PageResource extends WizardPage implements Listener {
         }
 
         if (bXpath.getSelection() && tXpath.getText().length() == 0) {
-            updateStatus(Messages.enterXPath, DialogPage.INFORMATION);
+            updateStatus(Messages.enterXPath, IMessageProvider.INFORMATION);
             return;
         } else if (bXpath.getSelection() && tXpath.getText().length() > 0) {
             String xpathValidator = Utils.validateXPath(doc, tXpath.getText());
             if (xpathValidator.equals("none")) { //$NON-NLS-1$
-                updateStatus(Messages.xpathNoElement, DialogPage.ERROR);
+                updateStatus(Messages.xpathNoElement, IMessageProvider.ERROR);
                 return;
             } else if (xpathValidator.equals("multiple")) { //$NON-NLS-1$
-                updateStatus(Messages.xpathMultipleElements, DialogPage.ERROR);
+                updateStatus(Messages.xpathMultipleElements, IMessageProvider.ERROR);
                 return;
             } else if (xpathValidator.equals("attribute")) { //$NON-NLS-1$
-                updateStatus(Messages.xpathAttribute, DialogPage.ERROR);
+                updateStatus(Messages.xpathAttribute, IMessageProvider.ERROR);
                 return;
             }
         }
         if (bDetached.getSelection() && tDetachedFile.getText().length() == 0) {
-            updateStatus(Messages.detachedFile, DialogPage.INFORMATION);
+            updateStatus(Messages.detachedFile, IMessageProvider.INFORMATION);
             return;
         } else if (bDetached.getSelection() && tDetachedFile.getText().length() > 0) {
             File tempFile = new File(tDetachedFile.getText());
             if (!tempFile.exists()) {
-                updateStatus(Messages.verifyDetachedFile, DialogPage.ERROR);
+                updateStatus(Messages.verifyDetachedFile, IMessageProvider.ERROR);
                 return;
             }
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

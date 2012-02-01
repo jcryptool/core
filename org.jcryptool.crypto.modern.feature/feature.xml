@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.modern"
       label="JCrypTool Modern Algorithms Feature"
-      version="0.9.5.qualifier"
+      version="0.9.7.qualifier"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.crypto.modern">
 
@@ -220,7 +220,7 @@ litigation.
    </license>
 
    <url>
-      <update label="JCrypTool.org" url="http://www.cryptool.org/jcryptool/update"/>
+      <update label="JCrypTool.org" url="http://www.cryptool.org/jct/update"/>
    </url>
 
    <plugin

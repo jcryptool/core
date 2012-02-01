@@ -1,20 +1,21 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui.wizards.autoanalysiswizard;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -28,17 +29,15 @@ import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.T
 import org.jcryptool.analysis.transpositionanalysis.calc.transpositionanalysis.model.TranspositionAnalysis;
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 
 	Composite pageComposite;
@@ -54,6 +53,7 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 		analysesList = analyses;
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 
 		{
@@ -68,8 +68,8 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 			pageComposite.setLayoutData(pageCompositeLayoutData);
 
 			analyses = new HashMap<TranspositionAnalysis, AnalysisSelectItem>();
-			for(TranspositionAnalysis analysis: analysesList) {
-				if(! (analysis instanceof TranspositionAnalysisResumee)) {
+			for (TranspositionAnalysis analysis : analysesList) {
+				if (!(analysis instanceof TranspositionAnalysisResumee)) {
 					AnalysisSelectItem newItem = new AnalysisSelectItem(pageComposite, analysis);
 					GridData newItemLData = new GridData();
 					newItemLData.grabExcessHorizontalSpace = true;
@@ -78,7 +78,7 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 					newItem.setLayoutData(newItemLData);
 
 					newItem.setSelection(true);
-					if(! analysis.isObligatory()) {
+					if (!analysis.isObligatory()) {
 						newItem.setSelection(true);
 						newItem.setEnabled(false);
 					}
@@ -95,53 +95,46 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 
 	}
 
-	public TranspositionAnalysis getNextAnalysisAfter(
-			TranspositionAnalysis analysisFrom) {
+	public TranspositionAnalysis getNextAnalysisAfter(TranspositionAnalysis analysisFrom) {
 		boolean found = analysisFrom == null;
-		for(TranspositionAnalysis analysis: analysesList) {
-			if(! found && analysis == analysisFrom) {
+		for (TranspositionAnalysis analysis : analysesList) {
+			if (!found && analysis == analysisFrom) {
 				found = true;
 				continue;
 			}
-			if(found &&
-					analyses.containsKey(analysis) &&
-					analyses.get(analysis).getSelection()) {
-				return analysis;
-			}
+			if (found && analyses.containsKey(analysis) && analyses.get(analysis).getSelection()) { return analysis; }
 		}
 		return null;
 	}
 
+	@Override
 	public void handleEvent(Event event) {
 		calcPageComplete();
 	}
 
 	@Override
 	public IWizardPage getNextPage() {
-		IWizardPage nextPage = ((AnalysisWizard)getWizard()).nextPageFrom(null);
-		if(nextPage != null) return nextPage;
+		IWizardPage nextPage = ((AnalysisWizard) getWizard()).nextPageFrom(null);
+		if (nextPage != null) return nextPage;
 
 		return null;
-//		return super.getNextPage();
+		// return super.getNextPage();
 	}
 
 	public boolean isAnalysisSelected(TranspositionAnalysis analysis) {
-		for(TranspositionAnalysis analysisInPage: analyses.keySet()) {
-			if(analysisInPage.getClass().equals(analysis.getClass()) &&
-					analyses.get(analysisInPage).getSelection()) return true;
+		for (TranspositionAnalysis analysisInPage : analyses.keySet()) {
+			if (analysisInPage.getClass().equals(analysis.getClass()) && analyses.get(analysisInPage).getSelection()) return true;
 		}
 		return false;
 	}
 
-
 	public int getSelectionCount() {
 		int counter = 0;
-		for(Entry<TranspositionAnalysis, AnalysisSelectItem> entry: analyses.entrySet()) {
-			if(entry.getValue().getSelection()) counter++;
+		for (Entry<TranspositionAnalysis, AnalysisSelectItem> entry : analyses.entrySet()) {
+			if (entry.getValue().getSelection()) counter++;
 		}
 		return counter;
 	}
-
 
 	private void calcPageComplete() {
 		setNormalMessage();
@@ -149,23 +142,23 @@ public class NewAnalysisSelectionPage extends WizardPage implements Listener {
 
 		boolean oneSelected = false;
 		boolean onePlusIniSelected = false;
-		for(Entry<TranspositionAnalysis, AnalysisSelectItem> entry: analyses.entrySet()) {
-			if(entry.getValue().getSelection()) oneSelected = true;
-			if(! (entry.getKey() instanceof TranspositionAnalysisInitialization) && entry.getValue().getSelection()) onePlusIniSelected = true;
+		for (Entry<TranspositionAnalysis, AnalysisSelectItem> entry : analyses.entrySet()) {
+			if (entry.getValue().getSelection()) oneSelected = true;
+			if (!(entry.getKey() instanceof TranspositionAnalysisInitialization) && entry.getValue().getSelection()) onePlusIniSelected = true;
 		}
 
-		if(! onePlusIniSelected) {
-			setMessage("Just the initialization of the analysis is selected.", DialogPage.WARNING);
+		if (!onePlusIniSelected) {
+			setMessage("Just the initialization of the analysis is selected.", IMessageProvider.WARNING);
 		}
-		if(! oneSelected) {
+		if (!oneSelected) {
 			setPageComplete(false);
-			setMessage("Select at least one analysis.", DialogPage.ERROR);
+			setMessage("Select at least one analysis.", IMessageProvider.ERROR);
 		}
 
 	}
 
 	private void setNormalMessage() {
-		setMessage(normalMessage, DialogPage.NONE);
+		setMessage(normalMessage, IMessageProvider.NONE);
 	}
 
 }

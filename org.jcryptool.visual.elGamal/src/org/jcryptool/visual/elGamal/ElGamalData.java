@@ -13,6 +13,7 @@ import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
@@ -126,7 +127,7 @@ public class ElGamalData {
                 try {
                     this.getPrivateParams();
                 } catch (UnrecoverableKeyException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(Status.INFO, ElGamalPlugin.PLUGIN_ID,
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, ElGamalPlugin.PLUGIN_ID,
                             Messages.ElGamalData_ExAccessKeystorePassword, e));
                 } catch (final Exception e) {
                     LogUtil.logError(e);

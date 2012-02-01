@@ -54,8 +54,8 @@ public class AdfgvxAlgorithmSpecification extends ClassicAlgorithmSpecification 
 				public boolean isStandaloneMessage() {
 					return false;
 				}
-				public int getMessageType() {
-					return WARNING;
+				public MessageType getMessageType() {
+					return InputVerificationResult.MessageType.WARNING;
 				}
 				public String getMessage() {
 					return org.jcryptool.crypto.classic.adfgvx.ui.Messages.AdfgvxWizardPage_onlyoccuronce;

@@ -12,8 +12,8 @@ package org.jcryptool.crypto.xml.ui.decrypt;
 
 import java.io.File;
 
-import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -309,25 +309,25 @@ public class PageKeystore extends WizardPage implements Listener {
      */
     private void dialogChanged() {
         if (tKeystore.getText().length() == 0) {
-            updateStatus(Messages.missingKeystore, DialogPage.INFORMATION);
+            updateStatus(Messages.missingKeystore, IMessageProvider.INFORMATION);
             return;
         } else if (!(new File(tKeystore.getText()).exists())) {
-            updateStatus(Messages.keystoreNotFound, DialogPage.ERROR);
+            updateStatus(Messages.keystoreNotFound, IMessageProvider.ERROR);
             return;
         }
 
         if (tKeystorePassword.getText().length() == 0) {
-            updateStatus(Messages.missingKeystorePassword, DialogPage.INFORMATION);
+            updateStatus(Messages.missingKeystorePassword, IMessageProvider.INFORMATION);
             return;
         }
 
         if (tKeyName.getText().length() == 0) {
-            updateStatus(Messages.missingKeyName, DialogPage.INFORMATION);
+            updateStatus(Messages.missingKeyName, IMessageProvider.INFORMATION);
             return;
         }
 
         if (tKeyPassword.getText().length() == 0) {
-            updateStatus(Messages.missingKeyPassword, DialogPage.INFORMATION);
+            updateStatus(Messages.missingKeyPassword, IMessageProvider.INFORMATION);
             return;
         }
 
@@ -336,24 +336,24 @@ public class PageKeystore extends WizardPage implements Listener {
                 keystore = new Keystore(tKeystore.getText(), tKeystorePassword.getText(), IGlobals.KEYSTORE_TYPE);
                 keystore.load();
                 if (!keystore.containsKey(tKeyName.getText())) {
-                    updateStatus(Messages.verifyKeyName, DialogPage.ERROR);
+                    updateStatus(Messages.verifyKeyName, IMessageProvider.ERROR);
                     return;
                 }
 
                 if (keystore.getSecretKey(tKeyName.getText(), tKeyPassword.getText().toCharArray()) == null) {
-                    updateStatus(Messages.verifyKeyPassword, DialogPage.ERROR);
+                    updateStatus(Messages.verifyKeyPassword, IMessageProvider.ERROR);
                     return;
                 }
             } catch (Exception ex) {
-                updateStatus(Messages.verifyAll, DialogPage.ERROR);
+                updateStatus(Messages.verifyAll, IMessageProvider.ERROR);
                 return;
             }
         } else {
-            updateStatus(Messages.keystoreNotFound, DialogPage.ERROR);
+            updateStatus(Messages.keystoreNotFound, IMessageProvider.ERROR);
             return;
         }
 
-        updateStatus(null, DialogPage.NONE);
+        updateStatus(null, IMessageProvider.NONE);
     }
 
     /**

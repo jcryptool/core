@@ -341,8 +341,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public boolean isStandaloneMessage() {
 							return false;
 						}
-						public int getMessageType() {
-							return InputVerificationResult.NONE;
+						public MessageType getMessageType() {
+							return InputVerificationResult.MessageType.NONE;
 						}
 						public String getMessage() {
 							return "<this should not be visible> reset when custom alphabet wizard has been cancelled";
@@ -356,8 +356,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public boolean isStandaloneMessage() {
 							return false;
 						}
-						public int getMessageType() {
-							return InputVerificationResult.NONE;
+						public MessageType getMessageType() {
+							return InputVerificationResult.MessageType.NONE;
 						}
 						public String getMessage() {
 							return "<this should not be visible> reset when custom alphabet wizard has been cancelled";

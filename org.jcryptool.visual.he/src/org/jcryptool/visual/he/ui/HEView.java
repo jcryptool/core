@@ -14,7 +14,9 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.visual.he.HEPlugin;
 import org.jcryptool.visual.he.Messages;
 
 
@@ -63,7 +65,7 @@ public class HEView extends ViewPart {
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
 
-
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), HEPlugin.PLUGIN_ID + ".heview");
 
 	}
 

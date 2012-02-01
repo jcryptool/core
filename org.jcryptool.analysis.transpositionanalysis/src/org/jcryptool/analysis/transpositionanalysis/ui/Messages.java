@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui;
 
@@ -21,21 +21,26 @@ public class Messages extends NLS {
 	public static String KeyViewer_prettyversion;
 	public static String ReadDirectionChooser_0;
 	public static String ReadDirectionChooser_1;
-	public static String TranspAnalysisUI_adjustcolumncount;
+	public static String TextInputWithSourceDisplayer_editorOpenHint;
+	public static String TextInputWithSourceDisplayer_fileOpenHint;
+	public static String TextInputWithSourceDisplayer_manualinput;
+	public static String TextInputWithSourceDisplayer_originLabelBeginning;
+	public static String TextInputWithSourceDisplayer_userinputOpenHint;
 	public static String TranspAnalysisUI_decipher;
 	public static String TranspAnalysisUI_Export;
-	public static String TranspAnalysisUI_findtherightblocklengthandtry;
-	public static String TranspAnalysisUI_furtheranalysislink;
 	public static String TranspAnalysisUI_keyfound;
 	public static String TranspAnalysisUI_keypreview_zerocolumns;
 	public static String TranspAnalysisUI_keyviewer;
-	public static String TranspAnalysisUI_loadedfile;
-	public static String TranspAnalysisUI_loadtext;
-	public static String TranspAnalysisUI_manualinput;
-	public static String TranspAnalysisUI_nofileloaded;
 	public static String TranspAnalysisUI_preview;
 	public static String TranspAnalysisUI_read_out_mode_label;
 	public static String TranspAnalysisUI_Results;
+	public static String TranspAnalysisUI_btnOpenTextWizard_text;
+	public static String TranspAnalysisUI_lblTryToRecover_text;
+	public static String TranspAnalysisUI_lblHoweverTheColumn_text;
+	public static String TranspAnalysisUI_lblChooseAnotherText;
+	public static String TranspAnalysisUI_lblColumnCount_text_1;
+	public static String TranspAnalysisUI_lblYouHaveSelected_text;
+	public static String TranspAnalysisUI_link_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

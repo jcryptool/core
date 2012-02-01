@@ -49,8 +49,8 @@ public class ClassicAlgorithmSpecification {
 					public boolean isStandaloneMessage() {
 						return true;
 					}
-					public int getMessageType() {
-						return INFORMATION;
+					public MessageType getMessageType() {
+						return InputVerificationResult.MessageType.INFORMATION;
 					}
 					public String getMessage() {
 						//key instructions to be inserted. Format: whole sentences.

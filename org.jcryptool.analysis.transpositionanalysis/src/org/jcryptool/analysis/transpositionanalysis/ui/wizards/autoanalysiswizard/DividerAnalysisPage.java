@@ -20,8 +20,7 @@ public class DividerAnalysisPage extends SingleAnalysisPage {
 
 	private Label labelNoInputNeeded;
 
-	public DividerAnalysisPage(
-			TranspositionAnalysisCipherlengthDividers analysis) {
+	public DividerAnalysisPage(TranspositionAnalysisCipherlengthDividers analysis) {
 		super(analysis);
 	}
 
@@ -34,7 +33,7 @@ public class DividerAnalysisPage extends SingleAnalysisPage {
 		labelNoInputNeededLData.widthHint = 200;
 		labelNoInputNeeded.setLayoutData(labelNoInputNeededLData);
 		labelNoInputNeeded
-				.setText("The cipherlength divider analysis does not need any input but the ciphertext itself.");
+			.setText("The cipherlength divider analysis does not need any input but the ciphertext itself.");
 	}
 
 	@Override

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.classic.delastelle;singleton:=true
-Bundle-Version: 0.9.5.qualifier
+Bundle-Version: 0.9.7.qualifier
 Bundle-Activator: org.jcryptool.crypto.classic.delastelle.DelastellePlugin
 Bundle-Vendor: %bundleVendor
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",

@@ -15,8 +15,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
@@ -94,7 +94,7 @@ public class NewEncryptionCommand extends AbstractAlgorithmAction {
         dialog.create();
         dialog.open();
 
-        if (dialog.getReturnCode() == Dialog.OK && wizard.getModel() != null) {
+        if (dialog.getReturnCode() == Window.OK && wizard.getModel() != null) {
             Job job = new Job(Messages.NewEncryptionCommand_0) {
                 public IStatus run(final IProgressMonitor monitor) {
                     try {

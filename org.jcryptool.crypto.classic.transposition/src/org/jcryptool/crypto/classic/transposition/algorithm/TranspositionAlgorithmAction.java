@@ -51,6 +51,7 @@ public class TranspositionAlgorithmAction extends AbstractAlgorithmAction{
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final TranspositionWizard wizard = new TranspositionWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -58,7 +59,8 @@ public class TranspositionAlgorithmAction extends AbstractAlgorithmAction{
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.TranspositionAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.TranspositionAlgorithmAction_1;
 

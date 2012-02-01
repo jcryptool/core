@@ -40,7 +40,7 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
     private TranspositionKeyInputComposite key2InputComposite;
 
     public TranspositionWizardPage() {
-        super(Messages.TranspositionWizardPage_transposition, Messages.TranspositionWizardPage_enterkey1); //$NON-NLS-1$
+        super(Messages.TranspositionWizardPage_transposition, Messages.TranspositionWizardPage_enterkey1); 
         int alphaBegin = 32, alphaEnd = 254;
         keyGenerationAlphabet = new char[alphaEnd - alphaBegin + 1];
         for (int i = alphaBegin; i <= alphaEnd; i++) {
@@ -116,7 +116,8 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
      *
      * @return The entered key
      */
-    public String getKey() {
+    @Override
+	public String getKey() {
         return key1InputComposite.getKeyInput().getContent().toUnformattedChars(this.getSelectedAlphabet());
     }
 
@@ -164,7 +165,8 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
      * This method initializes keyGroup
      *
      */
-    protected void createKeyGroup(Composite parent) {
+    @Override
+	protected void createKeyGroup(Composite parent) {
 
         keyGroup = new Group(parent, SWT.NONE);
         GridLayout keyGroupGridLayout = new GridLayout();

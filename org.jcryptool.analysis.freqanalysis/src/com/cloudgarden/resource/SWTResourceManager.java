@@ -18,19 +18,17 @@ import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
- * Class to manage SWT resources (Font, Color, Image and Cursor) There are no restrictions on the
- * use of this code.
+ * Class to manage SWT resources (Font, Color, Image and Cursor) There are no restrictions on the use of this code.
  *
- * You may change this code and your changes will not be overwritten, but if you change the version
- * number below then this class will be completely overwritten by Jigloo.
- * #SWTResourceManager:version4.0.0#
+ * You may change this code and your changes will not be overwritten, but if you change the version number below then
+ * this class will be completely overwritten by Jigloo. #SWTResourceManager:version4.0.0#
  */
 public class SWTResourceManager {
 
     @SuppressWarnings("rawtypes")
-	private static HashMap resources = new HashMap();
+    private static HashMap resources = new HashMap();
     @SuppressWarnings("rawtypes")
-	private static Vector users = new Vector();
+    private static Vector users = new Vector();
     private static SWTResourceManager instance = new SWTResourceManager();
 
     private static DisposeListener disposeListener = new DisposeListener() {
@@ -42,12 +40,12 @@ public class SWTResourceManager {
     };
 
     /**
-     * This method should be called by *all* Widgets which use resources provided by this
-     * SWTResourceManager. When widgets are disposed, they are removed from the "users" Vector, and
-     * when no more registered Widgets are left, all resources are disposed.
+     * This method should be called by *all* Widgets which use resources provided by this SWTResourceManager. When
+     * widgets are disposed, they are removed from the "users" Vector, and when no more registered Widgets are left, all
+     * resources are disposed.
      * <P>
-     * If this method is not called for all Widgets then it should not be called at all, and the
-     * "dispose" method should be explicitly called after all resources are no longer being used.
+     * If this method is not called for all Widgets then it should not be called at all, and the "dispose" method should
+     * be explicitly called after all resources are no longer being used.
      */
     @SuppressWarnings("unchecked")
     public static void registerResourceUser(Widget widget) {
@@ -58,7 +56,7 @@ public class SWTResourceManager {
     }
 
     @SuppressWarnings("rawtypes")
-	public static void dispose() {
+    public static void dispose() {
         Iterator it = resources.keySet().iterator();
         while (it.hasNext()) {
             Object resource = resources.get(it.next());
@@ -78,9 +76,8 @@ public class SWTResourceManager {
         return getFont(name, size, style, false, false);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static Font getFont(String name, int size, int style, boolean strikeout,
-            boolean underline) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static Font getFont(String name, int size, int style, boolean strikeout, boolean underline) {
         String fontName = name + "|" + size + "|" + style + "|" + strikeout + "|" + underline;
         if (resources.containsKey(fontName))
             return (Font) resources.get(fontName);
@@ -96,11 +93,8 @@ public class SWTResourceManager {
                         lfCls.getField("lfUnderline").set(lf, new Byte((byte) 1));
                 }
             } catch (Exception e) {
-                LogUtil
-                        .logError(
-                                FreqAnalysisPlugin.PLUGIN_ID,
-                                "Unable to set underline or strikeout (probably on a non-Windows platform).",
-                                e, false);
+                LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID,
+                        "Unable to set underline or strikeout (probably on a non-Windows platform).", e, false);
             }
         }
         Font font = new Font(Display.getDefault(), fd);
@@ -123,14 +117,12 @@ public class SWTResourceManager {
                 url = url.substring(1);
             if (resources.containsKey(url))
                 return (Image) resources.get(url);
-            Image img = new Image(Display.getDefault(), instance.getClass().getClassLoader()
-                    .getResourceAsStream(url));
-            if (img != null)
-                resources.put(url, img);
+            Image img = new Image(Display.getDefault(), instance.getClass().getClassLoader().getResourceAsStream(url));
+            resources.put(url, img);
             return img;
         } catch (Exception e) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID,
-                    "WTResourceManager.getImage: Error getting image " + url, e, false);
+            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, "SWTResourceManager.getImage: Error getting image " + url, e,
+                    false);
             return null;
         }
     }

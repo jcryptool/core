@@ -328,7 +328,7 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
             LogUtil.logInfo("Name of the new Alphabet: " + name); //$NON-NLS-1$
             LogUtil.logInfo("Charset of the new Alphabet: " + charset); //$NON-NLS-1$
 
-            Alphabet alphabet = new Alphabet(charset.toCharArray(), name, Alphabet.NO_DISPLAY);
+            Alphabet alphabet = new Alphabet(charset.toCharArray(), name, AbstractAlphabet.NO_DISPLAY);
             tempAlphas.add(alphabet);
 
             fillTable();

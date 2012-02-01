@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
@@ -136,7 +137,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
     }
 
     public void setTransformData(TransformData data) {
-        alphabetYESNO.setSelection(data.isAlphabetTransformationON());
+    	alphabetYESNO.setSelection(data.isAlphabetTransformationON());
         alphabetTransformationON = data.isAlphabetTransformationON();
         uppercaseYESNO.setSelection(data.isUppercaseTransformationOn());
         uppercaseTransformationOn = data.isUppercaseTransformationOn();
@@ -154,7 +155,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
         alphabetCombo.setEnabled(alphabetYESNO.getSelection());
     }
 
-    /**
+	/**
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
     private void initAlphabetComposites(String selectAlphabetName) {
@@ -204,7 +205,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
         } else if (event.widget == tryButton) {
             String text = getTryString();
             if (text == null)
-                JCTMessageDialog.showInfoDialog(new Status(Status.INFO, TextmodifyPlugin.PLUGIN_ID,
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, TextmodifyPlugin.PLUGIN_ID,
                         Messages.PreviewViewer_fileNotOpen));
             else {
                 myExampleViewer = new PreviewViewer(this.getShell());

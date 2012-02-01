@@ -59,7 +59,6 @@ public class TranspositionKey {
 		this.fromString(stringRepresentation, alphabet);
 	}
 
-
 	/**
 	 * Clears all content.
 	 */
@@ -227,6 +226,7 @@ public class TranspositionKey {
 		return result;
 	}
 
+	@Override
 	public String toString() {
 		return toString(0);
 	}
@@ -355,7 +355,7 @@ public class TranspositionKey {
 
 		// 0..10?
 		int digitsContained = 0;
-		for(char c: alphaSet) if(48 <= (byte)c && (byte) c <= 58) digitsContained++;
+		for(char c: alphaSet) if(48 <= (byte)c && (byte) c < 58) digitsContained++;
 
 		boolean containsDigits;
 		if(digitsContained != 10) containsDigits = false;
@@ -367,13 +367,22 @@ public class TranspositionKey {
 			char[] digitSet = new char[10];
 			int counter = 0;
 			for(char c: alphaSet) {
-				if(48 <= (byte)c && (byte) c <= 58) {
+				if(48 <= (byte)c && (byte) c < 58) {
 					digitSet[counter] = c;
 					counter++;
 				}
 			}
+			
+			boolean couldSpareTheZero = digitSet[0] == '0' && k.getLength()<10;
+			if(couldSpareTheZero) {
+				alphaSet = new char[9];
+				for(int i=0; i<digitSet.length-1; i++) {
+					alphaSet[i] = digitSet[i+1];
+				}
+			} else {
+				alphaSet = digitSet;
+			}
 
-			alphaSet = digitSet;
 		}
 
 		char[] output = new char[Math.min(alphaSet.length, k.getLength())];
@@ -402,6 +411,7 @@ public class TranspositionKey {
 	 * @return
 	 */
 	public static String getKeyInChars(AbstractAlphabet a, TranspositionKey k) {
+		//TODO: efficiency
 		AbstractAlphabet alpha = AlphabetsManager.getInstance().getDefaultAlphabet();
 		if(a != null) alpha = a;
 

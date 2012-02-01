@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -35,6 +34,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabetStore;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.classic.alphabets.Alphabet;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
@@ -92,8 +92,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         return null;
     }
 
-	@Override
-	public AbstractAlphabet getAlphabetByShortName(String name) {
+    @Override
+    public AbstractAlphabet getAlphabetByShortName(String name) {
         Enumeration<Alphabet> enumerator = alphabets.elements();
 
         while (enumerator.hasMoreElements()) {
@@ -104,8 +104,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
 
         return null;
-	}
-
+    }
 
     public void setAlphabets(AbstractAlphabet[] alphas) {
         Vector<Alphabet> v = new Vector<Alphabet>(alphas.length);
@@ -178,7 +177,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
         // load a WXS schema, represented by a Schema instance
-        Source schemaFile = new StreamSource(FileLocator.toFileURL(getClass().getClassLoader().getResource(ALPHABET_XML_SCHEMA_PATH)).toString());
+        Source schemaFile = new StreamSource(FileLocator.toFileURL(
+                getClass().getClassLoader().getResource(ALPHABET_XML_SCHEMA_PATH)).toString());
         Schema schema = factory.newSchema(schemaFile);
 
         // create a validator instance, which can be used to validate an instance document
@@ -191,17 +191,20 @@ public class AlphabetStore extends AbstractAlphabetStore {
     private void generateClassicAlphabets() {
         // ADFGVX
         char[] adfgvxCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray(); //$NON-NLS-1$
-        Alphabet adfgvxAlphabet = new Alphabet(adfgvxCharset, "ADFGVX Alphabet", "ADFGVX", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet adfgvxAlphabet = new Alphabet(adfgvxCharset,
+                "ADFGVX Alphabet", "ADFGVX", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
         addInternAlphabet(adfgvxAlphabet);
 
         // Xor with 32 (2^5)
         char[] xor32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345".toCharArray(); //$NON-NLS-1$
-        Alphabet xor32Alphabet = new Alphabet(xor32, "Xor Alphabet with 32 characters", "Xor32", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet xor32Alphabet = new Alphabet(xor32,
+                "Xor Alphabet with 32 characters", "Xor32", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
         addInternAlphabet(xor32Alphabet);
 
         // Xor with 64 (2^6)
         char[] xor64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.".toCharArray(); //$NON-NLS-1$
-        Alphabet xor64Alphabet = new Alphabet(xor64, "Xor Alphabet with 64 characters", "Xor64", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet xor64Alphabet = new Alphabet(xor64,
+                "Xor Alphabet with 64 characters", "Xor64", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
         addInternAlphabet(xor64Alphabet);
     }
 
@@ -210,7 +213,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         for (int i = 32; i < 127; i++) {
             set[i - 32] = (char) i;
         }
-        Alphabet shortAsciiAlphabet = new Alphabet(set, "Printable ASCII", "ASCII", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet shortAsciiAlphabet = new Alphabet(set, "Printable ASCII", "ASCII", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
         addInternAlphabet(shortAsciiAlphabet);
 
@@ -222,19 +225,22 @@ public class AlphabetStore extends AbstractAlphabetStore {
             set2[i - 71] = (char) i;
         }
 
-        Alphabet characterAlphabet = new Alphabet(set2, "Upper and lower Latin (A-Z,a-z)", "a-zA-Z", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet characterAlphabet = new Alphabet(set2,
+                "Upper and lower Latin (A-Z,a-z)", "a-zA-Z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
         addInternAlphabet(characterAlphabet);
 
         char[] set4 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(); //$NON-NLS-1$
 
-        Alphabet latinUpperCaseAlphabet = new Alphabet(set4, "Upper Latin (A-Z)", "A-Z", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet latinUpperCaseAlphabet = new Alphabet(set4,
+                "Upper Latin (A-Z)", "A-Z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
         addInternAlphabet(latinUpperCaseAlphabet);
 
         char[] set5 = "abcdefghijklmnopqrstuvwxyz".toCharArray(); //$NON-NLS-1$
 
-        Alphabet latinLowerCaseAlphabet = new Alphabet(set5, "Lower Latin (a-z)", "a-z", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet latinLowerCaseAlphabet = new Alphabet(set5,
+                "Lower Latin (a-z)", "a-z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
         addInternAlphabet(latinLowerCaseAlphabet);
 
@@ -242,7 +248,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
 
         char[] set6 = "ABCDEFGHIKLMNOPQRSTUVWXYZ".toCharArray(); //$NON-NLS-1$
 
-        Alphabet playfairalphabet = new Alphabet(set6, "Playfair/alike alphabet (25chars, w/o \"J\")", "Playfair", Alphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet playfairalphabet = new Alphabet(set6,
+                "Playfair/alike alphabet (25chars, w/o \"J\")", "Playfair", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
         addInternAlphabet(playfairalphabet);
     }
@@ -277,7 +284,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
     public void storeAlphabets() throws IOException {
         if (alphaPath == null || new File(alphaPath).canWrite()) {
             AlphabetPersistence.saveAlphabetsToXML(alphabets, new OutputStreamWriter(new FileOutputStream(alphaPath),
-                    Charset.forName("UTF-8"))); //$NON-NLS-1$
+                    Charset.forName(IConstants.UTF8_ENCODING)));
         } else {
             throw new IOException("Either no alphabet path was initialized or writing access is denied."); //$NON-NLS-1$
         }
@@ -285,7 +292,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
 
     private void loadAlphabets(File file) throws IOException {
         InputStreamReader isw = new InputStreamReader(new FileInputStream(file),
-                Charset.forName("UTF-8")); //$NON-NLS-1$
+                Charset.forName(IConstants.UTF8_ENCODING));
 
         alphabets = new Vector<Alphabet>(new AlphabetPersistence().loadAlphabetsFromXML(isw));
 

@@ -30,8 +30,8 @@ public class InputVerificationResultKeyNotInAlphabet extends
 	public boolean isStandaloneMessage() {
 		return false;
 	}
-	public int getMessageType() {
-		return InputVerificationResult.WARNING;
+	public MessageType getMessageType() {
+		return InputVerificationResult.MessageType.WARNING;
 	}
 	public String getMessage() {
 		return String.format(Messages.AbstractClassicCryptoPage_reason_notinalphabet, erroneusChar.toString());

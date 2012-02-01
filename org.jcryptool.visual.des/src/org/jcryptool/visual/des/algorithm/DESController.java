@@ -1,7 +1,6 @@
 package org.jcryptool.visual.des.algorithm;
 
 import java.util.ArrayList;
-import org.jcryptool.visual.des.algorithm.DESModel;
 
 public class DESController {
 	
