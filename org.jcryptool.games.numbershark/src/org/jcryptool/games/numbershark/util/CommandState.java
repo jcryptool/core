@@ -24,7 +24,15 @@ public class CommandState extends AbstractSourceProvider    {
 	      case REDO_ENABLED: str = "REDO_ENABLED";
 	      		break;          
 	      case REDO_DISABLED: str = "REDO_DISABLED";
-	      		break;          
+	      		break;    
+	      case SHARKMEAL_ENABLED: str = "SHARKMEAL_ENABLED";
+    			break;
+	      case SHARKMEAL_DISABLED: str = "SHARKMEAL_DISABLED";
+    			break; 
+	      case HINT_ENABLED: str = "HINT_ENABLED";
+    			break;
+	      case HINT_DISABLED: str = "HINT_DISABLED";
+    			break; 
 	      case DISABLED: str = "DISABLED";
 	      		break;          
 	      case ENABLED: str = "ENABLED";
@@ -40,16 +48,20 @@ public class CommandState extends AbstractSourceProvider    {
 	              break;
 	      case REDO_STATE: str = "org.jcryptool.games.numbershark.commands.redoState";
 	              break;
+	      case SHARKMEAL_STATE: str = "org.jcryptool.games.numbershark.commands.sharkMealState";
+          		  break;
+	      case HINT_STATE: str = "org.jcryptool.games.numbershark.commands.hintState";
+  		  break;
 	    }
 	    return str;
 	  }	
 	
 	public enum Variable {
-		UNDO_STATE, REDO_STATE,
+		UNDO_STATE, REDO_STATE, SHARKMEAL_STATE, HINT_STATE
 	}
 	
 	public enum State {
-		UNDO_ENABLED, UNDO_DISABLED, REDO_ENABLED, REDO_DISABLED, DISABLED, ENABLED
+		UNDO_ENABLED, UNDO_DISABLED, REDO_ENABLED, REDO_DISABLED, SHARKMEAL_ENABLED, SHARKMEAL_DISABLED, HINT_ENABLED, HINT_DISABLED, DISABLED, ENABLED
 	 }
 		
     private State curState = State.DISABLED;
@@ -57,6 +69,7 @@ public class CommandState extends AbstractSourceProvider    {
 	public void dispose() {
 		
 	}
+	
 	
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -71,6 +84,14 @@ public class CommandState extends AbstractSourceProvider    {
 		   	map.put(variableVal(Variable.REDO_STATE), stateVal(State.REDO_ENABLED));
 		else if (curState == State.REDO_DISABLED)
 		   	map.put(variableVal(Variable.REDO_STATE), stateVal(State.REDO_DISABLED));
+		else if (curState == State.SHARKMEAL_ENABLED)
+		   	map.put(variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_ENABLED));
+		else if (curState == State.SHARKMEAL_DISABLED)
+		   	map.put(variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_DISABLED));
+		else if (curState == State.HINT_ENABLED)
+		   	map.put(variableVal(Variable.HINT_STATE), stateVal(State.HINT_ENABLED));
+		else if (curState == State.HINT_DISABLED)
+		   	map.put(variableVal(Variable.HINT_STATE), stateVal(State.HINT_DISABLED));
 		else if (curState == State.DISABLED) {
 		   	map.put(variableVal(Variable.UNDO_STATE), stateVal(State.UNDO_DISABLED));
 			map.put(variableVal(Variable.REDO_STATE), stateVal(State.REDO_DISABLED));
@@ -84,7 +105,7 @@ public class CommandState extends AbstractSourceProvider    {
 
 	@Override
 	public String[] getProvidedSourceNames() {
-		return new String[] { variableVal(Variable.UNDO_STATE), variableVal(Variable.REDO_STATE) };
+		return new String[] { variableVal(Variable.UNDO_STATE), variableVal(Variable.REDO_STATE), variableVal(Variable.SHARKMEAL_STATE), variableVal(Variable.HINT_STATE) };
 	}
 	
 	public void setUndoEnabled() {		
@@ -101,6 +122,22 @@ public class CommandState extends AbstractSourceProvider    {
 
 	public void setRedoDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.REDO_STATE), stateVal(State.REDO_DISABLED));
+	}
+	
+	public void setSharkMealEnabled() {
+		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_ENABLED));
+	}
+
+	public void setSharkMealDisabled() {
+		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_DISABLED));
+	}
+	
+	public void setHintEnabled() {
+		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.HINT_STATE), stateVal(State.HINT_ENABLED));
+	}
+
+	public void setHintDisabled() {
+		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.HINT_STATE), stateVal(State.HINT_DISABLED));
 	}
 	
 	public void setDisabled() {

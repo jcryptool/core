@@ -82,6 +82,12 @@
                visible="true">
          </separator>
          <command
+               commandId="org.jcryptool.games.numbershark.optStrategyCommand"
+               icon="icons/wizard-icon.png"
+               style="push"
+               tooltip="%optStrategy.command.tooltip">
+         </command>
+         <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
                style="push"
@@ -132,6 +138,11 @@
                visible="true">
          </separator>
          <command
+               commandId="org.jcryptool.games.numbershark.optStrategyCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               style="push">
+         </command>
+         <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
                style="push">
@@ -143,6 +154,10 @@
       <command
             id="org.jcryptool.games.numbershark.helpCommand"
             name="%help.command.name">
+      </command>
+      <command
+            id="org.jcryptool.games.numbershark.optStrategyCommand"
+            name="%optStrategy.command.name">
       </command>
       <command
             id="org.jcryptool.games.numbershark.undoCommand"
@@ -171,6 +186,10 @@
             class="org.jcryptool.games.numbershark.handler.HelpHandler"
             commandId="org.jcryptool.games.numbershark.helpCommand">
       </handler>
+            <handler
+            class="org.jcryptool.games.numbershark.handler.OptimalStrategyHandler"
+            commandId="org.jcryptool.games.numbershark.optStrategyCommand">
+      </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.UndoHandler"
             commandId="org.jcryptool.games.numbershark.undoCommand">
@@ -187,10 +206,26 @@
       <handler
             class="org.jcryptool.games.numbershark.handler.HintHandler"
             commandId="org.jcryptool.games.numbershark.hintCommand">
+            <activeWhen>
+      			<with
+      			variable="org.jcryptool.games.numbershark.commands.hintState">
+          			<equals
+                    	value="HINT_ENABLED">
+                  	</equals>
+      			</with>
+      		</activeWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.SharkMealHandler"
             commandId="org.jcryptool.games.numbershark.sharkMealCommand">
+            <activeWhen>
+      			<with
+      			variable="org.jcryptool.games.numbershark.commands.sharkMealState">
+          			<equals
+                    	value="SHARKMEAL_ENABLED">
+                  	</equals>
+      			</with>
+      		</activeWhen>
       </handler>
       <handler
             class="org.jcryptool.games.numbershark.handler.NewGameHandler"
@@ -211,17 +246,25 @@
 
    </extension>
    <extension
-   	point="org.eclipse.ui.services">
-    <sourceProvider
-    	provider="org.jcryptool.games.numbershark.util.CommandState">
-        	<variable
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="org.jcryptool.games.numbershark.util.CommandState">
+         <variable
                name="org.jcryptool.games.numbershark.commands.undoState"
                priorityLevel="workbench">
-         	</variable>
-         	<variable
+         </variable>
+         <variable
                name="org.jcryptool.games.numbershark.commands.redoState"
                priorityLevel="workbench">
-         	</variable>
+         </variable>
+         <variable
+               name="org.jcryptool.games.numbershark.commands.sharkMealState"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="org.jcryptool.games.numbershark.commands.hintState"
+               priorityLevel="workbench">
+         </variable>
       </sourceProvider>
    </extension>
 

@@ -45,7 +45,7 @@ public class NewGameDialog extends TitleAreaDialog {
         setMessage(Messages.NewGameDialog_1, IMessageProvider.INFORMATION);
         LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
         setTitleImage(resources.createImage(NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"))); //$NON-NLS-1$
-
+        
         Composite area = (Composite) super.createDialogArea(parent);
 
         Group maximumNumberGroup = new Group(area, SWT.NONE);

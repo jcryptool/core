@@ -5,6 +5,12 @@
 		<topic href="$nl$/help/toc.html" label="Zahlenhai"/>
 	</context>
  <context id="newGameDialog" title="Neues Spiel">
-    <description>Started ein neues Spiel mit der angegebenen Zahl an Feldern. Das aktive Spiel wird dabei verworfen.</description>
+    <description>Startet ein neues Spiel mit der angegebenen Zahl an Feldern. Das aktive Spiel wird dabei verworfen.</description>
  </context>
+  <context id="optStratDialog" title="Optimale Gewinnzugfolge finden">
+    <description>Hier können Sie sich die optimalen Zugfolgen für einzelne Spielfeldgrößen berechnen und/oder anzeigen lassen.</description>
+ </context>
+  <context id="optStratResultDialog" title="Optimale Zugfolgen für den Zahlenhai">
+     <description>Hier sehen Sie die mit dem Algorithmus von van Nek berechneten optimalen Zugfolgen für den ausgewählten Zahlenbereich.</description>
+  </context>
 </contexts>

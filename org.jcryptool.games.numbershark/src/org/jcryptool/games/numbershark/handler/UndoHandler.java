@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
+import java.util.ArrayList;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -42,8 +44,12 @@ public class UndoHandler extends AbstractHandler {
             ScoreTableRow scoreTableRow =  view.getScoreTableRowByActualPlayerPosition();
             
             String undoLostNumbers =  scoreTableRow.getLostNumbers(); // row.getText(3);
-            int iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
+            undoLostNumbers = undoLostNumbers.replaceAll("prim", "");
+            undoLostNumbers = undoLostNumbers.replaceAll(" \\(", "");
+            undoLostNumbers = undoLostNumbers.replaceAll("\\)", "");
 
+            int iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
+           
             // reactivate numbers and buttons
             while (iterator != -1) {
                 int toEnable = Integer.parseInt(undoLostNumbers.substring(iterator + 2, undoLostNumbers.length()));
@@ -94,6 +100,27 @@ public class UndoHandler extends AbstractHandler {
                 commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_ENABLED);
             }      
             
+    		ArrayList<Integer> sharkMealList = view.getSharkMealList();
+    		if(sharkMealList.isEmpty()){
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+    					CommandState.State.SHARKMEAL_DISABLED);
+    		} else {
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+    					CommandState.State.SHARKMEAL_ENABLED);
+    		}
+            
+    		int hint = view.getHint();
+    		if(hint != 0 ){
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+    						CommandState.State.HINT_ENABLED);
+    		} else {
+    			CommandStateChanger commandStateChanger = new CommandStateChanger();
+    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+    					CommandState.State.HINT_DISABLED);
+    		}
         } 
         
         

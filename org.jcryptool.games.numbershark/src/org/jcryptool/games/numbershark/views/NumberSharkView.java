@@ -52,8 +52,10 @@ import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.util.ScoreTableRow;
 
 /**
- * @author Johannes Späth
- * @version 1.0
+ * The actual view of the game
+ * 
+ * @author Johannes Spaeth
+ * @version 0.9.5
  */
 public class NumberSharkView extends ViewPart {
 	private int numberOfFields = 40;
@@ -65,6 +67,7 @@ public class NumberSharkView extends ViewPart {
 	private Composite parent;
 	private Composite playingField;
 	public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
+	private int hint = 0;
 
 	private TabFolder numberTabs = null;
 	private TabItem[] tab;
@@ -208,11 +211,21 @@ public class NumberSharkView extends ViewPart {
 
 		// col 3 value of points
 		scoreTableRow.setPoints(String.valueOf((score + takenNumber)));
-
+		isPrime = lostNumbers[0] == 0 ? false : NumberService
+				.isPrime(lostNumbers[0]);
 		String lostNum = String.valueOf(lostNumbers[0]);
+		if (isPrime) {
+			lostNum += " (prim)";
+		}
+		
 		int lostSum = lostNumbers[0];
 		for (int k = 1; k < lostNumbers.length; k++) {
+			isPrime = lostNumbers[k] == 0 ? false : NumberService
+					.isPrime(lostNumbers[k]);
 			lostNum += ", " + lostNumbers[k]; //$NON-NLS-1$
+			if (isPrime) {
+				lostNum += " (prim)";
+			}
 			lostSum += lostNumbers[k];
 			remainingNumbers--;
 		}
@@ -236,16 +249,16 @@ public class NumberSharkView extends ViewPart {
 		
 		sharkScore.setText(String.valueOf(lostScore));
 		playerScore.setText(String.valueOf(score + takenNumber));
-		this.setPlayerMove(numberOfRows + 1);
-		this.removeElementsFromScoreTableRowList();
+		setPlayerMove(numberOfRows + 1);
+		removeElementsFromScoreTableRowList();
 
 		// scoreTableRowList kepp the moves from the player.
 		// scoreTableRowList is used from undo-/ redo-function for navigating
-		this.scoreTableRowList.put(numberOfRows + 1, this.scoreTableRow);
-		this.addScoreTableRow2ScoreTableView(scoreTableRow);
+		scoreTableRowList.put(numberOfRows + 1, this.scoreTableRow);
+		addScoreTableRow2ScoreTableView(scoreTableRow);
 
 		scoreTable.setSelection(scoreTable.getItemCount() - 1);
-
+		
 		// Change UndoCommandState 2 enable because more than 1 Entry in
 		// ScoreTableRowList
 		// Change RedoCommandState 2 disable because no Entry for RedoCommand in
@@ -255,6 +268,7 @@ public class NumberSharkView extends ViewPart {
 				CommandState.State.UNDO_ENABLED);
 		commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE,
 				CommandState.State.REDO_DISABLED);
+
 
 		if (remainingNumbers == 0) {
 			Shell shell = Display.getCurrent().getActiveShell();
@@ -280,12 +294,13 @@ public class NumberSharkView extends ViewPart {
 	 *            the parent Group where the content will be created in
 	 */
 	public void createPlayingField(int numberOfFields) {
+		
 		int numOfTabs = (numberOfFields - 1) / MAX_NUM_PER_TAB + 1;
+
 		numberField = new Number[numberOfFields];
 		for (int i = 0; i < numberOfFields; i++) {
 			numberField[i] = new Number(i + 1);
 		}
-
 		int minPtsToWin = numberOfFields * (numberOfFields + 1) / 4;
 		requiredScore.setText(String.valueOf(minPtsToWin));
 		sharkScore.setText(ZERO_SCORE);
@@ -302,9 +317,24 @@ public class NumberSharkView extends ViewPart {
 					+ min((j + 1) * MAX_NUM_PER_TAB, numberOfFields));
 		}
 		this.numberOfFields = numberOfFields;
-		initTab(0);
+
+		hint = getHint();
+		numberTabs.setSelection(numOfTabs-1);
+		initTab(numOfTabs-1);
 		numberTabs.addListener(SWT.Selection, tabsSelect);
 		playingField.layout();
+		
+		CommandStateChanger commandStateChanger = new CommandStateChanger();
+		commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+					CommandState.State.SHARKMEAL_DISABLED);
+		if(hint != 0 ){
+			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+						CommandState.State.HINT_ENABLED);
+		} else {
+			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+					CommandState.State.HINT_DISABLED);
+		}
+
 	}
 
 	/**
@@ -379,7 +409,7 @@ public class NumberSharkView extends ViewPart {
 	 * 
 	 * @param i
 	 *            number for which the ToolTip shall be created for
-	 * @return Sring with the ToolTip
+	 * @return String with the ToolTip
 	 */
 	private String calcToolTip(int i) {
 		StringBuffer sb = new StringBuffer();
@@ -472,7 +502,25 @@ public class NumberSharkView extends ViewPart {
 		}
 
 		refreshButtons();
-
+		hint = getHint();
+		CommandStateChanger commandStateChanger = new CommandStateChanger();
+		if(hint != 0 ){
+			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+						CommandState.State.HINT_ENABLED);
+		} else {
+			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+					CommandState.State.HINT_DISABLED);
+		}
+		
+		ArrayList<Integer> sharkMealList = getSharkMealList();
+		if(sharkMealList.isEmpty()){
+			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+					CommandState.State.SHARKMEAL_DISABLED);
+		} else {
+			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+					CommandState.State.SHARKMEAL_ENABLED);
+		}
+		
 		addMoveToTable(numToDeactivate, lostNumbersInt);
 	}
 
@@ -612,4 +660,59 @@ public class NumberSharkView extends ViewPart {
 			}
 		}
 	}
+	
+    public int getHint() {
+        for (int i = numberOfFields; i > numberOfFields / 2; i--) {
+            if (numberField[i - 1].isEnabled()) {
+                int counter = 0;
+
+                for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
+                    int n = numberField[i - 1].getDivisors().get(j);
+                    if (numberField[n - 1].isEnabled()) {
+                        counter++;
+                    }
+
+                }
+                if (counter == 1) {
+                    return i;
+                }
+
+            }
+        }
+
+        return 0;
+    }
+    
+    
+    public ArrayList<Integer> getSharkMealList(){
+        // calculate numbers to be eaten by the shark
+        ArrayList<Integer> sharkMealList = new ArrayList<Integer>();
+        for (int i = numberOfFields; i > numberOfFields / 2; i--) {
+            if (numberField[i - 1].isEnabled()) {
+                int counter = 0;
+                boolean stop = false;
+                for (int j = 0; j < numberField[i - 1].getDivisors().size(); j++) {
+                    int n = numberField[i - 1].getDivisors().get(j);
+                    if (numberField[n - 1].isEnabled()) {
+                        counter++;
+                        if (counter > 0) {
+                            stop = true;
+                            break;
+                        }
+                    }
+                }
+                if (!stop) {
+                    sharkMealList.add(i);
+
+                }
+            }
+        }
+    	return sharkMealList;
+    }
+    
+    public Composite getParent(){
+    	return parent;
+    }
+   
+
 }
