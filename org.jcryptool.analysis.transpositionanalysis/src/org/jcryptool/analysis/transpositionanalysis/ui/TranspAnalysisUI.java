@@ -17,7 +17,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -33,7 +32,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizard;
@@ -53,6 +51,7 @@ import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizardPage;
+import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -249,6 +248,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					GridData linkChooseTextLData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
 					linkChooseText.setLayoutData(linkChooseTextLData);
 					linkChooseTextLData.horizontalSpan = 2;
+					new Label(compTextSource, SWT.NONE);
 					linkChooseText.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
@@ -509,6 +509,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							}
 						});
 						btnDecipher.setEnabled(false);
+						btnDecipher.setImage(JCTTextEditorPlugin.getDefault().getImageRegistry().get(JCTTextEditorPlugin.JCT_TEXT_EDITOR_ICON));
 					}
 				}
 			}

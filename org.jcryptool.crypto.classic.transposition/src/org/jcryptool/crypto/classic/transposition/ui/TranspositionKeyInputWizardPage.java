@@ -1,6 +1,5 @@
 package org.jcryptool.crypto.classic.transposition.ui;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -270,7 +269,7 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 				textPreviewLData.horizontalAlignment = GridData.FILL;
 				textPreview.setLayoutData(textPreviewLData);
 				textPreview.setText(Messages.TranspositionKeyInputComposite_previewkey);
-				textPreview.setEnabled(false);
+				textPreview.setEditable(false);
 			}
 		}
 		
