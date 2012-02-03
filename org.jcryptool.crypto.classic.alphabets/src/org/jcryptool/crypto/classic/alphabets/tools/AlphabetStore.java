@@ -209,7 +209,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
     }
 
     private void generateStandardAlphabets() {
-        char[] extraChars = {'\r', '\n'};
+    	//TODO: maybe do umlauts in another alphabet, but for now...
+        char[] extraChars = {'\r', '\n', 'ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'};
     	char[] set = new char[95+extraChars.length];
         for (int i = 32; i < 127; i++) {
             set[i - 32] = (char) i;
