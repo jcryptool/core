@@ -209,9 +209,13 @@ public class AlphabetStore extends AbstractAlphabetStore {
     }
 
     private void generateStandardAlphabets() {
-        char[] set = new char[95];
+        char[] extraChars = {'\r', '\n'};
+    	char[] set = new char[95+extraChars.length];
         for (int i = 32; i < 127; i++) {
             set[i - 32] = (char) i;
+        }
+        for(int i=0; i<extraChars.length; i++) {
+        	set[set.length-extraChars.length+i] = extraChars[i];
         }
         Alphabet shortAsciiAlphabet = new Alphabet(set, "Printable ASCII", "ASCII", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
 
