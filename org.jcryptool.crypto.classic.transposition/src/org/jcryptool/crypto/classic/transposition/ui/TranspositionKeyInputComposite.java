@@ -32,6 +32,7 @@ import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
+import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 
@@ -184,7 +185,8 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 		if(alphabetInput != null) {
 			return alphabetInput.getContent();
 		} else {
-			return createAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß1234567890!§$%&/()=?*+#,.-;:_");
+			return TranspositionAlgorithm.specification.getDefaultPlainTextAlphabet();
+//			return createAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß1234567890!§$%&/()=?*+#,.-;:_");
 		}
 	}
 

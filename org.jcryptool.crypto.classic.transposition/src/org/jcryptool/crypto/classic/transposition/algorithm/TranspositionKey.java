@@ -10,9 +10,12 @@
 package org.jcryptool.crypto.classic.transposition.algorithm;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
@@ -24,6 +27,7 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
  *
  */
 public class TranspositionKey {
+	private static final String[] POSSIBLE_PARSE_SEPARATORS = new String[]{",", ";", "|"};
 	private static final Integer NOVALUE = -1;
 	private static final String SEPARATOR = "|"; //$NON-NLS-1$
 	private static final String SEPARATOR_REGEX = "\\|"; //$NON-NLS-1$
@@ -132,46 +136,128 @@ public class TranspositionKey {
 	 * @param argString The String to be read into the key.
 	 */
 	public void fromString(String argString, char[] alphabet) {
-		String alphaString = String.valueOf(alphabet);
-		char[] inputArray = argString.toCharArray();
-		int[] numberArray = new int[inputArray.length];
-		for(int i=0; i<inputArray.length; i++) {
-			numberArray[i] = alphaString.indexOf(inputArray[i]);
+		String mode = null;
+		String limiter = null;
+		/*
+		 * possible modes:
+		 * null: default;
+		 * "LIMITER": limiter String detected like ","; ", "; "|"...
+		 */
+		
+		String[] possibleLimiterStrings = POSSIBLE_PARSE_SEPARATORS;
+		
+		limiter = keyStringIsWithLimiters(argString, possibleLimiterStrings);
+		if(limiter != null) {
+			mode = "LIMITER";
 		}
+		
+		if(mode == null) {
+			String alphaString = String.valueOf(alphabet);
+			char[] inputArray = argString.toCharArray();
+			int[] numberArray = new int[inputArray.length];
+			for(int i=0; i<inputArray.length; i++) {
+				numberArray[i] = alphaString.indexOf(inputArray[i]);
+			}
 
-		int[] resultArray = new int[numberArray.length];
-		for(int i=0; i<numberArray.length; i++) {
+			int[] resultArray = generateKeyArrayFromNumberArray(numberArray);
+			this.fromArray(resultArray);
+		} else if(mode.equals("LIMITER")) {
+			argString = replaceAllNoRegex(argString, " ", "");
+			String[] split = replaceAllNoRegex(argString, " ", "").split(Pattern.quote(limiter));
+			List<Integer> numbers = new LinkedList<Integer>();
+			for(String splitPart: split) {
+				if(! splitPart.equals("")) {
+					try {
+						Integer part = Integer.parseInt(splitPart);
+						numbers.add(part);
+					} catch(NumberFormatException e) {
+						System.err.println("Somehow TranspositionKey.fromString decided to use limiter-based transposition key reading, but there were problems parsing numbers from the string.");
+					}
+				}
+			}
+			int[] key = new int[numbers.size()];
+			for (int i = 0; i < key.length; i++) {
+				key[i] = numbers.get(i);
+			}
+			
+			int[] resultArray = generateKeyArrayFromNumberArray(key);
+			
+			this.fromArray(resultArray);
+		} else {
+			System.err.println("unhandled case in TranspositionKey.fromString(...)!");
+		}
+	}
+
+	/**
+	 * Reads a formatted String into the key. Values of this string can be separated by one of the separators in {@link #POSSIBLE_PARSE_SEPARATORS} (read further about separators here: {@link #keyStringIsWithLimiter(String, String)}). If they are not separated in such a way, the alphabet used to parse this string is the standard alphabet as specified in {@link TranspositionAlgorithmSpecification}.
+	 *
+	 * @param argString The String to be read into the key.
+	 */
+	public void fromString(String argString) {
+		this.fromString(argString, TranspositionAlgorithm.specification.getDefaultPlainTextAlphabet().getCharacterSet());
+	}
+
+	private int[] generateKeyArrayFromNumberArray(int[] key) {
+		int[] resultArray = new int[key.length];
+		for(int i=0; i<key.length; i++) {
 			int howMuchAreSmaller = 0;
-			for(int k=0; k<numberArray.length; k++) {
-				if(numberArray[k] < numberArray[i]) {
+			for(int k=0; k<key.length; k++) {
+				if(key[k] < key[i]) {
 					howMuchAreSmaller++;
-				} else if(numberArray[k] == numberArray[i] && i>k) {
+				} else if(key[k] == key[i] && i>k) {
 					howMuchAreSmaller++;
 				}
 			}
 
 			resultArray[i] = howMuchAreSmaller;
 		}
-
-		this.fromArray(resultArray);
+		return resultArray;
 	}
 
 	/**
-	 * Reads a formatted String into the key. Values in the String have
-	 * to be separated by TranspositionKey.SEPARATOR. <br /><br />
-	 *
-	 * @param argString The String to be read into the key.
+	 * Checks, if a transposition key string uses one of the given strings as exclusive limiter for numbers.
+	 * for example, the method would return "," for the following key string: "1,2,3,4" but not for "1,,2,3,4".
+	 * if only blanks after a delimiter would prevent the limiter from being accepted, they will be ignored.
+	 * 
+	 * @param keyString
+	 * @param possibleLimiterStrings
+	 * @return
 	 */
-	public void fromString(String argString) {
-		String[] valueStrings = argString.split(SEPARATOR_REGEX);
-		int[] values = new int[valueStrings.length];
-		for(int i=0; i<valueStrings.length; i++) {
-			values[i] = Integer.parseInt(valueStrings[i]);
+	private static String keyStringIsWithLimiters(String keyString, String[] possibleLimiterStrings) {
+		for(String limiter: possibleLimiterStrings) {
+			if(keyStringIsWithLimiter(keyString, limiter)) {
+				return limiter;
+			}
 		}
-
-		this.fromArray(values);
+		return null;
 	}
-
+	
+	private static String replaceAllNoRegex(String str, String target, String replacement) {
+		return str.replaceAll(Pattern.quote(target), replacement);
+	}
+	
+	/**
+	 * Checks, if a transposition key string uses the given string as exclusive limiter for numbers.
+	 * for example, the method would return "," for the following key string: "1,2,3,4" but not for "1,,2,3,4". (neither would "1,a,2,3" be accepted)
+	 * if only blanks after a delimiter would prevent the limiter from being accepted, they will be ignored.
+	 * 
+	 * @param keyString
+	 * @param possibleLimiterString
+	 * @return
+	 */
+	private static boolean keyStringIsWithLimiter(String keyString, String possibleLimiterString) {
+		if(!keyString.contains(possibleLimiterString)) return false;
+		String[] digits = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+		for(String digit: digits) {
+			keyString = replaceAllNoRegex(keyString, digit, "");
+		}
+		
+		keyString = replaceAllNoRegex(keyString, possibleLimiterString, "");
+		keyString = replaceAllNoRegex(keyString, " ", "");
+		if(keyString.length() == 0) return true;
+		return false;
+	}
+	
 	/**
 	 * Read an array of integer values into the key. This content
 	 * replaces the current one.
@@ -384,6 +470,18 @@ public class TranspositionKey {
 			}
 
 		}
+		
+		//would delete all non-digits and non-A-Z characters suffice?
+		if(!inDigits) {
+			String alphaString = String.valueOf(a);
+			String nonNecessaryCharacters = "[^0-9A-Za-z]";
+			alphaString = alphaString.replaceAll(nonNecessaryCharacters, "");
+			
+			if(k.getLength() <= alphaString.length()) {
+				alphaSet = alphaString.toCharArray();
+			}
+		}
+		
 
 		char[] output = new char[Math.min(alphaSet.length, k.getLength())];
 		int[] key = k.toArray();
@@ -396,7 +494,7 @@ public class TranspositionKey {
 		return null;
 
 	}
-
+	
 	/**
 	 * Retrieves a key String without delimiters for a specific currentAlphabet.
 	 * if the currentAlphabet is null, the standard Alphabet will be used. <br>

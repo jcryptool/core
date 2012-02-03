@@ -32,15 +32,20 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 	private KeyInput<TranspositionKey> keyInput;
 	private AbstractAlphabet alpha;
 	private TranspositionKey initialKey;
+	protected String lastInputText;
+	private String initialTextfieldText;
 
 	public static class PageConfiguration {
 		
-		public PageConfiguration(TranspositionKey key) {
+		private TranspositionKey key;
+		private String inputString;
+
+		public PageConfiguration(TranspositionKey key, String inputString) {
 			super();
 			this.key = key;
+			this.inputString = inputString;
 		}
 
-		private TranspositionKey key;
 
 		public TranspositionKey getKey() {
 			return key;
@@ -48,6 +53,10 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 
 		public void setKey(TranspositionKey key) {
 			this.key = key;
+		}
+
+		public String getInputString() {
+			return inputString;
 		}
 		
 		
@@ -103,6 +112,16 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 			public AbstractAlphabet getAlphabet() {
 				return TranspositionKeyInputWizardPage.this.getAlphabet();
 			}
+			@Override
+			protected void saveDefaultRawUserInput() {
+				super.saveDefaultRawUserInput();
+				TranspositionKeyInputWizardPage.this.lastInputText = getTextfield().getText();
+			}
+			@Override
+			protected void saveRawUserInput() {
+				super.saveRawUserInput();
+				TranspositionKeyInputWizardPage.this.lastInputText = getTextfield().getText();
+			}
 		};
 
 		Observer keyChangeObserver = new Observer() {
@@ -120,7 +139,11 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 		};
 		keyInput.addObserver(keyChangeObserver);
 		
-		keyInput.writeContent(keyInput.getContent());
+		if(initialTextfieldText == null) {
+			keyInput.writeContent(keyInput.getContent());
+		} else {
+			keyInput.setTextfieldTextExternal(initialTextfieldText);
+		}
 		keyChangeObserver.update(keyInput, null);
 		
 		if(keyInput.getContent().getLength() > 0) {
@@ -137,76 +160,70 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 	}
 
 	public AbstractAlphabet getAlphabet() {
-		if(alpha != null) {
-			return alpha;
-		} else {
-			alpha = createAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜabcdefghijklmnopqrstuvwxyzäöüß0123456789!§$%&/()=?*+#,.-;:_");
-			return alpha;
-		}
+		return TranspositionAlgorithm.specification.getDefaultPlainTextAlphabet();
 	}
 	
-	//TODO: !provisory replace with Atomalphabet later
-		public static AbstractAlphabet createAlphabet(final String alphabetContent) {
-			return new AbstractAlphabet() {
-				List<Character> content = stringToList(alphabetContent);
-
-				@Override
-				public void setShortName(String shortName) {}
-				@Override
-				public void setName(String name) {}
-				@Override
-				public void setDefaultAlphabet(boolean b) {}
-				@Override
-				public void setCharacterSet(char[] characterSet) {}
-				@Override
-				public void setBasic(boolean basic) {}
-				@Override
-				public boolean isDefaultAlphabet() {return false;}
-				@Override
-				public boolean isBasic() {return false;}
-				@Override
-				public char getSubstituteCharacter() {return Character.MAX_VALUE;}
-				@Override
-				public int getDisplayMissingCharacters() {return Integer.MAX_VALUE;}
-
-				private List<Character> stringToList(String characters) {
-					List<Character> l = new LinkedList<Character>();
-					for(char c: characters.toCharArray()) l.add(c);
-					return l;
-				}
-
-
-				private String listToString(List<Character> input) {
-					StringBuffer result = new StringBuffer();
-					for(Character c: input) result.append(c);
-					return result.toString();
-				}
-
-				private char[] toCharArray(List<Character> input) {
-					char[] result = new char[input.size()];
-					for(int i=0; i<input.size(); i++) result[i] = input.get(i);
-					return result;
-				}
-
-				@Override
-				public String getShortName() {return listToString(content);} 
-				@Override
-				public String getName() {return "AtomAlphabet="+listToString(content);} //$NON-NLS-1$
-				@Override
-				public char[] getCharacterSet() {
-					return toCharArray(content);
-				}
-				@Override
-				public boolean contains(char e) {
-					return content.contains(e);
-				}
-
-				@Override
-				public String toString() {
-					return listToString(content);
-				}
-			};
-		}
+//		public static AbstractAlphabet createAlphabet(final String alphabetContent) {
+//			return new AbstractAlphabet() {
+//				List<Character> content = stringToList(alphabetContent);
+//
+//				@Override
+//				public void setShortName(String shortName) {}
+//				@Override
+//				public void setName(String name) {}
+//				@Override
+//				public void setDefaultAlphabet(boolean b) {}
+//				@Override
+//				public void setCharacterSet(char[] characterSet) {}
+//				@Override
+//				public void setBasic(boolean basic) {}
+//				@Override
+//				public boolean isDefaultAlphabet() {return false;}
+//				@Override
+//				public boolean isBasic() {return false;}
+//				@Override
+//				public char getSubstituteCharacter() {return Character.MAX_VALUE;}
+//				@Override
+//				public int getDisplayMissingCharacters() {return Integer.MAX_VALUE;}
+//
+//				private List<Character> stringToList(String characters) {
+//					List<Character> l = new LinkedList<Character>();
+//					for(char c: characters.toCharArray()) l.add(c);
+//					return l;
+//				}
+//
+//
+//				private String listToString(List<Character> input) {
+//					StringBuffer result = new StringBuffer();
+//					for(Character c: input) result.append(c);
+//					return result.toString();
+//				}
+//
+//				private char[] toCharArray(List<Character> input) {
+//					char[] result = new char[input.size()];
+//					for(int i=0; i<input.size(); i++) result[i] = input.get(i);
+//					return result;
+//				}
+//
+//				@Override
+//				public String getShortName() {return listToString(content);} 
+//				@Override
+//				public String getName() {return "AtomAlphabet="+listToString(content);} //$NON-NLS-1$
+//				@Override
+//				public char[] getCharacterSet() {
+//					return toCharArray(content);
+//				}
+//				@Override
+//				public boolean contains(char e) {
+//					return content.contains(e);
+//				}
+//
+//				@Override
+//				public String toString() {
+//					return listToString(content);
+//				}
+//			};
+//		}
 
 	@Override
 	public void createControl(Composite parent) {
@@ -261,7 +278,7 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 	}
 
 	public PageConfiguration getPageConfiguration() {
-		return new PageConfiguration(keyInput.getContent());
+		return new PageConfiguration(keyInput.getContent(), lastInputText);
 	}
 
 	public void setPageConfiguration(PageConfiguration config) {
@@ -270,6 +287,19 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 			keyInput.synchronizeWithUserSide();
 		} else {
 			initialKey = config.getKey();
+			initialTextfieldText = initialKey.toUnformattedChars(getAlphabet());
+		}
+		
+		if(config.inputString != null) {
+			if(keyInput != null) {
+				if(textKey!=null) {
+					keyInput.setTextfieldTextExternal(config.inputString);
+				} else {
+					initialTextfieldText = config.inputString;
+				}
+			} else {
+				initialTextfieldText = config.inputString;
+			}
 		}
 	}
 }

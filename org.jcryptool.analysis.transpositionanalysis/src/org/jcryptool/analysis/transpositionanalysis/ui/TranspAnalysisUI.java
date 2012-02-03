@@ -17,6 +17,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -32,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizard;
@@ -112,6 +114,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Link linkChooseText;
 	private Link linkSetKey;
 	private Label label_1;
+	
+	private String ownKeyInputString;
 
 	/**
 	 * @param text
@@ -399,7 +403,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 										dialog = new WizardDialog(TranspAnalysisUI.this.getShell(), wiz);
 
 										TranspositionKey oldKey = getKeyUsedToEncrypt();
-										wiz.setPageConfig(new TranspositionKeyInputWizardPage.PageConfiguration(oldKey));
+										wiz.setPageConfig(new TranspositionKeyInputWizardPage.PageConfiguration(oldKey, ownKeyInputString));
 										
 										int dialogResult = dialog.open();
 										
@@ -409,6 +413,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 											spinnerSelected();
 											transpTable.setColumnOrder(key.toArray());
 											columnsReordered(transpTable.getColumnOrder());
+											ownKeyInputString = wiz.getPageConfig().getInputString();
 										}
 									}
 								});
@@ -523,6 +528,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 
 	private void spinnerSelected() {
+		ownKeyInputString = null;
+		
 		if (doAutoCrop) {
 			if (spinner.getSelection() > 0) {
 				// if blocklength is greater than zero, make the text now
@@ -621,6 +628,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 
 	private void columnsReordered(int[] cols) {
+		ownKeyInputString = null;
 		int[] order;
 		if (cols.length != this.croplength) order = cols.clone();
 		else order = null;
