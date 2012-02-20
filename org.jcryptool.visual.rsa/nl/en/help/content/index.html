@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+  <h2>RSA Cryptographic System</h2>
+
+  <p>This help file consists of two parts, namely a <a href="#term">Scheme Explanation</a> and <a href="#plugin">plug-in handling instructions</a>. </p>
+
+  <h2 id="term">1) Scheme Explanation</h2>
+
+  <p> The most well-known asymmetric cryptosystem, the RSA algorithm, was developed in 1977 by Ronald Rivest, Adi Shamir and Leonard Adleman. The private and public keys are constructed using two big prime numbers p and q which the user can specify himself but must keep secret. The user chooses two natural numbers e and d such that (e*d) = 1 mod ((p-1)(q-1)).<br/>
+  The product of p*q = N and e then serves as the public key, N and d as the private key. For this encryption algorithm the plaintext letters must first be converted to numbers. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. However, the number of each plaintext letter must be smaller than the product N. This becomes clear when one examines the encryption and decryption functions (a = plaintext letter, c = ciphertext letter): c = a^e mod N and a = c^d mod N<br/>
+  Since in the modulo division one can also first determine the remainder from each factor in the division modulo N and then the rest of its product modulo N, it would not always be possible to obtain a unique ciphertext character if a could be bigger than N.<br/>
+  The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA-Problem). Second, factorization of a number N = p*q is hard, if the factors are sufficient large (RSA-Key problem). </p>
+
+  <h3 id="Enc">a) RSA Encryption</h3>
+
+  <p> To encrypt data with the RSA scheme, the ciphertext is calculated using the public key of the person who should be able to decrypt it, and the plaintext. The encryption function is c = a^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key can then decrypt the message again. </p>
+
+  <h3 id="Dec">b) RSA Decryption</h3>
+
+  <p> To decrypt a ciphertext with the RSA scheme, one needs to know the private key d. The encryption function, c^d = (a^e)^d = a^(e*d) = a mod N, yields the plaintext a. </p>
+
+  <h3 id="Sig">c) RSA Signature</h3>
+
+  <p> To sign a message m with the RSA scheme, one needs to know the private key d. The signing function, m^d = sign(m) or hash(m)^d = sign(hash(m)), yields the signature.</p>
+
+  <h3 id="Ver">d) RSA Signature Verification</h2>
+
+  <p> One can verify a digital RSA signature using the signers public key e. Computing sign(m)^e = m' or sign(hash(m))^e = hash(m)', yields the result m' or hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the document. If both hash values are identical this is considered as a proof that the owner of the corresponding private RSA key has signed the document.</p>
+
+  <h2 id="plugin">2) Plug-in Handling Instructions</h2>
+
+  <p> ... </p>
+</body>
+</html>

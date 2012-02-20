@@ -391,30 +391,47 @@ public class RSAComposite extends Composite {
      * @param parent the parent
      */
     private void createKeyGroup(final Composite parent) {
-        final GridLayout gl = new GridLayout(7, true);
+        final GridLayout gl = new GridLayout(8, true);
         final Group g = new Group(parent, SWT.SHADOW_NONE);
         g.setText(Messages.RSAComposite_key);
         g.setLayout(gl);
         g.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         Label l = new Label(g, SWT.NONE);
         l.setText("e"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         eText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
         eText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         l = new Label(g, SWT.NONE);
         l.setText("d"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         dText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
         dText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         l = new Label(g, SWT.NONE);
         l.setText("N"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         nText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
         nText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        
         // Spacer
         l = new Label(g, SWT.NONE);
-        l.setText("    "); //$NON-NLS-1$
+        l.setText("  "); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+        
+        // initialize key generation button
+        final Button keyButton = new Button(g, SWT.PUSH);
+        keyButton.setText(Messages.RSAComposite_key_generation);
+        keyButton.setToolTipText(Messages.RSAComposite_key_generation_text);
+        keyButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        keyButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                new WizardDialog(new Shell(Display.getDefault()), new KeySelectionWizard(null, true)).open();
+            }
+        });        
     }
 
     /**
@@ -793,19 +810,6 @@ public class RSAComposite extends Composite {
         optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         optionsGroup.setLayout(new GridLayout(5, false));
         optionsGroup.setText(Messages.RSAComposite_options);
-
-        // initialize key generation button
-        final Button keyButton = new Button(optionsGroup, SWT.PUSH);
-        keyButton.setText(Messages.RSAComposite_key_generation);
-        keyButton.setToolTipText(Messages.RSAComposite_key_generation_text);
-        keyButton.setLayoutData(new GridData(SWT.LEAD, SWT.CENTER, true, false));
-        keyButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                new WizardDialog(new Shell(Display.getDefault()), new KeySelectionWizard(null, true)).open();
-            }
-        });
 
         // initialize copy data selector
         final Label l = new Label(optionsGroup, SWT.NONE);
