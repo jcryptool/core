@@ -9,6 +9,7 @@
   <h2>RSA Cryptographic System</h2>
 
   <p>This help file consists of two parts, namely a <a href="#term">Scheme Explanation</a> and <a href="#plugin">plug-in handling instructions</a>. </p>
+  <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. RSA is not used to encrypt large amount of data. Generally, it is used to encrypt a symmetric key, which encrypts the data using a symmetric cryptosystem, e.g., AES, and 3DES or to sign the hash value of a message. </p>
 
   <h2 id="term">1) Scheme Explanation</h2>
 
@@ -17,24 +18,28 @@
   Since in the modulo division one can also first determine the remainder from each factor in the division modulo N and then the rest of its product modulo N, it would not always be possible to obtain a unique ciphertext character if a could be bigger than N.<br/>
   The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA-Problem). Second, factorization of a number N = p*q is hard, if the factors are sufficient large (RSA-Key problem). </p>
 
-  <h3 id="Enc">a) RSA Encryption</h3>
-
+  <h3 id="Enc">a) RSA Key generation</h3>
+  <p> A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before RSA en-/decryption or signing can take place.<br/>
+  First of all the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random and then calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.<br/>
+  In a second step, the public RSA exponent e is determined and from this together with phi(N) the secret RSA exponent d is calculated. The number e is chosen as follows e: 1 < e < phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.<br/>
+  The secret exponent d = e^(-1) mod phi(N) is calculated from the public exponent e as the multiplicative inverse modulo phi(N). <br/>
+  After the RSA key generation, the modulus N and the RSA key e can be published. Anyone could encrypt a message to the owner of the secret RSA key or check a digital signature.</p>
+  
+  <h3 id="Enc">b) RSA Encryption</h3>
   <p> To encrypt data with the RSA scheme, the ciphertext is calculated using the public key of the person who should be able to decrypt it, and the plaintext. The encryption function is c = a^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key can then decrypt the message again. </p>
-
-  <h3 id="Dec">b) RSA Decryption</h3>
 
   <p> To decrypt a ciphertext with the RSA scheme, one needs to know the private key d. The encryption function, c^d = (a^e)^d = a^(e*d) = a mod N, yields the plaintext a. </p>
 
   <h3 id="Sig">c) RSA Signature</h3>
-
   <p> To sign a message m with the RSA scheme, one needs to know the private key d. The signing function, m^d = sign(m) or hash(m)^d = sign(hash(m)), yields the signature.</p>
-
-  <h3 id="Ver">d) RSA Signature Verification</h2>
 
   <p> One can verify a digital RSA signature using the signers public key e. Computing sign(m)^e = m' or sign(hash(m))^e = hash(m)', yields the result m' or hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the document. If both hash values are identical this is considered as a proof that the owner of the corresponding private RSA key has signed the document.</p>
 
   <h2 id="plugin">2) Plug-in Handling Instructions</h2>
-
-  <p> ... </p>
+  <p> When the RSA visualization is started, one can select the desired operation, encryption, decryption, sign, and verification, by choosing the corresponding tab. Then the key, which should be used, is required. Here, two options are given. First, create a new key or choose a saved key by clicking the "Key selection" button on the left. Second, create and store a new key by clicking the "Key generation..." button on the right. If you choose the second option, you have to load the created key by clicking the "Key selection" button. The chosen key is now automatically inserted in the can be seen in the "Key" field (converted to hex).<br/> 
+  Next, click the "Enter text" button on the left. You can now enter a text using the characters a-z, A-Z, 0-9 and "SPACE". Every character will be converted to hex and can be seen in the "Entered text converted to numbers" field. If you mark the "Enter numbers directly" checkbox, you can insert decimal numbers separated by "SPACE". These numbers are converted to ASCII characters and can be seen in the "Entered text" field.<br/>
+  Now, all required information are given and it is possible to start the operation. If you just want to see the result, you can click on the "Calculate" button. To go stepwise through the calculation click on the "Start" button in the "Step-by-step calculations" field. If you go stepwise or directly through all steps, the result can be seen in the "Result" field.<br/>
+  On the bottom, you can see additional options. There, you have the possibility to inherit values from one of the three other tabs, show additional help while performing the operation, and reset the form. </p>
+   
 </body>
 </html>
