@@ -184,10 +184,10 @@ public class ReconstructionChartComposite extends Composite {
 
 	/**
 	 * Creates a chart.
-	 * 
+	 *
 	 * @param dataset
 	 *            the data for the chart.
-	 * 
+	 *
 	 * @return a chart.
 	 */
 	private JFreeChart createChart(final XYDataset dataset) {

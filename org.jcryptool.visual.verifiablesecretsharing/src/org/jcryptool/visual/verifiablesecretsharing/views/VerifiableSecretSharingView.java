@@ -30,7 +30,6 @@ import org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugi
 
 public class VerifiableSecretSharingView extends ViewPart {
 
-	private Composite parent;
 	private VerifiableSecretSharingComposite vssc;
 	private TabFolder tf;
 	private ScrolledComposite scVssc;
@@ -44,8 +43,6 @@ public class VerifiableSecretSharingView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(final Composite parent) {
-		this.parent = parent;
-		
 		tf = new TabFolder(parent, SWT.TOP);
 
 
@@ -63,7 +60,7 @@ public class VerifiableSecretSharingView extends ViewPart {
 //		viterbiComposite.displayDefaultTexts();
 //		PlatformUI.getWorkbench().getHelpSystem()
 //				.setHelp(parent, ViterbiPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
-		
+
 		tiVssc = new TabItem(tf, SWT.NONE);
 		tiVssc.setText(Messages.VerifiableSecretSharingComposite_tab_title);
 		scVssc = new ScrolledComposite(tf, SWT.H_SCROLL	| SWT.V_SCROLL);
@@ -73,7 +70,7 @@ public class VerifiableSecretSharingView extends ViewPart {
 		scVssc.setContent(vssc);
 		scVssc.setMinSize(vssc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		tiVssc.setControl(scVssc);
-		
+
 		tiCc = new TabItem(tf, SWT.NONE);
 		tiCc.setText(Messages.ChartComposite_tab_title);
 		scCc = new ScrolledComposite(tf, SWT.H_SCROLL	| SWT.V_SCROLL);
@@ -83,10 +80,10 @@ public class VerifiableSecretSharingView extends ViewPart {
 		scCc.setContent(cc);
 		scCc.setMinSize(cc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		tiCc.setControl(scCc);
-		
+
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, VerifiableSecretSharingPlugin.PLUGIN_ID + ".views"); //$NON-NLS-1$
-		
-		
+
+
         hookActionBar();
 	}
 
@@ -95,7 +92,7 @@ public class VerifiableSecretSharingView extends ViewPart {
         mgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
         getViewSite().getActionBars().updateActionBars();
     }
-	
+
 	public void restartVerifiableSecretSharing() {
 		vssc.dispose();
 		vssc = new VerifiableSecretSharingComposite(scVssc, SWT.NONE, this);
@@ -106,11 +103,11 @@ public class VerifiableSecretSharingView extends ViewPart {
 		scCc.setContent(cc);
 		scCc.setMinSize(cc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 	}
-	
+
 	public ReconstructionChartComposite getReconstructionChartComposite() {
 		return cc;
 	}
-	
+
 	public void setFocusOnReconstructionTab(boolean setFocus) {
 		if(setFocus) {
 			tf.setSelection(tiCc);
@@ -122,7 +119,5 @@ public class VerifiableSecretSharingView extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-		
 	}
 }

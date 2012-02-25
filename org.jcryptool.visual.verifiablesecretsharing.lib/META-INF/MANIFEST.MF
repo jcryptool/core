@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Lib
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.verifiablesecretsharing.lib
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.7
 Export-Package: com.keypoint,
  org.jfree,
  org.jfree.base,
@@ -67,3 +67,4 @@ Export-Package: com.keypoint,
  org.jfree.util
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.1"
+Bundle-Vendor: %Bundle-Vendor
