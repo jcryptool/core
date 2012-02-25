@@ -37,12 +37,14 @@ public class VerifiableSecretSharingView extends ViewPart {
 	private TabItem tiCc;
 	private TabItem tiVssc;
 	private ScrolledComposite scCc;
+	private Composite parent;
 
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(final Composite parent) {
+		this.parent = parent;
 		tf = new TabFolder(parent, SWT.TOP);
 
 
@@ -81,7 +83,7 @@ public class VerifiableSecretSharingView extends ViewPart {
 		scCc.setMinSize(cc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		tiCc.setControl(scCc);
 
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, VerifiableSecretSharingPlugin.PLUGIN_ID + ".views"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, VerifiableSecretSharingPlugin.PLUGIN_ID + ".view"); //$NON-NLS-1$
 
 
         hookActionBar();
@@ -119,5 +121,6 @@ public class VerifiableSecretSharingView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+        parent.setFocus();
 	}
 }
