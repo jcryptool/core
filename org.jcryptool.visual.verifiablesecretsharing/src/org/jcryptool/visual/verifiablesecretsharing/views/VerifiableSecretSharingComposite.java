@@ -77,7 +77,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 	/* if true, commit-Button got clicked */
 	private boolean commitmentsChecked = false;
 
-	StyledText stDescription;
+	private StyledText stDescription;
 	private Composite inputBody;
 	private GridLayout inputBodyLayout;
 	private Group parametersGroup;
