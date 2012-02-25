@@ -54,8 +54,8 @@ public class VerifiableSecretSharingComposite extends Composite {
 			SWT.COLOR_RED);
 
 	/* number of players for reconstruction t */
-	private static int playersRecon;
-	private static int players;
+	private int playersRecon;
+	private int players;
 
 	/* int array coefficients */
 	private static int[] coefficientsInt;
@@ -75,7 +75,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 			262127, 524243, 1048343, 2097143, 4194287 };
 
 	/* if true, commit-Button got clicked */
-	private static boolean commitmentsChecked = false;
+	private boolean commitmentsChecked = false;
 
 	StyledText stDescription;
 	private Composite inputBody;
@@ -1293,7 +1293,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param group
 	 *            Description for this group 1: parameters-group 2:
 	 *            coefficients-group 3: commitments-group 4: shares-group 5:
