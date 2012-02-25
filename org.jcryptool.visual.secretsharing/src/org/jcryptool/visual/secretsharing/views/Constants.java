@@ -114,21 +114,7 @@ public interface Constants {
 	public final String MESSAGE_W = "w"; //$NON-NLS-1$
 	public final String MESSAGE_INFO_GROUP = Messages.SSSConstants_Info_Group;
 	public final String MESSAGE_P_ = "P'(x)"; //$NON-NLS-1$
-	public final String MESSAGE_LAGRAGE = Messages.SSSConstants_Title_Info_Formula;
-
-	// public final String MESSAGE_FORMULAR = (uSum + " " + "s" + uI + " " + " " + uDot + " " + uProduct + " ( x - x" +
-	// uR
-	// + " ) " + uDot + " ( x" + uI + " - " + "x" + uR + " )" + uMinusUp + sOne + " mod p");
-	// public final String MESSAGE_FORMULAR_RANGE = ("0 " + " " + uST + " i,r " + uST + " t, i" + uNotEqual + "r");
-	// public final String MESSAGE_DESCRIPTION =
-	// ("Shamir's Secret Sharing is a secret sharing algorithm for distributing a secret. The secret is divided into parts, giving each participant its own unique"
-	// +
-	// "\npart where some of the parts or all of them are needed in order to reconstruct the secret. The secret is reconstructed with the lagrage polynomial.\n");
-	// public final String MESSAGE_INFO = "In order to reconstruct the polynomial any t points "
-	// + "will be enough. We use the Lagrage interpolation formula to reconstruct the polynomial:";
-	// public final String MESSAGE_MODUL = "Modul p (p " + uElem + " prime, p > n):";
-	// public final String MESSAGE_POLYNOM = "Polynom: s + a" + uOne + "x + a" + uTwo + "x²" + " + ... + a" + uR +
-	// "xʳ \t   (r := t-1)";
+	public final String MESSAGE_LAGRANGE = Messages.SSSConstants_Title_Info_Formula;
 
 	/*
 	 * MESSAGE COEFFICIENTS DIALOG
