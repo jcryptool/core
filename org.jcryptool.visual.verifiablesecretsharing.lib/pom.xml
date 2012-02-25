@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
-	<artifactId>visual.verifiablesecretsharing</artifactId>
+	<artifactId>visual.verifiablesecretsharing.lib</artifactId>
 	<version>0.9.7-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 </project>
