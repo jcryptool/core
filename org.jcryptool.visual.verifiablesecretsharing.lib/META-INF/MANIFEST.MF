@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.verifiablesecretsharing.lib
-Bundle-Version: 0.9.7
+Bundle-Version: 0.9.7.qualifier
 Export-Package: com.keypoint,
  org.jfree,
  org.jfree.base,
