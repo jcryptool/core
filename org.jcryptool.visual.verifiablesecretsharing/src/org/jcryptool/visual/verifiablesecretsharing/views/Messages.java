@@ -25,6 +25,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.verifiablesecretsharing.views.messages"; //$NON-NLS-1$
 
+	public static String VerifiableSecretSharingComposite_error;
+
 	public static String VerifiableSecretSharingComposite_tab_title;
 	public static String VerifiableSecretSharingComposite_description;
 	public static String VerifiableSecretSharingComposite_restart_button;
@@ -37,7 +39,7 @@ public class Messages extends NLS {
 	//texts for descriptions
 	public static String VerifiableSecretSharingComposite_description_title;
 	public static String VerifiableSecretSharingComposite_description_tooltip;
-	
+
 	//texts for parameters
 	public static String VerifiableSecretSharingComposite_parameters_players;
 	public static String VerifiableSecretSharingComposite_parameters_reconstructors;
@@ -46,13 +48,13 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_parameters_primeFactorMod;
 	public static String VerifiableSecretSharingComposite_parameters_primitiveRoot;
 	public static String VerifiableSecretSharingComposite_parameters_determineCoefficients;
-	
+
 	//Next step button for Parameters and Coefficients
 	public static String VerifiableSecretSharingComposite_nextStep_button;
 	public static String VerifiableSecretSharingComposite_coefficients_generate_button;
 	public static String VerifiableSecretSharingComposite_coefficients_commit_button;
 	public static String VerifiableSecretSharingComposite_coefficients_calculateShares_button;
-	
+
 	public static String VerifiableSecretSharingComposite_commitments_coefficient_subtitle;
 	public static String VerifiableSecretSharingComposite_commitments_commitment_subtitle;
 	public static String VerifiableSecretSharingComposite_shares_shareNModP_subtitle;
@@ -60,15 +62,15 @@ public class Messages extends NLS {
 	//playerX for Shares and Reconstruction
 	public static String VerifiableSecretSharingComposite_playerX;
 	public static String VerifiableSecretSharingComposite_shares_check_button;
-	
+
 	public static String VerifiableSecretSharingComposite_reconstruction_reconstruct_button;
 	public static String VerifiableSecretSharingComposite_reconstruction_reconstruct_dialog_title;
 	public static String VerifiableSecretSharingComposite_reconstruction_reconstruct_dialog_text;
-		
+
 	//errors general
 	public static String VerifiableSecretSharingComposite_error_start;
-	
-	
+
+
 	//errors for setting parameters
 	public static String VerifiableSecretSharingComposite_param_player_n_positive;
 	public static String VerifiableSecretSharingComposite_param_player_n_bigger_2;
@@ -79,15 +81,15 @@ public class Messages extends NLS {
 	public static String VerifiableSecretSharingComposite_param_primitive_g;
 	public static String VerifiableSecretSharingComposite_param_set_all;
 	public static String VerifiableSecretSharingComposite_param_p_not_safe_prime;
-	
+
 	//errors for setting the coefficients
 	public static String VerifiableSecretSharingComposite_coefficient_positive;
 	public static String VerifiableSecretSharingComposite_coefficient_smaller_p;
 	public static String VerifiableSecretSharingComposite_coefficient_set_all;
-	
+
 	public static String VerifiableSecretSharingComposite_commitment_not_calculated;
-	
-	
+
+
 	//reconstruction chart
 	public static String ChartComposite_tab_title;
 	public static String ChartComposite_reconstruct_success;
@@ -95,25 +97,25 @@ public class Messages extends NLS {
 	public static String ChartComposite_noGraph;
 
 	public static String VerifiableSecretSharingComposite_reconstruct_no_players;
-	
+
 	//boxes with further explanations
 	public static String VerifiableSecretSharingComposite_description_parameters_left;
 	public static String VerifiableSecretSharingComposite_description_parameters_right;
 
 	public static String VerifiableSecretSharingComposite_description_coefficients_left;
 	public static String VerifiableSecretSharingComposite_description_coefficients_right;
-	
+
 	public static String VerifiableSecretSharingComposite_description_commitments_left;
 	public static String VerifiableSecretSharingComposite_description_commitments_right;
 
 	public static String VerifiableSecretSharingComposite_description_shares_left;
 	public static String VerifiableSecretSharingComposite_description_shares_right;
-	
+
 	public static String VerifiableSecretSharingComposite_description_reconstruction_left;
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right;
 	public static String VerifiableSecretSharingComposite_description_reconstruction_right_part2;
-	
-	
+
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
