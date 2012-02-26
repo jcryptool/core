@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Verifiable Secret Sharing"
+            name="%view.name"
             icon="icons/view.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.verifiablesecretsharing.views.VerifiableSecretSharingView"
@@ -27,7 +27,7 @@
    </extension>
    <extension point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="%Visual.name.0"
+            name="%Visual.name"
             viewId="org.jcryptool.visual.verifiablesecretsharing.views.VerifiableSecretSharingView"
             contextHelpId="org.jcryptool.visual.verifiablesecretsharing.view">
       </Visual>
