@@ -29,7 +29,6 @@ public class Messages extends NLS {
 
 	public static String VerifiableSecretSharingComposite_tab_title;
 	public static String VerifiableSecretSharingComposite_description;
-	public static String VerifiableSecretSharingComposite_restart_button;
 	public static String VerifiableSecretSharingComposite_parameters_title;
 	public static String VerifiableSecretSharingComposite_coefficients_title;
 	public static String VerifiableSecretSharingComposite_commitments_title;
@@ -72,20 +71,12 @@ public class Messages extends NLS {
 
 
 	//errors for setting parameters
-	public static String VerifiableSecretSharingComposite_param_player_n_positive;
-	public static String VerifiableSecretSharingComposite_param_player_n_bigger_2;
 	public static String VerifiableSecretSharingComposite_param_player_t_smaller_n;
-	public static String VerifiableSecretSharingComposite_param_secret_s_positive;
 	public static String VerifiableSecretSharingComposite_param_module_p_bigger_s;
 	public static String VerifiableSecretSharingComposite_param_module_p_isPrime;
 	public static String VerifiableSecretSharingComposite_param_primitive_g;
 	public static String VerifiableSecretSharingComposite_param_set_all;
 	public static String VerifiableSecretSharingComposite_param_p_not_safe_prime;
-
-	//errors for setting the coefficients
-	public static String VerifiableSecretSharingComposite_coefficient_positive;
-	public static String VerifiableSecretSharingComposite_coefficient_smaller_p;
-	public static String VerifiableSecretSharingComposite_coefficient_set_all;
 
 	public static String VerifiableSecretSharingComposite_commitment_not_calculated;
 
