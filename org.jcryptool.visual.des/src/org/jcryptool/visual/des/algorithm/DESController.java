@@ -292,8 +292,8 @@ public class DESController {
 
        boolean isNotHex = false;
        for (int i=0; i < hexDigitLength; i++) 
-       {  //digit(c,b) gibt den numerischen Wert von c zurueck, der in der Basis b interpretiert wird
-          isNotHex = ( Character.digit(hexDigitArray[i], 16) == -1 ); //not -> -1
+       {  
+          isNotHex = ( Character.digit(hexDigitArray[i], 16) == -1 );
           if (isNotHex) 
           {
              return 1;

@@ -2,6 +2,8 @@ package org.jcryptool.visual.des.algorithm;
 
 import java.util.Random;
 
+// Class by Wolfgang Baltes
+
 public class DESModel {                                                                       //march 2009
 			
          public DESModel(){ }
