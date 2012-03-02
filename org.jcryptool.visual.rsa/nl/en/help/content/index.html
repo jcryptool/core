@@ -11,39 +11,41 @@
   <p>This help file describes two things:<br/>
   a) <a href="#term">The RSA Scheme</a><br/>
   b) <a href="#plugin">Handling instructions how to use this visualization</a> </p>
-  <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. Normally, RSA is not used to encrypt large amount of data. Mostly, it is used to encrypt a symmetric key, which encrypts the data using a symmetric cryptosystem (e.g., AES or 3DES), or to sign the hash value of a message. </p>
+  <p> <b>Please note</b> that in this visualization the operations are performed on each single character. In practice, the operations are performed on blocks or even the whole message. Normally, RSA is not used to encrypt large amounts of data. Mostly, it is used to encrypt a symmetric key, which later is used to encrypt the data with a symmetric cryptosystem (e.g., AES or 3DES), or to sign the hash value of a message. </p>
 
   <h2 id="term">1) Explanation of the RSA Scheme</h2>
 
   <p> The most well-known asymmetric cryptosystem, the RSA algorithm, was developed in 1977 by Ronald Rivest, Adi Shamir and Leonard Adleman. The private and public keys are constructed using two randomly selected big prime numbers p and q which the user can specify himself but must keep secret. Then, the user chooses two natural numbers e and d such that (e*d) = 1 mod ((p-1)(q-1)).<br/>
-  The product of p*q = N and e then serve as the public key, d as the private key. For this encryption algorithm the plaintext letters must first be converted to numbers. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. However, the number of each plaintext letter must be smaller than the product N. This becomes clear when one examines the encryption and decryption functions (a = plaintext letter, c = ciphertext letter): c = a^e mod N and a = c^d mod N<br/>
-  Since in the modulo division one can also first determine the remainder from each factor in the division modulo N and then the rest of its product modulo N, it would not always be possible to obtain a unique ciphertext character if a could be bigger than N.<br/>
+  The product p*q = N and e then serve as the public key, d as the private key. <br/>
+  As this encryption algorithm only works on numbers, first the plaintext letters must be converted. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. <br/>
+  However, the number of each plaintext letter must be smaller than the product N. This becomes clear when you examine the encryption and decryption functions (m = plaintext letter, c = ciphertext letter): c = m^e mod N and m = c^d mod N.<br/>
+  Calculating modulo you can also first determine the remainder from each factor and then the rest of its product modulo N. It would not always be possible to obtain a unique ciphertext character if m could be bigger than N.<br/>
   The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/>
   For further information please refer to <a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">http://en.wikipedia.org/wiki/RSA_(algorithm)</a>. </p>
 
   <h3 id="Enc">a) RSA Key Generation</h3>
   <p> A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before RSA en-/decryption or signing can take place.<br/>
-  First of all the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.<br/>
+  First of all, the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.<br/>
   In a second step, the public RSA exponent e is determined and from this, together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows e: 1 < e < phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.<br/>
-  The secret exponent d = e^(-1) mod phi(N) is calculated from the public exponent e as the multiplicative inverse modulo phi(N). <br/>
-  After the RSA key generation, N and e can be published. Then, anyone could encrypt a message to the owner of the according secret RSA key d or check a digital signature -- using only the public key. </p>
+  The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N). <br/>
+  After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d or check a digital signature -- using only the public key. </p>
 
   <h3 id="Enc">b) RSA Encryption / Decryption</h3>
-  <p> To encrypt data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = a^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again. </p>
+  <p> To <b>encrypt</b> data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = m^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again. </p>
 
-  <p> To decrypt a ciphertext with the RSA scheme, one needs to know the private key d. The decryption function, c^d = (a^e)^d = a^(e*d) = a mod N, yields the plaintext a. </p>
+  <p> To <b>decrypt</b> a ciphertext with the RSA scheme, one needs to know the private key d. The decryption function, c^d = (m^e)^d = m^(e*d) = m mod N, yields the plaintext m. </p>
 
   <h3 id="Sig">c) RSA Signing / Verifying</h3>
-  <p> To sign a message m with the RSA scheme, you need to know the private key d. The signing function is applied to m or to a hashvalue of m: m^d = sign(m) or (hash(m))^d = sign(hash(m)). This yields the signature.</p>
+  <p> To <b>sign</b> a message m with the RSA scheme, you need to know the private key d. The signing function is applied to m or to a hashvalue of m: m^d = sign(m) or (hash(m))^d = sign(hash(m)). This yields the signature.</p>
 
-  <p> You can verify a digital RSA signature using the signer's public key e by computing (sign(m))^e = m' or (sign(hash(m)))^e = hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the document. If both hash values are identical this is considered as a proof that the owner of the corresponding private RSA key has signed the document.</p>
+  <p> You can <b>verify</b> a digital RSA signature using the signer's public key e by computing (sign(m))^e = m' or (sign(hash(m)))^e = hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the received (and decrypted) document. If both hash values are identical this is considered as a proof that the real owner of the corresponding private RSA key has signed the document.</p>
 
   <h2 id="plugin">2) Handling Instructions: How to use this visualization</h2>
-  <p> When the RSA visualization is started, you can select the desired operation, encrypt, decrypt, sign, and verify, by choosing the corresponding tab.</p>
-  <p>Then you need to select the required RSA keys. There are two options to enter the keys: First, create a new key or choose a saved key by clicking the "Key selection" button on the left. Second, create and store a new key by clicking the "Key generation..." button on the right. If you choose the second option, you have to load the created key by clicking the "Key selection" button. The chosen key is now automatically inserted in the can be seen in the "Key" field (converted to hex).</p> 
+  <p> When the RSA visualization is started, you can select the desired operation, encrypt, decrypt, sign, or verify, by choosing the corresponding tab.</p>
+  <p> Then you need to select the required RSA keys. There are two options to enter the keys: First, create a new key or choose a saved key by clicking the "Key selection" button on the left. Second, create and store a new key by clicking the "Key generation..." button on the right. If you choose the second option, you have to load the created key by clicking the "Key selection" button. The chosen key is now automatically inserted in the can be seen in the "Key" field (converted to hex).</p> 
   <p> Next, click the "Enter text" button on the left. You can now enter a text using the characters a-z, A-Z, 0-9 and "SPACE". Every character will be converted to hex and can be seen in the "Entered text converted to numbers" field. If you mark the "Enter numbers directly" checkbox, you can insert decimal numbers separated by "SPACE". These numbers are converted to ASCII characters and can be seen in the "Entered text" field.</p>
-  <p>Now, all required information is available and it is possible to start the operation. If you just want to see the result, you can click on the "Calculate" button. To go stepwise through the calculation click on the "Start" button in the "Step-by-step calculations" field. If you go stepwise or directly through all steps, the result can be seen in the "Result" field. </p>
-  <p>On the bottom, you can see additional options. There, you have the possibility to inherit values from one of the three other tabs, show additional help while performing the operation, and reset the form. </p>
+  <p> Now, all required information is available and it is possible to start the operation. If you just want to see the result, you can click on the "Calculate" button. To see the calculation of each number click on the "Start" button in the "Step-by-step calculations" field. If you go stepwise or directly through all steps, the result can be seen in the "Result" field. </p>
+  <p> On the bottom, you can see additional options. There, you have the possibility to inherit values from one of the three other tabs, show additional help while performing the operation, and reset the form. </p>
    
 </body>
 </html>
