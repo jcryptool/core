@@ -67,10 +67,6 @@
                style="push"
                tooltip="%command.tooltip">
          </command>
-         <separator
-               name="org.jcryptool.games.numbershark.separator3"
-               visible="true">
-         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
@@ -78,15 +74,25 @@
                tooltip="%command.tooltip.1">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator4"
+               name="org.jcryptool.games.numbershark.separator3"
                visible="true">
          </separator>
+         <command
+               commandId="org.jcryptool.games.numbershark.heuStrategyCommand"
+               icon="icons/heuwizard-icon.png"
+               style="push"
+               tooltip="%heuStrategy.command.tooltip">
+         </command>
          <command
                commandId="org.jcryptool.games.numbershark.optStrategyCommand"
                icon="icons/wizard-icon.png"
                style="push"
                tooltip="%optStrategy.command.tooltip">
          </command>
+         <separator
+               name="org.jcryptool.games.numbershark.separator4"
+               visible="true">
+         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
@@ -124,24 +130,29 @@
                icon="icons/shark-icon.png"
                style="push">
          </command>
-         <separator
-               name="org.jcryptool.games.numbershark.separator7"
-               visible="true">
-         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.hintCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_search.gif"
                style="push">
          </command>
          <separator
-               name="org.jcryptool.games.numbershark.separator8"
+               name="org.jcryptool.games.numbershark.separator7"
                visible="true">
          </separator>
+         <command
+               commandId="org.jcryptool.games.numbershark.heuStrategyCommand"
+               icon="icons/heuwizard-icon.png"
+               style="push">
+         </command>
          <command
                commandId="org.jcryptool.games.numbershark.optStrategyCommand"
                icon="icons/wizard-icon.png"
                style="push">
          </command>
+         <separator
+               name="org.jcryptool.games.numbershark.separator8"
+               visible="true">
+         </separator>
          <command
                commandId="org.jcryptool.games.numbershark.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
@@ -178,6 +189,10 @@
       <command
             id="org.jcryptool.games.numbershark.redoCommand"
             name="%command.name.3">
+      </command>
+      <command
+            id="org.jcryptool.games.numbershark.heuStrategyCommand"
+            name="%heuStrategy.command.name">
       </command>
    </extension>
    <extension
@@ -242,6 +257,10 @@
                   	</equals>
       			</with>
       		</activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.games.numbershark.handler.HeuristicStrategyHandler"
+            commandId="org.jcryptool.games.numbershark.heuStrategyCommand">
       </handler>
 
    </extension>

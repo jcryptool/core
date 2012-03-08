@@ -5,7 +5,24 @@
 You win, if the sum of your numbers is greater than the sum of the Number Shark numbers. Try to maximize your sum as much as you can.</description>
 		<topic href="$nl$/help/toc.html" label="Number Shark"/>
 	</context>
+ <context id="heuStratDialog">
+    <description>Heuristic winning strategies can be analysed here.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristic strategies"/>
+ </context>
  <context id="newGameDialog" title="New Game">
     <description>Starts a new game with the given number of fields. The currently active game will be dropped.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html" label="Manual"/>
  </context>
+  <context id="optStratDialog" title="Optimal winning sequences">
+    <description>Optimal winning strategies can be calculated and displayed here.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#optStrat" label="Optimal strategies"/>
+ </context>
+  <context id="optStratResultDialog" title="Optimal sequences for the game numbershark">
+     <description>Optimal sequences for the chosen range of numbers, which were calculated by the algorithm of van Nek, are being displayed in this table.</description>
+     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#optStrat" label="Optimal strategies"/>
+  </context>
+  <context id="heuStratResultDialog">
+     <description>Sequences for the chosen heuristic strategy you have just chosen are being viewed here.</description>
+     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristic strategies"/>
+  </context>
 </contexts>

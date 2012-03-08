@@ -45,7 +45,7 @@ public class SharkMealHandler extends AbstractHandler {
 
 				if (tabFolderIndex * 40 < i
 						&& i < (tabFolderIndex + 1) * 40 + 1) {
-					view.disableNumber(i - 1);
+					view.setStatus(i - 1, false);
 				}
 			}
 

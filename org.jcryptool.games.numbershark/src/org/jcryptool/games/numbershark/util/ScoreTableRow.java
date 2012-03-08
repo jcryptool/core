@@ -15,8 +15,7 @@ public class ScoreTableRow {
 	private String sharkPoints;
 	private String remainingNumbers;
 	private String lostNumbers;
-	
-		
+
 	public String getTakenNumbers() {
 		return takenNumbers;
 	}

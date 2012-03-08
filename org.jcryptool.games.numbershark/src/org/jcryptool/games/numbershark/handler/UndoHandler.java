@@ -44,7 +44,7 @@ public class UndoHandler extends AbstractHandler {
             ScoreTableRow scoreTableRow =  view.getScoreTableRowByActualPlayerPosition();
             
             String undoLostNumbers =  scoreTableRow.getLostNumbers(); // row.getText(3);
-            undoLostNumbers = undoLostNumbers.replaceAll("prim", "");
+            undoLostNumbers = undoLostNumbers.replaceAll(Messages.UndoHandler_0, "");
             undoLostNumbers = undoLostNumbers.replaceAll(" \\(", "");
             undoLostNumbers = undoLostNumbers.replaceAll("\\)", "");
 
@@ -55,13 +55,11 @@ public class UndoHandler extends AbstractHandler {
                 int toEnable = Integer.parseInt(undoLostNumbers.substring(iterator + 2, undoLostNumbers.length()));
                 undoLostNumbers = undoLostNumbers.substring(0, iterator);
                 view.setStatus(toEnable - 1, true);
-                iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$  
-                view.enableNumber(toEnable - 1);               
+                iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$ 
             }
 
             int toEnable = Integer.parseInt(undoLostNumbers);
             view.setStatus(toEnable - 1, true);
-            view.enableNumber(toEnable - 1);
 
             String takenNumberString = scoreTableRow.getTakenNumbers(); // row.getText(1);
 
@@ -72,7 +70,6 @@ public class UndoHandler extends AbstractHandler {
                 }
                 int takenNumber = Integer.parseInt(temp);
                 view.setStatus(takenNumber - 1, true);
-                view.enableNumber(takenNumber - 1);
             }
 
             scoreTableView.getItem(view.getLastPlayerMove()).dispose();

@@ -18,6 +18,7 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -68,6 +69,7 @@ public class NumberSharkView extends ViewPart {
 	private Composite playingField;
 	public static final String ZERO_SCORE = "0"; //$NON-NLS-1$
 	private int hint = 0;
+	private Group detailedScore;
 
 	private TabFolder numberTabs = null;
 	private TabItem[] tab;
@@ -82,21 +84,26 @@ public class NumberSharkView extends ViewPart {
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
 
-		Composite content = new Composite(parent, SWT.NONE);
-		content.setLayout(new GridLayout(1, false));
-		content.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true,
+		SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
+		sashForm.setLayout(new GridLayout(1, false));
+		sashForm.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true,
 				true));
-
-		playingField = new Composite(content, SWT.NONE);
+		playingField = new Composite(sashForm, SWT.NONE);
 		playingField.setLayout(new GridLayout(1, false));
 		playingField.setLayoutData(new GridData(GridData.FILL, GridData.FILL,
 				true, true));
-
-		Group score = new Group(content, SWT.NONE);
+		
+		Composite lowerContent = new Composite(sashForm, SWT.NONE);
+		lowerContent.setLayout(new GridLayout(1, false));
+		lowerContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true,
+				true));
+		Group score = new Group(lowerContent, SWT.NONE);
+		
 		score.setText(Messages.NumberSetView_9);
 		score.setLayout(new RowLayout());
 		score.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true,
 				false));
+		
 
 		RowData fieldData = new RowData(60, 20);
 
@@ -112,6 +119,7 @@ public class NumberSharkView extends ViewPart {
 		sharkScoreLabel.setText(Messages.NumberSetView_12);
 		sharkScoreLabel.setFont(FontService.getLargeBoldFont());
 
+
 		sharkScore = new Label(score, SWT.LEFT);
 		sharkScore.setLayoutData(fieldData);
 		sharkScore.setFont(FontService.getLargeBoldFont());
@@ -124,7 +132,7 @@ public class NumberSharkView extends ViewPart {
 		requiredScore.setLayoutData(fieldData);
 		requiredScore.setFont(FontService.getLargeBoldFont());
 
-		Group detailedScore = new Group(content, SWT.NONE);
+		detailedScore = new Group(lowerContent, SWT.NONE);
 		detailedScore.setText(Messages.NumberSetView_14);
 		detailedScore.setLayout(new GridLayout(1, false));
 		detailedScore.setLayoutData(new GridData(GridData.FILL, GridData.FILL,
@@ -215,7 +223,7 @@ public class NumberSharkView extends ViewPart {
 				.isPrime(lostNumbers[0]);
 		String lostNum = String.valueOf(lostNumbers[0]);
 		if (isPrime) {
-			lostNum += " (prim)";
+			lostNum += Messages.NumberSharkView_0;
 		}
 		
 		int lostSum = lostNumbers[0];
@@ -224,7 +232,7 @@ public class NumberSharkView extends ViewPart {
 					.isPrime(lostNumbers[k]);
 			lostNum += ", " + lostNumbers[k]; //$NON-NLS-1$
 			if (isPrime) {
-				lostNum += " (prim)";
+				lostNum += Messages.NumberSharkView_0;
 			}
 			lostSum += lostNumbers[k];
 			remainingNumbers--;
@@ -366,11 +374,6 @@ public class NumberSharkView extends ViewPart {
 				buttons[i - translation].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
 
 				buttons[i - translation].addMouseListener(mouseListener);
-			} else {
-				buttons[i - translation] = new CLabel(compTabs, SWT.PUSH);
-				buttons[i - translation].setVisible(false);
-				buttons[i - translation].setText("" + i);
-				buttons[i - translation].setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 			}
 		}
 
@@ -528,7 +531,11 @@ public class NumberSharkView extends ViewPart {
 	 * refreshes the disabled/enabled status of all playing Buttons
 	 */
 	public void refreshButtons() {
-		for (int i = 0; i < min(numberOfFields, MAX_NUM_PER_TAB); i++) {
+		int bound = MAX_NUM_PER_TAB;
+		if((getSelectedTabFolderIndex()+1)*MAX_NUM_PER_TAB > numberOfFields){
+			bound = numberOfFields % MAX_NUM_PER_TAB;
+		}
+		for (int i = 0; i < bound; i++) {
 			int m = Integer.parseInt(buttons[i].getText());
 			if(m <= numberOfFields){
 				if(numberField[m-1].isEnabled()){
@@ -549,15 +556,6 @@ public class NumberSharkView extends ViewPart {
 		parent.setFocus();
 	}
 
-	public void disableNumber(int number) {
-		numberField[number].setEnabled(false);
-		refreshButtons();
-	}
-
-	public void enableNumber(int number) {
-		numberField[number].setEnabled(true);
-		refreshButtons();
-	}
 
 	public void setSharkScore(String text) {
 		sharkScore.setText(text);
@@ -589,6 +587,7 @@ public class NumberSharkView extends ViewPart {
 
 	public void setStatus(int index, boolean status) {
 		numberField[index].setEnabled(status);
+		refreshButtons();
 	}
 
 	public Number[] getNumberField() {

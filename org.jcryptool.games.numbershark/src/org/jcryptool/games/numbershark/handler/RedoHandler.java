@@ -44,24 +44,21 @@ public class RedoHandler extends AbstractHandler {
             
             //activate numbers an buttons            
             String redoLostNumbers =  scoreTableRow.getLostNumbers();
-            redoLostNumbers = redoLostNumbers.replaceAll("prim", "");
+            redoLostNumbers = redoLostNumbers.replaceAll(Messages.UndoHandler_0, "");
             redoLostNumbers = redoLostNumbers.replaceAll(" \\(", "");
             redoLostNumbers = redoLostNumbers.replaceAll("\\)", "");
             int iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
 
-            // activate numbers and buttons
+            // deactivate numbers and buttons
             while (iterator != -1) {
                 int toDisable = Integer.parseInt(redoLostNumbers.substring(iterator + 2, redoLostNumbers.length()));
                 redoLostNumbers = redoLostNumbers.substring(0, iterator);               
                 view.setStatus(toDisable - 1, false);
                 iterator = redoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
-                view.disableNumber(toDisable - 1);
             }
 
             int toDisable = Integer.parseInt(redoLostNumbers);
-            view.setStatus(toDisable - 1, true);
-            view.disableNumber(toDisable - 1);
-
+            view.setStatus(toDisable - 1, false);
             String takenNumberString = scoreTableRow.getTakenNumbers(); // row.getText(1);
 
             if (!"-".equals(takenNumberString)) { //$NON-NLS-1$
@@ -70,8 +67,7 @@ public class RedoHandler extends AbstractHandler {
                     temp = temp.substring(0, temp.indexOf(Messages.NumberSharkView_0));
                 }
                 int takenNumber = Integer.parseInt(temp);
-                view.setStatus(toDisable - 1, true);
-                view.disableNumber(takenNumber - 1);              
+                view.setStatus(takenNumber - 1, false);              
             }
 
             view.increasePlayerMove();

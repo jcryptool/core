@@ -6,11 +6,22 @@
 	</context>
  <context id="newGameDialog" title="Neues Spiel">
     <description>Startet ein neues Spiel mit der angegebenen Zahl an Feldern. Das aktive Spiel wird dabei verworfen.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html" label="Anleitung"/>
+ </context>
+ <context id="heuStratResultDialog">
+    <description>In dieser Tabelle sehen Sie die mit dem zuvor ausgewählten heuristischen Algorithmus berechneten Zugfolgen für den ausgewählten Zahlenbereich.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristische Strategien"/>
+ </context>
+ <context id="heuStratDialog">
+    <description>Hier können Sie sich die Zugfolgen für einzelne Spielfeldgrößen mit heuristischen Verfahren berechnen und anzeigen lassen.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristische Strategien"/>
  </context>
   <context id="optStratDialog" title="Optimale Gewinnzugfolge finden">
     <description>Hier können Sie sich die optimalen Zugfolgen für einzelne Spielfeldgrößen berechnen und/oder anzeigen lassen.</description>
+    <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#optStrat" label="Optimale Strategien"/>
  </context>
   <context id="optStratResultDialog" title="Optimale Zugfolgen für den Zahlenhai">
-     <description>Hier sehen Sie die mit dem Algorithmus von van Nek berechneten optimalen Zugfolgen für den ausgewählten Zahlenbereich.</description>
+     <description>In dieser Tabelle sehen Sie die mit dem Algorithmus von van Nek berechneten optimalen Zugfolgen für den ausgewählten Zahlenbereich.</description>
+     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#optStrat" label="Optimale Strategien"/>
   </context>
 </contexts>

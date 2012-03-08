@@ -16,8 +16,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jcryptool.games.numbershark.optStrat.OptimalStrategyDialog;
-import org.jcryptool.games.numbershark.optStrat.ResultDialog;
+import org.jcryptool.games.numbershark.strategies.OptimalStrategyDialog;
+import org.jcryptool.games.numbershark.strategies.ResultDialOptimalStrategy;
 import org.jcryptool.games.numbershark.util.CommandState;
 import org.jcryptool.games.numbershark.util.CommandStateChanger;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
@@ -25,7 +25,7 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 /**
  * This handler starts the wizard for calculating optimal strategies.
  * 
- * @author Johannes Späth
+ * @author Johannes Spï¿½th
  * @version 0.9.5
  */
 public class OptimalStrategyHandler extends AbstractHandler {
@@ -44,15 +44,11 @@ public class OptimalStrategyHandler extends AbstractHandler {
 
 			if (optStrat.getReturnCode() == IDialogConstants.OK_ID) {
 				
-				ResultDialog calculate;
-				if (optStrat.getCalculateStrategy()) {
-					calculate = new ResultDialog(
-							HandlerUtil.getActiveShell(event), true);
+				ResultDialOptimalStrategy calculate;
+					calculate = new ResultDialOptimalStrategy(
+							HandlerUtil.getActiveShell(event), optStrat.getSelectedStrategy());
 					calculate.setBounds(optStrat.getMin(), optStrat.getMax());
-				} else {
-					calculate = new ResultDialog(
-							HandlerUtil.getActiveShell(event), false);
-				}
+
 				calculate.open();
 
 				if (calculate.getReturnCode() == PLAY) {
@@ -67,7 +63,7 @@ public class OptimalStrategyHandler extends AbstractHandler {
 
 					for (int i = 0; i < sharkMealList.size(); i++) {
 						lostNumbers[i] = sharkMealList.get(i);
-						view.disableNumber(lostNumbers[i] - 1);
+						view.setStatus(lostNumbers[i] - 1, false);
 					}
 
 					view.addMoveToTable(0, lostNumbers);

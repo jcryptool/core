@@ -97,7 +97,7 @@ public class EndOfGameDialog{
 			saveDialog.setFilterNames(new String[] { "CSV-File",
 					"All Files (*.*)" });
 			saveDialog.setFilterExtensions(new String[] { "*.csv", "*.*" });
-			saveDialog.setFileName("log_numberShark.csv");
+			saveDialog.setFileName("log_numberShark_" + view.getNumberOfFields() +"-"+ view.getPlayerScore() + ".csv");
 			saveDialog.setOverwrite(true);
 			String fileName = saveDialog.open();
 

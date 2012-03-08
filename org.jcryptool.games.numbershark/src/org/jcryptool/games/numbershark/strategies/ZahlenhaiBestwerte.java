@@ -1,4 +1,4 @@
-package org.jcryptool.games.numbershark.optStrat;
+package org.jcryptool.games.numbershark.strategies;
 
 
 /*
@@ -163,6 +163,8 @@ public class ZahlenhaiBestwerte {
 	private static String[][] output = null;
 	private static int stoppedAt;
 	static final boolean isCancelled = false;
+	private static int von = 2;
+	private static int bis = 0;
 	
    /* VOLLSTAENDIG bestimmt, ob der Suchbaum vollstaendig durchlaufen werden 
       soll (true) oder ob nur bis zum Erreichen einer Eingabesequenz zum 
@@ -203,7 +205,7 @@ public class ZahlenhaiBestwerte {
       folge2 = new int[0];
       azR2 = new int[2];
       rest0 = new int[0];
-      int von = 2, bis = 0, schlaf, t;
+      int schlaf, t;
 
       try {
          von = von1;
@@ -215,7 +217,7 @@ public class ZahlenhaiBestwerte {
       }
       if (von < 1) { if (bis < 1) return; von = 1; }
       if (von == 1 && bis > 0) { System.out.println("1:1:0:[1]:0ms"); von++; }
-      setOutput(new String[bis+1][5]);
+      output = new String[bis+1-von][5];
       for (g = von; g <= bis; g++) {
     	  if(!monitor.isCanceled()){
 	         start = System.currentTimeMillis();
@@ -228,7 +230,7 @@ public class ZahlenhaiBestwerte {
 	         stop = System.currentTimeMillis();
 	         t = (int)(stop-start);
 	         String zeit = t < 1000? t+"ms" : (t/1000)+"s";
-	         getOutput()[g][4]=zeit;
+	         output[g-von][4]=zeit;
 	         stoppedAt = g;
     	  }
       }
@@ -1104,10 +1106,10 @@ public class ZahlenhaiBestwerte {
       }
       
       s = s.substring(0, s.length()-1);
-      getOutput()[g][0] = ""+ g;
-      getOutput()[g][1] = ""+ max;
-      getOutput()[g][2] = ""+ haiMax;
-      getOutput()[g][3] = ""+ s;
+      output[g-von][0] = ""+ g;
+      output[g-von][1] = ""+ max;
+      output[g-von][2] = ""+ haiMax;
+      output[g-von][3] = ""+ s;
    }
 
    static final short[] PRIM = {
