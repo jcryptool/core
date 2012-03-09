@@ -15,9 +15,23 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
+            contextHelpId="org.jcryptool.visual.rsa.rsaview"
             name="%Visual.name"
             viewId="org.jcryptool.visual.rsa.view">
       </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
    </extension>
 
 </plugin>

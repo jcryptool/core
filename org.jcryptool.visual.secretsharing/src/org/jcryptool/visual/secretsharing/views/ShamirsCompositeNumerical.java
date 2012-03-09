@@ -254,7 +254,7 @@ public class ShamirsCompositeNumerical extends Composite implements Constants {
 		label.setText(MESSAGE_TITLE);
 
 		stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
-		stDescription.setText(MESSAGE_DESCRIPTION + " " + MESSAGE_LAGRAGE + " " + MESSAGE_FORMULAR);
+		stDescription.setText(MESSAGE_DESCRIPTION + " " + MESSAGE_LAGRANGE + " " + MESSAGE_FORMULAR);
 		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 	}
 

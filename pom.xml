@@ -72,6 +72,8 @@
 	<module>org.jcryptool.visual.secretsharing</module>
 	<module>org.jcryptool.visual.sidechannelattack.dpa</module>
 	<module>org.jcryptool.visual.sidechannelattack.spa</module>
+	<module>org.jcryptool.visual.verifiablesecretsharing</module>
+	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
 	<module>org.jcryptool.visual.viterbi</module>
 	<module>org.jcryptool.visual.xeuclidean</module>
 	<module>org.jcryptool.visual.zeroknowledge</module>

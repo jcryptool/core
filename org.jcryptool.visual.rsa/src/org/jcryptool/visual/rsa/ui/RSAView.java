@@ -16,6 +16,7 @@ import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.Messages;
@@ -77,8 +78,7 @@ public class RSAView extends ViewPart {
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
 
-        // Sofern ich noch ne help schreibe
-        // PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.rsa.rsahelp");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.rsa.rsaview");
     }
 
     @Override

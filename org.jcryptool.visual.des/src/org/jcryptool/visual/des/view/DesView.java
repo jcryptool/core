@@ -114,13 +114,6 @@ public class DesView extends ViewPart {
 	Table tblAlgOutputHamming1 = null;
 	Table tblAlgOutputHamming2 = null;
 	Composite comAlgOutputHamming = null;
-	//Label lblAlgInfoDes = null;
-	//Label lblAlgInfoKey = null;
-	//Label lblAlgInfoData = null;
-	//Label lblAlgInfoTableRoundkeys = null;
-	//Label lblAlgInfoTableCDMatrix = null;
-	//Label lblAlgInfoTableM0M17 = null;
-	//Label lblAlgInfoTableDeskpei = null;
 	StyledText txtAlgInformation = null;
 	
 	// FPoints Study
@@ -159,10 +152,6 @@ public class DesView extends ViewPart {
 	Table tblFPointsOutputAFP = null;
 	Composite comFPointsOutput = null;
 	Label lblFPointsOutputAFPoint = null;
-	//Label lblFPointsInfoDes = null;
-	//Label lblFPointsInfoKey = null;
-	//Label lblFPointsInfoM8 = null;
-	//Label lblFPointsInfoTable = null;
 	StyledText txtFPointsInformation = null;
 	
 	//SBox Study
@@ -201,12 +190,6 @@ public class DesView extends ViewPart {
 	Label lblSBoxOutputP = null;
 	Label lblSBoxOutputK = null;
 	Group grpSBoxHeader = null;
-	//Label lblSBoxInfoDes = null;
-	//Label lblSBoxInfoDeltap = null;
-	//Label lblSBoxInfoRandomP = null;
-	//Label lblSBoxInfoRandomK = null;
-	//Label lblSBoxInfoYBox = null;
-	//Label lblSBoxInfoRBox = null;
 	Label lblFPointsInputM8cur = null;
 	StyledText txtSBoxInformation = null;
 	
@@ -708,11 +691,6 @@ public class DesView extends ViewPart {
 				"visualizes the Hamming distances b_ij := DIST[DES(k; p+e_8(i-1)+(j-1));DES(k; p+e_8(i-1)+j)]\n" +
 				"for i,j = 1, ..., 8 and e_0 := 0.");
 		
-		/*
-		tblAlgOutputHammingDes.setText("The matrices A and B visualize Hamming distances between " +
-									   "DES(k,Input_1) and DES(k,Input_2)\n where Input_1,Input_2 have a " +
-									   "Hamming distance of 1 (for A) and 2 (for B).\n");
-		*/
 		// Roundkeys
 		
 		tbtmAlgRoundkeys = new TabItem(tfAlgOutput, SWT.NONE);
@@ -871,72 +849,6 @@ public class DesView extends ViewPart {
 		srAlg6.fontStyle = SWT.BOLD;
 		txtAlgInformation.setStyleRange(srAlg6);
 		
-		/*
-		lblAlgInfoDes = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoDes = new FormData();
-		fd_lblAlgInfoDes.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoDes.top = new FormAttachment(0,10);
-		fd_lblAlgInfoDes.left = new FormAttachment(0, 10);
-		lblAlgInfoDes.setLayoutData(fd_lblAlgInfoDes);
-		lblAlgInfoDes.setText("Different aspects of the encryption or\n" +
-							  "decryption process of DES are visualized.\n");
-		
-		lblAlgInfoKey = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoKey = new FormData();
-		fd_lblAlgInfoKey.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoKey.top = new FormAttachment(lblAlgInfoDes,10);
-		fd_lblAlgInfoKey.left = new FormAttachment(0, 10);
-		lblAlgInfoKey.setLayoutData(fd_lblAlgInfoKey);
-		lblAlgInfoKey.setText("Key:\nThe key k used to encrypt or decrypt\n" +
-							  "the data.");
-					
-		lblAlgInfoTableM0M17 = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoTableM0M17 = new FormData();
-		fd_lblAlgInfoTableM0M17.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoTableM0M17.top = new FormAttachment(lblAlgInfoKey,10);
-		fd_lblAlgInfoTableM0M17.left = new FormAttachment(0, 10);
-		lblAlgInfoTableM0M17.setLayoutData(fd_lblAlgInfoTableM0M17);
-		lblAlgInfoTableM0M17.setText("Output table \"RoundCiphers\":\n" +
-									"The table shows the intermediate round\n" +
-									"ciphers m[0]-m[17] for the process\n" +
-									"(en-/decryption).\n" +
-									"For each column: Adjacent bit-colors \n" +
-									"change if adjacent bit-values change.");
-									
-									
-		lblAlgInfoTableDeskpei = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoTableDeskpei = new FormData();
-		fd_lblAlgInfoTableDeskpei.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoTableDeskpei.top = new FormAttachment(lblAlgInfoTableM0M17,10);
-		fd_lblAlgInfoTableDeskpei.left = new FormAttachment(0, 10);
-		lblAlgInfoTableDeskpei.setLayoutData(fd_lblAlgInfoTableDeskpei);
-		lblAlgInfoTableDeskpei.setText("Output table \"DES(k,p+e_i)\":\n" +
-									   "For i = 1, ..., 64: Plaintexts p and p+e_i\n" +
-									   "differ at position i by one bit.\n" +
-									   "Each DES(k; p+e_i) is presented and\n" +
-									   "compared with DES(k,p) using the\n" +
-									   "Hamming distance DIST as measure.");
-									   
-		
-		lblAlgInfoTableRoundkeys = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoTableRoundkeys = new FormData();
-		fd_lblAlgInfoTableRoundkeys.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoTableRoundkeys.top = new FormAttachment(lblAlgInfoTableDeskpei,10);
-		fd_lblAlgInfoTableRoundkeys.left = new FormAttachment(0, 10);
-		lblAlgInfoTableRoundkeys.setLayoutData(fd_lblAlgInfoTableRoundkeys);
-		lblAlgInfoTableRoundkeys.setText("Output Table \"Roundkeys\":\nThe table shows the 16 round keys.\n");
-		
-		lblAlgInfoTableCDMatrix = new Label(grpAlgInformation,SWT.NONE);
-		FormData fd_lblAlgInfoTableCDMatrix = new FormData();
-		fd_lblAlgInfoTableCDMatrix.right = new FormAttachment(100,-10);
-		fd_lblAlgInfoTableCDMatrix.top = new FormAttachment(lblAlgInfoTableRoundkeys,10);
-		fd_lblAlgInfoTableCDMatrix.left = new FormAttachment(0, 10);
-		lblAlgInfoTableCDMatrix.setLayoutData(fd_lblAlgInfoTableCDMatrix);
-		lblAlgInfoTableCDMatrix.setText("Output table \"CD Matrix\":\n" +
-										"Round key k_i is generated from C[i], D[i]\n" +
-										"by cyclic operations combined with\n" +
-										"specific bit-elections.");
-		*/
 		// Action Buttons
 		btnAlgReset = new Button(comAlgMain, SWT.NONE);
 		FormData fd_btnAlgReset = new FormData();
@@ -1421,64 +1333,6 @@ public class DesView extends ViewPart {
 		srFPoints3.fontStyle = SWT.BOLD;
 		txtFPointsInformation.setStyleRange(srFPoints3);
 		
-		
-		
-		/*
-		lblFPointsInfoDes = new Label(grpFPointsInformation,SWT.NONE);
-		FormData fd_lblFPointsInfoDes = new FormData();
-		fd_lblFPointsInfoDes.right = new FormAttachment(100,-10);
-		fd_lblFPointsInfoDes.top = new FormAttachment(0,10);
-		fd_lblFPointsInfoDes.left = new FormAttachment(0, 10);
-		lblFPointsInfoDes.setLayoutData(fd_lblFPointsInfoDes);
-		lblFPointsInfoDes.setText("A fixed-point F with a key k\n" +
-								  "is defined by DES(k;F) = F, whereas an\n"+
-								  "anti-fixed-point A with respect to a key k\n" +
-								  "is defined by DES(k;A) = com_A. The result\n" + 
-								  "com_A is the bitwise complement of A.\n");
-	
-		lblFPointsInfoKey = new Label(grpFPointsInformation,SWT.NONE);
-		FormData fd_lblFPointsInfoKey = new FormData();
-		fd_lblFPointsInfoKey.right = new FormAttachment(100,-10);
-		fd_lblFPointsInfoKey.top = new FormAttachment(lblFPointsInfoDes,10);
-		fd_lblFPointsInfoKey.left = new FormAttachment(0, 10);
-		lblFPointsInfoKey.setLayoutData(fd_lblFPointsInfoKey);
-		lblFPointsInfoKey.setText("Key:\n" +
-								"So far, known fixed-points (and\n" +
-								"anti-fixed points) only exist with respect\n" +
-								"to the special keys k[0],k[5],k[10], and\n" +
-								"k[15] (resp. k[3],k[6],k[9], and k[11]).");
-			
-		lblFPointsInfoM8 = new Label(grpFPointsInformation,SWT.NONE);
-		FormData fd_lblFPointsInfoM8 = new FormData();
-		fd_lblFPointsInfoM8.right = new FormAttachment(100,-10);
-		fd_lblFPointsInfoM8.top = new FormAttachment(lblFPointsInfoKey,10);
-		fd_lblFPointsInfoM8.left = new FormAttachment(0, 10);
-		lblFPointsInfoM8.setLayoutData(fd_lblFPointsInfoM8);
-		lblFPointsInfoM8.setText("m[i]:\n" +
-								"The i-th intermediate round cipher of\n" +
-								"en-/decryption process. The value m[8]\n" +
-								"is user-defined due to the way, the\n" +
-								"appropriate (anti-)fixed points are\n" +
-								"internally evaluated.");
-						
-		lblFPointsInfoTable = new Label(grpFPointsInformation,SWT.NONE);
-		FormData fd_lblFPointsInfoTable = new FormData();
-		fd_lblFPointsInfoTable.right = new FormAttachment(100,-10);
-		fd_lblFPointsInfoTable.top = new FormAttachment(lblFPointsInfoM8,10);
-		fd_lblFPointsInfoTable.left = new FormAttachment(0, 10);
-		lblFPointsInfoTable.setLayoutData(fd_lblFPointsInfoTable);
-		lblFPointsInfoTable.setText("Output table:\n" +
-								"The table only shows the 32 bit wide\n" +
-								"round ciphers from m[8] to m[17],\n" +
-								"since missing m[i] can be retrieved\n" +
-								"using the relation m[i] = m[17-i] for\n" +
-								"fixed-points (resp. m[i] = com_m[17-i]\n" +
-								"for anti-fixed points). For each column:\n" +
-								"Adjacent bit colors change if their\n" +
-								"bit values change. The column DIST\n" +
-								"reflects the Hamming distance between\n" +
-								"rows m[i-1] and m[i].");
-		*/
 		// Action Buttons
 		btnFPointsReset = new Button(comFPointsMain, SWT.NONE);
 		FormData fd_btnFPointsReset = new FormData();
@@ -1863,69 +1717,6 @@ public class DesView extends ViewPart {
 		srSBox6.length = 14;
 		srSBox6.fontStyle = SWT.BOLD;
 		txtSBoxInformation.setStyleRange(srSBox6);
-				
-		/*
-		lblSBoxInfoDes = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSboxInfoDes = new FormData();
-		fd_lblSboxInfoDes.right = new FormAttachment(100,-10);
-		fd_lblSboxInfoDes.top = new FormAttachment(0,10);
-		fd_lblSboxInfoDes.left = new FormAttachment(0, 10);
-		lblSBoxInfoDes.setLayoutData(fd_lblSboxInfoDes);
-		lblSBoxInfoDes.setText("A (randomly selected) plaintext p\n" +
-					"and another plaintext p + Delta_p\n" +
-					"undergo an encryption under the\n" +
-					"same (randomly selected) key k.\n" +
-					"Each of these plaintexts generate\n" +
-					"inputs in each of the 16 rounds for the 8\n" +
-					"S-Boxes S1, ..., S8. The 16 x 8 matrix\n" +
-					"visualizes by its cell colors whether\n" +
-					"these inputs are (per round and per\n" +
-					"S-Box) the same (yellow) or not the\n" +
-					"same (red). Hence the overall color\n" +
-					"pattern reflects the spread (avalanche)\n" +
-					"of the input difference Delta_p over\n" +
-					"the whole encryption process.");
-		
-		lblSBoxInfoDeltap = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSBoxInfoDeltap = new FormData();
-		fd_lblSBoxInfoDeltap.right = new FormAttachment(100,-10);
-		fd_lblSBoxInfoDeltap.top = new FormAttachment(lblSBoxInfoDes,10);
-		fd_lblSBoxInfoDeltap.left = new FormAttachment(0, 10);
-		lblSBoxInfoDeltap.setLayoutData(fd_lblSBoxInfoDeltap);
-		lblSBoxInfoDeltap.setText("Delta_p:\nDifference between the two inputs.");
-		
-		lblSBoxInfoRandomP = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSBoxInfoRandomP = new FormData();
-		fd_lblSBoxInfoRandomP.right = new FormAttachment(100,-10);
-		fd_lblSBoxInfoRandomP.top = new FormAttachment(lblSBoxInfoDeltap,10);
-		fd_lblSBoxInfoRandomP.left = new FormAttachment(0, 10);
-		lblSBoxInfoRandomP.setLayoutData(fd_lblSBoxInfoRandomP);
-		lblSBoxInfoRandomP.setText("Random p:\nA randomly choosen plaintext");
-				
-		lblSBoxInfoRandomK = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSBoxInfoRandomK = new FormData();
-		fd_lblSBoxInfoRandomK.right = new FormAttachment(100,-10);
-		fd_lblSBoxInfoRandomK.top = new FormAttachment(lblSBoxInfoRandomP,10);
-		fd_lblSBoxInfoRandomK.left = new FormAttachment(0, 10);
-		lblSBoxInfoRandomK.setLayoutData(fd_lblSBoxInfoRandomK);
-		lblSBoxInfoRandomK.setText("Random k:\nA randomly choosen key.");
-		
-		lblSBoxInfoYBox = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSBoxInfoYBox = new FormData();
-		fd_lblSBoxInfoYBox.right = new FormAttachment(100,-10);
-		fd_lblSBoxInfoYBox.top = new FormAttachment(lblSBoxInfoRandomK,10);
-		fd_lblSBoxInfoYBox.left = new FormAttachment(0, 10);
-		lblSBoxInfoYBox.setLayoutData(fd_lblSBoxInfoYBox);
-		lblSBoxInfoYBox.setText("Yellow S-Box:\nS-Box with the same input feeds.");
-		
-		lblSBoxInfoRBox = new Label(grpSBoxInformation,SWT.NONE);
-		FormData fd_lblSBoxInfoRBox = new FormData();
-		fd_lblSBoxInfoRBox.right = new FormAttachment(100,-10);
-		fd_lblSBoxInfoRBox.top = new FormAttachment(lblSBoxInfoYBox,10);
-		fd_lblSBoxInfoRBox.left = new FormAttachment(0, 10);
-		lblSBoxInfoRBox.setLayoutData(fd_lblSBoxInfoRBox);
-		lblSBoxInfoRBox.setText("Red S-Box:\nS-Box with different input feeds.");
-		*/
 		
 		// Action Buttons
 		btnSBoxReset = new Button(comSBoxMain, SWT.NONE);
@@ -1955,7 +1746,6 @@ public class DesView extends ViewPart {
 				cleanTable(tblSBoxOutput);
 			}
 		});
-		
 		
 				
 		btnSBoxEvaluate = new Button(comSBoxMain, SWT.NONE);
