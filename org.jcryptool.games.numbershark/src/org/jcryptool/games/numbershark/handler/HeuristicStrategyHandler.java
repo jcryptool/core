@@ -24,8 +24,8 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler starts the wizard for calculating optimal strategies.
- * 
- * @author Johannes Sp�th
+ *
+ * @author Johannes Späth
  * @version 0.9.5
  */
 public class HeuristicStrategyHandler extends AbstractHandler {
@@ -43,7 +43,7 @@ public class HeuristicStrategyHandler extends AbstractHandler {
 			heuStrat.open();
 
 			if (heuStrat.getReturnCode() == IDialogConstants.OK_ID) {
-				
+
 				ResultDialHeuristicStrategy calculate;
 					calculate = new ResultDialHeuristicStrategy(
 							HandlerUtil.getActiveShell(event), heuStrat.getSelectedStrategy());
