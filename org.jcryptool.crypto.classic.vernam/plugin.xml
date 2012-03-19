@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.jcryptool.crypto.classic.vernam.algorithm"
+         point="org.jcryptool.core.operations.algorithms">
+      <algorithm
+            actionClass="org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithmAction"
+            class="org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithm"
+            contextHelpId="org.jcryptool.crypto.classic.vernam.wizard"
+            engineClass="org.jcryptool.crypto.classic.vernam.algorithm.VernamEngine"
+            id="org.jcryptool.crypto.classic.vernam.algorithm"
+            name="Vernam"
+            type="classic">
+      </algorithm>
+   </extension>
+
+</plugin>
