@@ -24,8 +24,8 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler starts the wizard for calculating optimal strategies.
- * 
- * @author Johannes Sp�th
+ *
+ * @author Johannes Späth
  * @version 0.9.5
  */
 public class OptimalStrategyHandler extends AbstractHandler {
@@ -43,7 +43,7 @@ public class OptimalStrategyHandler extends AbstractHandler {
 			optStrat.open();
 
 			if (optStrat.getReturnCode() == IDialogConstants.OK_ID) {
-				
+
 				ResultDialOptimalStrategy calculate;
 					calculate = new ResultDialOptimalStrategy(
 							HandlerUtil.getActiveShell(event), optStrat.getSelectedStrategy());

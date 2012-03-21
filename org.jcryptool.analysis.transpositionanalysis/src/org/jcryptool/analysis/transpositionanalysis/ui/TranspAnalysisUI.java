@@ -248,7 +248,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					GridData linkChooseTextLData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
 					linkChooseText.setLayoutData(linkChooseTextLData);
 					linkChooseTextLData.horizontalSpan = 2;
-					new Label(compTextSource, SWT.NONE);
 					linkChooseText.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {

@@ -8,39 +8,39 @@ import org.eclipse.ui.ISources;
 
 
 /**
- * 
- * @author Daniel Löffler
+ *
+ * @author Daniel LÃ¶ffler
  * @version 0.9.5
  */
 public class CommandState extends AbstractSourceProvider    {
-    	
+
 	public static String stateVal(State state) {
 	    String str ="";
-	    switch (state) {	     
+	    switch (state) {
 	      case UNDO_ENABLED: str = "UNDO_ENABLED";
-	      		break;          
+	      		break;
 	      case UNDO_DISABLED: str = "UNDO_DISABLED";
-	      		break;          
+	      		break;
 	      case REDO_ENABLED: str = "REDO_ENABLED";
-	      		break;          
+	      		break;
 	      case REDO_DISABLED: str = "REDO_DISABLED";
-	      		break;    
+	      		break;
 	      case SHARKMEAL_ENABLED: str = "SHARKMEAL_ENABLED";
     			break;
 	      case SHARKMEAL_DISABLED: str = "SHARKMEAL_DISABLED";
-    			break; 
+    			break;
 	      case HINT_ENABLED: str = "HINT_ENABLED";
     			break;
 	      case HINT_DISABLED: str = "HINT_DISABLED";
-    			break; 
+    			break;
 	      case DISABLED: str = "DISABLED";
-	      		break;          
+	      		break;
 	      case ENABLED: str = "ENABLED";
 	      		break;
 	    }
 	    return str;
-	  }	
-	
+	  }
+
 	public static String variableVal(Variable variable) {
 	    String str ="";
 	    switch (variable) {
@@ -54,27 +54,27 @@ public class CommandState extends AbstractSourceProvider    {
   		  break;
 	    }
 	    return str;
-	  }	
-	
+	  }
+
 	public enum Variable {
 		UNDO_STATE, REDO_STATE, SHARKMEAL_STATE, HINT_STATE
 	}
-	
+
 	public enum State {
 		UNDO_ENABLED, UNDO_DISABLED, REDO_ENABLED, REDO_DISABLED, SHARKMEAL_ENABLED, SHARKMEAL_DISABLED, HINT_ENABLED, HINT_DISABLED, DISABLED, ENABLED
 	 }
-		
+
     private State curState = State.DISABLED;
-   
+
 	public void dispose() {
-		
+
 	}
-	
-	
+
+
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Map getCurrentState() {
-		
+
 		Map<String, String> map = new HashMap<String, String>(1);
 		if (curState == State.UNDO_ENABLED)
 			map.put(variableVal(Variable.UNDO_STATE) , stateVal(State.UNDO_ENABLED));
@@ -107,15 +107,15 @@ public class CommandState extends AbstractSourceProvider    {
 	public String[] getProvidedSourceNames() {
 		return new String[] { variableVal(Variable.UNDO_STATE), variableVal(Variable.REDO_STATE), variableVal(Variable.SHARKMEAL_STATE), variableVal(Variable.HINT_STATE) };
 	}
-	
-	public void setUndoEnabled() {		
+
+	public void setUndoEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.UNDO_STATE), stateVal(State.UNDO_ENABLED));
 	}
-	
-	public void setUndoDisabled() {		
+
+	public void setUndoDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.UNDO_STATE), stateVal(State.UNDO_DISABLED));
 	}
-	
+
 	public void setRedoEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.REDO_STATE), stateVal(State.REDO_ENABLED));
 	}
@@ -123,7 +123,7 @@ public class CommandState extends AbstractSourceProvider    {
 	public void setRedoDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.REDO_STATE), stateVal(State.REDO_DISABLED));
 	}
-	
+
 	public void setSharkMealEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_ENABLED));
 	}
@@ -131,7 +131,7 @@ public class CommandState extends AbstractSourceProvider    {
 	public void setSharkMealDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.SHARKMEAL_STATE), stateVal(State.SHARKMEAL_DISABLED));
 	}
-	
+
 	public void setHintEnabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.HINT_STATE), stateVal(State.HINT_ENABLED));
 	}
@@ -139,12 +139,12 @@ public class CommandState extends AbstractSourceProvider    {
 	public void setHintDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.HINT_STATE), stateVal(State.HINT_DISABLED));
 	}
-	
+
 	public void setDisabled() {
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.UNDO_STATE), stateVal(State.DISABLED));
 		fireSourceChanged(ISources.WORKBENCH, variableVal(Variable.REDO_STATE), stateVal(State.DISABLED));
 	}
-	
-}   
+
+}
 
 

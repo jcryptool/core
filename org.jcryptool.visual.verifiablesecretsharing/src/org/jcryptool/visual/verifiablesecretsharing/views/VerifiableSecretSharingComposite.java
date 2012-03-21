@@ -512,8 +512,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 				if (everythingCorrect) {
 					if (warning) {
 						MessageDialog
-								.openWarning(
-										getShell(),
+								.openWarning(getShell(),
 										"", //$NON-NLS-1$
 										Messages.VerifiableSecretSharingComposite_param_set_all);
 						if (secretText.getText().compareTo("") == 0) { //$NON-NLS-1$
@@ -539,7 +538,9 @@ public class VerifiableSecretSharingComposite extends Composite {
 									+ ""); //$NON-NLS-1$
 						} while (Integer.parseInt(secretText.getText()) <= 3);
 					}
-					MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, errorText);
+					MessageDialog.openError(getShell(),
+							Messages.VerifiableSecretSharingComposite_error,
+							errorText);
 				}
 			}
 		});
@@ -1047,7 +1048,11 @@ public class VerifiableSecretSharingComposite extends Composite {
 						}
 					} else {
 						String errorText = Messages.VerifiableSecretSharingComposite_commitment_not_calculated;
-						MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error, errorText);
+						MessageDialog
+								.openError(
+										getShell(),
+										Messages.VerifiableSecretSharingComposite_error,
+										errorText);
 						enableCoefficientsGroupWithoutDispose(true);
 						enableSharesGroup(false, players);
 						enableReconstructionGroup(false, players);
@@ -1127,8 +1132,7 @@ public class VerifiableSecretSharingComposite extends Composite {
 		scrolledReconstructionGroupContent.setBackground(WHITE);
 
 		reconstructButton = new Button(reconstructionGroup, SWT.NONE);
-		reconstructButton
-				.setText(Messages.VerifiableSecretSharingComposite_reconstruction_reconstruct_button);
+		reconstructButton.setText(Messages.VerifiableSecretSharingComposite_reconstruction_reconstruct_button);
 		reconstructButton.setLayoutData(new RowData(120, -1));
 		reconstructButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -1147,23 +1151,14 @@ public class VerifiableSecretSharingComposite extends Composite {
 							.getActiveWorkbenchWindow().getActivePage()
 							.getViewReferences();
 					for (IViewReference platformPart : platformParts) {
-						if (platformPart.getPartName().compareTo(
-								Messages.VerifiableSecretSharingComposite_tab_title) == 0) {
-
-							for (Control control : scrolledReconstructionGroupContent
-									.getChildren()) {
+						if (platformPart.getPartName().compareTo(Messages.VerifiableSecretSharingComposite_tab_title) == 0) {
+							for (Control control : scrolledReconstructionGroupContent.getChildren()) {
 								if (i == playerIdsHelp.length) {
 									break;
 								}
-								if (control.getData() != null
-										&& ((Button) control).getSelection()) {
-									playerIdsHelp[i] = Integer.parseInt(control
-											.getData().toString());
-									// sharesHelp[i] =
-									// Integer.parseInt(shareNTextShares[playerIdsHelp[i]-1].getText());
-									sharesHelp[i] = new BigInteger(
-											shareNTextShares[playerIdsHelp[i] - 1]
-													.getText());
+								if (control.getData() != null && ((Button) control).getSelection()) {
+									playerIdsHelp[i] = Integer.parseInt(control.getData().toString());
+									sharesHelp[i] = new BigInteger(shareNTextShares[playerIdsHelp[i] - 1].getText());
 									i++;
 								}
 							}
@@ -1171,8 +1166,11 @@ public class VerifiableSecretSharingComposite extends Composite {
 							shares = new BigInteger[i];
 							if (playerIds.length == 0) {
 								String errorText = Messages.VerifiableSecretSharingComposite_reconstruct_no_players;
-								MessageDialog.openError(getShell(), Messages.VerifiableSecretSharingComposite_error,
-										errorText);
+								MessageDialog
+										.openError(
+												getShell(),
+												Messages.VerifiableSecretSharingComposite_error,
+												errorText);
 								break;
 							} else {
 								for (int j = 0; j < playerIds.length; j++) {
@@ -1207,7 +1205,8 @@ public class VerifiableSecretSharingComposite extends Composite {
 																	.toString()
 															+ "."); //$NON-NLS-1$
 								}
-								//MessageDialog.openError(getShell(), "Error",errorText);
+								// MessageDialog.openError(getShell(),
+								// "Error",errorText);
 								rcc = ((VerifiableSecretSharingView) platformPart
 										.getView(false))
 										.getReconstructionChartComposite();
