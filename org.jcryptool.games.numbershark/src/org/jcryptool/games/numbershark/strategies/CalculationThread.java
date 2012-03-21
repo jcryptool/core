@@ -25,31 +25,34 @@ public class CalculationThread implements IRunnableWithProgress {
 
 public void run(IProgressMonitor monitor) throws InvocationTargetException,
       InterruptedException {
-    monitor.beginTask(Messages.ProgressDialog_0, IProgressMonitor.UNKNOWN);
     try {
     	switch (selectedStrategy)
     	{
     		case 0:
     			break;
     		case 1:
+    			monitor.beginTask(Messages.ProgressDialog_0, IProgressMonitor.UNKNOWN);
     			ZahlenhaiBestwerte.main(min, max, monitor);
     			outputTable = ZahlenhaiBestwerte.getOutput();
     			stoppedAt = ZahlenhaiBestwerte.getStoppedAt();
     			break;	
     			
     		case 2:
+    			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			MaximizeStrategy calc = new MaximizeStrategy(min, max, monitor);
     			outputTable = calc.getOutput();
     			stoppedAt = calc.getStoppedAt();
     			break;
     			
     		case 3:
+    			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			VanNekStrategy calc1 = new VanNekStrategy(min, max, monitor);
     			outputTable = calc1.getOutput();
     			stoppedAt = calc1.getStoppedAt();
     			break;
     			
     		case 4:
+    			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			Schu1Strategy calcSchu1 = new Schu1Strategy(min, max, monitor);
     			outputTable = calcSchu1.getOutput();
     			stoppedAt = calcSchu1.getStoppedAt();

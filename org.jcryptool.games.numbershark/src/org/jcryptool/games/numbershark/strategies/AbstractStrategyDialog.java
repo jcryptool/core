@@ -41,12 +41,12 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 		setShellStyle(SWT.TITLE | SWT.APPLICATION_MODAL);
 	}
 
-	protected Group createSliders(Composite parent, final boolean showWarning){
+	protected Group createSliders(Composite parent, final boolean showWarning, int max, int defaultSelection){
 
 		final Group compositeSliders = new Group(parent, SWT.NONE);
 		GridData gd_compositeSliders = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_compositeSliders.verticalIndent = 5;
-		gd_compositeSliders.widthHint = 325;
+		gd_compositeSliders.widthHint = 430;
 		gd_compositeSliders.horizontalIndent = 27;
 		compositeSliders.setLayoutData(gd_compositeSliders);
 		compositeSliders.setText(Messages.OptStratDialog_8);
@@ -57,26 +57,32 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 
 		final Slider minValueSlider = new Slider(compositeSliders, SWT.NONE);
 
-		minValueSlider.setValues(2, 2, 400, 1, 1, 10);
+		minValueSlider.setValues(2, 2, max, 1, 1, 10);
 
 
 		final Spinner minValueSpinner = new Spinner(compositeSliders, SWT.NONE);
-		minValueSpinner.setValues(2, 2, 400, 0, 1, 10);
+		minValueSpinner.setValues(2, 2, max, 0, 1, 10);
 
 
 		Label lblMinimalValue = new Label(compositeSliders, SWT.NONE);
 		lblMinimalValue.setText(Messages.OptStratDialog_3);
 		final Slider maxValueSlider = new Slider(compositeSliders, SWT.NONE);
-		maxValueSlider.setValues(100, 2, 400, 1, 1, 10);
+		maxValueSlider.setValues(defaultSelection, 2, max, 1, 1, 10);
 
 
 		final Spinner maxValueSpinner = new Spinner(compositeSliders, SWT.NONE);
-		maxValueSpinner.setValues(100, 2, 400, 0, 1, 10);
+		maxValueSpinner.setValues(defaultSelection, 2, max, 0, 1, 10);
 		
 		Label lblMaximalValue = new Label(compositeSliders, SWT.NONE);
 		lblMaximalValue.setText(Messages.OptStratDialog_4);
-
 		
+		Label lblNumOfPlayingFields = new Label(compositeSliders, SWT.NONE);
+		lblNumOfPlayingFields.setText(Messages.AbstStratDialog_0);
+		GridData gd_numOfPlayFields = new GridData();
+		gd_numOfPlayFields.horizontalSpan = 2;
+		lblNumOfPlayingFields.setLayoutData(gd_numOfPlayFields);
+		final Label lblNumOfPlayingFieldsNumber = new Label(compositeSliders, SWT.RIGHT);
+		lblNumOfPlayingFieldsNumber.setText("\t"+String.valueOf(defaultSelection - 1));
 		final Label longRunningProcessWarning = new Label(parent, SWT.NONE);
 		GridData gd_longRunningProcessWarning = new GridData(SWT.FILL, SWT.FILL,
 				true , true, 3 , 1);
@@ -92,8 +98,10 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 				int max = maxValueSpinner.getSelection();
 				maxValueSlider.setSelection(max);
 				maxSelected = max;
-
-				if(max < minValueSlider.getSelection() || max < minValueSpinner.getSelection()){
+				int min =  minValueSlider.getSelection();				
+				int value = max - min +1;
+				lblNumOfPlayingFieldsNumber.setText(String.valueOf(value));
+				if(max < min|| max < minValueSpinner.getSelection()){
 					minValueSlider.setSelection(max);
 					minValueSpinner.setSelection(max);
 				}
@@ -114,7 +122,10 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 				maxValueSpinner.setSelection(max);
 				maxSelected = max;
 				
-				if(max < minValueSlider.getSelection()  || max < minValueSpinner.getSelection()){
+				int min =  minValueSlider.getSelection();
+				int value = max - min +1;
+				lblNumOfPlayingFieldsNumber.setText(String.valueOf(value));
+				if(max < min  || max < minValueSpinner.getSelection()){
 					minValueSlider.setSelection(max);
 					minValueSpinner.setSelection(max);
 				}
@@ -126,11 +137,15 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 				}
 			}
 		});
+		
 		minValueSlider.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				int min = minValueSlider.getSelection();
 				minValueSpinner.setSelection(min);
-				if(min > maxValueSlider.getSelection()  || min > maxValueSpinner.getSelection()){
+				int max =  maxValueSlider.getSelection();				
+				int value = max - min +1;
+				lblNumOfPlayingFieldsNumber.setText(String.valueOf(value));
+				if(min > max  || min > maxValueSpinner.getSelection()){
 					maxValueSlider.setSelection(min);
 					maxValueSpinner.setSelection(min);
 				}
@@ -141,7 +156,10 @@ public class AbstractStrategyDialog extends TitleAreaDialog {
 			public void modifyText(ModifyEvent e) {
 				int min = minValueSpinner.getSelection();
 				minValueSlider.setSelection(min);
-				if(min > maxValueSlider.getSelection() || min > maxValueSpinner.getSelection()){
+				int max =  maxValueSlider.getSelection();
+				int value = max - min +1;
+				lblNumOfPlayingFieldsNumber.setText(String.valueOf(value));
+				if(min > max || min > maxValueSpinner.getSelection()){
 					maxValueSlider.setSelection(min);
 					maxValueSpinner.setSelection(min);
 				}

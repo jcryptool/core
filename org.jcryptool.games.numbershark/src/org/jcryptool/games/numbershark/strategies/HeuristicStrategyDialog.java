@@ -19,6 +19,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.games.numbershark.NumberSharkPlugin;
@@ -49,17 +50,27 @@ public class HeuristicStrategyDialog extends AbstractStrategyDialog {
 		GridLayout gl_composite = new GridLayout(1, false);
 		gl_composite.marginTop = 15;
 		gl_composite.marginLeft = 15;
+		
 		composite.setLayout(gl_composite);
 		
-
+		Group strategyGroup = new Group(composite, SWT.NONE);
+		strategyGroup.setText(Messages.HeuStratDialog_8);
+		GridData gd_strategyGroup = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+		gd_strategyGroup.verticalIndent = 5;
+		gd_strategyGroup.widthHint = 430;
+		gd_strategyGroup.horizontalIndent = 6;
+		
+		strategyGroup.setLayoutData(gd_strategyGroup);
+		GridLayout gl_strategyGroup = new GridLayout(1, true);
+		strategyGroup.setLayout(gl_strategyGroup);
 		final Button[] radioButton = new Button[4];
-		radioButton[0] = new Button(composite, SWT.RADIO);
+		radioButton[0] = new Button(strategyGroup, SWT.RADIO);
 		radioButton[0].setText(Messages.HeuStratDialog_1);
 		
-		radioButton[1] = new Button(composite, SWT.RADIO);
+		radioButton[1] = new Button(strategyGroup, SWT.RADIO);
 		radioButton[1].setText(Messages.HeuStratDialog_2);
 
-		radioButton[2] = new Button(composite, SWT.RADIO);
+		radioButton[2] = new Button(strategyGroup, SWT.RADIO);
 		radioButton[2].setText(Messages.HeuStratDialog_3);
 		/*
 		radioButton[3] = new Button(composite, SWT.RADIO);
@@ -88,7 +99,7 @@ public class HeuristicStrategyDialog extends AbstractStrategyDialog {
 		radioButton[1].addSelectionListener(radioButtonListener);
 		radioButton[2].addSelectionListener(radioButtonListener);
 		
-		createSliders(area, true);
+		createSliders(area, false, 2000, 40);
 
 		PlatformUI
 				.getWorkbench()

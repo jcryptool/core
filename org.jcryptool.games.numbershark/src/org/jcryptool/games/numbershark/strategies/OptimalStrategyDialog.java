@@ -13,6 +13,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -57,7 +58,7 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
 		Button calcButton = new Button(composite, SWT.RADIO);
 		calcButton.setText(Messages.OptStratDialog_1);
 
-		final Group compositeSliders = createSliders(area, true);
+		final Group compositeSliders = createSliders(area, true, 400, 40);
 		
 		calcButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -88,6 +89,10 @@ public class OptimalStrategyDialog extends AbstractStrategyDialog {
 	protected void configureShell(Shell newShell) {
 		super.configureShell(newShell);
 		newShell.setText(Messages.OptStratDialog_7);
+	}
+	
+	protected Point getInitialSize() {
+		return new Point(500, 370);
 	}
 
 }

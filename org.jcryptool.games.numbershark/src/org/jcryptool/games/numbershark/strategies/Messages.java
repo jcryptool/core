@@ -38,6 +38,13 @@ public class Messages extends NLS {
 	public static String ShowHeuStrategy_1;
 	public static String ShowHeuStrategy_2;
 	public static String ShowHeuStrategy_4;
+	public static String HeuStratDialog_8;
+	public static String AbstStratDialog_0;
+	public static String ShowHeuStrategy_3;
+	public static String ShowHeuStrategy_5;
+	public static String ShowHeuStrategy_6;
+	public static String ShowHeuStrategy_7;
+	public static String ProgressDialog_1;
 	
     static {
         // initialize resource bundle

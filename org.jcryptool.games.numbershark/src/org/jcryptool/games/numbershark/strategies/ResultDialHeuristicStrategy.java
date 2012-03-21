@@ -10,6 +10,7 @@
 package org.jcryptool.games.numbershark.strategies;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -31,14 +32,32 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
 
 	protected Control createDialogArea(Composite parent) {
 		setTitle(Messages.ShowHeuStrategy_1);
-		setMessage(Messages.ShowHeuStrategy_2, IMessageProvider.INFORMATION);
+		String algo ="";
+		switch (this.getSelectedStrategy())
+    	{
+		
+		case 2:
+			algo = Messages.ShowHeuStrategy_5;
+			break;
+			
+		case 3:
+			algo = Messages.ShowHeuStrategy_6;
+			break;
+			
+		case 4:
+			algo = Messages.ShowHeuStrategy_7;
+			break;
+    	}
+		
+		String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[]{algo});
+		setMessage(msg, IMessageProvider.INFORMATION);
 		Composite area = (Composite) super.createDialogArea(parent);
 
 
 		columns[0].setText(Messages.ShowOptStrategy_3);
 		columns[1].setText(Messages.ShowHeuStrategy_4);
 		columns[2].setText(Messages.ShowOptStrategy_5);
-		columns[3].setText(Messages.ShowOptStrategy_6);
+		columns[3].setText(Messages.ShowHeuStrategy_3);
 		columns[4].setText(Messages.ShowOptStrategy_7);
 		
 		PlatformUI
