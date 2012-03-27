@@ -47,6 +47,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.custom.ScrolledComposite;
 /**
  * The WizardPage for the Vernam cipher
  * 
@@ -56,6 +57,9 @@ import org.eclipse.swt.events.SelectionEvent;
  */
 public class VernamWizardPage extends WizardPage implements Listener {
 	
+	private Label lblShowNumberSystem;
+	private Label lblKeyLength;
+	
 	public Button rdBtnEncrypt;
 	public Button rdBtnDecrypt;
 	
@@ -63,8 +67,12 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	private Button rdBtnOctal;
 	private Button rdBtnBinary;
 	private Button rdBtnHexa;
+	private Button rdBtnManKeyInput;
+	private Button rdBtnKeyInputByFile;
 	
-	private Text keyInputByHandTextField;
+	private Button btnKeyInputByHandKeySave;
+	private Button btnKeyInputByHandLoadFile;
+	
 	private Text keyInputByFileTextField;
 	
 	Shell shell;
@@ -82,14 +90,16 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	private final int lengthOfEditorInput = getTextFromEditorAsCharCount();
 	private boolean operationInputEncrypt;
 	private boolean operationInputDecrypt;
+	private Text keyInputByHandTextField;
 	
 	/**
 	 * Create the wizard.
 	 */
 	public VernamWizardPage() {
-		super("wizardPage");
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		super("Vernam Wizard Page");
+		setTitle("Vernam Wizard Page");
+		setDescription(	"Bitte geben Sie einen Schlüssel für die Verschlüsselung des Textes ein.\n" +
+						"Achten Sie darauf, dass die Schlüssellänge gleich der Textlänge sein muss.\n");
 		setupDecimalValues();
 		setupBinaryValues();
 		setupOctalValues();
@@ -112,12 +122,12 @@ public class VernamWizardPage extends WizardPage implements Listener {
 		
 		createKeyInputByHandGroup( container );
 		
-		createKeyInputByFileGroup( container );
+		rdBtnDecimal.setSelection( true );
+		lblShowNumberSystem.setText( "0 1 2 3 4 5 6 7 8 9" );
 		
-		createUserInformation( container );
-		
-		keyInputByHandTextField.setEditable(false);
-		
+		keyInputByHandTextField.setEditable( false );
+		btnKeyInputByHandKeySave.setEnabled( false );
+		btnKeyInputByHandLoadFile.setEnabled( false );
 		setPageComplete( false );
 	}
 	/**
@@ -169,60 +179,15 @@ public class VernamWizardPage extends WizardPage implements Listener {
 		rdBtnHexa.setText("Hexadezimal");
 	}
 	/**
-	 * Creates the key input by hand group
+	 * Creates the key input by hand or by file
 	 */
 	private void createKeyInputByHandGroup( Composite parent )
 	{
 		Group grpKeyInputByHand = new Group(parent, SWT.NONE);
-		grpKeyInputByHand.setText("Manuelle Schlüsseleingabe");
-		grpKeyInputByHand.setBounds(10, 147, 554, 90);
+		grpKeyInputByHand.setText("Schlüsseleingabe");
+		grpKeyInputByHand.setBounds(10, 147, 554, 319);
 		
-		keyInputByHandTextField = new Text(grpKeyInputByHand, SWT.BORDER);
-		keyInputByHandTextField.addVerifyListener(new VerifyListener() {
-			public void verifyText(VerifyEvent e) 
-			{
-				setErrorMessage(null);
-				if (e.character != SWT.BS && e.character != SWT.DEL)
-				{
-					if( rdBtnDecimal.getSelection() )
-					{
-						if( !decValues.contains( e.text ) )
-						{
-							setErrorMessage("Nicht DEC " + e.text);
-							e.doit = false;
-						}
-					}
-					if( rdBtnBinary.getSelection() )
-					{
-						if( !binValues.contains( e.text ) )
-						{
-							setErrorMessage("Nicht BIN " + e.text);
-							e.doit = false;
-						}
-					}
-					if( rdBtnOctal.getSelection() )
-					{
-						if( !octValues.contains( e.text ) )
-						{
-							setErrorMessage("Nicht OCT " + e.text);
-							e.doit = false;
-						}
-					}
-					if( rdBtnHexa.getSelection() )
-					{
-						if( !hexValues.contains( e.text ) )
-						{
-							setErrorMessage("Nicht HEX " + e.text);
-							e.doit = false;
-						}
-					}
-					checkKeyInput();
-				}
-			}
-		});
-		keyInputByHandTextField.setBounds(10, 25, 534, 21);
-		
-		Button btnKeyInputByHandKeySave = new Button(grpKeyInputByHand, SWT.NONE);
+		btnKeyInputByHandKeySave = new Button(grpKeyInputByHand, SWT.NONE);
 		btnKeyInputByHandKeySave.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) 
@@ -238,62 +203,107 @@ public class VernamWizardPage extends WizardPage implements Listener {
 				}
 			}
 		});
-		btnKeyInputByHandKeySave.setBounds(10, 52, 534, 25);
+		btnKeyInputByHandKeySave.setBounds(10, 113, 534, 25);
 		btnKeyInputByHandKeySave.setText("Schlüsseleingabe speichern");
-	}
-	/**
-	 * Creates the key input by file group
-	 */
-	private void createKeyInputByFileGroup( Composite parent )
-	{
-		Group grpKeyInputByFile = new Group(parent, SWT.NONE);
-		grpKeyInputByFile.setText("Schlüsseleingabe per Datei");
-		grpKeyInputByFile.setBounds(10, 243, 554, 90);
 		
-		keyInputByFileTextField = new Text(grpKeyInputByFile, SWT.BORDER);
+		rdBtnManKeyInput = new Button(grpKeyInputByHand, SWT.RADIO);
+		rdBtnManKeyInput.setBounds(10, 25, 180, 16);
+		rdBtnManKeyInput.addListener(SWT.Selection, this);
+		rdBtnManKeyInput.setText("Manuelle Schlüsseleingabe");
+		
+		rdBtnKeyInputByFile = new Button(grpKeyInputByHand, SWT.RADIO);
+		rdBtnKeyInputByFile.setBounds(10, 144, 534, 16);
+		rdBtnKeyInputByFile.addListener(SWT.Selection, this);
+		rdBtnKeyInputByFile.setText("Schlüsseleingabe per Datei");
+		
+		keyInputByFileTextField = new Text(grpKeyInputByHand, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		keyInputByFileTextField.setBounds(10, 166, 534, 60);
 		keyInputByFileTextField.setEditable(false);
-		keyInputByFileTextField.setBounds(10, 25, 534, 21);
 		
-		Button btnKeyInputByHandLoadFile = new Button(grpKeyInputByFile, SWT.NONE);
+		btnKeyInputByHandLoadFile = new Button(grpKeyInputByHand, SWT.NONE);
+		btnKeyInputByHandLoadFile.setBounds(10, 232, 534, 25);
 		btnKeyInputByHandLoadFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e)
 			{
-				setErrorMessage( null );
-				if( keyInputByHandTextField.getCharCount() >= 1 )
-				{
-					setErrorMessage("Die Schlüsseleingabe per Datei kann nicht erfolgen, solange" +
-									" das Textfeld für die manuelle Eingabe NICHT leer ist.");
-				}
-				else
-				{
-					keyInputByFileTextField.setText( loadKeyFile() );
-					checkKeyInput();
-				}
+				keyInputByFileTextField.setText( loadKeyFile() );
+				checkKeyInput();
 			}
 		});
-		btnKeyInputByHandLoadFile.setBounds(10, 52, 534, 25);
 		btnKeyInputByHandLoadFile.setText("Schlüsseldatei laden");
-	}
-	/**
-	 * Creates User information
-	 */
-	private void createUserInformation( Composite parent )
-	{
-		Group grpHelp = new Group(parent, SWT.NONE);
-		grpHelp.setText("Hilfe");
-		grpHelp.setBounds(10, 339, 554, 50);
 		
-		Button btnKeyLength = new Button(grpHelp, SWT.NONE);
-		btnKeyLength.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) 
+		keyInputByHandTextField = new Text(grpKeyInputByHand, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		keyInputByHandTextField.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) 
 			{
-				msgBoxForKeyAndTextLength();
+				lblKeyLength.setText(""+keyInputByHandTextField.getCharCount());
+				checkKeyInput();
 			}
 		});
-		btnKeyLength.setBounds(10, 15, 534, 25);
-		btnKeyLength.setText("Schlüssellänge überprüfen");
+		keyInputByHandTextField.addVerifyListener(new VerifyListener() 
+		{
+			public void verifyText(VerifyEvent e) 
+			{
+				setErrorMessage(null);
+				if (e.character != SWT.BS && e.character != SWT.DEL)
+				{
+					if( rdBtnDecimal.getSelection() )
+					{
+						if( !decValues.contains( e.text ) )
+						{
+							setErrorMessage("Es handelt sich um keine Dezimalzahl bei Ihrer Eingabe: " + e.text);
+							e.doit = false;
+						}
+					}
+					if( rdBtnBinary.getSelection() )
+					{
+						if( !binValues.contains( e.text ) )
+						{
+							setErrorMessage("Es handelt sich um keine Binärzahl bei Ihrer Eingabe: " + e.text);
+							e.doit = false;
+						}
+					}
+					if( rdBtnOctal.getSelection() )
+					{
+						if( !octValues.contains( e.text ) )
+						{
+							setErrorMessage("Es handelt sich um keine Oktalzahl bei Ihrer Eingabe: " + e.text);
+							e.doit = false;
+						}
+					}
+					if( rdBtnHexa.getSelection() )
+					{
+						if( !hexValues.contains( e.text ) )
+						{
+							setErrorMessage("Es handelt sich um keine Hexadezimalzahl bei Ihrer Eingabe: " + e.text);
+							e.doit = false;
+						}
+					}
+				}
+		}});
+		keyInputByHandTextField.setBounds(10, 47, 534, 60);
+		
+		Label lblNumberSystemInfo = new Label(grpKeyInputByHand, SWT.NONE);
+		lblNumberSystemInfo.setBounds(196, 25, 140, 13);
+		lblNumberSystemInfo.setText("Inhalt des Zahlensystemes:");
+		
+		lblShowNumberSystem = new Label(grpKeyInputByHand, SWT.NONE);
+		lblShowNumberSystem.setBounds(342, 25, 202, 13);
+		
+		lblKeyLength = new Label(grpKeyInputByHand, SWT.NONE);
+		lblKeyLength.setBounds(379, 296, 165, 13);
+		
+		Label lblKeyLengthInfo = new Label(grpKeyInputByHand, SWT.NONE);
+		lblKeyLengthInfo.setBounds(292, 296, 81, 13);
+		lblKeyLengthInfo.setText("Schlüssellänge:");
+		
+		Label lblTextLengthInfo = new Label(grpKeyInputByHand, SWT.NONE);
+		lblTextLengthInfo.setBounds(10, 296, 70, 13);
+		lblTextLengthInfo.setText("Textlänge:");
+		
+		Label textLengthVar = new Label(grpKeyInputByHand, SWT.NONE);
+		textLengthVar.setBounds(86, 296, 88, 13);
+		textLengthVar.setText(""+lengthOfEditorInput);
 	}
 	/**
 	 *	Event handling for radio buttons in the number system group
@@ -302,31 +312,35 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	{
 		if( event.widget == rdBtnDecimal )
 		{
-			rdBtnOctal.setEnabled(false);
-			rdBtnBinary.setEnabled(false);
-			rdBtnHexa.setEnabled(false);
-			keyInputByHandTextField.setEditable(true);
+			lblShowNumberSystem.setText("0 1 2 3 4 5 6 7 8 9");
 		}
 		if( event.widget == rdBtnOctal )
 		{
-			rdBtnDecimal.setEnabled(false);
-			rdBtnBinary.setEnabled(false);
-			rdBtnHexa.setEnabled(false);
-			keyInputByHandTextField.setEditable(true);
+			lblShowNumberSystem.setText("0 1 2 3 4 5 6 7");
 		}
 		if( event.widget == rdBtnBinary )
 		{
-			rdBtnDecimal.setEnabled(false);
-			rdBtnOctal.setEnabled(false);
-			rdBtnHexa.setEnabled(false);
-			keyInputByHandTextField.setEditable(true);
+			lblShowNumberSystem.setText("0 1");
 		}
 		if( event.widget == rdBtnHexa )
 		{
-			rdBtnDecimal.setEnabled(false);
-			rdBtnOctal.setEnabled(false);
-			rdBtnBinary.setEnabled(false);
-			keyInputByHandTextField.setEditable(true);
+			lblShowNumberSystem.setText("0 1 2 3 4 5 6 7 8 9 A B C D E F");
+		}
+		// enable the key input textfield and save-key-to-file button
+		// also it disabled the load-key-from-file button
+		if( event.widget == rdBtnManKeyInput )
+		{
+			keyInputByHandTextField.setEditable( true );
+			btnKeyInputByHandKeySave.setEnabled( true );
+			btnKeyInputByHandLoadFile.setEnabled( false );
+		}
+		//
+		//
+		if( event.widget == rdBtnKeyInputByFile )
+		{
+			btnKeyInputByHandLoadFile.setEnabled( true );
+			keyInputByHandTextField.setEditable( false );
+			btnKeyInputByHandKeySave.setEnabled( false );
 		}
 		if( event.widget == rdBtnEncrypt )
 		{
@@ -347,13 +361,12 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	 */
 	private void checkKeyInput()
 	{
-		int charCountFromInputByFile = keyInputByFileTextField.getCharCount();
-		int charCountFromInputByHand = keyInputByHandTextField.getCharCount();
-		if( lengthOfEditorInput == charCountFromInputByHand )
+		//
+		if( lengthOfEditorInput == keyInputByHandTextField.getCharCount() )
 		{
 			setPageComplete(true);
 		}
-		else if( lengthOfEditorInput == charCountFromInputByFile )
+		else if( lengthOfEditorInput == keyInputByFileTextField.getCharCount() )
 		{
 			setPageComplete(true);
 		}
@@ -469,7 +482,8 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	 */
 	private void  saveKeyToFile()
 	{
-		StringBuilder writeInFile = new StringBuilder();
+		setErrorMessage(null);
+		StringBuilder writeInFile = new StringBuilder(keyInputByHandTextField.getText());
 		String fileName = null;
 		boolean done = false;
 		FileDialog fd = new FileDialog( Display.getCurrent().getActiveShell(), SWT.SAVE );
@@ -514,7 +528,6 @@ public class VernamWizardPage extends WizardPage implements Listener {
 					{
 						LogUtil.logError(VernamPlugin.PLUGIN_ID, e);
 					}
-					
 					done = true;
 				}
 			}
@@ -526,6 +539,7 @@ public class VernamWizardPage extends WizardPage implements Listener {
 	 */
 	private String loadKeyFile()
 	{
+		setErrorMessage(null);
 		FileDialog fd = new FileDialog( Display.getCurrent().getActiveShell(), SWT.OPEN );
 		fd.setFilterExtensions(new String[] {"*.txt"});
 		fd.setText("Datei öffnen");  
@@ -546,6 +560,13 @@ public class VernamWizardPage extends WizardPage implements Listener {
 					   sb.append( line );
 				   }
 				   br.close();
+				   // is key length equal text length?
+				   int len = sb.toString().length();
+				   if( len != lengthOfEditorInput )
+				   {
+					   setErrorMessage("Die Schlüssellänge muss gleich der Textlänge sein!");
+				   }
+				   lblKeyLength.setText(""+len);
 				   return ( sb.toString() );
 			} 
 			catch ( final Exception ex ) 
@@ -554,24 +575,6 @@ public class VernamWizardPage extends WizardPage implements Listener {
 			}
 		}
 		return "";
-	}
-	/**
-	 * Methode erzeugt eine MessageBox, in der die Länge des Textes, 
-	 * sowie die Länge des eingegebenen Schlüssel angezeigt wird
-	 * 
-	 * Method creates a Messagebox, the msgbox shows the Editorinput length and
-	 * the key length, from file and by hand
-	 * 
-	 */
-	private void msgBoxForKeyAndTextLength()
-	{
-		MessageDialog messageDialog = new MessageDialog(shell, "Überprüfen der Schlüssellänge", null,
-				"Länge des zuverschlüsselnen Textes: " + lengthOfEditorInput 
-				+ "\n" 
-				+ "Länge der Schlüsseleingabe " + (keyInputByHandTextField.getCharCount() == 0 ? keyInputByFileTextField.getCharCount() : keyInputByHandTextField.getCharCount()), 
-		        MessageDialog.INFORMATION,
-		        new String[] { "OK"}, 1);
-		if (messageDialog.open() == 1) {}
 	}
 	/**
 	 * 
