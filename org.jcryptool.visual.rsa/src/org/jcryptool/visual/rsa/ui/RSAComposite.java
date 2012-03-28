@@ -221,6 +221,7 @@ public class RSAComposite extends Composite {
         datas.put(action, data);
         this.datas = datas;
         initialize();
+        
     }
 
     /**
@@ -250,7 +251,24 @@ public class RSAComposite extends Composite {
         label.setText(Messages.RSAComposite_title);
 
         final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
-        stDescription.setText(Messages.RSAComposite_description);
+        switch (data.getAction()) {
+        case EncryptAction: {
+        	stDescription.setText(Messages.RSAComposite_description_enc);
+        	break;
+        	}
+        case DecryptAction: {
+        	stDescription.setText(Messages.RSAComposite_description_dec);
+        	break;
+        	}
+        case SignAction: {
+        	stDescription.setText(Messages.RSAComposite_description_sig);
+        	break;
+        	}
+        case VerifyAction: {
+        	stDescription.setText(Messages.RSAComposite_description_ver);
+        	break;
+        	}
+      	}
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
 
@@ -278,7 +296,7 @@ public class RSAComposite extends Composite {
         // set up the canvas for the Buttons
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayout(new FormLayout());
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, true));
+        canvas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
         // Form data to place Key selection Button
         final FormData fDkeysel = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
         fDkeysel.left = new FormAttachment(4);
@@ -345,7 +363,25 @@ public class RSAComposite extends Composite {
         runCalc = new Button(canvas, SWT.PUSH);
         runCalc.setBackground(RED);
         runCalc.setEnabled(false);
-        runCalc.setText(Messages.RSAComposite_Calculate);
+        switch (data.getAction()) {
+        case EncryptAction: {
+        	runCalc.setText(Messages.RSAComposite_Calculate_enc);
+        	break;
+        	}
+        case DecryptAction: {
+        	runCalc.setText(Messages.RSAComposite_Calculate_dec);
+        	break;
+        	}
+        case SignAction: {
+        	runCalc.setText(Messages.RSAComposite_Calculate_sig);
+        	break;
+        	}
+        case VerifyAction: {
+        	runCalc.setText(Messages.RSAComposite_Calculate_ver);
+        	break;
+        	}
+      	}
+        //runCalc.setText(Messages.RSAComposite_Calculate);
         runCalc.setLayoutData(fDcalc);
         runCalc.addSelectionListener(new SelectionAdapter() {
 
