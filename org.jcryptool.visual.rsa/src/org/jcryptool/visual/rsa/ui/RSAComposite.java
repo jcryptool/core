@@ -381,7 +381,6 @@ public class RSAComposite extends Composite {
         	break;
         	}
       	}
-        //runCalc.setText(Messages.RSAComposite_Calculate);
         runCalc.setLayoutData(fDcalc);
         runCalc.addSelectionListener(new SelectionAdapter() {
 
