@@ -13,13 +13,13 @@
 	</prerequisites>
 
 	<properties>
-		<tycho.version>0.13.0</tycho.version>
+		<tycho.version>0.14.1</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<modules>
-		<module>../../../core</module>
-		<module>../../../crypto</module>
+		<module>core</module>
+		<module>crypto</module>
 	</modules>
 
 	<repositories>
@@ -31,7 +31,7 @@
 		<repository>
 			<id>eclipse-babel-indigo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.0/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
 		</repository>
 	</repositories>
 
@@ -42,15 +42,6 @@
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<extensions>true</extensions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>maven-osgi-compiler-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
