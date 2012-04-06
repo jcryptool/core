@@ -13,105 +13,105 @@ package org.jcryptool.games.numbershark.strategies;
    http://www.gnu.org/copyleft/gpl.html.
 
    This software has NO WARRANTY, not even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
    ============================================================================
 
-   Der folgende Algorithmus ist geeignet, die optimale Punktzahl beim 
+   Der folgende Algorithmus ist geeignet, die optimale Punktzahl beim
    Taxman-Game bzw. Zahlenhai mit g Zahlen zu bestimmen.
-   
-   Schritt 1: 
-   Solange es Zahlen groesser g/2 gibt, die genau einen aktiven echten Teiler 
+
+   Schritt 1:
+   Solange es Zahlen groesser g/2 gibt, die genau einen aktiven echten Teiler
    besitzen, nimm von diesen die groesste.
-   
+
    Schritt 2:
-   Solange es ueberhaupt noch Zahlen gibt, fertige fuer jede dieser Zahlen eine 
-   Kopie der aktiven Zahlenmenge an, nimm die Zahl aus der jeweiligen Kopie und 
+   Solange es ueberhaupt noch Zahlen gibt, fertige fuer jede dieser Zahlen eine
+   Kopie der aktiven Zahlenmenge an, nimm die Zahl aus der jeweiligen Kopie und
    gehe mit der Kopie zurueck zu Schritt 1.
-   
+
    ============================================================================
 
    Die Klasse T01 implementiert diesen Algorithmus etwas effizienter:
-   
-   1. Die durch Schritt 2 erzeugte Anzahl an Verzweigungen des Suchbaums wird 
+
+   1. Die durch Schritt 2 erzeugte Anzahl an Verzweigungen des Suchbaums wird
    auf 5 verschiedene Weisen reduziert:
-   
+
       a) Wurde an einer anderen Stelle der Suche die noch zu betrachtende Menge
-      an aktiven Zahlen bereits einmal untersucht, wird die Suche in diesem 
-      Zweig abgebrochen. 
-      
-      b) Es kann fuer jeden Zweig abgeschaetzt werden, wieviel der Hai hier 
-      mindestens erhaelt. Liegt dieser Wert bereits ueber einer oberen 
+      an aktiven Zahlen bereits einmal untersucht, wird die Suche in diesem
+      Zweig abgebrochen.
+
+      b) Es kann fuer jeden Zweig abgeschaetzt werden, wieviel der Hai hier
+      mindestens erhaelt. Liegt dieser Wert bereits ueber einer oberen
       Schranke, wird die Suche in diesem Zweig abgebrochen.
-      
-      c) Hat eine Zahl noch mehr als zwei aktive echte Teiler, so wird diese 
-      Zahl an diesem Punkt noch nicht ausgewaehlt, wenn unter diesen echten 
+
+      c) Hat eine Zahl noch mehr als zwei aktive echte Teiler, so wird diese
+      Zahl an diesem Punkt noch nicht ausgewaehlt, wenn unter diesen echten
       Teilern einer ist, der einen der anderen teilt.
-      
-      d) Hat eine Zahl noch mehr als einen aktiven echten Teiler, so wird statt 
-      dieser Zahl der kleinste aktive Teiler ausgewaehlt. Dieser Teiler wird 
+
+      d) Hat eine Zahl noch mehr als einen aktiven echten Teiler, so wird statt
+      dieser Zahl der kleinste aktive Teiler ausgewaehlt. Dieser Teiler wird
       dabei jedoch nicht in die Zug-Sequenz uebernommen.
-      
-      e) Erreicht ein Zweig eine Punktzahl, die um g hoeher liegt als die 
+
+      e) Erreicht ein Zweig eine Punktzahl, die um g hoeher liegt als die
       optimale Punktzahl fuer g-1, so wird die Suche abgebrochen.
-   
-   2. Statt Kopien der aktiven Zahlenmenge anzufertigen, werden mit Hilfe einer 
-   Rueckverfolgung die jeweiligen Veraenderungen an der Zahlenmenge wieder 
+
+   2. Statt Kopien der aktiven Zahlenmenge anzufertigen, werden mit Hilfe einer
+   Rueckverfolgung die jeweiligen Veraenderungen an der Zahlenmenge wieder
    rueckgaengig gemacht.
 
    ============================================================================
-   
-   * Start des Programms: 
-   
-   Zwei Kommandozeilenparameter werden als Intervallgrenzen von und bis 
-   verwendet. Beispiel: 
-   
+
+   * Start des Programms:
+
+   Zwei Kommandozeilenparameter werden als Intervallgrenzen von und bis
+   verwendet. Beispiel:
+
    java ZahlenhaiBestwerte 1 159
 
    * Laufzeit des Programms:
-   
-   Die Laufzeiten sind sowohl von der Anzahl der Zahlen als auch von der Anzahl 
-   der Verzweigungen des Suchbaums und von den Permutationsmoeglichkeiten in 
-   der Zug-Sequenz zur optimalen Punktzahl abhaengig. Die Laufzeiten steigen 
-   nicht kontinuierlich an. 
-   
-   Abhaengig sind die Zeiten natuerlich auch davon, ob auf die Berechnung des 
-   Vorgaengers zurueck gegriffen werden kann oder ob die Suche nach Erreichen 
-   der maximal moeglichen Punktzahl abgebrochen werden kann.
-   
-   Ab 224 sollten die Rechnungen nicht mehr mit den Standardeinstellungen 
-   durchgefuehrt werden, da Java nach Erreichen der maximalen Heap-Kapazitaet 
-   recht viel Zeit zur Speicherbereinigung benoetigt und das Programm eventuell 
-   sogar mit einer Fehlermeldung abbricht. 
 
-   Die GC-Option -XX:+UseConcMarkSweepGC hat sich bei Rechnungen mit hoher  
-   RAM-Beanspruchung als guenstig erwiesen. Mit Hilfe dieser Option benoetigt 
-   z.B. die 330 nur 530 MB Speicher, ohne jedoch 1.1 GB. Allerdings ist Java 
+   Die Laufzeiten sind sowohl von der Anzahl der Zahlen als auch von der Anzahl
+   der Verzweigungen des Suchbaums und von den Permutationsmoeglichkeiten in
+   der Zug-Sequenz zur optimalen Punktzahl abhaengig. Die Laufzeiten steigen
+   nicht kontinuierlich an.
+
+   Abhaengig sind die Zeiten natuerlich auch davon, ob auf die Berechnung des
+   Vorgaengers zurueck gegriffen werden kann oder ob die Suche nach Erreichen
+   der maximal moeglichen Punktzahl abgebrochen werden kann.
+
+   Ab 224 sollten die Rechnungen nicht mehr mit den Standardeinstellungen
+   durchgefuehrt werden, da Java nach Erreichen der maximalen Heap-Kapazitaet
+   recht viel Zeit zur Speicherbereinigung benoetigt und das Programm eventuell
+   sogar mit einer Fehlermeldung abbricht.
+
+   Die GC-Option -XX:+UseConcMarkSweepGC hat sich bei Rechnungen mit hoher
+   RAM-Beanspruchung als guenstig erwiesen. Mit Hilfe dieser Option benoetigt
+   z.B. die 330 nur 530 MB Speicher, ohne jedoch 1.1 GB. Allerdings ist Java
    mit dem Standard-Kollektor i.A. deutlich schneller.
-   
-   Durch Anwendung von Multithreading erzielt das Programm, von den ersten 223 
-   abgesehen, wesentlich geringere Laufzeiten. Die hoehere Auslastung des 
+
+   Durch Anwendung von Multithreading erzielt das Programm, von den ersten 223
+   abgesehen, wesentlich geringere Laufzeiten. Die hoehere Auslastung des
    Rechners wirkt sich hier positiv aus.
-   Die Reihenfolge der den einzelnen Threads zugewiesenen Rechenzeiten scheint 
-   bei jeder Rechnung stets ein klein wenig unterschiedlich zu sein. Der Baum 
-   wird daher nicht immer gleich durchlaufen, die Datenbank ist unterschiedlich 
+   Die Reihenfolge der den einzelnen Threads zugewiesenen Rechenzeiten scheint
+   bei jeder Rechnung stets ein klein wenig unterschiedlich zu sein. Der Baum
+   wird daher nicht immer gleich durchlaufen, die Datenbank ist unterschiedlich
    gross und die Rechenzeiten weichen etwas voneinander ab.
-   Ueber den globalen Parameter G_MT laesst sich das Multithreading abstellen 
+   Ueber den globalen Parameter G_MT laesst sich das Multithreading abstellen
    bzw. definieren, ab welcher Zahl Multithreading verwendet werden soll.
-   
-   Es hat sich gezeigt, dass dieses Programm auf der 64-Bit-VM deutlich 
-   schneller laeuft und auch, dass die Java-Version 7 gegenueber der Version 6 
+
+   Es hat sich gezeigt, dass dieses Programm auf der 64-Bit-VM deutlich
+   schneller laeuft und auch, dass die Java-Version 7 gegenueber der Version 6
    deutliche Zeitvorteile erzielt.
 
-   (Zeitwerte in Klammern: 
+   (Zeitwerte in Klammern:
       Zeit bis zum Erreichen einer Eingabesequenz zum Bestwert.)
-   
+
    Testrechner 1: Ubuntu 10.04, 64 Bit VM 1.7.0, 4 GB RAM, 2 x 2.4 GHz
-                       
+
                               VM-Optionen (wie 224 falls nicht anders notiert)
      1 - 159 in    1 (   1) s keine
    160 - 223 in    3 (   1) s keine
-   224 - 259 in  472 (  92) s -Xms1g -Xmx2g -Xss6m 
+   224 - 259 in  472 (  92) s -Xms1g -Xmx2g -Xss6m
    260       in  271 ( 103) s
    261 - 329 in  343 (  85) s
    330 u 331 in  415 (   3) s
@@ -137,15 +137,15 @@ package org.jcryptool.games.numbershark.strategies;
 
 
    * Die Suchbaeume:
-   
-   Der groesste auf dem Testrechner 1 berechnete Baum gehoert zur 348. Das 
-   Programm musste 9.3 Mrd. Knoten besuchen, um den optimalen Punktwert zu 
-   beweisen, was einer Verarbeitung von 1.4 Mio. Knoten/s entspricht. (Aufgrund 
-   der recht grossen Anzahl an Knoten verwendet das Programm pro Baum bzw. 
-   Thread nur ein Arbeitsobjekt (Objekt-Typ D). Der Baum existiert lediglich in 
+
+   Der groesste auf dem Testrechner 1 berechnete Baum gehoert zur 348. Das
+   Programm musste 9.3 Mrd. Knoten besuchen, um den optimalen Punktwert zu
+   beweisen, was einer Verarbeitung von 1.4 Mio. Knoten/s entspricht. (Aufgrund
+   der recht grossen Anzahl an Knoten verwendet das Programm pro Baum bzw.
+   Thread nur ein Arbeitsobjekt (Objekt-Typ D). Der Baum existiert lediglich in
    der Idee des Programms.)
-   Die Datenbank enthielt 80 Mio. Eintraege, wobei bei der 348 die meisten 
-   Eintraege (Objekte vom Typ R) inkl. der Metadaten ein Volumen von jeweils 
+   Die Datenbank enthielt 80 Mio. Eintraege, wobei bei der 348 die meisten
+   Eintraege (Objekte vom Typ R) inkl. der Metadaten ein Volumen von jeweils
    56 Byte beanspruchen.
    Die 352 benoetigte auf dem Testrechner 2 ein Volumen von ueber 26 GB.
 */
@@ -156,37 +156,34 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 public class ZahlenhaiBestwerte {
 
 	private static String[][] output = null;
 	private static int stoppedAt;
 	static final boolean isCancelled = false;
 	private static int von = 2;
-	private static int bis = 0;
-	
-   /* VOLLSTAENDIG bestimmt, ob der Suchbaum vollstaendig durchlaufen werden 
-      soll (true) oder ob nur bis zum Erreichen einer Eingabesequenz zum 
+
+   /* VOLLSTAENDIG bestimmt, ob der Suchbaum vollstaendig durchlaufen werden
+      soll (true) oder ob nur bis zum Erreichen einer Eingabesequenz zum
       Bestwert gerechnet werden soll (false):
    */
    static final boolean VOLLSTAENDIG = true;
-   
-   /* Je nach Hardware kann mit G_MT die Grenze definiert werden, ab der mit 
-      Multithreading gerechnet werden soll. Ab der ersten Verzweigung laufen 
+
+   /* Je nach Hardware kann mit G_MT die Grenze definiert werden, ab der mit
+      Multithreading gerechnet werden soll. Ab der ersten Verzweigung laufen
       dann die einzelnen Zweige jeweils in einem eigenen Thread.
-      
-      Es werden zwei Moeglichkeiten des Multithreadings angeboten: Eine, bei 
-      der alle Verzweigungen parallel abgearbeitet werden, und eine, bei der 
-      nur AZ_KERNE viele Threads gleichzeiteig laufen. Auf letztere Weise 
-      wird bei nur wenigen Prozessor-Kernen eine fast sequentielle Reihenfolge 
-      eingehalten. Die Zahlen in G_SEMI_SEQUENTIELL sind die, bei denen sich 
+
+      Es werden zwei Moeglichkeiten des Multithreadings angeboten: Eine, bei
+      der alle Verzweigungen parallel abgearbeitet werden, und eine, bei der
+      nur AZ_KERNE viele Threads gleichzeiteig laufen. Auf letztere Weise
+      wird bei nur wenigen Prozessor-Kernen eine fast sequentielle Reihenfolge
+      eingehalten. Die Zahlen in G_SEMI_SEQUENTIELL sind die, bei denen sich
       diese Art des Durchlaufs auf dem Testrechner 1 als guenstiger erwies.
    */
    static final int G_MT = 220, // auf den Testrechner 1 zugeschnitten
-      AZ_KERNE = Runtime.getRuntime().availableProcessors(); // Anzahl Kerne 
+      AZ_KERNE = Runtime.getRuntime().availableProcessors(); // Anzahl Kerne
 
-   static final short[] G_SEMI_SEQUENTIELL = { // opt. fuer Testrechner 1 
+   static final short[] G_SEMI_SEQUENTIELL = { // opt. fuer Testrechner 1
       220,222,
       224,225,228,232,234,
       261,264,266,268,270,272,273,275,276,279,280,282,284,285,286,288,290,
@@ -200,47 +197,9 @@ public class ZahlenhaiBestwerte {
       return false;
    }
 
-
-   public static void main(final int von1, final int bis1, IProgressMonitor monitor) throws InterruptedException {
-      folge2 = new int[0];
-      azR2 = new int[2];
-      rest0 = new int[0];
-      int schlaf, t;
-
-      try {
-         von = von1;
-         bis = bis1;
-      }
-      catch(Exception e) {
-         System.out.println("Das Programm benoetigt zwei ganzzahlige " +
-            "Intervallgrenzen. Beispiel:\njava ZahlenhaiBestwerte 10 20");
-      }
-      if (von < 1) { if (bis < 1) return; von = 1; }
-      if (von == 1 && bis > 0) { System.out.println("1:1:0:[1]:0ms"); von++; }
-      output = new String[bis+1-von][5];
-      for (g = von; g <= bis; g++) {
-    	  if(!monitor.isCanceled()){
-	         start = System.currentTimeMillis();
-	         berechne();
-	         if (g >= G_MT) {
-	            schlaf = (g*g*g) >> 16; // Pause von g abhaengig
-	            while (azVZW > 0) Thread.sleep(schlaf);
-	            xs.shutdown();
-	         }
-	         stop = System.currentTimeMillis();
-	         t = (int)(stop-start);
-	         String zeit = t < 1000? t+"ms" : (t/1000)+"s";
-	         output[g-von][4]=zeit;
-	         stoppedAt = g;
-    	  }
-      }
-   }
-
-
-
    static int azVZW; // Zaehler fuer Anzahl an Thread-Instanzen
    static int azDB;
-   
+
    static int g, // groesste Zahl
               g2, // g/2
               g64, // (effektiv + 16 + 63)/64
@@ -256,15 +215,15 @@ public class ZahlenhaiBestwerte {
                 rest0,  // speichert Rest nach schritt1B fuer naechstes g
                 azR2;
 
-   static R[] db; // Datenbank fuer Reste bzw inaktive Zahlen, Index = ds.aktiv 
+   static R[] db; // Datenbank fuer Reste bzw inaktive Zahlen, Index = ds.aktiv
 
-   static boolean abbruch, // Cut im Fall T(g) = T(g-1) + g 
+   static boolean abbruch, // Cut im Fall T(g) = T(g-1) + g
                   semiseq;
 
    static long start, stop; // fuer die Zeitmessung
 
    static L pp; // pp = pseudoprimes Futter bei g
-   static int azP, azPP, // Anzahl der Primzahlen bzw. PP groesser g/2 
+   static int azP, azPP, // Anzahl der Primzahlen bzw. PP groesser g/2
               effektiv, // Summe der effektiv waehlbaren Zahlen nach Schritt 1B
               effektiv2, // Index fuer Teilung der Datenbank
               effektiv2plus79; // dto.
@@ -279,25 +238,25 @@ public class ZahlenhaiBestwerte {
    // eine nuetzliche Abkuerzung:
    static class L extends LinkedList<Integer> { }
 
-   /* Nach der Auswahl der groessten Primzahl in Schritt 1A werden saemtliche 
-      restliche Primzahlen groesser g/2 und alle Pseudoprimzahlen aus dem Spiel 
-      genommen. Wesentlich ist hierfuer die vorherige Markierung durch die 
-      Methode markierePP(T[]) (ebenfalls in Schritt 1A). Die Suche reduziert 
-      sich dann nach Schritt 1B auf die im Hinblick auf die optimale Punktzahl 
+   /* Nach der Auswahl der groessten Primzahl in Schritt 1A werden saemtliche
+      restliche Primzahlen groesser g/2 und alle Pseudoprimzahlen aus dem Spiel
+      genommen. Wesentlich ist hierfuer die vorherige Markierung durch die
+      Methode markierePP(T[]) (ebenfalls in Schritt 1A). Die Suche reduziert
+      sich dann nach Schritt 1B auf die im Hinblick auf die optimale Punktzahl
       effektiv waehlbaren Zahlen.
    */
-   /* pseudoprim() berechnet saemtliche Pseudoprimzahlen (nicht prime Zahlen, 
+   /* pseudoprim() berechnet saemtliche Pseudoprimzahlen (nicht prime Zahlen,
       die in keiner optimalen Zugfolge enthalten sein koennen).
 
-      Berechnung: Hat g die Primfaktorzerlegung g = p * q mit p,q > 2 und 
-      bezeichne p' bzw. q' die jeweils naechst kleinere Primzahl und sei 
-      f = p' * q' > g/2. Dann ist f pseudoprim bzgl. g. Weiter ist f pseudoprim 
+      Berechnung: Hat g die Primfaktorzerlegung g = p * q mit p,q > 2 und
+      bezeichne p' bzw. q' die jeweils naechst kleinere Primzahl und sei
+      f = p' * q' > g/2. Dann ist f pseudoprim bzgl. g. Weiter ist f pseudoprim
       bzgl. nachfolgender g solange f > g/2.
-      
-      (Zur Ueberpruefung der Konsistenz der Folge opt(g) der optimalen 
-      Punktzahlen kann die folgende Beziehung verwendet werden: 
-      Ist g die kleinste Zahl bzgl. derer f eine Pseudoprimzahl ist, so gilt 
-      opt(g) = opt(g-1) + g - p' * q' 
+
+      (Zur Ueberpruefung der Konsistenz der Folge opt(g) der optimalen
+      Punktzahlen kann die folgende Beziehung verwendet werden:
+      Ist g die kleinste Zahl bzgl. derer f eine Pseudoprimzahl ist, so gilt
+      opt(g) = opt(g-1) + g - p' * q'
       S. Kommentare unten in int[][] U_SCHRANKE.)
    */
    static L pseudoprim() {
@@ -339,17 +298,17 @@ public class ZahlenhaiBestwerte {
         else if (p > N) return false;
      return false; // Compiler-Dummy
    }
- 
+
    // Anzahl der Primzahlen groesser g/2:
-   static int prim2() { 
+   static int prim2() {
       int az = 0;
       for (int n = g; n > g/2; n--) if (istPrim(n)) az++;
       return az;
    }
 
-   /* Die Primzahlen groesser g/2 und alle Pseudoprimzahlen werden markiert 
-      und in Schritt 1B (zu diesem Zeitpunkt ist die groesste Primzahl bereits 
-      nicht mehr dabei) nach entsprechender Gutschrift fuer den Hai aus dem 
+   /* Die Primzahlen groesser g/2 und alle Pseudoprimzahlen werden markiert
+      und in Schritt 1B (zu diesem Zeitpunkt ist die groesste Primzahl bereits
+      nicht mehr dabei) nach entsprechender Gutschrift fuer den Hai aus dem
       Spiel entfernt:
    */
    static void markierePP(T[] tab) {
@@ -364,23 +323,23 @@ public class ZahlenhaiBestwerte {
 
 
 
-   /* Um die Anzahl erweiterte Teilermenge 
+   /* Um die Anzahl erweiterte Teilermenge
       (Menge ECHTER aktiver Teiler ungleich 1):
-      Um eine effiziente Verwaltung der Teilermengen zu ermoeglichen, wird 
-      noch ein Array hinzu gefuegt, das sich merkt, ob der entsprechende Teiler 
+      Um eine effiziente Verwaltung der Teilermengen zu ermoeglichen, wird
+      noch ein Array hinzu gefuegt, das sich merkt, ob der entsprechende Teiler
       aktiv ist, und eins, das den Array-Index der Teiler speichert.
    */
-   static class T { 
+   static class T {
       int az, // Anzahl INKL. der Zahl selbst
           az1; // zu Beginn und OHNE
       int[] tm; // Teilermenge OHNE die Zahl selbst
       byte[] aktiv; // Zahl aktiv=1 oder nicht=0
       short[] indizes; // die Indizes der Zahlen in tm
-      
+
       T(int[] tm) { // Konstruktor fuer den Start der Suche
          az1 = tm.length;
-         az = az1 + 1; 
-         this.tm = tm; 
+         az = az1 + 1;
+         this.tm = tm;
          aktiv = new byte[az1];
          if (az1 > 0) {
             int gT = tm[az1-1];
@@ -393,11 +352,11 @@ public class ZahlenhaiBestwerte {
       }
 
       T(int az, int az1, int[] tm, byte[] aktiv, short[] indizes) {
-         this.az = az; 
-         this.az1 = az1; 
-         this.tm = tm; 
-         this.aktiv = aktiv; 
-         this.indizes = indizes; 
+         this.az = az;
+         this.az1 = az1;
+         this.tm = tm;
+         this.aktiv = aktiv;
+         this.indizes = indizes;
       }
 
       T kopie() {
@@ -406,17 +365,17 @@ public class ZahlenhaiBestwerte {
             aktiv == null ? null : Arrays.copyOf(aktiv, aktiv.length),
             indizes == null ? null : Arrays.copyOf(indizes, indizes.length));
       }
-      
+
       void einfg(final int N) { aktiv[indizes[N]] = 1; az++; }
-      
+
       void entf(final int N) { aktiv[indizes[N]] = 0; az--; }
-      
+
       int kleinste() { // nicht alle Eintraege 0
          int i = 0;
          for ( ; ; i++) if (aktiv[i] > 0) break;
          return tm[i];
       }
-      
+
       int groesste() { // nicht alle Eintraege 0
          int i = az1 - 1;
          for ( ; ; i--) if (aktiv[i] > 0) break;
@@ -429,7 +388,7 @@ public class ZahlenhaiBestwerte {
    // der gute alte Gauss (fuer berechne()):
    static int summe(final int K) { return K*(K + 1)/2; }
 
-   
+
    // Start der Rechnung:
    static void berechne() {
       azDB = 0;
@@ -446,7 +405,7 @@ public class ZahlenhaiBestwerte {
       schritt1A();
    }
 
-   /* In Schritt 1A: Erzeuge das Array mit den Teilermengen aller Zahlen. 
+   /* In Schritt 1A: Erzeuge das Array mit den Teilermengen aller Zahlen.
       Der Array-Index entspricht dabei der jeweiligen Zahl.
    */
    static T[] tabelle() {
@@ -467,7 +426,7 @@ public class ZahlenhaiBestwerte {
       return a;
    }
    // Teilermenge von N ohne 1 und ohne N als Liste:
-   static L tmOhne1uN(final int N) { 
+   static L tmOhne1uN(final int N) {
       L tm = new L();
       for (int i = N/2; i > 1; i--) if (N % i == 0) tm.push(i);
       return tm;
@@ -484,46 +443,46 @@ public class ZahlenhaiBestwerte {
       while (tab[i].az != 1) i--; // 1 bereits weg
       pts = i; // groesste Primzahl
       folge1.add(i);
-      
+
       markierePP(tab); // setzt u.a. tab[i].az = -1;
       tab[i].az = -2;  // Korrektur
 
       (new D(hai, pts, null, tab, 1, g-2)).schritt1B();
    }
 
-   
-   /* entf(int,T[]) und reaktiviere(int,T[],int) werden zur Aenderung und  
-      Rueckaenderung des Arbeitsobjekts D verwendet (Methoden schritt1B(), 
+
+   /* entf(int,T[]) und reaktiviere(int,T[],int) werden zur Aenderung und
+      Rueckaenderung des Arbeitsobjekts D verwendet (Methoden schritt1B(),
       setze(int) und schritt1()).
    */
    // entferne n aus saemtlichen Teilermengen:
    static void entf(final int N, T[] tab) {
-      if (tab[N].az > 0) tab[N].az = 0; // d.h. if az == 1 
+      if (tab[N].az > 0) tab[N].az = 0; // d.h. if az == 1
                                     // (N wird aus tab[N] als letztes entfernt)
       for (int i = N << 1; i <= g; i += N)
          if (tab[i].az > 0) tab[i].entf(N);
    }
-   /* Der Teiler R wird in der gesamten Tabelle wieder reaktiviert, 
+   /* Der Teiler R wird in der gesamten Tabelle wieder reaktiviert,
       nur nicht in tab[N] (dort Sonderbehandlung):
    */
    static void reaktiviere(final int R, T[] tab, final int N) {
-      if (tab[R].az == 0 && R != N) tab[R].az = 1; 
+      if (tab[R].az == 0 && R != N) tab[R].az = 1;
       for (int i = R << 1; i <= g; i += R)
-         if (tab[i].az > 0 && i != N) tab[i].einfg(R); 
+         if (tab[i].az > 0 && i != N) tab[i].einfg(R);
    }
 
 
-   /* D ist das Arbeitsobjekt, dass entweder selbst oder als Kopie in einem 
-      eigenstaendigen Thread per Backtracking durch den Suchbaum geschickt 
+   /* D ist das Arbeitsobjekt, dass entweder selbst oder als Kopie in einem
+      eigenstaendigen Thread per Backtracking durch den Suchbaum geschickt
       wird. Im Wesentlichen beschreiben seine Methoden den Suchvorgang.
    */
-   /* Datenstruktur D, die es erlaubt, in Schritt 1 schnell die noch aktiven 
+   /* Datenstruktur D, die es erlaubt, in Schritt 1 schnell die noch aktiven
       Zahlen der Teilermenge einer Zahl i und deren Anzahl zu bestimmen:
       Wesentlich ist hierfuer T[] tab. tab[i] haelt diese Information bereit.
    */
-   static class D { 
+   static class D {
       int hai, pts, // Hai-Punkte, Spieler-Punkte
-          az, aktiv; // Anzahl bisher gewaehlter Zahlen bzw. aktiver Zahlen 
+          az, aktiv; // Anzahl bisher gewaehlter Zahlen bzw. aktiver Zahlen
       int[] seq2; // Eingabe-Sequenz ab Schritt 2; seq2[0] speichert Anzahl
       T[] tab; // Tabelle mit der Teilermenge jeder Zahl
       D(int hai, int pts, int[] seq2, T[] tab, int az, int aktiv) {
@@ -536,13 +495,13 @@ public class ZahlenhaiBestwerte {
       }
       D kopie() {
          T[] tabKopie = new T[tab.length];
-         for (int i = 0; i < tab.length; i++) 
+         for (int i = 0; i < tab.length; i++)
             tabKopie[i] = tab[i] == null ? null : tab[i].kopie();
-         return new D(hai, 
-                      pts, 
+         return new D(hai,
+                      pts,
                       Arrays.copyOf(seq2, seq2.length),
-                      tabKopie, 
-                      az, 
+                      tabKopie,
+                      az,
                       aktiv);
       }
 
@@ -550,7 +509,7 @@ public class ZahlenhaiBestwerte {
          T tabN, tabT;
          for (int n = g, t; n > g2; n--) {
             tabN = tab[n];
-            if (tabN.az == -1) { 
+            if (tabN.az == -1) {
                tabN.az = -2;
                hai += n;
                aktiv--;
@@ -562,8 +521,8 @@ public class ZahlenhaiBestwerte {
                pts += n;
                tabN.az = -2;
                folge1.add(n); az++;
-               entf(t, tab); 
-               tabT.az = -2; 
+               entf(t, tab);
+               tabT.az = -2;
                tabT.aktiv = null; tabT.tm = null; tabT.indizes = null;
                // n > g/2 muss nur in ds.tab[n] geloescht werden:
                tabN.aktiv = null; tabN.tm = null; tabN.indizes = null;
@@ -581,7 +540,7 @@ public class ZahlenhaiBestwerte {
          for (int i = 2; i <= g; i++) if (tab[i].az > 0) rest[k++] = i;
          // hatte g-1 den gleichen Rest? :
          int eq = 0;
-         if ( java.util.Arrays.equals(rest,rest0) ) eq = 1; 
+         if ( java.util.Arrays.equals(rest,rest0) ) eq = 1;
          rest0 = rest; // fuer g+1
          pts1g0 = pts1g;
          pts1g = pts; // dto.
@@ -613,12 +572,12 @@ public class ZahlenhaiBestwerte {
          g64 = (effektiv + 79)/64; // 79 = 16 + 63
          azR2[0] = (effektiv2 + 16)/64;
          azR2[1] = (effektiv2 + 16)%64;
-      
+
          if (g < G_MT) schritt2(); // kein Multithreading
          else if (semiseq) schritt2SemiSequentiell();
          else schritt2Parallel();
       }
-      
+
       /* Die erste Verzweigung des Suchbaums:
          Jeder Zweig wird in einem eigenen Thread abgearbeitet.
       */
@@ -636,7 +595,7 @@ public class ZahlenhaiBestwerte {
          short[] vzw = verzweigungen(this);
          for (short i : vzw) { if (i == 0) break; azVZW++; }
          xs = Executors.newFixedThreadPool(azVZW);
-         for (short i : vzw) { 
+         for (short i : vzw) {
             if (i == 0) break;
             xs.execute( new VZW(i, kopie()) );
          }
@@ -645,14 +604,14 @@ public class ZahlenhaiBestwerte {
       // Die weiteren Verzweigungen des Suchbaums:
       void schritt2() {
          if (abbruch) return;
-         for (short i : verzweigungen(this)) { 
-            if (i == 0) break; 
-            setze(i); 
-         } 
+         for (short i : verzweigungen(this)) {
+            if (i == 0) break;
+            setze(i);
+         }
       }
-   
+
       // n wird ausgewaehlt, die Datenstruktur ds entsprechend angepasst:
-      void setze(final int N) { 
+      void setze(final int N) {
          if (abbruch) return;
          T tabN = tab[N];
          final int AZ = tabN.az; // Merker fuer Ruecksetzung; az ist 1 oder 2
@@ -660,10 +619,10 @@ public class ZahlenhaiBestwerte {
          tabN.az = 0; // verhindert das Loeschen in tabN.tm
          if (AZ > 1) {
             t = tabN.kleinste();
-            hai += t; 
-            entf(t, tab); 
-            pts += N; 
-            seq2[++seq2[0]] = N; 
+            hai += t;
+            entf(t, tab);
+            pts += N;
+            seq2[++seq2[0]] = N;
             az++;
          }
          else hai += N;
@@ -672,19 +631,19 @@ public class ZahlenhaiBestwerte {
          schritt1();
          // Backtracking: die Aenderungen werden wieder rueckgaengig gemacht:
          aktiv += AZ;
-         reaktiviere(N, tab, N); 
-         if (AZ > 1) { 
-            pts -= N; 
-            seq2[seq2[0]--] = 0; 
+         reaktiviere(N, tab, N);
+         if (AZ > 1) {
+            pts -= N;
+            seq2[seq2[0]--] = 0;
             az--;
-            hai -= t; 
-            reaktiviere(t, tab, N); 
-            tabN.einfg(t); 
+            hai -= t;
+            reaktiviere(t, tab, N);
+            tabN.einfg(t);
          }
          else hai -= N;
          tabN.az = AZ;
       }
-   
+
       /* Der Teil, der dem Algorithmus seine hohe Geschwindigkeit verleiht:
          Die Suche ohne Verzweigung:
       */
@@ -694,8 +653,8 @@ public class ZahlenhaiBestwerte {
          for (int n = g, t; n > g2; n--) {
             tabN = tab[n];
             if (tabN.az < 1) continue;
-            // Haifutter darf es (bei opt. Punktzahlen) hier nicht mehr geben:  
-            else if (tabN.az == 1) return; 
+            // Haifutter darf es (bei opt. Punktzahlen) hier nicht mehr geben:
+            else if (tabN.az == 1) return;
             else if (tabN.az == 2) {
                t = tabN.kleinste();
                tabN.az = 0;
@@ -707,7 +666,7 @@ public class ZahlenhaiBestwerte {
                ende = false;
                schritt1();
                // Backtracking:
-               tabN.einfg(t); 
+               tabN.einfg(t);
                tabN.az = 2;
                hai -= t;
                pts -= n;
@@ -718,7 +677,7 @@ public class ZahlenhaiBestwerte {
             }
          }
          if (ende) {
-            if (pts > bw) bestwerte(); // evtl. Ausgabe; if (pts > bw) kostet 
+            if (pts > bw) bestwerte(); // evtl. Ausgabe; if (pts > bw) kostet
                         // .. hier weniger Zeit als in synchronized bestwerte()
             // Fertig?
             if (aktiv == 0) return;
@@ -734,7 +693,7 @@ public class ZahlenhaiBestwerte {
                else rest = restAktiv9(m, this);
             }
             else { // weniger INAKTIVE (ausgewaehlte) Zahlen
-               int r = effektiv - aktiv, 
+               int r = effektiv - aktiv,
                    s = (effektiv2plus79 + (r << 1)) >> 6,  m;
                if (s >= g64) rest = restInaktiv1(this);
                else if ((m = 1 + (r + 1)/7) > s) rest = restInaktiv2(s, this);
@@ -743,22 +702,22 @@ public class ZahlenhaiBestwerte {
             if (dbEinfuegen(rest, aktiv)) schritt2();
          }
       }
-   
-      /* Hier wird der maximale Wert (Thread-geschuetzt) hochgeschraubt und 
-         die zugehoerige Zugfolge ausgegeben, ggf. auch die weitere Suche 
+
+      /* Hier wird der maximale Wert (Thread-geschuetzt) hochgeschraubt und
+         die zugehoerige Zugfolge ausgegeben, ggf. auch die weitere Suche
          abgebrochen:
       */
       synchronized void bestwerte() {
          if (pts > bw) { // Thread-geschuetzte Wiederholung dieser Frage
             bw = pts;
-            if (pts >= max) { 
+            if (pts >= max) {
                haiMax -= pts - max; // falls max zu niedrig angesetzt wurde
                max = pts;
                U_SCHRANKE[g][0] = max; // Vorbereitung fuer naechstes g
                U_SCHRANKE[g][1] = az; // dto.
                folge2 = seq2.clone();
-               if (!VOLLSTAENDIG || max == U_SCHRANKE[g-1][0] + g) { 
-                  ausgabe(":cut"); abbruch = true; 
+               if (!VOLLSTAENDIG || max == U_SCHRANKE[g-1][0] + g) {
+                  ausgabe(":cut"); abbruch = true;
                }
                else ausgabe("");
                //else {
@@ -771,37 +730,37 @@ public class ZahlenhaiBestwerte {
 
    } // Ende class D
 
-   
+
    /* Es wird berechnet, was der Hai in diesem Zweig mindestens bekommt.
       Liegt dieser Wert bereits zu hoch, wird false zurueck gegeben.
-      Zusaetzlich wird beurteilt, ob ueberhaupt noch genuegend Zahlen zur 
+      Zusaetzlich wird beurteilt, ob ueberhaupt noch genuegend Zahlen zur
       Auswahl stehen.
    */
    static boolean moeglich(final D DS) { // haiMax-Version
       int hai = DS.hai,
           s = DS.aktiv,
           s2 = s/2, // mehr Zahlen kann der Spieler nicht bekommen
-          az1 = U_SCHRANKE[g-1][1] - DS.az; // braucht er mindestens noch 
+          az1 = U_SCHRANKE[g-1][1] - DS.az; // braucht er mindestens noch
       if (s2 < az1) return false;
       if (s2 == az1) s -= s2;
       else s -= ++az1; // diesmal evtl. eine Zahl mehr
       final T[] TAB = DS.tab;
-      for (int i = 2, n = 0; n < s; i++) 
+      for (int i = 2, n = 0; n < s; i++)
          if (TAB[i].az > 0) { hai += i; n++; }
       if (hai > haiMax) return false;
       return true;
    }
 
-   /* Die folgenden restXYZ-Methoden bilden die Spielsituation isomorph und 
+   /* Die folgenden restXYZ-Methoden bilden die Spielsituation isomorph und
       platzsparend in ein long[] ab.
-      Betrachtet wird dabei nur der effektive Rest (nach Schritt 1B). 
-      ds.pts wird aus Speicherplatzgruenden (Java verwaltet Objekte in 
-      8-Byte-Schritten) mit in dieses Array gesteckt. 
+      Betrachtet wird dabei nur der effektive Rest (nach Schritt 1B).
+      ds.pts wird aus Speicherplatzgruenden (Java verwaltet Objekte in
+      8-Byte-Schritten) mit in dieses Array gesteckt.
    */
-   /* Hier wird geprueft, ob die jeweilige Zahl aktiv ist (aktiv = 1, 
+   /* Hier wird geprueft, ob die jeweilige Zahl aktiv ist (aktiv = 1,
       nicht aktiv = 0) und das entsprechende Bit festgehalten:
    */
-   static long[] restAktiv1(final D DS) { 
+   static long[] restAktiv1(final D DS) {
       long[] rest = new long[g64];
       final int G = g;
       final T[] TAB = DS.tab;
@@ -815,14 +774,14 @@ public class ZahlenhaiBestwerte {
       rest[0] |= DS.pts; // Punkte
       return rest;
    }
-   /* Hier wird geprueft, ob die jeweilige Zahl nicht aktiv ist (aktiv = 0, 
+   /* Hier wird geprueft, ob die jeweilige Zahl nicht aktiv ist (aktiv = 0,
       nicht aktiv = 1) und das entsprechende Bit festgehalten:
    */
    static long[] restInaktiv1(final D DS) {
       long[] rest = new long[g64];
       final int G = g;
       final T[] TAB = DS.tab;
-      int i = 2, r = 0, r1 = 16; 
+      int i = 2, r = 0, r1 = 16;
       for ( ; i <= G; i++) {
          if (TAB[i].az < 0) continue;
          if (TAB[i].az == 0) rest[r] |= 1;
@@ -833,9 +792,9 @@ public class ZahlenhaiBestwerte {
       return rest;
    }
    /* Sind NUR NOCH WENIGE Zahlen AKTIV, so ist die Wahrscheinlichkeit hoch,
-      dass zwei aufeinander folgende (effektive) Zahlen nicht aktiv sind. 
+      dass zwei aufeinander folgende (effektive) Zahlen nicht aktiv sind.
       In diesem Fall wird im vorderen Teil des Arrays (hinter ds.pts) eine 1
-      festgehalten. Andernfalls wird hier eine Null eingetragen und beide 
+      festgehalten. Andernfalls wird hier eine Null eingetragen und beide
       Zahlen werden im hinteren Teil wie in der Methode restAktiv1 als 0
       oder 1 entsprechend notiert.
       D.h. hier werden INaktive Zahlen zusammengefasst und aktive
@@ -866,8 +825,8 @@ public class ZahlenhaiBestwerte {
       if (i <= g && TAB[i].az > 0) rest[r] |= (1L << r1);
       return rest;
    }
-   /* Sind noch viele (effektiv waehlbare) Zahlen aktiv (WENIGE INAKTIV), 
-      so ist die Wahrscheinlichkeit hoch, dass zwei aufeinander folgende 
+   /* Sind noch viele (effektiv waehlbare) Zahlen aktiv (WENIGE INAKTIV),
+      so ist die Wahrscheinlichkeit hoch, dass zwei aufeinander folgende
       (effektive) Zahlen aktiv sind.
       ... (s.o.)
       D.h. hier werden aktive Zahlen zusammengefasst und INaktive
@@ -902,19 +861,19 @@ public class ZahlenhaiBestwerte {
    /* Hier werden alle aktiven Zahlen als 9-Bit-Zahlen festgehalten
       (Methode fuer nur wenige aktive Zahlen):
    */
-   static long[] restAktiv9(final int DIM, final D DS) { 
+   static long[] restAktiv9(final int DIM, final D DS) {
       long[] rest = new long[DIM];
       final int G = g;
       final T[] TAB = DS.tab;
       int i = 2, r = 0, r1 = 2;
       for ( ; i <= G; i++) {
          if (TAB[i].az > 0) { // aktiv
-            rest[r] |= i; 
+            rest[r] |= i;
             if (r1 < 6) { rest[r] <<= 9; r1++; } else { r1 = 0; r++; }
-         } 
+         }
       }
       rest[0] <<= 16;
-      rest[0] |= DS.pts; 
+      rest[0] |= DS.pts;
       return rest;
    }
    /* Hier werden alle nicht aktiven Zahlen als 9-Bit-Zahlen festgehalten
@@ -927,32 +886,32 @@ public class ZahlenhaiBestwerte {
       int i = 2, r = 0, r1 = 2;
       for ( ; i <= G; i++) {
          if (TAB[i].az == 0) { // nicht aktiv
-            rest[r] |= i; 
+            rest[r] |= i;
             if (r1 < 6) { rest[r] <<= 9; r1++; } else { r1 = 0; r++; }
-         } 
+         }
       }
       rest[0] <<= 16;
-      rest[0] |= DS.pts; 
+      rest[0] |= DS.pts;
       return rest;
    }
 
 
-   /* Aus den Zahlen, die Schritt 1(B) uebrig laesst, werden hier die Zahlen  
+   /* Aus den Zahlen, die Schritt 1(B) uebrig laesst, werden hier die Zahlen
       zur Verzweigung des Suchbaums bestimmt:
-      Dieser Test unterscheidet grundsaetzlich zwischen Zahlen mit genau 
-      einem aktiven echten Teiler und Zahlen mit mehr als einem aktiven 
-      echten Teiler. Bei mehr als einem Teiler kann man statt der Zahl den 
-      kleinsten aktiven Teiler auswaehlen. So lassen sich mehrere Zweige 
-      zusammenfassen.   
-      Der Fall einer Zahl mit genau zwei aktiven echten Teilern wird zuerst 
-      behandelt und dabei der kleinste und auch der groesste (echte aktive) 
-      Teiler festgehalten. Im anschliessenden Fall der Zahlen mit genau 
-      einem aktiven echten Teiler duerfen Zahl und Teiler nicht mit einem 
+      Dieser Test unterscheidet grundsaetzlich zwischen Zahlen mit genau
+      einem aktiven echten Teiler und Zahlen mit mehr als einem aktiven
+      echten Teiler. Bei mehr als einem Teiler kann man statt der Zahl den
+      kleinsten aktiven Teiler auswaehlen. So lassen sich mehrere Zweige
+      zusammenfassen.
+      Der Fall einer Zahl mit genau zwei aktiven echten Teilern wird zuerst
+      behandelt und dabei der kleinste und auch der groesste (echte aktive)
+      Teiler festgehalten. Im anschliessenden Fall der Zahlen mit genau
+      einem aktiven echten Teiler duerfen Zahl und Teiler nicht mit einem
       zuvor notierten groessten und kleinsten Teiler uebereinstimmen.
    */
    static short[] verzweigungen(final D DS) {
-      short[] res = new short[DS.aktiv]; 
-      int[] ket = new int[DS.aktiv >> 1], // kleine echte Teiler 
+      short[] res = new short[DS.aktiv];
+      int[] ket = new int[DS.aktiv >> 1], // kleine echte Teiler
             nres = new int[DS.aktiv >> 2]; // was nicht in res soll
       final T[] TAB = DS.tab;
       int ir = 0, ik = 0, inr = 0, az, t1, t2;
@@ -966,8 +925,8 @@ public class ZahlenhaiBestwerte {
             ket[ik++] = t1;
          }
       for (int i = g2; i > 3; i--) // die 2er der unteren Haelfte
-         if ((az = TAB[i].az) == 2 && !enthaelt(nres, i, inr)) 
-            res[ir++] = (short)i; 
+         if ((az = TAB[i].az) == 2 && !enthaelt(nres, i, inr))
+            res[ir++] = (short)i;
       for (int i = g; i > 3; i--)
          if ((az = TAB[i].az) > 3 && kandidat(i, TAB)) {
             t1 = TAB[i].kleinste();
@@ -975,7 +934,7 @@ public class ZahlenhaiBestwerte {
          }
       // erst die Zahlen, dann die kleinen Teiler:
       for (int k = 0, r = ir; k < ik; k++) res[r++] = (short)ket[k];
-      return res;           
+      return res;
    }
 
    // ist N in A ?
@@ -983,13 +942,13 @@ public class ZahlenhaiBestwerte {
       for (int i = 0; i < ENDE; i++) if (A[i] == N) return true;
       return false;
    }
-   /* Eine Zahl mit mehr als zwei aktiven echten Teilern, die unter diesen  
-      einen hat, der einen anderen teilt, muss diesmal nicht in die Auswahl  
+   /* Eine Zahl mit mehr als zwei aktiven echten Teilern, die unter diesen
+      einen hat, der einen anderen teilt, muss diesmal nicht in die Auswahl
       genommen werden. kandidat gibt dann false zurueck.
-      Dieser Test nutzt die Tatsache, dass die Teilermenge einer Zahl die 
-      Teilermengen ihrer Teiler vollstaendig enhaelt. 
+      Dieser Test nutzt die Tatsache, dass die Teilermenge einer Zahl die
+      Teilermengen ihrer Teiler vollstaendig enhaelt.
    */
-   static boolean kandidat(final int K, final T[] TAB) { 
+   static boolean kandidat(final int K, final T[] TAB) {
       for (int i : TAB[K].tm)
          if (i != 0 && TAB[i].az > 1) return false;
      return true;
@@ -998,14 +957,14 @@ public class ZahlenhaiBestwerte {
 
    static class VZW extends D implements Runnable {
       int vzw;
-      VZW(int vzw, D ds) { 
+      VZW(int vzw, D ds) {
          super(ds.hai, ds.pts, ds.seq2, ds.tab, ds.az, ds.aktiv);
-         this.vzw = vzw; 
-      } 
-      public void run() { 
+         this.vzw = vzw;
+      }
+      public void run() {
          //stop = System.currentTimeMillis();
          //System.out.print(vzw+":"+((stop-start)/1000)+"s:");
-         setze(vzw); 
+         setze(vzw);
          runterzaehlen();
          if (semiseq) {
             int n = vzw1Pop();
@@ -1025,32 +984,32 @@ public class ZahlenhaiBestwerte {
       return vzw1.remove();
    }
 
-   
 
-   /* Es wird versucht, den Rest in die Datenbank einzufuegen. Dies gelingt 
-      nur, wenn der Rest noch nicht vorhanden ist oder wenn der Zwischenstand 
+
+   /* Es wird versucht, den Rest in die Datenbank einzufuegen. Dies gelingt
+      nur, wenn der Rest noch nicht vorhanden ist oder wenn der Zwischenstand
       mehr Punkte aufweist. In beiden Faellen wird true zurueck gegeben:
       (Thread-geschuetzter Zugriff auf die Datenbank)
    */
-   static synchronized 
+   static synchronized
          boolean dbEinfuegen(final long[] REST, final int AKTIV) {
-      if (db[AKTIV] == null) { 
+      if (db[AKTIV] == null) {
          db[AKTIV] = new R(REST); // Wurzel anlegen
          return true;
       }
       return db[AKTIV].dbEinfuegen(REST);
    }
-   
 
-   /* Die verbleibenden noch aktiven Zahlen ('Reste') werden um die bisher  
+
+   /* Die verbleibenden noch aktiven Zahlen ('Reste') werden um die bisher
       erreichten Punkte und um rekursive Referenzen erweitert.
-      R[] db implementiert eine Datenbank fuer Reste, so dass eine identische 
-      Aufgabe nicht ein zweites Mal gerechnet werden muss. Der Index des Arrays 
+      R[] db implementiert eine Datenbank fuer Reste, so dass eine identische
+      Aufgabe nicht ein zweites Mal gerechnet werden muss. Der Index des Arrays
       entspricht dabei der Laenge des Rest-Arrays.
-      db[i] erhaelt die Struktur eines Binaerbaums und die Methoden  
-      dbEinfuegen(..) greifen - da diese Baeume aufgrund der praktisch 
-      zufaelligen Reihenfolge an Zahlen recht gut ausbalanciert sind - mit 
-      einer Laufzeit vom Typ O(log(N)) auf db[i] zu. (Die Verwendung eines AVL- 
+      db[i] erhaelt die Struktur eines Binaerbaums und die Methoden
+      dbEinfuegen(..) greifen - da diese Baeume aufgrund der praktisch
+      zufaelligen Reihenfolge an Zahlen recht gut ausbalanciert sind - mit
+      einer Laufzeit vom Typ O(log(N)) auf db[i] zu. (Die Verwendung eines AVL-
       oder Rot-Schwarz-Baums bringt hier keinen Vorteil.)
    */
    static class R { // erweiterter Rest
@@ -1062,7 +1021,7 @@ public class ZahlenhaiBestwerte {
       }
 
       // Einfuegen in Baum mit existierender Wurzel:
-      boolean dbEinfuegen(final long[] REST) { 
+      boolean dbEinfuegen(final long[] REST) {
          long v = vergleiche(rest, REST);
          if (v > 0) {
             if (rechts == null) rechts = new R(REST);
@@ -1073,7 +1032,7 @@ public class ZahlenhaiBestwerte {
             else return links.dbEinfuegen(REST);
          }
          else if ( (rest[0] & 65535L) < (REST[0] & 65535L) ) {
-            rest[0] &= -65536L; // 16 Bits rechts nullen 
+            rest[0] &= -65536L; // 16 Bits rechts nullen
             rest[0] |= (REST[0] & 65535L);
          } // (0x000000000000ffffL = 65535, 0xffffffffffff0000L = -65536L)
          else return false;
@@ -1086,12 +1045,12 @@ public class ZahlenhaiBestwerte {
    static long vergleiche(final long[] A, final long[] B) {
       if ((A[0] & -65536L) - (B[0] & -65536L) != 0) // 16 Bits rechts ..
          return (A[0] & -65536L) - (B[0] & -65536L); // .. = ds.pts
-      for (int i = 1; i < B.length; i++)  
+      for (int i = 1; i < B.length; i++)
          if (A[i] - B[i] != 0) return A[i] - B[i];
       return 0;
    }
 
-   /* Der senkrechte Strich dient in der Ausgabe als Information ueber das 
+   /* Der senkrechte Strich dient in der Ausgabe als Information ueber das
       Ende der ersten Ausfuehrung des Schritts 1:
    */
    static void ausgabe(final String ARG) { // ggf. den Beduerfnissen anpassen
@@ -1104,7 +1063,7 @@ public class ZahlenhaiBestwerte {
          for ( ; i < folge2[0]; i++) s += folge2[i]+",";
          s += folge2[i]+",";
       }
-      
+
       s = s.substring(0, s.length()-1);
       output[g-von][0] = ""+ g;
       output[g-von][1] = ""+ max;
@@ -1123,9 +1082,9 @@ public class ZahlenhaiBestwerte {
    };
 
    /* Werte, die die moeglich-Methode verwendet:
-      Je naeher die Werte den tatsaechlichen Bestwerten sind, um so schneller 
+      Je naeher die Werte den tatsaechlichen Bestwerten sind, um so schneller
       kann die Methode moeglich() alle unbrauchbare Zweige abschneiden.
-      (Die hier aufgefuehrten stimmen natuerlich mit den Bestwerten ueberein.) 
+      (Die hier aufgefuehrten stimmen natuerlich mit den Bestwerten ueberein.)
    */
    static final int[][] U_SCHRANKE = {
       /* 0,0 */ {0,0}, // /* g, haiMax */ {max, seq-Laenge}
@@ -1458,8 +1417,8 @@ public class ZahlenhaiBestwerte {
       /* 327,19793 */ {33835,143}, // 214 neue PP
       /* 328,19941 */ {34015,143},
       /* 329,20156 */ {34129,143}, // rest:+114 (215 neue PP: 329-215=114)
-      /* 330,20261 */ {34354,143}, 
-      /* 331,20578 */ {34368,143}, // prim:+14 
+      /* 330,20261 */ {34354,143},
+      /* 331,20578 */ {34368,143}, // prim:+14
       /* 332,20578 */ {34700,144}, // cut:+332 (2*166 PP seit 267)
       /* 333,20578 */ {35033,145}, // cut:+333
       /* 334,20578 */ {35367,146}, // rest/cut:+334 (334=2*167;prim)
@@ -1486,12 +1445,12 @@ public class ZahlenhaiBestwerte {
       /* 355,23723 */ {39467,151}, // rest:+154 (201 neue PP: 355-201=154)
       /* 356,23723 */ {39823,152}, // cut: +356 (2*178; PP bis 355)
       /* 357,23736 */ {40167,153},
-      /* 358,23736 */ {40525,154}, // rest/cut: +358 (2*179; prim) 
+      /* 358,23736 */ {40525,154}, // rest/cut: +358 (2*179; prim)
       /* 359,24089 */ {40531,154}, // rest, prim:+6
 
 /* ---------------------------------------------------------------------------
-   Alle folgenden Punktzahlen wurden mit Hilfe einer unzulaessigen   
-   Vereinfachung berechnet u. sind daher nicht 100 % sicher. 
+   Alle folgenden Punktzahlen wurden mit Hilfe einer unzulaessigen
+   Vereinfachung berechnet u. sind daher nicht 100 % sicher.
 */
       /* 360,24249 */ {40731,154},
       /* 361,24538 */ {40803,154}, // rest:+72 (289 neue PP: 361-289=72)
@@ -1506,7 +1465,7 @@ public class ZahlenhaiBestwerte {
       /* 370,25271 */ {43364,160}, // cut: +370 (2*185; PP bis 369)
       /* 371,25506 */ {43500,160}, // rest:+136 (235 ist neue PP: 371-235=136)
       /* 372,25680 */ {43698,160},
-      /* 373,26047 */ {43704,160}, // rest, prim:+6 
+      /* 373,26047 */ {43704,160}, // rest, prim:+6
       /* 374,26047 */ {44078,161}, // cut: +378 (2*187; PP bis 373)
       /* 375,26172 */ {44328,161},
       /* 376,26344 */ {44532,161},
@@ -1516,8 +1475,8 @@ public class ZahlenhaiBestwerte {
    };
 
 /*
-   Die vorliegende Version des Programms ist auf optimale Punkte bis 65535 
-   beschraenkt. 
+   Die vorliegende Version des Programms ist auf optimale Punkte bis 65535
+   beschraenkt.
 */
 
    public static int getStoppedAt(){
