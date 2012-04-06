@@ -32,9 +32,9 @@ import org.jcryptool.crypto.classic.vernam.ui.VernamWizard;
 /**
  * The VernamAlgorithmAction is a specific implementation of
  * AbstractAlgorithmAction.
- * 
+ *
  * @see org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction
- * 
+ *
  * @author Michael Sommer (M1S)
  * @version 0.0.1
  *
@@ -43,12 +43,12 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
 	/**
 	 * Constructor
 	 */
-	public VernamAlgorithmAction() 
+	public VernamAlgorithmAction()
 	{
 		super();
 	}
-	
-	public void run() 
+
+	public void run()
 	{
 		final VernamWizard wizard = new VernamWizard("Vernam");
 		final AbstractClassicAlgorithm algorithm = new VernamAlgorithm();
@@ -58,28 +58,28 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
         {
         	Job job = new Job("ERSTER JOB")
         	{
-				public IStatus run(IProgressMonitor monitor) 
+				public IStatus run(IProgressMonitor monitor)
 				{
 					String jobTitle = "JOB TITLE";
 					try
 					{
-						if (!(wizard.encrypt())) 
+						if (!(wizard.encrypt()))
 						{
 							jobTitle = "Nix";
 						}
-						
+
 						monitor.beginTask(jobTitle, 4);
-						 
-						if (monitor.isCanceled()) 
+
+						if (monitor.isCanceled())
 						{
 	                           return Status.CANCEL_STATUS;
 	                    }
 						char[] key = wizard.getKey().toCharArray();
-						
+
 						monitor.worked(1);
-						
+
 						ByteArrayInputStream is = null;
-						is = new ByteArrayInputStream( wizard.getMyT().getBytes() );						
+						is = new ByteArrayInputStream( wizard.getMyT().getBytes() );
 						if (wizard.encrypt()) {
 							// explicit encrypt
 							algorithm.init(AbstractAlgorithm.ENCRYPT_MODE,
@@ -88,8 +88,7 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
 									key,
 									null
 									);
-							System.out.println( wizard.getMyT() );
-						} 
+						}
 						if( wizard.decrypt() ) {
 							// implicit decrypt
 							algorithm.init(AbstractAlgorithm.DECRYPT_MODE,
@@ -98,12 +97,11 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
 									key,
 									null
 									);
-							System.out.println( wizard.getMyT() );
 						}
-					
-						
+
+
 						monitor.worked(2);
-						
+
 						VernamAlgorithmAction.super.finalizeRun( algorithm );
 					}
 					catch( final Exception ex )
@@ -112,11 +110,11 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
 					}
 					finally
 					{
-						
+
 					}
 					return Status.OK_STATUS;
 				}
-        		
+
         	};
         	job.setUser(true);
             job.schedule();
@@ -124,7 +122,7 @@ public class VernamAlgorithmAction extends AbstractAlgorithmAction {
 	}
 
 	@Override
-	public void run(IDataObject dataobject) 
+	public void run(IDataObject dataobject)
 	{
 		AbstractClassicAlgorithm algorithm = new VernamAlgorithm();
 		algorithm.init((ClassicDataObject) dataobject);

@@ -27,8 +27,4 @@ public class CSVConverter {
 	public String getContentToCSV(){
 		return content.toString();
 	}
-	public void print(){
-		System.out.print(content.toString());
-	}
-	
 }
