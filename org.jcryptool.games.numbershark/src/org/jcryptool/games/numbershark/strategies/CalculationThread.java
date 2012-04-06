@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 /**
  * Starts the calculation Thread
@@ -15,12 +16,12 @@ public class CalculationThread implements IRunnableWithProgress {
 	private int max = 100;
 	private int stoppedAt = 250;
 	private int selectedStrategy = 0;
-	
+
 	public CalculationThread(int min, int max, int selectedStrategy){
 		this.min = min;
 		this.max = max;
 		this.selectedStrategy = selectedStrategy;
-	}	
+	}
 
 
 public void run(IProgressMonitor monitor) throws InvocationTargetException,
@@ -35,22 +36,22 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
     			ZahlenhaiBestwerte.main(min, max, monitor);
     			outputTable = ZahlenhaiBestwerte.getOutput();
     			stoppedAt = ZahlenhaiBestwerte.getStoppedAt();
-    			break;	
-    			
+    			break;
+
     		case 2:
     			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			MaximizeStrategy calc = new MaximizeStrategy(min, max, monitor);
     			outputTable = calc.getOutput();
     			stoppedAt = calc.getStoppedAt();
     			break;
-    			
+
     		case 3:
     			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			VanNekStrategy calc1 = new VanNekStrategy(min, max, monitor);
     			outputTable = calc1.getOutput();
     			stoppedAt = calc1.getStoppedAt();
     			break;
-    			
+
     		case 4:
     			monitor.beginTask(Messages.ProgressDialog_1, IProgressMonitor.UNKNOWN);
     			Schu1Strategy calcSchu1 = new Schu1Strategy(min, max, monitor);
@@ -58,12 +59,11 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
     			stoppedAt = calcSchu1.getStoppedAt();
     			break;
     	}
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	} catch (InterruptedException ex) {
+		LogUtil.logError(ex);
 	}
     monitor.done();
-    
+
     if (monitor.isCanceled()){
         throw new InterruptedException("The long running operation was cancelled");
     }
@@ -72,11 +72,11 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
 	public String[][] getSharkOutput(){
 		return outputTable;
 	}
-	
+
 	public int getStoppedAt(){
 		return stoppedAt;
 	}
-	
+
 
 	private String[][] outputTable =  {
 			{ "2", "2", "1", "2", "7ms" },
@@ -1378,5 +1378,5 @@ public void run(IProgressMonitor monitor) throws InvocationTargetException,
 					"11842",
 					"241,169,247,221,209,133,217,203,161,155,235,215,205,185,141,249,237,219,213,201,183,177,166,226,218,214,206,202,194,178,159,242,125,175,245,147,105,98,154,231,165,110,250,244,236,212,196,188,172,164,148,124,248,246,222,186,238,170,136,232,174,230,184,138,207,171,153,117,195,130,182,114,190,152,228,204,104,208,156,234,112,224,128,84,168,126,189,243,162,135,225,150,210,140,220,176,132,198,200,160,120,240,192,180,144,216",
 					"602s" } };
-	
+
 }

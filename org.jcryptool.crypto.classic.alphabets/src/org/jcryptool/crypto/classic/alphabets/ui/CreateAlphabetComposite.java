@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
@@ -314,8 +315,8 @@ public class CreateAlphabetComposite extends org.eclipse.swt.widgets.Composite {
 
 
 			this.layout();
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+			LogUtil.logError(ex);
 		}
 
 		initializeAvailableBlocks();

@@ -17,6 +17,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.games.numbershark.util.CSVConverter;
 import org.jcryptool.games.numbershark.views.NumberSharkView;
@@ -111,8 +112,8 @@ public class EndOfGameDialog{
 
 					writer.flush();
 					writer.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException ex) {
+					LogUtil.logError(ex);
 				}
 			}
 		}

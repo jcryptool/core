@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorUtils;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
@@ -107,10 +108,10 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 				// reset user input origin
 				userinputSource = null;
 				return new TextInputWithSource(getTextFromFile(getSelectedFile()), getSelectedFile());
-			} catch (FileNotFoundException e) {
-				// should not happen since existance of file has been
+			} catch (FileNotFoundException ex) {
+				// should not happen since existence of file has been
 				// tested
-				e.printStackTrace();
+				LogUtil.logError(ex);
 				return null;
 			}
 		} else if (getBtnJctEditorOption().getSelection()) {
