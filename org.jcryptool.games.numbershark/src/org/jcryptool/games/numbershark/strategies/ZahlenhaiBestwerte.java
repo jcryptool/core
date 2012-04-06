@@ -156,12 +156,15 @@ import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 public class ZahlenhaiBestwerte {
 
 	private static String[][] output = null;
 	private static int stoppedAt;
 	static final boolean isCancelled = false;
 	private static int von = 2;
+	private static int bis = 0;
 
    /* VOLLSTAENDIG bestimmt, ob der Suchbaum vollstaendig durchlaufen werden
       soll (true) oder ob nur bis zum Erreichen einer Eingabesequenz zum
@@ -196,6 +199,41 @@ public class ZahlenhaiBestwerte {
       for (short n : G_SEMI_SEQUENTIELL) if (g == n) return true;
       return false;
    }
+
+   public static void main(final int von1, final int bis1, IProgressMonitor monitor) throws InterruptedException {
+	      folge2 = new int[0];
+	      azR2 = new int[2];
+	      rest0 = new int[0];
+	      int schlaf, t;
+
+	      try {
+	         von = von1;
+	         bis = bis1;
+	      }
+	      catch(Exception e) {
+	         System.out.println("Das Programm benoetigt zwei ganzzahlige " +
+	            "Intervallgrenzen. Beispiel:\njava ZahlenhaiBestwerte 10 20");
+	      }
+	      if (von < 1) { if (bis < 1) return; von = 1; }
+	      if (von == 1 && bis > 0) { System.out.println("1:1:0:[1]:0ms"); von++; }
+	      output = new String[bis+1-von][5];
+	      for (g = von; g <= bis; g++) {
+	    	  if(!monitor.isCanceled()){
+		         start = System.currentTimeMillis();
+		         berechne();
+		         if (g >= G_MT) {
+		            schlaf = (g*g*g) >> 16; // Pause von g abhaengig
+		            while (azVZW > 0) Thread.sleep(schlaf);
+		            xs.shutdown();
+		         }
+		         stop = System.currentTimeMillis();
+		         t = (int)(stop-start);
+		         String zeit = t < 1000? t+"ms" : (t/1000)+"s";
+		         output[g-von][4]=zeit;
+		         stoppedAt = g;
+	    	  }
+	      }
+	   }
 
    static int azVZW; // Zaehler fuer Anzahl an Thread-Instanzen
    static int azDB;
