@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.46.0
+Bundle-Version: 1.47.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
@@ -66,32 +66,43 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.crypto.util,
  org.bouncycastle.i18n,
  org.bouncycastle.i18n.filter,
+ org.bouncycastle.jcajce,
+ org.bouncycastle.jcajce.io,
+ org.bouncycastle.jcajce.provider.asymmetric,
+ org.bouncycastle.jcajce.provider.asymmetric.dh,
+ org.bouncycastle.jcajce.provider.asymmetric.dsa,
+ org.bouncycastle.jcajce.provider.asymmetric.ec,
+ org.bouncycastle.jcajce.provider.asymmetric.ecgost,
+ org.bouncycastle.jcajce.provider.asymmetric.elgamal,
+ org.bouncycastle.jcajce.provider.asymmetric.gost,
+ org.bouncycastle.jcajce.provider.asymmetric.rsa,
+ org.bouncycastle.jcajce.provider.asymmetric.util,
+ org.bouncycastle.jcajce.provider.asymmetric.x509,
+ org.bouncycastle.jcajce.provider.config,
+ org.bouncycastle.jcajce.provider.digest,
+ org.bouncycastle.jcajce.provider.symmetric,
+ org.bouncycastle.jcajce.provider.symmetric.util,
+ org.bouncycastle.jcajce.provider.util,
  org.bouncycastle.jce,
  org.bouncycastle.jce.examples,
  org.bouncycastle.jce.exception,
  org.bouncycastle.jce.interfaces,
  org.bouncycastle.jce.netscape,
  org.bouncycastle.jce.provider,
- org.bouncycastle.jce.provider.asymmetric,
- org.bouncycastle.jce.provider.asymmetric.ec,
- org.bouncycastle.jce.provider.symmetric,
  org.bouncycastle.jce.spec,
  org.bouncycastle.math.ec,
- org.bouncycastle.mozilla,
  org.bouncycastle.ocsp,
- org.bouncycastle.openssl,
  org.bouncycastle.util,
  org.bouncycastle.util.encoders,
  org.bouncycastle.util.io,
  org.bouncycastle.util.io.pem,
  org.bouncycastle.util.test,
- org.bouncycastle.voms,
  org.bouncycastle.x509,
  org.bouncycastle.x509.examples,
  org.bouncycastle.x509.extension,
  org.bouncycastle.x509.util
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk16-146.jar
+ libs/bcprov-jdk15on-147.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
