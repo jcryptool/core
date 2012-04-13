@@ -12,10 +12,14 @@ package org.jcryptool.visual.rsa.ui.wizards.wizardpages;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.rsa.Messages;
 
 /**
@@ -31,11 +35,26 @@ public class EncryptVerifyPage extends WizardPage {
 	private static final String TITLE = Messages.DecryptSignPage_choose_action;
 
 	/** Button for selecting to create a new key. */
+	private Button newKeypairButton;
+	
+	/** Button for selecting to load an existing key. */
+	private Button existingKeypairButton;
+	
+	/** Button for selecting to create a new key. */
 	private Button newPubkeyButton;
 
 	/** Button for selecting to load an existing key. */
 	private Button existingPubkeyButton;
 
+	/** selection listener that updates the buttons. */
+	private final SelectionListener sl = new SelectionAdapter() {
+
+		public void widgetSelected(SelectionEvent e) {
+			getContainer().updateButtons();
+		}
+	};
+	
+	
 	/**
 	 * Constructor, setting name, title and description.
 	 */
@@ -56,6 +75,9 @@ public class EncryptVerifyPage extends WizardPage {
 		// create grid data
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
 		GridData gd1 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
+		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
 		// add enter Pubkey button
 		newPubkeyButton = new Button(composite, SWT.RADIO);
 		newPubkeyButton.setText(Messages.EncryptVerifyPage_manual_entry);
@@ -68,7 +90,29 @@ public class EncryptVerifyPage extends WizardPage {
 		existingPubkeyButton
 				.setToolTipText(Messages.EncryptVerifyPage_existing_key_popup);
 		existingPubkeyButton.setLayoutData(gd1);
+		//
+		// add new Keypair button
+		newKeypairButton = new Button(composite, SWT.RADIO);
+		newKeypairButton.setText(Messages.ChooseKeytypePage_new_keypair);
+		newKeypairButton.setToolTipText(Messages.ChooseKeytypePage_new_keypair_popup);
+		newKeypairButton.setLayoutData(gd2);
+		newKeypairButton.addSelectionListener(sl);
+		// add existing Keypair button
+		existingKeypairButton = new Button(composite, SWT.RADIO);
+		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
+		existingKeypairButton
+				.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
+		existingKeypairButton.setLayoutData(gd3);
+		existingKeypairButton.addSelectionListener(sl);
+        // Add Note
+		Label selectdtext = new Label(composite, SWT.NONE);
+        selectdtext.setText(Messages.EncryptVerifyPage_note);
+        selectdtext.setLayoutData(gd4);
+		
+		//
+		
 		// finally set control something
+		
 		setControl(composite);
 	}
 
@@ -76,11 +120,15 @@ public class EncryptVerifyPage extends WizardPage {
 	public final IWizardPage getNextPage() {
 		if (newPubkeyButton.getSelection()) {
 			return this.getWizard().getPage(NewPublicKeyPage.getPagename());
+		} else if (newKeypairButton.getSelection()) {
+			return getWizard().getPage(NewKeypairPage.getPagename());
+		} else if (existingKeypairButton.getSelection()) {
+			return getWizard().getPage(LoadKeypairPage.getPagename());
 		} else {
 			return this.getWizard().getPage(LoadPublicKeyPage.getPagename());
 		}
 	}
-
+	
 	/**
 	 * getter for the pagename.
 	 * @return the pagename
@@ -94,6 +142,6 @@ public class EncryptVerifyPage extends WizardPage {
 	 * @return selection status of the corresponding checkbox
 	 */
 	public final boolean wantNewKey() {
-		return newPubkeyButton.getSelection();
+		return (newPubkeyButton.getSelection()||newKeypairButton.getSelection());
 	}
 }

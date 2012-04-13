@@ -28,6 +28,7 @@ public class Messages extends NLS {
 	public static String EncryptVerifyPage_existing_key_popup;
 	public static String EncryptVerifyPage_manual_entry;
 	public static String EncryptVerifyPage_manual_entry_popup;
+	public static String EncryptVerifyPage_note;
 	public static String EnterCiphertextPage_enter_ciphertext;
 	public static String EnterCiphertextPage_enter_ciphertext_text;
 	public static String EnterCiphertextPage_error_param_gt_n;
@@ -106,8 +107,12 @@ public class Messages extends NLS {
     public static String RSAComposite_mult;
 	public static String RSAComposite_needed;
 	public static String RSAComposite_no;
-	public static String RSAComposite_numbertext_header;
+	public static String RSAComposite_numbertext_header_enc;
+	public static String RSAComposite_numbertext_header_dec;
+	public static String RSAComposite_numbertext_header_sig;
+	public static String RSAComposite_numbertext_header_ver;
     public static String RSAComposite_options;
+    public static String RSAComposite_random;
 	public static String RSAComposite_reset;
 	public static String RSAComposite_result;
 	public static String RSAComposite_show_dialogs;
@@ -118,7 +123,10 @@ public class Messages extends NLS {
 	public static String RSAComposite_step_text;
     public static String RSAComposite_step1;
 	public static String RSAComposite_sure;
-	public static String RSAComposite_text;
+	public static String RSAComposite_text_enc;
+	public static String RSAComposite_text_dec;
+	public static String RSAComposite_text_sig;
+	public static String RSAComposite_text_ver;
 	public static String RSAComposite_textentry_messagebox_text;
 	public static String RSAComposite_title;
 	public static String RSAComposite_valid;

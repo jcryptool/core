@@ -415,6 +415,28 @@ public class RSAData {
     }
 
     /**
+     * inherits the data from an other data object into this one. used for copying data between pages
+     *
+     * @param oldData the old data object from which data is copied
+     */
+    
+    public void random() {
+        this.N = new BigInteger("323");
+        this.e = new BigInteger("19");
+        this.simpleHash = true;
+        this.d = new BigInteger("91");
+        this.p = new BigInteger("17");
+        this.q = new BigInteger("19");
+        
+        // sometimes we need everything
+
+        this.cipherText = "f9 ae c2 2b 65 66 67 a1 a 1e 116 a5 47 35 a8 96 38 10a bf d3 3c 76 77 78 b2 1b 12a 8f 13b 32 33 34 6e 11a 12e e3 72";
+        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
+        this.signature = "62";
+    }
+    
+    
+    /**
      * gets the private key corresponding to the {@link #privateAlias} with the specified {@link #password} from the
      * keystore and extracts the private parameters from it
      *

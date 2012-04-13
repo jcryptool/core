@@ -91,6 +91,11 @@ public class KeySelectionWizard extends Wizard {
                     addPage(new LoadPublicKeyPage(data));
                     addPage(new NewPublicKeyPage(data));
                     addPage(new SavePublicKeyPage(data));
+                    //
+                    addPage(new LoadKeypairPage(data));
+                    addPage(new NewKeypairPage(data));
+                    addPage(new SaveKeypairPage(data));
+                    //
                     break;
                 default:
                     break;
@@ -129,12 +134,12 @@ public class KeySelectionWizard extends Wizard {
                     rv &= page.isPageComplete();
                     if (((EncryptVerifyPage) page).wantNewKey()) {
                         page = getPage(NewPublicKeyPage.getPagename());
-                        rv &= page.isPageComplete();
+                        rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete())||(getPage(NewKeypairPage.getPagename()).isPageComplete()));
                         if (((NewPublicKeyPage) page).wantSave()) {
-                            rv &= getPage(SavePublicKeyPage.getPagename()).isPageComplete();
+                            rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())||(getPage(SaveKeypairPage.getPagename()).isPageComplete());
                         }
                     } else {
-                        rv &= getPage(LoadPublicKeyPage.getPagename()).isPageComplete();
+                        rv &= ((getPage(LoadPublicKeyPage.getPagename()).isPageComplete())||(getPage(LoadKeypairPage.getPagename()).isPageComplete()));
                     }
                     break;
                 default:
@@ -177,13 +182,29 @@ public class KeySelectionWizard extends Wizard {
                             if (((NewPublicKeyPage) getPage(NewPublicKeyPage.getPagename())).wantSave()) {
                                 save(false);
                             }
-                        } else {
+                            else if (((NewKeypairPage) getPage(NewKeypairPage.getPagename())).wantSave()) {
+                                save(true);
+                            }
+                        } 
+                        else if (getPage(LoadKeypairPage.getPagename()).isPageComplete()){
+                            final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                            final KeyStoreAlias privAlias = data.getPrivateAlias();
+                            final String password = data.getPassword();
+                            final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                            final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+                            data.setN(privkey.getModulus());
+                            data.setD(privkey.getD().bigInt);
+                            data.setP(privkey.getP().bigInt);
+                            data.setQ(privkey.getQ().bigInt);
+                            data.setE(privkey.getPublicExponent());
+                        }
+                        else {
                             final KeyStoreManager ksm = KeyStoreManager.getInstance();
                             final KeyStoreAlias publicAlias = data.getPublicAlias();
                             final RSAPublicKey pubkey = (RSAPublicKey) ksm.getPublicKey(publicAlias).getPublicKey();
                             data.setN(pubkey.getModulus());
                             data.setE(pubkey.getPublicExponent());
-                        }
+                        } 
                         break;
                     default:
 

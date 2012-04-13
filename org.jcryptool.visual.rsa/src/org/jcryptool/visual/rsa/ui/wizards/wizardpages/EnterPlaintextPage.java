@@ -113,9 +113,14 @@ public class EnterPlaintextPage extends TextWizardPage {
                 if (numberCheckBox.getSelection()) {
                     e.doit = e.text.matches(DIGIT);
                 } else {
-                    e.doit = e.text.matches(CHARACTERS);
-                }
-            }
+                	if (e.text.matches(CHARACTERS)) {
+                		e.doit = true;
+                	} else {
+                		// Removes everything except "a-A0-9_ " from the inserted text.
+                		e.text = e.text.replaceAll("[^\\w\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC ]*","");
+                	}
+                };
+           }
         });
 
         if (action == Action.SignAction) {
