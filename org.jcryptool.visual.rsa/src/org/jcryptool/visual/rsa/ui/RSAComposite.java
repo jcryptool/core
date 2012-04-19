@@ -80,7 +80,7 @@ public class RSAComposite extends Composite {
     public boolean dialog = false;
 
     /** buttons for running the wizards and finishing up. */
-    private Button keysel, textEnter, runCalc;
+    private Button keysel, textEnter, runCalc, reset;
 
     /** shared data object. */
     private RSAData data;
@@ -107,7 +107,7 @@ public class RSAComposite extends Composite {
     private Text stepResult;
 
     /** buttons for starting and stepping through the fast exponentiation. */
-    private Button stepButton/* , startButton */;
+    private Button stepButton, stepbackButton;
 
     /** field for displaying the result. */
     private Text resultText;
@@ -169,6 +169,7 @@ public class RSAComposite extends Composite {
         @Override
         public void widgetSelected(final SelectionEvent e) {
             ++numberIndex;
+            stepbackButton.setEnabled(true);
             updateTable();
             updateLabel();
             if (numberIndex == numbers.length - 1) {
@@ -177,6 +178,7 @@ public class RSAComposite extends Composite {
                 runCalc.setBackground(GREEN);
                 finish();
             }
+            //stepButton.pack();
         }
     };
 
@@ -185,6 +187,7 @@ public class RSAComposite extends Composite {
 
         @Override
         public void widgetSelected(final SelectionEvent e) {
+            resultText.setText("");
             textEnter.setEnabled(false);
             numbers = numberText.getText().split(" "); //$NON-NLS-1$
             numberIndex = 0;
@@ -201,7 +204,7 @@ public class RSAComposite extends Composite {
             stepButton.removeSelectionListener(startSelectionListener);
             stepButton.addSelectionListener(stepSelectionListener);
             stepButton.setText(Messages.RSAComposite_step);
-            stepButton.pack();
+            //stepButton.pack();
         }
     };
 
@@ -293,10 +296,11 @@ public class RSAComposite extends Composite {
      * @param parent the parent composite
      */
     private void createButtonArea(final Composite parent) {
-        // set up the canvas for the Buttons
+        // Set up the canvas for the Buttons
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayout(new FormLayout());
         canvas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true));
+        
         // Form data to place Key selection Button
         final FormData fDkeysel = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
         fDkeysel.left = new FormAttachment(4);
@@ -305,7 +309,6 @@ public class RSAComposite extends Composite {
         // Key selection Button
         keysel = new Button(canvas, SWT.PUSH);
         keysel.setBackground(RED);
-        // keysel.setEnabled(false);
         keysel.setText(Messages.RSAComposite_key_selection);
         keysel.setLayoutData(fDkeysel);
         keysel.addSelectionListener(new SelectionAdapter() {
@@ -363,8 +366,10 @@ public class RSAComposite extends Composite {
         runCalc = new Button(canvas, SWT.PUSH);
         runCalc.setBackground(RED);
         runCalc.setEnabled(false);
+        
         switch (data.getAction()) {
         case EncryptAction: {
+        	runCalc.setEnabled(true);
         	runCalc.setText(Messages.RSAComposite_Calculate_enc);
         	break;
         	}
@@ -373,6 +378,7 @@ public class RSAComposite extends Composite {
         	break;
         	}
         case SignAction: {
+        	runCalc.setEnabled(true);
         	runCalc.setText(Messages.RSAComposite_Calculate_sig);
         	break;
         	}
@@ -398,10 +404,40 @@ public class RSAComposite extends Composite {
                     message.setMessage(Messages.RSAComposite_finish_calc_messagebox_text);
                     message.open();
                 }
+                
+                // If needed fill with random values
+                switch(data.getAction()) {
+                	case EncryptAction:
+                	case SignAction: {
+                		if (data.randomNeeded()){
+                			FillRandom();
+                		}
+                	}
+                	case DecryptAction:
+                	case VerifyAction: {
+                		break;
+                	}
+              	}
                 resultText.setText(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
-                        data.getN()));
+                data.getN()));
                 finish();
             }
+        });
+        
+        // Form Data to place Reset Button
+        final FormData fDreset = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
+        fDreset.left = new FormAttachment(4);
+        fDreset.top = new FormAttachment(runCalc, 2*BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
+        
+        // Initialize reset button
+        reset = new Button(canvas, SWT.PUSH);
+        reset.setLayoutData(fDreset);
+        reset.setText(Messages.RSAComposite_reset);
+        reset.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(final SelectionEvent e) {
+        		reset();
+        	}
         });
     }
 
@@ -543,25 +579,49 @@ public class RSAComposite extends Composite {
     private void createCalcGroup(final Composite parent) {
         final Group g = new Group(parent, SWT.NONE);
         int numColumns = 3;
-        g.setLayout(new GridLayout(numColumns, false));
+        g.setLayout(new GridLayout(3, false));
         g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         g.setText(Messages.RSAComposite_Calculations);
-        // final GridData gd = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
         final GridData gd2 = new GridData(SWT.FILL, SWT.CENTER, true, false, numColumns, 1);
         final GridData gd3 = new GridData(SWT.FILL, SWT.CENTER, true, false, numColumns, 1);
         gd2.heightHint = 25;
         gd3.heightHint = 25;
 
+        // Add Previous Step Button
+        stepbackButton = new Button(g, SWT.PUSH);
+        stepbackButton.setText(Messages.RSAComposite_stepback);
+        stepbackButton.setEnabled(false);
+        stepbackButton.setToolTipText(Messages.RSAComposite_stepback_text);
+        stepbackButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        stepbackButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+              --numberIndex;
+              if (numberIndex == 0) {
+            	  
+            	  //initTable();
+                  stepbackButton.setEnabled(false);
+              }
+              updateTable();
+              updateLabel();
+              resultText.setText(resultText.getText().substring(0,resultText.getText().length()-6));
+            }
+        });
+
+        // Add Start / Next Step Button
         stepButton = new Button(g, SWT.PUSH);
         stepButton.setText(Messages.RSAComposite_start);
         stepButton.setEnabled(false);
         stepButton.setToolTipText(Messages.RSAComposite_step_text);
-        stepButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 2, 1));
+        stepButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
         stepButton.addSelectionListener(startSelectionListener);
+        
+        // Add Step Status
         stepLabel = new Label(g, SWT.LEAD | SWT.BORDER);
         stepLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-        // set up a composite to draw the fast exp shit on
+        
+        // Set up a composite to draw the fast exp on
         styledFastExtText = new Composite(g, SWT.NONE);
         styledFastExtText.setLayoutData(gd2);
 
@@ -922,31 +982,15 @@ public class RSAComposite extends Composite {
             }
 
         });
-
-        // initialize random button
-        final Button random = new Button(optionsGroup, SWT.PUSH);
-        random.setLayoutData(new GridData(SWT.TRAIL, SWT.CENTER, true, false));
-        random.setText(Messages.RSAComposite_random);
-        random.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                FillRandom();
-            }
-        });
-        
-        // initialize reset button
-        final Button reset = new Button(optionsGroup, SWT.PUSH);
-        reset.setLayoutData(new GridData(SWT.TRAIL, SWT.CENTER, true, false));
-        reset.setText(Messages.RSAComposite_reset);
-        reset.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                reset();
-            }
-        });
     }
+    
     private void FillRandom() {
-    	reset();
+    	final MessageBox message = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+        message.setText(Messages.RSAComposite_random_title);
+        message.setMessage(Messages.RSAComposite_random_text);
+        message.open();
+
+        reset();
         data = new RSAData (data.getAction());
         datas.put(data.getAction(), data);
         keysel.setEnabled(false);
@@ -961,20 +1005,27 @@ public class RSAComposite extends Composite {
         //sets textText, numberText
         textEntered();
         stepButton.removeSelectionListener(stepSelectionListener);
-     
     }
     
     private void reset() {
-        // for (final Control c : actionChoiceGroup.getChildren()) {
-        // ((Button) c).setEnabled(true);
-        // ((Button) c).setSelection(false);
-        // }
         keysel.setEnabled(true);
         keysel.setBackground(RED);
         textEnter.setEnabled(false);
         textEnter.setBackground(RED);
-        runCalc.setEnabled(false);
+        switch (data.getAction()) {
+        	case EncryptAction:
+        	case SignAction: {
+        		runCalc.setEnabled(true);
+        		break;
+        	}
+        	case DecryptAction:
+        	case VerifyAction: {
+                runCalc.setEnabled(false);     	
+                break;
+        	}
+      	}
         runCalc.setBackground(RED);
+        
         data = new RSAData(data.getAction());
         datas.put(data.getAction(), data);
         eText.setText(""); //$NON-NLS-1$
@@ -989,6 +1040,7 @@ public class RSAComposite extends Composite {
         fastExpTable.setVisible(false);
         stepResult.setText(""); //$NON-NLS-1$
         stepButton.setEnabled(false);
+        stepbackButton.setEnabled(false);
         resultText.setText(""); //$NON-NLS-1$
         copyButton.setEnabled(false);
         verifiedText.setText(""); //$NON-NLS-1$
@@ -1002,7 +1054,7 @@ public class RSAComposite extends Composite {
        	stepButton.removeSelectionListener(startSelectionListener);
         stepButton.addSelectionListener(startSelectionListener);
         stepButton.setText(Messages.RSAComposite_start);
-        stepButton.pack();
+        //stepButton.pack();
     }
 
     /**
