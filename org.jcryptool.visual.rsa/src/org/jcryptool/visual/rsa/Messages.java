@@ -40,6 +40,7 @@ public class Messages extends NLS {
 	public static String EnterPlaintextPage_simple_hash;
 	public static String EnterPlaintextPage_use_sha1;
 	public static String EnterPlaintextPage_use_sha1_popup;
+	public static String EnterPlaintextPage_textmodify;
 	public static String EnterSignaturePage_enter_sig_as_hex;
 	public static String EnterSignaturePage_enter_sig;
 	public static String EnterSignaturePage_enter_signature;
@@ -139,6 +140,7 @@ public class Messages extends NLS {
 	public static String RSAData_inherit_password_title;
 	public static String RSAData_ExAccessKeystorePassword;
     public static String RSAData_failedInitPrivParams;
+    public static String RsaTextModifyPage_textmodifydescription;
 	public static String SaveKeypairPage_enter_params_text;
 	public static String SaveKeypairPage_error_passwords_mismatch;
 	public static String SaveKeypairPage_name;

@@ -14,8 +14,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -74,7 +72,7 @@ public class EnterPlaintextPage extends TextWizardPage {
         Composite composite = new Composite(parent, SWT.NONE);
         // do stuff like layout et al
         composite.setLayout(new GridLayout());
-        Label label;
+        Label label, label1;
         if (action == Action.SignAction) {
             label = new Label(composite, SWT.WRAP);
             label.setText(Messages.EnterPlaintextPage_simple_hash);
@@ -100,29 +98,10 @@ public class EnterPlaintextPage extends TextWizardPage {
         numberCheckBox.setText(Messages.EnterPlaintextPage_0);
         numberCheckBox.setToolTipText(Messages.EnterPlaintextPage_1);
 
-        text.addVerifyListener(new VerifyListener() {
-            public void verifyText(VerifyEvent e) {
-                switch (e.keyCode) {
-                    case SWT.DEL:
-                    case SWT.BS:
-                    case ' ':
-                        return;
-                    default:
-                        break;
-                }
-                if (numberCheckBox.getSelection()) {
-                    e.doit = e.text.matches(DIGIT);
-                } else {
-                	if (e.text.matches(CHARACTERS)) {
-                		e.doit = true;
-                	} else {
-                		// Removes everything except "a-A0-9_ " from the inserted text.
-                		e.text = e.text.replaceAll("[^\\w\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC ]*","");
-                	}
-                };
-           }
-        });
-
+		label1 = new Label(composite, SWT.NONE);
+		label1.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+		label1.setText(Messages.EnterPlaintextPage_textmodify);
+        
         if (action == Action.SignAction) {
             final Button SHA1Checkbox = new Button(composite, SWT.CHECK);
             SHA1Checkbox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
@@ -136,6 +115,7 @@ public class EnterPlaintextPage extends TextWizardPage {
             });
             SHA1Checkbox.setSelection(!data.getSimpleHash());
         }
+                
         // fill in old data
         text.setText(data.getPlainText());
 

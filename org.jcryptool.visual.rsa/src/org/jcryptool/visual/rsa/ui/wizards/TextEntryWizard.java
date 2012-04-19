@@ -10,13 +10,15 @@
 package org.jcryptool.visual.rsa.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.visual.rsa.ui.wizards.wizardpages.RsaTextModifyPage;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterCiphertextPage;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterPlaintextPage;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterSignaturePage;
-
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 /**
  * wizard for entering any type of text. plaintext, ciphertext or signature.
  * @author Michael Gaber
@@ -28,6 +30,12 @@ public class TextEntryWizard extends Wizard {
 	/** shared data object for exchanging data. */
 	private final RSAData data;
 
+	private boolean finished = false;
+//	private PageConfiguration textPageConfig;
+	private TransformData transformData;
+	private EnterPlaintextPage textPage;
+	private RsaTextModifyPage modifyPage;
+	
 	/**
 	 * Constructor, setting title, action and data.
 	 * @param action the cryptographic action
@@ -37,14 +45,26 @@ public class TextEntryWizard extends Wizard {
 		this.action = action;
 		this.data = data;
 		this.setWindowTitle(Messages.EnterCiphertextPage_textentry);
+		modifyPage = new RsaTextModifyPage();
+		textPage = new EnterPlaintextPage(action, data);
 	}
 
+	public TransformData getTransformData() {
+		if (!finished) return modifyPage.getSelectedData();
+		else return transformData;
+	}
+	
+	public void setTransformData(TransformData transformData) {
+		modifyPage.setSelectedData(transformData);
+	}
+	
 	@Override
 	public final void addPages() {
 		switch (action) {
 		case EncryptAction:
 		case SignAction:
-			addPage(new EnterPlaintextPage(action, data));
+			addPage(textPage);
+			addPage(modifyPage);
 			break;
 		case DecryptAction:
 			addPage(new EnterCiphertextPage(data));
@@ -61,7 +81,10 @@ public class TextEntryWizard extends Wizard {
 		switch (action) {
 		case EncryptAction:
 		case SignAction:
-			data.setPlainText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename())).getText());
+			this.transformData = getTransformData();
+			finished = true;
+			// Sets plain text using the inserted text and the transformData
+			data.setPlainText(Transform.transformText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename())).getText(), transformData));
 			break;
 		case DecryptAction:
 			data.setCipherText(((EnterCiphertextPage) getPage(EnterCiphertextPage.getPagename())).getText().trim());
