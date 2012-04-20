@@ -410,7 +410,13 @@ public class RSAComposite extends Composite {
                 	case EncryptAction:
                 	case SignAction: {
                 		if (data.randomNeeded()){
+                			data.setrandomKey(true);
+                			data.setrandomPlaintext(true);
                 			FillRandom();
+                		}
+                		if (data.plainNeeded()){
+                			data.setrandomPlaintext(true);
+                			FillPlain();
                 		}
                 	}
                 	case DecryptAction:
@@ -999,7 +1005,27 @@ public class RSAComposite extends Composite {
         textEnter.setBackground(GREEN);
         runCalc.setEnabled(true);
         runCalc.setBackground(RED);
-        data.random();
+        data.randomKey();
+        //sets eText, dText, nText
+        keySelected();
+        //sets textText, numberText
+        textEntered();
+        stepButton.removeSelectionListener(stepSelectionListener);
+    }
+    
+    private void FillPlain() {
+    	final MessageBox message = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+        message.setText(Messages.RSAComposite_randomPlain_title);
+        message.setMessage(Messages.RSAComposite_randomPlain_text);
+        message.open();
+
+        keysel.setEnabled(false);
+        keysel.setBackground(GREEN);
+        textEnter.setEnabled(false);
+        textEnter.setBackground(GREEN);
+        runCalc.setEnabled(true);
+        runCalc.setBackground(RED);
+        data.randomPlain();
         //sets eText, dText, nText
         keySelected();
         //sets textText, numberText

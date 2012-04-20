@@ -53,6 +53,14 @@ public class Messages extends NLS {
 	public static String LoadPublicKeyPage_select_pubkey;
 	public static String LoadPublicKeyPage_select_pubkey_text;
 	public static String LoadPublicKeyPage_select_pubkey_text2;
+    public static String ModifyWizardPage_alltolower;
+    public static String ModifyWizardPage_alltoupper;
+    public static String ModifyWizardPage_filteralpha;
+    public static String ModifyWizardPage_hint1;
+    public static String ModifyWizardPage_replaceblanks;
+    public static String ModifyWizardPage_texttransformations;
+    public static String ModifyWizardPage_umlauts;
+    public static String ModifyWizardPage_upperLower;
 	public static String NewKeypairPage_choose_params;
 	public static String NewKeypairPage_choose_params_text;
 	public static String NewKeypairPage_e_text;
@@ -115,6 +123,8 @@ public class Messages extends NLS {
     public static String RSAComposite_options;
     public static String RSAComposite_random_title;
     public static String RSAComposite_random_text;
+    public static String RSAComposite_randomPlain_title;
+    public static String RSAComposite_randomPlain_text;
 	public static String RSAComposite_reset;
 	public static String RSAComposite_result;
 	public static String RSAComposite_show_dialogs;

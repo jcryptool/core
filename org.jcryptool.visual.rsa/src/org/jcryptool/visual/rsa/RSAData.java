@@ -103,6 +103,9 @@ public class RSAData {
 
     /** if this data-object belongs to a standalone key generation wizard. */
     private boolean standalone;
+    
+    private boolean randomPlaintext;
+    private boolean randomKey;
 
     /**
      * setter for the standalone property
@@ -112,7 +115,25 @@ public class RSAData {
     public final void setStandalone(final boolean standalone) {
         this.standalone = standalone;
     }
-
+    
+    /**
+     * getter for randomPlaintext.
+     *
+     * @return the randomPlaintext
+     */
+    public final boolean getrandomPlaintext() {
+        return this.randomPlaintext;
+    }
+    
+    /**
+     * getter for randomPlaintext.
+     *
+     * @return the randomPlaintext
+     */
+    public final boolean getrandomKey() {
+        return this.randomKey;
+    }
+    
     /**
      * getter for the ciphertext.
      *
@@ -206,6 +227,24 @@ public class RSAData {
         }
     }
 
+    /**
+     * setter for randomPlaintext.
+     *
+     * @param the randomPlaintext
+     */
+    public final void setrandomPlaintext(final boolean randomPlaintext) {
+        this.randomPlaintext = randomPlaintext;
+    }
+    
+    /**
+     * getter for randomPlaintext.
+     *
+     * @return the randomPlaintext
+     */
+    public final void setrandomKey(final boolean randomKey) {
+        this.randomKey = randomKey;
+    }
+    
     /**
      * setter for the ciphertext.
      *
@@ -371,9 +410,13 @@ public class RSAData {
         // otherwise anyway.
         this.publicAlias = oldData.publicAlias;
         this.contactName = oldData.contactName;
-
+        if (oldData.randomKey){
+            this.d = oldData.d;
+            this.p = oldData.p;
+            this.q = oldData.q;
+        }
         // sometimes we need everything
-        if (this.action == Action.DecryptAction || this.action == Action.SignAction) {
+        else if (this.action == Action.DecryptAction || this.action == Action.SignAction) {
             // easy if the other action already has everything we need
             if (oldData.action == Action.DecryptAction || oldData.action == Action.SignAction) {
                 this.d = oldData.d;
@@ -415,7 +458,7 @@ public class RSAData {
     }
 
     /**
-     * tests if random values are needed
+     * tests if random key is needed
      */
     
     public boolean randomNeeded() {
@@ -436,21 +479,37 @@ public class RSAData {
     }
     
     /**
+     * tests if plain text is needed
+     */
+    
+    public boolean plainNeeded() {
+
+    	if (this.plainText == null) {
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
+    
+    /**
      * fills in random values
      */
     
-    public void random() {
+    public void randomKey() {
+    	this.randomKey = true;
     	this.N = new BigInteger("323");
         this.e = new BigInteger("19");
-        this.simpleHash = true;
         this.d = new BigInteger("91");
         this.p = new BigInteger("17");
         this.q = new BigInteger("19");
-        
-        // sometimes we need everything
-        this.cipherText = "f9 ae c2 2b 65 66 67 a1 a 1e 116 a5 47 35 a8 96 38 10a bf d3 3c 76 77 78 b2 1b 12a 8f 13b 32 33 34 6e 11a 12e e3 72";
-        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
-        this.signature = "62";
+        randomPlain();
+    }
+    
+    public void randomPlain() {
+    	this.randomPlaintext = true;
+        this.simpleHash = true;
+        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789123";
     }
     
     
