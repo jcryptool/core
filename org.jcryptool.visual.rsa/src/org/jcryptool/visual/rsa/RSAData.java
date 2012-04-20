@@ -468,14 +468,17 @@ public class RSAData {
     			if (this.N == null || this.e == null) {
     				return true;
     			}
+    			break;
     		}
     		case SignAction: {
     			if (this.N == null || this.d == null) {
     				return true;
+    				
     			}
+    			break;
     		}
     	}
-        return false;
+    	return false;
     }
     
     /**

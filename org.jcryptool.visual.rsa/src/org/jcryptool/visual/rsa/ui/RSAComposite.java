@@ -397,6 +397,7 @@ public class RSAComposite extends Composite {
                 runCalc.setBackground(GREEN);
                 // startButton.setEnabled(false);
                 stepButton.setEnabled(false);
+                stepbackButton.setEnabled(false);
                 if (dialog) {
                     final MessageBox message = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
                             | SWT.OK);
