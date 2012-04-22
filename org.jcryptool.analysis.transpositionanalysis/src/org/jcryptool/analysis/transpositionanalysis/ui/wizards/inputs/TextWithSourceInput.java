@@ -242,6 +242,10 @@ public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithS
 					// seems like the big selected text got deleted --
 					// disconnect
 					markDisconnectFromPreviousText();
+				} else if(Math.abs(selection.y-selection.x)==0 && (lastTextLength!=textLength)) {
+					//paste detected
+					//TODO: length comparison of texts should not be indicator of text change (could be accidentally the same length but still text replacement)
+					markDisconnectFromPreviousText();
 				}
 			}
 		}

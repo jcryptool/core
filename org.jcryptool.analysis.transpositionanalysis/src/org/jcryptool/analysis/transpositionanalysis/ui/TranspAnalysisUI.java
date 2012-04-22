@@ -10,13 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.transpositionanalysis.ui;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -38,15 +34,8 @@ import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizard;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizardPage.PageConfiguration;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
-import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
-import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -78,7 +67,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Group previewGroup;
 	private Text previewText;
 	private Composite compResults;
-	private Composite compTable;
+	private Group compTable;
 	private Label labelKeypreview;
 	private Composite composite4;
 	private Label label2;
@@ -115,6 +104,10 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Label label_1;
 	
 	private String ownKeyInputString;
+	private Label lblNewLabel;
+	private Label lblLoadedTextwith;
+
+	private String lastPreviewedText;
 
 	/**
 	 * @param text
@@ -202,6 +195,13 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				compLoadTextBtnLayout.marginHeight = 3;
 				compLoadTextBtn.setLayout(compLoadTextBtnLayout);
 				{
+					lblNewLabel = new Label(compLoadTextBtn, SWT.NONE | SWT.WRAP);
+					lblNewLabel.setText(Messages.TranspAnalysisUI_view_description);
+					GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+					layoutData.widthHint = 200;
+					lblNewLabel.setLayoutData(layoutData);
+				}
+				{
 					lblLoadA = new Label(compLoadTextBtn, SWT.NONE);
 					lblLoadA.setBounds(0, 0, 55, 15);
 					lblLoadA.setText("1)"); //$NON-NLS-1$
@@ -245,9 +245,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				{
 					linkChooseText = new Link(compTextSource, SWT.NONE);
 					linkChooseText.setText(Messages.TranspAnalysisUI_lblChooseAnotherText);
-					GridData linkChooseTextLData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+					GridData linkChooseTextLData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1);
 					linkChooseText.setLayoutData(linkChooseTextLData);
-					linkChooseTextLData.horizontalSpan = 2;
 					linkChooseText.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
@@ -283,7 +282,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				}
 			}
 			{
-				compTable = new Composite(this, SWT.NONE);
+				compTable = new Group(this, SWT.NONE);
 				GridLayout gl_compTable = new GridLayout();
 				gl_compTable.makeColumnsEqualWidth = true;
 				GridData gd_compTable = new GridData();
@@ -291,6 +290,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				gd_compTable.horizontalAlignment = GridData.FILL;
 				gd_compTable.verticalAlignment = GridData.FILL;
 				gd_compTable.grabExcessVerticalSpace = true;
+				compTable.setText(Messages.TranspAnalysisUI_grpEditText);
 				compTable.setLayoutData(gd_compTable);
 				compTable.setLayout(gl_compTable);
 				{
@@ -309,7 +309,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						spinner = new Spinner(composite_2, SWT.BORDER);
 						spinner.setMaximum(1000);
 						spinner.setMinimum(1);
-						spinner.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+						spinner.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 1, 1));
 						spinner.setEnabled(false);
 						spinner.addSelectionListener(new SelectionAdapter() {
 							@Override
@@ -318,6 +318,36 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							}
 						});
 					}
+				}
+				{
+					compReadDir = new Composite(compTable, SWT.NONE);
+					GridLayout compReadDirLayout = new GridLayout();
+					compReadDirLayout.numColumns = 2;
+					compReadDirLayout.marginWidth = 0;
+					compReadDirLayout.marginHeight = 0;
+					GridData compReadDirLData = new GridData();
+					compReadDirLData.grabExcessHorizontalSpace = true;
+					compReadDir.setLayoutData(compReadDirLData);
+					compReadDir.setLayout(compReadDirLayout);
+					{
+						labelReadDir = new Label(compReadDir, SWT.NONE);
+						labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
+					}
+					{
+						readoutDirChooser = new ReadDirectionChooser(compReadDir, true);
+						readoutDirChooser.setDirection(false);
+
+						readoutDirChooser.getInput().addObserver(new Observer() {
+							@Override
+							public void update(Observable o, Object arg) {
+								if (arg == null) previewPlaintext();
+							}
+						});
+					}
+				}
+				{
+					lblLoadedTextwith = new Label(compTable, SWT.NONE);
+					lblLoadedTextwith.setText(Messages.TranspAnalysisUI_lblLoadedTextwith_text);
 				}
 				{
 					GridData transpTableLData = new GridData();
@@ -336,6 +366,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			{
 				compResults = new Composite(this, SWT.NONE);
 				GridLayout gl_compResults = new GridLayout();
+				gl_compResults.marginHeight = 0;
+				gl_compResults.marginWidth = 0;
 				gl_compResults.makeColumnsEqualWidth = true;
 				GridData gd_compResults = new GridData();
 				gd_compResults.grabExcessHorizontalSpace = true;
@@ -454,32 +486,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 								textpreviewDescription = new Label(composite7, SWT.NONE);
 								textpreviewDescription.setText(Messages.TranspAnalysisUI_preview);
 							}
-							{
-								compReadDir = new Composite(composite7, SWT.NONE);
-								GridLayout compReadDirLayout = new GridLayout();
-								compReadDirLayout.numColumns = 2;
-								compReadDirLayout.marginWidth = 0;
-								compReadDirLayout.marginHeight = 0;
-								GridData compReadDirLData = new GridData();
-								compReadDirLData.grabExcessHorizontalSpace = true;
-								compReadDir.setLayoutData(compReadDirLData);
-								compReadDir.setLayout(compReadDirLayout);
-								{
-									labelReadDir = new Label(compReadDir, SWT.NONE);
-									labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
-								}
-								{
-									readoutDirChooser = new ReadDirectionChooser(compReadDir, true);
-									readoutDirChooser.setDirection(false);
-
-									readoutDirChooser.getInput().addObserver(new Observer() {
-										@Override
-										public void update(Observable o, Object arg) {
-											if (arg == null) previewPlaintext();
-										}
-									});
-								}
-							}
 						}
 					}
 					{
@@ -498,7 +504,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						btnDecipher = new Button(previewGroup, SWT.PUSH | SWT.CENTER);
 						GridData btnDecipherLData = new GridData();
 						btnDecipherLData.grabExcessHorizontalSpace = true;
-						btnDecipherLData.horizontalAlignment = GridData.END;
+						btnDecipherLData.horizontalAlignment = GridData.CENTER;
 						btnDecipher.setLayoutData(btnDecipherLData);
 						btnDecipher.setText(Messages.TranspAnalysisUI_decipher);
 						btnDecipher.addSelectionListener(new SelectionAdapter() {
@@ -643,7 +649,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (transpTable != null) {
 			TranspositionTable table = new TranspositionTable(transpTable.getColumnCountDisplayed());
 			table.fillCharsIntoTable(transpTable.getText().toCharArray(), false);
-			previewText.setText(String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent())));
+			lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
+			previewText.setText(lastPreviewedText);
+			btnDecipher.setEnabled(true);
+		} else {
+			btnDecipher.setEnabled(false);
 		}
 	}
 
@@ -663,12 +673,12 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (key != null) {
 			this.keyUsedToEncrypt = new TranspositionKey(key);
 			labelKeypreview.setText(" " + keyUsedToEncrypt.toStringOneRelative() + "|"); //$NON-NLS-1$ //$NON-NLS-2$
-			btnDecipher.setEnabled(true);
+//			btnDecipher.setEnabled(true);
 			actualKeyLength = keyUsedToEncrypt.getLength();
 			labelKeypreview.setEnabled(true);
 		} else {
 			this.keyUsedToEncrypt = null;
-			btnDecipher.setEnabled(false);
+//			btnDecipher.setEnabled(false);
 			labelKeypreview.setText(Messages.TranspAnalysisUI_keypreview_zerocolumns);
 			actualKeyLength = 0;
 			labelKeypreview.setEnabled(false);
@@ -679,36 +689,40 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 
 	private void decipherIntoEditor() {
-		final String TRANSPOSITION_ALGORITHM = "org.jcryptool.crypto.classic.transposition.algorithm"; //$NON-NLS-1$
-
-		OperationsPlugin op = OperationsPlugin.getDefault();
-		IAction[] actions = op.getAlgorithmsManager().getShadowAlgorithmActions();
-		for (final IAction action : actions) {
-			if (TRANSPOSITION_ALGORITHM.equals(action.getId())) {
-				ClassicDataObject myDO = new ClassicDataObject();
-				AbstractAlphabet ascii = AlphabetsManager.getInstance().getAlphabetByName("Printable ASCII"); //$NON-NLS-1$
-				myDO.setAlphabet(ascii);
-				char[] key = new char[keyUsedToEncrypt.getLength() + 2];
-				key[0] = getInputMethodDecryption() ? ascii.getCharacterSet()[0] : ascii.getCharacterSet()[1];
-				key[1] = getOutputMethodDecryption() ? ascii.getCharacterSet()[0] : ascii.getCharacterSet()[1];
-				System.arraycopy(keyUsedToEncrypt.toUnformattedChars(ascii).toCharArray(), 0, key, 2,
-					keyUsedToEncrypt.getLength());
-				myDO.setKey(key);
-				myDO.setKey2("".toCharArray()); //$NON-NLS-1$
-				try {
-					myDO.setInputStream(new BufferedInputStream(new ByteArrayInputStream(calcText().getBytes(
-						IConstants.UTF8_ENCODING))));
-				} catch (UnsupportedEncodingException e) {
-					LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e);
-				}
-				myDO.setOpmode(AbstractAlgorithm.DECRYPT_MODE);
-				myDO.setFilterNonAlphaChars(true);
-				myDO.setTransformData(new TransformData());
-
-				((ShadowAlgorithmAction) action).run(myDO);
-				break;
-			}
-		}
+		//mode: not using the transposition algorithm for now because of special characters issue
+		TextInputWithSourceDisplayer.openTextInEditor(lastPreviewedText, "deciphered_transposition");
+		return;
+//		
+//		final String TRANSPOSITION_ALGORITHM = "org.jcryptool.crypto.classic.transposition.algorithm"; //$NON-NLS-1$
+//
+//		OperationsPlugin op = OperationsPlugin.getDefault();
+//		IAction[] actions = op.getAlgorithmsManager().getShadowAlgorithmActions();
+//		for (final IAction action : actions) {
+//			if (TRANSPOSITION_ALGORITHM.equals(action.getId())) {
+//				ClassicDataObject myDO = new ClassicDataObject();
+//				AbstractAlphabet ascii = AlphabetsManager.getInstance().getAlphabetByName("Printable ASCII"); //$NON-NLS-1$
+//				myDO.setAlphabet(ascii);
+//				char[] key = new char[keyUsedToEncrypt.getLength() + 2];
+//				key[0] = getInputMethodDecryption() ? ascii.getCharacterSet()[0] : ascii.getCharacterSet()[1];
+//				key[1] = getOutputMethodDecryption() ? ascii.getCharacterSet()[0] : ascii.getCharacterSet()[1];
+//				System.arraycopy(keyUsedToEncrypt.toUnformattedChars(ascii).toCharArray(), 0, key, 2,
+//					keyUsedToEncrypt.getLength());
+//				myDO.setKey(key);
+//				myDO.setKey2("".toCharArray()); //$NON-NLS-1$
+//				try {
+//					myDO.setInputStream(new BufferedInputStream(new ByteArrayInputStream(calcText().getBytes(
+//						IConstants.UTF8_ENCODING))));
+//				} catch (UnsupportedEncodingException e) {
+//					LogUtil.logError(TranspositionAnalysisPlugin.PLUGIN_ID, e);
+//				}
+//				myDO.setOpmode(AbstractAlgorithm.DECRYPT_MODE);
+//				myDO.setFilterNonAlphaChars(true);
+//				myDO.setTransformData(new TransformData());
+//
+//				((ShadowAlgorithmAction) action).run(myDO);
+//				break;
+//			}
+//		}
 	}
 
 	private boolean getOutputMethodDecryption() {
