@@ -283,10 +283,8 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             return in;
         }
 
-//        LogUtil.logError("filterSBTD|"+InputStreamToString(in));
         String filterString = InputStreamToString(in);
         String filteredString = Transform.transformText(filterString, filter);
-        LogUtil.logError("filterSBTD2|"+InputStreamToString(StringToInputStream(filteredString)));
         
         return StringToInputStream(filteredString);
     }
@@ -344,12 +342,10 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         if (filter) {
             p.print(String.valueOf(cipherOutput));
             this.dataObject.setOutput(cipherOutput);
-            LogUtil.logError("execute1:"+String.valueOf(cipherOutput));
         } else {
             char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
             p.print(String.valueOf(finalOutput));
             this.dataObject.setOutput(finalOutput);
-            LogUtil.logError("execute2:"+String.valueOf(finalOutput));
         }
         
         return dataObject;

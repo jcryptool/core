@@ -129,7 +129,7 @@ public abstract class AbstractAlgorithmAction extends Action {
         if (algorithm instanceof AbstractClassicAlgorithm) {
             if (((IClassicDataObject) dataObject).getOutputIS() != null) {
                 output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutputIS());
-
+                //TODO: fix special character issues with IS input as well
             } else {
                 output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutput());
             }
