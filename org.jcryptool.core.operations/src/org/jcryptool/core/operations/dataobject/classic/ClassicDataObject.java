@@ -1,12 +1,12 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.core.operations.dataobject.classic;
 
@@ -20,212 +20,223 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
 /**
- *
- * The ClassicDataObject class is the implementation of the IDataObject interface for classic
- * algorithms.
- *
+ * 
+ * The ClassicDataObject class is the implementation of the IDataObject
+ * interface for classic algorithms.
+ * 
  * @author amro
  * @version 0.1
  */
 public class ClassicDataObject implements IClassicDataObject {
 
-    /**
-     * cipher as char representation
-     */
-    private char[] output;
+	/**
+	 * cipher as char representation
+	 */
+	private char[] output;
 
-    /**
-     * key as char representation
-     */
-    private char[] key;
+	/**
+	 * key as char representation
+	 */
+	private char[] key;
 
-    /**
-     * filter non-alphanumeric characters?
-     */
-    private boolean filterNonAlphaChars;
-    
-    /**
-     *  text transformations
-     */
-    private TransformData transformData;
+	/**
+	 * filter non-alphanumeric characters?
+	 */
+	private boolean filterNonAlphaChars;
 
-    /**
-     * Character used as null value in some ciphers
-     */
-    private char nullchar;
+	/**
+	 * text transformations
+	 */
+	private TransformData transformData;
 
-    /**
-     * key as char representation
-     */
-    private char[] key2;
+	/**
+	 * Character used as null value in some ciphers
+	 */
+	private char nullchar;
 
-    private AbstractAlphabet cypherAlphabet;
+	/**
+	 * key as char representation
+	 */
+	private char[] key2;
 
-    /**
-     * The plain text.
-     */
-    private char[] plain;
+	private AbstractAlphabet cypherAlphabet;
 
-    /**
-     * operation mode
-     */
-    private int opmode;
+	/**
+	 * The plain text.
+	 */
+	private char[] plain;
 
-    private InputStream inputStream;
+	/**
+	 * operation mode
+	 */
+	private int opmode;
 
-    private OutputStream outputStream;
+	private InputStream inputStream;
 
-    /**
-     * create DataObject with an initial alphabet
-     *
-     * @param alpha initial alphabet
-     */
-    public ClassicDataObject(AbstractAlphabet alpha) {
-        cypherAlphabet = alpha;
-    }
+	private OutputStream outputStream;
 
-    /**
-     * default constructor
-     */
-    public ClassicDataObject() {
-        super();
-    }
+	private InputStream outputIS;
 
-    /**
-     * method is defined by interface IDataObject used to set the editors input after operation was
-     * executed
-     */
-    public String getOutput() {
-        return String.copyValueOf(output);
-    }
+	/**
+	 * create DataObject with an initial alphabet
+	 * 
+	 * @param alpha
+	 *            initial alphabet
+	 */
+	public ClassicDataObject(AbstractAlphabet alpha) {
+		cypherAlphabet = alpha;
+	}
 
-    /**
-     * method is defined by interface IDataObject used to provide input for the operation
-     */
-    public void setPlain(String input) {
-        plain = input.toCharArray();
-    }
+	/**
+	 * default constructor
+	 */
+	public ClassicDataObject() {
+		super();
+	}
 
-    public void setPlain(byte[] input) {
+	/**
+	 * method is defined by interface IDataObject used to set the editors input
+	 * after operation was executed
+	 */
+	public String getOutput() {
+		return String.copyValueOf(output);
+	}
 
-    }
+	/**
+	 * method is defined by interface IDataObject used to provide input for the
+	 * operation
+	 */
+	public void setPlain(String input) {
+		plain = input.toCharArray();
+	}
 
-    /**
-     * Getter for plain text
-     *
-     * @return the plain text
-     */
-    public char[] getPlain() {
-        return plain;
-    }
+	public void setPlain(byte[] input) {
 
-    /**
-     * specific method for this IDataObject type
-     *
-     * @param finalOutput
-     */
-    public void setOutput(char[] finalOutput) {
-        output = finalOutput;
-    }
+	}
 
-    public AbstractAlphabet getAlphabet() {
-        return cypherAlphabet;
-    }
+	/**
+	 * Getter for plain text
+	 * 
+	 * @return the plain text
+	 */
+	public char[] getPlain() {
+		return plain;
+	}
 
-    public void setAlphabet(AbstractAlphabet alphabet) {
-        this.cypherAlphabet = alphabet;
-    }
+	/**
+	 * specific method for this IDataObject type
+	 * 
+	 * @param finalOutput
+	 */
+	public void setOutput(char[] finalOutput) {
+		output = finalOutput;
+	}
 
-    /**
-     * Getter for the algorithm's key
-     *
-     * @return the key as a char array
-     */
-    public char[] getKey() {
-        return key;
-    }
+	public AbstractAlphabet getAlphabet() {
+		return cypherAlphabet;
+	}
 
-    /**
-     * Setter for the key of the algorithm.
-     *
-     * @param key the key via a char array.
-     */
-    public void setKey(char[] key) {
-        this.key = key;
-    }
+	public void setAlphabet(AbstractAlphabet alphabet) {
+		this.cypherAlphabet = alphabet;
+	}
 
-    /**
-     * Getter for the operations mode
-     *
-     * @return the operation mode as int value
-     */
-    public int getOpmode() {
-        return opmode;
-    }
+	/**
+	 * Getter for the algorithm's key
+	 * 
+	 * @return the key as a char array
+	 */
+	public char[] getKey() {
+		return key;
+	}
 
-    /**
-     * Setter for the operation mode
-     *
-     * @param opmode the operation mode via int value
-     */
-    public void setOpmode(int opmode) {
-        this.opmode = opmode;
-    }
+	/**
+	 * Setter for the key of the algorithm.
+	 * 
+	 * @param key
+	 *            the key via a char array.
+	 */
+	public void setKey(char[] key) {
+		this.key = key;
+	}
 
-    public char getNullchar() {
-        return nullchar;
-    }
+	/**
+	 * Getter for the operations mode
+	 * 
+	 * @return the operation mode as int value
+	 */
+	public int getOpmode() {
+		return opmode;
+	}
 
-    public void setNullchar(char nullchar) {
-        this.nullchar = nullchar;
-    }
+	/**
+	 * Setter for the operation mode
+	 * 
+	 * @param opmode
+	 *            the operation mode via int value
+	 */
+	public void setOpmode(int opmode) {
+		this.opmode = opmode;
+	}
 
-    public char[] getKey2() {
-        return key2;
-    }
+	public char getNullchar() {
+		return nullchar;
+	}
 
-    public void setKey2(char[] key2) {
-        this.key2 = key2;
-    }
+	public void setNullchar(char nullchar) {
+		this.nullchar = nullchar;
+	}
 
-    public boolean isFilterNonAlphaChars() {
-        return filterNonAlphaChars;
-    }
+	public char[] getKey2() {
+		return key2;
+	}
 
-    public void setFilterNonAlphaChars(boolean filterNonAlphaChars) {
-        this.filterNonAlphaChars = filterNonAlphaChars;
-    }
-    
-    public TransformData getTransformData() {
-    	return transformData;
-    }
-    
-    public void setTransformData(TransformData transformData){
-    	this.transformData = transformData;
-    }
+	public void setKey2(char[] key2) {
+		this.key2 = key2;
+	}
 
-    public InputStream getInputStream() {
-        return inputStream;
-    }
+	public boolean isFilterNonAlphaChars() {
+		return filterNonAlphaChars;
+	}
 
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
+	public void setFilterNonAlphaChars(boolean filterNonAlphaChars) {
+		this.filterNonAlphaChars = filterNonAlphaChars;
+	}
 
-    public OutputStream getOutputStream() {
-        return outputStream;
-    }
+	public TransformData getTransformData() {
+		return transformData;
+	}
 
-    public void setOutputStream(OutputStream outputStream) {
-        this.outputStream = outputStream;
-    }
+	public void setTransformData(TransformData transformData) {
+		this.transformData = transformData;
+	}
 
-    public InputStream getOutputIS() {
-        if (this.outputStream instanceof ByteArrayOutputStream) {
-            return new BufferedInputStream(new ByteArrayInputStream(
-                    ((ByteArrayOutputStream) this.outputStream).toByteArray()));
-        } else {
-            return null;
-        }
-    }
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
+	}
+
+	public OutputStream getOutputStream() {
+		return outputStream;
+	}
+
+	public void setOutputStream(OutputStream outputStream) {
+		this.outputStream = outputStream;
+	}
+
+	public void setOutputIS(InputStream is) {
+		this.outputIS = is;
+	}
+
+	public InputStream getOutputIS() {
+		if (outputIS != null) return outputIS;
+		if (this.outputStream instanceof ByteArrayOutputStream) {
+			return new BufferedInputStream(new ByteArrayInputStream(
+				((ByteArrayOutputStream) this.outputStream).toByteArray()));
+		} else {
+			return null;
+		}
+	}
 }

@@ -17,6 +17,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -47,7 +49,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
     /** Operation's alpha converter. */
     protected AlphaConverter alphaConv;
     /** Filter for non alpha chars. */
-    private boolean filter = true;
+    protected boolean filter = true;
     /** Data object implementation must be the classic implementation. */
     protected ClassicDataObject dataObject;
     /** The InputStream. */
@@ -234,7 +236,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
      *
      * @param in the input stream
      */
-    private String InputStreamToString(InputStream in) {
+    protected String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
@@ -287,7 +289,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         return StringToInputStream(filteredString);
     }
 
-    public IDataObject execute() {
+    public IDataObject execute()  {
         // 1st prepare alphabet table, every char is associated has an int value
         this.alphaConv = new AlphaConverter(this.dataObject.getAlphabet().getCharacterSet());
         // 2nd key
@@ -304,7 +306,14 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         char[] charInput;
         char[] cipherInput = null;
         char[] cipherOutput = null;
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        OutputStream bout = null;
+        bout = new ByteArrayOutputStream();
+        PrintStream p = null;
+		try {
+			p = new PrintStream(bout, false, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
         this.dataObject.setOutputStream(bout);
         inputString = InputStreamToString(is);
 
@@ -331,20 +340,12 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         }
 
         if (filter) {
-            try {
-                bout.write(toByteArray(cipherOutput));
-            } catch (IOException ex) {
-                LogUtil.logError(OperationsPlugin.PLUGIN_ID, ex);
-            }
+            p.print(String.valueOf(cipherOutput));
         } else {
             char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
-            try {
-                bout.write(toByteArray(finalOutput));
-            } catch (IOException ex) {
-                LogUtil.logError(OperationsPlugin.PLUGIN_ID, ex);
-            }
+            p.print(String.valueOf(finalOutput));
         }
-
+        
         return dataObject;
     }
 
@@ -362,7 +363,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
      * @param cipherInput the to be processed input
      * @return the cipher output as a char array
      */
-    private char[] encrypt(char[] cipherInput, int cipherCount) {
+    protected char[] encrypt(char[] cipherInput, int cipherCount) {
         // convert cipher input to an int array by using the alphabet
         int[] input = alphaConv.charArrayToIntArray(cipherInput);
 
@@ -404,7 +405,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
      * @param cipherInput the to be processed input
      * @return the cipher output as a char array
      */
-    private char[] decrypt(char[] cipherInput, int cipherCount) {
+    protected char[] decrypt(char[] cipherInput, int cipherCount) {
         // convert cipher input to an int array by using the alphabet
         int[] input = alphaConv.charArrayToIntArray(cipherInput);
 
@@ -447,7 +448,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
      * @param cipherOutput the cipher output
      * @return the merged final output
      */
-    private char[] mergeToFinalOutput(char[] plain, char[] cipherOutput) {
+    protected char[] mergeToFinalOutput(char[] plain, char[] cipherOutput) {
         char[] finalOutput = new char[plain.length];
         boolean[] nonAlphaIndicator = new boolean[finalOutput.length];
 
