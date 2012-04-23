@@ -178,7 +178,6 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
         if(tKey2.getLength() > 0) {
         	text = transpose(text, tKey2, secondReadInOrder, secondReadOutOrder, false);
         }
-
         // Putting it back together
         int[] result = toInternalResultRepresentation(text, alphaChars);
 
