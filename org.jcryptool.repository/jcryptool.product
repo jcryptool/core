@@ -122,6 +122,7 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <property name="Dfile.encoding" value="UTF-8" />
    </configurations>
 
 </product>

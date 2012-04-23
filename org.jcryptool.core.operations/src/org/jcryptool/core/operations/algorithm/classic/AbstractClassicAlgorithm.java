@@ -249,7 +249,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         String output = ""; //$NON-NLS-1$
         try {
             while ((charOut = reader.read()) != -1) {
-                myStrBuf.append(String.valueOf((char) charOut));
+                myStrBuf.append(String.valueOf(Character.valueOf((char) charOut)));
             }
         } catch (IOException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
@@ -283,9 +283,11 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             return in;
         }
 
+//        LogUtil.logError("filterSBTD|"+InputStreamToString(in));
         String filterString = InputStreamToString(in);
         String filteredString = Transform.transformText(filterString, filter);
-
+        LogUtil.logError("filterSBTD2|"+InputStreamToString(StringToInputStream(filteredString)));
+        
         return StringToInputStream(filteredString);
     }
 
@@ -314,7 +316,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-        this.dataObject.setOutputStream(bout);
+//        this.dataObject.setOutputStream(bout);
         inputString = InputStreamToString(is);
 
         charInput = inputString.toCharArray();
@@ -341,9 +343,13 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
         if (filter) {
             p.print(String.valueOf(cipherOutput));
+            this.dataObject.setOutput(cipherOutput);
+            LogUtil.logError("execute1:"+String.valueOf(cipherOutput));
         } else {
             char[] finalOutput = mergeToFinalOutput(charInput, cipherOutput);
             p.print(String.valueOf(finalOutput));
+            this.dataObject.setOutput(finalOutput);
+            LogUtil.logError("execute2:"+String.valueOf(finalOutput));
         }
         
         return dataObject;

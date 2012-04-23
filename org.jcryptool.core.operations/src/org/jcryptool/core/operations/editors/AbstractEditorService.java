@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.io.RandomAccessFile;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -101,10 +103,10 @@ public abstract class AbstractEditorService {
                 + getFormatedFilenumber(outputNumber++) + IConstants.TXT_FILE_TYPE_EXTENSION);
 
         try {
-            FileOutputStream fos = new FileOutputStream(outputFile);
-            fos.write(content.getBytes());
-            fos.flush();
-            fos.close();
+            PrintWriter p = new PrintWriter(outputFile, "UTF-8");
+            p.print(content);
+            p.flush();
+            p.close();
         } catch (IOException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while writing to an output stream", e, false); //$NON-NLS-1$
         }
@@ -256,7 +258,7 @@ public abstract class AbstractEditorService {
             int read = 0;
             while ((read = fis.read(buffer)) > -1) {
                 s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
-                fos.write(s.getBytes());
+                fos.write(s.getBytes("UTF-8"));
             }
         } catch (IOException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while writing to an output stream", e, false); //$NON-NLS-1$
@@ -304,7 +306,7 @@ public abstract class AbstractEditorService {
             int read = 0;
             while ((read = fis.read(buffer)) > -1) {
                 s = Charset.forName(IConstants.UTF8_ENCODING).decode(ByteBuffer.wrap(buffer, 0, read)).toString();
-                fos.write(s.getBytes());
+                fos.write(s.getBytes("UTF-8"));
             }
         } catch (IOException e) {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while writing to an output stream", e, false); //$NON-NLS-1$
