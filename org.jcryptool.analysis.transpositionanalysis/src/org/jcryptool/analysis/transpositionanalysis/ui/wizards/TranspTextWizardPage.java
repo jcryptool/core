@@ -672,6 +672,7 @@ public class TranspTextWizardPage extends WizardPage {
 
 		showLoadFromEditorComponents(sourceType.equals(TextSourceType.JCTEDITOR));
 		if (sourceType.equals(TextSourceType.JCTEDITOR)) {
+			//TODO:
 			comboEditorInputSelector.select(editorRefs.indexOf(text.editorReference));
 		}
 		if (sourceType.equals(TextSourceType.FILE)) {

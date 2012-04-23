@@ -31,6 +31,7 @@ public class Messages extends NLS {
 	public static String TranspositionWizardPage_inputname_firstkey;
 	public static String TranspositionWizardPage_inputname_secondkey;
 	public static String TranspositionWizardPage_secondkey_grouptitle;
+	public static String TranspositionWizardPage_nogoodform;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

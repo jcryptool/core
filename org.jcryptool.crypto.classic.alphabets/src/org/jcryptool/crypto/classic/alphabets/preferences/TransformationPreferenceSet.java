@@ -151,7 +151,7 @@ public class TransformationPreferenceSet {
     public static TransformData getDefaultSetting(String alphabetName) {
         String[][] standards = new String[8][2];
         standards[0][0] = "Printable ASCII";
-        standards[0][1] = "Printable ASCII|true|false|false|true|false";
+        standards[0][1] = "Printable ASCII|true|false|false|false|false";
         standards[1][0] = "Upper and lower Latin (A-Z,a-z)";
         standards[1][1] = "Upper and lower Latin (A-Z,a-z)|true|false|false|true|true";
         standards[2][0] = "Upper Latin (A-Z)";

@@ -33,9 +33,11 @@ public class TranspositionAlgorithmSpecification extends
 		@Override
 		protected boolean verifyKeyInput(String key, AbstractAlphabet alphabet) {
 			if(key.length() < 1) return true;
-
-			TranspositionKey tKey = new TranspositionKey(key, alphabet.getCharacterSet());
-			return tKey.isReallyEncrypting();
+			if(NOFITTINGKEYFORM.verify(key, alphabet).isValid()) {
+				TranspositionKey tKey = new TranspositionKey(key, alphabet.getCharacterSet());
+				return tKey.isReallyEncrypting();
+			} else return false;
+			
 		}
 		@Override
 		protected InputVerificationResult getFailResult(final String key, final AbstractAlphabet alphabet) {
@@ -59,6 +61,40 @@ public class TranspositionAlgorithmSpecification extends
 		}
 	};
 	
+	public static final String RESULT_TYPE_KEY_NOFITTINGKEYFORM = "NOFITTINGKEYFORM";
+	public static KeyVerificator NOFITTINGKEYFORM = new KeyVerificator() {
+		@Override
+		protected boolean verifyKeyInput(String key, AbstractAlphabet alphabet) {
+			if(key.length() < 1) return true;
+
+			if(!TranspositionKey.generateKeyFromStringMode(key, alphabet.getCharacterSet()).mode.isSuccessful()) {
+				return false;
+			}
+			return true;
+		}
+		@Override
+		protected InputVerificationResult getFailResult(final String key, final AbstractAlphabet alphabet) {
+			return new InputVerificationResult() {
+				@Override
+				public boolean isStandaloneMessage() {return false;}
+				@Override
+				public MessageType getMessageType() {return InputVerificationResult.MessageType.ERROR;}
+				@Override
+				public boolean isValid() {return false;}
+				@Override
+				public String getMessage() {
+					String mask = org.jcryptool.crypto.classic.transposition.ui.Messages.TranspositionWizardPage_nogoodform;
+					Character missingChar = TranspositionKey.generateKeyFromStringMode(key, alphabet.getCharacterSet()).notinalphaChar;
+					return String.format(mask, missingChar==null?"null":String.valueOf(missingChar));
+				}
+				@Override
+				public Object getResultType() {
+					return RESULT_TYPE_KEY_NOFITTINGKEYFORM; 
+				}
+			};
+		}
+	};
+	
 	@Override
 	public AbstractAlphabet getDefaultPlainTextAlphabet() {
 		List<AbstractAlphabet> availableAlphabets = getAvailablePlainTextAlphabets();
@@ -76,7 +112,7 @@ public class TranspositionAlgorithmSpecification extends
 	@Override
 	public List<KeyVerificator> getKeyVerificators() {
 		List<KeyVerificator> verificators = new LinkedList<KeyVerificator>();
-		verificators.add(KEY_IN_ALPHABET);
+		verificators.add(NOFITTINGKEYFORM);
 		verificators.add(NOKEY(org.jcryptool.crypto.classic.transposition.ui.Messages.TranspositionKeyInputComposite_key_instructions));
 		verificators.add(NOTCHANGING);
 		return verificators;

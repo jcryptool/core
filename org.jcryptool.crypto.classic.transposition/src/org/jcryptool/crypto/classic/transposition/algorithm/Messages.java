@@ -26,6 +26,8 @@ public class Messages extends NLS {
 	public static String TranspositionAlgorithmCmd_rowwise_sentence_end;
 	public static String TranspositionAlgorithmCmd_columnwise_sentence_end;
 	public static String TranspositionAlgorithmCmd_seeabove;
+	public static String TranspositionTable_columnwise;
+	public static String TranspositionTable_rowwise;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

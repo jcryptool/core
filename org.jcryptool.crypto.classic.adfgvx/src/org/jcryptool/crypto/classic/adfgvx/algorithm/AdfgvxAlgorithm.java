@@ -73,7 +73,7 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
         return new ByteArrayInputStream(bytes);
     }
 
-    private String InputStreamToString(InputStream in) {
+    protected String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));

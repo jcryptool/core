@@ -92,7 +92,7 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
      *
      * @see #transpose(char[], TranspositionKey, boolean, boolean, boolean, TranspositionKey)
      */
-    public char[] transpose(char[] text, TranspositionKey key, boolean readInOrder, boolean readOutOrder, boolean predictPadding) {
+    public static char[] transpose(char[] text, TranspositionKey key, boolean readInOrder, boolean readOutOrder, boolean predictPadding) {
     	return transpose(text, key, readInOrder, readOutOrder, predictPadding, key.getReverseKey());
     }
 
@@ -109,7 +109,7 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
      * @param keyForPaddingPrediction the key that has to be used for padding prediction (in the case decryption of a cipher that has omissed padding, its the reverse key of the decryption key, thus, the encryption key)
      * @return the transposed text as char array
      */
-    public char[] transpose(char[] text, TranspositionKey key, boolean readInOrder, boolean readOutOrder, boolean predictPadding, TranspositionKey keyForPaddingPrediction) {
+    public static char[] transpose(char[] text, TranspositionKey key, boolean readInOrder, boolean readOutOrder, boolean predictPadding, TranspositionKey keyForPaddingPrediction) {
     	TranspositionTable table = new TranspositionTable(key.getLength());
     	if(predictPadding) {
     		table.fillCharsIntoTable(text, readInOrder, keyForPaddingPrediction);
@@ -129,7 +129,7 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
      * @param alphaChars the currentAlphabet for this encoding
      * @return the read order
      */
-    public boolean getReadOrderFromChar(char character, char[] alphaChars) {
+    public static boolean getReadOrderFromChar(char character, char[] alphaChars) {
     	if(character == alphaChars[0]) return true;
     	return false;
     }
@@ -158,6 +158,7 @@ public class TranspositionEngine implements IClassicAlgorithmEngine {
             key1String.append(alphaChars[key[i]]);
         tKey1 = new TranspositionKey(key1String.toString(), alphaChars);
 
+        
         boolean secondReadInOrder = getReadOrderFromChar(alphaChars[key[0]], alphaChars);
         boolean secondReadOutOrder = getReadOrderFromChar(alphaChars[key[1]], alphaChars);
         //Reading the second key (first two chars are order instructions)

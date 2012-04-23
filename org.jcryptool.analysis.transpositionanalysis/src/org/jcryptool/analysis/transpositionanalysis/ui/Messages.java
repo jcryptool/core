@@ -36,6 +36,7 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_Results;
 	public static String TranspAnalysisUI_btnOpenTextWizard_text;
 	public static String TranspAnalysisUI_grpEditText;
+	public static String TranspAnalysisUI_lbl_params_mask;
 	public static String TranspAnalysisUI_lblTryToRecover_text;
 	public static String TranspAnalysisUI_lblHoweverTheColumn_text;
 	public static String TranspAnalysisUI_lblChooseAnotherText;
@@ -46,6 +47,8 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_lblTheResultsthe_text;
 	public static String TranspAnalysisUI_view_description;
 	public static String TranspAnalysisUI_lblLoadedTextwith_text;
+	public static String TranspAnalysisUI_lblNewLabel_1_text;
+	public static String TranspAnalysisUI_tooltipParams;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

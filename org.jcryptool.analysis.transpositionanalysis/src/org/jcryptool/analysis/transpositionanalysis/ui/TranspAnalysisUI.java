@@ -68,7 +68,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Text previewText;
 	private Composite compResults;
 	private Group compTable;
-	private Label labelKeypreview;
+	private Text labelKeypreview;
 	private Composite composite4;
 	private Label label2;
 	private boolean crop = true;
@@ -108,6 +108,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Label lblLoadedTextwith;
 
 	private String lastPreviewedText;
+	private Label lblParameters;
 
 	/**
 	 * @param text
@@ -245,8 +246,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				{
 					linkChooseText = new Link(compTextSource, SWT.NONE);
 					linkChooseText.setText(Messages.TranspAnalysisUI_lblChooseAnotherText);
-					GridData linkChooseTextLData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1);
-					linkChooseText.setLayoutData(linkChooseTextLData);
+					linkChooseText.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false, 2, 1));
 					linkChooseText.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
@@ -418,12 +418,13 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							composite8.setLayoutData(composite8LData);
 							composite8.setLayout(composite8Layout);
 							{
-								labelKeypreview = new Label(composite8, SWT.BORDER);
+								labelKeypreview = new Text(composite8, SWT.BORDER);
 								GridData label3LData = new GridData();
 								label3LData.grabExcessHorizontalSpace = true;
 								label3LData.horizontalAlignment = GridData.FILL;
 								labelKeypreview.setLayoutData(label3LData);
 								labelKeypreview.setText(""); //$NON-NLS-1$
+								labelKeypreview.setEditable(false);
 							}
 							{
 								linkSetKey = new Link(composite8, SWT.NONE);
@@ -470,6 +471,13 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 									}
 								});
 							}
+						}
+						{
+							lblParameters = new Label(composite4, SWT.WRAP);
+							GridData data = new GridData(SWT.FILL, SWT.CENTER, true, false);
+							data.widthHint = 100;
+							lblParameters.setLayoutData(data);
+							lblParameters.setText(Messages.TranspAnalysisUI_lblNewLabel_1_text);
 						}
 						{
 							composite7 = new Composite(composite4, SWT.NONE);
@@ -652,9 +660,24 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
 			previewText.setText(lastPreviewedText);
 			btnDecipher.setEnabled(true);
+			
+			if(isCipherParametersComplete()) {
+				String maskParams = Messages.TranspAnalysisUI_lbl_params_mask;
+				String paramsLblText = Messages.TranspAnalysisUI_lblNewLabel_1_text + String.format(maskParams, 
+					TranspositionTable.readDirectionToString(readoutDirChooser.getInput().getContent()),
+					TranspositionTable.readDirectionToString(readInMode)
+					);
+				lblParameters.setText(paramsLblText);
+				lblParameters.setToolTipText(Messages.TranspAnalysisUI_tooltipParams);
+				this.layout(new Control[]{lblParameters});
+			}
 		} else {
 			btnDecipher.setEnabled(false);
 		}
+	}
+
+	private boolean isCipherParametersComplete() {
+		return text != null && readoutDirChooser != null && keyUsedToEncrypt != null && keyUsedToEncrypt.getLength()>0;
 	}
 
 	@Override
@@ -673,6 +696,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (key != null) {
 			this.keyUsedToEncrypt = new TranspositionKey(key);
 			labelKeypreview.setText(" " + keyUsedToEncrypt.toStringOneRelative() + "|"); //$NON-NLS-1$ //$NON-NLS-2$
+			
 //			btnDecipher.setEnabled(true);
 			actualKeyLength = keyUsedToEncrypt.getLength();
 			labelKeypreview.setEnabled(true);
@@ -680,6 +704,9 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			this.keyUsedToEncrypt = null;
 //			btnDecipher.setEnabled(false);
 			labelKeypreview.setText(Messages.TranspAnalysisUI_keypreview_zerocolumns);
+			
+			lblParameters.setText(Messages.TranspAnalysisUI_lblNewLabel_1_text);
+			
 			actualKeyLength = 0;
 			labelKeypreview.setEnabled(false);
 		}
@@ -690,7 +717,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private void decipherIntoEditor() {
 		//mode: not using the transposition algorithm for now because of special characters issue
-		TextInputWithSourceDisplayer.openTextInEditor(lastPreviewedText, "deciphered_transposition");
+		TextInputWithSourceDisplayer.openTextInEditor(lastPreviewedText, "deciphered_transposition"); //$NON-NLS-1$
 		return;
 //		
 //		final String TRANSPOSITION_ALGORITHM = "org.jcryptool.crypto.classic.transposition.algorithm"; //$NON-NLS-1$

@@ -39,6 +39,8 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.classic.alphabets.Alphabet;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
@@ -153,7 +155,10 @@ public class AlphabetStore extends AbstractAlphabetStore {
                 processAlphabetsCreation();
             } catch (IOException e) {
                 LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while initializing the alphabets", e, false); //$NON-NLS-1$
-            }
+            } catch (AlphaFileOutOfDateException e) {
+            	LogUtil.logInfo(AlphabetsPlugin.PLUGIN_ID, e.getMessage());
+            	processAlphabetsCreation();
+			}
         }
     }
 
@@ -168,10 +173,26 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
     }
 
-    private void validateAlphabet(File alphaFile) throws ParserConfigurationException, SAXException, IOException {
+    private void validateAlphabet(File alphaFile) throws ParserConfigurationException, SAXException, IOException, AlphaFileOutOfDateException {
         // parse an XML document into a DOM tree
         DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = parser.parse(alphaFile);
+        
+        NodeList characterSets = document.getElementsByTagName("characterSet");
+        boolean umlautsFound = false;
+        for(int i=0; i<characterSets.getLength(); i++) {
+        	Node set = characterSets.item(i);
+        	String setContent = set.getTextContent();
+        	if(setContent != null) {
+        		if(setContent.contains("ö")) {
+        			umlautsFound = true;
+        			break;
+        		}
+        	}
+        }
+        if(!umlautsFound) {
+        	throw new AlphaFileOutOfDateException("no umlauts were found in the present alphabet file; this must be out of date. creating a new file...");
+        }
 
         // create a SchemaFactory capable of understanding WXS schemas
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -210,7 +231,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
 
     private void generateStandardAlphabets() {
     	//TODO: maybe do umlauts in another alphabet, but for now...
-        char[] extraChars = {'\r', '\n', 'ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'};
+        char[] extraChars = Messages.AlphabetStore_extrachars.toCharArray();
     	char[] set = new char[95+extraChars.length];
         for (int i = 32; i < 127; i++) {
             set[i - 32] = (char) i;

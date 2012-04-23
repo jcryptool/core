@@ -27,7 +27,7 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
  *
  */
 public class TranspositionKey {
-	private static final String[] POSSIBLE_PARSE_SEPARATORS = new String[]{",", ";", "|"};
+	private static final String[] POSSIBLE_PARSE_SEPARATORS = new String[]{",", ";", "|", " "};
 	private static final Integer NOVALUE = -1;
 	private static final String SEPARATOR = "|"; //$NON-NLS-1$
 	private static final String SEPARATOR_REGEX = "\\|"; //$NON-NLS-1$
@@ -63,6 +63,28 @@ public class TranspositionKey {
 		this.fromString(stringRepresentation, alphabet);
 	}
 
+//	/**
+//	 * Returns the characters that are allowed 
+//	 * 
+//	 * @param baseAlphabet
+//	 * @return
+//	 */
+//	public static char[] generateCharsetForAcceptableKeyInputCharacters(char[] baseAlphabet) {
+//		String additionalCharacters = "0123456789";
+//		for(String s: POSSIBLE_PARSE_SEPARATORS) {
+//			additionalCharacters += s;
+//		}
+//		String result = String.valueOf(baseAlphabet);
+//		
+//		for(char c: additionalCharacters.toCharArray()) {
+//			if(String.valueOf(baseAlphabet).indexOf(c)==-1) {
+//				result += String.valueOf(c);
+//			}
+//		}
+//		
+//		return result.toCharArray();
+//	}
+	
 	/**
 	 * Clears all content.
 	 */
@@ -129,39 +151,112 @@ public class TranspositionKey {
 
 	}
 
-	/**
-	 * Reads a unformatted String into the key. The key is interpreted
-	 * by using the given currentAlphabet (as char-array) <br /><br />
-	 *
-	 * @param argString The String to be read into the key.
-	 */
-	public void fromString(String argString, char[] alphabet) {
-		String mode = null;
+	public static class KeyFromStringParseResult {
+		public enum Mode {
+			LIMITER, NOTINALPHA, DEFAULT;
+			
+			public boolean isSuccessful() {
+				if(this != NOTINALPHA) {
+					return true;
+				}
+				return false;
+			}
+		}
+		
+		public Mode mode;
+		public String limiter;
+		public Character notinalphaChar;
+		public String newkey;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new TranspositionKey("21", "abc".toCharArray()));
+	}
+	public static KeyFromStringParseResult generateKeyFromStringMode(String argString, char[] alphabet) {
+		KeyFromStringParseResult result = new KeyFromStringParseResult();
+		KeyFromStringParseResult.Mode mode = KeyFromStringParseResult.Mode.DEFAULT;
 		String limiter = null;
-		/*
-		 * possible modes:
-		 * null: default;
-		 * "LIMITER": limiter String detected like ","; ", "; "|"...
-		 */
 		
 		String[] possibleLimiterStrings = POSSIBLE_PARSE_SEPARATORS;
 		
 		limiter = keyStringIsWithLimiters(argString, possibleLimiterStrings);
 		if(limiter != null) {
-			mode = "LIMITER";
+			mode = KeyFromStringParseResult.Mode.LIMITER;
+		}
+		if(argString.matches("(\\d)*")) {
+			String digitStringToLimiterString = "";
+			for(int i=0; i<argString.toCharArray().length; i++) {
+				if(i!=argString.toCharArray().length-1) {
+					digitStringToLimiterString += (argString.toCharArray()[i]+",");
+				} else {
+					digitStringToLimiterString += (argString.toCharArray()[i]);
+				}
+			}
+			result.newkey = digitStringToLimiterString;
+			limiter = ",";
+			mode = KeyFromStringParseResult.Mode.LIMITER;
 		}
 		
-		if(mode == null) {
+		
+		
+		// check for not-in-alpha characters
+		if(mode==KeyFromStringParseResult.Mode.DEFAULT) {
+			Character lastFoundCharOutOfAlpha = null;
+			for(char c: argString.toCharArray()) {
+				if(String.valueOf(alphabet).indexOf(c) == -1) {
+					lastFoundCharOutOfAlpha = c;
+					String inputWithoutChar = argString.replaceAll(Pattern.quote(String.valueOf(c)), "");
+					if(generateKeyFromStringMode(inputWithoutChar, alphabet).mode.isSuccessful()) {
+						result.mode = KeyFromStringParseResult.Mode.NOTINALPHA;
+						result.notinalphaChar = c;
+						return result;
+					}
+					
+				}
+			}
+			if(lastFoundCharOutOfAlpha != null) {
+				result.mode = KeyFromStringParseResult.Mode.NOTINALPHA;
+				result.notinalphaChar = lastFoundCharOutOfAlpha;
+				return result;
+			}
+		}
+		
+		result.mode = mode;
+		result.limiter = limiter;
+		return result;
+	}
+	
+	/**
+	 * Reads a unformatted String into the key. The key is interpreted
+	 * by using the given currentAlphabet (as char-array) <br /><br />
+	 * Special input forms that even use characters out of the alphabet are allowed:
+	 * pure numbers and pure numbers limited by limiters specified in {@link #POSSIBLE_PARSE_SEPARATORS}.
+	 *
+	 * @param argString The String to be read into the key.
+	 */
+	public void fromString(String argString, char[] alphabet) {
+		KeyFromStringParseResult modeObj = generateKeyFromStringMode(argString, alphabet);
+		if(modeObj.newkey != null) argString = modeObj.newkey;
+		KeyFromStringParseResult.Mode mode = modeObj.mode;
+		String limiter = modeObj.limiter;
+
+		if(! mode.isSuccessful()) {
+			throw new RuntimeException("Can't parse this string to a transposition key because it does not comply with any special form and there is a character out of the specified alphabet: " + modeObj.notinalphaChar);
+		}
+		
+		if(mode == KeyFromStringParseResult.Mode.DEFAULT) {
 			String alphaString = String.valueOf(alphabet);
 			char[] inputArray = argString.toCharArray();
 			int[] numberArray = new int[inputArray.length];
 			for(int i=0; i<inputArray.length; i++) {
-				numberArray[i] = alphaString.indexOf(inputArray[i]);
+				int indexOf = alphaString.indexOf(inputArray[i]);
+				if(indexOf == -1) throw new RuntimeException("character not in alphabet when trying to generate transposition key");
+				numberArray[i] = indexOf;
 			}
 
 			int[] resultArray = generateKeyArrayFromNumberArray(numberArray);
 			this.fromArray(resultArray);
-		} else if(mode.equals("LIMITER")) {
+		} else if(mode.equals(KeyFromStringParseResult.Mode.LIMITER)) {
 			argString = replaceAllNoRegex(argString, " ", "");
 			String[] split = replaceAllNoRegex(argString, " ", "").split(Pattern.quote(limiter));
 			List<Integer> numbers = new LinkedList<Integer>();

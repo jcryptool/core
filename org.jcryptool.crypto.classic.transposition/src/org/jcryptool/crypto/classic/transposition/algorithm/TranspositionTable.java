@@ -276,6 +276,14 @@ public class TranspositionTable {
 	public void clearTable() {
 		content = new Character[colCount][0];
 	}
+	
+	public static String readDirectionToString(boolean direction) {
+		if(direction == DIR_ROWWISE) {
+			return Messages.TranspositionTable_rowwise;
+		} else {
+			return Messages.TranspositionTable_columnwise;
+		}
+	}
 
 	/**
 	 * @return the content of the table. empty fields are {@link #EMPTY}
