@@ -31,11 +31,10 @@ public class TextEntryWizard extends Wizard {
 	private final RSAData data;
 
 	private boolean finished = false;
-//	private PageConfiguration textPageConfig;
 	private TransformData transformData;
 	private EnterPlaintextPage textPage;
 	private RsaTextModifyPage modifyPage;
-	
+
 	/**
 	 * Constructor, setting title, action and data.
 	 * @param action the cryptographic action

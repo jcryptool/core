@@ -34,6 +34,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
@@ -68,6 +69,7 @@ import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
 import org.jcryptool.visual.rsa.ui.wizards.KeySelectionWizard;
 import org.jcryptool.visual.rsa.ui.wizards.TextEntryWizard;
+
 
 /**
  * composite, display of everything this visual shows, that is not contained within wizards.
@@ -108,18 +110,33 @@ public class RSAComposite extends Composite {
 
     /** buttons for starting and stepping through the fast exponentiation. */
     private Button stepButton, stepbackButton;
+    
+    /** Array for the StepBack Button */
+    private String[] stepBArray;
 
     /** field for displaying the result. */
     private Text resultText;
 
     /** button to copy the result to the clipboard. */
     private Button copyButton;
+    
+    /** button to switch view dec / hex */
+    private Button dec;
+    private Button hex;
+    
+	/** selection listener that updates the buttons. */
+	private final SelectionListener view = new SelectionAdapter() {
 
+		public void widgetSelected(SelectionEvent e) {
+			viewHex();
+		}
+	};
+    
     /** array containing the split up numbertext. */
     private String[] numbers;
 
     /** current index for the stepping through the fast exponentiation. */
-    private int numberIndex;
+    private int numberIndex = 0;
 
     /**
      * small field showing whether the signature is ok when we chose to verify a signature and entered plaintext.
@@ -162,6 +179,8 @@ public class RSAComposite extends Composite {
 
     /** label showing the currect step if we calculate stepwise */
     private Label stepLabel;
+    
+    private boolean started = false;
 
     /** Selectionlistener for the start/step button when in step-state */
     private SelectionAdapter stepSelectionListener = new SelectionAdapter() {
@@ -195,6 +214,7 @@ public class RSAComposite extends Composite {
             initTable();
             updateTable();
             updateLabel();
+            started = true;
             if (numberIndex == numbers.length - 1) {
                 runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
@@ -243,15 +263,18 @@ public class RSAComposite extends Composite {
     private void createHead() {
         final Composite head = new Composite(this, SWT.NONE);
         head.setBackground(WHITE);
-        head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        head.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
         head.setLayout(new GridLayout());
-
-        final Label label = new Label(head, SWT.NONE);
+        
+        final Label label = new Label(head, SWT.NONE); //head
         label.setFont(FontService.getHeaderFont());
         label.setBackground(WHITE);
         label.setText(Messages.RSAComposite_title);
 
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
+        //StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+        final Label stDescription = new Label(head, SWT.WRAP); // head
+        stDescription.setBackground(WHITE);
+        
         switch (data.getAction()) {
         case EncryptAction: {
         	stDescription.setText(Messages.RSAComposite_description_enc);
@@ -270,7 +293,15 @@ public class RSAComposite extends Composite {
         	break;
         	}
       	}
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+       // stDescription.setSize(1000,1000);
+//        stDescription.redraw();
+//        stDescription.setRedraw(true);
+        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+      
+       //stDescription.setSize(, height)
+//        RowLayout row = new RowLayout();
+//        row.wrap = true;
+//        stDescription.setLayoutData(new RowLayout(SWT.WRAP));
     }
 
     /**
@@ -393,10 +424,13 @@ public class RSAComposite extends Composite {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 textEnter.setEnabled(false);
-                runCalc.setEnabled(false);
+                //runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
-                // startButton.setEnabled(false);
-                stepButton.setEnabled(false);
+                //startButton.setEnabled(false);
+                if (numberIndex != 0 || started == true){
+                	stepButton.setEnabled(false);
+                	runCalc.setEnabled(false);
+                }
                 stepbackButton.setEnabled(false);
                 if (dialog) {
                     final MessageBox message = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
@@ -612,7 +646,29 @@ public class RSAComposite extends Composite {
               }
               updateTable();
               updateLabel();
-              resultText.setText(resultText.getText().substring(0,resultText.getText().length()-6));
+              if (numberIndex == numbers.length - 2) {
+                  stepButton.setEnabled(true);
+                  runCalc.setEnabled(true);
+                  runCalc.setBackground(GREEN);
+                  finish();
+              }
+    
+              switch (data.getAction()) {
+              case EncryptAction: {
+                  //resultText.setText(resultText.getText().substring(0,resultText.getText().length()-6));
+                  stepBArray = resultText.getText().split(" ");
+                  
+                  resultText.setText(resultText.getText().substring(0,resultText.getText().length()-(stepBArray[stepBArray.length-2].length() + stepBArray[stepBArray.length-1].length() + 2)));
+
+              	break;
+              	}
+              case DecryptAction: {
+            	  resultText.setText(resultText.getText().substring(0,resultText.getText().length()-2));
+              	break;
+              	}
+            	}
+              
+              
             }
         });
 
@@ -928,7 +984,7 @@ public class RSAComposite extends Composite {
         // setup the main layout for this group
         final Group optionsGroup = new Group(this, SWT.NONE);
         optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        optionsGroup.setLayout(new GridLayout(5, false));
+        optionsGroup.setLayout(new GridLayout(3, false));
         optionsGroup.setText(Messages.RSAComposite_options);
 
         // initialize copy data selector
@@ -979,7 +1035,7 @@ public class RSAComposite extends Composite {
 
         // initialize dialog checkbox
         final Button dialogButton = new Button(optionsGroup, SWT.CHECK);
-        dialogButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
+        dialogButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
         dialogButton.setText(Messages.RSAComposite_show_dialogs);
         dialogButton.setSelection(dialog);
         dialogButton.addSelectionListener(new SelectionAdapter() {
@@ -989,6 +1045,25 @@ public class RSAComposite extends Composite {
             }
 
         });
+        
+        // Change View
+        final Label viewText = new Label(optionsGroup, SWT.NONE);
+        viewText.setText(Messages.RSAComposite_view);
+        viewText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+   		// Dec
+    	dec = new Button(optionsGroup, SWT.RADIO);
+    	dec.setText(Messages.RSAComposite_view_dec);
+    	dec.setSelection(true);
+    	//dec.setToolTipText(Messages.RSAComposite_view);
+    	dec.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+    	dec.addSelectionListener(view);
+    	// Hex
+    	hex = new Button(optionsGroup, SWT.RADIO);
+    	hex.setText(Messages.RSAComposite_view_hex);
+    	//hex.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
+    	//hex.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+    	hex.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+    	hex.addSelectionListener(view);
     }
     
     private void FillRandom() {
@@ -1068,6 +1143,8 @@ public class RSAComposite extends Composite {
         stepResult.setText(""); //$NON-NLS-1$
         stepButton.setEnabled(false);
         stepbackButton.setEnabled(false);
+        numberIndex = 0;
+        started = false;
         resultText.setText(""); //$NON-NLS-1$
         copyButton.setEnabled(false);
         verifiedText.setText(""); //$NON-NLS-1$
@@ -1099,6 +1176,7 @@ public class RSAComposite extends Composite {
         if (data.getN() != null) {
             nText.setText(data.getN().toString(Constants.HEXBASE));
         }
+        viewHex();
     }
 
     /**
@@ -1142,5 +1220,36 @@ public class RSAComposite extends Composite {
                 data.setSignature(resultText.getText());
                 break;
         }
+    }
+    
+    /** Returns true for hex, false for dec */
+    private boolean viewHex(){
+		if (dec.getSelection()){
+			System.out.println("Dezimal Selected");
+	        if (data.getE() != null) {
+	            eText.setText(data.getE().toString());
+	        }
+	        if (data.getD() != null) {
+	            dText.setText(data.getD().toString());
+	        }
+	        if (data.getN() != null) {
+	            nText.setText(data.getN().toString());
+	        }
+	        return false;
+		}
+		else if (hex.getSelection()){
+			System.out.println("Hex Selected");
+	        if (data.getE() != null) {
+	            eText.setText(data.getE().toString(Constants.HEXBASE));
+	        }
+	        if (data.getD() != null) {
+	            dText.setText(data.getD().toString(Constants.HEXBASE));
+	        }
+	        if (data.getN() != null) {
+	            nText.setText(data.getN().toString(Constants.HEXBASE));
+	        }
+	        return true;
+		}
+		return true;
     }
 }

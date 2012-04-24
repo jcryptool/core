@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.rsa.Messages;
+import org.jcryptool.visual.rsa.RSAData;
 
 /**
  * page to choose whether to use a new key or enter the parameters manually.
@@ -36,6 +37,9 @@ public class DecryptSignPage extends WizardPage {
 	/** Button for selecting to load an existing key. */
 	private Button existingKeypairButton;
 
+	/** Determine which action we got */
+
+	
 	/** selection listener that updates the buttons. */
 	private final SelectionListener sl = new SelectionAdapter() {
 
@@ -47,9 +51,19 @@ public class DecryptSignPage extends WizardPage {
 	/**
 	 * Constructor, setting name, title and description.
 	 */
-	public DecryptSignPage() {
+	public DecryptSignPage(RSAData data) {
 		super(PAGENAME, Messages.DecryptSignPage_choose_action, null);
-		this.setDescription(Messages.DecryptSignPage_choose_action_text);
+
+	    switch (data.getAction()) {
+        case EncryptAction:
+    		this.setDescription(Messages.DecryptSignPage_choose_action_text_dec);
+           break;
+        case VerifyAction:
+   			this.setDescription(Messages.DecryptSignPage_choose_action_text_sig);
+   			break;
+        default:
+          break;
+	    }
 	}
 
 	/**

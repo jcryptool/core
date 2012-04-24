@@ -150,6 +150,7 @@ public class NewKeypairPage extends WizardPage {
                 elist.removeAll();
                 dfield.setText(""); //$NON-NLS-1$
                 setPageComplete(false);
+                setErrorMessage(Messages.NewKeypairPage_error_p_equals_q);
             }
         } catch (NumberFormatException e) {
             modulfield.setText(""); //$NON-NLS-1$
@@ -260,7 +261,7 @@ public class NewKeypairPage extends WizardPage {
             }
         });
         // phi(N)
-        new Label(composite, SWT.NONE).setText("φ(N)"); //$NON-NLS-1$
+        new Label(composite, SWT.NONE).setText(Messages.NewKeypairPage_phi_n); //$NON-NLS-1$
         phinfield = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
 
         // Trennline

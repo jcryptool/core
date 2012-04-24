@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.rsa.Messages;
+import org.jcryptool.visual.rsa.RSAData;
 
 /**
  * page to choose whether to use a new key or enter the parameters manually.
@@ -46,6 +47,9 @@ public class EncryptVerifyPage extends WizardPage {
 	/** Button for selecting to load an existing key. */
 	private Button existingPubkeyButton;
 
+	/** Determine which action we got */
+
+	
 	/** selection listener that updates the buttons. */
 	private final SelectionListener sl = new SelectionAdapter() {
 
@@ -58,10 +62,19 @@ public class EncryptVerifyPage extends WizardPage {
 	/**
 	 * Constructor, setting name, title and description.
 	 */
-	public EncryptVerifyPage() {
+	public EncryptVerifyPage(RSAData data) {
 		super(PAGENAME, TITLE, null);
-		this
-				.setDescription(Messages.EncryptVerifyPage_choose_action_text);
+
+	    switch (data.getAction()) {
+         case EncryptAction:
+    		this.setDescription(Messages.EncryptVerifyPage_choose_action_text_enc);
+            break;
+        case VerifyAction:
+    		this.setDescription(Messages.EncryptVerifyPage_choose_action_text_ver);
+            break;
+        default:
+            break;
+	    }
 	}
 
 	/**
@@ -105,7 +118,7 @@ public class EncryptVerifyPage extends WizardPage {
 		existingKeypairButton.setLayoutData(gd3);
 		existingKeypairButton.addSelectionListener(sl);
         // Add Note
-		Label selectdtext = new Label(composite, SWT.NONE);
+		Label selectdtext = new Label(composite, SWT.WRAP);
         selectdtext.setText(Messages.EncryptVerifyPage_note);
         selectdtext.setLayoutData(gd4);
 		

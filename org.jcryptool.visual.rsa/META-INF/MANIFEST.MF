@@ -15,8 +15,7 @@ Require-Bundle: org.jcryptool.crypto;bundle-version="0.9.5",
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.rsa.RSAPlugin
 Bundle-Vendor: %Bundle-Vendor
-Import-Package: org.jcryptool.analysis.textmodify.wizard,
- org.jcryptool.core.logging.dialogs,
+Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.algorithm.classic.textmodify,
  org.jcryptool.core.operations.alphabets,

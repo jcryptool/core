@@ -140,6 +140,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         nField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         nField.addModifyListener(this);
         nField.addVerifyListener(this);
+        nField.setToolTipText(Messages.NewPublicKeyPage_enter_n_popup);
 
         // new label for <-
         label = new Label(composite, SWT.CENTER);
@@ -151,7 +152,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         moveButton.setText(Messages.NewPublicKeyPage_use);
         moveButton.setToolTipText(Messages.NewPublicKeyPage_use_popup);
         moveButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-        moveButton.setEnabled(false);
+        moveButton.setEnabled(true);
         moveButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -164,15 +165,18 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         label.setText("<-");
         label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-        // field for calculated n value
+        // field for calculated N value
         calcNField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER | SWT.READ_ONLY);
         calcNField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-        calcNField.addModifyListener(new ModifyListener() {
-
-            public void modifyText(ModifyEvent e) {
-                moveButton.setEnabled(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
-            }
-        });
+//        calcNField.addModifyListener(new ModifyListener() {
+//
+//            public void modifyText(ModifyEvent e) {
+//                moveButton.setEnabled(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
+//            }
+//        });
+        calcRunnable.setN(new BigInteger("323"));
+        Display d = Display.getDefault();
+        d.asyncExec(calcRunnable);
 
          //new label for <-
          label = new Label(composite, SWT.CENTER);
@@ -189,6 +193,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         eField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         eField.addModifyListener(this);
         eField.addVerifyListener(this);
+        eField.setToolTipText(Messages.NewPublicKeyPage_enter_e_popup);
 
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd1);
@@ -233,16 +238,16 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         try {
             n = new BigInteger(nField.getText());
             if (n.compareTo(Constants.TWOFIVESIX) < 0) {
+                setPageComplete(false);
+            	setErrorMessage(null);
                 setErrorMessage(Messages.NewPublicKeyPage_error_n_lt_256);
-            } else {
-                setErrorMessage(null);
-            }
-            if (!isTwoComposite(n)) {
-                setMessage(Messages.NewPublicKeyPage_error_n_not_p_by_q, (isPrime(n) ? ERROR : WARNING));
+            } else if (!isTwoComposite(n)) {
+                setPageComplete(false);
+            	setErrorMessage(null);
+                setErrorMessage(Messages.NewPublicKeyPage_error_n_not_p_by_q);
                 suggestN(n);
             } else {
                 setErrorMessage(null);
-                setMessage(null, WARNING);
             }
             data.setN(n);
         } catch (NumberFormatException e1) {
@@ -255,6 +260,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
             boolean eok = e.compareTo(data.getN()) < 0;
             // check for valid e and n values (n >256, e<floor(sqrt(n)-1)^2
             setPageComplete(data.getN().compareTo(Constants.TWOFIVESIX) > 0
+            		&& isTwoComposite(data.getN())
                     && e.compareTo(BigInteger.ONE) > 0
                     && (eok && e.compareTo(BigSquareRoot.get(data.getN()).toBigInteger().subtract(BigInteger.ONE)
                             .pow(2)) < 0));
@@ -281,9 +287,14 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         new Thread() {
             @Override
             public void run() {
-                BigDecimal root = BigSquareRoot.get(n);
-                BigInteger possibleP = root.toBigInteger().nextProbablePrime();
-                BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
+                //BigDecimal root = BigSquareRoot.get(n);
+                // TODO / BUG , nextProbablePrime doesnt work properly?
+                //System.out.println("FOO"+ root.toBigInteger().nextProbablePrime());
+                //BigInteger possibleP = root.toBigInteger().nextProbablePrime();
+                //BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
+                BigInteger possibleQ = new BigInteger("19");
+                BigInteger possibleP = new BigInteger("17");
+                
                 BigInteger possibleN = possibleP.multiply(possibleQ);
                 while (n.compareTo(Constants.TWOFIVESIX) < 0) {
                     possibleQ = possibleQ.add(BigInteger.ONE).nextProbablePrime();
@@ -306,6 +317,9 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
      *         </ol>
      */
     private boolean isTwoComposite(BigInteger number) {
+    	if (number == null){
+    		return false;
+    	}
         if (isPrime(number)) {
             return false;
         }

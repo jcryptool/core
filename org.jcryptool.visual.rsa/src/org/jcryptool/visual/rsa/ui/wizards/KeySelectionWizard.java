@@ -80,14 +80,14 @@ public class KeySelectionWizard extends Wizard {
             switch (data.getAction()) {
                 case DecryptAction:
                 case SignAction:
-                    addPage(new DecryptSignPage());
+                    addPage(new DecryptSignPage(data));
                     addPage(new LoadKeypairPage(data));
                     addPage(new NewKeypairPage(data));
                     addPage(new SaveKeypairPage(data));
                     break;
                 case EncryptAction:
                 case VerifyAction:
-                    addPage(new EncryptVerifyPage());
+                    addPage(new EncryptVerifyPage(data));
                     addPage(new LoadPublicKeyPage(data));
                     addPage(new NewPublicKeyPage(data));
                     addPage(new SavePublicKeyPage(data));

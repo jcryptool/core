@@ -14,6 +14,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -93,11 +95,75 @@ public class EnterPlaintextPage extends TextWizardPage {
             }
         });
 
+        
+      text.addVerifyListener(new VerifyListener() { 
+    	public void verifyText(VerifyEvent e) { 
+    		switch (e.keyCode) { 
+    			case SWT.DEL: 
+    			case SWT.BS: 
+    			case ' ': 
+    				return; 
+    			default:
+                     break; 
+            }
+            if (numberCheckBox.getSelection()) { 
+            	e.doit = e.text.matches(DIGIT);
+            }
+//            } else { 
+//            	if (e.text.matches(CHARACTERS)) { 
+//             	e.doit = true; 
+//            	} else { 
+//               // Removes everything except "a-A0-9_ " from the inserted text. 
+//               e.text = e.text.replaceAll("[^\\w\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC ]*",""); 
+//               } 
+//               } 
+              } 
+        }); 
+        
+//        text.addVerifyListener(new VerifyListener() { 
+//        	public void verifyText(VerifyEvent e) { 
+//        		switch (e.keyCode) { 
+//        			case SWT.DEL: 
+//        			case SWT.BS: 
+//        			case ' ': 
+//        				return; 
+//        			default: 
+//                         break; 
+//                } 
+//                if (numberCheckBox.getSelection()) { 
+//                	e.doit = e.text.matches(DIGIT); 
+//                } else { 
+//                	if (e.text.matches(CHARACTERS)) { 
+//                 	e.doit = true; 
+//                	} else { 
+//                   // Removes everything except "a-A0-9_ " from the inserted text. 
+//                   e.text = e.text.replaceAll("[^\\w\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC ]*",""); 
+//                   } 
+//                   }; 
+//                  } 
+//            }); 
+
+
+        
+        
+        
         numberCheckBox = new Button(composite, SWT.CHECK);
         numberCheckBox.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         numberCheckBox.setText(Messages.EnterPlaintextPage_0);
         numberCheckBox.setToolTipText(Messages.EnterPlaintextPage_1);
-
+        numberCheckBox.addSelectionListener(new SelectionAdapter() {
+    	
+    	public void widgetSelected(SelectionEvent e) {
+    		if (numberCheckBox.getSelection()) {
+    		setPageComplete(text.getText().matches(DIGIT+WHITESPACE));
+    		}
+    		else {
+    			setPageComplete(!(text.getText().equals("")));
+    		}
+    		getWizard().getContainer().updateButtons();
+    	}
+    });
+        
 		label1 = new Label(composite, SWT.NONE);
 		label1.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 		label1.setText(Messages.EnterPlaintextPage_textmodify);
@@ -118,7 +184,6 @@ public class EnterPlaintextPage extends TextWizardPage {
                 
         // fill in old data
         text.setText(data.getPlainText());
-
         // finish
         setControl(composite);
     }
@@ -132,6 +197,15 @@ public class EnterPlaintextPage extends TextWizardPage {
         return PAGENAME;
     }
 
+    public boolean setPageCompleteNumbers(){
+    	if (this.text.getText().matches(DIGIT)){
+    		return true;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
     @Override
     public String getText() {
         if (numberCheckBox.getSelection()) {
@@ -139,10 +213,22 @@ public class EnterPlaintextPage extends TextWizardPage {
             StringBuilder sb = new StringBuilder(text.length);
             for (int i = 0; i < text.length; i++) {
                 sb.append(Character.toChars(Integer.parseInt(text[i])));
+                //sb.append(Integer.parseInt(text[i]));
             }
             return sb.toString();
         } else {
             return super.getText();
         }
     }
+    
+    @Override
+    public boolean canFlipToNextPage(){
+    	   if (numberCheckBox.getSelection()) {
+    		   return false;
+    	   }
+    	   else {
+    		   return true;
+    	   }
+    	}
+    
 }
