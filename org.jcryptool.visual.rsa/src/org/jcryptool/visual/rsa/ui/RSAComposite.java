@@ -196,8 +196,10 @@ public class RSAComposite extends Composite {
                 runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
                 finish();
+                viewHex();
             }
             finish();
+            viewHex();
             //stepButton.pack();
         }
     };
@@ -671,7 +673,8 @@ public class RSAComposite extends Composite {
                   break;
               	}
               	case DecryptAction: {
-            	  resultText.setText(data.getTemp().substring(0,data.getTemp().length()-2));
+            	  data.setTemp(data.getTemp().substring(0,data.getTemp().length()-2));
+            	  viewHex();
             	  break;
               	}
               }
@@ -1249,6 +1252,7 @@ public class RSAComposite extends Composite {
 	        if (data.getTemp() != null && data.getTemp() != "" && data.getTemp() != "\n\n") {
 	        	switch (data.getAction()) {
         			case DecryptAction:
+        				resultText.setText(data.getTemp());
         				break;
         			default:
         	        	StringBuilder sb = new StringBuilder();
@@ -1297,6 +1301,7 @@ public class RSAComposite extends Composite {
 
 	        	switch (data.getAction()) {
         			case DecryptAction:
+        				resultText.setText(data.getTemp());
         				break;
         			default:
 	            		resultText.setText(data.getTemp());
