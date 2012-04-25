@@ -65,6 +65,9 @@ public class RSAData {
         this.contactName = contactName;
     }
 
+    /** current temp working string */
+    private String temp;
+    
     /** current ciphertext for decrypting. */
     private String cipherText;
 
@@ -132,6 +135,19 @@ public class RSAData {
      */
     public final boolean getrandomKey() {
         return this.randomKey;
+    }
+    
+    /**
+     * getter for temp.
+     *
+     * @return the temp
+     */
+    public final String getTemp() {
+        if (this.temp == null) {
+            return ""; //$NON-NLS-1$
+        } else {
+            return this.temp;
+        }
     }
     
     /**
@@ -243,6 +259,15 @@ public class RSAData {
      */
     public final void setrandomKey(final boolean randomKey) {
         this.randomKey = randomKey;
+    }
+    
+    /**
+     * setter for temp.
+     *
+     * @param string the temp to set
+     */
+    public final void setTemp(final String temp) {
+        this.temp = temp;
     }
     
     /**
@@ -512,7 +537,7 @@ public class RSAData {
     public void randomPlain() {
     	this.randomPlaintext = true;
         this.simpleHash = true;
-        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789123";
+        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
     }
     
     

@@ -197,6 +197,7 @@ public class RSAComposite extends Composite {
                 runCalc.setBackground(GREEN);
                 finish();
             }
+            finish();
             //stepButton.pack();
         }
     };
@@ -206,7 +207,8 @@ public class RSAComposite extends Composite {
 
         @Override
         public void widgetSelected(final SelectionEvent e) {
-            resultText.setText("");
+            data.setTemp("");
+            viewHex();
             textEnter.setEnabled(false);
             numbers = numberText.getText().split(" "); //$NON-NLS-1$
             numberIndex = 0;
@@ -225,6 +227,7 @@ public class RSAComposite extends Composite {
             stepButton.addSelectionListener(stepSelectionListener);
             stepButton.setText(Messages.RSAComposite_step);
             //stepButton.pack();
+            finish();
         }
     };
 
@@ -271,9 +274,9 @@ public class RSAComposite extends Composite {
         label.setBackground(WHITE);
         label.setText(Messages.RSAComposite_title);
 
-        //StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-        final Label stDescription = new Label(head, SWT.WRAP); // head
-        stDescription.setBackground(WHITE);
+        StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+       // final Label stDescription = new Label(head, SWT.WRAP); // head
+        //stDescription.setBackground(WHITE);
         
         switch (data.getAction()) {
         case EncryptAction: {
@@ -292,11 +295,13 @@ public class RSAComposite extends Composite {
         	stDescription.setText(Messages.RSAComposite_description_ver);
         	break;
         	}
-      	}
+      }
+       // stDescription.setSize(500, SWT.DEFAULT);
+        
        // stDescription.setSize(1000,1000);
 //        stDescription.redraw();
 //        stDescription.setRedraw(true);
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
       
        //stDescription.setSize(, height)
 //        RowLayout row = new RowLayout();
@@ -459,9 +464,13 @@ public class RSAComposite extends Composite {
                 		break;
                 	}
               	}
-                resultText.setText(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
-                data.getN()));
+                data.setTemp(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
+                        data.getN()));
+               // resultText.setText(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
+               // 		data.getN()));
+                viewHex();
                 finish();
+
             }
         });
         
@@ -651,24 +660,21 @@ public class RSAComposite extends Composite {
                   runCalc.setEnabled(true);
                   runCalc.setBackground(GREEN);
                   finish();
+                  viewHex();
               }
     
               switch (data.getAction()) {
-              case EncryptAction: {
-                  //resultText.setText(resultText.getText().substring(0,resultText.getText().length()-6));
-                  stepBArray = resultText.getText().split(" ");
-                  
-                  resultText.setText(resultText.getText().substring(0,resultText.getText().length()-(stepBArray[stepBArray.length-2].length() + stepBArray[stepBArray.length-1].length() + 2)));
-
-              	break;
+              	case EncryptAction: {
+                  stepBArray = data.getTemp().split(" ");
+                  data.setTemp(data.getTemp().substring(0,data.getTemp().length()-(stepBArray[stepBArray.length-2].length() + stepBArray[stepBArray.length-1].length() + 2)));
+                  viewHex();
+                  break;
               	}
-              case DecryptAction: {
-            	  resultText.setText(resultText.getText().substring(0,resultText.getText().length()-2));
-              	break;
+              	case DecryptAction: {
+            	  resultText.setText(data.getTemp().substring(0,data.getTemp().length()-2));
+            	  break;
               	}
-            	}
-              
-              
+              }
             }
         });
 
@@ -903,18 +909,21 @@ public class RSAComposite extends Composite {
         }
 
         stepResult.setText(res);
-        if (resultText.getText().contains("\n")) { //$NON-NLS-1$
-            resultText.setText(""); //$NON-NLS-1$
+        if (data.getTemp().contains("\n")) { //$NON-NLS-1$
+            data.setTemp(""); //$NON-NLS-1$
+            viewHex();
         }
         if (data.getAction() == Action.DecryptAction) {
-            resultText.setText(resultText.getText() + (char) result.intValue());
+            data.setTemp(data.getTemp() + (char) result.intValue());
+            viewHex();
         } else {
-            String text1 = resultText.getText();
-            if (!resultText.getText().equals("")) { //$NON-NLS-1$
+            String text1 = data.getTemp();
+            if (!data.getTemp().equals("")) { //$NON-NLS-1$
                 text1 += " "; //$NON-NLS-1$
             }
             text1 += result.toString(Constants.HEXBASE);
-            resultText.setText(text1);
+            data.setTemp(text1);
+            viewHex();
         }
         // last thing: pack
         for (final TableColumn c : fastExpTable.getColumns()) {
@@ -936,6 +945,7 @@ public class RSAComposite extends Composite {
         group.setLayout(new GridLayout(3, false));
         group.setText(Messages.RSAComposite_result);
         resultText = new Text(group, SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI | SWT.WRAP);
+        data.setTemp("\n\n");
         resultText.setText("\n\n"); //$NON-NLS-1$
         resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         resultText.addModifyListener(new ModifyListener() {
@@ -945,7 +955,7 @@ public class RSAComposite extends Composite {
                 if (data.getAction() == Action.VerifyAction && !textText.getText().equals("")) { //$NON-NLS-1$
                     String text;
                     if (Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()).equals(
-                            resultText.getText().trim())) {
+                            data.getTemp().trim())) {
                         text = Messages.RSAComposite_valid;
                         verifiedText.setForeground(GREEN);
                     } else {
@@ -971,7 +981,7 @@ public class RSAComposite extends Composite {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 final Clipboard cb = new Clipboard(Display.getCurrent());
-                cb.setContents(new Object[] {resultText.getText()}, new Transfer[] {TextTransfer.getInstance()});
+                cb.setContents(new Object[] {data.getTemp()}, new Transfer[] {TextTransfer.getInstance()});
             }
         });
     }
@@ -1145,6 +1155,7 @@ public class RSAComposite extends Composite {
         stepbackButton.setEnabled(false);
         numberIndex = 0;
         started = false;
+        data.setTemp("");
         resultText.setText(""); //$NON-NLS-1$
         copyButton.setEnabled(false);
         verifiedText.setText(""); //$NON-NLS-1$
@@ -1211,13 +1222,13 @@ public class RSAComposite extends Composite {
     private void finish() {
         switch (data.getAction()) {
             case EncryptAction:
-                data.setCipherText(resultText.getText());
+                data.setCipherText(data.getTemp());
                 break;
             case DecryptAction:
-                data.setPlainText(resultText.getText());
+                data.setPlainText(data.getTemp());
                 break;
             case SignAction:
-                data.setSignature(resultText.getText());
+                data.setSignature(data.getTemp());
                 break;
         }
     }
@@ -1235,7 +1246,41 @@ public class RSAComposite extends Composite {
 	        if (data.getN() != null) {
 	            nText.setText(data.getN().toString());
 	        }
+	        if (data.getTemp() != null && data.getTemp() != "" && data.getTemp() != "\n\n") {
+	        	switch (data.getAction()) {
+        			case DecryptAction:
+        				break;
+        			default:
+        	        	StringBuilder sb = new StringBuilder();
+        	        	String[] words = data.getTemp().split(" ");
+        				for (String word : words){
+        					sb.append(Integer.valueOf(word, Constants.HEXBASE));
+        					sb.append(" ");
+        				}
+	            		resultText.setText(sb.toString());
+        				break;
+		        }
+		    }
 	        return false;
+		
+	        
+	        
+//	    	public String run(final String[] words, final BigInteger exponent,
+//	    			final BigInteger n) {
+//	    		final StringBuilder sb = new StringBuilder();
+//	    		BigInteger number;
+//	    		for (final String word : words) {
+//	    			number = new BigInteger(word, Constants.HEXBASE);
+//	    			if (this == DecryptAction) {
+//	    				sb.append((char) number.modPow(exponent, n).intValue());
+//	    			} else {
+//	    				sb.append(number.modPow(exponent, n).toString(Constants.HEXBASE));
+//	    				sb.append(' ');
+//	    			}
+//	    		}
+//	    		return sb.toString();
+//	    	}
+	        
 		}
 		else if (hex.getSelection()){
 			System.out.println("Hex Selected");
@@ -1248,6 +1293,16 @@ public class RSAComposite extends Composite {
 	        if (data.getN() != null) {
 	            nText.setText(data.getN().toString(Constants.HEXBASE));
 	        }
+	        if (data.getTemp() != null) {
+
+	        	switch (data.getAction()) {
+        			case DecryptAction:
+        				break;
+        			default:
+	            		resultText.setText(data.getTemp());
+        				break;
+		        }
+		    }
 	        return true;
 		}
 		return true;

@@ -287,12 +287,13 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         new Thread() {
             @Override
             public void run() {
-                //BigDecimal root = BigSquareRoot.get(n);
+
                 // TODO / BUG , nextProbablePrime doesnt work properly?
+                // BigDecimal root = BigSquareRoot.get(n);
                 //System.out.println("FOO"+ root.toBigInteger().nextProbablePrime());
                 //BigInteger possibleP = root.toBigInteger().nextProbablePrime();
                 //BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
-                BigInteger possibleQ = new BigInteger("19");
+            	BigInteger possibleQ = new BigInteger("19");
                 BigInteger possibleP = new BigInteger("17");
                 
                 BigInteger possibleN = possibleP.multiply(possibleQ);
