@@ -997,9 +997,41 @@ public class RSAComposite extends Composite {
         // setup the main layout for this group
         final Group optionsGroup = new Group(this, SWT.NONE);
         optionsGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        optionsGroup.setLayout(new GridLayout(3, false));
+        optionsGroup.setLayout(new GridLayout(4, false));
         optionsGroup.setText(Messages.RSAComposite_options);
 
+        // Change View
+        final Label viewText = new Label(optionsGroup, SWT.NONE);
+        viewText.setText(Messages.RSAComposite_view);
+        viewText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+   		// Dec
+    	dec = new Button(optionsGroup, SWT.RADIO);
+    	dec.setText(Messages.RSAComposite_view_dec);
+    	dec.setSelection(true);
+    	//dec.setToolTipText(Messages.RSAComposite_view);
+    	dec.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+    	dec.addSelectionListener(view);
+    	// Hex
+    	hex = new Button(optionsGroup, SWT.RADIO);
+    	hex.setText(Messages.RSAComposite_view_hex);
+    	//hex.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
+    	//hex.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+    	hex.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+    	hex.addSelectionListener(view);
+
+    	// initialize dialog checkbox
+        final Button dialogButton = new Button(optionsGroup, SWT.CHECK);
+        dialogButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
+        dialogButton.setText(Messages.RSAComposite_show_dialogs);
+        dialogButton.setSelection(dialog);
+        dialogButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                dialog = ((Button) e.widget).getSelection();
+            }
+
+        });
+        
         // initialize copy data selector
         final Label l = new Label(optionsGroup, SWT.NONE);
         l.setText(Messages.RSAComposite_inherit_from);
@@ -1045,38 +1077,6 @@ public class RSAComposite extends Composite {
 
         });
         // comb.setLayoutData(leftAlign);
-
-        // initialize dialog checkbox
-        final Button dialogButton = new Button(optionsGroup, SWT.CHECK);
-        dialogButton.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
-        dialogButton.setText(Messages.RSAComposite_show_dialogs);
-        dialogButton.setSelection(dialog);
-        dialogButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                dialog = ((Button) e.widget).getSelection();
-            }
-
-        });
-        
-        // Change View
-        final Label viewText = new Label(optionsGroup, SWT.NONE);
-        viewText.setText(Messages.RSAComposite_view);
-        viewText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-   		// Dec
-    	dec = new Button(optionsGroup, SWT.RADIO);
-    	dec.setText(Messages.RSAComposite_view_dec);
-    	dec.setSelection(true);
-    	//dec.setToolTipText(Messages.RSAComposite_view);
-    	dec.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-    	dec.addSelectionListener(view);
-    	// Hex
-    	hex = new Button(optionsGroup, SWT.RADIO);
-    	hex.setText(Messages.RSAComposite_view_hex);
-    	//hex.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
-    	//hex.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
-    	hex.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-    	hex.addSelectionListener(view);
     }
     
     private void FillRandom() {
@@ -1239,7 +1239,6 @@ public class RSAComposite extends Composite {
     /** Returns true for hex, false for dec */
     private boolean viewHex(){
 		if (dec.getSelection()){
-			System.out.println("Dezimal Selected");
 	        if (data.getE() != null) {
 	            eText.setText(data.getE().toString());
 	        }
@@ -1266,28 +1265,8 @@ public class RSAComposite extends Composite {
 		        }
 		    }
 	        return false;
-		
-	        
-	        
-//	    	public String run(final String[] words, final BigInteger exponent,
-//	    			final BigInteger n) {
-//	    		final StringBuilder sb = new StringBuilder();
-//	    		BigInteger number;
-//	    		for (final String word : words) {
-//	    			number = new BigInteger(word, Constants.HEXBASE);
-//	    			if (this == DecryptAction) {
-//	    				sb.append((char) number.modPow(exponent, n).intValue());
-//	    			} else {
-//	    				sb.append(number.modPow(exponent, n).toString(Constants.HEXBASE));
-//	    				sb.append(' ');
-//	    			}
-//	    		}
-//	    		return sb.toString();
-//	    	}
-	        
 		}
 		else if (hex.getSelection()){
-			System.out.println("Hex Selected");
 	        if (data.getE() != null) {
 	            eText.setText(data.getE().toString(Constants.HEXBASE));
 	        }
