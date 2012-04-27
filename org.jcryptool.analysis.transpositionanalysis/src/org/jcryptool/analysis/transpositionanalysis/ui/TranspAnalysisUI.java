@@ -36,6 +36,8 @@ import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputW
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.core.util.input.ButtonInput;
+import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -59,7 +61,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private TextInputWithSource text = null;
 	private Composite composite7;
 	private Label labelReadDir;
-	private Composite compReadDir;
+	private Composite compReadOutDir;
 	private Link linkExport;
 	private Composite composite8;
 	private Button btnDecipher;
@@ -109,6 +111,15 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private String lastPreviewedText;
 	private Label lblParameters;
+
+	private Composite compReadDir;
+
+	private ReadDirectionChooser readinDirChooser;
+
+	private Composite compApplyTransform;
+	private Button btnCheckButton;
+
+	private ButtonInput applyTransformationInput;
 
 	/**
 	 * @param text
@@ -167,10 +178,12 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		}
 	}
 
-	private void setReadInMode(boolean readInDirection, boolean refresh) {
+	protected void setReadInMode(boolean readInDirection, boolean refresh) {
 		this.readInMode = readInDirection;
+		if(textPageConfiguration != null) textPageConfiguration.setReadInMode(readInDirection);
 		if (refresh) {
 			transpTable.setReadInOrder(readInMode);
+			previewPlaintext();
 		}
 	}
 
@@ -294,6 +307,98 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				compTable.setLayoutData(gd_compTable);
 				compTable.setLayout(gl_compTable);
 				{
+					compApplyTransform = new Composite(compTable, SWT.NONE);
+					GridLayout compApplyTransformLayout = new GridLayout();
+					compApplyTransformLayout.numColumns = 1;
+					compApplyTransformLayout.marginWidth = 0;
+					compApplyTransformLayout.marginHeight = 0;
+					GridData compApplyTransformLData = new GridData();
+					compApplyTransformLData.grabExcessHorizontalSpace = true;
+					compApplyTransform.setLayoutData(compApplyTransformLData);
+					compApplyTransform.setLayout(compApplyTransformLayout);
+					{
+						btnCheckButton = new Button(compApplyTransform, SWT.CHECK);
+						btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, ""));
+						btnCheckButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+						
+						applyTransformationInput = new ButtonInput() {
+							
+							@Override
+							protected InputVerificationResult verifyUserChange() {
+								return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+							}
+							
+							@Override
+							public String getName() {
+								return "ApplyTransformation";
+							}
+							
+							@Override
+							protected Boolean getDefaultContent() {
+								return false;
+							}
+							
+							@Override
+							public Button getButton() {
+								return btnCheckButton;
+							}
+						};
+						
+						applyTransformationInput.addObserver(new Observer() {
+							@Override
+							public void update(Observable o, Object arg) {
+								refreshTable();
+								previewPlaintext();
+							}
+						});
+					}
+				}
+				{
+					compReadDir = new Composite(compTable, SWT.NONE);
+					GridLayout compReadDirLayout = new GridLayout();
+					compReadDirLayout.numColumns = 2;
+					compReadDirLayout.marginWidth = 0;
+					compReadDirLayout.marginHeight = 0;
+					GridData compReadDirLData = new GridData();
+					compReadDirLData.grabExcessHorizontalSpace = true;
+					compReadDir.setLayoutData(compReadDirLData);
+					compReadDir.setLayout(compReadDirLayout);
+					{
+						labelReadDir = new Label(compReadDir, SWT.NONE);
+						labelReadDir.setText("Read-in mode the chosen text into the table:");
+					}
+					{
+						readinDirChooser = new ReadDirectionChooser(compReadDir, true);
+						readinDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
+						readinDirChooser.setEnabled(false);
+						
+						readinDirChooser.getInput().addObserver(new Observer() {
+							@Override
+							public void update(Observable o, Object arg) {
+								if (arg == null) {
+									setReadInMode(readinDirChooser.getInput().getContent(), true);
+								}
+							}
+						});
+					}
+					{
+						labelReadDir = new Label(compReadDir, SWT.NONE);
+						labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
+					}
+					{
+						readoutDirChooser = new ReadDirectionChooser(compReadDir, true);
+						readoutDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
+						readoutDirChooser.setEnabled(false);
+
+						readoutDirChooser.getInput().addObserver(new Observer() {
+							@Override
+							public void update(Observable o, Object arg) {
+								if (arg == null) previewPlaintext();
+							}
+						});
+					}
+				}
+				{
 					composite_2 = new Composite(compTable, SWT.NONE);
 					composite_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 					GridLayout gl_composite_2 = new GridLayout(2, false);
@@ -315,32 +420,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							@Override
 							public void widgetSelected(SelectionEvent e) {
 								spinnerSelected();
-							}
-						});
-					}
-				}
-				{
-					compReadDir = new Composite(compTable, SWT.NONE);
-					GridLayout compReadDirLayout = new GridLayout();
-					compReadDirLayout.numColumns = 2;
-					compReadDirLayout.marginWidth = 0;
-					compReadDirLayout.marginHeight = 0;
-					GridData compReadDirLData = new GridData();
-					compReadDirLData.grabExcessHorizontalSpace = true;
-					compReadDir.setLayoutData(compReadDirLData);
-					compReadDir.setLayout(compReadDirLayout);
-					{
-						labelReadDir = new Label(compReadDir, SWT.NONE);
-						labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
-					}
-					{
-						readoutDirChooser = new ReadDirectionChooser(compReadDir, true);
-						readoutDirChooser.setDirection(false);
-
-						readoutDirChooser.getInput().addObserver(new Observer() {
-							@Override
-							public void update(Observable o, Object arg) {
-								if (arg == null) previewPlaintext();
 							}
 						});
 					}
@@ -528,6 +607,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			}
 			
 			//hide source display
+			displayTextTransformBtn(false, false, new TransformData());
 			displayTextSource(null, false, false);
 			this.layout();
 			pack();
@@ -537,6 +617,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 	
 	
+	
+
 	protected TranspositionKey getKeyUsedToEncrypt() {
 		return keyUsedToEncrypt;
 	}
@@ -587,11 +669,21 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (result == Window.OK) {
 			textPageConfiguration = textWizard.getTextPageConfig();
 			textTransformData = textWizard.getTransformData();
+			if(textTransformData!=null && !textTransformData.isUnmodified()) {
+				displayTextTransformBtn(true, true, textTransformData);
+				applyTransformationInput.writeContent(true);
+				applyTransformationInput.synchronizeWithUserSide();
+			} else {
+				displayTextTransformBtn(false, true, new TransformData());
+				applyTransformationInput.writeContent(false);
+				applyTransformationInput.synchronizeWithUserSide();
+			}
 			setText(textPageConfiguration.getText(), false);
+			setReadInMode(textPageConfiguration.getReadInDirection(), false);
+			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
 			setCrop(textPageConfiguration.isCrop(), false);
 			setCroplength(textPageConfiguration.getCropLength(), false);
 			setBlocklength(textPageConfiguration.getColumnCount(), false);
-			setReadInMode(textPageConfiguration.getReadInDirection(), false);
 
 			doAutoCrop = (blocklength > 0 && !crop || blocklength == 0 && crop);
 
@@ -605,6 +697,8 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			spinner.setEnabled(true);
 			linkSetKey.setEnabled(true);
 			linkExport.setEnabled(true);
+			readoutDirChooser.setEnabled(true);
+			readinDirChooser.setEnabled(true);
 		}
 	}
 
@@ -632,12 +726,25 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		}
 	}
 
+	private void displayTextTransformBtn(boolean b, boolean layout, TransformData transformData) {
+		((GridData) compApplyTransform.getLayoutData()).exclude = !b;
+		compApplyTransform.setVisible(b);
+		
+		if(b) {
+			btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, transformData.toString()));
+		}
+		
+		if(layout) {
+			this.layout(new Control[]{compApplyTransform});
+		}
+	}
+	
 	private String calcText() {
-		return Transform.transformText(text.getText(), textTransformData);
+		return Transform.transformText(text.getText(), applyTransformationInput.getContent()?textTransformData:new TransformData());
 	}
 
 	private void refreshTable() {
-		transpTable.setReadInOrder(readInMode, false);
+		transpTable.setReadInOrder(readinDirChooser.getInput().getContent(), false);
 		transpTable.setText(calcText(), blocklength, !crop, croplength);
 	}
 
@@ -655,17 +762,21 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private void previewPlaintext() {
 		if (transpTable != null) {
-			TranspositionTable table = new TranspositionTable(transpTable.getColumnCountDisplayed());
-			table.fillCharsIntoTable(transpTable.getText().toCharArray(), false);
-			lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
-			previewText.setText(lastPreviewedText);
-			btnDecipher.setEnabled(true);
 			
 			if(isCipherParametersComplete()) {
+				TranspositionTable table = new TranspositionTable(transpTable.getColumnCountDisplayed());
+				
+				table.fillCharsIntoTable(calcText().toCharArray(), readinDirChooser.getInput().getContent());
+				table.transposeColumns(getKeyUsedToEncrypt().getReverseKey());
+				lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
+				previewText.setText(lastPreviewedText);
+				btnDecipher.setEnabled(true);
+				
+				
 				String maskParams = Messages.TranspAnalysisUI_lbl_params_mask;
 				String paramsLblText = Messages.TranspAnalysisUI_lblNewLabel_1_text + String.format(maskParams, 
 					TranspositionTable.readDirectionToString(readoutDirChooser.getInput().getContent()),
-					TranspositionTable.readDirectionToString(readInMode)
+					TranspositionTable.readDirectionToString(readinDirChooser.getInput().getContent())
 					);
 				lblParameters.setText(paramsLblText);
 				lblParameters.setToolTipText(Messages.TranspAnalysisUI_tooltipParams);
@@ -677,7 +788,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 
 	private boolean isCipherParametersComplete() {
-		return text != null && readoutDirChooser != null && keyUsedToEncrypt != null && keyUsedToEncrypt.getLength()>0;
+		return text != null && readoutDirChooser != null && readinDirChooser != null && keyUsedToEncrypt != null && keyUsedToEncrypt.getLength()>0;
 	}
 
 	@Override
@@ -753,7 +864,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	}
 
 	private boolean getOutputMethodDecryption() {
-		return readInMode;
+		return readinDirChooser.getInput().getContent();
 	}
 
 	private boolean getInputMethodDecryption() {

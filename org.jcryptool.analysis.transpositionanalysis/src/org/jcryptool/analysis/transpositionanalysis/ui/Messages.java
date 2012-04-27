@@ -49,6 +49,7 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_lblLoadedTextwith_text;
 	public static String TranspAnalysisUI_lblNewLabel_1_text;
 	public static String TranspAnalysisUI_tooltipParams;
+	public static String TranspAnalysisUI_btnCheckButton_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -124,6 +124,10 @@ public class TranspTextWizardPage extends WizardPage {
 				&& getText().equals(c.getText()) && isCrop().equals(c.isCrop())
 				&& getReadInDirection().equals(c.getReadInDirection());
 		}
+
+		public void setReadInMode(Boolean content) {
+			this.readInDirection = content;
+		}
 	}
 
 	private Group group1;
