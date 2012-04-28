@@ -32,6 +32,10 @@ public class TransformData {
 	private final static String ALPHABET_LABEL = "filterByAlphabet"; //$NON-NLS-1$
 	private final static String UMLAUTS_LABEL = "filterUmlauts"; //$NON-NLS-1$
 	private final static String BLANKS_LABEL = "filterBlanks"; //$NON-NLS-1$
+	private final static String UPPERLOWERCASE_LABEL_R = Messages.TransformData_0;
+	private final static String ALPHABET_LABEL_R = Messages.TransformData_1;
+	private final static String UMLAUTS_LABEL_R = Messages.TransformData_2;
+	private final static String BLANKS_LABEL_R = Messages.TransformData_3;
 	private final static String SEPARATOR = ", "; //$NON-NLS-1$
 
 	/**
@@ -134,6 +138,15 @@ public class TransformData {
 		umlautTransformationON = false;
 		leerTransformationON = false;
 	}
+	
+	public boolean isUnmodified() {
+		if(doUppercase != true) return false;
+		if(uppercaseTransformationOn != false) return false;
+		if(alphabetTransformationON != false) return false;
+		if(umlautTransformationON != false) return false;
+		if(leerTransformationON != false) return false;
+		return true;
+	}
 
 	/**
 	 * parses a Transformdata object from a String that was created using
@@ -179,6 +192,50 @@ public class TransformData {
 		}
 
 		return result;
+	}
+
+	public String toReadableString() {
+		StringBuilder result = new StringBuilder(""); //$NON-NLS-1$
+	
+		if (uppercaseTransformationOn) {
+			String value = Messages.TransformData_4;
+			String separator = SEPARATOR;
+			if (doUppercase)
+				value = Messages.TransformData_5;
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
+	
+			result.append(separator + UPPERLOWERCASE_LABEL_R + "" + value); //$NON-NLS-1$
+		}
+	
+		if (alphabetTransformationON) {
+			String value = selectedAlphabetName;
+			String separator = SEPARATOR;
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
+	
+			result.append(separator + ALPHABET_LABEL_R + ": " + value); //$NON-NLS-1$
+		}
+	
+		if (leerTransformationON) {
+			String value = "on"; //$NON-NLS-1$
+			String separator = SEPARATOR;
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
+	
+			result.append(separator + BLANKS_LABEL_R); //$NON-NLS-1$
+		}
+	
+		if (umlautTransformationON) {
+			String value = "on"; //$NON-NLS-1$
+			String separator = SEPARATOR;
+			if (result.toString().equals("")) //$NON-NLS-1$
+				separator = ""; //$NON-NLS-1$
+	
+			result.append(separator + UMLAUTS_LABEL_R); //$NON-NLS-1$
+		}
+	
+		return result.toString();
 	}
 
 	@Override
