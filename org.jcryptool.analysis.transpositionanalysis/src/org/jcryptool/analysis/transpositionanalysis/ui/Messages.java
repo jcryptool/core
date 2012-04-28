@@ -46,6 +46,7 @@ public class Messages extends NLS {
 	public static String TranspAnalysisUI_view_description;
 	public static String TranspAnalysisUI_lblLoadedTextwith_text;
 	public static String TranspAnalysisUI_lblNewLabel_1_text;
+	public static String TranspAnalysisUI_lblReadinmode;
 	public static String TranspAnalysisUI_tooltipParams;
 	public static String TranspAnalysisUI_btnCheckButton_text;
 	public static String TranspAnalysisUI_lblTheseTextSettings_text;

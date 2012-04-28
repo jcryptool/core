@@ -326,7 +326,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					compApplyTransform.setLayout(compApplyTransformLayout);
 					{
 						btnCheckButton = new Button(compApplyTransform, SWT.CHECK | SWT.WRAP);
-						btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, ""));
+						btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, "")); //$NON-NLS-1$
 						GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 						layoutData.widthHint = 100;
 						btnCheckButton.setLayoutData(layoutData);
@@ -340,7 +340,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							
 							@Override
 							public String getName() {
-								return "ApplyTransformation";
+								return "ApplyTransformation"; //$NON-NLS-1$
 							}
 							
 							@Override
@@ -376,7 +376,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					compReadDir.setLayout(compReadDirLayout);
 					{
 						labelReadDir = new Label(compReadDir, SWT.NONE);
-						labelReadDir.setText("Read-in mode the chosen text into the table:");
+						labelReadDir.setText(Messages.TranspAnalysisUI_lblReadinmode);
 					}
 					{
 						readinDirChooser = new ReadDirectionChooser(compReadDir, true);
@@ -810,7 +810,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private void checkIsSolvableWarningNeeded() {
 		boolean needed = false;
 		if(isCipherParametersComplete()) {
-			if(readoutDirChooser.getInput().getContent() == TranspositionTable.DIR_COLUMNWISE ||
+			if(/*readoutDirChooser.getInput().getContent() == TranspositionTable.DIR_COLUMNWISE ||*/
 				readinDirChooser.getInput().getContent() == TranspositionTable.DIR_COLUMNWISE) {
 				
 				if(text.getText().length() % getKeyUsedToEncrypt().getLength() != 0) {
