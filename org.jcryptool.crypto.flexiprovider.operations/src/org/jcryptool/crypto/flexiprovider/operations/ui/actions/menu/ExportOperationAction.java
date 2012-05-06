@@ -29,15 +29,13 @@ public class ExportOperationAction extends Action {
     public ExportOperationAction(ISelectedOperationListener listener) {
         this.setText(Messages.ExportOperationAction_0);
         this.setToolTipText(Messages.ExportOperationAction_1);
-        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/up.png")); //$NON-NLS-1$
+        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/export.gif")); //$NON-NLS-1$
         this.listener = listener;
     }
 
     public void run() {
         this.descriptor = listener.getFlexiProviderOperation();
-        if (this.descriptor == null) {
-            LogUtil.logInfo("nothing selected"); //$NON-NLS-1$
-        } else {
+        if (this.descriptor != null) {
             LogUtil.logInfo("exporting... (" + descriptor.getTimestamp() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
             FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
             dialog.setFilterPath(DirectoryService.getUserHomeDir());

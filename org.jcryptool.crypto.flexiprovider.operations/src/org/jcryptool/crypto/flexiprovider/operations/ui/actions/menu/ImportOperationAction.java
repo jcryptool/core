@@ -23,7 +23,7 @@ public class ImportOperationAction extends Action {
     public ImportOperationAction() {
         this.setText(Messages.ImportOperationAction_0);
         this.setToolTipText(Messages.ImportOperationAction_1);
-        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/down.png")); //$NON-NLS-1$
+        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/import.gif")); //$NON-NLS-1$
     }
 
     public void run() {
