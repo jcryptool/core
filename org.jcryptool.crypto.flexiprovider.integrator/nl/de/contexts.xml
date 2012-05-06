@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="ElGamalWizard" title="ElGamal Verschlüsselung">
-      <description>Dies ist die FlexiProvider Implementierung der ElGamal Verschlüsselung. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der ElGamal Verschlüsselung. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="RSAWizard" title="RSA Verschlüsselung">
-      <description>Dies ist die FlexiProvider Implementierung der RSA Verschlüsselung. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der RSA Verschlüsselung. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="AESWizard" title="AES Verschlüsselung">
-      <description>Dies ist die FlexiProvider Implementierung der AES Verschlüsselung. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der AES Verschlüsselung. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="IDEAWizard" title="IDEA Verschlüsselung">
-      <description>Dies ist die FlexiProvider Implementierung der IDEA Verschlüsselung. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der IDEA Verschlüsselung. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="RC6Wizard" title="RC6 Verschlüsselung">
-      <description>Dies ist die FlexiProvider Implementierung der RC6 Verschlüsselung. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der RC6 Verschlüsselung. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="HMacMD5Wizard" title="HMacMD5 Hashes">
-      <description>Dies ist die FlexiProvider Implementierung des HMacMD5 Hashes. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung des HMacMD5 Hashes. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="SHA1Wizard" title="SHA1 Zufallszahlengenerators">
-      <description>Dies ist die FlexiProvider Implementierung des SHA1 Zufallszahlengenerators. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung des SHA1 Zufallszahlengenerators. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="DSAWizard" title="DSA Signatur">
-      <description>Dies ist die FlexiProvider Implementierung der DSA Signatur. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung der DSA Signatur. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="MD5Wizard" title="MD5 Hash">
-      <description>Dies ist die FlexiProvider Implementierung des MD5 Hashes. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung des MD5 Hashes. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
    <context id="SHAWizard" title="SHA Hash">
-      <description>Dies ist die FlexiProvider Implementierung des SHA Hashes. In der FlexiProvider-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
+      <description>Dies ist die FlexiProvider Implementierung des SHA Hashes. In der Funktional-Perspektive stehen Ihnen noch weitere Einstellungsmöglichkeiten für diesen Algorithmus zur Verfügung.</description>
       <topic href="$nl$/help/content/wizards.html" label="FlexiProvider"/>
-  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_flexiprovider.html" label="FlexiProvider-Perspektive"/>
+  		<topic href="PLUGINS_ROOT/org.jcryptool.core.help/$nl$/help/users/general/perspective_functional.html" label="Funktional-Perspektive"/>
    </context>
 </contexts>
