@@ -11,7 +11,7 @@
         <anchor id="general" />
         <topic href="$nl$/help/users/general/perspectives.html" label="Perspektiven">
            <anchor id="perspectives"/>
-           <topic href="$nl$/help/users/general/perspective_jcryptool.html" label="Standard">
+           <topic href="$nl$/help/users/general/perspective_default.html" label="Standard">
            </topic>
            <topic href="$nl$/help/users/general/perspective_functional.html" label="Funktional">
            </topic>
