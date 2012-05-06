@@ -21,7 +21,7 @@ import org.jcryptool.actions.ui.ActionsUIPlugin;
  * Label provider for the <b>Actions view</b>.
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 0.9.7
  */
 public class ActionLabelProvider extends LabelProvider implements ITableLabelProvider {
     public String getColumnText(Object obj, int index) {
@@ -29,10 +29,8 @@ public class ActionLabelProvider extends LabelProvider implements ITableLabelPro
 
         switch (index) {
             case 1:
-                return null;
+            	return item.getActionName();
             case 2:
-                return item.getActionName();
-            case 3:
             	return item.getFilename();
             default:
                 return null;
@@ -43,7 +41,7 @@ public class ActionLabelProvider extends LabelProvider implements ITableLabelPro
     	ActionItem item = (ActionItem) obj;
 
         switch (index) {
-            case 1:
+            case 0:
             	if (item.getActionType() != null && item.getActionType().equals(Constants.ACTIONS_DECRYPT)){
             		return ActionsUIPlugin.getImageDescriptor("icons/decrypt.gif").createImage(); //$NON-NLS-1$;
             	} else if (item.getActionType() != null &&  item.getActionType().equals(Constants.ACTIONS_ENCRYPT)){
