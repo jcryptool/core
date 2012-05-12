@@ -3,6 +3,6 @@
    <context id="OperationsView" title="Operations">
       <description>After selecting an algorithm in the &lt;b&gt;Algorithms&lt;/b&gt; view, the corresponding entry will appear in the &lt;b&gt;Operations&lt;/b&gt; view. The Operations view allows you to enter the input source (either the text editor or a file) and the output destination (a file). Via drag and drop from the keystore a key can be added to a specific operation. It is necessary to add a matching key before executing an algorithm.
 
-To execute an algorithm, after all parameters are set correctly, the red-and-white flag in the upper right corner of the Operations view must be pressed. In the below example, the text in the editor will be encrypted with AES, using the default key from Alice Whitehat. The encrypted data will be written to the file &lt;b&gt;encrypted.bin&lt;/b&gt;.</description>
+To execute an algorithm, after all parameters are set correctly, click on the execute icon in the upper right corner of the Operations view.</description>
    </context>
 </contexts>

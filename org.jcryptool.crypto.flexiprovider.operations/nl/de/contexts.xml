@@ -3,6 +3,6 @@
    <context id="OperationsView" title="Operationen">
       <description>Die &lt;b&gt;Operationen&lt;/b&gt; Sicht listet die ausgewählten Verfahren auf, die sich in der Algorithmen-Sicht auswählen lassen. Für diese Verfahren lassen sich in der Sicht die verschiedenen Parameter einstellen, wie beispielsweise die Ein- beziehungsweise Ausgabedatei oder der verwendete Schlüssel.
 
-Mit Klick auf &lt;b&gt;Ausführen&lt;/b&gt; (rot-weiße Flagge) lässt sich ein Algorithmus ausführen, sofern alle erforderlichen Parameter eingestellt wurden. </description>
+Mit Klick auf &lt;b&gt;Ausführen&lt;/b&gt; lässt sich ein Algorithmus ausführen, sofern alle erforderlichen Parameter eingestellt wurden. </description>
    </context>
 </contexts>
