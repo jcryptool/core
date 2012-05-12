@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -28,7 +28,7 @@ public class ExecuteOperationAction extends Action {
     public ExecuteOperationAction(ISelectedOperationListener listener) {
         this.setText(Messages.ExecuteOperationAction_0);
         this.setToolTipText(Messages.ExecuteOperationAction_1);
-        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/run.png")); //$NON-NLS-1$
+        this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif")); //$NON-NLS-1$
         this.listener = listener;
     }
 

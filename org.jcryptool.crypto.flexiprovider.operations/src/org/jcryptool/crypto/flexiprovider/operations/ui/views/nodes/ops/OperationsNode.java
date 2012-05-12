@@ -38,7 +38,7 @@ public class OperationsNode extends TreeNode {
 	}
 
 	public ImageDescriptor getImageDescriptor() {
-		return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/run.png"); //$NON-NLS-1$
+		return FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif"); //$NON-NLS-1$
 	}
 
 }
