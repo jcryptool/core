@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: de.flexiprovider;singleton:=true
-Bundle-Version: 1.7.0.p3
+Bundle-Version: 1.7.0.p4
 Bundle-Activator: de.flexiprovider.FlexiProviderPlugin
 Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  src/de/flexiprovider/,
- libs/FlexiProvider-1.7p3.signed.jar
+ libs/FlexiProvider-1.7p4.signed.jar
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers

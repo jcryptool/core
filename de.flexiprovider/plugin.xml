@@ -15,7 +15,7 @@
             cipherModes="CBC|CFB|ECB"
             class="de.flexiprovider.core.FlexiCoreProvider"
             paddings="PKCS5Padding|OneAndZeroesPadding"
-            providerInfo="FlexiProvider 1.7.0.p3"
+            providerInfo="FlexiProvider 1.7.0.p4"
             providerName="FlexiCore">
       </provider>
    </extension>
