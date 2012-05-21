@@ -6,7 +6,7 @@ verschlüsseln oder digital signieren, oder im Menü
 "Analyse" verschiedene Analysen auf eine verschlüsselte Datei anwenden.
 
 Noch einfacher gelangen Sie zu sämtlichen kryptografischen
-Operationen über die "Krypto Explorer" Sicht auf der rechten Seite.
+Operationen über die "Krypto-Explorer" Sicht auf der rechten Seite.
 Nach einem Doppelklick auf den gewünschten Eintrag auf dem
 "Algorithmen" Tab öffnet sich ein Assistent und führt Sie
 Schritt für Schritt durch den Verschlüsselungsprozess. Das
@@ -23,7 +23,7 @@ Operation generiert eine neue Arbeitsdatei.
 
 Bei der Suche nach einem bestimmten Algorithmus (auch Analyse,
 Visualisierung oder Spiel) hilft Ihnen das Filterfeld oben in
-der "Krypto Explorer" Sicht. Hiermit wird der gerade aktive Tab auf
+der "Krypto-Explorer" Sicht. Hiermit wird der gerade aktive Tab auf
 zum Suchbegriff passende Einträge eingeschränkt.
 
 Weitere Informationen zum Lernen, Anwenden und Erweitern von

@@ -47,7 +47,7 @@
             label="Um eine neue Datei anzulegen klicken Sie in der Toolbar auf das Icon Neu. Hiermit wird die JCrypTool Beispieldatei im Texteditor geöffnet. Um eine neue Datei im Hexeditor anzulegen klicken Sie auf den Pfeil neben dem Neu Icon und wählen den Hexeditor Eintrag aus. Eine neue Datei können Sie auch über das Menu Datei - Neu anlegen.">
       </subitem>
       <subitem
-            label="Eine vorhandene Datei öffnen Sie über das Menü Datei - Datei öffnen oder das Öffnen Icon in der Toolbar. Die Datei wird anschließend im zugeordneten Editor geöffnet. Diese Zuordnungen können Sie in den Benutzereinstellungen ändern. Alternativ können Sie im Datei Explorer einen Doppelklick auf eine Datei ausführen. Auch hierbei wird die Datei automatisch im zugeordneten Editor geöffnet. Um eine Datei gleich in einem bestimmten Editor zu öffnen klicken Sie im Datei Explorer mit der rechten Maustaste auf die gewünschte Datei und wählen im Kontextmenu Öffnen mit den gewünschten Editor aus.">
+            label="Eine vorhandene Datei öffnen Sie über das Menü Datei - Datei öffnen oder das Öffnen Icon in der Toolbar. Die Datei wird anschließend im zugeordneten Editor geöffnet. Diese Zuordnungen können Sie in den Benutzereinstellungen ändern. Alternativ können Sie im Datei-Explorer einen Doppelklick auf eine Datei ausführen. Auch hierbei wird die Datei automatisch im zugeordneten Editor geöffnet. Um eine Datei gleich in einem bestimmten Editor zu öffnen klicken Sie im Datei-Explorer mit der rechten Maustaste auf die gewünschte Datei und wählen im Kontextmenu Öffnen mit den gewünschten Editor aus.">
       </subitem>
    </item>
    <item

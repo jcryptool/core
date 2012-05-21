@@ -1,7 +1,7 @@
 <contexts>
-	<context id="actionView" title="Actions Sicht">
+	<context id="actionView" title="Aktionen-Sicht">
 		<description>Mit der &lt;b&gt;Actions&lt;/b&gt; Sicht können Sie aufeinanderfolgende kryptografische Operationen (Kaskaden) aufzeichnen.  Zum Starten der Aufzeichnung öffnen Sie die gewünschte Datei in einem der JCrypTool Editoren (Hex oder Text) und aktivieren den &lt;b&gt;Aufzeichnen&lt;/b&gt; Button. Anschließend werden alle kryptografischen Operationen (sofern vom jeweiligen Plug-in unterstützt) aufgezeichnet. Auch während der Aufnahme automatisch geöffnete Editorfenster werden überwacht. Zum Stoppen/ Unterbrechen der Aufzeichnung den Button &lt;b&gt;Aufzeichnen&lt;/b&gt; wieder deaktivieren.</description>
-  <topic href="nl/de/help/view.html" label="Actions Sicht"/>
+  <topic href="nl/de/help/view.html" label="Aktionen-Sicht"/>
   <topic href="nl/de/help/preferences.html" label="Actions Benutzervorgaben"/>
 	</context>
  <context id="generalPreferences" title="Actions Benutzervorgaben">

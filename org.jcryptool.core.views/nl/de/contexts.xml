@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="algorithmsView" title="Krypto Explorer Sicht">
-      <description>Die &lt;b&gt;Krypto Explorer&lt;/b&gt; Sicht listet alle in JCrypTool verfügbaren kryptografischen Operationen geordnet nach Kategorie auf. Zum Anwenden eines &lt;b&gt;Algorithmus&lt;/b&gt; muss eine Datei in einem der JCrypTool Editoren geöffnet sein. Dies gilt auch für Sichten aus der Kategorie &lt;b&gt;Analysen&lt;/b&gt;. &lt;b&gt;Visualisierungen&lt;/b&gt; und &lt;b&gt;Spiele&lt;/b&gt; öffnen Sichten, die meist ohne geöffnete Datei funktionieren.
+   <context id="algorithmsView" title="Krypto-Explorer Sicht">
+      <description>Die &lt;b&gt;Krypto-Explorer&lt;/b&gt; Sicht listet alle in JCrypTool verfügbaren kryptografischen Operationen geordnet nach Kategorie auf. Zum Anwenden eines &lt;b&gt;Algorithmus&lt;/b&gt; muss eine Datei in einem der JCrypTool Editoren geöffnet sein. Dies gilt auch für Sichten aus der Kategorie &lt;b&gt;Analysen&lt;/b&gt;. &lt;b&gt;Visualisierungen&lt;/b&gt; und &lt;b&gt;Spiele&lt;/b&gt; öffnen Sichten, die meist ohne geöffnete Datei funktionieren.
 
 Über das Menü können Sie zwischen der Baum- und der Palettenansicht umschalten. Mit dem Filterfeld können Sie nach dem Namen filtern (sowohl Algorithmen als auch Analysen, Spiele und Visualisierungen).</description>
-      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/view_algorithms.html" label="Krypto Explorer Sicht" />
+      <topic href="../org.jcryptool.core.help/$nl$/help/users/general/view_algorithms.html" label="Krypto-Explorer Sicht" />
    </context>
 
 </contexts>
