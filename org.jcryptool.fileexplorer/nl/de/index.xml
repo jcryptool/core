@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <index version="1.0">
-    <entry keyword="Datei Explorer">
+    <entry keyword="Datei-Explorer">
         <topic href="help/view.html" />
     </entry>
-    <entry keyword="Datei Explorer Einstellungen">
+    <entry keyword="Datei-Explorer Einstellungen">
         <topic href="help/preferences.html" />
     </entry>
 </index>
