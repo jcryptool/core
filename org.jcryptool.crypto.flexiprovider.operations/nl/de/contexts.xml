@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="OperationsView" title="Operationen">
-      <description>Die &lt;b&gt;Operationen&lt;/b&gt; Sicht listet die ausgewählten Verfahren auf, die sich in der Algorithmen-Sicht auswählen lassen. Für diese Verfahren lassen sich in der Sicht die verschiedenen Parameter einstellen, wie beispielsweise die Ein- beziehungsweise Ausgabedatei oder der verwendete Schlüssel.
+      <description>Die &lt;b&gt;Operationen&lt;/b&gt; Sicht listet die in der &lt;b&gt;Algorithmen&lt;/b&gt; Sicht ausgewählten Verfahren auf. Für diese Verfahren lassen sich hier verschiedene Parameter einstellen, wie beispielsweise die Ein- beziehungsweise Ausgabedatei oder der verwendete Schlüssel. Klicken Sie dazu mit der rechten Maustaste auf die Einträge zu einem Algorithmus und wählen den gewünschten Eintrag aus. Schlüssel können Sie per Drag&amp;Drop aus der &lt;b&gt;Schlüsselspeicher&lt;/b&gt; Sicht auf den Eintrag &lt;b&gt;Schlüssel&lt;/b&gt; ziehen. Der Eintrag &lt;b&gt;Operation&lt;/b&gt; passt sich dabei automatisch dem gewählten Schlüsseltyp an und führt entweder eine Ver- oder eine Entschlüsselung aus.
 
-Mit Klick auf &lt;b&gt;Ausführen&lt;/b&gt; lässt sich ein Algorithmus ausführen, sofern alle erforderlichen Parameter eingestellt wurden. </description>
+Mit Klick auf &lt;b&gt;Ausführen&lt;/b&gt; wird, sofern alle Parameter korrekt angegeben wurden, der ausgewählte Algorithmus angewendet. </description>
    </context>
 </contexts>
