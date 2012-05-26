@@ -24,6 +24,8 @@ public class OutputNode extends IONode {
 
 	public OutputNode() {
 		super(Messages.OutputNode_0);
+
+		setOutput(Messages.OutputNode_2);
 	}
 
 	public void setOutput(String output) {

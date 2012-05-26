@@ -25,6 +25,8 @@ public class InputNode extends TreeNode {
 
 	public InputNode() {
 		super(Messages.InputNode_0);
+
+		setInput(Messages.InputNode_2);
 	}
 
 	public void setInput(String input) {

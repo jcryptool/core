@@ -16,9 +16,11 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.io.messages"; //$NON-NLS-1$
     public static String InputNode_0;
     public static String InputNode_1;
+	public static String InputNode_2;
     public static String InputOutputNode_0;
     public static String OutputNode_0;
     public static String OutputNode_1;
+	public static String OutputNode_2;
     public static String SignatureIONode_0;
     public static String SignatureNode_0;
     public static String SignatureNode_1;
