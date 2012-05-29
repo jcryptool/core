@@ -1,16 +1,14 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2008 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions.ex;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
@@ -27,35 +25,30 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
  *
  */
 public class ExportCertificateAction extends Action {
-	private IViewKeyInformation info;
+    private IViewKeyInformation info;
 
-	/**
-	 * Creates a new instance of ExportSecretKeyAction
-	 */
-	public ExportCertificateAction(IViewKeyInformation info) {
-		this.info = info;
-		this.setText(Messages.getString("Label.ExportPublicKey")); //$NON-NLS-1$
-		this.setToolTipText(Messages.getString("Label.ExportPublicKey")); //$NON-NLS-1$
-		this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png")); //$NON-NLS-1$
-	}
+    /**
+     * Creates a new instance of ExportSecretKeyAction
+     */
+    public ExportCertificateAction(IViewKeyInformation info) {
+        this.info = info;
+        this.setText(Messages.getString("Label.ExportPublicKey")); //$NON-NLS-1$
+        this.setToolTipText(Messages.getString("Label.ExportPublicKey")); //$NON-NLS-1$
+        this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_export.png")); //$NON-NLS-1$
+    }
 
-	public void run() {
-		FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
+    public void run() {
+        FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFilterExtensions(new String[] {Messages.getString("ExportCertificateAction.0")}); //$NON-NLS-1$
         dialog.setFilterNames(new String[] {Messages.getString("ExportCertificateAction.1")}); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
-		String filename = dialog.open();
+        String filename = dialog.open();
 
-		if (filename != null) {
-    		IPath iPath = new Path(filename);
-
-    		if (info != null) {
-    			ImportExportManager.getInstance().exportCertificate(iPath,
-    					KeyStoreManager.getInstance().getPublicKey(info.getSelectedKeyAlias())
-    			);
-    		}
-		}
-	}
+        if (filename != null && info != null) {
+            ImportExportManager.getInstance().exportCertificate(new Path(filename),
+                    KeyStoreManager.getInstance().getPublicKey(info.getSelectedKeyAlias()));
+        }
+    }
 }
