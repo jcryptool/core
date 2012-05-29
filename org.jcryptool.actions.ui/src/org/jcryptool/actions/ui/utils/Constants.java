@@ -16,6 +16,6 @@ package org.jcryptool.actions.ui.utils;
  * @version 0.5.0
  */
 public interface Constants {
-    public static final String[] FILTER_EXTENSIONS = new String[] {"*.xml"}; //$NON-NLS-1$
-    public static final String[] FILTER_NAMES = new String[] {Messages.Constants_0};
+    String[] FILTER_EXTENSIONS = new String[] {"*.xml"}; //$NON-NLS-1$
+    String[] FILTER_NAMES = new String[] {Messages.Constants_0};
 }
