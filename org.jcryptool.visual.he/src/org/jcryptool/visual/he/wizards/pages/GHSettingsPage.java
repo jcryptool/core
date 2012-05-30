@@ -51,7 +51,7 @@ public class GHSettingsPage extends WizardPage {
 
 	public GHSettingsPage(GHData data) {
 		super(PAGENAME, TITLE, null);
-		this.setDescription("Change the amount of multiplications allowed before performing a Recrypt. \nMore is quicker, but might introduce decryption errors.");
+		this.setDescription(Messages.GHChooseMultiplicationsExplanation);
 		this.data = data;
 		setPageComplete(false);
 	}
@@ -68,7 +68,7 @@ public class GHSettingsPage extends WizardPage {
 		final RowData combord = new RowData(300,18);
 		Label label = new Label(subComposite, SWT.NONE);
 		label.setLayoutData(labelrd);
-		label.setText("Amount of Multiplications to perform before recrypt");
+		label.setText(Messages.GHChooseMultiplicationsText);
 		dim = new Combo(subComposite, SWT.READ_ONLY);
 		dim.setLayoutData(combord);
 		dim.add("", 0);

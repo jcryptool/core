@@ -191,6 +191,8 @@ public class Messages extends NLS {
 	public static String SettinsPage_Title;
 	public static String SettingsWizard_Title;
 	public static String Wrong_Password;
+	public static String GHChooseMultiplicationsExplanation;
+	public static String GHChooseMultiplicationsText;
 
 
 	static {
