@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.apache.xml.security;singleton:=true
-Bundle-Version: 1.4.6
+Bundle-Version: 1.5.2
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: javax.xml.crypto,
  javax.xml.crypto.dom,
@@ -10,6 +10,8 @@ Export-Package: javax.xml.crypto,
  javax.xml.crypto.dsig.dom,
  javax.xml.crypto.dsig.keyinfo,
  javax.xml.crypto.dsig.spec,
+ org.apache.jcp.xml.dsig.internal,
+ org.apache.jcp.xml.dsig.internal.dom,
  org.apache.xml.security,
  org.apache.xml.security.algorithms,
  org.apache.xml.security.algorithms.implementations,
@@ -27,14 +29,13 @@ Export-Package: javax.xml.crypto,
  org.apache.xml.security.keys.storage,
  org.apache.xml.security.keys.storage.implementations,
  org.apache.xml.security.signature,
+ org.apache.xml.security.signature.reference,
  org.apache.xml.security.transforms,
  org.apache.xml.security.transforms.implementations,
  org.apache.xml.security.transforms.params,
  org.apache.xml.security.utils,
  org.apache.xml.security.utils.resolver,
- org.apache.xml.security.utils.resolver.implementations,
- org.jcp.xml.dsig.internal,
- org.jcp.xml.dsig.internal.dom
+ org.apache.xml.security.utils.resolver.implementations
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.commons.logging;bundle-version="1.0.4"

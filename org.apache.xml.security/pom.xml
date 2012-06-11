@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache</groupId>
-	<version>1.4.5</version>
+	<version>1.5.2</version>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>xml.security</artifactId>
 </project>
