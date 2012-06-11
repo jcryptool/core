@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
+ * Copyright (c) 2012 Dominik Schadow - http://www.xml-sicherheit.de
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,7 +22,7 @@ import org.apache.xml.security.transforms.Transforms;
  * algorithm.</p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 0.9.7
  */
 public final class XmlSecurityConstants {
     /**
@@ -122,10 +122,6 @@ public final class XmlSecurityConstants {
             return Transforms.TRANSFORM_XPATH;
         } else if (transformationAlgorithmString.equalsIgnoreCase("XPath 2 Filter")) {
             return Transforms.TRANSFORM_XPATH2FILTER;
-        } else if (transformationAlgorithmString.equalsIgnoreCase("XPath 2 Filter 04")) {
-            return Transforms.TRANSFORM_XPATH2FILTER04;
-        } else if (transformationAlgorithmString.equalsIgnoreCase("XPath Filter CHGP")) {
-            return Transforms.TRANSFORM_XPATHFILTERCHGP;
         } else if (transformationAlgorithmString.equalsIgnoreCase("XPointer")) {
             return Transforms.TRANSFORM_XPOINTER;
         } else if (transformationAlgorithmString.equalsIgnoreCase("XSLT")) {
