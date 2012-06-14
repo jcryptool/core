@@ -379,7 +379,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						labelReadDir.setText(Messages.TranspAnalysisUI_lblReadinmode);
 					}
 					{
-						readinDirChooser = new ReadDirectionChooser(compReadDir, true);
+						readinDirChooser = new ReadDirectionChooser(compReadDir, false);
 						readinDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
 						readinDirChooser.setEnabled(false);
 						
@@ -397,7 +397,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						labelReadDir.setText(Messages.TranspAnalysisUI_read_out_mode_label);
 					}
 					{
-						readoutDirChooser = new ReadDirectionChooser(compReadDir, true);
+						readoutDirChooser = new ReadDirectionChooser(compReadDir, false);
 						readoutDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
 						readoutDirChooser.setEnabled(false);
 

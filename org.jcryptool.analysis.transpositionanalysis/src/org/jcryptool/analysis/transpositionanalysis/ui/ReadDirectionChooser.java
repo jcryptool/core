@@ -39,6 +39,8 @@ import org.jcryptool.core.util.input.InputVerificationResult;
  * @author Simon L
  */
 public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
+	private static final int HEIGHT_FLAT = 18;
+	private static final int HEIGHT_NORMAL = 21;
 	private AbstractUIInput<Boolean> input;
 	private Button btnRowwise;
 	private Button btnColumnar;
@@ -96,7 +98,8 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 				btnColumnarLData.grabExcessHorizontalSpace = true;
 				btnColumnarLData.horizontalAlignment = GridData.FILL;
 				btnColumnarLData.verticalAlignment = GridData.FILL;
-				if (flat) btnColumnarLData.heightHint = 18;
+				btnColumnarLData.heightHint = HEIGHT_NORMAL;
+				if (flat) btnColumnarLData.heightHint = HEIGHT_FLAT;
 				btnColumnar.setLayoutData(btnColumnarLData);
 				btnColumnar.setText(Messages.ReadDirectionChooser_0);
 				btnColumnar.addListener(SWT.Selection, radioGroup);
@@ -107,7 +110,8 @@ public class ReadDirectionChooser extends org.eclipse.swt.widgets.Composite {
 				btnRowwiseLData.grabExcessHorizontalSpace = true;
 				btnRowwiseLData.horizontalAlignment = GridData.FILL;
 				btnRowwiseLData.verticalAlignment = GridData.FILL;
-				if (flat) btnRowwiseLData.heightHint = 18;
+				btnRowwiseLData.heightHint = HEIGHT_NORMAL;
+				if (flat) btnRowwiseLData.heightHint = HEIGHT_FLAT;
 				btnRowwise.setLayoutData(btnRowwiseLData);
 				btnRowwise.setText(Messages.ReadDirectionChooser_1);
 				btnRowwise.addListener(SWT.Selection, radioGroup);

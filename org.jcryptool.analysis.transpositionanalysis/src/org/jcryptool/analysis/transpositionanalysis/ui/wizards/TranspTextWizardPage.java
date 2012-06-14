@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -56,6 +57,7 @@ import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputW
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextWithSourceInput;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextonlyInput;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
 
@@ -284,6 +286,20 @@ public class TranspTextWizardPage extends WizardPage {
 						btnZwischenablageeigeneEingabe = new Button(composite, SWT.RADIO);
 						btnZwischenablageeigeneEingabe
 							.setText(Messages.TranspTextWizardPage_btnZwischenablageeigeneEingabe_text);
+						btnZwischenablageeigeneEingabe.addSelectionListener(new SelectionAdapter() {
+
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								if(btnZwischenablageeigeneEingabe.getSelection()) {
+									doTxfieldActionPreservingVisibleLines(new Runnable() {
+										@Override
+										public void run() {
+											txtInputText.setSelection(txtInputText.getText().length(), 0);
+										}
+									}, txtInputText);
+								}
+							}
+						});
 					}
 				}
 			}
@@ -415,6 +431,11 @@ public class TranspTextWizardPage extends WizardPage {
 			}
 			{
 				blocklengthSpinner = new Spinner(group1, SWT.NONE);
+				{
+					GridData gd_blocklengthSpinner = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+					gd_blocklengthSpinner.heightHint = 18;
+					blocklengthSpinner.setLayoutData(gd_blocklengthSpinner);
+				}
 				blocklengthSpinner.setMinimum(1);
 				blocklengthSpinner.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -448,7 +469,7 @@ public class TranspTextWizardPage extends WizardPage {
 				labelReadIn.setText(Messages.TranspTextWizardPage_readinmode_description);
 			}
 			{
-				directionChooserIn = new ReadDirectionChooser(groupReadInDirection, true);
+				directionChooserIn = new ReadDirectionChooser(groupReadInDirection, false);
 				directionChooserIn.setDirection(iniDirection);
 
 				directionChooserIn.getInput().addObserver(new Observer() {
@@ -500,6 +521,35 @@ public class TranspTextWizardPage extends WizardPage {
 
 		isPageBuilt = true;
 		preview();
+	}
+
+	/**
+	 * Runs a runnable, which executes some code. The top visible line number of the text field is 
+	 * remembered, and after the runnable has finished, the top visible line is restored is set to the remembered number. 
+	 * 
+	 * @param runnable
+	 */
+	protected void doTxfieldActionPreservingVisibleLines(final Runnable runnable, Text textfield) {
+		final Display display = textfield.getDisplay();
+		final int topIndex = textfield.getTopIndex();
+		runnable.run();
+		
+		new Thread() {
+			public void run() {
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					LogUtil.logError(e);
+				}
+				Runnable r = new Runnable() {
+					public void run() {
+						txtInputText.setTopIndex(topIndex);
+					}
+				};
+				
+				display.syncExec(r);
+			};
+		}.start();
 	}
 
 	private void loadEditorsAndFillEditorChooser() {
