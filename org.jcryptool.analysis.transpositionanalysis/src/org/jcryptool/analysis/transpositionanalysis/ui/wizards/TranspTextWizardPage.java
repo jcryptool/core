@@ -295,6 +295,7 @@ public class TranspTextWizardPage extends WizardPage {
 										@Override
 										public void run() {
 											txtInputText.setSelection(txtInputText.getText().length(), 0);
+											txtInputText.forceFocus();
 										}
 									}, txtInputText);
 								}
