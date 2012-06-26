@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.eclipse.core.internal.runtime.Log;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -190,10 +189,10 @@ public class TranspTextWizardPage extends WizardPage {
 
 	/**
 	 * Creates a new instance of TranspTextWizardPage.
-	 * 
+	 *
 	 **/
 	public TranspTextWizardPage() {
-		super(Messages.TranspTextWizardPage_textwizardtitle, "", null); //$NON-NLS-1$ 
+		super(Messages.TranspTextWizardPage_textwizardtitle, "", null); //$NON-NLS-1$
 		setTitle(Messages.TranspTextWizardPage_pagetitle);
 		setMessage(Messages.TranspTextWizardPage_pagedescription);
 
@@ -252,7 +251,7 @@ public class TranspTextWizardPage extends WizardPage {
 								Point result = super.computeSize(wHint, hHint, changed);
 								return new Point(getAppropriateXValue(result.x, 160), result.y);
 							};
-							
+
 							private int getAppropriateXValue(int superXCalc, int maxSize) {
 								return Math.min(superXCalc, maxSize);
 							}
@@ -525,16 +524,16 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 	/**
-	 * Runs a runnable, which executes some code. The top visible line number of the text field is 
-	 * remembered, and after the runnable has finished, the top visible line is restored is set to the remembered number. 
-	 * 
+	 * Runs a runnable, which executes some code. The top visible line number of the text field is
+	 * remembered, and after the runnable has finished, the top visible line is restored is set to the remembered number.
+	 *
 	 * @param runnable
 	 */
 	protected void doTxfieldActionPreservingVisibleLines(final Runnable runnable, Text textfield) {
 		final Display display = textfield.getDisplay();
 		final int topIndex = textfield.getTopIndex();
 		runnable.run();
-		
+
 		new Thread() {
 			public void run() {
 				try {
@@ -547,7 +546,7 @@ public class TranspTextWizardPage extends WizardPage {
 						txtInputText.setTopIndex(topIndex);
 					}
 				};
-				
+
 				display.syncExec(r);
 			};
 		}.start();
@@ -696,7 +695,7 @@ public class TranspTextWizardPage extends WizardPage {
 	/**
 	 * Opens a modal dialogue to select a file from the file system. If the file
 	 * selection is cancelled, null is returned.
-	 * 
+	 *
 	 * @return the file, or null at dialogue cancel
 	 */
 	protected File openFileSelectionDialogue() {
@@ -745,7 +744,7 @@ public class TranspTextWizardPage extends WizardPage {
 	/**
 	 * Assumes that the selection index is not "-1" -> something is actually
 	 * selected
-	 * 
+	 *
 	 * @return
 	 */
 	protected IEditorReference getCurrentlySelectedEditor() {
