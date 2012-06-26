@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: net.sourceforge.codec
-Bundle-Version: 1.7.0
+Bundle-SymbolicName: net.sourceforge.codec;singleton:=true
+Bundle-Version: 2.3.0
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: codec,
  codec.asn1,
@@ -18,3 +18,4 @@ Export-Package: codec,
  codec.x509,
  codec.x509.extensions
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
