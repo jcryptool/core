@@ -11,8 +11,6 @@
 package org.jcryptool.crypto.classic.vernam.algorithm;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -24,7 +22,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
-import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.vernam.VernamPlugin;

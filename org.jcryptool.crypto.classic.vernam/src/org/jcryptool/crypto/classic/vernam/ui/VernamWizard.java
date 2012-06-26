@@ -10,11 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.vernam.ui;
 
-import java.io.InputStream;
-
-import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicTransformationPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicWizard;
-import org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithm;
 /**
  * The Wizard for the Vernam cipher
  * 

@@ -10,15 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.vernam.algorithm;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
-import org.jcryptool.core.operations.alphabets.AlphaConverter;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.vernam.ui.VernamWizard;
