@@ -11,7 +11,6 @@ package org.jcryptool.visual.rsa.ui.wizards.wizardpages;
 
 import static org.jcryptool.visual.library.Lib.isPrime;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.eclipse.jface.wizard.IWizardPage;
@@ -295,7 +294,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
                 //BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
             	BigInteger possibleQ = new BigInteger("19");
                 BigInteger possibleP = new BigInteger("17");
-                
+
                 BigInteger possibleN = possibleP.multiply(possibleQ);
                 while (n.compareTo(Constants.TWOFIVESIX) < 0) {
                     possibleQ = possibleQ.add(BigInteger.ONE).nextProbablePrime();
