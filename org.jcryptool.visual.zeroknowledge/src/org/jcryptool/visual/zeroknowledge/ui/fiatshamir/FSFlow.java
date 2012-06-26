@@ -273,9 +273,11 @@ public class FSFlow {
             public void widgetSelected(SelectionEvent arg0) {
                 if (!alice.getN().equals(BigInteger.ZERO)) {
                     if (secretKnown) {
+                        bob.setV(alice.getV());
                         alice.generateR();
                         bob.receiveX(alice.getX());
                     } else {
+                        bob.setV(carol.getV());
                         carol.generateR();
                         bob.receiveX(carol.getX());
                     }
