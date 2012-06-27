@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -34,13 +34,12 @@ import org.jcryptool.visual.viterbi.algorithm.ModularAddition;
 
 /**
  *
- * This class creates the content of the xor tab. The basic layout is a grid layout. In the grid
- * layout, the GUI objects are connected with canvas.
+ * This class creates the content of the xor tab. The basic layout is a grid layout. In the grid layout, the GUI objects
+ * are connected with canvas.
  *
  * @author Georg Chalupar, Niederwieser Martin, Scheuchenpflug Simon
  */
 public class XORComposite extends Composite {
-
     /* set default values */
     private static final int HORIZONTAL_SPACING = 50;
     private static final int MARGIN_WIDTH = 100;
@@ -60,7 +59,7 @@ public class XORComposite extends Composite {
     private String cipherString = "";
     private Button xor;
     private Button mod;
-    StyledText stDescription;
+    private StyledText stDescription;
 
     /* default value for the combination is xor */
     private Combination combi = new BitwiseXOR();
@@ -70,7 +69,6 @@ public class XORComposite extends Composite {
      * @param style
      * @param reference of the viterbiView
      */
-
     public XORComposite(final Composite parent, final int style, ViterbiView viterbiView) {
         super(parent, style);
 
@@ -81,8 +79,8 @@ public class XORComposite extends Composite {
     }
 
     /**
-     * Sets the default texts in the plaintext fields. This is just a bugfix, because setting the
-     * texts earlier would destroy the layout.
+     * Sets the default texts in the plaintext fields. This is just a bugfix, because setting the texts earlier would
+     * destroy the layout.
      */
     public void displayDefaultTexts() {
         plain2.setText(Messages.XORComposite_Plain2DefaultText);
@@ -93,7 +91,6 @@ public class XORComposite extends Composite {
     /**
      * This method generates the head of the tab. The head has a title and a description.
      */
-
     private void createHead() {
         final Composite head = new Composite(this, SWT.NONE);
         head.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WHITE));
@@ -110,11 +107,10 @@ public class XORComposite extends Composite {
     }
 
     /**
-     * This method creates the main area. It calls most of the other methods in this class. The
-     * basic layout is a grid layout.
+     * This method creates the main area. It calls most of the other methods in this class. The basic layout is a grid
+     * layout.
      */
     private void createMainArea() {
-
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.XORComposite_algo_header);
         final GridLayout gl = new GridLayout(3, false); //$NON-NLS-1$
@@ -135,19 +131,15 @@ public class XORComposite extends Composite {
         createLoadCipher(g);
         createCipher(g);
         createEncodingModeArea(g);
-
     }
 
     /**
      *
-     * This class makes a button that is used to read input from a file and print it into a
-     * textfield.
+     * This class makes a button that is used to read input from a file and print it into a textfield.
      *
      * @param the parent item
      */
-
     private void createLoadFile1(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
@@ -155,18 +147,17 @@ public class XORComposite extends Composite {
         Label plain1Label = new Label(canvas, SWT.PUSH);
         plain1Label.setText(Messages.XORComposite_Plain1);
 
-        final GridData fDloadButton = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
         Button loadPlain1 = new Button(canvas, SWT.PUSH);
         loadPlain1.setText(Messages.XORComposite_loadFile);
-        loadPlain1.setLayoutData(fDloadButton);
+        loadPlain1.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
 
         loadPlain1.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
                 dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
-                dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
+                dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION,
+                        IConstants.ALL_FILTER_EXTENSION});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
 
                 String filename = dialog.open();
@@ -183,26 +174,17 @@ public class XORComposite extends Composite {
      *
      * @param parent
      */
-
     private void createPlain1(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-
-        plain1 = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        plain1.setLayoutData(gd);
-
+        plain1 = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        plain1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
 
     /**
      * Creates radio buttons. This is used for determining the combination mode.
      */
-
     private void createCombinationArea(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 2);
-
         final Canvas combination = new Canvas(parent, SWT.NONE);
-        combination.setLayoutData(gd);
+        combination.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 2));
         combination.setLayout(new GridLayout());
 
         Group options = new Group(combination, SWT.NONE);
@@ -218,16 +200,13 @@ public class XORComposite extends Composite {
         xor.setText(Messages.XORComposite_Combination_RadioXOR);
         mod.setText(Messages.XORComposite_Combination_RadioMOD);
 
-        final GridData gDcontinueButton = new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT);
-
         Button calculate = new Button(combination, SWT.PUSH);
         calculate.setText(Messages.XORComposite_calculate);
-        calculate.setLayoutData(gDcontinueButton);
+        calculate.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
         calculate.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-
                 if (xor.getSelection()) {
                     combi = new BitwiseXOR();
                 } else {
@@ -237,14 +216,8 @@ public class XORComposite extends Composite {
                 cipherString = combi.add(plain1.getText(), plain2.getText());
 
                 if (text.getSelection()) {
-                    cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); // the
-                                                                                                      // �
-                                                                                                      // is
-                                                                                                      // used
-                                                                                                      // for
-                    // masking
-                    // unprintable
-                    // characters
+                    cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+                    // the � is used for masking unprintable characters
                 } else {
                     cipher.setText(ViterbiComposite.stringToHex(cipherString));
                 }
@@ -254,14 +227,11 @@ public class XORComposite extends Composite {
 
     /**
      *
-     * This class makes a button that is used to read input from a file and print it into a
-     * textfield.
+     * This class makes a button that is used to read input from a file and print it into a textfield.
      *
      * @param the parent item
      */
-
     private void createLoadFile2(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
@@ -269,18 +239,17 @@ public class XORComposite extends Composite {
         Label plain1Label = new Label(canvas, SWT.PUSH);
         plain1Label.setText(Messages.XORComposite_Plain2);
 
-        final GridData fDloadButton = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
         Button loadPlain2 = new Button(canvas, SWT.PUSH);
         loadPlain2.setText(Messages.XORComposite_loadFile);
-        loadPlain2.setLayoutData(fDloadButton);
+        loadPlain2.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
 
         loadPlain2.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
                 dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
-                dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
+                dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION,
+                        IConstants.ALL_FILTER_EXTENSION});
                 dialog.setFilterPath(DirectoryService.getUserHomeDir());
 
                 String filename = dialog.open();
@@ -297,27 +266,19 @@ public class XORComposite extends Composite {
      *
      * @param parent
      */
-
     private void createPlain2(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-
-        plain2 = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        plain2.setLayoutData(gd);
-
+        plain2 = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        plain2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     }
 
     /**
-     * This class makes a button that is used to read input from a file and print it into a
-     * textfield.
+     * This class makes a button that is used to read input from a file and print it into a textfield.
      *
      * The format of the text printed depends on the format selected.
      *
      * @param the parent item
      */
-
     private void createLoadCipher(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
@@ -325,14 +286,11 @@ public class XORComposite extends Composite {
         Label plain1Label = new Label(canvas, SWT.PUSH);
         plain1Label.setText(Messages.XORComposite_cipher);
 
-        final GridData gDloadButton = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
-
         Button exportButton = new Button(canvas, SWT.PUSH);
         exportButton.setText(Messages.ViterbiComposite_exportButton);
-        exportButton.setLayoutData(gDloadButton);
+        exportButton.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
 
         exportButton.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
@@ -354,13 +312,9 @@ public class XORComposite extends Composite {
      *
      * @param parent
      */
-
     private void createCipher(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-
-        cipher = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        cipher.setLayoutData(gd);
+        cipher = new Text(parent, SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        cipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         cipher.setEnabled(false);
     }
 
@@ -369,9 +323,7 @@ public class XORComposite extends Composite {
      *
      * @param parent
      */
-
     private void createEncodingModeArea(final Composite parent) {
-
         final Canvas encodingmod = new Canvas(parent, SWT.NONE);
         encodingmod.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
         GridLayout gl = new GridLayout();
@@ -398,12 +350,11 @@ public class XORComposite extends Composite {
             }
 
             public void widgetSelected(SelectionEvent e) {
-
                 hex.setSelection(true);
                 text.setSelection(false);
-                cipher.setText(ViterbiComposite.stringToHex(cipherString)); // converstion
-                                                                            // into
-                                                                            // hex
+
+                // conversion to hex
+                cipher.setText(ViterbiComposite.stringToHex(cipherString));
             }
         });
 
@@ -413,27 +364,18 @@ public class XORComposite extends Composite {
             }
 
             public void widgetSelected(SelectionEvent e) {
-
                 text.setSelection(true);
                 hex.setSelection(false);
 
-                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd")); // unprintable
-                                                                                                  // chars
-                                                                                                  // will
-                // be
-                // replaced with "�"
-
+                // unprintable chars will be replaced with "�"
+                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
             }
         });
 
-        final GridData gDcontinueButton = new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT);
-
         Button next = new Button(encodingmod, SWT.PUSH);
         next.setText(Messages.XORComposite_next);
-        next.setLayoutData(gDcontinueButton);
-
+        next.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
         next.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 viterbiView.changeTab(cipherString, combi);

@@ -53,7 +53,6 @@ import org.jcryptool.visual.viterbi.algorithm.ViterbiObserver;
  * @author Georg Chalupar, Niederwieser Martin, Scheuchenpflug Simon
  */
 public class ViterbiComposite extends Composite implements ViterbiObserver {
-
     /* set default values */
     private static final int HORIZONTAL_SPACING = 30;
     private static final int MARGIN_WIDTH = 30;
@@ -85,7 +84,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private Button startButton;
     private boolean isRunning; /* if the viterbi-algorithm is runnung */
     private Viterbi viterbi;
-    StyledText stDescription;
+    private StyledText stDescription;
 
     private static final char DEFAULT_CHARACTER_SET_BEGIN = '\u0000';
     private static final char DEFAULT_CHARACTER_SET_END = '\u00ff';
@@ -124,7 +123,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     	stDescription.setText(Messages.ViterbiComposite_description);
     }
 
-
     /**
      * Generates the head of the tab. The head has a title and a description.
      */
@@ -144,12 +142,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     }
 
     /**
-     *
      * Creates the first line of the viterbi tab content. The values may be filled by the XOR Tab.
-     *
      */
     public void createInput() {
-
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_input_header);
         final GridLayout gl = new GridLayout(3, false); //$NON-NLS-1$
@@ -161,7 +156,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createLoadCipher(g);
         createCipher(g);
         createEncodingModeArea(g);
-
     }
 
     /**
@@ -172,7 +166,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent the parent item, where the button is added to
      */
     private void createLoadCipher(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
@@ -180,10 +173,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         Label plain1Label = new Label(canvas, SWT.PUSH);
         plain1Label.setText(Messages.XORComposite_cipher);
 
-        final GridData fDloadButton = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
         Button loadCipher = new Button(canvas, SWT.PUSH);
         loadCipher.setText(Messages.XORComposite_loadFile);
-        loadCipher.setLayoutData(fDloadButton);
+        loadCipher.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
 
         loadCipher.addSelectionListener(new SelectionAdapter() {
 
@@ -214,13 +206,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent the component to add the ciphertext to
      */
     private void createCipher(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-
         cipher = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        cipher.setLayoutData(gd);
+        cipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
         cipher.setEnabled(false);
-
     }
 
     /**
@@ -229,7 +217,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createEncodingModeArea(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         canvas.setLayout(new GridLayout());
@@ -238,8 +225,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         encodingmod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         encodingmod.setLayout(new FormLayout());
 
-        final GridData gDloadButton = new GridData(LOADBUTTONWIDTH, 100);
-        encodingmod.setLayoutData(gDloadButton);
+        encodingmod.setLayoutData(new GridData(LOADBUTTONWIDTH, 100));
 
         Group options = new Group(encodingmod, SWT.NONE);
         options.setLayout(new GridLayout());
@@ -259,13 +245,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             }
 
             public void widgetSelected(SelectionEvent e) {
-
                 hex.setSelection(true);
                 text.setSelection(false);
 
-                // cipher.setEnabled(false);
                 cipher.setText(stringToHex(cipherString));
-
             }
         });
 
@@ -275,14 +258,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
             }
 
             public void widgetSelected(SelectionEvent e) {
-
                 text.setSelection(true);
                 hex.setSelection(false);
 
-                // cipher.setEnabled(true);
-
                 cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
-
             }
         });
     }
@@ -292,7 +271,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * calculation can be started/canceled
      */
     public void createCalculation() {
-
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_calculation_header);
         g.setLayout(new GridLayout());
@@ -308,14 +286,12 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createLanguage(canvas);
         createOptions(canvas);
         createStartButton(canvas);
-
     }
 
     /**
      * Creates radio buttons to select the language.
      */
     private void createLanguage(final Composite parent) {
-
         final Canvas language = new Canvas(parent, SWT.NONE);
         language.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         language.setLayout(new GridLayout());
@@ -340,12 +316,9 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createOptions(final Composite parent) {
-
-        final GridLayout gl = new GridLayout(2, false);
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
-        canvas.setLayout(gl);
+        canvas.setLayout(new GridLayout(2, false));
 
         Label nGramLabel = new Label(canvas, SWT.PUSH);
         nGramLabel.setText(Messages.ViterbiComposite_nGramLabel);
@@ -366,7 +339,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         }
 
         pathDrop.select(7);
-
     }
 
     /**
@@ -376,18 +348,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createStartButton(final Composite parent) {
-
-        final GridData gDstartButton = new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT);
-
         startButton = new Button(parent, SWT.PUSH);
         startButton.setText(Messages.ViterbiComposite_startButton);
-        startButton.setLayoutData(gDstartButton);
+        startButton.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
 
         startButton.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
-
                 Display display = Display.getDefault();
 
                 if (ViterbiComposite.this.isRunning) {
@@ -395,18 +362,14 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                     ViterbiComposite.this.isRunning = false;
 
                     display.syncExec(new Runnable() {
-
                         public void run() {
                             ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
                         }
                     });
                 } else {
-
                     display.syncExec(new Runnable() {
-
                         public void run() {
                             ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_cancelButton);
-
                         }
                     });
 
@@ -449,7 +412,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * contains the possible plaintexts and a button to export them
      */
     private void createResult() {
-
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_result_header);
         final GridLayout gl = new GridLayout(3, false);
@@ -463,7 +425,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createExportArea(g);
         createLabel2(g);
         createSolution2(g);
-
     }
 
     /**
@@ -472,16 +433,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createLabel1(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
 
-        final GridData gDLabel = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
-
         Label solution1Label = new Label(canvas, SWT.PUSH);
         solution1Label.setText(Messages.ViterbiComposite_solution1);
-        solution1Label.setLayoutData(gDLabel);
+        solution1Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
     }
 
     /**
@@ -490,12 +448,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createSolution1(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-
-        solution1 = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        solution1.setLayoutData(gd);
-
+        solution1 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        solution1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     }
 
     /**
@@ -504,21 +458,15 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createExportArea(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2);
-
         final Canvas export = new Canvas(parent, SWT.NONE);
-        export.setLayoutData(gd);
+        export.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         export.setLayout(new GridLayout());
-
-        final GridData gDloadButton = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
 
         Button exportButton = new Button(export, SWT.PUSH);
         exportButton.setText(Messages.ViterbiComposite_exportButton);
-        exportButton.setLayoutData(gDloadButton);
+        exportButton.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
 
         exportButton.addSelectionListener(new SelectionAdapter() {
-
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
@@ -543,16 +491,13 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createLabel2(final Composite parent) {
-
         final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
         canvas.setLayout(new GridLayout());
 
-        final GridData gDLabel = new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT);
-
         Label solution2Label = new Label(canvas, SWT.PUSH);
         solution2Label.setText(Messages.ViterbiComposite_solution2);
-        solution2Label.setLayoutData(gDLabel);
+        solution2Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
     }
 
     /**
@@ -561,20 +506,14 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createSolution2(final Composite parent) {
-
-        final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-
-        solution2 = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        solution2.setLayoutData(gd);
-
+        solution2 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        solution2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
     }
 
     /**
-     *
      * Synchronizes this tab with the xor tab. The xor tab sends its ciphertext content to this method.
      *
      * @param newText the ciphertext to be analyzed
-     *
      */
     public void setCipherText(String newText) {
         cipherString = newText;
@@ -587,18 +526,15 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     }
 
     /**
-     *
      * Synchronize this tab with the xor tab. The xor tab sends its mode of combination to this method.
      *
      * @param combi the mode of combination
-     *
      */
     public void setCombination(Combination combi) {
         this.combi = combi;
     }
 
     /**
-     *
      * replaces unprintable characters in a String
      *
      * @param in input string
@@ -619,12 +555,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     }
 
     /**
-     *
      * converts a string with normal text representation into a hexadecimal representation.
      *
      * @param inputString
      * @return a string that contains the hex values of the input characters separated by a space (' ')
-     *
      */
     public static String stringToHex(String inputString) {
         StringBuffer buffer = new StringBuffer();
@@ -661,8 +595,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         currentPath = path;
 
         Display display = Display.getDefault();
-        // Object object = new Object();
-        // object.toString();
         display.asyncExec(new Runnable() {
             public void run() {
                 solution1.setText(ViterbiComposite.this.currentPath.getPlain1());
@@ -681,7 +613,6 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         display.asyncExec(new Runnable() {
             public void run() {
                 ViterbiComposite.this.startButton.setText(Messages.ViterbiComposite_startButton);
-
             }
         });
     }
