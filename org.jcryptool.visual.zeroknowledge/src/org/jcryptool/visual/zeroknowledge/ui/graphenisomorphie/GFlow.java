@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,11 +25,10 @@ import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GCarol;
 import org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView;
 
 /**
- * Repräsentiert eine Klasse, die ein Group-Objekt erstellt, das die Erklärung zum behandelten Fall
- * enthält.
+ * Repräsentiert eine Klasse, die ein Group-Objekt erstellt, das die Erklärung zum behandelten Fall enthält.
  *
  * @author Mareike Paul
- *@version 1.0.0
+ * @version 1.0.0
  */
 public class GFlow {
     private GAlice alice;
@@ -166,19 +165,15 @@ public class GFlow {
         switch (step) {
             case 1:
                 erklaerung01.setFont(FontService.getNormalBoldFont());
-                erklaerung01.setSize(erklaerung01.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 break;
             case 2:
                 erklaerung02.setFont(FontService.getNormalBoldFont());
-                erklaerung02.setSize(erklaerung02.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 break;
             case 3:
                 erklaerung03.setFont(FontService.getNormalBoldFont());
-                erklaerung03.setSize(erklaerung03.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 break;
             case 4:
                 erklaerung04.setFont(FontService.getNormalBoldFont());
-                erklaerung04.setSize(erklaerung04.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 break;
         }
     }
@@ -196,25 +191,29 @@ public class GFlow {
      * Methode, die die Buttons anlegt
      */
     private void generateButtons() {
-        int heigth = 45;
-        int width = 150;
+        GridData gdButtons = new GridData();
+        gdButtons.heightHint = 55;
+        gdButtons.widthHint = 150;
+        gdButtons.verticalAlignment = GridData.CENTER;
 
-        GridData gridData1 = new GridData();
-        gridData1.heightHint = heigth;
-        gridData1.widthHint = width;
-        gridData1.verticalAlignment = GridData.CENTER;
+        GridData gdText = new GridData();
+        gdText.heightHint = 55;
+        gdText.widthHint = 350;
+        gdText.verticalAlignment = GridData.CENTER;
 
-        GridLayout gridLayout1 = new GridLayout();
-        gridLayout1.horizontalSpacing = 5;
-        gridLayout1.makeColumnsEqualWidth = false;
-        gridLayout1.numColumns = 2;
-        GridData gridData = new GridData();
-        gridData.horizontalAlignment = GridData.CENTER;
-        gridData.grabExcessHorizontalSpace = true;
-        gridData.grabExcessVerticalSpace = true;
-        gridData.verticalAlignment = GridData.CENTER;
-        group.setLayout(gridLayout1);
-        group.setLayoutData(gridData);
+        GridLayout glGroup = new GridLayout();
+        glGroup.horizontalSpacing = 5;
+        glGroup.makeColumnsEqualWidth = false;
+        glGroup.numColumns = 2;
+
+        GridData gdGroup = new GridData();
+        gdGroup.horizontalAlignment = GridData.CENTER;
+        gdGroup.grabExcessHorizontalSpace = true;
+        gdGroup.grabExcessVerticalSpace = true;
+        gdGroup.verticalAlignment = GridData.CENTER;
+
+        group.setLayout(glGroup);
+        group.setLayoutData(gdGroup);
 
         // Button, um die Zufallszahl zu erstellen
         generateH = new Button(group, SWT.PUSH | SWT.CENTER);
@@ -225,9 +224,8 @@ public class GFlow {
          */
         new SelectionAdapter() {
             /**
-             * Die Person, die gerade betrachtet wird, erstellt einen Graphen H und reicht diesen an
-             * Bob. Der erläuternde Text wird fett gedruckt, der zweite Schritt des Protokolls wird
-             * ermöglicht.
+             * Die Person, die gerade betrachtet wird, erstellt einen Graphen H und reicht diesen an Bob. Der
+             * erläuternde Text wird fett gedruckt, der zweite Schritt des Protokolls wird ermöglicht.
              */
             public void widgetSelected(SelectionEvent arg0) {
                 GBeweiser p;
@@ -246,9 +244,9 @@ public class GFlow {
             }
         });
         generateH.setEnabled(false);
-        generateH.setLayoutData(gridData1);
+        generateH.setLayoutData(gdButtons);
         erklaerung01 = new Label(group, SWT.None);
-        // erklaerung01.setLayoutData(gridData2);
+        erklaerung01.setLayoutData(gdText);
         erklaerung01.setVisible(false);
 
         // Button, um das Zufallsbit zu erstellen
@@ -260,8 +258,8 @@ public class GFlow {
          */
         new SelectionAdapter() {
             /**
-             * Bob generiert b. Der erläuternde Text wird fett gedruckt, der dritte Schritt des
-             * Protokolls wird ermöglicht.
+             * Bob generiert b. Der erläuternde Text wird fett gedruckt, der dritte Schritt des Protokolls wird
+             * ermöglicht.
              */
             public void widgetSelected(SelectionEvent arg0) {
                 bob.generateB();
@@ -269,12 +267,11 @@ public class GFlow {
                 setStep(2);
             }
         });
-        // generateB.setSize(width, height);
-        // generateB.setLocation(220, 70);
+
         generateB.setEnabled(false);
-        generateB.setLayoutData(gridData1);
+        generateB.setLayoutData(gdButtons);
         erklaerung02 = new Label(group, SWT.None);
-        // erklaerung02.setLayoutData(gridData2);
+        erklaerung02.setLayoutData(gdText);
         erklaerung02.setVisible(false);
 
         // Button, um die Antwort von Alice oder Carol zu errechnen
@@ -282,14 +279,12 @@ public class GFlow {
         sendSigma.setText(Messages.GFlow_10);
         sendSigma.addSelectionListener(
         /**
-         * SelectionAdapter, der darauf achtet, ob der Button "Isomorphismus berechnen" betätigt
-         * wurde
+         * SelectionAdapter, der darauf achtet, ob der Button "Isomorphismus berechnen" betätigt wurde
          */
         new SelectionAdapter() {
             /**
-             * Die Person, die gerade betrachtet wird, berechnet den Isomorphismus h. Der
-             * erläuternde Text wird fett gedruckt, der vierte Schritt des Protokolls wird
-             * ermöglicht.
+             * Die Person, die gerade betrachtet wird, berechnet den Isomorphismus h. Der erläuternde Text wird fett
+             * gedruckt, der vierte Schritt des Protokolls wird ermöglicht.
              */
             public void widgetSelected(SelectionEvent arg0) {
                 GBeweiser p;
@@ -303,12 +298,11 @@ public class GFlow {
                 setStep(3);
             }
         });
-        // sendSigma.setSize(width, height);
-        // sendSigma.setLocation(220, 130);
+
         sendSigma.setEnabled(false);
-        sendSigma.setLayoutData(gridData1);
+        sendSigma.setLayoutData(gdButtons);
         erklaerung03 = new Label(group, SWT.None);
-        // erklaerung03.setLayoutData(gridData2);
+        erklaerung03.setLayoutData(gdText);
         erklaerung03.setVisible(false);
 
         // Button, um die Antwort von Alice oder Carol zu verifizieren
@@ -320,9 +314,9 @@ public class GFlow {
          */
         new SelectionAdapter() {
             /**
-             * Bob erhält den Isomorphismus h und überprüft ihn. Das Ergebnis wird bekannt gegeben,
-             * ebenso der von Bob berechnete Graph h(G<sub>b</sub>). Der erläuternde Text wird fett
-             * gedruckt, der Durchlauf durch das Protokoll ist beendet.
+             * Bob erhält den Isomorphismus h und überprüft ihn. Das Ergebnis wird bekannt gegeben, ebenso der von Bob
+             * berechnete Graph h(G<sub>b</sub>). Der erläuternde Text wird fett gedruckt, der Durchlauf durch das
+             * Protokoll ist beendet.
              */
             public void widgetSelected(SelectionEvent arg0) {
                 setStep(4);
@@ -338,9 +332,9 @@ public class GFlow {
             }
         });
         verify.setEnabled(false);
-        verify.setLayoutData(gridData1);
+        verify.setLayoutData(gdButtons);
         erklaerung04 = new Label(group, SWT.None);
-        // erklaerung04.setLayoutData(gridData2);
+        erklaerung04.setLayoutData(gdText);
         erklaerung04.setVisible(false);
     }
 
