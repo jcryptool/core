@@ -20,63 +20,56 @@ import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 /**
  * Result dialog for the calculation of the optimal strategies
- * 
+ *
  * @author Johannes Spaeth
  * @version 0.9.5
  */
-
 public class ResultDialHeuristicStrategy extends AbstractResultDialog {
-	public ResultDialHeuristicStrategy(Shell shell, int selectedStrategy) {
-		super(shell, selectedStrategy);
-	}
+    public ResultDialHeuristicStrategy(Shell shell, int selectedStrategy) {
+        super(shell, selectedStrategy);
+    }
 
-	protected Control createDialogArea(Composite parent) {
-		setTitle(Messages.ShowHeuStrategy_1);
-		String algo ="";
-		switch (this.getSelectedStrategy())
-    	{
-		
-		case 2:
-			algo = Messages.ShowHeuStrategy_5;
-			break;
-			
-		case 3:
-			algo = Messages.ShowHeuStrategy_6;
-			break;
-			
-		case 4:
-			algo = Messages.ShowHeuStrategy_7;
-			break;
-    	}
-		
-		String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[]{algo});
-		setMessage(msg, IMessageProvider.INFORMATION);
-		Composite area = (Composite) super.createDialogArea(parent);
+    protected Control createDialogArea(Composite parent) {
+        setTitle(Messages.ShowHeuStrategy_1);
+        String algo = "";
+        switch (this.getSelectedStrategy()) {
 
+            case 2:
+                algo = Messages.ShowHeuStrategy_5;
+                break;
 
-		columns[0].setText(Messages.ShowOptStrategy_3);
-		columns[1].setText(Messages.ShowHeuStrategy_4);
-		columns[2].setText(Messages.ShowOptStrategy_5);
-		columns[3].setText(Messages.ShowHeuStrategy_3);
-		columns[4].setText(Messages.ShowOptStrategy_7);
-		
-		PlatformUI
-				.getWorkbench()
-				.getHelpSystem()
-				.setHelp(parent,
-						NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
+            case 3:
+                algo = Messages.ShowHeuStrategy_6;
+                break;
 
-		return area;
-	}
+            case 4:
+                algo = Messages.ShowHeuStrategy_7;
+                break;
+        }
 
-	@Override
-	protected Point getInitialSize() {
-		return new Point(640, 500);
-	}
+        String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[] {algo});
+        setMessage(msg, IMessageProvider.INFORMATION);
+        Composite area = (Composite) super.createDialogArea(parent);
 
-	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		newShell.setText(Messages.ShowHeuStrategy_0);
-	}
+        columns[0].setText(Messages.ShowOptStrategy_3);
+        columns[1].setText(Messages.ShowHeuStrategy_4);
+        columns[2].setText(Messages.ShowOptStrategy_5);
+        columns[3].setText(Messages.ShowHeuStrategy_3);
+        columns[4].setText(Messages.ShowOptStrategy_7);
+
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
+
+        return area;
+    }
+
+    @Override
+    protected Point getInitialSize() {
+        return new Point(640, 500);
+    }
+
+    @Override
+    protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(Messages.ShowHeuStrategy_0);
+    }
 }

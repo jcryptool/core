@@ -13,7 +13,7 @@
     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristische Strategien"/>
  </context>
  <context id="heuStratDialog">
-    <description>Hier können Sie sich die Zugfolgen für einzelne Spielfeldgrößen mit heuristischen Verfahren berechnen und anzeigen lassen.</description>
+    <description>Hier können Sie sich die Zugfolgen für einzelne Spielfeldgrößen mit heuristischen Verfahren berechnen und anzeigen lassen. Mit der von Ihnen gewählten Strategie wird für alle Spielfeldgrößen in dem gewählten Bereich eine Zugfolge berechnet, mit der Sie das Zahlenhai-Spiel gewinnen.</description>
     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristische Strategien"/>
  </context>
   <context id="optStratDialog" title="Optimale Gewinnzugfolge finden">

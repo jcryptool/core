@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.strategies;
 
-import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -26,73 +25,67 @@ import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 /**
  * Settings dialog for the calculation of the optimal strategies
+ *
  * @author Johannes Spaeth
  * @version 0.9.5
  */
 public class OptimalStrategyDialog extends AbstractStrategyDialog {
 
-	public OptimalStrategyDialog(Shell shell) {
-		super(shell);
-	}
+    public OptimalStrategyDialog(Shell shell) {
+        super(shell);
+    }
 
-	@Override
-	protected Control createDialogArea(Composite parent) {
-		setTitle(Messages.OptStratDialog_0);
-		setMessage(Messages.OptStratDialog_5, IMessageProvider.INFORMATION);
+    @Override
+    protected Control createDialogArea(Composite parent) {
+        setTitle(Messages.OptStratDialog_0);
+        setMessage(Messages.OptStratDialog_5);
 
-		Composite area = (Composite) super.createDialogArea(parent);
+        Composite area = (Composite) super.createDialogArea(parent);
 
-		Composite composite = new Composite(area, SWT.NONE);
-		GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false,
-				1, 1);
-		gd_composite.widthHint = 470;
-		composite.setLayoutData(gd_composite);
-		GridLayout gl_composite = new GridLayout(1, false);
-		gl_composite.marginTop = 15;
-		gl_composite.marginLeft = 15;
-		composite.setLayout(gl_composite);
+        Composite composite = new Composite(area, SWT.NONE);
+        GridData gd_composite = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd_composite.widthHint = 470;
+        composite.setLayoutData(gd_composite);
+        GridLayout gl_composite = new GridLayout(1, false);
+        gl_composite.marginTop = 15;
+        gl_composite.marginLeft = 15;
+        composite.setLayout(gl_composite);
 
-		Button showButton = new Button(composite, SWT.RADIO);
-		showButton.setText(Messages.OptStratDialog_2);
+        Button showButton = new Button(composite, SWT.RADIO);
+        showButton.setText(Messages.OptStratDialog_2);
 
-		Button calcButton = new Button(composite, SWT.RADIO);
-		calcButton.setText(Messages.OptStratDialog_1);
+        Button calcButton = new Button(composite, SWT.RADIO);
+        calcButton.setText(Messages.OptStratDialog_1);
 
-		final Group compositeSliders = createSliders(area, true, 400, 40);
-		
-		calcButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				selectedStrategy = 1;
-				compositeSliders.setVisible(true);
-			}
-		});
-		
-		showButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				selectedStrategy = 0;
-				compositeSliders.setVisible(false);
-			}
-		});
-		
-		
+        final Group compositeSliders = createSliders(area, true, 400, 40);
 
-		PlatformUI
-				.getWorkbench()
-				.getHelpSystem()
-				.setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratDialog"); //$NON-NLS-1$
+        calcButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                selectedStrategy = 1;
+                compositeSliders.setVisible(true);
+            }
+        });
 
-		return area;
-	}
+        showButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                selectedStrategy = 0;
+                compositeSliders.setVisible(false);
+            }
+        });
 
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratDialog"); //$NON-NLS-1$
 
-	@Override
-	protected void configureShell(Shell newShell) {
-		super.configureShell(newShell);
-		newShell.setText(Messages.OptStratDialog_7);
-	}
-	
-	protected Point getInitialSize() {
-		return new Point(500, 370);
-	}
+        return area;
+    }
+
+    @Override
+    protected void configureShell(Shell newShell) {
+        super.configureShell(newShell);
+        newShell.setText(Messages.OptStratDialog_7);
+    }
+
+    protected Point getInitialSize() {
+        return new Point(500, 370);
+    }
 
 }

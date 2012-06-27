@@ -10,7 +10,6 @@
 package org.jcryptool.games.numbershark.dialogs;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
@@ -42,10 +41,10 @@ public class NewGameDialog extends TitleAreaDialog {
     @Override
     protected Control createDialogArea(Composite parent) {
         setTitle(Messages.NewGameDialog_0);
-        setMessage(Messages.NewGameDialog_1, IMessageProvider.INFORMATION);
+        setMessage(Messages.NewGameDialog_1);
         LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
         setTitleImage(resources.createImage(NumberSharkPlugin.getImageDescriptor("/icons/new_game.png"))); //$NON-NLS-1$
-        
+
         Composite area = (Composite) super.createDialogArea(parent);
 
         Group maximumNumberGroup = new Group(area, SWT.NONE);

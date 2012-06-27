@@ -6,7 +6,7 @@ You win, if the sum of your numbers is greater than the sum of the Number Shark 
 		<topic href="$nl$/help/toc.html" label="Number Shark"/>
 	</context>
  <context id="heuStratDialog">
-    <description>Heuristic winning strategies can be analysed here.</description>
+    <description>Heuristic winning strategies can be analysed here. By choosing a strategy, winning move sequence - sequences, which allow you to win the Number Shark game - will be calculated for the selected range of playing fields.</description>
     <topic href="$nl$/help/gettingstarted/NumberSharkHelp-Manual.html#heuStrat" label="Heuristic strategies"/>
  </context>
  <context id="newGameDialog" title="New Game">
