@@ -365,7 +365,6 @@ public class EntropyUIresults extends Composite {
 			sTcriteria.setText(Messages.EntropyUIresults_26+twoD.format(signiveau * 100)+Messages.EntropyUIresults_27);
 		}
 
-		//TODO: dateiname einsetzen
 		labelFilename.setText(eC.getEditorname());
 		labelDiffchars.setText(diffChars.toString());
 		labelAllchars.setText(totalChars.toString());
