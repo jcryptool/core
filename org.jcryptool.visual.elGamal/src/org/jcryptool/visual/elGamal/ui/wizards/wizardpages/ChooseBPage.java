@@ -15,7 +15,6 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -47,6 +46,7 @@ public class ChooseBPage extends WizardPage {
      */
     public ChooseBPage(final ElGamalData data) {
         super(PAGENAME, TITLE, null);
+        setDescription(Messages.ChooseBPage_choose_b_text);
         this.data = data;
         setPageComplete(false);
     }
@@ -55,10 +55,7 @@ public class ChooseBPage extends WizardPage {
         final Composite composite = new Composite(parent, SWT.NONE);
         final int ncol = 2;
         composite.setLayout(new GridLayout(ncol, true));
-        Label l = new Label(composite, SWT.WRAP);
-        l.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true, ncol, 1));
-        l.setText(Messages.ChooseBPage_choose_b_text);
-        l = new Label(parent, SWT.NONE);
+        Label l = new Label(composite, SWT.NONE);
         l.setText("b"); //$NON-NLS-1$
         final Text t = new Text(composite, SWT.BORDER);
         t.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));

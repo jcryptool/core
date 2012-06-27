@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -16,13 +16,12 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -37,12 +36,8 @@ import org.jcryptool.visual.library.Lib;
  * @author Michael Gaber
  */
 public class NewPublicKeyPage extends WizardPage {
-
     /** unique pagename to get this page from inside a wizard. */
     private static final String PAGENAME = "New Public Key Page"; //$NON-NLS-1$
-
-    /** title of this page, displayed in the head of the wizard. */
-    private static final String TITLE = Messages.NewPublicKeyPage_select_params;
 
     /**
      * getter for the pagename constant for easy access.
@@ -57,7 +52,6 @@ public class NewPublicKeyPage extends WizardPage {
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
 
     private final ModifyListener ml = new ModifyListener() {
-
         public void modifyText(final ModifyEvent e) {
             setPageComplete();
         }
@@ -81,16 +75,13 @@ public class NewPublicKeyPage extends WizardPage {
     /** basic composite of this page */
     private Composite composite;
 
-    /** field for suggestions for g */
-    private Combo gfield;
-
     /**
      * Constructor for a new wizardpage getting the data object.
      *
      * @param data the data object
      */
     public NewPublicKeyPage(final ElGamalData data) {
-        super(PAGENAME, TITLE, null);
+        super(PAGENAME, Messages.NewPublicKeyPage_select_params, null);
         this.data = data;
         this.setDescription(Messages.NewPublicKeyPage_select_params_text);
         setPageComplete(false);
@@ -140,7 +131,8 @@ public class NewPublicKeyPage extends WizardPage {
         new Label(composite, SWT.NONE);
 
         // Separator
-        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
+        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+                false, ncol, 1));
 
         // should this key be saved?
         saveButton = new Button(composite, SWT.CHECK);
@@ -149,12 +141,7 @@ public class NewPublicKeyPage extends WizardPage {
         saveButton.setSelection(data.isStandalone());
         saveButton.setEnabled(!data.isStandalone());
         saveButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, ncol, 1));
-        saveButton.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(final SelectionEvent e) {
-                // won't be called
-            }
-
+        saveButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
                 getContainer().updateButtons();
             }
@@ -184,35 +171,47 @@ public class NewPublicKeyPage extends WizardPage {
             if (!Lib.isPrime(p)) {
                 setErrorMessage(Messages.NewPublicKeyPage_error_p_not_prime);
             }
-            if (getErrorMessage() == null) {
-                gfield = new Combo(composite, SWT.SINGLE | SWT.READ_ONLY);
-                gfield.setItems(Lib.calcG(p).toArray(new String[0]));
-            }
+
             if (!gtext.getText().equals("")) { //$NON-NLS-1$
                 final BigInteger g = new BigInteger(gtext.getText());
                 if (!Lib.checkGenerator(g, p)) {
                     setErrorMessage(Messages.NewPublicKeyPage_error_g_not_generator);
                 }
+            } else {
+                setErrorMessage(Messages.NewPublicKeyPage_0);
             }
+
             if (!atext.getText().equals("")) { //$NON-NLS-1$
                 final BigInteger a = new BigInteger(atext.getText());
                 if (a.compareTo(p) > 0) {
                     setErrorMessage(Messages.NewPublicKeyPage_error_A_gt_p);
                 }
+            } else {
+                setErrorMessage(Messages.NewPublicKeyPage_1);
             }
+        } else {
+            setErrorMessage(Messages.NewPublicKeyPage_2);
         }
+
         setPageComplete(getErrorMessage() == null);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.eclipse.jface.wizard.WizardPage#setPageComplete(boolean)
      */
     @Override
     public void setPageComplete(boolean complete) {
         if (complete) {
-            data.setGenerator(new BigInteger(gtext.getText()));
-            data.setModulus(new BigInteger(ptext.getText()));
-            data.setPublicA(new BigInteger(atext.getText()));
+            if (!gtext.getText().isEmpty()) {
+                data.setGenerator(new BigInteger(gtext.getText()));
+            }
+            if (!ptext.getText().isEmpty()) {
+                data.setModulus(new BigInteger(ptext.getText()));
+            }
+            if (!atext.getText().isEmpty()) {
+                data.setPublicA(new BigInteger(atext.getText()));
+            }
         }
         super.setPageComplete(complete);
     }

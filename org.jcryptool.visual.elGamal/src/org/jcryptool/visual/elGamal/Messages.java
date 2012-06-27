@@ -119,7 +119,10 @@ public class Messages extends NLS {
 	public static String NewKeypairPage_save_keypair_popup;
 	public static String NewKeypairPage_select_a;
 	public static String NewKeypairPage_select_g;
-	public static String NewPublicKeyPage_error_A_gt_p;
+	public static String NewPublicKeyPage_0;
+    public static String NewPublicKeyPage_1;
+    public static String NewPublicKeyPage_2;
+    public static String NewPublicKeyPage_error_A_gt_p;
 	public static String NewPublicKeyPage_error_g_not_generator;
 	public static String NewPublicKeyPage_error_p_lt_256;
 	public static String NewPublicKeyPage_error_p_not_prime;
