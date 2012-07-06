@@ -419,18 +419,22 @@ public class View extends ViewPart {
         spinner.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
 
         spinner_keySize = new Spinner(schablone, SWT.NONE);
-        spinner_keySize.setMinimum(3);
+        spinner_keySize.setMinimum(4);
         spinner_keySize.setMaximum(10);
-        spinner_keySize.setIncrement(1);
+        spinner_keySize.setIncrement(2);
         spinner_keySize.setSelection(6);
         spinner_keySize.setEnabled(true);
         spinner_keySize.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
+    	
         spinner_keySize.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
                 widgetSelected(e);
+            
             }
 
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(SelectionEvent e) {	
+            	if (Integer.parseInt(spinner_keySize.getText()) % 2 == 1 || Integer.parseInt(spinner_keySize.getText()) >= 11 || Integer.parseInt(spinner_keySize.getText()) <=3)
+            		spinner_keySize.setSelection(6);
                 reset();
                 model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
                 canvas_schluessel.removeMouseListener(schluessel_listener);
@@ -477,6 +481,8 @@ public class View extends ViewPart {
                 button_stepwise.setEnabled(false);
                 button_stepwise.setSelection(false);
                 button_direct.setSelection(true);
+                text_input.setText(text_output.getText());
+                text_output.setText("");
             }
         });
     }
@@ -515,7 +521,7 @@ public class View extends ViewPart {
         label_step4.setEnabled(false);
         label_step5.setEnabled(false);
         label_step6.setEnabled(false);
-        text_output.setText(""); //$NON-NLS-1$
+       // text_output.setText(""); //$NON-NLS-1$
         canvas_demonstration.redraw();
         canvas_schluessel.redraw();
     }
