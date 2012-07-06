@@ -637,6 +637,7 @@ public class BinaryContent {
                 RandomAccessFile randomFile = (RandomAccessFile) value;
                 randomFile.seek(position);
                 result = randomFile.read();
+                randomFile.close();
             }
         }
 

@@ -1,10 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -34,57 +33,50 @@ import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.keys.IKeyStoreAlias;
 
 public class PerformOperationListener implements IPerfomOperationListener {
+    @SuppressWarnings("incomplete-switch")
     public void performOperation(IFlexiProviderOperation operation) {
         LogUtil.logInfo("perform operation triggered: " + operation.getEntryName()); //$NON-NLS-1$
         FlexiProviderEngine engine = null;
         switch (operation.getRegistryType()) {
-            case ASYMMETRIC_BLOCK_CIPHER: {
+            case ASYMMETRIC_BLOCK_CIPHER:
                 engine = new AsymmetricBlockCipherEngine();
                 break;
-            }
-            case ASYMMETRIC_HYBRID_CIPHER: {
+            case ASYMMETRIC_HYBRID_CIPHER:
                 engine = new AsymmetricHybridCipherEngine();
                 break;
-            }
-            case BLOCK_CIPHER: {
+            case BLOCK_CIPHER:
                 engine = new BlockCipherEngine();
                 break;
-            }
-            case CIPHER: {
+            case CIPHER:
                 engine = new CipherEngine();
                 break;
-            }
-            case MAC: {
+            case MAC:
                 engine = new MacEngine();
                 break;
-            }
-            case MESSAGE_DIGEST: {
+            case MESSAGE_DIGEST:
                 engine = new MessageDigestEngine();
                 break;
-            }
-            case SECURE_RANDOM: {
+            case SECURE_RANDOM:
                 engine = new SecureRandomEngine();
                 break;
-            }
-            case SIGNATURE: {
+            case SIGNATURE:
                 engine = new SignatureEngine();
                 break;
-            }
         }
-        if (engine != null) {           
+        if (engine != null) {
             engine.perform(engine.init(operation));
             addActionItem(operation);
         }
     }
 
     private void addActionItem(IFlexiProviderOperation operation) {
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(
-                ICommandService.class);
+        ICommandService service = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
 
         if ((Boolean) service.getCommand("org.jcryptool.actions.recordCommand"). //$NON-NLS-1$
-                getState("org.jcryptool.actions.recordCommand.toggleState").getValue()) { //$NON-NLS-1$
+        getState("org.jcryptool.actions.recordCommand.toggleState").getValue()) { //$NON-NLS-1$
             AlgorithmDescriptor descriptor = operation.getAlgorithmDescriptor();
-            ActionItem item = new ActionItem(EditorsManager.getInstance().getActiveEditorTitle(), descriptor.getAlgorithmName()); //$NON-NLS-1$
+            ActionItem item =
+                    new ActionItem(EditorsManager.getInstance().getActiveEditorTitle(), descriptor.getAlgorithmName()); //$NON-NLS-1$
 
             item.setPluginId(operation.getRegistryType().getName());
 
@@ -111,15 +103,14 @@ public class PerformOperationListener implements IPerfomOperationListener {
                     item.addParam("key password", String.valueOf(operation.getPassword())); //$NON-NLS-1$
                 }
             }
-            
-            if (descriptor instanceof BlockCipherDescriptor){
-            	item.addParam("mode", ((BlockCipherDescriptor) descriptor).getMode()); //$NON-NLS-1$
-            	item.addParam("padding scheme", ((BlockCipherDescriptor) descriptor).getPadding());   //$NON-NLS-1$
-            }
-            else if (descriptor instanceof SecureRandomDescriptor){
-            	item.addParam("random size", ""+((SecureRandomDescriptor) descriptor).getLength()); //$NON-NLS-1$ //$NON-NLS-2$
-            	//byte[][] alphabets = ((SecureRandomDescriptor) descriptor).getAlphabet();
-            	//TODO push alphapet to items property "alphabet"
+
+            if (descriptor instanceof BlockCipherDescriptor) {
+                item.addParam("mode", ((BlockCipherDescriptor) descriptor).getMode()); //$NON-NLS-1$
+                item.addParam("padding scheme", ((BlockCipherDescriptor) descriptor).getPadding()); //$NON-NLS-1$
+            } else if (descriptor instanceof SecureRandomDescriptor) {
+                item.addParam("random size", "" + ((SecureRandomDescriptor) descriptor).getLength()); //$NON-NLS-1$ //$NON-NLS-2$
+                // byte[][] alphabets = ((SecureRandomDescriptor) descriptor).getAlphabet();
+                // TODO push alphapet to items property "alphabet"
             }
 
             ActionCascadeService.getInstance().addItem(item);
