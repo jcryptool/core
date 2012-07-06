@@ -1050,6 +1050,7 @@ public class ElGamalComposite extends Composite {
     /**
      * finished up after the operation by setting the plaintext ciphertext or signature to the data object
      */
+    @SuppressWarnings("incomplete-switch")
     private void finish() {
         switch (this.data.getAction()) {
             case EncryptAction:

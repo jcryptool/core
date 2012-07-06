@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigInteger;
 
 import org.eclipse.jface.wizard.Wizard;
@@ -32,11 +33,11 @@ import org.jcryptool.visual.he.wizards.pages.GHNewKeyPage;
 import de.flexiprovider.api.Cipher;
 
 /**
- * Wizard to choose whether to generate a new key or to enter an existing one for Gentry & Halevi
- * fully homomorphic visualization
- *
+ * Wizard to choose whether to generate a new key or to enter an existing one for Gentry & Halevi fully homomorphic
+ * visualization
+ * 
  * @author Coen Ramaekers
- *
+ * 
  */
 public class GHKeySelectionWizard extends Wizard {
     private final GHKeyPair keyPair;
@@ -76,10 +77,11 @@ public class GHKeySelectionWizard extends Wizard {
             dialog.setOverwrite(true);
 
             String filename = dialog.open();
+            FileOutputStream out = null;
 
             try {
                 /** first the encrypted file contents are entered */
-                FileOutputStream out = new FileOutputStream(filename);
+                out = new FileOutputStream(filename);
                 out.write(("Owner%" + keyPair.getContactName() + "%").getBytes());
                 out.write(("Dimension%" + fheParams.logn + "%").getBytes());
                 out.write(("Det%" + keyPair.det.toString() + "%").getBytes());
@@ -88,6 +90,9 @@ public class GHKeySelectionWizard extends Wizard {
                 out.write("END".getBytes());
                 new FileCrypto(filename, filename.replace(".ghpub", ".ghpr"), keyPair.getPassword(),
                         Cipher.ENCRYPT_MODE);
+
+                out.flush();
+                out.close();
 
                 /** now the public file contents are entered */
                 out = new FileOutputStream(filename);
@@ -105,6 +110,15 @@ public class GHKeySelectionWizard extends Wizard {
                 out.write("END".getBytes());
             } catch (Exception ex) {
                 LogUtil.logError(ex);
+            } finally {
+                try {
+                    if (out != null) {
+                        out.flush();
+                        out.close();
+                    }
+                } catch (IOException ex) {
+                    LogUtil.logError(ex);
+                }
             }
         }
         if (getPage(GHLoadKeyPage.getPagename()).isPageComplete()) {
@@ -169,7 +183,8 @@ public class GHKeySelectionWizard extends Wizard {
 
                 /** extract the private key */
 
-                new FileCrypto(filename.replace(".ghpub", ".ghpr"), filename.replace(".ghpub", ".tmp"), passwd, Cipher.DECRYPT_MODE);
+                new FileCrypto(filename.replace(".ghpub", ".ghpr"), filename.replace(".ghpub", ".tmp"), passwd,
+                        Cipher.DECRYPT_MODE);
                 fileData = new StringBuffer(1000);
                 reader = new BufferedReader(new FileReader(filename.replace(".ghpub", ".tmp")));
                 buf = new char[1024];

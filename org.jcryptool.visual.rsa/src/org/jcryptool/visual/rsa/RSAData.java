@@ -486,6 +486,7 @@ public class RSAData {
      * tests if random key is needed
      */
     
+    @SuppressWarnings("incomplete-switch")
     public boolean randomNeeded() {
 
     	switch (getAction()) {

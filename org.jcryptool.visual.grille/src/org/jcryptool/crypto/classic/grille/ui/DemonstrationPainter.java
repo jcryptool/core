@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -11,6 +11,7 @@ package org.jcryptool.crypto.classic.grille.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
@@ -42,13 +43,24 @@ public class DemonstrationPainter implements PaintListener {
     public DemonstrationPainter(Canvas parent, Demonstration demonstration) {
         this.demonstration = demonstration;
         this.parent = parent;
+
+        ObjectInputStream ois = null;
+
         try {
             File file = new File(FileLocator.toFileURL(GrillePlugin.getDefault().getBundle().getEntry("/")).getFile() //$NON-NLS-1$
                     + "files" + File.separatorChar + "charSize.map"); //$NON-NLS-1$ //$NON-NLS-2$
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+            ois = new ObjectInputStream(new FileInputStream(file));
             charSize = (HashMap<Character, Point>) ois.readObject();
         } catch (Exception e) {
             LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (IOException e) {
+                LogUtil.logError(GrillePlugin.PLUGIN_ID, e);
+            }
         }
     }
 
@@ -64,9 +76,12 @@ public class DemonstrationPainter implements PaintListener {
                 e.gc.drawText(Messages.getString("DemonstrationPainter.padding"), 0, 40); //$NON-NLS-1$
                 Color savedColor = e.gc.getForeground();
                 e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 70, 40);
+                e.gc.drawString(demonstration.padding.substring(0, Math.min(25, demonstration.padding.length())), 70,
+                        40);
                 for (int i = 25; i < demonstration.padding.length(); i = i + 40)
-                    e.gc.drawString(demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0, 40 + (i / 25) * 20);
+                    e.gc.drawString(
+                            demonstration.padding.substring(i, Math.min(demonstration.padding.length(), i + 40)), 0,
+                            40 + (i / 25) * 20);
                 e.gc.setForeground(savedColor);
 
             }
@@ -135,12 +150,12 @@ public class DemonstrationPainter implements PaintListener {
                 e.gc.drawLine(cellWidth / 2, cellHeight / 2 - 2 + i * cellHeight, cellWidth / 2 + (crypt.getSize() - 1)
                         * cellWidth, cellHeight / 2 - 2 + i * cellHeight);
                 if (i != crypt.getSize() - 1) {
-                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 + (i + 1) * cellHeight, cellWidth / 2
-                            + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 + i * cellHeight);
-                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 - 1 + (i + 1) * cellHeight, cellWidth / 2
-                            + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 - 1 + i * cellHeight);
-                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 + 1 + (i + 1) * cellHeight, cellWidth / 2
-                            + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 + 1 + i * cellHeight);
+                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 + (i + 1) * cellHeight,
+                            cellWidth / 2 + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 + i * cellHeight);
+                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 - 1 + (i + 1) * cellHeight,
+                            cellWidth / 2 + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 - 1 + i * cellHeight);
+                    e.gc.drawLine(cellWidth / 2, cellHeight / 2 + 1 + (i + 1) * cellHeight,
+                            cellWidth / 2 + (crypt.getSize() - 1) * cellWidth, cellHeight / 2 + 1 + i * cellHeight);
 
                 }
 
@@ -171,7 +186,8 @@ public class DemonstrationPainter implements PaintListener {
         Point eckeLO = new Point(x * cellWidth, y * cellHeight);
         int fontSize = (int) Math.round(10 / (double) 17 * cellHeight * 0.9);
         e.gc.setFont(new Font(Display.getCurrent(), "Times Roman", fontSize, SWT.NORMAL)); //$NON-NLS-1$
-        e.gc.drawString("" + c, eckeLO.x + (int) Math.round(cellWidth - charSize.get(c).x / (double) 10 * fontSize) / 2, eckeLO.y + (cellHeight - fontSize - (int) Math.round(5 / (double) 10 * fontSize)) / 2); //$NON-NLS-1$
+        e.gc.drawString(
+                "" + c, eckeLO.x + (int) Math.round(cellWidth - charSize.get(c).x / (double) 10 * fontSize) / 2, eckeLO.y + (cellHeight - fontSize - (int) Math.round(5 / (double) 10 * fontSize)) / 2); //$NON-NLS-1$
     }
 
 }

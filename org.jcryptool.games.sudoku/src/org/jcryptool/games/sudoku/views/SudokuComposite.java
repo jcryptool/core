@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -78,8 +78,8 @@ public class SudokuComposite extends Composite {
 
     public Button solveButton, showPossibleButton, autoFillOneButton, loadButton, saveButton, clearButton,
             boxRuleButton, loadStandardPuzzle;
-    public Button onePossibleButton, nakedSingleButton, hiddenSingleButton, blockAndCRButton,
-            nakedSubsetButton, candidateLineButton, doublePairButton, multipleLinesButton;
+    public Button onePossibleButton, nakedSingleButton, hiddenSingleButton, blockAndCRButton, nakedSubsetButton,
+            candidateLineButton, doublePairButton, multipleLinesButton;
     public Button additionButton, subtractionButton, multiplicationButton, divisionButton;
 
     Map<Text, UserInputPoint> inputBoxesNormal = new HashMap<Text, UserInputPoint>();
@@ -102,8 +102,7 @@ public class SudokuComposite extends Composite {
 
     public Composite playField;
 
-    public boolean showPossible, autoFillOne, solved, loading, solving, boxRule,
-            killerFirstPossible, loadedKiller;
+    public boolean showPossible, autoFillOne, solved, loading, solving, boxRule, killerFirstPossible, loadedKiller;
 
     public Runnable refresh;
 
@@ -163,46 +162,52 @@ public class SudokuComposite extends Composite {
     public void startBlinkingArea(final int x, final int y) {
         blinkerRed = new Thread() {
             public void run() {
-            	switch (tabChoice) {
-                	case NORMAL:
-                    labelCellNormal[x][y].setBackground(RED); break;
-                	case KILLER:
-                    labelCellKiller[x][y].setBackground(RED); break;
-                	case HEX:
-                    labelCellHex[x][y].setBackground(RED); break;
-            	}
-            	try {
-					Thread.sleep(500);
-				} catch (InterruptedException ex) {
-					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
-				}
+                switch (tabChoice) {
+                    case NORMAL:
+                        labelCellNormal[x][y].setBackground(RED);
+                        break;
+                    case KILLER:
+                        labelCellKiller[x][y].setBackground(RED);
+                        break;
+                    case HEX:
+                        labelCellHex[x][y].setBackground(RED);
+                        break;
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+                }
             }
         };
         blinkerWhite = new Thread() {
             public void run() {
-            	switch (tabChoice) {
-                	case NORMAL:
-                    labelCellNormal[x][y].setBackground(WHITE); break;
-                	case KILLER:
-                    labelCellKiller[x][y].setBackground(WHITE); break;
-                	case HEX:
-                    labelCellHex[x][y].setBackground(WHITE); break;
-            	}
-            	try {
-					Thread.sleep(500);
-				} catch (InterruptedException ex) {
-					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
-				}
+                switch (tabChoice) {
+                    case NORMAL:
+                        labelCellNormal[x][y].setBackground(WHITE);
+                        break;
+                    case KILLER:
+                        labelCellKiller[x][y].setBackground(WHITE);
+                        break;
+                    case HEX:
+                        labelCellHex[x][y].setBackground(WHITE);
+                        break;
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+                }
             }
         };
         for (int i = 0; i < 3; i++) {
-	        SudokuComposite.this.getDisplay().asyncExec(blinkerRed);
-	        SudokuComposite.this.getDisplay().asyncExec(blinkerWhite);
+            SudokuComposite.this.getDisplay().asyncExec(blinkerRed);
+            SudokuComposite.this.getDisplay().asyncExec(blinkerWhite);
         }
     }
 
     public void makeWhite() {
-    	this.makeWhite = new Thread() {
+        this.makeWhite = new Thread() {
             public void run() {
                 switch (tabChoice) {
                     case NORMAL:
@@ -210,7 +215,7 @@ public class SudokuComposite extends Composite {
                             for (int j = 0; j < 9; j++) {
                                 labelCellNormal[i][j].setBackground(WHITE);
                                 for (int k = 0; k < 8; k++) {
-                                	boardLabelsNormal[i][j][k].setBackground(WHITE);
+                                    boardLabelsNormal[i][j][k].setBackground(WHITE);
                                 }
                             }
                         }
@@ -220,7 +225,7 @@ public class SudokuComposite extends Composite {
                             for (int j = 0; j < 9; j++) {
                                 labelCellKiller[i][j].setBackground(WHITE);
                                 for (int k = 0; k < 8; k++) {
-                                	boardLabelsKiller[i][j][k].setBackground(WHITE);
+                                    boardLabelsKiller[i][j][k].setBackground(WHITE);
                                 }
                             }
                         }
@@ -230,7 +235,7 @@ public class SudokuComposite extends Composite {
                             for (int j = 0; j < 16; j++) {
                                 labelCellHex[i][j].setBackground(WHITE);
                                 for (int k = 0; k < 8; k++) {
-                                	boardLabelsHex[i][j][k].setBackground(WHITE);
+                                    boardLabelsHex[i][j][k].setBackground(WHITE);
                                 }
                             }
                         }
@@ -419,30 +424,30 @@ public class SudokuComposite extends Composite {
         this.loadStandardPuzzle.setToolTipText(Messages.SudokuComposite_LoadStandardPuzzle_Tooltip);
         this.loadStandardPuzzle.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
-            	int puzzle;
-            	URL fileName = null;
-				try {
-					fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/")));
-				} catch (IOException ex) {
-					LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
-				}
-				StringBuilder path = new StringBuilder();
+                int puzzle;
+                URL fileName = null;
+                try {
+                    fileName = FileLocator.toFileURL((SudokuPlugin.getDefault().getBundle().getEntry("/")));
+                } catch (IOException ex) {
+                    LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+                }
+                StringBuilder path = new StringBuilder();
                 path.append(fileName.getFile());
                 path.append("data/");
                 switch (tabChoice) {
                     case NORMAL:
-                    	puzzle = rnd.nextInt(6) + 1;
-                    	path.append("sudoku" + puzzle + ".sud");
+                        puzzle = rnd.nextInt(6) + 1;
+                        path.append("sudoku" + puzzle + ".sud");
                         loadNormal(path.toString());
                         break;
                     case KILLER:
-                    	puzzle = rnd.nextInt(2) + 1;
-                    	path.append("killer" + puzzle + ".sud");
+                        puzzle = rnd.nextInt(2) + 1;
+                        path.append("killer" + puzzle + ".sud");
                         loadKiller(path.toString());
                         break;
                     case HEX:
-                    	puzzle = rnd.nextInt(3) + 1;
-                    	path.append("hex" + puzzle + ".sud");
+                        puzzle = rnd.nextInt(3) + 1;
+                        path.append("hex" + puzzle + ".sud");
                         loadHex(path.toString());
                         break;
                 }
@@ -500,7 +505,7 @@ public class SudokuComposite extends Composite {
         this.clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
         this.clearButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
-            	loading = true;
+                loading = true;
                 switch (tabChoice) {
                     case NORMAL:
                         clearPuzzleNormal();
@@ -637,20 +642,15 @@ public class SudokuComposite extends Composite {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
                         InputDialog dlg =
-                                new InputDialog(SudokuComposite.this.getShell(), "Value Input",
-                                        "Input value", "", (new IInputValidator() {
-                                            private final Pattern INTEGER_PATTERN =
-                                                    Pattern.compile("[0-9]+");
+                                new InputDialog(SudokuComposite.this.getShell(), "Value Input", "Input value", "",
+                                        (new IInputValidator() {
+                                            private final Pattern INTEGER_PATTERN = Pattern.compile("[0-9]+");
 
                                             public String isValid(String newText) {
                                                 String toReturn =
-                                                        INTEGER_PATTERN.matcher(newText).matches()
-                                                                ? null
-                                                                : (newText.length() == 0)
-                                                                        ? "Please enter an integer."
-                                                                        : "'"
-                                                                                + newText
-                                                                                + "' is not a valid integer.";
+                                                        INTEGER_PATTERN.matcher(newText).matches() ? null
+                                                                : (newText.length() == 0) ? "Please enter an integer."
+                                                                        : "'" + newText + "' is not a valid integer.";
                                                 return toReturn;
                                             }
                                         }));
@@ -679,18 +679,15 @@ public class SudokuComposite extends Composite {
                     if (selected.size() > 0) {
                         if (selected.size() == 2) {
                             InputDialog dlg =
-                                    new InputDialog(SudokuComposite.this.getShell(), "Value Input",
-                                            "Input value", "", (new IInputValidator() {
-                                                private final Pattern INTEGER_PATTERN =
-                                                        Pattern.compile("[0-9]+");
+                                    new InputDialog(SudokuComposite.this.getShell(), "Value Input", "Input value", "",
+                                            (new IInputValidator() {
+                                                private final Pattern INTEGER_PATTERN = Pattern.compile("[0-9]+");
 
                                                 public String isValid(String newText) {
                                                     String toReturn =
-                                                            INTEGER_PATTERN.matcher(newText).matches()
-                                                                    ? null
+                                                            INTEGER_PATTERN.matcher(newText).matches() ? null
                                                                     : (newText.length() == 0)
-                                                                            ? "Please enter an integer."
-                                                                            : "'"
+                                                                            ? "Please enter an integer." : "'"
                                                                                     + newText
                                                                                     + "' is not a valid integer.";
                                                     return toReturn;
@@ -721,20 +718,15 @@ public class SudokuComposite extends Composite {
                 public void widgetSelected(final SelectionEvent e) {
                     if (selected.size() > 0) {
                         InputDialog dlg =
-                                new InputDialog(SudokuComposite.this.getShell(), "Value Input",
-                                        "Input value", "", (new IInputValidator() {
-                                            private final Pattern INTEGER_PATTERN =
-                                                    Pattern.compile("[0-9]+");
+                                new InputDialog(SudokuComposite.this.getShell(), "Value Input", "Input value", "",
+                                        (new IInputValidator() {
+                                            private final Pattern INTEGER_PATTERN = Pattern.compile("[0-9]+");
 
                                             public String isValid(String newText) {
                                                 String toReturn =
-                                                        INTEGER_PATTERN.matcher(newText).matches()
-                                                                ? null
-                                                                : (newText.length() == 0)
-                                                                        ? "Please enter an integer."
-                                                                        : "'"
-                                                                                + newText
-                                                                                + "' is not a valid integer.";
+                                                        INTEGER_PATTERN.matcher(newText).matches() ? null
+                                                                : (newText.length() == 0) ? "Please enter an integer."
+                                                                        : "'" + newText + "' is not a valid integer.";
                                                 return toReturn;
                                             }
                                         }));
@@ -763,18 +755,15 @@ public class SudokuComposite extends Composite {
                     if (selected.size() > 0) {
                         if (selected.size() == 2) {
                             InputDialog dlg =
-                                    new InputDialog(SudokuComposite.this.getShell(), "Value Input",
-                                            "Input value", "", (new IInputValidator() {
-                                                private final Pattern INTEGER_PATTERN =
-                                                        Pattern.compile("[0-9]+");
+                                    new InputDialog(SudokuComposite.this.getShell(), "Value Input", "Input value", "",
+                                            (new IInputValidator() {
+                                                private final Pattern INTEGER_PATTERN = Pattern.compile("[0-9]+");
 
                                                 public String isValid(String newText) {
                                                     String toReturn =
-                                                            INTEGER_PATTERN.matcher(newText).matches()
-                                                                    ? null
+                                                            INTEGER_PATTERN.matcher(newText).matches() ? null
                                                                     : (newText.length() == 0)
-                                                                            ? "Please enter an integer."
-                                                                            : "'"
+                                                                            ? "Please enter an integer." : "'"
                                                                                     + newText
                                                                                     + "' is not a valid integer.";
                                                     return toReturn;
@@ -818,8 +807,7 @@ public class SudokuComposite extends Composite {
             clearPuzzleNormal();
             StringBuilder puzzle = new StringBuilder("");
             Pattern p = Pattern.compile("[1-9]");
-            List<String> specialAll = new ArrayList<String>(), specialDistinct =
-                    new ArrayList<String>();
+            List<String> specialAll = new ArrayList<String>(), specialDistinct = new ArrayList<String>();
             String emptyCharacter = "0";
             int step = 1;
             String line = reader.readLine();
@@ -909,13 +897,14 @@ public class SudokuComposite extends Composite {
 
     public void savePuzzleNormal() {
         String fileName = openFileDialog(SWT.SAVE);
+        FileOutputStream out = null;
 
         if (fileName == null) {
             return;
         }
 
         try {
-            FileOutputStream out = new FileOutputStream(fileName);
+            out = new FileOutputStream(fileName);
             for (int i = 0; i < 9; i++) {
                 for (int j = 0; j < 9; j++) {
                     out.write(Integer.toString(boardNormal[i][j]).getBytes());
@@ -923,6 +912,15 @@ public class SudokuComposite extends Composite {
             }
         } catch (Exception ex) {
             LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+        } finally {
+            try {
+                if (out != null) {
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException ex) {
+                LogUtil.logError(ex);
+            }
         }
     }
 
@@ -937,7 +935,7 @@ public class SudokuComposite extends Composite {
     }
 
     public void loadKiller(String fileName) {
-    	solved = false;
+        solved = false;
         this.killerFirstPossible = false;
 
         BufferedReader reader;
@@ -958,8 +956,7 @@ public class SudokuComposite extends Composite {
                     String val = Character.toString(line.charAt(j));
                     if (!val.equals("|"))
                         idx++;
-                    if (!((int) line.charAt(j) == 160 || (int) line.charAt(j) == 32)
-                            & !val.equals("|")) {
+                    if (!((int) line.charAt(j) == 160 || (int) line.charAt(j) == 32) & !val.equals("|")) {
                         if (areaName.get(val) == null) {
                             areaName.put(val, ida);
                             ida++;
@@ -1019,6 +1016,7 @@ public class SudokuComposite extends Composite {
 
     public void savePuzzleKiller() {
         String fileName = openFileDialog(SWT.SAVE);
+        FileOutputStream out = null;
 
         if (fileName == null) {
             return;
@@ -1034,7 +1032,7 @@ public class SudokuComposite extends Composite {
             Map<Integer, String> areaName = new HashMap<Integer, String>();
             for (int i = 0; i < areas.size(); i++)
                 areaName.put(i, Character.toString((char) (i + 58)));
-            FileOutputStream out = new FileOutputStream(fileName + ".txt");
+            out = new FileOutputStream(fileName + ".txt");
             out.write(("+-------+-------+-------+\n").getBytes());
             for (int i = 0; i < 9; i++) {
                 out.write(("| ").getBytes());
@@ -1058,11 +1056,20 @@ public class SudokuComposite extends Composite {
             }
             out.write(("+-------+-------+-------+\n\n").getBytes());
             for (int i = 0; i < areas.size(); i++) {
-                out.write((areaName.get(i) + " " + operatorMap.get(areas.get(i).getOperator())
-                        + " " + Integer.toString(areas.get(i).getValue()) + "\n").getBytes());
+                out.write((areaName.get(i) + " " + operatorMap.get(areas.get(i).getOperator()) + " "
+                        + Integer.toString(areas.get(i).getValue()) + "\n").getBytes());
             }
         } catch (Exception ex) {
             LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+        } finally {
+            try {
+                if (out != null) {
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException ex) {
+                LogUtil.logError(ex);
+            }
         }
     }
 
@@ -1077,7 +1084,7 @@ public class SudokuComposite extends Composite {
     }
 
     public void loadHex(String fileName) {
-    	solved = false;
+        solved = false;
 
         BufferedReader reader;
         try {
@@ -1156,6 +1163,7 @@ public class SudokuComposite extends Composite {
 
     public void savePuzzleHex() {
         String fileName = openFileDialog(SWT.SAVE);
+        FileOutputStream out = null;
 
         if (fileName == null) {
             return;
@@ -1180,7 +1188,7 @@ public class SudokuComposite extends Composite {
             hexMap.put(13, "D");
             hexMap.put(14, "E");
             hexMap.put(15, "F");
-            FileOutputStream out = new FileOutputStream(fileName + ".txt");
+            out = new FileOutputStream(fileName + ".txt");
             out.write("2\n".getBytes());
             out.write("+---------+---------+---------+---------+\n".getBytes());
             for (int i = 0; i < 16; i++) {
@@ -1197,6 +1205,15 @@ public class SudokuComposite extends Composite {
             out.write(("+---------+---------+---------+---------+").getBytes());
         } catch (Exception ex) {
             LogUtil.logError(SudokuPlugin.PLUGIN_ID, ex);
+        } finally {
+            try {
+                if (out != null) {
+                    out.flush();
+                    out.close();
+                }
+            } catch (IOException ex) {
+                LogUtil.logError(ex);
+            }
         }
     }
 
@@ -1248,8 +1265,7 @@ public class SudokuComposite extends Composite {
             for (int j = 0; j < 16; j++) {
                 if (showPossible && possibleHex.get(i).get(j).size() < 9) {
                     for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
-                        boardLabelsHex[i][j][k].setText(valToTextHex(possibleHex.get(i).get(j).get(
-                                k)));
+                        boardLabelsHex[i][j][k].setText(valToTextHex(possibleHex.get(i).get(j).get(k)));
                     }
                     for (int k = possibleHex.get(i).get(j).size(); k < 8; k++) {
                         boardLabelsHex[i][j][k].setText("");
@@ -1404,8 +1420,7 @@ public class SudokuComposite extends Composite {
                 if ((j + 1) % 3 == 0 && (j + 1) != 9) {
                     labelCellNormal[i][j].addPaintListener(new PaintListener() {
                         public void paintControl(PaintEvent e) {
-                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1,
-                                    BOX_SIZE_NORMAL - 1, 0);
+                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, 0);
                         }
                     });
                 }
@@ -1413,8 +1428,7 @@ public class SudokuComposite extends Composite {
                 if ((i + 1) % 3 == 0 && (i + 1) != 9) {
                     labelCellNormal[i][j].addPaintListener(new PaintListener() {
                         public void paintControl(PaintEvent e) {
-                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, 0,
-                                    BOX_SIZE_NORMAL - 1);
+                            e.gc.drawLine(BOX_SIZE_NORMAL - 1, BOX_SIZE_NORMAL - 1, 0, BOX_SIZE_NORMAL - 1);
                         }
                     });
                 }
@@ -1437,8 +1451,7 @@ public class SudokuComposite extends Composite {
                 else {
                     if (possibleNormal.get(i).get(j).size() < 9) {
                         for (int k = 0; k < possibleNormal.get(i).get(j).size(); k++) {
-                            boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(
-                                    i).get(j).get(k)));
+                            boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(i).get(j).get(k)));
                         }
                     }
                 }
@@ -1474,16 +1487,16 @@ public class SudokuComposite extends Composite {
                         Composite composite = (Composite) event.widget;
                         Point point = compositeBoxesKiller.get(composite);
                         if (!loadedKiller) {
-	                        if (selected.contains(point)) {
-	                            composite.setBackground(WHITE);
-	                            boardTextKiller[point.x][point.y].setBackground(WHITE);
-	                            selected.remove(point);
+                            if (selected.contains(point)) {
+                                composite.setBackground(WHITE);
+                                boardTextKiller[point.x][point.y].setBackground(WHITE);
+                                selected.remove(point);
 
-	                        } else {
-	                            composite.setBackground(RED);
-	                            boardTextKiller[point.x][point.y].setBackground(RED);
-	                            selected.add(point);
-	                        }
+                            } else {
+                                composite.setBackground(RED);
+                                boardTextKiller[point.x][point.y].setBackground(RED);
+                                selected.add(point);
+                            }
                         } else {
                             boardTextKiller[point.x][point.y].setFocus();
                         }
@@ -1529,8 +1542,7 @@ public class SudokuComposite extends Composite {
                     labelCellKiller[i][j].addPaintListener(new PaintListener() {
                         public void paintControl(PaintEvent e) {
                             if (boxRule)
-                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1,
-                                        BOX_SIZE_KILLER - 1, 0);
+                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, 0);
                         }
                     });
                 }
@@ -1539,8 +1551,7 @@ public class SudokuComposite extends Composite {
                     labelCellKiller[i][j].addPaintListener(new PaintListener() {
                         public void paintControl(PaintEvent e) {
                             if (boxRule)
-                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, 0,
-                                        BOX_SIZE_KILLER - 1);
+                                e.gc.drawLine(BOX_SIZE_KILLER - 1, BOX_SIZE_KILLER - 1, 0, BOX_SIZE_KILLER - 1);
                         }
                     });
                 }
@@ -1560,11 +1571,9 @@ public class SudokuComposite extends Composite {
                         if (topLabel(point))
                             e.gc.drawString(topLabelValue(point), 1, 1);
                         if (bottomLine(point))
-                            e.gc.drawLine(2, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3,
-                                    BOX_SIZE_KILLER - 3);
+                            e.gc.drawLine(2, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3);
                         if (rightLine(point))
-                            e.gc.drawLine(BOX_SIZE_KILLER - 3, 2, BOX_SIZE_KILLER - 3,
-                                    BOX_SIZE_KILLER - 3);
+                            e.gc.drawLine(BOX_SIZE_KILLER - 3, 2, BOX_SIZE_KILLER - 3, BOX_SIZE_KILLER - 3);
                         e.gc.setFont(tempFont);
                         e.gc.setForeground(BLACK);
                     }
@@ -1587,8 +1596,7 @@ public class SudokuComposite extends Composite {
                 else {
                     if (possibleKiller.get(i).get(j).size() < 8) {
                         for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
-                            boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(
-                                    i).get(j).get(k)));
+                            boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
                             boardLabelsKiller[i][j][k + 1].setBackground(WHITE);
                         }
                     }
@@ -1636,10 +1644,9 @@ public class SudokuComposite extends Composite {
                 return true;
             }
             /*
-             * if (point.x == 0 && point.y == 0) return false; else if (point.x == 0) { Point
-             * leftPoint = new Point(point.x, point.y-1); return (area.pointUsed(leftPoint)); } else
-             * { Point topPoint = new Point(point.x-1, point.y); return !(area.pointUsed(topPoint));
-             * }
+             * if (point.x == 0 && point.y == 0) return false; else if (point.x == 0) { Point leftPoint = new
+             * Point(point.x, point.y-1); return (area.pointUsed(leftPoint)); } else { Point topPoint = new
+             * Point(point.x-1, point.y); return !(area.pointUsed(topPoint)); }
              */
         }
         return false;
@@ -1840,8 +1847,7 @@ public class SudokuComposite extends Composite {
                 else {
                     if (possibleHex.get(i).get(j).size() < 9) {
                         for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
-                            boardLabelsHex[i][j][k].setText(Integer.toString(possibleHex.get(i).get(
-                                    j).get(k)));
+                            boardLabelsHex[i][j][k].setText(Integer.toString(possibleHex.get(i).get(j).get(k)));
                         }
                     }
                 }
@@ -1898,8 +1904,7 @@ public class SudokuComposite extends Composite {
                     UserInputPoint point = inputBoxesNormal.get(textbox);
                     for (int i = 0; i < chars.length; i++) {
                         if (!('1' <= chars[i] && chars[i] <= '9')
-                                || possibleNormal.get(point.x).get(point.y).indexOf(
-                                        Integer.parseInt(input)) == -1) {
+                                || possibleNormal.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
                             e.doit = false;
                             return;
                         }
@@ -1931,8 +1936,7 @@ public class SudokuComposite extends Composite {
                     UserInputPoint point = inputBoxesKiller.get(textbox);
                     for (int i = 0; i < chars.length; i++) {
                         if (!('1' <= chars[i] && chars[i] <= '9')
-                                || possibleKiller.get(point.x).get(point.y).indexOf(
-                                        Integer.parseInt(input)) == -1) {
+                                || possibleKiller.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
                             e.doit = false;
                             return;
                         }
@@ -1960,8 +1964,7 @@ public class SudokuComposite extends Composite {
                 if (input.length() == 0 && !loading && !solving)
                     updateBoardDataWithUserInputHex(textbox, input);
                 if (!solved && !loading && !solving) {
-                    if (input.toUpperCase().equals("A")
-                            && possibleHex.get(point.x).get(point.y).indexOf(10) != -1) {
+                    if (input.toUpperCase().equals("A") && possibleHex.get(point.x).get(point.y).indexOf(10) != -1) {
                         updateBoardDataWithUserInputHex(textbox, Integer.toString(10));
                     } else if (input.toUpperCase().equals("B")
                             && possibleHex.get(point.x).get(point.y).indexOf(11) != -1) {
@@ -1983,8 +1986,7 @@ public class SudokuComposite extends Composite {
                         input.getChars(0, chars.length, chars, 0);
                         for (int i = 0; i < chars.length; i++) {
                             if (!('0' <= chars[i] && chars[i] <= '9')
-                                    || possibleHex.get(point.x).get(point.y).indexOf(
-                                            Integer.parseInt(input)) == -1) {
+                                    || possibleHex.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
                                 e.doit = false;
                                 return;
                             }
@@ -2118,13 +2120,10 @@ public class SudokuComposite extends Composite {
                         for (int l = 0; l < 3; l++) {
                             for (int m = 0; m < 3; m++) {
                                 if (boardNormal[3 * i + l][3 * j + m] == 0) {
-                                    idx =
-                                            possibleNormal.get(3 * i + l).get(3 * j + m).indexOf(
-                                                    used.get(k));
+                                    idx = possibleNormal.get(3 * i + l).get(3 * j + m).indexOf(used.get(k));
                                     if (idx != -1)
                                         possibleNormal.get(3 * i + l).get(3 * j + m).remove(idx);
-                                    if (autoFillOne
-                                            && possibleNormal.get(3 * i + l).get(3 * j + m).size() == 1) {
+                                    if (autoFillOne && possibleNormal.get(3 * i + l).get(3 * j + m).size() == 1) {
                                         boardNormal[3 * i + l][3 * j + m] =
                                                 possibleNormal.get(3 * i + l).get(3 * j + m).get(0);
                                         boardTextNormal[3 * i + l][3 * j + m].setText(Integer.toString(boardNormal[3
@@ -2143,8 +2142,7 @@ public class SudokuComposite extends Composite {
             for (int j = 0; j < 9; j++) {
                 if (showPossible && possibleNormal.get(i).get(j).size() < 9) {
                     for (int k = 0; k < possibleNormal.get(i).get(j).size(); k++) {
-                        boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(i).get(
-                                j).get(k)));
+                        boardLabelsNormal[i][j][k].setText(Integer.toString(possibleNormal.get(i).get(j).get(k)));
                     }
                     for (int k = possibleNormal.get(i).get(j).size(); k < 8; k++) {
                         boardLabelsNormal[i][j][k].setText("");
@@ -2166,48 +2164,48 @@ public class SudokuComposite extends Composite {
     }
 
     public void fillOneNormal() {
-    	boolean changed = false;
-    	for (int i = 0; i < 9 & !changed; i++) {
-    		for (int j = 0; j < 9 & !changed; j++) {
-    			if (possibleNormal.get(i).get(j).size() == 1) {
-    				 boardNormal[i][j] = possibleNormal.get(i).get(j).get(0);
-                     boardTextNormal[i][j].setText(Integer.toString(boardNormal[i][j]));
-                     labelCellNormal[i][j].layout();
-                     startBlinkingArea(i,j);
-                     changed = true;
-    			}
-    		}
-    	}
+        boolean changed = false;
+        for (int i = 0; i < 9 & !changed; i++) {
+            for (int j = 0; j < 9 & !changed; j++) {
+                if (possibleNormal.get(i).get(j).size() == 1) {
+                    boardNormal[i][j] = possibleNormal.get(i).get(j).get(0);
+                    boardTextNormal[i][j].setText(Integer.toString(boardNormal[i][j]));
+                    labelCellNormal[i][j].layout();
+                    startBlinkingArea(i, j);
+                    changed = true;
+                }
+            }
+        }
     }
 
     public void fillOneKiller() {
-    	boolean changed = false;
-    	for (int i = 0; i < 9 & !changed; i++) {
-    		for (int j = 0; j < 9 & !changed; j++) {
-    			if (possibleKiller.get(i).get(j).size() == 1) {
-    				 boardKiller[i][j] = possibleKiller.get(i).get(j).get(0);
-                     boardTextKiller[i][j].setText(Integer.toString(boardKiller[i][j]));
-                     labelCellKiller[i][j].layout();
-                     startBlinkingArea(i,j);
-                     changed = true;
-    			}
-    		}
-    	}
+        boolean changed = false;
+        for (int i = 0; i < 9 & !changed; i++) {
+            for (int j = 0; j < 9 & !changed; j++) {
+                if (possibleKiller.get(i).get(j).size() == 1) {
+                    boardKiller[i][j] = possibleKiller.get(i).get(j).get(0);
+                    boardTextKiller[i][j].setText(Integer.toString(boardKiller[i][j]));
+                    labelCellKiller[i][j].layout();
+                    startBlinkingArea(i, j);
+                    changed = true;
+                }
+            }
+        }
     }
 
     public void fillOneHex() {
-    	boolean changed = false;
-    	for (int i = 0; i < 16 & !changed; i++) {
-    		for (int j = 0; j < 16 & !changed; j++) {
-    			if (possibleHex.get(i).get(j).size() == 1) {
-    				 boardHex[i][j] = possibleHex.get(i).get(j).get(0);
-                     boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
-                     labelCellHex[i][j].layout();
-                     startBlinkingArea(i,j);
-                     changed = true;
-    			}
-    		}
-    	}
+        boolean changed = false;
+        for (int i = 0; i < 16 & !changed; i++) {
+            for (int j = 0; j < 16 & !changed; j++) {
+                if (possibleHex.get(i).get(j).size() == 1) {
+                    boardHex[i][j] = possibleHex.get(i).get(j).get(0);
+                    boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
+                    labelCellHex[i][j].layout();
+                    startBlinkingArea(i, j);
+                    changed = true;
+                }
+            }
+        }
     }
 
     public boolean sameLineKiller(List<Point> points) {
@@ -2230,27 +2228,21 @@ public class SudokuComposite extends Composite {
             List<Integer> possible = new ArrayList<Integer>();
             for (int j = 0; j < tempList.size(); j++) {
                 for (int k = 0; k < possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size(); k++) {
-                    if (possible.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                            tempList.get(j).y).get(k)) == -1) {
-                        possible.add(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(
-                                k));
+                    if (possible.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k)) == -1) {
+                        possible.add(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k));
                     }
                 }
             }
             switch (areas.get(i).getOperator()) {
                 case ADDITION: {
                     List<Integer> allowed =
-                            generateAllowedValuesKiller(areas.get(i).getList().size(),
-                                    areas.get(i).getValue(), ADDITION, sameLineKiller(tempList),
-                                    possible);
+                            generateAllowedValuesKiller(areas.get(i).getList().size(), areas.get(i).getValue(),
+                                    ADDITION, sameLineKiller(tempList), possible);
                     for (int j = 0; j < tempList.size(); j++) {
                         if (boardKiller[tempList.get(j).x][tempList.get(j).y] == 0) {
-                            for (int k =
-                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
-                                if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                                        tempList.get(j).y).get(k)) == -1) {
-                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(
-                                            k);
+                            for (int k = possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
+                                if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k)) == -1) {
+                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(k);
                                 }
                             }
                         }
@@ -2262,11 +2254,9 @@ public class SudokuComposite extends Composite {
                             && boardKiller[tempList.get(1).x][tempList.get(1).y] != 0) {
                         int result =
                                 (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(i).getValue())
-                                        ? boardKiller[tempList.get(1).x][tempList.get(1).y]
-                                                - areas.get(i).getValue() : areas.get(i).getValue()
-                                                - boardKiller[tempList.get(1).x][tempList.get(1).y];
-                        if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(
-                                result) != -1) {
+                                        ? boardKiller[tempList.get(1).x][tempList.get(1).y] - areas.get(i).getValue()
+                                        : areas.get(i).getValue() - boardKiller[tempList.get(1).x][tempList.get(1).y];
+                        if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(result) != -1) {
                             possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).clear();
                             possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(result);
                         }
@@ -2274,11 +2264,9 @@ public class SudokuComposite extends Composite {
                             && boardKiller[tempList.get(1).x][tempList.get(1).y] == 0) {
                         int result =
                                 (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(i).getValue())
-                                        ? boardKiller[tempList.get(0).x][tempList.get(0).y]
-                                                - areas.get(i).getValue() : areas.get(i).getValue()
-                                                - boardKiller[tempList.get(0).x][tempList.get(0).y];
-                        if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(
-                                result) != -1) {
+                                        ? boardKiller[tempList.get(0).x][tempList.get(0).y] - areas.get(i).getValue()
+                                        : areas.get(i).getValue() - boardKiller[tempList.get(0).x][tempList.get(0).y];
+                        if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(result) != -1) {
                             possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).clear();
                             possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(result);
                         }
@@ -2287,17 +2275,13 @@ public class SudokuComposite extends Composite {
                     break;
                 case MULTIPLICATION: {
                     List<Integer> allowed =
-                            generateAllowedValuesKiller(areas.get(i).getList().size(),
-                                    areas.get(i).getValue(), MULTIPLICATION,
-                                    sameLineKiller(tempList), possible);
+                            generateAllowedValuesKiller(areas.get(i).getList().size(), areas.get(i).getValue(),
+                                    MULTIPLICATION, sameLineKiller(tempList), possible);
                     for (int j = 0; j < tempList.size(); j++) {
                         if (boardKiller[tempList.get(j).x][tempList.get(j).y] == 0) {
-                            for (int k =
-                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
-                                if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                                        tempList.get(j).y).get(k)) == -1) {
-                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(
-                                            k);
+                            for (int k = possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
+                                if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k)) == -1) {
+                                    possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(k);
                                 }
                             }
                         }
@@ -2306,18 +2290,15 @@ public class SudokuComposite extends Composite {
                     break;
                 case DIVISION: {
                     List<Integer> allowed =
-                            generateAllowedValuesKiller(areas.get(i).getList().size(),
-                                    areas.get(i).getValue(), DIVISION, sameLineKiller(tempList),
-                                    possible);
+                            generateAllowedValuesKiller(areas.get(i).getList().size(), areas.get(i).getValue(),
+                                    DIVISION, sameLineKiller(tempList), possible);
                     if (boardKiller[tempList.get(0).x][tempList.get(0).y] == 0
                             && boardKiller[tempList.get(1).x][tempList.get(1).y] != 0) {
                         int result =
                                 (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(i).getValue())
-                                        ? boardKiller[tempList.get(1).x][tempList.get(1).y]
-                                                / areas.get(i).getValue() : areas.get(i).getValue()
-                                                * boardKiller[tempList.get(1).x][tempList.get(1).y];
-                        if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(
-                                result) != -1) {
+                                        ? boardKiller[tempList.get(1).x][tempList.get(1).y] / areas.get(i).getValue()
+                                        : areas.get(i).getValue() * boardKiller[tempList.get(1).x][tempList.get(1).y];
+                        if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(result) != -1) {
                             possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).clear();
                             possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(result);
                         }
@@ -2325,28 +2306,20 @@ public class SudokuComposite extends Composite {
                             && boardKiller[tempList.get(1).x][tempList.get(1).y] == 0) {
                         int result =
                                 (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(i).getValue())
-                                        ? boardKiller[tempList.get(0).x][tempList.get(0).y]
-                                                / areas.get(i).getValue() : areas.get(i).getValue()
-                                                * boardKiller[tempList.get(0).x][tempList.get(0).y];
-                        if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(
-                                result) != -1) {
+                                        ? boardKiller[tempList.get(0).x][tempList.get(0).y] / areas.get(i).getValue()
+                                        : areas.get(i).getValue() * boardKiller[tempList.get(0).x][tempList.get(0).y];
+                        if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(result) != -1) {
                             possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).clear();
                             possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(result);
                         }
                     } else {
-                        for (int j =
-                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).size() - 1; j >= 0; j--) {
-                            if (allowed.indexOf(possibleKiller.get(tempList.get(0).x).get(
-                                    tempList.get(0).y).get(j)) == -1)
-                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).remove(
-                                        j);
+                        for (int j = possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).size() - 1; j >= 0; j--) {
+                            if (allowed.indexOf(possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).get(j)) == -1)
+                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).remove(j);
                         }
-                        for (int j =
-                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).size() - 1; j >= 0; j--) {
-                            if (allowed.indexOf(possibleKiller.get(tempList.get(1).x).get(
-                                    tempList.get(1).y).get(j)) == -1)
-                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).remove(
-                                        j);
+                        for (int j = possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).size() - 1; j >= 0; j--) {
+                            if (allowed.indexOf(possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).get(j)) == -1)
+                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).remove(j);
                         }
                     }
                 }
@@ -2373,10 +2346,8 @@ public class SudokuComposite extends Composite {
                 List<Integer> possible = new ArrayList<Integer>();
                 for (int j = 0; j < tempList.size(); j++) {
                     for (int k = 0; k < possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size(); k++) {
-                        if (possible.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                                tempList.get(j).y).get(k)) == -1) {
-                            possible.add(possibleKiller.get(tempList.get(j).x).get(
-                                    tempList.get(j).y).get(k));
+                        if (possible.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k)) == -1) {
+                            possible.add(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(k));
                         }
                     }
                 }
@@ -2386,23 +2357,18 @@ public class SudokuComposite extends Composite {
                         for (int j = 0; j < tempList.size(); j++) {
                             if (boardKiller[tempList.get(j).x][tempList.get(j).y] != 0) {
                                 tempSet++;
-                                tempSum =
-                                        tempSum + boardKiller[tempList.get(j).x][tempList.get(j).y];
+                                tempSum = tempSum + boardKiller[tempList.get(j).x][tempList.get(j).y];
                             }
                         }
                         List<Integer> allowed =
-                                generateAllowedValuesKiller(
-                                        areas.get(i).getList().size() - tempSet,
-                                        areas.get(i).getValue() - tempSum, ADDITION,
-                                        sameLineKiller(tempList), possible);
+                                generateAllowedValuesKiller(areas.get(i).getList().size() - tempSet,
+                                        areas.get(i).getValue() - tempSum, ADDITION, sameLineKiller(tempList), possible);
                         for (int j = 0; j < tempList.size(); j++) {
                             if (boardKiller[tempList.get(j).x][tempList.get(j).y] == 0) {
-                                for (int k =
-                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
-                                    if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                                            tempList.get(j).y).get(k)) == -1) {
-                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(
-                                                k);
+                                for (int k = possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
+                                    if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(
+                                            k)) == -1) {
+                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(k);
                                     }
                                 }
                             }
@@ -2413,32 +2379,24 @@ public class SudokuComposite extends Composite {
                         if (boardKiller[tempList.get(0).x][tempList.get(0).y] == 0
                                 && boardKiller[tempList.get(1).x][tempList.get(1).y] != 0) {
                             int result =
-                                    (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(
-                                            i).getValue())
+                                    (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(i).getValue())
                                             ? boardKiller[tempList.get(1).x][tempList.get(1).y]
-                                                    - areas.get(i).getValue()
-                                            : areas.get(i).getValue()
+                                                    - areas.get(i).getValue() : areas.get(i).getValue()
                                                     - boardKiller[tempList.get(1).x][tempList.get(1).y];
-                            if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(
-                                    result) != -1) {
+                            if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(result) != -1) {
                                 possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).clear();
-                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(
-                                        result);
+                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(result);
                             }
                         } else if (boardKiller[tempList.get(0).x][tempList.get(0).y] != 0
                                 && boardKiller[tempList.get(1).x][tempList.get(1).y] == 0) {
                             int result =
-                                    (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(
-                                            i).getValue())
+                                    (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(i).getValue())
                                             ? boardKiller[tempList.get(0).x][tempList.get(0).y]
-                                                    - areas.get(i).getValue()
-                                            : areas.get(i).getValue()
+                                                    - areas.get(i).getValue() : areas.get(i).getValue()
                                                     - boardKiller[tempList.get(0).x][tempList.get(0).y];
-                            if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(
-                                    result) != -1) {
+                            if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(result) != -1) {
                                 possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).clear();
-                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(
-                                        result);
+                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(result);
                             }
                         }
                     }
@@ -2448,24 +2406,19 @@ public class SudokuComposite extends Composite {
                         for (int j = 0; j < tempList.size(); j++) {
                             if (boardKiller[tempList.get(j).x][tempList.get(j).y] != 0) {
                                 tempSet++;
-                                tempProd =
-                                        tempProd
-                                                * boardKiller[tempList.get(j).x][tempList.get(j).y];
+                                tempProd = tempProd * boardKiller[tempList.get(j).x][tempList.get(j).y];
                             }
                         }
                         List<Integer> allowed =
-                                generateAllowedValuesKiller(
-                                        areas.get(i).getList().size() - tempSet,
-                                        areas.get(i).getValue() / tempProd, MULTIPLICATION,
-                                        sameLineKiller(tempList), possible);
+                                generateAllowedValuesKiller(areas.get(i).getList().size() - tempSet,
+                                        areas.get(i).getValue() / tempProd, MULTIPLICATION, sameLineKiller(tempList),
+                                        possible);
                         for (int j = 0; j < tempList.size(); j++) {
                             if (boardKiller[tempList.get(j).x][tempList.get(j).y] == 0) {
-                                for (int k =
-                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
-                                    if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(
-                                            tempList.get(j).y).get(k)) == -1) {
-                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(
-                                                k);
+                                for (int k = possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).size() - 1; k >= 0; k--) {
+                                    if (allowed.indexOf(possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).get(
+                                            k)) == -1) {
+                                        possibleKiller.get(tempList.get(j).x).get(tempList.get(j).y).remove(k);
                                     }
                                 }
                             }
@@ -2474,53 +2427,38 @@ public class SudokuComposite extends Composite {
                         break;
                     case DIVISION: {
                         List<Integer> allowed =
-                                generateAllowedValuesKiller(areas.get(i).getList().size(),
-                                        areas.get(i).getValue(), DIVISION,
-                                        sameLineKiller(tempList), possible);
+                                generateAllowedValuesKiller(areas.get(i).getList().size(), areas.get(i).getValue(),
+                                        DIVISION, sameLineKiller(tempList), possible);
                         if (boardKiller[tempList.get(0).x][tempList.get(0).y] == 0
                                 && boardKiller[tempList.get(1).x][tempList.get(1).y] != 0) {
                             int result =
-                                    (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(
-                                            i).getValue())
+                                    (boardKiller[tempList.get(1).x][tempList.get(1).y] > areas.get(i).getValue())
                                             ? boardKiller[tempList.get(1).x][tempList.get(1).y]
-                                                    / areas.get(i).getValue()
-                                            : areas.get(i).getValue()
+                                                    / areas.get(i).getValue() : areas.get(i).getValue()
                                                     * boardKiller[tempList.get(1).x][tempList.get(1).y];
-                            if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(
-                                    result) != -1) {
+                            if (possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).indexOf(result) != -1) {
                                 possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).clear();
-                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(
-                                        result);
+                                possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).add(result);
                             }
                         } else if (boardKiller[tempList.get(0).x][tempList.get(0).y] != 0
                                 && boardKiller[tempList.get(1).x][tempList.get(1).y] == 0) {
                             int result =
-                                    (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(
-                                            i).getValue())
+                                    (boardKiller[tempList.get(0).x][tempList.get(0).y] > areas.get(i).getValue())
                                             ? boardKiller[tempList.get(0).x][tempList.get(0).y]
-                                                    / areas.get(i).getValue()
-                                            : areas.get(i).getValue()
+                                                    / areas.get(i).getValue() : areas.get(i).getValue()
                                                     * boardKiller[tempList.get(0).x][tempList.get(0).y];
-                            if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(
-                                    result) != -1) {
+                            if (possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).indexOf(result) != -1) {
                                 possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).clear();
-                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(
-                                        result);
+                                possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).add(result);
                             }
                         } else {
-                            for (int j =
-                                    possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).size() - 1; j >= 0; j--) {
-                                if (allowed.indexOf(possibleKiller.get(tempList.get(0).x).get(
-                                        tempList.get(0).y).get(j)) == -1)
-                                    possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).remove(
-                                            j);
+                            for (int j = possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).size() - 1; j >= 0; j--) {
+                                if (allowed.indexOf(possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).get(j)) == -1)
+                                    possibleKiller.get(tempList.get(0).x).get(tempList.get(0).y).remove(j);
                             }
-                            for (int j =
-                                    possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).size() - 1; j >= 0; j--) {
-                                if (allowed.indexOf(possibleKiller.get(tempList.get(1).x).get(
-                                        tempList.get(1).y).get(j)) == -1)
-                                    possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).remove(
-                                            j);
+                            for (int j = possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).size() - 1; j >= 0; j--) {
+                                if (allowed.indexOf(possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).get(j)) == -1)
+                                    possibleKiller.get(tempList.get(1).x).get(tempList.get(1).y).remove(j);
                             }
                         }
                     }
@@ -2578,8 +2516,7 @@ public class SudokuComposite extends Composite {
             for (int j = 0; j < 9; j++) {
                 if (showPossible && possibleKiller.get(i).get(j).size() < 8) {
                     for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
-                        boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(
-                                i).get(j).get(k)));
+                        boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
                         boardLabelsKiller[i][j][k + 1].setBackground(WHITE);
                     }
                     for (int k = possibleKiller.get(i).get(j).size() + 1; k < 8; k++) {
@@ -2633,8 +2570,8 @@ public class SudokuComposite extends Composite {
         }
     }
 
-    public List<Integer> generateAllowedValuesKiller(int numberOfPoints, int value, int operator,
-            boolean sameLine, List<Integer> possible) {
+    public List<Integer> generateAllowedValuesKiller(int numberOfPoints, int value, int operator, boolean sameLine,
+            List<Integer> possible) {
         List<Integer> allowedValues = new ArrayList<Integer>();
         Vector<Integer[]> allSubsets;
         int[] intSet;
@@ -2798,17 +2735,14 @@ public class SudokuComposite extends Composite {
                         for (int l = 0; l < 4; l++) {
                             for (int m = 0; m < 4; m++) {
                                 if (boardHex[4 * i + l][4 * j + m] == -1) {
-                                    idx =
-                                            possibleHex.get(4 * i + l).get(4 * j + m).indexOf(
-                                                    used.get(k));
+                                    idx = possibleHex.get(4 * i + l).get(4 * j + m).indexOf(used.get(k));
                                     if (idx != -1)
                                         possibleHex.get(4 * i + l).get(4 * j + m).remove(idx);
-                                    if (autoFillOne
-                                            && possibleHex.get(4 * i + l).get(4 * j + m).size() == 1) {
+                                    if (autoFillOne && possibleHex.get(4 * i + l).get(4 * j + m).size() == 1) {
                                         boardHex[4 * i + l][4 * j + m] =
                                                 possibleHex.get(4 * i + l).get(4 * j + m).get(0);
-                                        boardTextHex[4 * i + l][4 * j + m].setText(valToTextHex(boardHex[4
-                                                * i + l][4 * j + m]));
+                                        boardTextHex[4 * i + l][4 * j + m].setText(valToTextHex(boardHex[4 * i + l][4
+                                                * j + m]));
                                         labelCellHex[4 * i + l][4 * j + m].layout();
                                         changed = true;
                                     }
@@ -2823,8 +2757,7 @@ public class SudokuComposite extends Composite {
             for (int j = 0; j < 16; j++) {
                 if (showPossible && possibleHex.get(i).get(j).size() < 9) {
                     for (int k = 0; k < possibleHex.get(i).get(j).size(); k++) {
-                        boardLabelsHex[i][j][k].setText(valToTextHex(possibleHex.get(i).get(j).get(
-                                k)));
+                        boardLabelsHex[i][j][k].setText(valToTextHex(possibleHex.get(i).get(j).get(k)));
                     }
                     for (int k = possibleHex.get(i).get(j).size(); k < 8; k++) {
                         boardLabelsHex[i][j][k].setText("");
@@ -3148,8 +3081,7 @@ public class SudokuComposite extends Composite {
     }
 
     public boolean isConflictNormal(int x, int y, int c) {
-        return rowConflictNormal(x, y, c) || colConflictNormal(x, y, c)
-                || boxConflictNormal(x, y, c);
+        return rowConflictNormal(x, y, c) || colConflictNormal(x, y, c) || boxConflictNormal(x, y, c);
     }
 
     public boolean isConflictKiller(int x, int y, int c) {
@@ -3159,8 +3091,7 @@ public class SudokuComposite extends Composite {
                     || subtractionConflictKiller(x, y, c) || divConflictKiller(x, y, c);
         }
         return rowConflictKiller(y, c) || colConflictKiller(x, c) || prodConflictKiller(x, y, c)
-                || additionConflictKiller(x, y, c) || subtractionConflictKiller(x, y, c)
-                || divConflictKiller(x, y, c);
+                || additionConflictKiller(x, y, c) || subtractionConflictKiller(x, y, c) || divConflictKiller(x, y, c);
     }
 
     public boolean isConflictHex(int x, int y, int c) {
@@ -3240,9 +3171,7 @@ public class SudokuComposite extends Composite {
                     tempReqAddition = areas.get(i).getValue();
                     allSet = true;
                     for (int j = 0; j < tempPoints.size(); j++) {
-                        tempAddition =
-                                tempAddition
-                                        + boardKiller[tempPoints.get(j).x][tempPoints.get(j).y];
+                        tempAddition = tempAddition + boardKiller[tempPoints.get(j).x][tempPoints.get(j).y];
                         if (tempPoints.get(j).x != x || tempPoints.get(j).y != y)
                             if (boardKiller[tempPoints.get(j).x][tempPoints.get(j).y] == 0)
                                 allSet = false;
@@ -3311,9 +3240,7 @@ public class SudokuComposite extends Composite {
                     allSet = true;
                     for (int j = 0; j < tempPoints.size(); j++) {
                         if (boardKiller[tempPoints.get(j).x][tempPoints.get(j).y] != 0) {
-                            tempProd =
-                                    tempProd
-                                            * boardKiller[tempPoints.get(j).x][tempPoints.get(j).y];
+                            tempProd = tempProd * boardKiller[tempPoints.get(j).x][tempPoints.get(j).y];
                             if (tempReqProd % boardKiller[tempPoints.get(j).x][tempPoints.get(j).y] != 0) {
                                 return true;
                             }
@@ -3358,16 +3285,14 @@ public class SudokuComposite extends Composite {
                             if (boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] >= c) {
                                 if (boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] % c != 0) {
                                     return true;
-                                } else if (boardKiller[tempPoints.get(0).x][tempPoints.get(0).y]
-                                        / c != tempReqDiv) {
+                                } else if (boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] / c != tempReqDiv) {
                                     return true;
                                 }
                                 return false;
                             } else {
                                 if (c % boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] != 0) {
                                     return true;
-                                } else if (c
-                                        / boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] != tempReqDiv) {
+                                } else if (c / boardKiller[tempPoints.get(0).x][tempPoints.get(0).y] != tempReqDiv) {
                                     return true;
                                 }
                                 return false;
@@ -3376,16 +3301,14 @@ public class SudokuComposite extends Composite {
                             if (boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] >= c) {
                                 if (boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] % c != 0) {
                                     return true;
-                                } else if (boardKiller[tempPoints.get(1).x][tempPoints.get(1).y]
-                                        / c != tempReqDiv) {
+                                } else if (boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] / c != tempReqDiv) {
                                     return true;
                                 }
                                 return false;
                             } else {
                                 if (c % boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] != 0) {
                                     return true;
-                                } else if (c
-                                        / boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] != tempReqDiv) {
+                                } else if (c / boardKiller[tempPoints.get(1).x][tempPoints.get(1).y] != tempReqDiv) {
                                     return true;
                                 }
                                 return false;
@@ -3410,7 +3333,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Check if there exist squares for which only one value is possible
-     *
+     * 
      * @return if this was the case
      */
     public boolean onePossibleKiller() {
@@ -3428,7 +3351,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there exists a square which is a "naked single"
-     *
+     * 
      * @return if this was the case
      */
     public boolean nakedSingleKiller() {
@@ -3466,7 +3389,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there exists a square which is a "hidden single"
-     *
+     * 
      * @return if this was the case
      */
     public boolean hiddenSingleKiller() {
@@ -3481,8 +3404,7 @@ public class SudokuComposite extends Composite {
                     int x = 3 * (int) Math.floor(i / 3);
                     int y = 3 * (int) Math.floor(j / 3);
                     boolean neighborsSet =
-                            (boardKiller[x][j] != 0 || x == i)
-                                    & (boardKiller[x + 1][j] != 0 || x + 1 == i)
+                            (boardKiller[x][j] != 0 || x == i) & (boardKiller[x + 1][j] != 0 || x + 1 == i)
                                     & (boardKiller[x + 2][j] != 0 || x + 2 == i);
                     if (neighborsSet) {
                         if (y == j) {
@@ -3545,8 +3467,7 @@ public class SudokuComposite extends Composite {
                         set1 = new Vector<Integer>();
                         set2 = new Vector<Integer>();
                         neighborsSet =
-                                (boardKiller[i][y] != 0 || y == j)
-                                        & (boardKiller[i][y + 1] != 0 || y + 1 == j)
+                                (boardKiller[i][y] != 0 || y == j) & (boardKiller[i][y + 1] != 0 || y + 1 == j)
                                         & (boardKiller[i][y + 2] != 0 || y + 2 == j);
                         if (neighborsSet) {
                             if (x == i) {
@@ -3614,7 +3535,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there are Block and Column/Row interactions
-     *
+     * 
      * @return if this was the case
      */
     public boolean blockAndCRKiller() {
@@ -3643,21 +3564,16 @@ public class SudokuComposite extends Composite {
                             if (set.size() > 0) {
                                 for (int j = 0; j < set.size(); j++) {
                                     if (boardKiller[3 * i1 + (1 + i4) % 3][3 * i2 + i3] != set.elementAt(j)
-                                            & boardKiller[3 * i1 + (1 + i4) % 3][3 * i2 + (1 + i3)
-                                                    % 3] != set.elementAt(j)
+                                            & boardKiller[3 * i1 + (1 + i4) % 3][3 * i2 + (1 + i3) % 3] != set.elementAt(j)
                                             &
 
                                             boardKiller[3 * i1 + (2 + i4) % 3][3 * i2 + i3] != set.elementAt(j)
-                                            & boardKiller[3 * i1 + (2 + i4) % 3][3 * i2 + (1 + i3)
-                                                    % 3] != set.elementAt(j)) {
+                                            & boardKiller[3 * i1 + (2 + i4) % 3][3 * i2 + (1 + i3) % 3] != set.elementAt(j)) {
                                         for (int k = 0; k < 9; k++) {
                                             if ((k / 3) != i2) {
-                                                idx =
-                                                        possibleKiller.get(3 * i1 + i4).get(k).indexOf(
-                                                                set.elementAt(j));
+                                                idx = possibleKiller.get(3 * i1 + i4).get(k).indexOf(set.elementAt(j));
                                                 if (idx != -1) {
-                                                    possibleKiller.get(3 * i1 + i4).get(k).remove(
-                                                            idx);
+                                                    possibleKiller.get(3 * i1 + i4).get(k).remove(idx);
                                                     changed = true;
                                                 }
                                             }
@@ -3684,21 +3600,16 @@ public class SudokuComposite extends Composite {
                             if (set.size() > 0) {
                                 for (int j = 0; j < set.size(); j++) {
                                     if (boardKiller[3 * i2 + i3][3 * i1 + (1 + i4) % 3] != set.elementAt(j)
-                                            & boardKiller[3 * i2 + (1 + i3) % 3][3 * i1 + (1 + i4)
-                                                    % 3] != set.elementAt(j)
+                                            & boardKiller[3 * i2 + (1 + i3) % 3][3 * i1 + (1 + i4) % 3] != set.elementAt(j)
                                             &
 
                                             boardKiller[3 * i2 + i3][3 * i1 + (2 + i4) % 3] != set.elementAt(j)
-                                            & boardKiller[3 * i2 + (1 + i3) % 3][3 * i1 + (2 + i4)
-                                                    % 3] != set.elementAt(j)) {
+                                            & boardKiller[3 * i2 + (1 + i3) % 3][3 * i1 + (2 + i4) % 3] != set.elementAt(j)) {
                                         for (int k = 0; k < 9; k++) {
                                             if ((k / 3) != i2) {
-                                                idx =
-                                                        possibleKiller.get(k).get(3 * i1 + i4).indexOf(
-                                                                set.elementAt(j));
+                                                idx = possibleKiller.get(k).get(3 * i1 + i4).indexOf(set.elementAt(j));
                                                 if (idx != -1) {
-                                                    possibleKiller.get(k).get(3 * i1 + i4).remove(
-                                                            idx);
+                                                    possibleKiller.get(k).get(3 * i1 + i4).remove(idx);
                                                     changed = true;
                                                 }
                                             }
@@ -3731,8 +3642,7 @@ public class SudokuComposite extends Composite {
             while (set.size() >= i) {
                 total = 1;
                 for (int k = 1; k < set.size(); k++) {
-                    if (possibleKiller.get(j).get(set.elementAt(0)).equals(
-                            possibleKiller.get(j).get(set.elementAt(k))))
+                    if (possibleKiller.get(j).get(set.elementAt(0)).equals(possibleKiller.get(j).get(set.elementAt(k))))
                         total++;
                 }
                 if (total != i) {
@@ -3771,8 +3681,7 @@ public class SudokuComposite extends Composite {
             while (set.size() >= i) {
                 total = 1;
                 for (int k = 1; k < set.size(); k++) {
-                    if (possibleKiller.get(set.elementAt(0)).get(j).equals(
-                            possibleKiller.get(set.elementAt(k)).get(j)))
+                    if (possibleKiller.get(set.elementAt(0)).get(j).equals(possibleKiller.get(set.elementAt(k)).get(j)))
                         total++;
                 }
                 if (total != i) {
@@ -3816,18 +3725,15 @@ public class SudokuComposite extends Composite {
                     total = 1;
                     for (int k = 1; k < pointSet.size(); k++) {
                         if (possibleKiller.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y).equals(
-                                possibleKiller.get(pointSet.elementAt(k).x).get(
-                                        pointSet.elementAt(k).y)))
+                                possibleKiller.get(pointSet.elementAt(k).x).get(pointSet.elementAt(k).y)))
                             total++;
                     }
                     if (total != i) {
                         pointSet.remove(0);
                     } else {
                         for (int k = pointSet.size() - 1; k > 0; k--) {
-                            if (!possibleKiller.get(pointSet.elementAt(0).x).get(
-                                    pointSet.elementAt(0).y).equals(
-                                    possibleKiller.get(pointSet.elementAt(0).x).get(
-                                            pointSet.elementAt(0).y)))
+                            if (!possibleKiller.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y).equals(
+                                    possibleKiller.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y)))
                                 pointSet.remove(k);
                         }
                         break;
@@ -3872,12 +3778,9 @@ public class SudokuComposite extends Composite {
                     generateSubsets(allSubsets, intSet, new int[i], 0, 0);
                     for (int k1 = 0; k1 < allSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleKiller.get(j).get(
-                                    allSubsets.elementAt(k1)[k2]).size(); k3++) {
-                                if (values.indexOf(possibleKiller.get(j).get(
-                                        allSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
-                                    values.add(possibleKiller.get(j).get(
-                                            allSubsets.elementAt(k1)[k2]).get(k3));
+                            for (int k3 = 0; k3 < possibleKiller.get(j).get(allSubsets.elementAt(k1)[k2]).size(); k3++) {
+                                if (values.indexOf(possibleKiller.get(j).get(allSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
+                                    values.add(possibleKiller.get(j).get(allSubsets.elementAt(k1)[k2]).get(k3));
                                 }
                             }
                         }
@@ -3890,12 +3793,9 @@ public class SudokuComposite extends Composite {
                 if (goodSubsets.size() > 0) {
                     for (int k1 = 0; k1 < goodSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < goodSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleKiller.get(j).get(
-                                    goodSubsets.elementAt(k1)[k2]).size(); k3++) {
-                                if (values.indexOf(possibleKiller.get(j).get(
-                                        goodSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
-                                    values.add(possibleKiller.get(j).get(
-                                            goodSubsets.elementAt(k1)[k2]).get(k3));
+                            for (int k3 = 0; k3 < possibleKiller.get(j).get(goodSubsets.elementAt(k1)[k2]).size(); k3++) {
+                                if (values.indexOf(possibleKiller.get(j).get(goodSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
+                                    values.add(possibleKiller.get(j).get(goodSubsets.elementAt(k1)[k2]).get(k3));
                                 }
                             }
                         }
@@ -3907,9 +3807,7 @@ public class SudokuComposite extends Composite {
                             }
                             if (temp) {
                                 for (int l = 0; l < values.size(); l++) {
-                                    idx =
-                                            possibleKiller.get(j).get(k2).indexOf(
-                                                    values.elementAt(l));
+                                    idx = possibleKiller.get(j).get(k2).indexOf(values.elementAt(l));
                                     if (idx != -1) {
                                         possibleKiller.get(j).get(k2).remove(idx);
                                         changed = true;
@@ -3937,12 +3835,9 @@ public class SudokuComposite extends Composite {
                     generateSubsets(allSubsets, intSet, new int[i], 0, 0);
                     for (int k1 = 0; k1 < allSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(
-                                    j).size(); k3++) {
-                                if (values.indexOf(possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(
-                                        j).get(k3)) == -1) {
-                                    values.add(possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(
-                                            j).get(k3));
+                            for (int k3 = 0; k3 < possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(j).size(); k3++) {
+                                if (values.indexOf(possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(j).get(k3)) == -1) {
+                                    values.add(possibleKiller.get(allSubsets.elementAt(k1)[k2]).get(j).get(k3));
                                 }
                             }
                         }
@@ -3955,12 +3850,9 @@ public class SudokuComposite extends Composite {
                 if (goodSubsets.size() > 0) {
                     for (int k1 = 0; k1 < goodSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < goodSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(
-                                    j).size(); k3++) {
-                                if (values.indexOf(possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(
-                                        j).get(k3)) == -1) {
-                                    values.add(possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(
-                                            j).get(k3));
+                            for (int k3 = 0; k3 < possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(j).size(); k3++) {
+                                if (values.indexOf(possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(j).get(k3)) == -1) {
+                                    values.add(possibleKiller.get(goodSubsets.elementAt(k1)[k2]).get(j).get(k3));
                                 }
                             }
                         }
@@ -3972,9 +3864,7 @@ public class SudokuComposite extends Composite {
                             }
                             if (temp) {
                                 for (int l = 0; l < values.size(); l++) {
-                                    idx =
-                                            possibleKiller.get(k2).get(j).indexOf(
-                                                    values.elementAt(l));
+                                    idx = possibleKiller.get(k2).get(j).indexOf(values.elementAt(l));
                                     if (idx != -1) {
                                         possibleKiller.get(k2).get(j).remove(idx);
                                         changed = true;
@@ -4013,12 +3903,10 @@ public class SudokuComposite extends Composite {
                                         pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).size(); k3++) {
                                     if (values.indexOf(possibleKiller.get(
                                             pointSet.elementAt(allSubsets.elementAt(k1)[k2]).x).get(
-                                            pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(
-                                            k3)) == -1) {
+                                            pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(k3)) == -1) {
                                         values.add(possibleKiller.get(
                                                 pointSet.elementAt(allSubsets.elementAt(k1)[k2]).x).get(
-                                                pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(
-                                                k3));
+                                                pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(k3));
                                     }
                                 }
                             }
@@ -4036,12 +3924,10 @@ public class SudokuComposite extends Composite {
                                         pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).size(); k3++) {
                                     if (values.indexOf(possibleKiller.get(
                                             pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).x).get(
-                                            pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(
-                                            k3)) == -1) {
+                                            pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(k3)) == -1) {
                                         values.add(possibleKiller.get(
                                                 pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).x).get(
-                                                pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(
-                                                k3));
+                                                pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(k3));
                                     }
                                 }
                             }
@@ -4059,8 +3945,7 @@ public class SudokuComposite extends Composite {
                                                     possibleKiller.get(3 * j1 + k2).get(3 * j2 + k3).indexOf(
                                                             values.elementAt(l));
                                             if (idx != -1) {
-                                                possibleKiller.get(3 * j1 + k2).get(3 * j2 + k3).remove(
-                                                        idx);
+                                                possibleKiller.get(3 * j1 + k2).get(3 * j2 + k3).remove(idx);
                                                 changed = true;
                                             }
                                         }
@@ -4156,15 +4041,14 @@ public class SudokuComposite extends Composite {
         while (changed) {
             changed = false;
             changed =
-                    changed || onePossibleHex() || nakedSingleHex() || hiddenSingleHex()
-                            || blockAndCRHex() || nakedSubsetHex() || candidateLineHex()
-                            || doublePairHex() || multipleLinesHex();
+                    changed || onePossibleHex() || nakedSingleHex() || hiddenSingleHex() || blockAndCRHex()
+                            || nakedSubsetHex() || candidateLineHex() || doublePairHex() || multipleLinesHex();
         }
     }
 
     /**
      * Check if there exist squares for which only one value is possible
-     *
+     * 
      * @return if this was the case
      */
     public boolean onePossibleHex() {
@@ -4187,7 +4071,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Adds c to the possible values for "neighbors" of (xx,yy)
-     *
+     * 
      * @param xx the horizontal coordinate
      * @param yy the vertical coordinate
      * @param c the entered value
@@ -4223,7 +4107,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there exists a square which is a "naked single"
-     *
+     * 
      * @return if this was the case
      */
     public boolean nakedSingleHex() {
@@ -4276,7 +4160,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there exists a square which is a "hidden single"
-     *
+     * 
      * @return if this was the case
      */
     public boolean hiddenSingleHex() {
@@ -4291,8 +4175,7 @@ public class SudokuComposite extends Composite {
                     int x = 4 * (int) Math.floor(i / 4);
                     int y = 4 * (int) Math.floor(j / 4);
                     boolean neighborsSet =
-                            (boardHex[x][j] != -1 || x == i)
-                                    & (boardHex[x + 1][j] != -1 || x + 1 == i)
+                            (boardHex[x][j] != -1 || x == i) & (boardHex[x + 1][j] != -1 || x + 1 == i)
                                     & (boardHex[x + 2][j] != -1 || x + 2 == i)
                                     & (boardHex[x + 3][j] != -1 || x + 3 == i);
                     if (neighborsSet) {
@@ -4381,8 +4264,7 @@ public class SudokuComposite extends Composite {
                         }
                         if (set1.size() != 0 & set2.size() != 0 & set3.size() != 0) {
                             for (int k = 0; k < set1.size(); k++) {
-                                if (set2.indexOf(set1.elementAt(k)) != -1
-                                        & set3.indexOf(set1.elementAt(k)) != -1) {
+                                if (set2.indexOf(set1.elementAt(k)) != -1 & set3.indexOf(set1.elementAt(k)) != -1) {
                                     boardHex[i][j] = set1.elementAt(k);
                                     boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
                                     labelCellHex[i][j].layout();
@@ -4397,8 +4279,7 @@ public class SudokuComposite extends Composite {
                         set2 = new Vector<Integer>();
                         set3 = new Vector<Integer>();
                         neighborsSet =
-                                (boardHex[i][y] != -1 || y == j)
-                                        & (boardHex[i][y + 1] != -1 || y + 1 == j)
+                                (boardHex[i][y] != -1 || y == j) & (boardHex[i][y + 1] != -1 || y + 1 == j)
                                         & (boardHex[i][y + 2] != -1 || y + 2 == j)
                                         & (boardHex[i][y + 3] != -1 || y + 3 == j);
                         if (neighborsSet) {
@@ -4487,8 +4368,7 @@ public class SudokuComposite extends Composite {
                             }
                             if (set1.size() != 0 & set2.size() != 0 & set3.size() != 0) {
                                 for (int k = 0; k < set1.size(); k++) {
-                                    if (set2.indexOf(set1.elementAt(k)) != -1
-                                            & set3.indexOf(set1.elementAt(k)) != -1) {
+                                    if (set2.indexOf(set1.elementAt(k)) != -1 & set3.indexOf(set1.elementAt(k)) != -1) {
                                         boardHex[i][j] = set1.elementAt(k);
                                         boardTextHex[i][j].setText(valToTextHex(boardHex[i][j]));
                                         labelCellHex[i][j].layout();
@@ -4510,7 +4390,7 @@ public class SudokuComposite extends Composite {
 
     /**
      * Checks if there are Block and Column/Row interactions
-     *
+     * 
      * @return if this was the case
      */
     public boolean blockAndCRHex() {
@@ -4560,9 +4440,7 @@ public class SudokuComposite extends Composite {
                                             & boardHex[4 * i1 + (3 + i4) % 4][4 * i2 + (2 + i3) % 4] != set.elementAt(j)) {
                                         for (int k = 0; k < 16; k++) {
                                             if ((k / 4) != i2) {
-                                                idx =
-                                                        possibleHex.get(4 * i1 + i4).get(k).indexOf(
-                                                                set.elementAt(j));
+                                                idx = possibleHex.get(4 * i1 + i4).get(k).indexOf(set.elementAt(j));
                                                 if (idx != -1) {
                                                     possibleHex.get(4 * i1 + i4).get(k).remove(idx);
                                                     changed = true;
@@ -4612,9 +4490,7 @@ public class SudokuComposite extends Composite {
                                             & boardHex[4 * i2 + (2 + i3) % 4][4 * i1 + (3 + i4) % 4] != set.elementAt(j)) {
                                         for (int k = 0; k < 16; k++) {
                                             if ((k / 4) != i2) {
-                                                idx =
-                                                        possibleHex.get(k).get(4 * i1 + i4).indexOf(
-                                                                set.elementAt(j));
+                                                idx = possibleHex.get(k).get(4 * i1 + i4).indexOf(set.elementAt(j));
                                                 if (idx != -1) {
                                                     possibleHex.get(k).get(4 * i1 + i4).remove(idx);
                                                     changed = true;
@@ -4649,16 +4525,14 @@ public class SudokuComposite extends Composite {
             while (set.size() >= i) {
                 total = 1;
                 for (int k = 1; k < set.size(); k++) {
-                    if (possibleHex.get(j).get(set.elementAt(0)).equals(
-                            possibleHex.get(j).get(set.elementAt(k))))
+                    if (possibleHex.get(j).get(set.elementAt(0)).equals(possibleHex.get(j).get(set.elementAt(k))))
                         total++;
                 }
                 if (total != i) {
                     set.remove(0);
                 } else {
                     for (int k = set.size() - 1; k > 0; k--) {
-                        if (!possibleHex.get(j).get(set.elementAt(0)).equals(
-                                possibleHex.get(j).get(set.elementAt(k))))
+                        if (!possibleHex.get(j).get(set.elementAt(0)).equals(possibleHex.get(j).get(set.elementAt(k))))
                             set.remove(k);
                     }
                     break;
@@ -4668,9 +4542,7 @@ public class SudokuComposite extends Composite {
                 for (int k = 0; k < 16; k++) {
                     if (set.indexOf(k) == -1) {
                         for (int l = 0; l < possibleHex.get(j).get(set.elementAt(0)).size(); l++) {
-                            idx =
-                                    possibleHex.get(j).get(k).indexOf(
-                                            possibleHex.get(j).get(set.elementAt(0)).get(l));
+                            idx = possibleHex.get(j).get(k).indexOf(possibleHex.get(j).get(set.elementAt(0)).get(l));
                             if (idx != -1) {
                                 possibleHex.get(j).get(k).remove(idx);
                                 changed = true;
@@ -4689,16 +4561,14 @@ public class SudokuComposite extends Composite {
             while (set.size() >= i) {
                 total = 1;
                 for (int k = 1; k < set.size(); k++) {
-                    if (possibleHex.get(set.elementAt(0)).get(j).equals(
-                            possibleHex.get(set.elementAt(k)).get(j)))
+                    if (possibleHex.get(set.elementAt(0)).get(j).equals(possibleHex.get(set.elementAt(k)).get(j)))
                         total++;
                 }
                 if (total != i) {
                     set.remove(0);
                 } else {
                     for (int k = set.size() - 1; k > 0; k--) {
-                        if (!possibleHex.get(set.elementAt(0)).get(j).equals(
-                                possibleHex.get(set.elementAt(k)).get(j)))
+                        if (!possibleHex.get(set.elementAt(0)).get(j).equals(possibleHex.get(set.elementAt(k)).get(j)))
                             set.remove(k);
                     }
                     break;
@@ -4708,9 +4578,7 @@ public class SudokuComposite extends Composite {
                 for (int k = 0; k < 16; k++) {
                     if (set.indexOf(k) == -1) {
                         for (int l = 0; l < possibleHex.get(set.elementAt(0)).get(j).size(); l++) {
-                            idx =
-                                    possibleHex.get(k).get(j).indexOf(
-                                            possibleHex.get(set.elementAt(0)).get(j).get(l));
+                            idx = possibleHex.get(k).get(j).indexOf(possibleHex.get(set.elementAt(0)).get(j).get(l));
                             if (idx != -1) {
                                 possibleHex.get(k).get(j).remove(idx);
                                 changed = true;
@@ -4734,18 +4602,15 @@ public class SudokuComposite extends Composite {
                     total = 1;
                     for (int k = 1; k < pointSet.size(); k++) {
                         if (possibleHex.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y).equals(
-                                possibleHex.get(pointSet.elementAt(k).x).get(
-                                        pointSet.elementAt(k).y)))
+                                possibleHex.get(pointSet.elementAt(k).x).get(pointSet.elementAt(k).y)))
                             total++;
                     }
                     if (total != i) {
                         pointSet.remove(0);
                     } else {
                         for (int k = pointSet.size() - 1; k > 0; k--) {
-                            if (!possibleHex.get(pointSet.elementAt(0).x).get(
-                                    pointSet.elementAt(0).y).equals(
-                                    possibleHex.get(pointSet.elementAt(0).x).get(
-                                            pointSet.elementAt(0).y)))
+                            if (!possibleHex.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y).equals(
+                                    possibleHex.get(pointSet.elementAt(0).x).get(pointSet.elementAt(0).y)))
                                 pointSet.remove(k);
                         }
                         break;
@@ -4790,12 +4655,9 @@ public class SudokuComposite extends Composite {
                     generateSubsets(allSubsets, intSet, new int[i], 0, 0);
                     for (int k1 = 0; k1 < allSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleHex.get(j).get(
-                                    allSubsets.elementAt(k1)[k2]).size(); k3++) {
-                                if (values.indexOf(possibleHex.get(j).get(
-                                        allSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
-                                    values.add(possibleHex.get(j).get(allSubsets.elementAt(k1)[k2]).get(
-                                            k3));
+                            for (int k3 = 0; k3 < possibleHex.get(j).get(allSubsets.elementAt(k1)[k2]).size(); k3++) {
+                                if (values.indexOf(possibleHex.get(j).get(allSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
+                                    values.add(possibleHex.get(j).get(allSubsets.elementAt(k1)[k2]).get(k3));
                                 }
                             }
                         }
@@ -4808,12 +4670,9 @@ public class SudokuComposite extends Composite {
                 if (goodSubsets.size() > 0) {
                     for (int k1 = 0; k1 < goodSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < goodSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleHex.get(j).get(
-                                    goodSubsets.elementAt(k1)[k2]).size(); k3++) {
-                                if (values.indexOf(possibleHex.get(j).get(
-                                        goodSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
-                                    values.add(possibleHex.get(j).get(goodSubsets.elementAt(k1)[k2]).get(
-                                            k3));
+                            for (int k3 = 0; k3 < possibleHex.get(j).get(goodSubsets.elementAt(k1)[k2]).size(); k3++) {
+                                if (values.indexOf(possibleHex.get(j).get(goodSubsets.elementAt(k1)[k2]).get(k3)) == -1) {
+                                    values.add(possibleHex.get(j).get(goodSubsets.elementAt(k1)[k2]).get(k3));
                                 }
                             }
                         }
@@ -4853,12 +4712,9 @@ public class SudokuComposite extends Composite {
                     generateSubsets(allSubsets, intSet, new int[i], 0, 0);
                     for (int k1 = 0; k1 < allSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < allSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleHex.get(allSubsets.elementAt(k1)[k2]).get(
-                                    j).size(); k3++) {
-                                if (values.indexOf(possibleHex.get(allSubsets.elementAt(k1)[k2]).get(
-                                        j).get(k3)) == -1) {
-                                    values.add(possibleHex.get(allSubsets.elementAt(k1)[k2]).get(j).get(
-                                            k3));
+                            for (int k3 = 0; k3 < possibleHex.get(allSubsets.elementAt(k1)[k2]).get(j).size(); k3++) {
+                                if (values.indexOf(possibleHex.get(allSubsets.elementAt(k1)[k2]).get(j).get(k3)) == -1) {
+                                    values.add(possibleHex.get(allSubsets.elementAt(k1)[k2]).get(j).get(k3));
                                 }
                             }
                         }
@@ -4871,12 +4727,9 @@ public class SudokuComposite extends Composite {
                 if (goodSubsets.size() > 0) {
                     for (int k1 = 0; k1 < goodSubsets.size(); k1++) {
                         for (int k2 = 0; k2 < goodSubsets.elementAt(k1).length; k2++) {
-                            for (int k3 = 0; k3 < possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(
-                                    j).size(); k3++) {
-                                if (values.indexOf(possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(
-                                        j).get(k3)) == -1) {
-                                    values.add(possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(j).get(
-                                            k3));
+                            for (int k3 = 0; k3 < possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(j).size(); k3++) {
+                                if (values.indexOf(possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(j).get(k3)) == -1) {
+                                    values.add(possibleHex.get(goodSubsets.elementAt(k1)[k2]).get(j).get(k3));
                                 }
                             }
                         }
@@ -4927,12 +4780,9 @@ public class SudokuComposite extends Composite {
                                         pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).size(); k3++) {
                                     if (values.indexOf(possibleHex.get(
                                             pointSet.elementAt(allSubsets.elementAt(k1)[k2]).x).get(
-                                            pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(
-                                            k3)) == -1) {
-                                        values.add(possibleHex.get(
-                                                pointSet.elementAt(allSubsets.elementAt(k1)[k2]).x).get(
-                                                pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(
-                                                k3));
+                                            pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(k3)) == -1) {
+                                        values.add(possibleHex.get(pointSet.elementAt(allSubsets.elementAt(k1)[k2]).x).get(
+                                                pointSet.elementAt(allSubsets.elementAt(k1)[k2]).y).get(k3));
                                     }
                                 }
                             }
@@ -4950,12 +4800,9 @@ public class SudokuComposite extends Composite {
                                         pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).size(); k3++) {
                                     if (values.indexOf(possibleHex.get(
                                             pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).x).get(
-                                            pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(
-                                            k3)) == -1) {
-                                        values.add(possibleHex.get(
-                                                pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).x).get(
-                                                pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(
-                                                k3));
+                                            pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(k3)) == -1) {
+                                        values.add(possibleHex.get(pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).x).get(
+                                                pointSet.elementAt(goodSubsets.elementAt(k1)[k2]).y).get(k3));
                                     }
                                 }
                             }
@@ -4973,8 +4820,7 @@ public class SudokuComposite extends Composite {
                                                     possibleHex.get(4 * j1 + k2).get(4 * j2 + k3).indexOf(
                                                             values.elementAt(l));
                                             if (idx != -1) {
-                                                possibleHex.get(4 * j1 + k2).get(4 * j2 + k3).remove(
-                                                        idx);
+                                                possibleHex.get(4 * j1 + k2).get(4 * j2 + k3).remove(idx);
                                                 changed = true;
                                             }
                                         }
@@ -4990,8 +4836,7 @@ public class SudokuComposite extends Composite {
         return changed;
     }
 
-    public void generateSubsets(Vector<Integer[]> subsets, int[] set, int[] subset, int subsetSize,
-            int nextIndex) {
+    public void generateSubsets(Vector<Integer[]> subsets, int[] set, int[] subset, int subsetSize, int nextIndex) {
         if (subsetSize == subset.length) {
             Integer[] temp = new Integer[subset.length];
             for (int i = 0; i < subset.length; i++)
@@ -5005,8 +4850,7 @@ public class SudokuComposite extends Composite {
         }
     }
 
-    public void generateSets(Vector<Integer[]> subsets, int[] set, int[] subset, int subsetSize,
-            int nextIndex) {
+    public void generateSets(Vector<Integer[]> subsets, int[] set, int[] subset, int subsetSize, int nextIndex) {
         if (subsetSize == subset.length) {
             Integer[] temp = new Integer[subset.length];
             for (int i = 0; i < subset.length; i++)
@@ -5083,8 +4927,7 @@ public class SudokuComposite extends Composite {
                             pos1 = new Vector<Integer>();
                             for (int j = 0; j < 16; j++) {
                                 if ((j / 4) != boxX) {
-                                    if (boardHex[j][pos.elementAt(0).y] == -1
-                                            & boardHex[j][pos.elementAt(1).y] == -1
+                                    if (boardHex[j][pos.elementAt(0).y] == -1 & boardHex[j][pos.elementAt(1).y] == -1
                                             & possibleHex.get(j).get(pos.elementAt(0).y).indexOf(i) != -1
                                             & possibleHex.get(j).get(pos.elementAt(1).y).indexOf(i) != -1) {
                                         temp = true;
@@ -5123,8 +4966,7 @@ public class SudokuComposite extends Composite {
                             pos1 = new Vector<Integer>();
                             for (int j = 0; j < 16; j++) {
                                 if ((j / 4) != boxY) {
-                                    if (boardHex[pos.elementAt(0).x][j] == -1
-                                            & boardHex[pos.elementAt(1).x][j] == -1
+                                    if (boardHex[pos.elementAt(0).x][j] == -1 & boardHex[pos.elementAt(1).x][j] == -1
                                             & possibleHex.get(pos.elementAt(0).x).get(j).indexOf(i) != -1
                                             & possibleHex.get(pos.elementAt(1).x).get(j).indexOf(i) != -1) {
                                         temp = true;
@@ -5203,14 +5045,12 @@ public class SudokuComposite extends Composite {
                                     for (int sqX = 0; sqX < 4; sqX++) {
                                         for (int sqY = 0; sqY < 4; sqY++) {
                                             if (boardHex[4 * boxX + sqX][4 * j + sqY] == -1
-                                                    & possibleHex.get(4 * boxX + sqX).get(
-                                                            4 * j + sqY).indexOf(i) != -1
+                                                    & possibleHex.get(4 * boxX + sqX).get(4 * j + sqY).indexOf(i) != -1
                                                     & x.indexOf(sqX) != -1) {
                                                 possible++;
                                             }
                                             if (boardHex[4 * boxX + sqX][4 * j + sqY] == -1
-                                                    & possibleHex.get(4 * boxX + sqX).get(
-                                                            4 * j + sqY).indexOf(i) != -1
+                                                    & possibleHex.get(4 * boxX + sqX).get(4 * j + sqY).indexOf(i) != -1
                                                     & x.indexOf(sqX) == -1) {
                                                 temp = false;
                                             }
@@ -5233,14 +5073,11 @@ public class SudokuComposite extends Composite {
                                             for (int j = 0; j < badBox.size(); j++) {
                                                 idx =
                                                         possibleHex.get(4 * boxX + sqX).get(
-                                                                4 * badBox.elementAt(j) + sqY).indexOf(
-                                                                i);
+                                                                4 * badBox.elementAt(j) + sqY).indexOf(i);
                                                 if (idx != -1
-                                                        & boardHex[4 * boxX + sqX][4
-                                                                * badBox.elementAt(j) + sqY] == -1) {
+                                                        & boardHex[4 * boxX + sqX][4 * badBox.elementAt(j) + sqY] == -1) {
                                                     changed = true;
-                                                    possibleHex.get(4 * boxX + sqX).get(
-                                                            4 * badBox.elementAt(j) + sqY).remove(
+                                                    possibleHex.get(4 * boxX + sqX).get(4 * badBox.elementAt(j) + sqY).remove(
                                                             idx);
                                                 }
                                             }
@@ -5259,14 +5096,12 @@ public class SudokuComposite extends Composite {
                                     for (int sqX = 0; sqX < 4; sqX++) {
                                         for (int sqY = 0; sqY < 4; sqY++) {
                                             if (boardHex[4 * j + sqX][4 * boxY + sqY] == -1
-                                                    & possibleHex.get(4 * j + sqX).get(
-                                                            4 * boxY + sqY).indexOf(i) != -1
+                                                    & possibleHex.get(4 * j + sqX).get(4 * boxY + sqY).indexOf(i) != -1
                                                     & y.indexOf(sqY) != -1) {
                                                 possible++;
                                             }
                                             if (boardHex[4 * j + sqX][4 * boxY + sqY] == -1
-                                                    & possibleHex.get(4 * j + sqX).get(
-                                                            4 * boxY + sqY).indexOf(i) != -1
+                                                    & possibleHex.get(4 * j + sqX).get(4 * boxY + sqY).indexOf(i) != -1
                                                     & y.indexOf(sqY) == -1) {
                                                 temp = false;
                                             }
@@ -5288,15 +5123,13 @@ public class SudokuComposite extends Composite {
                                         if (y.indexOf(sqY) != -1) {
                                             for (int j = 0; j < badBox.size(); j++) {
                                                 idx =
-                                                        possibleHex.get(
-                                                                4 * badBox.elementAt(j) + sqX).get(
+                                                        possibleHex.get(4 * badBox.elementAt(j) + sqX).get(
                                                                 4 * boxY + sqY).indexOf(i);
                                                 if (idx != -1
-                                                        & boardHex[4 * badBox.elementAt(j) + sqX][4
-                                                                * boxY + sqY] == -1) {
+                                                        & boardHex[4 * badBox.elementAt(j) + sqX][4 * boxY + sqY] == -1) {
                                                     changed = true;
-                                                    possibleHex.get(4 * badBox.elementAt(j) + sqX).get(
-                                                            4 * boxY + sqY).remove(idx);
+                                                    possibleHex.get(4 * badBox.elementAt(j) + sqX).get(4 * boxY + sqY).remove(
+                                                            idx);
                                                 }
                                             }
                                         }
@@ -5348,8 +5181,7 @@ public class SudokuComposite extends Composite {
             }
             boolean correct = false;
             while (true) {
-                boardHex[guessPointX][guessPointY] =
-                        possibleHex.get(guessPointX).get(guessPointY).get(guessPossible);
+                boardHex[guessPointX][guessPointY] = possibleHex.get(guessPointX).get(guessPointY).get(guessPossible);
                 humanStrategiesHex();
                 correct = checkPuzzleHex();
                 if (!correct)
@@ -5416,7 +5248,7 @@ public class SudokuComposite extends Composite {
     }
 
     private class Area {
-//        final private int SUBTRACTION = 1, DIVISION = 3;
+        // final private int SUBTRACTION = 1, DIVISION = 3;
         private int operator, value;
         private List<Point> points;
 
@@ -5432,8 +5264,8 @@ public class SudokuComposite extends Composite {
             this.value = value;
             for (int i = 0; i < points.size(); i++)
                 this.points.add(points.get(i));
-//            if ((operator == SUBTRACTION || operator == DIVISION) && points.size() != 2)
-//                System.out.println("More than 2 points for sub/div!");
+            // if ((operator == SUBTRACTION || operator == DIVISION) && points.size() != 2)
+            // System.out.println("More than 2 points for sub/div!");
         }
 
         public void addPoint(Point point) {

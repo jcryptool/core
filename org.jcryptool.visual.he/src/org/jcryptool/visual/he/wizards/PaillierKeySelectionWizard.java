@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigInteger;
 
 import org.eclipse.jface.wizard.Wizard;
@@ -73,16 +74,21 @@ public class PaillierKeySelectionWizard extends Wizard {
             dialog.setOverwrite(true);
 
             String filename = dialog.open();
+            FileOutputStream out = null;
 
             try {
                 /** first the encrypted private key */
-                FileOutputStream out = new FileOutputStream(filename);
+                out = new FileOutputStream(filename);
                 out.write(("Owner%" + data.getContactName() + "%").getBytes());
                 out.write(("l%" + data.getPrivKey()[0].toString() + "%").getBytes());
                 out.write(("mu%" + data.getPrivKey()[1].toString() + "%").getBytes());
                 out.write("END".getBytes());
                 new FileCrypto(filename, filename.replace(".papub", ".papr"), data.getPassword(),
                         Cipher.ENCRYPT_MODE);
+
+                out.flush();
+                out.close();
+                
                 /** then the public key */
                 out = new FileOutputStream(filename);
                 out.write(("Owner%" + data.getContactName() + "%").getBytes());
@@ -91,6 +97,15 @@ public class PaillierKeySelectionWizard extends Wizard {
                 out.write(("g%" + data.getPubKey()[1].toString() + "%").getBytes());
             } catch (Exception ex) {
                 LogUtil.logError(ex);
+            } finally {
+                try {
+                    if (out != null) {
+                        out.flush();
+                        out.close();
+                    }
+                } catch (IOException ex) {
+                    LogUtil.logError(ex);
+                }
             }
         }
         if (getPage(PaillierLoadKeyPage.getPagename()).isPageComplete()) {
