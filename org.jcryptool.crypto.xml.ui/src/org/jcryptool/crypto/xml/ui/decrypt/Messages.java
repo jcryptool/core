@@ -37,7 +37,7 @@ public final class Messages extends NLS {
     public static String PageKeystore_keystoreDescription;
     /** PageResource externalized strings. */
     public static String decryptionTitle, resourceDescription, encryptionType, encryptionEnveloping,
-            encryptionDetached;
+            encryptionDetached, documentInvalid;
     /** PageKeystore externalized strings. */
     public static String keystore, selectButton, missingKeystore, encryptionId, missingEncryptionId, keystoreNotFound,
             password, echoPassword, name, key, missingKeyName, missingKeystorePassword, missingKeyPassword,

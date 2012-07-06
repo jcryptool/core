@@ -87,7 +87,7 @@ public class PageResource extends WizardPage implements Listener {
     private static final String EMPTY = "";
     /** Model for the XML Encryption Wizard. */
     private Encryption encryption = null;
-    private String[] ids;
+    private String[] ids = new String[0];
     private boolean globalError = false;
 
     /**

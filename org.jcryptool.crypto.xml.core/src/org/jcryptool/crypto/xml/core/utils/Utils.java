@@ -47,7 +47,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 /**
@@ -187,16 +186,15 @@ public final class Utils {
      * Collects all IDs (signature or encryption, based on the type) in the given XML document and
      * returns them in a String array.
      *
-     * @param content The XML document containing the IDs to search for
+     * @param doc The XML document containing the IDs to search for
      * @param type Indicates signature or encryption id search
      * @return All IDs in a String array
      */
-    public static String[] getIds(final InputStream content, final String type) {
+    public static String[] getIds(final Document doc, final String type) {
         StringBuilder ids = new StringBuilder();
         ids.append(NLS.bind(Messages.Utils_0, type));
 
         try {
-            Document doc = parse(content);
             String current = null;
             NodeList nodes = null;
 
@@ -222,8 +220,6 @@ public final class Utils {
                     }
                 }
             }
-        } catch (SAXParseException ex) {
-            // ignore, simply an XML error
         } catch (Exception ex) {
             logError(ex, Messages.errorDuringIdSearch);
         }
@@ -234,7 +230,7 @@ public final class Utils {
      * Collects all IDs (no difference between signature or encryption id) in the given XML document
      * and stores them in a String array.
      *
-     * @param xml The XML document containing the IDs to search for
+     * @param doc The XML document containing the IDs to search for
      * @return All IDs in a String array
      */
     public static String[] getAllIds(final Document doc) {

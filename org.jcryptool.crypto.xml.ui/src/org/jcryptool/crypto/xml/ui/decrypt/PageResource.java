@@ -2,7 +2,7 @@
  * Copyright (c) 2010 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
  * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.decrypt;
@@ -28,6 +28,7 @@ import org.jcryptool.crypto.xml.core.decrypt.Decryption;
 import org.jcryptool.crypto.xml.core.utils.IGlobals;
 import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
+import org.w3c.dom.Document;
 
 /**
  * <p>
@@ -35,7 +36,7 @@ import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
  * document part to decrypt and determine the used encryption type (enveloping or detached). A detached encryption
  * requires the detached file to be identified.
  * </p>
- *
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -48,14 +49,16 @@ public class PageResource extends WizardPage implements Listener {
     private Button bDetached = null;
     /** Radio to decrypt an enveloping encryption. */
     private Button bEnveloping = null;
-    /** The XML document. */
-    private InputStream data;
+    /** XML document to decrypt. */
+    private Document doc = null;
     /** Model for the XML Decryption Wizard. */
     private Decryption decryption = null;
+    private boolean globalError = false;
+    private String[] ids = new String[0];
 
     /**
      * Constructor for the algorithms page with three parameters.
-     *
+     * 
      * @param decryption The decryption wizard model
      * @param data The selected file
      */
@@ -65,12 +68,19 @@ public class PageResource extends WizardPage implements Listener {
         setDescription(Messages.resourceDescription);
 
         this.decryption = decryption;
-        this.data = data;
+
+        try {
+            doc = Utils.parse(data);
+            ids = Utils.getIds(doc, "encryption");
+        } catch (Exception ex) {
+            updateStatus(Messages.documentInvalid, IMessageProvider.ERROR);
+            globalError = true;
+        }
     }
 
     /**
      * Creates the wizard page with the layout settings.
-     *
+     * 
      * @param parent Parent composite
      */
     public void createControl(final Composite parent) {
@@ -79,7 +89,6 @@ public class PageResource extends WizardPage implements Listener {
         container.setLayout(formLayout);
 
         createPageContent(container);
-        determineIds();
         addListeners();
         setControl(container);
         loadSettings();
@@ -90,7 +99,7 @@ public class PageResource extends WizardPage implements Listener {
     /**
      * Fills this wizard page with content. Two groups (<i>Type</i> and <i>Encryption ID</i>) and all their widgets are
      * inserted.
-     *
+     * 
      * @param parent Parent composite
      */
     private void createPageContent(final Composite parent) {
@@ -127,6 +136,8 @@ public class PageResource extends WizardPage implements Listener {
         data.left = new FormAttachment(gEncryptionId);
         data.width = IGlobals.COMBO_LARGE_WIDTH;
         cEncryptionId.setLayoutData(data);
+        cEncryptionId.setItems(ids);
+        cEncryptionId.select(0);
 
         // Elements for group "Encryption Type"
         bEnveloping = new Button(gType, SWT.RADIO);
@@ -146,23 +157,6 @@ public class PageResource extends WizardPage implements Listener {
     }
 
     /**
-     * Determines all available encryption IDs in the XML document.<br>
-     * The entry <i>Use first encryption ID</i> is always available and selected per default.
-     */
-    private void determineIds() {
-        String[] ids = null;
-
-        try {
-            ids = Utils.getIds(data, "encryption");
-        } catch (Exception ex) {
-            ids = new String[] {};
-        }
-
-        cEncryptionId.setItems(ids);
-        cEncryptionId.select(0);
-    }
-
-    /**
      * Adds all listeners for the current wizard page.
      */
     private void addListeners() {
@@ -175,7 +169,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Shows a message to the user to complete the fields on this page.
-     *
+     * 
      * @param message The message for the user
      * @param status The status type of the message
      */
@@ -193,6 +187,10 @@ public class PageResource extends WizardPage implements Listener {
      * Determines the (error) message for the missing field.
      */
     private void dialogChanged() {
+        if (globalError) {
+            return;
+        }
+
         if ("".equals(cEncryptionId.getText())) {
             updateStatus(Messages.missingEncryptionId, IMessageProvider.INFORMATION);
             return;
@@ -203,7 +201,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Handles the events from this wizard page.
-     *
+     * 
      * @param e The triggered event
      */
     public void handleEvent(final Event e) {
@@ -212,7 +210,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Sets the completed field on the wizard class when all the data is entered and the wizard can be finished.
-     *
+     * 
      * @return Page is completed or not
      */
     public boolean isPageComplete() {

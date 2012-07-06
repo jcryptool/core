@@ -11,8 +11,6 @@
 package org.jcryptool.crypto.xml.core.tests.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 import junit.framework.TestCase;
 
@@ -68,12 +66,10 @@ public class UtilsTest extends TestCase {
      * or encryption.
      */
     public void testGetIds() throws Exception {
-        InputStream idStream = new FileInputStream(new File(XMLSecurityToolsCoreTestPlugin.getTestFileLocation("resources/ids.xml")));
         String[] idsEncryption = {"Use first encryption id", "myEncryptionA", "myEncryptionB"};
-        assertEquals(idsEncryption.length, Utils.getIds(idStream, "encryption").length);
-        idStream = new FileInputStream(new File(XMLSecurityToolsCoreTestPlugin.getTestFileLocation("resources/ids.xml")));
+        assertEquals(idsEncryption.length, Utils.getIds(idXml, "encryption").length);
         String[] idsSignature = {"Use first signature id", "mySignature"};
-        assertEquals(idsSignature.length, Utils.getIds(idStream, "signature").length);
+        assertEquals(idsSignature.length, Utils.getIds(idXml, "signature").length);
     }
 
     /**
