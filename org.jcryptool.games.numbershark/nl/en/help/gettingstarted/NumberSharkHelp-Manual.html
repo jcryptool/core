@@ -45,9 +45,9 @@
 
   <li><strong>"Hint&quot;</strong></li>
   
-  <p>Generates a hint for a number which can be choosen next. In some situations a hint cannot be provided.</p>
+  <p>Generates a hint for a number which can be chosen next. In some situations a hint cannot be provided.</p>
   <li><strong>&quot;Heuristic strategies&quot;</strong></li>
-  <p>Different heuristic strategies, which lead to winning situations can be analysed here. Further information can be found in &quot;2. Heuristic strategies&quot;.</p>
+  <p>Different heuristic strategies, which lead to winning situations can be analyzed here. Further information can be found in &quot;2. Heuristic strategies&quot;.</p>
   <li><strong>&quot;Optimal strategies&quot;</strong></li>
 
   <p>A wizard to calculate strategies, which are optimal. Detailed information can be found in &quot;3. Optimal strategies&quot;.</p>
@@ -58,7 +58,7 @@
 <ul>
 <li><strong>"Current points"</strong></li>
 
-<p>In this group, your score and the score of the shark are displayed, the colours significate who is currently leading the game. Are your points in green, you are about to win, are your points showed in red, you should get some points.<br>
+<p>In this group, your score and the score of the shark are displayed, the colors significate who is currently leading the game. Are your points in green, you are about to win, are your points showed in red, you should get some points.<br>
   The number next to &quot;Minimal Points to win&quot;, is the the number you should try to reach to win the game.</p>
 <li><strong>"Overview table: Detailed  score"</strong></li>
 <p>This table provides information of the game. For each move you can review which number you took and how many points to had. You as well can find the numbers you lost in this move. Further more, you get the number of remaining numbers and the score of the shark.</p>
@@ -66,7 +66,7 @@
 
 
 <h2 id = "heuStrat">2. The Heuristic Strategies</h2>
-<p>After playing a bit you might already have developped your first strategie how to win against the shark. The wizard for heuristic strategies (<img src="Manual_heuStrat.jpg" alt="Wizard heuristic strategies">) provides some strategies which leads to winning move sequences.</p>
+<p>After playing a bit you might already have developed your first strategy how to win against the shark. The wizard for heuristic strategies (<img src="Manual_heuStrat.jpg" alt="Wizard heuristic strategies">) provides some strategies which leads to winning move sequences.</p>
 <h3>2.1 The Wizard for Heuristic Strategies </h3>
 <p>By clicking on <img src="Manual_heuStrat.jpg" alt="Wizard heuristic strategies"> the wizard for heuristic strategies appears. At the moment three different strategies are implemented. Those strategies can be selected with the radio buttons. The lower sliders define the lower and upper bounds of the playing field sizes for which the move sequences will be calculated.</p>
 <ul>
@@ -98,7 +98,7 @@
   Step 2: Take the largest active integer with the fewest divisors in the interval N down to the first border value. <BR>
   Step 3: Calculate randomly a   second border value out of the interval N down to N/2+1. <BR>
   Step 4: Take the   largest pseudo prime in the interval N down to the second border value. <BR>
-  Step   5: As your current move take randomly one number out of the numers calculated in step 2 and 4 <BR>
+  Step   5: As your current move take randomly one number out of the numbers calculated in step 2 and 4 <BR>
   Step 6: Repeat from Step 1 as long as there are still free   numbers. </li>
 </ul>
 <p>Precise information can be found here: <br>
@@ -108,7 +108,7 @@
 By clicking &quot;Okay&quot;, the move sequences will be calculated with the bounds and the algorithm you have selected. Depending on your computer the process of calculating might take a while.<br>
 Finally the result dialog will appear. Sorted by the size of the playing field, you can find the following information: First you see the score you can reach, then the score the shark will get. Next is the move sequence which is required to reach the points. In the last column the time which was need to calculate the sequence is shown. If you select a row you can press the button &quot;Play selected..&quot; Then a new game will be set up and the moves of the sequence you selected will be played. Then you can see in the lower table more detailed information.<br>
 With
-&quot;Save as...&quot; the whole table can be exported as a &quot;.csv&quot;-File and can be opend e.g. in Excel.</p>
+&quot;Save as...&quot; the whole table can be exported as a &quot;.csv&quot;-File and can be opened e.g. in Excel.</p>
 <p><img src="Manual_5.jpg"/></p>
 <p>&nbsp;</p>
 <h2 id = "optStrat">3. The optimal strategies</h2>
@@ -118,13 +118,13 @@ With
   A look to the wizard is worth it, maybe you can find a strategy which always finds an optimal sequence?
 </p>
 <h3>3.1 The wizard optimal strategies</h3>
-<p>By clicking on the (completly filled) star icon  <img src="Manual_optStrat.jpg" alt=""/> in the toolbar  the wizard to calculate optimal strategies pops up. There you got to choose between the following:</p>
+<p>By clicking on the (completely filled) star icon  <img src="Manual_optStrat.jpg" alt=""/> in the toolbar  the wizard to calculate optimal strategies pops up. There you got to choose between the following:</p>
 
 <ul>
   <li><strong>"Show pre-calculated optimal strategies (for playing fields of size 2-250)"</strong></li>
-  <p>Already calculated move sequences for the playing field sizes between 2 and 250 can be viewed and analysed here.</p>
+  <p>Already calculated move sequences for the playing field sizes between 2 and 250 can be viewed and analyzed here.</p>
   <li><strong>"Calculate the optimal strategy with the algorithm of van Nek"</strong></li>
-  <p>By choosing this option, move sequences can be calculated with the backtracking algorithm developped by van Nek. Further more you can set the range of playing field sizes you want the sequences to be calculated for.<br>
+  <p>By choosing this option, move sequences can be calculated with the backtracking algorithm developed by van Nek. Further more you can set the range of playing field sizes you want the sequences to be calculated for.<br>
     Note: The run time of the algorithm is exponential in the size of the playing field, so depending on the interval you chose, the calculating process might take a while.
     <br>
   <br>
@@ -139,14 +139,13 @@ With
    Step 5: Go to another not yet finished subproblem.<br>
    <br>
    The description to this algorithm is just the main idea. Van Nek in his implementation used some other 
-   queries because it is not always needed to evaluate some subproblems till the end. E.g. before considering a subproblem the algorithmn tests if it is still possible with the remaining numbers to exceed the current optimal score.
+   queries because it is not always needed to evaluate some subproblems till the end. E.g. before considering a subproblem the algorithm tests if it is still possible with the remaining numbers to exceed the current optimal score.
 </ul>
 By clicking on &quot;Okay&quot;, the move sequences will be showed or re-calculated with the algorithm, depending on your selection. Depending on your computer the process of calculating might take a while.<br>
 Finally the result dialog will appear. Sorted by the size of the playing field, you can find the following information: First you see the maximal score you can reach, then the score the shark will get. Next is the move sequence which is required to reach the score. In the last column the time which was need to calculate the sequence is shown. If you select a row you can press the button &quot;Play selected..&quot; Then a new game will be set up and the moves of the sequence you selected will be played. Then you can see in the lower table more detailed information.<br>
 With
-&quot;Save as...&quot; the whole table can be exported as a &quot;.csv&quot;-File and can be opend e.g. in Excel.
-<p><img src="Manual_6.jpg" alt="" width="650" " /></p>
-  <p>
+&quot;Save as...&quot; the whole table can be exported as a &quot;.csv&quot;-File and can be opened e.g. in Excel.
+<p><img src="Manual_6.jpg" alt="" width="650" /></p>
 
 </body>
 </html>
