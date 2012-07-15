@@ -4,12 +4,12 @@
     <parent>
         <groupId>org.jcryptool</groupId>
         <artifactId>core.parent</artifactId>
-        <version>0.9.7-SNAPSHOT</version>
+        <version>0.9.8-SNAPSHOT</version>
     </parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>releng</artifactId>
-	<version>0.9.7-SNAPSHOT</version>
+	<version>0.9.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<build>
         <plugins>

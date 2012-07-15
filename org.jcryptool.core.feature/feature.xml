@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.core"
       label="JCrypTool Core Feature"
-      version="0.9.7.qualifier"
+      version="0.9.8.qualifier"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 

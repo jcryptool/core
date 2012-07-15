@@ -5,7 +5,7 @@ Name JCrypTool
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.9.7
+!define VERSION 0.9.8
 !define COMPANY jcryptool.org
 !define URL http://www.cryptool.org
 
