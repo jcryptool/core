@@ -61,7 +61,7 @@ public class SudokuComposite extends Composite {
 
     public final int NORMAL = 1, KILLER = 2, HEX = 3;
 
-    public final int BOX_SIZE_NORMAL = 50, BOX_SIZE_KILLER = 50, BOX_SIZE_HEX = 40;
+    public final int BOX_SIZE_NORMAL = 50, BOX_SIZE_KILLER = 50, BOX_SIZE_HEX = 42;
     final private int ADDITION = 0, SUBTRACTION = 1, MULTIPLICATION = 2, DIVISION = 3;
 
     public int tabChoice, numberOfGuesses = 0;
@@ -1834,13 +1834,13 @@ public class SudokuComposite extends Composite {
                 gridlayout.horizontalSpacing = 0;
                 labelCellHex[i][j].setLayout(gridlayout);
                 for (int k = 0; k < 4; k++) {
-                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j]);
+                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
 
                 }
                 boardTextHex[i][j] = createTextHex(labelCellHex[i][j]);
                 inputBoxesHex.put(boardTextHex[i][j], new UserInputPoint(i, j));
                 for (int k = 4; k < 8; k++) {
-                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j]);
+                    boardLabelsHex[i][j][k] = createLabelHex(labelCellHex[i][j],k);
                 }
                 if (boardHex[i][j] != -1)
                     boardTextHex[i][j].setText(Integer.toString(boardHex[i][j]));
@@ -1875,10 +1875,45 @@ public class SudokuComposite extends Composite {
         return label;
     }
 
-    public Label createLabelHex(Composite parent) {
+    public Label createLabelHex(Composite parent, int k) {
         Label label = new Label(parent, SWT.NONE);
         label.setAlignment(SWT.CENTER);
-        label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+        int horizontal = SWT.CENTER, vertical = SWT.CENTER;
+        switch (k) {
+        case 0: {
+        	horizontal = SWT.LEFT;
+        	vertical = SWT.TOP;
+        } break;
+        case 1: {
+        	horizontal = SWT.CENTER;
+        	vertical = SWT.TOP;
+        } break;
+        case 2: {
+        	horizontal = SWT.RIGHT;
+        	vertical = SWT.TOP;
+        } break;
+        case 3: {
+        	horizontal = SWT.LEFT;
+        	vertical = SWT.CENTER;
+        } break;
+        case 4: {
+        	horizontal = SWT.RIGHT;
+        	vertical = SWT.CENTER;
+        } break;
+        case 5: {
+        	horizontal = SWT.LEFT;
+        	vertical = SWT.BOTTOM;
+        } break;
+        case 6: {
+        	horizontal = SWT.CENTER;
+        	vertical = SWT.BOTTOM;
+        } break;
+        case 7: {
+        	horizontal = SWT.RIGHT;
+        	vertical = SWT.BOTTOM;
+        } break;
+        }
+        label.setLayoutData(new GridData(horizontal, vertical, true, true));
         label.setSize(BOX_SIZE_HEX / 3, BOX_SIZE_HEX / 3);
         label.setFont(FontService.getTinyFont());
         return label;

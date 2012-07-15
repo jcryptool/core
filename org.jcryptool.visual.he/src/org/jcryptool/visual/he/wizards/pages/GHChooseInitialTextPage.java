@@ -72,9 +72,14 @@ public class GHChooseInitialTextPage extends WizardPage{
         
         text.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {
-                setPageComplete(!((Text) e.widget).getText().equals("")); //$NON-NLS-1$
-                data.setData(Integer.parseInt(((Text) e.widget).getText()));
-                usedText.setText(Integer.toString(data.getNumber()%(int)Math.pow(2, logMod)));
+            	if (((Text) e.widget).getText().length()>0) {
+            		setPageComplete(true);
+            		data.setData(Integer.parseInt(((Text) e.widget).getText()));
+            		usedText.setText(Integer.toString(data.getNumber()%(int)Math.pow(2, logMod)));
+            	} else {
+            		setPageComplete(false);
+            		usedText.setText("");
+            	}  
             }
         });
         text.addVerifyListener(Lib.getVerifyListener(Lib.DIGIT));
