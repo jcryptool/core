@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Version: 0.9.7.qualifier
+Bundle-Version: 0.9.8.qualifier
 Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jcryptool.crypto.modern.sha3;singleton:=true
 Bundle-ActivationPolicy: lazy

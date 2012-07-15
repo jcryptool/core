@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Vernam
 Bundle-SymbolicName: org.jcryptool.crypto.classic.vernam;singleton:=true
-Bundle-Version: 0.9.7.qualifier
+Bundle-Version: 0.9.8.qualifier
 Bundle-Activator: org.jcryptool.crypto.classic.vernam.VernamPlugin
 Export-Package: org.jcryptool.crypto.classic.vernam,
  org.jcryptool.crypto.classic.vernam.algorithm,
