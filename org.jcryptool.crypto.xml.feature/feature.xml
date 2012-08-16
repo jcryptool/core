@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.xml"
       label="JCrypTool XML Security Feature"
-      version="0.9.7.qualifier"
+      version="0.9.8.qualifier"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.crypto.xml">
 

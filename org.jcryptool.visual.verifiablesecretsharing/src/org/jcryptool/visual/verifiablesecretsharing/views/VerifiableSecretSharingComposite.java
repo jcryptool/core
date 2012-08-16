@@ -1199,11 +1199,12 @@ public class VerifiableSecretSharingComposite extends Composite {
 													getShell(),
 													Messages.VerifiableSecretSharingComposite_reconstruction_reconstruct_dialog_title,
 													Messages.ChartComposite_reconstruct_failure
-															+ Messages.VerifiableSecretSharingComposite_reconstruction_reconstruct_dialog_text
-															+ reconstruction
-																	.getCoef()[0]
-																	.toString()
-															+ "."); //$NON-NLS-1$
+//															+ Messages.VerifiableSecretSharingComposite_reconstruction_reconstruct_dialog_text
+//															+ reconstruction
+//																	.getCoef()[0]
+//																	.toString()
+//															+ "."
+													); //$NON-NLS-1$
 								}
 								// MessageDialog.openError(getShell(),
 								// "Error",errorText);

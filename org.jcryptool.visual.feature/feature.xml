@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.visual"
       label="JCrypTool Visual Feature"
-      version="0.9.7.qualifier"
+      version="0.9.8.qualifier"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.visual">
 
@@ -365,6 +365,13 @@ litigation.
 
    <plugin
          id="org.jcryptool.visual.verifiablesecretsharing.lib"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.visual.sidechannelattack.dpa"
          download-size="0"
          install-size="0"
          version="0.0.0"
