@@ -13,5 +13,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.analysis.textmodify.wizard,
  org.jcryptool.core.logging.utils,
- org.jcryptool.core.util.fonts
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.crypto.classic.alphabets.ui
 Bundle-Vendor: %Bundle-Vendor

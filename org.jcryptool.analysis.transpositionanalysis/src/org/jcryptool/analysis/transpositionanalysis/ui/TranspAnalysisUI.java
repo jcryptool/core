@@ -16,6 +16,9 @@ import java.util.Observer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -40,6 +43,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizard;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
@@ -221,6 +225,14 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 					layoutData.widthHint = 200;
 					lblNewLabel.setLayoutData(layoutData);
+					lblNewLabel.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseDown(MouseEvent e) {
+							 AddAlphabetWizard wizard = new AddAlphabetWizard();
+						        WizardDialog dialog = new WizardDialog(getShell(), wizard);
+						        int value = dialog.open();
+						}
+					});
 				}
 				{
 					lblLoadA = new Label(compLoadTextBtn, SWT.NONE);

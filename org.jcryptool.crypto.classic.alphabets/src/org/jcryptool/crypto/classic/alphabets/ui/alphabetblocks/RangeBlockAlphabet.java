@@ -20,7 +20,7 @@ public class RangeBlockAlphabet extends BlockAlphabet {
 		return endCharacter;
 	}
 	
-	private static String generateRangeName(Character startCharacter,
+	protected static String generateRangeName(Character startCharacter,
 			Character endCharacter) {
 		return startCharacter+"-"+endCharacter;
 	}

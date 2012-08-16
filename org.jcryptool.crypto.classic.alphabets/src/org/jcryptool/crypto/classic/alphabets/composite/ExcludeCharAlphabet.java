@@ -1,5 +1,6 @@
 package org.jcryptool.crypto.classic.alphabets.composite;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,13 +35,20 @@ public class ExcludeCharAlphabet extends AtomAlphabet {
 		this.excludedChar = excludedChar;
 	}
 	
-	public ExcludeCharAlphabet(AtomAlphabet alphabet, Character excludedChar) {
-		this(alphabet, excludedChar, IS_BASIC_STD, IS_STANDARD_ALPHABET_STD, NAME_STD, SHORTNAME_STD);
+	public ExcludeCharAlphabet(AtomAlphabet alphabet, Character excludedChars) {
+		this(alphabet, excludedChars, IS_BASIC_STD, IS_STANDARD_ALPHABET_STD, NAME_STD, SHORTNAME_STD);
 	}
 	
-	private static List<Character> createExclusionCharset(AbstractAlphabet alphabet, Character excludedChar) {
+	public static List<Character> createExclusionCharset(AbstractAlphabet alphabet, Character excludedChar) {
 		List<Character> charset = new LinkedList<Character>();
 		for(Character c: alphabet.getCharacterSet()) if(! c.equals(excludedChar)) {
+			charset.add(c);
+		}
+		return charset;
+	}
+	public static List<Character> createExclusionCharset(AbstractAlphabet alphabet, List<Character> excludedChar) {
+		List<Character> charset = new LinkedList<Character>();
+		for(Character c: alphabet.getCharacterSet()) if(! excludedChar.contains(c)) {
 			charset.add(c);
 		}
 		return charset;
@@ -52,6 +60,11 @@ public class ExcludeCharAlphabet extends AtomAlphabet {
 
 	public Character getExcludedChar() {
 		return excludedChar;
+	}
+	
+	@Override
+	public String toString() {
+		return StringAlphabetFactory.buildStringRepresentation(this);
 	}
 
 }

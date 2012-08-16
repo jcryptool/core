@@ -2,7 +2,7 @@ package org.jcryptool.crypto.classic.alphabets.ui.alphabetblocks;
 
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 
-public class RevertBlock extends BlockAlphabet {
+public class RevertBlock extends BlockAlphabet implements HasOriginalBlockAlpha {
 
 	private BlockAlphabet origAlphabet;
 
@@ -29,16 +29,17 @@ public class RevertBlock extends BlockAlphabet {
 	}
 	
 	private static String generateReverseName(BlockAlphabet alpha) {
-		if(alpha instanceof RangeBlockAlphabet 
-				|| alpha.getBlockName().equals(String.valueOf(alpha.getCharacterSet()))
-				|| alpha.getBlockName().equals("'"+String.valueOf(alpha.getCharacterSet())+"'")) {
-			return reverseString(alpha.getBlockName());
+		if(alpha instanceof RangeBlockAlphabet) {
+			return RangeBlockAlphabet.generateRangeName(((RangeBlockAlphabet) alpha).getEndCharacter(), ((RangeBlockAlphabet) alpha).getStartCharacter());
+		} else if(alpha.getBlockName().equals(AtomAlphabet.alphabetContentAsString(alpha.getCharacterSet()))) {
+			return AtomAlphabet.alphabetContentAsString(reverseString(String.valueOf(alpha.getCharacterSet())).toCharArray());
 		} else {
-			return "invert("+alpha.getName()+")";
+			return "Reverse( "+alpha.getName()+" )";
 		}
 	}
 
-	public AtomAlphabet getOrigAlphabet() {
+	@Override
+	public BlockAlphabet getOrigAlphabet() {
 		return origAlphabet;
 	}
 

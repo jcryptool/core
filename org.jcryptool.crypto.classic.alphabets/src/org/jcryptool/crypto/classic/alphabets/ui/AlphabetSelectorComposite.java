@@ -127,6 +127,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 *
 	 * @param parent the parent control
 	 * @param mode the mode of user interaction
+	 * @wbp.parser.constructor
 	 */
 	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, Mode mode) {
 		this(parent, createAllAlphabetsAcceptor(), mode);

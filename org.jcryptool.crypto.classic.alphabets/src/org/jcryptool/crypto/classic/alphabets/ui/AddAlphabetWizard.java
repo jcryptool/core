@@ -21,7 +21,7 @@ import org.eclipse.jface.wizard.Wizard;
 public class AddAlphabetWizard extends Wizard {
 
 	/** The wizard page */
-	private AddAlphabetWizardPage page;
+	private AddAlphabetWizardPage2 page;
 	
 	/**
 	 * Creates a new instance of AddAlphabetWizard.
@@ -34,7 +34,7 @@ public class AddAlphabetWizard extends Wizard {
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
 	public void addPages() {
-		page = new AddAlphabetWizardPage();
+		page = new AddAlphabetWizardPage2();
 		addPage(page);
 	}
 	

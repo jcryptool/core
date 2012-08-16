@@ -12,7 +12,7 @@ public class BlockAlphabet extends AtomAlphabet {
 	}
 	
 	public BlockAlphabet(String characters) {
-		this(characters, characters);
+		this(characters, AtomAlphabet.alphabetContentAsString(characters.toCharArray()));
 	}
 
 	public String getBlockName() {
