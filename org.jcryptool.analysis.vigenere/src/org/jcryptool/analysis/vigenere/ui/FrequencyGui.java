@@ -82,7 +82,7 @@ public class FrequencyGui extends Content {
             Font coufont = new Font(getDisplay(), coudat);
 
             FormLayout thisLayout = new FormLayout();
-            this.setSize(780, 620);
+            this.setSize(780, 720);
             this.setLayout(thisLayout);
             {
                 cselection = new Composite(this, SWT.NONE);
@@ -146,7 +146,7 @@ public class FrequencyGui extends Content {
                 composite3LData.left = new FormAttachment(0, 1000, 10);
                 composite3LData.top = new FormAttachment(0, 1000, 30);
                 composite3LData.width = 760;
-                composite3LData.height = 580;
+                composite3LData.height = 680;
                 cvariable.setLayoutData(composite3LData);
                 cvariable.setLayout(composite3Layout);
                 {
@@ -167,7 +167,7 @@ public class FrequencyGui extends Content {
                     tdescrLData.left = new FormAttachment(0, 1000, 0);
                     tdescrLData.top = new FormAttachment(0, 1000, 380);
                     tdescrLData.width = 234;
-                    // tdescrLData.height = 145;
+                    tdescrLData.height = 245;
                     thelp.setLayoutData(tdescrLData);
                     thelp.setText(String.format(Messages.FrequencyGui_text_help, plength)
                             + "\n\nDurch Klick auf \"Bestimmen\" wird ein Lösungsvorschlag automatisch errechnet.");

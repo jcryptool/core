@@ -300,19 +300,28 @@ public class DataProvider {
 
             IClassicDataObject classic = (IClassicDataObject) data;
             InputStream plain = classic.getOutputIS();
-            InputStreamReader isr = new InputStreamReader(plain);
-            BufferedReader br = new BufferedReader(isr);
 
             StringBuffer buffer = new StringBuffer();
-            String line = br.readLine();
-
-            while (null != line) {
-                // don't add CRLF, otherwise results in problems by
-                // formatting the string. CRLF bad!!!
-                buffer.append(line);
-                // buffer.append(line + "\n"); // add CRLF, readLine()
-                // removes it.
-                line = br.readLine();
+           
+            if(plain == null) {
+            	if(classic.getOutput() != null) {
+            		buffer.append(classic.getOutput());
+            	} else {
+            		LogUtil.logError(new RuntimeException("Vigenere breaker: could not decrypt text with guessed character"));
+            	}
+            } else {
+            	InputStreamReader isr = new InputStreamReader(plain);
+            	BufferedReader br = new BufferedReader(isr);
+            	String line = br.readLine();
+            	
+            	while (null != line) {
+            		// don't add CRLF, otherwise results in problems by
+            		// formatting the string. CRLF bad!!!
+            		buffer.append(line);
+            		// buffer.append(line + "\n"); // add CRLF, readLine()
+            		// removes it.
+            		line = br.readLine();
+            	}
             }
 
             return buffer.toString();
