@@ -2,6 +2,8 @@ package org.jcryptool.visual.des.algorithm;
 
 import java.util.ArrayList;
 
+import org.jcryptool.visual.des.view.Messages;
+
 public class DESController {
 	
 	// General Variables
@@ -11,8 +13,8 @@ public class DESController {
 	// Algorithm Variables
 	public int Alg_In_Mode = 0;
 	public int Alg_In_selectedKey = 0;
-	public String Alg_In_manualKey = "";
-	public String Alg_In_Data = "";
+	public String Alg_In_manualKey = ""; //$NON-NLS-1$
+	public String Alg_In_Data = ""; //$NON-NLS-1$
 	public int[][] Alg_Out_M0M17 = null;
 	public int[] Alg_Out_M0M17_Dist = null;
 	public int[][] Alg_Out_cipherMatrix = null;
@@ -26,13 +28,13 @@ public class DESController {
 	// Fixed Point Variables
 	public boolean FPoints_In_FixedPoints = true;
 	public int FPoints_In_selectedKey = 0;		
-	public String FPoints_In_M8 = "";
-	public String FPoints_Out_AFpoints = "";
+	public String FPoints_In_M8 = ""; //$NON-NLS-1$
+	public String FPoints_Out_AFpoints = ""; //$NON-NLS-1$
 	public int[][] FPoints_Out_M8M17 = null;
 	public int[] FPoints_Out_Distances = null;
 	
 	// SBox Variables
-	public String SBox_In_Deltap = "";
+	public String SBox_In_Deltap = ""; //$NON-NLS-1$
 	public String SBox_Out_randomm = null;
 	public String SBox_Out_randomk = null;
 	public int[][] SBox_Out_activeBoxes = null;;
@@ -45,7 +47,7 @@ public class DESController {
 	}
 	
 	public int AlgorithmStudy(){
-		String strData = "";
+		String strData = ""; //$NON-NLS-1$
 		int[] intData = null;
 		int[] M0M17_Dist = null;
 		int[] cipherM_Dist = null;
@@ -98,7 +100,7 @@ public class DESController {
 	}
 	
 	public int FPointsStudy(){
-		String strData = "";
+		String strData = ""; //$NON-NLS-1$
 		int [] intData = null;
 		int[] dist;
 		
@@ -148,7 +150,7 @@ public class DESController {
 	}
 	
 	public int SBoxStudy(){
-		String strData = "";
+		String strData = ""; //$NON-NLS-1$
 		int[] intData = null;
 		
 		if (this.checkSBoxInput()!=0){
@@ -168,7 +170,7 @@ public class DESController {
         DESMod.key_user  = DESMod.generate_random_key();            
         for(int j=0; j< 8; j++){       
         	for(int k=0; k<8; k++){
-        		System.out.print(DESMod.key_user[8*j+k] + " ");
+        		System.out.print(DESMod.key_user[8*j+k] + " "); //$NON-NLS-1$
         	}
         	System.out.println();
          }
@@ -179,11 +181,11 @@ public class DESController {
                      
         for(int j=0; j< 8; j++){       
         	for(int k=0; k<8; k++){
-        		System.out.print(DESMod.DES_m_Plaintext[8*j+k] + " ");
+        		System.out.print(DESMod.DES_m_Plaintext[8*j+k] + " "); //$NON-NLS-1$
         	}
-        	System.out.println("");
+        	System.out.println(""); //$NON-NLS-1$
          }
-         System.out.println("");
+         System.out.println(""); //$NON-NLS-1$
                     
          for(int i=0; i<intData.length; i++){   
         	 DESMod.DES_m_oplus_Delta_Plaintext[i] = DESMod.DES_m_Plaintext[i] ^ DESMod.DES_delta_Plaintext[i];
@@ -204,15 +206,15 @@ public class DESController {
 		if (this.Alg_In_selectedKey==16){
 			this.Alg_In_manualKey=DESMod.cleanTheString(this.Alg_In_manualKey);
 			if (this.Alg_In_manualKey.length()!=16){
-				errList.add("Input manual key has not 16 hexdecimal digits");
+				errList.add(Messages.DESController_12);
 				err++;
 			}
 			if (DESMod.check_key_for_parity(this.Alg_In_manualKey.toCharArray())==false){
-				errList.add("Input manual key has incorrect parity");
+				errList.add(Messages.DESController_13);
 				err++;
 			}
 			if (this.isHexDigit(this.Alg_In_manualKey)!=0){
-				errList.add("Input manual key does not solely consists of hexdecimal digits (0-9,A,B,C,D,E,F,G)");
+				errList.add(Messages.DESController_14);
 				err++;
 			}
 		}
@@ -221,11 +223,11 @@ public class DESController {
 		// Check Input Data
 		this.Alg_In_Data = DESMod.cleanTheString(this.Alg_In_Data);
 		if (this.Alg_In_Data.length()!=16){
-			errList.add("Input data has not 16 hexdecimal digits");
+			errList.add(Messages.DESController_15);
 			err++;
 		}
 		if (this.isHexDigit(this.Alg_In_Data)!=0){
-			errList.add("Input data does not solely consists of hexdecimal digits (0-9,A,B,C,D,E,F,G)");
+			errList.add(Messages.DESController_16);
 			err++;
 		}
 		
@@ -245,12 +247,12 @@ public class DESController {
 		// Check length
 		len = this.FPoints_In_M8.length();
 		if (len!=8){
-			errList.add("Input m[8] has not 8 hexdecimal digits");
+			errList.add(Messages.DESController_17);
 			err++;
 		}
 		// Check Input Digits
 		if (this.isHexDigit(this.FPoints_In_M8)!=0){
-			errList.add("Input m[8] does not solely consists of hexdecimal digits (0-9,A,B,C,D,E,F,G)");
+			errList.add(Messages.DESController_18);
 			err++;
 		}
 		
@@ -269,12 +271,12 @@ public class DESController {
 		// Check Input Length
 		len = this.SBox_In_Deltap.length();
 		if (len!=16){
-			errList.add("Input Delta_P has not 16 hexdecimal digits");
+			errList.add(Messages.DESController_19);
 			err++;
 		}
 		// Check Input Digits
 		if (this.isHexDigit(this.SBox_In_Deltap)!=0){
-			errList.add("Delta P input does not solely consists of hexdecimal digits (0-9,A,B,C,D,E,F,G)");
+			errList.add(Messages.DESController_20);
 			err++;
 		}
 		
