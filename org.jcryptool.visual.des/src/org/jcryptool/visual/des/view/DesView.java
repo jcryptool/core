@@ -285,14 +285,14 @@ public class DesView extends ViewPart {
 		comAlgMainRight = new Composite(comAlgMain, SWT.NONE);
 		comAlgMainRight.setLayout(new FormLayout());
 		FormData fd_comAlgMainRight = new FormData(600,500);
+		fd_comAlgMainRight.left = new FormAttachment(comAlgMainLeft, 10);
+		fd_comAlgMainRight.right = new FormAttachment(100, -10);
 		fd_comAlgMainRight.top = new FormAttachment(0,10);
-		fd_comAlgMainRight.left = new FormAttachment(comAlgMainLeft,10);
-		fd_comAlgMainRight.right = new FormAttachment(100,-10);
 		comAlgMainRight.setLayoutData(fd_comAlgMainRight);
 
 		comAlgMainDown = new Composite(comAlgMain, SWT.NONE);
 		FormData fd_comAlgMainDown = new FormData(0,100);
-		fd_comAlgMainDown.top = new FormAttachment(comAlgMainLeft, 10);
+		fd_comAlgMainDown.top = new FormAttachment(comAlgMainRight, 10);
 		fd_comAlgMainDown.left = new FormAttachment(0, 10);
 		fd_comAlgMainDown.right = new FormAttachment(100,-10);
 		comAlgMainDown.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -350,7 +350,7 @@ public class DesView extends ViewPart {
 
 		btnAlgDecrypt = new Button(comAlgInputMode, SWT.RADIO);
 		btnAlgDecrypt.setText(Messages.DesView_5);
-		btnAlgDecrypt.setBounds(0, 40, 67, 22);
+		btnAlgDecrypt.setBounds(0, 40, 86, 22);
 
 		btnAlgDecrypt.addSelectionListener( new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e){
@@ -362,7 +362,7 @@ public class DesView extends ViewPart {
 
 		btnAlgEncrypt = new Button(comAlgInputMode, SWT.RADIO);
 		btnAlgEncrypt.setText(Messages.DesView_8);
-		btnAlgEncrypt.setBounds(0, 20, 67, 22);
+		btnAlgEncrypt.setBounds(0, 20, 86, 22);
 		btnAlgEncrypt.setSelection(true);
 
 		btnAlgEncrypt.addSelectionListener( new SelectionAdapter(){
@@ -388,10 +388,11 @@ public class DesView extends ViewPart {
 		});
 
 		comAlgInputKey = new Composite(grpAlgInput, SWT.NONE);
+		fd_comAlgInputMode.right = new FormAttachment(comAlgInputKey, -6);
 		FormData fd_comAlgInputKey = new FormData();
+		fd_comAlgInputKey.left = new FormAttachment(0, 102);
 		fd_comAlgInputKey.top = new FormAttachment(0);
 		fd_comAlgInputKey.bottom = new FormAttachment(100);
-		fd_comAlgInputKey.left = new FormAttachment(comAlgInputMode,25);
 		comAlgInputKey.setLayoutData(fd_comAlgInputKey);
 
 		btnAlgK0 = new Button(comAlgInputKey, SWT.RADIO);
@@ -444,7 +445,7 @@ public class DesView extends ViewPart {
 
 		btnAlgManual = new Button(comAlgInputKey, SWT.RADIO);
 		btnAlgManual.setText(Messages.DesView_21);
-		btnAlgManual.setBounds(220, 23, 155, 15);
+		btnAlgManual.setBounds(230, 23, 163, 15);
 
 		btnAlgManual.addSelectionListener(new SelectionAdapter(){
 			public void widgetSelected(SelectionEvent e) {
@@ -457,11 +458,11 @@ public class DesView extends ViewPart {
 		});
 
 		lblAlgInputManualCurChar = new Label(comAlgInputKey, SWT.NONE);
-		lblAlgInputManualCurChar.setBounds(368, 43, 25, 15);
+		lblAlgInputManualCurChar.setBounds(379, 43, 25, 15);
 		lblAlgInputManualCurChar.setText(Messages.DesView_22);
 
 		txtAlgKeyManual = new Text(comAlgInputKey, SWT.BORDER);
-		txtAlgKeyManual.setBounds(237, 41, 128, 20);
+		txtAlgKeyManual.setBounds(230, 41, 140, 20);
 		txtAlgKeyManual.setTextLimit(16);
 		txtAlgKeyManual.setEnabled(false);
 
@@ -779,19 +780,19 @@ public class DesView extends ViewPart {
 		txtAlgInformation.setText(Messages.DesView_60 +
 				  				Messages.DesView_61 +
 				  				Messages.DesView_62 +
-				  				Messages.DesView_63+
+				  				Messages.DesView_63 +
 				  				Messages.DesView_64 +
 				  				Messages.DesView_65 +
 				  				Messages.DesView_66 +
 				  				Messages.DesView_67 +
 				  				Messages.DesView_68 +
-				  				Messages.DesView_69+
+				  				Messages.DesView_69 +
 				  				Messages.DesView_70 +
 				  				Messages.DesView_71 +
 				  				Messages.DesView_72 +
 				  				Messages.DesView_73 +
 				  				Messages.DesView_74 +
-				  				Messages.DesView_75+
+				  				Messages.DesView_75 +
 				  				Messages.DesView_76 +
 				  				Messages.DesView_77 +
 				  				Messages.DesView_78 +
@@ -814,41 +815,43 @@ public class DesView extends ViewPart {
 			}
 		});
 
-		StyleRange srAlg1 = new StyleRange();
-		srAlg1.start = 82;
-		srAlg1.length = 4;
-		srAlg1.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg1);
-
-		StyleRange srAlg2 = new StyleRange();
-		srAlg2.start = 136;
-		srAlg2.length = 30;
-		srAlg2.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg2);
-
-		StyleRange srAlg3 = new StyleRange();
-		srAlg3.start = 335;
-		srAlg3.length = 29;
-		srAlg3.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg3);
-
-		StyleRange srAlg4 = new StyleRange();
-		srAlg4.start = 543;
-		srAlg4.length = 33;
-		srAlg4.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg4);
-
-		StyleRange srAlg5 = new StyleRange();
-		srAlg5.start = 661;
-		srAlg5.length = 26;
-		srAlg5.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg5);
-
-		StyleRange srAlg6 = new StyleRange();
-		srAlg6.start = 721;
-		srAlg6.length = 28;
-		srAlg6.fontStyle = SWT.BOLD;
-		txtAlgInformation.setStyleRange(srAlg6);
+//		The following Methods are not applicable for more than one language
+		
+//		StyleRange srAlg1 = new StyleRange();
+//		srAlg1.start = 82;
+//		srAlg1.length = 4;
+//		srAlg1.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg1);
+//
+//		StyleRange srAlg2 = new StyleRange();
+//		srAlg2.start = 136;
+//		srAlg2.length = 30;
+//		srAlg2.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg2);
+//
+//		StyleRange srAlg3 = new StyleRange();
+//		srAlg3.start = 335;
+//		srAlg3.length = 29;
+//		srAlg3.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg3);
+//
+//		StyleRange srAlg4 = new StyleRange();
+//		srAlg4.start = 543;
+//		srAlg4.length = 33;
+//		srAlg4.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg4);
+//
+//		StyleRange srAlg5 = new StyleRange();
+//		srAlg5.start = 661;
+//		srAlg5.length = 26;
+//		srAlg5.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg5);
+//
+//		StyleRange srAlg6 = new StyleRange();
+//		srAlg6.start = 721;
+//		srAlg6.length = 28;
+//		srAlg6.fontStyle = SWT.BOLD;
+//		txtAlgInformation.setStyleRange(srAlg6);
 
 		// Action Buttons
 		btnAlgReset = new Button(comAlgMain, SWT.NONE);
@@ -1185,7 +1188,7 @@ public class DesView extends ViewPart {
 
 		lblFPointsInputData = new Label(comFPointsInputM8, SWT.NONE);
 		lblFPointsInputData.setText(Messages.DesView_155);
-		lblFPointsInputData.setBounds(0, 0, 27, 13);
+		lblFPointsInputData.setBounds(0, 0, 42, 13);
 		FontData[] fd_data = lblFPointsInputData.getFont().getFontData();
 		fd_data[0].setStyle(SWT.BOLD);
 		lblFPointsInputData.setFont(new Font(Display.getCurrent(),fd_data[0]));
@@ -1316,23 +1319,23 @@ public class DesView extends ViewPart {
 
 		});
 
-		StyleRange srFPoints1 = new StyleRange();
-		srFPoints1.start = 182;
-		srFPoints1.length = 5;
-		srFPoints1.fontStyle = SWT.BOLD;
-		txtFPointsInformation.setStyleRange(srFPoints1);
-
-		StyleRange srFPoints2 = new StyleRange();
-		srFPoints2.start = 346;
-		srFPoints2.length = 5;
-		srFPoints2.fontStyle = SWT.BOLD;
-		txtFPointsInformation.setStyleRange(srFPoints2);
-
-		StyleRange srFPoints3 = new StyleRange();
-		srFPoints3.start = 522;
-		srFPoints3.length = 15;
-		srFPoints3.fontStyle = SWT.BOLD;
-		txtFPointsInformation.setStyleRange(srFPoints3);
+//		StyleRange srFPoints1 = new StyleRange();
+//		srFPoints1.start = 182;
+//		srFPoints1.length = 5;
+//		srFPoints1.fontStyle = SWT.BOLD;
+//		txtFPointsInformation.setStyleRange(srFPoints1);
+//
+//		StyleRange srFPoints2 = new StyleRange();
+//		srFPoints2.start = 346;
+//		srFPoints2.length = 5;
+//		srFPoints2.fontStyle = SWT.BOLD;
+//		txtFPointsInformation.setStyleRange(srFPoints2);
+//
+//		StyleRange srFPoints3 = new StyleRange();
+//		srFPoints3.start = 522;
+//		srFPoints3.length = 15;
+//		srFPoints3.fontStyle = SWT.BOLD;
+//		txtFPointsInformation.setStyleRange(srFPoints3);
 
 		// Action Buttons
 		btnFPointsReset = new Button(comFPointsMain, SWT.NONE);
@@ -1683,41 +1686,41 @@ public class DesView extends ViewPart {
 			}
 		});
 
-		StyleRange srSBox1 = new StyleRange();
-		srSBox1.start = 500;
-		srSBox1.length = 9;
-		srSBox1.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox1);
-
-		StyleRange srSBox2 = new StyleRange();
-		srSBox2.start = 552;
-		srSBox2.length = 12;
-		srSBox2.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox2);
-
-		StyleRange srSBox3 = new StyleRange();
-		srSBox3.start = 592;
-		srSBox3.length = 11;
-		srSBox3.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox3);
-
-		StyleRange srSBox4 = new StyleRange();
-		srSBox4.start = 626;
-		srSBox4.length = 15;
-		srSBox4.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox4);
-
-		StyleRange srSBox5 = new StyleRange();
-		srSBox5.start = 670;
-		srSBox5.length = 11;
-		srSBox5.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox5);
-
-		StyleRange srSBox6 = new StyleRange();
-		srSBox6.start = 710;
-		srSBox6.length = 14;
-		srSBox6.fontStyle = SWT.BOLD;
-		txtSBoxInformation.setStyleRange(srSBox6);
+//		StyleRange srSBox1 = new StyleRange();
+//		srSBox1.start = 500;
+//		srSBox1.length = 9;
+//		srSBox1.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox1);
+//
+//		StyleRange srSBox2 = new StyleRange();
+//		srSBox2.start = 552;
+//		srSBox2.length = 12;
+//		srSBox2.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox2);
+//
+//		StyleRange srSBox3 = new StyleRange();
+//		srSBox3.start = 592;
+//		srSBox3.length = 11;
+//		srSBox3.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox3);
+//
+//		StyleRange srSBox4 = new StyleRange();
+//		srSBox4.start = 626;
+//		srSBox4.length = 15;
+//		srSBox4.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox4);
+//
+//		StyleRange srSBox5 = new StyleRange();
+//		srSBox5.start = 670;
+//		srSBox5.length = 11;
+//		srSBox5.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox5);
+//
+//		StyleRange srSBox6 = new StyleRange();
+//		srSBox6.start = 710;
+//		srSBox6.length = 14;
+//		srSBox6.fontStyle = SWT.BOLD;
+//		txtSBoxInformation.setStyleRange(srSBox6);
 
 		// Action Buttons
 		btnSBoxReset = new Button(comSBoxMain, SWT.NONE);
