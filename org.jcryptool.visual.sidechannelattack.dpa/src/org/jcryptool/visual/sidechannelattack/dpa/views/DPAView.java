@@ -19,18 +19,15 @@ import java.security.spec.ECPoint;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -48,7 +45,6 @@ import org.jcryptool.algorithm.ECCDouble;
 import org.jcryptool.algorithm.ECCMultiply;
 import org.jcryptool.algorithm.ECCOrderAndPoints;
 import org.jcryptool.algorithm.RandomFactorCreator;
-import org.jcryptool.visual.sidechannelattack.DPAPlugIn;
 
 import com.swtdesigner.SWTResourceManager;
 
@@ -142,7 +138,7 @@ public class DPAView extends ViewPart implements Constants {
         unsecureText = new StyledText(eccAlgorithmGroup, SWT.BORDER | SWT.WRAP | SWT.MULTI | SWT.V_SCROLL);
         unsecureText.setEditable(false);
         unsecureText.setBounds(301, 20, 301, 269);
-        unsecureText.setText(UNSECURE_DOUBLE_ADD_ALWAYS_TEXT);
+        unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
         
                 // define the style of the text shown in the parameterOfCountermeasuresGroup
                 parameterOfCountermeasuresText = new StyledText(eccAlgorithmGroup, SWT.BORDER | SWT.MULTI
@@ -151,11 +147,6 @@ public class DPAView extends ViewPart implements Constants {
                 parameterOfCountermeasuresText.setSize(285, 269);
                 parameterOfCountermeasuresText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WHITE));
                 parameterOfCountermeasuresText.setText(TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT_1);
-
-        // define the color of special text
-        final RGB cc = new RGB(250, 5, 60);
-        unsecureText.setLineBackground(4, 3, new Color(parent.getDisplay(), cc));
-
 
         // define a group in which the user can select the parameters of ECC and initialize an EC, on which the
         // visualization will be based
@@ -477,27 +468,33 @@ public class DPAView extends ViewPart implements Constants {
                 counterFlag = countermeasureselectionCombo.getSelectionIndex();
 
                 // countermeasure 1: randomized scalar multiplier
-                if (counterFlag == 3) {
-                    unsecureText.setText(RANDOMIZED_SCALAR_MULTIPLIER_TEXT);
+                if (counterFlag == 1) {
+                    unsecureText.setText(UNSECURE_DOUBLE_ADD_ALWAYS_TEXT);
                 }
                 // countermeasure 2: randomized initial point
-                else if (counterFlag == 1) {
+                else if (counterFlag == 2) {
+                    unsecureText.setText(RANDOMIZED_SCALAR_MULTIPLIER_TEXT);
+                }
+                // whatever?
+                else if (counterFlag == 3) {
                     unsecureText.setText(RANDOMIZED_INITIAL_POINT_TEXT);
                 }
-                // countermeasure 3: randomized isomorphic curve
-                else if (counterFlag == 2) {
-                    unsecureText.setText(RANDOMIZED_ISOMORPHIC_CURVE_TEXT);
 
-                }         
+                // countermeasure 3: randomized isomorphic curve
+                else if (counterFlag == 4) {
+                    unsecureText.setText(RANDOMIZED_ISOMORPHIC_CURVE_TEXT);
+                }
+                
+                //Regular Double and Add?
                 else if (counterFlag == 0) {
-                    unsecureText.setText(UNSECURE_DOUBLE_ADD_ALWAYS_TEXT);
-                    unsecureText.setLineBackground(4, 3, new Color(parent.getDisplay(), cc));
+                    unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
                 }
             }
         });
         
                 // define parameters of countermeasuresselectionCombo
                 countermeasureselectionCombo.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                countermeasureselectionCombo.add(DOUBLE_ADD);
                 countermeasureselectionCombo.add(INSECURE_ALG_LABEL_TEXT);
                 countermeasureselectionCombo.add(COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER);
                 countermeasureselectionCombo.add(COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT);
@@ -514,7 +511,7 @@ public class DPAView extends ViewPart implements Constants {
                 
                 CLabel label_2 = new CLabel(parameterOfECCGroup, SWT.NONE);
                 label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
-                label_2.setBounds(9, 346, 143, 25);
+                label_2.setBounds(9, 346, 149, 25);
                 
                 CLabel lblModus = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblModus.setBounds(10, 25, 61, 21);

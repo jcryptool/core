@@ -27,8 +27,9 @@ public interface Constants {
     String ECC_ALG_TEXT =
             "Note: the scalar multiplication operation of ECCPoints above the elliptic curve is normally realized with \"Double and Add\" algorithm, the following introduced algorithm is based on \"Double and Add Always\", which is proved to be secure to SPA but still insecure to DPA.\nThe concrete attack process will be given on the right side in visual form and after all the corresponding countermeasures. ";
     String EXPLANATION_OF_ALG = "Part 2. Explanation of Algorithm: ";
-    // String UNSECURE_DOUBLE_ADD_TEXT =
-    // "Insecurity of \"Double and Add\" to SPA:\nsince the private key can be recovered through comparison the difference of power traces between ECAdd and ECDouble operations, the original \"Double and Add\" algorithm is insecure to both SPA and DPA.\n\nInput:\n ECPoint P;\n scalar parameter k;\n\nOutput:\n Q = kP;\n\nProcess:\n Q = P;\n for(i = n-2 down to 0){\n Q = 2Q;\n if(di == 1)\n Q = Q + P; }";
+    String UNSECURE_DOUBLE_ADD_TEXT =
+    "Insecurity of \"Double and Add\" to SPA:\nsince the private key can be recovered through comparison the difference of power traces between ECAdd and ECDouble operations, the original \"Double and Add\" algorithm is insecure to both SPA and DPA.\n\nInput:\n ECPoint P;\n scalar parameter k;\n\nOutput:\n Q = kP;\n\nProcess:\n Q = P;\n for(i = n-2 down to 0){\n Q = 2Q;\n if(di == 1)\n Q = Q + P; }";
+    String DOUBLE_ADD = "Double and Add";
     String UNSECURE_DOUBLE_ADD_ALWAYS_TEXT =
             "Note: the vulnerability to SPA attack can be solved by adding a dummy \"add\" operation in case of \"0\". It is named \"Double and Add Always\". However such countermeasure is still nonresistant to DPA attack, since the power consumption of \"Double and Add always\" method for each input looks same, but is slightly different. With statistic method like sampling analysis and differential analysis we can amplify the slight differences and recover the private key \'k\'.\n\n Q = kP with Double and Add Always:\n   Q[0] = P;\n   for(i = n-2 down to 0){\n   Q[0] = 2Q[0]; Q[1] = Q[0] + P;\n   Q[0] = Q[d\u1d62]; \n\n}";
     String RANDOMIZED_SCALAR_MULTIPLIER_TEXT =
