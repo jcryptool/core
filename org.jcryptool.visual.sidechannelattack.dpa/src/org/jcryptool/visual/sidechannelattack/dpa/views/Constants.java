@@ -23,7 +23,7 @@ public interface Constants {
 
     String VIEW_ID = "org.jcryptool.visual.sidechannelattack.dpaview"; // 96-47
     String MAIN_GROUP_TITLE = "DPA against ECC";
-    String ECC_ALG_GROUP_TITLE = "Part 1. ECC Algorithm:";
+    String ECC_ALG_GROUP_TITLE = "Information";
     String ECC_ALG_TEXT =
             "Note: the scalar multiplication operation of ECCPoints above the elliptic curve is normally realized with \"Double and Add\" algorithm, the following introduced algorithm is based on \"Double and Add Always\", which is proved to be secure to SPA but still insecure to DPA.\nThe concrete attack process will be given on the right side in visual form and after all the corresponding countermeasures. ";
     String EXPLANATION_OF_ALG = "Part 2. Explanation of Algorithm: ";
@@ -38,12 +38,12 @@ public interface Constants {
             "Initial Point P Randomization:\nif the initial point P is randomized in each turn of execution, it is also difficult to recover the private key through analysis of the correlation between a certain kP and its power trace.\n\nBasic idea and principle:\nFirst we choose randomly another ECPoint R on the same EC which is different from the initial ECPoint. Then we calculate R+P = P' as the new initial ECPoint for EC cryptography. After \"Double and Add Always\" algorithm we get Q' = kP' = k( P + R ) = kP + kR = Q + kR as the result. \nAnd for an ECPoint satisfies S = (x,y) then -S = (x, -y), thus Q = Q' - kR = Q' + (-kR), with this method we can calculate the result Q but concealing the real initial point P, in this way the correlation between power traces and the initial input P is also concealed.";
     String RANDOMIZED_ISOMORPHIC_CURVE_TEXT =
             "Isomorphic Curve Randomization:\nwe use a random isomorphic curve to the original curve, and after \"Double and Add always\" we recover the original result Q from Q'. The random isomorphic curve could also be understand as a DPA countermeasure with the method of randomizing the initial point P.\n\nIdea and process:\nFirst we choose randomly a number r in prime field [1, p-1], and then we calculate a' = r\u2074a, b' = r\u2076b P' = (r\u00b2Xp, r\u00b3Yp). With new a', b', P' we get a new isomorphic curve: E': y\u00b2 = x\u00b3 + a'x + b' After that we compute Q' = kP' on the new isomorphic curve. Q' = (Xq', Yq'). Finally we recover Q =(r\u207b\u00b2Xq',r\u207b\u00b3Yq'). Actually the method \"isomorphic curve\" breaks the correlation between ECPoint and power traces of different operations through randomizing the initial point.";
-    String COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER = "Randomize Parameter k (against DPA)";
-    String COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT = "Randomize initial ECPoint P (against DPA)";
-    String COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE = "Random Isomorphic Curve (against DPA) ";
+    String COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER = "Randomize Parameter k";
+    String COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT = "Randomize initial ECPoint P";
+    String COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE = "Random Isomorphic Curve";
     String TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT =
             "1. Q = KP at step j the processed point Q depends only on the first bits (kn-2,kn-3; : : : ; kj ) of K.\n\n2. Power consumption will be correlated to specific bit of Q, no correlation will be observed with a point not computed.\n\n3. The 2th most significant bit kn-2 of K can be recovered by computing the correlation between power consumption and any specific bit of the binary representation of 6P.\n\n 4. If kn-1 = 1, 6P is computed as Q[0] = 2*3P = 6P, otherwise by kn-1 = 0, 2*2P will be carried out during the Double operation.\n\n5. We gather many power consumption of computing 6P, and let si be any specific bit of 6P. We use the correlation function: g(t) = Power(si = 0) - Power(si = 1).\n\n6. If 6P is related to simulated correlation function g(t), a peak is observed corresponding to the computation of 6P, otherwise if there is no peak, the second significant bit is 0.\n\n7. The following bits kn-3, kn-4,... kj of K can be recursively recovered in the same way.\n\n8. The countermeasures against DPA are randomizing either the Initial Point P or the scalar multiplier K.";
-    String INSECURE_ALG_LABEL_TEXT = "Insecure to DPA: Double and Add Always";
+    String INSECURE_ALG_LABEL_TEXT = "Double and Add Always";
     String TITLE_OF_PARAMETEROFCOUNTERMEASURESGROUP = "DPA against Double and Add:";
     String TOOLTIPTEXT_OF_PARAMETERACOMBO = "choose the parameter a of the EC here";
     String TOOLTIPTEXT_OF_PARAMETERBCOMBO = "choose the parameter b of the EC here";
@@ -65,7 +65,7 @@ public interface Constants {
     String TEXT_OF_DOUBLE_FORMEL = "Q[0]' = 2Q[0]'";
     String TEXT_OF_ADD_FORMEL = "Q[1]' = Q[0]' + P";
     String TEXT_OF_K_IN_BINARYFORM = "k in binary form: ";
-    String PARAM_OF_ECC_GROUP_TITEL = "Part 3. Parameter of ECC";
+    String PARAM_OF_ECC_GROUP_TITEL = "Parameters";
     String PARAM_OF_COUNTERMEASURES_GROUP_TITEL = "Parameter of Countermeasures";
     String CALCULATION_TABLE_GROUP_TITEL = "Part 4. Double and Add (from left highest to right lowest valuable bit)";
     String FIRST_COLUMN_IN_TABLE = "Round Counter(left to right)";
@@ -73,7 +73,7 @@ public interface Constants {
     String THIRD_COLUMN_IN_TABLE = "Result after Add";
     String CHOOSE_AN_ECPOINT_LABEL_TEXT = "Choose a Point (no infinity point):";
     String PRIME_FIELD_LABEL_TEXT = "GF(p) =";
-    String ECCURVE_TEXT_PART1 = "E: y\u00b2 = x\u00b3 + ";
+    String ECCURVE_TEXT_PART1 = "y\u00b2 = x\u00b3 + ";
     String ECCURVE_TEXT_PART2 = "x + ";
     String ECCURVE_TEXT_PART3 = ", GF(";
     String CUE_LABEL_TEXT_1 = "a, b must be set in GF(p).";
