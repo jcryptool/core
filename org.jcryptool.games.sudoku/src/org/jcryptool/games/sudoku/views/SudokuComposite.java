@@ -456,7 +456,6 @@ public class SudokuComposite extends Composite {
         this.enterModeButton.setText(Messages.SudokuComposite_EnterModeButton);
         this.enterModeButton.addSelectionListener(new SelectionListener(){
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void widgetSelected(SelectionEvent e) {	
 				backgroundSolve.cancel();
