@@ -5,7 +5,7 @@ Name JCrypTool
 
 # General Symbol Definitions
 !define REGKEY "SOFTWARE\$(^Name)"
-!define VERSION 0.9.8
+!define VERSION 1.0.0
 !define COMPANY jcryptool.org
 !define URL http://www.cryptool.org
 
@@ -58,12 +58,12 @@ Var StartMenuGroup
 !insertmacro MUI_LANGUAGE English
 
 # Installer attributes
-OutFile jcryptool-1.0.0-RC6.Setup.x86_64.exe
+OutFile jcryptool-1.0.0.Setup.x86_64.exe
 InstallDir "$PROGRAMFILES64\JCrypTool"
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 0.9.7.0
+VIProductVersion 1.0.0.0
 VIAddVersionKey /LANG=${LANG_GERMAN} ProductName JCrypTool
 VIAddVersionKey /LANG=${LANG_GERMAN} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_GERMAN} CompanyName "${COMPANY}"

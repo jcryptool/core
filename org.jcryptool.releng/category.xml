@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.jcryptool.core_0.9.8.jar" id="org.jcryptool.core" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.core_1.0.0.jar" id="org.jcryptool.core" version="1.0.0">
       <category name="org.jcryptool.core"/>
    </feature>
-   <feature url="features/org.jcryptool.core.dependencies_0.9.8.jar" id="org.jcryptool.core.dependencies" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.core.dependencies_1.0.0.jar" id="org.jcryptool.core.dependencies" version="1.0.0">
       <category name="org.jcryptool.core.dependencies"/>
    </feature>
-   <feature url="features/org.jcryptool.core.dependencies.nl_de_0.9.8.jar" id="org.jcryptool.core.dependencies.nl_de" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.core.dependencies.nl_de_1.0.0.jar" id="org.jcryptool.core.dependencies.nl_de" version="1.0.0">
       <category name="org.jcryptool.core.dependencies"/>
    </feature>
-   <feature url="features/org.jcryptool.providers_0.9.8.jar" id="org.jcryptool.providers" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.providers_1.0.0.jar" id="org.jcryptool.providers" version="1.0.0">
       <category name="org.jcryptool.providers"/>
    </feature>
-   <feature url="features/org.jcryptool.views_0.9.8.jar" id="org.jcryptool.views" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.views_1.0.0.jar" id="org.jcryptool.views" version="1.0.0">
       <category name="org.jcryptool.core"/>
    </feature>
-   <feature url="features/org.jcryptool.analysis_0.9.8.jar" id="org.jcryptool.analysis" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.analysis_1.0.0.jar" id="org.jcryptool.analysis" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.crypto_0.9.8.jar" id="org.jcryptool.crypto" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.crypto_1.0.0.jar" id="org.jcryptool.crypto" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.crypto.classic_0.9.8.jar" id="org.jcryptool.crypto.classic" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.crypto.classic_1.0.0.jar" id="org.jcryptool.crypto.classic" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.crypto.flexiprovider_0.9.8.jar" id="org.jcryptool.crypto.flexiprovider" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.crypto.flexiprovider_1.0.0.jar" id="org.jcryptool.crypto.flexiprovider" version="1.0.0">
       <category name="org.jcryptool.core"/>
    </feature>
-   <feature url="features/org.jcryptool.crypto.modern_0.9.8.jar" id="org.jcryptool.crypto.modern" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.crypto.modern_1.0.0.jar" id="org.jcryptool.crypto.modern" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.games_0.9.8.jar" id="org.jcryptool.games" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.games_1.0.0.jar" id="org.jcryptool.games" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.visual_0.9.8.jar" id="org.jcryptool.visual" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.visual_1.0.0.jar" id="org.jcryptool.visual" version="1.0.0">
       <category name="org.jcryptool.crypto"/>
    </feature>
-   <feature url="features/org.jcryptool.editors_0.9.8.jar" id="org.jcryptool.editors" version="0.9.8.qualifier">
+   <feature url="features/org.jcryptool.editors_1.0.0.jar" id="org.jcryptool.editors" version="1.0.0">
       <category name="org.jcryptool.editors"/>
    </feature>
    <category-def name="org.jcryptool.core" label="JCrypTool Core">

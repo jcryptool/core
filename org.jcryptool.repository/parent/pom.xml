@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>product</artifactId>
-	<version>0.9.8-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
 
@@ -13,7 +13,7 @@
 	</prerequisites>
 
 	<properties>
-		<tycho.version>0.14.1</tycho.version>
+		<tycho.version>0.15.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -31,7 +31,7 @@
 		<repository>
 			<id>eclipse-babel-indigo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.9.1/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.10.0/indigo</url>
 		</repository>
 	</repositories>
 
@@ -53,7 +53,7 @@
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>releng</artifactId>
-							<version>0.9.8-SNAPSHOT</version>
+							<version>1.0.0</version>
 							<classifier>jcryptool</classifier>
 						</artifact>
 					</target>

@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.jcryptool</groupId>
 		<artifactId>core.parent</artifactId>
-		<version>0.9.8-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
-	<artifactId>repository</artifactId>
-	<version>0.9.8-SNAPSHOT</version>
+	<artifactId>org.jcryptool.repository</artifactId>
+	<version>1.0.0</version>
 	<packaging>eclipse-repository</packaging>
 	<build>
 		<plugins>

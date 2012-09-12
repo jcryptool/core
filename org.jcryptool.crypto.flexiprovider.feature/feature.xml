@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jcryptool.crypto.flexiprovider"
+      id="org.jcryptool.crypto.flexiprovider.feature"
       label="JCrypTool Flexiprovider Feature"
-      version="0.9.8.qualifier"
+      version="1.0.0"
       provider-name="Technische Universitaet Darmstadt"
       plugin="org.jcryptool.crypto.flexiprovider">
 

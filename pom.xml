@@ -4,12 +4,12 @@
   <parent>
   	<groupId>org.jcryptool</groupId>
   	<artifactId>product</artifactId>
-  	<version>0.9.8-SNAPSHOT</version>
+  	<version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jcryptool</groupId>
   <artifactId>core.parent</artifactId>
-  <version>0.9.8-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
   <name>JCrypTool Core</name>
   <modules>
@@ -25,6 +25,7 @@
     <module>org.jcryptool.commands.ui</module>
     <module>org.jcryptool.core</module>
     <module>org.jcryptool.core.action</module>
+    <module>org.jcryptool.core.cryptosystem</module>
     <module>org.jcryptool.core.dependencies.feature</module>
     <module>org.jcryptool.core.dependencies.nl_de.feature</module>
     <module>org.jcryptool.core.feature</module>

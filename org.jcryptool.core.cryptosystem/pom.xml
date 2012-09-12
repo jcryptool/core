@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
-	<artifactId>org.jcryptool.crypto.flexiprovider.feature</artifactId>
+	<artifactId>org.jcryptool.core.cryptosystem</artifactId>
 	<version>1.0.0</version>
-	<packaging>eclipse-feature</packaging>
+	<packaging>eclipse-plugin</packaging>
 </project>
