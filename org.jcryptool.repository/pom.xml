@@ -35,36 +35,10 @@
 					<products>
 						<product>
 							<id>${product-id}</id>
-							<rootFolder>jcryptool</rootFolder>
+							<rootFolder>${product-id}</rootFolder>
 						</product>
 					</products>
 				</configuration>
-			</plugin>
-			<!-- workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=349421 -->
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.5</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/products/${product-id}/icons/</outputDirectory>
-							<nonFilteredFileExtensions>
-								<nonFilteredFileExtension>ico</nonFilteredFileExtension>
-								<nonFilteredFileExtension>xpm</nonFilteredFileExtension>
-							</nonFilteredFileExtensions>
-							<resources>
-								<resource>
-									<directory>icons</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

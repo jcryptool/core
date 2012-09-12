@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="JCrypTool" uid="org.jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
+<product name="JCrypTool" uid="jcryptool" id="org.jcryptool.core.product" application="org.jcryptool.core.application" version="1.0.0" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.jcryptool.core/icons/about_dialog.gif"/>
@@ -26,11 +26,11 @@
       startupMessageRect="7,238,445,20"
       startupForegroundColor="C0C0C0" />
    <launcher name="JCrypTool">
-      <linux icon="/org.jcryptool.core/icons/icons_linux.xpm"/>
-      <macosx icon="/org.jcryptool.core/icons/icons_mac.icns"/>
+      <linux icon="/icons/icons_linux.xpm"/>
+      <macosx icon="/icons/icons_mac.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/org.jcryptool.core/icons/icons_w32.ico"/>
+         <ico path="/icons/icons_w32.ico"/>
          <bmp/>
       </win>
    </launcher>
