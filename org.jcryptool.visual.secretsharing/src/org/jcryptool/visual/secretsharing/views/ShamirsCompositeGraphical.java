@@ -828,10 +828,10 @@ public class ShamirsCompositeGraphical extends Composite implements Constants {
                                 stPolynom.setText(polynomialString);
                                 stPolynom.setStyleRange(stPolynomStyle);
 
-                                if (polynomialString.contains("-") || polynomialString.contains("+")) {
-                                    computeSharesButton.setEnabled(true);
-                                } else {
+                                if (polynomialString.isEmpty()) {
                                     computeSharesButton.setEnabled(false);
+                                } else {
+                                    computeSharesButton.setEnabled(true);
                                 }
                                 modulText.setEnabled(false);
                                 secretText.setEnabled(false);

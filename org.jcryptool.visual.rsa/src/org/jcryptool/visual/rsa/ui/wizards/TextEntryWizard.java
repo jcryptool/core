@@ -10,15 +10,15 @@
 package org.jcryptool.visual.rsa.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.visual.rsa.ui.wizards.wizardpages.RsaTextModifyPage;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterCiphertextPage;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterPlaintextPage;
 import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterSignaturePage;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.visual.rsa.ui.wizards.wizardpages.RsaTextModifyPage;
 /**
  * wizard for entering any type of text. plaintext, ciphertext or signature.
  * @author Michael Gaber

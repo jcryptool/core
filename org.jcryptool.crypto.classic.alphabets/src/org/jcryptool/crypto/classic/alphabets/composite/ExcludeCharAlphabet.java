@@ -1,6 +1,5 @@
 package org.jcryptool.crypto.classic.alphabets.composite;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
