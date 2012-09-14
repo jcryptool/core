@@ -76,6 +76,8 @@ public class Messages extends NLS {
 	public static String SudokuComposite_StrategiesAreaTitle;
 	public static String SudokuComposite_SubtractionButton;
 	public static String SudokuComposite_SubtractionButton_Tooltip;
+	public static String SudokuComposite_UndoButton;
+	public static String SudokuComposite_UndoButton_Tooltip;
 
 
 

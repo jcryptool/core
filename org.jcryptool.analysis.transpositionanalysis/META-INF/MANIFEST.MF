@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis; singleton:=true
-Bundle-Version: 0.9.8.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin
 Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.eclipse.help.ui;bundle-version="3.5.100",
