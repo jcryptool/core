@@ -27,12 +27,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -120,13 +118,13 @@ public class DPAView extends ViewPart implements Constants {
 
         // define an imbedding maingroup
         final Composite mainGroup = new Composite(scrolledComposite, SWT.NONE);
-        mainGroup.setSize(950, 760);
+        mainGroup.setSize(930, 790);
         scrolledComposite.setContent(mainGroup);
 
         // define a group called eccAlgorithmgroup which introduces the definition and basic principle of ECC algorithm
         final Group eccAlgorithmGroup = new Group(mainGroup, SWT.NONE);
         eccAlgorithmGroup.setText(ECC_ALG_GROUP_TITLE);
-        eccAlgorithmGroup.setBounds(10, 459, 903, 302);
+        eccAlgorithmGroup.setBounds(10, 481, 903, 297);
 
         // define the style of the Text shown in the eccAlgorithmGroup
         eCCAlgorithmText = new StyledText(eccAlgorithmGroup, SWT.BORDER | SWT.MULTI | SWT.WRAP);
@@ -151,17 +149,17 @@ public class DPAView extends ViewPart implements Constants {
         // define a group in which the user can select the parameters of ECC and initialize an EC, on which the
         // visualization will be based
         final Group parameterOfECCGroup = new Group(mainGroup, SWT.NONE);
-        parameterOfECCGroup.setBounds(10, 10, 230, 443);
+        parameterOfECCGroup.setBounds(10, 10, 230, 465);
         parameterOfECCGroup.setText(PARAM_OF_ECC_GROUP_TITEL);
         
         // define a group in which the whole process of encryption will be visualized with table form
         final Group visualizedGroup = new Group(mainGroup, SWT.NONE);
         visualizedGroup.setText("Output Table");
-        visualizedGroup.setBounds(246, 10, 667, 443);
+        visualizedGroup.setBounds(246, 10, 667, 465);
 
         // define a table to display the content and process of algorithm
         recordTable = new Table(visualizedGroup, SWT.BORDER);
-        recordTable.setBounds(10, 20, 647, 413);
+        recordTable.setBounds(10, 20, 647, 435);
         recordTable.setLinesVisible(true);
         recordTable.setHeaderVisible(true);
 
@@ -210,7 +208,7 @@ public class DPAView extends ViewPart implements Constants {
         eCCurveText.setEditable(false);
         eCCurveText.addModifyListener(new ModifyListener() {
             public void modifyText(final ModifyEvent e) {
-
+            	if(eCCurveText.getText() != "") {
                 ecc = new ECCOrderAndPoints(BigInteger.valueOf(paraA), BigInteger.valueOf(paraB), BigInteger.valueOf(primeFieldSelected));
 
                 orderOfCurveText.setText("" + ecc.getStepsofCurve());
@@ -231,12 +229,12 @@ public class DPAView extends ViewPart implements Constants {
                             + allPoints[data_element_index].getAffineY() + ")");
                     data_length--;
                     data_element_index++;
-
+                    
                 }
-
+            	}
             }
         });
-        eCCurveText.setBounds(60, 408, 159, 25);
+        eCCurveText.setBounds(61, 422, 159, 25);
         
         // define a text field in which the computed order will be displayed
         orderOfCurveText = new StyledText(parameterOfECCGroup, SWT.BORDER);
@@ -246,7 +244,7 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the meaning of order
         orderOfCurveText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFCURVETEXT);
         orderOfCurveText.setEditable(false);
-        orderOfCurveText.setBounds(158, 377, 61, 25);
+        orderOfCurveText.setBounds(158, 391, 62, 25);
 
         // define a combo in which the user can select a random point of EC to process the computation
         eCPointscombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
@@ -254,7 +252,7 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the aiming of selection
         eCPointscombo.setToolTipText(TOOLTIPTEXT_OF_ECPOINTSCOMBO);
         eCPointscombo.setBackground(SWTResourceManager.getColor(255, 255, 255));
-        eCPointscombo.setBounds(63, 232, 95, 23);
+        eCPointscombo.setBounds(65, 232, 95, 23);
         eCPointscombo.setEnabled(false);
 
         // define a text field in which the order of selected point will be displayed
@@ -266,16 +264,16 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the meaning of order
         orderOfECPointText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFECPOINTTEXT);
         //orderOfECPointText.setEditable(false);
-        orderOfECPointText.setBounds(158, 346, 61, 25);
+        orderOfECPointText.setBounds(158, 360, 62, 25);
 
         scalarParameterCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-        scalarParameterCombo.setBounds(63, 261, 95, 23);
+        scalarParameterCombo.setBounds(63, 261, 97, 23);
         scalarParameterCombo.setToolTipText(TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO);
         scalarParameterCombo.setEnabled(false);
         
         final Button executeButton = new Button(parameterOfECCGroup, SWT.NONE);
         executeButton.setText(TEXT_OF_EXECUTEBUTTON);
-        executeButton.setBounds(9, 302, 210, 25);
+        executeButton.setBounds(9, 298, 211, 25);
 
         executeButton.setEnabled(false);
         
@@ -461,7 +459,7 @@ public class DPAView extends ViewPart implements Constants {
         bLabel.setText(TEXT_OF_BLABEL);
         bLabel.setBounds(9, 168, 50, 23);
         countermeasureselectionCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-        countermeasureselectionCombo.setBounds(9, 50, 215, 23);
+        countermeasureselectionCombo.setBounds(9, 50, 211, 23);
         countermeasureselectionCombo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
 
@@ -511,7 +509,7 @@ public class DPAView extends ViewPart implements Constants {
                 
                 CLabel label_2 = new CLabel(parameterOfECCGroup, SWT.NONE);
                 label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
-                label_2.setBounds(9, 346, 149, 25);
+                label_2.setBounds(9, 360, 149, 25);
                 
                 CLabel lblModus = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblModus.setBounds(10, 25, 61, 21);
@@ -535,16 +533,46 @@ public class DPAView extends ViewPart implements Constants {
                 label_5.setBounds(9, 290, 210, 2);
                 
                 CLabel lblOrderOfCurve = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblOrderOfCurve.setBounds(9, 377, 95, 25);
+                lblOrderOfCurve.setBounds(10, 391, 95, 25);
                 lblOrderOfCurve.setText("Order of Curve: ");
                 
                 CLabel lblNewLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblNewLabel.setBounds(9, 408, 50, 25);
+                lblNewLabel.setBounds(9, 422, 50, 25);
                 lblNewLabel.setText("Curve:");
+                
+                Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
+                btnReset.addSelectionListener(new SelectionAdapter() {
+                	@Override
+                	public void widgetSelected(SelectionEvent e) {
+                		countermeasureselectionCombo.select(0);
+                		primeFieldSelectCombo.deselectAll();
+                		parameterACombo.deselectAll();
+                		parameterACombo.setEnabled(false);
+                		parameterBCombo.deselectAll();
+                		parameterBCombo.setEnabled(false);
+                		eCPointscombo.deselectAll();
+                		eCPointscombo.setEnabled(false);
+                		scalarParameterCombo.deselectAll();
+                		scalarParameterCombo.setEnabled(false);
+                		executeButton.setEnabled(false);
+                		unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
+                		parameterOfCountermeasuresText.setText(TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT_1);
+                		recordTable.removeAll();
+                		orderOfECPointText.setText("");
+                		orderOfCurveText.setText("");
+                        eCCurveText.setText("");
+                	}
+                });
+                btnReset.setBounds(9, 329, 211, 25);
+                btnReset.setText("Reset");
 
         // add a listener on executeButton, which is used to start the process of selected algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
+            		foo();
+            }
+
+			private void foo() {
 
                 Q = null;
                 outputFlag = 0;
@@ -625,7 +653,6 @@ public class DPAView extends ViewPart implements Constants {
                         initialTableItemInputnewScalarBinary.setText(0, "k': " + String.valueOf(newkInBinaryForm)
                                 + BINARY_ABBR);
 
-                        parameterOfCountermeasuresText.setText("");
                         parameterOfCountermeasuresText.setText(RANDOMIZED_K_TEXT_PART1 + RANDOMIZED_K_TEXT_PART2
                                 + paraA + "x + " + paraB + RANDOMIZED_K_TEXT_PART3 + primeFieldSelected
                                 + RANDOMIZED_K_TEXT_PART4 + paraA + RANDOMIZED_K_TEXT_PART5 + paraB
@@ -643,6 +670,8 @@ public class DPAView extends ViewPart implements Constants {
                     // counterflag = 3 means the processing algorithm is randomized initial point P
                     if (counterFlag == 3) {
 
+                    	
+                    	
                         RandomFactorCreator rfc = new RandomFactorCreator();
 
                         int randomFactor = rfc.randomCreator(orderOfCurve - 1);
@@ -664,43 +693,7 @@ public class DPAView extends ViewPart implements Constants {
                         originalRPlusP = rplusP;
 
                         if (originalRPlusP.getAffineY().equals(BigInteger.ZERO)) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                            foo();
                         }
 
                         final TableItem initialTableItemRandomPointPPlusR = new TableItem(recordTable, SWT.BORDER);
@@ -713,7 +706,6 @@ public class DPAView extends ViewPart implements Constants {
                         initialTableItemRandomPointS.setText(0, RANDOMIZED_ECPOINT_TEXT_PART2 + kSelected
                                 + RANDOMIZED_ECPOINT_TEXT_PART3 + "(" + kR.getAffineX() + "," + kR.getAffineY() + ")");
 
-                        parameterOfCountermeasuresText.setText("");
                         parameterOfCountermeasuresText.setText(RANDOMIZED_ECPOINT_TEXT_PART4
                                 + RANDOMIZED_ECPOINT_TEXT_PART5 + paraA + RANDOMIZED_ECPOINT_TEXT_PART6 + paraB
                                 + RANDOMIZED_ECPOINT_TEXT_PART7 + primeFieldSelected + RANDOMIZED_ECPOINT_TEXT_PART8
@@ -753,7 +745,6 @@ public class DPAView extends ViewPart implements Constants {
 
                         originalNewP = newP;
 
-                        parameterOfCountermeasuresText.setText("");
                         parameterOfCountermeasuresText.setText(RANDOMIZED_ISOMORPHIC_TEXT_PART1
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART2 + paraA + RANDOMIZED_ISOMORPHIC_TEXT_PART3 + paraB
                                 + RANDOMIZED_ISOMORPHIC_TEXT_PART4 + primeFieldSelected
@@ -840,42 +831,7 @@ public class DPAView extends ViewPart implements Constants {
                         // choose a new ecpoint automatically when the randomly chosen point is unsuitable
                         if (ecPoint.getAffineY().intValue() == 0) {
 
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                        	foo();
                             exceptionFlag = 1;
                             break;
 
@@ -890,43 +846,7 @@ public class DPAView extends ViewPart implements Constants {
                         if (Character.valueOf(kInBinaryForm.charAt(counter - 1)).equals('1')
                                 && ecPointbyBit0.getAffineX().equals(ecPointSelected.getAffineX())
                                 && !ecPointbyBit0.equals(ecPointSelected)) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                        	foo();
                             exceptionFlag = 1;
                             break;
 
@@ -979,87 +899,14 @@ public class DPAView extends ViewPart implements Constants {
 
                         // choose a new ecpoint automatically when the randomly chosen point is unsuitable
                         else if (ecPointbyBit0.getAffineY().equals(BigInteger.ZERO)) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                        	foo();
                             outputFlag = 1;
-
                             break;
                         }
 
                         // choose a new ecpoint automatically when the randomly chosen point is unsuitable
                         else if (originalRPlusP.equals(ecPointbyBit0)) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                        	foo();
                             outputFlag = 1;
 
                             break;
@@ -1068,43 +915,7 @@ public class DPAView extends ViewPart implements Constants {
 
                         else if (!(originalRPlusP.equals(ecPointbyBit0))
                                 && originalRPlusP.getAffineX().equals(ecPointbyBit0.getAffineX())) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
-
+                        	foo();
                             outputFlag = 1;
 
                             break;
@@ -1116,45 +927,8 @@ public class DPAView extends ViewPart implements Constants {
                             ecPointbyBit1 = eccAdd.ecAddition(originalRPlusP, ecPointbyBit0, new ECFieldFp(BigInteger.valueOf(primeFieldSelected)));
 
                             if (ecPointbyBit1.getAffineY().equals(BigInteger.ZERO)) {
-
-                                recordTable.clearAll();
-
-                                final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                                new Thread() {
-
-                                    Event event;
-
-                                    public void run() {
-                                        try {
-                                            Thread.sleep(30);
-                                        } catch (InterruptedException e) {
-                                        }
-                                        event = new Event();
-                                        event.type = SWT.MouseMove;
-                                        event.x = pt.x - 55;
-                                        event.y = pt.y - 180;
-
-                                        executeButton.getDisplay().post(event);
-
-                                        try {
-                                            Thread.sleep(30);
-                                        } catch (InterruptedException e) {
-                                        }
-                                        event.type = SWT.MouseDown;
-                                        event.button = 1;
-                                        executeButton.getDisplay().post(event);
-                                        try {
-                                            Thread.sleep(30);
-                                        } catch (InterruptedException e) {
-                                        }
-                                        event.type = SWT.MouseUp;
-                                        executeButton.getDisplay().post(event);
-                                    }
-                                }.start();
-
+                            	foo();
                                 outputFlag = 1;
-
                                 break;
 
                             }
@@ -1255,42 +1029,7 @@ public class DPAView extends ViewPart implements Constants {
                         // choose a new ecpoint automatically when the randomly chosen point is unsuitable: the X-Axis
                         // value of S = kR and Q' = k(P+R) is identical
                         if (Q.equals(ECPoint.POINT_INFINITY)) {
-
-                            recordTable.clearAll();
-
-                            final Point pt = executeButton.toDisplay(executeButton.getLocation());
-
-                            new Thread() {
-
-                                Event event;
-
-                                public void run() {
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event = new Event();
-                                    event.type = SWT.MouseMove;
-                                    event.x = pt.x - 55;
-                                    event.y = pt.y - 180;
-
-                                    executeButton.getDisplay().post(event);
-
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseDown;
-                                    event.button = 1;
-                                    executeButton.getDisplay().post(event);
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                    }
-                                    event.type = SWT.MouseUp;
-                                    executeButton.getDisplay().post(event);
-                                }
-                            }.start();
+                        	foo();
 
                         } else {
                             final TableItem initialTableItemnewGStep3 = new TableItem(recordTable, SWT.BORDER);
@@ -1337,9 +1076,14 @@ public class DPAView extends ViewPart implements Constants {
                             + ecPoint.getAffineY() + ")");
 
                 }
-            }
+				
+			}
         });
 
+    
+        
+        
+        
         scalarParameterCombo.addSelectionListener(new SelectionAdapter() {
 
             public void widgetSelected(final SelectionEvent e) {
