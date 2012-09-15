@@ -16,6 +16,7 @@
 		<tycho.version>0.15.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<product-id>jcryptool</product-id>
+		<product-version>1.0.0</product-version>
 	</properties>
 
 	<modules>
@@ -54,8 +55,8 @@
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>releng</artifactId>
-							<version>1.0.0</version>
-							<classifier>jcryptool</classifier>
+							<version>${product-version}</version>
+							<classifier>${product-id}</classifier>
 						</artifact>
 					</target>
 					<environments>

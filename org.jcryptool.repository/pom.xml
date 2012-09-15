@@ -15,6 +15,14 @@
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<p2inf>p2.inf</p2inf>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-director-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<executions>
@@ -32,6 +40,9 @@
 					</execution>
 				</executions>
 				<configuration>
+					<formats>
+					  <linux>tar.gz</linux>
+					</formats>
 					<products>
 						<product>
 							<id>${product-id}</id>
