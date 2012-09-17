@@ -513,15 +513,15 @@ public class DPAView extends ViewPart implements Constants {
                 
                 CLabel lblModus = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblModus.setBounds(10, 25, 61, 21);
-                lblModus.setText("Modus:");
+                lblModus.setText(Messages.mode);
                 
                 CLabel lblParameterOfEc = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblParameterOfEc.setBounds(9, 83, 106, 21);
-                lblParameterOfEc.setText("Parameter of EC:");
+                lblParameterOfEc.setText(Messages.parameter);
                 
                 CLabel lblPointsOnEc = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblPointsOnEc.setBounds(9, 205, 76, 21);
-                lblPointsOnEc.setText("Points on EC:");
+                lblPointsOnEc.setText(Messages.points);
                 
                 Label label_3 = new Label(parameterOfECCGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
                 label_3.setBounds(10, 79, 210, 2);
@@ -534,11 +534,11 @@ public class DPAView extends ViewPart implements Constants {
                 
                 CLabel lblOrderOfCurve = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblOrderOfCurve.setBounds(10, 391, 95, 25);
-                lblOrderOfCurve.setText("Order of Curve: ");
+                lblOrderOfCurve.setText(Messages.order_curve);
                 
                 CLabel lblNewLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblNewLabel.setBounds(9, 422, 50, 25);
-                lblNewLabel.setText("Curve:");
+                lblNewLabel.setText(Messages.curve);
                 
                 Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
                 btnReset.addSelectionListener(new SelectionAdapter() {

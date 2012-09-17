@@ -19,6 +19,8 @@ import org.eclipse.ui.part.ViewPart;
  * @author Michael Gaber
  */
 public class DSAView extends ViewPart {
+	public DSAView() {
+	}
 
     @Override
 	public final void createPartControl(final Composite parent) {
