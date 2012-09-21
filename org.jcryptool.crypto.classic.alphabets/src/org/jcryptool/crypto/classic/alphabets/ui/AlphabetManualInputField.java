@@ -50,7 +50,7 @@ public class AlphabetManualInputField extends Composite {
 				}
 				@Override
 				public String getName() {
-					return "Alphabet input";
+					return "Alphabet input"; //$NON-NLS-1$
 				}
 				@Override
 				public void writeContent(AtomAlphabet content) {
@@ -60,8 +60,8 @@ public class AlphabetManualInputField extends Composite {
 		}
 		{
 			lblYouCanEnter = new Label(this, SWT.WRAP);
-			lblYouCanEnter.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-			lblYouCanEnter.setText("You can enter special characters like '\\n', '\\t', and enter any character by writing '{character-number}', like '{13}'.");
+			lblYouCanEnter.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC)); //$NON-NLS-1$
+			lblYouCanEnter.setText(Messages.getString("AlphabetManualInputField.2")); //$NON-NLS-1$
 			GridData gd_lblYouCanEnter = new GridData(SWT.FILL, SWT.CENTER, true, false);
 			lblYouCanEnter.setLayoutData(gd_lblYouCanEnter);
 			gd_lblYouCanEnter.widthHint = 100;

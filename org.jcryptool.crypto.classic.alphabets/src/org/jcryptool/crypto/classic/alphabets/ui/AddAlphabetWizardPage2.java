@@ -101,7 +101,7 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 			compEnterName.setLayout(gl_compEnterName);
 			{
 				compNameData = new Group(compEnterName, SWT.NONE);
-				compNameData.setText("1) Enter a name for the alphabet:");
+				compNameData.setText(Messages.getString("AddAlphabetWizardPage2.0")); //$NON-NLS-1$
 				compNameData.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 				GridLayout gl_composite_2 = new GridLayout(1, false);
 				compNameData.setLayout(gl_composite_2);
@@ -129,12 +129,12 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 
 						@Override
 						protected String getDefaultContent() {
-							return "";
+							return ""; //$NON-NLS-1$
 						}
 
 						@Override
 						public String getName() {
-							return "Alphabet name";
+							return "Alphabetname"; //$NON-NLS-1$
 						}
 					};
 				}
@@ -233,14 +233,14 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 
 			@Override
 			protected AbstractAlphabet getDefaultContent() {
-				AtomAlphabet atomAlphabet = new AtomAlphabet("");
-				atomAlphabet.setName("");
+				AtomAlphabet atomAlphabet = new AtomAlphabet(""); //$NON-NLS-1$
+				atomAlphabet.setName(""); //$NON-NLS-1$
 				return atomAlphabet;
 			}
 
 			@Override
 			public String getName() {
-				return "Alphabet";
+				return "Alphabet"; //$NON-NLS-1$
 			}
 			
 			@Override
