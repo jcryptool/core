@@ -1,15 +1,14 @@
 package org.jcryptool.crypto.classic.alphabets.ui;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
-import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 
 public class AlphabetManualInputField extends Composite {

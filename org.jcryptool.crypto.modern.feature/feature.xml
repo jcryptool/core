@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jcryptool.crypto.modern"
+      id="org.jcryptool.crypto.modern.feature"
       label="JCrypTool Modern Algorithms Feature"
-      version="0.9.8.qualifier"
+      version="1.0.0"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.crypto.modern">
 

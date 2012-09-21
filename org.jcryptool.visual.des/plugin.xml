@@ -8,14 +8,14 @@
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.des.view.DesView"
           	id="org.jcryptool.visual.des.view.DesView"
-            name="Data Encryption Standard"
+            name="%view.name.0"
             icon="icons/view.gif"> 
       </view>
    </extension>
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="Data Encryption Standard"
+            name="%view.name.0"
             viewId="org.jcryptool.visual.des.view.DesView">
       </Visual>
    </extension>

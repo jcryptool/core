@@ -9,9 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.verifiablesecretsharing.views;
 
-import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
-import org.jcryptool.visual.verifiablesecretsharing.algorithm.VerifiableSecretSharing;
-
 import java.math.BigInteger;
 import java.util.Random;
 
@@ -43,6 +40,8 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
+import org.jcryptool.visual.verifiablesecretsharing.algorithm.VerifiableSecretSharing;
 
 public class VerifiableSecretSharingComposite extends Composite {
 

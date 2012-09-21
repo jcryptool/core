@@ -12,13 +12,14 @@ package org.jcryptool.visual.verifiablesecretsharing.views;
 
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.ui.part.*;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.ui.*;
-import org.eclipse.swt.SWT;
+import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.verifiablesecretsharing.VerifiableSecretSharingPlugin;
 
 /**

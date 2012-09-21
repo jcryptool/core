@@ -14,8 +14,6 @@ import java.awt.Color;
 import java.math.BigInteger;
 import java.text.NumberFormat;
 
-import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
@@ -24,6 +22,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.verifiablesecretsharing.algorithm.Polynomial;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;

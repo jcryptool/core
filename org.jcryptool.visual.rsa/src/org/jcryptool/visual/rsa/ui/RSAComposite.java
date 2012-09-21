@@ -13,8 +13,6 @@ import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
 import static org.jcryptool.visual.library.Constants.GREEN;
-// import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
-// import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
 import static org.jcryptool.visual.library.Constants.RED;
 import static org.jcryptool.visual.library.Constants.WHITE;
 
@@ -69,6 +67,8 @@ import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
 import org.jcryptool.visual.rsa.ui.wizards.KeySelectionWizard;
 import org.jcryptool.visual.rsa.ui.wizards.TextEntryWizard;
+// import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
+// import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
 
 /**
  * composite, display of everything this visual shows, that is not contained within wizards.

@@ -40,6 +40,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -66,12 +67,12 @@ public class SudokuComposite extends Composite {
 
     public final int NORMAL = 1, KILLER = 2, HEX = 3;
 
-    public final int BOX_SIZE_NORMAL = 50, BOX_SIZE_KILLER = 50, BOX_SIZE_HEX = 50;
+    public final int BOX_SIZE_NORMAL = 54, BOX_SIZE_KILLER = 54, BOX_SIZE_HEX = 54;
     final private int ADDITION = 0, SUBTRACTION = 1, MULTIPLICATION = 2, DIVISION = 3;
 
     public int tabChoice, numberOfGuesses = 0;
 
-    public int[][] boardNormal, boardKiller, boardHex, guessBoardHex, tempBoard;
+    public int[][] boardNormal, boardKiller, boardHex, guessBoardHex, tempBoard, givenNormal, givenKiller, givenHex;
 
     public Label[][][] boardLabelsNormal, boardLabelsKiller, boardLabelsHex;
 
@@ -86,7 +87,7 @@ public class SudokuComposite extends Composite {
     public Button onePossibleButton, nakedSingleButton, hiddenSingleButton, blockAndCRButton, nakedSubsetButton,
             candidateLineButton, doublePairButton, multipleLinesButton;
     public Button additionButton, subtractionButton, multiplicationButton, divisionButton, solveModeButton, enterModeButton,
-    		hintButton;
+    		hintButton, undoButton;
     
     Map<Text, UserInputPoint> inputBoxesNormal = new HashMap<Text, UserInputPoint>();
 
@@ -117,6 +118,8 @@ public class SudokuComposite extends Composite {
     public Thread blinkerRed = null, blinkerWhite = null, makeWhite;
     
     public Random rnd;
+    
+    public Vector<Point> movesNormal, movesKiller, movesHex;
 
     public SudokuComposite(final Composite parent, final int tabChoice, final int style) {
         super(parent, style);
@@ -137,6 +140,31 @@ public class SudokuComposite extends Composite {
         this.loadedKiller = false;
         this.loading = false;
         this.rnd = new Random(System.currentTimeMillis());
+        this.movesNormal = new Vector<Point>();
+        this.movesKiller = new Vector<Point>();
+        this.movesHex = new Vector<Point>();
+        this.givenNormal = new int[9][9];
+        this.givenKiller = new int[9][9];
+        this.givenHex = new int[16][16];
+        for (int i = 0; i < 16; i++) {
+        	for (int j = 0; j < 16; j++) {
+        		if (i < 9 && j < 9) {
+        			switch (tabChoice) {
+        				case NORMAL: 
+        					givenNormal[i][j] = 0;
+        				break;
+        				case KILLER: 
+        					givenKiller[i][j] = 0;
+        				break;
+        				case HEX: 
+        					givenHex[i][j] = 0;
+        				break;
+        			}
+        		} else {
+        			if (tabChoice == HEX) givenHex[i][j] = 0;
+        		}
+        	}
+        }
 
         this.refresh = new Runnable() {
             public void run() {
@@ -422,14 +450,53 @@ public class SudokuComposite extends Composite {
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
 				
+				if (tabChoice == NORMAL) movesNormal.clear();
+				
+				for (int i = 0; i < (tabChoice == HEX ? 16 : 9); i++) {
+					for (int j = 0; j < (tabChoice == HEX ? 16 : 9); j++) {
+						switch (tabChoice) {
+							case NORMAL: { 
+								if (boardNormal[i][j] > 0) {
+									boardTextNormal[i][j].setEditable(false);
+									givenNormal[i][j] = 1;
+								}
+							}
+							break;
+							case KILLER: { 
+								if (boardKiller[i][j] > 0) {
+									boardTextKiller[i][j].setEditable(false);
+									givenKiller[i][j] = 1;
+								}
+							}
+							break;
+							case HEX: { 
+								if (boardHex[i][j] > -1) {
+									boardTextHex[i][j].setEditable(false);
+									givenHex[i][j] = 1;
+								}
+							}
+							break;
+						}
+					}
+				}
+				
 				if (tabChoice == KILLER) {
+					movesKiller.clear();
 					additionButton.setEnabled(false);
 					subtractionButton.setEnabled(false);
 					multiplicationButton.setEnabled(false);
 					divisionButton.setEnabled(false);
+					if (selected.size() > 0) {
+	                    for (int i = 0; i < selected.size(); i++) {
+	                        labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+	                        boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+	                    }
+	                    selected.clear();
+					}
 				}
 				
 				if (tabChoice == HEX) {
+					movesHex.clear();
 					onePossibleButton.setEnabled(true);
 					nakedSingleButton.setEnabled(true);
 					hiddenSingleButton.setEnabled(true);
@@ -456,7 +523,6 @@ public class SudokuComposite extends Composite {
         this.enterModeButton.setText(Messages.SudokuComposite_EnterModeButton);
         this.enterModeButton.addSelectionListener(new SelectionListener(){
 
-			@SuppressWarnings("deprecation")
 			@Override
 			public void widgetSelected(SelectionEvent e) {	
 				backgroundSolve.cancel();
@@ -468,6 +534,25 @@ public class SudokuComposite extends Composite {
 				
 				loadStandardPuzzle.setEnabled(true);
 				loadButton.setEnabled(true);
+				
+				for (int i = 0; i < (tabChoice == HEX ? 16 : 9); i++) {
+					for (int j = 0; j < (tabChoice == HEX ? 16 : 9); j++) {
+						switch (tabChoice) {
+							case NORMAL: { 
+								boardTextNormal[i][j].setEditable(true);
+							}
+							break;
+							case KILLER: { 
+								boardTextKiller[i][j].setEditable(true);
+							}
+							break;
+							case HEX: { 
+								boardTextHex[i][j].setEditable(true);
+							}
+							break;
+						}
+					}
+				}
 				
 				if (tabChoice == KILLER) {
 					additionButton.setEnabled(true);
@@ -541,7 +626,7 @@ public class SudokuComposite extends Composite {
             public void widgetSelected(final SelectionEvent e) {
                 switch (tabChoice) {
                     case NORMAL: {
-                    	if (backgroundSolved && getEmptySquare(boardNormal) == null) {
+                    	if (backgroundSolved && getEmptySquare(boardNormal) != null) {
                     		Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
                     		while (boardNormal[square.x][square.y] > 0) 
                     			square = new Point(rnd.nextInt(9), rnd.nextInt(9));
@@ -554,7 +639,7 @@ public class SudokuComposite extends Composite {
                     }
                         break;
                     case KILLER: {
-                    	if (backgroundSolved && getEmptySquare(boardKiller) == null) {
+                    	if (backgroundSolved && getEmptySquare(boardKiller) != null) {
                     		Point square = new Point(rnd.nextInt(9), rnd.nextInt(9));
                     		while (boardKiller[square.x][square.y] > 0) 
                     			square = new Point(rnd.nextInt(9), rnd.nextInt(9));
@@ -567,7 +652,7 @@ public class SudokuComposite extends Composite {
                     }
                         break;
                     case HEX: {
-                    	if (backgroundSolved && getEmptySquare(boardHex) == null) {
+                    	if (backgroundSolved && getEmptySquare(boardHex) != null) {
                     		Point square = new Point(rnd.nextInt(16), rnd.nextInt(16));
                     		while (boardHex[square.x][square.y] > -1) 
                     			square = new Point(rnd.nextInt(9), rnd.nextInt(9));
@@ -582,7 +667,50 @@ public class SudokuComposite extends Composite {
                 }
             }
         });
-
+        
+        this.undoButton = new Button (subComposite, SWT.PUSH);
+        this.undoButton.setLayoutData(buttonrd);
+        this.undoButton.setEnabled(false);
+        this.undoButton.setText(Messages.SudokuComposite_UndoButton);
+        this.undoButton.setToolTipText(Messages.SudokuComposite_UndoButton_Tooltip);
+        this.undoButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                switch (tabChoice) {
+                    case NORMAL: {
+                    	if (movesNormal.size() > 0) {
+                    		Point pt = movesNormal.get(movesNormal.size()-1);
+                    		movesNormal.remove(movesNormal.size() -1);
+                    		boardTextNormal[pt.x][pt.y].setText("");
+                    		updateBoardDataWithUserInputNormal(boardTextNormal[pt.x][pt.y], "");
+                    		if (movesNormal.size() == 0) undoButton.setEnabled(false);
+                    	}
+                    }
+                    break;
+                    case KILLER: {
+                    	if (movesKiller.size() > 0) {
+                    		Point pt = movesKiller.get(movesKiller.size()-1);
+                    		movesKiller.remove(movesKiller.size() -1);
+                    		boardTextKiller[pt.x][pt.y].setText("");
+                    		updateBoardDataWithUserInputKiller(boardTextKiller[pt.x][pt.y], "");
+                    		if (movesKiller.size() == 0) undoButton.setEnabled(false);
+                    	}                   
+                    }
+                    break;
+                    case HEX: {
+                    	if (movesHex.size() > 0) {
+                    		Point pt = movesHex.get(movesHex.size()-1);
+                    		movesHex.remove(movesHex.size() -1);
+                    		boardTextHex[pt.x][pt.y].setText("");
+                    		updateBoardDataWithUserInputHex(boardTextHex[pt.x][pt.y], "");
+                    		if (movesHex.size() == 0) undoButton.setEnabled(false);
+                    	}
+                    }
+                   break;
+                }
+            }
+        });
+        
         if (tabChoice == KILLER) {
             this.boxRuleButton = new Button(subComposite, SWT.PUSH);
             this.boxRuleButton.setLayoutData(buttonrd);
@@ -1725,21 +1853,25 @@ public class SudokuComposite extends Composite {
                 labelCellKiller[i][j].addListener(SWT.MouseDown, new Listener() {
 
                     public void handleEvent(Event event) {
-                        Composite composite = (Composite) event.widget;
+                    	Composite composite = (Composite) event.widget;
                         Point point = compositeBoxesKiller.get(composite);
-                        if (!loadedKiller) {
-                            if (selected.contains(point)) {
-                                composite.setBackground(WHITE);
-                                boardTextKiller[point.x][point.y].setBackground(WHITE);
-                                selected.remove(point);
-
-                            } else {
-                                composite.setBackground(RED);
-                                boardTextKiller[point.x][point.y].setBackground(RED);
-                                selected.add(point);
-                            }
+                        if (!solveMode) { 
+	                        if (!loadedKiller) {
+	                            if (selected.contains(point)) {
+	                                composite.setBackground(WHITE);
+	                                boardTextKiller[point.x][point.y].setBackground(WHITE);
+	                                selected.remove(point);
+	
+	                            } else {
+	                                composite.setBackground(RED);
+	                                boardTextKiller[point.x][point.y].setBackground(RED);
+	                                selected.add(point);
+	                            }
+	                        } else {
+	                            boardTextKiller[point.x][point.y].setFocus();
+	                        }
                         } else {
-                            boardTextKiller[point.x][point.y].setFocus();
+                        	boardTextKiller[point.x][point.y].setFocus();
                         }
                     }
 
@@ -2165,7 +2297,7 @@ public class SudokuComposite extends Composite {
         input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
         input.setSize(BOX_SIZE_NORMAL / 3, BOX_SIZE_NORMAL / 3);
         input.setTextLimit(1);
-        input.setFont(FontService.getNormalFont());
+        input.setFont(FontService.getSmallFont());
         // input.setForeground(GREEN);
 
         input.addListener(SWT.Verify, new Listener() {
@@ -2197,7 +2329,7 @@ public class SudokuComposite extends Composite {
         input.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
         input.setSize(BOX_SIZE_KILLER / 3, BOX_SIZE_KILLER / 3);
         input.setTextLimit(1);
-        input.setFont(FontService.getNormalFont());
+        input.setFont(FontService.getSmallFont());
 
         input.addListener(SWT.Verify, new Listener() {
             public void handleEvent(Event e) {
@@ -2281,6 +2413,9 @@ public class SudokuComposite extends Composite {
         int num = 0;
         if (inputStr.length() > 0) {
             num = Integer.parseInt(inputStr);
+            Point pt = new Point(point.x,point.y);
+            movesNormal.add(pt);
+            undoButton.setEnabled(true);
         }
         if (num == 0 && boardNormal[point.x][point.y] != 0)
             addPossibleNormal(point.x, point.y, boardNormal[point.x][point.y]);
@@ -2294,6 +2429,9 @@ public class SudokuComposite extends Composite {
         int num = 0;
         if (inputStr.length() > 0) {
             num = Integer.parseInt(inputStr);
+            Point pt = new Point(point.x,point.y);
+            movesKiller.add(pt);
+            undoButton.setEnabled(true);
         }
         if (num == 0 && boardKiller[point.x][point.y] != 0)
             addPossibleKiller(point.x, point.y, boardKiller[point.x][point.y]);
@@ -2307,6 +2445,9 @@ public class SudokuComposite extends Composite {
         int num = -1;
         if (inputStr.length() > 0) {
             num = Integer.parseInt(inputStr);
+            Point pt = new Point(point.x,point.y);
+            movesHex.add(pt);
+            undoButton.setEnabled(true);
         }
         if (num == -1 && boardHex[point.x][point.y] != -1)
             addPossibleHex(point.x, point.y, boardHex[point.x][point.y]);
