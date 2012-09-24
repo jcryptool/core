@@ -16,167 +16,168 @@ public interface Constants {
 
     static String pluginRootDirectory = DPAPlugIn.getDefault().getBundle().getLocation().substring(16);
 
-    String IMGADDRESSE_TEST_ENG = "icons/explanation_4.jpg";
-    String IMGADDRESSE_DA_ENG = "icons/doubleAndAdd.jpg";
-    String IMGADDRESSE_D_ENG = "icons/double2.jpg";
-    String IMGADDRESSE_D_0_ENG = "icons/doubleAndAdd_0.jpg";
+    String IMGADDRESSE_TEST_ENG = Messages.Constants_0;
+    String IMGADDRESSE_DA_ENG = Messages.Constants_1;
+    String IMGADDRESSE_D_ENG = Messages.Constants_2;
+    String IMGADDRESSE_D_0_ENG = Messages.Constants_3;
 
-    String VIEW_ID = "org.jcryptool.visual.sidechannelattack.dpaview"; // 96-47
-    String MAIN_GROUP_TITLE = "DPA against ECC";
-    String ECC_ALG_GROUP_TITLE = "Part 1. ECC Algorithm:";
+    String VIEW_ID = Messages.Constants_4; // 96-47
+    String MAIN_GROUP_TITLE = Messages.Constants_5;
+    String ECC_ALG_GROUP_TITLE = Messages.Constants_6;
     String ECC_ALG_TEXT =
-            "Note: the scalar multiplication operation of ECCPoints above the elliptic curve is normally realized with \"Double and Add\" algorithm, the following introduced algorithm is based on \"Double and Add Always\", which is proved to be secure to SPA but still insecure to DPA.\nThe concrete attack process will be given on the right side in visual form and after all the corresponding countermeasures. ";
-    String EXPLANATION_OF_ALG = "Part 2. Explanation of Algorithm: ";
-    // String UNSECURE_DOUBLE_ADD_TEXT =
-    // "Insecurity of \"Double and Add\" to SPA:\nsince the private key can be recovered through comparison the difference of power traces between ECAdd and ECDouble operations, the original \"Double and Add\" algorithm is insecure to both SPA and DPA.\n\nInput:\n ECPoint P;\n scalar parameter k;\n\nOutput:\n Q = kP;\n\nProcess:\n Q = P;\n for(i = n-2 down to 0){\n Q = 2Q;\n if(di == 1)\n Q = Q + P; }";
+            Messages.Constants_7;
+    String EXPLANATION_OF_ALG = Messages.Constants_8;
+    String UNSECURE_DOUBLE_ADD_TEXT =
+    Messages.Constants_9;
+    String DOUBLE_ADD = Messages.Constants_10;
     String UNSECURE_DOUBLE_ADD_ALWAYS_TEXT =
-            "Note: the vulnerability to SPA attack can be solved by adding a dummy \"add\" operation in case of \"0\". It is named \"Double and Add Always\". However such countermeasure is still nonresistant to DPA attack, since the power consumption of \"Double and Add always\" method for each input looks same, but is slightly different. With statistic method like sampling analysis and differential analysis we can amplify the slight differences and recover the private key \'k\'.\n\n Q = kP with Double and Add Always:\n   Q[0] = P;\n   for(i = n-2 down to 0){\n   Q[0] = 2Q[0]; Q[1] = Q[0] + P;\n   Q[0] = Q[d\u1d62]; \n\n}";
+            Messages.Constants_11;
     String RANDOMIZED_SCALAR_MULTIPLIER_TEXT =
-            "Parameter k Randomization:\nif the scalar multiplier k is randomized in each turn of execution, the attacker could not recover the private key per comparison the differences between the power traces analysis of \"double and add\" operations.\n\n The idea and principle are like so:\nFirst Choose a random factor in group [1,p-1], then a new randomized scalar multiplier k'=k+r*order[P] will be calculated,\nsince order[P]*P is the infinity point(0) of the chosen elliptic curve, we get:\n G'=(k+r*order[P])*P=k*P+r*(oder[P]*P)\n    =kP+r*0=G\n With such method even for the same private key k, the power traces are still ensured to be different. The relation between certain input parameter K and corresponding power trace during operation process will be broken.";
-    String DOUBLE_ADD_ALWAYS = "Double and Add always";
+            Messages.Constants_12;
+    String DOUBLE_ADD_ALWAYS = Messages.Constants_13;
     String RANDOMIZED_INITIAL_POINT_TEXT =
-            "Initial Point P Randomization:\nif the initial point P is randomized in each turn of execution, it is also difficult to recover the private key through analysis of the correlation between a certain kP and its power trace.\n\nBasic idea and principle:\nFirst we choose randomly another ECPoint R on the same EC which is different from the initial ECPoint. Then we calculate R+P = P' as the new initial ECPoint for EC cryptography. After \"Double and Add Always\" algorithm we get Q' = kP' = k( P + R ) = kP + kR = Q + kR as the result. \nAnd for an ECPoint satisfies S = (x,y) then -S = (x, -y), thus Q = Q' - kR = Q' + (-kR), with this method we can calculate the result Q but concealing the real initial point P, in this way the correlation between power traces and the initial input P is also concealed.";
+            Messages.Constants_14;
     String RANDOMIZED_ISOMORPHIC_CURVE_TEXT =
-            "Isomorphic Curve Randomization:\nwe use a random isomorphic curve to the original curve, and after \"Double and Add always\" we recover the original result Q from Q'. The random isomorphic curve could also be understand as a DPA countermeasure with the method of randomizing the initial point P.\n\nIdea and process:\nFirst we choose randomly a number r in prime field [1, p-1], and then we calculate a' = r\u2074a, b' = r\u2076b P' = (r\u00b2Xp, r\u00b3Yp). With new a', b', P' we get a new isomorphic curve: E': y\u00b2 = x\u00b3 + a'x + b' After that we compute Q' = kP' on the new isomorphic curve. Q' = (Xq', Yq'). Finally we recover Q =(r\u207b\u00b2Xq',r\u207b\u00b3Yq'). Actually the method \"isomorphic curve\" breaks the correlation between ECPoint and power traces of different operations through randomizing the initial point.";
-    String COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER = "Randomize Parameter k (against DPA)";
-    String COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT = "Randomize initial ECPoint P (against DPA)";
-    String COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE = "Random Isomorphic Curve (against DPA) ";
+            Messages.Constants_15;
+    String COUTNERMEASURES_CCOMBO_RANDOMIZED_SCALAR_MULTIPLIER = Messages.Constants_16;
+    String COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT = Messages.Constants_17;
+    String COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE = Messages.Constants_18;
     String TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT =
-            "1. Q = KP at step j the processed point Q depends only on the first bits (kn-2,kn-3; : : : ; kj ) of K.\n\n2. Power consumption will be correlated to specific bit of Q, no correlation will be observed with a point not computed.\n\n3. The 2th most significant bit kn-2 of K can be recovered by computing the correlation between power consumption and any specific bit of the binary representation of 6P.\n\n 4. If kn-1 = 1, 6P is computed as Q[0] = 2*3P = 6P, otherwise by kn-1 = 0, 2*2P will be carried out during the Double operation.\n\n5. We gather many power consumption of computing 6P, and let si be any specific bit of 6P. We use the correlation function: g(t) = Power(si = 0) - Power(si = 1).\n\n6. If 6P is related to simulated correlation function g(t), a peak is observed corresponding to the computation of 6P, otherwise if there is no peak, the second significant bit is 0.\n\n7. The following bits kn-3, kn-4,... kj of K can be recursively recovered in the same way.\n\n8. The countermeasures against DPA are randomizing either the Initial Point P or the scalar multiplier K.";
-    String INSECURE_ALG_LABEL_TEXT = "Insecure to DPA: Double and Add Always";
-    String TITLE_OF_PARAMETEROFCOUNTERMEASURESGROUP = "DPA against Double and Add:";
-    String TOOLTIPTEXT_OF_PARAMETERACOMBO = "choose the parameter a of the EC here";
-    String TOOLTIPTEXT_OF_PARAMETERBCOMBO = "choose the parameter b of the EC here";
+            Messages.Constants_19;
+    String INSECURE_ALG_LABEL_TEXT = Messages.Constants_20;
+    String TITLE_OF_PARAMETEROFCOUNTERMEASURESGROUP = Messages.Constants_21;
+    String TOOLTIPTEXT_OF_PARAMETERACOMBO = Messages.Constants_22;
+    String TOOLTIPTEXT_OF_PARAMETERBCOMBO = Messages.Constants_23;
     String TOOLTIPTEXT_OF_ORDEROFCURVETEXT =
-            "order of the selected EC, that means the number of ECPoints on the curve plus the infinity point O";
-    String TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO = "select the scalar multiplier k for Q = kP here";
-    String TOOLTIPTEXT_OF_ECPOINTSCOMBO = "choose an ECPoint P as initial Point of ECC, except the infinity point O ";
-    String TEXT_OF_EXECUTEBUTTON = "Execute";
+            Messages.Constants_24;
+    String TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO = Messages.Constants_25;
+    String TOOLTIPTEXT_OF_ECPOINTSCOMBO = Messages.Constants_26;
+    String TEXT_OF_EXECUTEBUTTON = Messages.Constants_27;
     String TOOLTIPTEXT_OF_ORDEROFECPOINTTEXT =
-            "the order of selected initial point P, which means the minimum number k in GF(p) which satisfied kP = infinity point";
-    String TOOLTIPTEXT_OF_PRIMEFIELDSELECTCOMBO = "choose the prime field GF(p) here";
+            Messages.Constants_28;
+    String TOOLTIPTEXT_OF_PRIMEFIELDSELECTCOMBO = Messages.Constants_29;
     String TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT_1 =
-            "1. Q = KP at step j the processed point Q depends only on the first bits (kn-2,kn-3; : : : ; kj ) of K.\n\n2. Power consumption will be correlated to specific bit of Q, no correlation will be observed with a point not computed.\n\n3. The 2th most significant bit kn-2 of K can be recovered by computing the correlation between power consumption and any specific bit of the binary representation of 6P.\n\n 4. If kn-1 = 1, 6P is computed as Q[0] = 2*3P = 6P, otherwise by kn-1 = 0, 2*2P will be carried out during the Double operation.\n\n5. We gather many power consumption of computing 6P, and let si be any specific bit of 6P. We use the correlation function: g(t) = Power(si = 0) - Power(si = 1)\n\n6. If 6P is related to simulated correlation function g(t), a peak is observed corresponding to the computation of 6P, otherwise if there is no peak, the second significant bit is 0.\n\n7. The following bits kn-3, kn-4,... kj of K can be recursively recovered in the same way.";
-    String SECURE_ALG_LABEL_TEXT = "Secure countermeasures against SPA/DPA:";
-    String TEXT_OF_GLABEL = "   Q = ";
-    String TEXT_OF_ALABEL = "a =";
-    String TEXT_OF_BLABEL = "b = ";
-    String TOOLTIPTEXT_OF_ECCURVETEXT = "the EC has been selected with parameter a, b and GF(p)";
-    String TEXT_OF_DOUBLE_FORMEL = "Q[0]' = 2Q[0]'";
-    String TEXT_OF_ADD_FORMEL = "Q[1]' = Q[0]' + P";
-    String TEXT_OF_K_IN_BINARYFORM = "k in binary form: ";
-    String PARAM_OF_ECC_GROUP_TITEL = "Part 3. Parameter of ECC";
-    String PARAM_OF_COUNTERMEASURES_GROUP_TITEL = "Parameter of Countermeasures";
-    String CALCULATION_TABLE_GROUP_TITEL = "Part 4. Double and Add (from left highest to right lowest valuable bit)";
-    String FIRST_COLUMN_IN_TABLE = "Round Counter(left to right)";
-    String SECOND_COLUMN_IN_TABLE = "Result after Double";
-    String THIRD_COLUMN_IN_TABLE = "Result after Add";
-    String CHOOSE_AN_ECPOINT_LABEL_TEXT = "Choose a Point (no infinity point):";
-    String PRIME_FIELD_LABEL_TEXT = "GF(p) =";
-    String ECCURVE_TEXT_PART1 = "E: y\u00b2 = x\u00b3 + ";
-    String ECCURVE_TEXT_PART2 = "x + ";
-    String ECCURVE_TEXT_PART3 = ", GF(";
-    String CUE_LABEL_TEXT_1 = "a, b must be set in GF(p).";
-    String CUE_LABEL_TEXT_2 = "4a\u00b3 + 27b\u00b2 = 0. Change please.";
-    String CUE_LABEL_TEXT_3 = "Give correct number please.";
-    String CUE_LABEL_TEXT_4 = "a, b must be set in GF(p).";
-    String CUE_LABEL_TEXT_5 = "4a\u00b3 + 27b\u00b2 = 0. Change please.";
-    String ORDER_OF_SELECTED_POINT_TEXT = "Order of selected ECPoint: ";
-    String ORDER_OF_CURVE_TEXT = "Order of Curve: ";
-    String INITIAL_TABLE_ITEM_PART_1 = "ECPoint(P): ";
-    String INITIAL_TABLE_ITEM_PART_2 = "Parameter k: ";
-    String DECIMAL_ABBR = " (dec.)";
-    String INITIAL_TABLE_ITEM_BINARY = "Binary: ";
-    String BINARY_ABBR = " (bin.)";
-    String INITIAL_TABLE_ITEM_PROCESS = "Process: ";
-    String INITIAL_TABLE_ITEM_INPUT = "Input:";
-    String INITIAL_TABLE_ITEM_DOUBLE = "Q[0] = 2Q[0]";
-    String INITIAL_TABLE_ITEM_ADD = "Q[1] = Q[0] + P";
-    String RANDOMIZED_K_TEXT_PART1 = "1. Countermeasure against DPA:\n   (Parameter k Randomization)\n\n";
-    String RANDOMIZED_K_TEXT_PART2 = "a).Original Input:\n   Elliptic Curve: y\u00b2 = x\u00b3 + ";
-    String RANDOMIZED_K_TEXT_PART3 = "\n   GF(";
-    String RANDOMIZED_K_TEXT_PART4 = "), a = ";
-    String RANDOMIZED_K_TEXT_PART5 = ", b = ";
-    String RANDOMIZED_K_TEXT_PART6 = "\n   Initial ECPoint P: ";
-    String RANDOMIZED_K_TEXT_PART7 = "\n   Parameter k: ";
-    String RANDOMIZED_K_TEXT_PART8 = "\n   k in Binary: ";
-    String RANDOMIZED_K_TEXT_PART9 = "\n\nb).Randomization:\n   Random Factor r: ";
-    String RANDOMIZED_K_TEXT_PART10 = "\n   Order of P o(P): ";
-    String RANDOMIZED_K_TEXT_PART11 = "\n   k' = k + o(P)*r = ";
-    String RANDOMIZED_K_TEXT_PART12 = "\n   k' in Binary: ";
-    String RANDOMIZED_ECPOINT_TEXT_PART1 = "Random ECPoint R: (";
-    String RANDOMIZED_ECPOINT_TEXT_PART2 = "S = k*R = ";
-    String RANDOMIZED_ECPOINT_TEXT_PART3 = "R = ";
-    String RANDOMIZED_ECPOINT_TEXT_PART4 = "2. Countermeasure against DPA:\n   (Initial Point P Randomization)\n\n";
-    String RANDOMIZED_ECPOINT_TEXT_PART5 = "a).Original Input:\n   Elliptic Curve: y\u00b2 = x\u00b3 + ";
-    String RANDOMIZED_ECPOINT_TEXT_PART6 = "x + ";
-    String RANDOMIZED_ECPOINT_TEXT_PART7 = "\n   GF(";
-    String RANDOMIZED_ECPOINT_TEXT_PART8 = "), a = ";
-    String RANODMIZED_ECPOINT_TEXT_PART9 = ", b = ";
-    String RANODMIZED_ECPOINT_TEXT_PART10 = "\n   Initial ECPoint P: ";
-    String RANODMIZED_ECPOINT_TEXT_PART11 = "\n   Parameter k: ";
-    String RANODMIZED_ECPOINT_TEXT_PART12 = "\n   k in Binary: ";
-    String RANODMIZED_ECPOINT_TEXT_PART13 = "\n\nb).Randomization:\n   ";
-    String RANODMIZED_ECPOINT_TEXT_PART14 = "Random ECPoint R: (";
-    String RANODMIZED_ECPOINT_TEXT_PART15 = "\n   P + R = ";
-    String RANODMIZED_ECPOINT_TEXT_PART16 = "\n   S = k*R = ";
-    String RANODMIZED_ECPOINT_TEXT_PART17 = "R = ";
-    String RANODMIZED_ECPOINT_TEXT_PART18 = "\n   Q' = k*(P+R) = Q + S";
-    String RANODMIZED_ECPOINT_TEXT_PART19 = "\n   if S = (x, y) then -S = (x, -y)";
-    String RANODMIZED_ECPOINT_TEXT_PART20 = "\n   Q = Q' - S = Q' + (-S)";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART1 = "3. Countermeasure against DPA:\n   (Isomorphic Curve Random.)\n\n";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART2 = "a).Original Input:\n   Elliptic Curve: y\u00b2 = x\u00b3 + ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART3 = "x + ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART4 = "\n   GF(";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART5 = "), a = ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART6 = ", b = ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART7 = "\n   Initial ECPoint P: ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART8 = "\n   Parameter k: ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART9 = "\n   k in Binary: ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART10 = "\n\nb).Randomization:\n   ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART11 = "Random Factor r = ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART12 = "\n   a' = a*r\u2074 = ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART13 = ", b' = b*r\u2076 = ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART14 = "\n   P' = (r\u00b2*Xp, r\u00b3*Yp) = (";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART15 = "\n   EC': y\u00b2 = x\u00b3 + a'x + b' ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART16 = "\n            = x\u00b3 + ";
-    String RANDOMIZED_ISOMORPHIC_TEXT_PART17 = "x + ";
-    String INITIAL_TABLE_ITEM_HIGHEST_BIT = ". highest bit = ";
-    String TABLE_ITEM_DOUBLE = "Q = 2Q = ";
-    String TABLE_ITEM_P_EQUALS = "P = (";
-    String TABLE_ITEM_ADD = "Q = Q + P = ";
+            Messages.Constants_30;
+    String SECURE_ALG_LABEL_TEXT = Messages.Constants_31;
+    String TEXT_OF_GLABEL = Messages.Constants_32;
+    String TEXT_OF_ALABEL = Messages.Constants_33;
+    String TEXT_OF_BLABEL = Messages.Constants_34;
+    String TOOLTIPTEXT_OF_ECCURVETEXT = Messages.Constants_35;
+    String TEXT_OF_DOUBLE_FORMEL = Messages.Constants_36;
+    String TEXT_OF_ADD_FORMEL = Messages.Constants_37;
+    String TEXT_OF_K_IN_BINARYFORM = Messages.Constants_38;
+    String PARAM_OF_ECC_GROUP_TITEL = Messages.Constants_39;
+    String PARAM_OF_COUNTERMEASURES_GROUP_TITEL = Messages.Constants_40;
+    String CALCULATION_TABLE_GROUP_TITEL = Messages.Constants_41;
+    String FIRST_COLUMN_IN_TABLE = Messages.Constants_42;
+    String SECOND_COLUMN_IN_TABLE = Messages.Constants_43;
+    String THIRD_COLUMN_IN_TABLE = Messages.Constants_44;
+    String CHOOSE_AN_ECPOINT_LABEL_TEXT = Messages.Constants_45;
+    String PRIME_FIELD_LABEL_TEXT = Messages.Constants_46;
+    String ECCURVE_TEXT_PART1 = Messages.Constants_47;
+    String ECCURVE_TEXT_PART2 = Messages.Constants_48;
+    String ECCURVE_TEXT_PART3 = Messages.Constants_49;
+    String CUE_LABEL_TEXT_1 = Messages.Constants_50;
+    String CUE_LABEL_TEXT_2 = Messages.Constants_51;
+    String CUE_LABEL_TEXT_3 = Messages.Constants_52;
+    String CUE_LABEL_TEXT_4 = Messages.Constants_53;
+    String CUE_LABEL_TEXT_5 = Messages.Constants_54;
+    String ORDER_OF_SELECTED_POINT_TEXT = Messages.Constants_55;
+    String ORDER_OF_CURVE_TEXT = Messages.Constants_56;
+    String INITIAL_TABLE_ITEM_PART_1 = Messages.Constants_57;
+    String INITIAL_TABLE_ITEM_PART_2 = Messages.Constants_58;
+    String DECIMAL_ABBR = Messages.Constants_59;
+    String INITIAL_TABLE_ITEM_BINARY = Messages.Constants_60;
+    String BINARY_ABBR = Messages.Constants_61;
+    String INITIAL_TABLE_ITEM_PROCESS = Messages.Constants_62;
+    String INITIAL_TABLE_ITEM_INPUT = Messages.Constants_63;
+    String INITIAL_TABLE_ITEM_DOUBLE = Messages.Constants_64;
+    String INITIAL_TABLE_ITEM_ADD = Messages.Constants_65;
+    String RANDOMIZED_K_TEXT_PART1 = Messages.Constants_66;
+    String RANDOMIZED_K_TEXT_PART2 = Messages.Constants_67;
+    String RANDOMIZED_K_TEXT_PART3 = Messages.Constants_68;
+    String RANDOMIZED_K_TEXT_PART4 = Messages.Constants_69;
+    String RANDOMIZED_K_TEXT_PART5 = Messages.Constants_70;
+    String RANDOMIZED_K_TEXT_PART6 = Messages.Constants_71;
+    String RANDOMIZED_K_TEXT_PART7 = Messages.Constants_72;
+    String RANDOMIZED_K_TEXT_PART8 = Messages.Constants_73;
+    String RANDOMIZED_K_TEXT_PART9 = Messages.Constants_74;
+    String RANDOMIZED_K_TEXT_PART10 = Messages.Constants_75;
+    String RANDOMIZED_K_TEXT_PART11 = Messages.Constants_76;
+    String RANDOMIZED_K_TEXT_PART12 = Messages.Constants_77;
+    String RANDOMIZED_ECPOINT_TEXT_PART1 = Messages.Constants_78;
+    String RANDOMIZED_ECPOINT_TEXT_PART2 = Messages.Constants_79;
+    String RANDOMIZED_ECPOINT_TEXT_PART3 = Messages.Constants_80;
+    String RANDOMIZED_ECPOINT_TEXT_PART4 = Messages.Constants_81;
+    String RANDOMIZED_ECPOINT_TEXT_PART5 = Messages.Constants_82;
+    String RANDOMIZED_ECPOINT_TEXT_PART6 = Messages.Constants_83;
+    String RANDOMIZED_ECPOINT_TEXT_PART7 = Messages.Constants_84;
+    String RANDOMIZED_ECPOINT_TEXT_PART8 = Messages.Constants_85;
+    String RANODMIZED_ECPOINT_TEXT_PART9 = Messages.Constants_86;
+    String RANODMIZED_ECPOINT_TEXT_PART10 = Messages.Constants_87;
+    String RANODMIZED_ECPOINT_TEXT_PART11 = Messages.Constants_88;
+    String RANODMIZED_ECPOINT_TEXT_PART12 = Messages.Constants_89;
+    String RANODMIZED_ECPOINT_TEXT_PART13 = Messages.Constants_90;
+    String RANODMIZED_ECPOINT_TEXT_PART14 = Messages.Constants_91;
+    String RANODMIZED_ECPOINT_TEXT_PART15 = Messages.Constants_92;
+    String RANODMIZED_ECPOINT_TEXT_PART16 = Messages.Constants_93;
+    String RANODMIZED_ECPOINT_TEXT_PART17 = Messages.Constants_94;
+    String RANODMIZED_ECPOINT_TEXT_PART18 = Messages.Constants_95;
+    String RANODMIZED_ECPOINT_TEXT_PART19 = Messages.Constants_96;
+    String RANODMIZED_ECPOINT_TEXT_PART20 = Messages.Constants_97;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART1 = Messages.Constants_98;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART2 = Messages.Constants_99;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART3 = Messages.Constants_100;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART4 = Messages.Constants_101;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART5 = Messages.Constants_102;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART6 = Messages.Constants_103;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART7 = Messages.Constants_104;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART8 = Messages.Constants_105;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART9 = Messages.Constants_106;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART10 = Messages.Constants_107;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART11 = Messages.Constants_108;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART12 = Messages.Constants_109;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART13 = Messages.Constants_110;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART14 = Messages.Constants_111;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART15 = Messages.Constants_112;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART16 = Messages.Constants_113;
+    String RANDOMIZED_ISOMORPHIC_TEXT_PART17 = Messages.Constants_114;
+    String INITIAL_TABLE_ITEM_HIGHEST_BIT = Messages.Constants_115;
+    String TABLE_ITEM_DOUBLE = Messages.Constants_116;
+    String TABLE_ITEM_P_EQUALS = Messages.Constants_117;
+    String TABLE_ITEM_ADD = Messages.Constants_118;
     String TABLE_ITEM_WRONG_POINT_TEXT1 =
-            "The denominator 2Y\u2081 in ECDBL Formula is \"0\", please choose another point.";
-    String TABLE_ITEM_Q0_DOUBLE = "Q[0] = 2Q[0] = ";
-    String INITIALTABLEITEM_INPUT = "Input:";
-    String INITIALTABLEITEM_DOUBLE = "Q = 2Q";
-    String INITIALTABLEITEM_ADD = "Q = Q + P";
-    String TABLE_ITEM_Q1_DOUBLE = "Q[1]  = Q[0] + P = ";
-    String TABLE_ITEM_Q0_DOUBLE_NEW = "Q[0]' = 2Q[0]' = ";
-    String TABLE_ITEM_P_PLUS_R = "(P + R) = (";
-    String TABLE_ITEM_Q1_ADD_NEW1 = "Q[1]'  = Q[0]' + (P + R) = ";
-    String TABLE_ITEM_P_NEW_EQUALS = "P' = (";
-    String TABLE_ITEM_Q1_ADD_NEW2 = "Q[1]'  = Q[0]' + P' = ";
-    String TABLE_ITEM_OUTPUT = "Output:";
-    String TABLE_ITEM_NEW_G_PART1 = "Q' = k*(P+R) = Q + S = ";
-    String TABLE_ITEM_NEW_G_PART2 = "S = (x, y) then -S = (x, -y) = ";
-    String TABLE_ITEM_NEW_G_PART3 = "Q = Q' - S = Q' + (-S)";
-    String TABLE_ITEM_Q_EQUALS = "Q = (";
-    String TABLE_ITEM_NEW_Q = "Q' = (Xq*r\u00b2,Yq*r\u00b3) = ";
-    String UNICODE_1 = "\u0304";
-    String UNICODE_2 = "\u00b2"; // superscript 2
-    String UNICODE_3 = "\u00b3"; // superscript 3
-    String UNICODE_5 = "\u2081";
-    String UNICODE_6 = "\u2074";
-    String UNICODE_7 = "\u2076";
-    String UNICODE_8 = "\u2082";
-    String UNICODE_9 = "\u1d62"; // subscript i
-    String UNICODE_10 = "\u2074"; // superscript 4
-    String UNICODE_11 = "\u2076"; // superscript 6
-    String UNICODE_12 = "\u207b"; // superscript -
+            Messages.Constants_119;
+    String TABLE_ITEM_Q0_DOUBLE = Messages.Constants_120;
+    String INITIALTABLEITEM_INPUT = Messages.Constants_121;
+    String INITIALTABLEITEM_DOUBLE = Messages.Constants_122;
+    String INITIALTABLEITEM_ADD = Messages.Constants_123;
+    String TABLE_ITEM_Q1_DOUBLE = Messages.Constants_124;
+    String TABLE_ITEM_Q0_DOUBLE_NEW = Messages.Constants_125;
+    String TABLE_ITEM_P_PLUS_R = Messages.Constants_126;
+    String TABLE_ITEM_Q1_ADD_NEW1 = Messages.Constants_127;
+    String TABLE_ITEM_P_NEW_EQUALS = Messages.Constants_128;
+    String TABLE_ITEM_Q1_ADD_NEW2 = Messages.Constants_129;
+    String TABLE_ITEM_OUTPUT = Messages.Constants_130;
+    String TABLE_ITEM_NEW_G_PART1 = Messages.Constants_131;
+    String TABLE_ITEM_NEW_G_PART2 = Messages.Constants_132;
+    String TABLE_ITEM_NEW_G_PART3 = Messages.Constants_133;
+    String TABLE_ITEM_Q_EQUALS = Messages.Constants_134;
+    String TABLE_ITEM_NEW_Q = Messages.Constants_135;
+    String UNICODE_1 = Messages.Constants_136;
+    String UNICODE_2 = Messages.Constants_137; // superscript 2
+    String UNICODE_3 = Messages.Constants_138; // superscript 3
+    String UNICODE_5 = Messages.Constants_139;
+    String UNICODE_6 = Messages.Constants_140;
+    String UNICODE_7 = Messages.Constants_141;
+    String UNICODE_8 = Messages.Constants_142;
+    String UNICODE_9 = Messages.Constants_143; // subscript i
+    String UNICODE_10 = Messages.Constants_144; // superscript 4
+    String UNICODE_11 = Messages.Constants_145; // superscript 6
+    String UNICODE_12 = Messages.Constants_146; // superscript -
 
-    String TABLE_ITEM_Xq_EQUALS = "Xq = ";
-    String TABLE_ITEM_Yq_EQUALS = "Yq = ";
-    String DPA_PLUGIN_ID = "org.jcryptool.visual.sidechannelattack.dpa.dpaview";
+    String TABLE_ITEM_Xq_EQUALS = Messages.Constants_147;
+    String TABLE_ITEM_Yq_EQUALS = Messages.Constants_148;
+    String DPA_PLUGIN_ID = Messages.Constants_149;
 
 }

@@ -165,7 +165,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 				if(mode.isWithCustomButton()) {
 					btnSelectAlphabet = new Button(this, SWT.RADIO);
 					btnSelectAlphabet.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-					btnSelectAlphabet.setText("Select alphabet:");
+					btnSelectAlphabet.setText(Messages.getString("AlphabetSelectorComposite.0")); //$NON-NLS-1$
 
 					btnSelectAlphabet.addSelectionListener(new SelectionAdapter() {
 						@Override
@@ -193,7 +193,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 				comboAlphasLData.horizontalAlignment = GridData.FILL;
 				comboAlphasLData.verticalAlignment = GridData.FILL;
 				comboAlphas.setLayoutData(comboAlphasLData);
-				comboAlphas.setText("");
+				comboAlphas.setText(""); //$NON-NLS-1$
 
 				reloadAlphabetCombo();
 
@@ -311,11 +311,11 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			return alpha.getName();
 		}
 
-		return getCustomAlphabetLabel() + " (current: " + alpha.getName() + ")";
+		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
-		return getCustomAlphabetLabel() + " (current: " + alpha.getName() + ")";
+		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private int getIndexForRegisteredAlphabet(AbstractAlphabet content) {
@@ -346,7 +346,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 							return InputVerificationResult.MessageType.NONE;
 						}
 						public String getMessage() {
-							return "<this should not be visible> reset when custom alphabet wizard has been cancelled";
+							return "<this should not be visible> reset when custom alphabet wizard has been cancelled"; //$NON-NLS-1$
 						}
 					};
 				} else if (mode.isWithCustomButton() && btnCustomAlphabet.getSelection() && customAlphaByBtn == null) {
@@ -361,7 +361,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 							return InputVerificationResult.MessageType.NONE;
 						}
 						public String getMessage() {
-							return "<this should not be visible> reset when custom alphabet wizard has been cancelled";
+							return "<this should not be visible> reset when custom alphabet wizard has been cancelled"; //$NON-NLS-1$
 						}
 					};
 				} else {
@@ -380,7 +380,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 					} else if(isRegisteredAlphabetSetInCombo()) {
 						return getAlphabetFromCombo();
 					} else {
-						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found.");
+						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found."); //$NON-NLS-1$
 					}
 				}
 
@@ -393,7 +393,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 					} else if(isRegisteredAlphabetSetInCombo()) {
 						return getAlphabetFromCombo();
 					} else {
-						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found.");
+						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found."); //$NON-NLS-1$
 					}
 				}
 
@@ -442,7 +442,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 			@Override
 			public String getName() {
-				return "Alphabet";
+				return "Alphabet"; //$NON-NLS-1$
 			}
 
 			@Override
@@ -511,7 +511,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 * @return the label that is show for buttons/items which show a custom alphabet dialog on click.
 	 */
 	protected String getCustomAlphabetLabel() {
-		return "Custom alphabet...";
+		return Messages.getString("AlphabetSelectorComposite.1"); //$NON-NLS-1$
 	}
 
 	/**

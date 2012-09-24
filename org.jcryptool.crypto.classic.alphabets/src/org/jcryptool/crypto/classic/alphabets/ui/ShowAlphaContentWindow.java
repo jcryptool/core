@@ -25,7 +25,7 @@ public class ShowAlphaContentWindow extends Shell {
 	public static void main(String args[]) {
 		try {
 			Display display = Display.getDefault();
-			ShowAlphaContentWindow shell = new ShowAlphaContentWindow(display, new AtomAlphabet(""));
+			ShowAlphaContentWindow shell = new ShowAlphaContentWindow(display, new AtomAlphabet("")); //$NON-NLS-1$
 			shell.open();
 			shell.layout();
 			while (!shell.isDisposed()) {
@@ -52,7 +52,7 @@ public class ShowAlphaContentWindow extends Shell {
 	 * Create contents of the shell.
 	 */
 	protected void createContents() {
-		setText("Alphabet block content");
+		setText(Messages.getString("ShowAlphaContentWindow.1")); //$NON-NLS-1$
 		setSize(325, 130);
 		setLayout(new GridLayout());
 		{
@@ -65,9 +65,9 @@ public class ShowAlphaContentWindow extends Shell {
 				layoutData.widthHint = 130;
 				lblCharactersInThe.setLayoutData(layoutData);
 				if(alpha instanceof BlockAlphabet) {
-					lblCharactersInThe.setText(String.format("Characters in the block '%s':", ((BlockAlphabet) alpha).getBlockName()));
+					lblCharactersInThe.setText(String.format(Messages.getString("ShowAlphaContentWindow.0"), ((BlockAlphabet) alpha).getBlockName())); //$NON-NLS-1$
 				} else {
-					lblCharactersInThe.setText("Characters in the alphabet:");
+					lblCharactersInThe.setText(Messages.getString("ShowAlphaContentWindow.2")); //$NON-NLS-1$
 				}
 			}
 			{
