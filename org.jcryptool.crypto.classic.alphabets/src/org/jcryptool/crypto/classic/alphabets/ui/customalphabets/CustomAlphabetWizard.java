@@ -2,6 +2,10 @@ package org.jcryptool.crypto.classic.alphabets.ui.customalphabets;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.internal.ole.win32.ISpecifyPropertyPages;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizardPage2;
 
 public class CustomAlphabetWizard extends Wizard {
@@ -13,6 +17,10 @@ public class CustomAlphabetWizard extends Wizard {
 	AddAlphabetWizardPage2 page2;
 	
 	private String alphaSelectMode = MAKE_NEW_ALPHABET;
+	private boolean historyAlphaPermanence = false;
+	private boolean customAlphaPermanence = false;
+	
+	private AbstractAlphabet selectedAlphabet = null;
 	
 	public CustomAlphabetWizard() {
 		setWindowTitle("Create custom alphabets");
@@ -28,6 +36,11 @@ public class CustomAlphabetWizard extends Wizard {
 		return super.getNextPage(page);
 	}
 	
+	@Override
+	public boolean canFinish() {
+		return (page1!=null && page1.getNextPage() == null) || (page2!=null&&page2.isPageComplete());
+	}
+	
 	
 	@Override
 	public void addPages() {
@@ -37,15 +50,62 @@ public class CustomAlphabetWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		return false;
+		//TODO: !implement
+		if(getContainer().getCurrentPage() == page2) {
+			setWizardSelectedAlphabet(page2.getAlphabetInput().getContent());
+		}
+		return true;
+	}
+
+	public void setAlphaSelectMode(String alphaSelectMode) {
+		this.alphaSelectMode = alphaSelectMode;
+		if(page1!=null && page2!= null && getContainer().getCurrentPage() != null) getContainer().updateButtons();
+	}
+
+	public void setHistoryAlphaPermanence(boolean b) {
+		this.historyAlphaPermanence = b;
+	}
+
+	public void setCustomAlphaPermanence(boolean b) {
+		this.customAlphaPermanence = b;
+	}
+
+	public void setWizardSelectedAlphabet(AbstractAlphabet abstractAlphabet) {
+		this.selectedAlphabet = abstractAlphabet;
+	}
+
+	public boolean isHistoryAlphaPermanence() {
+		return historyAlphaPermanence;
+	}
+
+	public boolean isCustomAlphaPermanence() {
+		return customAlphaPermanence;
+	}
+
+	public AbstractAlphabet getAlphabet() {
+		return selectedAlphabet;
 	}
 
 	public String getAlphaSelectMode() {
 		return alphaSelectMode;
 	}
+	
+	/**
+	 * Signalizes that the overlying operation has finished successfully, 
+	 * so that the create/selected alphabet will be saved (if this was chosen 
+	 * in the wizard; if not, nothing happens);
+	 */
+	public void executeFinalizeOperation() {
+		if((getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence()) 
+			|| (getAlphaSelectMode() == USE_HISTORY_ALPHABET && isHistoryAlphaPermanence())) {
+			saveAlphabet(getAlphabet());
+		}
+	}
 
-	public void setAlphaSelectMode(String alphaSelectMode) {
-		this.alphaSelectMode = alphaSelectMode;
+	private static void saveAlphabet(AbstractAlphabet alpha) {
+		AlphabetsManager.getInstance().addAlphabet(alpha);
+        // saving
+        AlphabetsPlugin.getDefault().savePreferences();
 	}
 	
 }

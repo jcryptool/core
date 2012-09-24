@@ -11,7 +11,13 @@ public class CustomAlphabetHistoryManager {
 	public static List<AbstractAlphabet> customAlphabets = new LinkedList<AbstractAlphabet>();
 	static {
 		//TODO: !remove
-		customAlphabets.add(new AtomAlphabet("abcdefg\n\t x"));
+		AtomAlphabet a1 = new AtomAlphabet("abcdefg\n\t x");
+		a1.setName("Test-Alpha1");
+		customAlphabets.add(a1);
+		
+		AtomAlphabet a2 = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+		a1.setName("A-Za-z");
+		customAlphabets.add(a2);
 	}
 	
 }

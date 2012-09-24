@@ -13,8 +13,11 @@ package org.jcryptool.crypto.classic.alphabets.ui;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -22,14 +25,17 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
+import org.jcryptool.crypto.classic.alphabets.ui.customalphabets.CustomAlphabetWizard;
 
 /**
  * The WizardPage for the AddAlphabet wizard.
@@ -343,4 +349,9 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 	public String getAlphabetCharset() {
 		return String.valueOf(alphabetInput.getContent().getCharacterSet());
 	}
+
+	public AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
+		return alphabetInput;
+	}
+
 }

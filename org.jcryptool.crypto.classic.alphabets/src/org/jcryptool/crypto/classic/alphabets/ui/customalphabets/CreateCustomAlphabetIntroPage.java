@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -23,12 +26,13 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	private Label lblButEvenIf;
 	private Group grpPermanenceOfThe;
 	private Group grpReuseCustomAlphabets_1;
-	private Button btnReuseACustom;
+	private Button btnUseACustom;
 	private GridData grpReuseCustomAlphabetsGData;
 	final List<Button> btnsHistorySelect = new LinkedList<Button>();
 	
 	private int lastSelectedCustom = -1;
 	private Composite compHistoryDisplays;
+	private Button btnMakeTheSelected;
 	
 	/**
 	 * Create the wizard.
@@ -56,12 +60,16 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 			
 			{
 				lblTheAlphabetWhich = new Label(grpPermanenceOfThe, SWT.WRAP);
-				lblTheAlphabetWhich.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+				layoutData.widthHint = 250;
+				lblTheAlphabetWhich.setLayoutData(layoutData);
 				lblTheAlphabetWhich.setText("The alphabet which you will create can be used one-time, but can also be saved into the standard set of alphabets of the JCrypTool.");
 			}
 			{
 				lblButEvenIf = new Label(grpPermanenceOfThe, SWT.WRAP);
-				lblButEvenIf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+				layoutData.widthHint = 250;
+				lblButEvenIf.setLayoutData(layoutData);
 				lblButEvenIf.setText("But even if you don't make your alphabet permanent, you can still reuse it in this JCrypTool session. All custom alphabets you have created before restarting the JCrypTool will appear in this screen.");
 			}
 			{
@@ -87,14 +95,14 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 			grpReuseCustomAlphabets_1.setLayoutData(grpReuseCustomAlphabetsGData);
 			grpReuseCustomAlphabets_1.setLayout(new GridLayout(1, false));
 			{
-				btnReuseACustom = new Button(grpReuseCustomAlphabets_1, SWT.CHECK);
-				btnReuseACustom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				btnReuseACustom.setText("Select a custom alphabet from the past");
+				btnUseACustom = new Button(grpReuseCustomAlphabets_1, SWT.CHECK);
+				btnUseACustom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+				btnUseACustom.setText("Use a custom alphabet from the past");
 				
-				btnReuseACustom.addSelectionListener(new SelectionAdapter() {
+				btnUseACustom.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						if(btnReuseACustom.getSelection()) {
+						if(btnUseACustom.getSelection()) {
 							if(lastSelectedCustom >= 0) {
 								selectHistory(lastSelectedCustom);
 							} else {
@@ -110,6 +118,17 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 					compHistoryDisplays = new Composite(grpReuseCustomAlphabets_1, SWT.NONE);
 					compHistoryDisplays.setLayout(new GridLayout());
 					compHistoryDisplays.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+					{
+						btnMakeTheSelected = new Button(grpReuseCustomAlphabets_1, SWT.CHECK);
+						btnMakeTheSelected.setText("Make the selected alphabet permanent after finishing");
+						
+						btnMakeTheSelected.addSelectionListener(new SelectionAdapter() {
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								setHistoryAlphaPermanence(btnMakeTheSelected.getSelection());
+							}
+						});
+					}
 					
 					
 					List<AbstractAlphabet> customAlphabets = CustomAlphabetHistoryManager.customAlphabets;
@@ -128,6 +147,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 			grpReuseCustomAlphabetsGData.exclude = true;
 			grpReuseCustomAlphabets_1.setVisible(false);
 		}
+		selectHistory(-1);
 	}
 
 	private Button createCustomAlphaDisplay(AbstractAlphabet alpha, Composite host) {
@@ -136,18 +156,36 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 		comp.setLayout(new GridLayout(2, false));
 		comp.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 	
-		Button radio = new Button(comp, SWT.RADIO);
+		final Button radio = new Button(comp, SWT.RADIO);
 		CustomAlphabetItem alphaDisplay = new CustomAlphabetItem(comp, alpha);
+		alphaDisplay.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
+		alphaDisplay.setCursor(new Cursor(CreateCustomAlphabetIntroPage.this.getShell().getDisplay(), SWT.CURSOR_HAND));
 		
-		radio.addSelectionListener(new SelectionAdapter() {
+		final SelectionAdapter listener = new SelectionAdapter() {
+			Button defaultBtn = radio;
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if(e==null) {
+					selected(defaultBtn);
+				} else {
+					selected((Button) e.widget);
+				}
+			}
+			private void selected(Button selectedBtn) {
 				for (int j = 0; j < btnsHistorySelect.size(); j++) {
 					Button b = btnsHistorySelect.get(j);
+					b.setSelection(selectedBtn == b);
 					if(b.getSelection()) {
 						historySelected(CustomAlphabetHistoryManager.customAlphabets.get(j));
 					}
 				}
+			}
+		};
+		radio.addSelectionListener(listener);
+		alphaDisplay.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent e) {
+				listener.widgetSelected(null);
 			}
 		});
 		
@@ -155,8 +193,11 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	}
 
 	protected void setCustomAlphaPermanence(boolean b) {
-		// TODO Auto-generated method stub
-		
+		getMyWizard().setCustomAlphaPermanence(b);
+	}
+
+	protected void setHistoryAlphaPermanence(boolean b) {
+		getMyWizard().setHistoryAlphaPermanence(b);
 	}
 
 	protected void selectHistory(AbstractAlphabet alpha) {
@@ -175,14 +216,17 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	
 	protected void historySelected(AbstractAlphabet abstractAlphabet) {
 		if(abstractAlphabet!=null) {
-			btnReuseACustom.setSelection(true);
+			btnUseACustom.setSelection(true);
 			btnMakeTheCreated.setEnabled(false);
+			btnMakeTheSelected.setEnabled(true);
 			btnMakeTheCreated.setSelection(false);
 			lastSelectedCustom = CustomAlphabetHistoryManager.customAlphabets.indexOf(abstractAlphabet);
 			setWizardMode(CustomAlphabetWizard.USE_HISTORY_ALPHABET);
+			getMyWizard().setWizardSelectedAlphabet(abstractAlphabet);
 		} else {
-			btnReuseACustom.setSelection(false);
+			btnUseACustom.setSelection(false);
 			btnMakeTheCreated.setEnabled(true);
+			btnMakeTheSelected.setEnabled(false);
 			setWizardMode(CustomAlphabetWizard.MAKE_NEW_ALPHABET);
 		}
 	}
@@ -201,7 +245,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	}
 
 	public boolean isCustomAlphabetReuse() {
-		return btnReuseACustom.getSelection();
+		return btnUseACustom.getSelection();
 	}
 	
 	public AbstractAlphabet getReuseAlphabet() {

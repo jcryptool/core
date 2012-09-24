@@ -183,7 +183,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * @deprecated like {@link #getName()}
 	 */
 	private String generateName() {
-		return toString();
+		return alphabetContentAsString(getCharacterSet());
 	}
 
 	private static Map<Character, String> specialCharactersForPrinting = new HashMap<Character, String>();
