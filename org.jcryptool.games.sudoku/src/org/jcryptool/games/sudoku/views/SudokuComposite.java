@@ -430,14 +430,14 @@ public class SudokuComposite extends Composite {
 
         final RowLayout mrl = new RowLayout(SWT.VERTICAL);
         final RowData buttonrd = new RowData(129, 30);
-        final RowData radiord = new RowData(63,30);
+        //final RowData radiord = new RowData(63,30);
 
         Group choiceComposite = new Group(mainComposite, SWT.SHADOW_NONE);
         choiceComposite.setText(Messages.SudokuComposite_ModeAreaTitle);
         choiceComposite.setLayout(new RowLayout(SWT.HORIZONTAL));
         
         this.solveModeButton = new Button(choiceComposite, SWT.RADIO);
-        this.solveModeButton.setLayoutData(radiord);
+        this.solveModeButton.setLayoutData(new RowData(50,30));
         this.solveModeButton.setText(Messages.SudokuComposite_SolveModeButton);
         this.solveModeButton.addSelectionListener(new SelectionListener(){
 
@@ -518,7 +518,7 @@ public class SudokuComposite extends Composite {
         });
         
         this.enterModeButton = new Button(choiceComposite, SWT.RADIO);
-        this.enterModeButton.setLayoutData(radiord);
+        this.enterModeButton.setLayoutData(new RowData(76,30));
         this.enterModeButton.setSelection(true);
         this.enterModeButton.setText(Messages.SudokuComposite_EnterModeButton);
         this.enterModeButton.addSelectionListener(new SelectionListener(){
@@ -872,6 +872,9 @@ public class SudokuComposite extends Composite {
         this.clearButton.setToolTipText(Messages.SudokuComposite_ClearButton_Tooltip);
         this.clearButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
+            	enterModeButton.setSelection(true);
+            	solveModeButton.setSelection(false);
+            	enterModeButton.notifyListeners(SWT.Selection, null);
             	backgroundSolve.cancel();
                 loading = true;
                 switch (tabChoice) {
