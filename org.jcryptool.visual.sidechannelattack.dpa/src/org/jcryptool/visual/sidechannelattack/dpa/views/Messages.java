@@ -159,6 +159,13 @@ public class Messages extends NLS {
 	public static String points;
 	public static String order_curve;
 	public static String curve;
+	public static String reset;
+	public static String outputtable;
+	//public static String DPAView_roundCol_text;
+	public static String k;
+	public static String result;
+	public static String noprotection;
+	public static String protection;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
