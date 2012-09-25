@@ -144,7 +144,7 @@ public class DPAView extends ViewPart implements Constants {
                 parameterOfCountermeasuresText.setLocation(608, 20);
                 parameterOfCountermeasuresText.setSize(285, 269);
                 parameterOfCountermeasuresText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WHITE));
-                parameterOfCountermeasuresText.setText(TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT_1);
+                parameterOfCountermeasuresText.setText("");
 
         // define a group in which the user can select the parameters of ECC and initialize an EC, on which the
         // visualization will be based
@@ -154,7 +154,7 @@ public class DPAView extends ViewPart implements Constants {
         
         // define a group in which the whole process of encryption will be visualized with table form
         final Group visualizedGroup = new Group(mainGroup, SWT.NONE);
-        visualizedGroup.setText("Output Table");
+        visualizedGroup.setText(Messages.outputtable);
         visualizedGroup.setBounds(246, 10, 667, 465);
 
         // define a table to display the content and process of algorithm
@@ -201,7 +201,7 @@ public class DPAView extends ViewPart implements Constants {
         parameterBCombo.setBounds(65, 168, 50, 25);
         parameterBCombo.setEnabled(false);
 
-        eCCurveText = new StyledText(parameterOfECCGroup, SWT.BORDER);
+        eCCurveText = new StyledText(parameterOfECCGroup, SWT.NONE);
         eCCurveText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         eCCurveText.setEnabled(false);
         eCCurveText.setToolTipText(TOOLTIPTEXT_OF_ECCURVETEXT);
@@ -234,17 +234,17 @@ public class DPAView extends ViewPart implements Constants {
             	}
             }
         });
-        eCCurveText.setBounds(61, 422, 159, 25);
+        eCCurveText.setBounds(65, 375, 159, 15);
         
         // define a text field in which the computed order will be displayed
-        orderOfCurveText = new StyledText(parameterOfECCGroup, SWT.BORDER);
+        orderOfCurveText = new StyledText(parameterOfECCGroup, SWT.NONE);
         orderOfCurveText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         orderOfCurveText.setEnabled(false);
 
         // define a toolbar-text to explain the meaning of order
         orderOfCurveText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFCURVETEXT);
         orderOfCurveText.setEditable(false);
-        orderOfCurveText.setBounds(158, 391, 62, 25);
+        orderOfCurveText.setBounds(110, 396, 62, 15);
 
         // define a combo in which the user can select a random point of EC to process the computation
         eCPointscombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
@@ -256,7 +256,7 @@ public class DPAView extends ViewPart implements Constants {
         eCPointscombo.setEnabled(false);
 
         // define a text field in which the order of selected point will be displayed
-        orderOfECPointText = new StyledText(parameterOfECCGroup, SWT.BORDER);
+        orderOfECPointText = new StyledText(parameterOfECCGroup, SWT.NONE);
         orderOfECPointText.setBackground(org.eclipse.wb.swt.SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         orderOfECPointText.setEditable(false);
         orderOfECPointText.setEnabled(false);
@@ -264,10 +264,10 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the meaning of order
         orderOfECPointText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFECPOINTTEXT);
         //orderOfECPointText.setEditable(false);
-        orderOfECPointText.setBounds(158, 360, 62, 25);
+        orderOfECPointText.setBounds(158, 417, 62, 15);
 
         scalarParameterCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
-        scalarParameterCombo.setBounds(63, 261, 97, 23);
+        scalarParameterCombo.setBounds(65, 261, 95, 23);
         scalarParameterCombo.setToolTipText(TOOLTIPTEXT_OF_SCALARPARAMETERCOMBO);
         scalarParameterCombo.setEnabled(false);
         
@@ -463,29 +463,34 @@ public class DPAView extends ViewPart implements Constants {
         countermeasureselectionCombo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
 
-                counterFlag = countermeasureselectionCombo.getSelectionIndex();
+            	counterFlag = countermeasureselectionCombo.getSelectionIndex(); 
 
                 // countermeasure 1: randomized scalar multiplier
                 if (counterFlag == 1) {
                     unsecureText.setText(UNSECURE_DOUBLE_ADD_ALWAYS_TEXT);
+                    parameterOfCountermeasuresText.setText(Messages.noprotection);
                 }
                 // countermeasure 2: randomized initial point
                 else if (counterFlag == 2) {
                     unsecureText.setText(RANDOMIZED_SCALAR_MULTIPLIER_TEXT);
+                    parameterOfCountermeasuresText.setText(Messages.protection);
                 }
                 // whatever?
                 else if (counterFlag == 3) {
                     unsecureText.setText(RANDOMIZED_INITIAL_POINT_TEXT);
+                    parameterOfCountermeasuresText.setText(Messages.protection);
                 }
 
                 // countermeasure 3: randomized isomorphic curve
                 else if (counterFlag == 4) {
                     unsecureText.setText(RANDOMIZED_ISOMORPHIC_CURVE_TEXT);
+                    parameterOfCountermeasuresText.setText(Messages.protection);
                 }
                 
                 //Regular Double and Add?
                 else if (counterFlag == 0) {
                     unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
+                    parameterOfCountermeasuresText.setText(Messages.noprotection);
                 }
             }
         });
@@ -498,6 +503,8 @@ public class DPAView extends ViewPart implements Constants {
                 countermeasureselectionCombo.add(COUNTERMEASURES_CCOMBO_RANDOMIZED_INITIAL_POINT);
                 countermeasureselectionCombo.add(COUNTERMEASURES_CCOMBO_RANDOMIZED_ISOMORPHIC_CURVE);
                 countermeasureselectionCombo.select(0);
+                parameterOfCountermeasuresText.setText(Messages.noprotection);
+                counterFlag = 0;
                 
                 CLabel label = new CLabel(parameterOfECCGroup, SWT.NONE);
                 label.setText("P =");
@@ -509,7 +516,7 @@ public class DPAView extends ViewPart implements Constants {
                 
                 CLabel label_2 = new CLabel(parameterOfECCGroup, SWT.NONE);
                 label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
-                label_2.setBounds(9, 360, 149, 25);
+                label_2.setBounds(9, 417, 149, 15);
                 
                 CLabel lblModus = new CLabel(parameterOfECCGroup, SWT.NONE);
                 lblModus.setBounds(10, 25, 61, 21);
@@ -520,7 +527,7 @@ public class DPAView extends ViewPart implements Constants {
                 lblParameterOfEc.setText(Messages.parameter);
                 
                 CLabel lblPointsOnEc = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblPointsOnEc.setBounds(9, 205, 76, 21);
+                lblPointsOnEc.setBounds(9, 205, 211, 21);
                 lblPointsOnEc.setText(Messages.points);
                 
                 Label label_3 = new Label(parameterOfECCGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -533,11 +540,11 @@ public class DPAView extends ViewPart implements Constants {
                 label_5.setBounds(9, 290, 210, 2);
                 
                 CLabel lblOrderOfCurve = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblOrderOfCurve.setBounds(10, 391, 95, 25);
+                lblOrderOfCurve.setBounds(9, 396, 95, 15);
                 lblOrderOfCurve.setText(Messages.order_curve);
                 
                 CLabel lblNewLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblNewLabel.setBounds(9, 422, 50, 25);
+                lblNewLabel.setBounds(9, 375, 50, 15);
                 lblNewLabel.setText(Messages.curve);
                 
                 Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
@@ -556,7 +563,7 @@ public class DPAView extends ViewPart implements Constants {
                 		scalarParameterCombo.setEnabled(false);
                 		executeButton.setEnabled(false);
                 		unsecureText.setText(UNSECURE_DOUBLE_ADD_TEXT);
-                		parameterOfCountermeasuresText.setText(TEXT_OF_PARAMETEROFCOUNTERMEASURESTEXT_1);
+                		parameterOfCountermeasuresText.setText(Messages.noprotection);
                 		recordTable.removeAll();
                 		orderOfECPointText.setText("");
                 		orderOfCurveText.setText("");
@@ -564,12 +571,16 @@ public class DPAView extends ViewPart implements Constants {
                 	}
                 });
                 btnReset.setBounds(9, 329, 211, 25);
-                btnReset.setText("Reset");
+                btnReset.setText(Messages.reset);
+                
+                Label label_6 = new Label(parameterOfECCGroup, SWT.SEPARATOR | SWT.HORIZONTAL);
+                label_6.setBounds(9, 360, 210, 2);
 
         // add a listener on executeButton, which is used to start the process of selected algorithm
         executeButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(final SelectionEvent e) {
             		foo();
+            		outputFlag = 1;
             }
 
 			private void foo() {
@@ -599,27 +610,14 @@ public class DPAView extends ViewPart implements Constants {
                     initialTableItemBasis.setText(1, INITIALTABLEITEM_DOUBLE);
                     initialTableItemBasis.setText(2, INITIALTABLEITEM_ADD);
 
-                    // define the contents of recorder table
-                    final TableItem initialTableItemInputEC = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemInputEC.setText(0, ECCURVE_TEXT_PART1 + paraA + ECCURVE_TEXT_PART2 + paraB
-                            + ECCURVE_TEXT_PART3 + primeFieldSelected + ")");
-
-                    final TableItem initialTableItemInputECPoint = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemInputECPoint.setText(0, INITIAL_TABLE_ITEM_PART_1 + "("
-                            + allPoints[eCPointscombo.getSelectionIndex()].getAffineX() + ","
-                            + allPoints[eCPointscombo.getSelectionIndex()].getAffineY() + ")");
-
-                    final TableItem initialTableItemInputScalar = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemInputScalar.setText(0, INITIAL_TABLE_ITEM_PART_2 + String.valueOf(kSelected)
-                            + DECIMAL_ABBR);
-
                     final TableItem initialTableItemInputScalarBinary = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemInputScalarBinary.setText(0, INITIAL_TABLE_ITEM_BINARY
-                            + String.valueOf(kInBinaryForm) + " (bin.)");
+                            + String.valueOf(kInBinaryForm));
 
-                    final TableItem initialTableItemKinBinary = new TableItem(recordTable, SWT.BORDER);
-                    initialTableItemKinBinary.setText(0, kInBinaryForm);
-
+//                    final TableItem initialTableItemKinBinary = new TableItem(recordTable, SWT.BORDER);
+//                    initialTableItemKinBinary.setText(0, kInBinaryForm);
+                    final TableItem empty = new TableItem(recordTable, SWT.BORDER);
+                    empty.setText(0, "");
                     final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemProcess.setText(0, INITIAL_TABLE_ITEM_PROCESS);
 
@@ -650,8 +648,7 @@ public class DPAView extends ViewPart implements Constants {
                         newkInBinaryForm = Integer.toBinaryString(new_k);
                         klength = newkInBinaryForm.length();
                         final TableItem initialTableItemInputnewScalarBinary = new TableItem(recordTable, SWT.BORDER);
-                        initialTableItemInputnewScalarBinary.setText(0, "k': " + String.valueOf(newkInBinaryForm)
-                                + BINARY_ABBR);
+                        initialTableItemInputnewScalarBinary.setText(0, Messages.k + String.valueOf(newkInBinaryForm));
 
                         parameterOfCountermeasuresText.setText(RANDOMIZED_K_TEXT_PART1 + RANDOMIZED_K_TEXT_PART2
                                 + paraA + "x + " + paraB + RANDOMIZED_K_TEXT_PART3 + primeFieldSelected
@@ -694,8 +691,10 @@ public class DPAView extends ViewPart implements Constants {
 
                         if (originalRPlusP.getAffineY().equals(BigInteger.ZERO)) {
                             foo();
+                            outputFlag = 1;
+                            
                         }
-
+                        else{
                         final TableItem initialTableItemRandomPointPPlusR = new TableItem(recordTable, SWT.BORDER);
                         initialTableItemRandomPointPPlusR.setText(0, "P + R = " + "(" + rplusP.getAffineX() + ","
                                 + rplusP.getAffineY() + ")");
@@ -721,7 +720,7 @@ public class DPAView extends ViewPart implements Constants {
                                 + RANODMIZED_ECPOINT_TEXT_PART17 + "(" + kR.getAffineX() + "," + kR.getAffineY() + ")"
                                 + RANODMIZED_ECPOINT_TEXT_PART18 + RANODMIZED_ECPOINT_TEXT_PART19
                                 + RANODMIZED_ECPOINT_TEXT_PART20);
-
+                        }
                     }
 
                     // counterflag = 4 means the processing algorithm is randomized isomorphic curve
@@ -768,6 +767,9 @@ public class DPAView extends ViewPart implements Constants {
                     final TableItem initialTableItemKinBinary = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemKinBinary.setText(0, TEXT_OF_K_IN_BINARYFORM + kInBinaryForm);
 
+                    final TableItem empty = new TableItem(recordTable, SWT.BORDER);
+                    empty.setText(0, "");
+                    
                     final TableItem initialTableItemProcess = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemProcess.setText(0, INITIAL_TABLE_ITEM_PROCESS);
 
@@ -1002,18 +1004,16 @@ public class DPAView extends ViewPart implements Constants {
 
                 }
 
+                final TableItem empty2 = new TableItem(recordTable, SWT.BORDER);
+                final TableItem result2 = new TableItem(recordTable, SWT.BORDER);
                 final TableItem initialTableItemOutput = new TableItem(recordTable, SWT.BORDER);
+                
 
-                if (exceptionFlag != 1)
-                    initialTableItemOutput.setText(0, TABLE_ITEM_OUTPUT);
-
-                if (counterFlag == 3) {
-
-                    if (outputFlag == 1) {
-
-                    }
-
-                    else {
+                if (counterFlag == 3 && outputFlag != 1) {
+                	empty2.dispose();
+                	result2.dispose();
+                  final TableItem result = new TableItem(recordTable, SWT.BORDER);
+                  result.setText(0, Messages.result);
                         final TableItem initialTableItemnewGStep1 = new TableItem(recordTable, SWT.BORDER);
                         initialTableItemnewGStep1.setText(0, TABLE_ITEM_NEW_G_PART1 + "(" + rplusP.getAffineX() + ","
                                 + rplusP.getAffineY() + ")");
@@ -1030,6 +1030,8 @@ public class DPAView extends ViewPart implements Constants {
                         // value of S = kR and Q' = k(P+R) is identical
                         if (Q.equals(ECPoint.POINT_INFINITY)) {
                         	foo();
+                        	outputFlag = 1;
+                        	
 
                         } else {
                             final TableItem initialTableItemnewGStep3 = new TableItem(recordTable, SWT.BORDER);
@@ -1039,13 +1041,15 @@ public class DPAView extends ViewPart implements Constants {
                             initialTableItemnewGStep4.setText(0, TABLE_ITEM_Q_EQUALS + rplusP.getAffineX() + ","
                                     + rplusP.getAffineY() + ") + " + "(" + kR.getAffineX() + ","
                                     + kR.getAffineY().negate() + ") = (" + Q.getAffineX() + "," + Q.getAffineY() + ")");
-                        }
-                    }
+                        }               
 
                 }
                 // counterFlag == 4 stands for "randomizing the isomorphic curve"
                 else if (counterFlag == 4) {
-
+                	empty2.dispose();
+                	result2.dispose();
+                  final TableItem result = new TableItem(recordTable, SWT.BORDER);
+                  result.setText(0, Messages.result);
                     final TableItem initialTableItemOutputStep1 = new TableItem(recordTable, SWT.BORDER);
                     initialTableItemOutputStep1.setText(0, TABLE_ITEM_NEW_Q + "(" + newP.getAffineX() + ","
                             + newP.getAffineY() + ") ");
@@ -1072,6 +1076,9 @@ public class DPAView extends ViewPart implements Constants {
 
                 } else {
 
+                  empty2.setText(0, "");
+
+                  result2.setText(0, Messages.result);
                     initialTableItemOutput.setText(0, TABLE_ITEM_Q_EQUALS + ecPoint.getAffineX() + ","
                             + ecPoint.getAffineY() + ")");
 
