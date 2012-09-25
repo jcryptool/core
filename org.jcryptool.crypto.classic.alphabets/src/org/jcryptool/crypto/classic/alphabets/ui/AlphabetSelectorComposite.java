@@ -217,7 +217,10 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public void widgetSelected(SelectionEvent e) {
 							if(btnCustomAlphabet.getSelection()) {
 								customAlphaByBtn = makeCustomAlphabet(e);
-
+								if(customAlphaByCombo != null) {
+									reloadAlphabetCombo();
+								}
+								
 								alphabetInput.synchronizeWithUserSide();
 
 								if(btnCustomAlphabet.getSelection()) {
@@ -242,6 +245,9 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 						if(selectedItemIsCustomItem) {
 							customAlphaByCombo = makeCustomAlphabet(e);
+							if(customAlphaByCombo != null) {
+								reloadAlphabetCombo();
+							}
 						}
 
 						alphabetInput.synchronizeWithUserSide();
@@ -276,7 +282,6 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		WizardDialog d = new WizardDialog(parentShell, wiz);
 		d.open();
 		if(d.getReturnCode() == Dialog.OK) {
-			reloadAlphabetCombo();
 			return wiz.getAlphabet();
 		}
 		
@@ -349,6 +354,19 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 			private boolean alphabetFromComboWasCustom;
 			private boolean alphabetWasFromCustomBtn;
+			
+			@Override
+			protected boolean canAutocorrect(InputVerificationResult result) {
+				if(result.getMessage().contains("cancelled")) {
+					return true;
+				}
+				return super.canAutocorrect(result);
+			}
+
+			@Override
+			protected void autocorrect(InputVerificationResult result) {
+				writeContent(getContent());
+			}
 
 			@Override
 			protected InputVerificationResult verifyUserChange() {

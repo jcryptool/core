@@ -74,7 +74,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
     	if(alpha instanceof Alphabet) {
         	return (Alphabet) alpha;
         } else { //TODO: !alphaRefactor Diese Verzweigung muss entfernt werden. 
-        	return new Alphabet(alpha.getCharacterSet(), alpha.getName(), AbstractAlphabet.NO_DISPLAY);
+        	return new Alphabet(alpha.getCharacterSet(), alpha.getName(), alpha.getShortName(), AbstractAlphabet.DISPLAY, true);
         }
 	}
 

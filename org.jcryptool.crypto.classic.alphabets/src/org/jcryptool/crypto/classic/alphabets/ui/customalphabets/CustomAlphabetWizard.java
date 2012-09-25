@@ -54,10 +54,9 @@ public class CustomAlphabetWizard extends Wizard {
 		if(getContainer().getCurrentPage() == page2) {
 			setWizardSelectedAlphabet(page2.getAlphabetInput().getContent());
 		}
-		if(getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence()) {
-			//TODO: is this the right place?
-			executeFinalizeOperation();
-		}
+
+		//TODO: is this the right place?
+		executeFinalizeOperation();
 		return true;
 	}
 
@@ -100,11 +99,14 @@ public class CustomAlphabetWizard extends Wizard {
 	 * in the wizard; if not, nothing happens);
 	 */
 	public void executeFinalizeOperation() {
-		if((getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence())) {
-			saveAlphabet(getAlphabet());
+		if(getAlphaSelectMode() == MAKE_NEW_ALPHABET) {
+			if(isCustomAlphaPermanence()) {
+				saveAlphabet(getAlphabet());
+			}
+			CustomAlphabetHistoryManager.customAlphabets.add(getAlphabet());
 		}
 		if((getAlphaSelectMode() == USE_HISTORY_ALPHABET && isHistoryAlphaPermanence())) {
-			CustomAlphabetHistoryManager.customAlphabets.add(getAlphabet());
+			saveAlphabet(getAlphabet());
 		}
 	}
 

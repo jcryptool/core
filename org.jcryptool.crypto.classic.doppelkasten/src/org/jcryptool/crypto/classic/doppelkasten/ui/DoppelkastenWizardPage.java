@@ -66,7 +66,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 			}
 			@Override
 			protected InputVerificationResult verifyUserChange() {
-				return KeyVerificator.verify(getTextfield().getText(), alphabetInput.getContent(), getKeyVerificators());
+				return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), getKeyVerificators());
 			}
 			@Override
 			public String readContent() {
@@ -86,7 +86,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 				String keyNow = getTextfield().getText();
 				StringBuilder stringBuilder = new StringBuilder();
 				for(int i=0; i<keyNow.length(); i++) {
-					if(alphabetInput.getContent().contains(keyNow.charAt(i))) {
+					if(getAlphabetInput().getContent().contains(keyNow.charAt(i))) {
 						stringBuilder.append(keyNow.charAt(i));
 					}
 				}
@@ -96,12 +96,12 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 			}
 			@Override
 			public AbstractAlphabet getAlphabet() {
-				return alphabetInput.getContent();
+				return getAlphabetInput().getContent();
 			}
 		};
 
 		//changes in the currentAlphabet input must be forwarded to the key input for revalidation
-		alphabetInput.addObserver(keyInput);
+		getAlphabetInput().addObserver(keyInput);
 	}
 
 
@@ -114,7 +114,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 			}
 			@Override
 			protected InputVerificationResult verifyUserChange() {
-				return KeyVerificator.verify(getTextfield().getText(), alphabetInput.getContent(), getKeyVerificators());
+				return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), getKeyVerificators());
 			}
 			@Override
 			public String readContent() {
@@ -134,7 +134,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 				String keyNow = getTextfield().getText();
 				StringBuilder stringBuilder = new StringBuilder();
 				for(int i=0; i<keyNow.length(); i++) {
-					if(alphabetInput.getContent().contains(keyNow.charAt(i))) {
+					if(getAlphabetInput().getContent().contains(keyNow.charAt(i))) {
 						stringBuilder.append(keyNow.charAt(i));
 					}
 				}
@@ -146,7 +146,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 		};
 
 		//changes in the currentAlphabet input must be forwarded to the key input for revalidation
-		alphabetInput.addObserver(key2Input);
+		getAlphabetInput().addObserver(key2Input);
 	}
 
 

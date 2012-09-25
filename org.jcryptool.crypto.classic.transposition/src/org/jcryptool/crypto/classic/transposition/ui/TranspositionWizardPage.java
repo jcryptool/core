@@ -24,6 +24,8 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
+import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite;
+
 
 /**
  * The wizard page for the Autokey-Vigenere wizard.
@@ -51,8 +53,8 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
     @Override
     protected void createAlphabetInputObjects() {
         super.createAlphabetInputObjects();
-        key1InputComposite.setAlphabetInput(alphabetInput);
-        key2InputComposite.setAlphabetInput(alphabetInput);
+        key1InputComposite.setAlphabetInput(getAlphabetInput());
+        key2InputComposite.setAlphabetInput(getAlphabetInput());
     }
 
     @Override
@@ -77,11 +79,11 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
         };
         verificationDisplayHandler.addAsObserverForInput(operationInput);
         verificationDisplayHandler.addAsObserverForInput(filterInput);
-        verificationDisplayHandler.addAsObserverForInput(alphabetInput);
+        verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
         verificationDisplayHandler.addAsObserverForInput(transformationInput);
 
         // static mappings (dynamic, like at operation, are handled above in the overridden method)
-        verificationDisplayHandler.addInputWidgetMapping(alphabetInput, alphabetCombo);
+        verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
         verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
         verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
     }
@@ -98,7 +100,7 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
 	@Override
     protected void addPageObserver() {
         operationInput.addObserver(pageObserver);
-        alphabetInput.addObserver(pageObserver);
+        getAlphabetInput().addObserver(pageObserver);
         filterInput.addObserver(pageObserver);
         transformationInput.addObserver(pageObserver);
         key1InputComposite.setObserverToAllInputs(pageObserver);

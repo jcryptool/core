@@ -41,6 +41,8 @@ import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite;
+import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite.AlphabetAcceptor;
+import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite.Mode;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
@@ -677,7 +679,17 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			alphabetLabel.setText(Messages.WizardPage_selectalpha);
 			alphabetLabel.setLayoutData(alphabetLabelGridData);
 
-		alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, getDefaultAlphabet(), AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
+		AlphabetAcceptor acceptor = new AlphabetAcceptor() {
+			@Override
+			public boolean accept(AbstractAlphabet alphabet) {
+				return specification.isValidPlainTextAlphabet(alphabet);
+			}
+		};
+		Mode alphabetSelectionMode =
+			specification.isAllowCustomAlphabetCreation()?
+				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
+				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS;
+		alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, acceptor, getDefaultAlphabet(), alphabetSelectionMode);
 		
 		GridData filterComboGridData = new GridData();
 		filterComboGridData.horizontalAlignment = GridData.FILL;

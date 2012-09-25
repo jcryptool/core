@@ -131,7 +131,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 					
 					
 					List<AbstractAlphabet> customAlphabets = CustomAlphabetHistoryManager.customAlphabets;
-					for (int i = 0; i < customAlphabets.size(); i++) {
+					for (int i = customAlphabets.size()-1; i >= 0; i--) {
 						AbstractAlphabet alpha = customAlphabets.get(i);
 						
 						btnsHistorySelect.add(createCustomAlphaDisplay(alpha, compHistoryDisplays));

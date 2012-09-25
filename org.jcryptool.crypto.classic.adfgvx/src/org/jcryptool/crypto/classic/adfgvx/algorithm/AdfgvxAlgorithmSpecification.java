@@ -132,4 +132,9 @@ public class AdfgvxAlgorithmSpecification extends ClassicAlgorithmSpecification 
 		return substitutionKey;
 	}
 	
+	@Override
+	public boolean isAllowCustomAlphabetCreation() {
+		return false;
+	}
+	
 }
