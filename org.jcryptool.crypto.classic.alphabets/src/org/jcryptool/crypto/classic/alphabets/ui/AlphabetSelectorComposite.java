@@ -327,6 +327,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			comboAlphas.select(0);
 			if(alphabetInput != null) alphabetInput.synchronizeWithUserSide();
 		}
+		
+		comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
 	}
 
 	private String makeAlphaStringForCombo(AbstractAlphabet alpha, boolean custom) {
