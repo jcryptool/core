@@ -61,7 +61,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
      * @param alpha
      */
     public void addAlphabet(AbstractAlphabet alpha) {
-        alphabets.addElement((Alphabet) alpha);
+        alphabets.addElement(convertAbstractAlphaToAlpha(alpha));
         try {
             storeAlphabets();
         } catch (IOException e) {
@@ -69,7 +69,16 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
     }
 
-    private void addInternAlphabet(Alphabet alpha) {
+    //TODO: !alphaRefactoring: this method won't be needed anymore...
+    public static Alphabet convertAbstractAlphaToAlpha(AbstractAlphabet alpha) {
+    	if(alpha instanceof Alphabet) {
+        	return (Alphabet) alpha;
+        } else { //TODO: !alphaRefactor Diese Verzweigung muss entfernt werden. 
+        	return new Alphabet(alpha.getCharacterSet(), alpha.getName(), AbstractAlphabet.NO_DISPLAY);
+        }
+	}
+
+	private void addInternAlphabet(Alphabet alpha) {
         alphabets.addElement(alpha);
     }
 
@@ -112,7 +121,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         Vector<Alphabet> v = new Vector<Alphabet>(alphas.length);
 
         for (int i = 0; i < alphas.length; i++) {
-            v.addElement((Alphabet) alphas[i]);
+            v.addElement(convertAbstractAlphaToAlpha(alphas[i]));
         }
 
         alphabets = v;

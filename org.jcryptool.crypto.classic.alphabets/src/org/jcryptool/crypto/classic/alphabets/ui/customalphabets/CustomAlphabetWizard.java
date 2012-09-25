@@ -7,6 +7,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizardPage2;
+import org.jcryptool.crypto.classic.alphabets.ui.customalphabets.customhistory.CustomAlphabetHistoryManager;
 
 public class CustomAlphabetWizard extends Wizard {
 	
@@ -50,9 +51,12 @@ public class CustomAlphabetWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		//TODO: !implement
 		if(getContainer().getCurrentPage() == page2) {
 			setWizardSelectedAlphabet(page2.getAlphabetInput().getContent());
+		}
+		if(getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence()) {
+			//TODO: is this the right place?
+			executeFinalizeOperation();
 		}
 		return true;
 	}
@@ -96,9 +100,11 @@ public class CustomAlphabetWizard extends Wizard {
 	 * in the wizard; if not, nothing happens);
 	 */
 	public void executeFinalizeOperation() {
-		if((getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence()) 
-			|| (getAlphaSelectMode() == USE_HISTORY_ALPHABET && isHistoryAlphaPermanence())) {
+		if((getAlphaSelectMode() == MAKE_NEW_ALPHABET && isCustomAlphaPermanence())) {
 			saveAlphabet(getAlphabet());
+		}
+		if((getAlphaSelectMode() == USE_HISTORY_ALPHABET && isHistoryAlphaPermanence())) {
+			CustomAlphabetHistoryManager.customAlphabets.add(getAlphabet());
 		}
 	}
 

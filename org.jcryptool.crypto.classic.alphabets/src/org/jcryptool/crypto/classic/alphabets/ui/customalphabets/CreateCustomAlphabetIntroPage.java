@@ -82,7 +82,6 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 							setCustomAlphaPermanence(true);
 						} else {
 							setCustomAlphaPermanence(false);
-							//TODO: add equivalent controls for history alphabets
 						}
 					}
 				});

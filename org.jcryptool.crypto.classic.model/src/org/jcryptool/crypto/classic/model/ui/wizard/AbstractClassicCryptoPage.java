@@ -40,6 +40,7 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
+import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
@@ -64,7 +65,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	protected Composite alphabetInnerGroup;
 	protected Button showAlphabetContent;
 	protected Label alphabetLabel;
-	protected Combo alphabetCombo;
+	protected AlphabetSelectorComposite alphabetCombo;
 	protected Button filterCheckBox;
 	protected Group operationGroup;
 	protected Button encryptButton;
@@ -83,7 +84,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 */
 	protected MWizardMessage normalStatusMsg; //$NON-NLS-1$
 	protected AbstractUIInput<Boolean> operationInput;
-	protected AbstractUIInput<AbstractAlphabet> alphabetInput;
+//	protected AbstractUIInput<AbstractAlphabet> alphabetInput;
 	protected AbstractUIInput<Boolean> filterInput;
 	protected TextfieldInput<String> keyInput;
 	protected WidgetBubbleUIInputHandler verificationDisplayHandler;
@@ -236,30 +237,30 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 * This should be reimplemented if other input verification/handling is needed.
 	 */
 	protected void createAlphabetInputObjects() {
-		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				//Because no invalid Alphabets will be put into the Selection box
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-			}
-			@Override
-			public AbstractAlphabet readContent() {
-				String selectedAlphabetName = alphabetCombo.getText();
-				return AlphabetsManager.getInstance().getAlphabetByName(selectedAlphabetName);
-			}
-			@Override
-			public void writeContent(AbstractAlphabet content) {
-				alphabetCombo.setText(content.getName());
-			}
-			@Override
-			protected AbstractAlphabet getDefaultContent() {
-				return getDefaultAlphabet();
-			}
-			@Override
-			public String getName() {
-				return Messages.AbstractClassicCryptoPage_alphabet_input_name;
-			}
-		};
+//		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
+//			@Override
+//			protected InputVerificationResult verifyUserChange() {
+//				//Because no invalid Alphabets will be put into the Selection box
+//				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+//			}
+//			@Override
+//			public AbstractAlphabet readContent() {
+//				String selectedAlphabetName = alphabetCombo.getText();
+//				return AlphabetsManager.getInstance().getAlphabetByName(selectedAlphabetName);
+//			}
+//			@Override
+//			public void writeContent(AbstractAlphabet content) {
+//				alphabetCombo.setText(content.getName());
+//			}
+//			@Override
+//			protected AbstractAlphabet getDefaultContent() {
+//				return getDefaultAlphabet();
+//			}
+//			@Override
+//			public String getName() {
+//				return Messages.AbstractClassicCryptoPage_alphabet_input_name;
+//			}
+//		};
 
 		filterInput = new AbstractUIInput<Boolean>() {
 			@Override
@@ -284,31 +285,38 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			}
 		};
 
-		SelectionAdapter adapterAlphabet = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				alphabetInput.synchronizeWithUserSide();
-			}
-		};
-		alphabetCombo.addSelectionListener(adapterAlphabet);
+//		SelectionAdapter adapterAlphabet = new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				alphabetInput.synchronizeWithUserSide();
+//			}
+//		};
+//		alphabetCombo.addSelectionListener(adapterAlphabet);
 
-		SelectionAdapter adapterFilter = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				filterInput.synchronizeWithUserSide();
-			}
-		};
-		alphabetCombo.addSelectionListener(adapterFilter);
+//		SelectionAdapter adapterFilter = new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				filterInput.synchronizeWithUserSide();
+//			}
+//		};
+//		alphabetCombo.addSelectionListener(adapterFilter);
 
-		alphabetInput.addObserver(new Observer() {
+		getAlphabetInput().addObserver(new Observer() {
 			public void update(Observable o, Object arg) {
 				if(arg == null) { //when there is really a change
 					if(transformationInput.getContent()) {
-						updateTransformationPage(alphabetInput.getContent().getName());
+						updateTransformationPage(getAlphabetInput().getContent().getName());
 					}
 				}
 			}
 		});
 
-		updateTransformationPage(alphabetInput.getContent().getName());
+		updateTransformationPage(getAlphabetInput().getContent().getName());
+	}
+
+	/**
+	 * @return the input object from the alphabet combo
+	 */
+	protected AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
+		return alphabetCombo.getAlphabetInput();
 	}
 
 	/**
@@ -339,7 +347,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 				String keyNow = getTextfield().getText();
 				StringBuilder stringBuilder = new StringBuilder();
 				for(int i=0; i<keyNow.length(); i++) {
-					if(alphabetInput.getContent().contains(keyNow.charAt(i))) {
+					if(getAlphabetInput().getContent().contains(keyNow.charAt(i))) {
 						stringBuilder.append(keyNow.charAt(i));
 					}
 				}
@@ -350,7 +358,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
 			@Override
 			public AbstractAlphabet getAlphabet() {
-				return alphabetInput.getContent();
+				return getAlphabetInput().getContent();
 			}
 			@Override
 			protected InputVerificationResult verifyUserChange() {
@@ -359,7 +367,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		};
 
 		//changes in the currentAlphabet input must be forwarded to the key input for revalidation
-		alphabetInput.addObserver(keyInput);
+		getAlphabetInput().addObserver(keyInput);
 	}
 
 
@@ -402,7 +410,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			public void update(Observable o, Object arg) {
 				if(arg == null) { //when there is really a change
 					if(transformationInput.getContent()) {
-						updateTransformationPage(alphabetInput.getContent().getName());
+						updateTransformationPage(getAlphabetInput().getContent().getName());
 					} else {
 						updateTransformationPage("no transformation"); //$NON-NLS-1$
 					}
@@ -438,12 +446,12 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		};
 		verificationDisplayHandler.addAsObserverForInput(operationInput);
 		verificationDisplayHandler.addAsObserverForInput(filterInput);
-		verificationDisplayHandler.addAsObserverForInput(alphabetInput);
+		verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
 		verificationDisplayHandler.addAsObserverForInput(keyInput);
 		verificationDisplayHandler.addAsObserverForInput(transformationInput);
 
 		//static mappings (dynamic, like at operation, are handled above in the overridden method)
-		verificationDisplayHandler.addInputWidgetMapping(alphabetInput, alphabetCombo);
+		verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
 		verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
 		verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
 		verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
@@ -474,7 +482,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 */
 	protected void addPageObserver() {
 		operationInput.addObserver(pageObserver);
-		alphabetInput.addObserver(pageObserver);
+		getAlphabetInput().addObserver(pageObserver);
 		filterInput.addObserver(pageObserver);
 		keyInput.addObserver(pageObserver);
 		transformationInput.addObserver(pageObserver);
@@ -525,18 +533,6 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
 	}
 
-	/**
-	 * Initializes the currentAlphabet composites. Rather than overriding this, override the
-	 * getters {@link #getAvailableAlphabets()} and {@link #getDefaultAlphabet()}.
-	 */
-	private void initAlphabetComposites() {
-		List<AbstractAlphabet> alphas = getAvailableAlphabets();
-		for (int i=0; i < alphas.size(); i++) {
-			alphabetCombo.add(alphas.get(i).getName());
-		}
-
-		if(alphas.size() < 2) alphabetCombo.setEnabled(false);
-	}
 
 	@Override
 	public IWizardPage getNextPage() {
@@ -562,7 +558,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 * @return	The selected currentAlphabet
 	 */
 	public AbstractAlphabet getSelectedAlphabet() {
-		return alphabetInput.getContent();
+		return getAlphabetInput().getContent();
 	}
 
 	/**
@@ -681,30 +677,38 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			alphabetLabel.setText(Messages.WizardPage_selectalpha);
 			alphabetLabel.setLayoutData(alphabetLabelGridData);
 
-		alphabetCombo = new Combo(alphabetInnerGroup, SWT.BORDER | SWT.READ_ONLY);
-
-			GridData filterComboGridData = new GridData();
-				filterComboGridData.horizontalAlignment = GridData.FILL;
-				filterComboGridData.grabExcessHorizontalSpace = true;
-				filterComboGridData.grabExcessVerticalSpace = true;
-				filterComboGridData.verticalAlignment = GridData.CENTER;
-
-			alphabetCombo.setLayoutData(filterComboGridData);
-			{
-				showAlphabetContent = new Button(alphabetInnerGroup, SWT.PUSH);
-				GridData showAlphabetContentGridData = new GridData();
-				showAlphabetContent.setLayoutData(showAlphabetContentGridData);
-				showAlphabetContent.setText(Messages.AbstractClassicCryptoPage_showSelectedAlpha);
-				showAlphabetContent.addSelectionListener(new SelectionAdapter() {
-					public void widgetSelected(SelectionEvent evt) {
-						ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
-						tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
-						tooltip.setMessage(String.valueOf(alphabetInput.getContent().getCharacterSet()) + Messages.AbstractClassicCryptoPage_clicktoclose);
-						tooltip.setAutoHide(true);
-						tooltip.setVisible(true);
-					}
-				});
-			}
+		alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, getDefaultAlphabet(), AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
+		
+		GridData filterComboGridData = new GridData();
+		filterComboGridData.horizontalAlignment = GridData.FILL;
+		filterComboGridData.grabExcessHorizontalSpace = true;
+		filterComboGridData.grabExcessVerticalSpace = true;
+		filterComboGridData.verticalAlignment = GridData.CENTER;
+		
+		alphabetCombo.setLayoutData(filterComboGridData);
+//		alphabetCombo = new Combo(alphabetInnerGroup, SWT.BORDER | SWT.READ_ONLY);
+//		GridData filterComboGridData = new GridData();
+//			filterComboGridData.horizontalAlignment = GridData.FILL;
+//			filterComboGridData.grabExcessHorizontalSpace = true;
+//			filterComboGridData.grabExcessVerticalSpace = true;
+//			filterComboGridData.verticalAlignment = GridData.CENTER;
+//
+//		alphabetCombo.setLayoutData(filterComboGridData);
+		{
+			showAlphabetContent = new Button(alphabetInnerGroup, SWT.PUSH);
+			GridData showAlphabetContentGridData = new GridData();
+			showAlphabetContent.setLayoutData(showAlphabetContentGridData);
+			showAlphabetContent.setText(Messages.AbstractClassicCryptoPage_showSelectedAlpha);
+			showAlphabetContent.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent evt) {
+					ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
+					tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
+					tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet()) + Messages.AbstractClassicCryptoPage_clicktoclose);
+					tooltip.setAutoHide(true);
+					tooltip.setVisible(true);
+				}
+			});
+		}
 
 		filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);
 
@@ -717,9 +721,6 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
 			filterCheckBox.setText(Messages.WizardPage_filterchars);
 			filterCheckBox.setLayoutData(filterCheckBoxGridData);
-
-			initAlphabetComposites();
-
 	}
 
 
