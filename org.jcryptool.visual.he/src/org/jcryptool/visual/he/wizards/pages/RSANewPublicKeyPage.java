@@ -150,7 +150,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
         moveButton.setText(Messages.RSANewPublicKeyPage_use);
         moveButton.setToolTipText(Messages.RSANewPublicKeyPage_use_popup);
         moveButton.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-        moveButton.setEnabled(false);
+        moveButton.setEnabled(true);
         moveButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -166,6 +166,7 @@ public class RSANewPublicKeyPage extends WizardPage implements ModifyListener, V
         // field for calculated n value
         calcNField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER | SWT.READ_ONLY);
         calcNField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        calcNField.setText("323");
         calcNField.addModifyListener(new ModifyListener() {
 
             public void modifyText(ModifyEvent e) {
