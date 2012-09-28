@@ -511,16 +511,30 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
      */
     public void performDefaults() {
         // alphabets
+    	
+    	AbstractAlphabet[] alphabets = AlphabetsManager.getInstance().getAlphabets();
+		for (int i = 0; i < tempAlphas.size(); i++) {
+			AbstractAlphabet a = tempAlphas.get(i);
+			
+			if(! a.isBasic()) {
+				tempAlphas.remove(i);
+			}
+		}
 
         // revert2FactoryDefaultAlphabet
         if (!getDefaultAlphabet().getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET)) {
             getDefaultAlphabet().setDefaultAlphabet(false);
             getAlphabet(AlphabetsManager.FACTORY_DEFAULT_ALPHABET).setDefaultAlphabet(true);
-            fillTable();
         }
 
         // options
         enableFilterCheckBox.setSelection(AlphabetsPlugin.getDefault().getFilterCharsDefault());
+
+        fillTable();
+        editButton.setEnabled(false);
+        removeButton.setEnabled(false);
+        defaultButton.setEnabled(false);
+        updateCharset(null);
     }
 
     /**

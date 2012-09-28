@@ -74,7 +74,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
     	if(alpha instanceof Alphabet) {
         	return (Alphabet) alpha;
         } else { //TODO: !alphaRefactor Diese Verzweigung muss entfernt werden. 
-        	return new Alphabet(alpha.getCharacterSet(), alpha.getName(), alpha.getShortName(), AbstractAlphabet.DISPLAY, true);
+        	return new Alphabet(alpha.getCharacterSet(), alpha.getName(), alpha.getShortName(), AbstractAlphabet.DISPLAY, alpha.isBasic());
         }
 	}
 
@@ -140,6 +140,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         return null;
     }
 
+    boolean hardResetDebug = false;
     public void init() {
         // if alphabets is not null the alphabet store will only be initialized
         if (alphabets == null) {
@@ -148,7 +149,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
                 alphaPath = alphaFile.getAbsolutePath();
                 if (alphaFile.exists()) {
                     // for the case the alphabets file is empty, recreate anyway
-                    if (alphaFile.length() > 0) {
+                    if (alphaFile.length() > 0 && !hardResetDebug) {
                         validateAlphabet(alphaFile);
                         loadAlphabets(alphaFile);
                     } else {
