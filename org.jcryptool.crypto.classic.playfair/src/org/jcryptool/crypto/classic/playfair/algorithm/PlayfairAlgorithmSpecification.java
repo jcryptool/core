@@ -47,4 +47,9 @@ public class PlayfairAlgorithmSpecification extends
 		return true;
 	}
 	
+	@Override
+	public boolean isAllowCustomAlphabetCreation() {
+		return false;
+	}
+	
 }

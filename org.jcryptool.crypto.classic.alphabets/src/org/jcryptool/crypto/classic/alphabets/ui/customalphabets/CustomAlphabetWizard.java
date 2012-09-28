@@ -11,8 +11,8 @@ import org.jcryptool.crypto.classic.alphabets.ui.customalphabets.customhistory.C
 
 public class CustomAlphabetWizard extends Wizard {
 	
-	public static final String USE_HISTORY_ALPHABET = "use history";
-	public static final String MAKE_NEW_ALPHABET = "make custom alphabet";
+	public static final String USE_HISTORY_ALPHABET = "use history"; //$NON-NLS-1$
+	public static final String MAKE_NEW_ALPHABET = "make custom alphabet"; //$NON-NLS-1$
 	
 	CreateCustomAlphabetIntroPage page1;
 	AddAlphabetWizardPage2 page2;
@@ -24,7 +24,7 @@ public class CustomAlphabetWizard extends Wizard {
 	private AbstractAlphabet selectedAlphabet = null;
 	
 	public CustomAlphabetWizard() {
-		setWindowTitle("Create custom alphabets");
+		setWindowTitle(Messages.CustomAlphabetWizard_windowtitle);
 		page1 = new CreateCustomAlphabetIntroPage();
 		page2 = new AddAlphabetWizardPage2();
 	}

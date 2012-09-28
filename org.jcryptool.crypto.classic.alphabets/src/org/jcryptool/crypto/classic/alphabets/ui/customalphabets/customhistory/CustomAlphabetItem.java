@@ -12,6 +12,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class CustomAlphabetItem extends Composite {
 	private Label lblName;
@@ -35,7 +36,8 @@ public class CustomAlphabetItem extends Composite {
 		};
 		{
 			lblName_1 = new Label(this, SWT.NONE);
-			lblName_1.setText("Name:");
+			lblName_1.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
+			lblName_1.setText(Messages.CustomAlphabetItem_name_label1);
 			lblName_1.addMouseListener(clickListener);
 		}
 		{
@@ -46,7 +48,8 @@ public class CustomAlphabetItem extends Composite {
 		}
 		{
 			lblContent_1 = new Label(this, SWT.NONE);
-			lblContent_1.setText("Content:");
+			lblContent_1.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
+			lblContent_1.setText(Messages.CustomAlphabetItem_content_label1);
 			lblContent_1.addMouseListener(clickListener);
 		}
 		{

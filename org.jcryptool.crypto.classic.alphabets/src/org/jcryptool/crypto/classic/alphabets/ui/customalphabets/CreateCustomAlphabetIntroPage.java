@@ -38,10 +38,10 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	 * Create the wizard.
 	 */
 	public CreateCustomAlphabetIntroPage() {
-		super("Custom alphabet creation: informations");
-		setTitle("Create a custom alphabet");
-		setDescription("Here you can choose from any previously created alphabets, and " +
-				"\ndetermine whether your alphabet should be permanently saved or not.");
+		super(Messages.CreateCustomAlphabetIntroPage_wizard_super);
+		setTitle(Messages.CreateCustomAlphabetIntroPage_title);
+		setDescription(Messages.CreateCustomAlphabetIntroPage_descr1 +
+				Messages.CreateCustomAlphabetIntroPage_descr2);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 		{
 			grpPermanenceOfThe = new Group(container, SWT.NONE);
 			grpPermanenceOfThe.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			grpPermanenceOfThe.setText("Permanence of the newly created alphabet");
+			grpPermanenceOfThe.setText(Messages.CreateCustomAlphabetIntroPage_4);
 			grpPermanenceOfThe.setLayout(new GridLayout(1, false));
 			
 			{
@@ -63,18 +63,18 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 				layoutData.widthHint = 250;
 				lblTheAlphabetWhich.setLayoutData(layoutData);
-				lblTheAlphabetWhich.setText("The alphabet which you will create can be used one-time, but can also be saved into the standard set of alphabets of the JCrypTool.");
+				lblTheAlphabetWhich.setText(Messages.CreateCustomAlphabetIntroPage_permanenceHint1);
 			}
 			{
 				lblButEvenIf = new Label(grpPermanenceOfThe, SWT.WRAP);
 				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 				layoutData.widthHint = 250;
 				lblButEvenIf.setLayoutData(layoutData);
-				lblButEvenIf.setText("But even if you don't make your alphabet permanent, you can still reuse it in this JCrypTool session. All custom alphabets you have created before restarting the JCrypTool will appear in this screen.");
+				lblButEvenIf.setText(Messages.CreateCustomAlphabetIntroPage_permanenceHint2);
 			}
 			{
 				btnMakeTheCreated = new Button(grpPermanenceOfThe, SWT.CHECK);
-				btnMakeTheCreated.setText("Make the created alphabet permanent");
+				btnMakeTheCreated.setText(Messages.CreateCustomAlphabetIntroPage_7);
 				btnMakeTheCreated.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -89,14 +89,14 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 		}
 		{
 			grpReuseCustomAlphabets_1 = new Group(container, SWT.NONE);
-			grpReuseCustomAlphabets_1.setText("Reuse custom alphabets");
+			grpReuseCustomAlphabets_1.setText(Messages.CreateCustomAlphabetIntroPage_8);
 			grpReuseCustomAlphabetsGData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 			grpReuseCustomAlphabets_1.setLayoutData(grpReuseCustomAlphabetsGData);
 			grpReuseCustomAlphabets_1.setLayout(new GridLayout(1, false));
 			{
 				btnUseACustom = new Button(grpReuseCustomAlphabets_1, SWT.CHECK);
 				btnUseACustom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-				btnUseACustom.setText("Use a custom alphabet from the past");
+				btnUseACustom.setText(Messages.CreateCustomAlphabetIntroPage_9);
 				
 				btnUseACustom.addSelectionListener(new SelectionAdapter() {
 					@Override
@@ -119,7 +119,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 					compHistoryDisplays.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 					{
 						btnMakeTheSelected = new Button(grpReuseCustomAlphabets_1, SWT.CHECK);
-						btnMakeTheSelected.setText("Make the selected alphabet permanent after finishing");
+						btnMakeTheSelected.setText(Messages.CreateCustomAlphabetIntroPage_10);
 						
 						btnMakeTheSelected.addSelectionListener(new SelectionAdapter() {
 							@Override

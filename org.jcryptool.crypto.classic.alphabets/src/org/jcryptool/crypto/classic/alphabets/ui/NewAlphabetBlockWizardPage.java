@@ -11,9 +11,9 @@ public class NewAlphabetBlockWizardPage extends WizardPage {
 	 * Create the wizard.
 	 */
 	public NewAlphabetBlockWizardPage() {
-		super("wizardPage");
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		super(Messages.getString("NewAlphabetBlockWizardPage.0")); //$NON-NLS-1$
+		setTitle(Messages.getString("NewAlphabetBlockWizardPage.0")); //$NON-NLS-1$
+		setDescription(Messages.getString("NewAlphabetBlockWizardPage.2")); //$NON-NLS-1$
 	}
 
 	/**
