@@ -458,6 +458,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						comboAlphas.select(-1);
 					}
 				} else {
+					customAlphaByCombo = content;
 					comboAlphas.select(getComboIndexForUnregisteredAlphabet());
 				}
 
