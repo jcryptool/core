@@ -2,7 +2,6 @@ package org.jcryptool.crypto.classic.alphabets.ui.customalphabets;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.swt.internal.ole.win32.ISpecifyPropertyPages;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;

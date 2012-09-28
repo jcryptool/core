@@ -24,7 +24,6 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
-import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite;
 
 
 /**

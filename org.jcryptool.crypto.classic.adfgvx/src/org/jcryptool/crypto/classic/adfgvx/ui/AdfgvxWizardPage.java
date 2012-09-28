@@ -38,7 +38,6 @@ import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecificatio
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
-import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite;
 
 /**
  * Wizard page for the ADFGVX cipher.

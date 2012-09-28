@@ -1,18 +1,15 @@
 package org.jcryptool.crypto.classic.alphabets.ui.customalphabets.customhistory;
 
-import javax.annotation.PostConstruct;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class CustomAlphabetItem extends Composite {
 	private Label lblName;
