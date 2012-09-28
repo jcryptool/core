@@ -391,6 +391,10 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	 * @return null if canceled.
 	 */
 	protected BlockAlphabet createNewBlockAlphabet() {
+		//TODO: !implement
+//		NewAlphabetBlockWizard wiz = new NewAlphabetBlockWizard();
+//		WizardDialog dialog = new WizardDialog(getShell(), wiz);
+//		dialog.open();
 		return null;
 	}
 
