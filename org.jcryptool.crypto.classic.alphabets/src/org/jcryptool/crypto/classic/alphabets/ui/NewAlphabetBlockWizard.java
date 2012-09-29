@@ -1,6 +1,9 @@
 package org.jcryptool.crypto.classic.alphabets.ui;
 
+import java.util.Collections;
+
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 
 public class NewAlphabetBlockWizard extends Wizard {
@@ -27,14 +30,9 @@ public class NewAlphabetBlockWizard extends Wizard {
 		addPage(page);
 	}
 
-	@Override
-	public boolean performFinish() {
-		return false;
-	}
-
 	public void setName(String name) {
 		this.name = name;
-		System.out.println("name: " + name);
+		getContainer().updateButtons();
 	}
 	
 	public AtomAlphabet getAlphabetInput() {
@@ -43,6 +41,17 @@ public class NewAlphabetBlockWizard extends Wizard {
 
 	public void setAlphabet(AtomAlphabet content) {
 		this.alpha = content;
+		getContainer().updateButtons();
+	}
+
+	@Override
+	public boolean performFinish() {
+		return true;
+	}
+	
+	@Override
+	public boolean canFinish() {
+		return page!=null && page.isPageComplete();
 	}
 
 }
