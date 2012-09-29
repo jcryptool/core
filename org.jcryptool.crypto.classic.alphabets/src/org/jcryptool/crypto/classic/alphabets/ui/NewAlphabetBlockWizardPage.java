@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
+import org.jcryptool.crypto.classic.alphabets.ui.AlphabetSelectorComposite.Mode;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
@@ -104,6 +105,7 @@ public class NewAlphabetBlockWizardPage extends WizardPage {
 				}
 			});
 		}
+		
 	}
 
 	protected void setAlphaName(AtomAlphabet alpha) {
