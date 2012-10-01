@@ -236,6 +236,10 @@ litigation.
          id="org.eclipse.equinox.p2.rcp.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.equinox.p2.extras.feature"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.compare.core"
          download-size="0"
