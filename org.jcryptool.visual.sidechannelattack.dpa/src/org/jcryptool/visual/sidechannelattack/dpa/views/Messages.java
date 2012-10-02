@@ -164,8 +164,15 @@ public class Messages extends NLS {
 	//public static String DPAView_roundCol_text;
 	public static String k;
 	public static String result;
-	public static String noprotection;
+	public static String noprotection0;
+	public static String noprotection1;
 	public static String protection;
+	public static String Title;
+	public static String DPAView_text_text;
+	public static String DPAView_lblNewLabel_2_text;
+	public static String DPAView_lblNewLabel_3_text;
+	public static String DPAView_lblNewLabel_4_text;
+	public static String DPAView_grpZuErsetzen_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
