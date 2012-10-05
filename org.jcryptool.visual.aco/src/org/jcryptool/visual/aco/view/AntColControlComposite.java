@@ -655,7 +655,7 @@ public class AntColControlComposite extends Composite {
 			public void handleEvent(Event e) {
 
 				if (!model.isWorking()) {
-					if (model.getAntNr() != 1) {
+					if (model.getTrail().size() == model.getSize()) {
 						model.replaceAnt();
 					}
 					if (animationCheckbox.getSelection()) {
