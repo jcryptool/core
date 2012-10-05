@@ -47,7 +47,6 @@ import org.jcryptool.algorithm.ECCOrderAndPoints;
 import org.jcryptool.algorithm.RandomFactorCreator;
 import org.jcryptool.core.util.fonts.FontService;
 
-
 import com.swtdesigner.SWTResourceManager;
 
 /**
