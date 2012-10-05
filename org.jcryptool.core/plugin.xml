@@ -175,13 +175,6 @@
       </language>
    </extension>
    <extension
-         point="org.jcryptool.core.platformLanguage">
-      <language
-            languageCode="es_ES"
-            languageDescription="%language.languageSpanish">
-      </language>
-   </extension>
-   <extension
          id="product"
          point="org.eclipse.core.runtime.products">
       <product
