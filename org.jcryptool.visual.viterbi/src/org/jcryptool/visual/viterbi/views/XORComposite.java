@@ -41,13 +41,13 @@ import org.jcryptool.visual.viterbi.algorithm.ModularAddition;
  */
 public class XORComposite extends Composite {
     /* set default values */
-    private static final int HORIZONTAL_SPACING = 50;
-    private static final int MARGIN_WIDTH = 100;
+    private static final int HORIZONTAL_SPACING = 5;
+    private static final int MARGIN_WIDTH = 5;
 
     private static final int LOADBUTTONHEIGHT = 30;
     private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 50;
+    private static final int CONTINUEBUTTONHEIGHT = 30;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
     private Text plain1;
@@ -111,8 +111,8 @@ public class XORComposite extends Composite {
      * layout.
      */
     private void createMainArea() {
-        final Group g = new Group(this, SWT.NONE);
-        g.setText(Messages.XORComposite_algo_header);
+        final Composite g = new Composite(this, SWT.NONE);
+       // g.setText(Messages.XORComposite_algo_header);
         final GridLayout gl = new GridLayout(3, false); //$NON-NLS-1$
         // fixed size of 3
         // elements per line
@@ -130,7 +130,7 @@ public class XORComposite extends Composite {
 
         createLoadCipher(g);
         createCipher(g);
-        createEncodingModeArea(g);
+//        createEncodingModeArea(g);
     }
 
     /**
@@ -141,7 +141,7 @@ public class XORComposite extends Composite {
      */
     private void createLoadFile1(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
 
         Label plain1Label = new Label(canvas, SWT.PUSH);
@@ -184,22 +184,51 @@ public class XORComposite extends Composite {
      */
     private void createCombinationArea(final Composite parent) {
         final Canvas combination = new Canvas(parent, SWT.NONE);
-        combination.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 2));
+        combination.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 2));
         combination.setLayout(new GridLayout());
 
-        Group options = new Group(combination, SWT.NONE);
-        options.setLayout(new GridLayout());
-        options.setText(Messages.XORComposite_combination_header);
-        options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        Group options1 = new Group(combination, SWT.NONE);
+        options1.setLayout(new GridLayout());
+        options1.setText(Messages.XORComposite_combination_header);
+        options1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        options1.setToolTipText(Messages.options1tooltip);
 
-        xor = new Button(options, SWT.RADIO);
-        mod = new Button(options, SWT.RADIO);
+        xor = new Button(options1, SWT.RADIO);
+        mod = new Button(options1, SWT.RADIO);
 
         xor.setSelection(true);
 
         xor.setText(Messages.XORComposite_Combination_RadioXOR);
         mod.setText(Messages.XORComposite_Combination_RadioMOD);
 
+        Group options2 = new Group(combination, SWT.NONE);
+        options2.setLayout(new GridLayout());
+        options2.setText(Messages.XORComposite_encodingmod_header);
+        options2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+        options2.setToolTipText(Messages.options2tooltip);
+
+        hex = new Button(options2, SWT.RADIO);
+        text = new Button(options2, SWT.RADIO);
+
+        hex.setSelection(true);
+
+        hex.setText(Messages.XORComposite_EncodingMode_RadioHEX);
+        text.setText(Messages.XORComposite_EncodingMode_RadioUNI);
+
+        hex.addSelectionListener(new SelectionListener() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+                hex.setSelection(true);
+                text.setSelection(false);
+
+                // conversion to hex
+                cipher.setText(ViterbiComposite.stringToHex(cipherString));
+            }
+        });
+        
         Button calculate = new Button(combination, SWT.PUSH);
         calculate.setText(Messages.XORComposite_calculate);
         calculate.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
@@ -223,6 +252,33 @@ public class XORComposite extends Composite {
                 }
             }
         });
+        
+       
+
+        text.addSelectionListener(new SelectionListener() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+                widgetSelected(e);
+            }
+
+            public void widgetSelected(SelectionEvent e) {
+                text.setSelection(true);
+                hex.setSelection(false);
+
+                // unprintable chars will be replaced with "�"
+                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
+            }
+        });
+        
+        Button next = new Button(combination, SWT.PUSH);
+        next.setText(Messages.XORComposite_next);
+        next.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
+        next.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                viterbiView.changeTab(cipherString, combi);
+            }
+        });
+        
     }
 
     /**
@@ -233,7 +289,7 @@ public class XORComposite extends Composite {
      */
     private void createLoadFile2(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
 
         Label plain1Label = new Label(canvas, SWT.PUSH);
@@ -280,7 +336,7 @@ public class XORComposite extends Composite {
      */
     private void createLoadCipher(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
 
         Label plain1Label = new Label(canvas, SWT.PUSH);
@@ -323,63 +379,4 @@ public class XORComposite extends Composite {
      *
      * @param parent
      */
-    private void createEncodingModeArea(final Composite parent) {
-        final Canvas encodingmod = new Canvas(parent, SWT.NONE);
-        encodingmod.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
-        GridLayout gl = new GridLayout();
-        gl.verticalSpacing = 20;
-        gl.marginHeight = 0;
-        encodingmod.setLayout(gl);
-
-        Group options = new Group(encodingmod, SWT.NONE);
-        options.setLayout(new GridLayout());
-        options.setText(Messages.XORComposite_encodingmod_header);
-        options.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
-
-        hex = new Button(options, SWT.RADIO);
-        text = new Button(options, SWT.RADIO);
-
-        hex.setSelection(true);
-
-        hex.setText(Messages.XORComposite_EncodingMode_RadioHEX);
-        text.setText(Messages.XORComposite_EncodingMode_RadioUNI);
-
-        hex.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            public void widgetSelected(SelectionEvent e) {
-                hex.setSelection(true);
-                text.setSelection(false);
-
-                // conversion to hex
-                cipher.setText(ViterbiComposite.stringToHex(cipherString));
-            }
-        });
-
-        text.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
-            public void widgetSelected(SelectionEvent e) {
-                text.setSelection(true);
-                hex.setSelection(false);
-
-                // unprintable chars will be replaced with "�"
-                cipher.setText(ViterbiComposite.replaceUnprintableChars(cipherString, "\ufffd"));
-            }
-        });
-
-        Button next = new Button(encodingmod, SWT.PUSH);
-        next.setText(Messages.XORComposite_next);
-        next.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
-        next.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
-                viterbiView.changeTab(cipherString, combi);
-            }
-        });
-    }
 }

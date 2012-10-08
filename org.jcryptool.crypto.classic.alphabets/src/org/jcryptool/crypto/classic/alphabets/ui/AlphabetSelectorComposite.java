@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,12 +15,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
+import org.jcryptool.crypto.classic.alphabets.ui.customalphabets.CustomAlphabetWizard;
 
 
 /**
@@ -36,7 +41,6 @@ import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite {
 	//TODO!! when a custom alphabet is made and saved to the alphabet store, select the newly made alphabet in the combo box
 	//should the selector consist only of a combo.
-	//TODO!! also, when calling the custom alphabet dialog, show a section which contains alphabets that were created during this session.
 
 	/**
 	 * Fields: <br />
@@ -80,6 +84,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	protected AbstractAlphabet customAlphaByBtn;
 	private Button btnCustomAlphabet;
 
+	private AbstractAlphabet defaultAlphabet;
+
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
 	*/
@@ -97,12 +103,14 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 *
 	 * @param parent the parent control
 	 * @param acceptor a filter for dynamic control of which already existing alphabets should be shown in the combo box
+	 * @param defaultAlphabet the default alphabet. If null, or not an accepted/existing alphabet, the first one in the list will be taken.
 	 * @param mode the mode of user interaction
 	 */
-	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, AlphabetAcceptor acceptor, Mode mode) {
+	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, AlphabetAcceptor acceptor, AbstractAlphabet defaultAlphabet, Mode mode) {
 		super(parent, SWT.NONE);
 		this.mode = mode;
 		this.acceptor = acceptor;
+		this.defaultAlphabet = defaultAlphabet;
 		registeredAlphas = new LinkedList<AbstractAlphabet>();
 		initGUI();
 	}
@@ -114,10 +122,11 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 *
 	 * @param parent the parent control
 	 * @param registeredAlphabetsToShow the already existing alphabets to show in the selection combo
+	 * @param defaultAlphabet the default alphabet. If null, or not an accepted/existing alphabet, the first one in the list will be taken.
 	 * @param mode the mode of user interaction
 	 */
-	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, final Collection<? extends AbstractAlphabet> registeredAlphabetsToShow, Mode mode) {
-		this(parent, createAcceptorFromCollection(registeredAlphabetsToShow), mode);
+	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, final Collection<? extends AbstractAlphabet> registeredAlphabetsToShow, AbstractAlphabet defaultAlphabet, Mode mode) {
+		this(parent, createAcceptorFromCollection(registeredAlphabetsToShow), defaultAlphabet, mode);
 	}
 
 	/**
@@ -126,11 +135,12 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 * The default alphabet can be chosen by overriding {@link #getDefaultAlphabet()}.
 	 *
 	 * @param parent the parent control
+	 * @param defaultAlphabet the default alphabet. If null, or not an accepted/existing alphabet, the first one in the list will be taken.
 	 * @param mode the mode of user interaction
 	 * @wbp.parser.constructor
 	 */
-	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, Mode mode) {
-		this(parent, createAllAlphabetsAcceptor(), mode);
+	public AlphabetSelectorComposite(org.eclipse.swt.widgets.Composite parent, AbstractAlphabet defaultAlphabet, Mode mode) {
+		this(parent, createAllAlphabetsAcceptor(), defaultAlphabet, mode);
 	}
 
 	private static AlphabetAcceptor createAcceptorFromCollection(
@@ -207,7 +217,10 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public void widgetSelected(SelectionEvent e) {
 							if(btnCustomAlphabet.getSelection()) {
 								customAlphaByBtn = makeCustomAlphabet(e);
-
+								if(customAlphaByCombo != null) {
+									reloadAlphabetCombo();
+								}
+								
 								alphabetInput.synchronizeWithUserSide();
 
 								if(btnCustomAlphabet.getSelection()) {
@@ -232,6 +245,9 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 						if(selectedItemIsCustomItem) {
 							customAlphaByCombo = makeCustomAlphabet(e);
+							if(customAlphaByCombo != null) {
+								reloadAlphabetCombo();
+							}
 						}
 
 						alphabetInput.synchronizeWithUserSide();
@@ -261,8 +277,15 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	}
 
 	protected AbstractAlphabet makeCustomAlphabet(SelectionEvent evt) {
-		return ((evt.stateMask & SWT.CTRL) != SWT.CTRL) ? AlphabetsManager.getInstance().getDefaultAlphabet()
-				: null;
+		CustomAlphabetWizard wiz = new CustomAlphabetWizard();
+		Shell parentShell = new Shell(Display.getDefault());
+		WizardDialog d = new WizardDialog(parentShell, wiz);
+		d.open();
+		if(d.getReturnCode() == Dialog.OK) {
+			return wiz.getAlphabet();
+		}
+		
+		return null;
 	}
 
 	private void makeRegisteredAlphasList() {
@@ -304,6 +327,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			comboAlphas.select(0);
 			if(alphabetInput != null) alphabetInput.synchronizeWithUserSide();
 		}
+		
+		comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
 	}
 
 	private String makeAlphaStringForCombo(AbstractAlphabet alpha, boolean custom) {
@@ -331,6 +356,19 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 			private boolean alphabetFromComboWasCustom;
 			private boolean alphabetWasFromCustomBtn;
+			
+			@Override
+			protected boolean canAutocorrect(InputVerificationResult result) {
+				if(result.getMessage().contains("cancelled")) {
+					return true;
+				}
+				return super.canAutocorrect(result);
+			}
+
+			@Override
+			protected void autocorrect(InputVerificationResult result) {
+				writeContent(getContent());
+			}
 
 			@Override
 			protected InputVerificationResult verifyUserChange() {
@@ -420,6 +458,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						comboAlphas.select(-1);
 					}
 				} else {
+					customAlphaByCombo = content;
 					comboAlphas.select(getComboIndexForUnregisteredAlphabet());
 				}
 
@@ -515,13 +554,17 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	}
 
 	/**
-	 * @return the default Alphabet for this composite. Override to change the default alphabet.
+	 * @return the default Alphabet for this composite. Override to change the default alphabet, or set the default alphabet at creation.
 	 */
 	protected AbstractAlphabet getDefaultAlphabet() {
-		if(acceptor.accept(AlphabetsManager.getInstance().getDefaultAlphabet())) {
-			return AlphabetsManager.getInstance().getDefaultAlphabet();
+		if(defaultAlphabet != null && acceptor.accept(defaultAlphabet)) {
+			return defaultAlphabet;
 		} else {
-			return AlphabetsManager.getInstance().getAlphabets()[0];
+			if(acceptor.accept(AlphabetsManager.getInstance().getDefaultAlphabet())) {
+				return AlphabetsManager.getInstance().getDefaultAlphabet();
+			} else {
+				return AlphabetsManager.getInstance().getAlphabets()[0];
+			}
 		}
 	}
 

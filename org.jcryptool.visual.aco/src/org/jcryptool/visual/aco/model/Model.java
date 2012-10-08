@@ -7,119 +7,143 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.tutorial;
+package org.jcryptool.visual.aco.model;
 
 import java.util.Observable;
 import java.util.Vector;
 
-import org.jcryptool.visual.aco.antcolony.ACO;
-import org.jcryptool.visual.aco.antcolony.Ant;
-import org.jcryptool.visual.aco.antcolony.Graph;
 import org.jcryptool.visual.aco.transposition.Transposition;
+import org.jcryptool.visual.aco.view.AntColControlComposite;
+import org.jcryptool.visual.aco.view.AntColDescriptionComposite;
+import org.jcryptool.visual.aco.view.AntColVisualComposite;
+import org.jcryptool.visual.aco.model.Messages;
 
 /**
  * Klasse, die die Daten des Tutorials verwaltet und die Operationen des
  * Ameisenalgorithmus kontrolliert.
- *
+ * 
  * @author Philipp Blohm
  * @version 03.08.07
- *
+ * 
  */
 public class Model extends Observable {
 
-	private int nr;
+	private int state;
 	private int size;
 	private String text;
 	private int[] perm;
 	private Graph g;
 	private Ant a;
-	private boolean ani;
-	private boolean working;
-	private boolean second; // ab zweitem Durchgang
-	private boolean enani;
-	private boolean all;
+	private boolean isWorking;
+	private boolean isAnimateable;
+	private boolean finishCycle;
 	private double best;
 	private Vector<Integer> besttrail;
 	private PseudoRandomChars randomChars;
 	private int antNr = 0;
 	private boolean analyse = false;
+	private String language = Messages.Model_defaultLanguage;
+	private boolean isStepping;
+	private AntColControlComposite controlComp;
+	private AntColVisualComposite visual;
+	private AntColDescriptionComposite descriptionComp;
+	private boolean supsendViewRefresh = false;
 
 	/**
 	 * Der Konstruktor initialisiert die Variablen und setzt die Ausgangswerte.
-	 *
+	 * 
 	 */
 	public Model() {
-		nr = 0;
-		size = 4;
-		perm = new int[] { 0, 1, 2, 3, 4 };
 
-		text = Messages
-				.getString("Model.initial_plaintext").replaceAll(" ", "").toUpperCase(); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-		randomChars = new PseudoRandomChars(size - text.length() % size);
-
-		ACO.setAlpha(0.8);
-		ACO.setBeta(0.8);
-		ani = false;
-		working = false;
-		second = false;
-		enani = true;
-		all = false;
-		best = 0;
-
+		this.reset(false);
 		// String s = encrypt("1234567890abcdef");
 		// analyse = true;
 		// s = decrypt(s);
 	}
 
+	public void addViews(AntColControlComposite controlComp,
+			AntColVisualComposite visual, AntColDescriptionComposite desComp) {
+		this.controlComp = controlComp;
+		this.visual = visual;
+		this.descriptionComp = desComp;
+	}
+
 	/**
 	 * Gibt zurueck ob die Animation zugelassen wird.
-	 *
+	 * 
 	 * @return true wenn animiert werden soll
 	 */
-	public boolean getEnAni() {
-		return enani;
+	public boolean isAnimateable() {
+		return isAnimateable;
 	}
 
 	/**
 	 * Laesst Animation zu oder verhindert Animation.
-	 *
+	 * 
 	 * @param true wenn Animation zugelassen werden soll
 	 */
-	public void setEnAni(boolean b) {
-		enani = b;
-		setNotified();
-	}
-
-	/**
-	 * Gibt den Wert von ani zurueck.
-	 *
-	 * @return ani
-	 */
-	public boolean getAni() {
-		return ani;
+	public void setAnimateable(boolean b) {
+		isAnimateable = b;
 	}
 
 	/**
 	 * Gibt an ob das Tutorial momentan mit der Animation beschaeftigt ist.
-	 *
+	 * 
 	 * @return working
 	 */
-	public boolean getWorking() {
-		return working;
+	public boolean isWorking() {
+		return isWorking;
 	}
 
 	/**
 	 * Setzt working.
-	 *
+	 * 
 	 * @param true wenn Tutorial mit Animation beschaeftigt ist.
 	 */
 	public void setWorking(boolean b) {
-		working = b;
+		isWorking = b;
+		if (isWorking) {
+			this.controlComp.setEnabledFirstStep(!b);
+			this.controlComp.setEnabledSecondStep(!b);
+		}
+	}
+
+	public void startAnimation() {
+		if (this.isAnimateable) {
+			isWorking = true;
+			visual.animationStep();
+			this.controlComp.setEnabledFirstStep(false);
+			this.controlComp.setEnabledSecondStep(false);
+		} else {
+			updateView();
+		}
+	}
+
+	public void updateView() {
+		if (supsendViewRefresh) {
+			return;
+		}
+		if (this.isVisualizable()) {
+			visual.constructGraph();
+		}
+		updateDescription();
+		visual.showPheromoneMatrix();
+	}
+
+	public void updateDescription() {
+		descriptionComp.updateText();
+	}
+
+	public void finishedAnimation() {
+		this.finishCycle = false;
+		isWorking = false;
+		this.controlComp.setEnabledFirstStep(false);
+		this.controlComp.toAnalyse();
 	}
 
 	/**
 	 * Gibt den Wert der bisher besten Loesung zurueck.
-	 *
+	 * 
 	 * @return best
 	 */
 	public double getBest() {
@@ -128,7 +152,7 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt den bisher besten Weg durch den Graphen aus.
-	 *
+	 * 
 	 * @return besttrail Der bisher beste Weg
 	 */
 	public Vector<Integer> getBestTrail() {
@@ -137,7 +161,7 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt die Knoten zurueck.
-	 *
+	 * 
 	 * @return s String-Array des Graphen
 	 */
 	public String[] getKnots() {
@@ -146,7 +170,7 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt die Pheromonmatrix zurueck.
-	 *
+	 * 
 	 * @return m Die Pheromonmatrix
 	 */
 	public double[][] getMatrix() {
@@ -155,7 +179,7 @@ public class Model extends Observable {
 
 	/**
 	 * Erzeugt den Geheimtext aus dem Klartext und gibt ihn zurueck.
-	 *
+	 * 
 	 * @return t Geheimtext
 	 */
 	public String getCipher() {
@@ -171,7 +195,7 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt die Nummer des aktuellen Knoten zurueck.
-	 *
+	 * 
 	 * @return i Knotennummer
 	 */
 	public int getKnot() {
@@ -180,16 +204,20 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt an bei welchem Schritt des Tutorials man sich momentan befindet
-	 *
+	 * 
 	 * @return nr Schrittnummer
 	 */
-	public int getNr() {
-		return nr;
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int nr) {
+		this.state = nr;
 	}
 
 	/**
 	 * Gibt den Schluessel der Permutation zurueck.
-	 *
+	 * 
 	 * @return key Schluessel der Permutation
 	 */
 	public int[] getPerm() {
@@ -214,7 +242,7 @@ public class Model extends Observable {
 
 	/**
 	 * Setzt den Schluessel der Permutation
-	 *
+	 * 
 	 * @param s
 	 *            Schluessel
 	 */
@@ -232,14 +260,13 @@ public class Model extends Observable {
 				// p[i]=i;
 				// }
 				perm = q;
-				setNotified();
 			}
 		}
 	}
 
 	/**
 	 * Setzt den Klartext.
-	 *
+	 * 
 	 * @param t
 	 *            Klartext
 	 */
@@ -254,12 +281,14 @@ public class Model extends Observable {
 					text = text.concat(Character.toUpperCase(t.charAt(i)) + ""); //$NON-NLS-1$
 		}
 		randomChars = new PseudoRandomChars(size - text.length() % size);
-		setNotified();
+		g = new Graph(getCipher(), size, language);
+
+		visual.showPermutationMatrix();
 	}
 
 	/**
 	 * Gibt den Klartext zurueck.
-	 *
+	 * 
 	 * @return text Klartext
 	 */
 	public String getText() {
@@ -315,17 +344,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Gibt zurueck, ob man sich im zweiten oder hoeheren Durchlauf befindet.
-	 *
-	 * @return second
-	 */
-	public boolean getSecond() {
-		return second;
-	}
-
-	/**
 	 * Gibt die Anzahl der Spalten der Verschluesselung zurueck.
-	 *
+	 * 
 	 * @return size Anzahl der Spalten
 	 */
 	public int getSize() {
@@ -334,97 +354,113 @@ public class Model extends Observable {
 
 	/**
 	 * Setzt die Anzahl der Spalten auf den uebergebenen Wert.
-	 *
+	 * 
 	 * @param s
 	 *            neue Anzahl der Spalten
 	 */
 	public void setSize(int s) {
 		size = s;
 		randomChars = new PseudoRandomChars(size - text.length() % size);
-		setNotified();
+		g = new Graph(getCipher(), size, language);
+		visual.showPermutationMatrix();
 	}
 
 	/**
 	 * Tutorial wird in naechsten Schritt ueberfuehrt
-	 *
+	 * 
 	 */
-	public void inc() {
-		if (nr < 4)
-			nr++;
-		if (nr == 1) {
-			g = new Graph(getCipher(), size);
-			neuSetzen();
+	public void toAnalyse() {
+		if (state < 2) {
+			state++;
+			if (state == 1) {
+				initGraph();
+			}
 		}
-		if (nr == 4)
-			second = true;
-		if (nr != 3)
-			setNotified();
+		updateView();
 	}
 
 	/**
 	 * Eine neue Ameise wird erzeugt und zufaellig auf dem Graph platziert.
-	 *
+	 * 
 	 */
-	public void neuSetzen() {
+	public void replaceAnt() {
 		a = new Ant(g);
 		antNr++;
 		a.set();
-		if (nr == 4)
-			nr = 1;
-		setNotified();
+		state = 1;
+		updateView();
+	}
+
+	public void initGraph() {
+		g = new Graph(getCipher(), size, language);
+		replaceAnt();
+	}
+
+	public void setLanguage(String lang) {
+		language = lang;
 	}
 
 	/**
 	 * Die Ameise macht eine Schritt auf dem Graphen. Wenn damit der letzte
 	 * Knoten erreicht wird, wird das Pheromon abgelegt und ueberprueft, ob es
 	 * sich bei der erhaltenen Loesung um die bisher beste handelt.
-	 *
+	 * 
 	 */
-	public void step() {
-		ani = true;
+	public void toNextKnot() {
 		a.step();
+		isStepping = true;
+		state = 2;
 		if (a.getTrail().size() == size) { // wenn letzter Knoten erreicht
 			a.calcScore();
 			a.dropPheromon();
-			nr = 3;
+			state = 3;
 			if (a.getScore() >= best) {
 				best = a.getScore();
 				besttrail = getTrail();
 			}
 		}
-		setNotified();
-		ani = false;
+		if (!this.supsendViewRefresh) {
+			visual.showPheromoneMatrix();
+		}
+		this.startAnimation();
+
+		if (!this.isAnimateable) {
+			this.controlComp.toAnalyse();
+		}
+		updateDescription();
 	}
 
 	/**
 	 * Gibt den Wert von all zurueck (ob alle noch verbliebenen Knoten direkt
 	 * hintereinander passiert werden sollen)
-	 *
+	 * 
 	 * @return all
 	 */
-	public boolean getAll() {
-		return all;
+	public boolean isFinishCycle() {
+		return finishCycle;
 	}
 
 	/**
 	 * Fuehrt alle noch notwendigen Schritte durch, damit die Ameise ihren Weg
 	 * vollendet.
-	 *
+	 * 
 	 */
-	public void steps() {
+	public void finishCycle() {
 		if (a.getTrail().size() == size) { // letzter Knoten erreicht
-			all = false;
+			finishCycle = false;
 		} else { // sonst weiterer Schritt
-			all = true;
-			step();
+			finishCycle = true;
+			toNextKnot();
+			if (!this.isAnimateable) {
+				finishCycle();
+			}
 		}
-
 	}
 
 	/**
 	 * Erzeugt zum aktuellen oder bisher besten Weg die zugehoerige
 	 * Entschluesselung.
-	 *
+	 * 
 	 * @param best
 	 *            true wenn der beste Weg genommen werden soll
 	 * @return text Klartext
@@ -436,17 +472,8 @@ public class Model extends Observable {
 	}
 
 	/**
-	 * Setzt den Parameter ani auf den uebergebenen Wert
-	 *
-	 * @param b
-	 */
-	public void setAni(boolean b) {
-		ani = b;
-	}
-
-	/**
 	 * Gibt den aktuellen Weg der Ameise zurueck.
-	 *
+	 * 
 	 * @return
 	 */
 	public Vector<Integer> getTrail() {
@@ -456,7 +483,7 @@ public class Model extends Observable {
 	/**
 	 * Gibt die Wahrscheinlichkeiten zurueck mit denen die verbliebenen Knoten
 	 * im naechsten Schritt von der Ameise erreicht werden.
-	 *
+	 * 
 	 * @return
 	 */
 	public double[] getProbabilities() {
@@ -465,18 +492,17 @@ public class Model extends Observable {
 
 	/**
 	 * Setzt den Alpha-Wert auf den uebergebenen.
-	 *
+	 * 
 	 * @param d
 	 *            neuer Alpha-Wert
 	 */
 	public void setAlpha(double d) {
 		ACO.setAlpha(d);
-		setNotified();
 	}
 
 	/**
 	 * Gibt den aktuellen Wert von Alpha zurueck.
-	 *
+	 * 
 	 * @return alpha
 	 */
 	public double getAlpha() {
@@ -485,18 +511,17 @@ public class Model extends Observable {
 
 	/**
 	 * Setzt den Beta-Wert auf den uebergebenen.
-	 *
+	 * 
 	 * @param d
 	 *            neuer Beta-Wert
 	 */
 	public void setBeta(double d) {
 		ACO.setBeta(d);
-		setNotified();
 	}
 
 	/**
 	 * Gibt den aktuellen Beta-Wert zurueck.
-	 *
+	 * 
 	 * @return beta
 	 */
 	public double getBeta() {
@@ -505,7 +530,7 @@ public class Model extends Observable {
 
 	/**
 	 * Gibt den aktuellen Verdunstungswert zurueck.
-	 *
+	 * 
 	 * @return verd
 	 */
 	public double getVerd() {
@@ -514,23 +539,12 @@ public class Model extends Observable {
 
 	/**
 	 * Setzt den Verdunstungswert auf den uebergebenen.
-	 *
+	 * 
 	 * @param d
 	 *            neuer Verdunstungswert
 	 */
 	public void setVerd(double d) {
 		ACO.setVerd(d);
-		setNotified();
-	}
-
-	/**
-	 * Benachrichtigt die Oberserver, dass eine relevante Veraenderung
-	 * eingetreten ist.
-	 *
-	 */
-	public void setNotified() {
-		setChanged();
-		notifyObservers();
 	}
 
 	public int getAntNr() {
@@ -540,4 +554,45 @@ public class Model extends Observable {
 	public boolean getAnalyse() {
 		return analyse;
 	}
+
+	public void reset(boolean views) {
+		state = 0;
+		size = 4;
+		perm = new int[] { 0, 1, 2, 3, 4 };
+
+		text = Messages.Model_initial_plaintext
+				.replaceAll(" ", "").toUpperCase(); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+		randomChars = new PseudoRandomChars(size - text.length() % size);
+
+		ACO.setAlpha(0.8);
+		ACO.setBeta(0.8);
+		isWorking = false;
+		isAnimateable = true;
+		finishCycle = false;
+		isStepping = false;
+		best = 0;
+		antNr = 0;
+
+		if (views) {
+			visual.showPermutationMatrix();
+			updateDescription();
+		}
+	}
+
+	public boolean isVisualizable() {
+		return (size <= 5 && size > 2);
+	}
+
+	public boolean isStepping() {
+		return isStepping;
+	}
+
+	public void setStepping(boolean s) {
+		isStepping = s;
+	}
+
+	public void silentViewRefresh(boolean b) {
+		this.supsendViewRefresh = b;
+	}
+
 }

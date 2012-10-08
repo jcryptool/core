@@ -9,4 +9,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.jcryptool.core.logging.utils
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.fonts,
+ org.jcryptool.crypto.classic.transposition.algorithm

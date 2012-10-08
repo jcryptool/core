@@ -7,17 +7,17 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.gui;
+package org.jcryptool.visual.aco.view;
 
 import java.awt.Point;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Canvas;
@@ -25,121 +25,133 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.visual.aco.tutorial.Model;
+import org.jcryptool.visual.aco.model.Model;
 
 /**
  * Klasse zur Darstellung der Ablaeufe bei der Kryptanalyse mit Hilfe eines
  * Ameisenalgorithmus. Ist darstellendes Element des Tutorial.
- *
+ * 
  * @author Philipp Blohm
  * @version 03.08.07
- *
+ * 
  */
-public class Show extends Composite implements Observer {
+public class AntColVisualComposite extends Composite{
 	private Model m;
 	private Canvas canv;
+	private Composite desc;
+	private GridLayout layout;
+
 	private int x; // Position Ameise
 	private int y;
 	private int x2; // Ziel Ameise
 	private int y2;
-	private Composite desc;
-	private GridLayout layout;
-	private final Color highlightColor = new Color(this.getDisplay(), 200, 80,
-			10);
-	private Color normalColor = new Color(this.getDisplay(), 160, 125, 0);
-	private Color probabilityColor = highlightColor;
-
-	@Override
-	public void dispose() {
-		highlightColor.dispose();
-		normalColor.dispose();
-		super.dispose();
-	}
+	private final Color highlightColor = new Color(this.getDisplay(), 100, 190,
+			0);
+	private Color normalColor = new Color(this.getDisplay(), 50, 120,50);
+	private Color antColor = new Color(this.getDisplay(), 139, 90,40);
+	private Color eyeColor = new Color(this.getDisplay(), 255, 255, 255);
 
 	/**
 	 * Konstruktor erhaelt Model und Parent.
-	 *
+	 * 
 	 * @param model
 	 * @param c
 	 */
-	public Show(Model model, Composite c) {
-		super(c, SWT.BORDER);
+	public AntColVisualComposite(Model model, Composite c) {
+		super(c, SWT.NONE);
 		this.m = model;
 		layout = new GridLayout(2, false);
 		setLayout(layout);
-
 		showPermutationMatrix();
+	}
 
+	public void showMessage() {
+
+		if (this.canv != null) {
+			canv.dispose();
+		}
+		if (desc != null) {
+			desc.dispose();
+		}
+		desc = new Composite(this, SWT.NONE);
+		desc.setLayout(new GridLayout(1, true));
+		desc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		Label label = new Label(desc, SWT.NONE);
+
+		label.setText(Messages.Show_wrongInputTextSize); //$NON-NLS-1$
+		label.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false, 1, 1));
+		layout();
 	}
 
 	public void showPermutationMatrix() {
-		if (desc != null)
+
+		if (this.canv != null) {
+			canv.dispose();
+		}
+		if (desc != null) {
 			desc.dispose();
-
-		GridData data = new GridData(SWT.FILL, SWT.FILL, false, true);
-		desc = new Composite(this, SWT.NONE);
-		desc.setLayoutData(data);
-		desc.setLayout(new GridLayout(m.getSize(), true));
-
+		}
 		int len = m.getSize();
 		int depth = (int) Math.ceil(m.getText().length() / (double) len);
 		int[] p = m.getPerm();
+		GridData data = new GridData(SWT.LEFT, SWT.LEFT, true, true);
+		desc = new Composite(this, SWT.NONE);
+		desc.setLayoutData(data);
+		desc.setLayout(new FillLayout());
+		ScrolledComposite sc = new ScrolledComposite(desc, SWT.H_SCROLL
+				| SWT.V_SCROLL);
+		sc.setExpandHorizontal(true);
+		sc.setExpandVertical(true);
+		Composite innerComp = new Composite(sc, SWT.NONE);
+		innerComp.setLayoutData(data);
+		innerComp.setLayout(new GridLayout(len, true));
 
-		Label label = new Label(desc, SWT.NONE);
-		label.setText(Messages.getString("Show.permutationMatrix")); //$NON-NLS-1$
-		label.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false,
+		Label label = new Label(innerComp, SWT.NONE);
+		label.setText(Messages.Show_permutationMatrix); //$NON-NLS-1$
+		label.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false,
 				len, 1));
 
 		// Permutation
 		for (int i = 0; i < len; i++) {
-			label = new Label(desc, SWT.NONE);
-			data = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+			label = new Label(innerComp, SWT.NONE);
+			data = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
 			label.setLayoutData(data);
 			label.setText("   " + (p[i] + 1) + ".   "); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 
 		// Matrix
+		int index;
 		for (int i = 0; i < depth; i++) {
 			for (int j = 0; j < len; j++) {
-				label = new Label(desc, SWT.NONE);
+				label = new Label(innerComp, SWT.NONE);
 				data = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 				label.setLayoutData(data);
-				if (i * len + p[j] < m.getText().length())
-					label.setText(m.getText().substring(i * len + p[j],
-							i * len + p[j] + 1));
+				index = i * len + p[j];
+				if (index < m.getText().length())
+					label.setText(m.getText().substring(index, index + 1));
 				else
 					label.setText("*"); //$NON-NLS-1$
 			}
 		}
 
 		if (depth < 5) {
-			label = new Label(desc, SWT.NONE);
-			data = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-					m.getSize(), 1);
+			label = new Label(innerComp, SWT.NONE);
+			data = new GridData(SWT.LEFT, SWT.CENTER, false, false, len, 1);
 			label.setLayoutData(data);
 			label.setText(""); //$NON-NLS-1$
 		}
-
-		label = new Label(desc, SWT.NONE);
-		data = new GridData(SWT.LEFT, SWT.CENTER, false, false, m.getSize(), 1);
-		label.setLayoutData(data);
-		label.setText(Messages.getString("Show.encryptedText")); //$NON-NLS-1$
-
-		Text text = new Text(desc, SWT.BORDER);
-		data = new GridData(SWT.FILL, SWT.CENTER, false, false, m.getSize(), 1);
-		text.setLayoutData(data);
-		text.setEditable(false);
-		String s = m.getCipher();
-		text.setText(s);
-
+		sc.setContent(innerComp);
+		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		layout();
 	}
 
-	public void showPeromoneMatrix() {
-		if (desc != null)
+	public void showPheromoneMatrix() {
+		if (desc != null) {
 			desc.dispose();
+		}
 
-		GridData data = new GridData(SWT.LEFT, SWT.TOP, false, true);
+		GridData data = new GridData(SWT.LEFT, SWT.TOP, true, true);
 		desc = new Composite(this, SWT.NONE);
 		desc.setLayoutData(data);
 		desc.setLayout(new GridLayout(m.getSize(), true));
@@ -148,7 +160,7 @@ public class Show extends Composite implements Observer {
 		data = new GridData(SWT.CENTER, SWT.CENTER, false, false, m.getSize(),
 				1);
 		label.setLayoutData(data);
-		label.setText(Messages.getString("Show.pheromoneMatrix")); //$NON-NLS-1$
+		label.setText(Messages.Show_pheromoneMatrix); //$NON-NLS-1$
 
 		double[][] matrix = m.getMatrix();
 		for (int row = 0; row < matrix.length; row++) {
@@ -172,9 +184,9 @@ public class Show extends Composite implements Observer {
 		label = new Label(desc, SWT.NONE);
 		data = new GridData(SWT.LEFT, SWT.CENTER, false, false, m.getSize(), 1);
 		label.setLayoutData(data);
-		label.setText(Messages.getString("Show.decryptedByAnt1") + //$NON-NLS-1$
+		label.setText(Messages.Show_decryptedByAnt1 + //$NON-NLS-1$
 				" " + m.getAntNr() + " " + //$NON-NLS-1$ //$NON-NLS-2$
-				Messages.getString("Show.decryptedByAnt2")); //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.Show_decryptedByAnt2); //$NON-NLS-1$ //$NON-NLS-2$
 
 		Text text = new Text(desc, SWT.BORDER);
 		data = new GridData(SWT.FILL, SWT.CENTER, false, false, m.getSize(), 1);
@@ -188,7 +200,7 @@ public class Show extends Composite implements Observer {
 		label = new Label(desc, SWT.NONE);
 		data = new GridData(SWT.LEFT, SWT.CENTER, false, false, m.getSize(), 1);
 		label.setLayoutData(data);
-		label.setText(Messages.getString("Show.decryptedBestKnown")); //$NON-NLS-1$
+		label.setText(Messages.Show_decryptedBestKnown); //$NON-NLS-1$
 
 		text = new Text(desc, SWT.BORDER);
 		data = new GridData(SWT.FILL, SWT.CENTER, false, false, m.getSize(), 1);
@@ -199,37 +211,17 @@ public class Show extends Composite implements Observer {
 		label = new Label(desc, SWT.NONE);
 		data = new GridData(SWT.LEFT, SWT.CENTER, false, false, m.getSize(), 1);
 		label.setLayoutData(data);
-		label.setText(Messages.getString("Show.encryptionKey") + ConvertToString(invert(m.getBestTrail()))); //$NON-NLS-1$
+		label.setText(Messages.Show_encryptionKey
+				+ ConvertToString(invert(m.getBestTrail()))); //$NON-NLS-1$
 		layout();
 	}
 
-	@SuppressWarnings("unchecked")
-	private Vector<Integer> invert(Vector<Integer> bestTrail) {
-		if (bestTrail == null)
-			return null;
-		Vector<Integer> newTrail = (Vector<Integer>) bestTrail.clone();
-		for (int i = 0; i < bestTrail.size(); i++)
-			newTrail.set(bestTrail.get(i), i);
-
-		return newTrail;
-	}
-
-	private String ConvertToString(Vector<Integer> input) {
-		if (input == null)
-			return ""; //$NON-NLS-1$
-
-		String s = ""; //$NON-NLS-1$
-		for (Integer i : input)
-			s += "," + (i + 1); //$NON-NLS-1$
-
-		return "(" + s.replaceFirst(",", "") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-	}
-
-	public void showGraph() {
-		if (desc != null)
-			desc.dispose();
-		if (canv != null)
+	public void constructGraph() {
+		// visualisierung nur zeigen, wenn die schlüssellänge zwischen 3 und 5
+		// ist.
+		if (canv != null) {
 			canv.dispose();
+		}
 
 		GridData data = new GridData(SWT.NONE, SWT.TOP, false, false);
 		data.widthHint = 365;
@@ -241,59 +233,57 @@ public class Show extends Composite implements Observer {
 		canv.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 				// Fall: Entschluesselung darstellen
-				if (m.getNr() > 0) {
-					drawTrail(e);
-					drawKnots(e); // Graph zeichnen
-					if (m.getEnAni()) // Ameise zeichnen
-						drawAnt(e, new Point(x, y), new Point(x2, y2));
-				}
+				drawTrail(e);
+				drawKnots(e); // Graph zeichnen
+				// if (m.isAnimateable()) // Ameise zeichnen
+				drawAnt(e, new Point(x, y), new Point(x2, y2));
+
 			}
 		});
 
-		canv.layout();
+		setAnt();
+		layout();
 	}
 
-	/**
-	 * Setzt die Koordinaten, wo sich die Ameise befindet in Abhaengigkeit von
-	 * dem jeweils aktuellen Knoten.
-	 *
-	 */
-	public void setAnt() {
-		int fall = m.getKnot();
-		if (fall == 0) {
-			x = 55;
-			y = 115;
-			x2 = 230;
-			y2 = 115;
-		} else if (fall == 1) {
-			x = 305;
-			y = 115;
-			x2 = 230;
-			y2 = 115;
-		} else if (fall == 2) {
-			x = 305;
-			y = 185;
-			x2 = 230;
-			y2 = 185;
-		} else if (fall == 3) {
-			x = 55;
-			y = 185;
-			x2 = 230;
-			y2 = 185;
-		} else if (fall == 4) {
-			x = 180;
-			y = 80;
-			x2 = 180;
-			y2 = 250;
-		}
+	public void animationStep() {
+		final Display d = this.getDisplay();
+		x2 = getCoord(m.getKnot())[0];
+		y2 = getCoord(m.getKnot())[1];
+
+		// Schrittweite
+		final int diffx = (int) (Math.abs(x - x2) / 10 + 0.5);
+		final int diffy = (int) (Math.abs(y - y2) / 10 + 0.5);
+		// Thread, der Bewegung uebernimmt
+		Runnable runnable = new Runnable() {
+			public void run() {
+				// Schritt
+				if (x - x2 > 0)
+					x -= diffx;
+				else
+					x += diffx;
+				if (y - y2 > 0)
+					y -= diffy;
+				else
+					y += diffy;
+				if (Math.abs(x - x2) > 5 || Math.abs(y - y2) > 5) {
+					canv.redraw(); // neu zeichnen
+					d.timerExec(200, this); // Schleife
+				} else { // angekommen
+					setAnt();
+
+					canv.redraw(); // neu zeichnen
+					if (m.getTrail().size() != m.getSize() && m.isFinishCycle()) { // falls weitere
+						m.finishCycle(); // Schritte kommen
+					} else {
+						m.finishedAnimation();
+					}
+				}
+			}
+		};
+		d.timerExec(1, runnable); // Starten
+
 	}
 
-	/**
-	 * Zeichnet den Graphen auf das Canvas.
-	 *
-	 * @param e
-	 *            PaintEvent
-	 */
 	public void drawKnots(PaintEvent e) {
 		e.gc.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
 		String[] knots = m.getKnots();
@@ -310,7 +300,7 @@ public class Show extends Composite implements Observer {
 
 	/**
 	 * Zeichnet den von der Ameise zurueckgelegten Weg auf das Canvas
-	 *
+	 * 
 	 * @param e
 	 *            PaintEvent
 	 */
@@ -325,7 +315,7 @@ public class Show extends Composite implements Observer {
 
 	/**
 	 * Zeichnet eine Kante des Weges von Knoten i zu Knoten j;
-	 *
+	 * 
 	 * @param e
 	 *            PaintEvent
 	 * @param i
@@ -366,7 +356,7 @@ public class Show extends Composite implements Observer {
 	/**
 	 * Zeichnet einen Knoten bei den uebergebenen Koordinaten und mit dem
 	 * uebergebenen Text, Nummer und Wahrscheinlichkeit auf das Canvas.
-	 *
+	 * 
 	 * @param e
 	 *            PaintEvent
 	 * @param s
@@ -398,17 +388,17 @@ public class Show extends Composite implements Observer {
 					Character.toUpperCase(s.charAt(i)) + "", x + 30, y + 12 * (i + 1) - 8); //$NON-NLS-1$
 		}
 		if (prob > 0) { // W'keit
-			e.gc.setBackground(probabilityColor);
+			e.gc.setBackground(normalColor);
 			String str = prob * 100 + ""; //$NON-NLS-1$
-			str = str.substring(0, str.indexOf('.') + 2) + "%"; //$NON-NLS-1$
-			e.gc.drawString(str, x - 10, y);
+			str = str.substring(0, str.indexOf('.') + 2) + " %"; //$NON-NLS-1$
+			e.gc.drawString(str, x - 10, y-5);
 		}
 	}
 
 	/**
 	 * Zeichnet eine Ameise beim Punkt p auf das Canvas mit Orientierung
 	 * Richtung Punkt p2
-	 *
+	 * 
 	 * @param e
 	 *            PaintEvent
 	 * @param p
@@ -417,7 +407,7 @@ public class Show extends Composite implements Observer {
 	 *            Orientierung der Ameise
 	 */
 	public void drawAnt(PaintEvent e, Point p, Point p2) {
-		Color col = normalColor;
+		Color col = antColor;
 		e.gc.setBackground(col);
 		e.gc.fillOval(p.x, p.y, 15, 15);
 		double x = p2.x - p.x;
@@ -443,74 +433,19 @@ public class Show extends Composite implements Observer {
 				(int) (p.y + 7 + 26 * y + 3 * x));
 
 		// Augen
-		col = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
-		e.gc.setBackground(col);
+		// col = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
+		e.gc.setBackground(eyeColor);
 		e.gc.fillOval((int) (p.x + 7 + 17 * x + 3 * y),
 				(int) (p.y + 7 + 17 * y - 3 * x), 3, 3);
 		e.gc.fillOval((int) (p.x + 7 + 17 * x - 3 * y),
 				(int) (p.y + 7 + 17 * y + 3 * x), 3, 3);
-		col.dispose();
-	}
-
-	/**
-	 * Update-Methode reagiert auf Aenderungen am Model. Resultierende
-	 * aenderungen werden vorgenommen und die redraw-Methode des Canvas wird
-	 * aufgerufen.
-	 */
-	public void update(Observable arg0, Object arg1) {
-		// Animation laufende Ameise
-		if (m.getAni() && m.getEnAni()) {
-			final Display d = this.getDisplay();
-			m.setWorking(true);
-			x2 = getCoord(m.getKnot())[0];
-			y2 = getCoord(m.getKnot())[1];
-			// Schrittweite
-			final int diffx = (int) (Math.abs(x - x2) / 10 + 0.5);
-			final int diffy = (int) (Math.abs(y - y2) / 10 + 0.5);
-			// Thread, der Bewegung uebernimmt
-			Runnable runnable = new Runnable() {
-				public void run() {
-					// Schritt
-					if (x - x2 > 0)
-						x -= diffx;
-					else
-						x += diffx;
-					if (y - y2 > 0)
-						y -= diffy;
-					else
-						y += diffy;
-					if (Math.abs(x - x2) > 5 || Math.abs(y - y2) > 5) {
-						canv.redraw(); // neu zeichnen
-						d.timerExec(400, this); // Schleife
-					} else { // angekommen
-						setAnt();
-						canv.redraw(); // neu zeichnen
-						m.setWorking(false);
-						if (m.getAll()) { // falls weitere
-							m.steps(); // Schritte kommen
-						}
-					}
-				}
-			};
-			d.timerExec(1, runnable); // Starten
-		} else if (m.getNr() != 0) { // Neu zeichnen ohne Animation
-			showGraph();
-			showPeromoneMatrix();
-			setAnt();
-			canv.redraw();
-			if (m.getAll())
-				m.steps();
-		} else
-			// Fuer Verschluesselungsteil neuzeichnen
-			showPermutationMatrix();
-		// canv.redraw();
-
+		// col.dispose();*/
 	}
 
 	/**
 	 * Liefert die Koordinaten, wo die Ameise platziert werden muss, wenn sie
 	 * sich bei Knoten i befindet.
-	 *
+	 * 
 	 * @param i
 	 *            Knoten, bei dem sich die Ameise befindet
 	 * @return c Array mit zugehoerigen Koordinaten
@@ -535,4 +470,63 @@ public class Show extends Composite implements Observer {
 		}
 		return c;
 	}
+
+	/**
+	 * Setzt die Koordinaten, wo sich die Ameise befindet in Abhaengigkeit von
+	 * dem jeweils aktuellen Knoten.
+	 * 
+	 */
+	public void setAnt() {
+		int fall = m.getKnot();
+		if (fall == 0) {
+			x = 55;
+			y = 115;
+			x2 = 230;
+			y2 = 115;
+		} else if (fall == 1) {
+			x = 305;
+			y = 115;
+			x2 = 230;
+			y2 = 115;
+		} else if (fall == 2) {
+			x = 305;
+			y = 185;
+			x2 = 230;
+			y2 = 185;
+		} else if (fall == 3) {
+			x = 55;
+			y = 185;
+			x2 = 230;
+			y2 = 185;
+		} else if (fall == 4) {
+			x = 180;
+			y = 80;
+			x2 = 180;
+			y2 = 250;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private Vector<Integer> invert(Vector<Integer> bestTrail) {
+		if (bestTrail == null)
+			return null;
+		Vector<Integer> newTrail = (Vector<Integer>) bestTrail.clone();
+		for (int i = 0; i < bestTrail.size(); i++)
+			newTrail.set(bestTrail.get(i), i);
+
+		return newTrail;
+	}
+
+	private String ConvertToString(Vector<Integer> input) {
+		if (input == null)
+			return ""; //$NON-NLS-1$
+
+		String s = ""; //$NON-NLS-1$
+		for (Integer i : input)
+			s += "," + (i + 1); //$NON-NLS-1$
+
+		return "(" + s.replaceFirst(",", "") + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	}
+
+
 }

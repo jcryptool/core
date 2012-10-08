@@ -44,7 +44,6 @@ public class AlphabetManualInputField extends Composite {
 				}
 				@Override
 				protected AtomAlphabet getDefaultContent() {
-					// TODO Auto-generated method stub
 					return new AtomAlphabet(new char[]{});
 				}
 				@Override

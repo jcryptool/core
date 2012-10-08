@@ -182,4 +182,11 @@ public class ClassicAlgorithmSpecification {
 		return verificators;
 	}
 	
+	/**
+	 * @return if this algorithm should be allowed to use custom alphabets
+	 */
+	public boolean isAllowCustomAlphabetCreation() {
+		return true;
+	}
+	
 }

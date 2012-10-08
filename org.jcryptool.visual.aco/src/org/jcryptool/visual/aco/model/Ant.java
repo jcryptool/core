@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.antcolony;
+package org.jcryptool.visual.aco.model;
 
 import java.util.Vector;
 
@@ -106,9 +106,9 @@ public class Ant {
 	 * @return prob Array mit den Wahrscheinlichkeiten
 	 */
 	public double[] getProbabilities() { // nur fuer Tutorial
-		double[] prob = new double[5];
+		double[] prob = new double[g.size];
 		double sum = calcSum();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < g.size; i++) {
 			if (restliste.contains(i))
 				prob[i] = (Math.pow(g.pheromon[current][i], ACO.alpha) * Math
 						.pow(g.getPrior(current, i), ACO.beta)) / sum;

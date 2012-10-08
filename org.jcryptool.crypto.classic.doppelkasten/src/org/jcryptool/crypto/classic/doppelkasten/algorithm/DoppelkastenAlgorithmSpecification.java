@@ -44,4 +44,9 @@ public class DoppelkastenAlgorithmSpecification extends
 	    return glueKeys(key1, key2).toCharArray();
 	}
 	
+	@Override
+	public boolean isAllowCustomAlphabetCreation() {
+		return false;
+	}
+	
 }

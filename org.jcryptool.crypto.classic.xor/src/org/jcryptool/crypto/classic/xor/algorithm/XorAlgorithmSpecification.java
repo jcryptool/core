@@ -72,6 +72,9 @@ public class XorAlgorithmSpecification extends ClassicAlgorithmSpecification {
 		return verificators;
 	}
 	
-	
+	@Override
+	public boolean isAllowCustomAlphabetCreation() {
+		return false;
+	}
 	
 }

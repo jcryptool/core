@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.antcolony;
+package org.jcryptool.visual.aco.model;
 
 import java.util.Vector;
 
@@ -43,8 +43,8 @@ public class ACO {
 	 *            Schluessellaenge
 	 * @return best beste Entschluesselung
 	 */
-	public static String decodeString(String s, int len) {
-		Graph g = new Graph(s, len);
+	public static String decodeString(String s, int len, String language) {
+		Graph g = new Graph(s, len, language);
 		Vector<Integer> best = new Vector<Integer>();
 		double bestscore = 0;
 		Ant[] a = new Ant[population];

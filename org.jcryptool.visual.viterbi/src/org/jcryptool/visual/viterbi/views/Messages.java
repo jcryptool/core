@@ -70,6 +70,9 @@ public class Messages extends NLS {
 	public static String ViterbiComposite_exportButton;
 	public static String ViterbiComposite_cancelButton;
 
+	public static String options1tooltip;
+	public static String options2tooltip;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

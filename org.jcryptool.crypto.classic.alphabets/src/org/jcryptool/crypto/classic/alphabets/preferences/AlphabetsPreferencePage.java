@@ -38,6 +38,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.crypto.classic.alphabets.Alphabet;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
+import org.jcryptool.crypto.classic.alphabets.tools.AlphabetStore;
 import org.jcryptool.crypto.classic.alphabets.ui.AddAlphabetWizard;
 import org.jcryptool.crypto.classic.alphabets.ui.EditAlphabetWizard;
 
@@ -341,7 +342,7 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
      * @param name The name of the selected alphabet
      */
     private void editAction(String name) {
-        EditAlphabetWizard wizard = new EditAlphabetWizard((Alphabet) getAlphabet(name));
+        EditAlphabetWizard wizard = new EditAlphabetWizard(AlphabetStore.convertAbstractAlphaToAlpha(getAlphabet(name)));
         WizardDialog dialog = new WizardDialog(getShell(), wizard);
         int value = dialog.open();
 
@@ -510,16 +511,30 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
      */
     public void performDefaults() {
         // alphabets
+    	
+    	AbstractAlphabet[] alphabets = AlphabetsManager.getInstance().getAlphabets();
+		for (int i = 0; i < tempAlphas.size(); i++) {
+			AbstractAlphabet a = tempAlphas.get(i);
+			
+			if(! a.isBasic()) {
+				tempAlphas.remove(i);
+			}
+		}
 
         // revert2FactoryDefaultAlphabet
         if (!getDefaultAlphabet().getName().equals(AlphabetsManager.FACTORY_DEFAULT_ALPHABET)) {
             getDefaultAlphabet().setDefaultAlphabet(false);
             getAlphabet(AlphabetsManager.FACTORY_DEFAULT_ALPHABET).setDefaultAlphabet(true);
-            fillTable();
         }
 
         // options
         enableFilterCheckBox.setSelection(AlphabetsPlugin.getDefault().getFilterCharsDefault());
+
+        fillTable();
+        editButton.setEnabled(false);
+        removeButton.setEnabled(false);
+        defaultButton.setEnabled(false);
+        updateCharset(null);
     }
 
     /**

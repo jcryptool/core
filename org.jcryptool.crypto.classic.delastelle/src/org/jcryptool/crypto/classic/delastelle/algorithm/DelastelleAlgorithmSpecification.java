@@ -41,4 +41,9 @@ public class DelastelleAlgorithmSpecification extends
 	}
 
 	
+	@Override
+	public boolean isAllowCustomAlphabetCreation() {
+		return false;
+	}
+	
 }

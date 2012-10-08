@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.tutorial;
+package org.jcryptool.visual.aco.model;
 
 public class PseudoRandomChars {
 

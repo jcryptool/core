@@ -20,7 +20,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -54,13 +53,13 @@ import org.jcryptool.visual.viterbi.algorithm.ViterbiObserver;
  */
 public class ViterbiComposite extends Composite implements ViterbiObserver {
     /* set default values */
-    private static final int HORIZONTAL_SPACING = 30;
-    private static final int MARGIN_WIDTH = 30;
+    private static final int HORIZONTAL_SPACING = 15;
+    private static final int MARGIN_WIDTH = 5;
 
     private static final int LOADBUTTONHEIGHT = 30;
     private static final int LOADBUTTONWIDTH = 120;
 
-    private static final int CONTINUEBUTTONHEIGHT = 50;
+    private static final int CONTINUEBUTTONHEIGHT = 25;
     private static final int CONTINUEBUTTONWIDTH = 150;
 
     /* colors for backgrounds. */
@@ -147,15 +146,15 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     public void createInput() {
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_input_header);
-        final GridLayout gl = new GridLayout(3, false); //$NON-NLS-1$
+        final GridLayout gl = new GridLayout(2, false); //$NON-NLS-1$
         gl.marginWidth = MARGIN_WIDTH;
         gl.horizontalSpacing = HORIZONTAL_SPACING;
         g.setLayout(gl);
-        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
         createLoadCipher(g);
         createCipher(g);
-        createEncodingModeArea(g);
+//        createEncodingModeArea(g);
     }
 
     /**
@@ -167,7 +166,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      */
     private void createLoadCipher(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
 
         Label plain1Label = new Label(canvas, SWT.PUSH);
@@ -198,36 +197,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 }
             }
         });
-    }
-
-    /**
-     * Creates a text field for the ciphertext.
-     *
-     * @param parent the component to add the ciphertext to
-     */
-    private void createCipher(final Composite parent) {
-        cipher = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        cipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        cipher.setEnabled(false);
-    }
-
-    /**
-     * This class creates radio buttons. It is used to determine the encoding mode
-     *
-     * @param parent
-     */
-    private void createEncodingModeArea(final Composite parent) {
-        final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        canvas.setLayout(new GridLayout());
-
-        final Canvas encodingmod = new Canvas(canvas, SWT.NONE);
-        encodingmod.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
-        encodingmod.setLayout(new FormLayout());
-
-        encodingmod.setLayoutData(new GridData(LOADBUTTONWIDTH, 100));
-
-        Group options = new Group(encodingmod, SWT.NONE);
+        
+        Group options = new Group(canvas, SWT.BOTTOM);
         options.setLayout(new GridLayout());
         options.setText(Messages.XORComposite_encodingmod_header);
 
@@ -267,6 +238,23 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     }
 
     /**
+     * Creates a text field for the ciphertext.
+     *
+     * @param parent the component to add the ciphertext to
+     */
+    private void createCipher(final Composite parent) {
+        cipher = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        cipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+        cipher.setEnabled(false);
+    }
+
+    /**
+     * This class creates radio buttons. It is used to determine the encoding mode
+     *
+     * @param parent
+     */
+
+    /**
      * Creates the second line of the viterbi tab content, where parameters of the viterbi algorithm can be set and the
      * calculation can be started/canceled
      */
@@ -277,10 +265,10 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 
         final Canvas canvas = new Canvas(g, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false));
+        canvas.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, true, false));
         final GridLayout gl = new GridLayout(3, false);
         gl.marginWidth = 0;
-        gl.horizontalSpacing = HORIZONTAL_SPACING + 100;
+        gl.horizontalSpacing = HORIZONTAL_SPACING;
         canvas.setLayout(gl);
 
         createLanguage(canvas);
@@ -317,7 +305,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      */
     private void createOptions(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout(2, false));
 
         Label nGramLabel = new Label(canvas, SWT.PUSH);
@@ -348,7 +336,12 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createStartButton(final Composite parent) {
-        startButton = new Button(parent, SWT.PUSH);
+    	//some adjustments
+    	final Canvas canvas = new Canvas(parent, SWT.NONE);
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
+        canvas.setLayout(new GridLayout());
+        
+        startButton = new Button(canvas, SWT.PUSH);
         startButton.setText(Messages.ViterbiComposite_startButton);
         startButton.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
 
@@ -414,7 +407,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     private void createResult() {
         final Group g = new Group(this, SWT.NONE);
         g.setText(Messages.ViterbiComposite_result_header);
-        final GridLayout gl = new GridLayout(3, false);
+        final GridLayout gl = new GridLayout(2, false);
         gl.marginWidth = MARGIN_WIDTH;
         gl.horizontalSpacing = HORIZONTAL_SPACING;
         g.setLayout(gl);
@@ -425,40 +418,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createExportArea(g);
         createLabel2(g);
         createSolution2(g);
-    }
-
-    /**
-     * Creates a label to describe the solution text field.
-     *
-     * @param parent
-     */
-    private void createLabel1(final Composite parent) {
-        final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
-        canvas.setLayout(new GridLayout());
-
-        Label solution1Label = new Label(canvas, SWT.PUSH);
-        solution1Label.setText(Messages.ViterbiComposite_solution1);
-        solution1Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
-    }
-
-    /**
-     * Creates a new text field to display the first part of the solution.
-     *
-     * @param parent
-     */
-    private void createSolution1(final Composite parent) {
-        solution1 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        solution1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    }
-
-    /**
-     * Creates a button which allows the user to export the solution to a textfile.
-     *
-     * @param parent
-     */
-    private void createExportArea(final Composite parent) {
-        final Canvas export = new Canvas(parent, SWT.NONE);
+        
+        final Canvas export = new Canvas(g, SWT.NONE);
         export.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         export.setLayout(new GridLayout());
 
@@ -490,9 +451,43 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      *
      * @param parent
      */
+    private void createLabel1(final Composite parent) {
+        final Canvas canvas = new Canvas(parent, SWT.NONE);
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
+        canvas.setLayout(new GridLayout());
+
+        Label solution1Label = new Label(canvas, SWT.PUSH);
+        solution1Label.setText(Messages.ViterbiComposite_solution1);
+        solution1Label.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
+    }
+
+    /**
+     * Creates a new text field to display the first part of the solution.
+     *
+     * @param parent
+     */
+    private void createSolution1(final Composite parent) {
+        solution1 = new Text(parent, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
+        solution1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    }
+
+    /**
+     * Creates a button which allows the user to export the solution to a textfile.
+     *
+     * @param parent
+     */
+    private void createExportArea(final Composite parent) {
+       
+    }
+
+    /**
+     * Creates a label to describe the solution text field.
+     *
+     * @param parent
+     */
     private void createLabel2(final Composite parent) {
         final Canvas canvas = new Canvas(parent, SWT.NONE);
-        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, true));
+        canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
 
         Label solution2Label = new Label(canvas, SWT.PUSH);

@@ -142,6 +142,10 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
         return substitute;
     }
 
+    private AdfgvxAlgorithmSpecification getMySpecification() {
+		return (AdfgvxAlgorithmSpecification) specification;
+	}
+    
     /**
      * TranspositionKey -- transpositionKeyText -> isKeyValid(direct text) -> final transpositionKey just alpha
      * verification..
@@ -173,8 +177,8 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             @Override
             protected InputVerificationResult verifyUserChange() {
                 List<KeyVerificator> verificators =
-                        ((AdfgvxAlgorithmSpecification) specification).getKeyVerificatorsSubstitutionKey();
-                return KeyVerificator.verify(getTextfield().getText(), alphabetInput.getContent(), verificators);
+                        getMySpecification().getKeyVerificatorsSubstitutionKey();
+                return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), verificators);
             }
 
             @Override
@@ -208,7 +212,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             public AbstractAlphabet getAlphabet() {
-                return alphabetInput.getContent();
+                return getAlphabetInput().getContent();
             }
         };
 
@@ -224,8 +228,8 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             @Override
             protected InputVerificationResult verifyUserChange() {
                 List<KeyVerificator> verificators =
-                        ((AdfgvxAlgorithmSpecification) specification).getKeyVerificatorsTranspositionKey();
-                return KeyVerificator.verify(getTextfield().getText(), alphabetInput.getContent(), verificators);
+                        getMySpecification().getKeyVerificatorsTranspositionKey();
+                return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), verificators);
             }
 
             @Override
@@ -250,7 +254,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             public AbstractAlphabet getAlphabet() {
-                return alphabetInput.getContent();
+                return getAlphabetInput().getContent();
             }
         };
     }
@@ -280,13 +284,13 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
         };
         verificationDisplayHandler.addAsObserverForInput(operationInput);
         verificationDisplayHandler.addAsObserverForInput(filterInput);
-        verificationDisplayHandler.addAsObserverForInput(alphabetInput);
+        verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
         verificationDisplayHandler.addAsObserverForInput(transformationInput);
         verificationDisplayHandler.addAsObserverForInput(transpositionKeyInput);
         verificationDisplayHandler.addAsObserverForInput(substitutionKeyInput);
 
         // static mappings (dynamic, like at operation, are handled above in the overridden method)
-        verificationDisplayHandler.addInputWidgetMapping(alphabetInput, alphabetCombo);
+        verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
         verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
         verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
         verificationDisplayHandler.addInputWidgetMapping(transpositionKeyInput, transpositionKeyText);
@@ -296,7 +300,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     @Override
     protected void addPageObserver() {
         operationInput.addObserver(pageObserver);
-        alphabetInput.addObserver(pageObserver);
+        getAlphabetInput().addObserver(pageObserver);
         filterInput.addObserver(pageObserver);
         transformationInput.addObserver(pageObserver);
         transpositionKeyInput.addObserver(pageObserver);

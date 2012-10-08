@@ -343,4 +343,9 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 	public String getAlphabetCharset() {
 		return String.valueOf(alphabetInput.getContent().getCharacterSet());
 	}
+
+	public AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
+		return alphabetInput;
+	}
+
 }

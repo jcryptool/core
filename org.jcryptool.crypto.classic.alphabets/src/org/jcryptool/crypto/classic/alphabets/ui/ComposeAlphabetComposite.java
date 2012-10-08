@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -217,6 +218,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			btnVorhandeneAlphabeteAls.setText(Messages.getString("ComposeAlphabetComposite.2")); //$NON-NLS-1$
 			Image showExistingImg = AlphabetsPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
 			btnVorhandeneAlphabeteAls.setImage(showExistingImg);
+			btnVorhandeneAlphabeteAls.setVisible(false);
 			showExistingAlphasAsBlocks = new ButtonInput() {
 				@Override
 				protected InputVerificationResult verifyUserChange() {
@@ -244,7 +246,8 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 						if(showExistingAlphasAsBlocks.getContent()) {
 							showExistingAlphasAsBlocks.writeContent(false);
 							showExistingAlphasAsBlocks.synchronizeWithUserSide();
-							showNotImplementedTooltip(btnVorhandeneAlphabeteAls);
+							//!implement this functionality!
+//							showNotImplementedTooltip(btnVorhandeneAlphabeteAls);
 						}
 					}
 				}
@@ -258,7 +261,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					if(newBlock != null) {
 						addAvailableBlockAlphabet(newBlock, BlockType.SELFCREATED);
 					} else {
-						showNotImplementedTooltip(btnNeuerBaustein);
+//						showNotImplementedTooltip(btnNeuerBaustein);
 					}
 				}
 			});
@@ -391,7 +394,15 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	 * @return null if canceled.
 	 */
 	protected BlockAlphabet createNewBlockAlphabet() {
-		return null;
+		NewAlphabetBlockWizard wiz = new NewAlphabetBlockWizard();
+		WizardDialog dialog = new WizardDialog(getShell(), wiz);
+
+		dialog.open();
+		if(dialog.getReturnCode() == Dialog.OK) {
+			return new BlockAlphabet(String.valueOf(wiz.getAlpha().getCharacterSet()), wiz.getName());
+		} else {
+			return null;
+		}
 	}
 
 	private void initializeAvailableBlocks() {

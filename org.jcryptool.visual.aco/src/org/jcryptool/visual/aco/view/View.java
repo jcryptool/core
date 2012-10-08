@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.gui;
+package org.jcryptool.visual.aco.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -17,13 +17,13 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.aco.ACOPlugin;
-import org.jcryptool.visual.aco.tutorial.Model;
+import org.jcryptool.visual.aco.model.Model;
 
 /**
  * RCP View for the ACO Plugin
- *
+ * 
  * @author mwalthart
- *
+ * 
  */
 public class View extends ViewPart {
 	private Composite parent;
@@ -32,21 +32,23 @@ public class View extends ViewPart {
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 		Model m = new Model();
-		parent.setLayout(new GridLayout(2, false));
+		parent.setLayout(new GridLayout(3, false));
 
-		Func func = new Func(m, parent, this);
-		func.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 2));
+		AntColControlComposite controlComps = new AntColControlComposite(m,
+				parent);
+		controlComps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
+				false, 1, 1));
 
-		Show view = new Show(m, parent);
-		view.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		AntColVisualComposite visual = new AntColVisualComposite(m, parent);
+		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		visual.setLayoutData(gridData);
 
-		Info text = new Info(m, parent);
-		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		AntColDescriptionComposite descriptionComp = new AntColDescriptionComposite(
+				m, parent);
+		descriptionComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true, 3, 1));
 
-		m.addObserver(view);
-		m.addObserver(func);
-		m.addObserver(text);
-		m.setNotified();
+		m.addViews(controlComps, visual, descriptionComp);
 		parent.layout();
 
 		PlatformUI.getWorkbench().getHelpSystem()
@@ -68,4 +70,5 @@ public class View extends ViewPart {
 	public void setFocus() {
 		parent.setFocus();
 	}
+
 }

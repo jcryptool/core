@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.antcolony;
+package org.jcryptool.visual.aco.model;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,27 +45,27 @@ public class Graph {
 	 * @param l
 	 *            Anzahl der Knoten (= Schluessellaenge)
 	 */
-	public Graph(final String s, final int l) {
+	public Graph(final String s, final int l, String language) {
 		this.size = l;
 		this.getBigrams();
 		this.makeKanten();
 		this.readText(s, l);
 		this.wege = new Vector<Vector<Integer>>();
 		this.punkte = new Vector<Double>();
-		this.readWortliste();
+		this.readWortliste(language);
 	}
 
 	/**
 	 * Liest die Wortliste ein.
 	 *
 	 */
-	private void readWortliste() {
+	private void readWortliste(String language) {
 		this.wortliste = new Vector<String>();
 		try {
 			String liste;
 			liste = this
 					.loadTextResource(
-							"material", Messages.getString("Graph.language") + "/wordlist.txt"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							"material", language + "/wordlist.txt"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			final StringTokenizer stok = new StringTokenizer(liste);
 			String token = stok.nextToken(); // in einzelne Woerter trennen
 			while (stok.hasMoreTokens()) {
@@ -76,7 +76,7 @@ public class Graph {
 			}
 		} catch (final IOException e) {
 			LogUtil.logError(ACOPlugin.PLUGIN_ID,
-					Messages.getString("Graph.noWordlist"), e, true); //$NON-NLS-1$
+					Messages.Graph_noWordlist, e, true); //$NON-NLS-1$
 		}
 	}
 
@@ -134,7 +134,7 @@ public class Graph {
 	 */
 	public void getBigrams() {
 		String name;
-		name = "/material/" + Messages.getString("Graph.language") + "/bigrams.dat"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		name = "/material/" + Messages.Graph_language + "/bigrams.dat"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		try {
 			final InputStream fis = this.getClass().getResourceAsStream(name);
 			final ObjectInputStream ois = new ObjectInputStream(fis);

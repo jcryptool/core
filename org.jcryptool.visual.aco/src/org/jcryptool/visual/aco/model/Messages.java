@@ -7,25 +7,23 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.aco.gui;
+package org.jcryptool.visual.aco.model;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+
+import org.eclipse.osgi.util.NLS;
 
 public class Messages {
-	private static final String BUNDLE_NAME = "org.jcryptool.visual.aco.gui.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jcryptool.visual.aco.model.messages"; //$NON-NLS-1$
+	public static String Graph_noWordlist;
+	public static String Graph_language;
+	public static String Model_initial_plaintext;
+	public static String Model_defaultLanguage;
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
-
-	private Messages() {
+	static {
+		// initialize resource bundle
+		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
 	}
 
-	public static String getString(String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		} catch (MissingResourceException e) {
-			return '!' + key + '!';
-		}
+	private Messages() {
 	}
 }
