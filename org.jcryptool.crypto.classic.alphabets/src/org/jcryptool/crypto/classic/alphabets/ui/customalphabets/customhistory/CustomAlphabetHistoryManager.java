@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 
 public class CustomAlphabetHistoryManager {
 	

@@ -7,9 +7,9 @@
       <view
             allowMultiple="false"
             category="org.jcryptool.visual"
-            class="org.jcryptool.visual.aco.gui.View"
+            class="org.jcryptool.visual.aco.view.View"
             icon="icons/view.gif"
-            id="org.jcryptool.visual.aco.view"
+            id="org.jcryptool.visual.aco.view.View"
             name="%viewName"
             restorable="true">
       </view>
@@ -18,7 +18,7 @@
          point="org.jcryptool.core.operations.visuals">
       <Visual
             name="%visualName"
-            viewId="org.jcryptool.visual.aco.view"
+            viewId="org.jcryptool.visual.aco.view.View"
             contextHelpId="org.jcryptool.visual.aco.view">
       </Visual>
    </extension>
@@ -33,6 +33,41 @@
       <contexts
             file="$nl$/contexts.xml">
       </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.aco.handlers.RestartHandler"
+            commandId="org.jcryptool.visual.aco.restartCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.aco.restartCommand"
+            name="%restart.command.name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.jcryptool.visual.aco.view.View">
+         <command
+               commandId="org.jcryptool.visual.aco.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.aco.view.View">
+         <command
+               commandId="org.jcryptool.visual.aco.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>

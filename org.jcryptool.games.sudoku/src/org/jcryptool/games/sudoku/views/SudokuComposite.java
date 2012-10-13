@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.Thread.State;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +41,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -111,9 +111,9 @@ public class SudokuComposite extends Composite {
 
     public boolean showPossible, autoFillOne, solved, loading, solving, boxRule, killerFirstPossible, loadedKiller, solveMode = false, backgroundSolved = false;
 
-    public Runnable refresh, backgroundSolveComplete;
+    public Runnable refresh, backgroundSolveComplete, solveComplete;
     
-    public Job backgroundSolve;
+    public Job backgroundSolve, dummyJob;
 
     public Thread blinkerRed = null, blinkerWhite = null, makeWhite;
     
@@ -194,6 +194,48 @@ public class SudokuComposite extends Composite {
             }
         };
         
+        this.dummyJob = new Job("Solving Puzzle...") {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				while (backgroundSolve.getState() == Job.RUNNING) {
+					if (monitor.isCanceled()) return Status.CANCEL_STATUS;
+				}
+				if (backgroundSolve.getResult() == Status.OK_STATUS) {
+					SudokuComposite.this.getDisplay().asyncExec(solveComplete);
+	                return Status.OK_STATUS;
+				}
+				return null;
+			}
+        	
+        };
+        
+        this.solveComplete = new Runnable() {
+        	
+        	public void run() {
+                switch (tabChoice) {
+                case NORMAL: {
+                    if (SudokuComposite.this.solvePuzzleNormal()) {
+                        refresh();
+                    }
+                }
+                    break;
+                case KILLER: {
+                    if (SudokuComposite.this.solvePuzzleKiller()) {
+                        refresh();
+                    }
+                }
+                    break;
+                case HEX: {
+                    if (SudokuComposite.this.solvePuzzleHex()) {
+                        refresh();
+                    }
+                }
+                    break;
+                }
+        	}
+        };
+        
         this.backgroundSolveComplete = new Runnable() {
 
 			@Override
@@ -203,8 +245,8 @@ public class SudokuComposite extends Composite {
 			}
         	
         };
-        
-        this.backgroundSolve = new Job("Solving Puzzle...") {
+                
+        this.backgroundSolve = new Job("Solving Puzzle in Background") {
         	@Override
         	public IStatus run(final IProgressMonitor monitor) {
 				switch (tabChoice) {
@@ -421,6 +463,8 @@ public class SudokuComposite extends Composite {
         this.createButtonArea(g);
         this.createPlayFieldArea(g);
         makeWhite();
+        
+        SudokuComposite.this.display.asyncExec(refresh);
     }
 
     public void createButtonArea(final Composite parent) {
@@ -506,7 +550,7 @@ public class SudokuComposite extends Composite {
 		            doublePairButton.setEnabled(true);
 		            multipleLinesButton.setEnabled(true);
 				}
-				backgroundSolve.setSystem(true);
+				if (backgroundSolve.getState() != Job.RUNNING) backgroundSolve.setSystem(true);
 				backgroundSolve.schedule();
 			}
 
@@ -592,27 +636,9 @@ public class SudokuComposite extends Composite {
         this.solveButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
-            	backgroundSolve.cancel();
-                switch (tabChoice) {
-                    case NORMAL: {
-                        if (SudokuComposite.this.solvePuzzleNormal()) {
-                            refresh();
-                        }
-                    }
-                        break;
-                    case KILLER: {
-                        if (SudokuComposite.this.solvePuzzleKiller()) {
-                            refresh();
-                        }
-                    }
-                        break;
-                    case HEX: {
-                        if (SudokuComposite.this.solvePuzzleHex()) {
-                            refresh();
-                        }
-                    }
-                        break;
-                }
+            	//backgroundSolve.cancel();
+            	dummyJob.setUser(true);
+            	dummyJob.schedule();
             }
         });
         
@@ -734,7 +760,6 @@ public class SudokuComposite extends Composite {
 
         this.showPossibleButton = new Button(subComposite, SWT.PUSH);
         this.showPossibleButton.setLayoutData(buttonrd);
-        this.showPossibleButton.setBackground(RED);
         this.showPossibleButton.setEnabled(true);
         this.showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
         this.showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
@@ -819,6 +844,10 @@ public class SudokuComposite extends Composite {
                         break;
                 }
                 refresh();
+                
+            	enterModeButton.setSelection(false);
+            	solveModeButton.setSelection(true);
+            	solveModeButton.notifyListeners(SWT.Selection, null);
             }
         });
 
@@ -1616,6 +1645,11 @@ public class SudokuComposite extends Composite {
             }
         }
         areas.clear();
+        for (int i = 0; i < selected.size(); i++) {
+            labelCellKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+            boardTextKiller[selected.get(i).x][selected.get(i).y].setBackground(WHITE);
+        }
+        selected.clear();
     }
 
     public void clearPuzzleHex() {
@@ -1830,6 +1864,14 @@ public class SudokuComposite extends Composite {
             }
         }
     }
+    
+    public boolean adjacent(Point point) {
+    	if (selected.size() == 0) return true;
+    	for (int i = 0; i < selected.size(); i++) {
+    		if (Math.abs(selected.get(i).x - point.x) + Math.abs(selected.get(i).y - point.y) <= 1) return true;
+    	}
+    	return false;
+    }
 
     public void createFieldKiller(final Composite parent) {
         GridLayout layout = new GridLayout(9, false);
@@ -1866,9 +1908,11 @@ public class SudokuComposite extends Composite {
 	                                selected.remove(point);
 	
 	                            } else {
-	                                composite.setBackground(RED);
-	                                boardTextKiller[point.x][point.y].setBackground(RED);
-	                                selected.add(point);
+	                            	if (adjacent(point)) {
+		                                composite.setBackground(RED);
+		                                boardTextKiller[point.x][point.y].setBackground(RED);
+		                                selected.add(point);
+	                            	}
 	                            }
 	                        } else {
 	                            boardTextKiller[point.x][point.y].setFocus();
@@ -2934,12 +2978,12 @@ public class SudokuComposite extends Composite {
         }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (showPossible && possibleKiller.get(i).get(j).size() < 8) {
+                if (showPossible && possibleKiller.get(i).get(j).size() < 9) {
                     for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
-                        boardLabelsKiller[i][j][k + 1].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
-                        boardLabelsKiller[i][j][k + 1].setBackground(WHITE);
+                        boardLabelsKiller[i][j][k].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
+                        boardLabelsKiller[i][j][k].setBackground(WHITE);
                     }
-                    for (int k = possibleKiller.get(i).get(j).size() + 1; k < 8; k++) {
+                    for (int k = possibleKiller.get(i).get(j).size(); k < 8; k++) {
                         boardLabelsKiller[i][j][k].setText("");
                     }
                 }

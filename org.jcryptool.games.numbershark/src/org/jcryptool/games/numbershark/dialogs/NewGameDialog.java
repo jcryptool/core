@@ -53,7 +53,7 @@ public class NewGameDialog extends TitleAreaDialog {
         maximumNumberGroup.setText(Messages.NewGameDialog_2);
 
         final Slider numSlider = new Slider(maximumNumberGroup, SWT.NONE);
-        numSlider.setValues(numberOfFields, 1, 1031, 7, 1, 10);
+        numSlider.setValues(numberOfFields, 1, 1024, 7, 1, 10);
         numSlider.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
         final Spinner numSpinner = new Spinner(maximumNumberGroup, SWT.BORDER);
