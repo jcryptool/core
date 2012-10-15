@@ -41,7 +41,7 @@
 				</executions>
 				<configuration>
 					<formats>
-					  <linux>tar.gz</linux>
+						<linux>tar.gz</linux>
 					</formats>
 					<products>
 						<product>
@@ -50,6 +50,33 @@
 						</product>
 					</products>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<!-- rename the generated files -->
+					<execution>
+						<id>update-artifacts</id>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<move verbose="true" todir="${project.build.directory}/products">
+									<mapper type="regexp" from="^(jcryptool-)(.*)$$"
+										to="${product-id}-${product-version}-\2" />
+
+									<fileset dir="${project.build.directory}/products">
+										<include name="*.zip" />
+                                        <include name="*.tar.gz" />
+									</fileset>
+								</move>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
