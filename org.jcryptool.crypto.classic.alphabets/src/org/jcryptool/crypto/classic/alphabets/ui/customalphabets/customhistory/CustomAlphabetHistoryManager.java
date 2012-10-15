@@ -9,14 +9,6 @@ public class CustomAlphabetHistoryManager {
 	
 	public static List<AbstractAlphabet> customAlphabets = new LinkedList<AbstractAlphabet>();
 	static {
-		//TODO: !remove
-//		AtomAlphabet a1 = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXY0123456789");
-//		a1.setName("A-Z and digits");
-//		customAlphabets.add(a1);
-//		
-//		AtomAlphabet a2 = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-//		a1.setName("A-Z a-z and digits");
-//		customAlphabets.add(a2);
 	}
 	
 }
