@@ -9,9 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.aco.view;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.eclipse.osgi.util.NLS;
 
 public class Messages {
