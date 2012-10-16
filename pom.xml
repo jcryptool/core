@@ -5,6 +5,7 @@
   	<groupId>org.jcryptool</groupId>
   	<artifactId>product</artifactId>
   	<version>1.0.0</version>
+	<relativePath>../core/org.jcryptool.repository/parent</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jcryptool</groupId>
@@ -48,8 +49,8 @@
 	<module>org.jcryptool.crypto.modern.stream.lfsr</module>
 	<module>org.jcryptool.crypto.xml</module>
 	<module>org.jcryptool.crypto.xml.core</module>
-	<module>org.jcryptool.crypto.xml.help</module>
 	<module>org.jcryptool.crypto.xml.feature</module>
+	<module>org.jcryptool.crypto.xml.help</module>
 	<module>org.jcryptool.crypto.xml.ui</module>
 	<module>org.jcryptool.games</module>
 	<module>org.jcryptool.games.feature</module>
