@@ -330,8 +330,7 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 				result.append("\n\n"); //$NON-NLS-1$
 			}
 			
-			
-			result.append(dataObject.getOutputStream().toString());
+			result.append(dataObject.getOutput());
 			
 		} catch (ParseException e) {
 			result.append(Messages.ClassicAlgorithmCmd_error + e.getMessage());
