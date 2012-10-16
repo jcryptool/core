@@ -9,15 +9,11 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.aco.view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Color;
+//import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -36,7 +32,7 @@ public class AntColDescriptionComposite extends Composite {
 	private Label text;
 	private Model m;
 	private boolean isText3and4 = false;
-	private Color eyeColor = new Color(this.getDisplay(), 255, 255, 255);
+	//private Color eyeColor = new Color(this.getDisplay(), 255, 255, 255);
 
 	/**
 	 * Konstruktor. Erhaelt Model, setzt grundlegende Einstellungen.

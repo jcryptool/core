@@ -1,8 +1,5 @@
 package org.jcryptool.visual.aco.view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.KeyEvent;
@@ -12,7 +9,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,7 +23,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.aco.model.Model;
 
 public class AntColControlComposite extends Composite {
