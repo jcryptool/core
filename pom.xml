@@ -5,6 +5,7 @@
   	<groupId>org.jcryptool</groupId>
   	<artifactId>product</artifactId>
   	<version>1.0.0</version>
+	<relativePath>org.jcryptool.repository/parent</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jcryptool</groupId>
@@ -49,9 +50,10 @@
     <module>org.jcryptool.editors.feature</module>
     <module>org.jcryptool.fileexplorer</module>
     <module>org.jcryptool.providers.feature</module>
-    <module>org.jcryptool.views.feature</module>
-    <module>org.jcryptool.webbrowser</module>
     <module>org.jcryptool.releng</module>
     <module>org.jcryptool.repository</module>
+    <module>org.jcryptool.views.feature</module>
+    <module>org.jcryptool.webbrowser</module>
+    <module>org.jdom</module>
   </modules>
 </project>

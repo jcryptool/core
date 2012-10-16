@@ -15,13 +15,13 @@
 	<properties>
 		<tycho.version>0.15.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<product-id>jcryptool</product-id>
-		<product-version>1.0.0</product-version>
+		<product.id>jcryptool</product.id>
+		<product.version>1.0.0</product.version>
 	</properties>
 
 	<modules>
-		<module>core</module>
-		<module>crypto</module>
+		<module>../../../core</module>
+		<module>../../../crypto</module>
 	</modules>
 
 	<repositories>
@@ -68,8 +68,8 @@
 						<artifact>
 							<groupId>org.jcryptool</groupId>
 							<artifactId>releng</artifactId>
-							<version>${product-version}</version>
-							<classifier>${product-id}</classifier>
+							<version>${product.version}</version>
+							<classifier>${product.id}</classifier>
 						</artifact>
 					</target>
 					<environments>
@@ -114,5 +114,5 @@
 		</plugins>
 	</build>
 	<url>https://github.com/jcryptool</url>
-	<description>This is the parent pom for the JCrypTool product. Copy this file one level above the core and crypto repositories and execute &quot;mvn clean install&quot; to generate the JCrypTool release. Java 1.6 is required for this build, Java 1.7 won't work.</description>
+	<description>This is the parent pom for the JCrypTool product. Execute &quot;mvn clean package&quot; to generate the JCrypTool release for all supported platforms. Generated artifacts are stored in the &quot;core/org.jcryptool.repository/target/products&quot; directory. Maven 3 and at least Java 1.6 are required for the build.</description>
 </project>
