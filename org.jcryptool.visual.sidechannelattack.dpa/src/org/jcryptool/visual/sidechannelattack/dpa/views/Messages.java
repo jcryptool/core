@@ -171,7 +171,6 @@ public class Messages extends NLS {
 	public static String DPAView_lblNewLabel_2_text;
 	public static String DPAView_lblNewLabel_3_text;
 	public static String DPAView_lblNewLabel_4_text;
-	public static String DPAView_grpZuErsetzen_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

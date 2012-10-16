@@ -17,7 +17,6 @@ import java.security.spec.ECFieldFp;
 import java.security.spec.ECPoint;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -55,9 +54,7 @@ import com.swtdesigner.SWTResourceManager;
  *
  * @author Biqiang Jiang
  * @version 1.0, 01/09/09
- * @since JDK1.5.7
  */
-
 public class DPAView extends ViewPart implements Constants {
 	public DPAView() {
 	}
@@ -239,7 +236,7 @@ public class DPAView extends ViewPart implements Constants {
             	}
             }
         });
-        eCCurveText.setBounds(65, 136, 159, 15);
+        eCCurveText.setBounds(65, 136, 159, 21);
         
         // define a text field in which the computed order will be displayed
         orderOfCurveText = new StyledText(parameterOfECCGroup, SWT.NONE);
@@ -249,7 +246,7 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the meaning of order
         orderOfCurveText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFCURVETEXT);
         orderOfCurveText.setEditable(false);
-        orderOfCurveText.setBounds(110, 157, 62, 15);
+        orderOfCurveText.setBounds(110, 157, 62, 21);
 
         // define a combo in which the user can select a random point of EC to process the computation
         eCPointscombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
@@ -269,7 +266,7 @@ public class DPAView extends ViewPart implements Constants {
         // define a toolbar-text to explain the meaning of order
         orderOfECPointText.setToolTipText(TOOLTIPTEXT_OF_ORDEROFECPOINTTEXT);
         //orderOfECPointText.setEditable(false);
-        orderOfECPointText.setBounds(158, 276, 62, 15);
+        orderOfECPointText.setBounds(158, 276, 62, 21);
 
         scalarParameterCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
         scalarParameterCombo.setBounds(64, 247, 95, 23);
@@ -283,7 +280,7 @@ public class DPAView extends ViewPart implements Constants {
         executeButton.setEnabled(false);
         
         // define a cue label
-        final CLabel primeFieldFLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
+        final Label primeFieldFLabel = new Label(parameterOfECCGroup, SWT.NONE);
         primeFieldFLabel.setText(PRIME_FIELD_LABEL_TEXT);
         primeFieldFLabel.setBounds(9, 49, 50, 23);
 
@@ -459,12 +456,12 @@ public class DPAView extends ViewPart implements Constants {
         });
 
         // add a cue label
-        final CLabel aLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
+        final Label aLabel = new Label(parameterOfECCGroup, SWT.NONE);
         aLabel.setText(TEXT_OF_ALABEL);
         aLabel.setBounds(9, 78, 50, 23);
 
         // add a cue label
-        final CLabel bLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
+        final Label bLabel = new Label(parameterOfECCGroup, SWT.NONE);
         bLabel.setText(TEXT_OF_BLABEL);
         bLabel.setBounds(9, 107, 50, 23);
         countermeasureselectionCombo = new Combo(parameterOfECCGroup, SWT.READ_ONLY);
@@ -516,54 +513,53 @@ public class DPAView extends ViewPart implements Constants {
                 parameterOfCountermeasuresText.setText(Messages.noprotection0);
                 
                 Label lblNewLabel_2 = new Label(eccAlgorithmGroup, SWT.NONE);
-                lblNewLabel_2.setBounds(10, 17, 277, 15);
+                lblNewLabel_2.setBounds(10, 17, 277, 21);
                 lblNewLabel_2.setText(Messages.DPAView_lblNewLabel_2_text);
                 lblNewLabel_2.setFont(FontService.getSmallBoldFont());
                 
                 Label lblNewLabel_3 = new Label(eccAlgorithmGroup, SWT.NONE);
-                lblNewLabel_3.setBounds(303, 17, 293, 15);
+                lblNewLabel_3.setBounds(303, 17, 293, 21);
                 lblNewLabel_3.setText(Messages.DPAView_lblNewLabel_3_text);
                 lblNewLabel_3.setFont(FontService.getSmallBoldFont());
                 
                 Label lblNewLabel_4 = new Label(eccAlgorithmGroup, SWT.NONE);
-                lblNewLabel_4.setBounds(616, 17, 277, 15);
+                lblNewLabel_4.setBounds(616, 17, 277, 21);
                 lblNewLabel_4.setText(Messages.DPAView_lblNewLabel_4_text);
                 lblNewLabel_4.setFont(FontService.getSmallBoldFont());
                 counterFlag = 0;
                 
-                CLabel label = new CLabel(parameterOfECCGroup, SWT.NONE);
+                Label label = new Label(parameterOfECCGroup, SWT.NONE);
                 label.setText("P =");
-                label.setBounds(9, 218, 26, 20);
+                label.setBounds(9, 218, 26, 21);
                 
-                CLabel label_1 = new CLabel(parameterOfECCGroup, SWT.NONE);
+                Label label_1 = new Label(parameterOfECCGroup, SWT.NONE);
                 label_1.setText("Q =");
-                label_1.setBounds(9, 247, 26, 20);
+                label_1.setBounds(9, 247, 26, 21);
                 
-                CLabel label_2 = new CLabel(parameterOfECCGroup, SWT.NONE);
+                Label label_2 = new Label(parameterOfECCGroup, SWT.NONE);
                 label_2.setText(ORDER_OF_SELECTED_POINT_TEXT);
-                label_2.setBounds(9, 276, 149, 15);
+                label_2.setBounds(9, 276, 149, 21);
                 
-                CLabel lblModus = new CLabel(parameterOfECCGroup, SWT.NONE);
+                Label lblModus = new Label(parameterOfECCGroup, SWT.NONE);
                 lblModus.setBounds(9, 309, 61, 21);
                 lblModus.setText(Messages.mode);
-                lblModus.setFont(FontService.getSmallBoldFont());
                 
-                CLabel lblParameterOfEc = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblParameterOfEc.setBounds(9, 22, 106, 21);
+                Label lblParameterOfEc = new Label(parameterOfECCGroup, SWT.NONE);
+                lblParameterOfEc.setBounds(9, 22, 125, 21);
                 lblParameterOfEc.setText(Messages.parameter);
                 lblParameterOfEc.setFont(FontService.getSmallBoldFont());
                 
-                CLabel lblPointsOnEc = new CLabel(parameterOfECCGroup, SWT.NONE);
+                Label lblPointsOnEc = new Label(parameterOfECCGroup, SWT.NONE);
                 lblPointsOnEc.setBounds(9, 191, 211, 21);
                 lblPointsOnEc.setText(Messages.points);
                 lblPointsOnEc.setFont(FontService.getSmallBoldFont());
                 
-                CLabel lblOrderOfCurve = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblOrderOfCurve.setBounds(9, 157, 95, 15);
+                Label lblOrderOfCurve = new Label(parameterOfECCGroup, SWT.NONE);
+                lblOrderOfCurve.setBounds(9, 157, 95, 21);
                 lblOrderOfCurve.setText(Messages.order_curve);
                 
-                CLabel lblNewLabel = new CLabel(parameterOfECCGroup, SWT.NONE);
-                lblNewLabel.setBounds(9, 136, 50, 15);
+                Label lblNewLabel = new Label(parameterOfECCGroup, SWT.NONE);
+                lblNewLabel.setBounds(9, 136, 50, 21);
                 lblNewLabel.setText(Messages.curve);
                 
                 Button btnReset = new Button(parameterOfECCGroup, SWT.NONE);
@@ -595,7 +591,7 @@ public class DPAView extends ViewPart implements Constants {
                 
                 Label lblNewLabel_1 = new Label(mainGroup, SWT.NONE);
                 lblNewLabel_1.setFont(FontService.getHeaderFont());
-                lblNewLabel_1.setBounds(10, 10, 903, 23);
+                lblNewLabel_1.setBounds(10, 10, 903, 30);
                 lblNewLabel_1.setText(Messages.Title);
                 
 
