@@ -10,11 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.vigenere.algorithm;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmCmd;
@@ -46,19 +42,6 @@ public class VigenereCmd extends ClassicAlgorithmCmd {
 		return algorithm;
 	}
 
-	// TODO: !remove
-	private static String inputStreamToString(InputStream in) throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-		StringBuilder stringBuilder = new StringBuilder();
-		String line = null;
-
-		while ((line = bufferedReader.readLine()) != null) {
-			stringBuilder.append(line + "\n");
-		}
-
-		return stringBuilder.toString();
-	}
-	
 	@Override
 	protected ClassicAlgorithmSpecification getSpecification() {
 		return VigenereAlgorithm.specification;
