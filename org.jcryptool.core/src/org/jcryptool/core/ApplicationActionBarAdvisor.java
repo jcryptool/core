@@ -30,6 +30,7 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.actions.ContributionItemFactory;
@@ -186,7 +187,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         while (!sortedElements.isEmpty()) {
             element = sortedElements.get(sortedElements.firstKey());
             sortedElements.remove(sortedElements.firstKey());
-            menu.add(new ShowPluginViewAction(element.getAttribute("viewId"), element.getAttribute("name"))); //$NON-NLS-1$ //$NON-NLS-2$
+            IAction action = new ShowPluginViewAction(element.getAttribute("viewId"), element.getAttribute("name"));
+            String contextHelpId = element.getAttribute("contextHelpId");
+            if(contextHelpId != null)
+            	PlatformUI.getWorkbench().getHelpSystem().setHelp(action, contextHelpId);
+            menu.add(action); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
