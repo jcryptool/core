@@ -12,6 +12,7 @@ package org.jcryptool.visual.sidechannelattack.spa.views;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -78,6 +79,7 @@ public class SPAView extends ViewPart implements Constants {
 
 	private Composite visualizedGroup;
 	private Composite powerTraceVisualizationGroup;
+	private Text exponentBinary;
 
 	public void createPartControl(final Composite parent) {
 
@@ -96,15 +98,16 @@ public class SPAView extends ViewPart implements Constants {
 
 		parameterOfRSAGroup = new Composite(mainContent, SWT.NONE);
 		parameterOfRSAGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
-				false, false, 1, 1));
+				false, false, 1, 2));
 
 		visualizedGroup = new Composite(mainContent, SWT.NONE);
 		visualizedGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
 				false, 1, 1));
 		
 		informationGroup = new Composite(mainContent, SWT.NONE);
-		informationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-				true, 2, 1));
+		informationGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
+				false, 1, 1));
+		
 		
 		AddParameterOfRsaGroupContent();
 		AddRsaAlgorithmGroupContent(parent);
@@ -124,14 +127,15 @@ public class SPAView extends ViewPart implements Constants {
 
 	private void AddRsaAlgorithmGroupContent(final Composite parent) {
 		
-		informationGroup.setLayout(new RowLayout(SWT.VERTICAL));
+		informationGroup.setLayout(new RowLayout());
 		
-		CLabel resultLabel = new CLabel(informationGroup,
-				SWT.NONE);
-		resultLabel.setText(Constants.INFORMATION);
-		resultLabel.setFont(FontService.getSmallBoldFont());
+//		CLabel resultLabel = new CLabel(informationGroup,
+//				SWT.NONE);
+//		resultLabel.setText(Constants.INFORMATION);
+//		resultLabel.setFont(FontService.getSmallBoldFont());
 		
-		rsaProcessText = new StyledText(informationGroup, SWT.MULTI | SWT.NONE | SWT.H_SCROLL | SWT.V_SCROLL);
+		rsaProcessText = new StyledText(informationGroup, SWT.MULTI | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL);
+		rsaProcessText.setSize(600, 200);
 
 		rsaProcessText.setEditable(false);
 		rsaProcessText.setText(INFORMATION_SAM_TEXT);
@@ -140,7 +144,7 @@ public class SPAView extends ViewPart implements Constants {
 	private void AddParameterOfRsaGroupContent() {
 
 		FormLayout layout = new FormLayout();
-		layout.spacing = 15;
+		layout.spacing = 25;
 		layout.marginRight = 50;
 		parameterOfRSAGroup.setLayout(layout);
 
@@ -199,11 +203,29 @@ public class SPAView extends ViewPart implements Constants {
 		formData.right = new FormAttachment(basis, 0, SWT.RIGHT);
 		exponent.setLayoutData(formData);
 		exponent.setToolTipText(TOOL_TIP_TEXT_EXPONENT);
+		
+		Label exponentBinaryLabel = new Label(parameterOfRSAGroup,
+				SWT.NONE);
+		formData = new FormData();
+		formData.top = new FormAttachment(exponentLabel);
+		formData.right = new FormAttachment(exponentLabel, 0, SWT.RIGHT);
+		exponentBinaryLabel.setLayoutData(formData);
+		exponentBinaryLabel.setText("=");
+		
+		exponentBinary = new Text(parameterOfRSAGroup, SWT.BORDER);
+		formData = new FormData();
+		formData.top = new FormAttachment(exponentBinaryLabel, 0, SWT.CENTER);
+		formData.left = new FormAttachment(exponent, 0, SWT.LEFT);
+		formData.right = new FormAttachment(exponent, 0, SWT.RIGHT);
+		exponentBinary.setLayoutData(formData);
+
+		exponentBinary.setToolTipText(Constants.TOOL_TIP_TEXT_EXPONENT_BINARY);
+		exponentBinary.setEditable(false);
 
 		CLabel parameterLabel = new CLabel(parameterOfRSAGroup,
 				SWT.NONE);
 		formData = new FormData();
-		formData.top = new FormAttachment(exponentLabel);
+		formData.top = new FormAttachment(exponentBinaryLabel);
 		parameterLabel.setLayoutData(formData);
 		parameterLabel.setText(Constants.PARAMETER);
 		parameterLabel.setFont(FontService.getSmallBoldFont());
@@ -364,6 +386,8 @@ public class SPAView extends ViewPart implements Constants {
 			public void widgetSelected(final SelectionEvent e) {
 
 				exp_selected = primeDataExponent[exponent.getSelectionIndex()];
+				
+			    exponentBinary.setText(Integer.toBinaryString(Integer.parseInt(exponent.getText())));
 
 				if (!basis.getText().equals("") && (exp_selected != 0)
 						&& (!mod.getText().equals(""))) {
@@ -488,13 +512,14 @@ public class SPAView extends ViewPart implements Constants {
 		
 		boolean isSaMmode = modeSelection.getSelectionIndex() == 0;
 		
-		int exp_in_decimal = Integer.parseInt(exponent.getText());
 		int[] tempresult = new int[Integer.toBinaryString(
 				Integer.parseInt(exponent.getText())).length()];
+		
+		String exp_in_binary = exponentBinary.getText(); 
+		int exp_in_binar_length = exp_in_binary.length();
+		
 		int count = 0;
 		long res = 1;
-		String exp_in_binary = Integer.toBinaryString(exp_in_decimal);
-		int exp_in_binar_length = exp_in_binary.length();
 
 		// declare some initial parameters of
 		// "square and multiply always" in table
@@ -503,34 +528,22 @@ public class SPAView extends ViewPart implements Constants {
 		
 		initialTableItemBasis.setText(0, INPUT_BASIS_ENG);
 		
-		String text = isSaMmode ? RES_AFTER_SQUARE_ENG : INITIAL_TABLE_ITEM_SQUARE;
+		String text = RES_AFTER_SQUARE_ENG;
 		initialTableItemBasis.setText(1, text);
-		text = isSaMmode ? RES_AFTER_MUL_ENG : INITIAL_TABLE_ITEM_MULTIPLY;
+		text = isSaMmode ? RES_AFTER_MUL_BIT_1_ENG : RES_AFTER_MUL;
 		initialTableItemBasis.setText(2, text);
 
-		final TableItem initialTableItemInput = new TableItem(recordTable,
-				SWT.BORDER);
-		initialTableItemInput.setText(0,
-				INITIAL_ITEM_TEXT_1_IN_TABLE + basis.getText()
-						+ INPUT_RES_1_ENG);
-
-		final TableItem initialTableItemExponent = new TableItem(recordTable,
-				SWT.BORDER);
-		initialTableItemExponent.setText(0, EXP_ENG + exponent.getText()
-				+ DEC_ENG);
-
-		final TableItem initialTableItemExponent_binary = new TableItem(
-				recordTable, SWT.BORDER);
-		initialTableItemExponent_binary.setText(0, INITIAL_ITEM_TEXT_2_IN_TABLE
-				+ exp_in_binary);
-
-		final TableItem initialTableItemModul = new TableItem(recordTable,
-				SWT.BORDER);
-		initialTableItemModul.setText(0, "  " + MODUL_ENG + mod.getText());
-
+		if(isSaMmode)
+		{
+			final TableItem initialTableItemBasis2 = new TableItem(recordTable,
+					SWT.BORDER);
+			initialTableItemBasis2.setText(2, RES_AFTER_MUL_BIT_0_ENG);
+		}
+		
 		final TableItem initialTableItemProcess = new TableItem(recordTable,
 				SWT.BORDER);
 		initialTableItemProcess.setText(0, INITIAL_ITEM_TEXT_3_IN_TABLE);
+		
 		int achse_x = 0;
 
 		final Composite powerTraceComposite = new Composite(
@@ -552,7 +565,7 @@ public class SPAView extends ViewPart implements Constants {
 
 			long tempres_byExp = res;
 			
-			text = isSaMmode ? RES_EQUAL_ENG : RES_SQUARE_MULTI_ALWAYS_SQUARE;
+			text = NLS.bind(S_RES, INDICES[counter]);
 
 			res = (long) Math.pow(res, 2) % Integer.parseInt(mod.getText());
 			tempTableItems.setText(1, text + tempres_byExp
@@ -560,7 +573,7 @@ public class SPAView extends ViewPart implements Constants {
 
 			long tempres = res;
 			
-			text = isSaMmode ? RES_EQUAL_ENG : RES_SQUARE_MULTI_ALWAYS_MULTI;
+			text = NLS.bind(R_RES, INDICES[counter+1]);
 			
 			if (exp_in_binary.charAt(count) == '1') {
 				long tempres_byMul = res;
