@@ -15,6 +15,10 @@ import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
 public interface Constants {
     static String pluginRootDirectory = SPAPlugIn.getDefault().getBundle().getLocation().substring(16);
 
+	String RES_AFTER_MUL = Messages.Constants_145;
+
+	String TOOL_TIP_TEXT_EXPONENT_BINARY = Messages.Constants_144;
+
 	String INFORMATION = Messages.Constants_0;
 	String RESULT = Messages.Constants_1;
 	String MODE = Messages.Constants_10;
@@ -26,18 +30,18 @@ public interface Constants {
     String IMGADDRESSE_X_ACHSE_ENG = "icons/achse_x.jpg";
     String IMGADDRESSE_SQMUL_ENG = "icons/sam_SqMul.jpg";
 
-    String NOTE_RSA_VULNERABILITY = Messages.Constants_101;
-            
     String DEC_ENG = Messages.Constants_102;
+    String S_RES = Messages.Constants_103;
     String HIGHEST_BIT_ENG = Messages.Constants_104;
     String FINAL_RESULT_ENG = Messages.Constants_105;
     String INPUT_BASIS_ENG = Messages.Constants_106;
     String INPUT_RES_1_ENG = Messages.Constants_107;
     String RES_AFTER_SQUARE_ENG = Messages.Constants_108;
-    String RES_AFTER_MUL_ENG = Messages.Constants_109;
+    String RES_AFTER_MUL_BIT_1_ENG = Messages.Constants_109;
+    String RES_AFTER_MUL_BIT_0_ENG = Messages.Constants_131;
     String EXP_ENG = Messages.Constants_11;
     String MODUL_ENG = Messages.Constants_110;
-    String RES_EQUAL_ENG = Messages.Constants_111;
+    String R_RES = Messages.Constants_111;
     String HOCH_2_MOD_ENG = Messages.Constants_112;
     String RSA_PROCESS_TEXT = Messages.Constants_113;
     String MAIN_GROUP_TITLE = Messages.Constants_114;
@@ -61,12 +65,12 @@ public interface Constants {
     String INITIAL_TABLE_ITEM_SQUARE = Messages.Constants_129;
     String INITIAL_TABLE_ITEM_MULTIPLY = Messages.Constants_13;
     String RES_SQUARE_MULTI_ALWAYS_SQUARE = Messages.Constants_130;
-    String RES_SQUARE_MULTI_ALWAYS_MULTI = Messages.Constants_131;
+    String RES_SQUARE_MULTI_ALWAYS_MULTI = Messages.Constants_111;
     String INDICATION_SQUARE_MULTI_ALWAYS = Messages.Constants_132;
     String SQUARE_MULTI_ALWAYS_ALG_TEXT = Messages.Constants_133;
 
-    String INFORMATION_SAM_TEXT = RSA_PROCESS_TEXT + "\n" + INDICATION_OF_VULNERABILITY_TEXT  + "\n" +  NOTE_RSA_VULNERABILITY;
-    String INFORMATION_SAMA_TEXT = RSA_PROCESS_TEXT  + "\n" +  INDICATION_SQUARE_MULTI_ALWAYS  + "\n" +  NOTE_RSA_VULNERABILITY;
+    String INFORMATION_SAM_TEXT = INDICATION_OF_VULNERABILITY_TEXT;
+    String INFORMATION_SAMA_TEXT = INDICATION_SQUARE_MULTI_ALWAYS;
     String TOOL_TIP_TEXT_EXPONENT = Messages.Constants_134;
     String TOOL_TIP_TEXT_BASIS = Messages.Constants_135;
     String TOOL_TIP_TEXT_CLEARBUTTON = Messages.Constants_136;
@@ -80,5 +84,7 @@ public interface Constants {
     String SAMA_MODE = Messages.Constants_142;
 
     String PARAMETER = Messages.Constants_143;
+    
+    String[] INDICES = new String[] { "\u2080", "\u2081","\u2082","\u2083","\u2084","\u2085","\u2086","\u2087","\u2088","\u2089" };
 
 }
