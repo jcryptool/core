@@ -43,53 +43,63 @@
         </topic>
     </topic>
     <topic label="Algorithms"
-        href="$nl$/help/users/algorithms/toc.html">
-        <anchor id="algorithmPlugins" />
+        href="$nl$/help/users/algorithms/toc.html"
+        sort="true">
         <topic label="Encryption"
             href="$nl$/help/users/algorithms/encryption/toc.html">
             <topic label="Classic"
-                href="$nl$/help/users/algorithms/encryption/classic/toc.html">
+                href="$nl$/help/users/algorithms/encryption/classic/toc.html"
+                sort="true">
                 <anchor id="classicAlgorithmPlugins" />
             </topic>
             <topic label="Asymmetric"
-                href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html">
+                href="$nl$/help/users/algorithms/encryption/asymmetric/toc.html"
+                sort="true">
                 <anchor id="asymmetricAlgorithmPlugins" />
             </topic>
             <topic label="Symmetric"
-                href="$nl$/help/users/algorithms/encryption/symmetric/toc.html">
+                href="$nl$/help/users/algorithms/encryption/symmetric/toc.html"
+                sort="true">
                 <anchor id="symmetricAlgorithmPlugins" />
             </topic>
             <topic label="Hybrid"
-                href="$nl$/help/users/algorithms/encryption/hybrid/toc.html">
+                href="$nl$/help/users/algorithms/encryption/hybrid/toc.html"
+                sort="true">
                 <anchor id="hybridAlgorithmPlugins" />
             </topic>
         </topic>
         <topic label="Hash"
-            href="$nl$/help/users/algorithms/hash/toc.html">
+            href="$nl$/help/users/algorithms/hash/toc.html"
+            sort="true">
             <anchor id="hashPlugins" />
         </topic>
-        <topic href="$nl$/help/users/algorithms/mac/toc.html" label="MAC">
+        <topic href="$nl$/help/users/algorithms/mac/toc.html" label="MAC" sort="true">
            <anchor id="macPlugins"/>
         </topic>
-        <topic href="$nl$/help/users/algorithms/randomnumber/toc.html" label="Random Number">
+        <topic href="$nl$/help/users/algorithms/randomnumber/toc.html" label="Random Number" sort="true">
            <anchor id="randomNumberPlugins"/>
         </topic>
         <topic label="Signature"
-            href="$nl$/help/users/algorithms/signature/toc.html">
+            href="$nl$/help/users/algorithms/signature/toc.html"
+            sort="true">
             <anchor id="signaturePlugins" />
         </topic>
+        <anchor id="algorithmPlugins" />
     </topic>
-    <topic href="$nl$/help/users/analysis/toc.html" label="Cryptanalysis">
+    <topic href="$nl$/help/users/analysis/toc.html" label="Cryptanalysis"
+    	sort="true">
        <anchor id="analysisPlugins"/>
     </topic>
 
     <topic label="Games"
-        href="$nl$/help/users/games/toc.html">
+        href="$nl$/help/users/games/toc.html"
+        sort="true">
         <anchor id="gamePlugins" />
     </topic>
 
     <topic label="Visualizations"
-        href="$nl$/help/users/visualizations/toc.html">
+        href="$nl$/help/users/visualizations/toc.html"
+        sort="true">
         <anchor id="visualizationPlugins" />
 	  </topic>
 </toc>
