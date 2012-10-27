@@ -14,38 +14,40 @@ import java.util.Vector;
 /**
  * Die Klasse repraesentiert eine Ameise, die in einem Graphen die fuer den
  * Ameisenalgorithmus notwendigen Operationen durchfuehren kann.
- *
+ * 
  * @author Philipp Blohm
  * @version 03.08.07
- *
+ * 
  */
-public class Ant {
+public class AntModel {
 
 	private Vector<Integer> tabuliste;
 	private Vector<Integer> restliste;
-	private Graph g;
+	private GraphModel g;
 	private int current;
 	private double score;
 
 	/**
 	 * Konstruktor. Erzeugt eine neue Ameise.
-	 *
+	 * 
 	 * @param g
 	 *            Der Graph, durch den die Ameise sich einen Weg suchen soll.
 	 */
-	public Ant(Graph g) {
+	public AntModel(GraphModel g) {
 		this.g = g;
 		tabuliste = new Vector<Integer>();
 		restliste = new Vector<Integer>();
 		current = -1;
 		score = 0;
-		for (int i = 0; i < g.size; i++)
+		for (int i = 0; i < g.size; i++) {
+
 			restliste.add(i);
+		}
 	}
 
 	/**
 	 * Gibt die Knotennummer zurueck bei der sich die Ameise gerade befindet.
-	 *
+	 * 
 	 * @return current aktueller Knoten
 	 */
 	public int getLastKnot() {
@@ -54,7 +56,7 @@ public class Ant {
 
 	/**
 	 * Gibt den Weg aus, den die Ameise bis dato zurueckgelegt hat.
-	 *
+	 * 
 	 * @return tabuliste zurueckgelegter Weg
 	 */
 	public Vector<Integer> getTrail() {
@@ -63,7 +65,7 @@ public class Ant {
 
 	/**
 	 * Setzt die Ameise zufaellig auf einen der Knoten im Graphen.
-	 *
+	 * 
 	 */
 	public void set() {
 		int pos = (int) (Math.random() * g.size - Double.MIN_VALUE);
@@ -76,7 +78,7 @@ public class Ant {
 	 * Laesst die Ameise einen Knoten weiter laufen im Graphen. Der Uebergang
 	 * erfolgt mit einer Monte-Carlo-Auswahl (Kanten mit hohen Pheromon- und
 	 * Prioritaetswerten werden mit groesserer Wahrscheinlichkeit gewaehlt)
-	 *
+	 * 
 	 */
 	public void step() {
 		double sum = calcSum();
@@ -102,7 +104,7 @@ public class Ant {
 	 * Tutorial benoetigt wird, werden lediglich die ersten fuenf Knoten
 	 * beruecksichtigt. Knoten, die bereits passiert wurden erhalten eine
 	 * Wahrscheinlichkeit von -1.
-	 *
+	 * 
 	 * @return prob Array mit den Wahrscheinlichkeiten
 	 */
 	public double[] getProbabilities() { // nur fuer Tutorial
@@ -121,7 +123,7 @@ public class Ant {
 	/**
 	 * Addiert die Werte der Kanten fuer Pheromon und Prioritaetsregel gewichtet
 	 * mit den jeweiligen Parametern aus.
-	 *
+	 * 
 	 * @return sum Die Summe der Werte
 	 */
 	private double calcSum() {
@@ -135,7 +137,7 @@ public class Ant {
 
 	/**
 	 * Berechnet den Wert der ermittelten Loesung
-	 *
+	 * 
 	 */
 	public void calcScore() {
 		score = g.getPhero2(tabuliste);
@@ -151,9 +153,10 @@ public class Ant {
 	/**
 	 * Updated die Pheromonmatrix nachdem die Ameise ihren Weg durch den Graphen
 	 * vollendet hat.
-	 *
+	 * 
 	 */
 	public void dropPheromon() {
+		
 		for (int i = 0; i < g.size; i++) {
 			for (int j = 0; j < g.size; j++) {
 				g.pheromon[i][j] *= ACO.evaporation;

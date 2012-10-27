@@ -16,7 +16,6 @@ public class Messages {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.aco.model.messages"; //$NON-NLS-1$
 	public static String Graph_noWordlist;
 	public static String Graph_language;
-	public static String Model_initial_plaintext;
 	public static String Model_defaultLanguage;
 
 	static {

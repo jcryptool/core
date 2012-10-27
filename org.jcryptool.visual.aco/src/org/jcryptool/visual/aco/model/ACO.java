@@ -44,16 +44,16 @@ public class ACO {
 	 * @return best beste Entschluesselung
 	 */
 	public static String decodeString(String s, int len, String language) {
-		Graph g = new Graph(s, len, language);
+		GraphModel g = new GraphModel(s, len, language);
 		Vector<Integer> best = new Vector<Integer>();
 		double bestscore = 0;
-		Ant[] a = new Ant[population];
+		AntModel[] a = new AntModel[population];
 		// Fuer die angegebene Anzahl an Generationen
 		for (int k = 0; k < runden; k++) {
 			// Fuer die Anzahl einer Population
 			for (int i = 0; i < population; i++) {
 				// neue Ameise erzeugen und auf Graph platzieren
-				a[i] = new Ant(g);
+				a[i] = new AntModel(g);
 				a[i].set();
 			}
 			for (int j = 0; j < population; j++) {
@@ -209,8 +209,6 @@ public class ACO {
 	 * @return true wenn Wert einem Buchstaben entspricht
 	 */
 	public static boolean isLetter(int d) {
-		if ((d < 123 && d > 96) || (d < 91 && d > 64))
-			return true;
-		return false;
+		return ((d < 123 && d > 96) || (d < 91 && d > 64));
 	}
 }

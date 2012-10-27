@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Ant Colony Optimization" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
-  <topic href="$nl$/help/content/index.html" label="Ant Colony Optimization">
+<toc label="Ameisenkolonie-Optimierung" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
+  <topic href="$nl$/help/content/toc.html" label="Ameisenkolonie-Optimierung">
+   <topic href="$nl$/help/content/naturalreference.html" label="Das natürliche Vorbild">
+  </topic>
+   <topic href="$nl$/help/content/mathematicalabstraction.html" label="Mathematische Formulierung des Algorithmus">
+   </topic>
+   <topic href="$nl$/help/content/gui.html" label="Die Benutzeroberfläche des Plugins">
+   </topic>
   </topic>
 </toc>

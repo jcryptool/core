@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+	  <title>Mathematische Formulierung des Ameisenalgorithmus</title>
+</head>
+
+<body>
+
+<h1>Mathematische Formulierung des Ameisenalgorithmus</h1>
+<p>
+Die Anwendung des Verfahrens zur Futtersuche von Ameisen auf kombinatorische Probleme
+arbeitet auf der Grundlage von Graphen. Die künstlichen Ameisen suchen sich einen Weg in einem
+vollständigen Graphen. Die Entscheidung darüber welche Kante als jeweils nächste gewählt wird,
+beruht auf einer lokalen Information und der Markierung mit dem künstlichen Pheromon.<br>
+Die lokale Information wird Prioritätsregel genannt. Sie bezieht sich meistens auf die direkt nächste
+Kante. Im natürlichen Vorbild kann sie als Sehfähigkeit der Ameisen interpretiert werden. Das
+Pheromon auf der anderen Seite wird als Fließkommazahl in einer Matrix repräsentiert. Die Matrix
+wird aktualisiert sobald eine Ameise einen Weg durch den Graphen gefunden hat und die Güte des
+Weges berechnet wurde.<br>
+Ein Weg über alle Knoten durch einen Graphen mit n Knoten besteht aus n-1 Kanten (i,j). Ein
+Knotenübergang x<sub>ij</sub> tritt mit unterschiedlicher Wahrscheinlichkeit auf. Hierbei spielen die
+genannten Faktoren eine Rolle. Die Regel, mit welcher Wahrscheinlichkeit eine Ameise von
+Knoten i zu Knoten j gelangt, stellt sich demnach wie folgt dar:<br>
+
+<br><img src="formula.png"><br><br>
+
+Hierbei ist <img src="tau.png"> <sub>ij</sub> der Wert des Pheromons an der Kante (i,j) und <img src="vau.png"> <sub>ij</sub> ist der Wert der
+Prioritätsregel für (i,j). Alpha und Beta sind Parameter, mit denen sich der Einfluss des Pheromons
+bzw. der heuristischen Information der Prioritätsregel auf die Wegentscheidung festlegen lassen.
+J<sup>i</sup> steht für die möglichen Knoten, die von i aus erreicht werden können, also jene, die innerhalb
+des Weges noch nicht besucht wurden. Entsprechend der so ermittelten Wahrscheinlichkeiten lässt
+sich nun eine Monte-Carlo-Auswahl treffen.<br>
+Nachdem eine Ameise ihren Weg durch den Graphen bewältigt hat, wird analog zur Natur das
+Pheromon abgelegt. Diese künstliche Pheromonablage weist Unterschiede zu ihrem natürlichen
+Vorbild auf. Die beste Lösung wird nicht über die Dauer, die für die Bewältigung des Weges
+benötigt wird, gefunden. Stattdessen findet eine Bewertung der gefundenen Lösung aufgrund
+anderer Kriterien, z.B. beim Travelling Salesman Problem bezüglich der Kantenkosten, statt.
+Basierend auf dieser Bewertung erfolgt die Aktualisierung der Pheromonmatrix a posteriori im
+Gegensatz zur direkten Abgabe des Duftstoffes von realen Ameisen.<br>
+Die Stärke des künstlichen Pheromons, das eine Ameise nach ihrem Gang durch den Graphen
+ablegt, basiert auf der Qualität der so gefundenen Lösung. Entsprechend des ermittelten Wertes
+werden nun alle Pheromonwerte der Kanten auf dem passierten Weg inkrementiert. Darüber hinaus
+erfolgt eine marginale Verringerung aller Pheromonwerte, welches der Verdunstung der Duftstoffe
+im natürlichen Pendant entspricht. Formal lässt sich dieses mit folgender Formel beschreiben:<br>
+
+<br><img src="formula2.png"><br><br>
+
+Hierbei stellt <img src="tau.png"><sub>ij</sub>*(1-<img src="pau.png">) die Verdunstung dar. Entsprechend ist <img src="tau.png"> der Verdunstungsfaktor.
+Der zweite Teil der Formel steht für die Pheromonablage. Dieser entfällt, falls die Kante nicht auf
+dem Weg x der Ameise durch den Graphen liegt. Ansonsten fließt die Bewertung des Weges in
+Form einer Funktion F(x) in die Aktualisierung ein.<br>
+Es gibt darüber hinaus verschiedene Erweiterungen des Algorithmus von Dorigo. Um die Suche
+nach Lösungen, die der bisher besten gefundenen besonders ähneln, zu verstärken, kann in der
+Hälfte der Fälle anstelle der Monte-Carlo-Auswahl deterministisch jeweils die Wahl mit dem
+höchsten Wert aus dem Produkt von Pheromonwert und Prioritätsregel gewählt werden. Diese
+ebenfalls von Dorigo vorgestellte Variante des Algorithmus wird ACO genannt.<br>
+Zudem besteht die Möglichkeit, den Einfluss guter Lösungen zu verstärken. Dieses kann erfolgen,
+indem von einer Iteration von Ameisen lediglich diejenige mit dem besten Ergebnis Pheromon
+ablegen kann. Die erfolgloseren Ameisen hingegen werden ignoriert.<br>
+Eine Gefahr, die das Auffinden einer optimalen Lösung verhindern kann, besteht darin, dass ein
+Pfad durch den Graphen zu früh zu stark markiert wird. Hierdurch können später entdeckte bessere
+Lösungsansätze eventuell ignoriert werden. Darüber hinaus werden generell weniger Lösungen
+betrachtet. Aus diesem Grund ist eine sinnvolle Wahl der flexiblen Parameter im Algorithmus
+entscheidend. Eine zu hohe Gewichtung des Pheromonwertes verringert die Divergenz der Suche
+und somit den überprüften Suchraum. Eine Variante, die diesem Phänomen entgegen wirkt, wurde
+ebenfalls von Dorigo entwickelt. Die Pheromonwerte passen sich hierbei entsprechend folgender
+Formel stets wieder den Ausgangswerten an:<br>
+
+<br><img src="formula3.png"><br><br>
+
+Dabei ist <img src="tau.png"><sub>0</sub> der Ausgangswert des Pheromons. Der Wert des künstlichen Duftstoffs wird nun
+entsprechend <img src="gau.png"> dem Initialwert angepasst, falls (i,j) Teil einer gefundenen Lösung ist.
+Hierdurch sollen ausgewogene Pheromonwerte erzeugt werden, die eine zu frühe Festlegung auf
+einen Weg verhindern. Darüber hinaus trägt in allen Ameisenalgorithmen die Einbindung von
+zufälligen Entscheidungen bei der Monte-Carlo-Auswahl zur Divergenz der Suche bei.<br>
+Auf der anderen Seite führt eine Verringerung des Einfluss des Pheromons dazu, dass die Suche
+nach Lösungen arbiträrer bzw. stark von der Prioritätsregel abhängig wird. Dieses kann die
+Zielgerichtetheit der Suche abschwächen und die Dauer, bis Lösungen einer akzeptablen Güte
+gefunden werden, erhöhen. Man spricht in diesem Falle von einer mangelnden Intensivierung der
+Suche.<br>
+Die Balance zwischen Divergenz und Intensivierung zu finden stellt eine Herausforderung für jede
+Metaheuristik dar. Neben den verschiedenen allgemein anwendbaren Ansätzen zur Lösung dieser
+Schwierigkeit erscheinen Anpassungen an das konkrete Verfahren als hilfreich. Entsprechend ist
+eine experimentelle Abstimmung der Parameter für das jeweilige Problem unerlässlich.
+</p>
+</body>
+</html>

@@ -14,6 +14,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.aco.view.messages"; //$NON-NLS-1$
 
+	public static String graph_probHintLbl;
+
 	public static String Func_allSteps;
 	public static String Func_alpha;
 	public static String Func_analyseCreated;
@@ -52,7 +54,6 @@ public class Messages {
 	public static String Func_settings;
 	public static String Show_decryptedBestKnown;
 	public static String Show_decryptedByAnt1;
-	public static String Show_decryptedByAnt2;
 	public static String Show_encryptedText;
 	public static String Show_encryptionKey;
 	public static String Show_permutationMatrix;
@@ -66,6 +67,39 @@ public class Messages {
 	public static String Control_language1_short;
 	public static String Control_language2_short;
 	public static String Analysis_multipleCycles;
+	public static String Control_generateText;
+	public static String Visual_graphVisualRadio;
+	public static String Visual_matrixVisualRadio;
+	public static String Header_title;
+	public static String Header_text;
+	public static String Control_or;
+	public static String Control_textLength;
+	public static String Conrol_wrongInputToolTip;
+	public static String Viusal_ResultGroup;
+	public static String Visual_GraphMatrixGroupTitle;
+	public static String Viusal_CurrAntGroup;
+	public static String Viusal_BestAntGroup;
+	public static String Result_currEncryptionLbl;
+	public static String Result_bestEncryptionLbl;
+	public static String Result_emptyText2;
+	public static String Result_emptyText1;
+	public static String Result_currTrailLbl;
+
+	public static String Desc_configComp_left;
+	public static String Desc_configComp_right;
+	public static String Desc_analysisComp_left;
+	public static String Desc_analysisComp_right;
+	public static String Desc_analysisCompMulti_right;
+	public static String Desc_analysisAlgoSett_right;
+	public static String Desc_analysisAlgoSett_left;
+	public static String PherMatrix_knotContent;
+
+	public static String Result_description;
+
+	public static String PherMatrix_description;
+
+	public static String Analysis_newAntButtonToolTip;
+
 
 	private Messages() {
 	}

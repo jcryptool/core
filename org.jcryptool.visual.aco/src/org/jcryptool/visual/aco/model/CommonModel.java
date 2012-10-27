@@ -9,14 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.aco.model;
 
-import java.util.Observable;
 import java.util.Vector;
-
-import org.jcryptool.visual.aco.transposition.Transposition;
-import org.jcryptool.visual.aco.view.AntColControlComposite;
-import org.jcryptool.visual.aco.view.AntColDescriptionComposite;
-import org.jcryptool.visual.aco.view.AntColVisualComposite;
-import org.jcryptool.visual.aco.model.Messages;
 
 /**
  * Klasse, die die Daten des Tutorials verwaltet und die Operationen des
@@ -26,46 +19,35 @@ import org.jcryptool.visual.aco.model.Messages;
  * @version 03.08.07
  * 
  */
-public class Model extends Observable {
+public class CommonModel {
 
 	private int state;
 	private int size;
 	private String text;
-	private int[] perm;
-	private Graph g;
-	private Ant a;
-	private boolean isWorking;
+	private GraphModel graph;
+	private AntModel ant;
 	private boolean isAnimateable;
-	private boolean finishCycle;
+	private boolean displayGraph = true;
 	private double best;
 	private Vector<Integer> besttrail;
 	private PseudoRandomChars randomChars;
 	private int antNr = 0;
-	private boolean analyse = false;
 	private String language = Messages.Model_defaultLanguage;
-	private boolean isStepping;
-	private AntColControlComposite controlComp;
-	private AntColVisualComposite visual;
-	private AntColDescriptionComposite descriptionComp;
-	private boolean supsendViewRefresh = false;
+	private boolean isSingleStepSelected = true;
 
 	/**
 	 * Der Konstruktor initialisiert die Variablen und setzt die Ausgangswerte.
 	 * 
 	 */
-	public Model() {
+	public CommonModel() {
 
-		this.reset(false);
-		// String s = encrypt("1234567890abcdef");
-		// analyse = true;
-		// s = decrypt(s);
-	}
+		size = 4;
+		text = "";// Messages.Model_initial_plaintext
+					//.replaceAll(" ", "").toUpperCase(); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+		randomChars = new PseudoRandomChars(size - text.length() % size);
 
-	public void addViews(AntColControlComposite controlComp,
-			AntColVisualComposite visual, AntColDescriptionComposite desComp) {
-		this.controlComp = controlComp;
-		this.visual = visual;
-		this.descriptionComp = desComp;
+		graph = new GraphModel(getCipher(), size, language);
+		this.reset();
 	}
 
 	/**
@@ -86,60 +68,6 @@ public class Model extends Observable {
 		isAnimateable = b;
 	}
 
-	/**
-	 * Gibt an ob das Tutorial momentan mit der Animation beschaeftigt ist.
-	 * 
-	 * @return working
-	 */
-	public boolean isWorking() {
-		return isWorking;
-	}
-
-	/**
-	 * Setzt working.
-	 * 
-	 * @param true wenn Tutorial mit Animation beschaeftigt ist.
-	 */
-	public void setWorking(boolean b) {
-		isWorking = b;
-		if (isWorking) {
-			this.controlComp.setEnabledFirstStep(!b);
-			this.controlComp.setEnabledSecondStep(!b);
-		}
-	}
-
-	public void startAnimation() {
-		if (this.isAnimateable) {
-			isWorking = true;
-			visual.animationStep();
-			this.controlComp.setEnabledFirstStep(false);
-			this.controlComp.setEnabledSecondStep(false);
-		} else {
-			updateView();
-		}
-	}
-
-	public void updateView() {
-		if (supsendViewRefresh) {
-			return;
-		}
-		if (this.isVisualizable()) {
-			visual.constructGraph();
-		}
-		updateDescription();
-		visual.showPheromoneMatrix();
-	}
-
-	public void updateDescription() {
-		descriptionComp.updateText();
-	}
-
-	public void finishedAnimation() {
-		this.finishCycle = false;
-		isWorking = false;
-		this.controlComp.setEnabledFirstStep(false);
-		this.controlComp.toAnalyse();
-	}
 
 	/**
 	 * Gibt den Wert der bisher besten Loesung zurueck.
@@ -165,7 +93,7 @@ public class Model extends Observable {
 	 * @return s String-Array des Graphen
 	 */
 	public String[] getKnots() {
-		return g.getKnots();
+		return graph.getKnots();
 	}
 
 	/**
@@ -174,7 +102,7 @@ public class Model extends Observable {
 	 * @return m Die Pheromonmatrix
 	 */
 	public double[][] getMatrix() {
-		return g.getMatrix();
+		return graph.getMatrix();
 	}
 
 	/**
@@ -187,10 +115,7 @@ public class Model extends Observable {
 		while (s.length() % size != 0)
 			s = s.concat(Character.toString((randomChars.getRandomChar())));
 
-		if (analyse)
-			return s;
-		else
-			return encrypt(s);
+		return encrypt(s);
 	}
 
 	/**
@@ -199,7 +124,10 @@ public class Model extends Observable {
 	 * @return i Knotennummer
 	 */
 	public int getKnot() {
-		return a.getLastKnot();
+		if (ant == null) {
+			return 0;
+		}
+		return ant.getLastKnot();
 	}
 
 	/**
@@ -213,55 +141,6 @@ public class Model extends Observable {
 
 	public void setState(int nr) {
 		this.state = nr;
-	}
-
-	/**
-	 * Gibt den Schluessel der Permutation zurueck.
-	 * 
-	 * @return key Schluessel der Permutation
-	 */
-	public int[] getPerm() {
-		if (perm.length < size) {
-			int[] newPerm = new int[size];
-			for (int i = 0; i < size; i++) {
-				if (i < perm.length) {
-					newPerm[i] = perm[i];
-				} else {
-					newPerm[i] = i;
-				}
-			}
-			perm = newPerm;
-		}
-		String s = ""; //$NON-NLS-1$
-		for (int i = 0; i < size; i++) {
-			s = s.concat(perm[i] + ","); //$NON-NLS-1$
-		}
-
-		return Transposition.toKey(s);
-	}
-
-	/**
-	 * Setzt den Schluessel der Permutation
-	 * 
-	 * @param s
-	 *            Schluessel
-	 */
-	public void setPerm(String s) {
-		if (s.length() > 0) {
-			// aus String Schluessel machen
-			int[] q = Transposition.toKey(s);
-			if (q != null) {
-				// removed due to errors
-				// int[] p = new int[5];
-				// for(int i=0;i<5;i++){
-				// if(i<q.length)
-				// p[i]=q[i];
-				// else
-				// p[i]=i;
-				// }
-				perm = q;
-			}
-		}
 	}
 
 	/**
@@ -281,9 +160,7 @@ public class Model extends Observable {
 					text = text.concat(Character.toUpperCase(t.charAt(i)) + ""); //$NON-NLS-1$
 		}
 		randomChars = new PseudoRandomChars(size - text.length() % size);
-		g = new Graph(getCipher(), size, language);
-
-		visual.showPermutationMatrix();
+		graph = new GraphModel(getCipher(), size, language);
 	}
 
 	/**
@@ -296,51 +173,22 @@ public class Model extends Observable {
 		while (s.length() % size != 0)
 			s = s.concat(Character.toString((randomChars.getRandomChar())));
 
-		if (analyse)
-			return decrypt(s);
-		else
-			return s;
+		return s;
 	}
 
-	private String decrypt(String text) {
-		String s = text;
-		String t = ""; //$NON-NLS-1$
-		int[] p = getPerm();
-
-		int[] key = p.clone();
-		for (int i = 0; i < p.length; i++) {
-			key[Integer.parseInt("" + p[i])] = i;
-		}
-		p = key;
-
-		int depth = text.length() / size;
-		if (text.length() % size != 0)
-			depth++;
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < depth; j++) {
-				t = t.concat(s.charAt(p[i] + j * size) + ""); //$NON-NLS-1$
-			}
-		}
-		return t;
-	}
 
 	private String encrypt(String text) {
 		String s = text;
 		String t = ""; //$NON-NLS-1$
-		int[] p = getPerm();
 		int depth = text.length() / size;
 		if (text.length() % size != 0)
 			depth++;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < depth; j++) {
-				t = t.concat(s.charAt(p[i] + j * size) + ""); //$NON-NLS-1$
+				t = t.concat(s.charAt(i + j * size) + ""); //$NON-NLS-1$
 			}
 		}
 		return t;
-	}
-
-	public void setAnalyse(boolean analyse) {
-		this.analyse = analyse;
 	}
 
 	/**
@@ -361,22 +209,16 @@ public class Model extends Observable {
 	public void setSize(int s) {
 		size = s;
 		randomChars = new PseudoRandomChars(size - text.length() % size);
-		g = new Graph(getCipher(), size, language);
-		visual.showPermutationMatrix();
+		graph = new GraphModel(getCipher(), size, language);
 	}
 
 	/**
 	 * Tutorial wird in naechsten Schritt ueberfuehrt
 	 * 
 	 */
-	public void toAnalyse() {
-		if (state < 2) {
-			state++;
-			if (state == 1) {
-				initGraph();
-			}
-		}
-		updateView();
+	public void startAnalyse() {
+		state = 1;
+		replaceAnt();
 	}
 
 	/**
@@ -384,15 +226,14 @@ public class Model extends Observable {
 	 * 
 	 */
 	public void replaceAnt() {
-		a = new Ant(g);
+		ant = new AntModel(graph);
 		antNr++;
-		a.set();
+		ant.set();
 		state = 1;
-		updateView();
 	}
 
 	public void initGraph() {
-		g = new Graph(getCipher(), size, language);
+		graph = new GraphModel(getCipher(), size, language);
 		replaceAnt();
 	}
 
@@ -407,52 +248,15 @@ public class Model extends Observable {
 	 * 
 	 */
 	public void toNextKnot() {
-		a.step();
-		isStepping = true;
+		ant.step();
 		state = 2;
-		if (a.getTrail().size() == size) { // wenn letzter Knoten erreicht
-			a.calcScore();
-			a.dropPheromon();
+		if (ant.getTrail().size() == size) { // wenn letzter Knoten erreicht
+			ant.calcScore();
+			ant.dropPheromon();
 			state = 3;
-			if (a.getScore() >= best) {
-				best = a.getScore();
+			if (ant.getScore() >= best) {
+				best = ant.getScore();
 				besttrail = getTrail();
-			}
-		}
-		if (!this.supsendViewRefresh) {
-			visual.showPheromoneMatrix();
-		}
-		this.startAnimation();
-
-		if (!this.isAnimateable) {
-			this.controlComp.toAnalyse();
-		}
-		updateDescription();
-	}
-
-	/**
-	 * Gibt den Wert von all zurueck (ob alle noch verbliebenen Knoten direkt
-	 * hintereinander passiert werden sollen)
-	 * 
-	 * @return all
-	 */
-	public boolean isFinishCycle() {
-		return finishCycle;
-	}
-
-	/**
-	 * Fuehrt alle noch notwendigen Schritte durch, damit die Ameise ihren Weg
-	 * vollendet.
-	 * 
-	 */
-	public void finishCycle() {
-		if (a.getTrail().size() == size) { // letzter Knoten erreicht
-			finishCycle = false;
-		} else { // sonst weiterer Schritt
-			finishCycle = true;
-			toNextKnot();
-			if (!this.isAnimateable) {
-				finishCycle();
 			}
 		}
 	}
@@ -467,8 +271,8 @@ public class Model extends Observable {
 	 */
 	public String toText(boolean best) {
 		if (best)
-			return g.toText(besttrail);
-		return g.toText(getTrail());
+			return graph.toText(besttrail);
+		return graph.toText(getTrail());
 	}
 
 	/**
@@ -477,7 +281,7 @@ public class Model extends Observable {
 	 * @return
 	 */
 	public Vector<Integer> getTrail() {
-		return a.getTrail();
+		return ant.getTrail();
 	}
 
 	/**
@@ -487,7 +291,7 @@ public class Model extends Observable {
 	 * @return
 	 */
 	public double[] getProbabilities() {
-		return a.getProbabilities();
+		return ant.getProbabilities();
 	}
 
 	/**
@@ -551,48 +355,37 @@ public class Model extends Observable {
 		return antNr;
 	}
 
-	public boolean getAnalyse() {
-		return analyse;
-	}
-
-	public void reset(boolean views) {
+	public void reset() {
 		state = 0;
-		size = 4;
-		perm = new int[] { 0, 1, 2, 3, 4 };
-
-		text = Messages.Model_initial_plaintext
-				.replaceAll(" ", "").toUpperCase(); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
-		randomChars = new PseudoRandomChars(size - text.length() % size);
-
 		ACO.setAlpha(0.8);
 		ACO.setBeta(0.8);
-		isWorking = false;
 		isAnimateable = true;
-		finishCycle = false;
-		isStepping = false;
+		isSingleStepSelected = true;
 		best = 0;
+		ant = new AntModel(graph);
 		antNr = 0;
-
-		if (views) {
-			visual.showPermutationMatrix();
-			updateDescription();
-		}
 	}
 
 	public boolean isVisualizable() {
 		return (size <= 5 && size > 2);
 	}
 
-	public boolean isStepping() {
-		return isStepping;
+	public boolean isSingleStep() {
+		return isSingleStepSelected;
 	}
 
-	public void setStepping(boolean s) {
-		isStepping = s;
+	public void setSingleStep(boolean s) {
+		isSingleStepSelected = s;
 	}
 
-	public void silentViewRefresh(boolean b) {
-		this.supsendViewRefresh = b;
+	public boolean isGraphDisplayed() {
+		return displayGraph;
 	}
 
+	public void setDisplayGraph(boolean s) {
+		displayGraph = s;
+	}
+	public boolean isAtLastKnot() {
+		return ant.getTrail().size() == size;
+	}
 }

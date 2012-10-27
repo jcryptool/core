@@ -26,7 +26,7 @@ import org.jcryptool.visual.aco.ACOPlugin;
  * @version 03.08.07
  *
  */
-public class Graph {
+public class GraphModel {
 
 	protected double[][] pheromon; // Pheromonmarkierungen
 	protected int size; // Laenge Schluessel
@@ -45,7 +45,7 @@ public class Graph {
 	 * @param l
 	 *            Anzahl der Knoten (= Schluessellaenge)
 	 */
-	public Graph(final String s, final int l, String language) {
+	public GraphModel(final String s, final int l, String language) {
 		this.size = l;
 		this.getBigrams();
 		this.makeKanten();
@@ -123,7 +123,7 @@ public class Graph {
 	private InputStream getResourceStream(final String pkgname,
 			final String fname) {
 		final String resname = "/" + pkgname.replace('.', '/') + "/" + fname; //$NON-NLS-1$ //$NON-NLS-2$
-		final Class<? extends Graph> cla = this.getClass();
+		final Class<? extends GraphModel> cla = this.getClass();
 		final InputStream is = cla.getResourceAsStream(resname);
 		return is;
 	}
