@@ -11,8 +11,8 @@
 
 <h1>Fiat Shamir Protocol</h1>
 
+<h2>Intention</h2>
 <p>
-<h4>Intention:</h4>
 This mathematical protocol is designed to prove to Bob that Alice
 knows a secret without revealing it. It runs in the number space
 that is build up on the modulo n field, with n being the product of
@@ -20,8 +20,8 @@ two prime numbers, p and q. P and q are only known to Alice and must
 not be made public.
 </p>
 
+<h2>Appliance</h2>
 <p>
-<h4>Appliance:</h4>
 Alice chooses an arbitrary number s of the modulo n field with
 <span style="white-space:nowrap"><code>gcd(s, n) = 1</code></span> and calculates
 <span style="white-space:nowrap"><code>v = s<sup>2</sup> mod n.</code></span>
@@ -57,8 +57,8 @@ Bob checks if the following equation holds true:
 If the equation holds, one iteration of the protocol is a success.
 </p>
 
+<h2>Vulnerability</h2>
 <p>
-<h4>Vulnerability:</h4>
 Carol, the attacker, does not know p, q and s.
 She can choose on which x to send to Bob but has no influence on b
 which she receives. Therefore we will have two different cases:
