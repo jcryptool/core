@@ -3,10 +3,12 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <title>RSA Cryptographic System</title>
+      <title>RSA Cryptographic System</title>
 </head>
+
 <body>
-    <h1>RSA Cryptographic System</h1>
+  <h1>RSA Cryptographic System</h1>
+
   <p>This help file describes two things:<br/>
   1) <a href="#term">The RSA Scheme</a><br/>
   2) <a href="#plugin">Handling instructions how to use this visualization</a> </p>
@@ -22,19 +24,19 @@
   The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/>
   For further information please refer to <a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">http://en.wikipedia.org/wiki/RSA_(algorithm)</a>. </p>
 
-  <h2 id="Enc">a) RSA Key Generation</h2>
+  <h3 id="Enc">a) RSA Key Generation</h3>
   <p> A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before RSA en-/decryption or signing can take place.<br/>
   First of all, the RSA parameters p, q, N and the Euler number phi(N) are calculated by choosing two different prime numbers p and q at random, and then by calculating the so-called RSA modulus N = p*q. The Euler number phi(N) = (p-1)*(q-1) is calculated from the prime factors p and q.<br/>
   In a second step, the public RSA exponent e is determined and from this, together with phi(N), the secret RSA exponent d is calculated. The number e is chosen as follows e: 1 < e < phi(N), with the property that e is relatively prime to phi(N). An especially popular value for e is 2^16+1 = 65537, as in most cases this is co-prime to phi(N) and is especially well-suited for square and multiply exponentiation resulting in a very fast public key operation.<br/>
   The secret exponent d = e^(-1) mod phi(N) is calculated as the multiplicative inverse of the public exponent e modulo phi(N). <br/>
   After the RSA key generation, N and e can be published. Then, anyone could encrypt a message for the owner of the according secret RSA key d or check a digital signature -- using only the public key. </p>
 
-  <h2 id="Enc">b) RSA Encryption / Decryption</h2>
+  <h3 id="Enc">b) RSA Encryption / Decryption</h3>
   <p> To <b>encrypt</b> data with the RSA scheme, the ciphertext is calculated using the public key e of the recipient and the plaintext. The encryption function is c = m^e mod N. This means that anyone can encrypt a message using the public key. But only the owner of the associated secret key d can then decrypt the message again. </p>
 
   <p> To <b>decrypt</b> a ciphertext with the RSA scheme, one needs to know the private key d. The decryption function, c^d = (m^e)^d = m^(e*d) = m mod N, yields the plaintext m. </p>
 
-  <h2 id="Sig">c) RSA Signing / Verifying</h2>
+  <h3 id="Sig">c) RSA Signing / Verifying</h3>
   <p> To <b>sign</b> a message m with the RSA scheme, you need to know the private key d. The signing function is applied to m or to a hashvalue of m: m^d = sign(m) or (hash(m))^d = sign(hash(m)). This yields the signature.</p>
 
   <p> You can <b>verify</b> a digital RSA signature using the signer's public key e by computing (sign(m))^e = m' or (sign(hash(m)))^e = hash(m)'. The result of the RSA exponentiation is m' or hash(m)' which has to be compared with the message m or the hash of the message hash(m) computed from the received (and decrypted) document. If both hash values are identical this is considered as a proof that the real owner of the corresponding private RSA key has signed the document.</p>
