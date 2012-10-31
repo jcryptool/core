@@ -1,3 +1,14 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2012 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+ //-----END DISCLAIMER----- 
+
 package org.jcryptool.visual.aup.views;
 
 import java.io.BufferedReader;
@@ -19,6 +30,7 @@ import org.jcryptool.visual.aup.views.AupView.ApuState;
 
 /**
  * 
+ * @author Michael Schäfer
  * @author Stefan Kraus <stefan.kraus05@gmail.com>
  * 
  * 
