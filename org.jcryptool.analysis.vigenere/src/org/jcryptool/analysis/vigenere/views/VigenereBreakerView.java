@@ -9,13 +9,17 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.vigenere.views;
 
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.analysis.vigenere.VigenereBreakerPlugin;
 import org.jcryptool.analysis.vigenere.ui.VigenereBreakerGui;
 
 public class VigenereBreakerView extends ViewPart {
@@ -57,8 +61,19 @@ public class VigenereBreakerView extends ViewPart {
         scroll.setContent(gui);
         scroll.setMinSize(780, 620);
         scroll.layout();
+        
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
+            VigenereBreakerPlugin.PLUGIN_ID + ".vigenerebreaker"); //$NON-NLS-1$
+    
+        hookActionBar();
     }
 
+    private void hookActionBar() {
+        IToolBarManager mgr = getViewSite().getActionBars().getToolBarManager();
+        mgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+        getViewSite().getActionBars().updateActionBars();
+    }
+    
     public void scrollToTop() {
     	if(scroll != null && !scroll.isDisposed()) {
     		if(scroll.getVerticalBar() != null && !scroll.getVerticalBar().isDisposed()) {

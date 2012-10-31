@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.analysis.freqanalysis;bundle-version="0.9.5",
  org.jcryptool.analysis.friedman;bundle-version="0.9.5",
  org.jcryptool.core.operations;bundle-version="0.9.5",
- org.jcryptool.core.util;bundle-version="0.9.5"
+ org.jcryptool.core.util;bundle-version="0.9.5",
+ org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
