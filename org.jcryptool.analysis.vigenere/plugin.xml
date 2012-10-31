@@ -37,7 +37,7 @@
       <menuContribution
             locationURI="toolbar:org.jcryptool.analysis.vigenere.views.VigenereBreakerView">
          <command
-               commandId="org.jcryptool.analysis.freqanalysis.helpCommand"
+               commandId="org.jcryptool.analysis.vigenere.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
                style="push"
                tooltip="%help.command.tooltip">
@@ -46,11 +46,25 @@
       <menuContribution
             locationURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif">
          <command
-               commandId="org.jcryptool.analysis.freqanalysis.helpCommand"
+               commandId="org.jcryptool.analysis.vigenere.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.gif"
                style="push">
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.analysis.vigenere.helpCommand"
+            name="Show Help">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
    </extension>
 
 </plugin>
