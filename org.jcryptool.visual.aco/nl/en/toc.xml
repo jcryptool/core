@@ -2,6 +2,12 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Ant Colony Optimization" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
-  <topic href="$nl$/help/content/index.html" label="Ant Colony Optimization">
+  <topic href="$nl$/help/content/toc.html" label="Ant Colony Optimization">
+    <topic href="$nl$/help/content/naturalreference.html" label="The native model">
+  </topic>
+    <topic href="$nl$/help/content/mathematicalabstraction.html" label="The mathematical abstraction">
+    </topic>
+    <topic href="$nl$/help/content/gui.html" label="The user interface">
+    </topic>
   </topic>
 </toc>

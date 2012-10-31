@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+	  <title>Die Benutzeroberfläche des Plugins</title>
+</head>
+
+<body>
+
+<h1>Die Benutzeroberfläche des Plugins</h1>
+<p>In diesem Teil der Hilfe wird die Benutzeroberfläche des Plugins näher erläutert.</p>
+<p>In dem Screenshot unten sieht man, wie das Plugin nach dem Start aussieht. Die untere und obere Komponenten dienen zur kurzen
+Beschreibung des Plugins und den Einstellungsparametern. Die mittlere Reihe dient zur Steuerung des Plugins.<br>
+<h2>Konfiguration</h2>
+<p>Zunächst muss unter <b>Konfiguration</b> ein Text geladen oder direkt eingegeben werden. Außerdem befinden sich weiteree
+ Einstellungen zum Analysetext in dieser Gruppierung.
+
+Zum laden bzw. eingeben eines Textes zur Analyse gibt es zwei Möglichkeiten:</p>
+<ul>
+<li><b>Geheimtext erzeugen</b> - Startet einen Wizard, mit dem eine Transpositionschiffre aus einem Klartext erzeugt werden kann. <br>
+Dort kann ein Klartext aus einer Datei oder einem geöffneteten Editorfenster in JCrypTool geladen werden, oder per Direkteingabe eingegeben werden.
+Anschließend kann ausgewählt werden, wie lang der Schlüssel der Permutation sein soll, also in wieviele Spalten der Klartext letztendlich
+aufgeteilt werden soll. In der Tabelle im unteren Teil des Wizard können anschließend per Drag'n'Drop die Spalten ausgetauscht werden, 
+also direkt die Permutation der Chiffre eingestellt werden.<br>
+Durch Klicken auf Fertigstellen wird der Text in das Ameisenkolonie-Optimierungs-Plugin geladen.
+</li>
+<li>
+<b>Geheimtext direkt eingeben</b> - In diesem Feld kann alternativ auch ein mit einer Transpositionschiffre verschlüsselter Text eingeben werden.
+<br><i>Hinweis: In dem Textfeld sind nur Großbuchstaben von A-Z erlaubt.</i> 
+</li>
+</ul>
+<p>Zwei wichtige Einstellungen sind anschließend:
+<ul>
+<li><b>Vermutete Schlüssellänge</b> - Diese Einstellung setzt die Schlüssellänge die bei Dechiffrierung benutzt wird.
+Diese Zahl entspricht außerdem der Anzahl an Knoten im Analysegraphen. Falls die Schlüssellänge unbekannt ist, kann sie 
+über statistische Test (z.B. dem Friedman-Test - in JCrypTool unter Analyse > Friedman-Test) ermittel werden.
+</li>
+<li>
+<b>Sprache des Textes</b> - Derzeit stehen die deutsche und englische Sprache zur Auswahl. Bei der Entschlüsselung werden gefundene Klartexte
+darauf untersucht, ob in den Texten Wörter aus der ausgewählten Sprache vorkommen. Dazu sind Wörterbücher hinterlegt, mit denen verglichen wird.
+</li>
+</ul>
+<p> Sind diese Einstellungen getroffen, kann es losgehen mit der Analyse.<br></p>
+<p>
+<i>Hinweis: Der gewählte Text wird automatisch ergänzt, sodass die Länge des Textes durch die Schlüssellänge teilbar ist. Denn sonst
+würde die Anzahl der Zeichen in den einzelnen Knoten (manche hätten ein Zeichen weniger als andere Knoten) bereits Auskunft über die 
+Position im Schlüssel geben. Deshalb muss auch der gewählte Text länger als die Schlüssellänge sein, um die Analyse starten zu können.</i></p>
+<h2>Analyse</h2>
+<p>
+Die Gruppe <b>Analyse</b> steuert die Wiederholungen und Schritte des Algorithmus. Da bei der Ameisenkolonie-Optimierung Ameisen durch den Graphen
+geschickt werden, lassen sich hier die Ameisen auf ihrem Weg schrittweise steuern.<br>
+Unter <b>Detailstufe</b> lässt sich auswählen, ob eine Ameise Knoten für Knoten kontrolliert werden soll, oder ob gleich mehrere Ameisen
+hintereinander losgeschickt werden sollen.
+<ul>
+<li><b>Knoten für Knoten</b> - Eine einzelne Ameise wird durch den Graphen geschickt und sie kann auf ihrem Weg beobachtet werden.<br>
+<i>Hinweis: Diese Einstellung ist nur aktiv, wenn die Schlüssellänge kleiner als 6 gewählt wurde und <b>Visualisierung als Graph</b> gewählt ist.</i><br>
+Durch Wahl dieser Option ergeben sich dann folgende Möglichkeiten:</i>
+<ul><li>
+<b>Animation</b> - Aktiviert Animationen.
+</li>
+<li>
+<b>Zum nächsten Knoten</b> - Die aktuelle Ameise sucht sich einen nach einer Monte-Carlo-Auswahl zufälligen, basierend auf den neben den Knoten angezeigten Wahrscheinlichkeiten 
+(siehe <a href = "mathematicalabstraction.html">Mathematische Formulierungen des Algorithmus</a>), noch unbesuchten Knoten im Graphen und bewegt sich zu diesem. 
+</li>
+<li>
+<b>Bis zum letzten Knoten</b> - Die Ameise sucht sich ihrem Pfad durch den Graphen - also einen Pfad, bei dem sie alle Knoten besucht hat.
+Diese Aktion entspricht wiederholtem Drücken von <b>Zum nächsten Knoten</b>. 
+</li>
+<li>
+<b>Neue Ameise platzieren</b> - Hat die Ameise ihren Pfad beendet, lässt sich eine neue Ameise auf dem Graphen platzieren. Diese 
+wird zufällig auf einen der vorhandenen Knoten gesetzt, jetzt kann diese wieder mit den zwei Buttons <b>Zum nächsten Knoten</b> und <b>Bis zum letzten Knoten</b> 
+gesteuert werden.
+</li>
+</ul>
+</li>
+<li>
+<b>Mehrere Durchläufe</b> - Mit dieser Aufwahl können mehrere Ameisen aufeinmal losgeschickt werden. Es wird außerdem automatisch die Pheromonmatrix angezeigt.
+Durch Auswahl dieser Option ergeben sich folgende Einstellungen:
+<ul>
+<li>
+<b>Neue Ameisen losschicken</b> - Die unter <b>Anzahl an Ameisen</b> gesetzte Anzahl an Ameisen wird durch den Graphen geschickt.
+In der rechts angezeigten Pheromonmatrix kann man das Ergebnis des Durchlaufes beobachten.
+</li>
+<li>
+<b>Anzahl an Ameisen</b> - Setzt die Anzahl an Ameisen, die mit einem Mal losgeschickt werden.
+</li>
+</ul>
+</li>
+</ul>
+<p>
+Die Effekte der <b>Algorithmus-Einstellungen</b> lassen sich in den neben den Knoten angezeigte Wahrscheinlichkeiten oder in der Pheromonmatrix 
+am besten beobachten. Wie sich die Wahrscheinlichkeiten und die Pheromonmatrix zusammensetzen ist in den 
+<a href = "mathematicalabstraction.html">mathematischen Formulierungen</a> beschrieben.
+Die drei Parameter <b>Alpha, Beta</b> und <b>Verdunstung</b> regeln dabei die dort beschriebenen Parameter.
+Als Prioritätsregel <img src="vau.png"> <sub>i j</sub> wird die Häufigkeit der vorkommenen Bigramme, die beim Aneinandersetzen verschiedener Knoten entstehen, genommen.<br>
+<ul>
+<li><b>Alpha</b> - Bei jedem Durchlauf hinterlässt die Ameise an jeder besuchten Kante ein Pheromon. Nachfolgende Ameisen richten sich nach
+dem Pheromon, sie wählen Kanten mit höherem Pheromonwert eher aus. Der Wert Alpha regelt, wieviel Einfluss die Pheromone auf die Ameise haben.  
+</li>
+<li>
+<b>Beta</b> -Dieser Parameter regelt die Gewichtung von den Wahrscheinlichkeiten der Buchstabenbigramme, die entlang der Kante entstehen. 
+Ist der Parameter hoch eingestellt, geht die Ameise eher einen Weg, bei dem die  Buchstabenbigramme in der ausgewählten Sprache wahrscheinlicher sind.
+</li>
+<li>
+<b>Verdunstung</b> - Eine niedriger Verdunstungparameter bedeutet, dass Ameisen, die weit später folgen das Pheromon der aktuellen Ameise 
+noch lange wahrnehmen werden. Das Pheromon verdunstet also langsamer.
+</li>
+</ul>
+<h2>Visualisierung und Ergebnis</h2>
+<p>
+In der Gruppe <b>Visualisierung</b> lässt sich, sofern die eingestellte Schlüssellänge kleiner als 6 und die Option Knoten für Knoten aktiv ist,
+auswählen, ob der passende Graph oder die Pheromonmatrix angezeigt wird.</p>
+<ul>
+<li><b>Visualisierung als Graph</b> - Der passende Graph und die aktuelle Ameisenposition, sowie der derzeitige Pfad wird angezeigt.
+Jedem Knoten im Graphen sind Buchstaben des Geheimtextes zugeordnet, in jedem Knoten werden bis zu maximal 5 Zeichen, die zu dem Knoten gehören, 
+angezeigt. Ist die Ameise noch nicht am Ende ihres Weges durch den Graphen, so werden neben den unbesuchten Knoten die Übergangswahrscheinlichkeiten
+angezeigt. Diese ergeben sich aus den Wahrscheinlichkeiten der Buchstabenbigrammen, die durch Auswahl des entsprechenden Knoten entstehen würden.
+Eine höhere Wahrscheinlichkeit bedeutet, dass die Ameise wahrscheinlicher diesen Knoten als nächstes auswählen wird.
+</li>
+<li>
+<b>Pheromonmatrix anzeigen</b> - Diese Option zeigt die Pheromonmatrix. Die Pheromonmatrix spiegelt Kantengewichte im Graphen wieder.
+Sie ist quadratisch und hat als Anzahl von Spalten und Zeilen genau die Anzahl der Knoten bzw. die Länge des Schlüssels.
+Jeder Eintrag a<sub>ij</sub> der Matrix entspricht einem Gewicht der Kante vom Knoten i zum Knoten j. Da in dem Graphen keine Kante von einem Knoten zu sich 
+selbst existiert, ist die Diagonale nicht vorhanden. Der Wert a<sub>ij</sub> berechnet sich daraus, wieviele Ameisen vor der aktuellen Ameise bereits von Knoten 
+i zu Knoten j gelaufen sind und wie wahrscheinlich (in Bezug auf auftretende Buchstabenbigramme) es ist, dass nach Knoten i Knoten j kommt.
+</li>
+</ul>
+<p>In der <b>Ergebnis</b>-Gruppe befindet sich dann die Zusammenfassung des Algorithmus.</p>
+<ul>
+<li><b>Anzahl losgeschickter Ameisen</b> - Gibt an, wieviele Ameisen bereits den Graphen passiert haben.
+</li>
+<li>
+<b>Aktuelle Entschlüsselung</b> - Zeigt das Ergebnis der Ameise, die sich aktuell im Graphen befindet. Zum einen den Klartext, den sie liefert und
+den Schlüssel, also den Pfad, den sie gewählt hat. Der Klartext setzt sich dadurch zusammen, dass man die entsprechenden Knoten des Schlüssels
+nebeneinander schreibt und dann zeilenweise die Buchstaben aus den Knoten ausließt.
+</li>
+<li>
+<b>Beste Entschlüsselung</b> - Hier steht das bisher beste gefundene Ergebnis aller Ameisen. Dazu wird das Ergebnis jeder Ameise anhand des hinterlegten
+Wörterbuches der ausgewählten Sprache bewertet. Das beste Ergebnis wird hier dargestellt.</li>
+</ul>
+</p>
+</body>
+</html>

@@ -7,7 +7,7 @@
       <view
             allowMultiple="false"
             category="org.jcryptool.visual"
-            class="org.jcryptool.visual.aco.view.View"
+            class="org.jcryptool.visual.aco.view.AntColView"
             icon="icons/view.gif"
             id="org.jcryptool.visual.aco.view.View"
             name="%viewName"
