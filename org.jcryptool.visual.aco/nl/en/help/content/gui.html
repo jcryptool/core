@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      
+	  <title>The user interface</title>
+</head>
+
+<body>
+
+<h1>The user interface</h1>
+<p>Here the user interface is explained more precisely.</p>
+<p>The screenshot below shows the view of the plug-in when initially loaded. In the upper and lower components brief explanations of the parameters
+and the view can be found. The centered component is the controller of the plug-in.<br>
+<h2>Configuration</h2>
+<p>First of all, a cipher text has to be chosen in the <b>Configuration</b> panel. There are two possibilities to do so:
+</p>
+<ul>
+<li><b>Generate cipher text</b> - A wizard will be started. The wizard helps you to generate a cipher text from a plain text by
+encrypting it with a transposition cipher.<br>
+Therefore, a cipher text can be loaded from a file, from an opened editor window in JCrypTool or the text can be inserted directly.
+Next the length of the key of encryption can be chosen. This number indicates in how many columns in the lower table the text will be divided.
+Via drag'n'drop the table columns can easily be swapped and the key of encryption can be changed.<br>
+By pressing on Finish the encoded text will be loaded to the Ant Colony Optimization plug-in.
+</li>
+<li>
+<b>Insert cipher text directly</b> - Alternatively, a pre-encoded text can be inserted in this text field.
+<br><i>Information: Only upper case characters from A-Z are allowed.</i> 
+</li>
+</ul>
+<p>Two important settings are:
+<ul>
+<li><b>Estimated key length</b> - Sets the length of key which will be used for the decryption. The number coincides with the number of knots in
+graph. If you do not know this length, statistic test, e.g. the Friedman test, in the <i>JCrypTool Menu: Analysis > Friedman test</i> might help you.
+</li>
+<li>
+<b>Language of text</b> - You can choose between German and English. The output of the algorithm will be compared and rated based on the 
+frequency of common word in the chosen language. Therefore a dictionary will be used.
+</li>
+</ul>
+<p> After completing choosing those setting, the analysis can be started.<br></p>
+<p>
+<i>Information: The chosen text will automatically be completed such that the length of text is divisible by the key length. 
+If not, it would give a hint of the position of a knot in the encryption, as some knots would hold less letters.
+Therefore, it is necessary that the length of the cipher is greater than the key length to start the analysis.</i></p>
+<h2>Analysis</h2>
+<p>
+The group <b>Analysis</b> handles the iterations of the algorithm. 
+As in the Ant Colony Optimization Algorithm ants are sent through the graph, it is possible to control the ants step by step or directly
+send multiple ants.
+The <b>Level of detail</b> allows you to choose whether to send one ant from knot to knot or directly send multiple ants on their ways.
+<ul>
+<li><b>Knot-by-Knot</b> - One single ant can be send and observed on its way.<br>
+<i>Information: This setting is active only if the length of key is less than 6 and <b>Visualization as graph</b> is chosen.</i><br>
+By choosing so, the following options appear:</i>
+<ul><li>
+<b>Animation</b> - Animations in the graph can be enabled.
+</li>
+<li>
+<b>To next knot</b> - By doing a Monte-Carlo selection based on the probability which is shown next to the graph, the ant selects
+its next knot to visit. How the probabilities are calculated can be found <a href = "mathematicalabstraction.html">here</a>.
+</li>
+<li>
+<b>Until last knot</b> - It is the same as pressing <b>To next knot</b> until the ant is at the last knot. 
+</li>
+<li>
+<b>Place new ant</b> - If an ant has finished its path, a new ant can be placed. The ant will be placed randomly on one of the knots.
+The two buttons <b>To next knot</b> and <b>Until last knot</b> are active again, such that the new ant can be controlled.
+</li>
+</ul>
+</li>
+<li>
+<b>Multiple iterations</b> - Multiple ants can be sent at once. By selecting this option, the pheromone matrix will be shown automatically and 
+following controllers appear.
+<ul>
+<li>
+<b>Send new ants</b> - <b>Number of ants</b> many ants will be sent through the graph at once.
+On the right side in the pheromone matrix you can observe what happens.
+</li>
+<li>
+<b>Number of ants</b> - Determines the number of ants which will be sent at once.
+</li>
+</ul>
+</li>
+</ul>
+<p>
+The effects of the <b>Algorithm settings</b> can be observed in the probabilities which are shown next to the knots in the graph or 
+in the pheromone matrix.
+To see how those values are calculated have a look <a href = "mathematicalabstraction.html">here</a>.
+The three parameters <b>Alpha, Beta</b> and <b>Evaporation</b> adjust the parameters explained there.
+The rule of priority <img src="vau.png"> <sub>i j</sub> is determined by the upcoming bigrams, which appear by concatenating the knots and its letters.<br>
+<ul>
+<li><b>Alpha</b> - On each iteration an ant drops a pheromon on the passed edges. Following ant are influenced by the pheromon and will 
+more likely chose edges with a higher value of pheromon. Alpha determines the influence of the pheromon have over the ants.   
+</li>
+<li>
+<b>Beta</b> -This parameter adjusts the weight of the probabilities of the bigrams of letters which arise along the edges. 
+By choosing a big parameter, the ant will choose a path where the bigrams of letters in the chosen language are more likely.
+</li>
+<li>
+<b>Evaporation</b> - A small value means, that more following ants will notice the pheromon dropped on the edges by the current ant.
+</li>
+</ul>
+<h2>Visualization and result</h2>
+<p>
+If the key length is smaller than 6 and the option Knot-by-knot is activated, in <b>Visualization</b> you can choose between showing the
+graph or the pheromone matrix.</p>
+<ul>
+<li><b>Visualization as graph</b> - 
+The appropriate graph with the current ant on its position and its path will be shown.
+In the graph, each knot contains letters (maximal 5 letters are displayed) of the cipher text. If the ant has not yet reached its final position
+in the graph, next to each knot transposition probabilities are shown. Those probabilities represent the bigrams of letters which would 
+arise by concatenating the knots. A higher probability therefore means, that the ant would more likely choose this knot.
+</li>
+<li>
+<b>Show pheromone matrix</b> - The pheromone matrix will be shown. The matrix represents weight of edges in the graph. The matrix is symmetric
+and quadratic, the number of columns and rows equals the length of the key. Each entry a<sub>ij</sub> correspond to a weight of the edge
+connecting Vertex i and j. As in our graph there should not be an edge from each knot to itself, the diagonal values are not available.
+The value itself depends on how many ant have previously chosen this edges on their trail and it depends on the probability on the bigrams
+as well.
+</li>
+</ul>
+<p>
+The <b>Result</b> component summarizes the overall results of the algorithm.</p>
+<ul>
+<li><b>Number of ants sent so far</b> - Displays the number of ants which have already passed the graph.
+</li>
+<li>
+<b>Current decryption</b> - Shows the result of the current ant. The plain text and the key of the decryption of the ant is shown. 
+The plain text can be found by concatenating the letters in the knot along the path (the key of decryption) the ant chose.
+</li>
+<li>
+<b>Best known decryption</b> - Depending on how many known words are in the plaintext (known words are word which
+were found in the dictionary of the <b>Language of text</b>) the result
+of each ant is rated. The result which has the best grading is displayed here.</li>
+</ul>
+</p>
+</body>
+</html>

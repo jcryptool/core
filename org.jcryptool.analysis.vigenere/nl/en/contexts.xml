@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="vigenerebreaker" title="Vigenère breaker">
+      <description>In the Vigenère-breaker, you can decrypt a Vigenère-encrypted text fully automated or manually.&lt;br&gt;
+Select whether you want the automated analysis or to follow through the decryption process manually.&lt;br&gt;
+If you choose the &lt;b&gt;automated mode&lt;/b&gt;, the result (decrypted text and the key) will be displayed directly to you, with the option to see the solution steps and details to finding the key length and the key.&lt;br&gt; 
+If you choose the &lt;b&gt;manual mode&lt;/b&gt;, you will have to do a Friedman- and a frequency analysis. The plugin supports you in doing this by displaying interactive graphs as analysis help.&lt;br&gt; 
+For more information consult the help page (link below).
+      </description>
+      <topic href="$nl$/content/index.html" label="Vigenère breaker" />
+   </context>
+
+</contexts>

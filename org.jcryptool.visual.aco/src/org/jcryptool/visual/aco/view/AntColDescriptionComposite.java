@@ -9,19 +9,13 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.aco.view;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.jcryptool.visual.aco.model.Model;
 
 /**
  * Feld fuer die Informationstexte im Tutorial zur Kryptanalyse von
@@ -33,10 +27,10 @@ import org.jcryptool.visual.aco.model.Model;
  */
 public class AntColDescriptionComposite extends Composite {
 
-	private Label text;
-	private Model m;
-	private boolean isText3and4 = false;
-	private Color eyeColor = new Color(this.getDisplay(), 255, 255, 255);
+	private Label descriptionLeft;
+	private Label descriptionRight;
+	private Composite innerComp;
+	private ScrolledComposite sc;
 
 	/**
 	 * Konstruktor. Erhaelt Model, setzt grundlegende Einstellungen.
@@ -46,63 +40,68 @@ public class AntColDescriptionComposite extends Composite {
 	 * @param c
 	 *            Parent
 	 */
-	public AntColDescriptionComposite(Model m, Composite c) {
+	public AntColDescriptionComposite(Composite c) {
 		super(c, SWT.NONE);
-		this.m = m;
 
-		this.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		this.setLayout(new FillLayout());
+		this.setLayout(new GridLayout(1, false));
 
 		Group descriptionGroup = new Group(this, SWT.NONE);
-		descriptionGroup.setLayout(new FillLayout());
+		descriptionGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true));
 		descriptionGroup.setText(Messages.Description_title);
 		descriptionGroup.setToolTipText(Messages.Description_tooltip);
+		descriptionGroup.setLayout(new GridLayout(1, false));
+		sc = new ScrolledComposite(descriptionGroup,
+				SWT.H_SCROLL | SWT.V_SCROLL);
+		sc.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		innerComp = new Composite(sc, SWT.NONE);
+		innerComp.setLayout(new GridLayout(2, true));
 
-		ScrolledComposite sc = new ScrolledComposite(descriptionGroup, SWT.H_SCROLL
-				| SWT.V_SCROLL);
-		Composite innerComp = new Composite(sc, SWT.NONE);
-		innerComp.setLayout(new FillLayout());
 		sc.setContent(innerComp);
-		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		text = new Label(innerComp, SWT.WRAP);
-		updateText();
+		descriptionLeft = new Label(innerComp, SWT.NONE);
+		descriptionLeft.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true));
+		descriptionRight = new Label(innerComp, SWT.NONE);
+		descriptionRight.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+				true));
+		setDescriptionText(0);
+		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT,SWT.DEFAULT));
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
 		layout();
 	}
 
-	/**
-	 * Reagiert auf Aenderungen des Models, liest den jeweils benoetigten Text
-	 * aus einer Datei und schreibt diesen in sein Textfeld.
-	 */
-	public void updateText() {
-		String s = ""; //$NON-NLS-1$
-		int nr = m.getState();
-		switch (nr) {
-		case 0:
-			s = Messages.Info_description1;
-			isText3and4 = false;
-			break; //$NON-NLS-1$
-		case 1:
-			s = Messages.Info_description2;
-			isText3and4 = false;
-			break; //$NON-NLS-1$
-		case 2:
-			s = Messages.Info_description3;
-			if (m.isFinishCycle()) {
-				s += "\n"+ Messages.Info_description4;
-				isText3and4 = true;
-			}
-			break; //$NON-NLS-1$
-		case 3:
-			if (isText3and4) {
-				return;
-			}
-			s = Messages.Info_description4;
-			break; //$NON-NLS-1$
-		}
-		text.setText(s);
-		layout();
+	private void setDescriptionText(String left, String right) {
+		descriptionLeft.setText(left);
+		descriptionRight.setText(right);
+		sc.layout(true);
 	}
+
+	/**
+	 * number 0: Configuration Comp 1: Analysis Comp knot by knot 2: Analysis Comp multiple iteration at once, 3: Algo settings
+	 * 
+	 * @param number
+	 */
+	public void setDescriptionText(int number) {
+		switch (number) {
+		case 0:
+			setDescriptionText(Messages.Desc_configComp_left,
+					Messages.Desc_configComp_right);
+			break;
+		case 1:
+			setDescriptionText(Messages.Desc_analysisComp_left,
+					Messages.Desc_analysisComp_right);
+			break;
+		case 2:
+			setDescriptionText(Messages.Desc_analysisComp_left,
+					Messages.Desc_analysisCompMulti_right);
+			break;
+		case 3:
+			setDescriptionText(Messages.Desc_analysisAlgoSett_left,
+					Messages.Desc_analysisAlgoSett_right);
+			break;
+		}
+	}
+
 
 }

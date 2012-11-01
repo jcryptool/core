@@ -11,7 +11,6 @@
 package org.jcryptool.crypto.classic.vigenere.algorithm;
 
 import java.io.InputStream;
-
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmCmd;

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Android Unlock Pattern (AUP)</title>
+	</head>
+	<body>
+		<h1>Graphical Passwords</h1>
+		<p>JCrypTool implements a graphical password method similar to the Android Unlock Pattern (AUP) leveraged by Android for unlocking devices. In the following section, this method is explained, and its security is compared with PINs. Afterwards, further graphical password methods are shortly presented.</p>
+		
+		<h2>Android Unlock Pattern (AUP)</h2>
+		<p>The AUP authentication scheme is supported by the Android operating system since October 2008 with version 1. The scheme is used to prevent unauthorized access to the device and to information stored on it. In the following the AUP design and security is described.</p>	
+		
+		<p align=center><img src="../../../nl/img/pattern_valid.png"></p>
+		
+		<h3>AUP Design</h3>
+		<p>The AUP uses nine quadratic arranged fields in a grid to describe a &lsquo;password&rsquo;. This resulting pattern is then used like a password for unlocking a device.</p>
+		<p>For choosing AUP patterns the following rules have to be considered:</p>
+		<ul>
+			<li>A pattern has to include at least four of the nine fields.</li>
+			<li>Every field can be used only once.</li>
+			<li>Two fields can only be connected if their direct connection line does not intersect an unused field.</li>
+			<li>The order of passing through fields matters.</li>
+		</ul>	
+		
+		<h3>AUP Security</h3>
+		<p>The Google Nexus S, with unmodified Android 2.3.4, is used as reference because many devices are operated by vendor modified Android versions: The unmodified Android forces the user to wait for 30 seconds after five failed unlock attempts. From this point on, the Google password can additionally be used for unlocking the device. However, the user is still able to use the pattern for 15 further pattern unlock attempts. Every five failed attempts 30 seconds have to be waited. After a total of 20 failed attempts, the device can be only unlocked with the Google password. The security of this password is not evaluated because it is a standard text based password.</p>
+		
+		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach.</p>
+		
+		<p>For comparison: There are 985,824 different PINs of length four to nine, using the digits 1 to 9, and containing every digit only once (This rules for PINs are similar to that of the AUP). This calculation is done as sum of the k-permutations of n<sup><a id="anker1" title="Source" href="#fn1">[1]</a></sup> over the PIN lengths four to nine:</p>
+		
+		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
+		
+		<p>The table below lists the quantity of AUP permutations in direct comparison to the above explained limited PIN. The column &lsquo;Multiplier&rsquo; lists the growing factor of the permutations when their length is increased by one. The column &lsquo;AUP/PIN&rsquo; lists the ratio of the AUP quantity to the PIN quantity.</p>
+		
+		<p><table border=1 align=center>
+			<tr>
+				<td> </td>
+				<td colspan=2>PIN</td>
+				<td colspan=2>AUP</td>
+				<td>AUP/PIN</td>
+			</tr>
+			<tr>
+				<td>Length</td>
+				<td>Quantity</td>
+				<td>Multiplier</td>
+				<td>Quantity</td>
+				<td>Multiplier</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>3,024</td>
+				<td>5</td>
+				<td>1,624</td>
+				<td>4.40</td>
+				<td>0.537</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>15,120</td>
+				<td>4</td>
+				<td>7,152</td>
+				<td>3.64</td>
+				<td>0.473</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>60,480</td>
+				<td>3</td>
+				<td>26,016</td>
+				<td>2.80</td>
+				<td>0.430</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>181,440</td>
+				<td>2</td>
+				<td>72,912</td>
+				<td>1.93</td>
+				<td>0.402</td>
+			</tr>
+			<tr>
+				<td>8</td>
+				<td>362,880</td>
+				<td>1</td>
+				<td>140,704</td>
+				<td>1</td>
+				<td>0.388</td>
+			</tr>
+			<tr>
+				<td>9</td>
+				<td>362,880</td>
+				<td>/</td>
+				<td>140,704</td>
+				<td>/</td>
+				<td>0.388</td>
+			</tr>
+			<tr>
+				<td>Sum</td>
+				<td>985,824</td>
+				<td></td>
+				<td>389,112</td>
+				<td></td>
+				<td>0.395</td>
+			</tr>
+		</table></p>
+		
+		<p>As the table shows, the AUP grows slower. As a result, with increasing length the direct comparison gets even worse. In the total, the AUP achieves only about 40% of the limited PIN's permutation quantity.</p>
+		
+		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better <sup><a id="anker2" title="Source" href="#fn2">[2, p. 5]</a></sup>. Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as 10<sup><i>l</i></sup> for a normal PIN with 10 digits and length <i>l</i>.</p>
+		
+		<p>All in all, there are 2,856 times more limited PINs than AUP permutations (for limited PINs of length 4 to 9). Due to the fact, that the AUP has not so many pattern permutations, it is more vulnerable to brute-force attacks than PIN or password authentication methods. However, a brute-force attack which uses the conventional input has only a very little success rate because only 20 pattern can be tried. Thereafter the Google account password is required.</p>
+		
+		<h4>Attacks against AUP</h4>
+		<p>1. Shoulder Surfing</p>
+		<p>The observation of a victim during an authentication process is called shoulder surfing. He tries  to learn his victim's secret partly or even fully. The observation itself can be carried out directly through the adversary or indirectly for example with cameras. Shoulder surfing AUP patterns is generally easier than PIN or passwords, because inputting patterns requires a large part of the display.</p>
+		
+		<p>2. Smudge Attack</p>
+		<p>After the usage of touchscreen devices mostly oily smudge are left behind on their surfaces. These can be used as side canal for detecting recently or frequently touched areas. The resulting information can be used for example to gain information on the authentication pattern or password.</p>
+		
+		<p>3. Attacking Stolen Authentication Information</p>
+		
+		<p>In case authentication information can be copied and thus separated of an authenticating system, it is possible to directly analyse them. As a result, it is possible to launch a brute-force attack which tests all alternatives for a match. This is however not necessary for Android because the patterns are saved as unsalted hash values <sup><a id="anker3" title="Source" href="#fn3">[3]</a></sup>. This weakness enables the much more powerful dictionary attack for retrieving patterns from their hash value in a matter of seconds.</p>
+		
+		<h2>Further Graphical Password Methods</h2>
+		<h3>1. Draw a Secret (DAS)</h3>
+		
+		<p><table border=0 align=center>
+			<tr>
+				<td align=center><img src="../../../nl/img/DasUserInput.png"></td>
+				<td width=20></td>
+				<td align=center><img src="../../../nl/img/DasInternal.png"></td>
+			</tr>
+			<tr>
+				<td align=center>User input</td>
+				<td></td>
+				<td align=center>Internal representation</td>
+			</tr>
+		</table></p>
+		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5 <sup><a title="Source" href="#fn2">[2]</a></sup>.</p>
+		
+		<p>According to paper <a title="Source" href="#fn2">[2]</a>, the DAS features a higher security level than passwords. Due to the much better memory of humans for figures and graphics  long patterns can be chosen. But notice that mirror-symmetrical figures can be memorised better than asymmetrical <sup><a id="anker4" title="Source" href="#fn4">[4]</a></sup>. This fact can be exploited to reduce the possible pattern set for an attack significantly which in the end results in a lower security.</p>
+		
+		<h3>2. Windows 8: Picture Password</h3>
+		
+		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
+		<p>Windows 8 adopts the idea of graphical passwords to offer a login technique based on this idea <sup><a id="anker5" title="Source" href="#fn5">[5]</a></sup>. In order to use this authentication scheme, the user has to choose a picture and highlight different areas with gestures thereafter. In comparison to the DAS no freeform gestures are supported; they are limited to circles, lines and taps. Another difference is that only certain &lsquo;characteristics&rsquo; are saved for the authentication and not a sequence of fields. For lines the start and end point, as well as their direction is saved. The grid moreover has a much higher resolution. &ldquo;The longest dimension of the image is divided into 100 segments. The shorter dimension is then divided on that scale to create the grid upon which you draw gestures&rdquo; <a title="Source" href="#fn5">[5]</a>. According to Sinofsky in <a title="Source" href="#fn5">[5]</a> this authentication procedure has a much better security than traditional passwords.</p>
+		<hr>
+		<p>Sources</p>
+		<p><table border=0>
+			<tr id="fn1">
+				<td valign=top><a href="#anker1" title="back to text passage">[1]</a></td>
+				<td>Wikipedia contributors. <i>Permutation</i>, 22 October 2012. <a href="http://en.wikipedia.org/wiki/Permutations#In_combinatorics">http://en.wikipedia.org/wiki/Permutations#In_combinatorics</a>, retrieved 26 October 2012.</td>
+			</tr>
+			<tr id="fn2">
+				<td valign=top><a href="#anker2" title="back to text passage">[2]</a></td>
+				<td>I. Jermyn, A. Mayer, F. Monrose, M. K. Reiter, and A. D. Rubin. The Design and Analysis of Graphical Passwords. In <i>Proceedings of the 8th USENIX Security Symposium</i>, August 1999. <a href="http://static.usenix.org/events/sec99/full_papers/jermyn/jermyn_html/">http://static.usenix.org/events/sec99/full_papers/jermyn/jermyn_html/</a>.</td>
+			</tr>
+			<tr id="fn3">
+				<td valign=top><a href="#anker3" title="back to text passage">[3]</a></td>
+				<td>Michael Spreitzenbarth. <i>Cracking the Pattern Lock on Android</i>, 28 February 2012. <a href="http://forensics.spreitzenbarth.de/2012/02/28/cracking-the-pattern-lock-on-android/">http://forensics.spreitzenbarth.de/2012/02/28/cracking-the-pattern-lock-on-android/</a>, retrieved 11 October 2012.</td>
+			</tr>
+			<tr id="fn4">
+				<td valign=top><a href="#anker4" title="back to text passage">[4]</a></td>
+				<td>Xiaoyuan Suo, Ying Zhu, and G. Scott. Owen. Graphical Passwords: A Survey. In <i>Proceedings of the 21st Annual Computer Security Applications Conference</i>, December 2005.</td>
+			</tr>
+			<tr id="fn5">
+				<td valign=top><a href="#anker5" title="back to text passage">[5]</a></td>
+				<td>Steven Sinofsky, Microsoft Corporation. <i>Signing in with a picture password</i>, 16 December 2011. <a href="http://blogs.msdn.com/b/b8/archive/2011/12/16/signing-in-with-a-picture-password.aspx">http://blogs.msdn.com/b/b8/archive/2011/12/16/signing-in-with-a-picture-password.aspx</a>, retrieved 11 October 2012.</td>
+			</tr>
+		</table></p>
+	</body>
+</html>

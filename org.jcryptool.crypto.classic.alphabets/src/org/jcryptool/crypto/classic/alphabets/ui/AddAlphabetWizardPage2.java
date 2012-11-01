@@ -321,10 +321,10 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 //		pageComposite.layout();
 	}
 
-	private void createSeparator(Composite parent) {
-		Label s = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
-		s.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-	}
+//	private void createSeparator(Composite parent) {
+//		Label s = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+//		s.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+//	}
 
 	/**
 	 * Returns the name of the new alphabet.

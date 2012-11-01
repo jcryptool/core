@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: org.jcryptool.visual.aup;singleton:=true
+Bundle-Version: 1.2.2
+Bundle-Activator: org.jcryptool.visual.aup.AndroidUnlockPatternPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help;bundle-version="3.5.100",
+ org.jcryptool.core.operations,
+ org.jcryptool.core.logging;bundle-version="0.9.5",
+ org.jcryptool.core.util
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: %Bundle-Vendor
+Import-Package: org.jcryptool.core.util.fonts

@@ -16,3 +16,6 @@ Import-Package: org.jcryptool.analysis.textmodify.wizard,
  org.jcryptool.core.util.fonts,
  org.jcryptool.crypto.classic.alphabets.ui
 Bundle-Vendor: %Bundle-Vendor
+Export-Package: org.jcryptool.analysis.transpositionanalysis,
+ org.jcryptool.analysis.transpositionanalysis.ui,
+ org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs

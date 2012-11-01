@@ -185,10 +185,18 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 		if(getSpecification().getAvailablePlainTextAlphabets().size() > 1) {
 			if (commandLine.hasOption(ALPHABET_OPTION_NAME)) { //$NON-NLS-1$
 				String alphabetName = commandLine.getOptionValue(ALPHABET_OPTION_NAME); //$NON-NLS-1$
-				AbstractAlphabet result = AlphabetsManager.getInstance().getAlphabetByShortName(alphabetName);
-				if(result != null) {
-					if(getSpecification().isValidPlainTextAlphabet(result) && getSpecification().isValidAlphabetCombination(result, result)) {
-						return result;
+				AbstractAlphabet resultShort = AlphabetsManager.getInstance().getAlphabetByShortName(alphabetName);
+				AbstractAlphabet resultLong = AlphabetsManager.getInstance().getAlphabetByName(alphabetName);
+				if(resultShort != null) {
+					if(getSpecification().isValidPlainTextAlphabet(resultShort) && getSpecification().isValidAlphabetCombination(resultShort, resultShort)) {
+						return resultShort;
+					} else {
+						String mask = Messages.ClassicAlgorithmCmd_alphabetnotsupportedMsg;
+						throw new ParseException(String.format(mask, alphabetName, createAvailabeAlphabetsString(getSpecification().getAvailablePlainTextAlphabets())));
+					}
+				} else if(resultLong != null) {
+					if(getSpecification().isValidPlainTextAlphabet(resultLong) && getSpecification().isValidAlphabetCombination(resultLong, resultLong)) {
+						return resultLong;
 					} else {
 						String mask = Messages.ClassicAlgorithmCmd_alphabetnotsupportedMsg;
 						throw new ParseException(String.format(mask, alphabetName, createAvailabeAlphabetsString(getSpecification().getAvailablePlainTextAlphabets())));
@@ -330,8 +338,7 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 				result.append("\n\n"); //$NON-NLS-1$
 			}
 			
-			
-			result.append(dataObject.getOutputStream().toString());
+			result.append(dataObject.getOutput());
 			
 		} catch (ParseException e) {
 			result.append(Messages.ClassicAlgorithmCmd_error + e.getMessage());

@@ -5,10 +5,14 @@ Bundle-SymbolicName: org.jcryptool.visual.aco;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.aco.ACOPlugin
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
- org.eclipse.core.runtime;bundle-version="3.7.0"
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ org.jcryptool.analysis.transpositionanalysis;bundle-version="1.0.0";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.jcryptool.core.logging.utils,
+Import-Package: org.jcryptool.analysis.textmodify.wizard,
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations.algorithm.classic.textmodify,
+ org.jcryptool.core.operations.editors,
  org.jcryptool.core.util.fonts,
- org.jcryptool.crypto.classic.transposition.algorithm
+ org.jcryptool.core.util.input
