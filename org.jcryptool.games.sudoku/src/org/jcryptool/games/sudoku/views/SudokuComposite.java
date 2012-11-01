@@ -193,7 +193,7 @@ public class SudokuComposite extends Composite {
             }
         };
         
-        this.dummyJob = new Job("Solving Puzzle...") {
+        this.dummyJob = new Job(Messages.SudokuComposite_SolvingPuzzle) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -2977,12 +2977,12 @@ public class SudokuComposite extends Composite {
         }
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                if (showPossible && possibleKiller.get(i).get(j).size() < 9) {
+                if (showPossible && possibleKiller.get(i).get(j).size() < 8) {
                     for (int k = 0; k < possibleKiller.get(i).get(j).size(); k++) {
-                        boardLabelsKiller[i][j][k].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
-                        boardLabelsKiller[i][j][k].setBackground(WHITE);
+                        boardLabelsKiller[i][j][k+1].setText(Integer.toString(possibleKiller.get(i).get(j).get(k)));
+                        boardLabelsKiller[i][j][k+1].setBackground(WHITE);
                     }
-                    for (int k = possibleKiller.get(i).get(j).size(); k < 8; k++) {
+                    for (int k = possibleKiller.get(i).get(j).size()+1; k < 8; k++) {
                         boardLabelsKiller[i][j][k].setText("");
                     }
                 }

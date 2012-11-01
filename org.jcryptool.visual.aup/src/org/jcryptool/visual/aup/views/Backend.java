@@ -25,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 import org.jcryptool.visual.aup.views.AupView.ApuState;
 
@@ -37,6 +38,9 @@ import org.jcryptool.visual.aup.views.AupView.ApuState;
  */
 public class Backend {
 
+    private static final String AUP_FOLDER = "aup"; //$NON-NLS-1$
+    private static final String AUP_FILE = "pattern"; //$NON-NLS-1$
+	
 	private final static int arrayLengthStd = 10;
 
 	private final static Color STANDARD = Display.getCurrent().getSystemColor(
@@ -672,34 +676,50 @@ public class Backend {
 		}
 	}
 
+    private File getAupFile() throws IOException {
+        File aupFolder = new File(new File(DirectoryService.getWorkspaceDir()), AUP_FOLDER);
+        if (!aupFolder.exists()) {
+        	aupFolder.mkdir();
+        }
+        File aupFile = new File(aupFolder, AUP_FILE);
+        if (!aupFile.exists()) {
+            if (aupFile.createNewFile()) {
+                return aupFile;
+            } else {
+                throw new IOException("Unable to create File: " + aupFile.getAbsolutePath()); //$NON-NLS-1$
+            }
+        } else {
+            return aupFile;
+        }
+    }
+	
 	/**
-	 * saves order[] in file "./Android" separated by semicolon
+	 * saves order[] in AUP savefile separated by semicolon
 	 * 
 	 * @return false on error else true
 	 */
 	public boolean save() {
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(
-					"./Android"))); //$NON-NLS-1$
+			BufferedWriter writer = new BufferedWriter(new FileWriter(getAupFile()));
 			for (int i = 0; i < order.length; i++) {
 				writer.write(order[i] + ";"); //$NON-NLS-1$
 			}
 			writer.close();
 		} catch (IOException e) {
-			LogUtil.logError("Error when saving file\n" + e.getMessage()); //$NON-NLS-1$
+			LogUtil.logError("Error on saving pattern file.\n" + e.getMessage()); //$NON-NLS-1$
 			return false;
 		}
 		return true;
 	}
 
 	/**
-	 * read from file "./Android" and save in order[]
+	 * read from AUP savefile and save in order[]
 	 */
 	public void restore() {
 		BufferedReader reader;
 		ordersaved = new int[10];
 		try {
-			reader = new BufferedReader(new FileReader(new File("./Android"))); //$NON-NLS-1$
+			reader = new BufferedReader(new FileReader(getAupFile()));
 			String zeile = reader.readLine();
 			while (zeile != null) {
 				String[] values = zeile.split(";"); //$NON-NLS-1$
