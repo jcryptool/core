@@ -6,17 +6,41 @@
 </head>
 
 <body>
-<h3>The XXX Analysis</h3>
-<p>The Frequency Analysis basically counts the occurrence of all characters the text consists of. You can use this plug-in in two ways, depending on what you want to do with the frequency distribution:</p>
-<p>The <b>simple view</b> shows you a graph with the percental occurrences. You have the option to alter the text before analyzing it (filter characters, transforming all characters to lower case, etc.).</p>
-<p>The <b>extended view</b> offers more analysis abilities, which are located in the second tab in the properties area:</p>
-<p><img src="freqanalysis1.png" alt="Image: extended view"/></p>
-<p>The first option offered is to <b>"overlay" a reference distribution</b>. This will be semi-transparent, and can be useful in many ways, but exceptionally when using it with the "decryption tools" below. You can choose a reference text from which the distribution is calculated in the drop down menu below.</p>
-<p>The next option is <b>on which character set</b> (alphabet) the reference distribution is displayed. If you only want to see what is the usual distribution of capital letters over a text as overlay, select the corresponding alphabet "Upper Latin". <br /><b>Important:</b> this option is adjusting itself correctly on ciphertexts normally. If you use an overlay alphabet whose cardinality is bigger than the cardinality of the ciphertext's alphabet, the deciphering tools (below) won't work correctly.</p>
-<p><b>Deciphering tools:</b> Enable the overlay, set the correct key length ("General" tab), and try to match the reference overlay with your actual graph (black bars) by dragging it with the mouse. When you are done matching the graph, you have found the key character for this certain position in the key string. Click on the "Save, next position!" button to continue deciphering the text. Position by position the key is revealed in the lower corner of the deciphering tools. You can click on this field, too, to set the key manually.</p> 
-<p><img src="freqanalysis2.png" alt="Image: deciphering in progress"/></p>
-<p>Like the Friedman test, the frequency analysis integrates with the Vigen&egrave;re helper. Click "Save result" to save the found key in the Vigen&egrave;re helper.</p>
+	<h1>Vigenère breaker</h1>
+ 
+	<p>In the Vigenère-breaker, you can decrypt a Vigenère-encrypted text fully automated or manually. Select whether you want the automated analysis or to follow through the decryption process manually.</p>
 
+	<img src="img/step1.png" alt="Choosing the mode of analysis"/>
+
+	<p>If you choose the automated mode, the result (decrypted text and the key) will be displayed 
+	directly to you, with the option to see the solution steps and details to finding the key length 
+	and the key.</p>
+	<p><img src="img/automaticResult.png" /></p>
+	<p>If you choose the manual mode, you have to complete the following steps: 
+	Friedman test and frequency analysis.</p>
+	
+	<h2>Friedman test</h2>
+	
+	<img src="img/friedman.png" />
+	
+	<p>The displayed diagram shows how good the cipher correlates, shifted by x against itself.</p>
+	<p>With a Vigenère-cipher, this graph should show periodic spikes, like in the picture above.</p>
+	<p>The length of the key is equal to this period. If you have found it, put this value in the text 
+	field below, and press "Continue".</p>
+	
+	<h2>Frequency analysis</h2>
+	
+	<img src="img/friedman.png" />
+	
+	<p>The second step analyses every position in the key (whichs length we just have found out). 
+	You have to shift the displayed graph, such that the white reference diagram matches the actual, black one
+	as good as possible. This shift of the graph tells us the character on the current position in the key.</p>
+	<p>You have to save your shift for the current position in the key with a press on "Accept shift". You
+	can also get the automatically calculated result by pressing "Compute".</p>
+	<p>When you have found all shifts for the positions of the key, the decryption is complete. You can view 
+	the result page with a click on "Continue".</p>
+	
+	
 
 </body>
 </html>
