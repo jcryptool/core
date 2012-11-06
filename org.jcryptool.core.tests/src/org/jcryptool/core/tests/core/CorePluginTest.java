@@ -90,7 +90,7 @@ public class CorePluginTest {
         IEditorRegistry registry = activeWorkbenchWindow.getWorkbench().getEditorRegistry();
 
         assertEquals("org.jcryptool.editor.text.editor.JCTTextEditor", registry.getDefaultEditor("test.txt").getId());
-        assertEquals("net.sourceforge.javahexeditor.editors.BinaryEditor", registry.getDefaultEditor("*.*").getId());
+        assertEquals("net.sourceforge.ehep.editors.HexEditor", registry.getDefaultEditor("*.*").getId());
     }
 
     @Test

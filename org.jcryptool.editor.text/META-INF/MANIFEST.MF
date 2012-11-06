@@ -17,6 +17,7 @@ Export-Package: org.jcryptool.editor.text,
  org.jcryptool.editor.text.editor,
  org.jcryptool.editor.text.service
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.operations.util,
  org.jcryptool.core.util.constants,

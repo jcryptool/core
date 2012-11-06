@@ -53,6 +53,7 @@ import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.views.AlgorithmView;
@@ -71,7 +72,7 @@ public class FileExplorerView extends ViewPart {
     private TreeViewer viewer;
     private IHandler cryptoHandler;
     private CryptoContributionItem cryptoContributionItem;
-    public static final String EDITOR_ID_HEX = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
+    public static final String EDITOR_ID_HEX = IOperationsConstants.ID_HEX_EDITOR; //$NON-NLS-1$
     /** The system clipboard. */
     private Clipboard clipboard = null;
 

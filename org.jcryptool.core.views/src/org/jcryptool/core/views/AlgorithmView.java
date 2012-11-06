@@ -51,7 +51,7 @@ import org.jcryptool.core.views.content.TreeView;
  */
 public class AlgorithmView extends ViewPart implements IOperationsConstants {
     public static final String ID = "org.jcryptool.core.views.AlgorithmView"; //$NON-NLS-1$
-    public static final String EDITOR_ID_HEX = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
+//    public static final String EDITOR_ID_HEX = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
     public static final String MENU_TEXT_ALGORITHM = Messages.AlgorithmView_menu_text_algorithms;
     public static final String MENU_TEXT_ANALYSIS = Messages.AlgorithmView_menu_text_analysis;
     public static final String MENU_TEXT_VISUALS = Messages.AlgorithmView_menu_text_visuals;

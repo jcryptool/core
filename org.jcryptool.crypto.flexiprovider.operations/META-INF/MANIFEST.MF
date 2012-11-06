@@ -15,6 +15,7 @@ Export-Package: org.jcryptool.crypto.flexiprovider.operations.engines
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations,
  org.jcryptool.core.operations.providers,
  org.jcryptool.core.operations.util,
  org.jcryptool.core.util.constants,

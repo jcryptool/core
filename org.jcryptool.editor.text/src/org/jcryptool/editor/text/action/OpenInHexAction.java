@@ -21,6 +21,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.util.PathEditorInput;
 
 /**
@@ -69,14 +70,11 @@ public class OpenInHexAction implements IEditorActionDelegate {
         IPathEditorInput originalInput = (IPathEditorInput) editor.getEditorInput();
         IEditorInput input = createEditorInput(originalInput.getPath().toString());
 
-        final String hexEditorID = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
-        final String hexEditorPluginID = "net.sourceforge.javahexeditor"; //$NON-NLS-1$
-
         // check if hex editor plug-in is loaded
-        if (Platform.getBundle(hexEditorPluginID) != null) {
+        if (Platform.getBundle(IOperationsConstants.ID_HEX_EDITOR_PLUGIN) != null) {
             try {
                 page.closeEditor(editor, true);
-                page.openEditor(input, hexEditorID);
+                page.openEditor(input, IOperationsConstants.ID_HEX_EDITOR);
             } catch (PartInitException e) {
                 MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
                         Messages.OpenInHexAction_1);

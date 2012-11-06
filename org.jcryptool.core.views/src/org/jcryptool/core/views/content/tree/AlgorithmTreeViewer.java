@@ -43,6 +43,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
 import org.jcryptool.core.operations.util.PathEditorInput;
@@ -327,7 +328,7 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
 
         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
         try {
-            page.openEditor(new PathEditorInput(new Path(path)), AlgorithmView.EDITOR_ID_HEX);
+            page.openEditor(new PathEditorInput(new Path(path)), IOperationsConstants.ID_HEX_EDITOR);
         } catch (PartInitException ex) {
             LogUtil.logError(ex);
 

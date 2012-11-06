@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hex
+Bundle-SymbolicName: org.jcryptool.editor.hex;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: net.sourceforge.ehep;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.filesystem,
+ org.jcryptool.core.logging.utils,
+ org.jcryptool.core.operations.editors,
+ org.jcryptool.core.operations.util
+Export-Package: org.jcryptool.editor.hex,
+ org.jcryptool.editor.hex.actions,
+ org.jcryptool.editor.hex.commands,
+ org.jcryptool.editor.hex.service

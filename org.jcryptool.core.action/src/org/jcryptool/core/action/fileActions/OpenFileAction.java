@@ -32,7 +32,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
 public class OpenFileAction implements IWorkbenchWindowActionDelegate {
     private IWorkbenchWindow window;
     private static final String TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
-    private static final String HEX_EDITOR = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
+    private static final String HEX_EDITOR = "net.sourceforge.ehep.editors.HexEditor"; //$NON-NLS-1$
 
     public void dispose() {
     }

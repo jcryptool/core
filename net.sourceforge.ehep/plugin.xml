@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ *==========================================================================
+ * 
+ * plugin.xml
+ * 
+ * $Author: anatolibarski $
+ * $Revision: 1.12 $
+ * $Date: 2012/11/06 16:45:22 $
+ * 
+ * Created by Marcel Palko alias Randallco (randallco@users.sourceforge.net)
+ *==========================================================================
+-->
+<?eclipse version="3.0"?>
+<plugin
+	id="net.sourceforge.ehep"
+	name="%pluginName"
+	version="1.0.0"
+	provider-name="%providerName"
+	class="net.sourceforge.ehep.EhepPlugin">
+
+	<runtime>
+		<library name="ehep.jar" />
+	</runtime>
+
+	<requires>
+		<import plugin="org.eclipse.ui.ide"/>
+		<import plugin="org.eclipse.ui.workbench.texteditor"/>
+		<import plugin="org.eclipse.ui.editors"/>
+		<import plugin="org.eclipse.core.resources" />
+		<import plugin="org.eclipse.ui" />
+	</requires>
+
+	<extension point="org.eclipse.ui.editors">
+		<editor
+			name="%productName"
+			icon="icons/ehep.gif"
+			extensions="exe,com,dll,bin,hex,class"
+			contributorClass="net.sourceforge.ehep.actions.HexEditorContributor"
+			class="net.sourceforge.ehep.editors.HexEditor"
+			id="net.sourceforge.ehep.editors.HexEditor">
+		</editor>
+	</extension>
+
+	<!-- Preferences -->
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			name="%productName"
+			category="org.eclipse.ui.preferencePages.Editors"
+			class="net.sourceforge.ehep.preferences.PreferencesPage"
+			id="net.sourceforge.ehep.preferences.PreferencesPage">
+		</page>
+	</extension>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="net.sourceforge.ehep.preferences.PreferencesInitializer">
+      </initializer>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            id="net.sourceforge.ehep.HexEditorPopup"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="net.sourceforge.ehep.popup.actions.OpenHexEditorAction"
+               id="net.sourceforge.ehep.openWithHexEditor"
+               label="%action.label"
+               menubarPath="additions"
+               enablesFor="1"/>
+      </objectContribution>
+   </extension>
+
+</plugin>

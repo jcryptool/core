@@ -77,9 +77,12 @@ public interface IOperationsConstants {
 	
 	/** An attribute in an ExtensionPoint. The value is <code>wizardClass</code> */
 	public static final String ATT_WIZARD_CLASS = "wizardClass"; //$NON-NLS-1$
+	
+	/** An editor Plugin ID. The value is <code>org.jcryptool.editor.hex</code> */
+	public static final String ID_HEX_EDITOR_PLUGIN = "org.jcryptool.editor.hex"; //$NON-NLS-1$
 		
-	/** An editor ID. The value is <code>net.sourceforge.javahexeditor.editors.BinaryEditor</code> */
-	public static final String ID_HEX_EDITOR = "net.sourceforge.javahexeditor.editors.BinaryEditor"; //$NON-NLS-1$
+	/** An editor ID. The value is <code>org.jcryptool.editors.hex.HexEditor</code> */
+	public static final String ID_HEX_EDITOR = "org.jcryptool.editors.hex.HexEditor"; //$NON-NLS-1$
 	
 	/** An editor ID. The value is <code>org.jcryptool.editor.text.editor.JCTTextEditor</code> */
 	public static final String ID_TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
