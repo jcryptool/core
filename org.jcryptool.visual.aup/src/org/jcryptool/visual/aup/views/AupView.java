@@ -793,7 +793,7 @@ public class AupView extends ViewPart {
 			}
 			case 3: {	// check
 				instrText1.setEnabled(true);
-				instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Check_1));
+				instrText1.setText(Messages.Mode_Check_1);
 				instrText2.setText("");
 				instrText3.setText("");
 				break;
