@@ -203,6 +203,7 @@ public class AupView extends ViewPart {
 				{
 					if(l.getImage() != null) l.getImage().dispose(); //dispose image
 				}
+				if(statusText.getImage() != null) statusText.getImage().dispose();
 				headingBox.getChildren()[0].getFont().dispose();
 				nFont.dispose();
 				bFont.dispose();
