@@ -24,6 +24,8 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -79,9 +81,9 @@ public class AupView extends ViewPart {
 	private Button btnCancel;
 	private StyledText descText;
 	private Backend logic;
-	private Label instrText1;
-	private Label instrText2;
-	private Label instrText3;
+	private StyledText instrText1;
+	private StyledText instrText2;
+	private StyledText instrText3;
 	private CLabel statusText;
 	private Label instrTextHeading;
 	private Label descTextHeading;
@@ -90,6 +92,8 @@ public class AupView extends ViewPart {
 	private Boolean patternInput = false;
 	private Boolean inputFinished = false;
 	private Boolean advancedGraphic = false;
+	private Font nFont;
+	private Font bFont;
 	
 	//precomputed values for APU permutations depending on the APU's length
 	private static int[] apuPerm = {
@@ -176,6 +180,12 @@ public class AupView extends ViewPart {
 		checkPattern.setText(Messages.AndroidUnlockPattern_ModeCheckText);
 		optionbox.setText(Messages.AndroidUnlockPattern_GroupHeadingModes);
 
+		//get standard font
+		FontData fd = setPattern.getFont().getFontData()[0];
+		nFont = new Font(child.getDisplay(), fd);
+		fd.setStyle(SWT.BOLD);
+		bFont = new Font(child.getDisplay(), fd);
+		
 		initLayout();
 		addActions();
 		centerResize();
@@ -194,6 +204,8 @@ public class AupView extends ViewPart {
 					if(l.getImage() != null) l.getImage().dispose(); //dispose image
 				}
 				headingBox.getChildren()[0].getFont().dispose();
+				nFont.dispose();
+				bFont.dispose();
 			}
 		});
 		
@@ -302,7 +314,9 @@ public class AupView extends ViewPart {
 		descTextHeading = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		descTextHeading.setText(Messages.AndroidUnlockPattern_helpBox_descText_Heading);
 
-		instrText1 = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText1 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText1.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		instrText1.setDoubleClickEnabled(false);
 		instrText1.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText1.setAlignment(SWT.LEFT);
 		instrText1.setText(Messages.Mode_Set_1);
@@ -313,12 +327,16 @@ public class AupView extends ViewPart {
 		descText.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 3));
 		descText.setText(Messages.AndroidUnlockPattern_helpBox_descText);
 		
-		instrText2 = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText2 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText2.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		instrText2.setDoubleClickEnabled(false);
 		instrText2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText2.setAlignment(SWT.LEFT);
 		instrText2.setText(Messages.Mode_Set_1);
 		
-		instrText3 = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText3 = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP);
+		instrText3.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+		instrText3.setDoubleClickEnabled(false);
 		instrText3.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
 		instrText3.setAlignment(SWT.LEFT);
 		instrText3.setText(Messages.Mode_Set_1);
@@ -759,11 +777,15 @@ public class AupView extends ViewPart {
 		switch(logic.getModus()) {
 			case 1: {	// set				
 				if (logic.isFirst()) {
-						instrText1.setEnabled(true); 
-						instrText2.setEnabled(false);
+						instrText1.setFont(bFont);
+						instrText2.setFont(nFont);
+//						instrText1.setEnabled(true); 
+//						instrText2.setEnabled(false);
 				} else {
-					instrText1.setEnabled(false); 
-					instrText2.setEnabled(true);
+					instrText1.setFont(nFont);
+					instrText2.setFont(bFont);
+//					instrText1.setEnabled(false); 
+//					instrText2.setEnabled(true);
 				}
 				
 				instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Set_1));
@@ -773,17 +795,26 @@ public class AupView extends ViewPart {
 			}
 			case 2: {	// change
 				if (!logic.isChangeable()) {
-					instrText1.setEnabled(true); 
-					instrText2.setEnabled(false);
-					instrText3.setEnabled(false);
+					instrText1.setFont(bFont);
+					instrText2.setFont(nFont);
+					instrText3.setFont(nFont);
+//					instrText1.setEnabled(true);
+//					instrText2.setEnabled(false);
+//					instrText3.setEnabled(false);
 				} else if (logic.isFirst()) {
-					instrText1.setEnabled(false); 
-					instrText2.setEnabled(true);
-					instrText3.setEnabled(false);
+					instrText1.setFont(nFont);
+					instrText2.setFont(bFont);
+					instrText3.setFont(nFont);
+//					instrText1.setEnabled(false); 
+//					instrText2.setEnabled(true);
+//					instrText3.setEnabled(false);
 				} else {
-					instrText1.setEnabled(false); 
-					instrText2.setEnabled(false);
-					instrText3.setEnabled(true);
+					instrText1.setFont(nFont);
+					instrText2.setFont(nFont);
+					instrText3.setFont(bFont);
+//					instrText1.setEnabled(false); 
+//					instrText2.setEnabled(false);
+//					instrText3.setEnabled(true);
 				}
 				
 				instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Change_1));
@@ -792,7 +823,8 @@ public class AupView extends ViewPart {
 				break;
 			}
 			case 3: {	// check
-				instrText1.setEnabled(true);
+				instrText1.setFont(bFont);
+//				instrText1.setEnabled(true);
 				instrText1.setText(Messages.Mode_Check_1);
 				instrText2.setText("");
 				instrText3.setText("");
