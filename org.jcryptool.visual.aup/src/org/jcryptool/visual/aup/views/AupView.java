@@ -14,7 +14,6 @@ package org.jcryptool.visual.aup.views;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -27,6 +26,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.graphics.Transform;
 import org.eclipse.swt.layout.FormAttachment;
@@ -47,6 +47,8 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 
 /**
  * 
@@ -77,7 +79,8 @@ public class AupView extends ViewPart {
 	private Button checkPattern;
 	private Button btnSave;
 	private Button btnCancel;
-	private StyledText descText;
+	private ScrolledComposite descTextScroller;
+	private Label descText;
 	private Backend logic;
 	private Label instrText1;
 	private Label instrText2;
@@ -307,11 +310,14 @@ public class AupView extends ViewPart {
 		instrText1.setAlignment(SWT.LEFT);
 		instrText1.setText(Messages.Mode_Set_1);
 		
-		descText = new StyledText(helpBox, SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-		descText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-		descText.setDoubleClickEnabled(false);
-		descText.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 3));
+		descTextScroller = new ScrolledComposite(helpBox, SWT.V_SCROLL);
+		descTextScroller.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, true, 1, 3));
+		descTextScroller.setExpandHorizontal(true);
+		descTextScroller.setExpandVertical(true);
+		
+		descText = new Label(descTextScroller, SWT.WRAP);
 		descText.setText(Messages.AndroidUnlockPattern_helpBox_descText);
+		descTextScroller.setContent(descText);
 		
 		instrText2 = new Label(helpBox, SWT.READ_ONLY | SWT.WRAP);
 		instrText2.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
@@ -447,7 +453,9 @@ public class AupView extends ViewPart {
 						if(a.getData("icon").toString().regionMatches(false, 6, "g", 0, 1))
 							length++;
 					}
-					descText.setText(String.format(Messages.AndroidUnlockPattern_helpBox_descText_Security, Messages.AndroidUnlockPattern_helpBox_descText, length, apuPerm[length-4]));
+					descText.setText(String.format(Messages.AndroidUnlockPattern_helpBox_descText_Security, Messages.AndroidUnlockPattern_helpBox_descText, length, apuPerm[length-4])); // set new Text
+					recalcDescTextScrolling();
+					
 					helpBox.layout(true);
 				}
 				logic.btnSaveClick();
@@ -534,6 +542,12 @@ public class AupView extends ViewPart {
 
 			}
 
+		});
+		descTextScroller.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				recalcDescTextScrolling();
+			}
 		});
 	}
 
@@ -710,7 +724,10 @@ public class AupView extends ViewPart {
 			setStatusText("", null); //$NON-NLS-1$
 			patternInput = inputFinished = false;
 			btnSave.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+			
 			descText.setText(Messages.AndroidUnlockPattern_helpBox_descText);
+			recalcDescTextScrolling();
+			
 			logic.reset();
 		}
 	}
@@ -800,5 +817,15 @@ public class AupView extends ViewPart {
 			}
 		}
 		helpBox.layout(true);
+	}
+	
+	/**
+	 * Recalculate the scrolling area size for the description text.
+	 * <br>
+	 * Has to be called after every description text update.
+	 */
+	private void recalcDescTextScrolling() {		
+		Point size = descText.computeSize(descTextScroller.getClientArea().width, SWT.DEFAULT, true);	// compute required height for fixed width
+		descTextScroller.setMinHeight(size.y); // enable scrolling
 	}
 }
