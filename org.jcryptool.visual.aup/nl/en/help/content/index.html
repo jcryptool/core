@@ -24,7 +24,7 @@
 		</ul>	
 		
 		<h3>AUP Security</h3>
-		<p>The Google Nexus S, with unmodified Android 2.3.4, is used as reference because many devices are operated by vendor modified Android versions: The unmodified Android forces the user to wait for 30 seconds after five failed unlock attempts. From this point on, the Google password can additionally be used for unlocking the device. However, the user is still able to use the pattern for 15 further pattern unlock attempts. Every five failed attempts 30 seconds have to be waited. After a total of 20 failed attempts, the device can be only unlocked with the Google password. The security of this password is not evaluated because it is a standard text based password.</p>
+		<p>The Google Nexus S with unmodified Android 2.3.4 is used as reference because many devices are operated by vendor modified Android versions: The unmodified Android forces the user to wait for 30 seconds after five failed unlock attempts. From this point on, the Google password can additionally be used for unlocking the device. However, the user is still able to use the pattern for 15 further pattern unlock attempts. Every five failed attempts 30 seconds have to be waited. After a total of 20 failed attempts, the device can be only unlocked with the Google password. The security of this password is not evaluated because it is a standard text based password.</p>
 		
 		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach.</p>
 		
@@ -107,7 +107,7 @@
 			</tr>
 		</table></p>
 		
-		<p>As the table shows, the AUP grows slower. As a result, with increasing length the direct comparison gets even worse. In the total, the AUP achieves only about 40% of the limited PIN's permutation quantity.</p>
+		<p>As the table shows, the AUP grows slower. As a result, with increasing length the direct comparison gets even worse. In the total, the AUP achieves only about 40% of the limited PIN&rsquo;s permutation quantity.</p>
 		
 		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better <sup><a id="anker2" title="Source" href="#fn2">[2, p. 5]</a></sup>. Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as 10<sup><i>l</i></sup> for a normal PIN with 10 digits and length <i>l</i>.</p>
 		
@@ -115,14 +115,18 @@
 		
 		<h4>Attacks against AUP</h4>
 		<p>1. Shoulder Surfing</p>
-		<p>The observation of a victim during an authentication process is called shoulder surfing. He tries  to learn his victim's secret partly or even fully. The observation itself can be carried out directly through the adversary or indirectly for example with cameras. Shoulder surfing AUP patterns is generally easier than PIN or passwords, because inputting patterns requires a large part of the display.</p>
+		<p>The observation of a victim during an authentication process in order to partly or fully learn a victim&rsquo;s secret is called shoulder surfing. The observation itself can be carried out directly through the adversary or indirectly for example with cameras. Shoulder surfing AUP patterns is generally easier than PIN or passwords, because inputting patterns requires a large part of the display.</p>
 		
 		<p>2. Smudge Attack</p>
-		<p>After the usage of touchscreen devices mostly oily smudge are left behind on their surfaces. These can be used as side canal for detecting recently or frequently touched areas. The resulting information can be used for example to gain information on the authentication pattern or password.</p>
+		<p>After the usage of touchscreen devices mostly oily smudges are left behind on their surfaces. These can be used as side channel for detecting recently or frequently touched areas. The resulting information can be used for example to gain information on the authentication pattern or password.</p>
 		
 		<p>3. Attacking Stolen Authentication Information</p>
 		
 		<p>In case authentication information can be copied and thus separated of an authenticating system, it is possible to directly analyse them. As a result, it is possible to launch a brute-force attack which tests all alternatives for a match. This is however not necessary for Android because the patterns are saved as unsalted hash values <sup><a id="anker3" title="Source" href="#fn3">[3]</a></sup>. This weakness enables the much more powerful dictionary attack for retrieving patterns from their hash value in a matter of seconds.</p>
+		
+		<!--As Android saves the patterns as unsalted hash values <sup><a id="anker3" title="Source" href="#fn3">[3]</a></sup>, there is an additional weakness, which enables dictionary attacks for retrieving patterns from their hash value in a matter of seconds.
+		
+		Since Android saves the patterns as unsalted hash values <sup><a id="anker3" title="Source" href="#fn3">[3]</a></sup>, the optimised dictionary attacks are enabled. These are able to retrieve patterns from their hash values in a matter of seconds.-->
 		
 		<h2>Further Graphical Password Methods</h2>
 		<h3>1. Draw a Secret (DAS)</h3>
@@ -139,7 +143,7 @@
 				<td align=center>Internal representation</td>
 			</tr>
 		</table></p>
-		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5 <sup><a title="Source" href="#fn2">[2]</a></sup>.</p>
+		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5. <sup><a title="Source" href="#fn2">[2]</a></sup></p>
 		
 		<p>According to paper <a title="Source" href="#fn2">[2]</a>, the DAS features a higher security level than passwords. Due to the much better memory of humans for figures and graphics  long patterns can be chosen. But notice that mirror-symmetrical figures can be memorised better than asymmetrical <sup><a id="anker4" title="Source" href="#fn4">[4]</a></sup>. This fact can be exploited to reduce the possible pattern set for an attack significantly which in the end results in a lower security.</p>
 		
