@@ -33,7 +33,7 @@ public class AntColVisualComposite extends Composite {
 		super(c, SWT.NONE);
 		this.model = model;
 		this.setLayout(new GridLayout(1, false));
-		Group visualGroup = new Group(this, SWT.BORDER);
+		Group visualGroup = new Group(this, SWT.NONE);
 
 		visualGroup.setText(Messages.Visual_GraphMatrixGroupTitle);
 		visualGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

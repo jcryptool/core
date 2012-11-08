@@ -3,7 +3,6 @@ package org.jcryptool.visual.aco.controller;
 import org.jcryptool.visual.aco.model.CommonModel;
 import org.jcryptool.visual.aco.view.AntColAnalysisComposite;
 import org.jcryptool.visual.aco.view.AntColView;
-import org.jcryptool.visual.aco.view.AntColVisualComposite;
 
 public class AntColAnalysisController implements
 		AntColEvents {
@@ -123,7 +122,7 @@ public class AntColAnalysisController implements
 
 	@Override
 	public void onSelectMultipleSteps() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
@@ -134,7 +133,7 @@ public class AntColAnalysisController implements
 		analysisComp.setEnabledFinishCycleButton(!atLastKnot);
 	}
 	
-	public void onKeyLengthChange(int value){
+	public void onKeyLengthChange(int value, int oldValue){
 		if(value > 5){
 			model.setSingleStep(false);
 			analysisComp.setSingleStepSelected(false);
@@ -150,43 +149,39 @@ public class AntColAnalysisController implements
 
 	@Override
 	public void onChangeAnimationCheckboxValue(boolean value) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onConfigurationChange() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void onGenerateText() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onCipherTextModify(String text) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onAlphaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onBetaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onPheromoneChanged(double value) {
-		// TODO Auto-generated method stub
+
 		
 	}
 

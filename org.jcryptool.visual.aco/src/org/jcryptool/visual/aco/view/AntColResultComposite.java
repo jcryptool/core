@@ -30,7 +30,7 @@ public class AntColResultComposite extends Composite {
 
 		super(c, SWT.NONE);
 		this.setLayout(new GridLayout(2, false));
-		resultGroup = new Group(this, SWT.BORDER);
+		resultGroup = new Group(this, SWT.NONE);
 		resultGroup.setText(Messages.Viusal_ResultGroup);
 		resultGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		resultGroup.setLayout(new GridLayout(1, false));
@@ -53,7 +53,7 @@ public class AntColResultComposite extends Composite {
 		data.heightHint = 18;
 		currAntNolabel = new Label(resultGroup, SWT.NONE);
 		currAntNolabel.setLayoutData(data);
-		Group currGroup = new Group(resultGroup, SWT.BORDER);
+		Group currGroup = new Group(resultGroup, SWT.NONE);
 		currGroup.setText(Messages.Viusal_CurrAntGroup);
 		currGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		currGroup.setLayout(new GridLayout(2, false));
@@ -95,7 +95,7 @@ public class AntColResultComposite extends Composite {
 		filler = new Composite(resultGroup, SWT.NONE);
 		filler.setLayoutData(new GridData(SWT.TOP, SWT.LEFT, true, true));
 		
-		bestGroup = new Group(resultGroup, SWT.BORDER);
+		bestGroup = new Group(resultGroup, SWT.NONE);
 		bestGroup.setText(Messages.Viusal_BestAntGroup);
 		bestGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		bestGroup.setLayout(new GridLayout(2, false));

@@ -11,16 +11,16 @@
 
 <h1>Die Benutzeroberfläche des Plugins</h1>
 <p>In diesem Teil der Hilfe wird die Benutzeroberfläche des Plugins näher erläutert.</p>
-<p>In dem Screenshot unten sieht man, wie das Plugin nach dem Start aussieht. Die untere und obere Komponenten dienen zur kurzen
-Beschreibung des Plugins und den Einstellungsparametern. Die mittlere Reihe dient zur Steuerung des Plugins.<br>
+<p>In dem Screenshot unten sieht man, wie das Plugin nach dem Start aussieht. Die untere und obere Komponente dienen zur kurzen
+Beschreibung des Plugins und den Einstellungsparametern. Der mittlere Bereich dient zur Steuerung des Plugins.<br>
 <h2>Konfiguration</h2>
-<p>Zunächst muss unter <b>Konfiguration</b> ein Text geladen oder direkt eingegeben werden. Außerdem befinden sich weiteree
+<p>Zunächst muss unter <b>Konfiguration</b> ein Geheimtext erzeugt oder geladen werden. Außerdem befinden sich weitere
  Einstellungen zum Analysetext in dieser Gruppierung.
 
-Zum laden bzw. eingeben eines Textes zur Analyse gibt es zwei Möglichkeiten:</p>
+Zum Erzeugen bzw. Eingeben eines zu analysierenden Textes gibt es zwei Möglichkeiten:</p>
 <ul>
 <li><b>Geheimtext erzeugen</b> - Startet einen Wizard, mit dem eine Transpositionschiffre aus einem Klartext erzeugt werden kann. <br>
-Dort kann ein Klartext aus einer Datei oder einem geöffneteten Editorfenster in JCrypTool geladen werden, oder per Direkteingabe eingegeben werden.
+Dort kann ein Klartext aus einer Datei oder einem geöffneten Editorfenster in JCrypTool geladen werden, oder per Direkteingabe eingegeben werden.
 Anschließend kann ausgewählt werden, wie lang der Schlüssel der Permutation sein soll, also in wieviele Spalten der Klartext letztendlich
 aufgeteilt werden soll. In der Tabelle im unteren Teil des Wizard können anschließend per Drag'n'Drop die Spalten ausgetauscht werden, 
 also direkt die Permutation der Chiffre eingestellt werden.<br>
@@ -65,7 +65,7 @@ Durch Wahl dieser Option ergeben sich dann folgende Möglichkeiten:</i>
 (siehe <a href = "mathematicalabstraction.html">Mathematische Formulierungen des Algorithmus</a>), noch unbesuchten Knoten im Graphen und bewegt sich zu diesem. 
 </li>
 <li>
-<b>Bis zum letzten Knoten</b> - Die Ameise sucht sich ihrem Pfad durch den Graphen - also einen Pfad, bei dem sie alle Knoten besucht hat.
+<b>Bis zum letzten Knoten</b> - Die Ameise sucht sich ihren Pfad durch den Graphen - also einen Pfad, bei dem sie alle Knoten besucht hat.
 Diese Aktion entspricht wiederholtem Drücken von <b>Zum nächsten Knoten</b>. 
 </li>
 <li>
@@ -76,7 +76,7 @@ gesteuert werden.
 </ul>
 </li>
 <li>
-<b>Mehrere Durchläufe</b> - Mit dieser Aufwahl können mehrere Ameisen aufeinmal losgeschickt werden. Es wird außerdem automatisch die Pheromonmatrix angezeigt.
+<b>Mehrere Durchläufe</b> - Mit dieser Auswahl können mehrere Ameisen auf einmal losgeschickt werden. Es wird außerdem automatisch die Pheromonmatrix angezeigt.
 Durch Auswahl dieser Option ergeben sich folgende Einstellungen:
 <ul>
 <li>
@@ -90,8 +90,8 @@ In der rechts angezeigten Pheromonmatrix kann man das Ergebnis des Durchlaufes b
 </li>
 </ul>
 <p>
-Die Effekte der <b>Algorithmus-Einstellungen</b> lassen sich in den neben den Knoten angezeigte Wahrscheinlichkeiten oder in der Pheromonmatrix 
-am besten beobachten. Wie sich die Wahrscheinlichkeiten und die Pheromonmatrix zusammensetzen ist in den 
+Die Effekte der <b>Algorithmus-Einstellungen</b> lassen sich am besten in den neben den Knoten angezeigte Wahrscheinlichkeiten oder in der Pheromonmatrix 
+beobachten. Wie sich die Wahrscheinlichkeiten und die Pheromonmatrix zusammensetzen ist in den 
 <a href = "mathematicalabstraction.html">mathematischen Formulierungen</a> beschrieben.
 Die drei Parameter <b>Alpha, Beta</b> und <b>Verdunstung</b> regeln dabei die dort beschriebenen Parameter.
 Als Prioritätsregel <img src="vau.png"> <sub>i j</sub> wird die Häufigkeit der vorkommenen Bigramme, die beim Aneinandersetzen verschiedener Knoten entstehen, genommen.<br>
@@ -113,10 +113,10 @@ noch lange wahrnehmen werden. Das Pheromon verdunstet also langsamer.
 In der Gruppe <b>Visualisierung</b> lässt sich, sofern die eingestellte Schlüssellänge kleiner als 6 und die Option Knoten für Knoten aktiv ist,
 auswählen, ob der passende Graph oder die Pheromonmatrix angezeigt wird.</p>
 <ul>
-<li><b>Visualisierung als Graph</b> - Der passende Graph und die aktuelle Ameisenposition, sowie der derzeitige Pfad wird angezeigt.
+<li><b>Visualisierung als Graph</b> - Der passende Graph und die aktuelle Ameisenposition, sowie der derzeitige Pfad werden angezeigt.
 Jedem Knoten im Graphen sind Buchstaben des Geheimtextes zugeordnet, in jedem Knoten werden bis zu maximal 5 Zeichen, die zu dem Knoten gehören, 
 angezeigt. Ist die Ameise noch nicht am Ende ihres Weges durch den Graphen, so werden neben den unbesuchten Knoten die Übergangswahrscheinlichkeiten
-angezeigt. Diese ergeben sich aus den Wahrscheinlichkeiten der Buchstabenbigrammen, die durch Auswahl des entsprechenden Knoten entstehen würden.
+angezeigt. Diese ergeben sich aus den Wahrscheinlichkeiten der Buchstaben-Bigrammen, die durch Auswahl des entsprechenden Knoten entstehen würden.
 Eine höhere Wahrscheinlichkeit bedeutet, dass die Ameise wahrscheinlicher diesen Knoten als nächstes auswählen wird.
 </li>
 <li>
@@ -124,7 +124,7 @@ Eine höhere Wahrscheinlichkeit bedeutet, dass die Ameise wahrscheinlicher diese
 Sie ist quadratisch und hat als Anzahl von Spalten und Zeilen genau die Anzahl der Knoten bzw. die Länge des Schlüssels.
 Jeder Eintrag a<sub>ij</sub> der Matrix entspricht einem Gewicht der Kante vom Knoten i zum Knoten j. Da in dem Graphen keine Kante von einem Knoten zu sich 
 selbst existiert, ist die Diagonale nicht vorhanden. Der Wert a<sub>ij</sub> berechnet sich daraus, wieviele Ameisen vor der aktuellen Ameise bereits von Knoten 
-i zu Knoten j gelaufen sind und wie wahrscheinlich (in Bezug auf auftretende Buchstabenbigramme) es ist, dass nach Knoten i Knoten j kommt.
+i zu Knoten j gelaufen sind, und wie wahrscheinlich (in Bezug auf auftretende Buchstaben-Bigramme) es ist, dass nach Knoten i Knoten j kommt.
 </li>
 </ul>
 <p>In der <b>Ergebnis</b>-Gruppe befindet sich dann die Zusammenfassung des Algorithmus.</p>
@@ -134,7 +134,7 @@ i zu Knoten j gelaufen sind und wie wahrscheinlich (in Bezug auf auftretende Buc
 <li>
 <b>Aktuelle Entschlüsselung</b> - Zeigt das Ergebnis der Ameise, die sich aktuell im Graphen befindet. Zum einen den Klartext, den sie liefert und
 den Schlüssel, also den Pfad, den sie gewählt hat. Der Klartext setzt sich dadurch zusammen, dass man die entsprechenden Knoten des Schlüssels
-nebeneinander schreibt und dann zeilenweise die Buchstaben aus den Knoten ausließt.
+nebeneinander schreibt und dann zeilenweise die Buchstaben aus den Knoten ausliest.
 </li>
 <li>
 <b>Beste Entschlüsselung</b> - Hier steht das bisher beste gefundene Ergebnis aller Ameisen. Dazu wird das Ergebnis jeder Ameise anhand des hinterlegten

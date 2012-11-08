@@ -101,6 +101,8 @@ public class AntColDescriptionComposite extends Composite {
 					Messages.Desc_analysisAlgoSett_right);
 			break;
 		}
+
+		sc.setMinSize(innerComp.computeSize(SWT.DEFAULT,SWT.DEFAULT));
 	}
 
 

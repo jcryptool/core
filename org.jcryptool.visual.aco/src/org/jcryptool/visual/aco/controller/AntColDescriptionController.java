@@ -15,7 +15,7 @@ public class AntColDescriptionController implements AntColEvents {
 
 	@Override
 	public void onSelectShowMatrix() {
-		// TODO Auto-generated method stub
+	 
 	}
 
 	@Override
@@ -43,20 +43,20 @@ public class AntColDescriptionController implements AntColEvents {
 
 	@Override
 	public void afterGraphDrawn() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onSelectMultipleSteps() {
-		// TODO Auto-generated method stub
+	 
 		comp.setDescriptionText(2);
 
 	}
 
 	@Override
 	public void onSelectSingleStep() {
-		// TODO Auto-generated method stub
+	 
 		comp.setDescriptionText(1);
 
 	}
@@ -68,13 +68,13 @@ public class AntColDescriptionController implements AntColEvents {
 
 	@Override
 	public void onModifyConfiguration() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onConfigurationChange() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
@@ -91,20 +91,20 @@ public class AntColDescriptionController implements AntColEvents {
 	}
 
 	@Override
-	public void onKeyLengthChange(int value) {
-		// TODO Auto-generated method stub
+	public void onKeyLengthChange(int value, int oldValue) {
+	 
 
 	}
 
 	@Override
 	public void onGenerateText() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onCipherTextModify(String text) {
-		// TODO Auto-generated method stub
+	 
 
 	}
 

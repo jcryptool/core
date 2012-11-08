@@ -76,7 +76,7 @@ public class AntColEventController implements AntColEvents {
 		for (AntColEvents con : controllerList) {
 			con.onSelectShowGraph();
 		}
-		// TODO Auto-generated method stub
+	 
 
 	}
 
@@ -186,15 +186,6 @@ public class AntColEventController implements AntColEvents {
 		configController.onChangeLanguage();
 	}
 	
-	public void onKeyLengthChange(int value){
-		model.setSize(value);
-
-		for (AntColEvents con : controllerList) {
-			con.onKeyLengthChange(value);
-			con.onConfigurationChange();
-		}
-	}
-	
 
 	public void onGenerateText(){
 		for (AntColEvents con : controllerList) {
@@ -232,6 +223,16 @@ public class AntColEventController implements AntColEvents {
 		model.setVerd(value);
 		for (AntColEvents con : controllerList) {
 			con.onPheromoneChanged(value);
+		}
+	}
+
+	@Override
+	public void onKeyLengthChange(int value, int oldValue) {
+		model.setSize(value);
+
+		for (AntColEvents con : controllerList) {
+			con.onKeyLengthChange(value, oldValue);
+			con.onConfigurationChange();
 		}
 	}
 }
