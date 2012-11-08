@@ -28,7 +28,9 @@
 		
 		<p>Anhand der Regeln für die AUP-Musterauswahl ergeben sich insgesamt 389.112 mögliche Muster für das AUP. Dieser Wert wurde mittels eines Brute-Force-Programms ermittelt.</p>
 		
-		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer nur einmal vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten (Diese Regeln für die PIN ähneln denen für AUP-Muster). Dies lässt sich durch die Summe der Variationen ohne Zurücklegen<sup><a id="anker1" title="Zur Quelle" href="#fn1">[1]</a></sup> über die PIN-Längen vier bis neun berechnen:</p>
+		<p>Hinweis: Sollte eine Formel gefunden werden, so sind wird daran interessiert sie zu erhalten.</p>
+		
+		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer <b>nur einmal</b> vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten. Diese PINs werden im Folgenden als eingeschränkte PINs bezeichnet. Die Regeln für die eingeschränkten PINs ähneln denen für AUP-Muster; ihre Anzahl lässt sich durch die Summe der Variationen ohne Zurücklegen <a id="anker1" title="Zur Quelle" href="#fn1">[1]</a> über die PIN-Längen vier bis neun berechnen:</p>
 		
 		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
 		
@@ -131,7 +133,7 @@
 		
 		<p>Die Tabelle zeigt, dass das AUP ein kleineres Wachstum hat. Dadurch schneidet es im Direktvergleich zur PIN mit zunehmender Länge immer schlechter ab. In der Summe über alle möglichen Muster kann das AUP nur etwa 40% der Variationen der eingeschränkten PIN erzielen.</p>
 		
-		<p>Es sollte aber bedacht werden, dass sich Menschen Muster bzw. Bilder nachweisbar besser merken können <sup><a id="anker2" title="Zur Quelle" href="#fn2">[2, S. 5]</a></sup>. Folglich lassen sich auch längere Muster gut merken, weshalb der Direktvergleich wahrscheinlich keinen hohen Aussagewert besitzt.</p>
+		<p>Es sollte aber bedacht werden, dass sich Menschen Muster bzw. Bilder nachweisbar besser merken können. <a id="anker2" title="Zur Quelle" href="#fn2">[2, S. 5]</a> Folglich lassen sich auch längere Muster gut merken, weshalb der Direktvergleich wahrscheinlich keinen hohen Aussagewert besitzt.</p>
 		
 		<p>Auch sollte bedacht werden, dass eine &bdquo;normale&ldquo; PIN deutlich mehr Möglichkeiten besitzt. Die Anzahl der Variationen einer normalen PIN mit 10 Ziffern der Länge <i>l</i> beträgt 10<sup><i>l</i></sup>.</p>
 		
@@ -145,7 +147,7 @@
 		<p>Bei der Nutzung von Geräten mit Touchscreen bleiben meist ölige Rückstände auf der Oberfläche zurück. Diese können als Seitenkanal für einen Angriff verwendet werden, um kürzlich oder häufig berührte Bereiche des Bildschirms zu bestimmen. Die resultierenden Informationen können dann beispielsweise verwendet werden, um Informationen über das Authentifizierungsmuster oder -passwort zu erhalten.</p>
 		
 		<p>3. Angriff auf entwendete Authentifizierungsdaten</p>
-		<p>Gelingt es, Authentifizierungsdaten auszulesen und somit vom authentifizierenden System zu trennen, so können diese direkt untersucht werden. Dann kann beispielsweise ein Brute-Force-Angriff durchgeführt werden, der alle Möglichkeiten durchprobiert, bis die berechneten Daten mit den entwendeten Daten übereinstimmen. Problematisch im Zusammenhang mit Android ist, dass die Muster für ihre Speicherung lediglich ungesalzen gehasht werden <sup><a id="anker3" title="Zur Quelle" href="#fn3">[3]</a></sup>. Dies ermöglicht sogar einen noch mächtigeren Wörterbuchangriff auf die gespeicherten Muster. Kennt der Angreifer den Hashwert, so kann er mit diesem Angriff in Sekundenschnelle sagen, welches Muster verwendet wurde.</p>
+		<p>Gelingt es, Authentifizierungsdaten auszulesen und somit vom authentifizierenden System zu trennen, so können diese direkt untersucht werden. Dann kann beispielsweise ein Brute-Force-Angriff durchgeführt werden, der alle Möglichkeiten durchprobiert, bis die berechneten Daten mit den entwendeten Daten übereinstimmen. Problematisch im Zusammenhang mit Android ist, dass die Muster für ihre Speicherung lediglich ungesalzen gehasht werden. <a id="anker3" title="Zur Quelle" href="#fn3">[3]</a> Dies ermöglicht sogar einen noch mächtigeren Wörterbuchangriff auf die gespeicherten Muster. Kennt der Angreifer den Hashwert, so kann er mit diesem Angriff in Sekundenschnelle sagen, welches Muster verwendet wurde.</p>
 		
 		<h2>Andere Arten grafischer Passwörter</h2>
 		<h3>1. Draw-a-Secret (DAS)</h3>
@@ -162,14 +164,14 @@
 				<td align=center>Interne Repräsentation</td>
 			</tr>
 		</table></p>
-		<p>Beim DAS werden zur Nutzerauthentifizierung &bdquo;Passwörter&ldquo; gezeichnet. Diese werden als Abfolge von berührten Feldern in einem Raster gespeichert. Beim DAS gibt es keine Einschränkungen in Bezug auf die Länge oder Wiederholung von Feldern. Darüber hinaus kann ein Muster aus mehreren, nicht zusammenhängenden Teilen bestehen. Das AUP ist ein Spezialfall des DAS, denn seine Länge ist beschränkt, jedes Feld kann nur einmal verwendet werden und das Muster besteht aus nur einer zusammenhängenden Linie. Die Entwickler des DAS empfehlen eine Rastergröße von fünf mal fünf <sup><a title="Zur Quelle" href="#fn2">[2]</a></sup>.</p>
+		<p>Beim DAS werden zur Nutzerauthentifizierung &bdquo;Passwörter&ldquo; gezeichnet. Diese werden als Abfolge von berührten Feldern in einem Raster gespeichert. Beim DAS gibt es keine Einschränkungen in Bezug auf die Länge oder Wiederholung von Feldern. Darüber hinaus kann ein Muster aus mehreren, nicht zusammenhängenden Teilen bestehen. Das AUP ist ein Spezialfall des DAS, denn seine Länge ist beschränkt, jedes Feld kann nur einmal verwendet werden und das Muster besteht aus nur einer zusammenhängenden Linie. Die Entwickler des DAS empfehlen eine Rastergröße von fünf mal fünf. <a title="Zur Quelle" href="#fn2">[2]</a></p>
 		
-		<p>Wie im Artikel <a title="Zur Quelle" href="#fn2">[2]</a> angegeben, besitzt das DAS ein höheres Sicherheitsniveau als Passwörter. Dies kann darauf zurück geführt werden, dass Menschen sich Grafiken und Figuren besser merken können und sich somit auch längere Muster gut behalten lassen. Es sollte aber auch bedacht werden, dass sich spiegelsymmetrische Bilder besser merken lassen als asymmetrische <sup><a id="anker4" title="Zur Quelle" href="#fn4">[4]</a></sup>. Dadurch kann der Musterraum für Angriffe erheblich verkleinern werden, was in der Folge auch die Sicherheit verringert.</p>
+		<p>Wie im Artikel <a title="Zur Quelle" href="#fn2">[2]</a> angegeben, besitzt das DAS ein höheres Sicherheitsniveau als Passwörter. Dies kann darauf zurück geführt werden, dass Menschen sich Grafiken und Figuren besser merken können und sich somit auch längere Muster gut behalten lassen. Es sollte aber auch bedacht werden, dass sich spiegelsymmetrische Bilder besser merken lassen als asymmetrische. <a id="anker4" title="Zur Quelle" href="#fn4">[4]</a> Dadurch kann der Musterraum für Angriffe erheblich verkleinern werden, was in der Folge auch die Sicherheit verringert.</p>
 		
 		<h3>2. Windows 8: Picture-Passwort</h3>
 		
 		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
-		<p>Windows 8 greift die Idee der grafischen Passwörter auf und bietet sie als Login-Möglichkeit an <sup><a id="anker5" title="Zur Quelle" href="#fn5">[5]</a></sup>. Der Nutzer kann sich für diesen Mechanismus ein Bild auswählen und im Anschluss Bereiche darauf mit verschiedenen Gesten hervorheben. Im Gegensatz zum DAS sind keine freien Gesten möglich. Die Gesten sind auf Kreise, Linien und Punkte limitiert. Ein weiterer Unterschied ist, dass lediglich &bdquo;Charakteristiken&ldquo; für die Authentisierung gespeichert werden und nicht die berührten Felder. Bei Linien sind dies der Anfangs- und Endpunkt, sowie ihre Richtung. Darüber hinaus ist das Raster beim Picture-Passwort deutlich feiner. So wird die längere Seite des Bildes in 100 Abschnitte unterteilt. Diese Skalierung wird anschließend auf die kürzere Seite übertragen, um das Raster zu bilden, welches über das Bild gelegt wird. Nach Aussage von Sinofsky in <a title="Zur Quelle" href="#fn5">[5]</a> bietet auch dieses Verfahren eine deutlich größere Sicherheit als traditionelle Passwörter.</p>
+		<p>Windows 8 greift die Idee der grafischen Passwörter auf und bietet sie als Login-Möglichkeit an. <a id="anker5" title="Zur Quelle" href="#fn5">[5]</a> Der Nutzer kann sich für diesen Mechanismus ein Bild auswählen und im Anschluss Bereiche darauf mit verschiedenen Gesten hervorheben. Im Gegensatz zum DAS sind keine freien Gesten möglich. Die Gesten sind auf Kreise, Linien und Punkte limitiert. Ein weiterer Unterschied ist, dass lediglich &bdquo;Charakteristiken&ldquo; für die Authentisierung gespeichert werden und nicht die berührten Felder. Bei Linien sind dies der Anfangs- und Endpunkt, sowie ihre Richtung. Darüber hinaus ist das Raster beim Picture-Passwort deutlich feiner. So wird die längere Seite des Bildes in 100 Abschnitte unterteilt. Diese Skalierung wird anschließend auf die kürzere Seite übertragen, um das Raster zu bilden, welches über das Bild gelegt wird. Nach Aussage von Sinofsky in <a title="Zur Quelle" href="#fn5">[5]</a> bietet auch dieses Verfahren eine deutlich größere Sicherheit als traditionelle Passwörter.</p>
 		<hr>
 		<p>Quellen</p>
 		<p><table border=0>
