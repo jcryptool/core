@@ -26,11 +26,9 @@
 		<h3>AUP Security</h3>
 		<p>The Google Nexus S with unmodified Android 2.3.4 is used as reference because many devices are operated by vendor modified Android versions: The unmodified Android forces the user to wait for 30 seconds after five failed unlock attempts. From this point on, the Google password can additionally be used for unlocking the device. However, the user is still able to use the pattern for 15 further pattern unlock attempts. Every five failed attempts 30 seconds have to be waited. After a total of 20 failed attempts, the device can be only unlocked with the Google password. The security of this password is not evaluated because it is a standard text based password.</p>
 		
-		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach.</p>
+		<p>The AUP has a total of 389,112 different valid patterns. This value was determined using a brute-force approach. [<b>Remark</b>: If someone knows a formula we are interested to get known of it.]</p>
 		
-		<p>Remark: If someone knows a formula we are interested to get known of it.</p>
-		
-		<p>For comparison: There are 985,824 different PINs of length four to nine, using the digits 1 to 9, and containing every digit <b>only once</b>. These PINs are called limited PINs. The rules for limited PINs are similar to that of the AUP. The calculation is done as sum of the k-permutations of n <a id="anker1" title="Source" href="#fn1">[1]</a> over the PIN lengths four to nine:</p>
+		<p>For comparison: There are 985,824 different PINs of length four to nine, using the digits 1 to 9, and containing every digit <b>only once</b>. These PINs are called limited PINs. The rules for limited PINs are similar to that of the AUP. The calculation is done as sum of the k-permutations of n <sup><a id="anker1" title="Source" href="#fn1">[1]</a></sup> over the PIN lengths four to nine:</p>
 		
 		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
 		
@@ -111,7 +109,7 @@
 		
 		<p>As the table shows, the AUP grows slower. As a result, with increasing length the direct comparison gets even worse. In the total, the AUP achieves only about 40% of the limited PIN&rsquo;s permutation quantity.</p>
 		
-		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better. <a id="anker2" title="Source" href="#fn2">[2, p. 5]</a> Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as 10<sup><i>l</i></sup> for a normal PIN with 10 digits and length <i>l</i>.</p>
+		<p>However, it should also be noticed that humans are verifiably able to memorise patterns and pictures much better.<sup><a id="anker2" title="Source" href="#fn2">[2, p. 5]</a></sup> Accordingly, longer pattern can be memorised well, resulting in a lower significance of the direct comparison. On the other hand, a not restricted PIN has significant more permutations. These can be calculated as 10<sup><i>l</i></sup> for a normal PIN with 10 digits and length <i>l</i>.</p>
 		
 		<p>All in all, there are 2,856 times more limited PINs than AUP permutations (for limited PINs of length 4 to 9). Due to the fact, that the AUP has not so many pattern permutations, it is more vulnerable to brute-force attacks than PIN or password authentication methods. However, a brute-force attack which uses the conventional input has only a very little success rate because only 20 pattern can be tried. Thereafter the Google account password is required.</p>
 		
@@ -122,9 +120,9 @@
 		<p>2. Smudge Attack</p>
 		<p>After the usage of touchscreen devices mostly oily smudges are left behind on their surfaces. These can be used as side channel for detecting recently or frequently touched areas. The resulting information can be used for example to gain information on the authentication pattern or password.</p>
 		
-		<p>3. Attacking Stolen Authentication Information</p>
+		<p>3. Attacking Stolen Authentication Data</p>
 		
-		<p>In case authentication information can be copied and thus separated of an authenticating system, it is possible to directly analyse them. As a result, it is possible to launch a brute-force attack which tests all alternatives for a match. Android saves the patterns as unsalted hash values <a id="anker3" title="Source" href="#fn3">[3]</a>, which is an additional weakness: Dictionary attacks for retrieving patterns from their hash value could be performed in a matter of seconds.</p>
+		<p>In case, authentication data can be copied and thus separated of an authenticating system, it is possible to directly analyse it. As a result, it is possible to launch a brute-force attack which tests all alternatives for a match. Android saves the patterns as unsalted hash values, which is an additional weakness: Dictionary attacks for retrieving patterns from their hash value could be performed in a matter of seconds.<sup><a id="anker3" title="Source" href="#fn3">[3]</a></sup></p>
 		
 		<h2>Further Graphical Password Methods</h2>
 		<h3>1. Draw a Secret (DAS)</h3>
@@ -141,14 +139,14 @@
 				<td align=center>Internal representation</td>
 			</tr>
 		</table></p>
-		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5. <a title="Source" href="#fn2">[2]</a></p>
+		<p>The DAS utilizes drawn &lsquo;passwords&rsquo; for user authentication. These passwords are represented as sequence of traversed fields in a grid. The DAS has no limitations regarding the length of the sequence or the repetition of single fields. Additionally, it is possible that a pattern can be composed of many disjoint parts. The AUP can therefore be considered as special case of the DAS because its length is limited, fields can be used only once, and the pattern is one coherent line. The DAS developers recommend a grid size of 5 x 5.<sup><a title="Source" href="#fn2">[2]</a></sup></p>
 		
-		<p>According to paper <a title="Source" href="#fn2">[2]</a>, the DAS features a higher security level than passwords. Due to the much better memory of humans for figures and graphics  long patterns can be chosen. But notice that mirror symmetrical figures can be memorised better than asymmetrical. <a id="anker4" title="Source" href="#fn4">[4]</a> This fact can be exploited to reduce the possible pattern set for an attack significantly which in the end results in a lower security.</p>
+		<p>According to the developers&rsquo; security analysis, the DAS features a higher security level than passwords.<sup><a title="Source" href="#fn2">[2]</a></sup> Due to the much better memory of humans for figures and graphics  long patterns can be chosen. But notice that mirror symmetrical figures can be memorised better than asymmetrical.<sup><a id="anker4" title="Source" href="#fn4">[4]</a></sup> This fact can be exploited to reduce the possible pattern set for an attack significantly which in the end results in a lower security.</p>
 		
 		<h3>2. Windows 8: Picture Password</h3>
 		
 		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
-		<p>Windows 8 adopts the idea of graphical passwords to offer a login technique based on this idea. <a id="anker5" title="Source" href="#fn5">[5]</a> In order to use this authentication scheme, the user has to choose a picture and highlight different areas with gestures thereafter. In comparison to the DAS no freeform gestures are supported; they are limited to circles, lines and taps. Another difference is that only certain &lsquo;characteristics&rsquo; are saved for the authentication and not a sequence of fields. For lines the start and end point, as well as their direction is saved. The grid moreover has a much higher resolution. &ldquo;The longest dimension of the image is divided into 100 segments. The shorter dimension is then divided on that scale to create the grid upon which you draw gestures.&rdquo; <a title="Source" href="#fn5">[5]</a> According to Sinofsky in <a title="Source" href="#fn5">[5]</a> this authentication procedure has a much better security than traditional passwords.</p>
+		<p>Windows 8 adopts the idea of graphical passwords to offer a login technique based on this idea.<sup><a id="anker5" title="Source" href="#fn5">[5]</a></sup> In order to use this authentication scheme, the user has to choose a picture and highlight different areas with gestures thereafter. In comparison to the DAS no freeform gestures are supported; they are limited to circles, lines and taps. Another difference is that only certain &lsquo;characteristics&rsquo; are saved for the authentication and not a sequence of fields. For lines the start and end point, as well as their direction is saved. The grid moreover has a much higher resolution. &ldquo;The longest dimension of the image is divided into 100 segments. The shorter dimension is then divided on that scale to create the grid upon which you draw gestures.&rdquo;<sup><a title="Source" href="#fn5">[5]</a></sup> According to Sinofsky this authentication procedure has a much better security than traditional passwords.<sup><a title="Source" href="#fn5">[5]</a></sup></p>
 		<hr>
 		<p>Sources</p>
 		<p><table border=0>
