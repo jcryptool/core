@@ -60,6 +60,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.visual.aco.model.PseudoRandomChars;
 /**
  * This code was edited or generated using CloudGarden's Jigloo
  * SWT/Swing GUI Builder, which is free for non-commercial
@@ -450,10 +451,6 @@ public class TranspTextWizardPage extends WizardPage {
 							fontdata));
 				}
 			}
-			{
-				// parttextLabel1 = new Label(parttextGroup, SWT.NONE);
-				// parttextLabel1.setText("(This option is activated by default, if you chose not to arrange the text into columns)");
-			}
 		}
 		{
 			group1 = new Group(pageComposite, SWT.NONE);
@@ -491,37 +488,6 @@ public class TranspTextWizardPage extends WizardPage {
 				blocklengthSpinner.setSelection(init_blocklength);
 			}
 		}
-		/*{
-			groupReadInDirection = new Group(pageComposite, SWT.NONE);
-			GridLayout groupReadInDirectionLayout = new GridLayout();
-			groupReadInDirectionLayout.numColumns = 2;
-			groupReadInDirection.setLayout(groupReadInDirectionLayout);
-			GridData groupReadInDirectionLData = new GridData();
-			groupReadInDirectionLData.grabExcessHorizontalSpace = true;
-			groupReadInDirectionLData.horizontalAlignment = GridData.FILL;
-			groupReadInDirection.setLayoutData(groupReadInDirectionLData);
-			groupReadInDirection
-					.setText(Messages.TranspTextWizardPage_readinmode);
-			{
-				labelReadIn = new Label(groupReadInDirection, SWT.NONE);
-				labelReadIn
-						.setText(Messages.TranspTextWizardPage_readinmode_description);
-			}
-			{
-				directionChooserIn = new ReadDirectionChooser(
-						groupReadInDirection, false);
-				directionChooserIn.setDirection(iniDirection);
-
-				directionChooserIn.getInput().addObserver(new Observer() {
-					@Override
-					public void update(Observable o, Object arg) {
-						if (arg == null)
-							preview();
-					}
-				});
-			}
-		}
-*/
 		{
 			previewGroup = new Group(pageComposite, SWT.NONE);
 			GridLayout previewGroupLayout = new GridLayout();
@@ -882,6 +848,8 @@ public class TranspTextWizardPage extends WizardPage {
 		TransformData transform = new TransformData();
 		transform.setUppercaseTransformationOn(true);
 		transform.setAlphabetTransformationON(true);
+		
+		text = forceFitTextLength(text);
 
 		String is = Transform.transformText(text, transform);
 		transpositionTable1.setText(is, pageConfig.getColumnCount(),
@@ -890,6 +858,14 @@ public class TranspTextWizardPage extends WizardPage {
 	}
 
 
+	private String forceFitTextLength(String text){
+		int colCount = getPageConfiguration().columnCount;
+		int textCount = text.length();
+		PseudoRandomChars chars = new PseudoRandomChars((colCount - textCount % colCount) % colCount);
+		text += chars.toString();
+		return text;
+	}
+	
 	/**
 	 * @param initBlocklength
 	 *            the init_blocklength to set
