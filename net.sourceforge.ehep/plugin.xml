@@ -12,24 +12,7 @@
  *==========================================================================
 -->
 <?eclipse version="3.0"?>
-<plugin
-	id="net.sourceforge.ehep"
-	name="%pluginName"
-	version="1.0.0"
-	provider-name="%providerName"
-	class="net.sourceforge.ehep.EhepPlugin">
-
-	<runtime>
-		<library name="ehep.jar" />
-	</runtime>
-
-	<requires>
-		<import plugin="org.eclipse.ui.ide"/>
-		<import plugin="org.eclipse.ui.workbench.texteditor"/>
-		<import plugin="org.eclipse.ui.editors"/>
-		<import plugin="org.eclipse.core.resources" />
-		<import plugin="org.eclipse.ui" />
-	</requires>
+<plugin>
 
 	<extension point="org.eclipse.ui.editors">
 		<editor
