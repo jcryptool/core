@@ -16,8 +16,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -144,7 +142,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         String path = Platform.getInstallLocation().getURL().toExternalForm();
         String fileNameOrg = Platform.getProduct().getName() + ".ini"; //$NON-NLS-1$
         String fileNameBak = fileNameOrg + ".bak"; //$NON-NLS-1$
-        
+
         if ("macosx".equalsIgnoreCase(Platform.getOS())) { //$NON-NLS-1$
             path += "JCrypTool.app/Contents/MacOS/"; //$NON-NLS-1$
         }
@@ -155,8 +153,8 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         if (fileBak.exists()) {
             fileBak.delete();
         }
-        
-        Files.move(fileOrg.toPath(), fileBak.toPath(), StandardCopyOption.ATOMIC_MOVE);
+
+        fileOrg.renameTo(fileBak);
 
         BufferedReader in = new BufferedReader(new FileReader(fileBak));
         BufferedWriter out = new BufferedWriter(new FileWriter(fileOrg));
