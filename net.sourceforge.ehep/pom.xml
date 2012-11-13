@@ -9,7 +9,7 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sourceforge</groupId>
-	<artifactId>net.sourceforge.ehep</artifactId>
 	<version>1.0.0</version>
 	<packaging>eclipse-plugin</packaging>
+	<artifactId>net.sourceforge.ehep</artifactId>
 </project>

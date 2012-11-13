@@ -40,19 +40,5 @@
             class="net.sourceforge.ehep.preferences.PreferencesInitializer">
       </initializer>
    </extension>
-   
-   <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            id="net.sourceforge.ehep.HexEditorPopup"
-            objectClass="org.eclipse.core.resources.IFile">
-         <action
-               class="net.sourceforge.ehep.popup.actions.OpenHexEditorAction"
-               id="net.sourceforge.ehep.openWithHexEditor"
-               label="%action.label"
-               menubarPath="additions"
-               enablesFor="1"/>
-      </objectContribution>
-   </extension>
 
 </plugin>
