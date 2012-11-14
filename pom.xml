@@ -17,7 +17,8 @@
     <module>com.thoughtworks.qdox</module>
     <module>de.flexiprovider</module>
     <module>net.sourceforge.codec</module>
-    <module>net.sourceforge.javahexeditor</module>
+    <module>net.sourceforge.ehep</module>
+    <module>net.sourceforge.ehep.nl_de</module>
     <module>org.apache.commons.cli</module>
     <module>org.bouncycastle</module>
     <module>org.jcryptool.actions.core</module>
@@ -46,6 +47,7 @@
     <module>org.jcryptool.crypto.flexiprovider.keystore</module>
     <module>org.jcryptool.crypto.flexiprovider.operations</module>
     <module>org.jcryptool.crypto.keystore</module>
+    <module>org.jcryptool.editor.hex</module>
     <module>org.jcryptool.editor.text</module>
     <module>org.jcryptool.editors.feature</module>
     <module>org.jcryptool.fileexplorer</module>
