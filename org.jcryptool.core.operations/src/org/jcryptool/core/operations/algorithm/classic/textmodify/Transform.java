@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.operations.algorithm.classic.textmodify;
 
+import java.util.regex.Pattern;
+
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -127,32 +129,32 @@ public class Transform {
      */
     public static String umlautTransformation(String text) {
         String text2;
-        String replaceThis = "Ä"; //$NON-NLS-1$
+        String replaceThis = Messages.Transform_0; 
         String withThis = "AE"; //$NON-NLS-1$
-        text2 = text.replaceAll(replaceThis, withThis); //
-        replaceThis = "ä"; //$NON-NLS-1$
+        text2 = text.replaceAll(Pattern.quote(replaceThis), withThis); //
+        replaceThis = Messages.Transform_1; 
         withThis = "ae"; //$NON-NLS-1$
-        text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "Ö"; //$NON-NLS-1$
+        text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
+        replaceThis = Messages.Transform_2; 
         withThis = "OE"; //$NON-NLS-1$
-        text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "ö"; //$NON-NLS-1$
+        text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
+        replaceThis = Messages.Transform_3; 
         withThis = "oe"; //$NON-NLS-1$
-        text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "Ü"; //$NON-NLS-1$
+        text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
+        replaceThis = Messages.Transform_4; 
         withThis = "UE"; //$NON-NLS-1$
-        text2 = text2.replace(replaceThis, withThis); //
-        replaceThis = "ü"; //$NON-NLS-1$
+        text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
+        replaceThis = Messages.Transform_5; 
         withThis = "ue"; //$NON-NLS-1$
-        text2 = text2.replace(replaceThis, withThis); //
+        text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
         if (text.toUpperCase().equals(text)) { // For not writing two small caps 's' into a text full of capitals
-            replaceThis = "ß"; //$NON-NLS-1$
+            replaceThis = Messages.Transform_6; 
             withThis = "SS"; //$NON-NLS-1$
-            text2 = text2.replace(replaceThis, withThis); //
+            text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
         } else if (text2.toUpperCase().equals(text2)) {
-            replaceThis = "ß"; //$NON-NLS-1$
+            replaceThis = Messages.Transform_7; 
             withThis = "ss"; //$NON-NLS-1$
-            text2 = text2.replace(replaceThis, withThis); //
+            text2 = text2.replaceAll(Pattern.quote(replaceThis), withThis); //
         }
 
         return text2;
