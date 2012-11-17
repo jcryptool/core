@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Uitools
-Bundle-SymbolicName: org.jcryptool.crypto.ui
+Bundle-Name: Crypto UI Plug-in
+Bundle-SymbolicName: org.jcryptool.crypto.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: org.jcryptool.crypto.ui.UIToolsPlugin
+Bundle-Activator: org.jcryptool.crypto.ui.CryptoUIPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.logging,
@@ -14,3 +14,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.crypto.ui.alphabets,
  org.jcryptool.crypto.ui.alphabets.customalphabets,
  org.jcryptool.crypto.ui.textmodify.wizard
+Bundle-Vendor: jcryptool.org
