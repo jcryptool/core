@@ -17,7 +17,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.analysis.textmodify.wizard.ModifySelectionComposite;
+import org.jcryptool.crypto.uitools.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;

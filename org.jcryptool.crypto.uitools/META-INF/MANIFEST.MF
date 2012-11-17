@@ -12,4 +12,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.crypto.uitools.alphabets,
- org.jcryptool.crypto.uitools.alphabets.customalphabets
+ org.jcryptool.crypto.uitools.alphabets.customalphabets,
+ org.jcryptool.crypto.uitools.textmodify.wizard

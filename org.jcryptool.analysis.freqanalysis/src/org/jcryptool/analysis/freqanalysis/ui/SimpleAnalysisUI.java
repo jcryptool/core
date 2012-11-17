@@ -33,7 +33,7 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
-import org.jcryptool.analysis.textmodify.wizard.ModifyWizard;
+import org.jcryptool.crypto.uitools.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
