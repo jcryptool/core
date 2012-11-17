@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.jcryptool.crypto.uitools.textmodify.wizard.ModifySelectionComposite;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;

@@ -25,7 +25,7 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.textmodify.TextmodifyPlugin;
-import org.jcryptool.crypto.uitools.textmodify.wizard.ModifyWizard;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;

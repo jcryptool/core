@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.entropy.EntropyPlugin;
 import org.jcryptool.analysis.entropy.calc.EntropyCalc;
-import org.jcryptool.crypto.uitools.textmodify.wizard.ModifyWizard;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;

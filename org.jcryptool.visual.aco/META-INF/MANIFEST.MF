@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.jcryptool.crypto.uitools.textmodify.wizard,
+Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.algorithm.classic.textmodify,
  org.jcryptool.core.operations.editors,

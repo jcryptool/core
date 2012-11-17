@@ -11,7 +11,7 @@
 package org.jcryptool.crypto.classic.alphabets.ui;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.crypto.uitools.alphabets.customalphabets.CreateCustomAlphabetsWizardPage;
+import org.jcryptool.crypto.ui.alphabets.customalphabets.CreateCustomAlphabetsWizardPage;
 
 /**
  * The wizard for adding a new alphabet.

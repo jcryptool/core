@@ -1,12 +1,10 @@
-package org.jcryptool.crypto.classic.alphabets.ui.customalphabets;
+package org.jcryptool.crypto.ui.alphabets.customalphabets;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
-import org.jcryptool.crypto.ui.alphabets.customalphabets.CreateCustomAlphabetsWizardPage;
-import org.jcryptool.crypto.classic.alphabets.ui.customalphabets.customhistory.CustomAlphabetHistoryManager;
+import org.jcryptool.crypto.ui.alphabets.customalphabets.customhistory.CustomAlphabetHistoryManager;
 
 public class CustomAlphabetWizard extends Wizard {
 	
@@ -112,7 +110,6 @@ public class CustomAlphabetWizard extends Wizard {
 	private static void saveAlphabet(AbstractAlphabet alpha) {
 		AlphabetsManager.getInstance().addAlphabet(alpha);
         // saving
-        AlphabetsPlugin.getDefault().savePreferences();
 	}
 	
 }

@@ -14,7 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jcryptool.crypto.uitools.textmodify.wizard.ModifyWizardPage;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizardPage;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI

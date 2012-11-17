@@ -11,7 +11,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.analysis.graphtools,
  org.jcryptool.analysis.graphtools.derivates,
- org.jcryptool.crypto.uitools.textmodify.wizard,
+ org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.editors
 Export-Package: org.jcryptool.analysis.freqanalysis,
