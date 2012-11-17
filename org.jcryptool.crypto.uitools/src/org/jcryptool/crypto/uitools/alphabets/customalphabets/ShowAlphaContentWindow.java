@@ -1,4 +1,4 @@
-package org.jcryptool.crypto.classic.alphabets.ui;
+package org.jcryptool.crypto.uitools.alphabets.customalphabets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -9,8 +9,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
-import org.jcryptool.crypto.classic.alphabets.ui.alphabetblocks.BlockAlphabet;
+import org.jcryptool.crypto.uitools.alphabets.alphabetblocks.BlockAlphabet;
+import org.jcryptool.crypto.uitools.alphabets.composite.AtomAlphabet;
+import org.jcryptool.crypto.uitools.alphabets.Messages;
 
 public class ShowAlphaContentWindow extends Shell {
 	private Composite composite;

@@ -1,7 +1,7 @@
-package org.jcryptool.crypto.classic.alphabets.ui;
+package org.jcryptool.crypto.uitools.alphabets.alphabetblocks;
 
 import org.eclipse.jface.wizard.Wizard;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
+import org.jcryptool.crypto.uitools.alphabets.composite.AtomAlphabet;
 
 public class NewAlphabetBlockWizard extends Wizard {
 

@@ -1,4 +1,4 @@
-package org.jcryptool.crypto.classic.alphabets.ui;
+package org.jcryptool.crypto.classic.alphabets.ui.abc;
 
 import java.util.Observable;
 import java.util.Observer;

@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.crypto.classic.model;bundle-version="0.9.5",
  org.apache.commons.cli;bundle-version="1.2.0",
  org.jcryptool.commands.core;bundle-version="0.9.5",
- org.jcryptool.crypto.classic.alphabets
+ org.jcryptool.crypto.classic.alphabets,
+ org.jcryptool.crypto.uitools;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.transposition.algorithm,
  org.jcryptool.crypto.classic.transposition.ui,

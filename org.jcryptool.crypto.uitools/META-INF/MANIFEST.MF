@@ -5,6 +5,11 @@ Bundle-SymbolicName: org.jcryptool.crypto.uitools
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jcryptool.crypto.uitools.UIToolsPlugin
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.jcryptool.core.logging,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jcryptool.crypto.uitools.alphabets,
+ org.jcryptool.crypto.uitools.alphabets.customalphabets

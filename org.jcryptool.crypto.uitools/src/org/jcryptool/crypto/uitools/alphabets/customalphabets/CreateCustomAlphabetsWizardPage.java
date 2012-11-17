@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.alphabets.ui;
+package org.jcryptool.crypto.uitools.alphabets.customalphabets;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -29,7 +29,9 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
+import org.jcryptool.crypto.uitools.alphabets.AlphabetManualInputField;
+import org.jcryptool.crypto.uitools.alphabets.Messages;
+import org.jcryptool.crypto.uitools.alphabets.composite.AtomAlphabet;
 
 /**
  * The WizardPage for the AddAlphabet wizard.
@@ -37,7 +39,7 @@ import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
  * @author simlei
  *
  */
-public class AddAlphabetWizardPage2 extends WizardPage {
+public class CreateCustomAlphabetsWizardPage extends WizardPage {
 
 	private Group alphabetCharsGroup;
 	private Label charsLabel;
@@ -72,7 +74,7 @@ public class AddAlphabetWizardPage2 extends WizardPage {
 	/**
 	 * Creates a new instance of AddAlphabetWizardPage.
 	 */
-	public AddAlphabetWizardPage2() {
+	public CreateCustomAlphabetsWizardPage() {
 		super("page_name", Messages.getString("AddAlphabetWizardPage.1"), null);	 //$NON-NLS-1$ //$NON-NLS-2$
 		setPageComplete(false);
 		setDescription(Messages.getString("AddAlphabetWizardPage.2")); //$NON-NLS-1$
