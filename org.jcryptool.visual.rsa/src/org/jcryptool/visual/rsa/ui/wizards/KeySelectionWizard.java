@@ -133,10 +133,18 @@ public class KeySelectionWizard extends Wizard {
                     page = getPage(EncryptVerifyPage.getPagename());
                     rv &= page.isPageComplete();
                     if (((EncryptVerifyPage) page).wantNewKey()) {
-                        page = getPage(NewPublicKeyPage.getPagename());
-                        rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete())||(getPage(NewKeypairPage.getPagename()).isPageComplete()));
-                        if (((NewPublicKeyPage) page).wantSave()) {
-                            rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())||(getPage(SaveKeypairPage.getPagename()).isPageComplete());
+                        if(getContainer().getCurrentPage().getName().equals(NewPublicKeyPage.getPagename())){
+                        	page = getPage(NewPublicKeyPage.getPagename());
+                        	rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete())||(getPage(NewKeypairPage.getPagename()).isPageComplete()));
+                        	if (((NewPublicKeyPage) page).wantSave()) {
+                        		rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())||(getPage(SaveKeypairPage.getPagename()).isPageComplete());
+                        	}
+                        } else if(getContainer().getCurrentPage().getName().equals(NewKeypairPage.getPagename())) {
+                        	page = getPage(NewKeypairPage.getPagename());
+                        	rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete())||(getPage(NewKeypairPage.getPagename()).isPageComplete()));
+                        	if (((NewKeypairPage) page).wantSave()) {
+                        		rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())||(getPage(SaveKeypairPage.getPagename()).isPageComplete());
+                        	}
                         }
                     } else {
                         rv &= ((getPage(LoadPublicKeyPage.getPagename()).isPageComplete())||(getPage(LoadKeypairPage.getPagename()).isPageComplete()));
