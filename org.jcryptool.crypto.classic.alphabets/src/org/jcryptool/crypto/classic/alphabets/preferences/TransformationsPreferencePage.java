@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
@@ -49,7 +50,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     public final static String PREFID = AlphabetsPlugin.PLUGIN_ID;
     public final static String SUBNODE = "standdardtransformations"; //$NON-NLS-1$
 
-    private ModifySelectionComposite composite1;
+    private ModifySelectionComposite textTransformComposite;
     private Composite pageComposite;
     private Group transformationGroup;
     private Composite composite2;
@@ -138,7 +139,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
             firstFormSetting = preferenceSet[0];
             actualAlphabetName = alphabets[0];
 
-            composite1.setTransformData(firstFormSetting);
+            textTransformComposite.setTransformData(firstFormSetting);
         }
 
         savePreferences();
@@ -222,10 +223,10 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                             if (alphabetCombo.getText() != actualAlphabetName) {
                                 for (int i = 0; i < alphabets.length; i++) {
                                     if (alphabets[i].equals(actualAlphabetName) && !siteChanged) {
-                                        preferenceSet[i] = composite1.getTransformData();
+                                        preferenceSet[i] = textTransformComposite.getTransformData();
                                         for (int k = 0; k < alphabets.length; k++) {
                                             if (alphabets[k].equals(alphabetCombo.getText())) {
-                                                composite1.setTransformData(preferenceSet[k]);
+                                                textTransformComposite.setTransformData(preferenceSet[k]);
                                                 actualAlphabetName = alphabets[k];
                                                 siteChanged = true;
                                             }
@@ -271,16 +272,16 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                     composite1LData.grabExcessHorizontalSpace = true;
                     composite1LData.horizontalAlignment = GridData.FILL;
                     composite1LData.verticalAlignment = GridData.FILL;
-                    composite1 = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting);
+                    textTransformComposite = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting, AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS);
                     GridLayout composite1Layout1 = new GridLayout();
                     composite1Layout1.makeColumnsEqualWidth = true;
                     composite1Layout1.marginWidth = 0;
                     composite1Layout1.marginHeight = 0;
-                    composite1.setLayout(composite1Layout1);
+                    textTransformComposite.setLayout(composite1Layout1);
                     GridLayout composite1Layout = new GridLayout();
                     composite1Layout.makeColumnsEqualWidth = true;
                     composite1Layout.marginWidth = 0;
-                    composite1.setLayoutData(composite1LData);
+                    textTransformComposite.setLayoutData(composite1LData);
                 }
             }
         }
@@ -290,7 +291,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     private void saveCurrentState() {
         for (int i = 0; i < alphabets.length; i++) {
             if (alphabets[i].equals(actualAlphabetName)) {
-                preferenceSet[i] = composite1.getTransformData();
+                preferenceSet[i] = textTransformComposite.getTransformData();
             }
         }
     }
