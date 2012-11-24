@@ -327,7 +327,7 @@ public class TransformData {
 		GenericAlphabet result = null;
 		
 		try {
-			String[] split = value.substring(NONSTORE_ALPHABET_STARTMARKER.length()+1).split(Pattern.quote(INTER_ALPHA_SEPARATOR));
+			String[] split = value.substring(NONSTORE_ALPHABET_STARTMARKER.length()).split(Pattern.quote(INTER_ALPHA_SEPARATOR));
 			contentString = split[0];
 			nameString = split[1];
 			shortnameString = split[2];
@@ -352,7 +352,7 @@ public class TransformData {
 	 */
 	private static AbstractAlphabet alphaStoreReferenceStringToAlpha(
 			String value) {
-		String name = value.substring(STORE_ALPHABET_STARTMARKER.length()+1);
+		String name = value.substring(STORE_ALPHABET_STARTMARKER.length());
 		AbstractAlphabet alpha = AlphabetsManager.getInstance().getAlphabetByName(name);
 		if(alpha == null) {
 			LogUtil.logWarning(OperationsPlugin.PLUGIN_ID, "could not load alphabet by name " + name + " for transformData. Using the default transformation instead.");
@@ -368,7 +368,6 @@ public class TransformData {
 	private static String alphaToString(AbstractAlphabet alpha) {
 		StringBuilder b = new StringBuilder();
 		b.append(NONSTORE_ALPHABET_STARTMARKER);
-		b.append(":");
 		b.append(
 			AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet())
 		);
@@ -391,7 +390,7 @@ public class TransformData {
 	
 	private static String alphaToAlphaStoreReferenceString(
 			AbstractAlphabet alpha) {
-		return STORE_ALPHABET_STARTMARKER+":"+alpha.getName();
+		return STORE_ALPHABET_STARTMARKER+alpha.getName();
 	}
 
 	private static boolean isAlphaInAlphabetStore(AbstractAlphabet alpha) {
