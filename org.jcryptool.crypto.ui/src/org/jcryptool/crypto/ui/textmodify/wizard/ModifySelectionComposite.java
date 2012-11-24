@@ -130,7 +130,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     public TransformData getTransformData() {
     	//TODO: !provisory getNameForAlphabet
-        return new TransformData(getNameForAlphabet(getSelectedFilterAlphabet()), 
+        return new TransformData(getSelectedFilterAlphabet(), 
         		doUppercase, 
         		uppercaseTransformationOn, 
         		leerTransformationON,
@@ -166,7 +166,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
         leerTransformationON = data.isLeerTransformationON();
         umlautYESNO.setSelection(data.isUmlautTransformationON());
         umlautTransformationON = data.isUmlautTransformationON();
-        initAlphabetComposites(data.getSelectedAlphabetName());
+        initAlphabetComposites(data.getSelectedAlphabet());
 
         uppercase.setEnabled(uppercaseTransformationOn);
         lowercase.setEnabled(uppercaseTransformationOn);
@@ -176,8 +176,8 @@ public class ModifySelectionComposite extends Composite implements Listener {
 	/**
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
-    private void initAlphabetComposites(String selectAlphabetName) {
-        alphabetComboNew.getAlphabetInput().writeContent(getAlphabetForName(selectAlphabetName));
+    private void initAlphabetComposites(AbstractAlphabet selectAlphabet) {
+        alphabetComboNew.getAlphabetInput().writeContent(selectAlphabet);
         alphabetComboNew.getAlphabetInput().synchronizeWithUserSide();
     }
     

@@ -151,8 +151,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 	 * @return whether the node exists or not
 	 */
 	private static boolean nodeExists(Preferences myNode) {
-		if(! myNode.get(TransformationPreferenceSet.ID_UPPC_ON, "default").equals("default")) return true; //$NON-NLS-1$ //$NON-NLS-2$
+		if(! myNode.get(TransformationPreferenceSet.ID_TRANSFORM_DATA, "default").equals("default")) return true; //$NON-NLS-1$ //$NON-NLS-2$
 		return false;
 	}
-
 }

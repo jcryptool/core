@@ -47,7 +47,8 @@ import org.osgi.service.prefs.Preferences;
  */
 public class TransformationsPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
-    public final static String PREFID = AlphabetsPlugin.PLUGIN_ID;
+    private static final String SUBNODE_EACH_ALPHABET = "standardtransformation";
+	public final static String PREFID = AlphabetsPlugin.PLUGIN_ID;
     public final static String SUBNODE = "standdardtransformations"; //$NON-NLS-1$
 
     private ModifySelectionComposite textTransformComposite;
@@ -81,20 +82,14 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     }
 
     private boolean nodeExists(Preferences myNode) {
-        if (!myNode.get(TransformationPreferenceSet.ID_UPPC_ON, "default").equals("default")) //$NON-NLS-1$ //$NON-NLS-2$
+        if (!myNode.get(SUBNODE_EACH_ALPHABET, "default").equals("default")) //$NON-NLS-1$ //$NON-NLS-2$
             return true;
         return false;
     }
 
     public static TransformData getDataFromNode(Preferences myNode) {
-        String[][] preferenceTemplate = TransformationPreferenceSet.getTemplate();
-        for (int i = 0; i < TransformationPreferenceSet.PREFERENCE_COUNT; i++) {
-            preferenceTemplate[i][1] = myNode.get(preferenceTemplate[i][0], "default"); //$NON-NLS-1$
-        }
-
-        TransformationPreferenceSet temp = TransformationPreferenceSet.fromStringArray(preferenceTemplate);
-        TransformData result = temp.toTransformData();
-        return result;
+    	String data = myNode.get(SUBNODE_EACH_ALPHABET, new TransformData().toString());
+    	return TransformData.fromString(data);
     }
 
     private void loadPreferences() {
@@ -148,16 +143,11 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     private void savePreferences() {
         Preferences preferences = ConfigurationScope.INSTANCE.getNode(PREFID);
         Preferences mainnode = preferences.node(SUBNODE);
-        TransformationPreferenceSet mySet;
         String[][] myPrefSaveArray;
 
         for (int i = 0; i < alphabets.length; i++) {
             Preferences myNode = mainnode.node(alphabets[i]);
-            mySet = new TransformationPreferenceSet(preferenceSet[i], alphabets[i]);
-            myPrefSaveArray = mySet.toStringArray();
-            for (int k = 0; k < TransformationPreferenceSet.PREFERENCE_COUNT; k++) {
-                myNode.put(myPrefSaveArray[k][0], myPrefSaveArray[k][1]);
-            }
+            myNode.put(SUBNODE_EACH_ALPHABET, preferenceSet[i].toString());
         }
         try {
             preferences.flush();
@@ -179,9 +169,6 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
 
     @Override
     protected Control createContents(Composite parent) {
-        // GridLayout parentLayout = new GridLayout();
-        // parentLayout.makeColumnsEqualWidth = true;
-        // parent.setLayout(parentLayout);
         {
             GridData pageCompositeLData = new GridData();
             pageCompositeLData.grabExcessHorizontalSpace = true;
