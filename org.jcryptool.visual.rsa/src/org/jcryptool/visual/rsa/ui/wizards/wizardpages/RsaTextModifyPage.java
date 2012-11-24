@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.visual.rsa.Messages;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 
 /**
  * @author SLeischnig
@@ -25,7 +26,7 @@ import org.jcryptool.visual.rsa.Messages;
 public class RsaTextModifyPage extends WizardPage{
 
 	private TransformData predefinedData = new TransformData();
-	private ModifySelection composite1;
+	private ModifySelectionComposite composite1;
 
 	/**
 	 * Creates a new instance of CaesarWizardPage.
@@ -52,7 +53,7 @@ public class RsaTextModifyPage extends WizardPage{
 		pageComposite.setLayoutData(pageCompositeLayoutData);
 
 		{
-			composite1 = new ModifySelection(pageComposite, SWT.NONE);
+			composite1 = new ModifySelectionComposite(pageComposite, SWT.NONE);
 			composite1.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 			composite1.setTransformData(predefinedData);
 		}
