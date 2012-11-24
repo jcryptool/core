@@ -1,8 +1,10 @@
 package org.jcryptool.crypto.ui.alphabets;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,6 +17,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
@@ -636,6 +640,40 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	 */
 	protected Button getBtnCustomAlphabet() {
 		return btnCustomAlphabet;
+	}
+	
+	
+	Map<Control, Boolean> enabledStateMap = new HashMap<Control, Boolean>();
+	@Override
+	public void setEnabled(boolean enabled) {
+		boolean thisEnabled = this.isEnabled();
+		if(enabled == false && this.isEnabled()) {
+			enabledStateMap = new HashMap<Control, Boolean>();
+			disableAndPopulateEnabledMap(this);
+		} else if(enabled == true && !this.isEnabled()) {
+			applyEnabledMap();
+		}
+		super.setEnabled(enabled);
+	}
+
+	private void applyEnabledMap() {
+		for(Control c: enabledStateMap.keySet()) {
+			if(!c.isDisposed()) {
+				c.setEnabled(enabledStateMap.get(c));
+			}
+		}
+	}
+
+	private void disableAndPopulateEnabledMap(Composite node) {
+		for(Control c: node.getChildren()) {
+			if(!c.isDisposed()) {
+				enabledStateMap.put(c, c.isEnabled());
+				if(c instanceof Composite) {
+					disableAndPopulateEnabledMap((Composite) c);
+				}
+				c.setEnabled(false);
+			}
+		}
 	}
 
 }
