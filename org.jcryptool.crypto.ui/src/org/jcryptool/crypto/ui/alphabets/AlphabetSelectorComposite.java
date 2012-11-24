@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -85,6 +86,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	private Button btnCustomAlphabet;
 
 	private AbstractAlphabet defaultAlphabet;
+
+	private boolean showCustomCreationHint = true;
 
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
@@ -165,6 +168,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	private void initGUI() {
 		try {
 			GridLayout thisLayout = new GridLayout();
+			thisLayout.marginWidth = 0;
+			thisLayout.marginHeight = 0;
 			if(mode.isWithCustomButton()) {
 				thisLayout.numColumns = 2;
 				thisLayout.makeColumnsEqualWidth = false;
@@ -252,6 +257,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 						alphabetInput.synchronizeWithUserSide();
 
+						selectedItemIsCustomItem = !isRegisteredAlphabetSetInCombo();
 						if(selectedItemIsCustomItem) {
 							showCustomAlphabetSelection();
 						} else {
@@ -336,11 +342,15 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			return alpha.getName();
 		}
 
-		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")";//$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
 		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	private String makeAbbreviatedContentString(AbstractAlphabet alpha) {
+		return AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet());
 	}
 
 	private int getIndexForRegisteredAlphabet(AbstractAlphabet content) {
@@ -460,6 +470,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 				} else {
 					customAlphaByCombo = content;
 					comboAlphas.select(getComboIndexForUnregisteredAlphabet());
+					showCustomAlphabetSelection(content);
 				}
 
 				if(mode.isWithCustomButton()) {
@@ -509,28 +520,31 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 		};
 
+		comboAlphas.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
+		
 		alphabetInput.addObserver(new Observer() {
 			public void update(Observable o, Object arg) {
-				if(arg == null) {
-//					if(isRegisteredAlphabetSetInCombo()) {
-//						resetCustomAlphabetSelection();
-//					} else {
-//						showCustomAlphabetSelection();
-//					}
-				}
+				comboAlphas.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
 			}
 		});
+	}
+
+	private String generateAlphaContentTip(AbstractAlphabet content) {
+		return "Content" + ": " + AbstractAlphabet.alphabetContentAsString(content.getCharacterSet());
 	}
 
 	/**
 	 * Shows the custom alphabet's description in the UI
 	 */
 	protected void showCustomAlphabetSelection() {
+		showCustomAlphabetSelection(alphabetInput.getContent());
+	}
+	protected void showCustomAlphabetSelection(AbstractAlphabet alpha) {
 		if(mode.isWithCustomComboEntry()) {
-			comboAlphas.setItem(getComboIndexForUnregisteredAlphabet(), makeAlphaStringForCombo(alphabetInput.getContent(), true));
+			comboAlphas.setItem(getComboIndexForUnregisteredAlphabet(), makeAlphaStringForCombo(alpha, true));
 		}
 		if(mode.isWithCustomButton()) {
-			btnCustomAlphabet.setText(makeAlphaStringForBtn(alphabetInput.getContent()));
+			btnCustomAlphabet.setText(makeAlphaStringForBtn(alpha));
 		}
 	}
 

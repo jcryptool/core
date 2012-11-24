@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
@@ -106,6 +107,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			getContainer().updateButtons();
 		}
 	};
+	private Label customAlphaHint;
 
 	/**
 	 * Creates a new instance of AbstractClassicCryptoPage
@@ -720,11 +722,24 @@ public class AbstractClassicCryptoPage extends WizardPage {
 				}
 			});
 		}
+		
+		if(specification.isAllowCustomAlphabetCreation()) {
+			new Label(alphabetInnerGroup, SWT.NONE);
+			customAlphaHint = new Label(alphabetInnerGroup,	SWT.NONE);
+			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+			layoutData.verticalIndent = -5;
+			
+			customAlphaHint.setLayoutData(layoutData);
+			customAlphaHint.setText(Messages.AbstractClassicCryptoPage_customAlphabetHint);
+			customAlphaHint.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+			customAlphaHint.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
+		}
 
 		filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);
 
 			GridData filterCheckBoxGridData = new GridData();
 				filterCheckBoxGridData.horizontalSpan = 3;
+				if(specification.isAllowCustomAlphabetCreation()) filterCheckBoxGridData.verticalIndent = 3;
 				filterCheckBoxGridData.verticalAlignment = GridData.CENTER;
 				filterCheckBoxGridData.grabExcessHorizontalSpace = true;
 				filterCheckBoxGridData.grabExcessVerticalSpace = true;
