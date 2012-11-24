@@ -10,8 +10,13 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.operations.algorithm.classic.textmodify;
 
+import java.util.regex.Pattern;
+
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.core.operations.alphabets.GenericAlphabet;
 
 /**
  * saving the transformation wizard settings / configuring the transformation
@@ -21,7 +26,11 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * @version 0.6.0
  */
 public class TransformData {
-	private String selectedAlphabetName = ""; //$NON-NLS-1$
+	private static final String NONSTORE_ALPHABET_STARTMARKER = "Alphabet:";
+	private static final String STORE_ALPHABET_STARTMARKER = "StoreAlphabet:";
+	private static final String INTER_ALPHA_SEPARATOR = "{inter-alpha separator}";
+	private static final String SEPARATOR_REPLACEMENT = "{separator replacement}";
+	private AbstractAlphabet selectedAlphabet; //$NON-NLS-1$
 	private boolean doUppercase = true;
 	private boolean uppercaseTransformationOn = true;
 	private boolean alphabetTransformationON = false;
@@ -47,8 +56,8 @@ public class TransformData {
 	}
 
 	/**
-	 * @param pSelectedAlphabetName
-	 *            the name of the filtering alphabet
+	 * @param pSelectedAlphabet
+	 *            the filtering alphabet
 	 * @param pDoUppercase
 	 *            true: UPPERCASE. false: lowercase.
 	 * @param pUppercaseTransformationON
@@ -61,13 +70,13 @@ public class TransformData {
 	 * @param pUmlautTransformationON
 	 *            whether umlauts-replacing transformation will be applied.
 	 */
-	public TransformData(final String pSelectedAlphabetName,
+	public TransformData(final AbstractAlphabet pSelectedAlphabet,
 			final boolean pDoUppercase,
 			final boolean pUppercaseTransformationON,
 			final boolean pLeerTransformationON,
 			final boolean pAlphabetTransformationON,
 			final boolean pUmlautTransformationON) {
-		setSelectedAlphabetName(pSelectedAlphabetName);
+		setSelectedAlphabet(pSelectedAlphabet);
 		setDoUppercase(pDoUppercase);
 		setUppercaseTransformationOn(pUppercaseTransformationON);
 		setAlphabetTransformationON(pAlphabetTransformationON);
@@ -75,12 +84,12 @@ public class TransformData {
 		setLeerTransformationON(pLeerTransformationON);
 	}
 
-	public final void setSelectedAlphabetName(final String selectedAlphabetName) {
-		this.selectedAlphabetName = selectedAlphabetName;
+	public final void setSelectedAlphabet(final AbstractAlphabet selectedAlphabet) {
+		this.selectedAlphabet = selectedAlphabet;
 	}
 
-	public final String getSelectedAlphabetName() {
-		return selectedAlphabetName;
+	public final AbstractAlphabet getSelectedAlphabet() {
+		return selectedAlphabet;
 	}
 
 	public final void setDoUppercase(final boolean doUppercase) {
@@ -131,7 +140,7 @@ public class TransformData {
 	 * text unmodified.
 	 */
 	public final void setUnmodified() {
-		selectedAlphabetName = ""; //$NON-NLS-1$
+		selectedAlphabet = getDefaultFilterAlphabet(); //$NON-NLS-1$
 		doUppercase = true;
 		uppercaseTransformationOn = false;
 		alphabetTransformationON = false;
@@ -139,6 +148,10 @@ public class TransformData {
 		leerTransformationON = false;
 	}
 	
+	private static AbstractAlphabet getDefaultFilterAlphabet() {
+		return AlphabetsManager.getInstance().getDefaultAlphabet();
+	}
+
 	public boolean isUnmodified() {
 		if(doUppercase != true) return false;
 		if(uppercaseTransformationOn != false) return false;
@@ -175,7 +188,15 @@ public class TransformData {
 					String value = split[i]
 							.substring(split[i].indexOf("=") + 1); //$NON-NLS-1$
 
-					result.setSelectedAlphabetName(value);
+					value = value.replaceAll(Pattern.quote(SEPARATOR_REPLACEMENT), SEPARATOR);
+					AbstractAlphabet alpha;
+					if(isAlphaStringStoreReference(value)) {
+						alpha = alphaStoreReferenceStringToAlpha(value);
+					} else {
+						alpha = stringToAlpha(value);
+					}
+					
+					result.setSelectedAlphabet(alpha);
 				}
 
 				if (split[i].contains(BLANKS_LABEL)) {
@@ -209,7 +230,15 @@ public class TransformData {
 		}
 	
 		if (alphabetTransformationON) {
-			String value = selectedAlphabetName;
+			String alphaAsString;
+			//reference alphabets by name from the alphabets
+			if(isAlphaInAlphabetStore(selectedAlphabet)) {
+				alphaAsString = alphaToAlphaStoreReferenceString(selectedAlphabet);
+			} else {
+				alphaAsString = alphaToString(selectedAlphabet);
+			}
+			
+			String value = alphaAsString;
 			String separator = SEPARATOR;
 			if (result.toString().equals("")) //$NON-NLS-1$
 				separator = ""; //$NON-NLS-1$
@@ -254,7 +283,14 @@ public class TransformData {
 		}
 
 		if (alphabetTransformationON) {
-			String value = selectedAlphabetName;
+			String alphaAsString;
+			if(isAlphaInAlphabetStore(selectedAlphabet)) {
+				alphaAsString = alphaToAlphaStoreReferenceString(selectedAlphabet);
+			} else {
+				alphaAsString = alphaToString(selectedAlphabet);
+			}
+			
+			String value = alphaAsString.replaceAll(Pattern.quote(SEPARATOR), SEPARATOR_REPLACEMENT);
 			String separator = SEPARATOR;
 			if (result.toString().equals("")) //$NON-NLS-1$
 				separator = ""; //$NON-NLS-1$
@@ -283,10 +319,95 @@ public class TransformData {
 		return result.toString();
 	}
 	
+	private static AbstractAlphabet stringToAlpha(String value) {
+		String contentString;
+		String nameString;
+		String shortnameString;
+		String isbasicString;
+		GenericAlphabet result = null;
+		
+		try {
+			String[] split = value.substring(NONSTORE_ALPHABET_STARTMARKER.length()+1).split(Pattern.quote(INTER_ALPHA_SEPARATOR));
+			contentString = split[0];
+			nameString = split[1];
+			shortnameString = split[2];
+			isbasicString = split[3];
+			
+			result = new GenericAlphabet(nameString, shortnameString, 
+					AbstractAlphabet.parseAlphaContentFromString(contentString), 
+					Boolean.parseBoolean(isbasicString));
+		} catch (Exception e) {
+			LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Error when trying to parse alphabet from string for transformData: " + value);
+			return null;
+		}
+		
+		return result;
+	}
+
+	/**
+	 * Returns an alphabet from the store which is referenced in a string by "STORE_ALPHABET_STARTMARKER:[name]"
+	 * 
+	 * @param value the reference string
+	 * @return null if not found in the store, else the store alphabet
+	 */
+	private static AbstractAlphabet alphaStoreReferenceStringToAlpha(
+			String value) {
+		String name = value.substring(STORE_ALPHABET_STARTMARKER.length()+1);
+		AbstractAlphabet alpha = AlphabetsManager.getInstance().getAlphabetByName(name);
+		if(alpha == null) {
+			LogUtil.logWarning(OperationsPlugin.PLUGIN_ID, "could not load alphabet by name " + name + " for transformData. Using the default transformation instead.");
+			return AlphabetsManager.getInstance().getDefaultAlphabet();
+		}
+		return alpha;
+	}
+
+	private static boolean isAlphaStringStoreReference(String value) {
+		return value.startsWith(STORE_ALPHABET_STARTMARKER);
+	}
+
+	private static String alphaToString(AbstractAlphabet alpha) {
+		StringBuilder b = new StringBuilder();
+		b.append(NONSTORE_ALPHABET_STARTMARKER);
+		b.append(":");
+		b.append(
+			AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet())
+		);
+		b.append(INTER_ALPHA_SEPARATOR);
+		b.append(alpha.getName());
+		b.append(INTER_ALPHA_SEPARATOR);
+		b.append(alpha.getShortName());
+		b.append(INTER_ALPHA_SEPARATOR);
+		b.append(Boolean.valueOf(alpha.isBasic()).toString());
+		return b.toString();
+	}
+
+//	public static void main(String[] args) {
+//		String string1 = "ab|c||d";
+//		String[] split1 = string1.split(Pattern.quote("|"));
+//		for(String s: split1) {
+//			System.out.println(s+"+");
+//		}
+//	}
+	
+	private static String alphaToAlphaStoreReferenceString(
+			AbstractAlphabet alpha) {
+		return STORE_ALPHABET_STARTMARKER+":"+alpha.getName();
+	}
+
+	private static boolean isAlphaInAlphabetStore(AbstractAlphabet alpha) {
+		AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
+		for(AbstractAlphabet a: alphas) {
+			if(a!=null && (a==alpha || a.equals(alpha))) {
+    			return true;
+    		}
+		}
+		return false;
+	}
+
 	@Override
 	protected TransformData clone() throws CloneNotSupportedException {
 		TransformData clone = new TransformData();
-		clone.selectedAlphabetName = selectedAlphabetName;
+		clone.selectedAlphabet = selectedAlphabet;
 		clone.doUppercase = doUppercase;
 		clone.uppercaseTransformationOn = uppercaseTransformationOn;
 		clone.alphabetTransformationON = alphabetTransformationON;

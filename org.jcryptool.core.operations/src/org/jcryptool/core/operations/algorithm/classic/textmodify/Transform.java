@@ -16,7 +16,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphaConverter;
-import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 
 /**
  * Transformation calculation class - Executes all the transformations based upon the Wizard setting
@@ -45,7 +44,7 @@ public class Transform {
             myText = uppercaseTransformation(myText, myTransformationData.isDoUppercase());
         if (myTransformationData.isAlphabetTransformationON())
             try {
-                myText = alphabetTransformation(myText, myTransformationData.getSelectedAlphabetName());
+                myText = alphabetTransformation(myText, myTransformationData.getSelectedAlphabet());
             } catch (Exception e) {
                 LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
             }
@@ -79,19 +78,9 @@ public class Transform {
      * @return the transformed text
      * @throws Exception
      */
-    public static String alphabetTransformation(String text, String alphabetName) throws Exception {
-        AbstractAlphabet myAlphabet;
+    public static String alphabetTransformation(String text, AbstractAlphabet alphabet) throws Exception {
         AlphaConverter myAC;
-        AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
-        alphas = AlphabetsManager.getInstance().getAlphabets();
-        myAlphabet = AlphabetsManager.getInstance().getDefaultAlphabet();
-        for (int i = 0; i < alphas.length; i++) {
-            if (alphas[i].getName().equals(alphabetName)) {
-                myAlphabet = alphas[i];
-            }
-        }
-
-        myAC = new AlphaConverter(myAlphabet.getCharacterSet());
+        myAC = new AlphaConverter(alphabet.getCharacterSet());
 
         char[] myCharArray = text.toCharArray();
         return String.valueOf(myAC.filterNonAlphaChars(myCharArray));
