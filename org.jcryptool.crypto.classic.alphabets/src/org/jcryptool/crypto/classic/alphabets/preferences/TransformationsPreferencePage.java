@@ -259,7 +259,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                     composite1LData.grabExcessHorizontalSpace = true;
                     composite1LData.horizontalAlignment = GridData.FILL;
                     composite1LData.verticalAlignment = GridData.FILL;
-                    textTransformComposite = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting, AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS);
+                    textTransformComposite = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting);
                     GridLayout composite1Layout1 = new GridLayout();
                     composite1Layout1.makeColumnsEqualWidth = true;
                     composite1Layout1.marginWidth = 0;

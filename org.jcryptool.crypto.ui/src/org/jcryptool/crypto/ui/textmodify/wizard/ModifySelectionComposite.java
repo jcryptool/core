@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -74,6 +75,8 @@ public class ModifySelectionComposite extends Composite implements Listener {
     private boolean umlautTransformationON;
     private boolean leerTransformationON;
 
+    private static Mode defaultMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
+    
     /**
      * the alphabets to be displayed in the alphabet box
      */
@@ -86,15 +89,16 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     private String tryString;
     private PreviewViewer myExampleViewer;
-	private Mode customAlphabetMode = Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS;
+	private Mode customAlphabetMode = defaultMode;
 	private AlphabetSelectorComposite alphabetComboNew;
+	
 
     /**
      * @param parent the parent composite
      * @param style SWT style for the composite
      */
     public ModifySelectionComposite(Composite parent, int style) {
-        this(parent, style, new TransformData(), Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS);
+        this(parent, style, new TransformData(), defaultMode);
     }
 
     /**
@@ -128,7 +132,12 @@ public class ModifySelectionComposite extends Composite implements Listener {
         setTransformData(defaultData);
     }
 
-    public TransformData getTransformData() {
+    public ModifySelectionComposite(Group transformationGroup, int style,
+			TransformData firstFormSetting) {
+		this(transformationGroup, style, firstFormSetting, defaultMode);
+	}
+
+	public TransformData getTransformData() {
     	//TODO: !provisory getNameForAlphabet
         return new TransformData(getSelectedFilterAlphabet(), 
         		doUppercase, 
