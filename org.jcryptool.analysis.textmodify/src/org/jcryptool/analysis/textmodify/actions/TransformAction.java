@@ -25,7 +25,6 @@ import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.textmodify.TextmodifyPlugin;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
@@ -33,6 +32,7 @@ import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.constants.IConstants;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 
 public class TransformAction implements IWorkbenchWindowActionDelegate {
     /**

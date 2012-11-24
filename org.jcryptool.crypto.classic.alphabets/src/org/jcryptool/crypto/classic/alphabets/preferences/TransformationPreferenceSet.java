@@ -11,10 +11,8 @@ package org.jcryptool.crypto.classic.alphabets.preferences;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 
 /**

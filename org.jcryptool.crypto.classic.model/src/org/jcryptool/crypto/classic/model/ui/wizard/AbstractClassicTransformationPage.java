@@ -17,12 +17,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;
 import org.jcryptool.crypto.classic.model.ClassicCryptoModelPlugin;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.osgi.service.prefs.Preferences;
 
 public class AbstractClassicTransformationPage extends WizardPage {

@@ -16,8 +16,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
+import org.jcryptool.visual.rsa.Messages;
 
 /**
  * @author SLeischnig

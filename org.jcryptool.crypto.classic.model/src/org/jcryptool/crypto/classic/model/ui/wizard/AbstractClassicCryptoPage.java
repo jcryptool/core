@@ -40,12 +40,12 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
-import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
-import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.AlphabetAcceptor;
-import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.AlphabetAcceptor;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
 
 /**
