@@ -72,7 +72,7 @@ public abstract class TextWizardPage extends WizardPage {
 			this.getNextPage().setVisible(false);
 		}
 		else if (!numbers){
-			System.out.println("Enable Next Page");
+//			System.out.println("Enable Next Page");
 			this.getNextPage().setVisible(true);
 		}
 		

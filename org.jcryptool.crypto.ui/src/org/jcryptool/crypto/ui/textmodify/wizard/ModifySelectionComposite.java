@@ -73,7 +73,8 @@ public class ModifySelectionComposite extends Composite implements Listener {
     private boolean umlautTransformationON;
     private boolean leerTransformationON;
 
-    private static Mode defaultMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
+//    private static Mode defaultMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
+    private static Mode defaultMode = Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON;
     
     /**
      * the alphabets to be displayed in the alphabet box

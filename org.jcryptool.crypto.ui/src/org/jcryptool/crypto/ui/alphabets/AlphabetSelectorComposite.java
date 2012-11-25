@@ -349,7 +349,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	}
 
 	private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
-		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private String makeAbbreviatedContentString(AbstractAlphabet alpha) {
@@ -524,10 +524,16 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		};
 
 		comboAlphas.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
+		if(mode.isWithCustomButton()) {
+			btnCustomAlphabet.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
+		}
 		
 		alphabetInput.addObserver(new Observer() {
 			public void update(Observable o, Object arg) {
 				comboAlphas.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
+				if(mode.isWithCustomButton()) {
+					btnCustomAlphabet.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
+				}
 			}
 		});
 	}
