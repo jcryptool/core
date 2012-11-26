@@ -68,5 +68,88 @@
             file="$nl$/contexts.xml">
       </contexts>
    </extension>
-
+<extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.zeroknowledge.handlers.RestartHandler"
+            commandId="org.jcryptool.visual.zeroknowledge.restartCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.zeroknowledge.restartCommand"
+            name="%restart.command.name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.MagicDoorView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      
+            <menuContribution
+            locationURI="menu:org.jcryptool.visual.zeroknowledge.views.FiatShamirView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.FiatShamirView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      
+                  <menuContribution
+            locationURI="menu:org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.FeigeFiatShamirView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      
+              <menuContribution
+            locationURI="menu:org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.zeroknowledge.views.GraphenisomorphieView">
+         <command
+               commandId="org.jcryptool.visual.zeroknowledge.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

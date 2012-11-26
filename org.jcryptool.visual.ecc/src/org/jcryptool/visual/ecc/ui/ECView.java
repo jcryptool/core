@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -212,4 +213,16 @@ public class ECView extends ViewPart {
             saveToFile();
         }
     }
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
+	}
+    
+    
+    
 }

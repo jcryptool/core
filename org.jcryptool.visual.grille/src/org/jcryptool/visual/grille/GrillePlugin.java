@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille;
+package org.jcryptool.visual.grille;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

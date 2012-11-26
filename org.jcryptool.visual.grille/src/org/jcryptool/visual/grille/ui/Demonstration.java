@@ -7,11 +7,11 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.ui;
+package org.jcryptool.visual.grille.ui;
 
-import org.jcryptool.crypto.classic.grille.algorithm.Grille;
-import org.jcryptool.crypto.classic.grille.algorithm.KeySchablone;
-import org.jcryptool.crypto.classic.grille.algorithm.Schablone;
+import org.jcryptool.visual.grille.algorithm.Grille;
+import org.jcryptool.visual.grille.algorithm.KeySchablone;
+import org.jcryptool.visual.grille.algorithm.Schablone;
 
 public class Demonstration {
 

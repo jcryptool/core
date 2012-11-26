@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.ui;
+package org.jcryptool.visual.grille.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -23,6 +23,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -32,9 +33,9 @@ import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.crypto.classic.grille.GrillePlugin;
-import org.jcryptool.crypto.classic.grille.algorithm.Grille;
-import org.jcryptool.crypto.classic.grille.algorithm.KeySchablone;
+import org.jcryptool.visual.grille.GrillePlugin;
+import org.jcryptool.visual.grille.algorithm.Grille;
+import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
 public class View extends ViewPart {
 
@@ -67,6 +68,7 @@ public class View extends ViewPart {
     protected Demonstration demonstration;
     private KeyListener schluessel_listener;
     private Composite parent;
+	private Composite viewParent;
 
     public View() {
         model = new Grille();
@@ -75,6 +77,7 @@ public class View extends ViewPart {
 
     @Override
     public void createPartControl(Composite viewParent) {
+    	this.viewParent = viewParent;
         ScrolledComposite scrolledComposite = new ScrolledComposite(viewParent, SWT.H_SCROLL | SWT.V_SCROLL);
         parent = new Composite(scrolledComposite, SWT.NONE);
         parent.setLayout(new GridLayout(3, false));
@@ -526,6 +529,17 @@ public class View extends ViewPart {
         canvas_schluessel.redraw();
     }
 
+    
+    public void resetView(){
+		Control[] children = viewParent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(viewParent);
+		viewParent.layout();
+		reset();
+    }
+    
     @Override
     public void setFocus() {
         parent.setFocus();

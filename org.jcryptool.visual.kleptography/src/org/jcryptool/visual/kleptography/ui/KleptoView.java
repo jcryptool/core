@@ -13,6 +13,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -72,6 +73,7 @@ public class KleptoView extends ViewPart {
 	 * 19. Texts decrypted.
 	 */
 	public Integer currentStep;
+	private Composite parent;
 
 	// Define all the colors at once.
 	public static final Color WHITE;
@@ -90,6 +92,7 @@ public class KleptoView extends ViewPart {
 
 	@Override
 	public void createPartControl(final Composite parent) {
+		this.parent = parent;
 		klepto = new Kleptography();
 		setUpGUI(parent);
 	}
@@ -170,5 +173,14 @@ public class KleptoView extends ViewPart {
 			}
 			attackView.updateVisibility();
 		}
+	}
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
 	}
 }

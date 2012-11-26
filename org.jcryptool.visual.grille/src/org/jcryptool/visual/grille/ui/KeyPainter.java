@@ -7,15 +7,15 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.ui;
+package org.jcryptool.visual.grille.ui;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Canvas;
-import org.jcryptool.crypto.classic.grille.algorithm.Grille;
-import org.jcryptool.crypto.classic.grille.algorithm.KeySchablone;
+import org.jcryptool.visual.grille.algorithm.Grille;
+import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
 public class KeyPainter implements PaintListener {
 

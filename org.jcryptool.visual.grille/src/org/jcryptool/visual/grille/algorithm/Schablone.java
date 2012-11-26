@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.algorithm;
+package org.jcryptool.visual.grille.algorithm;
 
 import java.util.Arrays;
 

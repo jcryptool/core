@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.ui;
+package org.jcryptool.visual.grille.ui;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,8 +26,8 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.crypto.classic.grille.GrillePlugin;
-import org.jcryptool.crypto.classic.grille.algorithm.Schablone;
+import org.jcryptool.visual.grille.GrillePlugin;
+import org.jcryptool.visual.grille.algorithm.Schablone;
 
 public class DemonstrationPainter implements PaintListener {
 

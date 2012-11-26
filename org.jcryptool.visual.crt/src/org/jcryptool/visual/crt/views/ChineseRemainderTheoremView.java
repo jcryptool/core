@@ -14,6 +14,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
@@ -22,12 +23,11 @@ import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.visual.crt.export.FileExporter;
 
-
 /**
  * @author Oryal Inel
  * @version 1.0.0
  */
-public class ChineseRemainderTheoremView extends ViewPart implements Constants{
+public class ChineseRemainderTheoremView extends ViewPart implements Constants {
 
 	private Action exportToLatexAction;
 	private Action exportToCSVAction;
@@ -35,13 +35,17 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 
 	private StackLayout layout;
 	private CRTGroup CRTGroup;
+	private Composite parent;
+	private boolean reset = false;
 
 	/**
 	 * Create contents of the view part
+	 * 
 	 * @param parent
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, "1");
 
 		layout = new StackLayout();
@@ -50,8 +54,10 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 		CRTGroup = new CRTGroup(parent, SWT.NONE, this);
 		layout.topControl = CRTGroup;
 
-		createActions();
-		initializeMenu();
+		if (!reset) {
+			createActions();
+			initializeMenu();
+		}
 	}
 
 	/**
@@ -62,15 +68,17 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 		exportToPdfAction = new Action(MESSAGE_EXPORT_PDF) {
 			@Override
 			public void run() {
-				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-				dialog.setFilterExtensions(new String[] {IConstants.PDF_FILTER_EXTENSION});
-		        dialog.setFilterNames(new String[] {IConstants.PDF_FILTER_NAME});
-		        dialog.setFilterPath(DirectoryService.getUserHomeDir());
-		        dialog.setOverwrite(true);
+				FileDialog dialog = new FileDialog(Display.getCurrent()
+						.getActiveShell(), SWT.SAVE);
+				dialog.setFilterExtensions(new String[] { IConstants.PDF_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.PDF_FILTER_NAME });
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setOverwrite(true);
 				String filename = dialog.open();
 
 				if (filename != null) {
-					FileExporter pdfExport = new FileExporter(CRTGroup.getCrt(), filename);
+					FileExporter pdfExport = new FileExporter(
+							CRTGroup.getCrt(), filename);
 					pdfExport.exportToPDF();
 				}
 
@@ -81,15 +89,17 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 		exportToCSVAction = new Action(MESSAGE_EXPORT_CSV) {
 			@Override
 			public void run() {
-				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-				dialog.setFilterExtensions(new String[] {IConstants.CSV_FILTER_EXTENSION});
-                dialog.setFilterNames(new String[] {IConstants.CSV_FILTER_NAME});
-                dialog.setFilterPath(DirectoryService.getUserHomeDir());
-                dialog.setOverwrite(true);
+				FileDialog dialog = new FileDialog(Display.getCurrent()
+						.getActiveShell(), SWT.SAVE);
+				dialog.setFilterExtensions(new String[] { IConstants.CSV_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.CSV_FILTER_NAME });
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setOverwrite(true);
 				String filename = dialog.open();
 
 				if (filename != null) {
-					FileExporter csvExport = new FileExporter(CRTGroup.getCrt(), filename);
+					FileExporter csvExport = new FileExporter(
+							CRTGroup.getCrt(), filename);
 					csvExport.exportToCSV();
 				}
 			}
@@ -99,15 +109,17 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 		exportToLatexAction = new Action(MESSAGE_EXPORT_LATEX) {
 			@Override
 			public void run() {
-				FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-				dialog.setFilterExtensions(new String[] {IConstants.TEX_FILTER_EXTENSION});
-                dialog.setFilterNames(new String[] {IConstants.TEX_FILTER_NAME});
-                dialog.setFilterPath(DirectoryService.getUserHomeDir());
-		        dialog.setOverwrite(true);
+				FileDialog dialog = new FileDialog(Display.getCurrent()
+						.getActiveShell(), SWT.SAVE);
+				dialog.setFilterExtensions(new String[] { IConstants.TEX_FILTER_EXTENSION });
+				dialog.setFilterNames(new String[] { IConstants.TEX_FILTER_NAME });
+				dialog.setFilterPath(DirectoryService.getUserHomeDir());
+				dialog.setOverwrite(true);
 				String filename = dialog.open();
 
 				if (filename != null) {
-					FileExporter latexExport = new FileExporter(CRTGroup.getCrt(), filename);
+					FileExporter latexExport = new FileExporter(
+							CRTGroup.getCrt(), filename);
 					latexExport.exportToLatex();
 				}
 
@@ -121,17 +133,29 @@ public class ChineseRemainderTheoremView extends ViewPart implements Constants{
 	 * Initialize the menu
 	 */
 	private void initializeMenu() {
-		IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
+		IMenuManager menuManager = getViewSite().getActionBars()
+				.getMenuManager();
 
 		menuManager.add(exportToPdfAction);
 		menuManager.add(exportToCSVAction);
 		menuManager.add(exportToLatexAction);
 	}
 
-	public void enableMenu(boolean enable){
+	public void enableMenu(boolean enable) {
 		exportToPdfAction.setEnabled(enable);
 		exportToLatexAction.setEnabled(enable);
 		exportToCSVAction.setEnabled(enable);
+	}
+
+	public void reset() {
+		layout = null;
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
+		reset = true;
 	}
 
 	@Override

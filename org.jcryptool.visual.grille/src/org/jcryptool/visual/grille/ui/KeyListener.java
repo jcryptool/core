@@ -7,13 +7,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.grille.ui;
+package org.jcryptool.visual.grille.ui;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Canvas;
-import org.jcryptool.crypto.classic.grille.algorithm.Grille;
-import org.jcryptool.crypto.classic.grille.algorithm.KeySchablone;
+import org.jcryptool.visual.grille.algorithm.Grille;
+import org.jcryptool.visual.grille.algorithm.KeySchablone;
 
 public class KeyListener implements MouseListener {
 
