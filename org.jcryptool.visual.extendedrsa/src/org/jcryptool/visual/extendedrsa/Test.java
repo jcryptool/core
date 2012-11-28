@@ -1,22 +1,23 @@
 package org.jcryptool.visual.extendedrsa;
 
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
-import org.jcryptool.core.util.fonts.FontService;
+import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.jcryptool.visual.extendedrsa.ui.wizard.KeyringWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizard.NewKeypairWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
 
 public class Test extends ViewPart{
 	private Text text;
@@ -91,14 +92,32 @@ public class Test extends ViewPart{
 	    grpErklrungen.setBounds(10, 338, 1389, 249);
 	    
 	    Button btnMeineSchlssel = new Button(grpLalala, SWT.NONE);
+	    btnMeineSchlssel.addSelectionListener(new SelectionAdapter() {
+	    	@Override
+	    	public void widgetSelected(SelectionEvent e) {
+	    		new WizardDialog(getSite().getShell(), new KeyringWizard()).open();
+	    	}
+	    });
 	    btnMeineSchlssel.setBounds(10, 257, 141, 50);
 	    btnMeineSchlssel.setText("Meine Schlüssel");
 	    
 	    Button btnNeuesSchlsselpaarErstellen = new Button(grpLalala, SWT.NONE);
+	    btnNeuesSchlsselpaarErstellen.addSelectionListener(new SelectionAdapter() {
+	    	@Override
+	    	public void widgetSelected(SelectionEvent e) {
+	    		new WizardDialog(getSite().getShell(), new NewKeypairWizard()).open();
+	    	}
+	    });
 	    btnNeuesSchlsselpaarErstellen.setBounds(10, 201, 141, 50);
 	    btnNeuesSchlsselpaarErstellen.setText("Neues Schlüsselpaar");
 	    
 	    Button btnIdentittErstellen = new Button(grpLalala, SWT.NONE);
+	    btnIdentittErstellen.addSelectionListener(new SelectionAdapter() {
+	    	@Override
+	    	public void widgetSelected(SelectionEvent e) {
+	    		new WizardDialog(getSite().getShell(), new NewIdentityWizard()).open();
+	    	}
+	    });
 	    btnIdentittErstellen.setBounds(10, 32, 141, 50);
 	    btnIdentittErstellen.setText("Identität erstellen");
 	    
@@ -174,6 +193,9 @@ public class Test extends ViewPart{
 	    Button button_1 = new Button(group, SWT.NONE);
 	    button_1.setText("Neues Schlüsselpaar");
 	    button_1.setBounds(10, 201, 141, 50);
+	    
+	    
+	    
 	    
 	    Button button_2 = new Button(group, SWT.NONE);
 	    button_2.setText("Identität erstellen");
