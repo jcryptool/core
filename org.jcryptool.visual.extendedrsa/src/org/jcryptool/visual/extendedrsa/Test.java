@@ -1,8 +1,9 @@
 package org.jcryptool.visual.extendedrsa;
 
-import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -13,11 +14,9 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.jcryptool.visual.extendedrsa.ui.wizard.KeyringWizard;
-import org.jcryptool.visual.extendedrsa.ui.wizard.NewKeypairWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizard.NewKeypairWizard;
 
 public class Test extends ViewPart{
 	private Text text;
