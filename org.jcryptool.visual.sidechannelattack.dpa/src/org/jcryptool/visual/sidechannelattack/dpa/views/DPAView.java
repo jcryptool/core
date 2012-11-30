@@ -30,6 +30,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -95,10 +96,11 @@ public class DPAView extends ViewPart implements Constants {
     private ECPoint Q;
     private int outputFlag = 0;
     private int counterFlag = 1;
+    private Composite parent;
 
     // create a visual panel of DPA
     public void createPartControl(final Composite parent) {
-
+    	this.parent = parent;
         // define the subscript and superscript correctly
         final StyleRange styleRange = new StyleRange();
         styleRange.start = 282;
@@ -1131,4 +1133,13 @@ public class DPAView extends ViewPart implements Constants {
     public void setFocus() {
 
     }
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
+	}
 }

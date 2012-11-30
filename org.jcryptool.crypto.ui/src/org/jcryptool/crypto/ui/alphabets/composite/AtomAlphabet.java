@@ -1,12 +1,7 @@
 package org.jcryptool.crypto.ui.alphabets.composite;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
@@ -186,63 +181,4 @@ public class AtomAlphabet extends AbstractAlphabet {
 		return alphabetContentAsString(getCharacterSet());
 	}
 
-	private static Map<Character, String> specialCharactersForPrinting = new HashMap<Character, String>();
-	static {
-		specialCharactersForPrinting.put('\n', "\\n");
-		specialCharactersForPrinting.put('\r', "\\r");
-		specialCharactersForPrinting.put('\t', "\\t");
-	}
-	
-	/**
-	 * converts an alphabet's content to a String. This makes sure that linebreaks etc. are
-	 * shown as "\n" etc.<br />
-	 * 
-	 * 
-	 * @param alpha the alphabet
-	 * @return a string containing a representation of every character in the alphabet
-	 */
-	public static String alphabetContentAsString(char[] alphaContent) {
-		StringBuilder sb = new StringBuilder();
-		
-		for(char c: alphaContent) {
-			String charRep = getPrintableCharRepresentation(c);
-			sb.append(charRep);
-		}
-		
-		return sb.toString();
-	}
-	
-	public static String getPrintableCharRepresentation(char c) {
-		if(specialCharactersForPrinting.containsKey(Character.valueOf(c))) {
-			return specialCharactersForPrinting.get(Character.valueOf(c));
-		} else if((int) c < 32) {
-			return "{" + String.valueOf((int) c) + "}";
-		} else {
-			return String.valueOf(c);
-		}
-	}
-
-	/**
-	 * pendant to {@link #alphabetContentAsString(AbstractAlphabet)}
-	 */
-	public static char[] parseAlphaContentFromString(String alpha) {
-		Pattern nonprintables;
-		nonprintables = Pattern.compile("\\{\\d+}", Pattern.DOTALL);
-		String newAlpha = alpha;
-		
-		Matcher m = nonprintables.matcher(alpha);
-		
-		while(m.find()) {
-			int number = Integer.valueOf(newAlpha.substring(m.start()+1, m.end()-1));
-			newAlpha = newAlpha.replace(m.group(), String.valueOf((char)number));
-			m = nonprintables.matcher(newAlpha);
-		}
-		
-		for(Entry<Character, String> replacement: specialCharactersForPrinting.entrySet()) {
-			newAlpha = newAlpha.replace(replacement.getValue(), String.valueOf(replacement.getKey()));
-		}
-		
-		return newAlpha.toCharArray();
-	}
-	
 }

@@ -288,7 +288,7 @@ public class AntColAnalysisComposite extends Composite {
 	
 	private void addToolTip(){
 		final ToolTip tip = new ToolTip(newAntButton.getShell(), SWT.BALLOON);
-		tip.setText(Messages.Analysis_newAntButtonToolTip);
+		tip.setMessage(Messages.Analysis_newAntButtonToolTip);
 		newAntButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				tip.setVisible(true);

@@ -12,6 +12,7 @@ package org.jcryptool.visual.he.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
@@ -24,12 +25,14 @@ public class HEView extends ViewPart {
 
 	/** Handles the tab choice */
 	public final int GENTRY_HALEVI = 1, RSA = 2, PAILLIER = 3;
+	private Composite parent;
 
 	public HEView() {
 	}
 
 	@Override
 	public void createPartControl(final Composite parent) {
+		this.parent = parent;
 		final TabFolder tf = new TabFolder(parent, SWT.TOP);
 
 		// Gentry & Halevi
@@ -71,6 +74,15 @@ public class HEView extends ViewPart {
 
 	@Override
 	public void setFocus() {
+	}
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
 	}
 
 }

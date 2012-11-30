@@ -2,6 +2,7 @@ package org.jcryptool.crypto.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -36,6 +37,7 @@ public class CryptoUIPlugin extends AbstractUIPlugin {
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
+		SWTResourceManager.dispose();
 		super.stop(context);
 	}
 

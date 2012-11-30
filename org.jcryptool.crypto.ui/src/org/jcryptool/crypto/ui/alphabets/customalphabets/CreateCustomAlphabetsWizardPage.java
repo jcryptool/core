@@ -218,6 +218,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				
 				name = text.getText();
 				charData.setName(name);
+				charData.setShortName(name);
 				return charData;
 			}
 

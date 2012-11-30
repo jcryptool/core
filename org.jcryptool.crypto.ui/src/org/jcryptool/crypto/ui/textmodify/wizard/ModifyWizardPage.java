@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
 /**
  * @author SLeischnig
@@ -26,6 +27,12 @@ public class ModifyWizardPage extends WizardPage{
 	private TransformData predefinedData = new TransformData();
 	private ModifySelectionComposite composite1;
 	private TransformData initTransformData;
+	
+	private Mode alphabetSelectionMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
+
+	public void setAlphabetSelectionMode(Mode alphabetSelectionMode) {
+		this.alphabetSelectionMode = alphabetSelectionMode;
+	}
 
 	/**
 	 * Creates a new instance of CaesarWizardPage.
@@ -65,7 +72,7 @@ public class ModifyWizardPage extends WizardPage{
 			composite1LData.horizontalAlignment = GridData.FILL;
 			composite1LData.verticalAlignment = GridData.FILL;
 
-			composite1 = new ModifySelectionComposite(pageComposite, SWT.NONE);
+			composite1 = new ModifySelectionComposite(pageComposite, SWT.NONE, new TransformData(), alphabetSelectionMode);
 			composite1.setLayoutData(composite1LData);
 
 			composite1.setTransformData(predefinedData);

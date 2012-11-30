@@ -80,9 +80,10 @@ public class SPAView extends ViewPart implements Constants {
 	private Composite visualizedGroup;
 	private Composite powerTraceVisualizationGroup;
 	private Text exponentBinary;
+	private Composite parent;
 
 	public void createPartControl(final Composite parent) {
-
+		this.parent = parent;
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(
 				parent, SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER);
 
@@ -689,6 +690,18 @@ public class SPAView extends ViewPart implements Constants {
 	 */
 	public void setFocus() {
 
+	}
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 }

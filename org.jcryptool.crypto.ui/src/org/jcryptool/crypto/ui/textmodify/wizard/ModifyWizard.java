@@ -11,6 +11,7 @@ package org.jcryptool.crypto.ui.textmodify.wizard;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
 /**
  * The wizard for the transformation settings
@@ -22,8 +23,14 @@ public class ModifyWizard extends Wizard {
     /** The wizard page. */
     private ModifyWizardPage page;
     private TransformData wizardDataToSet = new TransformData();
+    
+    private Mode alphabetSelectionMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
 
-    /**
+    public void setAlphabetSelectionMode(Mode alphabetSelectionMode) {
+		this.alphabetSelectionMode = alphabetSelectionMode;
+	}
+
+	/**
      * Creates a new instance of CaesarWizard.
      *
      * @param alphabets the alphabets to be displayed in the alphabet box
@@ -39,6 +46,7 @@ public class ModifyWizard extends Wizard {
      */
     public final void addPages() {
         page = new ModifyWizardPage();
+        page.setAlphabetSelectionMode(alphabetSelectionMode);
         addPage(page);
         page.setPredefinedData(wizardDataToSet);
     }

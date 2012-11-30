@@ -28,12 +28,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
@@ -46,10 +46,11 @@ import org.osgi.service.prefs.Preferences;
  */
 public class TransformationsPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
-    public final static String PREFID = AlphabetsPlugin.PLUGIN_ID;
+    private static final String SUBNODE_EACH_ALPHABET = "standardtransformation";
+	public final static String PREFID = AlphabetsPlugin.PLUGIN_ID;
     public final static String SUBNODE = "standdardtransformations"; //$NON-NLS-1$
 
-    private ModifySelectionComposite composite1;
+    private ModifySelectionComposite textTransformComposite;
     private Composite pageComposite;
     private Group transformationGroup;
     private Composite composite2;
@@ -80,20 +81,14 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     }
 
     private boolean nodeExists(Preferences myNode) {
-        if (!myNode.get(TransformationPreferenceSet.ID_UPPC_ON, "default").equals("default")) //$NON-NLS-1$ //$NON-NLS-2$
+        if (!myNode.get(SUBNODE_EACH_ALPHABET, "default").equals("default")) //$NON-NLS-1$ //$NON-NLS-2$
             return true;
         return false;
     }
 
     public static TransformData getDataFromNode(Preferences myNode) {
-        String[][] preferenceTemplate = TransformationPreferenceSet.getTemplate();
-        for (int i = 0; i < TransformationPreferenceSet.PREFERENCE_COUNT; i++) {
-            preferenceTemplate[i][1] = myNode.get(preferenceTemplate[i][0], "default"); //$NON-NLS-1$
-        }
-
-        TransformationPreferenceSet temp = TransformationPreferenceSet.fromStringArray(preferenceTemplate);
-        TransformData result = temp.toTransformData();
-        return result;
+    	String data = myNode.get(SUBNODE_EACH_ALPHABET, new TransformData().toString());
+    	return TransformData.fromString(data);
     }
 
     private void loadPreferences() {
@@ -138,7 +133,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
             firstFormSetting = preferenceSet[0];
             actualAlphabetName = alphabets[0];
 
-            composite1.setTransformData(firstFormSetting);
+            textTransformComposite.setTransformData(firstFormSetting);
         }
 
         savePreferences();
@@ -147,16 +142,11 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     private void savePreferences() {
         Preferences preferences = ConfigurationScope.INSTANCE.getNode(PREFID);
         Preferences mainnode = preferences.node(SUBNODE);
-        TransformationPreferenceSet mySet;
         String[][] myPrefSaveArray;
 
         for (int i = 0; i < alphabets.length; i++) {
             Preferences myNode = mainnode.node(alphabets[i]);
-            mySet = new TransformationPreferenceSet(preferenceSet[i], alphabets[i]);
-            myPrefSaveArray = mySet.toStringArray();
-            for (int k = 0; k < TransformationPreferenceSet.PREFERENCE_COUNT; k++) {
-                myNode.put(myPrefSaveArray[k][0], myPrefSaveArray[k][1]);
-            }
+            myNode.put(SUBNODE_EACH_ALPHABET, preferenceSet[i].toString());
         }
         try {
             preferences.flush();
@@ -178,9 +168,6 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
 
     @Override
     protected Control createContents(Composite parent) {
-        // GridLayout parentLayout = new GridLayout();
-        // parentLayout.makeColumnsEqualWidth = true;
-        // parent.setLayout(parentLayout);
         {
             GridData pageCompositeLData = new GridData();
             pageCompositeLData.grabExcessHorizontalSpace = true;
@@ -222,10 +209,10 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                             if (alphabetCombo.getText() != actualAlphabetName) {
                                 for (int i = 0; i < alphabets.length; i++) {
                                     if (alphabets[i].equals(actualAlphabetName) && !siteChanged) {
-                                        preferenceSet[i] = composite1.getTransformData();
+                                        preferenceSet[i] = textTransformComposite.getTransformData();
                                         for (int k = 0; k < alphabets.length; k++) {
                                             if (alphabets[k].equals(alphabetCombo.getText())) {
-                                                composite1.setTransformData(preferenceSet[k]);
+                                                textTransformComposite.setTransformData(preferenceSet[k]);
                                                 actualAlphabetName = alphabets[k];
                                                 siteChanged = true;
                                             }
@@ -271,16 +258,16 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                     composite1LData.grabExcessHorizontalSpace = true;
                     composite1LData.horizontalAlignment = GridData.FILL;
                     composite1LData.verticalAlignment = GridData.FILL;
-                    composite1 = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting);
+                    textTransformComposite = new ModifySelectionComposite(transformationGroup, SWT.NONE, firstFormSetting);
                     GridLayout composite1Layout1 = new GridLayout();
                     composite1Layout1.makeColumnsEqualWidth = true;
                     composite1Layout1.marginWidth = 0;
                     composite1Layout1.marginHeight = 0;
-                    composite1.setLayout(composite1Layout1);
+                    textTransformComposite.setLayout(composite1Layout1);
                     GridLayout composite1Layout = new GridLayout();
                     composite1Layout.makeColumnsEqualWidth = true;
                     composite1Layout.marginWidth = 0;
-                    composite1.setLayoutData(composite1LData);
+                    textTransformComposite.setLayoutData(composite1LData);
                 }
             }
         }
@@ -290,7 +277,7 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     private void saveCurrentState() {
         for (int i = 0; i < alphabets.length; i++) {
             if (alphabets[i].equals(actualAlphabetName)) {
-                preferenceSet[i] = composite1.getTransformData();
+                preferenceSet[i] = textTransformComposite.getTransformData();
             }
         }
     }

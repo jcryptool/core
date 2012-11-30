@@ -9,9 +9,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.crypto.ui.alphabets.Messages;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.BlockAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
-import org.jcryptool.crypto.ui.alphabets.Messages;
 
 public class ShowAlphaContentWindow extends Shell {
 	private Composite composite;

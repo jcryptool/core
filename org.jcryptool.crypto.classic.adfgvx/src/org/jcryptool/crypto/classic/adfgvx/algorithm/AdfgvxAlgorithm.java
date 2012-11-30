@@ -106,7 +106,7 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
             // temporary only -- see tracker artifact #3071244
             this.is =
                     new BufferedInputStream(filterStreamByTransformData(this.dataObject.getInputStream(),
-                            new TransformData("ADFGVX Alphabet", true, true, true, true, true)));
+                            new TransformData(specification.getDefaultPlainTextAlphabet(), true, true, true, true, true)));
         } catch (Exception e) {
             LogUtil.logError(e);
         }

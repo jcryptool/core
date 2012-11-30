@@ -17,11 +17,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;
 import org.jcryptool.crypto.classic.model.ClassicCryptoModelPlugin;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifySelectionComposite;
 import org.osgi.service.prefs.Preferences;
 
 public class AbstractClassicTransformationPage extends WizardPage {
@@ -70,7 +71,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 			pageComposite.setLayout(pageCompositeLayout);
 			pageComposite.setLayoutData(pageCompositeLayoutData);
 
-			transformComposite = new ModifySelectionComposite(pageComposite, SWT.NONE);
+			transformComposite = new ModifySelectionComposite(pageComposite, SWT.NONE, new TransformData(), Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
 				GridData composite1LData = new GridData();
 				composite1LData.grabExcessHorizontalSpace = true;
 				composite1LData.horizontalAlignment = GridData.FILL;
@@ -151,8 +152,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 	 * @return whether the node exists or not
 	 */
 	private static boolean nodeExists(Preferences myNode) {
-		if(! myNode.get(TransformationPreferenceSet.ID_UPPC_ON, "default").equals("default")) return true; //$NON-NLS-1$ //$NON-NLS-2$
+		if(! myNode.get(TransformationPreferenceSet.ID_TRANSFORM_DATA, "default").equals("default")) return true; //$NON-NLS-1$ //$NON-NLS-2$
 		return false;
 	}
-
 }

@@ -19,13 +19,12 @@ import java.util.Vector;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -35,6 +34,8 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.ui.CryptoUIPlugin;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
+import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial
@@ -51,7 +52,6 @@ import org.jcryptool.crypto.ui.CryptoUIPlugin;
 public class ModifySelectionComposite extends Composite implements Listener {
 
     private Composite alphabetGroup;
-    private Combo alphabetCombo;
     private Button alphabetYESNO;
     private Composite uppercaseGroup;
     private Button uppercaseYESNO;
@@ -64,9 +64,6 @@ public class ModifySelectionComposite extends Composite implements Listener {
     private Composite tryComposite;
     private Button tryButton;
 
-    /** The selected alphabet's name */
-    private String selectedAlphabetName = ""; //$NON-NLS-1$
-
     /** The operation */
     private boolean doUppercase = true;
 
@@ -76,6 +73,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
     private boolean umlautTransformationON;
     private boolean leerTransformationON;
 
+//    private static Mode defaultMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
+    private static Mode defaultMode = Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON;
+    
     /**
      * the alphabets to be displayed in the alphabet box
      */
@@ -88,28 +88,28 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
     private String tryString;
     private PreviewViewer myExampleViewer;
+	private Mode customAlphabetMode = defaultMode;
+	private AlphabetSelectorComposite alphabetComboNew;
+	
 
     /**
      * @param parent the parent composite
      * @param style SWT style for the composite
-     * @param alphabets the alphabets to be displayed in the alphabet box
-     * @param defaultAlphabet the name of the default alphabet (the selected entry in the alphabet combo box) - if the
-     *        alphabet is not found, the first Alphabet is used
      */
     public ModifySelectionComposite(Composite parent, int style) {
-        this(parent, style, new TransformData());
+        this(parent, style, new TransformData(), defaultMode);
     }
 
     /**
      * @param parent the parent composite
      * @param style SWT style for the composite
-     * @param alphabets the alphabets to be displayed in the alphabet box
-     * @param defaultAlphabet the name of the default alphabet (the selected entry in the alphabet combo box)
      * @param defaultData defines how the page's elements will be selected first
      */
-    public ModifySelectionComposite(Composite parent, int style, TransformData defaultData) {
+    public ModifySelectionComposite(Composite parent, int style, TransformData defaultData, AlphabetSelectorComposite.Mode customAlphaMode) {
         super(parent, style);
 
+        this.customAlphabetMode = customAlphaMode;
+        
         GridLayout layout = new GridLayout();
         this.setLayout(layout);
 
@@ -131,9 +131,35 @@ public class ModifySelectionComposite extends Composite implements Listener {
         setTransformData(defaultData);
     }
 
-    public TransformData getTransformData() {
-        return new TransformData(selectedAlphabetName, doUppercase, uppercaseTransformationOn, leerTransformationON,
-                alphabetTransformationON, umlautTransformationON);
+    public ModifySelectionComposite(Group transformationGroup, int style,
+			TransformData firstFormSetting) {
+		this(transformationGroup, style, firstFormSetting, defaultMode);
+	}
+
+	public TransformData getTransformData() {
+    	//TODO: !provisory getNameForAlphabet
+        return new TransformData(getSelectedFilterAlphabet(), 
+        		doUppercase, 
+        		uppercaseTransformationOn, 
+        		leerTransformationON,
+                alphabetTransformationON, 
+                umlautTransformationON);
+    }
+    
+    //TODO: !relocate
+    /**
+     * retrieves a name for a given alphabet object that is supposed to be in the JCT alphabets store.
+     * 
+     * @param a the alphabet object
+     * @return the name, or null, if not found
+     */
+    public static String getNameForAlphabet(AbstractAlphabet a) {
+    	for(AbstractAlphabet alpha: AlphabetsManager.getInstance().getAlphabets()) {
+    		if(a!=null && (a==alpha || a.equals(alpha))) {
+    			return alpha.getName();
+    		}
+    	}
+    	return null;
     }
 
     public void setTransformData(TransformData data) {
@@ -148,37 +174,30 @@ public class ModifySelectionComposite extends Composite implements Listener {
         leerTransformationON = data.isLeerTransformationON();
         umlautYESNO.setSelection(data.isUmlautTransformationON());
         umlautTransformationON = data.isUmlautTransformationON();
-        initAlphabetComposites(data.getSelectedAlphabetName());
+        initAlphabetComposites(data.getSelectedAlphabet());
 
         uppercase.setEnabled(uppercaseTransformationOn);
         lowercase.setEnabled(uppercaseTransformationOn);
-        alphabetCombo.setEnabled(alphabetYESNO.getSelection());
+        alphabetComboNew.setEnabled(alphabetYESNO.getSelection());
     }
 
 	/**
      * Initializes the alphabet composites. An empty string leads to the selection of the first alphabet
      */
-    private void initAlphabetComposites(String selectAlphabetName) {
-        alphabetCombo.setItems(new String[0]);
-        boolean found = false;
-        alphabetCombo.setItems(new String[0]);
-        for (int i = 0; i < alphabets.length; i++) {
-            alphabetCombo.add(alphabets[i]);
-            if (i == 0) {
-                alphabetCombo.setText(alphabets[i]);
-                selectedAlphabetName = alphabetCombo.getText();
-            }
-            if (alphabets[i].equals(defaultAlphabet) && !found) {
-                alphabetCombo.setText(alphabets[i]);
-                selectedAlphabetName = alphabetCombo.getText();
-            }
-            if (alphabets[i].equals(selectAlphabetName)) {
-                alphabetCombo.setText(alphabets[i]);
-                selectedAlphabetName = alphabetCombo.getText();
-                alphabetCombo.setSelection(new Point(i, i));
-                found = true;
-            }
-        }
+    private void initAlphabetComposites(AbstractAlphabet selectAlphabet) {
+        alphabetComboNew.getAlphabetInput().writeContent(selectAlphabet);
+        alphabetComboNew.getAlphabetInput().synchronizeWithUserSide();
+    }
+    
+    private static AbstractAlphabet getAlphabetForName(String name) {
+    	for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
+    		if(a.getName().equals(name)) return a;
+    	}
+    	return null;
+    }
+    
+    public AbstractAlphabet getSelectedFilterAlphabet() {
+    	return alphabetComboNew.getAlphabetInput().getContent();
     }
 
     /**
@@ -193,11 +212,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
             uppercaseTransformationOn = uppercaseYESNO.getSelection();
             uppercase.setEnabled(uppercaseTransformationOn);
             lowercase.setEnabled(uppercaseTransformationOn);
-        } else if (event.widget == alphabetCombo) {
-            selectedAlphabetName = alphabetCombo.getText();
         } else if (event.widget == alphabetYESNO) {
             alphabetTransformationON = alphabetYESNO.getSelection();
-            alphabetCombo.setEnabled(alphabetYESNO.getSelection());
+            alphabetComboNew.setEnabled(alphabetYESNO.getSelection());
         } else if (event.widget == umlautYESNO) {
             umlautTransformationON = umlautYESNO.getSelection();
         } else if (event.widget == leerYESNO) {
@@ -398,9 +415,8 @@ public class ModifySelectionComposite extends Composite implements Listener {
         innerGroup.setLayoutData(singleTransformationInnerBoxGData);
         innerGroup.setLayout(new GridLayout(1, true));
 
-        alphabetCombo = new Combo(innerGroup, SWT.NONE | SWT.READ_ONLY);
-        alphabetCombo.setLayoutData(filterComboGridData);
-        alphabetCombo.addListener(SWT.Selection, this);
+        alphabetComboNew = new AlphabetSelectorComposite(innerGroup, null, customAlphabetMode);
+        alphabetComboNew.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     }
 
     /**

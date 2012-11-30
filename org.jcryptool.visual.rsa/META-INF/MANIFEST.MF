@@ -11,7 +11,8 @@ Require-Bundle: org.jcryptool.crypto;bundle-version="0.9.5",
  de.flexiprovider;bundle-version="1.7.0",
  org.jcryptool.visual.library;bundle-version="0.9.5",
  net.sourceforge.codec;bundle-version="1.7.0",
- org.eclipse.help
+ org.eclipse.help,
+ org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.rsa.RSAPlugin
 Bundle-Vendor: %Bundle-Vendor
