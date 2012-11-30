@@ -18,7 +18,7 @@
 				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
-					<p2inf>p2.inf</p2inf>
+					<p2inf>jcryptool.p2.inf</p2inf>
 				</configuration>
 			</plugin>
 			<plugin>

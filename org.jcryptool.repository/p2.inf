@@ -1,5 +1,0 @@
-instructions.configure=\
-  addRepository(type:0,location:http${#58}//www.cryptool.org/jct/update);\
-  addRepository(type:1,location:http${#58}//www.cryptool.org/jct/update);
-
-instructions.install=mkdir(path:${installFolder}/dropins);
