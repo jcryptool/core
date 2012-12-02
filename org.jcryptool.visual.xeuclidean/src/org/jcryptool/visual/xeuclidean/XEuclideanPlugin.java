@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class XEuclideanPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.visual.XEuclideanPlugin";
+	public static final String PLUGIN_ID = "org.jcryptool.visual.xeuclidean";
 
 	// The shared instance
 	private static XEuclideanPlugin plugin;
