@@ -29,7 +29,7 @@
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
 			name="%productName"
-			category="org.eclipse.ui.preferencePages.Editors"
+			category="org.jcryptool.preferences.editors"
 			class="net.sourceforge.ehep.preferences.PreferencesPage"
 			id="net.sourceforge.ehep.preferences.PreferencesPage">
 		</page>
