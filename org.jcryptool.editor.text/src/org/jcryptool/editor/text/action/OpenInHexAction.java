@@ -10,7 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.editor.text.action;
 
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -34,7 +33,6 @@ import org.jcryptool.core.operations.util.PathEditorInput;
 public class OpenInHexAction implements IEditorActionDelegate {
     /** The active editor. */
     private IEditorPart editor;
-
     /** Active workbench page. */
     private IWorkbenchPage page;
 
@@ -44,6 +42,7 @@ public class OpenInHexAction implements IEditorActionDelegate {
      * @param action the action proxy that handles presentation portion of the action
      * @param targetEditor the new editor target
      */
+    @Override
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
         editor = targetEditor;
         if (editor != null) {
@@ -58,7 +57,7 @@ public class OpenInHexAction implements IEditorActionDelegate {
      * @return the created editor input
      */
     private IEditorInput createEditorInput(String absolutePath) {
-        return new PathEditorInput(new Path(absolutePath));
+        return new PathEditorInput(absolutePath);
     }
 
     /**
@@ -66,6 +65,7 @@ public class OpenInHexAction implements IEditorActionDelegate {
      *
      * @param action the action proxy that handles the presentation portion of the action
      */
+    @Override
     public void run(IAction action) {
         IPathEditorInput originalInput = (IPathEditorInput) editor.getEditorInput();
         IEditorInput input = createEditorInput(originalInput.getPath().toString());
@@ -91,6 +91,7 @@ public class OpenInHexAction implements IEditorActionDelegate {
      * @param action action the action proxy that handles presentation portion of the action
      * @param selection the current selection, or <code>null</code> if there is no selection.
      */
+    @Override
     public void selectionChanged(IAction action, ISelection selection) {
     }
 }
