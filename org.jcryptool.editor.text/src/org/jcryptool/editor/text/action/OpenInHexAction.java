@@ -74,7 +74,7 @@ public class OpenInHexAction implements IEditorActionDelegate {
         if (Platform.getBundle(IOperationsConstants.ID_HEX_EDITOR_PLUGIN) != null) {
             try {
                 page.closeEditor(editor, true);
-                page.openEditor(input, IOperationsConstants.ID_HEX_EDITOR);
+                page.openEditor(input, IOperationsConstants.ID_HEX_EDITOR, true);
             } catch (PartInitException e) {
                 MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
                         Messages.OpenInHexAction_1);
