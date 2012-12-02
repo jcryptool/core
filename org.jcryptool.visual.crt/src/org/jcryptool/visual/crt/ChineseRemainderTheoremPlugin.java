@@ -19,7 +19,7 @@ import org.osgi.framework.BundleContext;
 public class ChineseRemainderTheoremPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.visual.ChineseRemainderTheoremPlugin";
+	public static final String PLUGIN_ID = "org.jcryptool.visual.crt";
 
 	// The shared instance
 	private static ChineseRemainderTheoremPlugin plugin;
