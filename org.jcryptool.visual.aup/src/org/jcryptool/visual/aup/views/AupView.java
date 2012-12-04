@@ -413,15 +413,10 @@ public class AupView extends ViewPart {
 				}
 
 				@Override
-				public void mouseDown(MouseEvent e) {
-					//Toggle patternInput -> Toggle touch for input
-					//Lock input after 2nd click
-					if(patternInput) {
-						patternInput = false;
-						inputFinished = true;
-					}
-					else
-						patternInput = true;
+				public void mouseDown(MouseEvent e) {					
+					patternInput = true; //enable touch input
+					((Label)e.widget).setCapture(false); //release mouse to fire subsequent mouse events
+
 					if (!inputFinished && e.widget.getData("icon").toString().regionMatches(false, 6, "b", 0, 1)) { //$NON-NLS-1$ //$NON-NLS-2$
 						// to get here the button needs to be unclicked
 						// (in this case e.widget.getData("icon").toString() is "icons/black.png")
@@ -433,6 +428,8 @@ public class AupView extends ViewPart {
 
 				@Override
 				public void mouseUp(MouseEvent e) {
+					patternInput = false; //disable touch input
+					inputFinished = true; //disable subsequent pattern input
 				}
 				
 			});
