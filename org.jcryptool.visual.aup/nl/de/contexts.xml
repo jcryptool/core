@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="ContextHelpView" title="Android-Mustersperre">
-      <description>Das Android-Mustersperren-Plugin ist der Mustersperre nachempfunden, mit dem Android-Smartphones gesichert werden können.</description>
+   <context id="ContextHelpView" title="Wie wird die Android-Mustersperre verwendet?">
+      <description>Wählen Sie einen Modus im linken Bereich unter &quot;Operation&quot; aus. Anschließend können Sie ein Muster (Abfolge von Punkten) im Bereich der &quot;Mustermatrix&quot; eingeben. Drücken Sie dazu die linke Maustaste über dem ersten Punkt der Abfolge. Weitere Punkte können anschließend durch Überfahren mit der Maus hinzugefügt werden. Das Loslassen der Maustaste beendet die Eingabe. Rückmeldungen zu Ihrer Eingabe werden direkt unter der Eingabematrix angezeigt.  Wenn Sie sich verzeichnet haben, können Sie die Schaltfläche &quot;Eingabe löschen&quot; drücken, und dann das Muster erneut eingeben. Wollen Sie mit dem nächsten Schritt fortfahren, so drücken Sie bitte die Schaltfläche &quot;Weiter&quot;, &quot;Speichern&quot; bzw. &quot;Prüfen&quot;.
+
+Die Schritte, die eine Operation benötigt, werden im Bereich &quot;Erklärungen&quot; unten links unter &quot;Schritte&quot; angezeigt. Der jeweils aktuelle wird dabei fett hervorgehoben.
+
+Die Visualisierung lässt sich mittels der Neustarten-Schaltfläche in der Titelleiste in den Ursprungszustand zurücksetzen.</description>
       <topic href="$nl$/help/content/index.html" label="Android-Mustersperre"/>
    </context>
 </contexts>
