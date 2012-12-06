@@ -1,23 +1,28 @@
 <html>
 <body>
-	<h2>Sudoku Solver</h2>
+	<h2>Sudoku-L&ouml;ser</h2>
 	
-	<p>This plugin helps to solve three kinds of sudoku, namely the normal sudoku, killer sudoku and hexadecimal sudoku. <br />	
-	This help file consists of four main sections: <a href="#expl">puzzle explanation</a>, <a href="#tact">sudoku tactics</a>, <a href="#view">plugin instructions</a> and <a href="#filehandling">file handling</a>.
-	
-	<a name="expl"><h3>Puzzle Explanation</h3></a>
-	
-	<p>The normal variant is well known, it consists of a 9x9 grid where in each position a number ranging from 1 to 9 must be entered. But these numbers must be entered in such a way that it is unique in its row, column and 3x3 sub box (indicated by the bold lines). <br />
-	A hexadecimal sudoku is merely an extension of this puzzle to a 16x16 grid with 4x4 sub boxes. Now, 16 unique numbers must be entered, often denoted by 0 through 9 and A through F, hexadecimal numbers. The restrictions are analogous. <br />
-	Most people consider the killer sudoku as the most difficult of the three types. In this type, different boxes are defined with mathematical operations (addition, subtraction, multiplication and division). The numbers entered in these boxes must have the correct result when the operation is performed. Again, numbers must be unique in its row, column and "operation box". It is also possible that the number must be unique in its 3x3 sub box as well. The plugin allows you to turn this 'box rule' on and off.</p>
+	<p>Mit diesem Plugin k&ouml;nnen die folgender <b>drei Arten von Sudokus</b> gel&ouml;st werden: Normale Sudokus, Killer-Sudokus und hexadezimales Sudokus.</p>	
+	<p>Die folgende Hilfe dazu besteht aus 4 Abschnitten: <a href="#expl">Erkl&auml;rung der Sudokus</a>, <a href="#tact">Sudoku-L&ouml;sungstaktik</a>, <a href="#view">Bedienung des Plugins</a> und <a href="#filehandling">Datei-Support</a>.</p>
 
-	<a name="tact"><h3>Sudoku Tactics</h3></a>
+
+	<a name="expl"><h3>Erkl&auml;rung der Sudokus</h3></a>
 	
-	<p>Since sudoku has become popular several tactics have been published online. Some of these tactics are implemented in this solver to aid the user in solving a sudoku puzzle. For the normal sudoku this plugin does not have any built in tactics at this point. This is due to the fact that a normal sudoku can easily be solved by brute force (trying all possibilities).<br />
-	A killer sudoku is much harder to brute force because of the stranger restrictions. Nonetheless, no tactics are built in at this point. This is due to the fact that no "good" tactics could be found at the moment. The brute-force solver calculates the possibilities per square with respect to the mathematical restrictions and starts to try them in a smart way (least possibilities first). <br />
-	Hexadecimal sudoku probably is the hardest to brute force because of the increased puzzle size and thus possible numbers. So for this type there are several tactics built in. These tactics are explained for normal sudoku on <a href="http://www.su-doku.net/tech.php">www.su-doku.net</a> and <a href="www.sudokuoftheday.com">www.sudokuoftheday.com</a>. The following are available:
+	<p>Die <b>normale Variante</b> ist aus Zeitungen gut bekannt: Sie besteht aus einem 9x9-Quadrat, bei dem in jedes der 81 Felder eine Zahl zwischen 1 und 9 eingetragen werden muss. Jede der neun Zahlen muss so eingetragen werden, dass sie in jeder Zeile, jeder Spalte und in jedem 3x3-Teilquadrat (angezeigt durch die dickeren Linien) nur einmal vorkommt.</p>
+	<p>Ein <b>hexadezimales Sudoku</b> ist lediglich eine Erweiterung dieses Sudokus auf ein 16x16-Quadrat mit 4x4-Teilquadraten. Nun muss in jedes der 256 Felder eindeutig eines von 16 Zeichen (oft bezeichnet mit den Hexziffern 0 bis 9 und A bis F) eingetragen werden. Die Restriktionen sind entsprechend zur normalen Variante.</p>
+	<p>Die meisten betrachten das <b>Killer-Sudoku</b> als das schwierigste der drei Typen. Hierbei gibt es unterschiedliche Boxen mit mathematischen Operationen (Addition, Subtraktion, Multiplikation und Division). Wendet man die Operation auf alle Zahlen einer Box an, muss das in der Box angegebene Ergebnis entstehen. Wiederum sind die Zahlen pro Zeile, pro Spalte und pro "Rechen-Box" eindeutig. Es kann auch sein, dass zus&auml;tzlich die Zahlen in jedem 3x3-Teilquadrat nur einmal vorkommen d&uuml;rfen. Das Plugin erlaubt, diese zus&auml;tzliche Teilquadrate-Regel (Box-Regel) ein- und auszuschalten.</p>
+
+
+	<a name="tact"><h3>Sudoku-L&ouml;sungstaktik</h3></a>
+	
+	<p>Nachdem Sudoku popul&auml;r wurde, sind zahlreiche Taktiken zur L&ouml;sung online ver&ouml;ffentlicht worden. Einige dieser Taktiken sind in diesem L&ouml;ser implementiert worden, um einem Benutzer zu helfen, ein Sudoku zu l&ouml;sen. F&uuml;r das normale und das Killer-Sudoku enth&auml;lt dieses Plugin momentan keine Taktiken, denn diese k&ouml;nnen mit einem Brute-Force-Ansatz gel&ouml;st werden (Ausprobieren aller M&ouml;glichkeiten). </p>
+	
+	<p>Das Killer-Sudoku l&auml;sst sich aufgrund der zus&auml;tzlichen Restriktionen deutlich schwieriger per Brute-Force l&ouml;sen. Trotzdem sind auch dazu momentan keine Taktiken in das Plugin eingebaut, weil wir keine "guten" Taktiken fanden. Der eingebaute Brute-Force-Ansatz berechnet alle M&ouml;glichkeiten pro Einzelfeld unter Beachtung der mathematischen Beschr&auml;nkungen (indem er mit der kleinsten Anzahl M&ouml;glichkeiten beginnt).</p>
+	
+	<p>Das hexadezimale Sudoku ist wahrscheinlich am schwierigsten mit einem Brute-Force-Ansatz zu l&ouml;sen aufgrund des vergr&ouml;ßerten Quadrats. Deshalb sind f&uuml;r diese Typ einige Taktiken eingebaut. Diese Taktiken werden f&uuml;r das normale Sudoku erkl&auml;rt auf <a href="http://www.su-doku.net/tech.php">www.su-doku.net</a> und <a href="www.sudokuoftheday.com">www.sudokuoftheday.com</a>. Die folgenden Taktiken sind hierf&uuml;r verf&uuml;gbar:
 	<ul>
-		<li><a href="http://www.su-doku.net/tech.php">One possible (not explained, obviously)</a></li>
+		<li><a href="http://www.su-doku.net/tech.php">One possible (nicht erkl&auml;rt)
+		</a></li>
 		<li><a href="http://www.su-doku.net/tech.php">Naked single</a></li>
 		<li><a href="http://www.su-doku.net/tech.php">Hidden single</a></li>
 		<li><a href="http://www.su-doku.net/tech.php">Block and Column</a></li>
@@ -28,22 +33,24 @@
 	</ul></p>
 	<br />
 
-	<a name="view"><h3>Plugin Instructions</h3></a>
-	<p>The plugin has two modes; Enter and Solve. At startup it will be in Enter mode in which either an existing or standard puzzle can be loaded or a puzzle can be entered manually. Entering a Normal or Hexadecimal sudoku is straightforward; simply enter the given numbers in the correct squares. <br />
-Entering a Killer sudoku is a bit more complicated. Given numbers can be entered, but the areas with mathematical operation and results must be added as well. To do so, consecutively click the squares for one area, turning them red. Once all the squares in an area are selected, choose the operator form the menu on the left and enter the required result. Note that only bordering squares can be chosen in one area. <br />
-After entering a puzzle switch to Solve mode to start solving. To solve a sudoku, simply click a square and type in the number that should go there. The plugin prevents you from entering a number that violates one of the rules. If you want to make solving a bit easier, you can let the plugin show which numbers are possible for each square. If you're stuck; you can ask for a hint. The plugin will select an empty square at random and fill out the correct number. Note that the Hint-button might not be available immediately when switching to Solve Mode, the plugin will first solve the puzzle in the background. <br />
-	The plugin has the possibility to save and load puzzles so you can stop at any time. Also, you could download puzzles from the internet and open them in JCT. The file format demands are different for each type of puzzle, see <a href="#filehandling">file handling</a>.<br />
-	
-	</p>
-	
-	<a name="filehandling"><h3>File Handling</h3></a>
-	<p>	The plugin supports different types of file formats for the different puzzles. Below it is explained what is expected in a file.
-	- For normal sudokus, the file format should not matter. The plugin tries to find 81 numbers including a number for empty squares (usually 0 or '.'). <br />
-	- Killer sudokus require a strict file format. Each square in a field is denoted by the same character. These characters are unique for each field. The characters should be in place in the file exactly as the puzzle looks. Then below this puzzle, for each character a value must be defined, e.g. a x 24 or b + 12. If '=' is used instead of an operator, the plugin assumes addition. For an example, see <a href="#killerfile">below</a>. <br />
-	- For a hexadecimal puzzle, two formats are accepted. Either an empty square is denoted by a '.' or by a space. In the former case, the entries are expected row by row with no spaces in between. In the latter case, the entries are expected row by row with a space in between each entry. Which type is used should be indicated with a 1 or 2 respectively in the first line of the file. <br /> <br />
-	The autofill button can be clicked to fill out one square where only one number is possible. The square that is filled out will blink red after this is done. <br />
-	In case of the hexadecimal puzzle, the strategy buttons apply one of the strategies to the puzzle and fill out the results. The strategy is repeated until no new entries are discovered. </p>
-	<br />
+
+	<a name="view"><h3>Bedienung des Plugins</h3></a>
+	<p>Das Plugin hat zwei Modi: Eingabe und L&ouml;sen. Beim Start ist es im <b>Eingabe-Modus</b>, in dem man entweder ein existierendes Sudoku laden oder in dem man das neue Sudoku von Hand eintippen kann. Das Eingeben eines normalen oder hexadezimalen Sudokus ist unkompliziert: Die gegebenen Zahlen werden einfach in die richtigen Felder eingetragen.</p>
+	<p>Ein Killer-Sudoku einzugeben ist etwas komplizierter: Die Zahlen einzugeben ist wieder einfach, aber zus&auml;tzlich sind noch die Fl&auml;chen (Rechen-Boxen), die mathematische Operation und das Ergebnis einzugeben. Dazu muss man nacheinander die Felder einer Rechen-Box anklicken, wodurch sie rot werden. Hat man alle Einzelfelder f&uuml;r eine Rechen-Box ausgew&auml;hlt, wird der Operator aus dem Men&uuml; links gew&auml;hlt und das erforderliche Ergebnis eingegeben. Es ist zu beachten, dass nur Einzelfelder, die nebeneinander liegen, in einer Rechen-Box liegen k&ouml;nnen.</p>
+	<p>Nachdem ein Sudoku geladen oder fertig eingegeben ist, muss man in den <b>L&ouml;sen-Modus</b> wechseln. Um das Sudoku dann zu l&ouml;sen, ist als n&auml;chstes ein Einzelfeld anzuklicken und die entsprechende Zahl einzugeben. Das Plugin verhindert, dass man eine Zahl eingibt, die eine der gegebenen Regeln verletzt. Um es einfacher zu haben, kann das Plugin auch in allen Einzelfeldern alle m&ouml;glichen Zahlen anzeigen. Wenn man nicht weiter weiß, kann man sich einen Hinweis geben lassen. Das Plugin w&auml;hlt dazu ein leeres Einzelfeld zuf&auml;llig aus und tr&auml;gt die korrekte Zahl ein. Beachte, das der "Hinweis"-Button nicht sofort aufrufbar ist, wenn man in den L&ouml;sen-Modus wechselt, weil das Plugin zuerst das gesamte Sudoku im Hintergrund l&ouml;st.</p>
+	<p>Mit dem Plugin kan man Sudokus nicht nur laden, sondern auch abspeichern, so dass man jederzeit unterbrechen kann. <br />
+	Man kann sich auch Sudokus aus dem Internet herunterladen und diese in diesem JCT-Plugin &ouml;ffnen: Diese m&uuml;ssen nur zu den jeweiligen Dateiformaten f&uuml;r die drei unterschiedlichen Sudoku-Typen passen (siehe <a href="#filehandling">Datei-Support</a>).</p>
+
+
+	<a name="filehandling"><h3>Datei-Support</h3></a>
+	<p>Das Plugin unterst&uuml;tzt unterschiedliche Dateiformate f&uuml;r die verschiedenen Sudoku-Typen. Im Folgenden wird erkl&auml;rt, wie die Datei aussehen soll.</p>
+	<p>F&uuml;r normale Sudokus ist das Format sehr flexibel: Das Plugin versucht, 81 unterscheidbare Zahlen zu finden (wobei die leeren Einzelfelder normalerweise als '0' oder '.' dargestellt werden).</p>
+	<p>Killer-Sudokus erfodern ein striktes Dateiformat: Alle Einzelfelder, die zu einer Rechenbox geh&ouml;ren, m&uuml;ssen dasselbe Zeichen (Character) enthalten. Diese Zeichen sind pro Rechenbox eindeutig. Die Zeichen m&uuml;ssen so angeordnet werden, wie sie auch im Sudoku stehen. Unterhalb des Sudokus ist dann f&uuml;r jedes Zeichen ein String anzugeben, der die Operation und das Ergebnis enth&auml;lt, z.B. a x 24 or b + 12. Anstelle von '+' kann man als Operator auch '=' angeben. Ein komplettes Beispiel finden Sie <a href="#killerfile">unten</a>.</p>
+	<p>Bei hexadezimalen Sudokus werden zwei Formate akzeptiert: Ein leeres Einzelfeld kann entweder per '.' oder per Leerzeichen gekennzeichnet werden. Im ersten Fall werden die Eingaben zeilenweise ohne Leerzeichen dazwischen erwartet. Im zweiten Fall werden die Eingaben auch zeilenweisen erwartet -- mit einem Leerzeichen zwischen jedem Zeichen.	
+	Welcher Typ benutzt wird, muss 	mit einer '1' oder '2' in der ersten Zeile der Datei angezeigt werden.</p>
+	<p>Das Klicken des "Autofill"-Buttons f&uuml;llt ein leeres Einzelfeld, in dem nur eine Zahl m&ouml;glich war. Das gef&uuml;llte Einzelfeld blinkt danach rot.
+	Im Fall des hexadezimalen Sudokus wird durch Klick auf einen der Strategie-Buttons die entsprechende Strategie angewandt und die entspechenden Eintr&auml;ge vorgenommen. Die gew&auml;hlte Strategie wird (ohne weitere Benutzereingabe) so oft wiederholt, bis damit keine weiteren leeren Einzelfelder mehr gef&uuml;llt werden k&ouml;nnen.	</p>
+
 	<a name="killerfile"><h4>Killer Sudoku Example File</h4></a>
 	
 	<pre>
