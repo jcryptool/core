@@ -9,44 +9,6 @@
     <topic
         label="Zeittafel"
         href="$nl$/help/cryptology/crypto_timeline.html" />
-    <topic label="Algorithmen"
-        href="$nl$/help/cryptology/algorithms/toc.html">
-        <anchor id="algorithms" />
-        <topic label="Hash"
-            href="$nl$/help/cryptology/algorithms/hash/toc.html">
-            <anchor id="hashAlgorithms" />
-        </topic>
-        <topic href="$nl$/help/cryptology/algorithms/mac/toc.html" label="MAC">
-           <anchor id="macAlgorithms"/>
-        </topic>
-        <topic label="Signatur"
-            href="$nl$/help/cryptology/algorithms/signature/toc.html">
-            <anchor id="signatureAlgorithms" />
-        </topic>
-        <topic label="Verschlüsselung"
-            href="$nl$/help/cryptology/algorithms/encryption/toc.html">
-            <anchor id="encryptionAlgorithms" />
-            <topic label="Klassisch"
-                href="$nl$/help/cryptology/algorithms/encryption/classic/toc.html">
-                <anchor id="classicEncryptionAlgorithms" />
-            </topic>
-            <topic label="Asymmetrisch"
-                href="$nl$/help/cryptology/algorithms/encryption/asymmetric/toc.html">
-                <anchor id="asymmetricEncryptionAlgorithms" />
-            </topic>
-            <topic label="Symmetrisch"
-                href="$nl$/help/cryptology/algorithms/encryption/symmetric/toc.html">
-                <anchor id="symmetricEncryptionAlgorithms" />
-            </topic>
-            <topic label="Hybrid"
-                href="$nl$/help/cryptology/algorithms/encryption/hybrid/toc.html">
-                <anchor id="hybridEncryptionAlgorithms" />
-            </topic>
-        </topic>
-        <topic href="$nl$/help/cryptology/algorithms/randomnumber/toc.html" label="Zufallszahlen">
-           <anchor id="randomNumberAlgorithms"/>
-        </topic>
-    </topic>
 
 
 </toc>
