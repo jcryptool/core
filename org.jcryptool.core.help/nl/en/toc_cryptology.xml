@@ -2,17 +2,13 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Cryptology" topic="$nl$/help/cryptology/toc.html">
-    <topic label="General Information"
-        href="$nl$/help/cryptology/general/toc.html">
-        <anchor id="general" />
-        <topic label="Cryptographic Mechanisms"
-            href="$nl$/help/cryptology/general/crypto_methods.html" />
-        <topic label="Overview"
-            href="$nl$/help/cryptology/general/cryptology.html" />
-        <topic
-            label="Time-table / time-travel through cryptography and cryptanalysis"
-            href="$nl$/help/cryptology/general/crypto_timeline.html" />
-    </topic>
+    <topic label="Cryptographic Mechanisms"
+        href="$nl$/help/cryptology/crypto_methods.html" />
+    <topic label="Overview"
+        href="$nl$/help/cryptology/cryptology.html" />
+    <topic
+        label="Time-table"
+        href="$nl$/help/cryptology/crypto_timeline.html" />
     <topic label="Algorithms"
         href="$nl$/help/cryptology/algorithms/toc.html">
         <anchor id="algorithms" />
@@ -51,17 +47,6 @@
             <anchor id="signatureAlgorithms" />
         </topic>
     </topic>
-    <topic href="$nl$/help/cryptology/analysis/toc.html" label="Cryptanalysis">
-       <anchor id="analysis"/>
-    </topic>
 
-    <topic label="Games"
-        href="$nl$/help/cryptology/games/toc.html">
-        <anchor id="games" />
-    </topic>
 
-    <topic label="Visualizations"
-        href="$nl$/help/cryptology/visualizations/toc.html">
-        <anchor id="visualizations" />
-    </topic>
 </toc>
