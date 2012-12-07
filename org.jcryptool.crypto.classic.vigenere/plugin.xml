@@ -19,10 +19,6 @@
       <toc
             file="$nl$/toc.xml"
             primary="false"/>
-      <toc
-            file="$nl$/toc_cryptology.xml"
-            primary="false">
-      </toc>
    </extension>
    <!-- Context Help -->
    <extension point="org.eclipse.help.contexts">

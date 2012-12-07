@@ -18,10 +18,6 @@
       <toc
             file="$nl$/toc.xml"
             primary="false"/>
-      <toc
-            file="$nl$/toc_cryptology.xml"
-            primary="false">
-      </toc>
    </extension>
    <extension
          point="org.jcryptool.commands.core.commands">
