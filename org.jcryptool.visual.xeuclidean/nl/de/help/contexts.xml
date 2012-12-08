@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="view" title="Extended Euclidean">
-      <description>TODO</description>
-      <topic href="nl/de/help/content/index.html" label="Extended Euclidean tutorial"/>
+   <context id="view" title="Erweiterter Euklid">
+      <description>In die Eingabemaske &lt;b&gt;p&lt;/b&gt; und &lt;b&gt;q&lt;/b&gt; können zwei beliebige große positive Zahlen eingegeben werden.
+
+Danach stehen verschiedene Auswahlmöglichkeiten zur Verfügung. Über die Buttons kann die Berechnung schrittweise oder vollständig automatisch durchgeführt werden.</description>
+      <topic href="nl/de/help/content/index.html" label="Extended Euclidean"/>
    </context>
 </contexts>
