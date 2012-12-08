@@ -1175,7 +1175,7 @@ public class XEuclideanView extends ViewPart {
         gd_visualizeStyledText.widthHint = 400;
         visualizeStyledText.setLayoutData(gd_visualizeStyledText);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), XEuclideanPlugin.PLUGIN_ID + ".viewer");
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), XEuclideanPlugin.PLUGIN_ID + ".view");
         createActions();
         initializeMenu();
     }
