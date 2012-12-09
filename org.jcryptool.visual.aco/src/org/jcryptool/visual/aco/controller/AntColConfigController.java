@@ -48,9 +48,13 @@ public class AntColConfigController implements AntColEvents{
 		checkTextInput();
 	}
 	
-	public void onKeyLengthChange(int value){ 
+	public void onKeyLengthChange(int value, int oldValue){ 
 		checkTextInput();
+		if(oldValue == 5 && value == 6){
+			configComp.showNoVisualToolTip();
+		}
 	}
+	
 
 
 	public void onModifyConfiguration(){
@@ -76,85 +80,85 @@ public class AntColConfigController implements AntColEvents{
 
 	@Override
 	public void onSelectShowGraph() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onSelectShowMatrix() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onNextKnot() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onFinishCycle() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void afterGraphDrawn() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onSelectMultipleSteps() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onSelectSingleStep() {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onChangeAnimationCheckboxValue(boolean value) {
-		// TODO Auto-generated method stub
+	 
 
 	}
 
 	@Override
 	public void onConfigurationChange() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onPlaceNewAnt() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onNewIteration() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onAlphaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onBetaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onPheromoneChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 

@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.aco.ACOPlugin;
 import org.jcryptool.visual.aco.controller.AntColEventController;
+import org.jcryptool.visual.aco.model.ACO;
 import org.jcryptool.visual.aco.model.CommonModel;
 
 /**
@@ -86,6 +87,9 @@ public class AntColView extends ViewPart {
 	 * resets the model and view to its initial state
 	 */
 	public void reset() {
+		ACO.setAlpha(0.8);
+		ACO.setBeta(0.8);
+		ACO.setVerd(0.9);
 		Control[] children = parent.getChildren();
 		for (Control control : children) {
 			control.dispose();

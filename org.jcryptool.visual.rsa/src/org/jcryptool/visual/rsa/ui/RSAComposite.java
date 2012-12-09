@@ -523,6 +523,7 @@ public class RSAComposite extends Composite {
         l.setText("e :"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         eText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+        eText.setEnabled(false);
         eText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         // Spacer
@@ -534,6 +535,7 @@ public class RSAComposite extends Composite {
         l.setText("d :"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         dText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+        dText.setEnabled(false);
         dText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         // Spacer
@@ -545,6 +547,7 @@ public class RSAComposite extends Composite {
         l.setText("N :"); //$NON-NLS-1$
         l.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         nText = new Text(g, SWT.READ_ONLY | SWT.BORDER);
+        nText.setEnabled(false);
         nText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     }
 
@@ -576,7 +579,7 @@ public class RSAComposite extends Composite {
             }
         }
 
-        textText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+        textText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         textText.setText("\n\n\n"); //$NON-NLS-1$
         textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
         textText.addModifyListener(new ModifyListener() {
@@ -617,7 +620,7 @@ public class RSAComposite extends Composite {
                 break;
             }
         }
-        numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP);
+        numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
         numberText.setText("\n\n\n"); //$NON-NLS-1$
         numberText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
     }

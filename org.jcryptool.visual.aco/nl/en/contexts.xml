@@ -2,6 +2,6 @@
 <contexts>
 	<context id="view" title="Ant Colony Optimization">
     <description>The Ant Colony Optimization is an algorithm based on the behaviour of ants searching for food. Ants have developed a method to find efficiently a shortest path between two points. For doing so, each ant drops pheromons which will help other ants to follow or not follow the path the ant took. In optimization such a behvaiour can be converted to the problem of finding a shortest path in a graph. By storing local information on each edge, such as how many ants have already passed the edge, following ants can decide which way to take.</description>
-		<topic href="$nl$/help/content/index.html" label="Ant Colony Optimization"/>
+		<topic href="$nl$/help/content/toc.html" label="Ant Colony Optimization"/>
 	</context>
 </contexts>

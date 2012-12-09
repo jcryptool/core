@@ -17,10 +17,6 @@
 	<extension
 			point="org.eclipse.help.toc">
 		<toc
-			file="$nl$/toc.xml"
-			primary="false">
-		</toc>
-		<toc
 			file="$nl$/tocUI.xml"
 			primary="false">
 		</toc>

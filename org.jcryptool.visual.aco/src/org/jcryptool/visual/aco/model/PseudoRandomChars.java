@@ -26,4 +26,12 @@ public class PseudoRandomChars {
 		pos = (pos + 1) % chars.length;
 		return ret;
 	}
+	
+	public String toString(){
+		String str ="";
+		for(char character : chars){
+			str += character;
+		}
+		return str;
+	}
 }

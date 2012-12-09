@@ -13,12 +13,12 @@
 <p>
 Die Anwendung des Verfahrens zur Futtersuche von Ameisen auf kombinatorische Probleme
 arbeitet auf der Grundlage von Graphen. Die künstlichen Ameisen suchen sich einen Weg in einem
-vollständigen Graphen. Die Entscheidung darüber welche Kante als jeweils nächste gewählt wird,
+vollständigen Graphen. Die Entscheidung darüber, welche Kante als jeweils nächste gewählt wird,
 beruht auf einer lokalen Information und der Markierung mit dem künstlichen Pheromon.<br>
 Die lokale Information wird Prioritätsregel genannt. Sie bezieht sich meistens auf die direkt nächste
 Kante. Im natürlichen Vorbild kann sie als Sehfähigkeit der Ameisen interpretiert werden. Das
 Pheromon auf der anderen Seite wird als Fließkommazahl in einer Matrix repräsentiert. Die Matrix
-wird aktualisiert sobald eine Ameise einen Weg durch den Graphen gefunden hat und die Güte des
+wird aktualisiert, sobald eine Ameise einen Weg durch den Graphen gefunden hat und die Güte des
 Weges berechnet wurde.<br>
 Ein Weg über alle Knoten durch einen Graphen mit n Knoten besteht aus n-1 Kanten (i,j). Ein
 Knotenübergang x<sub>ij</sub> tritt mit unterschiedlicher Wahrscheinlichkeit auf. Hierbei spielen die
@@ -37,7 +37,7 @@ Nachdem eine Ameise ihren Weg durch den Graphen bewältigt hat, wird analog zur 
 Pheromon abgelegt. Diese künstliche Pheromonablage weist Unterschiede zu ihrem natürlichen
 Vorbild auf. Die beste Lösung wird nicht über die Dauer, die für die Bewältigung des Weges
 benötigt wird, gefunden. Stattdessen findet eine Bewertung der gefundenen Lösung aufgrund
-anderer Kriterien, z.B. beim Travelling Salesman Problem bezüglich der Kantenkosten, statt.
+anderer Kriterien, z.B. beim Travelling-Salesman-Problem anhand der Kantenkosten, statt.
 Basierend auf dieser Bewertung erfolgt die Aktualisierung der Pheromonmatrix a posteriori im
 Gegensatz zur direkten Abgabe des Duftstoffes von realen Ameisen.<br>
 Die Stärke des künstlichen Pheromons, das eine Ameise nach ihrem Gang durch den Graphen

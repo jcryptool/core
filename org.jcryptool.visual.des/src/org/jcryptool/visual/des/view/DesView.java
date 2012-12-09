@@ -25,6 +25,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -192,6 +193,7 @@ public class DesView extends ViewPart {
 	Group grpSBoxHeader = null;
 	Label lblFPointsInputM8cur = null;
 	StyledText txtSBoxInformation = null;
+	private Composite parent;
 
 	public DesView() {
 	}
@@ -202,6 +204,7 @@ public class DesView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
 		parent.setLayout(new FillLayout());
 
 		// Wrapper Start
@@ -1957,6 +1960,15 @@ public class DesView extends ViewPart {
 		Date d = new Date();
 
 		return df.format(d);
+	}
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
 	}
 
 

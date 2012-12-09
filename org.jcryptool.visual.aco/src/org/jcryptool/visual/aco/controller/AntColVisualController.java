@@ -123,55 +123,55 @@ public class AntColVisualController implements
 
 	@Override
 	public void onChangeAnimationCheckboxValue(boolean value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onModifyConfiguration() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onNewIteration() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
-	public void onKeyLengthChange(int value) {
-		// TODO Auto-generated method stub
+	public void onKeyLengthChange(int value, int oldValue) {
+	 
 		
 	}
 
 	@Override
 	public void onGenerateText() {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onCipherTextModify(String text) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onAlphaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onBetaChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 
 	@Override
 	public void onPheromoneChanged(double value) {
-		// TODO Auto-generated method stub
+	 
 		
 	}
 

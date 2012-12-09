@@ -14,7 +14,7 @@ public interface AntColEvents{
 	public void onConfigurationChange();
 	public void onPlaceNewAnt();
 	public void onNewIteration();
-	public void onKeyLengthChange(int value);
+	public void onKeyLengthChange(int value, int oldValue);
 	public void onGenerateText();
 	public void onCipherTextModify(String text);
 	public void onAlphaChanged(double value);

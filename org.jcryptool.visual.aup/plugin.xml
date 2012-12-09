@@ -26,7 +26,7 @@
             locationURI="toolbar:org.jcryptool.visual.aup.views.AndroidUnlockPattern">
          <command
                commandId="org.jcryptool.visual.aup.RestartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/clear_co.gif"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
                style="push"
                tooltip="%command.RestartTooltip">
          </command>

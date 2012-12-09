@@ -74,7 +74,7 @@ public class Messages {
 	public static String Header_text;
 	public static String Control_or;
 	public static String Control_textLength;
-	public static String Conrol_wrongInputToolTip;
+	public static String Control_wrongInputToolTip;
 	public static String Viusal_ResultGroup;
 	public static String Visual_GraphMatrixGroupTitle;
 	public static String Viusal_CurrAntGroup;
@@ -99,6 +99,8 @@ public class Messages {
 	public static String PherMatrix_description;
 
 	public static String Analysis_newAntButtonToolTip;
+
+	public static String Control_noVisualAvailable;
 
 
 	private Messages() {

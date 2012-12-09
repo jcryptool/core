@@ -47,6 +47,7 @@
 	<module>org.jcryptool.crypto.modern.sha3</module>
 	<module>org.jcryptool.crypto.modern.stream.dragon</module>
 	<module>org.jcryptool.crypto.modern.stream.lfsr</module>
+	<module>org.jcryptool.crypto.ui</module>
 	<module>org.jcryptool.crypto.xml</module>
 	<module>org.jcryptool.crypto.xml.core</module>
 	<module>org.jcryptool.crypto.xml.feature</module>
@@ -58,6 +59,7 @@
 	<module>org.jcryptool.games.sudoku</module>
 	<module>org.jcryptool.visual</module>
 	<module>org.jcryptool.visual.aco</module>
+	<module>org.jcryptool.visual.aup</module>
 	<module>org.jcryptool.visual.crt</module>
 	<module>org.jcryptool.visual.des</module>
 	<module>org.jcryptool.visual.ecc</module>

@@ -15,6 +15,7 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
@@ -77,6 +78,15 @@ public class SecretSharingView extends ViewPart {
 			layout.topControl = shamirsCompositeGraphical;
 			parent.layout();
 		}
+	}
+
+	public void reset() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		parent.layout();
 	}
 
 }

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Crypto UI Plug-in
+Bundle-SymbolicName: org.jcryptool.crypto.ui;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jcryptool.crypto.ui.CryptoUIPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.logging,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.util
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jcryptool.crypto.ui.alphabets,
+ org.jcryptool.crypto.ui.alphabets.customalphabets,
+ org.jcryptool.crypto.ui.textmodify.wizard
+Bundle-Vendor: jcryptool.org

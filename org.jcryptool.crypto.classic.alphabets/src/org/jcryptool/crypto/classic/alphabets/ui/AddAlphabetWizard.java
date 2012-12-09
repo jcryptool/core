@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.classic.alphabets.ui;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.crypto.ui.alphabets.customalphabets.CreateCustomAlphabetsWizardPage;
 
 /**
  * The wizard for adding a new alphabet.
@@ -21,7 +22,7 @@ import org.eclipse.jface.wizard.Wizard;
 public class AddAlphabetWizard extends Wizard {
 
 	/** The wizard page */
-	private AddAlphabetWizardPage2 page;
+	private CreateCustomAlphabetsWizardPage page;
 	
 	/**
 	 * Creates a new instance of AddAlphabetWizard.
@@ -34,7 +35,7 @@ public class AddAlphabetWizard extends Wizard {
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
 	public void addPages() {
-		page = new AddAlphabetWizardPage2();
+		page = new CreateCustomAlphabetsWizardPage();
 		addPage(page);
 	}
 	

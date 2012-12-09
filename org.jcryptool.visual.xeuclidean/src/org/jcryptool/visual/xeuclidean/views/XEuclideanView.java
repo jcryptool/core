@@ -27,6 +27,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
@@ -101,6 +102,7 @@ public class XEuclideanView extends ViewPart {
     private Vector<BigInteger> yTmp = null;
     private Vector<BigInteger> rTmp = null;
     private Vector<BigInteger> qTmp = null;
+    private boolean reset = false;
 
     @Override
     public void dispose() {
@@ -210,20 +212,20 @@ public class XEuclideanView extends ViewPart {
 
         final Button clearButton = new Button(action, SWT.NONE);
         final GridData gd_clearButton = new GridData(SWT.RIGHT, SWT.CENTER, false, true);
-        gd_clearButton.widthHint = 125;
+        gd_clearButton.widthHint = 140;
         clearButton.setLayoutData(gd_clearButton);
         clearButton.setText(Messages.XEuclideanView_Clear_Button);
 
         final Button resetTableButton = new Button(action, SWT.NONE);
         resetTableButton.setEnabled(false);
         final GridData gd_resetTableButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
-        gd_resetTableButton.widthHint = 125;
+        gd_resetTableButton.widthHint = 140;
         resetTableButton.setLayoutData(gd_resetTableButton);
         resetTableButton.setText(Messages.XEuclideanView_ResetTable_Button);
 
         final Button computeButton = new Button(action, SWT.NONE);
         final GridData gd_computeButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
-        gd_computeButton.widthHint = 125;
+        gd_computeButton.widthHint = 140;
         computeButton.setLayoutData(gd_computeButton);
         computeButton.setText(Messages.XEuclideanView_Compute_Button);
 
@@ -505,8 +507,8 @@ public class XEuclideanView extends ViewPart {
                         parameterB.fontStyle = SWT.BOLD;
                         visualizeStyledText.setStyleRange(parameterB);
 
-                        parameterC.start =
-                                Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3 + tmpB.length() + 3;
+                        parameterC.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3
+                                + tmpB.length() + 3;
                         parameterC.length = tmpC.length();
                         parameterC.foreground = BLUE_COLOR;
                         parameterC.fontStyle = SWT.BOLD;
@@ -617,8 +619,8 @@ public class XEuclideanView extends ViewPart {
                         visualizeStyledText.setStyleRange(parameterC);
 
                         parameterD = new StyleRange();
-                        parameterD.start =
-                                MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3 + tmpC.length() + 3;
+                        parameterD.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+                                + tmpC.length() + 3;
                         parameterD.length = tmpD.length();
                         parameterD.foreground = BLUE_COLOR;
                         parameterD.fontStyle = SWT.BOLD;
@@ -684,8 +686,8 @@ public class XEuclideanView extends ViewPart {
                         visualizeStyledText.setStyleRange(parameterC);
 
                         parameterD = new StyleRange();
-                        parameterD.start =
-                                MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3 + tmpC.length() + 3;
+                        parameterD.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+                                + tmpC.length() + 3;
                         parameterD.length = tmpD.length();
                         parameterD.foreground = BLUE_COLOR;
                         parameterD.fontStyle = SWT.BOLD;
@@ -763,7 +765,7 @@ public class XEuclideanView extends ViewPart {
             }
         });
         final GridData gd_stepwiseButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
-        gd_stepwiseButton.widthHint = 125;
+        gd_stepwiseButton.widthHint = 140;
         stepwiseButton.setLayoutData(gd_stepwiseButton);
         stepwiseButton.setText(Messages.XEuclideanView_Stepwise_Button);
 
@@ -850,8 +852,8 @@ public class XEuclideanView extends ViewPart {
                         parameterB.fontStyle = SWT.BOLD;
                         visualizeStyledText.setStyleRange(parameterB);
 
-                        parameterC.start =
-                                Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3 + tmpB.length() + 3;
+                        parameterC.start = Messages.XEuclideanView_Quotient.length() + tmpA.length() + 3
+                                + tmpB.length() + 3;
                         parameterC.length = tmpC.length();
                         parameterC.foreground = BLUE_COLOR;
                         parameterC.fontStyle = SWT.BOLD;
@@ -963,8 +965,8 @@ public class XEuclideanView extends ViewPart {
                         visualizeStyledText.setStyleRange(parameterC);
 
                         parameterD = new StyleRange();
-                        parameterD.start =
-                                MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3 + tmpC.length() + 3;
+                        parameterD.start = MESSAGE_X_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+                                + tmpC.length() + 3;
                         parameterD.length = tmpD.length();
                         parameterD.foreground = BLUE_COLOR;
                         parameterD.fontStyle = SWT.BOLD;
@@ -1037,8 +1039,8 @@ public class XEuclideanView extends ViewPart {
                         visualizeStyledText.setStyleRange(parameterC);
 
                         parameterD = new StyleRange();
-                        parameterD.start =
-                                MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3 + tmpC.length() + 3;
+                        parameterD.start = MESSAGE_Y_VISUAL.length() + tmpA.length() + 3 + tmpB.length() + 3
+                                + tmpC.length() + 3;
                         parameterD.length = tmpD.length();
                         parameterD.foreground = BLUE_COLOR;
                         parameterD.fontStyle = SWT.BOLD;
@@ -1061,7 +1063,7 @@ public class XEuclideanView extends ViewPart {
             }
         });
         final GridData gd_backStepwiseButton = new GridData(SWT.LEFT, SWT.CENTER, false, true);
-        gd_backStepwiseButton.widthHint = 125;
+        gd_backStepwiseButton.widthHint = 140;
         backStepwiseButton.setLayoutData(gd_backStepwiseButton);
         backStepwiseButton.setText(Messages.XEuclideanView_BackStepwise_Button);
 
@@ -1175,16 +1177,18 @@ public class XEuclideanView extends ViewPart {
         gd_visualizeStyledText.widthHint = 400;
         visualizeStyledText.setLayoutData(gd_visualizeStyledText);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), XEuclideanPlugin.PLUGIN_ID + ".viewer");
-        createActions();
-        initializeMenu();
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), XEuclideanPlugin.PLUGIN_ID + ".view");
+
+        if (!reset) {
+            createActions();
+            initializeMenu();
+        }
     }
 
     /**
      * Create the actions
      */
     private void createActions() {
-
         exportToPdfAction = new Action(Messages.XEuclideanView_ExportPDF_Menu) {
             @Override
             public void run() {
@@ -1283,5 +1287,15 @@ public class XEuclideanView extends ViewPart {
             tableItem.setForeground(3, BLACK_COLOR);
             tableItem.setForeground(4, BLACK_COLOR);
         }
+    }
+
+    public void reset() {
+        Control[] children = parent.getChildren();
+        for (Control control : children) {
+            control.dispose();
+        }
+        createPartControl(parent);
+        parent.layout();
+        reset = true;
     }
 }

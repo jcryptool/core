@@ -12,6 +12,7 @@ package org.jcryptool.crypto.classic.model;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -48,6 +49,7 @@ public class ClassicCryptoModelPlugin extends AbstractUIPlugin {
 	 */
 	public final void stop(final BundleContext context) throws Exception {
 		plugin = null;
+		SWTResourceManager.dispose();
 		super.stop(context);
 	}
 

@@ -34,6 +34,7 @@ public class AntColConfigComposite extends Composite {
 	protected Label labelSlider;
 	private AntColEventController controller;
 	private Group firstStepGroup;
+	private int currKeyLength = 4;
 	private Label textLengthLabel;
 
 	/**
@@ -102,7 +103,9 @@ public class AntColConfigComposite extends Composite {
 				false));
 		keyLengthSlider.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				controller.onKeyLengthChange(keyLengthSlider.getSelection());
+				
+				controller.onKeyLengthChange(keyLengthSlider.getSelection(), currKeyLength);
+				currKeyLength = keyLengthSlider.getSelection();
 			}
 		});
 
@@ -151,7 +154,7 @@ public class AntColConfigComposite extends Composite {
 	private void addCipherTextListener() {
 		final ToolTip tip = new ToolTip(firstStepGroup.getShell(), SWT.BALLOON);
 
-		tip.setMessage(Messages.Conrol_wrongInputToolTip);
+		tip.setMessage(Messages.Control_wrongInputToolTip);
 		txtCipher.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -240,6 +243,13 @@ public class AntColConfigComposite extends Composite {
 
 	public int getKeyLengthSliderValue() {
 		return keyLengthSlider.getSelection();
+
+	}
+	
+	public void showNoVisualToolTip(){
+		final ToolTip tip = new ToolTip(keyLengthSlider.getShell(), SWT.BALLOON);
+		tip.setMessage(Messages.Control_noVisualAvailable);
+		tip.setVisible(true);
 
 	}
 
