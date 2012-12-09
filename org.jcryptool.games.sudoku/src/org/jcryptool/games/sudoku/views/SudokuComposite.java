@@ -472,7 +472,7 @@ public class SudokuComposite extends Composite {
         mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-        final RowData buttonrd = new RowData(129, 30);
+        final RowData buttonrd = new RowData(135, 30);
         //final RowData radiord = new RowData(63,30);
 
         Group choiceComposite = new Group(mainComposite, SWT.SHADOW_NONE);
@@ -489,6 +489,10 @@ public class SudokuComposite extends Composite {
 				solveMode = true;
 				solveButton.setEnabled(true);
 				hintButton.setEnabled(false);
+				showPossibleButton.setEnabled(true);
+				autoFillOneButton.setEnabled(true);
+				
+				
 				
 				loadStandardPuzzle.setEnabled(false);
 				loadButton.setEnabled(false);
@@ -571,6 +575,9 @@ public class SudokuComposite extends Composite {
 				backgroundSolve.cancel();
 				backgroundSolved = false; 
 				hintButton.setEnabled(false);
+
+				showPossibleButton.setEnabled(false);
+				autoFillOneButton.setEnabled(false);
 				
 				solveMode = false;
 				solveButton.setEnabled(false);
@@ -759,7 +766,7 @@ public class SudokuComposite extends Composite {
 
         this.showPossibleButton = new Button(subComposite, SWT.PUSH);
         this.showPossibleButton.setLayoutData(buttonrd);
-        this.showPossibleButton.setEnabled(true);
+        this.showPossibleButton.setEnabled(false);
         this.showPossibleButton.setText(Messages.SudokuComposite_ShowPossibleButton);
         this.showPossibleButton.setToolTipText(Messages.SudokuComposite_ShowPossibleButton_Tooltip);
         this.showPossibleButton.addSelectionListener(new SelectionAdapter() {
@@ -788,7 +795,7 @@ public class SudokuComposite extends Composite {
 
         this.autoFillOneButton = new Button(subComposite, SWT.PUSH);
         this.autoFillOneButton.setLayoutData(buttonrd);
-        this.autoFillOneButton.setEnabled(true);
+        this.autoFillOneButton.setEnabled(false);
         this.autoFillOneButton.setText(Messages.SudokuComposite_AutoFillOneButton);
         this.autoFillOneButton.setToolTipText(Messages.SudokuComposite_AutoFillOneButton_Tooltip);
         this.autoFillOneButton.addSelectionListener(new SelectionAdapter() {
