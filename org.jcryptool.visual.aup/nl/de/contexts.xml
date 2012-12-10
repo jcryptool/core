@@ -3,15 +3,15 @@
    <context id="ContextHelpView" title="Wie wird die Android-Mustersperre verwendet?">
       <description>Wählen Sie im linken Bereich eine Operation aus.
  
-Im ersten Schritt ist dazu ein Muster einzugeben: Ein Muster ist eine Abfolge von Punkten. Diese Abfolge kann im &quot;Eingabebereich&quot; mit Hilfe der Maus erstellt werden: Drücken Sie dazu die linke Maustaste über dem ersten Punkt der Abfolge. Weitere Punkte können anschließend durch Überfahren mit der Maus hinzugefügt werden. Das Loslassen der Maustaste beendet die Eingabe.
+Der erste Schritt besteht dann aus der Eingabe eines Musters. Das Muster wird dabei durch die Berührungsabfolge der Schaltflächen im &quot;Eingabebereich&quot; beschrieben. Zum Starten der Eingabe drücken Sie die linke Maustaste über der ersten Schaltfläche des gewünschten Musters. Das Muster kann durch anschließendes Überfahren weiterer Schaltflächen mit der Maus erweitert werden. Die Eingabe wird schließlich durch loslassen der Maustaste beendet.
 
-Rückmeldungen zu Ihrer Eingabe werden direkt unter der Eingabematrix angezeigt.  Wenn Sie sich verzeichnet haben, können Sie die Schaltfläche &quot;Eingabe löschen&quot; drücken, und dann das Muster erneut eingeben.
+Rückmeldungen zu Ihrer Eingabe werden direkt unter der Eingabematrix angezeigt. Wenn Sie sich verzeichnet haben, können Sie die Schaltfläche &quot;Eingabe löschen&quot; drücken und dann das Muster erneut eingeben.
  
 Wollen Sie mit dem nächsten Schritt fortfahren, so drücken Sie bitte eine der Schaltflächen &quot;Weiter&quot;, &quot;Speichern&quot; oder &quot;Prüfen&quot;.
 
 Die Schritte, die eine Operation benötigt, werden im Bereich &quot;Erklärungen&quot; unten links angezeigt. Der jeweils aktuelle Schritt wird dabei fett hervorgehoben.
 
-Die Visualisierung kann jederzeit in ihren Ursprungszustand zurückgesetzt werden, indem man auf die Neustarten-Schaltfläche in der Titelleiste des Reiters (Tabs) dieser Visualisierung klickt. Dadurch wird ein vorher evtl. eingegebenes Muster gelöscht.r gelöscht.
+Die Visualisierung kann jederzeit von Ihnen in ihren Ursprungszustand zurückgesetzt werden, indem Sie auf die Neustarten-Schaltfläche in der Titelleiste des Reiters (Tabs) dieser Visualisierung klicken. Dadurch wird ein vorher evtl. eingegebenes Muster gelöscht.
 
 </description>
       <topic href="$nl$/help/content/index.html" label="Android-Mustersperre"/>
