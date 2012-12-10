@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="ContextHelpView" title="How is the Android Unlock Pattern used?">
+   <context id="ContextHelpView" title="How to use the Android Unlock Pattern?">
       <description>Choose an operation from the left area.
 
-Then, the first  step is the pattern input. The pattern is interpreted from the touch sequence of the buttons in the &quot;input area&quot;. The pattern input can be started with pressing the first button of the desired pattern with the left mouse button. The pattern can be extended with the mouse by traversing subsequent additional buttons. The input is finally completed by releasing the mouse button.
+Then, the first step is the pattern input. The pattern is interpreted from the touch sequence of the circular buttons in the &quot;input area&quot;. The pattern input can be started by pressing the left mouse button on starting button of the desired pattern. Hold the mouse button and traverse subsequent buttons with the cursor to extend the pattern. The input is finally completed by releasing the mouse button.
 
 Feedback on your input will appear directly below the input matrix. In case you want to correct your input, the button &quot;Reset input&quot; can be pressed to clear the input area.
 
