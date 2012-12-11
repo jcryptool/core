@@ -3,7 +3,7 @@
    <context id="ContextHelpView" title="Wie wird die Android-Mustersperre verwendet?">
       <description>Wählen Sie im linken Bereich eine Operation aus.
  
-Der erste Schritt besteht dann aus der Eingabe eines Musters. Das Muster wird dabei durch die Berührungsabfolge der kreisförmigen Schaltflächen im &quot;Eingabebereich&quot; beschrieben. Zum Starten der Eingabe drücken Sie die linke Maustaste über der Anfangsschaltfläche des gewünschten Musters. Halten Sie die Maustaste gedrückt und Überfahren Sie anschließend weitere Schaltflächen mit dem Cursor um das Muster zu erweitern. Die Eingabe wird schließlich durch Loslassen der Maustaste beendet.
+Der erste Schritt besteht aus der Eingabe eines Musters. Das Muster wird dabei durch die Berührungsabfolge der kreisförmigen Schaltflächen im &quot;Eingabebereich&quot; beschrieben. Zum Starten der Eingabe drücken Sie die linke Maustaste über der ersten Schaltfläche des gewünschten Musters. Behalten Sie die Maustaste gedrückt und überfahren Sie weitere Schaltflächen mit dem Cursor, um das Muster zu erweitern. Die Eingabe wird schließlich durch Loslassen der Maustaste beendet.
 
 Rückmeldungen zu Ihrer Eingabe werden direkt unter der Eingabematrix angezeigt. Wenn Sie sich verzeichnet haben, können Sie die Schaltfläche &quot;Eingabe löschen&quot; drücken und dann das Muster erneut eingeben.
  
@@ -13,7 +13,7 @@ Die Schritte, die eine Operation benötigt, werden im Bereich &quot;Erklärungen
 
 Die Visualisierung kann jederzeit von Ihnen in ihren Ursprungszustand zurückgesetzt werden, indem Sie auf die Neustarten-Schaltfläche in der Titelleiste des Reiters (Tabs) dieser Visualisierung klicken. Dadurch wird ein vorher evtl. eingegebenes Muster gelöscht.
 
-</description>
+      </description>
       <topic href="$nl$/help/content/index.html" label="Android-Mustersperre"/>
    </context>
 </contexts>
