@@ -289,7 +289,7 @@ public class AupView extends ViewPart {
 		clayout.verticalSpacing = 15;
 		centerbox.setLayout(clayout);
 		final FormData fdCb = new FormData(0, 0);
-		fdCb.bottom = new FormAttachment(100, -190);
+		fdCb.bottom = new FormAttachment(100, -170);
 		fdCb.top = new FormAttachment(headingBox, 6);
 		fdCb.left = new FormAttachment(0, 156);
 		fdCb.right = new FormAttachment(100, -10);
