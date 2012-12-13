@@ -14,9 +14,6 @@
       <toc
             file="$nl$/toc_cryptology.xml"
             primary="true"/>
-      <toc
-            file="$nl$/toc_glossary.xml"
-            primary="true"/>
    </extension>
    <extension
          point="org.eclipse.help.index">
