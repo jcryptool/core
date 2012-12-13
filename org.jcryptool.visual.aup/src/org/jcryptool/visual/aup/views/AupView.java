@@ -289,7 +289,7 @@ public class AupView extends ViewPart {
 		clayout.verticalSpacing = 15;
 		centerbox.setLayout(clayout);
 		final FormData fdCb = new FormData(0, 0);
-		fdCb.bottom = new FormAttachment(100, -163);
+		fdCb.bottom = new FormAttachment(100, -170);
 		fdCb.top = new FormAttachment(headingBox, 6);
 		fdCb.left = new FormAttachment(0, 156);
 		fdCb.right = new FormAttachment(100, -10);
@@ -791,39 +791,50 @@ public class AupView extends ViewPart {
 	protected void updateProgress() {
 		switch(logic.getModus()) {
 			case 1: {	// set				
-				if (logic.isFirst()) {
-						instrText1.setFont(bFont);
-						instrText2.setFont(nFont);
-//						instrText1.setEnabled(true); 
-//						instrText2.setEnabled(false);
-				} else {
+				if (logic.isFirst()) { // 1. step
+					//set texts
+					instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeSetText));
+					instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Set_1));
+					instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Set_2));
+					instrText3.setText("");	
+					
+					//set highlight
+					instrText1.setFont(bFont);
+					instrText2.setFont(nFont);
+//					instrText1.setEnabled(true); 
+//					instrText2.setEnabled(false);
+				} else { // 2. step
 					instrText1.setFont(nFont);
 					instrText2.setFont(bFont);
 //					instrText1.setEnabled(false); 
 //					instrText2.setEnabled(true);
 				}
-				
-				instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Set_1));
-				instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Set_2));
-				instrText3.setText("");				
+					
 				break;
 			}
 			case 2: {	// change
-				if (!logic.isChangeable()) {
+				if (!logic.isChangeable()) { // 1. step
+					//set texts
+					instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeChangeText));
+					instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Change_1));
+					instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Change_2));
+					instrText3.setText(String.format(Messages.AndroidUnlockPattern_Step, 3, Messages.Mode_Set_2));
+					
+					//set highlight
 					instrText1.setFont(bFont);
 					instrText2.setFont(nFont);
 					instrText3.setFont(nFont);
 //					instrText1.setEnabled(true);
 //					instrText2.setEnabled(false);
 //					instrText3.setEnabled(false);
-				} else if (logic.isFirst()) {
+				} else if (logic.isFirst()) { //2. step
 					instrText1.setFont(nFont);
 					instrText2.setFont(bFont);
 					instrText3.setFont(nFont);
 //					instrText1.setEnabled(false); 
 //					instrText2.setEnabled(true);
 //					instrText3.setEnabled(false);
-				} else {
+				} else { // 3. step
 					instrText1.setFont(nFont);
 					instrText2.setFont(nFont);
 					instrText3.setFont(bFont);
@@ -832,17 +843,16 @@ public class AupView extends ViewPart {
 //					instrText3.setEnabled(true);
 				}
 				
-				instrText1.setText(String.format(Messages.AndroidUnlockPattern_Step, 1, Messages.Mode_Change_1));
-				instrText2.setText(String.format(Messages.AndroidUnlockPattern_Step, 2, Messages.Mode_Change_2));
-				instrText3.setText(String.format(Messages.AndroidUnlockPattern_Step, 3, Messages.Mode_Set_2));
 				break;
 			}
 			case 3: {	// check
-				instrText1.setFont(bFont);
-//				instrText1.setEnabled(true);
+				instrTextHeading.setText(String.format(Messages.AndroidUnlockPattern_helpBox_instrText_Heading, Messages.AndroidUnlockPattern_ModeCheckText));
 				instrText1.setText(Messages.Mode_Check_1);
 				instrText2.setText("");
 				instrText3.setText("");
+				
+				instrText1.setFont(bFont);
+//				instrText1.setEnabled(true);
 				break;
 			}
 		}
