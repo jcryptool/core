@@ -735,31 +735,20 @@ public class HexTable extends Composite implements IPropertyChangeListener {
 		if (includeCharacters) {
 			String encoding = hexEditorControl.getCurrentEncoding();
 			StringBuffer stringData = new StringBuffer(EHEP.TABLE_NUM_DATA_COLUMNS);
-	
-			//
-			// Loop for each column in the row
-			//
-			for (int i = 0; i < EHEP.TABLE_NUM_DATA_COLUMNS; i++) {
-	
-				if (dataIndex + i >= length) {
-					//
-					// We reached end-of-data, stop looping and add spare
-					//
-					stringData.append("                ".substring(i)); //$NON-NLS-1$
-					break;
-				}
-	
-				String str = null;
-				try {
-					str = new String(new byte[] { (byte) data[dataIndex + i] }, encoding);
-				} catch (UnsupportedEncodingException e) {
-					str = new String(new byte[] { (byte) data[dataIndex + i] });
-				}
-				char c = str.charAt(0);
-				stringData.append(((Character.isWhitespace(c) &&
-						!Character.isSpaceChar(c))
-						|| Character.isISOControl(c)) ? "." : str); //$NON-NLS-1$
-			} // for
+			
+			// row data as byte array
+			byte[] rowData = new byte[EHEP.TABLE_NUM_DATA_COLUMNS];
+			for(int i = 0; i < EHEP.TABLE_NUM_DATA_COLUMNS; i++)
+				rowData[i] = (byte) data[dataIndex + i];
+			
+			String str = "";
+			try {
+				str = new String(rowData, encoding);
+			} catch (UnsupportedEncodingException e) {
+				str = new String(rowData);
+			}
+			str = str.replaceAll("[\\t\\n\\f\\r]", ".");
+			stringData.append(str);
 	
 			item.setText(EHEP.TABLE_NUM_DATA_COLUMNS + 1, stringData.toString());
 		}

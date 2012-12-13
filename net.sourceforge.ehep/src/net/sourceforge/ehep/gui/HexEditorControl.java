@@ -1431,7 +1431,7 @@ public class HexEditorControl {
 				tableColumn.setText(Integer.toHexString(i-1).toUpperCase());
 			}
 			else {
-				tableColumn.setText(Messages.HexEditorControl_36);
+				tableColumn.setText(getCurrentEncoding());
 			}
 		} // for
 	}

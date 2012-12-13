@@ -42,6 +42,15 @@
         <topic href="$nl$/help/users/general/updates.html" label="Updates">
         </topic>
     </topic>
+    <topic href="$nl$/help/cryptology/toc.html" label="Cryptology">
+	    <topic label="Cryptographic Mechanisms"
+	        href="$nl$/help/cryptology/crypto_methods.html" />
+	    <topic label="Overview"
+	        href="$nl$/help/cryptology/cryptology.html" />
+	    <topic
+	        label="Time-table"
+	        href="$nl$/help/cryptology/crypto_timeline.html" />
+	</topic>
     <topic label="Algorithms"
         href="$nl$/help/users/algorithms/toc.html"
         sort="true">
