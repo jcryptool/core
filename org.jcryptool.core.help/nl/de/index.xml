@@ -12,30 +12,6 @@
     <entry keyword="Über JCrypTool">
     	<topic href="help/users/about/about.html" />
     </entry>
-    <entry keyword="Signatur">
-    	<topic href="help/glossary/signature.html" />
-    </entry>
-    <entry keyword="Klartext">
-    	<topic href="help/glossary/plaintext.html" />
-    </entry>
-    <entry keyword="Schlüssel">
-    	<topic href="help/glossary/key.html" />
-    </entry>
-    <entry keyword="Hash-Funktion">
-    	<topic href="help/glossary/hashfunction.html" />
-    </entry>
-    <entry keyword="Verschlüsselung">
-    	<topic href="help/glossary/encryption.html" />
-    </entry>
-    <entry keyword="Entschlüsselung">
-    	<topic href="help/glossary/decryption.html" />
-    </entry>
-    <entry keyword="Schlüsseltext">
-    	<topic href="help/glossary/ciphertext.html" />
-    </entry>
-    <entry keyword="Digitale Zertifikate">
-    	<topic href="help/glossary/certificates.html" />
-    </entry>
     <entry keyword="Erste Schritte als JCrypTool Entwickler">
     	<topic href="help/developers/general/firststart.html" />
     </entry>
@@ -61,12 +37,12 @@
     	<topic href="help/developers/develop/features/feature.html" />
     </entry>
     <entry keyword="Überblick über Kryptologie">
-    	<topic href="help/cryptology/general/cryptology.html" />
+    	<topic href="help/users/cryptology/cryptology.html" />
     </entry>
     <entry keyword="Zeitreise">
-    	<topic href="help/cryptology/general/crypto_timeline.html" />
+    	<topic href="help/users/cryptology/crypto_timeline.html" />
     </entry>
 	<entry keyword="Kryptographische Mechanismen">
-    	<topic href="help/cryptology/general/crypto_methods.html" />
+    	<topic href="help/users/cryptology/crypto_methods.html" />
     </entry>
 </index>
