@@ -35,16 +35,10 @@ public class EncryptVerifyPage extends WizardPage {
 	/** title of this page, displayed in the head of the wizard. */
 	private static final String TITLE = Messages.DecryptSignPage_choose_action;
 
-	/** Button for selecting to create a new key. */
+	/** Buttons for creating, loading a key or keypair. */
 	private Button newKeypairButton;
-	
-	/** Button for selecting to load an existing key. */
 	private Button existingKeypairButton;
-	
-	/** Button for selecting to create a new key. */
 	private Button newPubkeyButton;
-
-	/** Button for selecting to load an existing key. */
 	private Button existingPubkeyButton;
 
 	/** Determine which action we got */
@@ -85,60 +79,52 @@ public class EncryptVerifyPage extends WizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		// set layout
 		composite.setLayout(new GridLayout());
-		// create grid data
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-		GridData gd1 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-		GridData gd2 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
-		GridData gd4 = new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER);
 		// add enter Pubkey button
 		newPubkeyButton = new Button(composite, SWT.RADIO);
 		newPubkeyButton.setText(Messages.EncryptVerifyPage_manual_entry);
 		newPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_manual_entry_popup);
 		newPubkeyButton.setSelection(true);
-		newPubkeyButton.setLayoutData(gd);
+		newPubkeyButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		newPubkeyButton.addSelectionListener(sl);
 		// add existing Pubkey button
 		existingPubkeyButton = new Button(composite, SWT.RADIO);
 		existingPubkeyButton.setText(Messages.EncryptVerifyPage_existing_key);
-		existingPubkeyButton
-				.setToolTipText(Messages.EncryptVerifyPage_existing_key_popup);
-		existingPubkeyButton.setLayoutData(gd1);
-		//
+		existingPubkeyButton.setToolTipText(Messages.EncryptVerifyPage_existing_key_popup);
+		existingPubkeyButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
+		existingPubkeyButton.addSelectionListener(sl);
 		// add new Keypair button
 		newKeypairButton = new Button(composite, SWT.RADIO);
 		newKeypairButton.setText(Messages.ChooseKeytypePage_new_keypair);
 		newKeypairButton.setToolTipText(Messages.ChooseKeytypePage_new_keypair_popup);
-		newKeypairButton.setLayoutData(gd2);
+		newKeypairButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
 		newKeypairButton.addSelectionListener(sl);
 		// add existing Keypair button
 		existingKeypairButton = new Button(composite, SWT.RADIO);
 		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
-		existingKeypairButton
-				.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
-		existingKeypairButton.setLayoutData(gd3);
+		existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
+		existingKeypairButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
 		existingKeypairButton.addSelectionListener(sl);
         // Add Note
 		Label selectdtext = new Label(composite, SWT.WRAP);
         selectdtext.setText(Messages.EncryptVerifyPage_note);
-        selectdtext.setLayoutData(gd4);
-		
-		//
+        selectdtext.setLayoutData(new GridData(GridData.FILL_HORIZONTAL | GridData.VERTICAL_ALIGN_CENTER));
 		
 		// finally set control something
-		
 		setControl(composite);
 	}
 
 	@Override
 	public final IWizardPage getNextPage() {
 		if (newPubkeyButton.getSelection()) {
-			return this.getWizard().getPage(NewPublicKeyPage.getPagename());
+			//return this.getWizard().getPage(NewPublicKeyPage.getPagename());
+			return getWizard().getPage(NewPublicKeyPage.getPagename());
 		} else if (newKeypairButton.getSelection()) {
 			return getWizard().getPage(NewKeypairPage.getPagename());
 		} else if (existingKeypairButton.getSelection()) {
 			return getWizard().getPage(LoadKeypairPage.getPagename());
 		} else {
-			return this.getWizard().getPage(LoadPublicKeyPage.getPagename());
+			//return this.getWizard().getPage(LoadPublicKeyPage.getPagename());
+			return getWizard().getPage(LoadPublicKeyPage.getPagename());
 		}
 	}
 	

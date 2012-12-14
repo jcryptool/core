@@ -31,15 +31,12 @@ public class DecryptSignPage extends WizardPage {
 	/** unique pagename to get this page from inside a wizard. */
 	private static final String PAGENAME = "Decrypt/Sign Page"; //$NON-NLS-1$
 
-	/** Button for selecting to create a new key. */
+	/** Button for selecting, loading a keypair. */
 	private Button newKeypairButton;
-
-	/** Button for selecting to load an existing key. */
 	private Button existingKeypairButton;
 
 	/** Determine which action we got */
 
-	
 	/** selection listener that updates the buttons. */
 	private final SelectionListener sl = new SelectionAdapter() {
 
@@ -87,8 +84,7 @@ public class DecryptSignPage extends WizardPage {
 		// add existing Keypair button
 		existingKeypairButton = new Button(composite, SWT.RADIO);
 		existingKeypairButton.setText(Messages.DecryptSignPage_existing_keypair);
-		existingKeypairButton
-				.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
+		existingKeypairButton.setToolTipText(Messages.DecryptSignPage_existing_keypair_popup);
 		existingKeypairButton.setLayoutData(gd1);
 		existingKeypairButton.addSelectionListener(sl);
 		// finally set control something
