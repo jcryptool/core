@@ -146,6 +146,9 @@ public class KeySelectionWizard extends Wizard {
                         		rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())||(getPage(SaveKeypairPage.getPagename()).isPageComplete());
                         	}
                         }
+                        else {
+                        	rv=false;
+                        }
                     } else {
                         rv &= ((getPage(LoadPublicKeyPage.getPagename()).isPageComplete())||(getPage(LoadKeypairPage.getPagename()).isPageComplete()));
                     }
