@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.visual.extendedrsa.ui.wizard.KeyringWizard;
@@ -23,6 +24,7 @@ public class Test extends ViewPart{
 	private Text text_1;
 	private Text text_2;
 	private Text text_3;
+	public static final String ID = "org.jcryptool.visual.extendedrsa.Test";
 	public Test() {
 	}
 	
@@ -224,7 +226,9 @@ public class Test extends ViewPart{
 	    lblRsaKryptosystemNeu.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.BOLD));
 	    lblRsaKryptosystemNeu.setBounds(0, 0, 168, 22);
 	    lblRsaKryptosystemNeu.setText("RSA Kryptosystem neu");
-		// TODO Auto-generated method stub
+		
+	    
+	    PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,Activator.PLUGIN_ID + ".rsaExtView"); //$NON-NLS-1$
 		
 	}
 

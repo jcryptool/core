@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="rsaExtView" title="Extended RSA">
+      <description>Diese neue Visualisierung demonstriert das asymmetrische Verschlüsseluns- und Signaturverfahren RSA.</description>
+      <topic href="nl/de/help/content/rsaHelp.html" label="Extended RSA"/>
+   </context>
+</contexts>
