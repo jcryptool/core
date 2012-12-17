@@ -2,6 +2,18 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Android-Mustersperre" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins" topic="$nl$/help/content/index.html">
-	<topic href="$nl$/help/content/index.html" label="Android-Mustersperre">
- </topic>
+  <topic href="$nl$/help/content/index.html" label="Android-Mustersperre">
+   <topic href="$nl$/help/content/index.html#design" label="AUP-Aufbau">
+    </topic>
+    <topic href="$nl$/help/content/index.html#security" label="AUP-Sicherheit">
+    </topic>
+    <topic href="$nl$/help/content/index.html#attacks" label="Angriffe gegen das AUP">
+    </topic>
+    <topic href="$nl$/help/content/index.html#further" label="Andere Arten grafischer Passwörter">
+       <topic href="$nl$/help/content/index.html#das" label="Draw-a-Secret (DAS)">
+       </topic>
+       <topic href="$nl$/help/content/index.html#win8" label="Windows 8: Picture-Passwort">
+       </topic>
+    </topic>	
+  </topic>
 </toc>
