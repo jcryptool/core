@@ -452,27 +452,35 @@ public class RSAData {
                 this.privateAlias = oldData.privateAlias;
                 this.password = oldData.password;
             } else {
-                this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.publicAlias);
-                // get the password via some dialog
-                final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
+                if (oldData.d != null){
+                	this.privateAlias = KeyStoreManager.getInstance().getPrivateForPublic(this.publicAlias);
+                	// get the password via some dialog
+                	final InputDialog passDialog = new InputDialog(Display.getCurrent().getActiveShell(),
                         Messages.RSAData_inherit_password_title, Messages.RSAData_inherit_password_text, "", null); //$NON-NLS-1$
-                if (passDialog.open() == Window.OK) {
-                    this.password = passDialog.getValue();
+                	if (passDialog.open() == Window.OK) {
+                		this.password = passDialog.getValue();
+                	} else {
+                		return;
+                	}
+                	
+                	try {
+                		this.getPrivateParams();
+                	}
+                	catch (UnrecoverableKeyException e) {
+                		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
+                				Messages.RSAData_ExAccessKeystorePassword, e));
+                	} catch (final NullPointerException e) {
+                		JCTMessageDialog.showErrorDialog(new Status(IStatus.ERROR, RSAPlugin.PLUGIN_ID,
+                				e.getMessage(), e), Messages.RSAData_failedInitPrivParams);
+                	} catch (final Exception e) {
+                		LogUtil.logError(e);
+                	}
                 } else {
-                    return;
-                }
-                try {
-                    this.getPrivateParams();
-                }
-                catch (UnrecoverableKeyException e) {
-                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
-                            Messages.RSAData_ExAccessKeystorePassword, e));
-                } catch (final NullPointerException e) {
-                    JCTMessageDialog.showErrorDialog(new Status(IStatus.ERROR, RSAPlugin.PLUGIN_ID,
-                            e.getMessage(), e), Messages.RSAData_failedInitPrivParams);
-                } catch (final Exception e) {
-                    LogUtil.logError(e);
-                }
+            		JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, RSAPlugin.PLUGIN_ID,
+            				Messages.RSAData_privateKeyNull));
+                        this.N = null;
+                        this.e = null;
+                }	
             }
         }
 

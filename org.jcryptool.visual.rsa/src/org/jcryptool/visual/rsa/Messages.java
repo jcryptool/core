@@ -159,6 +159,7 @@ public class Messages extends NLS {
 	public static String RSAData_inherit_password_title;
 	public static String RSAData_ExAccessKeystorePassword;
     public static String RSAData_failedInitPrivParams;
+	public static String RSAData_privateKeyNull;
     public static String RsaTextModifyPage_textmodifydescription;
 	public static String SaveKeypairPage_enter_params_text;
 	public static String SaveKeypairPage_error_passwords_mismatch;
