@@ -13,7 +13,7 @@
 		
 		<p align=center><img src="../../../nl/img/AupDe.png"></p>
 		
-		<h3>AUP-Aufbau</h3>
+		<h3 id="design">AUP-Aufbau</h3>
 		<p>Das AUP besteht aus dem Muster, das sich aus einer Verbindung von neun quadratisch angeordneten Feldern ergibt. Dieses Muster wird dann wie ein Passwort zum Entsperren verwendet.</p>
 		<p>Bei der AUP-Musterauswahl müssen die folgenden Regeln beachtet werden:</p>
 		<ul>
@@ -23,12 +23,12 @@
 			<li>Die Reihenfolge der besuchten Felder ist entscheidend.</li>
 		</ul>		
 		
-		<h3>AUP-Sicherheit</h3>
+		<h3 id="security">AUP-Sicherheit</h3>
 		<p>Da auf vielen Smartphones ein vom Hersteller modifiziertes Android läuft, wird das Google Nexus S mit nicht-modifiziertem Android 2.3.4 als Referenzplattform verwendet: Nach fünfmaliger Falscheingabe des grafischen Passwortes muss der Benutzer 30 Sekunden warten. Zusätzlich besteht dann die Möglichkeit, das Smartphone mithilfe des zugehörigen Google-Passwortes zu entsperren. Der Benutzer hat aber auch noch weitere 15 Versuche, um das Muster einzugeben. Nach jeweils fünf Fehlversuchen muss 30 Sekunden gewartet werden. Nach insgesamt 20 Fehlversuchen kann nur noch das Google-Passwort zum Entsperren genutzt werden. Die Sicherheit dieses Passworts wird nicht näher betrachtet, da es sich dabei um ein textuelles Passwort handelt.</p>
 		
 		<p>Anhand der Regeln für die AUP-Musterauswahl ergeben sich insgesamt 389.112 mögliche Muster für das AUP. Dieser Wert wurde mittels eines Brute-Force-Programms ermittelt. [<b>Hinweis</b>: Wenn Sie dafür eine Formel kennen, informieren Sie uns bitte darüber.]</p>
 		
-		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer <b>nur einmal</b> vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten. Diese PINs werden im Folgenden als eingeschränkte PINs bezeichnet. Die Regeln für die eingeschränkten PINs ähneln denen für AUP-Muster; ihre Anzahl lässt sich durch die Summe der Variationen ohne Zurücklegen <sup><a id="anker1" title="Zur Quelle" href="#fn1">[1]</a></sup> über die PIN-Längen vier bis neun berechnen:</p>
+		<p>Zum Vergleich: Bei einer vier bis neun stelligen PIN, die aus Ziffern von 1 bis 9 gebildet wird und bei der jede Ziffer <b>nur einmal</b> vorkommen darf, gibt es 985.824 verschiedene Möglichkeiten. Diese PINs werden im Folgenden als eingeschränkte PINs bezeichnet. Die Regeln für die eingeschränkten PINs ähneln denen für AUP-Muster; ihre Anzahl lässt sich durch die Summe der Variationen ohne Zurücklegen<sup><a id="anker1" title="Zur Quelle" href="#fn1">[1]</a></sup> über die PIN-Längen vier bis neun berechnen:</p>
 		
 		<p><img src="../../../nl/img/formula_pin_perm.png"></p>
 		
@@ -129,7 +129,7 @@
 			</tr>
 		</table></p>
 		
-		<p>Die Tabelle zeigt, dass das AUP ein kleineres Wachstum hat. Dadurch schneidet es im Direktvergleich zur PIN mit zunehmender Länge immer schlechter ab. In der Summe über alle möglichen Muster kann das AUP nur etwa 40% der Variationen der eingeschränkten PIN erzielen.</p>
+		<p>Die Tabelle zeigt, dass das AUP ein geringeres Wachstum hat. Dadurch schneidet es im Direktvergleich zur PIN mit zunehmender Länge immer schlechter ab. In der Summe über alle möglichen Muster kann das AUP nur etwa 40% der Variationen der eingeschränkten PIN erzielen.</p>
 		
 		<p>Es sollte aber bedacht werden, dass sich Menschen Muster bzw. Bilder nachweisbar besser merken können.<sup><a id="anker2" title="Zur Quelle" href="#fn2">[2, S. 5]</a></sup> Folglich lassen sich auch längere Muster gut merken, weshalb der Direktvergleich wahrscheinlich keinen hohen Aussagewert besitzt.</p>
 		
@@ -137,7 +137,7 @@
 		
 		<p>Das Ergebnis eines Vergleichs der Gesamtanzahl aller 4-9 stelligen eingeschränkten PINs mit der Gesamtheit aller AUP-Muster ergibt, dass es etwa 2.856 so viele PIN-Variationen wie AUP-Variationen gibt. Dadurch, dass es beim AUP weniger Möglichkeiten bei der Passwortwahl gibt, ist es gegen einen Brute-Force-Angriff anfälliger als PIN- oder Passwort-Authentifizierungsverfahren. In der Praxis ist ein Brute-Force-Angriff über die reguläre Eingabe nicht möglich, da nach spätestens 20 Versuchen das Email-Passwort benötigt wird.</p>
 		
-		<h4>Angriffe gegen das AUP</h4>
+		<h4 id="attacks">Angriffe gegen das AUP</h4>
 		<p>1. Shoulder-Surfing</p>
 		<p>Als Shoulder-Surfing werden Angriffe bezeichnet, bei denen eine Person bei der Eingabe ihres Passworts beobachtet wird, um es vollständig oder teilweise zu erhalten. Dies kann direkt durch den Angreifer oder beispielsweise mit Hilfe von Kameras erfolgen. Da für die Eingabe des AUP ein sehr großer Bereich des Displays verwendet wird, sind Rückschlüsse auf das Entsperrmuster einfacher als wenn PINs oder Passwörter verwendet werden.</p>
 		
@@ -147,8 +147,8 @@
 		<p>3. Angriff auf entwendete Authentifizierungsdaten</p>
 		<p>Gelingt es, Authentifizierungsdaten auszulesen und somit vom authentifizierenden System zu trennen, so können diese direkt untersucht werden. Dann kann beispielsweise ein Brute-Force-Angriff durchgeführt werden, der alle Möglichkeiten durchprobiert, bis die berechneten Daten mit den entwendeten Daten übereinstimmen. Problematisch im Zusammenhang mit Android ist, dass die Muster für ihre Speicherung lediglich ungesalzen gehasht werden. Dies ist ein Schwachpunkt, der sich ausnutzen lässt, um mittels eines Wörterbuchangriffs in Sekundenschnelle das Muster eines zugehörigen Hashwertes zu bestimmen.<sup><a id="anker3" title="Zur Quelle" href="#fn3">[3]</a></sup></p>
 		
-		<h2>Andere Arten grafischer Passwörter</h2>
-		<h3>1. Draw-a-Secret (DAS)</h3>
+		<h2 id="further">Andere Arten grafischer Passwörter</h2>
+		<h3 id="das">1. Draw-a-Secret (DAS)</h3>
 		
 		<p><table border=0 align=center>
 			<tr>
@@ -166,7 +166,7 @@
 		
 		<p>Die Entwickler geben in ihrer Sicherheitsanalyse an, dass das DAS ein höheres Sicherheitsniveau als Passwörter besitzt.<sup><a title="Zur Quelle" href="#fn2">[2]</a></sup> Dies kann darauf zurück geführt werden, dass Menschen sich Grafiken und Figuren besser merken können und sich somit auch längere Muster gut behalten lassen. Es sollte aber auch bedacht werden, dass sich spiegelsymmetrische Bilder besser merken lassen als asymmetrische.<sup><a id="anker4" title="Zur Quelle" href="#fn4">[4]</a></sup> Dadurch kann der Musterraum für Angriffe erheblich verkleinern werden, was in der Folge auch die Sicherheit verringert.</p>
 		
-		<h3>2. Windows 8: Picture-Passwort</h3>
+		<h3 id="win8">2. Windows 8: Picture-Passwort</h3>
 		
 		<p align=center><img src="../../../nl/img/PicturePassword.png"></p>
 		<p>Windows 8 greift die Idee der grafischen Passwörter auf und bietet sie als Login-Möglichkeit an.<sup><a id="anker5" title="Zur Quelle" href="#fn5">[5]</a></sup> Der Nutzer kann sich für diesen Mechanismus ein Bild auswählen und im Anschluss Bereiche darauf mit verschiedenen Gesten hervorheben. Im Gegensatz zum DAS sind keine freien Gesten möglich. Die Gesten sind auf Kreise, Linien und Punkte limitiert. Ein weiterer Unterschied ist, dass lediglich &bdquo;Charakteristiken&ldquo; für die Authentisierung gespeichert werden und nicht die berührten Felder. Bei Linien sind dies der Anfangs- und Endpunkt, sowie ihre Richtung. Darüber hinaus ist das Raster beim Picture-Passwort deutlich feiner. So wird die längere Seite des Bildes in 100 Abschnitte unterteilt. Diese Skalierung wird anschließend auf die kürzere Seite übertragen, um das Raster zu bilden, welches über das Bild gelegt wird. Nach Aussage von Sinofsky bietet auch dieses Verfahren eine deutlich größere Sicherheit als traditionelle Passwörter.<sup><a title="Zur Quelle" href="#fn5">[5]</a></sup></p>
