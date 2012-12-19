@@ -152,6 +152,7 @@ public class Messages extends NLS {
 	public static String RSAComposite_valid;
 	public static String RSAComposite_verify;
 	public static String RSAComposite_view;
+	public static String RSAComposite_view_decr;
 	public static String RSAComposite_view_dec;
 	public static String RSAComposite_view_hex;
 	public static String RSAComposite_yes;

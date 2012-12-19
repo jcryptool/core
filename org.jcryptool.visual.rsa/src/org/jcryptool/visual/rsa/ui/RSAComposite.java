@@ -1010,7 +1010,17 @@ public class RSAComposite extends Composite {
 
         // Change View
         final Label viewText = new Label(optionsGroup, SWT.NONE);
-        viewText.setText(Messages.RSAComposite_view);
+        switch (data.getAction()) {
+        	case EncryptAction:
+        	case SignAction:
+        	case VerifyAction:
+        		viewText.setText(Messages.RSAComposite_view);
+        		break;
+        	case DecryptAction:
+        		viewText.setText(Messages.RSAComposite_view_decr);
+        		break;
+        }
+        
         viewText.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
         // Dec
         dec = new Button(optionsGroup, SWT.RADIO);
