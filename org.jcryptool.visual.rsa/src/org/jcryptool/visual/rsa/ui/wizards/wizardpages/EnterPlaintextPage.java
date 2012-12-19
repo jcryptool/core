@@ -209,7 +209,7 @@ public class EnterPlaintextPage extends TextWizardPage {
     @Override
     public String getText() {
         if (numberCheckBox.getSelection()) {
-            String[] text = this.text.getText().split(" "); //$NON-NLS-1$
+            String[] text = this.text.getText().replaceAll("\\s+", " ").split(" "); //$NON-NLS-1$
             StringBuilder sb = new StringBuilder(text.length);
             for (int i = 0; i < text.length; i++) {
                 sb.append(Character.toChars(Integer.parseInt(text[i])));
