@@ -54,9 +54,12 @@ public class Identity extends TabItem {
 	private Text subjectInput;
 	private Text clearMessage;
 	private Text encryptedMessage;
+	private Text decryptedMessage;
+	private Text encryptedMessage_2;
 	private Combo messageRecipient;
 	private Button sendMessage;
 	private Button encryptMessage;
+	private Button decryptMessage;
 	private Combo recipientKeys;
 	private Button receive_and_decrypt;
 	private Button attackPublicKey;
@@ -67,6 +70,10 @@ public class Identity extends TabItem {
 	private GridData group_4;
 	private int forerunner;
 	private int id;
+	private Combo subjectChoose;
+	private Combo decryptionKey;
+	private Button deleteMessage;
+	private Text pwPrivKey;
 	
 	public Identity(TabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region) {
 		super(parent, style);
@@ -118,7 +125,9 @@ public class Identity extends TabItem {
 					createSpacer(actionGroup_1);
 					
 					subjectInput = new Text(actionGroup_1, SWT.NONE);
-					subjectInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					GridData gd_subject = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_subject.heightHint = 13;
+					subjectInput.setLayoutData(gd_subject);
 					createSpacer(actionGroup_1);
 					
 					label = new Label (actionGroup_1, SWT.NONE);
@@ -143,7 +152,9 @@ public class Identity extends TabItem {
 					createSpacer(actionGroup_1);
 					
 					messageRecipient = new Combo(actionGroup_1, SWT.READ_ONLY);
-					messageRecipient.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					GridData gd_recp = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_recp.heightHint = 13;
+					messageRecipient.setLayoutData(gd_recp);
 					sendMessage = new Button(actionGroup_1, SWT.PUSH);
 					sendMessage.setText("Nachricht senden");
 					sendMessage.addSelectionListener(new SelectionAdapter() {
@@ -160,7 +171,9 @@ public class Identity extends TabItem {
 					createSpacer(actionGroup_1);
 					
 					recipientKeys = new Combo(actionGroup_1, SWT.READ_ONLY);
-					recipientKeys.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					GridData gd_rk = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_rk.heightHint = 13;
+					recipientKeys.setLayoutData(gd_rk);
 					createSpacer(actionGroup_1);
 					
 					createSpacer(actionGroup_1);
@@ -202,9 +215,80 @@ public class Identity extends TabItem {
 					initActions2 = new Label(actionGroup_2, SWT.NONE);
 					initActions2.setText("Nachricht ausw\u00e4hlen: ");
 					initActions2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+					createSpacer(actionGroup_2);	
+					
+//					label = new Label (actionGroup_2, SWT.NONE);
+//					label.setText("testtest");
+//					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					subjectChoose = new Combo(actionGroup_2, SWT.READ_ONLY);
+					GridData gd_combo = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_combo.heightHint = 13;
+					subjectChoose.setLayoutData(gd_combo);
+					
 					createSpacer(actionGroup_2);
-						
-					actionLayout_2.horizontalSpacing = 80;			
+					
+					label = new Label (actionGroup_2, SWT.NONE);
+					label.setText("Verschl\u00fcsselte Nachricht:");
+					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					
+					label = new Label (actionGroup_2, SWT.NONE);
+					label.setText("Entschl\u00fcsselte Nachricht:");
+					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					
+					encryptedMessage_2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP);
+					encryptedMessage_2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 18));
+					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP);
+					decryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 18));
+					
+					createSpacer(actionGroup_2);
+					createSpacer(actionGroup_2);
+					
+					label = new Label (actionGroup_2, SWT.NONE);
+					label.setText("Schl\u00fcssel ausw\u00e4hlen:");
+					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					createSpacer(actionGroup_2);
+					
+					decryptionKey = new Combo(actionGroup_2, SWT.READ_ONLY);
+					GridData gd_dk = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_dk.heightHint = 13;
+					decryptionKey.setLayoutData(gd_dk);
+					deleteMessage = new Button(actionGroup_2, SWT.PUSH);
+					deleteMessage.setText("Nachricht l\u00f6schen");
+					deleteMessage.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(final SelectionEvent e) {
+							decryptedMessage.setText("nun wird die nachricht gel\u00f6scht");
+						}
+					});
+					deleteMessage.setLayoutData(new GridData(SWT.RIGHT, SWT.RIGHT, true, false, 1, 1));
+					
+					label = new Label (actionGroup_2, SWT.NONE);
+					label.setText("Passwort eingeben:");
+					GridData gd_pw = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_pw.heightHint = 13;
+					label.setLayoutData(gd_pw);
+					createSpacer(actionGroup_2);
+					
+					pwPrivKey = new Text(actionGroup_2, SWT.NONE);
+					GridData gd_key = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
+					gd_key.widthHint = 200;
+					pwPrivKey.setLayoutData(gd_key);
+					createSpacer(actionGroup_2);
+					
+					createSpacer(actionGroup_2);
+					createSpacer(actionGroup_2);
+					
+					decryptMessage = new Button(actionGroup_2, SWT.PUSH);
+					decryptMessage.setText("Nachricht entschl\u00fcsseln");
+					decryptMessage.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(final SelectionEvent e) {
+							decryptedMessage.setText("nun wird die nachricht verschl\u00fcsselt");
+						}
+					});
+					decryptMessage.setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1));
+					createSpacer(actionGroup_2);
+					
 					
 					generalGroup.redraw();
 					generalGroup.layout();
@@ -277,6 +361,7 @@ public class Identity extends TabItem {
 		actionGroup_1.setText("Aktionsfenster");
 		actionLayout_1 = new GridLayout(2, false);
 		actionLayout_1.horizontalSpacing = 80;
+
 		actionGroup_1.setLayout(actionLayout_1);
 		group_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		group_1.exclude = false;
@@ -288,7 +373,8 @@ public class Identity extends TabItem {
 	private void createActionGroup2(){
 		actionGroup_2 = new Group(generalGroup, SWT.NONE);
 		actionGroup_2.setText("Aktionsfenster");
-		actionLayout_2 = new GridLayout(1, false);
+		actionLayout_2 = new GridLayout(2, false);
+		actionLayout_2.horizontalSpacing = 80;
 		actionGroup_2.setLayout(actionLayout_2);
 		group_2 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		actionGroup_2.setLayoutData(group_2);
