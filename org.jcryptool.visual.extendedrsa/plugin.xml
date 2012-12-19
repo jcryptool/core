@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <view
       		category="org.jcryptool.visual"
-            class="org.jcryptool.visual.extendedrsa.ExtendedRSAView"
+            class="org.jcryptool.visual.extendedrsa.ExtendedRSA_Visual"
             id="org.jcryptool.visual.extendedrsa.ExtendedRSAView"
             icon="icons/view.gif"
             name="Visualisierung zu RSA"

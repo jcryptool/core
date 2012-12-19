@@ -116,7 +116,7 @@ public class Test extends ViewPart{
 	    btnIdentittErstellen.addSelectionListener(new SelectionAdapter() {
 	    	@Override
 	    	public void widgetSelected(SelectionEvent e) {
-	    		new WizardDialog(getSite().getShell(), new NewIdentityWizard()).open();
+//	    		new WizardDialog(getSite().getShell(), new NewIdentityWizard(tabFolder)).open();
 	    	}
 	    });
 	    btnIdentittErstellen.setBounds(10, 32, 141, 50);

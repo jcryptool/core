@@ -10,39 +10,44 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa.ui.wizard;
 
+
 import org.eclipse.jface.wizard.Wizard;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.extendedrsa.Identity;
-import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.NewIdentityPage;
+import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.DeleteIdentityPage;
 
 /**
  * This is the wizard to create a new Identity with the button in the visual
  * @author Christoph Schnepf, Patrick Zillner
  *
  */
-public class NewIdentityWizard extends Wizard{
+public class DeleteIdentityWizard extends Wizard{
 	
 	TabFolder tabfolder;
-	NewIdentityPage newIDPage;
+	DeleteIdentityPage deleteIDPage;
 	
-	public NewIdentityWizard(TabFolder folder){
+	public DeleteIdentityWizard(TabFolder folder){
 		this.tabfolder = folder;
 	}
 	
 	@Override
 	public final void addPages() {
-		newIDPage = new NewIdentityPage();
-		addPage(newIDPage);
+		deleteIDPage = new DeleteIdentityPage(tabfolder);
+		addPage(deleteIDPage);
 	}
 	
 	@Override
-	public boolean performFinish() {
-		if (newIDPage.isPageComplete()){
-			new Identity(tabfolder, SWT.NONE, newIDPage.getIdName().getText(), newIDPage.getIdForename().getText(),  newIDPage.getIdSurname().getText(), newIDPage.getIdOrganisation().getText(),  newIDPage.getIdRegion().getText());
-			return true;
+	public boolean performFinish() { 
+		//find the tabitem and delete it
+		for (TabItem ti : tabfolder.getItems()){
+			Identity current = (Identity)ti;
+			if (current.getIdentityName().equals(deleteIDPage.getSelectedIdentity().getText())){
+				current.dispose();
+			}
 		}
-		return false;
+		
+		return true;
 	}
 
 }
