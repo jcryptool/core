@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -41,11 +41,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.entropy.EntropyPlugin;
 import org.jcryptool.analysis.entropy.calc.EntropyCalc;
-import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.constants.IConstants;
+import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -221,8 +221,8 @@ public class EntropyUIconfig extends Composite {
                 buttonStart.setToolTipText(Messages.EntropyUIconfig_23);
                 buttonStart.addSelectionListener(new SelectionAdapter() {
                     public void widgetSelected(SelectionEvent evt) {
-                        final int n =
-                                buttonDeepAnalysis.getSelection() ? 50 : cComboTupelLength.getSelectionIndex() + 1;
+                        final int n = buttonDeepAnalysis.getSelection() ? 50
+                                : cComboTupelLength.getSelectionIndex() + 1;
                         final double sig = getSignificance();
 
                         if (checkEditor()) {
@@ -244,9 +244,8 @@ public class EntropyUIconfig extends Composite {
                                             return Status.CANCEL_STATUS;
                                         }
 
-                                        final EntropyCalc calc =
-                                                new EntropyCalc(getEditorText(), n, sig, myModifySettings,
-                                                        entropyUIpointer, editorname);
+                                        final EntropyCalc calc = new EntropyCalc(getEditorText(), n, sig,
+                                                myModifySettings, entropyUIpointer, editorname);
 
                                         monitor.worked(1);
 
@@ -295,7 +294,7 @@ public class EntropyUIconfig extends Composite {
 
     /**
      * reads the current value from an input stream
-     *
+     * 
      * @param in the input stream
      */
     private String InputStreamToString(InputStream in) {
@@ -359,22 +358,22 @@ public class EntropyUIconfig extends Composite {
     private double getSignificance() {
         double result = 0;
         switch (cComboSignificance.getSelectionIndex()) {
-            case 0:
-                return result;
-            case 1:
-                result = 0.001;
-                return result;
-            case 2:
-                result = 0.0025;
-                return result;
-            case 3:
-                result = 0.005;
-                return result;
-            case 4:
-                result = 0.01;
-                return result;
-            default:
-                return result;
+        case 0:
+            return result;
+        case 1:
+            result = 0.001;
+            return result;
+        case 2:
+            result = 0.0025;
+            return result;
+        case 3:
+            result = 0.005;
+            return result;
+        case 4:
+            result = 0.01;
+            return result;
+        default:
+            return result;
         }
     }
 
