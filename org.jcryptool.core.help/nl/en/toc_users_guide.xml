@@ -13,7 +13,7 @@
            <anchor id="perspectives"/>
            <topic href="$nl$/help/users/general/perspective_default.html" label="Default">
            </topic>
-           <topic href="$nl$/help/users/general/perspective_algorithm.html" label="Functional">
+           <topic href="$nl$/help/users/general/perspective_algorithm.html" label="Algorithm">
            </topic>
         </topic>
         <topic label="Views"
