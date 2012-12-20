@@ -16,7 +16,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -34,20 +33,9 @@ public class GHSettingsPage extends WizardPage {
 	private static final String TITLE=Messages.SettinsPage_Title;
 	private final GHData data;
 	private Combo dim = null;
-	private Button genButton, yesButton, noButton;
-	private Label own, pass;
 
 	/** field for the owner of this keypair. */
 	protected Text owner;
-
-	/** field for the password. */
-	private Text password;
-
-	/** password verification field. */
-	private Text passwordverify;
-
-	/** boolean to check if the key is set*/
-	private boolean keySet = false;
 
 	public GHSettingsPage(GHData data) {
 		super(PAGENAME, TITLE, null);
