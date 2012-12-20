@@ -9,9 +9,9 @@ import java.util.List;
 
 /**
  * Models alphabets with a finite number of elements which are maintained in a specific order (stored as a list).
- *
+ * 
  * @param <C> the boundary generic type for elements contained in this alphabet
- *
+ * 
  * @author Simon L
  */
 public class Alphabet<C> {
@@ -21,7 +21,7 @@ public class Alphabet<C> {
     /**
      * Creates an alphabet by specifying its elements. The order in which the iterator of the collection returns the
      * elements will be maintained.
-     *
+     * 
      * @param alphabetElements the alphabet elements.
      * @throws IllegalArgumentException if the collection is null or if the collection is empty
      */
@@ -53,7 +53,7 @@ public class Alphabet<C> {
 
     /**
      * Filters non-alphabet content from a list (alters the given list!)
-     *
+     * 
      * @param toFilter the list to filter
      */
     public void filterByAlphabet(List<C> toFilter) {
@@ -77,7 +77,7 @@ public class Alphabet<C> {
 
     /**
      * returns true, if every element that is contained in this alphabet is contained in the other alphabet, too.
-     *
+     * 
      * @param otherAlpha the other alphabet
      * @return whether the set of elements of this alphabet is a subset of the other alphabet's element set.
      */
@@ -94,27 +94,13 @@ public class Alphabet<C> {
     /**
      * returns true, if this and the other alphabet have exactly the same elements sotred. (alphabets can be permuted,
      * still, thus not be equal)
-     *
+     * 
      * @param otherAlpha the other alphabet
      */
     public boolean isSetEqualTo(Alphabet<? extends C> otherAlpha) {
         return isSubsetOf(otherAlpha) && otherAlpha.getContent().size() == this.getContent().size();
     }
 
-    // TODO:!utils
-    private static void removeDoublesInplace(Collection<?> coll) {
-        List<Object> found = new ArrayList<Object>();
-        for (Iterator<?> iterator = coll.iterator(); iterator.hasNext();) {
-            Object collElem = iterator.next();
-            if (!found.contains(collElem)) {
-                found.add(collElem);
-            } else {
-                iterator.remove();
-            }
-        }
-    }
-
-    // TODO:!utils
     private static <EType> List<EType> removeDoubles(Collection<EType> coll) {
         List<EType> found = new ArrayList<EType>();
         for (Iterator<EType> iterator = coll.iterator(); iterator.hasNext();) {
