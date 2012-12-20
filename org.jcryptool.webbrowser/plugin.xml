@@ -5,10 +5,10 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
-            category="org.jcryptool.core.views"
             class="org.jcryptool.webbrowser.ui.BrowserView"
             icon="icons/browser.gif"
             id="org.jcryptool.webbrowser.browser"
+            category="org.eclipse.ui"
             name="%view.name"
             restorable="true">
          <description>

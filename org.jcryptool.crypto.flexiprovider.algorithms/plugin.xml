@@ -6,7 +6,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="org.jcryptool.crypto.flexiprovider"
+            category="org.jcryptool.crypto"
             class="org.jcryptool.crypto.flexiprovider.algorithms.ui.views.FlexiProviderAlgorithmsView"
             icon="icons/16x16/bookcase.png"
             id="org.jcryptool.crypto.flexiprovider.algorithms.ui.views.FlexiProviderAlgorithmsView"

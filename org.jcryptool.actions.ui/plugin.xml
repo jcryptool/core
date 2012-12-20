@@ -5,7 +5,7 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="org.jcryptool.core.views"
+            category="org.jcryptool.crypto"
             class="org.jcryptool.actions.ui.views.ActionView"
             icon="icons/icon.gif"
             id="org.jcryptool.actions.views.ActionView"

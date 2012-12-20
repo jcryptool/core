@@ -11,13 +11,6 @@
       </perspective>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="org.jcryptool.crypto.flexiprovider"
-            name="%category.name">
-      </category>
-   </extension>
-   <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective">

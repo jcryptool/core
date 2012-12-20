@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="org.jcryptool.crypto.flexiprovider"
+            category="org.jcryptool.crypto"
             class="org.jcryptool.crypto.flexiprovider.operations.ui.views.FlexiProviderOperationsView"
             icon="icons/16x16/klipper_dock.png"
             id="org.jcryptool.crypto.flexiprovider.operations.OperationsView"

@@ -5,10 +5,10 @@
          point="org.eclipse.ui.views">
       <view
             allowMultiple="false"
-            category="org.jcryptool.core.views"
             class="org.jcryptool.fileexplorer.views.FileExplorerView"
             icon="icons/icon.png"
             id="org.jcryptool.fileexplorer.views.FileExplorerView"
+            category="org.eclipse.ui"
             name="%viewName"
             restorable="true">
          <description>
