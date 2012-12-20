@@ -2,7 +2,7 @@
  * Copyright (c) 2011 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
  * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.commands;
@@ -23,6 +23,7 @@ import org.jcryptool.core.operations.dataobject.modern.hybrid.HybridDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.xml.core.canonicalize.CreateCanonicalization;
+import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 import org.jcryptool.crypto.xml.ui.preferences.PreferenceConstants;
 import org.jcryptool.crypto.xml.ui.utils.IXMLSecurityConstants;
@@ -33,11 +34,11 @@ import org.jcryptool.crypto.xml.ui.utils.IXMLSecurityConstants;
  * The canonicalization process differs depending on whether editor content or a file via a view should be
  * canonicalized.
  * </p>
- *
+ * 
  * <p>
  * This version removes the XML comments and replaces them with an empty line.
  * </p>
- *
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -51,16 +52,22 @@ public class NewCanonicalizationRemoveCommand extends AbstractAlgorithmAction {
         try {
             InputStream editorContent = getActiveEditorInputStream();
 
-            if (editorContent != null) {
+            boolean wellFormed = Utils.isDocumentWellFormed(editorContent);
+
+            if (wellFormed && editorContent != null) {
                 byte[] outputBytes = canonicalize(editorContent);
 
                 if (outputBytes != null && outputBytes.length > 0) {
-	                IEditorInput output = AbstractEditorService.createOutputFile(outputBytes, IConstants.XML_FILE_TYPE_EXTENSION);
-	                getActiveWorkbenchWindow().getActivePage().openEditor(output, IOperationsConstants.ID_TEXT_EDITOR);
+                    IEditorInput output = AbstractEditorService.createOutputFile(outputBytes,
+                            IConstants.XML_FILE_TYPE_EXTENSION);
+                    getActiveWorkbenchWindow().getActivePage().openEditor(output, IOperationsConstants.ID_TEXT_EDITOR);
                 } else {
-                	IStatus info = new Status(IStatus.WARNING, XSTUIPlugin.getId(), Messages.NewCanonicalizationRemoveCommand_0);
-                	JCTMessageDialog.showInfoDialog(info);
+                    JCTMessageDialog.showInfoDialog(new Status(IStatus.WARNING, XSTUIPlugin.getId(),
+                            Messages.NewCanonicalizationRemoveCommand_0));
                 }
+            } else {
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.WARNING, XSTUIPlugin.getId(),
+                        Messages.NewCanonicalizationMaintainCommand_1));
             }
         } catch (Exception ex) {
             LogUtil.logError(XSTUIPlugin.getId(), Messages.ErrorDuringCanonicalization, ex, true);
@@ -78,7 +85,7 @@ public class NewCanonicalizationRemoveCommand extends AbstractAlgorithmAction {
 
     /**
      * Calls the canonicalization method of the Apache XML Security API and executes the canonicalization.
-     *
+     * 
      * @param stream The XML document to canonicalize as InputStream
      * @return The canonicalized XML
      * @throws Exception Exception during canonicalization
@@ -93,7 +100,7 @@ public class NewCanonicalizationRemoveCommand extends AbstractAlgorithmAction {
     /**
      * Determines the canonicalization algorithm (exclusive or inclusive) based on the preference selection. The
      * algorithm type always removes the comments. Version 1.1 is used in case of inclusive canonicalization.
-     *
+     * 
      * @return The canonicalization algorithm to use
      */
     private String getCanonicalizationAlgorithm() {
