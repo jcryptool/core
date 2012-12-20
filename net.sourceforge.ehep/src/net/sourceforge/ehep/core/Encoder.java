@@ -12,11 +12,13 @@
  *==========================================================================*/
 package net.sourceforge.ehep.core;
 
-import org.eclipse.swt.widgets.Composite;
-import java.util.*;
 import java.io.UnsupportedEncodingException;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
-import net.sourceforge.ehep.*;
+import net.sourceforge.ehep.EhepPlugin;
+
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Marcel Palko alias Randallco

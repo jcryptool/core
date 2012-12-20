@@ -12,22 +12,29 @@
  *==========================================================================*/
 package net.sourceforge.ehep.gui;
 
-import org.eclipse.swt.*;
-import org.eclipse.swt.widgets.*;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.graphics.Image;
+import java.net.URL;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
+import net.sourceforge.ehep.core.Utils;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.core.runtime.*;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
-
-import java.net.URL;
-
-import net.sourceforge.ehep.*;
-import net.sourceforge.ehep.core.*;
 
 /**
  * @author Marcel Palko

@@ -12,19 +12,21 @@
  *==========================================================================*/
 package net.sourceforge.ehep.events;
 
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.core.EHEP;
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.gui.HexEditorControl;
+import net.sourceforge.ehep.gui.HexTable;
+import net.sourceforge.ehep.gui.HexTablePointer;
+
+import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.custom.ControlEditor;
-import org.eclipse.jface.preference.PreferenceConverter;
-
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.editors.*;
-import net.sourceforge.ehep.core.*;
-import net.sourceforge.ehep.gui.*;
+import org.eclipse.swt.widgets.Text;
 
 /**
  * @author Marcel Palko alias Randallco

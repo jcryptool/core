@@ -10,14 +10,14 @@
 package org.jcryptool.editor.hex.service;
 
 import java.io.ByteArrayInputStream;
-//import java.io.IOException;
 import java.io.InputStream;
-//import java.nio.ByteBuffer;
 
 import org.eclipse.ui.IEditorPart;
-//import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.editor.hex.HexEditorConstants;
+//import java.io.IOException;
+//import java.nio.ByteBuffer;
+//import org.jcryptool.core.logging.utils.LogUtil;
 
 /***
  * 

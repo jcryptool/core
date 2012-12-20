@@ -12,20 +12,21 @@
  *==========================================================================*/
 package net.sourceforge.ehep.core;
 
-import org.eclipse.swt.widgets.Composite;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+
+import net.sourceforge.ehep.EhepPlugin;
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.gui.HexTable;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import java.lang.reflect.InvocationTargetException;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.FileOutputStream;
-import java.io.File;
-
-import net.sourceforge.ehep.EhepPlugin;
-import net.sourceforge.ehep.editors.*;
-import net.sourceforge.ehep.gui.*;
+import org.eclipse.swt.widgets.Composite;
 
 /**
  * @author Marcel Palko alias Randallco
