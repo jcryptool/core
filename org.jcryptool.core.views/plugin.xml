@@ -11,10 +11,6 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="%views.category1"
-            id="org.jcryptool.core.views">
-      </category>
-      <category
             id="org.jcryptool.games"
             name="%views.category2">
       </category>
@@ -28,7 +24,7 @@
       </category>
       <view
             allowMultiple="false"
-            category="org.jcryptool.core.views"
+            category="org.jcryptool.crypto"
             class="org.jcryptool.core.views.AlgorithmView"
             icon="icons/algorithm_view.png"
             id="org.jcryptool.core.views.AlgorithmView"
