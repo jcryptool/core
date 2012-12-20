@@ -7,10 +7,10 @@
    </intro>
    <item title="Switching between perspectives" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/en/help/users/general/perspectives.html">
       <description>
-         JCrypTool comes with two perspectives: <b>Default</b> and <b>Functional</b>. You can switch between those two perspectives in two different ways: By using the <b>Window - Open Perspective</b> menu entry or by using the icons in the upper right of the window. Only one perspective can be active at a time (you can recognize the active one by the selected icon).
+         JCrypTool comes with two perspectives: <b>Default</b> and <b>Algorithm</b>. You can switch between those two perspectives in two different ways: By using the <b>Window - Open Perspective</b> menu entry or by using the icons in the upper right of the window. Only one perspective can be active at a time (you can recognize the active one by the selected icon).
       </description>
       <subitem
-            label="Activate the Functional Perspective by selecting the menu Window - Open Perspective.">
+            label="Activate the Algorithm Perspective by selecting the menu Window - Open Perspective.">
          <command
                required="false"
                serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective)"/>
