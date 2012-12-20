@@ -25,14 +25,14 @@ import org.jcryptool.commands.core.Command;
 import org.jcryptool.core.operations.editors.EditorsManager;
 
 public abstract class AbstractCommand implements Command {
-    private static final String EDITORINPUT_OPTIONNAME = "ed";
-    private static final String EDITORINPUT_LONG_OPTIONNAME = "editor";
-    private static final String FILEINPUT_OPTIONNAME = "f";
-    private static final String FILEINPUT_LONG_OPTIONNAME = "inputFile";
-    private static final String FILEINPUT_ARGUMENT1_NAME = "FILE_PATH";
-    private static final String TEXTINPUT_OPTIONNAME = "t";
-    private static final String TEXTINPUT_LONG_OPTIONNAME = "inputText";
-    private static final String TEXTINPUT_ARGUMENT1_NAME = "TEXT";
+    private static final String EDITORINPUT_OPTIONNAME = "ed"; //$NON-NLS-1$
+    private static final String EDITORINPUT_LONG_OPTIONNAME = "editor"; //$NON-NLS-1$
+    private static final String FILEINPUT_OPTIONNAME = "f"; //$NON-NLS-1$
+    private static final String FILEINPUT_LONG_OPTIONNAME = "inputFile"; //$NON-NLS-1$
+    private static final String FILEINPUT_ARGUMENT1_NAME = "FILE_PATH"; //$NON-NLS-1$
+    private static final String TEXTINPUT_OPTIONNAME = "t"; //$NON-NLS-1$
+    private static final String TEXTINPUT_LONG_OPTIONNAME = "inputText"; //$NON-NLS-1$
+    private static final String TEXTINPUT_ARGUMENT1_NAME = "TEXT"; //$NON-NLS-1$
     private String description = ""; //$NON-NLS-1$
     private String commandName = ""; //$NON-NLS-1$
     private String commandSyntax = ""; //$NON-NLS-1$

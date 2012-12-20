@@ -30,10 +30,10 @@ public class Alphabet<C> {
             if (alphabetContent.size() > 0) {
                 this.alphabetElements = new LinkedList<C>(alphabetContent);
             } else {
-                throw new IllegalArgumentException("The alphabet collection may not be empty");
+                throw new IllegalArgumentException("The alphabet collection may not be empty"); //$NON-NLS-1$
             }
         } else {
-            throw new IllegalArgumentException("The alphabet collection may not be null");
+            throw new IllegalArgumentException("The alphabet collection may not be null"); //$NON-NLS-1$
         }
     }
 
@@ -68,7 +68,7 @@ public class Alphabet<C> {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (C element : alphabetElements) {
-            String prefix = (alphabetElements.indexOf(element) > 0) ? ((element instanceof Character) ? "" : ",") : "";
+            String prefix = (alphabetElements.indexOf(element) > 0) ? ((element instanceof Character) ? "" : ",") : ""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             builder.append(prefix.concat(element.toString()));
         }
 

@@ -310,7 +310,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         bout = new ByteArrayOutputStream();
         PrintStream p = null;
 		try {
-			p = new PrintStream(bout, false, "UTF-8");
+			p = new PrintStream(bout, false, "UTF-8"); //$NON-NLS-1$
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}

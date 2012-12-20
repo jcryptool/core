@@ -109,9 +109,9 @@ public abstract class AbstractAlphabet {
 	
 	private static Map<Character, String> specialCharactersForPrinting = new HashMap<Character, String>();
 	static {
-		specialCharactersForPrinting.put('\n', "\\n");
-		specialCharactersForPrinting.put('\r', "\\r");
-		specialCharactersForPrinting.put('\t', "\\t");
+		specialCharactersForPrinting.put('\n', "\\n"); //$NON-NLS-1$
+		specialCharactersForPrinting.put('\r', "\\r"); //$NON-NLS-1$
+		specialCharactersForPrinting.put('\t', "\\t"); //$NON-NLS-1$
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public abstract class AbstractAlphabet {
 		if(specialCharactersForPrinting.containsKey(Character.valueOf(c))) {
 			return specialCharactersForPrinting.get(Character.valueOf(c));
 		} else if((int) c < 32) {
-			return "{" + String.valueOf((int) c) + "}";
+			return "{" + String.valueOf((int) c) + "}"; //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return String.valueOf(c);
 		}
@@ -148,7 +148,7 @@ public abstract class AbstractAlphabet {
 	 */
 	public static char[] parseAlphaContentFromString(String alpha) {
 		Pattern nonprintables;
-		nonprintables = Pattern.compile("\\{\\d+}", Pattern.DOTALL);
+		nonprintables = Pattern.compile("\\{\\d+}", Pattern.DOTALL); //$NON-NLS-1$
 		String newAlpha = alpha;
 		
 		Matcher m = nonprintables.matcher(alpha);

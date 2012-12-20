@@ -41,7 +41,7 @@ public class AlgorithmsXMLManager {
 			root = new FlexiProviderRootElement(xmlDocument.getRootElement());
 			LogUtil.logInfo("Version: " + root.getVersion()); //$NON-NLS-1$
 		} catch (InvalidAlgorithmsXMLElementException e) {
-		    LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID, "InvalidAlgorithmsXMLElementException while parsing the xml structure", e, false);
+		    LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID, "InvalidAlgorithmsXMLElementException while parsing the xml structure", e, false); //$NON-NLS-1$
 		}
 
 	}

@@ -139,7 +139,7 @@ public class HelpCommand extends AbstractCommand {
     private static String makeLeerString(int length) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < length; i++) {
-            builder.append(" ");
+            builder.append(" "); //$NON-NLS-1$
         }
         return builder.toString();
     }

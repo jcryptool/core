@@ -59,10 +59,10 @@ public class Reflector {
             return generator.generateParameters();
         } catch (final NoSuchAlgorithmException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "NoSuchAlgorithmException while generating default parameters for " + algorithm.getName(), e, true);
+                    "NoSuchAlgorithmException while generating default parameters for " + algorithm.getName(), e, true); //$NON-NLS-1$
         } catch (final InvalidAlgorithmParameterException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "InvalidAlgorithmParameterException while generating default parameters for "
+                    "InvalidAlgorithmParameterException while generating default parameters for " //$NON-NLS-1$
                             + algorithm.getName(), e, true);
         }
         return null;
@@ -116,7 +116,7 @@ public class Reflector {
             return Class.forName(parameter);
         } catch (final ClassNotFoundException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "ClassNotFoundException while trying to get a class for: " + parameter, e, true);
+                    "ClassNotFoundException while trying to get a class for: " + parameter, e, true); //$NON-NLS-1$
         }
         return null;
     }
@@ -126,25 +126,25 @@ public class Reflector {
             return Reflector.getInstance().instantiateParameterSpec(spec.getClassName(), null);
         } catch (final SecurityException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "SecurityException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "SecurityException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final IllegalArgumentException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "IllegalArgumentException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "IllegalArgumentException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final ClassNotFoundException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "ClassNotFoundException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "ClassNotFoundException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final NoSuchMethodException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "NoSuchMethodException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "NoSuchMethodException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final InstantiationException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "InstantiationException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "InstantiationException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final IllegalAccessException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "IllegalAccessException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "IllegalAccessException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         } catch (final InvocationTargetException e) {
             LogUtil.logError(FlexiProviderPlugin.PLUGIN_ID,
-                    "InvocationTargetException while instantiating default AlgorithmParameterSpecs", e, true);
+                    "InvocationTargetException while instantiating default AlgorithmParameterSpecs", e, true); //$NON-NLS-1$
         }
         return null;
     }

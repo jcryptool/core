@@ -26,10 +26,10 @@ import org.jcryptool.core.operations.alphabets.GenericAlphabet;
  * @version 0.6.0
  */
 public class TransformData {
-	private static final String NONSTORE_ALPHABET_STARTMARKER = "Alphabet:";
-	private static final String STORE_ALPHABET_STARTMARKER = "StoreAlphabet:";
-	private static final String INTER_ALPHA_SEPARATOR = "{inter-alpha separator}";
-	private static final String SEPARATOR_REPLACEMENT = "{separator replacement}";
+	private static final String NONSTORE_ALPHABET_STARTMARKER = "Alphabet:"; //$NON-NLS-1$
+	private static final String STORE_ALPHABET_STARTMARKER = "StoreAlphabet:"; //$NON-NLS-1$
+	private static final String INTER_ALPHA_SEPARATOR = "{inter-alpha separator}"; //$NON-NLS-1$
+	private static final String SEPARATOR_REPLACEMENT = "{separator replacement}"; //$NON-NLS-1$
 	private AbstractAlphabet selectedAlphabet; //$NON-NLS-1$
 	private boolean doUppercase = true;
 	private boolean uppercaseTransformationOn = true;
@@ -337,7 +337,7 @@ public class TransformData {
 					AbstractAlphabet.parseAlphaContentFromString(contentString), 
 					Boolean.parseBoolean(isbasicString));
 		} catch (Exception e) {
-			LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Error when trying to parse alphabet from string for transformData: " + value);
+			LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Error when trying to parse alphabet from string for transformData: " + value); //$NON-NLS-1$
 			return null;
 		}
 		
@@ -355,7 +355,7 @@ public class TransformData {
 		String name = value.substring(STORE_ALPHABET_STARTMARKER.length());
 		AbstractAlphabet alpha = AlphabetsManager.getInstance().getAlphabetByName(name);
 		if(alpha == null) {
-			LogUtil.logWarning(OperationsPlugin.PLUGIN_ID, "could not load alphabet by name " + name + " for transformData. Using the default transformation instead.");
+			LogUtil.logWarning(OperationsPlugin.PLUGIN_ID, "could not load alphabet by name " + name + " for transformData. Using the default transformation instead."); //$NON-NLS-1$ //$NON-NLS-2$
 			return AlphabetsManager.getInstance().getDefaultAlphabet();
 		}
 		return alpha;

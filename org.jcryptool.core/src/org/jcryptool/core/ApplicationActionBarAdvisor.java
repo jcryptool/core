@@ -187,8 +187,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         while (!sortedElements.isEmpty()) {
             element = sortedElements.get(sortedElements.firstKey());
             sortedElements.remove(sortedElements.firstKey());
-            IAction action = new ShowPluginViewAction(element.getAttribute("viewId"), element.getAttribute("name"));
-            String contextHelpId = element.getAttribute("contextHelpId");
+            IAction action = new ShowPluginViewAction(element.getAttribute("viewId"), element.getAttribute("name")); //$NON-NLS-1$ //$NON-NLS-2$
+            String contextHelpId = element.getAttribute("contextHelpId"); //$NON-NLS-1$
             if(contextHelpId != null)
             	PlatformUI.getWorkbench().getHelpSystem().setHelp(action, contextHelpId);
             menu.add(action); //$NON-NLS-1$ //$NON-NLS-2$
