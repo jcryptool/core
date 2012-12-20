@@ -161,7 +161,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
 
         try {
             String line = in.readLine();
-            if (line.equals("-nl")) { //$NON-NLS-1$
+            if (line != null && line.equals("-nl")) { //$NON-NLS-1$
                 out.write(line);
                 out.newLine();
                 line = in.readLine();
