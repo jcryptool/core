@@ -828,7 +828,7 @@ public class Identity extends TabItem {
 					keyMgmt_2.setControl(tab2);
 					
 					Label lbl_init_tab2 = new Label(tab2, SWT.NONE);
-					lbl_init_tab2.setText("Hier können Sie neue Schl\u00fcssel mit gängigen Schl\u00fcsselgr\u00f6ßen erstellen:");
+					lbl_init_tab2.setText("Hier können Sie neue Schl\u00fcssel mit g\u00e4ngigen Schl\u00fcsselgr\u00f6ßen erstellen:");
 					GridData gd_init_tab2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_init_tab2.heightHint = 20;
 					lbl_init_tab2.setLayoutData(gd_init_tab2);
@@ -982,7 +982,7 @@ public class Identity extends TabItem {
 					keyMgmt_3.setControl(tab3);
 					
 					Label lbl_init_tab3 = new Label(tab3, SWT.WRAP);
-					lbl_init_tab3.setText("Hier können Sie sich Ihre privaten Schlüsselpaare und die öffentlichen Schlüssel aller Mitspieler ansehen. \n\nHinweis: Um einen Ihrer privaten Schlüssel anzuzeigen, müssen Sie Ihr Passwort eingeben. Die Anzeige öffentlicher Schlüssel erfordert keine Passwort-Eingabe.");
+					lbl_init_tab3.setText("Hier k\u00f6nnen Sie sich Ihre privaten Schl\u00fcsselpaare und die \u00f6ffentlichen Schl\u00fcssel aller Mitspieler ansehen. \n\nHinweis: Um einen Ihrer privaten Schl\u00fcssel anzuzeigen, m\u00fcssen Sie Ihr Passwort eingeben. Die Anzeige \u00f6ffentlicher Schl\u00fcssel erfordert keine Passwort-Eingabe.");
 					GridData gd_init_tab3 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_init_tab3.heightHint = 20;
 					lbl_init_tab3.setLayoutData(gd_init_tab3);
