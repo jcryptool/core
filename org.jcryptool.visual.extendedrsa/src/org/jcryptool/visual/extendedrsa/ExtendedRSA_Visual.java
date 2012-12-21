@@ -50,6 +50,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 	private StyledText head_description;
 	private Group grp_id_mgmt;
 	private Button btn_newID;
+	private Button btn_manageID;
 	private Button btn_delID;
 	private Composite comp_center;
 	private TabFolder tabFolder;
@@ -84,12 +85,12 @@ public class ExtendedRSA_Visual extends ViewPart{
 		label.setText("Extended RSA-Kryptosystem");
 		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false));
-		head_description.setText("Beim RSA-Kryptosystem k\u00f6nnen Sie verschiedene Aktionen im Namen einer Identit\u00e4t durchf\u00fchren.So k\u00f6nnen Sie als 'Alice' einen Text verschl\u00fcsseln und an 'Bob' senden, der diesen dann entschl\u00fcsseln kann.");	
+		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten: Sie k\u00f6nnten als 'Alice' einen Text verschl\u00fcsseln und an 'Bob' senden.  Bob kann dann die empfangene Nachricht entschl\u00fcsseln. Und umgekehrt.");	
 		//End - Header
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
 		grp_id_mgmt.setText("Identit\u00e4tenverwaltung");
-		grp_id_mgmt.setLayout(new GridLayout(2,true));
+		grp_id_mgmt.setLayout(new GridLayout(3,true));
 		
 //		Button btnIdentitaetAnnehmen = new Button(grp_id_mgmt, SWT.NONE);
 //		btnIdentitaetAnnehmen.setText("Identit\u00e4t annehmen");
@@ -105,6 +106,12 @@ public class ExtendedRSA_Visual extends ViewPart{
 		btn_newID.setText("Neue Identit\u00e4t erstellen");
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
+		//neuer button begin
+		btn_manageID = new Button(grp_id_mgmt, SWT.PUSH);
+			//selectionListener einfügen
+		btn_manageID.setText("Identit\u00e4t ein-/ausblenden");
+		btn_manageID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		//neuer button ende
 		btn_delID = new Button(grp_id_mgmt, SWT.PUSH);
 		btn_delID.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -149,7 +156,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_explain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
 		grp_explain.setText("Erkl\u00e4rungen");
 		
-		Label txtEplain = new Label(grp_explain, SWT.NONE);
+		Label txtEplain = new Label(grp_explain, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		txtEplain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		txtEplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen!");
 		txtEplain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));

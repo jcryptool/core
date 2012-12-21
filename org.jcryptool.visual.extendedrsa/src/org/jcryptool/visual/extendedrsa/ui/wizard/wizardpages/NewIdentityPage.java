@@ -48,7 +48,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		container.setLayout(layout);
 		
 		Label lblName = new Label(container, SWT.NONE);
-		lblName.setText("Name der Identit\u00e4t");
+		lblName.setText("Name der Identit\u00e4t:");
 		
 		idName = new Text(container, SWT.BORDER);
 		GridData gd_text = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
@@ -57,7 +57,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		idName.addModifyListener(this);
 		
 		Label lblVorname = new Label(container, SWT.NONE);
-		lblVorname.setText("Vorname");
+		lblVorname.setText("Vorname:");
 		
 		idForename = new Text(container, SWT.BORDER);
 		GridData gd_idForename = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
@@ -65,7 +65,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		idForename.setLayoutData(gd_idForename);
 		
 		Label lblNachname = new Label(container, SWT.NONE);
-		lblNachname.setText("Nachname");
+		lblNachname.setText("Nachname:");
 		
 		idSurname = new Text(container, SWT.BORDER);
 		GridData gd_idSurname = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
@@ -73,7 +73,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		idSurname.setLayoutData(gd_idSurname);
 		
 		Label lblFirma = new Label(container, SWT.NONE);
-		lblFirma.setText("Firma/Organisation");
+		lblFirma.setText("Firma/Organisation:");
 		
 		idOrganisation = new Text(container, SWT.BORDER);
 		GridData gd_txt_idOrganisation = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
@@ -81,7 +81,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		idOrganisation.setLayoutData(gd_txt_idOrganisation);
 		
 		Label lblLand = new Label(container, SWT.NONE);
-		lblLand.setText("Land/Region");
+		lblLand.setText("Land/Region:");
 		
 		idRegion = new Text(container, SWT.BORDER);
 		GridData gd_idRegion = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
