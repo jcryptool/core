@@ -91,10 +91,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_id_mgmt = new Group(composite, SWT.NONE);
 		grp_id_mgmt.setText("Identit\u00e4tenverwaltung");
 		grp_id_mgmt.setLayout(new GridLayout(3,true));
-		
-//		Button btnIdentitaetAnnehmen = new Button(grp_id_mgmt, SWT.NONE);
-//		btnIdentitaetAnnehmen.setText("Identit\u00e4t annehmen");
-		
+
 		btn_newID = new Button(grp_id_mgmt, SWT.PUSH);
 		btn_newID.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -125,11 +122,11 @@ public class ExtendedRSA_Visual extends ViewPart{
 		
 		comp_center = new Composite(composite, SWT.NONE);
 		//2 columns (tabs and explanation) --> new GridLayout(2, false);
-        comp_center.setLayout(new GridLayout(1, false)); 
+        comp_center.setLayout(new GridLayout(2, false)); 
         comp_center.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		tabFolder = new TabFolder(comp_center, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		tabFolder.addMouseMoveListener(new MouseMoveListener() {
 			
 			@Override
@@ -144,6 +141,8 @@ public class ExtendedRSA_Visual extends ViewPart{
 		});
 		btn_delID.setEnabled(false);
 		
+		//syncWithKeystore()	(todo)
+		
 		//create "Alice"
 		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown");
 		
@@ -151,15 +150,17 @@ public class ExtendedRSA_Visual extends ViewPart{
 		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown");
 		
 		//-------------------------------
-		Group grp_explain = new Group(composite, SWT.NONE);		//Group grp_explain = new Group(comp_center, SWT.NONE);
-		grp_explain.setLayout(new GridLayout(1, false));
-		grp_explain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		Group grp_explain = new Group(comp_center, SWT.NONE);		//Group grp_explain = new Group(composite, SWT.NONE);
+		grp_explain.setLayout(new GridLayout(1, true));
+		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
+		gd_explain.widthHint = 270;
+		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText("Erkl\u00e4rungen");
 		
-		Label txtEplain = new Label(grp_explain, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
-		txtEplain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		Label txtEplain = new Label(grp_explain,  SWT.WRAP);
 		txtEplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen!");
-		txtEplain.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1));
+		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		txtEplain.setLayoutData(gd_txtEplain);
 	
 	}
 

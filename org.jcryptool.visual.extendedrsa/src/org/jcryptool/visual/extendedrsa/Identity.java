@@ -43,6 +43,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
@@ -145,6 +148,12 @@ public class Identity extends TabItem {
 	private Combo extRsa_numberOfPrimes;
 	private Button createKey;
 	private Button createKey2;
+	private Combo selectedKey_Keydata;
+	private Text password_keydata;
+	private Button showKeydata;
+	private Table keyData;
+	private TableColumn column_parameter;
+	private TableColumn column_value;
 	
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
@@ -772,7 +781,7 @@ public class Identity extends TabItem {
 					combo_ExrsaE.addVerifyListener(VL);
 					combo_ExrsaE.setEnabled(false);
 					
-					new Label(rsaExMainComposite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+					new Label(rsaExMainComposite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));					
 					
 					rsaExComposite3 = new Composite(rsaExMainComposite, SWT.NONE);
 					rsaExComposite3.setLayout(new GridLayout(5, true));
@@ -923,9 +932,9 @@ public class Identity extends TabItem {
 					extRsa_length.setEnabled(false);
 					
 					new Label(tab2, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+					new Label(tab2, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 					
 					new Label(tab2, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-					new Label(tab2, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 					
 					
 					rsaExComposite3 = new Composite(tab2, SWT.NONE);
@@ -983,14 +992,87 @@ public class Identity extends TabItem {
 					
 					Label lbl_init_tab3 = new Label(tab3, SWT.WRAP);
 					lbl_init_tab3.setText("Hier k\u00f6nnen Sie sich Ihre privaten Schl\u00fcsselpaare und die \u00f6ffentlichen Schl\u00fcssel aller Mitspieler ansehen. \n\nHinweis: Um einen Ihrer privaten Schl\u00fcssel anzuzeigen, m\u00fcssen Sie Ihr Passwort eingeben. Die Anzeige \u00f6ffentlicher Schl\u00fcssel erfordert keine Passwort-Eingabe.");
-					GridData gd_init_tab3 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-					gd_init_tab3.heightHint = 20;
-					lbl_init_tab3.setLayoutData(gd_init_tab3);
+					lbl_init_tab3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 3));
 					
 					
+					Composite myKeyData = new Composite(tab3, SWT.NONE);
+					myKeyData.setLayout(new GridLayout(4, false));
+					myKeyData.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+					
+					//combo "select key"
+					Label lbl_selectKey = new Label(myKeyData, SWT.WRAP);
+					lbl_selectKey.setText("Schl\u00fcssel ausw\u00e4hlen:");
+					GridData gd_lbl_selKey = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_lbl_selKey.heightHint = 20;
+					lbl_selectKey.setLayoutData(gd_lbl_selKey);
+					selectedKey_Keydata = new Combo(myKeyData, SWT.READ_ONLY);
+					GridData gd_selKey = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_selKey.heightHint = 20;
+					gd_selKey.widthHint = 200;
+					selectedKey_Keydata.setLayoutData(gd_selKey);
+					
+					for (int i = 0; i < 2; i++){
+						createSpacer(myKeyData);
+					}
 					
 					
+					//textfield "enter password"
+					Label lbl_enterPW = new Label(myKeyData, SWT.NONE);
+					lbl_enterPW.setText("Passwort eingeben:");
+					GridData gd_enterPW = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_enterPW.heightHint = 20;
+					lbl_enterPW.setLayoutData(gd_enterPW);
+					password_keydata = new Text(myKeyData, SWT.NONE);
+					GridData gd_pw = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_pw.heightHint = 20;
+					gd_pw.widthHint = 200;
+					password_keydata.setLayoutData(gd_pw);
 					
+					//button "show keydata"
+					showKeydata = new Button(myKeyData, SWT.PUSH);
+					GridData gd_showKeydata = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_showKeydata.heightHint = 20;
+					gd_showKeydata.widthHint = 100;
+					showKeydata.setLayoutData(gd_showKeydata);
+					showKeydata.setText("Schl\u00fcsseldaten anzeigen");
+					showKeydata.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							keyData.removeAll();
+							for (int i = 0; i < 10; i++){
+								TableItem ti = new TableItem(keyData, SWT.NONE);
+								ti.setText(new String[]{"wert in s1: "+i, "wert in S2: "+i});
+							}
+							
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+					
+					createSpacer(myKeyData);
+					
+					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+					
+					keyData = new Table(tab3, SWT.BORDER|SWT.FULL_SELECTION);
+					GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_table.heightHint = 100;
+					keyData.setLayoutData(gd_table);
+					keyData.setHeaderVisible(true);
+					keyData.setLinesVisible(true);
+					
+					
+					column_parameter = new TableColumn(keyData, SWT.NONE);
+					column_parameter.setWidth(100);
+					column_parameter.setText("Parameter");
+					
+					column_value = new TableColumn(keyData, SWT.NONE);
+					column_value.setWidth(500);
+					column_value.setText("Wert");
+					
+					TableItem ti = new TableItem(keyData, SWT.NONE);
+					ti.setText(new String[]{"wert in s1", "wert in S2"});
 					
 					generalGroup.redraw();
 					generalGroup.layout();
