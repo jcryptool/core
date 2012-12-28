@@ -39,7 +39,7 @@ public class NewIdentityWizard extends Wizard{
 	@Override
 	public boolean performFinish() {
 		if (newIDPage.isPageComplete()){
-			new Identity(tabfolder, SWT.NONE, newIDPage.getIdName().getText(), newIDPage.getIdForename().getText(),  newIDPage.getIdSurname().getText(), newIDPage.getIdOrganisation().getText(),  newIDPage.getIdRegion().getText());
+//			new Identity(tabfolder, SWT.NONE, newIDPage.getIdName().getText(), newIDPage.getIdForename().getText(),  newIDPage.getIdSurname().getText(), newIDPage.getIdOrganisation().getText(),  newIDPage.getIdRegion().getText());
 			return true;
 		}
 		return false;

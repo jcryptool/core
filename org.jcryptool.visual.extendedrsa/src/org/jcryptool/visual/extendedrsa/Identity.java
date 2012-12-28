@@ -126,6 +126,7 @@ public class Identity extends TabItem {
 	private Label errorLabel_1;
 	private boolean pIsPrime;
 	private boolean qIsPrime;
+	private boolean eIsValid;
 	private boolean init;
 	private Composite rsaComposite;
 	private Composite rsaExMainComposite;
@@ -143,6 +144,8 @@ public class Identity extends TabItem {
 	private Label rsa_ex_T;
 	private Text password1;
 	private Text password2;
+	private Text ext_password1; 
+	private Text ext_password2;
 	private Combo rsa_length;
 	private Combo extRsa_length;
 	private Combo extRsa_numberOfPrimes;
@@ -154,7 +157,10 @@ public class Identity extends TabItem {
 	private Table keyData;
 	private TableColumn column_parameter;
 	private TableColumn column_value;
-	
+	private Label txtExplain;
+	private Label init_tab1;
+	private String pw1;
+	private String pw2;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -173,7 +179,7 @@ public class Identity extends TabItem {
             }
     };
 	
-	public Identity(TabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region) {
+	public Identity(TabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region, Label explain) {
 		super(parent, style);
 		this.tabfolder = parent;
 		this.identityName = identityName;
@@ -182,11 +188,13 @@ public class Identity extends TabItem {
 		this.organisation = organisation;
 		this.region = region;
 		this.id = parent.getItemCount();
+		this.txtExplain = explain;
 		
 		//set the text of the TabItem
 		this.setText(identityName);
 		forerunner = 0;	
 		init = true;
+		
 		
 		//*** define the layout for the whole TabItem now
 		generalGroup = new Group(parent, SWT.NONE);
@@ -213,6 +221,8 @@ public class Identity extends TabItem {
 			@Override
 			//Button 1
 			public void widgetSelected(final SelectionEvent e) {
+				txtExplain.setText("button 1");
+				
 				if(actionGroup_1.isDisposed()){
 					createActionGroup1();
 				}
@@ -232,7 +242,9 @@ public class Identity extends TabItem {
 					
 					label = new Label (actionGroup_1, SWT.NONE);
 					label.setText("Nachricht:");
-					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					GridData gd_message = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_message.heightHint = 13;
+					label.setLayoutData(gd_message);
 					
 					label = new Label (actionGroup_1, SWT.NONE);
 					label.setText("Verschl\u00fcsselte Nachricht:");
@@ -255,15 +267,7 @@ public class Identity extends TabItem {
 					GridData gd_recp = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_recp.heightHint = 13;
 					messageRecipient.setLayoutData(gd_recp);
-					messageRecipient.addMouseMoveListener(new MouseMoveListener() {
-						
-						@Override
-						public void mouseMove(MouseEvent e) {
-							addReceipientsToCombo(tabfolder);
-							
-						}
-					});
-
+					addReceipientsToCombo(tabfolder);
 					messageRecipient.select(0);
 					
 					sendMessage = new Button(actionGroup_1, SWT.PUSH);
@@ -316,6 +320,7 @@ public class Identity extends TabItem {
 		receive_and_decrypt.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 2
 			public void widgetSelected(SelectionEvent e) {
+				txtExplain.setText("button 2");
 				if (forerunner != 2){
 					actionGroup_1.dispose();
 					actionGroup_3.dispose();
@@ -337,7 +342,9 @@ public class Identity extends TabItem {
 					
 					label = new Label (actionGroup_2, SWT.NONE);
 					label.setText("Verschl\u00fcsselte Nachricht:");
-					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+					GridData gd_message = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_message.heightHint = 13;
+					label.setLayoutData(gd_message);
 					
 					label = new Label (actionGroup_2, SWT.NONE);
 					label.setText("Entschl\u00fcsselte Nachricht:");
@@ -434,8 +441,8 @@ public class Identity extends TabItem {
 					keyMgmt_1.setControl(tab1);
 					
 					
-					Label init_tab1 = new Label(tab1, SWT.NONE);
-					init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen p und q, sowie einen Exponenten e:");
+					init_tab1 = new Label(tab1, SWT.NONE);
+					init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen P und Q, sowie einen Exponenten E:");
 					init_tab1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
 					errorLabel_1 = new Label(tab1, SWT.NONE);
@@ -452,6 +459,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeRSAVisibility();
+							init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen P und Q, sowie einen Exponenten E:");
 						}
 						
 						@Override
@@ -586,7 +594,6 @@ public class Identity extends TabItem {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
-					    	//check if p and q are primes and e is valid
 							bi_rsaE = new BigInteger(combo_rsaE.getItem(combo_rsaE.getSelectionIndex()));
 					        checkParameter();
 						}
@@ -603,6 +610,7 @@ public class Identity extends TabItem {
 
 			            public void widgetSelected(SelectionEvent e) {
 			               combo_rsaE.setText(possibleEs.get((int)(Math.random()*possibleEs.size())).toString());
+			               eIsValid = true;
 			               errorLabel_1.setText("");
 			            }
 
@@ -620,6 +628,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeRSAVisibility();
+							init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen P, Q und R, sowie einen Exponenten E:");
 						}
 						
 						@Override
@@ -657,18 +666,21 @@ public class Identity extends TabItem {
 										combo_ExrsaT.setVisible(false);
 										rsa_ex_S.setVisible(false);
 										rsa_ex_T.setVisible(false);
+										init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen P, Q und R, sowie einen Exponenten E:");
 										break;
 										
 								case 4: combo_ExrsaS.setVisible(true);
 										combo_ExrsaT.setVisible(false);
 										rsa_ex_S.setVisible(true);
 										rsa_ex_T.setVisible(false);
+										init_tab1.setText("W\u00e4hlen Sie 4 verschiedene Primzahlen P, Q, R und S, sowie einen Exponenten E:");
 										break;
 								
 								case 5: combo_ExrsaS.setVisible(true);
 										combo_ExrsaT.setVisible(true);
 										rsa_ex_S.setVisible(true);
 										rsa_ex_T.setVisible(true);
+										init_tab1.setText("W\u00e4hlen Sie 5 verschiedene Primzahlen P, Q, R, S und T, sowie einen Exponenten E:");
 										break;
 							}
 						}
@@ -796,11 +808,19 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw.heightHint = 20;
 					rsa_password.setLayoutData(gd_rsa_pw);
-					password1 = new Text(rsaExComposite3, SWT.NONE);
+					password1 = new Text(rsaExComposite3, SWT.PASSWORD);
 					GridData gd_combo_pw1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw1.heightHint = 20;
 					gd_combo_pw1.widthHint = 100;
 					password1.setLayoutData(gd_combo_pw1);
+					password1.addModifyListener(new ModifyListener() {
+						
+						@Override
+						public void modifyText(ModifyEvent e) {
+							pw1 = password1.getText();
+							checkPasswords();
+						}
+					});
 					
 					for (int i = 0; i < 3; i++){
 						createSpacer(rsaExComposite3);
@@ -811,11 +831,19 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw2.heightHint = 20;
 					rsa_password2.setLayoutData(gd_rsa_pw2);
-					password2 = new Text(rsaExComposite3, SWT.NONE);
+					password2 = new Text(rsaExComposite3, SWT.PASSWORD);
 					GridData gd_combo_pw2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw2.heightHint = 20;
 					gd_combo_pw2.widthHint = 100;
 					password2.setLayoutData(gd_combo_pw2);
+					password2.addModifyListener(new ModifyListener() {
+						
+						@Override
+						public void modifyText(ModifyEvent e) {
+							pw2 = password2.getText();
+							checkPasswords();
+						}
+					});
 					
 					for (int i = 0; i < 4; i++){
 						createSpacer(rsaExComposite3);
@@ -823,6 +851,7 @@ public class Identity extends TabItem {
 					
 					createKey = new Button(rsaExComposite3, SWT.PUSH);
 					createKey.setText("Schl\u00fcssel erstellen");
+					createKey.setEnabled(false);
 					GridData gd_createKey = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_createKey.heightHint = 20;
 					gd_createKey.widthHint = 100;
@@ -950,11 +979,11 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw_2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw_2.heightHint = 20;
 					rsa_password_2.setLayoutData(gd_rsa_pw_2);
-					password1 = new Text(rsaExComposite3, SWT.NONE);
+					ext_password1 = new Text(rsaExComposite3, SWT.NONE);
 					GridData gd_combo_pw1_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw1_2.heightHint = 20;
 					gd_combo_pw1_2.widthHint = 100;
-					password1.setLayoutData(gd_combo_pw1_2);
+					ext_password1.setLayoutData(gd_combo_pw1_2);
 					
 					for (int i = 0; i < 3; i++){
 						createSpacer(rsaExComposite3);
@@ -965,11 +994,11 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw2_2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw2_2.heightHint = 20;
 					rsa_password2_2.setLayoutData(gd_rsa_pw2_2);
-					password2 = new Text(rsaExComposite3, SWT.NONE);
+					ext_password2 = new Text(rsaExComposite3, SWT.NONE);
 					GridData gd_combo_pw2_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw2_2.heightHint = 20;
 					gd_combo_pw2_2.widthHint = 100;
-					password2.setLayoutData(gd_combo_pw2_2);
+					ext_password2.setLayoutData(gd_combo_pw2_2);
 					
 					for (int i = 0; i < 4; i++){
 						createSpacer(rsaExComposite3);
@@ -1120,6 +1149,16 @@ public class Identity extends TabItem {
 		
 	}
 	
+	private void checkPasswords(){
+		if (pw1 != null && pw2 != null){
+			if (pw1.equals(pw2) && eIsValid){
+				createKey.setEnabled(true);
+			}
+			txtExplain.setText(pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
+		}
+		
+	}
+	
 	private void changeRSAVisibility_Tab2(){
 		if (btn_RSA_2.getSelection()){
 			//Radiobutton "RSA" is activated
@@ -1147,14 +1186,23 @@ public class Identity extends TabItem {
 			combo_ExrsaS.setEnabled(false);
 			combo_ExrsaT.setEnabled(false);
 			combo_ExrsaE.setEnabled(false);
+			
+			combo_ExrsaS.setVisible(false);
+			combo_ExrsaT.setVisible(false);
+			rsa_ex_S.setVisible(false);
+			rsa_ex_T.setVisible(false);
+			
+			numberOfPrimesExRSA.select(0);
 			numberOfPrimesExRSA.setEnabled(false);
 			
 		}else{
 			//Radiobutton "Multi-prime RSA" is activated
 			if (pickRandomE.isEnabled()){
 				pickRandomE.setEnabled(false);
+				eIsValid = false;
 			}
 			numberOfPrimesExRSA.setEnabled(true);
+			numberOfPrimesExRSA.select(0);
 			combo_rsaE.setEnabled(false);
 			combo_rsaP.setEnabled(false);
 			combo_rsaQ.setEnabled(false);
@@ -1164,6 +1212,11 @@ public class Identity extends TabItem {
 			combo_ExrsaS.setEnabled(true);
 			combo_ExrsaT.setEnabled(true);
 			combo_ExrsaE.setEnabled(true);
+			
+			combo_ExrsaS.setVisible(false);
+			combo_ExrsaT.setVisible(false);
+			rsa_ex_S.setVisible(false);
+			rsa_ex_T.setVisible(false);
 		}
 		
 		resetRSAValues();
@@ -1185,7 +1238,12 @@ public class Identity extends TabItem {
 	}
 	
 	private void addReceipientsToCombo(TabFolder tabfolder){
-		Vector<String> recipients = new Vector<String>(Arrays.asList(messageRecipient.getItems()));
+//		Vector<String> recipients = new Vector<String>(Arrays.asList(messageRecipient.getItems()));
+		Vector<String> recipients = new Vector<String>();
+		if (messageRecipient != null){
+			messageRecipient.removeAll();
+		}
+		
 		//fill in possible recipients
 		for (TabItem ti : tabfolder.getItems()){
 			Identity id = (Identity)ti;
@@ -1194,6 +1252,7 @@ public class Identity extends TabItem {
 				//add only new recipients
 				if (!recipients.contains(id.getIdentityName())){
 					messageRecipient.add(id.getIdentityName());
+					txtExplain.setText(txtExplain.getText()+ id.getIdentityName());
 				}
 			}
 		}
@@ -1384,20 +1443,36 @@ public class Identity extends TabItem {
     	if(bi_rsaP!=null){
     		if (!bi_rsaP.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_rsaP)) {
 	        	errorLabel_1.setText("Achtung: 'P' ist keine Primzahl!");
+	        	combo_rsaE.removeAll();
 	        	pIsPrime = false;
+	        	init = false;
+	        	pickRandomE.setEnabled(false); 
+	        	eIsValid = false;
 	        }else{
-	        	errorLabel_1.setText("");
-	        	pIsPrime = true;
+        		errorLabel_1.setText("");
+        		pIsPrime = true;
 	        }
     	}
         if (bi_rsaQ!=null){
 	        if (!bi_rsaQ.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_rsaQ)) {
 	        	errorLabel_1.setText("Achtung: 'Q' ist keine Primzahl!");
+	        	combo_rsaE.removeAll();
 	        	qIsPrime = false;
+	        	init = false;
+	        	pickRandomE.setEnabled(false);
+	        	eIsValid = false;
 	        }else{
 	        	errorLabel_1.setText("");
 	        	qIsPrime = true;
 	        }
+        }
+        if (qIsPrime && !pIsPrime){
+        	errorLabel_1.setText("Achtung: 'P' ist keine Primzahl!");
+        	combo_rsaE.removeAll();
+        	pIsPrime = false;
+        	init = false;
+        	pickRandomE.setEnabled(false);
+        	eIsValid = false;
         }
         
         if(pIsPrime && qIsPrime){
@@ -1414,8 +1489,10 @@ public class Identity extends TabItem {
 	            if(bi_rsaE != null){
 	            	if (!possibleEs.contains(bi_rsaE)) {
 	    	        	errorLabel_1.setText("Achtung: 'E' ist kein passender Exponent!");
+	    	        	eIsValid = false;
 	    	        }else{
 	    	        	errorLabel_1.setText("");
+	    	        	eIsValid = true;
 	    	        }
 	            }
 
@@ -1431,6 +1508,10 @@ public class Identity extends TabItem {
     }
     private void fillE(){
         if(pIsPrime && qIsPrime){
+        	eIsValid = false;
+        	password1.setText("");
+        	password2.setText("");
+        	createKey.setEnabled(false);
 	        if (!bi_rsaP.equals(bi_rsaQ)) {
         		combo_rsaE.removeAll();
 	            fillElist();

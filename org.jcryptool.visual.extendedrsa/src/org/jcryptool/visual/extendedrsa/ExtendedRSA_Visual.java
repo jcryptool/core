@@ -20,15 +20,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.extendedrsa.ui.wizard.DeleteIdentityWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseMoveListener;
+//import org.eclipse.swt.events.MouseEvent;
+//import org.eclipse.swt.events.MouseListener;
+//import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
@@ -53,7 +52,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 	private Button btn_manageID;
 	private Button btn_delID;
 	private Composite comp_center;
-	private TabFolder tabFolder;
+	private ExtendedTabFolder tabFolder;
 	private Identity identity;
 	
 	public ExtendedRSA_Visual() {
@@ -93,9 +92,13 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_id_mgmt.setLayout(new GridLayout(3,true));
 
 		btn_newID = new Button(grp_id_mgmt, SWT.PUSH);
+		btn_manageID = new Button(grp_id_mgmt, SWT.PUSH);
+		btn_delID = new Button(grp_id_mgmt, SWT.PUSH);
+		
 		btn_newID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				//button "Identität löschen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identitäten existiern
 				new WizardDialog(getSite().getShell(), new NewIdentityWizard(tabFolder)).open();
 				grp_id_mgmt.update();
 			}
@@ -104,15 +107,14 @@ public class ExtendedRSA_Visual extends ViewPart{
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		//neuer button begin
-		btn_manageID = new Button(grp_id_mgmt, SWT.PUSH);
-			//selectionListener einfügen
 		btn_manageID.setText("Identit\u00e4t ein-/ausblenden");
 		btn_manageID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		//neuer button ende
-		btn_delID = new Button(grp_id_mgmt, SWT.PUSH);
+		
 		btn_delID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				//button "Identität löschen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identitäten existiern nachm löschen
 				new WizardDialog(getSite().getShell(), new DeleteIdentityWizard(tabFolder)).open();
 				grp_id_mgmt.update();
 			}
@@ -125,42 +127,45 @@ public class ExtendedRSA_Visual extends ViewPart{
         comp_center.setLayout(new GridLayout(2, false)); 
         comp_center.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
-		tabFolder = new TabFolder(comp_center, SWT.NONE);
+		tabFolder = new ExtendedTabFolder(comp_center, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		tabFolder.addMouseMoveListener(new MouseMoveListener() {
-			
-			@Override
-			public void mouseMove(MouseEvent e) {
-				if (tabFolder.getItemCount() < 3){
-					btn_delID.setEnabled(false);
-				}else{
-					btn_delID.setEnabled(true);
-				}
-				
-			}
-		});
+////		tabFolder.addMouseMoveListener(new MouseMoveListener() {
+//			
+//			@Override
+//			public void mouseMove(MouseEvent e) {
+//				if (tabFolder.getItemCount() < 3){
+//					btn_delID.setEnabled(false);
+//				}else{
+//					btn_delID.setEnabled(true);
+//				}
+//			}
+//		});
 		btn_delID.setEnabled(false);
 		
 		//syncWithKeystore()	(todo)
 		
-		//create "Alice"
-		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown");
 		
-		//create "Bob"
-		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown");
 		
 		//-------------------------------
 		Group grp_explain = new Group(comp_center, SWT.NONE);		//Group grp_explain = new Group(composite, SWT.NONE);
 		grp_explain.setLayout(new GridLayout(1, true));
 		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_explain.widthHint = 270;
-		grp_explain.setLayoutData(gd_explain);
+		
 		grp_explain.setText("Erkl\u00e4rungen");
 		
 		Label txtEplain = new Label(grp_explain,  SWT.WRAP);
 		txtEplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen!");
 		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		txtEplain.setLayoutData(gd_txtEplain);
+		
+		//create "Alice"
+		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown", txtEplain);
+		
+		//create "Bob"
+		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown", txtEplain);
+		
+		grp_explain.setLayoutData(gd_explain);
 	
 	}
 
