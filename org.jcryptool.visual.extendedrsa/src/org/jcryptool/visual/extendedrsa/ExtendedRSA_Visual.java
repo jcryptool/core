@@ -155,8 +155,9 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_explain.setText("Erkl\u00e4rungen");
 		
 		Label txtEplain = new Label(grp_explain,  SWT.WRAP);
-		txtEplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen!");
-		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		txtEplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen! Hier k\u00f6nnte Ihre Erkl\u00e4rung stehenHier k\u00f6nnte Ihre Erkl\u00e4rung stehenHier k\u00f6nnte Ihre Erkl\u00e4rung stehen");
+		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		gd_txtEplain.heightHint = 300;
 		txtEplain.setLayoutData(gd_txtEplain);
 		
 		//create "Alice"
