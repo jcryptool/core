@@ -1515,6 +1515,8 @@ public class Identity extends TabItem {
 			numberOfPrimesExRSA.select(0);
 			numberOfPrimesExRSA.setEnabled(false);
 			
+			errorLabel_1.setText("");
+			
 		}else{
 			//Radiobutton "Multi-prime RSA" is activated
 			pickRandomE.setEnabled(false);
@@ -1540,6 +1542,8 @@ public class Identity extends TabItem {
 		password1.setText("");
 		password2.setText("");
 		createKey.setEnabled(false);
+		
+		errorLabel_1.setText("");
 		
 		resetRSAValues();
 	}
@@ -1942,7 +1946,7 @@ public class Identity extends TabItem {
 	    	}
     		//check belated changes and show only the message.. the rest is done in the methods above
     		if (!pIsPrime && bi_ExtrsaP != null){
-    			errorLabel_1.setText("Achtung: 'P' ist keine Primzahl!");
+    			errorLabel_1.setText("Achtung: 'P' ist keine Primzahl....!");
     		}
     		if (!qIsPrime && bi_ExtrsaQ != null){
     			errorLabel_1.setText("Achtung: 'Q' ist keine Primzahl!");
@@ -1958,15 +1962,19 @@ public class Identity extends TabItem {
     		}
     		
     		//check, if different primes are chosen
-    		validCount = 1;
+    		validCount = 0;
     		TreeSet<BigInteger> checkPrimes = new TreeSet<BigInteger>();
     		if (bi_ExtrsaP != null && pIsPrime){
     			checkPrimes.add(bi_ExtrsaP);
+    			validCount++;
+    		}else{
+    			combo_ExrsaE.removeAll();
     		}
     		
     		if (bi_ExtrsaQ != null && qIsPrime){
     			if(checkPrimes.contains(bi_ExtrsaQ)){
     				errorLabel_1.setText("Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!");
+    				combo_ExrsaE.removeAll();
     			}else{
         			checkPrimes.add(bi_ExtrsaQ);
         			validCount++;
@@ -1976,6 +1984,7 @@ public class Identity extends TabItem {
     		if (bi_ExtrsaR != null && rIsPrime){
     			if(checkPrimes.contains(bi_ExtrsaR)){
     				errorLabel_1.setText("Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!");
+    				combo_ExrsaE.removeAll();
     			}else{
         			checkPrimes.add(bi_ExtrsaR);
         			validCount++;
@@ -1985,6 +1994,7 @@ public class Identity extends TabItem {
     		if (bi_ExtrsaS != null && sIsPrime){
     			if(checkPrimes.contains(bi_ExtrsaS)){
     				errorLabel_1.setText("Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!");
+    				combo_ExrsaE.removeAll();
     			}else{
         			checkPrimes.add(bi_ExtrsaS);
         			validCount++;
@@ -1994,6 +2004,7 @@ public class Identity extends TabItem {
     		if (bi_ExtrsaT != null && tIsPrime){
     			if(checkPrimes.contains(bi_ExtrsaT)){
     				errorLabel_1.setText("Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!");
+    				combo_ExrsaE.removeAll();
     			}else{
         			checkPrimes.add(bi_ExtrsaT);
         			validCount++;
