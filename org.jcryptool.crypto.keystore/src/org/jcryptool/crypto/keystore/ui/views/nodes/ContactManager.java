@@ -44,9 +44,23 @@ public class ContactManager {
     public synchronized static ContactManager getInstance() {
         if (instance == null) {
             instance = new ContactManager();
-            instance.getTreeModel(); // init
+            instance.initTreeModel();
         }
         return instance;
+    }
+
+    private void initTreeModel() {
+        if (invisibleRoot == null) {
+            init();
+            invisibleRoot = new TreeNode("INVISIBLE_ROOT"); //$NON-NLS-1$
+            for (IContactDescriptor desc : contacts.values()) {
+                if (desc instanceof ContactDescriptorNode) {
+                    LogUtil.logInfo("adding: " + desc.getName()); //$NON-NLS-1$
+                    invisibleRoot.addChild((ContactDescriptorNode) desc);
+                }
+            }
+            LogUtil.logInfo("children.length: " + invisibleRoot.getChildrenArray().length); //$NON-NLS-1$
+        }
     }
 
     public void addKeyStoreListener(IKeyStoreListener listener) {
@@ -61,45 +75,33 @@ public class ContactManager {
         return listeners.iterator();
     }
 
-    public synchronized ITreeNode getTreeModel() { // singleton
-
-        if (invisibleRoot == null) {
-            init();
-            invisibleRoot = new TreeNode("INVISIBLE_ROOT"); //$NON-NLS-1$
-            for (IContactDescriptor desc : contacts.values()) {
-                if (desc instanceof ContactDescriptorNode) {
-                    LogUtil.logInfo("adding: " + desc.getName()); //$NON-NLS-1$
-                    invisibleRoot.addChild((ContactDescriptorNode) desc);
-                }
-            }
-            LogUtil.logInfo("children.length: " + invisibleRoot.getChildrenArray().length); //$NON-NLS-1$
-        }
+    public ITreeNode getTreeModel() {
         return invisibleRoot;
     }
 
     private void init() {
         contacts.clear();
-        Enumeration<String> en = null;
+        Enumeration<String> aliases = null;
+
         try {
-            KeyStoreManager manager = KeyStoreManager.getInstance();
-            en = manager.getAliases();
+            aliases = KeyStoreManager.getInstance().getAliases();
         } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true);
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true); //$NON-NLS-1$
         }
-        while (en != null && en.hasMoreElements()) {
-            LogUtil.logInfo("Adding an Entry"); //$NON-NLS-1$
-            String tmp = en.nextElement();
-            LogUtil.logInfo("TMP: " + tmp); //$NON-NLS-1$
-            addEntry(new KeyStoreAlias(tmp));
+
+        while (aliases != null && aliases.hasMoreElements()) {
+            String alias = aliases.nextElement();
+            LogUtil.logInfo("Adding Entry " + alias); //$NON-NLS-1$
+            addEntry(new KeyStoreAlias(alias));
         }
     }
 
     private void addEntry(KeyStoreAlias alias) {
+        LogUtil.logInfo("Adding entry " + alias.getAliasString()); //$NON-NLS-1$
+
         if (contacts.containsKey(alias.getContactName())) {
-            // contact is already known
             addEntryToContact(contacts.get(alias.getContactName()), alias);
         } else {
-            // contact is not known
             IContactDescriptor contact = new ContactDescriptorNode(alias.getContactName());
             addEntryToContact(contact, alias);
             contacts.put(alias.getContactName(), contact);
@@ -107,7 +109,8 @@ public class ContactManager {
     }
 
     private void addEntryToContact(IContactDescriptor contact, KeyStoreAlias alias) {
-        LogUtil.logInfo("ALIAS: " + alias.toString()); //$NON-NLS-1$
+        LogUtil.logInfo("Adding entry to contact " + alias.getAliasString()); //$NON-NLS-1$
+
         if (alias.getKeyStoreEntryType().equals(KeyType.SECRETKEY)) {
             contact.addSecretKey(alias);
         } else if (alias.getKeyStoreEntryType().equals(KeyType.PUBLICKEY)) {
@@ -118,10 +121,26 @@ public class ContactManager {
             contact.addKeyPair(null, alias);
         }
     }
+    
+    public boolean contactExists(String name) {
+        return contacts.containsKey(name);
+    }
 
-    public void removeContact(String contactName) {
-        invisibleRoot.removeChild((ContactDescriptorNode) contacts.get(contactName));
-        contacts.remove(contactName);
+    public void addContact(IContactDescriptor contact) {
+        if (contactExists(contact.getName())) {
+            LogUtil.logInfo("Contact name already exists"); //$NON-NLS-1$
+            
+            return;
+        }
+        
+        contacts.put(contact.getName(), contact);
+    }
+
+    public void removeContact(String contact) {
+        LogUtil.logInfo("Removing contact " + contact); //$NON-NLS-1$
+
+        invisibleRoot.removeChild((ContactDescriptorNode) contacts.get(contact));
+        contacts.remove(contact);
         Iterator<IKeyStoreListener> it = getKeyStoreListeners();
         while (it.hasNext()) {
             it.next().fireKeyStoreModified(invisibleRoot);
@@ -129,6 +148,8 @@ public class ContactManager {
     }
 
     public void removeEntry(KeyStoreAlias alias) {
+        LogUtil.logInfo("Removing entry " + alias.getAliasString()); //$NON-NLS-1$
+
         if (alias.getKeyStoreEntryType().equals(KeyType.SECRETKEY)) {
             LogUtil.logInfo("removing a secret key"); //$NON-NLS-1$
             contacts.get(alias.getContactName()).removeSecretKey(alias);
@@ -145,7 +166,9 @@ public class ContactManager {
     }
 
     public void addCertificate(KeyStoreAlias alias) {
-        if (contacts.containsKey(alias.getContactName())) {
+        LogUtil.logInfo("Adding certificate " + alias.getAliasString()); //$NON-NLS-1$
+
+        if (contactExists(alias.getContactName())) {
             contacts.get(alias.getContactName()).addCertificate(alias);
         } else {
             IContactDescriptor contact = new ContactDescriptorNode(alias.getContactName());
@@ -160,7 +183,9 @@ public class ContactManager {
     }
 
     public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
-        if (contacts.containsKey(privateKey.getContactName())) {
+        LogUtil.logInfo("Adding key pair " + publicKey.getAliasString()); //$NON-NLS-1$
+
+        if (contactExists(privateKey.getContactName())) {
             contacts.get(privateKey.getContactName()).addKeyPair(privateKey, publicKey);
         } else {
             IContactDescriptor contact = new ContactDescriptorNode(privateKey.getContactName());
@@ -173,9 +198,11 @@ public class ContactManager {
             }
         }
     }
-
+    
     public void addSecretKey(KeyStoreAlias alias) {
-        if (contacts.containsKey(alias.getContactName())) {
+        LogUtil.logInfo("Adding secret key " + alias.getAliasString()); //$NON-NLS-1$
+
+        if (contactExists(alias.getContactName())) {
             contacts.get(alias.getContactName()).addSecretKey(alias);
         } else {
             IContactDescriptor contact = new ContactDescriptorNode(alias.getContactName());
@@ -190,12 +217,11 @@ public class ContactManager {
     }
 
     public Iterator<IContactDescriptor> getContacts() {
-        LogUtil.logInfo("returning contacts"); //$NON-NLS-1$
         return contacts.values().iterator();
     }
 
     public int getContactSize() {
+        LogUtil.logInfo("Contacts size is " + contacts.size()); //$NON-NLS-1$
         return contacts.size();
     }
-
 }

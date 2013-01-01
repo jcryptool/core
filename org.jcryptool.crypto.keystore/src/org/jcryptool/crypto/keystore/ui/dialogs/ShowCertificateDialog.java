@@ -35,7 +35,7 @@ public class ShowCertificateDialog extends CommonPropertyDialog {
      */
     @Override
     protected Control createDialogArea(Composite parent) {
-        setTitle(Messages.getString("certificate.dialog.title") + "\n" + certificateNode.getName()); //$NON-NLS-1$
+        setTitle(Messages.getString("certificate.dialog.title") + "\n" + certificateNode.getAlias()); //$NON-NLS-1$
         setTitleImage(KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_identity.png").createImage());
         Composite container = (Composite) super.createDialogArea(parent);
         
