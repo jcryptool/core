@@ -134,6 +134,7 @@ public class ContactManager {
         }
         
         contacts.put(contact.getName(), contact);
+        notifyListeners();
     }
 
     public void removeContact(String contact) {
@@ -141,6 +142,10 @@ public class ContactManager {
 
         invisibleRoot.removeChild((ContactDescriptorNode) contacts.get(contact));
         contacts.remove(contact);
+        notifyListeners();
+    }
+
+    private void notifyListeners() {
         Iterator<IKeyStoreListener> it = getKeyStoreListeners();
         while (it.hasNext()) {
             it.next().fireKeyStoreModified(invisibleRoot);
@@ -175,10 +180,7 @@ public class ContactManager {
             contact.addCertificate(alias);
             contacts.put(alias.getContactName(), contact);
             invisibleRoot.addChild((ContactDescriptorNode) contact);
-            Iterator<IKeyStoreListener> it = getKeyStoreListeners();
-            while (it.hasNext()) {
-                it.next().fireKeyStoreModified(invisibleRoot);
-            }
+            notifyListeners();
         }
     }
 
@@ -192,10 +194,7 @@ public class ContactManager {
             contact.addKeyPair(privateKey, publicKey);
             contacts.put(privateKey.getContactName(), contact);
             invisibleRoot.addChild((ContactDescriptorNode) contact);
-            Iterator<IKeyStoreListener> it = getKeyStoreListeners();
-            while (it.hasNext()) {
-                it.next().fireKeyStoreModified(invisibleRoot);
-            }
+            notifyListeners();
         }
     }
     
@@ -209,10 +208,7 @@ public class ContactManager {
             contact.addSecretKey(alias);
             contacts.put(alias.getContactName(), contact);
             invisibleRoot.addChild((ContactDescriptorNode) contact);
-            Iterator<IKeyStoreListener> it = getKeyStoreListeners();
-            while (it.hasNext()) {
-                it.next().fireKeyStoreModified(invisibleRoot);
-            }
+            notifyListeners();
         }
     }
 
