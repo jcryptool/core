@@ -10,7 +10,6 @@ public class Messages extends NLS {
 	public static String CreateCustomAlphabetIntroPage_8;
 	public static String CreateCustomAlphabetIntroPage_9;
 	public static String CreateCustomAlphabetIntroPage_descr1;
-	public static String CreateCustomAlphabetIntroPage_descr2;
 	public static String CreateCustomAlphabetIntroPage_permanenceHint1;
 	public static String CreateCustomAlphabetIntroPage_permanenceHint2;
 	public static String CreateCustomAlphabetIntroPage_title;

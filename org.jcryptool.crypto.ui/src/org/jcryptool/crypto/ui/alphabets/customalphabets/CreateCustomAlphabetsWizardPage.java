@@ -192,8 +192,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				}
 				{
 					compositeAlphaInput = new ComposeAlphabetComposite(compCharacterData);
-					GridData gd_blockAlphaComposite = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
-					compositeAlphaInput.setLayoutData(gd_blockAlphaComposite);
+					compositeAlphaInput.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 					compositeAlphaInput.layoutRoot = pageComposite; 
 					//TODO: das mit der übergebenen layout root für dynamische größenverändernde ui spielereien muss auch irgendwie anders gehen
 				}
