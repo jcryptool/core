@@ -17,6 +17,8 @@ public class Messages extends NLS {
     public static String ImportKeyAction_1;
     public static String NewKeyPairAction_0;
     public static String NewKeyPairAction_1;
+    public static String NewKeyPairAction_2;
+    public static String NewKeyPairAction_3;
     public static String NewSymmetricKeyAction_0;
     public static String NewSymmetricKeyAction_1;
     static {
