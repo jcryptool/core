@@ -690,7 +690,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		};
 		Mode alphabetSelectionMode =
 			specification.isAllowCustomAlphabetCreation()?
-				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
+//				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
+				AlphabetSelectorComposite.Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON:
 				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS;
 		alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, acceptor, getDefaultAlphabet(), alphabetSelectionMode);
 		
@@ -725,7 +726,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			});
 		}
 		
-		if(specification.isAllowCustomAlphabetCreation()) {
+		boolean showAlphaCreationHint = false;
+		if(showAlphaCreationHint && specification.isAllowCustomAlphabetCreation()) {
 			new Label(alphabetInnerGroup, SWT.NONE);
 			customAlphaHint = new Label(alphabetInnerGroup,	SWT.NONE);
 			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
