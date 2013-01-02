@@ -211,7 +211,9 @@ public class Identity extends TabItem {
 		init = true;
 		
 		
-		//*** define the layout for the whole TabItem now
+		txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
+		
+		// define the layout for the whole TabItem now
 		generalGroup = new Group(parent, SWT.NONE);
 		generalGroup.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		
@@ -236,7 +238,7 @@ public class Identity extends TabItem {
 			@Override
 			//Button 1
 			public void widgetSelected(final SelectionEvent e) {
-				txtExplain.setText("button 1");
+				txtExplain.setText("Für den Verschlüsselungsvorgang werden die Parameter N und e benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\n Vorgehensweise:\n1) Geben Sie eine beliebige Nachricht und einen optionalen Betreff ein.\n\n2) Wählen Sie einen Empfänger aus (zum Beispiel Bob). Hinweis: Diese Visualisierung erlaubt nur einen Empfänger. In der Praxis eingesetzte Protokolle wie S/MIME erlauben auch, eine Nachricht an mehr als einen Empfänger gleichzeitig verschlüsselt zu senden.\n\n3) Wählen Sie einen öffentlichen Schlüssel des Empfängers aus.\n\n4) Klicken Sie auf „Nachricht verschlüsseln“, um die Nachricht zu verschlüsseln.\n\n5) Die verschlüsselte Nachricht erscheint nun im Textfeld rechts („Verschlüsselte Nachricht“).\n\n6) Klicken Sie auf „Senden“, um die verschlüsselte Nachricht zu verschicken.");
 				
 				if(actionGroup_1.isDisposed()){
 					createActionGroup1();
@@ -249,7 +251,7 @@ public class Identity extends TabItem {
 					initActions.setText("Betreff der Nachricht: ");
 					createSpacer(actionGroup_1);
 					
-					subjectInput = new Text(actionGroup_1, SWT.NONE);
+					subjectInput = new Text(actionGroup_1, SWT.BORDER);
 					GridData gd_subject = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_subject.heightHint = 20;
 					subjectInput.setLayoutData(gd_subject);
@@ -267,7 +269,7 @@ public class Identity extends TabItem {
 					gd_enc_message.heightHint = 20;
 					label.setLayoutData(gd_enc_message);
 					
-					clearMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP);
+					clearMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 					clearMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					clearMessage.addModifyListener(new ModifyListener() {
 						
@@ -276,7 +278,7 @@ public class Identity extends TabItem {
 							changeButtonVisibility();
 						}
 					});
-					encryptedMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP);
+					encryptedMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 					encryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					
 					createSpacer(actionGroup_1);
@@ -370,7 +372,7 @@ public class Identity extends TabItem {
 		receive_and_decrypt.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 2
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText("button 2");
+				txtExplain.setText("Für den Entschlüsselungsvorgang werden die Parameter N und d benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\nVorgehensweise:\n1) Wählen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) Wählen Sie einen Ihrer privaten Schlüssel aus und geben Sie das Passwort dieses Schlüssels ein.\n\n3) Klicken Sie auf „Entschlüsseln“, um die Nachricht zu entschlüsseln. Wenn der passende private Schlüssel gewählt wurde, wird das Nachrichten-Chiffrat erfolgreich entschlüsselt. Falls ein falscher privater Schlüssel gewählt wurde, kann die Nachricht nicht korrekt entschlüsselt werden!\n\n4) Durch den Button \"Nachricht löschen\" kann die verschlüsselte Nachricht aus dem Nachrichtenspeicher gelöscht werden.");
 				if (forerunner != 2){
 					actionGroup_1.dispose();
 					actionGroup_3.dispose();
@@ -380,7 +382,9 @@ public class Identity extends TabItem {
 					
 					initActions2 = new Label(actionGroup_2, SWT.NONE);
 					initActions2.setText("Nachricht ausw\u00e4hlen: ");
-					initActions2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+					GridData chMsg = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
+					chMsg.heightHint = 20;
+					initActions2.setLayoutData(chMsg);
 					createSpacer(actionGroup_2);	
 
 					subjectChoose = new Combo(actionGroup_2, SWT.READ_ONLY);
@@ -411,7 +415,7 @@ public class Identity extends TabItem {
 					label.setText("Entschl\u00fcsselte Nachricht:");
 					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 					
-					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP);
+					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER);
 					encryptedMessage_Tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					encryptedMessage_Tab2.addModifyListener(new ModifyListener() {
 						
@@ -420,7 +424,7 @@ public class Identity extends TabItem {
 							changeButtonVisibilityTab2();
 						}
 					});
-					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP);
+					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP| SWT.BORDER);
 					decryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					
 					createSpacer(actionGroup_2);
@@ -464,7 +468,7 @@ public class Identity extends TabItem {
 					label.setLayoutData(gd_pw);
 					createSpacer(actionGroup_2);
 					
-					pwPrivKey = new Text(actionGroup_2, SWT.NONE);
+					pwPrivKey = new Text(actionGroup_2, SWT.BORDER);
 					pwPrivKey.addModifyListener(new ModifyListener() {
 						
 						@Override
@@ -510,6 +514,7 @@ public class Identity extends TabItem {
 		keymanagement.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 3
 			public void widgetSelected(SelectionEvent e) {
+				txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
 				if (forerunner != 3){
 					actionGroup_1.dispose();
 					actionGroup_2.dispose();
@@ -523,6 +528,24 @@ public class Identity extends TabItem {
 					
 					tf_keyMgmt = new TabFolder(actionGroup_3, SWT.NONE);
 					tf_keyMgmt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+					tf_keyMgmt.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							if (tf_keyMgmt.getSelectionIndex() == 0){
+								txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
+							}
+							if (tf_keyMgmt.getSelectionIndex() == 1){
+								txtExplain.setText("In dieser Registerkarte können Schlüssel mit aktuell verwendeten Schlüssellängen erstellt werden. Es muss nur die gewünschte Schlüssellänge bzw. die Anzahl der Primzahlen ausgewählt werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten (zwei oder mehrere Primzahlen) ein Passwort für den geheimen Schlüssel festgelegt werden.");
+							}
+							if (tf_keyMgmt.getSelectionIndex() == 2){
+								txtExplain.setText("Ein Schlüsselpaar besteht aus einem „privaten Schlüssel“ und einem „öffentlichen Schlüssel“:\na) Parameter eines privaten Schlüssels (N, d):\n-Der Modulus N ist sowohl Teil des öffentlichen wie des privaten Schlüssels.\n-Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Parameter eines öffentlichen Schlüssels (N, e):\n-Der Modulus N ist sowohl Teil des öffentlichen wie des privaten Schlüssels.\n-Der öffentliche Exponent e (er befindet sich üblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren können mehr als zwei Primzahlen gewählt werden. In diesem Plugin ist die Anzahl auf drei bis fünf Primzahlen beschränkt. Theoretisch ist die Anzahl nach oben offen.");
+							}
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
 					
 					//Tab "New Key"
 					keyMgmt_1 = new TabItem(tf_keyMgmt, SWT.NONE);
@@ -533,7 +556,7 @@ public class Identity extends TabItem {
 					
 					
 					init_tab1 = new Label(tab1, SWT.NONE);
-					init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen P und Q, sowie einen Exponenten E:");
+					init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen p und q, sowie einen Exponenten e:");
 					init_tab1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
 					errorLabel_1 = new Label(tab1, SWT.NONE);
@@ -550,7 +573,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeRSAVisibility();
-							init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen P und Q, sowie einen Exponenten E:");
+							init_tab1.setText("W\u00e4hlen Sie 2 verschiedene Primzahlen p und q, sowie einen Exponenten e:");
 						}
 						
 						@Override
@@ -562,7 +585,7 @@ public class Identity extends TabItem {
 					rsaComposite.setLayout(new GridLayout(10, false));
 					
 					Label rsaP = new Label(rsaComposite, SWT.NONE);
-					rsaP.setText("P:");
+					rsaP.setText("p:");
 					GridData gd_rsa_p = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_p.heightHint = 20;
 					rsaP.setLayoutData(gd_rsa_p);
@@ -607,7 +630,7 @@ public class Identity extends TabItem {
 					combo_rsaP.setLayoutData(gd_combo_rsaP);
 					
 					Label rsaQ = new Label(rsaComposite, SWT.NONE);
-					rsaQ.setText("Q:");
+					rsaQ.setText("q:");
 					GridData gd_rsa_q = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_q.heightHint = 20;
 					rsaQ.setLayoutData(gd_rsa_q);
@@ -655,7 +678,7 @@ public class Identity extends TabItem {
 					}
 					
 					Label rsaE = new Label(rsaComposite, SWT.NONE);
-					rsaE.setText("E:");
+					rsaE.setText("e:");
 					GridData gd_rsa_e = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_e.heightHint = 20;
 					rsaE.setLayoutData(gd_rsa_e);
@@ -719,7 +742,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeRSAVisibility();
-							init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen P, Q und R, sowie einen Exponenten E:");
+							init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen p, q, r und einen Exponenten e:");
 						}
 						
 						@Override
@@ -757,21 +780,21 @@ public class Identity extends TabItem {
 										combo_ExrsaT.setVisible(false);
 										rsa_ex_S.setVisible(false);
 										rsa_ex_T.setVisible(false);
-										init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen P, Q und R, sowie einen Exponenten E:");
+										init_tab1.setText("W\u00e4hlen Sie 3 verschiedene Primzahlen p, q, r und einen Exponenten e:");
 										break;
 										
 								case 4: combo_ExrsaS.setVisible(true);
 										combo_ExrsaT.setVisible(false);
 										rsa_ex_S.setVisible(true);
 										rsa_ex_T.setVisible(false);
-										init_tab1.setText("W\u00e4hlen Sie 4 verschiedene Primzahlen P, Q, R und S, sowie einen Exponenten E:");
+										init_tab1.setText("W\u00e4hlen Sie 4 verschiedene Primzahlen p, q, r, s und einen Exponenten e:");
 										break;
 								
 								case 5: combo_ExrsaS.setVisible(true);
 										combo_ExrsaT.setVisible(true);
 										rsa_ex_S.setVisible(true);
 										rsa_ex_T.setVisible(true);
-										init_tab1.setText("W\u00e4hlen Sie 5 verschiedene Primzahlen P, Q, R, S und T, sowie einen Exponenten E:");
+										init_tab1.setText("W\u00e4hlen Sie 5 verschiedene Primzahlen p, q, r, s, t und einen Exponenten e:");
 										break;
 										
 								default:password1.setText("");
@@ -800,7 +823,7 @@ public class Identity extends TabItem {
 					
 					//P
 					Label rsa_ex_P = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_P.setText("P:");
+					rsa_ex_P.setText("p:");
 					GridData gd_rsa_exP = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exP.heightHint = 20;
 					rsa_ex_P.setLayoutData(gd_rsa_exP);
@@ -837,7 +860,7 @@ public class Identity extends TabItem {
 					
 					//Q
 					Label rsa_ex_Q = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_Q.setText("Q:");
+					rsa_ex_Q.setText("q:");
 					GridData gd_rsa_exQ = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exQ.heightHint = 20;
 					rsa_ex_Q.setLayoutData(gd_rsa_exQ);
@@ -874,7 +897,7 @@ public class Identity extends TabItem {
 					
 					//R
 					Label rsa_ex_R = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_R.setText("R:");
+					rsa_ex_R.setText("r:");
 					GridData gd_rsa_exR = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exR.heightHint = 20;
 					rsa_ex_R.setLayoutData(gd_rsa_exR);
@@ -911,7 +934,7 @@ public class Identity extends TabItem {
 					
 					//S
 					rsa_ex_S = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_S.setText("S:");
+					rsa_ex_S.setText("s:");
 					GridData gd_rsa_exS = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exS.heightHint = 20;
 					rsa_ex_S.setLayoutData(gd_rsa_exS);
@@ -950,7 +973,7 @@ public class Identity extends TabItem {
 					
 					//T
 					rsa_ex_T = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_T.setText("T:");
+					rsa_ex_T.setText("t:");
 					GridData gd_rsa_exT = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exT.heightHint = 20;
 					rsa_ex_T.setLayoutData(gd_rsa_exT);
@@ -989,7 +1012,7 @@ public class Identity extends TabItem {
 					
 					//E
 					Label rsa_ex_E = new Label(rsaExComposite2, SWT.NONE);
-					rsa_ex_E.setText("E:");
+					rsa_ex_E.setText("e:");
 					GridData gd_rsa_exE = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_exE.heightHint = 20;
 					rsa_ex_E.setLayoutData(gd_rsa_exE);
@@ -1056,7 +1079,7 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw.heightHint = 20;
 					rsa_password.setLayoutData(gd_rsa_pw);
-					password1 = new Text(rsaExComposite3, SWT.PASSWORD);
+					password1 = new Text(rsaExComposite3, SWT.PASSWORD| SWT.BORDER);
 					GridData gd_combo_pw1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw1.heightHint = 20;
 					gd_combo_pw1.widthHint = 100;
@@ -1079,7 +1102,7 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw2.heightHint = 20;
 					rsa_password2.setLayoutData(gd_rsa_pw2);
-					password2 = new Text(rsaExComposite3, SWT.PASSWORD);
+					password2 = new Text(rsaExComposite3, SWT.PASSWORD| SWT.BORDER);
 					GridData gd_combo_pw2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw2.heightHint = 20;
 					gd_combo_pw2.widthHint = 100;
@@ -1241,7 +1264,7 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw_2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw_2.heightHint = 20;
 					rsa_password_2.setLayoutData(gd_rsa_pw_2);
-					ext_password1 = new Text(rsaExComposite3, SWT.PASSWORD);
+					ext_password1 = new Text(rsaExComposite3, SWT.PASSWORD| SWT.BORDER);
 					GridData gd_combo_pw1_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw1_2.heightHint = 20;
 					gd_combo_pw1_2.widthHint = 100;
@@ -1266,7 +1289,7 @@ public class Identity extends TabItem {
 					GridData gd_rsa_pw2_2 = new GridData(SWT.RIGHT, SWT.RIGHT, true, true, 1, 1);
 					gd_rsa_pw2_2.heightHint = 20;
 					rsa_password2_2.setLayoutData(gd_rsa_pw2_2);
-					ext_password2 = new Text(rsaExComposite3, SWT.PASSWORD);
+					ext_password2 = new Text(rsaExComposite3, SWT.PASSWORD| SWT.BORDER);
 					GridData gd_combo_pw2_2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw2_2.heightHint = 20;
 					gd_combo_pw2_2.widthHint = 100;
@@ -1346,7 +1369,7 @@ public class Identity extends TabItem {
 					GridData gd_enterPW = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 					gd_enterPW.heightHint = 20;
 					lbl_enterPW.setLayoutData(gd_enterPW);
-					password_keydata = new Text(myKeyData, SWT.NONE);
+					password_keydata = new Text(myKeyData, SWT.PASSWORD|SWT.BORDER);
 					GridData gd_pw = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 					gd_pw.heightHint = 20;
 					gd_pw.widthHint = 200;
@@ -1419,7 +1442,7 @@ public class Identity extends TabItem {
 		attackPublicKey.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		//add spacer to the buttons on the left (for further actions :) )
-		for (int i = 0; i < 14; i++){
+		for (int i = 0; i < 15; i++){
 			createSpacer(composite);
 		}
 		
@@ -1463,7 +1486,7 @@ public class Identity extends TabItem {
 			}else{
 				createKey.setEnabled(false);
 			}
-			txtExplain.setText(pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
+//			txtExplain.setText(pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
 		}
 		if(pw1_Ext != null && pw2_Ext != null){
 			if (pw1_Ext.equals(pw2_Ext)){
@@ -1602,7 +1625,7 @@ public class Identity extends TabItem {
 				//add only new recipients
 				if (!recipients.contains(id.getIdentityName())){
 					messageRecipient.add(id.getIdentityName());
-					txtExplain.setText(txtExplain.getText()+ id.getIdentityName());
+//					txtExplain.setText(txtExplain.getText()+ id.getIdentityName());
 				}
 			}
 		}

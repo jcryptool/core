@@ -15,9 +15,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.jcryptool.visual.extendedrsa.ui.wizard.KeyringWizard;
+//import org.jcryptool.visual.extendedrsa.ui.wizard.KeyringWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
-import org.jcryptool.visual.extendedrsa.ui.wizard.NewKeypairWizard;
+//import org.jcryptool.visual.extendedrsa.ui.wizard.NewKeypairWizard;
 
 public class Test extends ViewPart{
 	private Text text;
@@ -93,22 +93,22 @@ public class Test extends ViewPart{
 	    grpErklrungen.setBounds(10, 338, 1389, 249);
 	    
 	    Button btnMeineSchlssel = new Button(grpLalala, SWT.NONE);
-	    btnMeineSchlssel.addSelectionListener(new SelectionAdapter() {
-	    	@Override
-	    	public void widgetSelected(SelectionEvent e) {
-	    		new WizardDialog(getSite().getShell(), new KeyringWizard()).open();
-	    	}
-	    });
+//	    btnMeineSchlssel.addSelectionListener(new SelectionAdapter() {
+//	    	@Override
+//	    	public void widgetSelected(SelectionEvent e) {
+//	    		new WizardDialog(getSite().getShell(), new KeyringWizard()).open();
+//	    	}
+//	    });
 	    btnMeineSchlssel.setBounds(10, 257, 141, 50);
 	    btnMeineSchlssel.setText("Meine Schlüssel");
 	    
 	    Button btnNeuesSchlsselpaarErstellen = new Button(grpLalala, SWT.NONE);
-	    btnNeuesSchlsselpaarErstellen.addSelectionListener(new SelectionAdapter() {
-	    	@Override
-	    	public void widgetSelected(SelectionEvent e) {
-	    		new WizardDialog(getSite().getShell(), new NewKeypairWizard()).open();
-	    	}
-	    });
+//	    btnNeuesSchlsselpaarErstellen.addSelectionListener(new SelectionAdapter() {
+//	    	@Override
+//	    	public void widgetSelected(SelectionEvent e) {
+//	    		new WizardDialog(getSite().getShell(), new NewKeypairWizard()).open();
+//	    	}
+//	    });
 	    btnNeuesSchlsselpaarErstellen.setBounds(10, 201, 141, 50);
 	    btnNeuesSchlsselpaarErstellen.setText("Neues Schlüsselpaar");
 	    
