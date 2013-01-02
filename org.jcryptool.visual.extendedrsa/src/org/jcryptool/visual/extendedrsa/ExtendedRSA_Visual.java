@@ -30,10 +30,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -75,9 +77,6 @@ public class ExtendedRSA_Visual extends ViewPart{
 	private Label txtExplain;
 	private Enumeration<String> aliases;
     private KeyStoreAlias keyStoreAlias;
-    private Vector<KeyStoreAlias> publicKeyMap;
-    private Vector<KeyStoreAlias> privateKeyMap;
-//    private Vector<KeyStoreAlias> comboKeyMap;
     
 	
 	public ExtendedRSA_Visual() {
@@ -169,7 +168,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		tabFolder.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
+//				txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
 			}
 			
 			@Override
@@ -186,7 +185,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 //				}
 //			}
 //		});
-		btn_delID.setEnabled(false);
+//		btn_delID.setEnabled(false);
 		
 
 		Group grp_explain = new Group(comp_center, SWT.NONE);
@@ -197,48 +196,77 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_explain.setText("Erkl\u00e4rungen");
 		
 		txtExplain = new Label(grp_explain,  SWT.WRAP);
-		txtExplain.setText("Hier k\u00f6nnte Ihre Erkl\u00e4rung stehen! Hier k\u00f6nnte Ihre Erkl\u00e4rung stehenHier k\u00f6nnte Ihre Erkl\u00e4rung stehenHier k\u00f6nnte Ihre Erkl\u00e4rung stehen");
 		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_txtEplain.heightHint = 300;
 		txtExplain.setLayoutData(gd_txtEplain);
-		
-		//create "Alice"
-		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown", txtExplain);
-		
-		//create "Bob"
-		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown", txtExplain);
-		
+
 		grp_explain.setLayoutData(gd_explain);
 		
-		initKeystore();
-		
-		//syncWithKeystore()	(todo)
-		
-	
+		initKeystore(tabFolder);
 	}
 
-	private void initKeystore() {
+	private void initKeystore(TabFolder tabfolder) {
         try{
         	if (!KeyStorePlugin.isInitialized()){
         		KeyStorePlugin.initialize();
         	}
         	ContactManager cManager = ContactManager.getInstance();
         	KeyStoreManager ksManager = KeyStoreManager.getInstance();
-        	aliases = ksManager.getAliases();
+        	IdentityManager iMgr = new IdentityManager();
 
-            String contactNames = " ";
-            
-            cManager.getTreeModel();
+            Vector<String> contactNames = new Vector<String>();
+            Vector<String> keyAlgos = new Vector<String>();
+            //get available contacts 
             int size = cManager.getContactSize();
             if (size > 0) {             
                 Iterator<IContactDescriptor> it = cManager.getContacts();
                 IContactDescriptor meta;
                 while (it.hasNext()) {
                     meta = it.next();
-                    contactNames += meta.getName() + " ";
+                    contactNames.add(meta.getName());
                 }
             }
+
+            if (!contactNames.contains("Alice Whitehat")){
+            	//create Alice in the keystore
+            	iMgr.createIdentity("Alice Whitehat", "RSA", "1234", 1024);
+            	
+            }else{
+              
+//              KeyStoreAlias localKeyStoreAlias = null;
+//              aliases = ksManager.getAliases();
+//              
+//              while (aliases.hasMoreElements()) {
+//                  localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
+//                  
+//                  if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
+//                      if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY) && localKeyStoreAlias.getContactName().equals("Alice Whitehat")) {
+//                          keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
+//                      }
+//                  }
+//                  if (!keyAlgos.contains("MpRSA")){
+//                	  iMgr.createIdentity("Alice Whitehat", "MpRSA", "1234", 1024);
+//                  }
+//              }
+            }
+            //create "Alice" in the visual
+    		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown", txtExplain);
+    		
+    		
+    		
+            if (!contactNames.contains("Bob")){
+            	//create Bob in the keystore
+            	iMgr.createIdentity("Bob", "RSA", "1234", 1024);
+//            	iMgr.createIdentity("Bob", "MpRSA", "1234", 1024);
+            }
             
+            
+//            iMgr.createIdentity("Bob", "RSA", "1234", 1024);
+            
+            //create "Bob" in the visual
+    		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown", txtExplain);
+        	
+        	aliases = ksManager.getAliases();
             KeyStoreAlias localKeyStoreAlias = null;
             
             int counter = 0;
@@ -251,30 +279,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             
         }catch (Exception e) {
             LogUtil.logError(e);
-        }
-        
-        
-//        publicKeyMap = new Vector<KeyStoreAlias>();
-//        privateKeyMap = new Vector<KeyStoreAlias>();
-//            
-//        KeyStoreAlias localKeyStoreAlias = null;
-//        
-//        while (aliases.hasMoreElements()) {
-//            localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
-//
-//            if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
-//                if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
-//                    publicKeyMap.add(localKeyStoreAlias);
-//                }
-//                if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
-//                    privateKeyMap.add(localKeyStoreAlias);
-//                }
-//            } else { // symmetric
-//                publicKeyMap.add(localKeyStoreAlias);
-//                privateKeyMap.add(localKeyStoreAlias);
-//            }
-//        }
-         
+        }    
 	}
 
 	@Override
