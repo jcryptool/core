@@ -1,10 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -33,18 +32,16 @@ import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 
 /**
- * The ProvidersManager class represents a global point of access to extensions
- * of the extension point <i>providers</i>. The extensions are loaded conform to
- * the <i>lazy loading</i> rule: Firstly only the declarative manifest is
- * retrieved, the appropriate business logic is only loaded if required. The
- * first step is performed by the method <i>retrieveProvidersExtensions</i> and
- * <i>performCreateExecutableExtension</i> serves the second one.
- *
+ * The ProvidersManager class represents a global point of access to extensions of the extension point <i>providers</i>.
+ * The extensions are loaded conform to the <i>lazy loading</i> rule: Firstly only the declarative manifest is
+ * retrieved, the appropriate business logic is only loaded if required. The first step is performed by the method
+ * <i>retrieveProvidersExtensions</i> and <i>performCreateExecutableExtension</i> serves the second one.
+ * 
  * The class has only instance (singleton class).
- *
+ * 
  * @author amro
  * @author t-kern
- *
+ * 
  */
 public class ProvidersManager {
     /** The factory default Provider ID (FlexiProvider's Plug-in ID) */
@@ -67,9 +64,8 @@ public class ProvidersManager {
 
     /**
      * Getter for the only EditorManager object
-     *
+     * 
      * @return the EditorManager object
-     * @deprecated This singleton will not be supported after milestone 2!
      */
     public synchronized static ProvidersManager getInstance() {
         if (instance == null)
@@ -108,7 +104,7 @@ public class ProvidersManager {
 
     /**
      * Returns a list containing all the info values of all Providers.
-     *
+     * 
      * @return A list containing all the info values of all Providers
      */
     public ArrayList<String> getAvailableProviderInfos() {
@@ -121,11 +117,10 @@ public class ProvidersManager {
     }
 
     /**
-     * Takes the order of the infos received from the PreferencePage and puts
-     * the provider hierarchy in the correct order.
-     *
-     * @param providerHierarchy Contains the info values received from the
-     *        PreferencePage
+     * Takes the order of the infos received from the PreferencePage and puts the provider hierarchy in the correct
+     * order.
+     * 
+     * @param providerHierarchy Contains the info values received from the PreferencePage
      */
     public void setProviderHierarchy(ArrayList<String> providerHierarchy) {
         // providerHierarchy contains the infos; get the names
@@ -162,7 +157,7 @@ public class ProvidersManager {
 
     /**
      * Returns the names of all available providers.
-     *
+     * 
      * @return The names of all available providers
      */
     private ArrayList<String> getAvailableProviderNames() {
@@ -217,7 +212,7 @@ public class ProvidersManager {
     /**
      * Makes the given list consistent.<br>
      * Entries in the list that
-     *
+     * 
      * @param fromPreferences The list that will be mande consistent
      * @return The consistent list
      */
@@ -251,7 +246,7 @@ public class ProvidersManager {
 
     /**
      * Returns the FlexiProvider's MetaProvider.
-     *
+     * 
      * @return FlexiProvider's MetaProvider
      */
     public ProviderDescriptor getMetaFactoryDefault() {
@@ -289,10 +284,8 @@ public class ProvidersManager {
     }
 
     /**
-     * @deprecated This method loades the platform providers. Currently, they
-     *             are not supported, since we rely on additional information
-     *             provided via plug-in manifest. They may be included in
-     *             Milestone 2
+     * @deprecated This method loades the platform providers. Currently, they are not supported, since we rely on
+     *             additional information provided via plug-in manifest. They may be included in Milestone 2
      */
     @SuppressWarnings("unused")
     private void loadPlatformProviders() {
@@ -300,8 +293,8 @@ public class ProvidersManager {
 
         Provider[] providers = Security.getProviders();
         for (int i = 0; i < providers.length; i++) {
-            ProviderDescriptor installedProvider = new ProviderDescriptor(providers[i].getName(), providers[i]
-                    .getInfo());
+            ProviderDescriptor installedProvider = new ProviderDescriptor(providers[i].getName(),
+                    providers[i].getInfo());
             availableProviders.put(providers[i].getName(), installedProvider);
         }
     }
@@ -316,7 +309,7 @@ public class ProvidersManager {
 
     /**
      * Returns the provider object of the currently selected default provider.
-     *
+     * 
      * @return The Provider object of the currently selected default provider
      * @throws CoreException Thrown, when no provider could be loaded
      */
@@ -349,7 +342,7 @@ public class ProvidersManager {
 
     /**
      * Returns the provider object for the provider with the given name.
-     *
+     * 
      * @param name The name of the provider
      * @return The corresponding provider object
      * @throws CoreException Thrown, when no provider could be loaded
@@ -376,11 +369,10 @@ public class ProvidersManager {
 
     /**
      * Checks whether the default provider supports the specified service.
-     *
+     * 
      * @param type The type of the service
      * @param algorithmName The algorithm name of the service
-     * @return <code>true</code>, when the default provider supports the
-     *         specified service
+     * @return <code>true</code>, when the default provider supports the specified service
      */
     public boolean isServiceProvidedByDefault(String type, String algorithmName) {
         if (defaultProvider == null) {
@@ -420,17 +412,14 @@ public class ProvidersManager {
     }
 
     /**
-     * Returns the provider with the highest priority that supports the
-     * specified service. <br>
-     * The default provider is queried first and only if it does not support the
-     * service, the other available providers are queried in their priority
-     * order.
-     *
+     * Returns the provider with the highest priority that supports the specified service. <br>
+     * The default provider is queried first and only if it does not support the service, the other available providers
+     * are queried in their priority order.
+     * 
      * @param type The type of the service
      * @param algorithmName The algorithm name of the service
      * @return The highest-ordered provider supporting the given service
-     * @throws NoSuchAlgorithmException Thrown, when no available provider
-     *         supports the specified service
+     * @throws NoSuchAlgorithmException Thrown, when no available provider supports the specified service
      */
     public Provider getSupportingProvider(String type, String algorithmName) throws NoSuchAlgorithmException {
         LogUtil.logInfo("getting service provider"); //$NON-NLS-1$
@@ -469,13 +458,11 @@ public class ProvidersManager {
     }
 
     /**
-     * The method performs the creation of the executable extension. The
-     * executable code is loaded, only for the plug-in which extension has the
-     * specific extension ID.
-     *
+     * The method performs the creation of the executable extension. The executable code is loaded, only for the plug-in
+     * which extension has the specific extension ID.
+     * 
      * @param extensionID ID of the contribution to extension point providers
-     * @return the associated crypto provider object of the type
-     *         <i>java.security.Provider</i>
+     * @return the associated crypto provider object of the type <i>java.security.Provider</i>
      * @throws CoreException
      */
     private Provider createExecutableExtension(String extensionID, String providerName) throws CoreException {
@@ -517,7 +504,7 @@ public class ProvidersManager {
 
     /**
      * Returns the ExtensionID for the specified provider.
-     *
+     * 
      * @param provider The provider (which is implicitly provided by a plug-in)
      * @return The ID of the plug-in supplying the given provider
      */
@@ -542,9 +529,8 @@ public class ProvidersManager {
     }
 
     /**
-     * Returns the value of the given attribute of the plug-in with the given
-     * id.
-     *
+     * Returns the value of the given attribute of the plug-in with the given id.
+     * 
      * @param id The plug-in ID that will be checked for the attribute value
      * @param attributeName The identifier of the attribute
      * @return The value of the attribute
@@ -566,13 +552,11 @@ public class ProvidersManager {
     }
 
     /**
-     * Returns an array containing all cipher modes associated with the given
-     * service.
-     *
+     * Returns an array containing all cipher modes associated with the given service.
+     * 
      * @param type The type of the service
      * @param name The name of the algorithm of the service
-     * @return An array containing all cipher modes associated with the given
-     *         service
+     * @return An array containing all cipher modes associated with the given service
      */
     public String[] getCipherModes(String type, String name) {
         String[] result = new String[0];
@@ -587,13 +571,11 @@ public class ProvidersManager {
     }
 
     /**
-     * Returns an array containing all paddings associated with the given
-     * service.
-     *
+     * Returns an array containing all paddings associated with the given service.
+     * 
      * @param type The type of the service
      * @param name The name of the algorithm of the service
-     * @return An array containing all paddings associated with the given
-     *         service
+     * @return An array containing all paddings associated with the given service
      */
     public String[] getPaddings(String type, String name) {
         String[] result = new String[0];
@@ -610,7 +592,7 @@ public class ProvidersManager {
     /**
      * Takes a String and tokenizes it into a String array.<br>
      * The expected delimiter is an '|'.
-     *
+     * 
      * @param attribute Contains a list of attributes delimited by a '|'
      * @return A String array containing all tokens
      */

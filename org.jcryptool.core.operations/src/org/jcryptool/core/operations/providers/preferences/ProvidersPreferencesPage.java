@@ -1,10 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -37,15 +36,14 @@ import org.jcryptool.core.operations.providers.ProvidersManager;
 
 /**
  * The PreferencesPage for the Providers.<br>
- * Allows the user to select a default Crypto Provider, or revert to the factory
- * default Provider (which is FlexiProvier). <br>
- * Additionally, the user can specify a fall-through hierarchy. This will
- * determine the order in which the installed (non-default) Providers will be
- * searched for a requested service, if the previously searched Providers do not
- * provide the requested service.
- *
+ * Allows the user to select a default Crypto Provider, or revert to the factory default Provider (which is
+ * FlexiProvier). <br>
+ * Additionally, the user can specify a fall-through hierarchy. This will determine the order in which the installed
+ * (non-default) Providers will be searched for a requested service, if the previously searched Providers do not provide
+ * the requested service.
+ * 
  * @author t-kern
- *
+ * 
  */
 public class ProvidersPreferencesPage extends PreferencePage implements IWorkbenchPreferencePage, Listener {
     /** The Up Button */
@@ -79,9 +77,8 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
 
     /**
      * Creates the contents of this preferences page.<br>
-     * Puts all composits together with the given layout, registers the
-     * listeners and fills the table.
-     *
+     * Puts all composits together with the given layout, registers the listeners and fills the table.
+     * 
      * @see org.eclipse.jface.preference.PreferencePage#createContents(org.eclipse.swt.widgets.Composite)
      */
     @Override
@@ -95,14 +92,15 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
 
         fillProvidersTable();
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), "org.jcryptool.core.operations.providerPreferences"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem()
+                .setHelp(getControl(), "org.jcryptool.core.operations.providerPreferences"); //$NON-NLS-1$
 
         return pageComposite;
     }
 
     /**
      * This method initializes group
-     *
+     * 
      */
     private void createGroup(Composite parent) {
         GridData upButtonGridData = new GridData();
@@ -158,14 +156,13 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
     /**
      * Initializes the data fields for internal use.
      */
-    @SuppressWarnings("deprecation")
-	private void initProviderHierarchy() {
+    private void initProviderHierarchy() {
         providerHierarchy = ProvidersManager.getInstance().getAvailableProviderInfos();
     }
 
     /**
      * Creates a new TableItem with the given parameters.
-     *
+     * 
      * @param providerName The Provider that will be displayed by this TableItem
      * @param index The index of this TableItem in the table
      * @return The new TableItem
@@ -180,9 +177,8 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
     }
 
     /**
-     * Fills the Provider table with the installed CryptoProviders and sets the
-     * parameters accordingly. (Reads the default Provider from the
-     * ProvidersManager singleton)
+     * Fills the Provider table with the installed CryptoProviders and sets the parameters accordingly. (Reads the
+     * default Provider from the ProvidersManager singleton)
      */
     private void fillProvidersTable() {
         providersTable.removeAll();
@@ -199,9 +195,8 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
     }
 
     /**
-     * Handles the event of the "Apply" (AND/OR "Okay") button in the lower
-     * right corner.
-     *
+     * Handles the event of the "Apply" (AND/OR "Okay") button in the lower right corner.
+     * 
      * @see org.eclipse.jface.preference.PreferencePage#performOk()
      */
     public boolean performOk() {
@@ -210,13 +205,11 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
     }
 
     /**
-     * Handles the event of the "Reset to Default" button in the lower right
-     * corner.
-     *
+     * Handles the event of the "Reset to Default" button in the lower right corner.
+     * 
      * @see org.eclipse.jface.preference.PreferencePage#performDefaults()
      */
-    @SuppressWarnings("deprecation")
-	protected void performDefaults() {
+    protected void performDefaults() {
         // move flexi to the top of the table
         int index = providerHierarchy.indexOf(ProvidersManager.getInstance().getMetaFactoryDefault().getInfo());
         if (index != 0) {
@@ -230,7 +223,7 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
 
     /**
      * Handles the event of the "Apply" button in the lower right corner.
-     *
+     * 
      * @see org.eclipse.jface.preference.PreferencePage#performApply()
      */
     protected void performApply() {
@@ -241,7 +234,7 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
 
     /**
      * Handles all events that occur in the context of this preferences page.
-     *
+     * 
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
     public void handleEvent(Event event) {
@@ -273,7 +266,8 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
                 providersTable.setSelection(selected - 1);
             }
         } else {
-            MessageDialog.openInformation(this.getShell(), Messages.ProvidersPreferencesPage_7, Messages.ProvidersPreferencesPage_8);
+            MessageDialog.openInformation(this.getShell(), Messages.ProvidersPreferencesPage_7,
+                    Messages.ProvidersPreferencesPage_8);
         }
     }
 
@@ -294,26 +288,24 @@ public class ProvidersPreferencesPage extends PreferencePage implements IWorkben
                 providersTable.setSelection(selected + 1);
             }
         } else {
-            MessageDialog.openInformation(this.getShell(), Messages.ProvidersPreferencesPage_7, Messages.ProvidersPreferencesPage_8);
+            MessageDialog.openInformation(this.getShell(), Messages.ProvidersPreferencesPage_7,
+                    Messages.ProvidersPreferencesPage_8);
         }
     }
 
     /**
      * Sets the fall-through hierarchy in the Activator.<br>
      * <br>
-     * Converts the internal Vector to a formatted String with the correct
-     * delimiters.
+     * Converts the internal Vector to a formatted String with the correct delimiters.
      */
-    @SuppressWarnings("deprecation")
-	private void setProviderHierarchy() {
+    private void setProviderHierarchy() {
         ProvidersManager.getInstance().setProviderHierarchy(providerHierarchy);
     }
 
     /**
      * Saves the preferences store.
      */
-    @SuppressWarnings("deprecation")
-	private void save() {
+    private void save() {
         ProvidersManager.getInstance().savePreferences();
     }
 
