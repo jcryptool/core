@@ -65,6 +65,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
     private Group optionsGroup = null;
     private Button enableFilterCheckBox = null;
 
+	private Label lblFilterHint;
+
     /**
      * No-args Constructor.
      */
@@ -210,10 +212,10 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
         nameColumn.setWidth(200);
         basicColumn = new TableColumn(availableAlphabetsTable, SWT.CENTER);
         basicColumn.setText(Messages.getString("AlphabetsPreferencePage.1")); //$NON-NLS-1$
-        basicColumn.setWidth(50);
+        basicColumn.setWidth(80);
         defaultColumn = new TableColumn(availableAlphabetsTable, SWT.CENTER);
         defaultColumn.setText(Messages.getString("AlphabetsPreferencePage.2")); //$NON-NLS-1$
-        defaultColumn.setWidth(50);
+        defaultColumn.setWidth(80);
 
         addButton = new Button(managementGroup, SWT.NONE);
         addButton.setText(Messages.getString("AlphabetsPreferencePage.3")); //$NON-NLS-1$
@@ -265,6 +267,12 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
         enableFilterCheckBox = new Button(optionsGroup, SWT.CHECK);
         enableFilterCheckBox.setText(Messages.getString("AlphabetsPreferencePage.10")); //$NON-NLS-1$
         enableFilterCheckBox.setLayoutData(checkBoxLayout);
+        
+        lblFilterHint = new Label(optionsGroup, SWT.WRAP);
+        GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        layoutData.widthHint = 250;
+		lblFilterHint.setLayoutData(layoutData);
+		lblFilterHint.setText(Messages.getString("AlphabetsPreferencePage.12")); //$NON-NLS-1$
     }
 
     public void init(IWorkbench workbench) {
