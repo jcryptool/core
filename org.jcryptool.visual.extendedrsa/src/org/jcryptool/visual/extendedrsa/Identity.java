@@ -360,7 +360,7 @@ public class Identity extends TabItem {
 					encryptMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							encryptedMessage.setText("nun wird die nachricht verschl\u00fcsselt");
+							encryptedMessage.setText(Rsa_Implementation.encrypt(clearMessage.getText(), pubKeyParameters.get(1), pubKeyParameters.get(0)));
 							sendMessage.setEnabled(true);
 						}
 					});
