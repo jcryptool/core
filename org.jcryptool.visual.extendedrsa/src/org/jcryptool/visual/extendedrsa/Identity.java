@@ -99,11 +99,11 @@ public class Identity extends TabItem {
 	private GridData group_4;
 	private int forerunner;
 	private int id;
-	private Combo subjectChoose;
+	private Combo selectMessage;
 	private Combo decryptionKey;
 	private Button deleteMessage;
 	private Text pwPrivKey;
-	private TabFolder tabfolder;
+	private ExtendedTabFolder extTF;
 	private TabFolder tf_keyMgmt;
 	private TabItem keyMgmt_1;
 	private TabItem keyMgmt_2;
@@ -199,9 +199,9 @@ public class Identity extends TabItem {
             }
     };
 	
-	public Identity(TabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region, Label explain) {
+	public Identity(ExtendedTabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region, Label explain) {
 		super(parent, style);
-		this.tabfolder = parent;
+		this.extTF = parent;
 		this.identityName = identityName;
 		this.forename = forename;
 		this.surname = surname;
@@ -300,7 +300,7 @@ public class Identity extends TabItem {
 					GridData gd_recp = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_recp.heightHint = 20;
 					messageRecipient.setLayoutData(gd_recp);
-					addReceipientsToCombo(tabfolder);
+					addReceipientsToCombo(extTF);
 //					messageRecipient.select(0);
 					messageRecipient.addSelectionListener(new SelectionListener() {
 						
@@ -333,7 +333,6 @@ public class Identity extends TabItem {
 					createSpacer(actionGroup_1);
 					
 					recipientKeys = new Combo(actionGroup_1, SWT.READ_ONLY);
-					recipientKeys.add("testkey");
 					recipientKeys.addSelectionListener(new SelectionListener() {
 						
 						@Override
@@ -396,21 +395,22 @@ public class Identity extends TabItem {
 					initActions2.setLayoutData(chMsg);
 					createSpacer(actionGroup_2);	
 
-					subjectChoose = new Combo(actionGroup_2, SWT.READ_ONLY);
-					subjectChoose.add("asdf");	
+					selectMessage = new Combo(actionGroup_2, SWT.READ_ONLY);
 					GridData gd_combo = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_combo.heightHint = 20;
-					subjectChoose.setLayoutData(gd_combo);
-					subjectChoose.addSelectionListener(new SelectionListener() {
+					selectMessage.setLayoutData(gd_combo);
+					selectMessage.addSelectionListener(new SelectionListener() {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibilityTab2();
+							//set message
 						}
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent e) {}
 					});
+					fillSelectMessage();
 					
 					createSpacer(actionGroup_2);
 					
@@ -1484,9 +1484,14 @@ public class Identity extends TabItem {
 		pubKeyParameters = iMgr.getPublicKeyParameters(rec.get(recipientKeys.getText()));
 	}
 	
+	private void fillSelectMessage(){
+		for (SecureMessage sec :extTF.getMessageQueue()){
+			System.out.println(""+sec.getSubject()+" - "+sec.getRecipient().getContactName().substring(0,sec.getRecipient().getContactName().indexOf(' '))+" - "+sec.getMessageID());
+		}
+	}
 	
 	private void changeButtonVisibilityTab2(){
-		if ((subjectChoose.getSelectionIndex() != -1) &&(encryptedMessage_Tab2.getText().length() >1 ) && (decryptionKey.getSelectionIndex() != -1) && (pwPrivKey.getText().length() > 0)){
+		if ((selectMessage.getSelectionIndex() != -1) &&(encryptedMessage_Tab2.getText().length() >1 ) && (decryptionKey.getSelectionIndex() != -1) && (pwPrivKey.getText().length() > 0)){
 			decryptMessage.setEnabled(true);
 		}
 	}

@@ -216,7 +216,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
        
        return pubkeys;
 	}
-	
+	/**
+	 * 
+	 * @param alias The alias who wants to get his publicKey
+	 * @return parameters: contains the publicKey Parameters. The first parameter is 'N', the second 'e'
+	 */
 	public Vector<BigInteger>getPublicKeyParameters(KeyStoreAlias alias){
 		Vector<BigInteger> parameters = new Vector<BigInteger>();
 
