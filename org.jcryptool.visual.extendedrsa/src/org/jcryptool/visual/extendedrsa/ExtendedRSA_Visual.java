@@ -213,7 +213,7 @@ public class ExtendedRSA_Visual extends ViewPart{
         		KeyStorePlugin.initialize();
         	}
         	
-        	IdentityManager iMgr = new IdentityManager();
+        	IdentityManager iMgr = IdentityManager.getInstance();
             Vector<String> contactNames = iMgr.getContacts();
 
             if (!contactNames.contains(ALICE)){

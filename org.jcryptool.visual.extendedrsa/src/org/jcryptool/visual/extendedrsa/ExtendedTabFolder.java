@@ -25,15 +25,26 @@ public class ExtendedTabFolder extends TabFolder{
 	
 	public ExtendedTabFolder(Composite parent, int style) {
 		super(parent, style);
+		messageQueue = new Vector<SecureMessage>();
 	}
 
 	public Vector<SecureMessage> getMessageQueue() {
 		return messageQueue;
 	}
-
-	public void setMessageQueue(Vector<SecureMessage> messageQueue) {
-		this.messageQueue = messageQueue;
+	
+	public void addMessageToQueue(SecureMessage message){
+		messageQueue.add(message);
+		message.setMessageID(messageQueue.indexOf(message)+1);
 	}
+	
+	public SecureMessage getMessageAtIndex(int index){
+		return messageQueue.elementAt(index);
+	}
+	
+	public void deleteMessageAtIndex(int index){
+		messageQueue.remove(index);
+	}
+	
 	@Override 
 	protected void checkSubclass() { 
 	}

@@ -12,15 +12,12 @@ package org.jcryptool.visual.extendedrsa;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
-import java.security.Key;
-import java.security.KeyFactory;
 import java.security.KeyStoreException;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -33,14 +30,12 @@ import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keys.KeyType;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
@@ -61,13 +56,26 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
  *
  */
 public class IdentityManager extends AbstractNewKeyStoreEntryAction{
+	private static IdentityManager identityManager;
+	
+	
 	private ContactManager cManager;
 	private KeyStoreManager ksManager;
 	private Enumeration<String> aliases;
+	private Map<String,Integer> keymgmt;
+
 	
-	public IdentityManager(){
+    public static IdentityManager getInstance() {
+        if (identityManager == null) {
+        	identityManager = new IdentityManager();
+        }
+        return identityManager;
+    }
+    
+	private IdentityManager(){
 		cManager = ContactManager.getInstance();
 		ksManager = KeyStoreManager.getInstance();
+		keymgmt = new HashMap<String,Integer>();
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -190,23 +198,28 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         return keyAlgos;
 	}
 	/**
-	 * Method to get possible recipient-keys
-	 * @param identity specifies the identity looking for OTHER public key (at the moment, "identity" could contain "Alice" (without surname))
+	 * Method to get publicKeys for a certain identity
+	 * @param identity specifies the identity looking for public keys
 	 */
 	public HashMap<String, KeyStoreAlias> getPublicKeys(String identity){
-//		System.out.println("id: "+identity);
 		HashMap<String, KeyStoreAlias> pubkeys = new HashMap<String, KeyStoreAlias>();
 		KeyStoreAlias alias = null;
-		int counter = 0;
         try {
 			aliases = ksManager.getAliases();
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
-//                System.out.println("contact.name: "+alias.getContactName());
+
                 if (alias.getClassName().equals(RSAPublicKey.class.getName())&&alias.getContactName().equals(identity)) {
-                	counter++;
-                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - "+counter,alias);
-                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - "+counter);
+                	int keyID;
+                	if (!keymgmt.containsKey(alias.getHashValue())){
+                		keyID = keymgmt.size()+1;
+                		keymgmt.put(alias.getHashValue(),keyID);
+                	}else{
+                		keyID = keymgmt.get(alias.getHashValue());
+                	}
+                	
+                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+keyID,alias);
+                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - KeyID:"+keyID);
                 
                 }
             }
@@ -216,6 +229,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
        
        return pubkeys;
 	}
+
+	
 	/**
 	 * 
 	 * @param alias The alias who wants to get his publicKey
@@ -231,5 +246,34 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		System.out.println("e: "+pubkey.getPublicExponent());
 		
 		return parameters;
+	}
+	
+	public RSAPublicKey getRSAPublicKey(KeyStoreAlias alias){
+		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		return pubkey;
+	}
+	
+	public PrivateKey getPrivateKey(KeyStoreAlias alias, String password){
+		PrivateKey key = null;
+		try {
+			key = (PrivateKey) ksManager.getPrivateKey(alias, password.toCharArray());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return key;
+	}
+	
+	public Vector<BigInteger> getPrivateKeyParametersRSA(PrivateKey key){
+		Vector <BigInteger> privKeyValues = new Vector<BigInteger>();
+		
+        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+        privKeyValues.add(privkey.getModulus());
+        privKeyValues.add(privkey.getD().bigInt);
+        privKeyValues.add(privkey.getP().bigInt);
+        privKeyValues.add(privkey.getQ().bigInt);
+        privKeyValues.add(privkey.getPublicExponent());
+        
+        return privKeyValues;
 	}
 }

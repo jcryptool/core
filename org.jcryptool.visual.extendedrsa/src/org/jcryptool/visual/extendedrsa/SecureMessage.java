@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa;
 
+import java.math.BigInteger;
+
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
@@ -19,7 +21,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
  */
 public class SecureMessage {
 	
-	private byte[] encryptedMessage;
+	private BigInteger encryptedMessage;
 	private int keyID;
 	private KeyStoreAlias sender;
 	private KeyStoreAlias recipient;
@@ -29,24 +31,27 @@ public class SecureMessage {
 	/**
 	 * contains a "secured message"
 	 * @param encryptedMessage stands for the message itself.
-	 * @param keyID represents the internal ID of the used key (from this alias)
+	 * @param keyID represents the internal ID of the used key
 	 * @param sender sender
 	 * @param recipient recipient
 	 * @param subject the subject
 	 */
-	public SecureMessage(byte[] encryptedMessage, int keyID, KeyStoreAlias sender, KeyStoreAlias recipient, String subject) {
+	public SecureMessage(BigInteger encryptedMessage, int keyID, KeyStoreAlias sender, KeyStoreAlias recipient, String subject) {
 		this.encryptedMessage = encryptedMessage;
 		this.keyID = keyID;
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
 	}
-	public byte[] getEncryptedMessage() {
+	
+	public BigInteger getEncryptedMessage() {
 		return encryptedMessage;
 	}
-	public void setEncryptedMessage(byte[] encryptedMessage) {
+
+	public void setEncryptedMessage(BigInteger encryptedMessage) {
 		this.encryptedMessage = encryptedMessage;
 	}
+
 	public int getKeyID() {
 		return keyID;
 	}
