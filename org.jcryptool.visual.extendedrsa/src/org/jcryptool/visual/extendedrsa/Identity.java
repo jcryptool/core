@@ -180,6 +180,7 @@ public class Identity extends TabItem {
 	private int validCount;
 	private IdentityManager iMgr;
 	private HashMap<String, KeyStoreAlias> rec;
+	private Vector<BigInteger> pubKeyParameters;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -338,6 +339,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibility();
+							pubKeyParameters = iMgr.getPublicKeyParameters(rec.get(recipientKeys.getText()));
 						}
 						
 						@Override
@@ -1479,6 +1481,7 @@ public class Identity extends TabItem {
 		rec = iMgr.getPublicKeys(messageRecipient.getText());
 		recipientKeys.setItems(rec.keySet().toArray(new String[rec.size()]));
 		recipientKeys.select(0);
+		pubKeyParameters = iMgr.getPublicKeyParameters(rec.get(recipientKeys.getText()));
 	}
 	
 	

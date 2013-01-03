@@ -11,6 +11,7 @@
 package org.jcryptool.visual.extendedrsa;
 
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigInteger;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyStoreException;
@@ -214,5 +215,17 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		}
        
        return pubkeys;
+	}
+	
+	public Vector<BigInteger>getPublicKeyParameters(KeyStoreAlias alias){
+		Vector<BigInteger> parameters = new Vector<BigInteger>();
+
+		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		parameters.add(pubkey.getModulus());
+		System.out.println("N: "+pubkey.getModulus());
+		parameters.add(pubkey.getPublicExponent());
+		System.out.println("e: "+pubkey.getPublicExponent());
+		
+		return parameters;
 	}
 }
