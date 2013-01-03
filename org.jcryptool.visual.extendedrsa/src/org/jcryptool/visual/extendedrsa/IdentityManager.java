@@ -11,8 +11,16 @@
 package org.jcryptool.visual.extendedrsa;
 
 import java.lang.reflect.InvocationTargetException;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.KeyStoreException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -24,10 +32,16 @@ import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
+import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
+import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 import de.flexiprovider.api.Registry;
 import de.flexiprovider.api.exceptions.InvalidAlgorithmParameterException;
@@ -37,6 +51,8 @@ import de.flexiprovider.api.keys.KeyPairGenerator;
 import de.flexiprovider.api.keys.PrivateKey;
 import de.flexiprovider.api.keys.PublicKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
+import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
+import de.flexiprovider.core.rsa.RSAPublicKey;
 
 /**
  * Represents all actions concerning Identities
@@ -44,8 +60,13 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
  *
  */
 public class IdentityManager extends AbstractNewKeyStoreEntryAction{
+	private ContactManager cManager;
+	private KeyStoreManager ksManager;
+	private Enumeration<String> aliases;
+	
 	public IdentityManager(){
-		
+		cManager = ContactManager.getInstance();
+		ksManager = KeyStoreManager.getInstance();
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -54,10 +75,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		final Integer[] argument = new Integer[1];
 		argument[0] = keyLength;
 		LogUtil.logInfo("create new keypair");
-		Job job = new Job("New Key Pair Job - initial") { //$NON-NLS-1$
+		Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
-				monitor.beginTask("New KeyPair Task_", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+				monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 				try {
 					IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
 					
@@ -105,6 +126,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		};
 		job.setPriority(Job.LONG);
 		job.schedule();
+		
 	}
 
 	private String getConcreteAlgorithm(String algorithm) {
@@ -132,4 +154,65 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         return algorithm;
     }
 	
+	public Vector<String> getContacts(){ 
+		Vector<String> contactNames = new Vector<String>();             
+        Iterator<IContactDescriptor> it = cManager.getContacts();
+        IContactDescriptor meta;
+        
+        while (it.hasNext()) {
+            meta = it.next();
+            contactNames.add(meta.getName());
+        }
+        
+        return contactNames;
+	}
+	
+	public Vector<String>getAssymetricKeyAlgorithms(String identity){
+		Vector<String> keyAlgos = new Vector<String>();
+		KeyStoreAlias localKeyStoreAlias = null;
+        try {
+			aliases = ksManager.getAliases();
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+        
+        
+        while (aliases.hasMoreElements()) {
+            localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
+            
+            if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
+                if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY) && localKeyStoreAlias.getContactName().equals(identity)) {
+                    keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
+                }
+            }
+        }
+        return keyAlgos;
+	}
+	/**
+	 * Method to get possible recipient-keys
+	 * @param identity specifies the identity looking for OTHER public key (at the moment, "identity" could contain "Alice" (without surname))
+	 */
+	public HashMap<String, KeyStoreAlias> getPublicKeys(String identity){
+//		System.out.println("id: "+identity);
+		HashMap<String, KeyStoreAlias> pubkeys = new HashMap<String, KeyStoreAlias>();
+		KeyStoreAlias alias = null;
+		int counter = 0;
+        try {
+			aliases = ksManager.getAliases();
+			while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+//                System.out.println("contact.name: "+alias.getContactName());
+                if (alias.getClassName().equals(RSAPublicKey.class.getName())&&alias.getContactName().substring(0,alias.getContactName().indexOf(' ')).equals(identity)) {
+                	counter++;
+                	pubkeys.put(alias.getContactName().substring(0,alias.getContactName().indexOf(' ')) + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - "+counter,alias);
+                	System.out.println(alias.getContactName().substring(0,alias.getContactName().indexOf(' ')) + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - "+counter);
+                
+                }
+            }
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+       
+       return pubkeys;
+	}
 }

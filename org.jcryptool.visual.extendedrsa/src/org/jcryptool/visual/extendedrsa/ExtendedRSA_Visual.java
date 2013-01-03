@@ -60,6 +60,8 @@ import org.eclipse.swt.events.SelectionListener;
 public class ExtendedRSA_Visual extends ViewPart{
 
 	public static final String ID = "org.jcryptool.visual.extendedrsa.ExtendedRSAView";
+	public static final String ALICE = "Alice Whitehat";
+	public static final String BOB = "Bob Whitehat";
 	
 	private ScrolledComposite sc;
 	private Composite composite;
@@ -76,7 +78,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 	private Identity identity;
 	private Label txtExplain;
 	private Enumeration<String> aliases;
-    private KeyStoreAlias keyStoreAlias;
+//    private KeyStoreAlias keyStoreAlias;
     
 	
 	public ExtendedRSA_Visual() {
@@ -210,72 +212,53 @@ public class ExtendedRSA_Visual extends ViewPart{
         	if (!KeyStorePlugin.isInitialized()){
         		KeyStorePlugin.initialize();
         	}
-        	ContactManager cManager = ContactManager.getInstance();
-        	KeyStoreManager ksManager = KeyStoreManager.getInstance();
-        	IdentityManager iMgr = new IdentityManager();
-
-            Vector<String> contactNames = new Vector<String>();
-            Vector<String> keyAlgos = new Vector<String>();
-            //get available contacts 
-            int size = cManager.getContactSize();
-            if (size > 0) {             
-                Iterator<IContactDescriptor> it = cManager.getContacts();
-                IContactDescriptor meta;
-                while (it.hasNext()) {
-                    meta = it.next();
-                    contactNames.add(meta.getName());
-                }
-            }
-
-            if (!contactNames.contains("Alice Whitehat")){
-            	//create Alice in the keystore
-            	iMgr.createIdentity("Alice Whitehat", "RSA", "1234", 1024);
-            	
-            }else{
-              
-//              KeyStoreAlias localKeyStoreAlias = null;
-//              aliases = ksManager.getAliases();
-//              
-//              while (aliases.hasMoreElements()) {
-//                  localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
-//                  
-//                  if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
-//                      if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY) && localKeyStoreAlias.getContactName().equals("Alice Whitehat")) {
-//                          keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
-//                      }
-//                  }
-//                  if (!keyAlgos.contains("MpRSA")){
-//                	  iMgr.createIdentity("Alice Whitehat", "MpRSA", "1234", 1024);
-//                  }
-//              }
-            }
-            //create "Alice" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, "Alice", "Alice", "Whitehat", "none", "unknown", txtExplain);
-    		
-    		
-    		
-            if (!contactNames.contains("Bob")){
-            	//create Bob in the keystore
-            	iMgr.createIdentity("Bob", "RSA", "1234", 1024);
-//            	iMgr.createIdentity("Bob", "MpRSA", "1234", 1024);
-            }
-            
-            
-//            iMgr.createIdentity("Bob", "RSA", "1234", 1024);
-            
-            //create "Bob" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, "Bob", "Bob", "-", "none", "unknown", txtExplain);
         	
-        	aliases = ksManager.getAliases();
-            KeyStoreAlias localKeyStoreAlias = null;
+        	IdentityManager iMgr = new IdentityManager();
+            Vector<String> contactNames = iMgr.getContacts();
+
+            if (!contactNames.contains(ALICE)){
+            	//create Alice in the keystore
+            	iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
+            	System.out.println("[DEBUG] ALICE generiert rsa key");
+            }
+        	Vector<String> keyAlgos = iMgr.getAssymetricKeyAlgorithms(ALICE);
+
+        	if (!keyAlgos.contains("MpRSA")){
+//            		iMgr.createIdentity(ALICE, "MpRSA", "1234", 1024);
+        		System.out.println("[DEBUG]mprsa-key wird generiert...alice");
+        	}
+        	if (!keyAlgos.contains("RSA")){
+//            		iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
+        		System.out.println("[DEBUG]rsa-key wird generiert... alice");
+        	}
+              
             
-            int counter = 0;
-          while (aliases.hasMoreElements()) {
-              localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
-              counter++;
-          }
-          
-//          txtExplain.setText("anzahl schlüssel: "+counter+" kontakte: "+contactNames);
+            String[] alice_split = ALICE.split(" ");
+            //create "Alice" in the visual
+    		identity = new Identity(tabFolder, SWT.NONE, alice_split[0], alice_split[0], alice_split[1], "none", "unknown", txtExplain);
+    		
+    		
+            if (!contactNames.contains(BOB)){
+            	//create Bob in the keystore
+            	iMgr.createIdentity(BOB, "RSA", "1234", 1024);
+            	System.out.println("[DEBUG]rsakey wird generiert...bob");
+            }
+        	keyAlgos = iMgr.getAssymetricKeyAlgorithms(BOB);
+
+        	if (!keyAlgos.contains("MpRSA")){
+//            		iMgr.createIdentity("Bob", "MpRSA", "1234", 1024);
+        		System.out.println("[DEBUG]mprsa-key wird generiert...bob");
+        	}
+        	if (!keyAlgos.contains("RSA")){
+//            		iMgr.createIdentity("Bob", "RSA", "1234", 1024);
+        		System.out.println("[DEBUG]rsa-key wird generiert...bob");
+        	}
+            
+            
+            String[] bob_split = BOB.split(" ");
+            //create "Bob" in the visual
+    		identity = new Identity(tabFolder, SWT.NONE, bob_split[0], bob_split[0], bob_split[1], "none", "unknown", txtExplain);
+        	
             
         }catch (Exception e) {
             LogUtil.logError(e);

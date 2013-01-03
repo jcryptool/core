@@ -16,6 +16,7 @@ import static org.jcryptool.visual.library.Lib.LOW_PRIMES;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +50,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
@@ -176,6 +178,8 @@ public class Identity extends TabItem {
 	private String pw1_Ext;
 	private String pw2_Ext;
 	private int validCount;
+	private IdentityManager iMgr;
+	private HashMap<String, KeyStoreAlias> rec;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -205,13 +209,15 @@ public class Identity extends TabItem {
 		this.id = parent.getItemCount();
 		this.txtExplain = explain;
 		
+		iMgr = new IdentityManager();
+		
 		//set the text of the TabItem
 		this.setText(identityName);
 		forerunner = 0;	
 		init = true;
 		
 		
-//		txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
+		txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
 		
 		// define the layout for the whole TabItem now
 		generalGroup = new Group(parent, SWT.NONE);
@@ -238,7 +244,7 @@ public class Identity extends TabItem {
 			@Override
 			//Button 1
 			public void widgetSelected(final SelectionEvent e) {
-//				txtExplain.setText("Für den Verschlüsselungsvorgang werden die Parameter N und e benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\n Vorgehensweise:\n1) Geben Sie eine beliebige Nachricht und einen optionalen Betreff ein.\n\n2) Wählen Sie einen Empfänger aus (zum Beispiel Bob). Hinweis: Diese Visualisierung erlaubt nur einen Empfänger. In der Praxis eingesetzte Protokolle wie S/MIME erlauben auch, eine Nachricht an mehr als einen Empfänger gleichzeitig verschlüsselt zu senden.\n\n3) Wählen Sie einen öffentlichen Schlüssel des Empfängers aus.\n\n4) Klicken Sie auf „Nachricht verschlüsseln“, um die Nachricht zu verschlüsseln.\n\n5) Die verschlüsselte Nachricht erscheint nun im Textfeld rechts („Verschlüsselte Nachricht“).\n\n6) Klicken Sie auf „Senden“, um die verschlüsselte Nachricht zu verschicken.");
+				txtExplain.setText("Für den Verschlüsselungsvorgang werden die Parameter N und e benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\n Vorgehensweise:\n1) Geben Sie eine beliebige Nachricht und einen optionalen Betreff ein.\n\n2) Wählen Sie einen Empfänger aus (zum Beispiel Bob). Hinweis: Diese Visualisierung erlaubt nur einen Empfänger. In der Praxis eingesetzte Protokolle wie S/MIME erlauben auch, eine Nachricht an mehr als einen Empfänger gleichzeitig verschlüsselt zu senden.\n\n3) Wählen Sie einen öffentlichen Schlüssel des Empfängers aus.\n\n4) Klicken Sie auf „Nachricht verschlüsseln“, um die Nachricht zu verschlüsseln.\n\n5) Die verschlüsselte Nachricht erscheint nun im Textfeld rechts („Verschlüsselte Nachricht“).\n\n6) Klicken Sie auf „Senden“, um die verschlüsselte Nachricht zu verschicken.");
 				
 				if(actionGroup_1.isDisposed()){
 					createActionGroup1();
@@ -294,12 +300,13 @@ public class Identity extends TabItem {
 					gd_recp.heightHint = 20;
 					messageRecipient.setLayoutData(gd_recp);
 					addReceipientsToCombo(tabfolder);
-					messageRecipient.select(0);
+//					messageRecipient.select(0);
 					messageRecipient.addSelectionListener(new SelectionListener() {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibility();
+							fillRecipientKeys();
 						}
 						
 						@Override
@@ -372,7 +379,7 @@ public class Identity extends TabItem {
 		receive_and_decrypt.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 2
 			public void widgetSelected(SelectionEvent e) {
-//				txtExplain.setText("Für den Entschlüsselungsvorgang werden die Parameter N und d benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\nVorgehensweise:\n1) Wählen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) Wählen Sie einen Ihrer privaten Schlüssel aus und geben Sie das Passwort dieses Schlüssels ein.\n\n3) Klicken Sie auf „Entschlüsseln“, um die Nachricht zu entschlüsseln. Wenn der passende private Schlüssel gewählt wurde, wird das Nachrichten-Chiffrat erfolgreich entschlüsselt. Falls ein falscher privater Schlüssel gewählt wurde, kann die Nachricht nicht korrekt entschlüsselt werden!\n\n4) Durch den Button \"Nachricht löschen\" kann die verschlüsselte Nachricht aus dem Nachrichtenspeicher gelöscht werden.");
+				txtExplain.setText("Für den Entschlüsselungsvorgang werden die Parameter N und d benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\nVorgehensweise:\n1) Wählen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) Wählen Sie einen Ihrer privaten Schlüssel aus und geben Sie das Passwort dieses Schlüssels ein.\n\n3) Klicken Sie auf „Entschlüsseln“, um die Nachricht zu entschlüsseln. Wenn der passende private Schlüssel gewählt wurde, wird das Nachrichten-Chiffrat erfolgreich entschlüsselt. Falls ein falscher privater Schlüssel gewählt wurde, kann die Nachricht nicht korrekt entschlüsselt werden!\n\n4) Durch den Button \"Nachricht löschen\" kann die verschlüsselte Nachricht aus dem Nachrichtenspeicher gelöscht werden.");
 				if (forerunner != 2){
 					actionGroup_1.dispose();
 					actionGroup_3.dispose();
@@ -514,7 +521,7 @@ public class Identity extends TabItem {
 		keymanagement.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 3
 			public void widgetSelected(SelectionEvent e) {
-//				txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
+				txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
 				if (forerunner != 3){
 					actionGroup_1.dispose();
 					actionGroup_2.dispose();
@@ -1466,6 +1473,15 @@ public class Identity extends TabItem {
 		actionGroup_4.setVisible(false);
 		
 	}
+	
+	private void fillRecipientKeys(){
+//		Vector<String> rec = iMgr.getPublicKeys(this.identityName);
+		rec = iMgr.getPublicKeys(messageRecipient.getText());
+		recipientKeys.setItems(rec.keySet().toArray(new String[rec.size()]));
+		recipientKeys.select(0);
+	}
+	
+	
 	private void changeButtonVisibilityTab2(){
 		if ((subjectChoose.getSelectionIndex() != -1) &&(encryptedMessage_Tab2.getText().length() >1 ) && (decryptionKey.getSelectionIndex() != -1) && (pwPrivKey.getText().length() > 0)){
 			decryptMessage.setEnabled(true);
@@ -1486,7 +1502,7 @@ public class Identity extends TabItem {
 			}else{
 				createKey.setEnabled(false);
 			}
-//			txtExplain.setText(pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
+			System.out.println("[DEBUG]"+pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
 		}
 		if(pw1_Ext != null && pw2_Ext != null){
 			if (pw1_Ext.equals(pw2_Ext)){
@@ -1617,18 +1633,18 @@ public class Identity extends TabItem {
 			messageRecipient.removeAll();
 		}
 		
-		//fill in possible recipients
-		for (TabItem ti : tabfolder.getItems()){
-			Identity id = (Identity)ti;
-			//to avoid sending messages to yourself
-			if (id.getIdentityName() != Identity.this.identityName){
-				//add only new recipients
-				if (!recipients.contains(id.getIdentityName())){
-					messageRecipient.add(id.getIdentityName());
-//					txtExplain.setText(txtExplain.getText()+ id.getIdentityName());
-				}
+		//fill in possible recipients (split is necessary because we store Alice e.g. as "Alice Whitehat" and we only display the first name)
+		
+		for (String s : iMgr.getContacts()){
+			String[]split_name = s.split(" ");
+//			if (!split_name[0].equals(this.identityName) && !recipients.contains(split_name[0])){
+			if (!recipients.contains(split_name[0])){
+				recipients.add(split_name[0]);
+				System.out.println("[DEBUG] filling receipients... adding: "+split_name[0]);
 			}
 		}
+		
+		messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
 	}
 	
     /**
