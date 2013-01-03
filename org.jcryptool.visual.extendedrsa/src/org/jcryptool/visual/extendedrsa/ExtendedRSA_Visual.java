@@ -235,7 +235,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             
             String[] alice_split = ALICE.split(" ");
             //create "Alice" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, alice_split[0], alice_split[0], alice_split[1], "none", "unknown", txtExplain);
+    		identity = new Identity(tabFolder, SWT.NONE, ALICE, alice_split[0], alice_split[1], "none", "unknown", txtExplain);
     		
     		
             if (!contactNames.contains(BOB)){
@@ -257,7 +257,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             
             String[] bob_split = BOB.split(" ");
             //create "Bob" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, bob_split[0], bob_split[0], bob_split[1], "none", "unknown", txtExplain);
+    		identity = new Identity(tabFolder, SWT.NONE, BOB, bob_split[0], bob_split[1], "none", "unknown", txtExplain);
         	
             
         }catch (Exception e) {

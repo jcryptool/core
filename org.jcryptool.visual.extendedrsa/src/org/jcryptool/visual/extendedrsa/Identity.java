@@ -54,6 +54,8 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
+import codec.Hex;
+
 /**
  * This class represents an identity in the visual.
  * @author Christoph Schnepf, Patrick Zillner
@@ -1474,6 +1476,8 @@ public class Identity extends TabItem {
 		actionGroup_4.setLayoutData(group_4);
 		actionGroup_4.setVisible(false);
 		
+//		SecureMessage sec = new SecureMessage(Hex.decodeHex("asdf".toCharArray()), 1, new KeyStoreAlias("ast"), new KeyStoreAlias("asdf"), "none");
+		
 	}
 	
 	private void fillRecipientKeys(){
@@ -1486,7 +1490,7 @@ public class Identity extends TabItem {
 	
 	private void fillSelectMessage(){
 		for (SecureMessage sec :extTF.getMessageQueue()){
-			System.out.println(""+sec.getSubject()+" - "+sec.getRecipient().getContactName().substring(0,sec.getRecipient().getContactName().indexOf(' '))+" - "+sec.getMessageID());
+			System.out.println(""+sec.getSubject()+" - "+sec.getRecipient().getContactName()+" - "+sec.getMessageID());
 		}
 	}
 	
@@ -1641,14 +1645,11 @@ public class Identity extends TabItem {
 			messageRecipient.removeAll();
 		}
 		
-		//fill in possible recipients (split is necessary because we store Alice e.g. as "Alice Whitehat" and we only display the first name)
-		
 		for (String s : iMgr.getContacts()){
-			String[]split_name = s.split(" ");
-//			if (!split_name[0].equals(this.identityName) && !recipients.contains(split_name[0])){
-			if (!recipients.contains(split_name[0])){
-				recipients.add(split_name[0]);
-				System.out.println("[DEBUG] filling receipients... adding: "+split_name[0]);
+//			if (!s.equals(this.identityName) && !recipients.contains(s)){
+			if (!recipients.contains(s)){
+				recipients.add(s);
+				System.out.println("[DEBUG] filling receipients... adding: "+s);
 			}
 		}
 		

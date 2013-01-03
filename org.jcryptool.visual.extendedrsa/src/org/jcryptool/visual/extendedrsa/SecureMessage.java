@@ -33,15 +33,13 @@ public class SecureMessage {
 	 * @param sender sender
 	 * @param recipient recipient
 	 * @param subject the subject
-	 * @param messageID is the vector.size()+1
 	 */
-	public SecureMessage(byte[] encryptedMessage, int keyID, KeyStoreAlias sender, KeyStoreAlias recipient, String subject,int messageID) {
+	public SecureMessage(byte[] encryptedMessage, int keyID, KeyStoreAlias sender, KeyStoreAlias recipient, String subject) {
 		this.encryptedMessage = encryptedMessage;
 		this.keyID = keyID;
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
-		this.messageID = messageID;
 	}
 	public byte[] getEncryptedMessage() {
 		return encryptedMessage;

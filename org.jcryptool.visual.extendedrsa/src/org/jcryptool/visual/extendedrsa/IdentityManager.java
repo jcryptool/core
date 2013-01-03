@@ -203,10 +203,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
 //                System.out.println("contact.name: "+alias.getContactName());
-                if (alias.getClassName().equals(RSAPublicKey.class.getName())&&alias.getContactName().substring(0,alias.getContactName().indexOf(' ')).equals(identity)) {
+                if (alias.getClassName().equals(RSAPublicKey.class.getName())&&alias.getContactName().equals(identity)) {
                 	counter++;
-                	pubkeys.put(alias.getContactName().substring(0,alias.getContactName().indexOf(' ')) + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - "+counter,alias);
-                	System.out.println(alias.getContactName().substring(0,alias.getContactName().indexOf(' ')) + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - "+counter);
+                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - "+counter,alias);
+                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - "+counter);
                 
                 }
             }
