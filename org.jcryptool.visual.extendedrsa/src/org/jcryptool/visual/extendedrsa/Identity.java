@@ -11,11 +11,9 @@
 package org.jcryptool.visual.extendedrsa;
 
 import static java.math.BigInteger.ONE;
-import static java.math.BigInteger.ZERO;
 import static org.jcryptool.visual.library.Lib.LOW_PRIMES;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,8 +26,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -40,10 +36,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -54,7 +50,6 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
-import codec.Hex;
 
 /**
  * This class represents an identity in the visual.
@@ -102,7 +97,7 @@ public class Identity extends TabItem {
 	private int forerunner;
 	private int id;
 	private Combo selectMessage;
-	private Combo decryptionKey;
+	private Combo decryptionKeys;
 	private Button deleteMessage;
 	private Text pwPrivKey;
 	private ExtendedTabFolder extTF;
@@ -183,6 +178,7 @@ public class Identity extends TabItem {
 	private IdentityManager iMgr;
 	private HashMap<String, KeyStoreAlias> rec;
 	private Vector<BigInteger> pubKeyParameters;
+	private Label lbl_notification_tab2;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -212,7 +208,7 @@ public class Identity extends TabItem {
 		this.id = parent.getItemCount();
 		this.txtExplain = explain;
 		
-		iMgr = new IdentityManager();
+		iMgr = IdentityManager.getInstance();
 		
 		//set the text of the TabItem
 		this.setText(identityName);
@@ -220,7 +216,7 @@ public class Identity extends TabItem {
 		init = true;
 		
 		
-		txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
+		txtExplain.setText("Die Identit\u00e4ten aus Ihrem Schl\u00fcsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identit\u00e4ten „Alice“ und „Bob“ im Schl\u00fcsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identit\u00e4t dar. Durch den Button „Identit\u00e4ten ein-/ausblenden“ k\u00f6nnen bestehende Identit\u00e4ten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identit\u00e4t erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identit\u00e4ten ein-/ausblenden“ ausgew\u00e4hlt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identit\u00e4t durchgef\u00fchrt), wird eine Hilfe im Feld „Erkl\u00e4rungen“ angezeigt.");
 		
 		// define the layout for the whole TabItem now
 		generalGroup = new Group(parent, SWT.NONE);
@@ -247,7 +243,7 @@ public class Identity extends TabItem {
 			@Override
 			//Button 1
 			public void widgetSelected(final SelectionEvent e) {
-				txtExplain.setText("Für den Verschlüsselungsvorgang werden die Parameter N und e benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\n Vorgehensweise:\n1) Geben Sie eine beliebige Nachricht und einen optionalen Betreff ein.\n\n2) Wählen Sie einen Empfänger aus (zum Beispiel Bob). Hinweis: Diese Visualisierung erlaubt nur einen Empfänger. In der Praxis eingesetzte Protokolle wie S/MIME erlauben auch, eine Nachricht an mehr als einen Empfänger gleichzeitig verschlüsselt zu senden.\n\n3) Wählen Sie einen öffentlichen Schlüssel des Empfängers aus.\n\n4) Klicken Sie auf „Nachricht verschlüsseln“, um die Nachricht zu verschlüsseln.\n\n5) Die verschlüsselte Nachricht erscheint nun im Textfeld rechts („Verschlüsselte Nachricht“).\n\n6) Klicken Sie auf „Senden“, um die verschlüsselte Nachricht zu verschicken.");
+				txtExplain.setText("F\u00fcr den Verschl\u00fcsselungsvorgang werden die Parameter N und e ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\n Vorgehensweise:\n1) Geben Sie eine beliebige Nachricht und einen optionalen Betreff ein.\n\n2) W\u00e4hlen Sie einen Empf\u00e4nger aus (zum Beispiel Bob). Hinweis: Diese Visualisierung erlaubt nur einen Empf\u00e4nger. In der Praxis eingesetzte Protokolle wie S/MIME erlauben auch, eine Nachricht an mehr als einen Empf\u00e4nger gleichzeitig verschl\u00fcsselt zu senden.\n\n3) W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel des Empf\u00e4ngers aus.\n\n4) Klicken Sie auf „Nachricht verschl\u00fcsseln“, um die Nachricht zu verschl\u00fcsseln.\n\n5) Die verschl\u00fcsselte Nachricht erscheint nun im Textfeld rechts („Verschl\u00fcsselte Nachricht“).\n\n6) Klicken Sie auf „Senden“, um die verschl\u00fcsselte Nachricht zu verschicken.");
 				
 				if(actionGroup_1.isDisposed()){
 					createActionGroup1();
@@ -382,7 +378,7 @@ public class Identity extends TabItem {
 		receive_and_decrypt.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 2
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText("Für den Entschlüsselungsvorgang werden die Parameter N und d benötigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schlüssel“  in der „Schlüsselverwaltung“.\n\nVorgehensweise:\n1) Wählen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) Wählen Sie einen Ihrer privaten Schlüssel aus und geben Sie das Passwort dieses Schlüssels ein.\n\n3) Klicken Sie auf „Entschlüsseln“, um die Nachricht zu entschlüsseln. Wenn der passende private Schlüssel gewählt wurde, wird das Nachrichten-Chiffrat erfolgreich entschlüsselt. Falls ein falscher privater Schlüssel gewählt wurde, kann die Nachricht nicht korrekt entschlüsselt werden!\n\n4) Durch den Button \"Nachricht löschen\" kann die verschlüsselte Nachricht aus dem Nachrichtenspeicher gelöscht werden.");
+				txtExplain.setText("F\u00fcr den Entschl\u00fcsselungsvorgang werden die Parameter N und d ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\nVorgehensweise:\n1) W\u00e4hlen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) W\u00e4hlen Sie einen Ihrer privaten Schl\u00fcssel aus und geben Sie das Passwort dieses Schl\u00fcssels ein.\n\n3) Klicken Sie auf „Entschl\u00fcsseln“, um die Nachricht zu entschl\u00fcsseln. Wenn der passende private Schl\u00fcssel gew\u00e4hlt wurde, wird das Nachrichten-Chiffrat erfolgreich entschl\u00fcsselt. Falls ein falscher privater Schl\u00fcssel gew\u00e4hlt wurde, kann die Nachricht nicht korrekt entschl\u00fcsselt werden!\n\n4) Durch den Button \"Nachricht l\u00f6schen\" kann die verschl\u00fcsselte Nachricht aus dem Nachrichtenspeicher gel\u00f6scht werden.");
 				if (forerunner != 2){
 					actionGroup_1.dispose();
 					actionGroup_3.dispose();
@@ -406,13 +402,29 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibilityTab2();
-							//set message
+							
+							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+
+							encryptedMessage_Tab2.setText(currentMsg.getEncryptedMessage().toString());
+							
+							HashMap<String,KeyStoreAlias> pubKeys =iMgr.getPublicKeys(Identity.this.identityName);
+							decryptionKeys.setItems(pubKeys.keySet().toArray(new String[pubKeys.size()]));
+							//select the "correct" key
+//							
+							String hashCurrent = currentMsg.getRecipient().getHashValue();
+							int count = 0;
+							for (KeyStoreAlias ksa : pubKeys.values()){
+								if (!ksa.getHashValue().equals(hashCurrent)){
+									count++;
+								}else{
+									decryptionKeys.select(count);
+								}
+							}
 						}
 						
 						@Override
 						public void widgetDefaultSelected(SelectionEvent e) {}
 					});
-					fillSelectMessage();
 					
 					createSpacer(actionGroup_2);
 					
@@ -435,6 +447,9 @@ public class Identity extends TabItem {
 							changeButtonVisibilityTab2();
 						}
 					});
+					
+					fillSelectMessage();
+					
 					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP| SWT.BORDER);
 					decryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					
@@ -446,13 +461,13 @@ public class Identity extends TabItem {
 					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 					createSpacer(actionGroup_2);
 					
-					decryptionKey = new Combo(actionGroup_2, SWT.READ_ONLY);
-					decryptionKey.add("blabla");
-					decryptionKey.addSelectionListener(new SelectionListener() {
+					decryptionKeys = new Combo(actionGroup_2, SWT.READ_ONLY);
+					decryptionKeys.addSelectionListener(new SelectionListener() {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibilityTab2();
+							
 						}
 						
 						@Override
@@ -460,14 +475,16 @@ public class Identity extends TabItem {
 					});
 					GridData gd_dk = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_dk.heightHint = 20;
-					decryptionKey.setLayoutData(gd_dk);
+					decryptionKeys.setLayoutData(gd_dk);
 					deleteMessage = new Button(actionGroup_2, SWT.PUSH);
 					deleteMessage.setText("Nachricht l\u00f6schen");
 					deleteMessage.setEnabled(false);
 					deleteMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							decryptedMessage.setText("nun wird die nachricht gel\u00f6scht");
+							extTF.deleteMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+						
+							System.out.println("nun wird die nachricht gel\u00f6scht");
 						}
 					});
 					deleteMessage.setLayoutData(new GridData(SWT.RIGHT, SWT.RIGHT, true, false, 1, 1));
@@ -505,6 +522,14 @@ public class Identity extends TabItem {
 						public void widgetSelected(final SelectionEvent e) {
 							decryptedMessage.setText("nun wird die nachricht verschl\u00fcsselt");
 							deleteMessage.setEnabled(true);
+							
+							//richtiger privateKey müsste der da sein
+							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+							
+							iMgr.getPrivateKey(currentMsg.getRecipient(), pwPrivKey.getText());
+							//todo: exception beobachten bei falschem passwort, für einen hinweis
+							
+							
 						}
 					});
 					decryptMessage.setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1));
@@ -525,7 +550,7 @@ public class Identity extends TabItem {
 		keymanagement.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 3
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
+				txtExplain.setText("Hier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) F\u00fcr den klassischen RSA-Algorithmus werden hierf\u00fcr zwei verschiedene Primzahlen (p und q) ben\u00f6tigt. Diese k\u00f6nnen entweder aus der Liste ausgew\u00e4hlt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zuf\u00e4llig gew\u00e4hlt, oder eingegeben werden kann, sofern die Parameter p und q zul\u00e4ssig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent k\u00f6nnen auch hier entweder aus der Liste gew\u00e4hlt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss bei beiden Varianten ein Passwort f\u00fcr den geheimen Schl\u00fcssel festgelegt werden.");
 				if (forerunner != 3){
 					actionGroup_1.dispose();
 					actionGroup_2.dispose();
@@ -544,13 +569,13 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							if (tf_keyMgmt.getSelectionIndex() == 0){
-								txtExplain.setText("Hier kann ein Schlüssel mit ausgewählten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) Für den klassischen RSA-Algorithmus werden hierfür zwei verschiedene Primzahlen (p und q) benötigt. Diese können entweder aus der Liste ausgewählt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zufällig gewählt, oder eingegeben werden kann, sofern die Parameter p und q zulässig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent können auch hier entweder aus der Liste gewählt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten ein Passwort für den geheimen Schlüssel festgelegt werden.");
+								txtExplain.setText("Hier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\na) F\u00fcr den klassischen RSA-Algorithmus werden hierf\u00fcr zwei verschiedene Primzahlen (p und q) ben\u00f6tigt. Diese k\u00f6nnen entweder aus der Liste ausgew\u00e4hlt oder eingegeben werden.Weiters muss ein Exponent e angegeben werden, der entweder aus der Liste ausgesucht, durch den entsprechenden Button zuf\u00e4llig gew\u00e4hlt, oder eingegeben werden kann, sofern die Parameter p und q zul\u00e4ssig sind.\n\nb) Beim „multi-primen RSA“ muss zuerst die Anzahl der verwendeten Primzahlen (zwischen 3 und 5) festgelegt werden. Die Primzahlen und der Exponent k\u00f6nnen auch hier entweder aus der Liste gew\u00e4hlt, vom Programm generiert oder selbst eingegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss bei beiden Varianten ein Passwort f\u00fcr den geheimen Schl\u00fcssel festgelegt werden.");
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 1){
-								txtExplain.setText("In dieser Registerkarte können Schlüssel mit aktuell verwendeten Schlüssellängen erstellt werden. Es muss nur die gewünschte Schlüssellänge bzw. die Anzahl der Primzahlen ausgewählt werden.\n\nAm Ende der Schlüsselerzeugung muss bei beiden Varianten (zwei oder mehrere Primzahlen) ein Passwort für den geheimen Schlüssel festgelegt werden.");
+								txtExplain.setText("In dieser Registerkarte k\u00f6nnen Schl\u00fcssel mit aktuell verwendeten Schl\u00fcssell\u00e4ngen erstellt werden. Es muss nur die gew\u00fcnschte Schl\u00fcssell\u00e4nge bzw. die Anzahl der Primzahlen ausgew\u00e4hlt werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss bei beiden Varianten (zwei oder mehrere Primzahlen) ein Passwort f\u00fcr den geheimen Schl\u00fcssel festgelegt werden.");
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 2){
-								txtExplain.setText("Ein Schlüsselpaar besteht aus einem „privaten Schlüssel“ und einem „öffentlichen Schlüssel“:\na) Parameter eines privaten Schlüssels (N, d):\n-Der Modulus N ist sowohl Teil des öffentlichen wie des privaten Schlüssels.\n-Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Parameter eines öffentlichen Schlüssels (N, e):\n-Der Modulus N ist sowohl Teil des öffentlichen wie des privaten Schlüssels.\n-Der öffentliche Exponent e (er befindet sich üblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren können mehr als zwei Primzahlen gewählt werden. In diesem Plugin ist die Anzahl auf drei bis fünf Primzahlen beschränkt. Theoretisch ist die Anzahl nach oben offen.");
+								txtExplain.setText("Ein Schl\u00fcsselpaar besteht aus einem „privaten Schl\u00fcssel“ und einem „\u00f6ffentlichen Schl\u00fcssel“:\na) Parameter eines privaten Schl\u00fcssels (N, d):\n-Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n-Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Parameter eines \u00f6ffentlichen Schl\u00fcssels (N, e):\n-Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n-Der \u00f6ffentliche Exponent e (er befindet sich \u00fcblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren k\u00f6nnen mehr als zwei Primzahlen gew\u00e4hlt werden. In diesem Plugin ist die Anzahl auf drei bis f\u00fcnf Primzahlen beschr\u00e4nkt. Theoretisch ist die Anzahl nach oben offen.");
 							}
 						}
 						
@@ -1162,10 +1187,15 @@ public class Identity extends TabItem {
 					keyMgmt_2.setControl(tab2);
 					
 					Label lbl_init_tab2 = new Label(tab2, SWT.NONE);
-					lbl_init_tab2.setText("Hier können Sie neue Schl\u00fcssel mit g\u00e4ngigen Schl\u00fcsselgr\u00f6ßen erstellen:");
+					lbl_init_tab2.setText("Hier k\u00f6nnen Sie neue Schl\u00fcssel mit g\u00e4ngigen Schl\u00fcsselgr\u00f6ßen erstellen:");
 					GridData gd_init_tab2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_init_tab2.heightHint = 20;
 					lbl_init_tab2.setLayoutData(gd_init_tab2);
+					
+					lbl_notification_tab2 = new Label(tab2, SWT.NONE);
+					GridData gd_noti_tab2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+					gd_noti_tab2.heightHint = 20;
+					lbl_notification_tab2.setLayoutData(gd_noti_tab2);
 					
 					
 					radio_RSA_tab2 = new Button(tab2, SWT.RADIO);
@@ -1332,7 +1362,15 @@ public class Identity extends TabItem {
 							if (radio_ExtRSA_tab2.getSelection()){
 								txtExplain.setText("Nun wird großer multiprimer RSA-key erstellt");	
 							}else{
-								txtExplain.setText("Nun wird großer klassischer RSA-key erstellt");	
+								iMgr.createIdentity(Identity.this.identityName, "RSA", ext_password1.getText(), Integer.parseInt(rsa_length.getItem(rsa_length.getSelectionIndex())));
+								System.out.println("großen klassischen RSA erstellen: name:"+Identity.this.identityName+" pw: "+ext_password1.getText()+" länge: "+ rsa_length.getItem(rsa_length.getSelectionIndex()));	
+								lbl_notification_tab2.setText("RSA-Key f\u00fcr '"+Identity.this.identityName+"' erfolgreich erstellt");
+								
+								createKey_Tab2.setEnabled(false);
+								ext_password1.setText("");
+								ext_password1.setEnabled(false);
+								ext_password2.setText("");
+								ext_password2.setEnabled(false);
 							}
 						}
 						
@@ -1475,9 +1513,6 @@ public class Identity extends TabItem {
 		group_4.exclude = true;
 		actionGroup_4.setLayoutData(group_4);
 		actionGroup_4.setVisible(false);
-		
-//		SecureMessage sec = new SecureMessage(Hex.decodeHex("asdf".toCharArray()), 1, new KeyStoreAlias("ast"), new KeyStoreAlias("asdf"), "none");
-		
 	}
 	
 	private void fillRecipientKeys(){
@@ -1490,12 +1525,25 @@ public class Identity extends TabItem {
 	
 	private void fillSelectMessage(){
 		for (SecureMessage sec :extTF.getMessageQueue()){
-			System.out.println(""+sec.getSubject()+" - "+sec.getRecipient().getContactName()+" - "+sec.getMessageID());
+			if (sec.getRecipient().getContactName().equals(identityName)){
+				String subject = "";
+				if (sec.getSubject() == null){
+					subject = "kein Betreff";
+				}else{
+					subject = sec.getSubject();
+				}
+				String message = ""+subject+" - "+sec.getRecipient().getContactName()+" - "+sec.getMessageID();
+				selectMessage.add(message);
+				System.out.println(message);
+			}
+		}
+		if (selectMessage.getItemCount() == 0){
+			encryptedMessage_Tab2.setText("Achtung: Keine entschl\u00fcsselbare Nachricht verf\u00fcgbar! Bitte verschl\u00fcsseln und senden Sie vorher eine Nachricht an diese Identit\u00e4t.");
 		}
 	}
 	
 	private void changeButtonVisibilityTab2(){
-		if ((selectMessage.getSelectionIndex() != -1) &&(encryptedMessage_Tab2.getText().length() >1 ) && (decryptionKey.getSelectionIndex() != -1) && (pwPrivKey.getText().length() > 0)){
+		if ((selectMessage.getSelectionIndex() != -1) &&(encryptedMessage_Tab2.getText().length() >1 ) && (decryptionKeys.getSelectionIndex() != -1) && (pwPrivKey.getText().length() > 0)){
 			decryptMessage.setEnabled(true);
 		}
 	}
@@ -1517,7 +1565,7 @@ public class Identity extends TabItem {
 			System.out.println("[DEBUG]"+pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
 		}
 		if(pw1_Ext != null && pw2_Ext != null){
-			if (pw1_Ext.equals(pw2_Ext)){
+			if (pw1_Ext.equals(pw2_Ext)&&(pw1_Ext.length()>0 && pw2_Ext.length()>0)){
 				createKey_Tab2.setEnabled(true);
 			}else{
 				createKey_Tab2.setEnabled(false);
@@ -1532,12 +1580,19 @@ public class Identity extends TabItem {
 			rsa_length.setEnabled(true);
 			extRsa_length.setEnabled(false);
 			extRsa_numberPrimes_tab2.setEnabled(false);
+
 		}else{
 			//Radiobutton "Multi-prime RSA" is activated
 			rsa_length.setEnabled(false);
 			extRsa_length.setEnabled(true);
 			extRsa_numberPrimes_tab2.setEnabled(true);
 		}
+		lbl_notification_tab2.setText("");
+		createKey_Tab2.setEnabled(false);
+		ext_password1.setText("");
+		ext_password1.setEnabled(false);
+		ext_password2.setText("");
+		ext_password2.setEnabled(false);
 	}
 	
 	
