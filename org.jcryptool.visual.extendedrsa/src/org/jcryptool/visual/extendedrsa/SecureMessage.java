@@ -21,7 +21,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
  */
 public class SecureMessage {
 	
-	private BigInteger encryptedMessage;
+	private String encryptedMessage;
 	private int keyID;
 	private String sender;
 	private KeyStoreAlias recipient;
@@ -36,19 +36,19 @@ public class SecureMessage {
 	 * @param recipient recipient
 	 * @param subject the subject
 	 */
-	public SecureMessage(BigInteger encryptedMessage, int keyID, String sender, KeyStoreAlias recipient, String subject) {
+	public SecureMessage(String encryptedMessage, int keyID, String sender, KeyStoreAlias recipient, String subject) {
 		this.encryptedMessage = encryptedMessage;
 		this.keyID = keyID;
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
 	}
-	
-	public BigInteger getEncryptedMessage() {
+
+	public String getEncryptedMessage() {
 		return encryptedMessage;
 	}
 
-	public void setEncryptedMessage(BigInteger encryptedMessage) {
+	public void setEncryptedMessage(String encryptedMessage) {
 		this.encryptedMessage = encryptedMessage;
 	}
 

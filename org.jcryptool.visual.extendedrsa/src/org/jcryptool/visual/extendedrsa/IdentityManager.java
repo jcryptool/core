@@ -258,11 +258,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		return pubkey;
 	}
 	
-	public RSAPrivateCrtKey getPrivateKey(KeyStoreAlias alias, String password){
+	public RSAPrivateCrtKey getPrivateKey(KeyStoreAlias privAlias, String password){
         PrivateKey key = null;
         RSAPrivateCrtKey privkey = null;
 		try {
-			key = ksManager.getPrivateKey(alias, password.toCharArray());
+			key = ksManager.getPrivateKey(privAlias, password.toCharArray());
 			privkey = (RSAPrivateCrtKey) key;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -270,7 +270,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 
 		return privkey;
 	}
-	
+	/**
+	 * get the privateKey parameters
+	 * @param privkey contains the privateKey parameters 
+	 * @return vector with parameters in the following order: N, d, p, q, e
+	 */
 	public Vector<BigInteger> getPrivateKeyParametersRSA(RSAPrivateCrtKey privkey){
 		Vector <BigInteger> privKeyValues = new Vector<BigInteger>();
 	
@@ -305,6 +309,23 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         }
         
 		return keyStoreItems;
+	}
+	
+	public KeyStoreAlias getPublicForPrivateRSA(KeyStoreAlias privAlias){
+        Enumeration<String> aliases;
+        try {
+            aliases = ksManager.getAliases();
+        } catch (KeyStoreException e) {
+            LogUtil.logError(e);
+            return null;
+        }
+        KeyStoreAlias alias;
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
+            if (alias.getHashValue().equalsIgnoreCase(privAlias.getHashValue()) && alias != privAlias)
+                return alias;
+        }
+        return null;
 	}
        
 }

@@ -181,6 +181,10 @@ public class Identity extends TabItem {
 	private HashMap<String, KeyStoreAlias> rec;
 	private Vector<BigInteger> pubKeyParameters;
 	private Label lbl_notification_tab2;
+	private KeyStoreAlias publicAlias;
+	private KeyStoreAlias privateAlias;
+	private Label pwWrong;
+	private Rsa_Implementation rsa_impl;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -211,6 +215,7 @@ public class Identity extends TabItem {
 		this.txtExplain = explain;
 		
 		iMgr = IdentityManager.getInstance();
+		rsa_impl = new Rsa_Implementation();
 		
 		//set the text of the TabItem
 		this.setText(identityName);
@@ -326,13 +331,14 @@ public class Identity extends TabItem {
 
 //							System.out.println("keyID: "+keyID);
 							
-							extTF.addMessageToQueue(new SecureMessage(new BigInteger(encryptedMessage.getText(),16), keyID,Identity.this.identityName, rec.get(recipientKeys.getText()), subjectInput.getText()));
+							extTF.addMessageToQueue(new SecureMessage(encryptedMessage.getText(), keyID,Identity.this.identityName, rec.get(recipientKeys.getText()), subjectInput.getText()));
 							encryptedMessage.setText("");
 							subjectInput.setText("");
 							clearMessage.setText("");
 							txtExplain.setText("Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.");
 							recipientKeys.removeAll();
-							messageRecipient.removeAll();
+							messageRecipient.add("",messageRecipient.getItemCount());
+							messageRecipient.select(messageRecipient.getItemCount()-1);
 							encryptMessage.setEnabled(false);
 							sendMessage.setEnabled(false);
 							
@@ -373,7 +379,7 @@ public class Identity extends TabItem {
 					encryptMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							encryptedMessage.setText(Rsa_Implementation.encrypt(clearMessage.getText(), pubKeyParameters.get(1), pubKeyParameters.get(0)));
+							encryptedMessage.setText(rsa_impl.encrypt(clearMessage.getText(), pubKeyParameters.get(1), pubKeyParameters.get(0)));
 							sendMessage.setEnabled(true);
 						}
 					});
@@ -423,7 +429,7 @@ public class Identity extends TabItem {
 							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 
 							//display the message in hex
-							encryptedMessage_Tab2.setText(String.format("%040x",currentMsg.getEncryptedMessage()));
+							encryptedMessage_Tab2.setText(currentMsg.getEncryptedMessage());
 							
 							HashMap<String,KeyStoreAlias> privKeys =iMgr.getPrivateKeys(Identity.this.identityName);
 							decryptionKeys.setItems(privKeys.keySet().toArray(new String[privKeys.size()]));
@@ -438,6 +444,9 @@ public class Identity extends TabItem {
 									decryptionKeys.select(count);
 								}
 							}
+							
+							privateAlias = privKeys.get(decryptionKeys.getText());
+			                publicAlias = iMgr.getPublicForPrivateRSA(privateAlias);
 						}
 						
 						@Override
@@ -500,9 +509,19 @@ public class Identity extends TabItem {
 					deleteMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							extTF.deleteMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+							extTF.deleteMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 						
 							System.out.println("nun wird die nachricht gel\u00f6scht");
+							selectMessage.remove(selectMessage.getSelectionIndex());
+							encryptedMessage_Tab2.setText("");
+							decryptionKeys.removeAll();
+							pwPrivKey.setText("");
+							decryptedMessage.setText("");
+							decryptMessage.setEnabled(false);
+							deleteMessage.setEnabled(false);
+							if (selectMessage.getItemCount() == 0){
+								encryptedMessage_Tab2.setText("Achtung: Keine entschl\u00fcsselbare Nachricht verf\u00fcgbar! Bitte verschl\u00fcsseln und senden Sie vorher eine Nachricht an diese Identit\u00e4t.");
+							}
 						}
 					});
 					deleteMessage.setLayoutData(new GridData(SWT.RIGHT, SWT.RIGHT, true, false, 1, 1));
@@ -527,7 +546,13 @@ public class Identity extends TabItem {
 					gd_key.widthHint = 200;
 					gd_key.heightHint = 20;
 					pwPrivKey.setLayoutData(gd_key);
-					createSpacer(actionGroup_2);
+					
+					pwWrong = new Label (actionGroup_2, SWT.NONE);
+					pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					GridData gd_pwWrong = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_pwWrong.heightHint = 20;
+					pwWrong.setLayoutData(gd_pwWrong);
+//					createSpacer(actionGroup_2);
 					
 					createSpacer(actionGroup_2);
 					createSpacer(actionGroup_2);
@@ -538,20 +563,30 @@ public class Identity extends TabItem {
 					decryptMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							System.out.println("nun wird die nachricht verschl\u00fcsselt");
+							
 							deleteMessage.setEnabled(true);
 							
 							//richtiger privateKey m\u00fcsste der da sein
 							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 											
-							
-							Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(iMgr.getPrivateKey(currentMsg.getRecipient(), pwPrivKey.getText()));
-							//todo: exception beobachten bei falschem passwort, f\u00fcr einen hinweis
-							for (BigInteger bi : privKeyValues){
-								System.out.println("value: "+bi);
+							RSAPrivateCrtKey privkey = iMgr.getPrivateKey(privateAlias, pwPrivKey.getText());
+							if(privkey == null){
+								//can't catch the  'java.security.UnrecoverableKeyException'
+								pwWrong.setText("Fehler: Das eingegebene Passwort f\u00fcr den selektierten Privaten Schl\u00fcssel ist FALSCH!");
+							}else{
+								pwWrong.setText("");
+								System.out.println("nun wird die nachricht entschl\u00fcsselt");
+								Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(privkey);
+								for (BigInteger bi: privKeyValues){
+									System.out.println("wert: "+bi);
+								}
+								
+								//entschlüsseln
+								//we need d (position 0) and N (position 1)
+								decryptedMessage.setText(rsa_impl.decrypt(encryptedMessage_Tab2.getText(), privKeyValues.get(1), privKeyValues.get(0)));
+								//errormessage anpassen (layout und so)
 							}
-							
-							
+												
 						}
 					});
 					decryptMessage.setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1));
@@ -1539,10 +1574,19 @@ public class Identity extends TabItem {
 	
 	private void fillRecipientKeys(){
 //		Vector<String> rec = iMgr.getPublicKeys(this.identityName);
-		rec = iMgr.getPublicKeys(messageRecipient.getText());
-		recipientKeys.setItems(rec.keySet().toArray(new String[rec.size()]));
-		recipientKeys.select(0);
-		pubKeyParameters = iMgr.getPublicKeyParameters(rec.get(recipientKeys.getText()));
+		if(!messageRecipient.getText().equals("")){
+			rec = iMgr.getPublicKeys(messageRecipient.getText());
+			recipientKeys.setItems(rec.keySet().toArray(new String[rec.size()]));
+			recipientKeys.select(0);
+			pubKeyParameters = iMgr.getPublicKeyParameters(rec.get(recipientKeys.getText()));
+			//remove the possible empty-element
+			for(String s: messageRecipient.getItems()){
+				if (s.equals("")){
+					messageRecipient.remove("");
+					System.out.println("leeres element löschen");
+				}
+			}
+		}
 	}
 	
 	private void fillSelectMessage(){
