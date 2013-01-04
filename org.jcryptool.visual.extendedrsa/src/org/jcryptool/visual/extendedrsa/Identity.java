@@ -120,6 +120,7 @@ public class Identity extends TabItem {
 	private BigInteger bi_rsaP;
 	private BigInteger bi_rsaQ;
 	private BigInteger bi_rsaE;
+	private BigInteger bi_rsaD; // D berechnen
 	private BigInteger bi_rsaN;
 	private BigInteger bi_rsaPhi;
 	private BigInteger bi_ExtrsaP;
@@ -1226,6 +1227,17 @@ public class Identity extends TabItem {
 						public void widgetSelected(SelectionEvent e) {
 							if (radio_RSA.getSelection()){
 								txtExplain.setText("nun wird ein klassicher RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
+								
+								bi_rsaD = bi_rsaE.modInverse(bi_rsaPhi);
+								
+								iMgr.saveKeyToKeystore(Identity.this.identityName, password1.getText(), bi_rsaN, bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
+								
+								createKey.setEnabled(false);
+								password1.setText("");
+								password1.setEnabled(false);
+								password2.setText("");
+								password2.setEnabled(false);
+								
 							}else{
 								txtExplain.setText("nun wird ein mp-RSA key erstellt. Parameter: P"+bi_ExtrsaP+" Q: "+bi_ExtrsaQ+" R: "+bi_ExtrsaR+"E:"+bi_ExtrsaE+" pw: "+pw1);
 							}
@@ -1974,6 +1986,7 @@ public class Identity extends TabItem {
             }
         }.start();
     }
+    
     private void checkParameter(){
     	pIsPrime = false;
     	qIsPrime = false;
