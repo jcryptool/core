@@ -50,6 +50,8 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
+import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
+
 
 /**
  * This class represents an identity in the visual.
@@ -269,12 +271,12 @@ public class Identity extends TabItem {
 					label.setLayoutData(gd_message);
 					
 					label = new Label (actionGroup_1, SWT.NONE);
-					label.setText("Verschl\u00fcsselte Nachricht:");
+					label.setText("Verschl\u00fcsselte Nachricht (hexadezimale Darstellung):");
 					GridData gd_enc_message = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_enc_message.heightHint = 20;
 					label.setLayoutData(gd_enc_message);
 					
-					clearMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+					clearMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 					clearMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					clearMessage.addModifyListener(new ModifyListener() {
 						
@@ -283,7 +285,7 @@ public class Identity extends TabItem {
 							changeButtonVisibility();
 						}
 					});
-					encryptedMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+					encryptedMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 					encryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					
 					createSpacer(actionGroup_1);
@@ -327,7 +329,8 @@ public class Identity extends TabItem {
 							extTF.addMessageToQueue(new SecureMessage(new BigInteger(encryptedMessage.getText(),16), keyID,Identity.this.identityName, rec.get(recipientKeys.getText()), subjectInput.getText()));
 							encryptedMessage.setText("");
 							subjectInput.setText("");
-							clearMessage.setText("Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.");
+							clearMessage.setText("");
+							txtExplain.setText("Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.");
 							recipientKeys.removeAll();
 							messageRecipient.removeAll();
 							encryptMessage.setEnabled(false);
@@ -419,15 +422,16 @@ public class Identity extends TabItem {
 							
 							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 
-							encryptedMessage_Tab2.setText(currentMsg.getEncryptedMessage().toString());
+							//display the message in hex
+							encryptedMessage_Tab2.setText(String.format("%040x",currentMsg.getEncryptedMessage()));
 							
-							HashMap<String,KeyStoreAlias> pubKeys =iMgr.getPublicKeys(Identity.this.identityName);
-							decryptionKeys.setItems(pubKeys.keySet().toArray(new String[pubKeys.size()]));
+							HashMap<String,KeyStoreAlias> privKeys =iMgr.getPrivateKeys(Identity.this.identityName);
+							decryptionKeys.setItems(privKeys.keySet().toArray(new String[privKeys.size()]));
 							//select the "correct" key
 //							
 							String hashCurrent = currentMsg.getRecipient().getHashValue();
 							int count = 0;
-							for (KeyStoreAlias ksa : pubKeys.values()){
+							for (KeyStoreAlias ksa : privKeys.values()){
 								if (!ksa.getHashValue().equals(hashCurrent)){
 									count++;
 								}else{
@@ -443,7 +447,7 @@ public class Identity extends TabItem {
 					createSpacer(actionGroup_2);
 					
 					label = new Label (actionGroup_2, SWT.NONE);
-					label.setText("Verschl\u00fcsselte Nachricht:");
+					label.setText("Verschl\u00fcsselte Nachricht (hexadezimale Darstellung):");
 					GridData gd_message = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_message.heightHint = 20;
 					label.setLayoutData(gd_message);
@@ -452,7 +456,7 @@ public class Identity extends TabItem {
 					label.setText("Entschl\u00fcsselte Nachricht:");
 					label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 					
-					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER);
+					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 					encryptedMessage_Tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					encryptedMessage_Tab2.addModifyListener(new ModifyListener() {
 						
@@ -464,7 +468,7 @@ public class Identity extends TabItem {
 					
 					fillSelectMessage();
 					
-					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP| SWT.BORDER);
+					decryptedMessage = new Text(actionGroup_2, SWT.MULTI | SWT.WRAP| SWT.BORDER | SWT.V_SCROLL);
 					decryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
 					
 					createSpacer(actionGroup_2);
@@ -510,7 +514,7 @@ public class Identity extends TabItem {
 					label.setLayoutData(gd_pw);
 					createSpacer(actionGroup_2);
 					
-					pwPrivKey = new Text(actionGroup_2, SWT.BORDER);
+					pwPrivKey = new Text(actionGroup_2, SWT.BORDER|SWT.PASSWORD);
 					pwPrivKey.addModifyListener(new ModifyListener() {
 						
 						@Override
@@ -539,9 +543,13 @@ public class Identity extends TabItem {
 							
 							//richtiger privateKey m\u00fcsste der da sein
 							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
+											
 							
-							iMgr.getPrivateKey(currentMsg.getRecipient(), pwPrivKey.getText());
+							Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(iMgr.getPrivateKey(currentMsg.getRecipient(), pwPrivKey.getText()));
 							//todo: exception beobachten bei falschem passwort, f\u00fcr einen hinweis
+							for (BigInteger bi : privKeyValues){
+								System.out.println("value: "+bi);
+							}
 							
 							
 						}

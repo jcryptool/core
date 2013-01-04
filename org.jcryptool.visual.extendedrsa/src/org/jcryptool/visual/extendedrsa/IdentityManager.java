@@ -13,6 +13,7 @@ package org.jcryptool.visual.extendedrsa;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.security.KeyStoreException;
+import java.security.PrivateKey;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -44,7 +45,6 @@ import de.flexiprovider.api.exceptions.InvalidAlgorithmParameterException;
 import de.flexiprovider.api.exceptions.NoSuchAlgorithmException;
 import de.flexiprovider.api.keys.KeyPair;
 import de.flexiprovider.api.keys.KeyPairGenerator;
-import de.flexiprovider.api.keys.PrivateKey;
 import de.flexiprovider.api.keys.PublicKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
@@ -63,6 +63,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private KeyStoreManager ksManager;
 	private Enumeration<String> aliases;
 	private Map<String,Integer> keymgmt;
+	private Map<String,Integer> privKeymgmt;
+	private int keyID;
+	private int privKeyID;
 
 	
     public static IdentityManager getInstance() {
@@ -76,6 +79,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		cManager = ContactManager.getInstance();
 		ksManager = KeyStoreManager.getInstance();
 		keymgmt = new HashMap<String,Integer>();
+		privKeymgmt = new HashMap<String,Integer>();
+		keyID = 0;
+		privKeyID = 0;
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -210,7 +216,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 alias = new KeyStoreAlias(aliases.nextElement());
 
                 if (alias.getClassName().equals(RSAPublicKey.class.getName())&&alias.getContactName().equals(identity)) {
-                	int keyID;
                 	if (!keymgmt.containsKey(alias.getHashValue())){
                 		keyID = keymgmt.size()+1;
                 		keymgmt.put(alias.getHashValue(),keyID);
@@ -253,21 +258,22 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		return pubkey;
 	}
 	
-	public PrivateKey getPrivateKey(KeyStoreAlias alias, String password){
-		PrivateKey key = null;
+	public RSAPrivateCrtKey getPrivateKey(KeyStoreAlias alias, String password){
+        PrivateKey key = null;
+        RSAPrivateCrtKey privkey = null;
 		try {
-			key = (PrivateKey) ksManager.getPrivateKey(alias, password.toCharArray());
+			key = ksManager.getPrivateKey(alias, password.toCharArray());
+			privkey = (RSAPrivateCrtKey) key;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return key;
+
+		return privkey;
 	}
 	
-	public Vector<BigInteger> getPrivateKeyParametersRSA(PrivateKey key){
+	public Vector<BigInteger> getPrivateKeyParametersRSA(RSAPrivateCrtKey privkey){
 		Vector <BigInteger> privKeyValues = new Vector<BigInteger>();
-		
-        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+	
         privKeyValues.add(privkey.getModulus());
         privKeyValues.add(privkey.getD().bigInt);
         privKeyValues.add(privkey.getP().bigInt);
@@ -276,4 +282,29 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         
         return privKeyValues;
 	}
+
+	public HashMap<String, KeyStoreAlias> getPrivateKeys(String identityName) {
+		HashMap<String, KeyStoreAlias> keyStoreItems = new HashMap<String, KeyStoreAlias>();
+        try {
+            KeyStoreAlias alias;
+            for (Enumeration<String> aliases = ksManager.getAliases(); aliases.hasMoreElements();) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) && alias.getContactName().equals(identityName)) {
+                	if (!privKeymgmt.containsKey(alias.getHashValue())){
+                		privKeyID = privKeymgmt.size()+1;
+                		privKeymgmt.put(alias.getHashValue(),privKeyID);
+                	}else{
+                		privKeyID = privKeymgmt.get(alias.getHashValue());
+                	}
+                    keyStoreItems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+privKeyID,alias);
+                    System.out.println("added priv-key: "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+privKeyID);
+                }
+            }
+        } catch (KeyStoreException e) {
+            LogUtil.logError(e);
+        }
+        
+		return keyStoreItems;
+	}
+       
 }
