@@ -318,7 +318,21 @@ public class Identity extends TabItem {
 					sendMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							encryptedMessage.setText("nun wird die nachricht gesendet");
+							System.out.println("nun wird die nachricht gesendet");
+
+							int keyID = Integer.parseInt(recipientKeys.getItem(recipientKeys.getSelectionIndex()).substring(recipientKeys.getItem(recipientKeys.getSelectionIndex()).indexOf(':')+1));
+
+//							System.out.println("keyID: "+keyID);
+							
+							extTF.addMessageToQueue(new SecureMessage(new BigInteger(encryptedMessage.getText(),16), keyID,Identity.this.identityName, rec.get(recipientKeys.getText()), subjectInput.getText()));
+							encryptedMessage.setText("");
+							subjectInput.setText("");
+							clearMessage.setText("Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.");
+							recipientKeys.removeAll();
+							messageRecipient.removeAll();
+							encryptMessage.setEnabled(false);
+							sendMessage.setEnabled(false);
+							
 						}
 					});
 					sendMessage.setLayoutData(new GridData(SWT.RIGHT, SWT.RIGHT, true, false, 1, 1));
@@ -403,7 +417,7 @@ public class Identity extends TabItem {
 						public void widgetSelected(SelectionEvent e) {
 							changeButtonVisibilityTab2();
 							
-							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 
 							encryptedMessage_Tab2.setText(currentMsg.getEncryptedMessage().toString());
 							
@@ -520,14 +534,14 @@ public class Identity extends TabItem {
 					decryptMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-							decryptedMessage.setText("nun wird die nachricht verschl\u00fcsselt");
+							System.out.println("nun wird die nachricht verschl\u00fcsselt");
 							deleteMessage.setEnabled(true);
 							
-							//richtiger privateKey müsste der da sein
-							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
+							//richtiger privateKey m\u00fcsste der da sein
+							SecureMessage currentMsg = extTF.getMessageAtIndex(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1))-1);
 							
 							iMgr.getPrivateKey(currentMsg.getRecipient(), pwPrivKey.getText());
-							//todo: exception beobachten bei falschem passwort, für einen hinweis
+							//todo: exception beobachten bei falschem passwort, f\u00fcr einen hinweis
 							
 							
 						}
@@ -1363,7 +1377,7 @@ public class Identity extends TabItem {
 								txtExplain.setText("Nun wird großer multiprimer RSA-key erstellt");	
 							}else{
 								iMgr.createIdentity(Identity.this.identityName, "RSA", ext_password1.getText(), Integer.parseInt(rsa_length.getItem(rsa_length.getSelectionIndex())));
-								System.out.println("großen klassischen RSA erstellen: name:"+Identity.this.identityName+" pw: "+ext_password1.getText()+" länge: "+ rsa_length.getItem(rsa_length.getSelectionIndex()));	
+								System.out.println("großen klassischen RSA erstellen: name:"+Identity.this.identityName+" pw: "+ext_password1.getText()+" l\u00e4nge: "+ rsa_length.getItem(rsa_length.getSelectionIndex()));	
 								lbl_notification_tab2.setText("RSA-Key f\u00fcr '"+Identity.this.identityName+"' erfolgreich erstellt");
 								
 								createKey_Tab2.setEnabled(false);
@@ -1527,7 +1541,7 @@ public class Identity extends TabItem {
 		for (SecureMessage sec :extTF.getMessageQueue()){
 			if (sec.getRecipient().getContactName().equals(identityName)){
 				String subject = "";
-				if (sec.getSubject() == null){
+				if (sec.getSubject().equals("")){
 					subject = "kein Betreff";
 				}else{
 					subject = sec.getSubject();
@@ -1550,7 +1564,7 @@ public class Identity extends TabItem {
 	
 	
 	private void changeButtonVisibility(){
-		if ((clearMessage.getText().length() > 0) && (recipientKeys.getSelectionIndex() != -1) && (messageRecipient.getSelectionIndex() != -1)){
+		if ((clearMessage.getText().length() > 0) && (messageRecipient.getSelectionIndex() != -1)){
 			encryptMessage.setEnabled(true);
 		}
 	}

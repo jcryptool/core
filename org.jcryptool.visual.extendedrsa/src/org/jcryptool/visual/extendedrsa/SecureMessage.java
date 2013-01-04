@@ -23,7 +23,7 @@ public class SecureMessage {
 	
 	private BigInteger encryptedMessage;
 	private int keyID;
-	private KeyStoreAlias sender;
+	private String sender;
 	private KeyStoreAlias recipient;
 	private String subject;
 	private int messageID;
@@ -36,7 +36,7 @@ public class SecureMessage {
 	 * @param recipient recipient
 	 * @param subject the subject
 	 */
-	public SecureMessage(BigInteger encryptedMessage, int keyID, KeyStoreAlias sender, KeyStoreAlias recipient, String subject) {
+	public SecureMessage(BigInteger encryptedMessage, int keyID, String sender, KeyStoreAlias recipient, String subject) {
 		this.encryptedMessage = encryptedMessage;
 		this.keyID = keyID;
 		this.sender = sender;
@@ -59,11 +59,11 @@ public class SecureMessage {
 		this.keyID = keyID;
 	}
 
-	public KeyStoreAlias getSender() {
+	public String getSender() {
 		return sender;
 	}
 
-	public void setSender(KeyStoreAlias sender) {
+	public void setSender(String sender) {
 		this.sender = sender;
 	}
 
@@ -74,7 +74,6 @@ public class SecureMessage {
 	public void setRecipient(KeyStoreAlias recipient) {
 		this.recipient = recipient;
 	}
-
 
 	public String getSubject() {
 		return subject;
