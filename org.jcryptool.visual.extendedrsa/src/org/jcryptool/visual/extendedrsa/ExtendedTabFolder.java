@@ -10,6 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.eclipse.swt.widgets.Composite;
@@ -22,10 +23,12 @@ import org.eclipse.swt.widgets.TabFolder;
 public class ExtendedTabFolder extends TabFolder{
 
 	private Vector<SecureMessage> messageQueue;
+	private int messageID;
 	
 	public ExtendedTabFolder(Composite parent, int style) {
 		super(parent, style);
 		messageQueue = new Vector<SecureMessage>();
+		messageID = 0;
 	}
 
 	public Vector<SecureMessage> getMessageQueue() {
@@ -34,7 +37,7 @@ public class ExtendedTabFolder extends TabFolder{
 	
 	public void addMessageToQueue(SecureMessage message){
 		messageQueue.add(message);
-		message.setMessageID(messageQueue.indexOf(message)+1);
+		message.setMessageID(++messageID);
 	}
 	
 	public SecureMessage getMessageAtIndex(int index){
@@ -47,5 +50,27 @@ public class ExtendedTabFolder extends TabFolder{
 	
 	@Override 
 	protected void checkSubclass() { 
+	}
+
+	public SecureMessage getMessageWithID(int messageID) {
+		SecureMessage secM = null;
+		for (SecureMessage mess: messageQueue){
+			if (mess.getMessageID() == messageID){
+				secM = mess;
+			}
+		}
+		return secM;
+	}
+
+	public void deleteMessageWithID(int messageID) {
+		SecureMessage secM = null;
+		Iterator<SecureMessage> it = messageQueue.iterator();
+		
+		while (it.hasNext()){
+			secM = (SecureMessage)it.next();
+			if (secM.getMessageID() == messageID){
+				it.remove();
+			}
+		}
 	}
 }
