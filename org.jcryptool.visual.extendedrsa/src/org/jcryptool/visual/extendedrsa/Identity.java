@@ -1278,9 +1278,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							if (radio_RSA.getSelection()){
-<<<<<<< HEAD
-								System.out.println("nun wird ein klassicher RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
-=======
+
 								txtExplain.setText("nun wird ein klassicher RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
 								
 								bi_rsaD = bi_rsaE.modInverse(bi_rsaPhi);
@@ -1292,8 +1290,6 @@ public class Identity extends TabItem {
 								password1.setEnabled(false);
 								password2.setText("");
 								password2.setEnabled(false);
-								
->>>>>>> branch 'master' of git@github.com:cschnepf2/JCT_ExtRSA.git
 							}else{
 								System.out.println("nun wird ein mp-RSA key erstellt. Parameter: P"+bi_ExtrsaP+" Q: "+bi_ExtrsaQ+" R: "+bi_ExtrsaR+"E:"+bi_ExtrsaE+" pw: "+pw1);
 							}
