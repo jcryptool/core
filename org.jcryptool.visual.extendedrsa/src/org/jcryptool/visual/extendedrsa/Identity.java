@@ -631,8 +631,9 @@ public class Identity extends TabItem {
 								lbl_pwWrong.setText("");
 								System.out.println("nun wird die nachricht entschl\u00fcsselt");
 								Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(privkey);
+
 								for (BigInteger bi: privKeyValues){
-									System.out.println("wert: "+bi);
+									System.out.println("wert: "+bi+" bitlength: "+bi.bitLength()+" bitcount:"+bi.bitCount());
 								}
 								
 								//entschl\u00fcsseln
@@ -679,8 +680,14 @@ public class Identity extends TabItem {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
+							resetRSAValues();
 							if (tf_keyMgmt.getSelectionIndex() == 0){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
+								eIsValid = false;
+								password1.setEnabled(false);
+								password2.setEnabled(false);
+								pickRandomE.setEnabled(false);
+								pickRandomExtE.setEnabled(false);
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 1){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB2);
@@ -872,6 +879,7 @@ public class Identity extends TabItem {
 			            	combo_rsaE.setText(bi_rsaE.toString());
 			            	eIsValid = true;
 			            	errorLabel_1.setText("");
+			            	checkParameter();
 			            }
 
 			            public void widgetDefaultSelected(SelectionEvent e) {}
@@ -1229,6 +1237,7 @@ public class Identity extends TabItem {
 					GridData gd_combo_pw1 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw1.heightHint = 20;
 					gd_combo_pw1.widthHint = 100;
+					password1.setEnabled(false);
 					password1.setLayoutData(gd_combo_pw1);
 					password1.addModifyListener(new ModifyListener() {
 						
@@ -1252,6 +1261,7 @@ public class Identity extends TabItem {
 					GridData gd_combo_pw2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 					gd_combo_pw2.heightHint = 20;
 					gd_combo_pw2.widthHint = 100;
+					password2.setEnabled(false);
 					password2.setLayoutData(gd_combo_pw2);
 					password2.addModifyListener(new ModifyListener() {
 						
@@ -1279,17 +1289,30 @@ public class Identity extends TabItem {
 						public void widgetSelected(SelectionEvent e) {
 							if (radio_RSA.getSelection()){
 
-								txtExplain.setText("nun wird ein klassicher RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
+								System.out.println("nun wird ein klassischer RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
 								
 								bi_rsaD = bi_rsaE.modInverse(bi_rsaPhi);
 								
+								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								if (bi_rsaD.toString().length() < 40){
+									errorLabel_1.setText("Klassischer RSA-Schl\u00fcssel wurde erstellt. Der geheime Exponent d ist: "+bi_rsaD+".");
+								}else{
+									errorLabel_1.setText("RSA-Schlüssel wurde erstellt. Schlüsseldetails aufgrund der Größe bitte im Reiter 'Meine Schlüssel' betrachten");
+								}
+								
 								iMgr.saveKeyToKeystore(Identity.this.identityName, password1.getText(), bi_rsaN, bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
 								
-								createKey.setEnabled(false);
 								password1.setText("");
 								password1.setEnabled(false);
 								password2.setText("");
 								password2.setEnabled(false);
+								fillPrimesTo(combo_rsaP);
+								fillPrimesTo(combo_rsaQ);
+								combo_rsaE.removeAll();
+								pickRandomE.setEnabled(false);
+								eIsValid = false;
+								resetRSAValues();
+								createKey.setEnabled(false);
 							}else{
 								System.out.println("nun wird ein mp-RSA key erstellt. Parameter: P"+bi_ExtrsaP+" Q: "+bi_ExtrsaQ+" R: "+bi_ExtrsaR+"E:"+bi_ExtrsaE+" pw: "+pw1);
 							}
@@ -1347,6 +1370,19 @@ public class Identity extends TabItem {
 					rsa_length = new Combo(rsaComp, SWT.READ_ONLY);
 					rsa_length.add("1024");
 					rsa_length.add("2048");
+					rsa_length.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							ext_password1.setText("");
+							ext_password2.setText("");	
+							lbl_notification_tab2.setText("");
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+					
 					GridData gd_rsa_length_comb = new GridData(SWT.LEFT, SWT.LEFT, true, true, 1, 1);
 					gd_rsa_length_comb.heightHint = 20;
 					rsa_length.select(0);
@@ -1391,6 +1427,18 @@ public class Identity extends TabItem {
 						extRsa_numberPrimes_tab2.add(""+i);
 					}
 					extRsa_numberPrimes_tab2.select(0);
+					extRsa_numberPrimes_tab2.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							ext_password1.setText("");
+							ext_password2.setText("");
+							lbl_notification_tab2.setText("");
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
 					
 					Label rsa_extlength = new Label(rsaExtComp, SWT.NONE);
 					rsa_extlength.setText("Schl\u00fcssell\u00e4nge w\u00e4hlen:");
@@ -1401,6 +1449,19 @@ public class Identity extends TabItem {
 					extRsa_length = new Combo(rsaExtComp, SWT.READ_ONLY);
 					extRsa_length.add("1024");
 					extRsa_length.add("2048");
+					extRsa_length.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							ext_password1.setText("");
+							ext_password2.setText("");	
+							lbl_notification_tab2.setText("");
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+
 					GridData gd_Extrsa_length_comb = new GridData(SWT.LEFT, SWT.LEFT, true, true, 1, 1);
 					gd_Extrsa_length_comb.heightHint = 20;
 					extRsa_length.select(0);
@@ -1485,13 +1546,11 @@ public class Identity extends TabItem {
 							}else{
 								iMgr.createIdentity(Identity.this.identityName, "RSA", ext_password1.getText(), Integer.parseInt(rsa_length.getItem(rsa_length.getSelectionIndex())));
 								System.out.println("großen klassischen RSA erstellen: name:"+Identity.this.identityName+" pw: "+ext_password1.getText()+" l\u00e4nge: "+ rsa_length.getItem(rsa_length.getSelectionIndex()));	
-								lbl_notification_tab2.setText("RSA-Key f\u00fcr '"+Identity.this.identityName+"' erfolgreich erstellt");
+								lbl_notification_tab2.setText("Klassischer RSA-Key erfolgreich erstellt. Schlüsseldetails aufgrund der Größe bitte im Reiter 'Meine Schlüssel' betrachten.");
 								
 								createKey_Tab2.setEnabled(false);
 								ext_password1.setText("");
-								ext_password1.setEnabled(false);
 								ext_password2.setText("");
-								ext_password2.setEnabled(false);
 							}
 						}
 						
@@ -1664,6 +1723,7 @@ public class Identity extends TabItem {
 			infolabel_tab2.setText(NO_ENCRYPTED_MESSAGES);
 			selectMessage.setEnabled(false);
 			pwPrivKey.setEnabled(false);
+			decryptionKeys.setEnabled(false);
 			encryptedMessage_Tab2.setEnabled(false);
 			decryptedMessage.setEnabled(false);
 		}
@@ -1717,9 +1777,7 @@ public class Identity extends TabItem {
 		lbl_notification_tab2.setText("");
 		createKey_Tab2.setEnabled(false);
 		ext_password1.setText("");
-		ext_password1.setEnabled(false);
 		ext_password2.setText("");
-		ext_password2.setEnabled(false);
 	}
 	
 	
@@ -1777,7 +1835,7 @@ public class Identity extends TabItem {
 		createKey.setEnabled(false);
 		
 		errorLabel_1.setText("");
-		
+		txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
 		resetRSAValues();
 	}
 	private void resetRSAValues(){
@@ -1844,6 +1902,7 @@ public class Identity extends TabItem {
      * @param combo the list from which a prime can be selected
      */
     private void fillPrimesTo(final Combo combo) {
+    	combo.removeAll();
         for (Integer i : LOW_PRIMES) {
             combo.add(i.toString());
         }
@@ -2044,6 +2103,8 @@ public class Identity extends TabItem {
     	tIsPrime = false;
     	eIsValid = false;
     	
+    	errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+    	
     	if (radio_RSA.getSelection()){
 	    	if(bi_rsaP!=null){
 	    		if (!bi_rsaP.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_rsaP)) {
@@ -2103,6 +2164,9 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(PRIMES_EQUAL);
 		        	pickRandomE.setEnabled(false);
 		        }
+		        
+		        password1.setEnabled(eIsValid);
+	        	password2.setEnabled(eIsValid);
 	        }
     	}else{
     		//check the multi-prime RSA parameters

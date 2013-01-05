@@ -70,6 +70,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private Map<String,Integer> privKeymgmt;
 	private int keyID;
 	private int privKeyID;
+	private BigInteger lastD;
 
 
 	private KeyStoreAlias privateAlias;
@@ -90,6 +91,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		privKeymgmt = new HashMap<String,Integer>();
 		keyID = 0;
 		privKeyID = 0;
+		lastD = BigInteger.ZERO;
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -118,8 +120,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 						generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
 					}
 					KeyPair keyPair = generator.genKeyPair();
-		
+					
 					PrivateKey priv = keyPair.getPrivate();
+					
 					PublicKey pub = keyPair.getPublic();
 					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
