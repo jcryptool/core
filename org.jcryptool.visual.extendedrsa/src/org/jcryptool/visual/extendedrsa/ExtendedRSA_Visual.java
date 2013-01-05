@@ -10,20 +10,16 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.security.KeyStore;
-import java.security.KeyStore.Entry;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Vector;
-import java.util.Iterator;
 
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,21 +31,10 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizard.DeleteIdentityWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizard.ManageVisibleIdentitesWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
-//import org.eclipse.swt.events.MouseEvent;
-//import org.eclipse.swt.events.MouseListener;
-//import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 
 
 /**
@@ -78,8 +63,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 	private Identity identity;
 	private Label txtExplain;
 	private Enumeration<String> aliases;
-//    private KeyStoreAlias keyStoreAlias;
-    
+  
 	
 	public ExtendedRSA_Visual() {
 	}
@@ -108,14 +92,14 @@ public class ExtendedRSA_Visual extends ViewPart{
 		label = new Label(headComposite, SWT.NONE);
 		label.setFont(FontService.getHeaderFont());
 		label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		label.setText("Extended RSA-Kryptosystem");
+		label.setText("Erweitertes RSA-Kryptosystem");
 		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false));
-		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten: Sie k\u00f6nnten als 'Alice' einen Text verschl\u00fcsseln und an 'Bob' senden.  Bob kann dann die empfangene Nachricht entschl\u00fcsseln. Und umgekehrt.");	
+		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten. Sie k\u00f6nnen z.B. als 'Alice Whitehat' einen Text verschl\u00fcsseln und an 'Bob Whitehat' senden. Bob Whitehat kann dann die empfangene Nachricht entschl\u00fcsseln. Und umgekehrt.");	
 		//End - Header
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
-		grp_id_mgmt.setText("Identit\u00e4tenverwaltung");
+		grp_id_mgmt.setText("Identit\u00e4ten-Verwaltung");
 		grp_id_mgmt.setLayout(new GridLayout(3,true));
 
 		btn_newID = new Button(grp_id_mgmt, SWT.PUSH);
@@ -126,7 +110,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		btn_newID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//button "Identität löschen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identitäten existiern
+				//button "Identit\u00e4t l\u00f6schen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identit\u00e4ten existiern
 				new WizardDialog(getSite().getShell(), new NewIdentityWizard(tabFolder)).open();
 				grp_id_mgmt.update();
 			}
@@ -152,7 +136,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		btn_delID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//button "Identität löschen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identitäten existiern nachm löschen
+				//button "Identit\u00e4t l\u00f6schen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identit\u00e4ten existiern nachm l\u00f6schen
 				new WizardDialog(getSite().getShell(), new DeleteIdentityWizard(tabFolder)).open();
 				grp_id_mgmt.update();
 			}
@@ -170,7 +154,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		tabFolder.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-//				txtExplain.setText("Die Identitäten aus Ihrem Schlüsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identitäten „Alice“ und „Bob“ im Schlüsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identität dar. Durch den Button „Identitäten ein-/ausblenden“ können bestehende Identitäten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identität erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identitäten ein-/ausblenden“ ausgewählt wurde!\n\nWird nun ein Button auf einer Registerkarte angeklickt (und so eine Aktion im Namen einer Identität durchgeführt), wird eine Hilfe im Feld „Erklärungen“ angezeigt.");
+//				
 			}
 			
 			@Override
@@ -193,7 +177,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		Group grp_explain = new Group(comp_center, SWT.NONE);
 		grp_explain.setLayout(new GridLayout(1, true));
 		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
-		gd_explain.widthHint = 270;
+		gd_explain.widthHint = 300;
 		
 		grp_explain.setText("Erkl\u00e4rungen");
 		

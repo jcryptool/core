@@ -61,7 +61,7 @@ public class DeleteIdentityPage extends WizardPage {
 		TabItem[] ids = tabfolder.getItems();
 		for (TabItem ti : ids){
 			Identity id = (Identity)ti;
-			if ((id.getIdentityName() != "Alice") && (id.getIdentityName() != "Bob")){
+			if ((id.getIdentityName() != "Alice Whitehat") && (id.getIdentityName() != "Bob Whitehat")){
 				selectedIdentity.add(id.getIdentityName());
 			}
 		}
@@ -72,7 +72,7 @@ public class DeleteIdentityPage extends WizardPage {
 		Text hint = new Text(container, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		hint.setBackground(container.getBackground());
 		hint.setFont(FontService.getNormalBoldFont());
-		hint.setText("ACHTUNG: Wenn Sie eine Identit\u00e4t ausgew\u00e4hlt haben und diese Auswahl durch einen Klick auf \"Fertigstellen\" best\u00e4tigen, wird diese Identit\u00e4t mit allen zugordneten Schl\u00fcsseln sofort und permanent gel\u00f6scht!\n\nDie Identit\u00e4ten \"Alice\" und \"Bob\" k\u00f6nnen nicht gel\u00f6scht werden!");
+		hint.setText("ACHTUNG: Wenn Sie eine Identit\u00e4t ausgew\u00e4hlt haben und diese Auswahl durch einen Klick auf \"Fertigstellen\" best\u00e4tigen, wird diese Identit\u00e4t mit allen zugordneten Schl\u00fcsseln sofort und permanent gel\u00f6scht!\n\nDie Identit\u00e4ten \"Alice Whitehat\" und \"Bob Whitehat\" k\u00f6nnen nicht gel\u00f6scht werden.");
 		GridData gd_hint = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_hint.widthHint = 559;
 		hint.setLayoutData(gd_hint);

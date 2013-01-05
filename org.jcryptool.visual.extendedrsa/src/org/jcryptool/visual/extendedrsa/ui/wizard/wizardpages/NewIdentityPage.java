@@ -95,7 +95,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		
 		Label hint = new Label(container, SWT.WRAP);
 		hint.setFont(FontService.getNormalBoldFont());
-		hint.setText("Achtung: Diese Identit\u00e4t wird erst als Registerkarte in der Visualisierung angezeigt, wenn diese durch den Button „Identit\u00e4ten ein-/ausblenden“ selektiert wurde!");
+		hint.setText("Achtung: Diese Identit\u00e4t wird erst als Registerkarte in der Visualisierung angezeigt, wenn diese durch den Button „Identit\u00e4ten ein-/ausblenden“ selektiert wurde.");
 		GridData gd = new GridData(SWT.LEFT, SWT.LEFT, true, true, 3, 2);
 		gd.widthHint = 500;
 		hint.setLayoutData(gd);
