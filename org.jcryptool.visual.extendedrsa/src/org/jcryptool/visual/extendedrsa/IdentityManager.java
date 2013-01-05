@@ -26,17 +26,20 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.certificates.CertFact;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
 import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
+import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
@@ -47,6 +50,7 @@ import de.flexiprovider.api.keys.KeyPair;
 import de.flexiprovider.api.keys.KeyPairGenerator;
 import de.flexiprovider.api.keys.PublicKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
+import de.flexiprovider.common.math.FlexiBigInt;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 import de.flexiprovider.core.rsa.RSAPublicKey;
 
@@ -66,6 +70,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private Map<String,Integer> privKeymgmt;
 	private int keyID;
 	private int privKeyID;
+
+
+	private KeyStoreAlias privateAlias;
+	private KeyStoreAlias publicAlias;
 
 	
     public static IdentityManager getInstance() {
@@ -143,6 +151,57 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		job.schedule();
 		
 	}
+	
+	/**
+     * setter for the private alias for the contact
+     *
+     * @param privateAlias the privateAlias to set
+     */
+    public final void setPrivateAlias(final KeyStoreAlias privateAlias) {
+        this.privateAlias = privateAlias;
+    }
+
+    /**
+     * setter for the public alias for the contact
+     *
+     * @param publicAlias the publicAlias to set
+     */
+    public final void setPublicAlias(final KeyStoreAlias publicAlias) {
+        this.publicAlias = publicAlias;
+    }
+	
+	/**
+     * Saves the keypair or private key this wizard constructs to the platform keystore.
+     *
+     * @param keypair <code>true</code> if the key to save is a keypair or <code>false</code> if it's only a public key.
+     */
+    public void saveKeyToKeystore(final String name, final String password, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent, final BigInteger privExponent) {
+        final KeyStoreManager ksm = KeyStoreManager.getInstance();
+        try {
+            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+        } catch (final NoKeyStoreFileException e) {
+            LogUtil.logError(e);
+        }
+        final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
+        final RSAPublicKey pubkey = new RSAPublicKey(n, e);
+
+        final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,
+                "", new BigInteger(modulus.toString()).bitLength(), //$NON-NLS-1$
+                (name.concat(modulus.toString())).hashCode() + "", pubkey //$NON-NLS-1$
+                        .getClass().getName());
+        setPublicAlias(publicAlias);
+        
+        
+	    final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(
+	            firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
+	    final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,
+	            "", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus //$NON-NLS-1$
+	                    .toString())).hashCode() + "", privkey.getClass().getName()); //$NON-NLS-1$
+	    setPrivateAlias(privateAlias);
+	    
+	    ksm.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
+	    ksm.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+    }
 
 	private String getConcreteAlgorithm(String algorithm) {
 		List<IMetaKeyGenerator>  keyPairGenerators = AlgorithmsXMLManager.getInstance().getKeyPairGenerators();
