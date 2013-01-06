@@ -54,10 +54,8 @@ public class ContactManager {
             init();
             invisibleRoot = new TreeNode("INVISIBLE_ROOT"); //$NON-NLS-1$
             for (IContactDescriptor desc : contacts.values()) {
-                if (desc instanceof ContactDescriptorNode) {
-                    LogUtil.logInfo("adding: " + desc.getName()); //$NON-NLS-1$
-                    invisibleRoot.addChild((ContactDescriptorNode) desc);
-                }
+                LogUtil.logInfo("adding: " + desc.getName()); //$NON-NLS-1$
+                invisibleRoot.addChild(desc);
             }
             LogUtil.logInfo("children.length: " + invisibleRoot.getChildrenArray().length); //$NON-NLS-1$
         }
@@ -121,7 +119,7 @@ public class ContactManager {
             contact.addKeyPair(null, alias);
         }
     }
-    
+
     public boolean contactExists(String name) {
         return contacts.containsKey(name);
     }
@@ -129,10 +127,10 @@ public class ContactManager {
     public void addContact(IContactDescriptor contact) {
         if (contactExists(contact.getName())) {
             LogUtil.logInfo("Contact name already exists"); //$NON-NLS-1$
-            
+
             return;
         }
-        
+
         contacts.put(contact.getName(), contact);
         notifyListeners();
     }
@@ -140,7 +138,7 @@ public class ContactManager {
     public void removeContact(String contact) {
         LogUtil.logInfo("Removing contact " + contact); //$NON-NLS-1$
 
-        invisibleRoot.removeChild((ContactDescriptorNode) contacts.get(contact));
+        invisibleRoot.removeChild(contacts.get(contact));
         contacts.remove(contact);
         notifyListeners();
     }
@@ -179,7 +177,7 @@ public class ContactManager {
             IContactDescriptor contact = new ContactDescriptorNode(alias.getContactName());
             contact.addCertificate(alias);
             contacts.put(alias.getContactName(), contact);
-            invisibleRoot.addChild((ContactDescriptorNode) contact);
+            invisibleRoot.addChild(contact);
             notifyListeners();
         }
     }
@@ -193,11 +191,11 @@ public class ContactManager {
             IContactDescriptor contact = new ContactDescriptorNode(privateKey.getContactName());
             contact.addKeyPair(privateKey, publicKey);
             contacts.put(privateKey.getContactName(), contact);
-            invisibleRoot.addChild((ContactDescriptorNode) contact);
+            invisibleRoot.addChild(contact);
             notifyListeners();
         }
     }
-    
+
     public void addSecretKey(KeyStoreAlias alias) {
         LogUtil.logInfo("Adding secret key " + alias.getAliasString()); //$NON-NLS-1$
 
@@ -207,7 +205,7 @@ public class ContactManager {
             IContactDescriptor contact = new ContactDescriptorNode(alias.getContactName());
             contact.addSecretKey(alias);
             contacts.put(alias.getContactName(), contact);
-            invisibleRoot.addChild((ContactDescriptorNode) contact);
+            invisibleRoot.addChild(contact);
             notifyListeners();
         }
     }

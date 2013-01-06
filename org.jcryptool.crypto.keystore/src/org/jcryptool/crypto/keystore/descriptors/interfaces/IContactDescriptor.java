@@ -10,8 +10,9 @@
 package org.jcryptool.crypto.keystore.descriptors.interfaces;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ITreeNode;
 
-public interface IContactDescriptor {
+public interface IContactDescriptor extends ITreeNode {
     String getName();
     
     String getFirstname();
