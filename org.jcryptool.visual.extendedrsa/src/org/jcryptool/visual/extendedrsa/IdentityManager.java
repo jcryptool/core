@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -68,10 +69,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private Enumeration<String> aliases;
 	private Map<String,Integer> keymgmt;
 	private Map<String,Integer> privKeymgmt;
+	private Map<String,Integer> allKeysForID;
 	private int keyID;
 	private int privKeyID;
-	private BigInteger lastD;
-
+	private int genKeyID;
 
 	private KeyStoreAlias privateAlias;
 	private KeyStoreAlias publicAlias;
@@ -89,9 +90,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		ksManager = KeyStoreManager.getInstance();
 		keymgmt = new HashMap<String,Integer>();
 		privKeymgmt = new HashMap<String,Integer>();
+		allKeysForID = new HashMap<String,Integer>();
 		keyID = 0;
+		genKeyID = 0;
 		privKeyID = 0;
-		lastD = BigInteger.ZERO;
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -205,7 +207,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	    ksm.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
 	    ksm.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
     }
-
+    /**
+     * gets the OID to a certain algorithm
+     * @param algorithm the algorithm, you want to know the OID from
+     * @return the OID
+     */
 	private String getConcreteAlgorithm(String algorithm) {
 		List<IMetaKeyGenerator>  keyPairGenerators = AlgorithmsXMLManager.getInstance().getKeyPairGenerators();
         Iterator<IMetaKeyGenerator> it = keyPairGenerators.iterator();
@@ -230,7 +236,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         }
         return algorithm;
     }
-	
+	/**
+	 * method to get all available contacts
+	 * @return the contacts in a Vector<String>
+	 */
 	public Vector<String> getContacts(){ 
 		Vector<String> contactNames = new Vector<String>();             
         Iterator<IContactDescriptor> it = cManager.getContacts();
@@ -243,8 +252,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         
         return contactNames;
 	}
-	
-	public Vector<String>getAssymetricKeyAlgorithms(String identity){
+	/**
+	 * get all asymmetric algorithms of an identity
+	 * @param identity the identity
+	 * @return a Vector<String> with the algorithm-names
+	 */
+	public Vector<String>getAsymmetricKeyAlgorithms(String identity){
 		Vector<String> keyAlgos = new Vector<String>();
 		KeyStoreAlias localKeyStoreAlias = null;
         try {
@@ -252,7 +265,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		} catch (KeyStoreException e) {
 			e.printStackTrace();
 		}
-        
         
         while (aliases.hasMoreElements()) {
             localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
@@ -286,7 +298,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 	}
                 	
                 	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+keyID,alias);
-                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - KeyID:"+keyID);
+//                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - KeyID:"+keyID);
                 
                 }
             }
@@ -296,10 +308,81 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
        
        return pubkeys;
 	}
-
+	/**
+	 * get all keys for an identity
+	 * @param identity the identity
+	 * @return HashMap<String, KeyStoreAlias>
+	 */
+	public TreeMap<String, KeyStoreAlias>loadAllKeysForIdentity(String identity){
+		TreeMap<String, KeyStoreAlias> keys = new TreeMap<String, KeyStoreAlias>();
+		KeyStoreAlias alias = null;
+        try {
+			aliases = ksManager.getAliases();
+			while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                //load RSA public and private keys
+                if ((alias.getClassName().equals(RSAPublicKey.class.getName())||alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) && alias.getContactName().equals(identity)) {
+                	if (!allKeysForID.containsKey(alias.getHashValue())){
+                		genKeyID = allKeysForID.size()+1;
+                		allKeysForID.put(alias.getHashValue(),genKeyID);
+                	}else{
+                		genKeyID = allKeysForID.get(alias.getHashValue());
+                	}
+                	
+                	keys.put("Schl\u00fcsselpaar: "+genKeyID+" - "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1),alias);
+//                	System.out.println("Schl\u00fcsselpaar: "+genKeyID+" - "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName());
+                }
+            }
+			
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+        
+       return keys;
+	}
+	/**
+	 * get all public key parameters of an RSA key
+	 * @param alias the alias for the key
+	 * @return the parameters in an Vector<String> in the following order: algorithm, format, e, N, encodedKey
+	 */
+	public Vector<String> getAllRSAPubKeyParameters(KeyStoreAlias alias){
+		Vector<String> parameters = new Vector<String>();
+		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		
+		parameters.add(pubkey.getAlgorithm());
+		parameters.add(pubkey.getFormat());
+		parameters.add(pubkey.getE().toString());
+		parameters.add(pubkey.getModulus().toString());
+		
+		return parameters;
+	}
 	
 	/**
-	 * 
+	 * get all private key parameters of an RSA key
+	 * @param alias the alias for the key
+	 * @param password the password for the key
+	 * @return the parameters in an Vector<String> in the following order: algorithm, format, p, q, d, e, N
+	 */
+	public Vector<String> getAllRSAPrivKeyParameters(KeyStoreAlias alias, String password){
+		Vector<String> parameters = new Vector<String>();
+		final RSAPrivateCrtKey privKey = getPrivateKey(alias, password);
+		
+		if (privKey != null){
+			parameters.add(privKey.getAlgorithm());
+			parameters.add(privKey.getFormat());
+			parameters.add(privKey.getP().toString());
+			parameters.add(privKey.getQ().toString());
+			parameters.add(privKey.getD().toString());
+			parameters.add(privKey.getE().toString());
+			parameters.add(privKey.getN().toString());
+		}
+		
+		return parameters;
+	}
+	
+	
+	/**
+	 * get N and e of the public key
 	 * @param alias The alias who wants to get his publicKey
 	 * @return parameters: contains the publicKey Parameters. The first parameter is 'N', the second 'e'
 	 */
@@ -311,7 +394,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		System.out.println("N: "+pubkey.getModulus());
 		parameters.add(pubkey.getPublicExponent());
 		System.out.println("e: "+pubkey.getPublicExponent());
-		
 		return parameters;
 	}
 	

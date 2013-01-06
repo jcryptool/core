@@ -205,7 +205,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             	iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
             	System.out.println("[DEBUG] ALICE generiert rsa key");
             }
-        	Vector<String> keyAlgos = iMgr.getAssymetricKeyAlgorithms(ALICE);
+        	Vector<String> keyAlgos = iMgr.getAsymmetricKeyAlgorithms(ALICE);
 
         	if (!keyAlgos.contains("MpRSA")){
 //            		iMgr.createIdentity(ALICE, "MpRSA", "1234", 1024);
@@ -227,7 +227,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             	iMgr.createIdentity(BOB, "RSA", "1234", 1024);
             	System.out.println("[DEBUG]rsakey wird generiert...bob");
             }
-        	keyAlgos = iMgr.getAssymetricKeyAlgorithms(BOB);
+        	keyAlgos = iMgr.getAsymmetricKeyAlgorithms(BOB);
 
         	if (!keyAlgos.contains("MpRSA")){
 //            		iMgr.createIdentity("Bob", "MpRSA", "1234", 1024);

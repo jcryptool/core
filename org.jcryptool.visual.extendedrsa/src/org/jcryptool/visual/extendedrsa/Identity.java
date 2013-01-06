@@ -14,10 +14,12 @@ import static java.math.BigInteger.ONE;
 import static org.jcryptool.visual.library.Lib.LOW_PRIMES;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
@@ -187,13 +189,17 @@ public class Identity extends TabItem {
 	private Label lbl_pwWrong;
 	private Rsa_Implementation rsa_impl;
 	private Label infolabel_tab2;
+	private boolean isPubKey;
+	private TreeMap<String, KeyStoreAlias> allKeys_keydata;
+	private Label wrongPW_keydata;
+	private Label lbl_enterPW;
 	
 	private final String EXPLAIN_INIT = "Die Identit\u00e4ten aus Ihrem Schl\u00fcsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identit\u00e4ten „Alice Whitehat“ und „Bob Whitehat“ im Schl\u00fcsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identit\u00e4t dar. Durch den Button „Identit\u00e4ten ein-/ausblenden“ k\u00f6nnen bestehende Identit\u00e4ten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identit\u00e4t erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identit\u00e4ten ein-/ausblenden“ ausgew\u00e4hlt wurde!\n\nZu allen Aktionen finden Sie in diesem Bereich Erl\u00e4uterungen.";
 	private final String EXPLAIN_ENCRYPT = "1.Aktion: Nachricht verschl\u00fcsseln und senden\n\nF\u00fcr den Verschl\u00fcsselungsvorgang werden die Parameter N und e ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\n Vorgehensweise:\n\n1) Geben Sie einen optionalen Betreff und eine beliebige Nachricht ein.\n\n2) W\u00e4hlen Sie einen Empf\u00e4nger aus (zum Beispiel Bob Whitehat). Hinweis: Diese Visualisierung erlaubt nur einen Empf\u00e4nger.\n\n3) W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel des Empf\u00e4ngers aus.\n\n4) Klicken Sie auf den Button „Nachricht verschl\u00fcsseln“.\n\n5) Klicken Sie auf den Button „Nachricht senden“, um die verschl\u00fcsselte Nachricht zu verschicken und im Nachrichtenspeicher abzulegen.";
 	private final String EXPLAIN_DECRYPT = "2.Aktion: Nachricht empfangen und entschl\u00fcsseln\n\nF\u00fcr den Entschl\u00fcsselungsvorgang werden die Parameter N und d ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\nVorgehensweise:\n\n1) W\u00e4hlen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) W\u00e4hlen Sie einen Ihrer privaten Schl\u00fcssel aus, und geben Sie das entsprechende Passwort ein.\n\n3) Klicken Sie auf den Button „Nachricht entschl\u00fcsseln“. Die Nachricht kann nur mit dem passenden privaten Schl\u00fcssel erfolgreich entschl\u00fcsselt werden.\n\n4) Klicken Sie auf den Button \"Nachricht l\u00f6schen\", um die verschl\u00fcsselte Nachricht aus dem Nachrichtenspeicher zu l\u00f6schen.";
 	private final String EXPLAIN_SENDED = "Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.";
 	private final String EXPLAIN_DELETED = "Die Nachricht wurde nun endg\u00fcltig aus dem Nachrichtenspeicher gel\u00f6scht. Falls f\u00fcr diese Identit\u00e4ten weitere Nachrichten im Nachrichtenspeicher existieren, k\u00f6nnen sie sich diese nun ansehen. Andernfalls m\u00fcssen Sie vorher weitere Nachrichten verschl\u00fcsseln und an diese Identit\u00e4t senden.";
-	private final String PW_WRONG = "Fehler: Das eingegebene Passwort f\u00fcr den selektierten Privaten Schl\u00fcssel ist FALSCH!";
+	private final String PW_WRONG = "Fehler: Das eingegebene Passwort f\u00fcr den selektierten privaten Schl\u00fcssel ist FALSCH!";
 	private final String EXPLAIN_KEYMGMT_TAB1 = "3.Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen\n\nHier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\n\n1) F\u00fcr den klassischen RSA-Algorithmus werden zwei verschiedene Primzahlen p und q ben\u00f6tigt. Diese k\u00f6nnen entweder ausgew\u00e4hlt oder eingegeben werden. Sofern p und q zul\u00e4ssig sind, kann ein Exponent e ausgesucht, eingegeben oder generiert werden.\n\n2) Beim „multi-primen RSA“ muss zuerst die Anzahl der Primzahlen (zwischen 3 und 5) festgelegt werden. Die Parameter k\u00f6nnen hier analog zum klassischen RSA angegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
 	private final String EXPLAIN_KEYMGMT_TAB2 ="3.Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen (erweitert)\n\nIn dieser Registerkarte k\u00f6nnen Schl\u00fcssel mit aktuell verwendeten Schl\u00fcssell\u00e4ngen erstellt werden. Es muss nur die gew\u00fcnschte Schl\u00fcssell\u00e4nge bzw. die Anzahl der Primzahlen ausgew\u00e4hlt werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
 	private final String EXPLAIN_KEYMGMT_TAB3 = "3.Aktion: Schl\u00fcsselverwaltung - Meine Schl\u00fcssel\n\nEin Schl\u00fcsselpaar besteht aus einem „privaten Schl\u00fcssel“ und einem „\u00f6ffentlichen Schl\u00fcssel“:\n\na) Der private Schl\u00fcssel (N, d):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Der \u00f6ffentliche Schl\u00fcssel (N, e):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der \u00f6ffentliche Exponent e (er befindet sich \u00fcblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren k\u00f6nnen mehr als zwei Primzahlen gew\u00e4hlt werden. In diesem Plugin ist die Anzahl auf drei bis f\u00fcnf Primzahlen beschr\u00e4nkt. Theoretisch ist die Anzahl jedoch nach oben offen.";
@@ -202,7 +208,7 @@ public class Identity extends TabItem {
 	private final String ENTER_FOUR_PRIMES = "W\u00e4hlen Sie 4 verschiedene Primzahlen p, q, r, s und einen Exponenten e:";
 	private final String ENTER_FIVE_PRIMES = "W\u00e4hlen Sie 5 verschiedene Primzahlen p, q, r, s, t und einen Exponenten e:";
 	private final String TAB2_INIT = "Hier k\u00f6nnen Sie neue Schl\u00fcssel mit g\u00e4ngigen Schl\u00fcsselgr\u00f6\u00dfen erstellen:"; 
-	private final String TAB3_INIT = "Hier k\u00f6nnen Sie sich Ihre privaten Schl\u00fcsselpaare und die \u00f6ffentlichen Schl\u00fcssel aller Mitspieler ansehen. \n\nHinweis: Um einen Ihrer privaten Schl\u00fcssel anzuzeigen, m\u00fcssen Sie Ihr Passwort eingeben. Die Anzeige \u00f6ffentlicher Schl\u00fcssel erfordert keine Passwort-Eingabe.";
+	private final String TAB3_INIT = "Hier k\u00f6nnen Sie sich Ihre privaten Schl\u00fcsselpaare und die \u00f6ffentlichen Schl\u00fcssel aller Mitspieler ansehen. \n\nHinweis: Um einen Ihrer privaten Schl\u00fcssel anzuzeigen, m\u00fcssen Sie Ihr Passwort eingeben. Die Anzeige \u00f6ffentlicher Schl\u00fcssel (public keys) erfordert keine Passwort-Eingabe.";
 	private final String NO_ENCRYPTED_MESSAGES = "Achtung: Momentan sind keine verschl\u00fcsselten Nachrichten f\u00fcr diese Identit\u00e4t verf\u00fcgbar.";
 	private final String NO_PRIME_P = "Achtung: 'p' ist keine Primzahl!"; 
 	private final String NO_PRIME_Q = "Achtung: 'q' ist keine Primzahl!"; 
@@ -567,7 +573,6 @@ public class Identity extends TabItem {
 							System.out.println("nun wird die nachricht gel\u00f6scht");
 							txtExplain.setText(EXPLAIN_DELETED);
 							
-//							selectMessage.remove(selectMessage.getSelectionIndex());
 							selectMessage.removeAll();
 							fillSelectMessage();
 							
@@ -623,8 +628,6 @@ public class Identity extends TabItem {
 							
 							deleteMessage.setEnabled(true);
 							
-							SecureMessage currentMsg = extTF.getMessageWithID(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
-											
 							RSAPrivateCrtKey privkey = iMgr.getPrivateKey(privateAlias, pwPrivKey.getText());
 							if(privkey == null){
 								//can't catch the  'java.security.UnrecoverableKeyException'
@@ -638,7 +641,6 @@ public class Identity extends TabItem {
 									System.out.println("wert: "+bi+" bitlength: "+bi.bitLength()+" bitcount:"+bi.bitCount());
 								}
 								
-								//entschl\u00fcsseln
 								//we need d (position 0) and N (position 1)
 								decryptedMessage.setText(rsa_impl.decrypt(encryptedMessage_Tab2.getText(), privKeyValues.get(1), privKeyValues.get(0)));
 							}
@@ -1587,25 +1589,38 @@ public class Identity extends TabItem {
 					selectedKey_Keydata = new Combo(myKeyData, SWT.READ_ONLY);
 					GridData gd_selKey = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 					gd_selKey.heightHint = 20;
-					gd_selKey.widthHint = 200;
+					gd_selKey.widthHint = 250;
 					selectedKey_Keydata.setLayoutData(gd_selKey);
+					allKeys_keydata = iMgr.loadAllKeysForIdentity(Identity.this.identityName);
 					
-					for (int i = 0; i < 2; i++){
-						createSpacer(myKeyData);
-					}
+					selectedKey_Keydata.setItems(allKeys_keydata.keySet().toArray(new String[allKeys_keydata.size()]));
+					selectedKey_Keydata.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							keyData.removeAll();
+							
+							if (selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex()).contains("PublicKey")){
+								showKeydata.setEnabled(true);
+								password_keydata.setVisible(false);
+								lbl_enterPW.setVisible(false);
+								password_keydata.setText("");
+								isPubKey = true;
+							}else{
+								showKeydata.setEnabled(false);
+								password_keydata.setVisible(true);
+								lbl_enterPW.setVisible(true);
+								password_keydata.setText("");
+								isPubKey = false;
+							}
+//							System.out.println(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex()));
+							
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
 					
-					
-					//textfield "enter password"
-					Label lbl_enterPW = new Label(myKeyData, SWT.NONE);
-					lbl_enterPW.setText("Passwort eingeben:");
-					GridData gd_enterPW = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-					gd_enterPW.heightHint = 20;
-					lbl_enterPW.setLayoutData(gd_enterPW);
-					password_keydata = new Text(myKeyData, SWT.PASSWORD|SWT.BORDER);
-					GridData gd_pw = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-					gd_pw.heightHint = 20;
-					gd_pw.widthHint = 200;
-					password_keydata.setLayoutData(gd_pw);
 					
 					//button "show keydata"
 					showKeydata = new Button(myKeyData, SWT.PUSH);
@@ -1614,16 +1629,34 @@ public class Identity extends TabItem {
 					gd_showKeydata.widthHint = 100;
 					showKeydata.setLayoutData(gd_showKeydata);
 					showKeydata.setText("Schl\u00fcsseldaten anzeigen");
+					showKeydata.setEnabled(false);
 					showKeydata.addSelectionListener(new SelectionListener() {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							keyData.removeAll();
-							for (int i = 0; i < 10; i++){
-								TableItem ti = new TableItem(keyData, SWT.NONE);
-								ti.setText(new String[]{"wert in s1: "+i, "wert in S2: "+i});
-							}
+							Vector<String> descriptions = null;
+							Vector<String> values = null;
+							if (isPubKey){
+								descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "e", "N"));
+								values = iMgr.getAllRSAPubKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex())));
+							}else{
+								descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","d", "e","N"));
+								values = iMgr.getAllRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex())), password_keydata.getText());
 							
+							}
+							if (values.size() == 0){
+								wrongPW_keydata.setText(PW_WRONG);
+							}else{
+								wrongPW_keydata.setText("");
+								for (int i = 0; i < descriptions.size(); i++){
+									TableItem ti = new TableItem(keyData, SWT.NONE);
+									ti.setText(new String[]{descriptions.get(i), values.get(i)});
+									
+								}
+//								System.out.println("resize to: "+values.get(values.size()-1).length()*8);
+								column_value.setWidth(values.get(values.size()-1).length()*8);
+							}
 						}
 						
 						@Override
@@ -1632,11 +1665,49 @@ public class Identity extends TabItem {
 					
 					createSpacer(myKeyData);
 					
+					
+					//textfield "enter password"
+					lbl_enterPW = new Label(myKeyData, SWT.NONE);
+					lbl_enterPW.setText("Passwort eingeben:");
+					GridData gd_enterPW = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_enterPW.heightHint = 20;
+					lbl_enterPW.setLayoutData(gd_enterPW);
+					lbl_enterPW.setVisible(false);
+					password_keydata = new Text(myKeyData, SWT.PASSWORD|SWT.BORDER);
+					GridData gd_pw = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_pw.heightHint = 20;
+					gd_pw.widthHint = 200;
+					password_keydata.setLayoutData(gd_pw);
+					password_keydata.setVisible(false);
+					password_keydata.addKeyListener(new KeyListener() {
+						
+						@Override
+						public void keyReleased(KeyEvent e) {
+							showKeydata.setEnabled(true);
+						}
+						
+						@Override
+						public void keyPressed(KeyEvent e) {}
+					});
+					
+					
+					
+					createSpacer(myKeyData);
+					createSpacer(myKeyData);
+					
+					wrongPW_keydata = new Label(myKeyData, SWT.WRAP);
+					GridData gd_wrongPW_kd = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+					gd_wrongPW_kd.heightHint = 30;
+					gd_wrongPW_kd.widthHint = 200;
+					wrongPW_keydata.setLayoutData(gd_wrongPW_kd);
+					wrongPW_keydata.setFont(FontService.getNormalBoldFont());
+					wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					
 					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
 					keyData = new Table(tab3, SWT.BORDER|SWT.FULL_SELECTION);
 					GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-					gd_table.heightHint = 100;
+					gd_table.heightHint = 130;
 					keyData.setLayoutData(gd_table);
 					keyData.setHeaderVisible(true);
 					keyData.setLinesVisible(true);
@@ -1650,9 +1721,7 @@ public class Identity extends TabItem {
 					column_value.setWidth(500);
 					column_value.setText("Wert");
 					
-					TableItem ti = new TableItem(keyData, SWT.NONE);
-					ti.setText(new String[]{"wert in s1", "wert in S2"});
-					
+
 					generalGroup.redraw();
 					generalGroup.layout();
 					forerunner = 3;
