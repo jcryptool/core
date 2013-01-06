@@ -10,6 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages;
 
+import java.util.Arrays;
+import java.util.Vector;
+
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,8 +21,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.jcryptool.visual.extendedrsa.IdentityManager;
 
 /**
  * This is the wizard to delete a new Identity with the button in the visual
@@ -28,13 +34,17 @@ import org.eclipse.swt.widgets.TableItem;
  */
 public class ManageVisibleIdentitiesPage extends WizardPage {
 	
-	public ManageVisibleIdentitiesPage() {
+	private TabFolder tabfolder;
+	private Table table;
+	private Vector<String> displayList;
+	private Vector<String> alreadyShownIDs;
+	
+	public ManageVisibleIdentitiesPage(TabFolder folder) {
 		super("Identit\u00e4ten ausw\u00e4hlen", "Identit\u00e4ten ausw\u00e4hlen", null);
         setDescription("W\u00e4hlen Sie die anzuzeigenden Identit\u00e4t und best\u00e4tigen Sie Ihre Auswahl.");
+        this.tabfolder = folder;
 	}
-
-	private Label selection;
-	private Table table;
+	
 	@Override
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
@@ -45,32 +55,43 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 		container.setLayout(grid);
 		
 		Label lbl = new Label(container, SWT.WRAP);
-		lbl.setText("Selektieren Sie die Identit\u00e4ten, die in der Visualisierung angezeigt werden sollen. Zur Auswahl stehen alle\nIdentit\u00e4ten, die aktuell in Ihrem Schl\u00fcsselspeicher existieren.");
-		
-		String[]identities = {"Alice", "Bob", "Carol", "Dave"};
+		lbl.setText("Selektieren Sie die Identit\u00e4ten, die in der Visualisierung angezeigt werden sollen. Zur Auswahl stehen alle\nIdentit\u00e4ten, die aktuell in Ihrem Schl\u00fcsselspeicher existieren.\n\nHinweis: Es m\u00fcssen mindestens 2 Identit\u00e4ten gew\u00e4hlt werden.");
 		
 		
+		String[] identities =new String[IdentityManager.getInstance().getContacts().size()];
+		IdentityManager.getInstance().getContacts().toArray(identities);
+		Arrays.sort(identities);
+		
+		//identify already shown tabs
+	    alreadyShownIDs = new Vector<String>();
+	    for (TabItem ti : tabfolder.getItems()){
+	    	alreadyShownIDs.add(ti.getText());
+	    }
+	    
 		table = new Table(container, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
 	    for (String s: identities) {
 	      TableItem item = new TableItem(table, SWT.NONE);
 	      item.setText(s);
+	      if (alreadyShownIDs.contains(s)){
+	    	  item.setChecked(true);
+	      }
 	    }
+	    
 	    table.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String auswahl = "";
-				int count = 0;
+				displayList = new Vector<String>();
 				for (TableItem ti : table.getItems()){
 					if (ti.getChecked()){
-						auswahl += ti.getText()+" ";
-						count ++;
+						displayList.add(ti.getText());
 					}
-					
 				}
-				
-				selection.setText(count+".."+auswahl);
-				
+				if (displayList.size() < 2){
+					setPageComplete(false);
+				}else{
+					setPageComplete(true);
+				}
 			}
 			
 			@Override
@@ -82,10 +103,12 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 		gdTable.heightHint = 150;
 		table.setLayoutData(gdTable);
 		
-		
-		selection = new Label(container, SWT.NONE);
-		selection.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1) );
-		
 	}
-
+	public Vector<String> getDisplayList(){
+		return displayList;
+	}
+	
+	public Vector<String> getAllreadyShownList(){
+		return alreadyShownIDs;
+	}
 }

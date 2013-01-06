@@ -95,6 +95,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		genKeyID = 0;
 		privKeyID = 0;
 	}
+	
+	public ContactManager getContactManger(){
+		return cManager;
+	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
 		final String concreteAlgorithm = getConcreteAlgorithm(algorithm);
@@ -247,7 +251,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         
         while (it.hasNext()) {
             meta = it.next();
-            contactNames.add(meta.getName());
+            contactNames.add(meta.getName().toString());
         }
         
         return contactNames;
@@ -277,6 +281,29 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         }
         return keyAlgos;
 	}
+	
+	
+	public int countOwnKeys(String identity){
+		int count = 0;
+		KeyStoreAlias alias = null;
+        try {
+			aliases = ksManager.getAliases();
+			while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+
+                if ((alias.getClassName().equals(RSAPublicKey.class.getName())||alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) && alias.getContactName().equals(identity)) {
+                	count++;
+                }
+            }
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+       
+       return count;
+	}
+	
+	
+	
 	/**
 	 * Method to get publicKeys for a certain identity
 	 * @param identity specifies the identity looking for public keys

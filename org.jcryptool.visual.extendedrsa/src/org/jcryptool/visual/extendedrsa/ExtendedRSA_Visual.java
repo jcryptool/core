@@ -107,41 +107,40 @@ public class ExtendedRSA_Visual extends ViewPart{
 		btn_delID = new Button(grp_id_mgmt, SWT.PUSH);
 		
 		
+		
 		btn_newID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//button "Identit\u00e4t l\u00f6schen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identit\u00e4ten existiern
-				new WizardDialog(getSite().getShell(), new NewIdentityWizard(tabFolder)).open();
+				new WizardDialog(getSite().getShell(), new NewIdentityWizard(tabFolder, btn_delID)).open();
 				grp_id_mgmt.update();
 			}
 		});
 		btn_newID.setText("Neue Identit\u00e4t erstellen");
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		//neuer button begin
 		btn_manageID.setText("Identit\u00e4t ein-/ausblenden");
 		btn_manageID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		btn_manageID.addSelectionListener(new SelectionListener() {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new WizardDialog(getSite().getShell(), new ManageVisibleIdentitesWizard()).open();
+				new WizardDialog(getSite().getShell(), new ManageVisibleIdentitesWizard(tabFolder, txtExplain)).open();
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {}
 		});
-		//neuer button ende
 		
 		btn_delID.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//button "Identit\u00e4t l\u00f6schen" mitgeben... zum deaktivieren/aktivieren, falls zu wenige Identit\u00e4ten existiern nachm l\u00f6schen
-				new WizardDialog(getSite().getShell(), new DeleteIdentityWizard(tabFolder)).open();
+				new WizardDialog(getSite().getShell(), new DeleteIdentityWizard(tabFolder,btn_delID)).open();
 				grp_id_mgmt.update();
 			}
 		});
 		btn_delID.setText("Identit\u00e4t l\u00f6schen");
+		btn_delID.setEnabled(IdentityManager.getInstance().getContacts().size()>2);
+		
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
 		comp_center = new Composite(composite, SWT.NONE);
@@ -151,28 +150,6 @@ public class ExtendedRSA_Visual extends ViewPart{
 		
 		tabFolder = new ExtendedTabFolder(comp_center, SWT.NONE);
 		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		tabFolder.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-//				
-			}
-			
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {}
-		});
-////		tabFolder.addMouseMoveListener(new MouseMoveListener() {
-//			
-//			@Override
-//			public void mouseMove(MouseEvent e) {
-//				if (tabFolder.getItemCount() < 3){
-//					btn_delID.setEnabled(false);
-//				}else{
-//					btn_delID.setEnabled(true);
-//				}
-//			}
-//		});
-//		btn_delID.setEnabled(false);
-		
 
 		Group grp_explain = new Group(comp_center, SWT.NONE);
 		grp_explain.setLayout(new GridLayout(1, true));

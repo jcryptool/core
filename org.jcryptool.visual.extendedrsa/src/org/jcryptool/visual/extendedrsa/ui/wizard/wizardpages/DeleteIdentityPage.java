@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages;
 
+import java.util.Vector;
+
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -21,7 +23,9 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
+import org.jcryptool.visual.extendedrsa.IdentityManager;
 
 /**
  * This is the wizard to delete a new Identity with the button in the visual
@@ -31,9 +35,9 @@ import org.jcryptool.visual.extendedrsa.Identity;
 public class DeleteIdentityPage extends WizardPage {
 
 	private Combo selectedIdentity;
-	private TabFolder tabfolder;
+	private ExtendedTabFolder tabfolder;
 	
-	public DeleteIdentityPage(TabFolder tabfolder) {
+	public DeleteIdentityPage(ExtendedTabFolder tabfolder) {
 		super("Identit\u00e4t l\u00f6schen", "Identit\u00e4t l\u00f6schen", null);
         setDescription("W\u00e4hlen Sie die zu l\u00f6schende Identit\u00e4t aus und best\u00e4tigen Sie Ihre Auswahl.");
         this.tabfolder = tabfolder;
@@ -57,14 +61,13 @@ public class DeleteIdentityPage extends WizardPage {
 		gd_selectedIdentity.widthHint = 256;
 		selectedIdentity.setLayoutData(gd_selectedIdentity);
 		
-		//Fill the combo with the possible Identities
-		TabItem[] ids = tabfolder.getItems();
-		for (TabItem ti : ids){
-			Identity id = (Identity)ti;
-			if ((id.getIdentityName() != "Alice Whitehat") && (id.getIdentityName() != "Bob Whitehat")){
-				selectedIdentity.add(id.getIdentityName());
+		Vector<String> ids = IdentityManager.getInstance().getContacts();
+		for (String s : ids){
+			if (!s.equals("Alice Whitehat") && (!s.equals("Bob Whitehat"))){
+				selectedIdentity.add(s);
 			}
 		}
+		
 		selectedIdentity.select(0);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);

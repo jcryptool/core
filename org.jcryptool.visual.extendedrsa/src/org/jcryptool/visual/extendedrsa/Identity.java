@@ -1594,6 +1594,7 @@ public class Identity extends TabItem {
 					allKeys_keydata = iMgr.loadAllKeysForIdentity(Identity.this.identityName);
 					
 					selectedKey_Keydata.setItems(allKeys_keydata.keySet().toArray(new String[allKeys_keydata.size()]));
+					
 					selectedKey_Keydata.addSelectionListener(new SelectionListener() {
 						
 						@Override
@@ -1702,6 +1703,11 @@ public class Identity extends TabItem {
 					wrongPW_keydata.setLayoutData(gd_wrongPW_kd);
 					wrongPW_keydata.setFont(FontService.getNormalBoldFont());
 					wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					
+					if (selectedKey_Keydata.getItemCount() == 0){
+						wrongPW_keydata.setText("Achtung: Noch keine Schl\u00fcssel f\u00fcr diese Identit\u00e4t vorhanden.");
+						selectedKey_Keydata.setEnabled(false);
+					}
 					
 					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
@@ -1960,8 +1966,12 @@ public class Identity extends TabItem {
 		for (String s : iMgr.getContacts()){
 //			if (!s.equals(this.identityName) && !recipients.contains(s)){
 			if (!recipients.contains(s)){
-				recipients.add(s);
-				System.out.println("[DEBUG] filling recipients... adding: "+s);
+				if (IdentityManager.getInstance().countOwnKeys(s)>0){
+					recipients.add(s);
+					System.out.println("[DEBUG] filling recipients... adding: "+s);
+				}else{
+					System.out.println("[DEBUG] recipient "+s+" has no keys");
+				}
 			}
 		}
 		

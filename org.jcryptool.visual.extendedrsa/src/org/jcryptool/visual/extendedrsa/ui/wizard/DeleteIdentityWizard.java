@@ -12,9 +12,14 @@ package org.jcryptool.visual.extendedrsa.ui.wizard;
 
 
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
+import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
+import org.jcryptool.visual.extendedrsa.IdentityManager;
 import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.DeleteIdentityPage;
 
 /**
@@ -24,11 +29,13 @@ import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.DeleteIdentityPage
  */
 public class DeleteIdentityWizard extends Wizard{
 	
-	TabFolder tabfolder;
-	DeleteIdentityPage deleteIDPage;
+	private ExtendedTabFolder tabfolder;
+	private DeleteIdentityPage deleteIDPage;
+	private Button delID;
 	
-	public DeleteIdentityWizard(TabFolder folder){
+	public DeleteIdentityWizard(ExtendedTabFolder folder, Button delID){
 		this.tabfolder = folder;
+		this.delID = delID;
 	}
 	
 	@Override
@@ -39,14 +46,29 @@ public class DeleteIdentityWizard extends Wizard{
 	
 	@Override
 	public boolean performFinish() { 
+		String contactToDelete = deleteIDPage.getSelectedIdentity().getItem(deleteIDPage.getSelectedIdentity().getSelectionIndex()).toString();
+		
 		//find the tabitem and delete it
 		for (TabItem ti : tabfolder.getItems()){
 			Identity current = (Identity)ti;
-			if (current.getIdentityName().equals(deleteIDPage.getSelectedIdentity().getText())){
+			if (current.getIdentityName().equals(contactToDelete)){
 				current.dispose();
 			}
 		}
+		ContactManager.getInstance().removeContact(contactToDelete);
 		
+		try{
+			KeyStoreManager.getInstance().deleteContact(contactToDelete);
+		}catch(Exception e){
+			System.out.println("error");
+			//if the Identity doesn't have keys, it is not in the keystore.. so it can't be deleted there.--> do nothing here
+		}
+		
+		if (IdentityManager.getInstance().getContacts().size()>3){
+			delID.setEnabled(true);
+		}else{
+			delID.setEnabled(false);
+		}
 		return true;
 	}
 

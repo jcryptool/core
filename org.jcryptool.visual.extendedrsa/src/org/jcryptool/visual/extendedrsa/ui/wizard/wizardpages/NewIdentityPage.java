@@ -20,6 +20,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.GridData;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.extendedrsa.IdentityManager;
 
 /**
  * This is the wizardPage for a new Identity.
@@ -101,30 +102,36 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		hint.setLayoutData(gd);
 	}
 
-	public Text getIdName() {
-		return idName;
+	public String getIdName() {
+		return idName.getText().toString();
 	}
 
-	public Text getIdForename() {
-		return idForename;
+	public String getIdForename() {
+		return idForename.getText().toString();
 	}
 
-	public Text getIdSurname() {
-		return idSurname;
+	public String getIdSurname() {
+		return idSurname.getText().toString();
 	}
 
-	public Text getIdOrganisation() {
-		return idOrganisation;
+	public String getIdOrganisation() {
+		return idOrganisation.getText().toString();
 	}
 
-	public Text getIdRegion() {
-		return idRegion;
+	public String getIdRegion() {
+		return idRegion.getText().toString();
 	}
 
 	@Override
 	public void modifyText(ModifyEvent e) {
 		if (idName.getText().length() > 0){
-			setPageComplete(true);
+			if (IdentityManager.getInstance().getContacts().contains(idName.getText().toString())){
+				setPageComplete(false);
+				setErrorMessage("Achtung: Diese Identit\u00e4t existiert bereits. Bitte einen anderen Namen w\u00e4hlen.");
+			}else{
+				setErrorMessage(null);
+				setPageComplete(true);
+			}
 		}else{
 			setPageComplete(false);
 		}

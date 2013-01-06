@@ -10,8 +10,17 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa.ui.wizard;
 
+import java.util.Iterator;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabItem;
+import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
+import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
+import org.jcryptool.visual.extendedrsa.Identity;
+import org.jcryptool.visual.extendedrsa.IdentityManager;
 import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.ManageVisibleIdentitiesPage;
 
 /**
@@ -21,20 +30,51 @@ import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.ManageVisibleIdent
  */
 public class ManageVisibleIdentitesWizard extends Wizard{
 
-	ManageVisibleIdentitiesPage visiblePages;
+	private ManageVisibleIdentitiesPage visiblePage;
+	private ExtendedTabFolder tabfolder;
+	private Label txtExplain;
 	
-	public ManageVisibleIdentitesWizard(){
+	public ManageVisibleIdentitesWizard(ExtendedTabFolder folder, Label txtExplain){
+		this.tabfolder = folder;
+		this.txtExplain = txtExplain;
 	}
 	
 	@Override
 	public final void addPages() {
-		visiblePages = new ManageVisibleIdentitiesPage();
-		addPage(visiblePages);
+		visiblePage = new ManageVisibleIdentitiesPage(tabfolder);
+		addPage(visiblePage);
 	}
 	
 	@Override
 	public boolean performFinish() {
+		if (visiblePage.isPageComplete()){
+			for (String s: IdentityManager.getInstance().getContacts()){
+				if (visiblePage.getAllreadyShownList().contains(s) && !visiblePage.getDisplayList().contains(s)){
+					//id 'deselected' -> remove from visual
+					for (TabItem ti : tabfolder.getItems()){
+						Identity current = (Identity)ti;
+						if (current.getIdentityName().equals(s)){
+							current.dispose();
+						}
+					}
+				}
+				if (!visiblePage.getAllreadyShownList().contains(s) && visiblePage.getDisplayList().contains(s)){
+					//create selected identity in the visual
+					
+					Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
+					IContactDescriptor meta;
+		            while (it.hasNext()) {
+		                meta = it.next();
+		                if(meta.getName().equals(s)){
+		                	new Identity(tabfolder, SWT.NONE, meta.getName(), meta.getFirstname(), meta.getLastname(), meta.getOrganization(), meta.getRegion(), txtExplain);
+		                }
+		            }
+				}
+			}
 		return true;
+		}else{
+			return false;
+		}
 	}
 
 }
