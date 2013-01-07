@@ -59,6 +59,7 @@ public class FlexiProviderController extends AbstractProviderController {
 		LogUtil.logInfo("Security Provider '" + flexiCore.getName() + "' added to pos: " + pos);
 
 		Provider flexiEC = new FlexiECProvider();
+        flexiEC.remove("SecureRandom.ECPRNG");
 		pos = Security.insertProviderAt(flexiEC, 2);
 		providers.add(flexiEC.getName() + AbstractProviderController.SEPARATOR + flexiEC.getInfo());
 		LogUtil.logInfo("Security Provider '" + flexiEC.getName() + "' added to pos: " + pos);
