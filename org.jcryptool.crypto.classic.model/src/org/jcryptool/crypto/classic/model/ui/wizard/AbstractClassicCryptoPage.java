@@ -37,6 +37,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
@@ -104,15 +105,27 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 */
 	protected Observer pageObserver = new Observer() {
 		public void update(Observable o, Object arg) {
-			setPageComplete(mayFinish());
 			haveNextPage = transformationInput.getContent();
+			setPageComplete(mayFinish());
 			getContainer().updateButtons();
+			updateCommandLineString();
 		}
 	};
 	private Label customAlphaHint;
 
+	protected Group consoleGroup;
+
+	private Label lblConsoleDescr;
+
+	private Button consoleButton;
+
+	private Label lblConsoleFurther;
+
+	private Text txtConsoleCommand;
+
 	/**
 	 * Creates a new instance of AbstractClassicCryptoPage
+	 * @wbp.parser.constructor
 	 */
 	public AbstractClassicCryptoPage() {
 		this("", Messages.AbstractClassicCryptoPage_genericNormalMsg); //$NON-NLS-1$
@@ -169,6 +182,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 		createAlphabetGroup(pageComposite);
 		createKeyGroup(pageComposite);
 		createTransformGroup(pageComposite);
+		createConsoleGroup(pageComposite);
 
 		setPageComplete(mayFinish());
 		setControl(pageComposite);
@@ -178,6 +192,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
 		createInputVerificationHandler(parent.getShell());
 		addPageObserver();
+		updateCommandLineString();
 	}
 
 	/**
@@ -242,67 +257,29 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	 * This should be reimplemented if other input verification/handling is needed.
 	 */
 	protected void createAlphabetInputObjects() {
-//		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
-//			@Override
-//			protected InputVerificationResult verifyUserChange() {
-//				//Because no invalid Alphabets will be put into the Selection box
-//				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-//			}
-//			@Override
-//			public AbstractAlphabet readContent() {
-//				String selectedAlphabetName = alphabetCombo.getText();
-//				return AlphabetsManager.getInstance().getAlphabetByName(selectedAlphabetName);
-//			}
-//			@Override
-//			public void writeContent(AbstractAlphabet content) {
-//				alphabetCombo.setText(content.getName());
-//			}
-//			@Override
-//			protected AbstractAlphabet getDefaultContent() {
-//				return getDefaultAlphabet();
-//			}
-//			@Override
-//			public String getName() {
-//				return Messages.AbstractClassicCryptoPage_alphabet_input_name;
-//			}
-//		};
-
-		filterInput = new AbstractUIInput<Boolean>() {
-			@Override
-			public void writeContent(Boolean content) {
-				filterCheckBox.setSelection(content);
-			}
+		
+		filterInput = new ButtonInput() {
+			
 			@Override
 			protected InputVerificationResult verifyUserChange() {
 				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
 			}
-			@Override
-			public Boolean readContent() {
-				return filterCheckBox.getSelection();
-			}
+			
 			@Override
 			public String getName() {
-				return Messages.AbstractClassicCryptoPage_filter_input_name;
+				return "nonalpha-chars filter"; //$NON-NLS-1$
 			}
+			
 			@Override
 			protected Boolean getDefaultContent() {
-				return AlphabetsPlugin.getDefault().getFilterChars();
+				return true;
+			}
+			
+			@Override
+			public Button getButton() {
+				return filterCheckBox;
 			}
 		};
-
-//		SelectionAdapter adapterAlphabet = new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//				alphabetInput.synchronizeWithUserSide();
-//			}
-//		};
-//		alphabetCombo.addSelectionListener(adapterAlphabet);
-
-//		SelectionAdapter adapterFilter = new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//				filterInput.synchronizeWithUserSide();
-//			}
-//		};
-//		alphabetCombo.addSelectionListener(adapterFilter);
 
 		getAlphabetInput().addObserver(new Observer() {
 			public void update(Observable o, Object arg) {
@@ -565,7 +542,14 @@ public class AbstractClassicCryptoPage extends WizardPage {
 	public AbstractAlphabet getSelectedAlphabet() {
 		return getAlphabetInput().getContent();
 	}
-
+	
+	/**
+	 * @return whether the selected alphabet is a custom one.
+	 */
+	public boolean isSelectedAlphaCustom() {
+		return alphabetCombo.isCustomAlphabetSelected();
+	}
+	
 	/**
 	 * Returns the entered key.
 	 *
@@ -835,6 +819,109 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			keyText.setLayoutData(keyTextGridData);
 	        keyText.setToolTipText(Messages.AbstractClassicCryptoPage_keyToolTip);
 	}
+
+	protected void createConsoleGroup(Composite parent) {
+		if(specification.hasConsoleRepresentation()) {
+			consoleGroup = new Group(parent, SWT.NONE);
+			consoleGroup.setLayout(new GridLayout(2, false));
+			consoleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+			consoleGroup.setText(Messages.AbstractClassicCryptoPage_1);
+			
+			{
+				lblConsoleDescr = new Label(consoleGroup, SWT.WRAP);
+				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+				layoutData.widthHint = 320;
+				layoutData.horizontalSpan = 2;
+				lblConsoleDescr.setLayoutData(layoutData);
+				lblConsoleDescr.setText(Messages.AbstractClassicCryptoPage_2);
+				
+				lblConsoleFurther = new Label(consoleGroup, SWT.WRAP);
+				layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+				layoutData.widthHint = 320;
+				layoutData.verticalIndent = 5;
+				layoutData.horizontalSpan = 2;
+				lblConsoleFurther.setLayoutData(layoutData);
+				lblConsoleFurther.setText(Messages.AbstractClassicCryptoPage_3);
+				
+//				consoleButton = new Button(consoleGroup, SWT.PUSH);
+//				layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+//				layoutData.verticalIndent = 5;
+//				consoleButton.setLayoutData(layoutData);
+//				consoleButton.setText("Generate command line: ");
+//				consoleButton.addSelectionListener(new SelectionAdapter() {
+//					@Override
+//					public void widgetSelected(SelectionEvent e) {
+//						updateCommandLineString();
+//					}
+//				});
+
+				txtConsoleCommand = new Text(consoleGroup, SWT.BORDER|SWT.CENTER);
+				txtConsoleCommand.setEditable(false);
+				layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+				layoutData.verticalIndent = 5;
+				txtConsoleCommand.setLayoutData(layoutData);
+				txtConsoleCommand.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NONE)); //$NON-NLS-1$
+				//TODO: dispose
+			}
+		}
+	}
+	
+	
+	/**
+     * @return the alphabet command line part
+     */
+    protected String generateAlphabetPartForCommandLine() {
+    	String result = ""; //$NON-NLS-1$
+    	if(isSelectedAlphaCustom()) {
+    		setCommandLineWarning(String.format("The custom alphabet %s cannot be used in the command. Specify an existing alphabet with the parameter '-a <alphabet name>'; currently, a standard alphabet will be used.", getAlphabetInput().getContent().getName())); //$NON-NLS-1$
+    	} else {
+    		result += "-a "; //$NON-NLS-1$
+    		if(getAlphabetInput().getContent().getName().contains(" ")) { //$NON-NLS-1$
+    			result += "\""+getAlphabetInput().getContent().getName()+"\""; //$NON-NLS-1$ //$NON-NLS-2$
+    		} else {
+    			result += getAlphabetInput().getContent().getName();
+    		}
+    	}
+    	return result;
+    }
+    
+    protected String quoteCmdlineArgIfNecessary(String arg) {
+    	if(arg.contains(" ")) { //$NON-NLS-1$
+    		return "\""+arg+"\""; //$NON-NLS-1$ //$NON-NLS-2$
+    	}
+    	return arg;
+    }
+	
+	/**
+	 * Sets a warning to be displayed in the command line section
+	 * 
+	 * @param warning if null, the warning disappears
+	 */
+	protected void setCommandLineWarning(String warning) {
+		//TODO: handle
+	}
+
+	/**
+	 * This method generates a JCT console string which should result in the exact same result
+	 * which would have been yielded when finishing this wizard.
+	 * 
+	 * It is safe to assume when extending this function, that the wizard is filled out correctly,
+	 * and the "finish" button is enabled.
+	 * 
+	 * @return
+	 */
+	protected String generateCommandLineString() {
+		return ""; //$NON-NLS-1$
+	}
+	
+	protected void updateCommandLineString() {
+		if(isPageComplete()) {
+			txtConsoleCommand.setText(generateCommandLineString());
+		} else {
+			txtConsoleCommand.setText(Messages.AbstractClassicCryptoPage_15);
+		}
+	}
+	
 
 	/**
 	 * Sets a MWizardMessage Object to this WizardPage

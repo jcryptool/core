@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.doppelkasten.algorithm;
 
+import java.util.regex.Pattern;
+
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 
@@ -21,6 +23,8 @@ import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecificatio
 public class DoppelkastenAlgorithmSpecification extends
 		ClassicAlgorithmSpecification {
 	
+	public static final String KEY_SEPARATOR = "SLGFLBSDFGKSDFGSDFGLK";
+
 	@Override
 	public boolean isValidPlainTextAlphabet(AbstractAlphabet alpha) {
 		char[] one = alpha.getCharacterSet();
@@ -36,9 +40,14 @@ public class DoppelkastenAlgorithmSpecification extends
 		return true;
 	}
 	
-	public String glueKeys(String key1, String key2) {
-		return (key1 + "SLGFLBSDFGKSDFGSDFGLK" + key2); //$NON-NLS-1$
+	public static String glueKeys(String key1, String key2) {
+		return (key1 + KEY_SEPARATOR + key2); //$NON-NLS-1$
 	}
+	
+	public static String[] unglueKeys(String gluedKeys) {
+		return gluedKeys.split(Pattern.quote(KEY_SEPARATOR));
+	}
+	
 	
 	public char[] keyInputStringToDataobjectFormat(String key1, String key2) {
 	    return glueKeys(key1, key2).toCharArray();

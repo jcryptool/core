@@ -660,6 +660,16 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 		super.setEnabled(enabled);
 	}
+	
+	public boolean isCustomAlphabetSelected() {
+		if(mode.isWithCustomButton()) {
+			return btnCustomAlphabet.getSelection();
+		}
+		if(mode.isWithCustomComboEntry()) {
+			return !isRegisteredAlphabetSetInCombo();
+		}
+		return false;
+	}
 
 	private void applyEnabledMap() {
 		for(Control c: enabledStateMap.keySet()) {

@@ -121,11 +121,25 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
 	public String getKey() {
         return key1InputComposite.getKeyInput().getContent().toUnformattedChars(this.getSelectedAlphabet());
     }
+    
+    /**
+     * @return the passphrase for key 1
+     */
+    public String getKeyString() {
+    	return key1InputComposite.getTextfieldString();
+    }
+    
+    /**
+     * @return the passphrase for key 2
+     */
+    public String getKey2String() {
+    	return key2InputComposite.getTextfieldString();
+    }
 
     /**
      * Returns the entered 2nd key.
      *
-     * @return The entered 2nd key
+     * @return The entered 2nd key (or "" if not active)
      */
     public String getKey2() {
         if (key2InputComposite.getIsActiveInput().getContent())
@@ -133,18 +147,30 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
         return ""; //$NON-NLS-1$
     }
 
+    /**
+     * @return true: columnwise; false: rowwise
+     */
     public boolean getTransp1InOrder() {
         return key1InputComposite.getReadInInput().getContent();
     }
 
+    /**
+     * @return true: columnwise; false: rowwise
+     */
     public boolean getTransp1OutOrder() {
         return key1InputComposite.getReadOutInput().getContent();
     }
 
+    /**
+     * @return true: columnwise; false: rowwise
+     */
     public boolean getTransp2InOrder() {
         return key2InputComposite.getReadInInput().getContent();
     }
 
+    /**
+     * @return true: columnwise; false: rowwise
+     */
     public boolean getTransp2OutOrder() {
         return key2InputComposite.getReadOutInput().getContent();
     }
@@ -207,6 +233,33 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
         if (key2InputComposite != null && key2InputComposite.getVerificationDisplayHandler() != null) {
             key2InputComposite.getVerificationDisplayHandler().dispose();
         }
+    }
+    
+    @Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "-k " + quoteCmdlineArgIfNecessary(getKeyString());
+    	String key2 = "-k2 " + quoteCmdlineArgIfNecessary(getKey2String());
+    	
+    	String t1ReadIn = "-t1ReadIn ";
+    	String t1ReadOut = "-t1ReadOut ";
+    	String t2ReadIn = "-t2ReadIn ";
+    	String t2ReadOut = "-t2ReadOut ";
+    	t1ReadIn += getTransp1InOrder()?"cw":"rw";
+    	t1ReadOut += getTransp1OutOrder()?"cw":"rw";
+    	t2ReadIn += getTransp2InOrder()?"cw":"rw";
+    	t2ReadOut += getTransp2OutOrder()?"cw":"rw";
+    	
+    	String result = "transposition " + encDec + " -ed " + key + " " + t1ReadIn + " " + t1ReadOut;
+
+    	if(!getKey2().equals("")) {
+    		result += " " + key2 + " " + t2ReadIn + " " + t2ReadOut;
+    	}
+    	
+    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
     }
 
 }

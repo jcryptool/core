@@ -30,12 +30,22 @@ public class DelastelleWizardPage extends AbstractClassicCryptoPage {
 		super(Messages.DelastelleWizardPage_delastelle, Messages.DelastelleWizardPage_enterkey); //$NON-NLS-1$
 	}
 	
-	
-	
-	
 	@Override
 	protected void setHelpAvailable() {
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), DelastellePlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
 	}
+	
+	@Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "-k " + quoteCmdlineArgIfNecessary(getKey());
+    	
+    	String result = "bifid " + encDec + " -ed " + key;
+
+//    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
+    }
 	
 }

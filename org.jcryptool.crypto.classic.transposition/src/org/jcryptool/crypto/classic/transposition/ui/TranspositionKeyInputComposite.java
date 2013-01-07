@@ -629,5 +629,9 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 	public WidgetBubbleUIInputHandler getVerificationDisplayHandler() {
 		return verificationDisplayHandler;
 	}
+	
+	public String getTextfieldString() {
+		return textKey.getText();
+	}
 
 }

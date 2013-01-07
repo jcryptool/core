@@ -31,6 +31,19 @@ public class VigenereWizardPage extends AbstractClassicCryptoPage{
     protected void setHelpAvailable() {
     	PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), VigenerePlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }
+    
+    @Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "-k " + quoteCmdlineArgIfNecessary(getKey());
+    	
+    	String result = "vigenere " + encDec + " -ed " + key;
+
+    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
+    }
 
 
 }
