@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages;
+package org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;

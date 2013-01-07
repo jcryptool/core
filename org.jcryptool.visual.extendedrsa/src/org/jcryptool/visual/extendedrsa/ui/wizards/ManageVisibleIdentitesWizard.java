@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.extendedrsa.ui.wizard;
+package org.jcryptool.visual.extendedrsa.ui.wizards;
 
 import java.util.Iterator;
 
@@ -21,7 +21,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
-import org.jcryptool.visual.extendedrsa.ui.wizard.wizardpages.ManageVisibleIdentitiesPage;
+import org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages.ManageVisibleIdentitiesPage;
 
 /**
  * This is the wizard to create a new Identity with the button in the visual

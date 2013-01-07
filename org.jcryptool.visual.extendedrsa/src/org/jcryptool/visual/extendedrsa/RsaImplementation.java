@@ -21,9 +21,9 @@ import org.jcryptool.visual.library.Constants;
  * @author Christoph Schnepf, Patrick Zillner
  *
  */
-public class Rsa_Implementation{
+public class RsaImplementation{
 	
-	public Rsa_Implementation(){
+	public RsaImplementation(){
 		
 	}
 	/**

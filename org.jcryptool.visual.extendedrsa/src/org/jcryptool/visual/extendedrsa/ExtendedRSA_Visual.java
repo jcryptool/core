@@ -32,9 +32,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.visual.extendedrsa.ui.wizard.DeleteIdentityWizard;
-import org.jcryptool.visual.extendedrsa.ui.wizard.ManageVisibleIdentitesWizard;
-import org.jcryptool.visual.extendedrsa.ui.wizard.NewIdentityWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizards.ManageVisibleIdentitesWizard;
+import org.jcryptool.visual.extendedrsa.ui.wizards.NewIdentityWizard;
 
 
 /**

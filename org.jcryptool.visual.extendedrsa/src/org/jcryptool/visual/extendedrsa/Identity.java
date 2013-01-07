@@ -187,7 +187,7 @@ public class Identity extends TabItem {
 	private KeyStoreAlias publicAlias;
 	private KeyStoreAlias privateAlias;
 	private Label lbl_pwWrong;
-	private Rsa_Implementation rsa_impl;
+	private RsaImplementation rsa_impl;
 	private Label infolabel_tab2;
 	private boolean isPubKey;
 	private TreeMap<String, KeyStoreAlias> allKeys_keydata;
@@ -248,7 +248,7 @@ public class Identity extends TabItem {
 		this.txtExplain = explain;
 		
 		iMgr = IdentityManager.getInstance();
-		rsa_impl = new Rsa_Implementation();
+		rsa_impl = new RsaImplementation();
 		stopUpdateE = false;
 		
 		//set the text of the TabItem
