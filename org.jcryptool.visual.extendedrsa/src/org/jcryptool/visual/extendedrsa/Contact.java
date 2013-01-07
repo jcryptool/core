@@ -11,23 +11,23 @@
 package org.jcryptool.visual.extendedrsa;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactDescriptorNode;
 
 /**
  * represents a contact/identity
  * @author Christoph Schnepf, Patrick Zillner
  *
  */
-public class Contact implements IContactDescriptor{
+public class Contact extends ContactDescriptorNode{
 
 	private String name;
 	private String firstName;
 	private String lastName;
 	private String organisation;
 	private String region;
-	
-	
+
 	public Contact(String name, String firstName, String lastName, String organisation, String region) {
+		super(name);
 		this.name = name;
 		this.firstName = firstName;
 		this.lastName = lastName;

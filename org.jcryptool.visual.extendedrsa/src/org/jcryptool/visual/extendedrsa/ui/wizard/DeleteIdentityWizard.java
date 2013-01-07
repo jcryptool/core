@@ -47,7 +47,7 @@ public class DeleteIdentityWizard extends Wizard{
 	@Override
 	public boolean performFinish() { 
 		String contactToDelete = deleteIDPage.getSelectedIdentity().getItem(deleteIDPage.getSelectedIdentity().getSelectionIndex()).toString();
-		
+		System.out.println("contact to delete: "+contactToDelete);
 		//find the tabitem and delete it
 		for (TabItem ti : tabfolder.getItems()){
 			Identity current = (Identity)ti;
@@ -55,14 +55,8 @@ public class DeleteIdentityWizard extends Wizard{
 				current.dispose();
 			}
 		}
-		ContactManager.getInstance().removeContact(contactToDelete);
 		
-		try{
-			KeyStoreManager.getInstance().deleteContact(contactToDelete);
-		}catch(Exception e){
-			System.out.println("error");
-			//if the Identity doesn't have keys, it is not in the keystore.. so it can't be deleted there.--> do nothing here
-		}
+		KeyStoreManager.getInstance().deleteContact(contactToDelete);
 		
 		if (IdentityManager.getInstance().getContacts().size()>3){
 			delID.setEnabled(true);
