@@ -60,6 +60,10 @@ public class AsymmetricHybridCipherEngine extends FlexiProviderEngine {
                     password = promptPassword();
                 }
 
+                if (password == null) {
+                    return null;
+                }
+
                 key = (Key) KeyStoreManager.getInstance().getPrivateKey(operation.getKeyStoreAlias(), password);
                 cipher.initEncrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec(),
                         FlexiProviderEnginesPlugin.getSecureRandom());

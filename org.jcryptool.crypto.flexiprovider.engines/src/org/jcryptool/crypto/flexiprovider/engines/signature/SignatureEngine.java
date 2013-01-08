@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -56,18 +56,22 @@ public class SignatureEngine extends FlexiProviderEngine {
                 signature.setParameters(spec);
             }
             if (operation.getOperation().equals(OperationType.SIGN)) {
-                if (operation.getPassword() != null)
+                if (operation.getPassword() != null) {
                     password = operation.getPassword();
-                else
+                } else {
                     password = promptPassword();
-                if (password != null) {
-                    Key privateKey = (Key) KeyStoreManager.getInstance().getPrivateKey(operation.getKeyStoreAlias(),
-                            password);
-                    signature.initSign((PrivateKey) privateKey, FlexiProviderEnginesPlugin.getSecureRandom());
-
-                    usedKey = new KeyObject(privateKey, password);
-                    operation.setPassword(password); // save in the operation if no exception occurred
                 }
+
+                if (password == null) {
+                    return null;
+                }
+                
+                Key privateKey = (Key) KeyStoreManager.getInstance().getPrivateKey(operation.getKeyStoreAlias(),
+                        password);
+                signature.initSign((PrivateKey) privateKey, FlexiProviderEnginesPlugin.getSecureRandom());
+
+                usedKey = new KeyObject(privateKey, password);
+                operation.setPassword(password); // save in the operation if no exception occurred
             } else {
                 Certificate certificate = KeyStoreManager.getInstance().getPublicKey(operation.getKeyStoreAlias());
                 Key publicKey = (Key) certificate.getPublicKey();
