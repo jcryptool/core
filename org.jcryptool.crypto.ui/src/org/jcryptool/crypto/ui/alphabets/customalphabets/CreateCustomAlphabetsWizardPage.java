@@ -156,10 +156,10 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				{
 					composite_1 = new Composite(compCharacterData, SWT.NONE);
 					composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-					GridLayout gl_composite_1 = new GridLayout(2, false);
+					GridLayout gl_composite_1 = new GridLayout(1, false);
 					gl_composite_1.marginLeft = 5;
 					gl_composite_1.marginWidth = 0;
-					gl_composite_1.marginHeight = 0;
+					gl_composite_1.marginHeight = 5;
 					composite_1.setLayout(gl_composite_1);
 					{
 						btnComposeAlphabetFrom = new Button(composite_1, SWT.RADIO);
