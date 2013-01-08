@@ -245,7 +245,7 @@ public class FriedmanGui extends Content {
                     lalengthLData.width = 160;
                     lalengthLData.height = 15;
                     llength.setLayoutData(lalengthLData);
-                    llength.setText("Länge des Passwortes:");
+                    llength.setText(Messages.FriedmanGui_0);
                     llength.setFont(FontService.getSmallFont());
                     llength.setAlignment(SWT.RIGHT);
                 }
@@ -273,7 +273,7 @@ public class FriedmanGui extends Content {
 
             this.layout();
             final SingleVanishTooltipLauncher launcher = new SingleVanishTooltipLauncher(this.getShell());
-            launcher.showNewTooltip(tlength.toDisplay(new Point(tlength.getBounds().width-1, 1)), 20000, "Analysehilfe", "Dies ist die vom JCT ermittelte Vermutung über die Schlüssellänge, basierend auf obigem Diagramm.\n\n[Klicken zum Schließen]");
+            launcher.showNewTooltip(tlength.toDisplay(new Point(tlength.getBounds().width-1, 1)), 20000, Messages.FriedmanGui_1, Messages.FriedmanGui_2);
             this.addDisposeListener(new DisposeListener() {
     			public void widgetDisposed(DisposeEvent e) {
     				launcher.dispose();
@@ -287,7 +287,7 @@ public class FriedmanGui extends Content {
     private void start() {
         int step = 0;
     	try {
-    		if(tlength.getText().length()==0) throw new NumberFormatException("Bitte geben Sie die Länge des Passworts ein!");
+    		if(tlength.getText().length()==0) throw new NumberFormatException(Messages.FriedmanGui_3);
     		step = 1;
     		int length = Integer.parseInt(tlength.getText());
             step = 2;

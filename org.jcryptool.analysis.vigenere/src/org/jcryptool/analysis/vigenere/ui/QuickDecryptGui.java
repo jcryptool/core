@@ -7,9 +7,12 @@
 package org.jcryptool.analysis.vigenere.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FormAttachment;
@@ -185,7 +188,14 @@ public class QuickDecryptGui extends Content {
                     lstwo.setLayoutData(lstwoLData);
                     lstwo.setText(Messages.VigenereGlobal_navi_frequency);
                     lstwo.setFont(FontService.getLargeFont());
-                    lstwo.setEnabled(false);
+                    lstwo.setEnabled(true);
+                    lstwo.setCursor(new Cursor(getDisplay(), SWT.CURSOR_HAND));
+                    lstwo.addMouseListener(new MouseAdapter() {
+                    	@Override
+                    	public void mouseDown(MouseEvent e) {
+                    		showFrequency();
+                    	}
+					});
                 }
                 {
                     lsone = new Label(cselection, SWT.BORDER | SWT.CENTER);
@@ -197,7 +207,14 @@ public class QuickDecryptGui extends Content {
                     lsone.setLayoutData(lsoneLData);
                     lsone.setText(Messages.VigenereGlobal_navi_friedman);
                     lsone.setFont(FontService.getLargeFont());
-                    lsone.setEnabled(false);
+                    lsone.setEnabled(true);
+                    lsone.setCursor(new Cursor(getDisplay(), SWT.CURSOR_HAND));
+                    lsone.addMouseListener(new MouseAdapter() {
+                    	@Override
+                    	public void mouseDown(MouseEvent e) {
+                    		showFriedman();
+                    	}
+					});
                 }
             }
             {

@@ -165,7 +165,7 @@ public class SummaryGui extends Content {
                 labinputLData.width = 160;
                 labinputLData.height = 15;
                 leditor.setLayoutData(labinputLData);
-                leditor.setText("Editor mit Geheimtext:");
+                leditor.setText(Messages.SummaryGui_0);
                 leditor.setFont(FontService.getNormalFont());
                 leditor.setAlignment(SWT.RIGHT);
             }
@@ -336,11 +336,11 @@ public class SummaryGui extends Content {
 					ceditor.select(pos);
 					setSelectedEditor(editorRef);
 				} else {
-					throw new IllegalArgumentException("Can't select the given editor because it is not contained in the combo box");
+					throw new IllegalArgumentException("Can't select the given editor because it is not contained in the combo box"); //$NON-NLS-1$
 				}
 			}
 		} else {
-			throw new UnsupportedOperationException("Can't select an item in an empty combo box");
+			throw new UnsupportedOperationException("Can't select an item in an empty combo box"); //$NON-NLS-1$
 		}
 	}
 
