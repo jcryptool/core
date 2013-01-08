@@ -16,7 +16,7 @@ import java.security.PrivateKey;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.certificates.CertFact;
+import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -257,9 +257,9 @@ public class KeySelectionWizard extends Wizard {
                     "", new BigInteger(data.getN().toString()).bitLength(), (data.getContactName().concat(data.getN() //$NON-NLS-1$
                             .toString())).hashCode() + "", privkey.getClass().getName()); //$NON-NLS-1$
             data.setPrivateAlias(privateAlias);
-            ksm.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), data.getPassword(), privateAlias, publicAlias);
+            ksm.addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), data.getPassword(), privateAlias, publicAlias);
         } else {
-            ksm.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+            ksm.addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
         }
     }
 }
