@@ -1,19 +1,20 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.engines.PerformOperationManager;
@@ -35,7 +36,8 @@ public class ExecuteOperationAction extends Action {
     public void run() {
         this.operation = listener.getFlexiProviderOperation();
         if (operation == null) {
-            LogUtil.logInfo("nothing selected"); //$NON-NLS-1$
+            JCTMessageDialog.showInfoDialog(new Status(IStatus.WARNING, FlexiProviderOperationsPlugin.PLUGIN_ID,
+                    Messages.ExecuteOperationAction_2));
             return;
         }
         if (isComplete(operation)) {
