@@ -11,13 +11,18 @@ package org.jcryptool.editor.hex.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+
+import net.sourceforge.ehep.editors.HexEditor;
+import net.sourceforge.ehep.gui.HexEditorControl;
+import net.sourceforge.ehep.gui.HexTable;
 
 import org.eclipse.ui.IEditorPart;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.editor.hex.HexEditorConstants;
-//import java.io.IOException;
-//import java.nio.ByteBuffer;
-//import org.jcryptool.core.logging.utils.LogUtil;
 
 /***
  * 
@@ -60,38 +65,51 @@ public class HexEditorService extends AbstractEditorService {
      * max: ~2GB
      */
     public byte[] getContentOfEditorAsBytes(IEditorPart editorPart) {
-//        try {
-
-        	// TODO: refactor
-        	return new byte[10];
-//            BinaryContent content = HexEditorActionBarContributor.getManager().getContent();
-//            if (content == null)
-//                return null;
-//            int size = 0;
-//            if (content.length() > Integer.MAX_VALUE) {
-//                LogUtil.logWarning("Editor content does not fit into a java array. It will be cut.");
-//                size = Integer.MAX_VALUE;
-//            } else
-//                size = (int) content.length();
-//            ByteBuffer buffer = ByteBuffer.allocate(size);
-//            content.get(buffer, 0);
-//            return buffer.array();
-//        } catch (IOException e) {
-//            LogUtil.logError(e);
-//        }
-//        return null;
+        HexTable hexTable = getHexEditor(editorPart).getControl().getHexTable();
+		if(hexTable == null)
+			return null;
+		
+		// This actually cannot happen because HexTable is backed by an byte array, but may be this will change
+		int size = 0;
+		if (hexTable.getBufferSize() > Integer.MAX_VALUE) {
+		    LogUtil.logWarning("Editor content does not fit into a java array. It will be cut.");
+		    size = Integer.MAX_VALUE;
+		} else
+		    size = (int)hexTable.getBufferSize();
+		ByteBuffer buffer = ByteBuffer.allocate(size);
+		hexTable.getData(buffer.array(), 0, size);
+		return buffer.array();
     }
 
-    /**
-     * not used
-     */
+	private HexEditor getHexEditor(IEditorPart editorPart) {
+		HexEditor hexEditor = (HexEditor)editorPart.getAdapter(HexEditor.class);
+		return hexEditor;
+	}
+
     public String getContentOfEditorAsString(IEditorPart editorPart) {
-        return null;
+    	HexEditorControl control = getHexEditor(editorPart).getControl();
+		if(control == null)
+			return null;
+		try {
+			String content = new String(getContentOfEditorAsBytes(editorPart), control.getCurrentEncoding());
+			return content;
+		} catch (UnsupportedEncodingException e) {
+			LogUtil.logError(e);
+		}
+		return null;
     }
 
-    /**
-     * not used
-     */
     public void setContentOfEditor(IEditorPart editorPart, String content) {
+    	HexEditor editor = getHexEditor(editorPart);
+    	if(editor == null)
+    	{
+    		LogUtil.logError(new IllegalArgumentException("cannot set content of undefined editor"));
+    		return;
+    	}
+    	HexEditorControl control = editor.getControl();
+    	HexTable hexTable = control.getHexTable();
+    	byte[] data = content.getBytes(Charset.forName(control.getCurrentEncoding()));
+    	hexTable.setBufferSize(data.length);
+    	hexTable.setData(data, 0, data.length);
     }
 }
