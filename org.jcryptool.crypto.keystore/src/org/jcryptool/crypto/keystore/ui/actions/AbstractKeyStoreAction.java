@@ -23,7 +23,7 @@ import javax.crypto.SecretKey;
 import org.eclipse.jface.action.Action;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.ByteArrayUtils;
-import org.jcryptool.crypto.certificates.CertFact;
+import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -95,7 +95,7 @@ public abstract class AbstractKeyStoreAction extends Action {
 				publicKey.getClass().getName()
 		);
 	
-		X509Certificate dummy = CertFact.getDummyCertificate(publicKey);
+		X509Certificate dummy = CertificateFactory.createJCrypToolCertificate(publicKey);
 	
 		KeyStoreManager.getInstance().addKeyPair(
 				privateKey,

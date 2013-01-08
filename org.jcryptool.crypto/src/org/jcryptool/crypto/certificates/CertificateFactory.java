@@ -1,10 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,9 +24,8 @@ import codec.x509.X509Certificate;
 import codec.x509.X509Extension;
 import codec.x509.X509TBSCertificate;
 
-public class CertFact {
-
-    public static X509Certificate getDummyCertificate(PublicKey publicKey) {
+public class CertificateFactory {
+    public static X509Certificate createJCrypToolCertificate(PublicKey publicKey) {
         X509TBSCertificate certificate = new X509TBSCertificate();
         try {
             certificate.setSubjectPublicKey(publicKey);
@@ -35,14 +33,15 @@ public class CertFact {
             Calendar calendar = Calendar.getInstance();
 
             // not before 1.1.2000
-            calendar.set(2000, Calendar.JANUARY, 1);
+            calendar.set(2000, Calendar.JANUARY, 1, 0, 0, 0);
             certificate.setNotBefore(calendar);
-            // not after 31.12.2099
+            // not after 31.12.2049
             calendar.clear();
-            calendar.set(2199, Calendar.DECEMBER, 31);
+            calendar.set(2049, Calendar.DECEMBER, 31, 0, 0, 0);
             certificate.setNotAfter(calendar);
 
-            X500Principal subjectDN = new X500Principal("CN=Dummy, C=Dummy, ST=Dummy, L=Dummy, O=Dummy, OU=Dummy"); //$NON-NLS-1$
+            X500Principal subjectDN = new X500Principal(
+                    "CN=JCrypTool, C=Germany, ST=Hessen, L=Frankfurt, O=JCrypTool.org, OU=JCrypTool Core"); //$NON-NLS-1$
             certificate.setSubjectDN(subjectDN);
             certificate.setIssuerDN(subjectDN);
 
@@ -50,11 +49,11 @@ public class CertFact {
             setKeyUsages(certificate, keyUsages);
 
             return new X509Certificate(certificate);
-
         } catch (InvalidKeyException e) {
-            LogUtil.logError(CryptoPlugin.PLUGIN_ID, "InvalidKeyException while setting up a dummy certificate", e, false); //$NON-NLS-1$
+            LogUtil.logError(CryptoPlugin.PLUGIN_ID,
+                    "InvalidKeyException while setting up the JCrypTool certificate", e, true); //$NON-NLS-1$
         } catch (Exception e) {
-            LogUtil.logError(CryptoPlugin.PLUGIN_ID, e);
+            LogUtil.logError(CryptoPlugin.PLUGIN_ID, "Exception while setting up the JCrypTool certificate", e, true); //$NON-NLS-1$
         }
         return null;
     }
@@ -63,5 +62,4 @@ public class CertFact {
         certificate.addExtension(new X509Extension(new ASN1ObjectIdentifier("2.5.29.15"), true, new ASN1BitString( //$NON-NLS-1$
                 keyUsages)));
     }
-
 }
