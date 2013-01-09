@@ -231,7 +231,7 @@ public class Identity extends TabItem {
 	private final String NO_PRIME_R = "Achtung: 'r' ist keine Primzahl!"; 
 	private final String NO_PRIME_S = "Achtung: 's' ist keine Primzahl!"; 
 	private final String NO_PRIME_T = "Achtung: 't' ist keine Primzahl!"; 
-	private final String NO_VALID_E = "Achtung: 'e' ist kein passender Exponent!";
+	private final String NO_VALID_E = "Achtung: 'e' ist kein passender Exponent ('e' muss zwischen 3 und 65537 liegen)!";
 	private final String PRIMES_EQUAL = "Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!";
 	private final String VALUE_TOO_SMALL="Achtung: Bitte eine gr\u00f6ßere Primzahl als 2 eingeben, da ansonsten keine Werte f\u00fcr 'e' m\u00f6glich sind!";
 	private final String NO_KEY_TO_ATTACK = "Achtung: Es ist noch kein angreifbarer Schl\u00fcssel (kleiner als 128 bit Schl\u00fcssell\u00e4nge) im Schl\u00fcsselspeicher.";
