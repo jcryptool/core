@@ -52,6 +52,8 @@ import de.flexiprovider.api.keys.KeyPairGenerator;
 import de.flexiprovider.api.keys.PublicKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 import de.flexiprovider.common.math.FlexiBigInt;
+import de.flexiprovider.core.mprsa.MpRSAPrivateKey;
+import de.flexiprovider.core.mprsa.RSAOtherPrimeInfo;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 import de.flexiprovider.core.rsa.RSAPublicKey;
 
@@ -273,10 +275,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         while (aliases.hasMoreElements()) {
             localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
             
-            if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
-                if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY) && localKeyStoreAlias.getContactName().equals(identity)) {
-                    keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
-                }
+            if (localKeyStoreAlias.getClassName().equals(RSAPublicKey.class.getName())&&localKeyStoreAlias.getContactName().equals(identity)) {
+//            	keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
+            	keyAlgos.add(localKeyStoreAlias.getOperation());
             }
         }
         return keyAlgos;
@@ -323,10 +324,13 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 	}else{
                 		keyID = keymgmt.get(alias.getHashValue());
                 	}
-                	
-                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+keyID,alias);
-//                	System.out.println(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" - KeyID:"+keyID);
-                
+                	String[] operation = alias.getOperation().split(" ");
+                	//for self-made rsa-keys.. no operation is available
+                	if (operation[0].length() == 0){
+                		operation[0] ="RSA";
+                	}
+                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ operation[0]+"PublicKey - KeyID:"+keyID,alias);
+                	System.out.println(""+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ operation[0]+"PublicKey - KeyID:"+keyID);
                 }
             }
 		} catch (KeyStoreException e) {
@@ -335,20 +339,46 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
        
        return pubkeys;
 	}
+	
+	/**
+	 * Method to get little publicKeys to attack for a certain identity
+	 * @param identity specifies the identity looking for public keys
+	 */
+	public HashMap<String, KeyStoreAlias> getAttackablePublicKeys(String identity){
+		HashMap<String, KeyStoreAlias> attackPubkeys = new HashMap<String, KeyStoreAlias>();
+		KeyStoreAlias alias = null;
+        try {
+			aliases = ksManager.getAliases();
+			int count = 1;
+			while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                if (alias.getClassName().equals(RSAPublicKey.class.getName()) && !alias.getContactName().equals(identity)) {
+                	attackPubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" KeyID: "+count,alias);
+                	System.out.println("attack key added: "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" KeyID: "+count);
+                	count++;
+                }
+            }
+		} catch (KeyStoreException e) {
+			e.printStackTrace();
+		}
+       
+       return attackPubkeys;
+	}
+	
 	/**
 	 * get all keys for an identity
 	 * @param identity the identity
 	 * @return HashMap<String, KeyStoreAlias>
 	 */
-	public TreeMap<String, KeyStoreAlias>loadAllKeysForIdentity(String identity){
+	public TreeMap<String, KeyStoreAlias>loadAllKeysForIdentityAndOtherPublics(String identity){
 		TreeMap<String, KeyStoreAlias> keys = new TreeMap<String, KeyStoreAlias>();
 		KeyStoreAlias alias = null;
         try {
 			aliases = ksManager.getAliases();
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
-                //load RSA public and private keys
-                if ((alias.getClassName().equals(RSAPublicKey.class.getName())||alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) && alias.getContactName().equals(identity)) {
+                //load RSA public and private keys for a certain identity and all other public keys for other identities
+                if (((alias.getClassName().equals(RSAPublicKey.class.getName())||alias.getClassName().equals(RSAPrivateCrtKey.class.getName())||alias.getClassName().equals(MpRSAPrivateKey.class.getName())) && alias.getContactName().equals(identity))||alias.getClassName().equals(RSAPublicKey.class.getName()) && !alias.getContactName().equals(identity)) {
                 	if (!allKeysForID.containsKey(alias.getHashValue())){
                 		genKeyID = allKeysForID.size()+1;
                 		allKeysForID.put(alias.getHashValue(),genKeyID);
@@ -370,7 +400,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	/**
 	 * get all public key parameters of an RSA key
 	 * @param alias the alias for the key
-	 * @return the parameters in an Vector<String> in the following order: algorithm, format, e, N, encodedKey
+	 * @return the parameters in an Vector<String> in the following order: algorithm, format, e, N
 	 */
 	public Vector<String> getAllRSAPubKeyParameters(KeyStoreAlias alias){
 		Vector<String> parameters = new Vector<String>();
@@ -403,7 +433,39 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			parameters.add(privKey.getE().toString());
 			parameters.add(privKey.getN().toString());
 		}
+		return parameters;
+	}
+	
+	/**
+	 * get all private key parameters of an MULTI-PRIME! RSA key
+	 * @param alias the alias for the key
+	 * @param password the password for the key
+	 * @return the parameters in an Vector<String> in the following order: algorithm, format, p, q, other Primes, d, e, N
+	 */
+	public Vector<String> getAllMpRSAPrivKeyParameters(KeyStoreAlias alias, String password){
+		Vector<String> parameters = new Vector<String>();
+		StringBuilder sb = new StringBuilder();
 		
+		final MpRSAPrivateKey privKey = getMpPrivateKey(alias, password);
+		if (privKey != null){
+			parameters.add(privKey.getAlgorithm());
+			parameters.add(privKey.getFormat());
+			parameters.add(privKey.getP().toString());
+			parameters.add(privKey.getQ().toString());
+			RSAOtherPrimeInfo[] otherPrimeIinfo = privKey.getOtherPrimeInfo();
+			for (int i = 0; i < otherPrimeIinfo.length; i++){
+				
+				sb.append(otherPrimeIinfo[i].getPrime()+" ");
+			}
+			parameters.add(sb.toString());
+			//other primes
+			parameters.add(privKey.getD().toString());
+			parameters.add(privKey.getE().toString());
+			parameters.add(privKey.getN().toString());
+		}else{
+			System.out.println("nix private key");
+		}
+		System.out.println("parameters.lenth = "+parameters.size());
 		return parameters;
 	}
 	
@@ -441,6 +503,22 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 
 		return privkey;
 	}
+	
+	
+	public MpRSAPrivateKey getMpPrivateKey(KeyStoreAlias privAlias, String password){
+        PrivateKey key = null;
+        MpRSAPrivateKey privkey = null;
+		try {
+			key = ksManager.getPrivateKey(privAlias, password.toCharArray());
+			privkey = (MpRSAPrivateKey) key;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return privkey;
+	}
+	
+	
 	/**
 	 * get the privateKey parameters
 	 * @param privkey contains the privateKey parameters 
@@ -464,7 +542,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
             KeyStoreAlias alias;
             for (Enumeration<String> aliases = ksManager.getAliases(); aliases.hasMoreElements();) {
                 alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) && alias.getContactName().equals(identityName)) {
+                if ((alias.getClassName().equals(RSAPrivateCrtKey.class.getName())||(alias.getClassName().equals(MpRSAPrivateKey.class.getName()))) && alias.getContactName().equals(identityName)) {
                 	if (!privKeymgmt.containsKey(alias.getHashValue())){
                 		privKeyID = privKeymgmt.size()+1;
                 		privKeymgmt.put(alias.getHashValue(),privKeyID);

@@ -10,6 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -95,7 +97,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		label.setText("Erweitertes RSA-Kryptosystem");
 		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false));
-		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten. Sie k\u00f6nnen z.B. als 'Alice Whitehat' einen Text verschl\u00fcsseln und an 'Bob Whitehat' senden. Bob Whitehat kann dann die empfangene Nachricht entschl\u00fcsseln. Und umgekehrt.");	
+		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten. Sie k\u00f6nnen z.B. als 'Alice Whitehat' einen Text verschl\u00fcsseln und an 'Bob Whitehat' senden. Bob Whitehat kann dann die empfangene Nachricht entschl\u00fcsseln, und umgekehrt.");	
 		//End - Header
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
@@ -166,6 +168,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		grp_explain.setLayoutData(gd_explain);
 		
 		initKeystore(tabFolder);
+		
 	}
 
 	private void initKeystore(TabFolder tabfolder) {
@@ -176,20 +179,31 @@ public class ExtendedRSA_Visual extends ViewPart{
         	
         	IdentityManager iMgr = IdentityManager.getInstance();
             Vector<String> contactNames = iMgr.getContacts();
-
             if (!contactNames.contains(ALICE)){
             	//create Alice in the keystore
             	iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
             	System.out.println("[DEBUG] ALICE generiert rsa key");
             }
         	Vector<String> keyAlgos = iMgr.getAsymmetricKeyAlgorithms(ALICE);
-
-        	if (!keyAlgos.contains("MpRSA")){
-//            		iMgr.createIdentity(ALICE, "MpRSA", "1234", 1024);
+        	for (int i = 0; i < keyAlgos.size(); i++){
+        		System.out.println("alice keyalgos: "+keyAlgos.get(i));
+        	}
+        	int count = 0;
+        	int count2 = 0;
+        	for (int i = 0; i < keyAlgos.size(); i++){
+	        	if (keyAlgos.get(i).startsWith("MpRSA")){
+	        		count++;
+	        	}
+	        	if (keyAlgos.get(i).startsWith("RSA")){
+	        		count2++;
+	        	}
+        	}
+        	if (count == 0){
+        		iMgr.createIdentity(ALICE, "MpRSA", "1234", 1024);
         		System.out.println("[DEBUG]mprsa-key wird generiert...alice");
         	}
-        	if (!keyAlgos.contains("RSA")){
-//            		iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
+        	if (count2 == 0){
+        		iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
         		System.out.println("[DEBUG]rsa-key wird generiert... alice");
         	}
               
@@ -205,14 +219,26 @@ public class ExtendedRSA_Visual extends ViewPart{
             	System.out.println("[DEBUG]rsakey wird generiert...bob");
             }
         	keyAlgos = iMgr.getAsymmetricKeyAlgorithms(BOB);
-
-        	if (!keyAlgos.contains("MpRSA")){
-//            		iMgr.createIdentity("Bob", "MpRSA", "1234", 1024);
+        	for (int i = 0; i < keyAlgos.size(); i++){
+        		System.out.println("bob keyalgos: "+keyAlgos.get(i));
+        	}
+        	count = 0;
+        	count2 = 0;
+        	for (int i = 0; i < keyAlgos.size(); i++){
+	        	if (keyAlgos.get(i).startsWith("MpRSA")){
+	        		count++;
+	        	}
+	        	if (keyAlgos.get(i).startsWith("RSA")){
+	        		count2++;
+	        	}
+        	}
+        	if (count == 0){
+        		iMgr.createIdentity(BOB, "MpRSA", "1234", 1024);
         		System.out.println("[DEBUG]mprsa-key wird generiert...bob");
         	}
-        	if (!keyAlgos.contains("RSA")){
-//            		iMgr.createIdentity("Bob", "RSA", "1234", 1024);
-        		System.out.println("[DEBUG]rsa-key wird generiert...bob");
+        	if (count2 == 0){
+        		iMgr.createIdentity(BOB, "RSA", "1234", 1024);
+        		System.out.println("[DEBUG]rsa-key wird generiert... bob");
         	}
             
             

@@ -13,6 +13,7 @@ package org.jcryptool.visual.extendedrsa;
 import static java.math.BigInteger.ONE;
 import static org.jcryptool.visual.library.Lib.LOW_PRIMES;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +24,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -46,6 +50,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -194,16 +199,25 @@ public class Identity extends TabItem {
 	private Label wrongPW_keydata;
 	private Label lbl_enterPW;
 	private boolean stopUpdateE;
+	private Button attackKey;
+	private Combo keyToAttack;
+	private Label lbl_noKeyToAttack;
+	HashMap<String, KeyStoreAlias> attackableKeys;
+	private Table keyData_attacked;
+	private TableColumn column_parameter_attacked;
+	private TableColumn column_value_attacked;	
+	private Label attack_hint;
 	
 	private final String EXPLAIN_INIT = "Die Identit\u00e4ten aus Ihrem Schl\u00fcsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identit\u00e4ten „Alice Whitehat“ und „Bob Whitehat“ im Schl\u00fcsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identit\u00e4t dar. Durch den Button „Identit\u00e4ten ein-/ausblenden“ k\u00f6nnen bestehende Identit\u00e4ten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identit\u00e4t erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identit\u00e4ten ein-/ausblenden“ ausgew\u00e4hlt wurde!\n\nZu allen Aktionen finden Sie in diesem Bereich Erl\u00e4uterungen.";
-	private final String EXPLAIN_ENCRYPT = "1.Aktion: Nachricht verschl\u00fcsseln und senden\n\nF\u00fcr den Verschl\u00fcsselungsvorgang werden die Parameter N und e ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\n Vorgehensweise:\n\n1) Geben Sie einen optionalen Betreff und eine beliebige Nachricht ein.\n\n2) W\u00e4hlen Sie einen Empf\u00e4nger aus (zum Beispiel Bob Whitehat). Hinweis: Diese Visualisierung erlaubt nur einen Empf\u00e4nger.\n\n3) W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel des Empf\u00e4ngers aus.\n\n4) Klicken Sie auf den Button „Nachricht verschl\u00fcsseln“.\n\n5) Klicken Sie auf den Button „Nachricht senden“, um die verschl\u00fcsselte Nachricht zu verschicken und im Nachrichtenspeicher abzulegen.";
-	private final String EXPLAIN_DECRYPT = "2.Aktion: Nachricht empfangen und entschl\u00fcsseln\n\nF\u00fcr den Entschl\u00fcsselungsvorgang werden die Parameter N und d ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\nVorgehensweise:\n\n1) W\u00e4hlen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) W\u00e4hlen Sie einen Ihrer privaten Schl\u00fcssel aus, und geben Sie das entsprechende Passwort ein.\n\n3) Klicken Sie auf den Button „Nachricht entschl\u00fcsseln“. Die Nachricht kann nur mit dem passenden privaten Schl\u00fcssel erfolgreich entschl\u00fcsselt werden.\n\n4) Klicken Sie auf den Button \"Nachricht l\u00f6schen\", um die verschl\u00fcsselte Nachricht aus dem Nachrichtenspeicher zu l\u00f6schen.";
+	private final String EXPLAIN_ENCRYPT = "Aktion: Nachricht verschl\u00fcsseln und senden\n\nF\u00fcr den Verschl\u00fcsselungsvorgang werden die Parameter N und e ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\n Vorgehensweise:\n\n1) Geben Sie einen optionalen Betreff und eine beliebige Nachricht ein.\n\n2) W\u00e4hlen Sie einen Empf\u00e4nger aus (zum Beispiel Bob Whitehat). Hinweis: Diese Visualisierung erlaubt nur einen Empf\u00e4nger.\n\n3) W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel des Empf\u00e4ngers aus.\n\n4) Klicken Sie auf den Button „Nachricht verschl\u00fcsseln“.\n\n5) Klicken Sie auf den Button „Nachricht senden“, um die verschl\u00fcsselte Nachricht zu verschicken und im Nachrichtenspeicher abzulegen.";
+	private final String EXPLAIN_DECRYPT = "Aktion: Nachricht empfangen und entschl\u00fcsseln\n\nF\u00fcr den Entschl\u00fcsselungsvorgang werden die Parameter N und d ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\nVorgehensweise:\n\n1) W\u00e4hlen Sie eine beliebige Nachricht aus dem Nachrichtenspeicher aus.\n\n2) W\u00e4hlen Sie einen Ihrer privaten Schl\u00fcssel aus, und geben Sie das entsprechende Passwort ein.\n\n3) Klicken Sie auf den Button „Nachricht entschl\u00fcsseln“. Die Nachricht kann nur mit dem passenden privaten Schl\u00fcssel erfolgreich entschl\u00fcsselt werden.\n\n4) Klicken Sie auf den Button \"Nachricht l\u00f6schen\", um die verschl\u00fcsselte Nachricht aus dem Nachrichtenspeicher zu l\u00f6schen.";
 	private final String EXPLAIN_SENDED = "Die Nachricht wurde erfolgreich in den Nachrichtenspeicher aufgenommen. Sie k\u00f6nnen nun eine neue Nachricht verschl\u00fcssen und senden oder sich die verschl\u00fcsselte Nachricht beim Empf\u00e4nger ansehen.";
 	private final String EXPLAIN_DELETED = "Die Nachricht wurde nun endg\u00fcltig aus dem Nachrichtenspeicher gel\u00f6scht. Falls f\u00fcr diese Identit\u00e4ten weitere Nachrichten im Nachrichtenspeicher existieren, k\u00f6nnen sie sich diese nun ansehen. Andernfalls m\u00fcssen Sie vorher weitere Nachrichten verschl\u00fcsseln und an diese Identit\u00e4t senden.";
 	private final String PW_WRONG = "Fehler: Das eingegebene Passwort f\u00fcr den selektierten privaten Schl\u00fcssel ist FALSCH!";
-	private final String EXPLAIN_KEYMGMT_TAB1 = "3.Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen\n\nHier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\n\n1) F\u00fcr den klassischen RSA-Algorithmus werden zwei verschiedene Primzahlen p und q ben\u00f6tigt. Diese k\u00f6nnen entweder ausgew\u00e4hlt oder eingegeben werden. Sofern p und q zul\u00e4ssig sind, kann ein Exponent e ausgesucht, eingegeben oder generiert werden.\n\n2) Beim „multi-primen RSA“ muss zuerst die Anzahl der Primzahlen (zwischen 3 und 5) festgelegt werden. Die Parameter k\u00f6nnen hier analog zum klassischen RSA angegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
-	private final String EXPLAIN_KEYMGMT_TAB2 ="3.Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen (erweitert)\n\nIn dieser Registerkarte k\u00f6nnen Schl\u00fcssel mit aktuell verwendeten Schl\u00fcssell\u00e4ngen erstellt werden. Es muss nur die gew\u00fcnschte Schl\u00fcssell\u00e4nge bzw. die Anzahl der Primzahlen ausgew\u00e4hlt werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
-	private final String EXPLAIN_KEYMGMT_TAB3 = "3.Aktion: Schl\u00fcsselverwaltung - Meine Schl\u00fcssel\n\nEin Schl\u00fcsselpaar besteht aus einem „privaten Schl\u00fcssel“ und einem „\u00f6ffentlichen Schl\u00fcssel“:\n\na) Der private Schl\u00fcssel (N, d):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Der \u00f6ffentliche Schl\u00fcssel (N, e):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der \u00f6ffentliche Exponent e (er befindet sich \u00fcblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren k\u00f6nnen mehr als zwei Primzahlen gew\u00e4hlt werden. In diesem Plugin ist die Anzahl auf drei bis f\u00fcnf Primzahlen beschr\u00e4nkt. Theoretisch ist die Anzahl jedoch nach oben offen.";
+	private final String EXPLAIN_KEYMGMT_TAB1 = "Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen\n\nHier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\n\n1) F\u00fcr den klassischen RSA-Algorithmus werden zwei verschiedene Primzahlen p und q ben\u00f6tigt. Diese k\u00f6nnen entweder ausgew\u00e4hlt oder eingegeben werden. Sofern p und q zul\u00e4ssig sind, kann ein Exponent e ausgesucht, eingegeben oder generiert werden.\n\n2) Beim „multi-primen RSA“ muss zuerst die Anzahl der Primzahlen (zwischen 3 und 5) festgelegt werden. Die Parameter k\u00f6nnen hier analog zum klassischen RSA angegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
+	private final String EXPLAIN_KEYMGMT_TAB2 ="Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen (erweitert)\n\nIn dieser Registerkarte k\u00f6nnen Schl\u00fcssel mit aktuell verwendeten Schl\u00fcssell\u00e4ngen erstellt werden. Es muss nur die gew\u00fcnschte Schl\u00fcssell\u00e4nge bzw. die Anzahl der Primzahlen ausgew\u00e4hlt werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
+	private final String EXPLAIN_KEYMGMT_TAB3 = "Aktion: Schl\u00fcsselverwaltung - Meine Schl\u00fcssel\n\nEin Schl\u00fcsselpaar besteht aus einem „privaten Schl\u00fcssel“ und einem „\u00f6ffentlichen Schl\u00fcssel“:\n\na) Der private Schl\u00fcssel (N, d):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Der \u00f6ffentliche Schl\u00fcssel (N, e):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der \u00f6ffentliche Exponent e (er befindet sich \u00fcblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren k\u00f6nnen mehr als zwei Primzahlen gew\u00e4hlt werden. In diesem Plugin ist die Anzahl auf drei bis f\u00fcnf Primzahlen beschr\u00e4nkt. Theoretisch ist die Anzahl jedoch nach oben offen.";
+	private final String EXPLAIN_ATTACK_PUBKEY = "Aktion: \u00d6ffentlichen Schl\u00fcssel angreifen\n\nIn dieser Registerkarte k\u00f6nnen Sie versuchen, einen \u00f6ffentlichen Schl\u00fcssel anzugreifen. Wenn der Modulus N kurz genug ist (weniger als 256 bit L\u00e4nge), wird es m\u00f6glich sein, N in \"endlicher Zeit\" zu faktorisieren. Die Faktorisierung liefert die verwendeten Primzahlen, und mit diesen kann der geheime Schl\u00fcssel d rekonstruiert werden. Somit k\u00f6nnen Sie sich als jemand anderes ausgeben und eventuell Nachrichten lesen, die nicht f\u00fcr Sie bestimmt sind oder Nachrichten im Namen von jemand anderem signieren.\n\nAchtung: Das Faktorisieren wird viel Zeit in Anspruch nehmen. Je nach Hardware und Schl\u00fcssell\u00e4nge k\u00f6nnte dieser Vorgang mehrere Jahre dauern!\n\nDa die Sicherheit von RSA auf langen Schl\u00fcsseln beruht (bei denen der Faktorisierungsvorgang mehrere Jahre dauern w\u00fcrde), wird empfohlen, zum Verschl\u00fcsseln/Signieren Schl\u00fcssel gr\u00f6ßer als 1024 bit L\u00e4nge zu verwenden.";
 	private final String ENTER_TWO_PRIMES = "W\u00e4hlen Sie 2 verschiedene Primzahlen p und q, sowie einen Exponenten e:";
 	private final String ENTER_THREE_PRIMES = "W\u00e4hlen Sie 3 verschiedene Primzahlen p, q, r und einen Exponenten e:";
 	private final String ENTER_FOUR_PRIMES = "W\u00e4hlen Sie 4 verschiedene Primzahlen p, q, r, s und einen Exponenten e:";
@@ -218,6 +232,8 @@ public class Identity extends TabItem {
 	private final String NO_PRIME_T = "Achtung: 't' ist keine Primzahl!"; 
 	private final String NO_VALID_E = "Achtung: 'e' ist kein passender Exponent!";
 	private final String PRIMES_EQUAL = "Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!";
+	private final String VALUE_TOO_SMALL="Achtung: Bitte eine gr\u00f6ßere Primzahl als 2 eingeben, da ansonsten keine Werte f\u00fcr 'e' m\u00f6glich sind!";
+	private final String NO_KEY_TO_ATTACK = "Achtung: Es ist noch kein angreifbarer Schl\u00fcssel (kleiner als 128 bit Schl\u00fcssell\u00e4nge) im Schl\u00fcsselspeicher.";
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -250,6 +266,8 @@ public class Identity extends TabItem {
 		iMgr = IdentityManager.getInstance();
 		rsa_impl = new RsaImplementation();
 		stopUpdateE = false;
+		
+//		getPrimes();
 		
 		//set the text of the TabItem
 		this.setText(identityName);
@@ -523,7 +541,6 @@ public class Identity extends TabItem {
 					
 					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL| SWT.READ_ONLY);
 					encryptedMessage_Tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
-//					encryptedMessage_Tab2.setEnabled(false);
 					encryptedMessage_Tab2.addModifyListener(new ModifyListener() {
 						
 						@Override
@@ -613,12 +630,10 @@ public class Identity extends TabItem {
 					
 					lbl_pwWrong = new Label (actionGroup_2, SWT.WRAP);
 					lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					GridData gd_pwWrong = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					GridData gd_pwWrong = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
 					gd_pwWrong.heightHint = 20;
 					lbl_pwWrong.setLayoutData(gd_pwWrong);
-//					createSpacer(actionGroup_2);
-					
-					createSpacer(actionGroup_2);
+
 					createSpacer(actionGroup_2);
 					
 					decryptMessage = new Button(actionGroup_2, SWT.PUSH);
@@ -1020,6 +1035,8 @@ public class Identity extends TabItem {
 								bi_ExtrsaP = new BigInteger(combo_ExrsaP.getText());
 								resetMPInputs();
 								checkParameter();
+							}else{
+								bi_ExtrsaE = null;
 							}
 						}
 						
@@ -1613,7 +1630,7 @@ public class Identity extends TabItem {
 					gd_selKey.heightHint = 20;
 					gd_selKey.widthHint = 250;
 					selectedKey_Keydata.setLayoutData(gd_selKey);
-					allKeys_keydata = iMgr.loadAllKeysForIdentity(Identity.this.identityName);
+					allKeys_keydata = iMgr.loadAllKeysForIdentityAndOtherPublics(Identity.this.identityName);
 					
 					selectedKey_Keydata.setItems(allKeys_keydata.keySet().toArray(new String[allKeys_keydata.size()]));
 					
@@ -1636,8 +1653,6 @@ public class Identity extends TabItem {
 								password_keydata.setText("");
 								isPubKey = false;
 							}
-//							System.out.println(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex()));
-							
 						}
 						
 						@Override
@@ -1662,11 +1677,30 @@ public class Identity extends TabItem {
 							Vector<String> values = null;
 							if (isPubKey){
 								descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "e", "N"));
-								values = iMgr.getAllRSAPubKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex())));
+								values = iMgr.getAllRSAPubKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()));
 							}else{
-								descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","d", "e","N"));
-								values = iMgr.getAllRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex())), password_keydata.getText());
-							
+								String keyDescription = selectedKey_Keydata.getText().substring(selectedKey_Keydata.getText().lastIndexOf(' ')+1);
+								if (keyDescription.startsWith("RSA")){
+									descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","d","e","N"));
+									values = iMgr.getAllRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
+								}else{
+									//mp-rsa key
+									values = iMgr.getAllMpRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
+									System.out.println("size: "+values.size());
+									String str_otherPrimeinfo = values.get(values.size()-4);
+									String []split_opi = str_otherPrimeinfo.split(" ");
+									switch (split_opi.length){
+									case 1: descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","r","d","e","N"));
+											break;
+											
+									case 2: descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","r","s","d","e","N"));
+											break;
+											
+									case 3: descriptions = new Vector<String>(Arrays.asList("Algorithmus", "Format", "p","q","r","s","t","d","e","N"));
+											break;
+									}
+									//TODO fix
+								}
 							}
 							if (values.size() == 0){
 								wrongPW_keydata.setText(PW_WRONG);
@@ -1678,7 +1712,7 @@ public class Identity extends TabItem {
 									
 								}
 //								System.out.println("resize to: "+values.get(values.size()-1).length()*8);
-								column_value.setWidth(values.get(values.size()-1).length()*8);
+								column_value.setWidth((values.get(values.size()-1).length()*8)+100);
 							}
 						}
 						
@@ -1761,8 +1795,117 @@ public class Identity extends TabItem {
 		attackPublicKey.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 4
 			public void widgetSelected(SelectionEvent e) {
-				
-				
+				txtExplain.setText(EXPLAIN_ATTACK_PUBKEY);
+				if (forerunner != 4){
+					actionGroup_1.dispose();
+					actionGroup_2.dispose();
+					actionGroup_3.dispose();
+					
+					createActionGroup4();
+					
+					lbl_noKeyToAttack = new Label(actionGroup_4, SWT.NONE);
+					lbl_noKeyToAttack.setFont(FontService.getNormalBoldFont());
+					lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					GridData gd_lbl_noKey = new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1);
+					gd_lbl_noKey.heightHint = 20;
+					lbl_noKeyToAttack.setLayoutData(gd_lbl_noKey);				
+					
+					Label l = new Label(actionGroup_4, SWT.NONE);
+					l.setText("W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel: ");
+					GridData gd_lbl_attack = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					gd_lbl_attack.heightHint = 20;
+					l.setLayoutData(gd_lbl_attack);
+					
+					for(int i = 0; i < 3; i++){
+						createSpacer(actionGroup_4);
+					}
+					
+					keyToAttack = new Combo(actionGroup_4, SWT.READ_ONLY);
+					GridData combo_attack = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
+					combo_attack.heightHint = 20;
+					combo_attack.widthHint = 250;
+					keyToAttack.setLayoutData(combo_attack);
+					attackableKeys = iMgr.getAttackablePublicKeys(Identity.this.identityName);
+					if (attackableKeys.size() == 0){
+						keyToAttack.setEnabled(false);
+						lbl_noKeyToAttack.setText(NO_KEY_TO_ATTACK);
+					}
+					keyToAttack.setItems(attackableKeys.keySet().toArray(new String[attackableKeys.size()]));
+					keyToAttack.addSelectionListener(new SelectionListener() {
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							if (keyToAttack.getSelectionIndex() != -1 && attackableKeys.size()>0){
+								attackKey.setEnabled(true);
+								Vector<BigInteger> actualKey = iMgr.getPublicKeyParameters(attackableKeys.get(keyToAttack.getText()));
+								
+								String name = keyToAttack.getText().substring(0,keyToAttack.getText().indexOf('-')-1);
+								attack_hint.setText("Mit Klick auf \"Schl\u00fcssel attackieren\" wird versucht, den Exponten N vom "+name+" zu faktorisieren:\nBitl\u00e4nge von N:"+actualKey.get(0).bitLength()+"bit \nN: "+actualKey.get(0));		
+								keyData_attacked.setVisible(false);
+							}
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+					
+					attackKey = new Button(actionGroup_4, SWT.PUSH);
+					attackKey.setText("Schl\u00fcssel attackieren");
+					attackKey.setEnabled(false);
+					GridData btn_attack = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
+					btn_attack.heightHint = 20;
+					btn_attack.widthHint = 200;
+					attackKey.setLayoutData(btn_attack);
+					attackKey.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							BigInteger publicN = null;
+							BigInteger publicE = null;
+							Vector<String> pubKeyParameter = iMgr.getAllRSAPubKeyParameters(attackableKeys.get(keyToAttack.getText()));
+							if(pubKeyParameter.size()>0){
+								publicN = new BigInteger(pubKeyParameter.get(pubKeyParameter.size()-1));
+								publicE = new BigInteger(pubKeyParameter.get(pubKeyParameter.size()-2));
+								factorizePubKey(publicN,publicE);
+								
+							}
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+					
+					
+					for(int i = 0; i < 6; i++){
+						createSpacer(actionGroup_4);
+					}
+
+					attack_hint = new Label(actionGroup_4, SWT.WRAP);
+					GridData at_hint = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 2);
+					at_hint.heightHint = 110;
+					attack_hint.setLayoutData(at_hint);
+					
+					keyData_attacked = new Table(actionGroup_4, SWT.BORDER|SWT.FULL_SELECTION);
+					GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
+					gd_table.heightHint = 130;
+					keyData_attacked.setLayoutData(gd_table);
+					keyData_attacked.setHeaderVisible(true);
+					keyData_attacked.setLinesVisible(true);
+					keyData_attacked.setVisible(false);
+					
+					
+					column_parameter_attacked = new TableColumn(keyData_attacked, SWT.NONE);
+					column_parameter_attacked.setWidth(100);
+					column_parameter_attacked.setText("Parameter");
+					
+					column_parameter_attacked = new TableColumn(keyData_attacked, SWT.NONE);
+					column_parameter_attacked.setWidth(500);
+					column_parameter_attacked.setText("Wert");
+
+					
+					generalGroup.redraw();
+					generalGroup.layout();
+					forerunner = 4;
+				}
 			}
 		});
 		attackPublicKey.setText("\u00d6ffentlichen Schl\u00fcssel angreifen");
@@ -1783,15 +1926,133 @@ public class Identity extends TabItem {
 		group_3.exclude = true;
 		actionGroup_3.setVisible(false);
 		
-		actionGroup_4 = new Group(generalGroup, SWT.NONE);
-		actionGroup_4.setText("Aktionsfenster 4");
-		actionLayout_4 = new GridLayout(1, false);
-		actionGroup_4.setLayout(actionLayout_4);
-		group_4 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		group_4.exclude = true;
-		actionGroup_4.setLayoutData(group_4);
+		createActionGroup4();
 		actionGroup_4.setVisible(false);
+		group_4.exclude = true;
 	}
+	
+	private void factorizePubKey(final BigInteger n, final BigInteger e){
+		new Thread(){
+			
+			private BigDecimal getNextPrime(final BigDecimal start){
+				BigDecimal prime = start.add(BigDecimal.ONE);
+				boolean isPrime = false;
+				while (!isPrime){
+					if (!Lib.isPrime(prime.toBigInteger())){
+						prime = prime.add(BigDecimal.ONE);
+					}else{
+						isPrime = true;
+					}
+				}
+				return prime;
+			}
+			@Override
+			public void run(){
+				final long start = System.currentTimeMillis();
+				System.out.println("factorize n: "+n+"("+n.bitLength()+")bit");
+				boolean finish = false;
+				final Vector<BigInteger> divisors = new Vector<BigInteger>();
+				BigDecimal divisor = new BigDecimal(3);
+				BigDecimal decN = new BigDecimal(n);
+				BigInteger result = BigInteger.ONE;
+				boolean check = false;
+				
+				while (!finish){
+					System.out.println("aktuelle primzahl: "+divisor);
+					BigDecimal[]erg = decN.divideAndRemainder(divisor);
+					if (erg[1].intValue() == 0){
+						divisors.add(erg[0].toBigInteger());
+						divisor = getNextPrime(divisor);
+						check = true;
+					}else{
+						divisor = getNextPrime(divisor);
+						check = false;
+					}
+	
+					if (divisors.size() > 1 && check){
+						for (int i = 0; i < divisors.size(); i++){
+							result = result.multiply(divisors.get(i));
+						}
+						if (result.equals(decN.toBigInteger())){
+							System.out.println("factorized!");
+							finish = true;
+						}
+						check = false;
+					}
+	
+					if (finish){
+						new UIJob("Display results") { 
+							@Override
+							public IStatus runInUIThread(IProgressMonitor monitor) {
+								System.out.println("Dauer in ms: " + (System.currentTimeMillis() - start));
+								keyData_attacked.setVisible(true);
+								keyData_attacked.removeAll();
+								attack_hint.setText(attack_hint.getText()+"\nDie Faktorisierung war erfolgreich. Folgende Werte konnten rekonstruiert werden:");
+								keyData_attacked.setVisible(true);
+								TableItem ti_p;
+								TableItem ti_q;
+								TableItem ti_r;
+								TableItem ti_s;
+								TableItem ti_t;
+								BigInteger phi = BigInteger.ONE;
+								
+								switch (divisors.size()){
+								case 2: ti_p = new TableItem(keyData_attacked, SWT.NONE);
+										ti_p.setText(new String[]{"p",""+divisors.get(0)});
+										ti_q = new TableItem(keyData_attacked, SWT.NONE);
+										ti_q.setText(new String[]{"q",""+divisors.get(1)});
+										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE));
+										break;
+										
+								case 3: ti_p = new TableItem(keyData_attacked, SWT.NONE);
+										ti_p.setText(new String[]{"p",""+divisors.get(0)});
+										ti_q = new TableItem(keyData_attacked, SWT.NONE);
+										ti_q.setText(new String[]{"q",""+divisors.get(1)});
+										ti_r = new TableItem(keyData_attacked, SWT.NONE);
+										ti_r.setText(new String[]{"r",""+divisors.get(2)});
+										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE)).multiply(divisors.get(2).subtract(BigInteger.ONE));
+										break;
+								
+								case 4: ti_p = new TableItem(keyData_attacked, SWT.NONE);
+										ti_p.setText(new String[]{"p",""+divisors.get(0)});
+										ti_q = new TableItem(keyData_attacked, SWT.NONE);
+										ti_q.setText(new String[]{"q",""+divisors.get(1)});
+										ti_r = new TableItem(keyData_attacked, SWT.NONE);
+										ti_r.setText(new String[]{"r",""+divisors.get(2)});
+										ti_s = new TableItem(keyData_attacked, SWT.NONE);
+										ti_s.setText(new String[]{"s",""+divisors.get(3)});
+										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE)).multiply(divisors.get(2).subtract(BigInteger.ONE)).multiply(divisors.get(3).subtract(BigInteger.ONE));
+										break;
+										
+								case 5: ti_p = new TableItem(keyData_attacked, SWT.NONE);
+										ti_p.setText(new String[]{"p",""+divisors.get(0)});
+										ti_q = new TableItem(keyData_attacked, SWT.NONE);
+										ti_q.setText(new String[]{"q",""+divisors.get(1)});
+										ti_r = new TableItem(keyData_attacked, SWT.NONE);
+										ti_r.setText(new String[]{"r",""+divisors.get(2)});
+										ti_s = new TableItem(keyData_attacked, SWT.NONE);
+										ti_s.setText(new String[]{"s",""+divisors.get(3)});
+										ti_t = new TableItem(keyData_attacked, SWT.NONE);
+										ti_t.setText(new String[]{"t",""+divisors.get(4)});
+										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE)).multiply(divisors.get(2).subtract(BigInteger.ONE)).multiply(divisors.get(3).subtract(BigInteger.ONE)).multiply(divisors.get(4).subtract(BigInteger.ONE));
+										break;
+								}
+								
+								TableItem ti_e = new TableItem(keyData_attacked, SWT.NONE);
+								ti_e.setText(new String[]{"e",""+e});
+								
+								TableItem ti_d = new TableItem(keyData_attacked, SWT.NONE);
+								ti_d.setText(new String[]{"d",""+e.modInverse(phi)});	
+								return Status.OK_STATUS;
+							} 
+						}.schedule();
+						
+					}
+				}
+			}
+		}.start();
+	}
+	
 	private void additionalChanges(){
 		password1.setText("");
 		password2.setText("");
@@ -2015,6 +2276,22 @@ public class Identity extends TabItem {
 		}
 	}
 	
+	private void getPrimes(){
+		BigInteger start = BigInteger.ONE;
+		BigInteger end = new BigInteger("65537");
+		int count = 0;
+		while (start.compareTo(end) < 0){
+			if (!Lib.isPrime(start)){
+				start = start.add(BigInteger.ONE);
+			}else{
+				System.out.println("zahl: "+start);
+				start = start.add(BigInteger.ONE);
+				count++;
+			}
+		}
+		System.out.println("anzal: "+count);
+	}
+	
 	private void addRecipientsToCombo(){
 		Vector<String> recipients = new Vector<String>();
 		if (messageRecipient != null){
@@ -2059,7 +2336,7 @@ public class Identity extends TabItem {
 		group_1.exclude = false;
 		actionGroup_1.setLayoutData(group_1);
 		initActions = new Label(actionGroup_1, SWT.WRAP);
-		initActions.setText("W\u00e4hlen Sie ein Aktion f\u00fcr die aktuelle Identit\u00e4t ("+identityName+"), oder einen Button im Feld „Identit\u00e4ten-Verwaltung“.");
+		initActions.setText("W\u00e4hlen Sie eine Aktion f\u00fcr die aktuelle Identit\u00e4t ("+identityName+"), oder einen Button im Feld „Identit\u00e4ten-Verwaltung“.");
 		actionGroup_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 	}
 	private void createActionGroup2(){
@@ -2080,6 +2357,15 @@ public class Identity extends TabItem {
 		group_3 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		actionGroup_3.setLayoutData(group_3);
 	}
+	
+	private void createActionGroup4(){
+		actionGroup_4 = new Group(generalGroup, SWT.NONE);
+		actionGroup_4.setText("Aktionsfenster");
+		actionLayout_4 = new GridLayout(4, false);
+		actionGroup_4.setLayout(actionLayout_4);
+		group_4 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+		actionGroup_4.setLayoutData(group_4);
+	}	
 	
 	private Label createSpacer(final Composite location){
 		Label spacer = new Label(location, SWT.NONE);
@@ -2241,6 +2527,7 @@ public class Identity extends TabItem {
     	sIsPrime = false;
     	tIsPrime = false;
     	eIsValid = false;
+    	BigInteger minimum = new BigInteger("3");
     	
     	errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
     	
@@ -2252,7 +2539,9 @@ public class Identity extends TabItem {
 		        	pIsPrime = false;
 		        	init = false;
 		        	deactivateSave();
-		        }else{
+		        }else if (bi_rsaP.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		pIsPrime = true;
 		        }
@@ -2264,7 +2553,9 @@ public class Identity extends TabItem {
 		        	qIsPrime = false;
 		        	init = false;
 		        	deactivateSave();
-		        }else{
+		        }else if (bi_rsaQ.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 		        	errorLabel_1.setText("");
 		        	qIsPrime = true;
 		        }
@@ -2322,7 +2613,9 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_P);
 		        	pIsPrime = false;
 		        	disableSomeExRSAParams();
-		        }else{
+		        }else if (bi_ExtrsaP.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		pIsPrime = true;
 		        }
@@ -2332,7 +2625,9 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_Q);
 		        	qIsPrime = false;
 		        	disableSomeExRSAParams();
-		        }else{
+		        }else if (bi_ExtrsaQ.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		qIsPrime = true;
 		        }
@@ -2342,7 +2637,9 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_R);
 		        	rIsPrime = false;
 		        	disableSomeExRSAParams();
-		        }else{
+		        }else if (bi_ExtrsaR.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		rIsPrime = true;
 		        }
@@ -2352,7 +2649,9 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_S);
 		        	sIsPrime = false;
 		        	disableSomeExRSAParams();
-		        }else{
+		        }else if (bi_ExtrsaS.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		sIsPrime = true;
 		        }
@@ -2361,27 +2660,45 @@ public class Identity extends TabItem {
 	    		if (!bi_ExtrsaT.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaT)) {
 		        	errorLabel_1.setText(NO_PRIME_T);
 		        	tIsPrime = false;
-		        }else{
+		        	disableSomeExRSAParams();
+		        }else if (bi_ExtrsaT.compareTo(minimum)< 0){
+	        		errorLabel_1.setText(VALUE_TOO_SMALL);
+	        	}else{
 	        		errorLabel_1.setText("");
 	        		tIsPrime = true;
 		        }
 	    	}
+    		
     		//check belated changes and show only the message.. the rest is done in the methods above
-    		if (!pIsPrime && bi_ExtrsaP != null){
+    		if (!bi_ExtrsaP.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaP) && combo_ExrsaP.getText().length()>0){
     			errorLabel_1.setText(NO_PRIME_P);
-    		}
-    		if (!qIsPrime && bi_ExtrsaQ != null){
+    		}else if (bi_ExtrsaP != null && bi_ExtrsaP.compareTo(minimum)< 0){
+        		errorLabel_1.setText(VALUE_TOO_SMALL);
+        	}
+    		
+    		if (bi_ExtrsaQ != null && !bi_ExtrsaQ.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaQ) && combo_ExrsaQ.getText().length()>0){
     			errorLabel_1.setText(NO_PRIME_Q);
-    		}
-    		if (!rIsPrime && bi_ExtrsaR != null){
+    		}else if (bi_ExtrsaQ != null && bi_ExtrsaQ.compareTo(minimum)< 0){
+        		errorLabel_1.setText(VALUE_TOO_SMALL);
+        	}
+    		
+    		if (bi_ExtrsaR != null && !bi_ExtrsaR.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaR) && combo_ExrsaR.getText().length()>0){
     			errorLabel_1.setText(NO_PRIME_R);
-    		}
-    		if (!sIsPrime && bi_ExtrsaS != null){
+    		}else if (bi_ExtrsaR != null && bi_ExtrsaR.compareTo(minimum)< 0){
+        		errorLabel_1.setText(VALUE_TOO_SMALL);
+        	}
+    		
+    		if (bi_ExtrsaS != null && !bi_ExtrsaS.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaS) && combo_ExrsaS.getText().length()>0){
     			errorLabel_1.setText(NO_PRIME_S);
-    		}
-    		if (!tIsPrime && bi_ExtrsaT != null){
+    		}else if (bi_ExtrsaS != null && bi_ExtrsaS.compareTo(minimum)< 0){
+        		errorLabel_1.setText(VALUE_TOO_SMALL);
+        	}
+    		
+    		if (bi_ExtrsaT != null && !bi_ExtrsaT.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaT) && combo_ExrsaT.getText().length()>0){
     			errorLabel_1.setText(NO_PRIME_T);
-    		}
+    		}else if (bi_ExtrsaT != null && bi_ExtrsaT.compareTo(minimum)< 0){
+        		errorLabel_1.setText(VALUE_TOO_SMALL);
+        	}
     		
     		//check, if different primes are chosen
     		validCount = 0;
