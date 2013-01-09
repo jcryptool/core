@@ -185,9 +185,9 @@ public class ExtendedRSA_Visual extends ViewPart{
             	System.out.println("[DEBUG] ALICE generiert rsa key");
             }
         	Vector<String> keyAlgos = iMgr.getAsymmetricKeyAlgorithms(ALICE);
-        	for (int i = 0; i < keyAlgos.size(); i++){
-        		System.out.println("alice keyalgos: "+keyAlgos.get(i));
-        	}
+//        	for (int i = 0; i < keyAlgos.size(); i++){
+//        		System.out.println("alice keyalgos: "+keyAlgos.get(i));
+//        	}
         	int count = 0;
         	int count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){
@@ -219,9 +219,9 @@ public class ExtendedRSA_Visual extends ViewPart{
             	System.out.println("[DEBUG]rsakey wird generiert...bob");
             }
         	keyAlgos = iMgr.getAsymmetricKeyAlgorithms(BOB);
-        	for (int i = 0; i < keyAlgos.size(); i++){
-        		System.out.println("bob keyalgos: "+keyAlgos.get(i));
-        	}
+//        	for (int i = 0; i < keyAlgos.size(); i++){
+//        		System.out.println("bob keyalgos: "+keyAlgos.get(i));
+//        	}
         	count = 0;
         	count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){

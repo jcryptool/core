@@ -140,7 +140,7 @@ public class Identity extends TabItem {
 	private BigInteger bi_ExtrsaPhi;
 	private Button pickRandomE;
 	private Button pickRandomExtE;
-	private Vector<BigInteger> possibleEs;
+	private Vector<String> possibleEs;
 	private Label errorLabel_1;
 	private boolean pIsPrime;
 	private boolean qIsPrime;
@@ -148,7 +148,7 @@ public class Identity extends TabItem {
 	private boolean sIsPrime;
 	private boolean tIsPrime;
 	private boolean eIsValid;
-	private boolean init;
+//	private boolean init;
 	private Composite rsaComposite;
 	private Composite rsaExMainComposite;
 	private Composite rsaExComposite1;
@@ -207,6 +207,7 @@ public class Identity extends TabItem {
 	private TableColumn column_parameter_attacked;
 	private TableColumn column_value_attacked;	
 	private Label attack_hint;
+	private Vector<BigInteger> primesE;
 	
 	private final String EXPLAIN_INIT = "Die Identit\u00e4ten aus Ihrem Schl\u00fcsselspeicher werden in dieser Visualisierung als Tabs (Registerkarten) angezeigt. Schon bei der Auslieferung befinden sich die Identit\u00e4ten „Alice Whitehat“ und „Bob Whitehat“ im Schl\u00fcsselspeicher und werden dehalb auch initial schon als Tabs angezeigt.\n\nJede Registerkarte stellt eine Identit\u00e4t dar. Durch den Button „Identit\u00e4ten ein-/ausblenden“ k\u00f6nnen bestehende Identit\u00e4ten als Registerkarten angezeigt oder ausgeblendet werden. Wenn eine neue Identit\u00e4t erstellt wird, wird diese erst als Registerkarte angezeigt, wenn sie durch „Identit\u00e4ten ein-/ausblenden“ ausgew\u00e4hlt wurde!\n\nZu allen Aktionen finden Sie in diesem Bereich Erl\u00e4uterungen.";
 	private final String EXPLAIN_ENCRYPT = "Aktion: Nachricht verschl\u00fcsseln und senden\n\nF\u00fcr den Verschl\u00fcsselungsvorgang werden die Parameter N und e ben\u00f6tigt. Mehr Informationen zu den einzelnen Parametern finden Sie in der Registerkarte „Meine Schl\u00fcssel“  in der „Schl\u00fcsselverwaltung“.\n\n Vorgehensweise:\n\n1) Geben Sie einen optionalen Betreff und eine beliebige Nachricht ein.\n\n2) W\u00e4hlen Sie einen Empf\u00e4nger aus (zum Beispiel Bob Whitehat). Hinweis: Diese Visualisierung erlaubt nur einen Empf\u00e4nger.\n\n3) W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel des Empf\u00e4ngers aus.\n\n4) Klicken Sie auf den Button „Nachricht verschl\u00fcsseln“.\n\n5) Klicken Sie auf den Button „Nachricht senden“, um die verschl\u00fcsselte Nachricht zu verschicken und im Nachrichtenspeicher abzulegen.";
@@ -267,12 +268,11 @@ public class Identity extends TabItem {
 		rsa_impl = new RsaImplementation();
 		stopUpdateE = false;
 		
-//		getPrimes();
+		primesE = getEPrimes();
 		
 		//set the text of the TabItem
 		this.setText(identityName);
 		forerunner = 0;	
-		init = true;
 		
 		txtExplain.setText(EXPLAIN_INIT);
 		
@@ -778,10 +778,8 @@ public class Identity extends TabItem {
 							bi_rsaP = new BigInteger(combo_rsaP.getItem(combo_rsaP.getSelectionIndex()));
 							combo_rsaE.setText("");
 							bi_rsaE = null;
+							stopUpdateE = false;
 					        checkParameter();
-							if (qIsPrime&&pIsPrime){
-								fillE();
-							}
 						}
 						
 						@Override
@@ -795,10 +793,8 @@ public class Identity extends TabItem {
 								bi_rsaP = new BigInteger(combo_rsaP.getText());
 								bi_rsaE = null;
 								combo_rsaE.setText("");
+								stopUpdateE = false;
 								checkParameter();
-								if (qIsPrime&&pIsPrime){
-									fillE();
-								}
 							}
 						}
 						
@@ -830,10 +826,8 @@ public class Identity extends TabItem {
 							bi_rsaQ = new BigInteger(combo_rsaQ.getItem(combo_rsaQ.getSelectionIndex()));
 							combo_rsaE.setText("");
 							bi_rsaE = null;
+							stopUpdateE = false;
 					        checkParameter();
-							if (qIsPrime&&pIsPrime){
-								fillE();
-							}
 						}
 						
 						@Override
@@ -846,10 +840,8 @@ public class Identity extends TabItem {
 								bi_rsaQ = new BigInteger(combo_rsaQ.getText());
 								combo_rsaE.setText("");
 								bi_rsaE = null;
+								stopUpdateE = false;
 								checkParameter();
-								if (qIsPrime&&pIsPrime){
-									fillE();
-								}
 							}
 						}
 						
@@ -880,6 +872,7 @@ public class Identity extends TabItem {
 						public void keyReleased(KeyEvent e) {
 							if (combo_rsaE.getText().length() >0){
 								bi_rsaE = new BigInteger(combo_rsaE.getText());
+								stopUpdateE = true;
 								checkParameter();
 							}
 						}
@@ -893,7 +886,9 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							bi_rsaE = new BigInteger(combo_rsaE.getItem(combo_rsaE.getSelectionIndex()));
-					        checkParameter();
+							stopUpdateE = true;
+							eIsValid = true;
+							checkParameter();
 						}
 						
 						@Override
@@ -907,10 +902,12 @@ public class Identity extends TabItem {
 			        pickRandomE.addSelectionListener(new SelectionListener() {
 
 			            public void widgetSelected(SelectionEvent e) {
-			            	bi_rsaE = possibleEs.get((int)(Math.random()*possibleEs.size()));
+			            	bi_rsaE = new BigInteger(possibleEs.get((int)(Math.random()*possibleEs.size())));
+			            	combo_rsaE.setText(bi_rsaE.toString());
 			            	combo_rsaE.setText(bi_rsaE.toString());
 			            	eIsValid = true;
 			            	errorLabel_1.setText("");
+			            	stopUpdateE = true;
 			            	checkParameter();
 			            }
 
@@ -1235,6 +1232,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							bi_ExtrsaE = new BigInteger(combo_ExrsaE.getItem(combo_ExrsaE.getSelectionIndex()));
+							stopUpdateE = true;
 					        checkParameter();
 						}
 						
@@ -1250,10 +1248,11 @@ public class Identity extends TabItem {
 			        pickRandomExtE.addSelectionListener(new SelectionListener() {
 
 			            public void widgetSelected(SelectionEvent e) {
-			            	bi_ExtrsaE = possibleEs.get((int)(Math.random()*possibleEs.size()));
+			            	bi_ExtrsaE = new BigInteger(possibleEs.get((int)(Math.random()*possibleEs.size())));
 			            	combo_ExrsaE.setText(bi_ExtrsaE.toString());
 			            	eIsValid = true;
 			            	errorLabel_1.setText("");
+			            	stopUpdateE = true;
 			            	checkParameter();
 			            }
 
@@ -2276,20 +2275,23 @@ public class Identity extends TabItem {
 		}
 	}
 	
-	private void getPrimes(){
-		BigInteger start = BigInteger.ONE;
+	/**
+	 * get all primes for a possible 'e'. 
+	 * @return 6542 prime numbers from 3 to 65537
+	 */
+	private Vector<BigInteger> getEPrimes(){
+		BigInteger start = new BigInteger("3");
 		BigInteger end = new BigInteger("65537");
-		int count = 0;
-		while (start.compareTo(end) < 0){
+		Vector<BigInteger> ePrimes = new Vector<BigInteger>();
+		while (start.compareTo(end) <= 0){
 			if (!Lib.isPrime(start)){
 				start = start.add(BigInteger.ONE);
 			}else{
-				System.out.println("zahl: "+start);
+				ePrimes.add(start);
 				start = start.add(BigInteger.ONE);
-				count++;
 			}
 		}
-		System.out.println("anzal: "+count);
+		return ePrimes;
 	}
 	
 	private void addRecipientsToCombo(){
@@ -2309,13 +2311,11 @@ public class Identity extends TabItem {
 				}
 			}
 		}
-		
 		messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
 	}
 	
     /**
-     * enters all primes into the given combo item.
-     *
+     * fills all primes into the given combo item.
      * @param combo the list from which a prime can be selected
      */
     private void fillPrimesTo(final Combo combo) {
@@ -2370,7 +2370,6 @@ public class Identity extends TabItem {
 	private Label createSpacer(final Composite location){
 		Label spacer = new Label(location, SWT.NONE);
 		spacer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-//		spacer.setText("     ");
 		return spacer;
 	}
 
@@ -2424,102 +2423,8 @@ public class Identity extends TabItem {
 	}
 	
 	/**
-     * fills the list of possible e values for selection.
-     * "0" represents the classic RSA and "1" for multi-prime
-     */
-    private void fillElist(final int algorithm) {
-        new Thread() {
-
-            /**
-             * Runnable for accessing the user interface
-             *
-             * @author Michael Gaber
-             */
-            final class KeyRunnable implements Runnable {
-
-                /** itemcount that is added directly to the list */
-                private static final int TRIGGERLENGTH = 20000;
-
-                /** list of items to add */
-                private final String[] newList;
-
-                /**
-                 * Constructor sets the list
-                 *
-                 * @param list the list of items to add to combo_rsaE
-                 * @param intermediate whether this result is an intermediate one, so enable the transfer-button
-                 */
-                private KeyRunnable(String[] list) {
-                    this.newList = list;
-                }
-
-                public void run() {
-                    if (newList.length <= TRIGGERLENGTH) {
-                    	if(algorithm == 0){
-                    		combo_rsaE.setItems(newList);
-                        	if(bi_rsaE != null){
-                        		//really important!!
-                        		combo_rsaE.setText(bi_rsaE.toString());
-                        	}
-                    	}else{
-                    		combo_ExrsaE.setItems(newList);
-                        	if(bi_ExtrsaE != null){
-                        		//really important!!
-                        		combo_ExrsaE.setText(bi_ExtrsaE.toString());
-                        	}
-                    	}
-                    } 
-                }
-            }
-
-            @Override
-            public void run() {
-                Set<BigInteger> tempEList = new TreeSet<BigInteger>();
-                BigInteger ih;
-                if (algorithm == 0){
-	                for (int i = 2; i < bi_rsaPhi.intValue(); i++) {
-	                    ih = new BigInteger("" + i); //$NON-NLS-1$
-	                    if (bi_rsaPhi.gcd(ih).equals(ONE)) {
-	                        if (tempEList.size() == KeyRunnable.TRIGGERLENGTH) {
-	                        	fillToE(tempEList);
-	                        }
-	                        tempEList.add(ih);
-	                    }
-	                }
-                }else{
-                	for (int i = 2; i < bi_ExtrsaPhi.intValue(); i++) {
-	                    ih = new BigInteger("" + i); //$NON-NLS-1$
-	                    if (bi_ExtrsaPhi.gcd(ih).equals(ONE)) {
-	                        if (tempEList.size() == KeyRunnable.TRIGGERLENGTH) {
-	                        	fillToE(tempEList);
-	                        }
-	                        tempEList.add(ih);
-	                    }
-	                }
-                }
-                
-                //now, the tempEList contains all elements
-                fillToE(tempEList);
-                
-                possibleEs = new Vector<BigInteger>(tempEList);
-
-            }
-            /**
-             * transfers the given list of items to an array of strings, creates a new Keyrunnable and starts it using
-             * the {@link Display#asyncExec(Runnable)} Method.
-             *
-             * @param list the list of items to set
-             */
-            private void fillToE(Set<BigInteger> list) {
-                List<String> newList = new LinkedList<String>();
-                for (BigInteger integer : list) {
-                    newList.add(integer.toString());
-                }
-                Display.getDefault().asyncExec(new KeyRunnable(newList.toArray(new String[newList.size()])));
-            }
-        }.start();
-    }
-    
+	 * main check-method for the entered parameters
+	 */
     private void checkParameter(){
     	pIsPrime = false;
     	qIsPrime = false;
@@ -2537,7 +2442,6 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_P);
 		        	combo_rsaE.removeAll();
 		        	pIsPrime = false;
-		        	init = false;
 		        	deactivateSave();
 		        }else if (bi_rsaP.compareTo(minimum)< 0){
 	        		errorLabel_1.setText(VALUE_TOO_SMALL);
@@ -2551,7 +2455,6 @@ public class Identity extends TabItem {
 		        	errorLabel_1.setText(NO_PRIME_Q);
 		        	combo_rsaE.removeAll();
 		        	qIsPrime = false;
-		        	init = false;
 		        	deactivateSave();
 		        }else if (bi_rsaQ.compareTo(minimum)< 0){
 	        		errorLabel_1.setText(VALUE_TOO_SMALL);
@@ -2572,14 +2475,15 @@ public class Identity extends TabItem {
 		        	bi_rsaN = bi_rsaP.multiply(bi_rsaQ);                    	
 		        	bi_rsaPhi = Lib.calcPhi(bi_rsaP, bi_rsaQ);
 		        	pickRandomE.setEnabled(true); 
-		        	combo_rsaE.setEnabled(true);
-		        	if (init){
+		        	
+	        		if (!stopUpdateE){
+	        			combo_rsaE.setEnabled(true);
 		        		combo_rsaE.removeAll();
-			            fillElist(0);
-			            init = false;
-		        	}
+	        			fillE();
+	        		}
+		            
 		            if(bi_rsaE != null){
-		            	if (!possibleEs.contains(bi_rsaE)) {
+		            	if (!possibleEs.contains(bi_rsaE.toString())) {
 		    	        	errorLabel_1.setText(NO_VALID_E);
 		    	        	password1.setText("");
 		    	    		password2.setText("");
@@ -2757,9 +2661,6 @@ public class Identity extends TabItem {
     		int selectednumberOfPrimes = Integer.parseInt(numberOfPrimesExRSA.getItem(numberOfPrimesExRSA.getSelectionIndex()));
     		
     		if (validCount == selectednumberOfPrimes){
-    			if(!stopUpdateE){
-    				fillElist(1);
-    			}
     			switch (selectednumberOfPrimes){
     				case 3: bi_ExtrsaN = bi_ExtrsaP.multiply(bi_ExtrsaQ).multiply(bi_ExtrsaR);
     						bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE));
@@ -2773,15 +2674,16 @@ public class Identity extends TabItem {
 							bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaT.subtract(ONE));
 							break;
     			}
+    			if(!stopUpdateE){
+    				combo_ExrsaE.removeAll();
+        			fillE();
+    			}
     			pickRandomExtE.setEnabled(true);
     			combo_ExrsaE.setEnabled(true);
-    			if (init){
-	        		combo_ExrsaE.removeAll();    		
-		            fillElist(1);
-		            init = false;
-	        	}
+
+		        
     			if(bi_ExtrsaE != null){
-	            	if (!possibleEs.contains(bi_ExtrsaE)) {
+	            	if (!possibleEs.contains(bi_ExtrsaE.toString())) {
 	    	        	errorLabel_1.setText(NO_VALID_E);
 	    	        	eIsValid = false;
 	    	        }else{
@@ -2798,7 +2700,6 @@ public class Identity extends TabItem {
         
     }
     private void disableSomeExRSAParams(){
-    	init = false;
     	eIsValid = false;
     	pickRandomExtE.setEnabled(false); 
     	combo_ExrsaE.setEnabled(false);
@@ -2811,16 +2712,26 @@ public class Identity extends TabItem {
     	password1.setText("");
     	password2.setText("");
     	createKey.setEnabled(false);
+    	possibleEs = new Vector<String>();
     	
     	if(radio_RSA.getSelection()){
-	        if(pIsPrime && qIsPrime){
-	        	combo_rsaE.removeAll();
-		        if (!bi_rsaP.equals(bi_rsaQ)) {
-		            fillElist(0);
-		        } else {
-		        	init = true;
-		        }
+        	combo_rsaE.removeAll();
+	        if (!bi_rsaP.equals(bi_rsaQ)) {
+	            for (int i = 0; i < primesE.size(); i++){
+	            	if (primesE.get(i).compareTo(bi_rsaN) < 0){
+	            		possibleEs.add(primesE.get(i).toString());
+	            	}
+	            }
+	            combo_rsaE.setItems(possibleEs.toArray(new String[possibleEs.size()]));
 	        }
+    	}else{
+    		combo_ExrsaE.removeAll();
+    		for (int i = 0; i < primesE.size(); i++){
+            	if (primesE.get(i).compareTo(bi_ExtrsaN) < 0){
+            		possibleEs.add(primesE.get(i).toString());
+            	}
+            }
+            combo_ExrsaE.setItems(possibleEs.toArray(new String[possibleEs.size()]));
     	}
     }
 }
