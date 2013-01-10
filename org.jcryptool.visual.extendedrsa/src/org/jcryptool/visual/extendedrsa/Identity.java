@@ -218,7 +218,7 @@ public class Identity extends TabItem {
 	private final String EXPLAIN_KEYMGMT_TAB1 = "Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen\n\nHier kann ein Schl\u00fcssel mit ausgew\u00e4hlten Parametern erstellt werden. Der RSA-Algorithmus ist in zwei Varianten implementiert:\n\n1) F\u00fcr den klassischen RSA-Algorithmus werden zwei verschiedene Primzahlen p und q ben\u00f6tigt. Diese k\u00f6nnen entweder ausgew\u00e4hlt oder eingegeben werden. Sofern p und q zul\u00e4ssig sind, kann ein Exponent e ausgesucht, eingegeben oder generiert werden.\n\n2) Beim „multi-primen RSA“ muss zuerst die Anzahl der Primzahlen (zwischen 3 und 5) festgelegt werden. Die Parameter k\u00f6nnen hier analog zum klassischen RSA angegeben werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
 	private final String EXPLAIN_KEYMGMT_TAB2 ="Aktion: Schl\u00fcsselverwaltung - Neuen Schl\u00fcssel erstellen (erweitert)\n\nIn dieser Registerkarte k\u00f6nnen Schl\u00fcssel mit aktuell verwendeten Schl\u00fcssell\u00e4ngen erstellt werden. Es muss nur die gew\u00fcnschte Schl\u00fcssell\u00e4nge bzw. die Anzahl der Primzahlen ausgew\u00e4hlt werden.\n\nAm Ende der Schl\u00fcsselerzeugung muss ein Passwort f\u00fcr den privaten Schl\u00fcssel festgelegt werden.\n\nKlicken Sie auf den Button „Schl\u00fcssel erstellen“, um den neuen Schl\u00fcssel mit den gew\u00e4hlten Parametern im Schl\u00fcsselspeicher abzulegen.";
 	private final String EXPLAIN_KEYMGMT_TAB3 = "Aktion: Schl\u00fcsselverwaltung - Meine Schl\u00fcssel\n\nEin Schl\u00fcsselpaar besteht aus einem „privaten Schl\u00fcssel“ und einem „\u00f6ffentlichen Schl\u00fcssel“:\n\na) Der private Schl\u00fcssel (N, d):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der private Exponent d muss geheim gehalten werden. Er ergab sich aus der Berechnung e^(-1) modulo phi(N).\n\nb) Der \u00f6ffentliche Schl\u00fcssel (N, e):\n- Der Modulus N ist sowohl Teil des \u00f6ffentlichen wie des privaten Schl\u00fcssels.\n- Der \u00f6ffentliche Exponent e (er befindet sich \u00fcblicherweise im Bereich von 17 – 65537).\n\nBeim „multi-primen“ RSA-Verfahren k\u00f6nnen mehr als zwei Primzahlen gew\u00e4hlt werden. In diesem Plugin ist die Anzahl auf drei bis f\u00fcnf Primzahlen beschr\u00e4nkt. Theoretisch ist die Anzahl jedoch nach oben offen.";
-	private final String EXPLAIN_ATTACK_PUBKEY = "Aktion: \u00d6ffentlichen Schl\u00fcssel angreifen\n\nIn dieser Registerkarte k\u00f6nnen Sie versuchen, einen \u00f6ffentlichen Schl\u00fcssel anzugreifen. Wenn der Modulus N kurz genug ist (weniger als 256 bit L\u00e4nge), wird es m\u00f6glich sein, N in \"endlicher Zeit\" zu faktorisieren. Die Faktorisierung liefert die verwendeten Primzahlen, und mit diesen kann der geheime Schl\u00fcssel d rekonstruiert werden. Somit k\u00f6nnen Sie sich als jemand anderes ausgeben und eventuell Nachrichten lesen, die nicht f\u00fcr Sie bestimmt sind oder Nachrichten im Namen von jemand anderem signieren.\n\nAchtung: Das Faktorisieren wird viel Zeit in Anspruch nehmen. Je nach Hardware und Schl\u00fcssell\u00e4nge k\u00f6nnte dieser Vorgang mehrere Jahre dauern!\n\nDa die Sicherheit von RSA auf langen Schl\u00fcsseln beruht (bei denen der Faktorisierungsvorgang mehrere Jahre dauern w\u00fcrde), wird empfohlen, zum Verschl\u00fcsseln/Signieren Schl\u00fcssel gr\u00f6ßer als 1024 bit L\u00e4nge zu verwenden.";
+	private final String EXPLAIN_ATTACK_PUBKEY = "Aktion: \u00d6ffentlichen Schl\u00fcssel angreifen\n\nIn dieser Registerkarte k\u00f6nnen Sie versuchen, einen \u00f6ffentlichen Schl\u00fcssel anzugreifen. Wenn der Modulus N kurz genug ist (weniger als 256 bit L\u00e4nge), wird es m\u00f6glich sein, N in \"endlicher Zeit\" zu faktorisieren. Die Faktorisierung liefert die verwendeten Primzahlen, und mit diesen kann der geheime Schl\u00fcssel d rekonstruiert werden. Somit k\u00f6nnen Sie sich als der tats\u00e4chliche Schl\u00fcsselbesitzer ausgeben und eventuell Nachrichten lesen, die f\u00fcr den eigentlichen Schl\u00fcsselbesitzer bestimmt sind oder Nachrichten im Namen des tats\u00e4chlichen Schl\u00fcsselbesitzers .\n\nAchtung: Das Faktorisieren wird viel Zeit in Anspruch nehmen. Je nach Hardware und Schl\u00fcssell\u00e4nge k\u00f6nnte dieser Vorgang mehrere Jahre dauern!\n\nDa die Sicherheit von RSA auf langen Schl\u00fcsseln beruht (bei denen der Faktorisierungsvorgang mehrere Jahre dauern w\u00fcrde), wird empfohlen, zum Verschl\u00fcsseln/Signieren Schl\u00fcssel gr\u00f6\u00dfer als 1024 bit L\u00e4nge zu verwenden.";
 	private final String ENTER_TWO_PRIMES = "W\u00e4hlen Sie 2 verschiedene Primzahlen p und q, sowie einen Exponenten e:";
 	private final String ENTER_THREE_PRIMES = "W\u00e4hlen Sie 3 verschiedene Primzahlen p, q, r und einen Exponenten e:";
 	private final String ENTER_FOUR_PRIMES = "W\u00e4hlen Sie 4 verschiedene Primzahlen p, q, r, s und einen Exponenten e:";
@@ -233,7 +233,7 @@ public class Identity extends TabItem {
 	private final String NO_PRIME_T = "Achtung: 't' ist keine Primzahl!"; 
 	private final String NO_VALID_E = "Achtung: 'e' ist kein passender Exponent ('e' muss zwischen 3 und 65537 liegen)!";
 	private final String PRIMES_EQUAL = "Achtung: Bitte verschiedene Primzahlen ausw\u00e4hlen!";
-	private final String VALUE_TOO_SMALL="Achtung: Bitte eine gr\u00f6ßere Primzahl als 2 eingeben, da ansonsten keine Werte f\u00fcr 'e' m\u00f6glich sind!";
+	private final String VALUE_TOO_SMALL="Achtung: Bitte eine gr\u00f6\u00dfere Primzahl als 2 eingeben, da ansonsten keine Werte f\u00fcr 'e' m\u00f6glich sind!";
 	private final String NO_KEY_TO_ATTACK = "Achtung: Es ist noch kein angreifbarer Schl\u00fcssel (kleiner als 128 bit Schl\u00fcssell\u00e4nge) im Schl\u00fcsselspeicher.";
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
@@ -272,9 +272,7 @@ public class Identity extends TabItem {
 		
 		//set the text of the TabItem
 		this.setText(identityName);
-		forerunner = 0;	
-		
-		txtExplain.setText(EXPLAIN_INIT);
+		forerunner = 0;
 		
 		// define the layout for the whole TabItem now
 		generalGroup = new Group(parent, SWT.NONE);
@@ -311,8 +309,12 @@ public class Identity extends TabItem {
 					actionGroup_3.dispose();
 					actionGroup_4.dispose();
 					
-					initActions.setText("Betreff der Nachricht: ");
-					createSpacer(actionGroup_1);
+					initActions.dispose();
+					Label lbl_subj = new Label(actionGroup_1, SWT.NONE);
+					lbl_subj.setText("Betreff der Nachricht:");
+					GridData gd_sub = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+					gd_sub.heightHint = 20;
+					lbl_subj.setLayoutData(gd_sub);
 					
 					subjectInput = new Text(actionGroup_1, SWT.BORDER);
 					GridData gd_subject = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
@@ -1811,11 +1813,11 @@ public class Identity extends TabItem {
 					
 					Label l = new Label(actionGroup_4, SWT.NONE);
 					l.setText("W\u00e4hlen Sie einen \u00f6ffentlichen Schl\u00fcssel: ");
-					GridData gd_lbl_attack = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+					GridData gd_lbl_attack = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 					gd_lbl_attack.heightHint = 20;
 					l.setLayoutData(gd_lbl_attack);
 					
-					for(int i = 0; i < 3; i++){
+					for(int i = 0; i < 2; i++){
 						createSpacer(actionGroup_4);
 					}
 					
@@ -1838,7 +1840,7 @@ public class Identity extends TabItem {
 								Vector<BigInteger> actualKey = iMgr.getPublicKeyParameters(attackableKeys.get(keyToAttack.getText()));
 								
 								String name = keyToAttack.getText().substring(0,keyToAttack.getText().indexOf('-')-1);
-								attack_hint.setText("Mit Klick auf \"Schl\u00fcssel attackieren\" wird versucht, den Exponten N vom "+name+" zu faktorisieren:\nBitl\u00e4nge von N:"+actualKey.get(0).bitLength()+"bit \nN: "+actualKey.get(0));		
+								attack_hint.setText("Mit Klick auf \"Schl\u00fcssel attackieren\" wird versucht, den Modulus N von "+name+" zu faktorisieren:\nBitl\u00e4nge von N:"+actualKey.get(0).bitLength()+"bit \nN: "+actualKey.get(0));		
 								keyData_attacked.setVisible(false);
 							}
 						}
@@ -1852,7 +1854,7 @@ public class Identity extends TabItem {
 					attackKey.setEnabled(false);
 					GridData btn_attack = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
 					btn_attack.heightHint = 20;
-					btn_attack.widthHint = 200;
+					btn_attack.widthHint = 250;
 					attackKey.setLayoutData(btn_attack);
 					attackKey.addSelectionListener(new SelectionListener() {
 						
@@ -1880,7 +1882,7 @@ public class Identity extends TabItem {
 
 					attack_hint = new Label(actionGroup_4, SWT.WRAP);
 					GridData at_hint = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 2);
-					at_hint.heightHint = 110;
+					at_hint.heightHint = 150;
 					attack_hint.setLayoutData(at_hint);
 					
 					keyData_attacked = new Table(actionGroup_4, SWT.BORDER|SWT.FULL_SELECTION);
@@ -2336,8 +2338,13 @@ public class Identity extends TabItem {
 		group_1.exclude = false;
 		actionGroup_1.setLayoutData(group_1);
 		initActions = new Label(actionGroup_1, SWT.WRAP);
-		initActions.setText("W\u00e4hlen Sie eine Aktion f\u00fcr die aktuelle Identit\u00e4t ("+identityName+"), oder einen Button im Feld „Identit\u00e4ten-Verwaltung“.");
+		initActions.setText("Bitte w\u00e4hlen Sie eine Aktion f\u00fcr die Identit\u00e4t im aktuellen Tab ("+identityName+"),  oder einen Button im Feld \"Identit\u00e4ten-Verwaltung\".");
+		GridData gd_initActions = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+		gd_initActions.heightHint = 40;
+		initActions.setLayoutData(gd_initActions);
 		actionGroup_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		
+		txtExplain.setText(EXPLAIN_INIT);
 	}
 	private void createActionGroup2(){
 		actionGroup_2 = new Group(generalGroup, SWT.NONE);
