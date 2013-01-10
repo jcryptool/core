@@ -23,3 +23,7 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.operations.alphabets,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.fonts
+Export-Package: 
+ org.jcryptool.visual.extendedrsa,
+ org.jcryptool.visual.extendedrsa.ui.wizards,
+ org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages

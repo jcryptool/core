@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2012 JCrypTool Team and Contributors
+ * Copyright (c) 2013 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,11 +28,15 @@ public class Contact extends ContactDescriptorNode{
 
 	public Contact(String name, String firstName, String lastName, String organisation, String region) {
 		super(name);
-		this.name = name;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.organisation = organisation;
-		this.region = region;
+		if (name != null){
+			this.name = name;
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.organisation = organisation;
+			this.region = region;
+		}else{
+			throw new IllegalArgumentException("Error: You have to enter a name for your Identity!");
+		}
 	}
 
 	@Override

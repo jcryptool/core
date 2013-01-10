@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2012 JCrypTool Team and Contributors
+ * Copyright (c) 2013 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,8 +9,6 @@
  *******************************************************************************/
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.extendedrsa;
-
-import java.math.BigInteger;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
@@ -37,11 +35,15 @@ public class SecureMessage {
 	 * @param subject the subject
 	 */
 	public SecureMessage(String encryptedMessage, int keyID, String sender, KeyStoreAlias recipient, String subject) {
+		if (encryptedMessage != null && keyID > 0 && sender != null && recipient != null){
 		this.encryptedMessage = encryptedMessage;
 		this.keyID = keyID;
 		this.sender = sender;
 		this.recipient = recipient;
 		this.subject = subject;
+		}else{
+			throw new IllegalArgumentException("Error: null-values for the encryptedMessage, the sender and the recipient are not allowed! And the keyID has to be greater than 0!");
+		}
 	}
 
 	public String getEncryptedMessage() {
