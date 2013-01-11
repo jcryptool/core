@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: ExtendedRSA
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.extendedrsa;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jcryptool.visual.extendedrsa.Activator

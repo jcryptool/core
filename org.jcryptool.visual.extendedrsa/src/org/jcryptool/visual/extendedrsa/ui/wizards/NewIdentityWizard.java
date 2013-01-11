@@ -42,7 +42,6 @@ public class NewIdentityWizard extends Wizard{
 	public boolean performFinish() {
 		if (newIDPage.isPageComplete()){
 			Contact contact = new Contact(newIDPage.getIdName().toString(), newIDPage.getIdForename().toString(), newIDPage.getIdSurname().toString(), newIDPage.getIdOrganisation().toString(), newIDPage.getIdRegion().toString());
-			System.out.println("name: "+newIDPage.getIdName().toString());
 			IdentityManager.getInstance().getContactManger().addContact(contact);
 			
 			if (IdentityManager.getInstance().getContacts().size() > 2){

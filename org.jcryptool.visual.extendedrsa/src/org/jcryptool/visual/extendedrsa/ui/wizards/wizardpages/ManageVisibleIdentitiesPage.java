@@ -40,8 +40,8 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 	private Vector<String> alreadyShownIDs;
 	
 	public ManageVisibleIdentitiesPage(TabFolder folder) {
-		super("Identit\u00e4ten ausw\u00e4hlen", "Identit\u00e4ten ausw\u00e4hlen", null);
-        setDescription("W\u00e4hlen Sie die anzuzeigenden Identit\u00e4t und best\u00e4tigen Sie Ihre Auswahl.");
+		super(Messages.ManageVisibleIdentitiesPage_0, Messages.ManageVisibleIdentitiesPage_1, null);
+        setDescription(Messages.ManageVisibleIdentitiesPage_2);
         this.tabfolder = folder;
 	}
 	
@@ -55,8 +55,9 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 		container.setLayout(grid);
 		
 		Label lbl = new Label(container, SWT.WRAP);
-		lbl.setText("Selektieren Sie die Identit\u00e4ten, die in der Visualisierung angezeigt werden sollen. Zur Auswahl stehen alle\nIdentit\u00e4ten, die aktuell in Ihrem Schl\u00fcsselspeicher existieren.\n\nHinweis: Es m\u00fcssen mindestens 2 Identit\u00e4ten gew\u00e4hlt werden.");
-		
+		lbl.setText(Messages.ManageVisibleIdentitiesPage_3);
+		GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
+		lbl.setLayoutData(gdLbl);
 		
 		String[] identities =new String[IdentityManager.getInstance().getContacts().size()];
 		IdentityManager.getInstance().getContacts().toArray(identities);

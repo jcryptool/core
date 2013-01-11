@@ -47,7 +47,6 @@ public class DeleteIdentityWizard extends Wizard{
 	@Override
 	public boolean performFinish() { 
 		String contactToDelete = deleteIDPage.getSelectedIdentity().getItem(deleteIDPage.getSelectedIdentity().getSelectionIndex()).toString();
-		System.out.println("contact to delete: "+contactToDelete);
 		//find the tabitem and delete it
 		for (TabItem ti : tabfolder.getItems()){
 			Identity current = (Identity)ti;

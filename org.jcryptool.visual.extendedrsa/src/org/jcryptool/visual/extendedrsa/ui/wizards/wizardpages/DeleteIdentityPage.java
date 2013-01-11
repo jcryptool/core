@@ -38,8 +38,8 @@ public class DeleteIdentityPage extends WizardPage {
 	private ExtendedTabFolder tabfolder;
 	
 	public DeleteIdentityPage(ExtendedTabFolder tabfolder) {
-		super("Identit\u00e4t l\u00f6schen", "Identit\u00e4t l\u00f6schen", null);
-        setDescription("W\u00e4hlen Sie die zu l\u00f6schende Identit\u00e4t aus und best\u00e4tigen Sie Ihre Auswahl.");
+		super(Messages.DeleteIdentityPage_0, Messages.DeleteIdentityPage_1, null);
+        setDescription(Messages.DeleteIdentityPage_2);
         this.tabfolder = tabfolder;
 	}
 
@@ -54,7 +54,7 @@ public class DeleteIdentityPage extends WizardPage {
 		container.setLayout(grid);
 		
 		Label lbl_chooseId = new Label(container, SWT.NONE);
-		lbl_chooseId.setText("Identit\u00e4t w\u00e4hlen: ");
+		lbl_chooseId.setText(Messages.DeleteIdentityPage_3);
 		
 		selectedIdentity = new Combo(container, SWT.READ_ONLY);
 		GridData gd_selectedIdentity = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -63,7 +63,7 @@ public class DeleteIdentityPage extends WizardPage {
 		
 		Vector<String> ids = IdentityManager.getInstance().getContacts();
 		for (String s : ids){
-			if (!s.equals("Alice Whitehat") && (!s.equals("Bob Whitehat"))){
+			if (!s.equals(Messages.DeleteIdentityPage_4) && (!s.equals(Messages.DeleteIdentityPage_5))){
 				selectedIdentity.add(s);
 			}
 		}
@@ -75,7 +75,7 @@ public class DeleteIdentityPage extends WizardPage {
 		Text hint = new Text(container, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		hint.setBackground(container.getBackground());
 		hint.setFont(FontService.getNormalBoldFont());
-		hint.setText("ACHTUNG: Wenn Sie eine Identit\u00e4t ausgew\u00e4hlt haben und diese Auswahl durch einen Klick auf \"Fertigstellen\" best\u00e4tigen, wird diese Identit\u00e4t mit allen zugordneten Schl\u00fcsseln sofort und permanent gel\u00f6scht!\n\nDie Identit\u00e4ten \"Alice Whitehat\" und \"Bob Whitehat\" k\u00f6nnen nicht gel\u00f6scht werden.");
+		hint.setText(Messages.DeleteIdentityPage_6);
 		GridData gd_hint = new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1);
 		gd_hint.widthHint = 559;
 		hint.setLayoutData(gd_hint);

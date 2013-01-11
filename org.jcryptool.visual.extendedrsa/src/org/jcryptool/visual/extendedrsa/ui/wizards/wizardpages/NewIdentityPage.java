@@ -35,8 +35,8 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 	private Text idRegion;
 
 	public NewIdentityPage() {
-		super("Neue Identit\u00e4t", "Neue Identit\u00e4t", null);
-        setDescription("Bitte f\u00fcllen Sie die Felder aus und dr\u00fccken Sie 'Fertigstellen', um die Identit\u00e4t zu erzeugen.\nIhre Identit\u00e4t wird dann im Schl\u00fcsselspeicher gespeichert.");
+		super(Messages.NewIdentityPage_0, Messages.NewIdentityPage_1, null);
+        setDescription(Messages.NewIdentityPage_2);
         setPageComplete(false);
 	}
 
@@ -50,17 +50,17 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		container.setLayout(layout);
 		
 		Label lblName = new Label(container, SWT.NONE);
-		lblName.setText("Name der Identit\u00e4t:");
+		lblName.setText(Messages.NewIdentityPage_3);
 		idName = new Text(container, SWT.BORDER);
 		GridData gd_text = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
 		gd_text.widthHint = 155;
 		idName.setLayoutData(gd_text);
 		idName.addModifyListener(this);
 		Label mandatory = new Label (container, SWT.NONE);
-		mandatory.setText("(erforderlich)");
+		mandatory.setText(Messages.NewIdentityPage_4);
 		
 		Label lblVorname = new Label(container, SWT.NONE);
-		lblVorname.setText("Vorname:");
+		lblVorname.setText(Messages.NewIdentityPage_5);
 		idForename = new Text(container, SWT.BORDER);
 		GridData gd_idForename = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
 		gd_idForename.widthHint = 155;
@@ -68,7 +68,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
 		
 		Label lblNachname = new Label(container, SWT.NONE);
-		lblNachname.setText("Nachname:");
+		lblNachname.setText(Messages.NewIdentityPage_6);
 		idSurname = new Text(container, SWT.BORDER);
 		GridData gd_idSurname = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
 		gd_idSurname.widthHint = 155;
@@ -76,7 +76,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
 		
 		Label lblFirma = new Label(container, SWT.NONE);
-		lblFirma.setText("Firma/Organisation:");
+		lblFirma.setText(Messages.NewIdentityPage_7);
 		idOrganisation = new Text(container, SWT.BORDER);
 		GridData gd_txt_idOrganisation = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
 		gd_txt_idOrganisation.widthHint = 155;
@@ -84,7 +84,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		new Label(container, SWT.NONE).setLayoutData(new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1));
 		
 		Label lblLand = new Label(container, SWT.NONE);
-		lblLand.setText("Land/Region:");
+		lblLand.setText(Messages.NewIdentityPage_8);
 		idRegion = new Text(container, SWT.BORDER);
 		GridData gd_idRegion = new GridData(SWT.LEFT, SWT.LEFT, false, false, 1, 1);
 		gd_idRegion.widthHint = 155;
@@ -96,7 +96,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		
 		Label hint = new Label(container, SWT.WRAP);
 		hint.setFont(FontService.getNormalBoldFont());
-		hint.setText("Achtung: Diese Identit\u00e4t wird erst als Registerkarte in der Visualisierung angezeigt, wenn diese durch den Button „Identit\u00e4ten ein-/ausblenden“ selektiert wurde.");
+		hint.setText(Messages.NewIdentityPage_9);
 		GridData gd = new GridData(SWT.LEFT, SWT.LEFT, true, true, 3, 2);
 		gd.widthHint = 500;
 		hint.setLayoutData(gd);
@@ -127,7 +127,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener{
 		if (idName.getText().length() > 0){
 			if (IdentityManager.getInstance().getContacts().contains(idName.getText().toString())){
 				setPageComplete(false);
-				setErrorMessage("Achtung: Diese Identit\u00e4t existiert bereits. Bitte einen anderen Namen w\u00e4hlen.");
+				setErrorMessage(Messages.NewIdentityPage_10);
 			}else{
 				setErrorMessage(null);
 				setPageComplete(true);

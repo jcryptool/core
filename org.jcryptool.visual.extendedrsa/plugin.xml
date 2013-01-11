@@ -8,7 +8,7 @@
             class="org.jcryptool.visual.extendedrsa.ExtendedRSA_Visual"
             id="org.jcryptool.visual.extendedrsa.ExtendedRSAView"
             icon="icons/view.gif"
-            name="Erweitertes RSA-Kryptosystem"
+            name="%view.name"
             restorable="true">
       </view>
    </extension>
@@ -16,7 +16,7 @@
          point="org.jcryptool.core.operations.visuals">
       <Visual
             contextHelpId="org.jcryptool.visual.extendedrsa.rsaExtView"
-            name="Erweitertes RSA-Kryptosystem"
+            name="%Visual.name"
             viewId="org.jcryptool.visual.extendedrsa.ExtendedRSAView">
       </Visual>
    </extension>

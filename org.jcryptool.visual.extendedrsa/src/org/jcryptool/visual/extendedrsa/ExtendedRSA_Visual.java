@@ -44,9 +44,10 @@ import org.jcryptool.visual.extendedrsa.ui.wizards.NewIdentityWizard;
  */
 public class ExtendedRSA_Visual extends ViewPart{
 
-	public static final String ID = "org.jcryptool.visual.extendedrsa.ExtendedRSAView";
-	public static final String ALICE = "Alice Whitehat";
-	public static final String BOB = "Bob Whitehat";
+	private final String ID = Messages.ExtendedRSA_Visual_0;
+	private final String ALICE = Messages.ExtendedRSA_Visual_1;
+	private final String BOB = Messages.ExtendedRSA_Visual_2;
+	private final String BLANK = Messages.ExtendedRSA_Visual_3;
 	
 	private ScrolledComposite sc;
 	private Composite composite;
@@ -92,14 +93,14 @@ public class ExtendedRSA_Visual extends ViewPart{
 		label = new Label(headComposite, SWT.NONE);
 		label.setFont(FontService.getHeaderFont());
 		label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		label.setText("Erweitertes RSA-Kryptosystem");
+		label.setText(Messages.ExtendedRSA_Visual_4);
 		head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI| SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,false));
-		head_description.setText("In diesem Plugin k\u00f6nnen Sie mit dem RSA-Verfahren verschiedene Aktionen durchf\u00fchren. Dazu agieren Sie im Namen unterschiedlicher Identit\u00e4ten. Sie k\u00f6nnen z.B. als 'Alice Whitehat' einen Text verschl\u00fcsseln und an 'Bob Whitehat' senden. Bob Whitehat kann dann die empfangene Nachricht entschl\u00fcsseln, und umgekehrt.");	
+		head_description.setText(Messages.ExtendedRSA_Visual_5);	
 		//End - Header
 
 		grp_id_mgmt = new Group(composite, SWT.NONE);
-		grp_id_mgmt.setText("Identit\u00e4ten-Verwaltung");
+		grp_id_mgmt.setText(Messages.ExtendedRSA_Visual_6);
 		grp_id_mgmt.setLayout(new GridLayout(3,true));
 
 		btn_newID = new Button(grp_id_mgmt, SWT.PUSH);
@@ -115,10 +116,10 @@ public class ExtendedRSA_Visual extends ViewPart{
 				grp_id_mgmt.update();
 			}
 		});
-		btn_newID.setText("Neue Identit\u00e4t erstellen");
+		btn_newID.setText(Messages.ExtendedRSA_Visual_7);
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		btn_manageID.setText("Identit\u00e4t ein-/ausblenden");
+		btn_manageID.setText(Messages.ExtendedRSA_Visual_8);
 		btn_manageID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		btn_manageID.addSelectionListener(new SelectionListener() {
 			
@@ -138,7 +139,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 				grp_id_mgmt.update();
 			}
 		});
-		btn_delID.setText("Identit\u00e4t l\u00f6schen");
+		btn_delID.setText(Messages.ExtendedRSA_Visual_9);
 		btn_delID.setEnabled(IdentityManager.getInstance().getContacts().size()>2);
 		
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
@@ -156,7 +157,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		gd_explain.widthHint = 300;
 		
-		grp_explain.setText("Erkl\u00e4rungen");
+		grp_explain.setText(Messages.ExtendedRSA_Visual_10);
 		
 		txtExplain = new Label(grp_explain,  SWT.WRAP);
 		GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
@@ -179,8 +180,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             Vector<String> contactNames = iMgr.getContacts();
             if (!contactNames.contains(ALICE)){
             	//create Alice in the keystore
-            	iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
-            	System.out.println("[DEBUG] ALICE generiert rsa key");
+            	iMgr.createIdentity(ALICE, Messages.ExtendedRSA_Visual_11, Messages.ExtendedRSA_Visual_12, 1024);
             }
         	Vector<String> keyAlgos = iMgr.getAsymmetricKeyAlgorithms(ALICE);
 //        	for (int i = 0; i < keyAlgos.size(); i++){
@@ -189,32 +189,29 @@ public class ExtendedRSA_Visual extends ViewPart{
         	int count = 0;
         	int count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){
-	        	if (keyAlgos.get(i).startsWith("MpRSA")){
+	        	if (keyAlgos.get(i).startsWith(Messages.ExtendedRSA_Visual_13)){
 	        		count++;
 	        	}
-	        	if (keyAlgos.get(i).startsWith("RSA")){
+	        	if (keyAlgos.get(i).startsWith(Messages.ExtendedRSA_Visual_14)){
 	        		count2++;
 	        	}
         	}
         	if (count == 0){
-        		iMgr.createIdentity(ALICE, "MpRSA", "1234", 1024);
-        		System.out.println("[DEBUG]mprsa-key wird generiert...alice");
+        		iMgr.createIdentity(ALICE, Messages.ExtendedRSA_Visual_15, Messages.ExtendedRSA_Visual_16, 1024);
         	}
         	if (count2 == 0){
-        		iMgr.createIdentity(ALICE, "RSA", "1234", 1024);
-        		System.out.println("[DEBUG]rsa-key wird generiert... alice");
+        		iMgr.createIdentity(ALICE, Messages.ExtendedRSA_Visual_17, Messages.ExtendedRSA_Visual_18, 1024);
         	}
               
             
-            String[] alice_split = ALICE.split(" ");
+            String[] alice_split = ALICE.split(BLANK);
             //create "Alice" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, ALICE, alice_split[0], alice_split[1], "none", "unknown", txtExplain);
+    		identity = new Identity(tabFolder, SWT.NONE, ALICE, alice_split[0], alice_split[1], Messages.ExtendedRSA_Visual_19, Messages.ExtendedRSA_Visual_20, txtExplain);
     		
     		
             if (!contactNames.contains(BOB)){
             	//create Bob in the keystore
-            	iMgr.createIdentity(BOB, "RSA", "1234", 1024);
-            	System.out.println("[DEBUG]rsakey wird generiert...bob");
+            	iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_21, Messages.ExtendedRSA_Visual_22, 1024);
             }
         	keyAlgos = iMgr.getAsymmetricKeyAlgorithms(BOB);
 //        	for (int i = 0; i < keyAlgos.size(); i++){
@@ -223,26 +220,24 @@ public class ExtendedRSA_Visual extends ViewPart{
         	count = 0;
         	count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){
-	        	if (keyAlgos.get(i).startsWith("MpRSA")){
+	        	if (keyAlgos.get(i).startsWith(Messages.ExtendedRSA_Visual_23)){
 	        		count++;
 	        	}
-	        	if (keyAlgos.get(i).startsWith("RSA")){
+	        	if (keyAlgos.get(i).startsWith(Messages.ExtendedRSA_Visual_24)){
 	        		count2++;
 	        	}
         	}
         	if (count == 0){
-        		iMgr.createIdentity(BOB, "MpRSA", "1234", 1024);
-        		System.out.println("[DEBUG]mprsa-key wird generiert...bob");
+        		iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_25, Messages.ExtendedRSA_Visual_26, 1024);
         	}
         	if (count2 == 0){
-        		iMgr.createIdentity(BOB, "RSA", "1234", 1024);
-        		System.out.println("[DEBUG]rsa-key wird generiert... bob");
+        		iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_27, Messages.ExtendedRSA_Visual_28, 1024);
         	}
             
             
-            String[] bob_split = BOB.split(" ");
+            String[] bob_split = BOB.split(BLANK);
             //create "Bob" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, BOB, bob_split[0], bob_split[1], "none", "unknown", txtExplain);
+    		identity = new Identity(tabFolder, SWT.NONE, BOB, bob_split[0], bob_split[1], Messages.ExtendedRSA_Visual_29, Messages.ExtendedRSA_Visual_30, txtExplain);
         	
             
         }catch (Exception e) {

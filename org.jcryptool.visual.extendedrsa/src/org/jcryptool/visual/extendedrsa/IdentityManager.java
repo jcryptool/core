@@ -103,10 +103,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
 		final String concreteAlgorithm = getConcreteAlgorithm(algorithm);
-		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, concreteAlgorithm, keyLength, password, "PLACEHOLDER", KeyType.KEYPAIR);
+		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, concreteAlgorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
 		final Integer[] argument = new Integer[1];
 		argument[0] = keyLength;
-		LogUtil.logInfo("create new keypair");
+		LogUtil.logInfo(Messages.IdentityManager_1);
 		Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -133,24 +133,24 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 					PublicKey pub = keyPair.getPublic();
 					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_2, e, true);
 				} catch (InvalidAlgorithmParameterException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "InvalidAlgorithmParameterException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_3, e, true);
 				} catch (SecurityException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "SecurityException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_4, e, true);
 				} catch (IllegalArgumentException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "IllegalArgumentException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_5, e, true);
 				} catch (ClassNotFoundException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "ClassNotFoundException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_6, e, true);
 				} catch (NoSuchMethodException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "NoSuchMethodException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_7, e, true);
 				} catch (InstantiationException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "InstantiationException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_8, e, true);
 				} catch (IllegalAccessException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "IllegalAccessException while generating a key pair", e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_9, e, true);
 				} catch (InvocationTargetException e) {
 					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID,
-                            "InvocationTargetException while generating a key pair", e, true);
+                            Messages.IdentityManager_10, e, true);
 				} finally {
 					monitor.done();
 				}
@@ -232,7 +232,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
             
             if (allNames.equals(algorithm)){
             	if (current.getOID() != null) {
-            		return algorithm+" (OID: " + current.getOID().getStringOID() + ")";
+            		return algorithm+Messages.IdentityManager_11 + current.getOID().getStringOID() + Messages.IdentityManager_12;
             	}
             	else{
             		return algorithm;
@@ -323,13 +323,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 	}else{
                 		keyID = keymgmt.get(alias.getHashValue());
                 	}
-                	String[] operation = alias.getOperation().split(" ");
+                	String[] operation = alias.getOperation().split(Messages.IdentityManager_13);
                 	//for self-made rsa-keys.. no operation is available
                 	if (operation[0].length() == 0){
-                		operation[0] ="RSA";
+                		operation[0] =Messages.IdentityManager_14;
                 	}
-                	pubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ operation[0]+"PublicKey - KeyID:"+keyID,alias);
-                	System.out.println(""+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ operation[0]+"PublicKey - KeyID:"+keyID);
+                	pubkeys.put(alias.getContactName() + Messages.IdentityManager_15 + alias.getKeyLength() + Messages.IdentityManager_16+ operation[0]+Messages.IdentityManager_17+keyID,alias);
                 }
             }
 		} catch (KeyStoreException e) {
@@ -352,8 +351,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 if (alias.getClassName().equals(RSAPublicKey.class.getName()) && !alias.getContactName().equals(identity)) {
-                	attackPubkeys.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" KeyID: "+count,alias);
-                	System.out.println("attack key added: "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName()+" KeyID: "+count);
+                	attackPubkeys.put(alias.getContactName() + Messages.IdentityManager_18 + alias.getKeyLength() + Messages.IdentityManager_19+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+Messages.IdentityManager_20+count,alias);
                 	count++;
                 }
             }
@@ -385,8 +383,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 		genKeyID = allKeysForID.get(alias.getHashValue());
                 	}
                 	
-                	keys.put("Schl\u00fcsselpaar: "+genKeyID+" - "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1),alias);
-//                	System.out.println("Schl\u00fcsselpaar: "+genKeyID+" - "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName());
+                	keys.put(Messages.IdentityManager_21+genKeyID+Messages.IdentityManager_22+alias.getContactName() + Messages.IdentityManager_23 + alias.getKeyLength() + Messages.IdentityManager_24+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1),alias);
                 }
             }
 			
@@ -454,17 +451,14 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			RSAOtherPrimeInfo[] otherPrimeIinfo = privKey.getOtherPrimeInfo();
 			for (int i = 0; i < otherPrimeIinfo.length; i++){
 				
-				sb.append(otherPrimeIinfo[i].getPrime()+" ");
+				sb.append(otherPrimeIinfo[i].getPrime()+Messages.IdentityManager_25);
 			}
 			parameters.add(sb.toString());
 			//other primes
 			parameters.add(privKey.getD().toString());
 			parameters.add(privKey.getE().toString());
 			parameters.add(privKey.getN().toString());
-		}else{
-			System.out.println("nix private key");
 		}
-		System.out.println("parameters.lenth = "+parameters.size());
 		return parameters;
 	}
 	
@@ -479,9 +473,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 
 		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
 		parameters.add(pubkey.getModulus());
-		System.out.println("N: "+pubkey.getModulus());
 		parameters.add(pubkey.getPublicExponent());
-		System.out.println("e: "+pubkey.getPublicExponent());
 		return parameters;
 	}
 	
@@ -548,8 +540,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 	}else{
                 		privKeyID = privKeymgmt.get(alias.getHashValue());
                 	}
-                    keyStoreItems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+privKeyID,alias);
-                    System.out.println("added priv-key: "+alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+" - KeyID:"+privKeyID);
+                    keyStoreItems.put(alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength() + Messages.IdentityManager_27+ alias.getClassName().substring(alias.getClassName().lastIndexOf('.')+1)+Messages.IdentityManager_28+privKeyID,alias);
                 }
             }
         } catch (KeyStoreException e) {
