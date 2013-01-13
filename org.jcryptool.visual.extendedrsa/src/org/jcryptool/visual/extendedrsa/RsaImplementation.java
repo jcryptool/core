@@ -43,11 +43,9 @@ public class RsaImplementation{
         }
         
         String hexText = sb.toString();
-//        System.out.println("hex-text: "+hexText);
         
         StringBuilder enc_sb = new StringBuilder();
         String[] splittedHexText = hexText.split(" ");
-//        System.out.println("splittet-text entries: "+splittedHexText.length);
         BigInteger number;
         for (String s : splittedHexText){
         	number = new BigInteger(s, Constants.HEXBASE);
