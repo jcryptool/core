@@ -3,7 +3,7 @@ package org.jcryptool.visual.extendedrsa;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.visual.extendedrsa.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jcryptool.visual.extendedrsa.messages";
 	public static String ExtendedRSA_Visual_0;
 	public static String ExtendedRSA_Visual_1;
 	public static String ExtendedRSA_Visual_10;
@@ -113,7 +113,10 @@ public class Messages extends NLS {
 	public static String Identity_166;
 	public static String Identity_167;
 	public static String Identity_168;
+	public static String Identity_169;
 	public static String Identity_17;
+	public static String Identity_170;
+	public static String Identity_171;
 	public static String Identity_18;
 	public static String Identity_19;
 	public static String Identity_2;

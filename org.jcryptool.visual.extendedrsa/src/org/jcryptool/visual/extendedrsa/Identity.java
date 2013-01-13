@@ -134,6 +134,7 @@ public class Identity extends TabItem {
 	private BigInteger bi_ExtrsaE;
 	private BigInteger bi_ExtrsaN;
 	private BigInteger bi_ExtrsaPhi;
+	private BigInteger bi_ExtrsaD;
 	private Button pickRandomE;
 	private Button pickRandomExtE;
 	private Vector<String> possibleEs;
@@ -385,11 +386,7 @@ public class Identity extends TabItem {
 					sendMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
-//							System.out.println("nun wird die nachricht gesendet");
-
 							int keyID = Integer.parseInt(recipientKeys.getItem(recipientKeys.getSelectionIndex()).substring(recipientKeys.getItem(recipientKeys.getSelectionIndex()).indexOf(':')+1));
-
-//							System.out.println("keyID: "+keyID);
 							
 							extTF.addMessageToQueue(new SecureMessage(encryptedMessage.getText(), keyID,Identity.this.identityName, rec.get(recipientKeys.getText()), subjectInput.getText()));
 							encryptedMessage.setText(NOTHING);
@@ -587,8 +584,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
 							extTF.deleteMessageWithID(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
-							
-//							System.out.println("nun wird die nachricht gel\u00f6scht");
+
 							txtExplain.setText(EXPLAIN_DELETED);
 							
 							selectMessage.removeAll();
@@ -650,12 +646,8 @@ public class Identity extends TabItem {
 								lbl_pwWrong.setText(PW_WRONG);
 							}else{
 								lbl_pwWrong.setText(NOTHING);
-//								System.out.println("nun wird die nachricht entschl\u00fcsselt");
-								Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(privkey);
 
-//								for (BigInteger bi: privKeyValues){
-//									System.out.println("wert: "+bi+" bitlength: "+bi.bitLength()+" bitcount:"+bi.bitCount());
-//								}
+								Vector<BigInteger> privKeyValues = iMgr.getPrivateKeyParametersRSA(privkey);
 								
 								//we need d (position 0) and N (position 1)
 								decryptedMessage.setText(rsa_impl.decrypt(encryptedMessage_Tab2.getText(), privKeyValues.get(1), privKeyValues.get(0)));
@@ -705,17 +697,35 @@ public class Identity extends TabItem {
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
 								eIsValid = false;
 								password1.setEnabled(false);
+								password1.setText(NOTHING);
 								password2.setEnabled(false);
+								password2.setText(NOTHING);
 								pickRandomE.setEnabled(false);
 								combo_rsaE.setEnabled(false);
 								pickRandomExtE.setEnabled(false);
 								combo_ExrsaE.setEnabled(false);
+								errorLabel_1.setText(NOTHING);
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 1){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB2);
+								ext_password1.setText(NOTHING);
+								ext_password2.setText(NOTHING);
+								lbl_notification_tab2.setText(NOTHING);
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 2){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB3);
+								
+								allKeys_keydata = iMgr.loadAllKeysForIdentityAndOtherPublics(Identity.this.identityName);
+								selectedKey_Keydata.setItems(allKeys_keydata.keySet().toArray(new String[allKeys_keydata.size()]));
+								
+								if (selectedKey_Keydata.getItemCount() == 0){
+									wrongPW_keydata.setText(Messages.Identity_126);
+									selectedKey_Keydata.setEnabled(false);
+								}
+								
+								keyData.removeAll();
+								lbl_enterPW.setVisible(false);
+								password_keydata.setVisible(false);
 							}
 						}
 						
@@ -1328,9 +1338,6 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							if (radio_RSA.getSelection()){
-
-//								System.out.println("nun wird ein klassischer RSA key erstellt. Parameter: P"+bi_rsaP+" Q: "+bi_rsaQ+" E:"+bi_rsaE+" pw: "+pw1);
-								
 								bi_rsaD = bi_rsaE.modInverse(bi_rsaPhi);
 								
 								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
@@ -1340,23 +1347,43 @@ public class Identity extends TabItem {
 									errorLabel_1.setText(Messages.Identity_65);
 								}
 								
-								iMgr.saveKeyToKeystore(Identity.this.identityName, password1.getText(), bi_rsaN, bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
+								iMgr.saveRSAKeyToKeystore(Identity.this.identityName, password1.getText(), bi_rsaN, bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
 								
-								password1.setText(NOTHING);
-								password1.setEnabled(false);
-								password2.setText(NOTHING);
-								password2.setEnabled(false);
+								
 								fillPrimesTo(combo_rsaP);
 								fillPrimesTo(combo_rsaQ);
 								combo_rsaE.removeAll();
-								pickRandomE.setEnabled(false);
 								combo_rsaE.setEnabled(false);
-								eIsValid = false;
-								resetRSAValues();
-								createKey.setEnabled(false);
+								pickRandomE.setEnabled(false);
 							}else{
-//								System.out.println("nun wird ein mp-RSA key erstellt. Parameter: P"+bi_ExtrsaP+" Q: "+bi_ExtrsaQ+" R: "+bi_ExtrsaR+"E:"+bi_ExtrsaE+" pw: "+pw1);
+								bi_ExtrsaD = bi_ExtrsaE.modInverse(bi_ExtrsaPhi);
+								
+								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								if (bi_ExtrsaD.toString().length() < 40){
+									errorLabel_1.setText(Messages.Identity_169+bi_ExtrsaD+Messages.Identity_64);
+								}else{
+									errorLabel_1.setText(Messages.Identity_170);
+								}
+								
+								iMgr.saveMpRSAKeyToKeystore(Identity.this.identityName, password1.getText(), validCount, bi_ExtrsaN, bi_ExtrsaP, bi_ExtrsaQ, bi_ExtrsaR, bi_ExtrsaS, bi_ExtrsaT, bi_ExtrsaE, bi_ExtrsaD);
+								
+								fillPrimesTo(combo_ExrsaP);
+								fillPrimesTo(combo_ExrsaQ);
+								fillPrimesTo(combo_ExrsaR);
+								fillPrimesTo(combo_ExrsaS);
+								fillPrimesTo(combo_ExrsaT);
+								combo_ExrsaE.removeAll();
+								combo_ExrsaE.setEnabled(false);
+								pickRandomExtE.setEnabled(false);
 							}
+							
+							password1.setText(NOTHING);
+							password1.setEnabled(false);
+							password2.setText(NOTHING);
+							password2.setEnabled(false);
+							eIsValid = false;
+							resetRSAValues();
+							createKey.setEnabled(false);
 						}
 						
 						@Override
@@ -1582,18 +1609,19 @@ public class Identity extends TabItem {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
+							lbl_notification_tab2.setFont(FontService.getNormalBoldFont());
+							
 							if (radio_ExtRSA_tab2.getSelection()){
-//								System.out.println("Nun wird gro\u00dfer multiprimer RSA-key erstellt");	
+								iMgr.createMpRSAIdentity(Identity.this.identityName, Messages.Identity_171, ext_password1.getText(), Integer.parseInt(extRsa_length.getItem(extRsa_length.getSelectionIndex())), Integer.parseInt(extRsa_numberPrimes_tab2.getItem(extRsa_numberPrimes_tab2.getSelectionIndex())));
+								lbl_notification_tab2.setText(Messages.Identity_170);
 							}else{
 								iMgr.createIdentity(Identity.this.identityName, Messages.Identity_79, ext_password1.getText(), Integer.parseInt(rsa_length.getItem(rsa_length.getSelectionIndex())));
-//								System.out.println("gro\u00dfen klassischen RSA erstellen: name:"+Identity.this.identityName+" pw: "+ext_password1.getText()+" l\u00e4nge: "+ rsa_length.getItem(rsa_length.getSelectionIndex()));	
-								lbl_notification_tab2.setFont(FontService.getNormalBoldFont());
 								lbl_notification_tab2.setText(Messages.Identity_80);
-								
-								createKey_Tab2.setEnabled(false);
-								ext_password1.setText(NOTHING);
-								ext_password2.setText(NOTHING);
 							}
+							
+							createKey_Tab2.setEnabled(false);
+							ext_password1.setText(NOTHING);
+							ext_password2.setText(NOTHING);
 						}
 						
 						@Override
@@ -1628,9 +1656,6 @@ public class Identity extends TabItem {
 					gd_selKey.heightHint = 20;
 					gd_selKey.widthHint = 250;
 					selectedKey_Keydata.setLayoutData(gd_selKey);
-					allKeys_keydata = iMgr.loadAllKeysForIdentityAndOtherPublics(Identity.this.identityName);
-					
-					selectedKey_Keydata.setItems(allKeys_keydata.keySet().toArray(new String[allKeys_keydata.size()]));
 					
 					selectedKey_Keydata.addSelectionListener(new SelectionListener() {
 						
@@ -1684,7 +1709,6 @@ public class Identity extends TabItem {
 								}else{
 									//mp-rsa key
 									values = iMgr.getAllMpRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
-//									System.out.println("size: "+values.size());
 									String str_otherPrimeinfo = values.get(values.size()-4);
 									String []split_opi = str_otherPrimeinfo.split(Messages.Identity_97);
 									switch (split_opi.length){
@@ -1709,7 +1733,6 @@ public class Identity extends TabItem {
 									ti.setText(new String[]{descriptions.get(i), values.get(i)});
 									
 								}
-//								System.out.println("resize to: "+values.get(values.size()-1).length()*8);
 								column_value.setWidth((values.get(values.size()-1).length()*8)+100);
 							}
 						}
@@ -1755,11 +1778,6 @@ public class Identity extends TabItem {
 					wrongPW_keydata.setLayoutData(gd_wrongPW_kd);
 					wrongPW_keydata.setFont(FontService.getNormalBoldFont());
 					wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-					
-					if (selectedKey_Keydata.getItemCount() == 0){
-						wrongPW_keydata.setText(Messages.Identity_126);
-						selectedKey_Keydata.setEnabled(false);
-					}
 					
 					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
@@ -1946,8 +1964,6 @@ public class Identity extends TabItem {
 			}
 			@Override
 			public void run(){
-				final long start = System.currentTimeMillis();
-//				System.out.println("factorize n: "+n+"("+n.bitLength()+")bit");
 				boolean finish = false;
 				final Vector<BigInteger> divisors = new Vector<BigInteger>();
 				BigDecimal divisor = new BigDecimal(3);
@@ -1956,7 +1972,6 @@ public class Identity extends TabItem {
 				boolean check = false;
 				
 				while (!finish){
-//					System.out.println("aktuelle primzahl: "+divisor);
 					BigDecimal[]erg = decN.divideAndRemainder(divisor);
 					if (erg[1].intValue() == 0){
 						divisors.add(erg[0].toBigInteger());
@@ -1972,7 +1987,6 @@ public class Identity extends TabItem {
 							result = result.multiply(divisors.get(i));
 						}
 						if (result.equals(decN.toBigInteger())){
-//							System.out.println("factorized!");
 							finish = true;
 						}
 						check = false;
@@ -1982,7 +1996,6 @@ public class Identity extends TabItem {
 						new UIJob(Messages.Identity_138) { 
 							@Override
 							public IStatus runInUIThread(IProgressMonitor monitor) {
-//								System.out.println("Dauer in ms: " + (System.currentTimeMillis() - start));
 								keyData_attacked.setVisible(true);
 								keyData_attacked.removeAll();
 								attack_hint.setText(attack_hint.getText()+Messages.Identity_139);
@@ -2084,7 +2097,6 @@ public class Identity extends TabItem {
 				}
 				String message = NOTHING+subject+HYPHEN+sec.getRecipient().getContactName()+HYPHEN+sec.getMessageID();
 				selectMessage.add(message);
-//				System.out.println(message);
 			}
 		}
 		if (selectMessage.getItemCount() == 0){
@@ -2117,7 +2129,6 @@ public class Identity extends TabItem {
 			}else{
 				createKey.setEnabled(false);
 			}
-//			System.out.println("[DEBUG]"+pw1.length()+ "-"+ pw2.length()+"+++++ "+eIsValid);
 		}
 		if(pw1_Ext != null && pw2_Ext != null){
 			if (pw1_Ext.equals(pw2_Ext)&&(pw1_Ext.length()>0 && pw2_Ext.length()>0)){
@@ -2236,6 +2247,8 @@ public class Identity extends TabItem {
 		bi_rsaE = null;
 		bi_rsaP = null;
 		bi_rsaQ = null;
+		bi_rsaN = null;
+		bi_rsaPhi = null;
 		bi_ExtrsaP = null;
 		bi_ExtrsaQ = null;
 		bi_ExtrsaR = null;

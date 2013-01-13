@@ -52,6 +52,7 @@ import de.flexiprovider.api.keys.KeyPairGenerator;
 import de.flexiprovider.api.keys.PublicKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 import de.flexiprovider.common.math.FlexiBigInt;
+import de.flexiprovider.core.mprsa.MpRSAKeyGenParameterSpec;
 import de.flexiprovider.core.mprsa.MpRSAPrivateKey;
 import de.flexiprovider.core.mprsa.RSAOtherPrimeInfo;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
@@ -74,7 +75,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private int keyID;
 	private int privKeyID;
 	private int genKeyID;
-
 	private KeyStoreAlias privateAlias;
 	private KeyStoreAlias publicAlias;
 
@@ -149,8 +149,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 				} catch (IllegalAccessException e) {
 					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_9, e, true);
 				} catch (InvocationTargetException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID,
-                            Messages.IdentityManager_10, e, true);
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_10, e, true);
 				} finally {
 					monitor.done();
 				}
@@ -158,9 +157,73 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			}
 		};
 		job.setPriority(Job.LONG);
-		job.schedule();
-		
+		job.schedule();	
 	}
+	
+	public void createMpRSAIdentity(final String name, final String algorithm, final String password, final int keyLength, final int numberOfPrimes){
+		final String concreteAlgorithm = getConcreteAlgorithm(algorithm);
+		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, concreteAlgorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
+		final Integer[] argument = new Integer[1];
+		argument[0] = keyLength;
+		LogUtil.logInfo(Messages.IdentityManager_1);
+		Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+				try {
+					IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
+					
+					final byte[] e = new byte[1];
+					e[0] = (byte) 65537;
+					FlexiBigInt exponent = new FlexiBigInt(e);
+					
+					AlgorithmParameterSpec spec = null;
+					if (keyLength != -1) {
+						if (gen.getParameterSpecClassName() != null) {
+							spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
+							spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
+						}
+					}
+					KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
+					if (spec != null) {
+						generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
+					} else if (keyLength != -1) {
+						generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
+					}
+					KeyPair keyPair = generator.genKeyPair();
+					
+					PrivateKey priv = keyPair.getPrivate();
+					
+					PublicKey pub = keyPair.getPublic();
+					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
+				} catch (NoSuchAlgorithmException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_2, e, true);
+				} catch (InvalidAlgorithmParameterException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_3, e, true);
+				} catch (SecurityException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_4, e, true);
+				} catch (IllegalArgumentException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_5, e, true);
+				} catch (ClassNotFoundException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_6, e, true);
+				} catch (NoSuchMethodException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_7, e, true);
+				} catch (InstantiationException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_8, e, true);
+				} catch (IllegalAccessException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_9, e, true);
+				} catch (InvocationTargetException e) {
+					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_10, e, true);
+				} finally {
+					monitor.done();
+				}
+				return Status.OK_STATUS;
+			}
+		};
+		job.setPriority(Job.LONG);
+		job.schedule();	
+	}
+	
 	
 	/**
      * setter for the private alias for the contact
@@ -180,38 +243,93 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         this.publicAlias = publicAlias;
     }
 	
-	/**
-     * Saves the keypair or private key this wizard constructs to the platform keystore.
-     *
-     * @param keypair <code>true</code> if the key to save is a keypair or <code>false</code> if it's only a public key.
+    /**
+     * method to create a classic RSA-key with chosen parameters
+     * @param name the name of the alias
+     * @param password for the private key
+     * @param modulus N
+     * @param firstPrime p
+     * @param secondPrime q
+     * @param pubExponent e
+     * @param privExponent d
      */
-    public void saveKeyToKeystore(final String name, final String password, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent, final BigInteger privExponent) {
-        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-        } catch (final NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        }
-        final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
-        final RSAPublicKey pubkey = new RSAPublicKey(n, e);
+    public void saveRSAKeyToKeystore(final String name, final String password, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent, final BigInteger privExponent) {
+    	try {
+    		ksManager.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+    	} catch (final NoKeyStoreFileException e) {
+    		LogUtil.logError(e);
+    	}
+    	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
+    	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
-        final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,
-                "", new BigInteger(modulus.toString()).bitLength(), //$NON-NLS-1$
-                (name.concat(modulus.toString())).hashCode() + "", pubkey //$NON-NLS-1$
-                        .getClass().getName());
-        setPublicAlias(publicAlias);
-        
-        
-	    final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(
-	            firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
-	    final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,
-	            "", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus //$NON-NLS-1$
-	                    .toString())).hashCode() + "", privkey.getClass().getName()); //$NON-NLS-1$
-	    setPrivateAlias(privateAlias);
-	    
-	    ksm.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
-	    ksm.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+    	final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,"RSA (OID: 1.2.840.113549.1.1.1)", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
+    	setPublicAlias(publicAlias);
+    	
+    	
+    	final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
+    	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,"RSA (OID: 1.2.840.113549.1.1.1)", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
+    	setPrivateAlias(privateAlias);
+    	
+    	ksManager.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
+    	ksManager.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
     }
+    
+    /**
+     * method to create a multi-prime RSA-key with chosen parameters
+     * @param name of the alias
+     * @param password for the private key
+     * @param primeNumber number of used primes
+     * @param modulus the N
+     * @param firstPrime p
+     * @param secondPrime q
+     * @param thirdPrime r
+     * @param fourthPrime s
+     * @param fifthPrime t
+     * @param pubExponent e
+     * @param privExponent d
+     */
+    public void saveMpRSAKeyToKeystore(final String name, final String password, final int primeNumber, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger thirdPrime, final BigInteger fourthPrime, final BigInteger fifthPrime, final BigInteger pubExponent, final BigInteger privExponent) {
+    	try {
+    		ksManager.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+    	} catch (final NoKeyStoreFileException e) {
+    		LogUtil.logError(e);
+    	}
+    	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
+    	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
+
+    	final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "MpRSA", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
+    	setPublicAlias(publicAlias);
+    	
+    	RSAOtherPrimeInfo[] otherPrimeInfo = null;
+    	
+    	final FlexiBigInt r = new FlexiBigInt(thirdPrime);
+    	final RSAOtherPrimeInfo rR = new RSAOtherPrimeInfo(r, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
+    	
+    	final FlexiBigInt s = new FlexiBigInt(fourthPrime);
+    	final RSAOtherPrimeInfo sS = new RSAOtherPrimeInfo(s, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
+
+    	final FlexiBigInt t = new FlexiBigInt(fifthPrime);
+    	final RSAOtherPrimeInfo tT = new RSAOtherPrimeInfo(t, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
+    	
+    	if(primeNumber == 3){
+    		otherPrimeInfo = new RSAOtherPrimeInfo[]{rR};
+    	}        
+    	if(primeNumber == 4){
+    		otherPrimeInfo = new RSAOtherPrimeInfo[]{rR, sS};
+    	}      
+    	if(primeNumber == 5){
+    		otherPrimeInfo = new RSAOtherPrimeInfo[]{rR, sS, tT};
+    	}
+    	
+    	final MpRSAPrivateKey privkey = new MpRSAPrivateKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO, otherPrimeInfo);
+    	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,"MpRSA", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
+    	setPrivateAlias(privateAlias);
+    	
+    	ksManager.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
+    	ksManager.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+    }
+    
+    
     /**
      * gets the OID to a certain algorithm
      * @param algorithm the algorithm, you want to know the OID from

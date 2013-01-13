@@ -183,9 +183,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             	iMgr.createIdentity(ALICE, Messages.ExtendedRSA_Visual_11, Messages.ExtendedRSA_Visual_12, 1024);
             }
         	Vector<String> keyAlgos = iMgr.getAsymmetricKeyAlgorithms(ALICE);
-//        	for (int i = 0; i < keyAlgos.size(); i++){
-//        		System.out.println("alice keyalgos: "+keyAlgos.get(i));
-//        	}
+
         	int count = 0;
         	int count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){
@@ -214,9 +212,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             	iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_21, Messages.ExtendedRSA_Visual_22, 1024);
             }
         	keyAlgos = iMgr.getAsymmetricKeyAlgorithms(BOB);
-//        	for (int i = 0; i < keyAlgos.size(); i++){
-//        		System.out.println("bob keyalgos: "+keyAlgos.get(i));
-//        	}
+
         	count = 0;
         	count2 = 0;
         	for (int i = 0; i < keyAlgos.size(); i++){
