@@ -27,7 +27,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.certificates.CertFact;
+import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaKeyGenerator;
 import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
@@ -65,9 +65,7 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
  */
 public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	private static IdentityManager identityManager;
-	
-	private ContactManager cManager;
-	private KeyStoreManager ksManager;
+
 	private Enumeration<String> aliases;
 	private Map<String,Integer> keymgmt;
 	private Map<String,Integer> privKeymgmt;
@@ -87,18 +85,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
     }
     
 	private IdentityManager(){
-		cManager = ContactManager.getInstance();
-		ksManager = KeyStoreManager.getInstance();
 		keymgmt = new HashMap<String,Integer>();
 		privKeymgmt = new HashMap<String,Integer>();
 		allKeysForID = new HashMap<String,Integer>();
 		keyID = 0;
 		genKeyID = 0;
 		privKeyID = 0;
-	}
-	
-	public ContactManager getContactManger(){
-		return cManager;
 	}
 
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
@@ -133,23 +125,23 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 					PublicKey pub = keyPair.getPublic();
 					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_2, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
 				} catch (InvalidAlgorithmParameterException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_3, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_3, e, true);
 				} catch (SecurityException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_4, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_4, e, true);
 				} catch (IllegalArgumentException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_5, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_5, e, true);
 				} catch (ClassNotFoundException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_6, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_6, e, true);
 				} catch (NoSuchMethodException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_7, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_7, e, true);
 				} catch (InstantiationException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_8, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_8, e, true);
 				} catch (IllegalAccessException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_9, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
 				} catch (InvocationTargetException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_10, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
 				} finally {
 					monitor.done();
 				}
@@ -197,23 +189,23 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 					PublicKey pub = keyPair.getPublic();
 					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_2, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
 				} catch (InvalidAlgorithmParameterException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_3, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_3, e, true);
 				} catch (SecurityException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_4, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_4, e, true);
 				} catch (IllegalArgumentException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_5, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_5, e, true);
 				} catch (ClassNotFoundException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_6, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_6, e, true);
 				} catch (NoSuchMethodException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_7, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_7, e, true);
 				} catch (InstantiationException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_8, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_8, e, true);
 				} catch (IllegalAccessException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_9, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
 				} catch (InvocationTargetException e) {
-					LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, Messages.IdentityManager_10, e, true);
+					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
 				} finally {
 					monitor.done();
 				}
@@ -254,11 +246,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
      * @param privExponent d
      */
     public void saveRSAKeyToKeystore(final String name, final String password, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent, final BigInteger privExponent) {
-    	try {
-    		ksManager.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-    	} catch (final NoKeyStoreFileException e) {
-    		LogUtil.logError(e);
-    	}
     	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
     	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
@@ -270,8 +257,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
     	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,"RSA (OID: 1.2.840.113549.1.1.1)", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
     	setPrivateAlias(privateAlias);
     	
-    	ksManager.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
-    	ksManager.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+    	KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), password, privateAlias, publicAlias);
+    	KeyStoreManager.getInstance().addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
     }
     
     /**
@@ -289,11 +276,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
      * @param privExponent d
      */
     public void saveMpRSAKeyToKeystore(final String name, final String password, final int primeNumber, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger thirdPrime, final BigInteger fourthPrime, final BigInteger fifthPrime, final BigInteger pubExponent, final BigInteger privExponent) {
-    	try {
-    		ksManager.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-    	} catch (final NoKeyStoreFileException e) {
-    		LogUtil.logError(e);
-    	}
     	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
     	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
@@ -325,8 +307,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
     	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,"MpRSA", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
     	setPrivateAlias(privateAlias);
     	
-    	ksManager.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), password, privateAlias, publicAlias);
-    	ksManager.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+    	KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), password, privateAlias, publicAlias);
+    	KeyStoreManager.getInstance().addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
     }
     
     
@@ -365,7 +347,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	 */
 	public Vector<String> getContacts(){ 
 		Vector<String> contactNames = new Vector<String>();             
-        Iterator<IContactDescriptor> it = cManager.getContacts();
+        Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
         IContactDescriptor meta;
         
         while (it.hasNext()) {
@@ -384,16 +366,16 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		Vector<String> keyAlgos = new Vector<String>();
 		KeyStoreAlias localKeyStoreAlias = null;
         try {
-			aliases = ksManager.getAliases();
+			aliases = KeyStoreManager.getInstance().getAliases();
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
         
         while (aliases.hasMoreElements()) {
             localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
             
             if (localKeyStoreAlias.getClassName().equals(RSAPublicKey.class.getName())&&localKeyStoreAlias.getContactName().equals(identity)) {
-//            	keyAlgos.add(ksManager.getKey(localKeyStoreAlias).getAlgorithm());
+//            	keyAlgos.add(KeyStoreManager.getInstance().getKey(localKeyStoreAlias).getAlgorithm());
             	keyAlgos.add(localKeyStoreAlias.getOperation());
             }
         }
@@ -405,7 +387,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		int count = 0;
 		KeyStoreAlias alias = null;
         try {
-			aliases = ksManager.getAliases();
+			aliases = KeyStoreManager.getInstance().getAliases();
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
 
@@ -414,7 +396,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 }
             }
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
        
        return count;
@@ -430,7 +412,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		HashMap<String, KeyStoreAlias> pubkeys = new HashMap<String, KeyStoreAlias>();
 		KeyStoreAlias alias = null;
         try {
-			aliases = ksManager.getAliases();
+			aliases = KeyStoreManager.getInstance().getAliases();
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
 
@@ -450,7 +432,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 }
             }
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
        
        return pubkeys;
@@ -464,7 +446,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		HashMap<String, KeyStoreAlias> attackPubkeys = new HashMap<String, KeyStoreAlias>();
 		KeyStoreAlias alias = null;
         try {
-			aliases = ksManager.getAliases();
+			aliases = KeyStoreManager.getInstance().getAliases();
 			int count = 1;
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
@@ -474,7 +456,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
                 }
             }
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
        
        return attackPubkeys;
@@ -489,7 +471,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		TreeMap<String, KeyStoreAlias> keys = new TreeMap<String, KeyStoreAlias>();
 		KeyStoreAlias alias = null;
         try {
-			aliases = ksManager.getAliases();
+			aliases = KeyStoreManager.getInstance().getAliases();
 			while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 //load RSA public and private keys for a certain identity and all other public keys for other identities
@@ -506,7 +488,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
             }
 			
 		} catch (KeyStoreException e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
         
        return keys;
@@ -518,7 +500,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	 */
 	public Vector<String> getAllRSAPubKeyParameters(KeyStoreAlias alias){
 		Vector<String> parameters = new Vector<String>();
-		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		final RSAPublicKey pubkey = (RSAPublicKey) KeyStoreManager.getInstance().getPublicKey(alias).getPublicKey();
 		
 		parameters.add(pubkey.getAlgorithm());
 		parameters.add(pubkey.getFormat());
@@ -589,14 +571,14 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	public Vector<BigInteger>getPublicKeyParameters(KeyStoreAlias alias){
 		Vector<BigInteger> parameters = new Vector<BigInteger>();
 
-		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		final RSAPublicKey pubkey = (RSAPublicKey) KeyStoreManager.getInstance().getPublicKey(alias).getPublicKey();
 		parameters.add(pubkey.getModulus());
 		parameters.add(pubkey.getPublicExponent());
 		return parameters;
 	}
 	
 	public RSAPublicKey getRSAPublicKey(KeyStoreAlias alias){
-		final RSAPublicKey pubkey = (RSAPublicKey) ksManager.getPublicKey(alias).getPublicKey();
+		final RSAPublicKey pubkey = (RSAPublicKey) KeyStoreManager.getInstance().getPublicKey(alias).getPublicKey();
 		return pubkey;
 	}
 	
@@ -604,10 +586,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         PrivateKey key = null;
         RSAPrivateCrtKey privkey = null;
 		try {
-			key = ksManager.getPrivateKey(privAlias, password.toCharArray());
+			key = KeyStoreManager.getInstance().getPrivateKey(privAlias, password.toCharArray());
 			privkey = (RSAPrivateCrtKey) key;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 
 		return privkey;
@@ -618,10 +600,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         PrivateKey key = null;
         MpRSAPrivateKey privkey = null;
 		try {
-			key = ksManager.getPrivateKey(privAlias, password.toCharArray());
+			key = KeyStoreManager.getInstance().getPrivateKey(privAlias, password.toCharArray());
 			privkey = (MpRSAPrivateKey) key;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 
 		return privkey;
@@ -649,7 +631,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		HashMap<String, KeyStoreAlias> keyStoreItems = new HashMap<String, KeyStoreAlias>();
         try {
             KeyStoreAlias alias;
-            for (Enumeration<String> aliases = ksManager.getAliases(); aliases.hasMoreElements();) {
+            for (Enumeration<String> aliases = KeyStoreManager.getInstance().getAliases(); aliases.hasMoreElements();) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 if ((alias.getClassName().equals(RSAPrivateCrtKey.class.getName())||(alias.getClassName().equals(MpRSAPrivateKey.class.getName()))) && alias.getContactName().equals(identityName)) {
                 	if (!privKeymgmt.containsKey(alias.getHashValue())){
@@ -671,7 +653,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	public KeyStoreAlias getPublicForPrivateRSA(KeyStoreAlias privAlias){
         Enumeration<String> aliases;
         try {
-            aliases = ksManager.getAliases();
+            aliases = KeyStoreManager.getInstance().getAliases();
         } catch (KeyStoreException e) {
             LogUtil.logError(e);
             return null;

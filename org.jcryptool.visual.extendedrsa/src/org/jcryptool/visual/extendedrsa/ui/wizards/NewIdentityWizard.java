@@ -13,6 +13,7 @@ package org.jcryptool.visual.extendedrsa.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabFolder;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.Contact;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages.NewIdentityPage;
@@ -42,7 +43,7 @@ public class NewIdentityWizard extends Wizard{
 	public boolean performFinish() {
 		if (newIDPage.isPageComplete()){
 			Contact contact = new Contact(newIDPage.getIdName().toString(), newIDPage.getIdForename().toString(), newIDPage.getIdSurname().toString(), newIDPage.getIdOrganisation().toString(), newIDPage.getIdRegion().toString());
-			IdentityManager.getInstance().getContactManger().addContact(contact);
+			ContactManager.getInstance().addContact(contact);
 			
 			if (IdentityManager.getInstance().getContacts().size() > 2){
 				delID.setEnabled(true);
