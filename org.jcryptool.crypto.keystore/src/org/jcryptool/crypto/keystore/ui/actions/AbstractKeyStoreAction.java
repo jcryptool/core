@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2008 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions;
 
 import java.security.MessageDigest;
@@ -32,100 +31,71 @@ import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 
 /**
  * Abstract (and empty) top-level action for plug-in.
- *
+ * 
  * @author tkern
- *
+ * 
  */
 public abstract class AbstractKeyStoreAction extends Action {
-	protected void addCertificate(INewEntryDescriptor descriptor, Certificate certificate) {
-		KeyStoreManager.getInstance().addCertificate(
-				certificate,
-				new KeyStoreAlias(
-						descriptor.getContactName(),
-						KeyType.PUBLICKEY,
-						certificate.getPublicKey().getAlgorithm(),
-						descriptor.getKeyLength(),
-						ByteArrayUtils.toHexString(getHashValue(descriptor)),
-						certificate.getPublicKey().getClass().getName()
-				)
-		);
-	}
-	
-	public static KeyStoreAlias addSecretKeyStatic(INewEntryDescriptor descriptor, SecretKey key) {
-		LogUtil.logInfo("adding SecretKey"); //$NON-NLS-1$
-		KeyStoreAlias alias = new KeyStoreAlias(
-				descriptor.getContactName(),
-				KeyType.SECRETKEY,
-//				key.getAlgorithm(),
-				descriptor.getDisplayedName(),
-				(key.getEncoded().length*8),
-				ByteArrayUtils.toHexString(getHashValue(descriptor)),
-				key.getClass().getName()
-		);
-		
-		KeyStoreManager.getInstance().addSecretKey(
-				key,
-				descriptor.getPassword(),
-				alias
-		);
-		
-		return alias;
-	}
-	
-	protected KeyStoreAlias addSecretKey(INewEntryDescriptor descriptor, SecretKey key) {
-		return addSecretKeyStatic(descriptor, key);
-	}
+    protected void addCertificate(INewEntryDescriptor descriptor, Certificate certificate) {
+        KeyStoreManager.getInstance().addCertificate(
+                certificate,
+                new KeyStoreAlias(descriptor.getContactName(), KeyType.PUBLICKEY, certificate.getPublicKey()
+                        .getAlgorithm(), descriptor.getKeyLength(), ByteArrayUtils
+                        .toHexString(getHashValue(descriptor)), certificate.getPublicKey().getClass().getName()));
+    }
 
-	public static KeyStoreAlias addKeyPairStatic(INewEntryDescriptor descriptor, PrivateKey privateKey, PublicKey publicKey) {
-		KeyStoreAlias privateAlias = new KeyStoreAlias(
-				descriptor.getContactName(),
-				KeyType.KEYPAIR_PRIVATE_KEY,
-				descriptor.getDisplayedName(),
-				descriptor.getKeyLength(),
-				ByteArrayUtils.toHexString(getHashValue(descriptor)),
-				privateKey.getClass().getName()
-		);
-	
-		KeyStoreAlias publicAlias = new KeyStoreAlias(
-				descriptor.getContactName(),
-				KeyType.KEYPAIR_PUBLIC_KEY,
-				descriptor.getDisplayedName(),
-				descriptor.getKeyLength(),
-				ByteArrayUtils.toHexString(getHashValue(descriptor)),
-				publicKey.getClass().getName()
-		);
-	
-		X509Certificate jctCertificate = CertificateFactory.createJCrypToolCertificate(publicKey);
-	
-		KeyStoreManager.getInstance().addKeyPair(
-				privateKey,
-				jctCertificate,
-				descriptor.getPassword(),
-				privateAlias,
-				publicAlias
-		);
-		
-		return publicAlias;
-	}
+    public static KeyStoreAlias addSecretKeyStatic(INewEntryDescriptor descriptor, SecretKey key) {
+        LogUtil.logInfo("adding SecretKey"); //$NON-NLS-1$
+        KeyStoreAlias alias = new KeyStoreAlias(descriptor.getContactName(), KeyType.SECRETKEY,
+        // key.getAlgorithm(),
+                descriptor.getDisplayedName(), (key.getEncoded().length * 8),
+                ByteArrayUtils.toHexString(getHashValue(descriptor)), key.getClass().getName());
 
-	protected KeyStoreAlias addKeyPair(INewEntryDescriptor descriptor, PrivateKey privateKey, PublicKey publicKey) {
-		return addKeyPairStatic(descriptor, privateKey, publicKey);
-	}
+        KeyStoreManager.getInstance().addSecretKey(key, descriptor.getPassword(), alias);
 
-	private static byte[] getHashValue(INewEntryDescriptor descriptor) {
-		String timeStamp = Calendar.getInstance().getTime().toString();
-		MessageDigest sha1;
+        return alias;
+    }
 
-		try {
-			sha1 = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
-			sha1.update(descriptor.getContactName().getBytes());
-			sha1.update(descriptor.getAlgorithmName().getBytes());
-			sha1.update(descriptor.getProvider().getBytes());
-			return sha1.digest(timeStamp.getBytes());
-		} catch (NoSuchAlgorithmException e) {
-		    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while digesting", e, true);
-		}
-		return new byte[] {0};
-	}
+    protected KeyStoreAlias addSecretKey(INewEntryDescriptor descriptor, SecretKey key) {
+        return addSecretKeyStatic(descriptor, key);
+    }
+
+    public static KeyStoreAlias addKeyPairStatic(INewEntryDescriptor descriptor, PrivateKey privateKey,
+            PublicKey publicKey) {
+        KeyStoreAlias privateAlias = new KeyStoreAlias(descriptor.getContactName(), KeyType.KEYPAIR_PRIVATE_KEY,
+                descriptor.getDisplayedName(), descriptor.getKeyLength(),
+                ByteArrayUtils.toHexString(getHashValue(descriptor)), privateKey.getClass().getName());
+
+        KeyStoreAlias publicAlias = new KeyStoreAlias(descriptor.getContactName(), KeyType.KEYPAIR_PUBLIC_KEY,
+                descriptor.getDisplayedName(), descriptor.getKeyLength(),
+                ByteArrayUtils.toHexString(getHashValue(descriptor)), publicKey.getClass().getName());
+
+        X509Certificate jctCertificate = CertificateFactory.createJCrypToolCertificate(publicKey);
+
+        KeyStoreManager.getInstance().addKeyPair(privateKey, jctCertificate, descriptor.getPassword(), privateAlias,
+                publicAlias);
+
+        return publicAlias;
+    }
+
+    protected KeyStoreAlias addKeyPair(INewEntryDescriptor descriptor, PrivateKey privateKey, PublicKey publicKey) {
+        return addKeyPairStatic(descriptor, privateKey, publicKey);
+    }
+
+    private static byte[] getHashValue(INewEntryDescriptor descriptor) {
+        String timeStamp = Calendar.getInstance().getTime().toString();
+        MessageDigest sha1;
+
+        try {
+            sha1 = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
+            sha1.update(descriptor.getContactName().getBytes());
+            sha1.update(descriptor.getAlgorithmName().getBytes());
+            sha1.update(descriptor.getProvider().getBytes());
+            return sha1.digest(timeStamp.getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while digesting", e, true);
+        }
+        return new byte[] { 0 };
+    }
 
 }
