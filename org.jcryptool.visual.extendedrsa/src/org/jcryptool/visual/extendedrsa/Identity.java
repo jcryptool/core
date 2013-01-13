@@ -1965,7 +1965,6 @@ public class Identity extends TabItem {
 			}
 			@Override
 			public void run(){
-				final long start = System.currentTimeMillis();
 				boolean finish = false;
 				final Vector<BigInteger> divisors = new Vector<BigInteger>();
 				BigDecimal divisor = new BigDecimal(3);
@@ -1974,7 +1973,6 @@ public class Identity extends TabItem {
 				boolean check = false;
 				
 				while (!finish){
-					System.out.println("akt: "+divisor);
 					BigDecimal[]erg = decN.divideAndRemainder(divisor);
 					if (erg[1].intValue() == 0){
 						divisors.add(divisor.toBigInteger());
@@ -2000,8 +1998,6 @@ public class Identity extends TabItem {
 						new UIJob(Messages.Identity_138) { 
 							@Override
 							public IStatus runInUIThread(IProgressMonitor monitor) {
-								System.out.println("Duration in ms: " + (System.currentTimeMillis() - start));
-								
 								keyData_attacked.setVisible(true);
 								keyData_attacked.removeAll();
 								attack_hint.setText(attack_hint.getText()+Messages.Identity_139);
