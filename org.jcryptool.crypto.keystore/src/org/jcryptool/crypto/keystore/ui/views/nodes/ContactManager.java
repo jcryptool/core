@@ -92,6 +92,8 @@ public class ContactManager {
             LogUtil.logInfo("Adding Entry " + alias); //$NON-NLS-1$
             addEntry(new KeyStoreAlias(alias));
         }
+        
+        notifyListeners();
     }
 
     private void addEntry(KeyStoreAlias alias) {
@@ -132,6 +134,7 @@ public class ContactManager {
         }
 
         contacts.put(contact.getName(), contact);
+        
         notifyListeners();
     }
 
@@ -140,6 +143,7 @@ public class ContactManager {
 
         invisibleRoot.removeChild(contacts.get(contact));
         contacts.remove(contact);
+        
         notifyListeners();
     }
 
@@ -166,6 +170,8 @@ public class ContactManager {
             LogUtil.logInfo("removing a key pair"); //$NON-NLS-1$
             contacts.get(alias.getContactName()).removeKeyPair(alias);
         }
+        
+        notifyListeners();
     }
 
     public void addCertificate(KeyStoreAlias alias) {
@@ -178,8 +184,9 @@ public class ContactManager {
             contact.addCertificate(alias);
             contacts.put(alias.getContactName(), contact);
             invisibleRoot.addChild(contact);
-            notifyListeners();
         }
+        
+        notifyListeners();
     }
 
     public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
@@ -192,8 +199,9 @@ public class ContactManager {
             contact.addKeyPair(privateKey, publicKey);
             contacts.put(privateKey.getContactName(), contact);
             invisibleRoot.addChild(contact);
-            notifyListeners();
         }
+        
+        notifyListeners();
     }
 
     public void addSecretKey(KeyStoreAlias alias) {
@@ -206,8 +214,9 @@ public class ContactManager {
             contact.addSecretKey(alias);
             contacts.put(alias.getContactName(), contact);
             invisibleRoot.addChild(contact);
-            notifyListeners();
         }
+        
+        notifyListeners();
     }
 
     public Iterator<IContactDescriptor> getContacts() {
