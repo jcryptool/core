@@ -1,29 +1,33 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
-* 
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2008 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewSecretKeyDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 
 public abstract class AbstractNewKeyStoreEntryAction extends AbstractKeyStoreAction {
-	protected KeyStoreAlias performNewKeyAction(INewEntryDescriptor descriptor) {		
-		if (descriptor instanceof NewSecretKeyDescriptor) {
-			return addSecretKey(descriptor, ((NewSecretKeyDescriptor)descriptor).getSecretKey());
-		} else if (descriptor instanceof NewKeyPairDescriptor) {
-			return addKeyPair(descriptor, ((NewKeyPairDescriptor)descriptor).getPrivateKey(), ((NewKeyPairDescriptor)descriptor).getPublicKey());
-		} else {
-			// TODO:catch
-		}
-		return null;
-	}
+    protected KeyStoreAlias performNewKeyAction(INewEntryDescriptor descriptor) {
+        if (descriptor instanceof NewSecretKeyDescriptor) {
+            return addSecretKey(descriptor, ((NewSecretKeyDescriptor) descriptor).getSecretKey());
+        } else if (descriptor instanceof NewKeyPairDescriptor) {
+            return addKeyPair(descriptor, ((NewKeyPairDescriptor) descriptor).getPrivateKey(),
+                    ((NewKeyPairDescriptor) descriptor).getPublicKey());
+        } else {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "INewEntryDescriptor instance " + INewEntryDescriptor.class
+                    + " is invalid");
+        }
+
+        return null;
+    }
 }
