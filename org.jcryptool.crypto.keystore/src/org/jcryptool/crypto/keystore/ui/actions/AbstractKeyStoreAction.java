@@ -95,11 +95,11 @@ public abstract class AbstractKeyStoreAction extends Action {
 				publicKey.getClass().getName()
 		);
 	
-		X509Certificate dummy = CertificateFactory.createJCrypToolCertificate(publicKey);
+		X509Certificate jctCertificate = CertificateFactory.createJCrypToolCertificate(publicKey);
 	
 		KeyStoreManager.getInstance().addKeyPair(
 				privateKey,
-				dummy,
+				jctCertificate,
 				descriptor.getPassword(),
 				privateAlias,
 				publicAlias
