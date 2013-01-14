@@ -205,6 +205,8 @@ public class Identity extends TabItem {
 	private TableColumn column_value_attacked;	
 	private Label attack_hint;
 	private Vector<BigInteger> primesE;
+	private Text keydataN;
+	private Label attack_success;
 	
 	private final String EXPLAIN_INIT = Messages.Identity_0;
 	private final String EXPLAIN_ENCRYPT = Messages.Identity_1;
@@ -1868,7 +1870,10 @@ public class Identity extends TabItem {
 								Vector<BigInteger> actualKey = iMgr.getPublicKeyParameters(attackableKeys.get(keyToAttack.getText()));
 								
 								String name = keyToAttack.getText().substring(0,keyToAttack.getText().indexOf('-')-1);
-								attack_hint.setText(Messages.Identity_131+name+Messages.Identity_132+actualKey.get(0).bitLength()+Messages.Identity_133+actualKey.get(0));		
+								attack_hint.setText(Messages.Identity_131+name+Messages.Identity_132+actualKey.get(0).bitLength()+Messages.Identity_133);		
+								keydataN.setVisible(true);
+								keydataN.setText(Messages.Identity_173+actualKey.get(0));
+								attack_success.setText(NOTHING);
 								keyData_attacked.setVisible(false);
 							}
 						}
@@ -1908,14 +1913,25 @@ public class Identity extends TabItem {
 						createSpacer(actionGroup_4);
 					}
 
-					attack_hint = new Label(actionGroup_4, SWT.WRAP);
+					attack_hint = new Label(actionGroup_4, SWT.WRAP|SWT.V_SCROLL|SWT.H_SCROLL);
 					GridData at_hint = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 2);
-					at_hint.heightHint = 150;
+					at_hint.heightHint = 40;
 					attack_hint.setLayoutData(at_hint);
+					
+					keydataN = new Text(actionGroup_4, SWT.V_SCROLL| SWT.H_SCROLL | SWT.MULTI| SWT.WRAP|SWT.READ_ONLY|SWT.BORDER);
+					GridData gd_N = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
+					gd_N.heightHint = 50;
+					keydataN.setLayoutData(gd_N);
+					keydataN.setVisible(false);
+					
+					attack_success = new Label(actionGroup_4, SWT.WRAP|SWT.V_SCROLL|SWT.H_SCROLL);
+					GridData at_success = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
+					at_success.heightHint = 40;
+					attack_success.setLayoutData(at_success);
 					
 					keyData_attacked = new Table(actionGroup_4, SWT.BORDER|SWT.FULL_SELECTION);
 					GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
-					gd_table.heightHint = 130;
+					gd_table.heightHint = 150;
 					keyData_attacked.setLayoutData(gd_table);
 					keyData_attacked.setHeaderVisible(true);
 					keyData_attacked.setLinesVisible(true);
@@ -2014,7 +2030,7 @@ public class Identity extends TabItem {
 								keyData_attacked.setVisible(true);
 								keyData_attacked.removeAll();
 								double timeNeeded = (System.currentTimeMillis() - start)/1000;
-								attack_hint.setText(attack_hint.getText()+Messages.Identity_139+timeNeeded+" "+Messages.Identity_172);
+								attack_success.setText(Messages.Identity_139+timeNeeded+" "+Messages.Identity_172);
 								keyData_attacked.setVisible(true);
 								TableItem ti_p;
 								TableItem ti_q;
