@@ -27,11 +27,16 @@
 <h3>RSA Ver- / Entschl&uuml;sselung</h3>
 <p>Um Daten mit RSA zu <b>verschl&uuml;sseln</b>, wird das Chiffrat mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels e des Empf&auml;ngers und des Klartexts berechnet. Die Verschl&uuml;sselungsfunktion ist c = m^e mod N. Das hei&szlig;t, dass jeder eine Nachricht mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels verschl&uuml;sseln kann. Allerdings kann nur der Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d die Nachricht wieder entschl&uuml;sseln.
 Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml;ssel d bekannt sein. Die Entschl&uuml;sselungsfunktion, c^d = (m^e)^d = m^(e*d) = m mod N, berechnet den Klartext m.</p>
-<p>Weitere Informationen finden sich z.B. unter <a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">http://de.wikipedia.org/wiki/RSA-Kryptosystem</a> oder im <a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">CrypTool-Skript, Kapitel 4</a>.</p>
+
 
 <h2>Faktorisierungsangriff</h2>
 <p>Ziel des Faktorisierungsangriffes ist es, den &ouml;ffentlich bekannten Modulus N zu faktorisieren und so die Primfaktoren zu rekonstruieren. Mit diesen Primzahlen kann dann - genau wie bei der urspr&uuml;nglichen Schl&uuml;sselerstellung - der private Schl&uuml;ssel (der geheime Parameter d) berechnet werden. Dadurch kann der Angreifer Nachrichten lesen, die nicht f&uuml;r ihn bestimmt sind, bzw. Signaturen im Namen einer anderen Person erstellen.</p>
 <p>Durch Verwendung von Primzahlen von mehr als 612 bit L&auml;nge (was im 2-Primzahl-Fall zu Modulen von mehr als 1024 bit L&auml;nge f&uuml;hrt) kann man diesen Angriff vermeiden - auch heutige Supercomputer haben dann keine Chance (in einem Zeitraum von wenigen Jahren).</p>
 <p>In dieser Visualisierung ist ein Faktorisierungsangriff implementiert, um vor allem kleine Schl&uuml;ssel zu faktorisieren. Dazu wird versucht, die Teiler des &ouml;ffentlichen Modulus zu finden. Sobald alle Teiler gefunden sind, sind die Primzahlen zur Schl&uuml;sselrekonstruktion bekannt und der Faktorisierungsangriff wird erfolgreich beendet.</p>
 
+<p>Weitere Informationen finden sich z.B. unter:</p>
+<ul>
+	<li><a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">http://de.wikipedia.org/wiki/RSA-Kryptosystem</a></li>
+	<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">the CrypTool-script, chapter 4</a></li>
+</ul>
 </body>
