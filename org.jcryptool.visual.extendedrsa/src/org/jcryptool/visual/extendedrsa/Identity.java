@@ -1613,7 +1613,7 @@ public class Identity extends TabItem {
 							lbl_notification_tab2.setFont(FontService.getNormalBoldFont());
 							
 							if (radio_ExtRSA_tab2.getSelection()){
-								iMgr.createMpRSAIdentity(Identity.this.identityName, Messages.Identity_171, ext_password1.getText(), Integer.parseInt(extRsa_length.getItem(extRsa_length.getSelectionIndex())), Integer.parseInt(extRsa_numberPrimes_tab2.getItem(extRsa_numberPrimes_tab2.getSelectionIndex())));
+								iMgr.createMpRSAIdentity(Identity.this.identityName, ext_password1.getText(), Integer.parseInt(extRsa_length.getItem(extRsa_length.getSelectionIndex())), Integer.parseInt(extRsa_numberPrimes_tab2.getItem(extRsa_numberPrimes_tab2.getSelectionIndex())));
 								lbl_notification_tab2.setText(Messages.Identity_170);
 							}else{
 								iMgr.createIdentity(Identity.this.identityName, Messages.Identity_79, ext_password1.getText(), Integer.parseInt(rsa_length.getItem(rsa_length.getSelectionIndex())));
@@ -2075,6 +2075,7 @@ public class Identity extends TabItem {
 		combo_ExrsaE.removeAll();
 		pickRandomExtE.setEnabled(false);
 		combo_ExrsaE.setEnabled(false);
+		errorLabel_1.setText(NOTHING);
 		resetRSAValues();
 	}
 	

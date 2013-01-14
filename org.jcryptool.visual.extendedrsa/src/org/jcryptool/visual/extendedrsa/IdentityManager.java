@@ -33,14 +33,12 @@ import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 import org.jcryptool.crypto.keys.KeyType;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
@@ -93,6 +91,13 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		privKeyID = 0;
 	}
 
+	/**
+	 * method to create an identity with a key (GENERATED parameters)
+	 * @param name of the identity
+	 * @param algorithm used for the new key
+	 * @param password for the private key
+	 * @param keyLength
+	 */
 	public void createIdentity(final String name, final String algorithm, final String password, final int keyLength){
 		final String concreteAlgorithm = getConcreteAlgorithm(algorithm);
 		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, concreteAlgorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
@@ -106,24 +111,28 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 				try {
 					IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
 					
-					AlgorithmParameterSpec spec = null;
-					if (keyLength != -1) {
-						if (gen.getParameterSpecClassName() != null) {
-							spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
+					if (gen != null && name != null && password != null && keyLength > 0){
+						AlgorithmParameterSpec spec = null;
+						if (keyLength != -1) {
+							if (gen.getParameterSpecClassName() != null) {
+								spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
+							}
 						}
+						KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
+						if (spec != null) {
+							generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
+						} else if (keyLength != -1) {
+							generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
+						}
+						KeyPair keyPair = generator.genKeyPair();
+						
+						PrivateKey priv = keyPair.getPrivate();
+						
+						PublicKey pub = keyPair.getPublic();
+						performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
+					}else{
+						LogUtil.logInfo("Attention: One of the given parameters is wrong! Identity name: '"+name+"', algorithm name: '"+algorithm+"', password: '"+password+"' and key length: '"+keyLength+"'. Key creation failed!");
 					}
-					KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
-					if (spec != null) {
-						generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
-					} else if (keyLength != -1) {
-						generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
-					}
-					KeyPair keyPair = generator.genKeyPair();
-					
-					PrivateKey priv = keyPair.getPrivate();
-					
-					PublicKey pub = keyPair.getPublic();
-					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
 					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
 				} catch (InvalidAlgorithmParameterException e) {
@@ -142,7 +151,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_9, e, true);
 				} catch (InvocationTargetException e) {
 					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_10, e, true);
-				} finally {
+				} 
+				finally {
 					monitor.done();
 				}
 				return Status.OK_STATUS;
@@ -150,11 +160,18 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 		};
 		job.setPriority(Job.LONG);
 		job.schedule();	
+		
 	}
-	
-	public void createMpRSAIdentity(final String name, final String algorithm, final String password, final int keyLength, final int numberOfPrimes){
-		final String concreteAlgorithm = getConcreteAlgorithm(algorithm);
-		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, concreteAlgorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
+	/**
+	 * method to create a "big" new multi-prime RSA key with GENERATED parameters
+	 * @param name the name of the identity
+	 * @param password the password for the private key
+	 * @param keyLength 
+	 * @param numberOfPrimes number of used primes (should be between 3 and 5)
+	 */
+	public void createMpRSAIdentity(final String name, final String password, final int keyLength, final int numberOfPrimes){
+		final String algorithm = "MpRSA";
+		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, algorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
 		final Integer[] argument = new Integer[1];
 		argument[0] = keyLength;
 		LogUtil.logInfo(Messages.IdentityManager_1);
@@ -164,30 +181,33 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 				monitor.beginTask("New KeyPair Task", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 				try {
 					IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
-					
-					final byte[] e = new byte[1];
-					e[0] = (byte) 65537;
-					FlexiBigInt exponent = new FlexiBigInt(e);
-					
-					AlgorithmParameterSpec spec = null;
-					if (keyLength != -1) {
-						if (gen.getParameterSpecClassName() != null) {
-							spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
-							spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
+					if (gen != null && numberOfPrimes > 2 && numberOfPrimes < 6 && name != null && password != null && keyLength > 0){
+						final byte[] e = new byte[1];
+						e[0] = (byte) 65537;
+						FlexiBigInt exponent = new FlexiBigInt(e);
+						
+						AlgorithmParameterSpec spec = null;
+						if (keyLength != -1) {
+							if (gen.getParameterSpecClassName() != null) {
+								spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
+								spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
+							}
 						}
+						KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
+						if (spec != null) {
+							generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
+						} else if (keyLength != -1) {
+							generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
+						}
+						KeyPair keyPair = generator.genKeyPair();
+						
+						PrivateKey priv = keyPair.getPrivate();
+						
+						PublicKey pub = keyPair.getPublic();
+						performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
+					}else{
+						LogUtil.logInfo("Attention: One of the given parameters is wrong! Identity name: '"+name+"', number of primes: '"+numberOfPrimes+"', password: '"+password+"' and key length: '"+keyLength+"'. Key creation failed!");
 					}
-					KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
-					if (spec != null) {
-						generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
-					} else if (keyLength != -1) {
-						generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
-					}
-					KeyPair keyPair = generator.genKeyPair();
-					
-					PrivateKey priv = keyPair.getPrivate();
-					
-					PublicKey pub = keyPair.getPublic();
-					performNewKeyAction(new NewKeyPairDescriptor(nkd, priv, pub));
 				} catch (NoSuchAlgorithmException e) {
 					LogUtil.logError(Activator.PLUGIN_ID, Messages.IdentityManager_2, e, true);
 				} catch (InvalidAlgorithmParameterException e) {
@@ -246,6 +266,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
      * @param privExponent d
      */
     public void saveRSAKeyToKeystore(final String name, final String password, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent, final BigInteger privExponent) {
+    	if (name == null || password == null || modulus.compareTo(BigInteger.ZERO) <= 0 || firstPrime.compareTo(BigInteger.ZERO) <= 0 || secondPrime.compareTo(BigInteger.ZERO) <= 0 || pubExponent.compareTo(BigInteger.ZERO) <= 0 || privExponent.compareTo(BigInteger.ZERO) <= 0){
+    		throw new IllegalArgumentException("Error: One of the given parameters is not valid!");
+    	}
     	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
     	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
@@ -276,6 +299,22 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
      * @param privExponent d
      */
     public void saveMpRSAKeyToKeystore(final String name, final String password, final int primeNumber, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger thirdPrime, final BigInteger fourthPrime, final BigInteger fifthPrime, final BigInteger pubExponent, final BigInteger privExponent) {
+    	if (name == null || password == null || primeNumber < 3 || primeNumber > 5 ||modulus.compareTo(BigInteger.ZERO) <= 0 || firstPrime.compareTo(BigInteger.ZERO) <= 0 || secondPrime.compareTo(BigInteger.ZERO) <= 0 || thirdPrime.compareTo(BigInteger.ZERO) <= 0|| pubExponent.compareTo(BigInteger.ZERO) <= 0 || privExponent.compareTo(BigInteger.ZERO) <= 0){
+    		throw new IllegalArgumentException("Error: One of the given parameters is not valid!");
+    	}
+    	switch (primeNumber) {
+		case 4:
+			if (thirdPrime.compareTo(BigInteger.ZERO) <= 0 || fourthPrime.compareTo(BigInteger.ZERO) <= 0 ){
+				throw new IllegalArgumentException("Error: One of the given parameters is not valid!");
+			}
+			break;
+		case 5:
+			if (thirdPrime.compareTo(BigInteger.ZERO) <= 0 || fourthPrime.compareTo(BigInteger.ZERO) <= 0 || fifthPrime.compareTo(BigInteger.ZERO) <= 0){
+				throw new IllegalArgumentException("Error: One of the given parameters is not valid!");
+			}
+			break;
+		}
+    	
     	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
     	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 

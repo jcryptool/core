@@ -40,6 +40,4 @@ public class SecureMessageTest {
 	public void testSecureMessage_null4() {
 		SecureMessage message = new SecureMessage("asdf", 1, "sender", null, null);
 	}
-
-	//for the other methods, you need a valid recipient. But you only get a valid one, if JCrypTool is launched!
 }
