@@ -78,7 +78,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 		sc.setContent(composite);
 		sc.setExpandHorizontal(true);
 		sc.setExpandVertical(true);
-		sc.setMinSize(composite.computeSize(1000, 800));
+		sc.setMinSize(composite.computeSize(1000, 680));
 		
 		gl = new GridLayout(1, false);
 		gl.verticalSpacing = 20;
