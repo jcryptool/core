@@ -686,26 +686,38 @@ public class Identity extends TabItem {
 					bi_rsaQ = null;
 					
 					createActionGroup3();
-					
+
 					tf_keyMgmt = new TabFolder(actionGroup_3, SWT.NONE);
 					tf_keyMgmt.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 					tf_keyMgmt.addSelectionListener(new SelectionListener() {
-						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							resetRSAValues();
+							
 							if (tf_keyMgmt.getSelectionIndex() == 0){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
 								eIsValid = false;
-								password1.setEnabled(false);
-								password1.setText(NOTHING);
-								password2.setEnabled(false);
-								password2.setText(NOTHING);
-								pickRandomE.setEnabled(false);
-								combo_rsaE.setEnabled(false);
-								pickRandomExtE.setEnabled(false);
-								combo_ExrsaE.setEnabled(false);
-								errorLabel_1.setText(NOTHING);
+								if (password1 != null && !password1.isDisposed()){
+									password1.setEnabled(false);
+									password1.setText(NOTHING);
+								}
+								if (password2 != null && !password2.isDisposed()){
+									password2.setEnabled(false);
+									password2.setText(NOTHING);
+								}
+								if(pickRandomE != null && !pickRandomE.isDisposed()){
+									pickRandomE.setEnabled(false);
+								}
+								if (combo_rsaE != null && !combo_rsaE.isDisposed()){
+									combo_rsaE.setEnabled(false);
+								}
+								if (pickRandomExtE != null && combo_ExrsaE != null && !pickRandomExtE.isDisposed() && !combo_ExrsaE.isDisposed()){
+									pickRandomExtE.setEnabled(false);
+									combo_ExrsaE.setEnabled(false);
+								}
+								if (errorLabel_1 != null && !errorLabel_1.isDisposed()){
+									errorLabel_1.setText(NOTHING);
+								}
 							}
 							if (tf_keyMgmt.getSelectionIndex() == 1){
 								txtExplain.setText(EXPLAIN_KEYMGMT_TAB2);
@@ -1966,6 +1978,7 @@ public class Identity extends TabItem {
 			@Override
 			public void run(){
 				boolean finish = false;
+				final double start = System.currentTimeMillis();
 				final Vector<BigInteger> divisors = new Vector<BigInteger>();
 				BigDecimal divisor = new BigDecimal(3);
 				BigDecimal decN = new BigDecimal(n);
@@ -2000,7 +2013,8 @@ public class Identity extends TabItem {
 							public IStatus runInUIThread(IProgressMonitor monitor) {
 								keyData_attacked.setVisible(true);
 								keyData_attacked.removeAll();
-								attack_hint.setText(attack_hint.getText()+Messages.Identity_139);
+								double timeNeeded = (System.currentTimeMillis() - start)/1000;
+								attack_hint.setText(attack_hint.getText()+Messages.Identity_139+timeNeeded+" "+Messages.Identity_172);
 								keyData_attacked.setVisible(true);
 								TableItem ti_p;
 								TableItem ti_q;
@@ -2261,31 +2275,31 @@ public class Identity extends TabItem {
 		bi_ExtrsaN = null;
 		bi_ExtrsaPhi = null;
 		
-		if(combo_rsaE != null){
+		if(combo_rsaE != null && !combo_rsaE.isDisposed()){
 			combo_rsaE.setText(NOTHING);
 		}
-		if(combo_rsaP != null){
+		if(combo_rsaP != null && !combo_rsaP.isDisposed()){
 			combo_rsaP.setText(NOTHING);
 		}
-		if(combo_rsaQ != null){
+		if(combo_rsaQ != null && !combo_rsaQ.isDisposed()){
 			combo_rsaQ.setText(NOTHING);
 		}
-		if(combo_ExrsaP != null){
+		if(combo_ExrsaP != null && !combo_ExrsaP.isDisposed()){
 			combo_ExrsaP.setText(NOTHING);
 		}
-		if(combo_ExrsaQ != null){
+		if(combo_ExrsaQ != null && !combo_ExrsaQ.isDisposed()){
 			combo_ExrsaQ.setText(NOTHING);
 		}
-		if(combo_ExrsaR != null){
+		if(combo_ExrsaR != null && !combo_ExrsaR.isDisposed()){
 			combo_ExrsaR.setText(NOTHING);
 		}
-		if(combo_ExrsaS != null){
+		if(combo_ExrsaS != null && !combo_ExrsaS.isDisposed()){
 			combo_ExrsaS.setText(NOTHING);
 		}
-		if(combo_ExrsaT != null){
+		if(combo_ExrsaT != null && !combo_ExrsaT.isDisposed()){
 			combo_ExrsaT.setText(NOTHING);
 		}
-		if(combo_ExrsaE != null){
+		if(combo_ExrsaE != null && !combo_ExrsaT.isDisposed()){
 			combo_ExrsaE.setText(NOTHING);
 		}
 	}
