@@ -5,7 +5,7 @@
   	<groupId>org.jcryptool</groupId>
   	<artifactId>product</artifactId>
   	<version>1.0.0</version>
-	<relativePath>../core/org.jcryptool.repository/parent</relativePath>
+	<relativePath>../core/org.jcryptool.product</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jcryptool</groupId>
