@@ -1,39 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <groupId>org.jcryptool</groupId>
-        <artifactId>core.parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>releng</artifactId>
+	<groupId>org.jcryptool</groupId>
+	<artifactId>org.jcryptool.releng</artifactId>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
+	<name>JCrypTool</name>
+    <url>https://github.com/jcryptool</url>
+    <description>This is the main (parent) pom file for the JCrypTool product. Execute &quot;mvn clean package&quot; to generate the JCrypTool release for all supported platforms. Generated artifacts are stored in the &quot;core/org.jcryptool.releng/target/products&quot; directory. Maven 3 and at least Java 1.6 are required for the build. See https://github.com/jcryptool/core/wiki/Creating-a-new-Release for more information.</description>
+    <organization>
+        <name>JCrypTool</name>
+        <url>https://github.com/jcryptool/</url>
+    </organization>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<properties>
+		<tycho.version>0.16.0</tycho.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<product.id>jcryptool</product.id>
+		<product.version>1.0.0</product.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>eclipse-indigo</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/indigo</url>
+		</repository>
+		<repository>
+			<id>eclipse-babel-indigo</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.10.1/indigo</url>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>../../core</module>
+		<module>../../crypto</module>
+	</modules>
+
 	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.3</version>
-                <executions>
-                    <execution>
-                        <id>attach-artifacts</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>attach-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <artifacts>
-                                <artifact>
-                                    <file>jcryptool.target</file>
-                                    <type>target</type>
-                                    <classifier>indigo</classifier>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-         </plugins>
-    </build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho.version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho.version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>carbon</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
