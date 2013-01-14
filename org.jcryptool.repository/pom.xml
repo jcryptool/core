@@ -7,9 +7,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jcryptool</groupId>
 	<artifactId>org.jcryptool.repository</artifactId>
-	<version>1.0.0</version>
 	<packaging>eclipse-repository</packaging>
 	<build>
 		<plugins>
