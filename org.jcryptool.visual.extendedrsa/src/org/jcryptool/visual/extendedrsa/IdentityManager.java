@@ -272,12 +272,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
     	final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
     	final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
-    	final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,"RSA (OID: 1.2.840.113549.1.1.1)", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
+    	final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,getConcreteAlgorithm("RSA"), new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
     	setPublicAlias(publicAlias);
     	
     	
     	final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
-    	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,"RSA (OID: 1.2.840.113549.1.1.1)", new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
+    	final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,getConcreteAlgorithm("RSA"), new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
     	setPrivateAlias(privateAlias);
     	
     	KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), password, privateAlias, publicAlias);
