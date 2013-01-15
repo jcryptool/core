@@ -318,13 +318,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.ui.views.log"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.ui.workbench.texteditor"
          download-size="0"
          install-size="0"
@@ -343,36 +336,6 @@ litigation.
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.filesystem.win32.x86"
-         os="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.net.win32.x86"
-         os="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.core.resources.win32.x86"
-         os="win32"
-         arch="x86"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
