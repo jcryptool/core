@@ -11,6 +11,7 @@ package org.jcryptool.crypto.keystore.ui.views.nodes;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.security.KeyStoreException;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBException;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -49,15 +52,31 @@ public class ContactManager {
 
     private ITreeNode invisibleRoot;
     
-    private static String CONTACTS_XML;
+    private static String DEFAULT_CONTACTS_XML;
+    private static String USER_CONTACTS_XML;
 
     private ContactManager() {
-    	URL url = FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID), new Path("contactstore/contacts.xml"), null);
+    	
     	try {
-			CONTACTS_XML = FileLocator.toFileURL(url).getPath();
-		} catch (IOException e) {
-			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to locate contacts file", e, true);
+	    	USER_CONTACTS_XML = Platform.getInstanceLocation().getURL().getPath() + "contacts.xml";
+	    	IFileStore userContacts = EFS.getStore(new URI("file://"+USER_CONTACTS_XML));
+	    	if(!userContacts.fetchInfo().exists())
+	    	{
+	    		URL url = FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID), new Path("contactstore/contacts.xml"), null);
+	        	try {
+	    			DEFAULT_CONTACTS_XML = FileLocator.toFileURL(url).getPath();
+	    		} catch (IOException e) {
+	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to locate default contacts file", e, true);
+	    		}
+	        	
+	        	IFileStore defaultContacts = EFS.getStore(new URI("file://"+DEFAULT_CONTACTS_XML));
+	        	
+	        	defaultContacts.copy(userContacts, 0, null);
+	    	}
+    	} catch (Exception e) {
+    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Could not create contact manager.", e, true);
 		}
+    	
     }
 
     public synchronized static ContactManager getInstance() {
@@ -143,12 +162,12 @@ public class ContactManager {
 	}
     
     private void storeContacts(ContactStore cStore) throws JAXBException {
-    	cStore.write(CONTACTS_XML);
+    	cStore.write(USER_CONTACTS_XML);
 	}
 
 	private ContactStore getContactStore() throws FileNotFoundException, JAXBException {
 		if(contactStore == null)
-			contactStore = ContactStore.read(CONTACTS_XML);
+			contactStore = ContactStore.read(USER_CONTACTS_XML);
 		return contactStore;
 	}
 
