@@ -37,15 +37,6 @@
       <view
             allowMultiple="false"
             category="org.eclipse.ui"
-            class="org.eclipse.ui.ExtensionFactory:logView"
-            icon="icons/error_log.gif"
-            id="org.eclipse.pde.runtime.LogView"
-            name="%views.errorlog"
-            restorable="true">
-      </view>
-      <view
-            allowMultiple="false"
-            category="org.eclipse.ui"
             class="org.eclipse.ui.ExtensionFactory:progressView"
             icon="icons/progress.gif"
             id="org.eclipse.ui.views.ProgressView"
@@ -57,14 +48,6 @@
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
             targetID="org.jcryptool.core.perspective">
-         <view
-               id="org.eclipse.pde.runtime.LogView"
-               minimized="false"
-               ratio="0.7"
-               relationship="bottom"
-               relative="org.eclipse.ui.editorss"
-               visible="false">
-         </view>
          <view
                id="org.eclipse.ui.views.ProgressView"
                minimized="false"

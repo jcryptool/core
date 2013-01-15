@@ -33,10 +33,10 @@
            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.jcryptool.webbrowser.browser)"/>
       </subitem>
       <subitem
-            label="Open the Error Log view as fast view (a fast view hides automatically when losing focus). Click on the fast view icon in the lower left and select Other.... Extend General in the dialog and select Error Log. Click on the OK button. The view Error Log is shown. A click outside of the view automatically hides it, but keeps the additional icon next to the fast view icon.">
+            label="Open the Progress view as fast view (a fast view hides automatically when losing focus). Click on the fast view icon in the lower left and select Other.... Extend General in the dialog and select Progress. Click on the OK button. The view Progress is shown. A click outside of the view automatically hides it, but keeps the additional icon next to the fast view icon.">
          <command
                required="false"
-               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.pde.runtime.LogView,org.eclipse.ui.views.showView.makeFast=true)"/>
+               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.ui.views.ProgressView,org.eclipse.ui.views.showView.makeFast=true)"/>
       </subitem>
    </item>
    <item title="Opening an editor" dialog="true" skip="false" href="/org.jcryptool.core.help/nl/en/help/users/general/editors.html">
