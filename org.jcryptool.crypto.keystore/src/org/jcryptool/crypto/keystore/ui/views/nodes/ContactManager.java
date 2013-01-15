@@ -102,7 +102,7 @@ public class ContactManager {
     	
         try {
 			contactsDesc = loadContacts(getContactStore());
-		} catch (FileNotFoundException | JAXBException ex) {
+		} catch (Exception ex) {
 			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to load contacts", ex, true);
 			return;
 		}
@@ -187,7 +187,7 @@ public class ContactManager {
         try {
 			getContactStore().getContacts().add(contactDesc.getContact());
 			storeContacts(getContactStore());
-		} catch (FileNotFoundException | JAXBException e) {
+		} catch (Exception e) {
 			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Exception while adding contact", e, true);
 			return;
 		}
@@ -209,7 +209,7 @@ public class ContactManager {
         		}
         	}
 			storeContacts(getContactStore());
-		} catch (FileNotFoundException | JAXBException e) {
+		} catch (Exception e) {
 			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Exception while removing contact", e, true);
 			return;
 		}
