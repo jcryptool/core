@@ -33,8 +33,8 @@ import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.descriptors.ImportDescriptor;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IImportDescriptor;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 /**
@@ -114,12 +114,12 @@ public class ImportWizardPage extends WizardPage implements Listener {
         int size = ContactManager.getInstance().getContactSize();
         if (size > 0) {
             String[] contactNames = new String[size];
-            Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
-            IContactDescriptor meta;
+            Iterator<Contact> it = ContactManager.getInstance().getContacts();
+            Contact contact;
             int counter = 0;
             while (it.hasNext()) {
-                meta = it.next();
-                contactNames[counter] = meta.getName();
+            	contact = it.next();
+                contactNames[counter] = contact.getName();
                 counter++;
             }
             Arrays.sort(contactNames);

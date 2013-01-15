@@ -36,8 +36,8 @@ import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 /**
@@ -128,12 +128,12 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
         int size = ContactManager.getInstance().getContactSize();
         if (size > 0) {
             String[] contactNames = new String[size];
-            Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
-            IContactDescriptor meta;
+            Iterator<Contact> it = ContactManager.getInstance().getContacts();
+            Contact contact;
             int counter = 0;
             while (it.hasNext()) {
-                meta = it.next();
-                contactNames[counter] = meta.getName();
+            	contact = it.next();
+                contactNames[counter] = contact.getName();
                 counter++;
             }
             Arrays.sort(contactNames);

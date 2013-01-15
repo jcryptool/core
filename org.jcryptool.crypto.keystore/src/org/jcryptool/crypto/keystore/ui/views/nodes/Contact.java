@@ -19,6 +19,16 @@ public class Contact {
 	@XmlAttribute
     private String region;
     
+	public Contact() {
+	}
+	public Contact(String name, String firstname, String lastname,
+			String organization, String region) {
+		this.name = name;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.organization = organization;
+		this.region = region;
+	}
 	public String getName() {
 		return name;
 	}

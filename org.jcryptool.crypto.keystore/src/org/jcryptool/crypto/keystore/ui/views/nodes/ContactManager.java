@@ -191,14 +191,18 @@ public class ContactManager {
     
     public IContactDescriptor newContact(String name)
     {
-    	Contact newContact = new Contact();
-    	newContact.setName(name);
-    	IContactDescriptor newContactDesc = new ContactDescriptorNode(newContact);
-    	addContact(newContactDesc);
-    	return newContactDesc;
+    	Contact contact = new Contact();
+    	contact.setName(name);
+    	return newContact(contact);
     }
+    
+	public IContactDescriptor newContact(Contact contact) {
+		IContactDescriptor newContactDesc = new ContactDescriptorNode(contact);
+		addContact(newContactDesc);
+		return newContactDesc;
+	}
 
-    public void addContact(IContactDescriptor contactDesc) {
+    private void addContact(IContactDescriptor contactDesc) {
         if (contactExists(contactDesc.getContact().getName())) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Contact already exists", null, true); //$NON-NLS-1$
             return;
@@ -215,13 +219,13 @@ public class ContactManager {
         notifyListeners();
     }
 
-    public void removeContact(String contactName) {
+	public void removeContact(String contactName) {
         LogUtil.logInfo("Removing contact " + contactName); //$NON-NLS-1$
         
         try {
         	for(Contact c : getContactStore().getContacts())
         	{
-        		if(c.getName() == contactName)
+        		if(c.getName().equals(contactName))
         		{
         			getContactStore().getContacts().remove(c);
         			break;
@@ -271,7 +275,7 @@ public class ContactManager {
         if (contactExists(alias.getContactName())) {
             contactsDesc.get(alias.getContactName()).addCertificate(alias);
         } else {
-            IContactDescriptor contact = newContact(alias.getContactName());
+            IContactDescriptor contact = newContact(new Contact(alias.getContactName(), null, null, null, null));
             contact.addCertificate(alias);
         }
         
@@ -284,7 +288,7 @@ public class ContactManager {
         if (contactExists(privateKey.getContactName())) {
             contactsDesc.get(privateKey.getContactName()).addKeyPair(privateKey, publicKey);
         } else {
-        	IContactDescriptor contact = newContact(privateKey.getContactName());
+        	IContactDescriptor contact = newContact(new Contact(privateKey.getContactName(), null, null, null, null) );
             contact.addKeyPair(privateKey, publicKey);
         }
         
@@ -297,19 +301,25 @@ public class ContactManager {
         if (contactExists(alias.getContactName())) {
             contactsDesc.get(alias.getContactName()).addSecretKey(alias);
         } else {
-        	IContactDescriptor contact = newContact(alias.getContactName());
+        	IContactDescriptor contact = newContact(new Contact(alias.getContactName(), null, null, null, null));
             contact.addSecretKey(alias);
         }
         
         notifyListeners();
     }
 
-    public Iterator<IContactDescriptor> getContacts() {
-        return contactsDesc.values().iterator();
+	public Iterator<Contact> getContacts() {
+    	try {
+			return getContactStore().getContacts().iterator();
+		} catch (Exception e) {
+			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to retrieve contacts", e, true);
+		}
+    	return null;
     }
 
     public int getContactSize() {
         LogUtil.logInfo("Contacts size is " + contactsDesc.size()); //$NON-NLS-1$
         return contactsDesc.size();
     }
+
 }
