@@ -1872,7 +1872,7 @@ public class Identity extends TabItem {
 								String name = keyToAttack.getText().substring(0,keyToAttack.getText().indexOf('-')-1);
 								attack_hint.setText(Messages.Identity_131+name+Messages.Identity_132+actualKey.get(0).bitLength()+Messages.Identity_133);		
 								keydataN.setVisible(true);
-								keydataN.setText(Messages.Identity_173+actualKey.get(0));
+								keydataN.setText(Messages.Identity_173+getDottedNumber(actualKey.get(0)));
 								attack_success.setText(NOTHING);
 								keyData_attacked.setVisible(false);
 							}
@@ -1975,7 +1975,38 @@ public class Identity extends TabItem {
 		actionGroup_4.setVisible(false);
 		group_4.exclude = true;
 	}
+	/**
+	 * method to add "thousand"-points in the number (12345 -> 12.345)
+	 * @param number the raw number
+	 * @return the dotted number
+	 */
+	private String getDottedNumber(BigInteger number){
+		StringBuilder sb = new StringBuilder();
+		StringBuilder sb2 = new StringBuilder();
+
+		if (number.toString().length() < 4){
+			return number.toString();
+		}else {
+			for (int i = 0; i < number.toString().length(); i++){
+				sb.append(number.toString().charAt(number.toString().length()-i-1));
+				if ((i+1) % 3 == 0){
+					sb.append(".");
+				}
+			}
+
+			for (int i = 0; i < sb.toString().length(); i++){
+				sb2.append(sb.charAt(sb.toString().length()-i-1));
+			}
+		}
+		
+		return sb2.toString();
+	}
 	
+	/**
+	 * method to factorize a public key
+	 * @param n the modulus
+	 * @param e the public exponent
+	 */
 	private void factorizePubKey(final BigInteger n, final BigInteger e){
 		new Thread(){
 			
