@@ -38,8 +38,9 @@ import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
 import org.jcryptool.crypto.keystore.ui.actions.ChooseKeyStoreAction;
 import org.jcryptool.crypto.keystore.ui.actions.IKeyStoreActionDescriptor;
 import org.jcryptool.crypto.keystore.ui.actions.ShadowKeyStoreAction;
+import org.jcryptool.crypto.keystore.ui.actions.contacts.DeleteContactAction;
+import org.jcryptool.crypto.keystore.ui.actions.contacts.NewContactAction;
 import org.jcryptool.crypto.keystore.ui.actions.del.DeleteCertificateAction;
-import org.jcryptool.crypto.keystore.ui.actions.del.DeleteContactAction;
 import org.jcryptool.crypto.keystore.ui.actions.del.DeleteKeyPairAction;
 import org.jcryptool.crypto.keystore.ui.actions.del.DeleteSecretKeyAction;
 import org.jcryptool.crypto.keystore.ui.actions.ex.ExportCertificateAction;
@@ -70,7 +71,9 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     private Action exportKeyPairAction = new ExportKeyPairAction(this);
     private Action exportPublicKeyAction = new ExportCertificateAction(this);
     
+    private Action newContactAction = new NewContactAction(this);
     private Action deleteContactAction = new DeleteContactAction(this);
+    
     private Action deleteSecretKeyAction = new DeleteSecretKeyAction(this);
     private Action deleteKeyPairAction = new DeleteKeyPairAction(this);
     private Action deleteCertificateAction = new DeleteCertificateAction(this);
@@ -188,6 +191,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     }
 
     private void fillContactContextMenu(IMenuManager manager) {
+    	manager.add(newContactAction);
         manager.add(deleteContactAction);
     }
 

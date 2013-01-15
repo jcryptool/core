@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.crypto.keystore.ui.actions.del;
+package org.jcryptool.crypto.keystore.ui.actions.contacts;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -16,6 +16,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.ui.actions.del.Messages;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 
 /**
@@ -29,7 +30,7 @@ public class DeleteContactAction extends Action {
         this.descriptor = descriptor;
         this.setText(Messages.getString("Label.DeleteContact")); //$NON-NLS-1$
         this.setToolTipText(Messages.getString("Label.DeleteContact")); //$NON-NLS-1$
-        this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/cancel.png")); //$NON-NLS-1$
+        this.setImageDescriptor(KeyStorePlugin.getImageDescriptor("icons/16x16/user-delete-3.png")); //$NON-NLS-1$
     }
 
     public void run() {

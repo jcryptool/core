@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contactStore>
+    <contact name="Alice Whitehat" firstname="Test" lastname="Test2" organization="None" region="Earth"/>
+    <contact name="Alice"/>
+</contactStore>

@@ -21,26 +21,14 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.containers.KeyPairContainerN
 import org.jcryptool.crypto.keystore.ui.views.nodes.containers.SecretKeyContainerNode;
 
 public class ContactDescriptorNode extends TreeNode implements IContactDescriptor {
-    private String name;
-    private String firstname;
-    private String lastname;
-    private String organization;
-    private String region;
+    private Contact contact;
     private AbstractContainerNode secretKeyContainer;
     private AbstractContainerNode keyPairContainer;
     private AbstractContainerNode certificateContainer;
 
-    public ContactDescriptorNode(String name) {
-        this(name, "", "", "", "");
-    }
-
-    public ContactDescriptorNode(String name, String firstname, String lastname, String organization, String region) {
-        super(name, firstname, lastname, organization, region);
-        this.name = name;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.organization = organization;
-        this.region = region;
+    public ContactDescriptorNode(Contact contact) {
+        super(contact.getName());
+        this.contact = contact;
 
         secretKeyContainer = new SecretKeyContainerNode();
         addChild(secretKeyContainer);
@@ -48,10 +36,6 @@ public class ContactDescriptorNode extends TreeNode implements IContactDescripto
         addChild(keyPairContainer);
         certificateContainer = new CertificateContainerNode();
         addChild(certificateContainer);
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**
@@ -62,53 +46,38 @@ public class ContactDescriptorNode extends TreeNode implements IContactDescripto
     }
 
     public void addCertificate(KeyStoreAlias alias) {
-        LogUtil.logInfo("adding a certificate to: " + name); //$NON-NLS-1$
+        LogUtil.logInfo("adding a certificate to: " + contact.getName()); //$NON-NLS-1$
         certificateContainer.add(alias);
     }
 
     public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
-        LogUtil.logInfo("adding a key pair to: " + name); //$NON-NLS-1$
+        LogUtil.logInfo("adding a key pair to: " + contact.getName()); //$NON-NLS-1$
         ((IKeyPairContainerNode) keyPairContainer).addKeyPair(privateKey, publicKey);
 
     }
 
     public void addSecretKey(KeyStoreAlias alias) {
-        LogUtil.logInfo("adding a secret key to: " + name); //$NON-NLS-1$
+        LogUtil.logInfo("adding a secret key to: " + contact.getName()); //$NON-NLS-1$
         secretKeyContainer.add(alias);
     }
 
     public void removeCertificate(KeyStoreAlias alias) {
-        LogUtil.logInfo("removing a certificate from " + name); //$NON-NLS-1$
+        LogUtil.logInfo("removing a certificate from " + contact.getName()); //$NON-NLS-1$
         certificateContainer.remove(alias);
     }
 
     public void removeKeyPair(KeyStoreAlias privateKey) {
-        LogUtil.logInfo("removing a key pair from " + name); //$NON-NLS-1$
+        LogUtil.logInfo("removing a key pair from " + contact.getName()); //$NON-NLS-1$
         keyPairContainer.remove(privateKey);
     }
 
     public void removeSecretKey(KeyStoreAlias alias) {
-        LogUtil.logInfo("removing a secret key from " + name); //$NON-NLS-1$
+        LogUtil.logInfo("removing a secret key from " + contact.getName()); //$NON-NLS-1$
         secretKeyContainer.remove(alias);
     }
 
-    @Override
-    public String getFirstname() {
-        return firstname;
-    }
-
-    @Override
-    public String getLastname() {
-        return lastname;
-    }
-
-    @Override
-    public String getOrganization() {
-        return organization;
-    }
-
-    @Override
-    public String getRegion() {
-        return region;
-    }
+	@Override
+	public Contact getContact() {
+		return contact;
+	}
 }
