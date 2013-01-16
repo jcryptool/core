@@ -11,12 +11,11 @@
 package org.jcryptool.visual.extendedrsa.ui.wizards;
 
 import java.util.Iterator;
-
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabItem;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
@@ -29,7 +28,6 @@ import org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages.ManageVisibleIden
  *
  */
 public class ManageVisibleIdentitesWizard extends Wizard{
-
 	private ManageVisibleIdentitiesPage visiblePage;
 	private ExtendedTabFolder tabfolder;
 	private Label txtExplain;
@@ -38,7 +36,7 @@ public class ManageVisibleIdentitesWizard extends Wizard{
 		this.tabfolder = folder;
 		this.txtExplain = txtExplain;
 	}
-	
+
 	@Override
 	public final void addPages() {
 		visiblePage = new ManageVisibleIdentitiesPage(tabfolder);
@@ -61,12 +59,12 @@ public class ManageVisibleIdentitesWizard extends Wizard{
 				if (!visiblePage.getAllreadyShownList().contains(s) && visiblePage.getDisplayList().contains(s)){
 					//create selected identity in the visual
 					
-					Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
-					IContactDescriptor meta;
+					Iterator<Contact> it = ContactManager.getInstance().getContacts();					
+					Contact contactNode;
 		            while (it.hasNext()) {
-		                meta = it.next();
-		                if(meta.getName().equals(s)){
-		                	new Identity(tabfolder, SWT.NONE, meta.getName(), meta.getFirstname(), meta.getLastname(), meta.getOrganization(), meta.getRegion(), txtExplain);
+		                contactNode = it.next();
+		                if(contactNode.getName().equals(s)){
+		                	new Identity(tabfolder, SWT.NONE, contactNode, txtExplain);
 		                }
 		            }
 				}
@@ -76,5 +74,5 @@ public class ManageVisibleIdentitesWizard extends Wizard{
 			return false;
 		}
 	}
-
 }
+

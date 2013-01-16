@@ -37,9 +37,9 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
-import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 import de.flexiprovider.api.Registry;
@@ -386,12 +386,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	 */
 	public Vector<String> getContacts(){ 
 		Vector<String> contactNames = new Vector<String>();             
-        Iterator<IContactDescriptor> it = ContactManager.getInstance().getContacts();
-        IContactDescriptor meta;
+		Iterator<Contact> it = ContactManager.getInstance().getContacts();
+		Contact contactNode;
         
         while (it.hasNext()) {
-            meta = it.next();
-            contactNames.add(meta.getName().toString());
+            contactNode = it.next();
+            contactNames.add(contactNode.getName());
         }
         
         return contactNames;

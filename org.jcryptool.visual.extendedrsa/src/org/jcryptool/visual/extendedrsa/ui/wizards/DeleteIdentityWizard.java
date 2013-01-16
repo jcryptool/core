@@ -13,10 +13,8 @@ package org.jcryptool.visual.extendedrsa.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
 import org.jcryptool.visual.extendedrsa.IdentityManager;

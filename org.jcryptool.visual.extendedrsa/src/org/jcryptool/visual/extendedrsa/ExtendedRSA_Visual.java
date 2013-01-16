@@ -32,6 +32,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizards.ManageVisibleIdentitesWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizards.NewIdentityWizard;
@@ -204,8 +205,8 @@ public class ExtendedRSA_Visual extends ViewPart{
             
             String[] alice_split = ALICE.split(BLANK);
             //create "Alice" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, ALICE, alice_split[0], alice_split[1], Messages.ExtendedRSA_Visual_19, Messages.ExtendedRSA_Visual_20, txtExplain);
-    		
+    		identity = new Identity(tabFolder, SWT.NONE, new Contact(ALICE, alice_split[0], alice_split[1], Messages.ExtendedRSA_Visual_19, Messages.ExtendedRSA_Visual_20), txtExplain);
+     		
     		
             if (!contactNames.contains(BOB)){
             	//create Bob in the keystore
@@ -233,8 +234,7 @@ public class ExtendedRSA_Visual extends ViewPart{
             
             String[] bob_split = BOB.split(BLANK);
             //create "Bob" in the visual
-    		identity = new Identity(tabFolder, SWT.NONE, BOB, bob_split[0], bob_split[1], Messages.ExtendedRSA_Visual_29, Messages.ExtendedRSA_Visual_30, txtExplain);
-        	
+            identity = new Identity(tabFolder, SWT.NONE, new Contact(BOB, bob_split[0], bob_split[1], Messages.ExtendedRSA_Visual_29, Messages.ExtendedRSA_Visual_30), txtExplain);
             
         }catch (Exception e) {
             LogUtil.logError(e);

@@ -13,8 +13,10 @@ package org.jcryptool.visual.extendedrsa.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabFolder;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactDescriptorNode;
+import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
-import org.jcryptool.visual.extendedrsa.Contact;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages.NewIdentityPage;
 
@@ -42,10 +44,10 @@ public class NewIdentityWizard extends Wizard{
 	@Override
 	public boolean performFinish() {
 		if (newIDPage.isPageComplete()){
-			Contact contact = new Contact(newIDPage.getIdName().toString(), newIDPage.getIdForename().toString(), newIDPage.getIdSurname().toString(), newIDPage.getIdOrganisation().toString(), newIDPage.getIdRegion().toString());
-			ContactManager.getInstance().addContact(contact);
+			Contact contact = new Contact(newIDPage.getIdName(), newIDPage.getIdForename(), newIDPage.getIdSurname(), newIDPage.getIdOrganisation(),newIDPage.getIdRegion());
+			ContactManager.getInstance().newContact(contact);
 			
-			if (IdentityManager.getInstance().getContacts().size() > 2){
+			if (ContactManager.getInstance().getContactSize() > 2){
 				delID.setEnabled(true);
 			}else{
 				delID.setEnabled(false);

@@ -16,7 +16,6 @@ import static org.jcryptool.visual.library.Lib.LOW_PRIMES;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -51,6 +50,7 @@ import org.eclipse.ui.progress.UIJob;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 
@@ -254,14 +254,14 @@ public class Identity extends TabItem {
             }
     };
 	
-	public Identity(ExtendedTabFolder parent, int style, String identityName, String forename, String surname, String organisation, String region, Label explain) {
-		super(parent, style);
+    public Identity(ExtendedTabFolder parent, int style, Contact contact, Label explain){
+    	super(parent, style);
 		this.extTF = parent;
-		this.identityName = identityName;
-		this.forename = forename;
-		this.surname = surname;
-		this.organisation = organisation;
-		this.region = region;
+		this.identityName = contact.getName();
+		this.forename = contact.getFirstname();
+		this.surname = contact.getLastname();
+		this.organisation = contact.getOrganization();
+		this.region = contact.getRegion();
 		this.id = parent.getItemCount();
 		this.txtExplain = explain;
 		

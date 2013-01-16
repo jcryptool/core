@@ -27,7 +27,7 @@ public class Contact extends ContactDescriptorNode{
 	private String region;
 
 	public Contact(String name, String firstName, String lastName, String organisation, String region) {
-		super(name);
+		super(new org.jcryptool.crypto.keystore.ui.views.nodes.Contact(name, firstName, lastName, organisation, region));
 		if (name != null){
 			this.name = name;
 			this.firstName = firstName;
