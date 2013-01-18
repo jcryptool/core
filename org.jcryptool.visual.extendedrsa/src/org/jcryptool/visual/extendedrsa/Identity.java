@@ -236,6 +236,7 @@ public class Identity extends TabItem {
 	private final String NO_KEY_TO_ATTACK = Messages.Identity_25;
 	private final String NOTHING = Messages.Identity_26;
 	private final String HYPHEN = Messages.Identity_27;
+	private final String FROM = Messages.Identity_174;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -300,8 +301,6 @@ public class Identity extends TabItem {
 			@Override
 			//Button 1
 			public void widgetSelected(final SelectionEvent e) {
-				txtExplain.setText(EXPLAIN_ENCRYPT);
-				
 				if(actionGroup_1.isDisposed()){
 					createActionGroup1();
 				}
@@ -309,6 +308,8 @@ public class Identity extends TabItem {
 					actionGroup_2.dispose();
 					actionGroup_3.dispose();
 					actionGroup_4.dispose();
+					
+					txtExplain.setText(EXPLAIN_ENCRYPT);
 					
 					initActions.dispose();
 					Label lbl_subj = new Label(actionGroup_1, SWT.NONE);
@@ -2133,7 +2134,7 @@ public class Identity extends TabItem {
 				}else{
 					subject = sec.getSubject();
 				}
-				String message = NOTHING+subject+HYPHEN+sec.getRecipient().getContactName()+HYPHEN+sec.getMessageID();
+				String message = NOTHING+subject+HYPHEN+FROM+sec.getSender()+HYPHEN+sec.getMessageID();
 				selectMessage.add(message);
 			}
 		}
