@@ -172,8 +172,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 	public void createMpRSAIdentity(final String name, final String password, final int keyLength, final int numberOfPrimes){
 		final String algorithm = "MpRSA";
 		final INewEntryDescriptor nkd = new NewEntryDescriptor(name, algorithm, algorithm, keyLength, password, Messages.IdentityManager_0, KeyType.KEYPAIR);
-		final Integer[] argument = new Integer[1];
+		
+		final Integer[] argument = new Integer[3];
 		argument[0] = keyLength;
+		argument[1] = 65537;
+		argument[2] = numberOfPrimes;
 		LogUtil.logInfo(Messages.IdentityManager_1);
 		Job job = new Job("New Key Pair Job") { //$NON-NLS-1$
 			@Override
@@ -182,11 +185,11 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 				try {
 					IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(algorithm);
 					if (gen != null && numberOfPrimes > 2 && numberOfPrimes < 6 && name != null && password != null && keyLength > 0){
-						final byte[] e = new byte[1];
-						e[0] = (byte) 65537;
+						
+						final String e = "65537";
 						FlexiBigInt exponent = new FlexiBigInt(e);
 						
-						AlgorithmParameterSpec spec = null;
+						AlgorithmParameterSpec spec = new MpRSAKeyGenParameterSpec(keyLength, exponent, numberOfPrimes);
 						if (keyLength != -1) {
 							if (gen.getParameterSpecClassName() != null) {
 								spec = Reflector.getInstance().instantiateParameterSpec(gen.getParameterSpecClassName(), argument);
@@ -196,7 +199,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 						KeyPairGenerator generator = Registry.getKeyPairGenerator(nkd.getAlgorithmName());
 						if (spec != null) {
 							generator.initialize(spec, FlexiProviderKeystorePlugin.getSecureRandom());
-						} else if (keyLength != -1) {
+						} 
+						else if (keyLength != -1) {
 							generator.initialize(keyLength, FlexiProviderKeystorePlugin.getSecureRandom());
 						}
 						KeyPair keyPair = generator.genKeyPair();
@@ -589,9 +593,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
 			parameters.add(privKey.getFormat());
 			parameters.add(privKey.getP().toString());
 			parameters.add(privKey.getQ().toString());
-			RSAOtherPrimeInfo[] otherPrimeIinfo = privKey.getOtherPrimeInfo();
-			for (int i = 0; i < otherPrimeIinfo.length; i++){
-				sb.append(otherPrimeIinfo[i].getPrime()+Messages.IdentityManager_25);
+			RSAOtherPrimeInfo[] otherPrimeInfo = privKey.getOtherPrimeInfo();
+			for (int i = 0; i < otherPrimeInfo.length; i++){
+				sb.append(otherPrimeInfo[i].getPrime()+Messages.IdentityManager_25);
 			}
 			parameters.add(sb.toString());
 			//other primes

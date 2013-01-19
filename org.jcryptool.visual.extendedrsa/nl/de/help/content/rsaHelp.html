@@ -30,7 +30,7 @@ Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml
 
 
 <h2>Faktorisierungsangriff</h2>
-<p>Ziel des Faktorisierungsangriffes ist es, den &ouml;ffentlich bekannten Modulus N zu faktorisieren und so die Primfaktoren zu rekonstruieren. Mit diesen Primzahlen kann dann - genau wie bei der urspr&uuml;nglichen Schl&uuml;sselerstellung - der private Schl&uuml;ssel (der geheime Parameter d) berechnet werden. Dadurch kann der Angreifer Nachrichten lesen, die nicht f&uuml;r ihn bestimmt sind, bzw. Signaturen im Namen einer anderen Person erstellen.</p>
+<p>Ziel des Faktorisierungsangriffes ist es, den &ouml;ffentlich bekannten Modulus N zu faktorisieren und so die Primfaktoren zu rekonstruieren. Mit diesen Primzahlen kann dann - genau wie bei der urspr&uuml;nglichen Schl&uuml;sselerstellung - der private Schl&uuml;ssel (der geheime Parameter d) berechnet werden. Dadurch kann der Angreifer Nachrichten lesen, die nicht f&uuml;r ihn bestimmt sind.</p>
 <p>Durch Verwendung von Primzahlen von mehr als 612 bit L&auml;nge (was im 2-Primzahl-Fall zu Modulen von mehr als 1024 bit L&auml;nge f&uuml;hrt) kann man diesen Angriff vermeiden - auch heutige Supercomputer haben dann keine Chance (in einem Zeitraum von wenigen Jahren).</p>
 <p>In dieser Visualisierung ist ein Faktorisierungsangriff implementiert, um vor allem kleine Schl&uuml;ssel zu faktorisieren. Dazu wird versucht, die Teiler des &ouml;ffentlichen Modulus zu finden. Sobald alle Teiler gefunden sind, sind die Primzahlen zur Schl&uuml;sselrekonstruktion bekannt und der Faktorisierungsangriff wird erfolgreich beendet.</p>
 

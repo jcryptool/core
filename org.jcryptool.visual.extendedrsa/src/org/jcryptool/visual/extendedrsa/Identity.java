@@ -207,6 +207,7 @@ public class Identity extends TabItem {
 	private Vector<BigInteger> primesE;
 	private Text keydataN;
 	private Label attack_success;
+	private Button reconstructKey;
 	
 	private final String EXPLAIN_INIT = Messages.Identity_0;
 	private final String EXPLAIN_ENCRYPT = Messages.Identity_1;
@@ -237,6 +238,8 @@ public class Identity extends TabItem {
 	private final String NOTHING = Messages.Identity_26;
 	private final String HYPHEN = Messages.Identity_27;
 	private final String FROM = Messages.Identity_174;
+	private final String TO = Messages.Identity_175;
+	private final String NO_VALID_GcdE = Messages.Identity_222;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -462,8 +465,9 @@ public class Identity extends TabItem {
 		receive_and_decrypt.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 2
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText(EXPLAIN_DECRYPT);
 				if (forerunner != 2){
+					txtExplain.setText(EXPLAIN_DECRYPT);
+					
 					actionGroup_1.dispose();
 					actionGroup_3.dispose();
 					actionGroup_4.dispose();
@@ -512,9 +516,11 @@ public class Identity extends TabItem {
 									decryptionKeys.select(count);
 								}
 							}
+							if (currentMsg.getRecipient().getContactName().equals(Identity.this.identityName)){
+								privateAlias = privKeys.get(decryptionKeys.getText());
+				                publicAlias = iMgr.getPublicForPrivateRSA(privateAlias);
+							}
 							
-							privateAlias = privKeys.get(decryptionKeys.getText());
-			                publicAlias = iMgr.getPublicForPrivateRSA(privateAlias);
 			                pwPrivKey.setEnabled(true);
 			                pwPrivKey.setText(NOTHING);
 			                decryptMessage.setEnabled(false);
@@ -641,12 +647,15 @@ public class Identity extends TabItem {
 					decryptMessage.addSelectionListener(new SelectionAdapter() {
 						@Override
 						public void widgetSelected(final SelectionEvent e) {
+							SecureMessage currentMsg = extTF.getMessageWithID(Integer.parseInt(selectMessage.getText().substring(selectMessage.getText().lastIndexOf(' ')+1)));
 							
-							deleteMessage.setEnabled(true);
+							if (currentMsg.getRecipient().getContactName().equals(Identity.this.identityName)){
+								deleteMessage.setEnabled(true);
+							}
 							
 							RSAPrivateCrtKey privkey = iMgr.getPrivateKey(privateAlias, pwPrivKey.getText());
 							if(privkey == null){
-								//can't catch the  'java.security.UnrecoverableKeyException'
+								//can't catch the 'java.security.UnrecoverableKeyException'
 								lbl_pwWrong.setText(PW_WRONG);
 							}else{
 								lbl_pwWrong.setText(NOTHING);
@@ -678,8 +687,9 @@ public class Identity extends TabItem {
 		keymanagement.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 3
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
 				if (forerunner != 3){
+					txtExplain.setText(EXPLAIN_KEYMGMT_TAB1);
+					
 					actionGroup_1.dispose();
 					actionGroup_2.dispose();
 					actionGroup_4.dispose();
@@ -1850,8 +1860,9 @@ public class Identity extends TabItem {
 		attackPublicKey.addSelectionListener(new SelectionAdapter() {
 			@Override //Button 4
 			public void widgetSelected(SelectionEvent e) {
-				txtExplain.setText(EXPLAIN_ATTACK_PUBKEY);
 				if (forerunner != 4){
+					txtExplain.setText(EXPLAIN_ATTACK_PUBKEY);
+					
 					actionGroup_1.dispose();
 					actionGroup_2.dispose();
 					actionGroup_3.dispose();
@@ -1883,6 +1894,7 @@ public class Identity extends TabItem {
 					attackableKeys = iMgr.getAttackablePublicKeys(Identity.this.identityName);
 					if (attackableKeys.size() == 0){
 						keyToAttack.setEnabled(false);
+						lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 						lbl_noKeyToAttack.setText(NO_KEY_TO_ATTACK);
 					}
 					keyToAttack.setItems(attackableKeys.keySet().toArray(new String[attackableKeys.size()]));
@@ -1899,6 +1911,9 @@ public class Identity extends TabItem {
 								keydataN.setText(Messages.Identity_173+actualKey.get(0));
 								attack_success.setText(NOTHING);
 								keyData_attacked.setVisible(false);
+								
+								reconstructKey.setEnabled(false);
+								reconstructKey.setVisible(false);
 							}
 						}
 						
@@ -1932,11 +1947,92 @@ public class Identity extends TabItem {
 						public void widgetDefaultSelected(SelectionEvent e) {}
 					});
 					
+					createSpacer(actionGroup_4);
 					
-					for(int i = 0; i < 6; i++){
+					reconstructKey = new Button(actionGroup_4, SWT.PUSH);
+					reconstructKey.setText(Messages.Identity_176);
+					reconstructKey.setEnabled(false);
+					reconstructKey.setVisible(false);
+					GridData btn_rec_key = new GridData(SWT.LEFT, SWT.LEFT, true, false, 1, 1);
+					btn_rec_key.heightHint = 20;
+					btn_rec_key.widthHint = 250;
+					reconstructKey.setLayoutData(btn_rec_key);
+					reconstructKey.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							TableItem[]allTableItems = keyData_attacked.getItems();
+							if (allTableItems.length < 5){
+								//create mprsa-key
+								BigInteger rec_p = new BigInteger(allTableItems[0].getText(1)); 
+								BigInteger rec_q = new BigInteger(allTableItems[1].getText(1)); 
+								BigInteger rec_N = rec_p.multiply(rec_q);
+								BigInteger rec_e = new BigInteger(allTableItems[2].getText(1)); 
+								BigInteger rec_d = new BigInteger(allTableItems[3].getText(1)); 
+								iMgr.saveRSAKeyToKeystore(identityName, "1234", rec_N, rec_p, rec_q, rec_e, rec_d);
+								lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								lbl_noKeyToAttack.setText(Messages.Identity_177);
+							}else{
+								//create rsa key
+								BigInteger rec_p = new BigInteger(allTableItems[0].getText(1)); 
+								BigInteger rec_q = new BigInteger(allTableItems[1].getText(1)); 
+								BigInteger rec_r = new BigInteger(allTableItems[2].getText(1));
+								
+								switch (allTableItems.length){
+								case 5: {
+									BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r);
+									BigInteger rec_e = new BigInteger(allTableItems[3].getText(1)); 
+									BigInteger rec_d = new BigInteger(allTableItems[4].getText(1)); 
+									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r, BigInteger.ZERO, BigInteger.ZERO, rec_e, rec_d);
+									break;
+								}
+								case 6: {
+									BigInteger rec_s = new BigInteger(allTableItems[3].getText(1));
+									BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r).multiply(rec_s);
+									BigInteger rec_e = new BigInteger(allTableItems[4].getText(1)); 
+									BigInteger rec_d = new BigInteger(allTableItems[5].getText(1)); 
+									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r, rec_s, BigInteger.ZERO, rec_e, rec_d);
+									break;
+								}
+								case 7: {
+									BigInteger rec_s = new BigInteger(allTableItems[3].getText(1));
+									BigInteger rec_t = new BigInteger(allTableItems[4].getText(1));
+									BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r).multiply(rec_s).multiply(rec_t);
+									BigInteger rec_e = new BigInteger(allTableItems[5].getText(1)); 
+									BigInteger rec_d = new BigInteger(allTableItems[6].getText(1)); 
+									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r, rec_s, rec_t, rec_e, rec_d);
+									break;
+								}
+								}	
+							}
+							lbl_noKeyToAttack.setText(Messages.Identity_178);
+							keyData_attacked.setVisible(false);
+							attackKey.setEnabled(false);
+							attack_hint.setText(NOTHING);
+							reconstructKey.setVisible(false);
+							attack_success.setVisible(false);
+							keydataN.setText(NOTHING);
+							keydataN.setVisible(false);
+							keyToAttack.removeAll();
+							attackableKeys = iMgr.getAttackablePublicKeys(Identity.this.identityName);
+							if (attackableKeys.size() == 0){
+								keyToAttack.setEnabled(false);
+								lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+								lbl_noKeyToAttack.setText(NO_KEY_TO_ATTACK);
+							}
+							keyToAttack.setItems(attackableKeys.keySet().toArray(new String[attackableKeys.size()]));
+							
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
+					
+					for(int i = 0; i < 4; i++){
 						createSpacer(actionGroup_4);
 					}
-
+					
+					
 					attack_hint = new Label(actionGroup_4, SWT.WRAP|SWT.V_SCROLL|SWT.H_SCROLL);
 					GridData at_hint = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 2);
 					at_hint.heightHint = 40;
@@ -2061,6 +2157,8 @@ public class Identity extends TabItem {
 								double timeNeeded = (System.currentTimeMillis() - start)/1000;
 								attack_success.setText(Messages.Identity_139+timeNeeded+" "+Messages.Identity_172);
 								keyData_attacked.setVisible(true);
+								reconstructKey.setEnabled(true);
+								reconstructKey.setVisible(true);
 								TableItem ti_p;
 								TableItem ti_q;
 								TableItem ti_r;
@@ -2149,17 +2247,18 @@ public class Identity extends TabItem {
 	}
 	
 	private void fillSelectMessage(){
+		//show all messages
 		for (SecureMessage sec :extTF.getMessageQueue()){
-			if (sec.getRecipient().getContactName().equals(identityName)){
+//			if (sec.getRecipient().getContactName().equals(identityName)){
 				String subject = NOTHING;
 				if (sec.getSubject().equals(Messages.Identity_158)){
 					subject = Messages.Identity_159;
 				}else{
 					subject = sec.getSubject();
 				}
-				String message = NOTHING+subject+HYPHEN+FROM+sec.getSender()+HYPHEN+sec.getMessageID();
+				String message = NOTHING+subject+HYPHEN+FROM+sec.getSender()+HYPHEN+TO+sec.getRecipient().getContactName()+HYPHEN+sec.getMessageID();
 				selectMessage.add(message);
-			}
+//			}
 		}
 		if (selectMessage.getItemCount() == 0){
 			infolabel_tab2.setText(NO_ENCRYPTED_MESSAGES);
@@ -2559,16 +2658,23 @@ public class Identity extends TabItem {
 	        		}
 		            
 		            if(bi_rsaE != null){
+		            	BigInteger gcd = bi_rsaE.gcd(bi_rsaPhi);
 		            	if (!possibleEs.contains(bi_rsaE.toString())) {
-		    	        	errorLabel_1.setText(NO_VALID_E);
-		    	        	password1.setText(NOTHING);
-		    	    		password2.setText(NOTHING);
-		    	    		createKey.setEnabled(false);
-		    	    		eIsValid = false;
-		    	        }else{
-		    	        	errorLabel_1.setText(NOTHING);
-		    	        	eIsValid = true;
-		    	        }
+		            		errorLabel_1.setText(NO_VALID_E);
+		            		password1.setText(NOTHING);
+		            		password2.setText(NOTHING);
+		            		createKey.setEnabled(false);
+		            		eIsValid = false;
+		            	}else if (gcd.intValue() != 1){
+		            		errorLabel_1.setText(NO_VALID_GcdE);
+		            		password1.setText(NOTHING);
+		            		password2.setText(NOTHING);
+		            		createKey.setEnabled(false);
+		            		eIsValid = false;
+		            	}else{
+		            		errorLabel_1.setText(NOTHING);
+		            		eIsValid = true;
+		            	}
 		            }
 	
 		        } else {
@@ -2759,17 +2865,24 @@ public class Identity extends TabItem {
 
 		        
     			if(bi_ExtrsaE != null){
-	            	if (!possibleEs.contains(bi_ExtrsaE.toString())) {
-	    	        	errorLabel_1.setText(NO_VALID_E);
-	    	        	eIsValid = false;
-	    	        }else{
-	    	        	errorLabel_1.setText(NOTHING);
-	    	        	eIsValid = true;
-	        			
-	    	        }
-	            	password1.setEnabled(eIsValid);
-    	        	password2.setEnabled(eIsValid);
-	            }
+    				BigInteger gcd = bi_ExtrsaE.gcd(bi_ExtrsaPhi);
+    				if (!possibleEs.contains(bi_ExtrsaE.toString())) {
+    					errorLabel_1.setText(NO_VALID_E);
+    					eIsValid = false;
+    				}else if (gcd.intValue() != 1){
+    					errorLabel_1.setText(NO_VALID_GcdE);
+    					password1.setText(NOTHING);
+    					password2.setText(NOTHING);
+    					createKey.setEnabled(false);
+    					eIsValid = false;
+    				}else{
+    					errorLabel_1.setText(NOTHING);
+    					eIsValid = true;
+    					
+    				}
+    				password1.setEnabled(eIsValid);
+    				password2.setEnabled(eIsValid);
+    			}
     		}
     	}
     	
