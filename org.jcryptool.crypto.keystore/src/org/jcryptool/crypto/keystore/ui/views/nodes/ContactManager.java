@@ -309,7 +309,7 @@ public class ContactManager {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_9, e, true);
         }
 
-        return null;
+        return new ArrayList<Contact>().iterator();
     }
 
     public int getContactSize() {
