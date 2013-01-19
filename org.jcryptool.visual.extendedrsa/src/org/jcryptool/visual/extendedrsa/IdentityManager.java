@@ -391,7 +391,9 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction{
         
         while (it.hasNext()) {
             contactNode = it.next();
-            contactNames.add(contactNode.getName());
+            if (!contactNames.contains(contactNode.getName())){
+            	contactNames.add(contactNode.getName());
+            }
         }
         
         return contactNames;

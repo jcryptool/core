@@ -234,7 +234,6 @@ public class ExtendedRSA_Visual extends ViewPart{
         		iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_27, Messages.ExtendedRSA_Visual_28, 1024);
         	}
             
-            
             String[] bob_split = BOB.split(BLANK);
             //create "Bob" in the visual
             identity = new Identity(tabFolder, SWT.NONE, new Contact(BOB, bob_split[0], bob_split[1], Messages.ExtendedRSA_Visual_29, Messages.ExtendedRSA_Visual_30), txtExplain);

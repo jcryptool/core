@@ -11,6 +11,8 @@
 package org.jcryptool.visual.extendedrsa.ui.wizards;
 
 import java.util.Iterator;
+import java.util.Vector;
+
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
@@ -46,6 +48,7 @@ public class ManageVisibleIdentitesWizard extends Wizard{
 	@Override
 	public boolean performFinish() {
 		if (visiblePage.isPageComplete()){
+			Vector<String> allreadyAdded = new Vector<String>();
 			for (String s: IdentityManager.getInstance().getContacts()){
 				if (visiblePage.getAllreadyShownList().contains(s) && !visiblePage.getDisplayList().contains(s)){
 					//id 'deselected' -> remove from visual
@@ -58,13 +61,14 @@ public class ManageVisibleIdentitesWizard extends Wizard{
 				}
 				if (!visiblePage.getAllreadyShownList().contains(s) && visiblePage.getDisplayList().contains(s)){
 					//create selected identity in the visual
+					Iterator<Contact> it = ContactManager.getInstance().getContacts();	
 					
-					Iterator<Contact> it = ContactManager.getInstance().getContacts();					
 					Contact contactNode;
 		            while (it.hasNext()) {
 		                contactNode = it.next();
-		                if(contactNode.getName().equals(s)){
+		                if(contactNode.getName().equals(s) && !allreadyAdded.contains(s)){
 		                	new Identity(tabfolder, SWT.NONE, contactNode, txtExplain);
+		                	allreadyAdded.add(contactNode.getName());
 		                }
 		            }
 				}

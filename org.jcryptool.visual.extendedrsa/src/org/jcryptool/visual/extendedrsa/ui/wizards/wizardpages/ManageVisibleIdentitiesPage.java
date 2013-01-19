@@ -11,6 +11,7 @@
 package org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -25,6 +26,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
 
 /**
@@ -59,8 +62,19 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 		GridData gdLbl = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
 		lbl.setLayoutData(gdLbl);
 		
-		String[] identities =new String[IdentityManager.getInstance().getContacts().size()];
-		IdentityManager.getInstance().getContacts().toArray(identities);
+		
+		Vector<String> identites_vector = new Vector<String>(); 
+		Vector<String> ids = IdentityManager.getInstance().getContacts();
+		for (String s : ids){
+			if (!identites_vector.contains(s)){
+				identites_vector.add(s);
+			}
+		}
+		
+	    String[] identities = new String[identites_vector.size()];
+	    identites_vector.toArray(identities);
+		
+		
 		Arrays.sort(identities);
 		
 		//identify already shown tabs
