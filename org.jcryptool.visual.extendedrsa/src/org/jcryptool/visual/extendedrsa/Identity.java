@@ -1383,7 +1383,6 @@ public class Identity extends TabItem {
 								pickRandomE.setEnabled(false);
 							}else{
 								bi_ExtrsaD = bi_ExtrsaE.modInverse(bi_ExtrsaPhi);
-								
 								errorLabel_1.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 								if (bi_ExtrsaD.toString().length() < 40){
 									errorLabel_1.setText(Messages.Identity_169+bi_ExtrsaD+Messages.Identity_64);
@@ -1914,6 +1913,7 @@ public class Identity extends TabItem {
 								
 								reconstructKey.setEnabled(false);
 								reconstructKey.setVisible(false);
+								lbl_noKeyToAttack.setText(NOTHING);
 							}
 						}
 						
@@ -1962,6 +1962,8 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							TableItem[]allTableItems = keyData_attacked.getItems();
+							lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+							
 							if (allTableItems.length < 5){
 								//create mprsa-key
 								BigInteger rec_p = new BigInteger(allTableItems[0].getText(1)); 
@@ -1970,7 +1972,6 @@ public class Identity extends TabItem {
 								BigInteger rec_e = new BigInteger(allTableItems[2].getText(1)); 
 								BigInteger rec_d = new BigInteger(allTableItems[3].getText(1)); 
 								iMgr.saveRSAKeyToKeystore(identityName, "1234", rec_N, rec_p, rec_q, rec_e, rec_d);
-								lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 								lbl_noKeyToAttack.setText(Messages.Identity_177);
 							}else{
 								//create rsa key
@@ -1991,7 +1992,7 @@ public class Identity extends TabItem {
 									BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r).multiply(rec_s);
 									BigInteger rec_e = new BigInteger(allTableItems[4].getText(1)); 
 									BigInteger rec_d = new BigInteger(allTableItems[5].getText(1)); 
-									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r, rec_s, BigInteger.ZERO, rec_e, rec_d);
+									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 4, rec_N, rec_p, rec_q, rec_r, rec_s, BigInteger.ZERO, rec_e, rec_d);
 									break;
 								}
 								case 7: {
@@ -2000,12 +2001,13 @@ public class Identity extends TabItem {
 									BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r).multiply(rec_s).multiply(rec_t);
 									BigInteger rec_e = new BigInteger(allTableItems[5].getText(1)); 
 									BigInteger rec_d = new BigInteger(allTableItems[6].getText(1)); 
-									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r, rec_s, rec_t, rec_e, rec_d);
+									iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 5, rec_N, rec_p, rec_q, rec_r, rec_s, rec_t, rec_e, rec_d);
 									break;
 								}
-								}	
+								}
+								lbl_noKeyToAttack.setText(Messages.Identity_178);
 							}
-							lbl_noKeyToAttack.setText(Messages.Identity_178);
+							
 							keyData_attacked.setVisible(false);
 							attackKey.setEnabled(false);
 							attack_hint.setText(NOTHING);
@@ -2207,7 +2209,7 @@ public class Identity extends TabItem {
 										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE)).multiply(divisors.get(2).subtract(BigInteger.ONE)).multiply(divisors.get(3).subtract(BigInteger.ONE)).multiply(divisors.get(4).subtract(BigInteger.ONE));
 										break;
 								}
-								
+								//TODO
 								TableItem ti_e = new TableItem(keyData_attacked, SWT.NONE);
 								ti_e.setText(new String[]{Messages.Identity_154,NOTHING+e});
 								
@@ -2845,15 +2847,15 @@ public class Identity extends TabItem {
     		if (validCount == selectednumberOfPrimes){
     			switch (selectednumberOfPrimes){
     				case 3: bi_ExtrsaN = bi_ExtrsaP.multiply(bi_ExtrsaQ).multiply(bi_ExtrsaR);
-    						bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE));
+    						bi_ExtrsaPhi = bi_ExtrsaP.subtract(ONE).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE));
     						break;
     						
     				case 4: bi_ExtrsaN = bi_ExtrsaP.multiply(bi_ExtrsaQ).multiply(bi_ExtrsaR).multiply(bi_ExtrsaS);
-							bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE));
+							bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaS.subtract(ONE));
 							break;
 							
     				case 5: bi_ExtrsaN = bi_ExtrsaP.multiply(bi_ExtrsaQ).multiply(bi_ExtrsaR).multiply(bi_ExtrsaS).multiply(bi_ExtrsaT);
-							bi_ExtrsaPhi = (bi_ExtrsaP.subtract(ONE)).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaT.subtract(ONE));
+							bi_ExtrsaPhi = bi_ExtrsaP.subtract(ONE).multiply(bi_ExtrsaQ.subtract(ONE)).multiply(bi_ExtrsaR.subtract(ONE)).multiply(bi_ExtrsaS.subtract(ONE)).multiply(bi_ExtrsaT.subtract(ONE));
 							break;
     			}
     			if(!stopUpdateE){
