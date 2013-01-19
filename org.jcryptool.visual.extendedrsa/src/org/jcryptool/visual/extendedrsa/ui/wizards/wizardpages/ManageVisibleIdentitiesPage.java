@@ -46,6 +46,9 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 		super(Messages.ManageVisibleIdentitiesPage_0, Messages.ManageVisibleIdentitiesPage_1, null);
         setDescription(Messages.ManageVisibleIdentitiesPage_2);
         this.tabfolder = folder;
+        
+        displayList = new Vector<String>();
+        alreadyShownIDs = new Vector<String>();
 	}
 	
 	@Override
@@ -81,6 +84,8 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 	    alreadyShownIDs = new Vector<String>();
 	    for (TabItem ti : tabfolder.getItems()){
 	    	alreadyShownIDs.add(ti.getText());
+	    	//also add them to the display-list if the user don't changes the selection
+	    	displayList.add(ti.getText());
 	    }
 	    
 		table = new Table(container, SWT.CHECK | SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL);
@@ -96,7 +101,7 @@ public class ManageVisibleIdentitiesPage extends WizardPage {
 			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				displayList = new Vector<String>();
+				displayList.removeAllElements();
 				for (TableItem ti : table.getItems()){
 					if (ti.getChecked()){
 						displayList.add(ti.getText());
