@@ -1714,6 +1714,7 @@ public class Identity extends TabItem {
 							keyData.removeAll();
 							Vector<String> descriptions = null;
 							Vector<String> values = null;
+							Vector<String> rawValues = null;
 							if (isPubKey){
 								descriptions = new Vector<String>(Arrays.asList(Messages.Identity_85, Messages.Identity_86, Messages.Identity_87, Messages.Identity_88));
 								values = iMgr.getAllRSAPubKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()));
@@ -1724,20 +1725,42 @@ public class Identity extends TabItem {
 									values = iMgr.getAllRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
 								}else{
 									//mp-rsa key
-									values = iMgr.getAllMpRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
-									String str_otherPrimeinfo = values.get(values.size()-4);
-									String []split_opi = str_otherPrimeinfo.split(Messages.Identity_97);
-									switch (split_opi.length){
-									case 1: descriptions = new Vector<String>(Arrays.asList(Messages.Identity_98, Messages.Identity_99, Messages.Identity_100,Messages.Identity_101,Messages.Identity_102,Messages.Identity_103,Messages.Identity_104,Messages.Identity_105));
-											break;
-											
-									case 2: descriptions = new Vector<String>(Arrays.asList(Messages.Identity_106, Messages.Identity_107, Messages.Identity_108,Messages.Identity_109,Messages.Identity_110,Messages.Identity_111,Messages.Identity_112,Messages.Identity_113,Messages.Identity_114));
-											break;
-											
-									case 3: descriptions = new Vector<String>(Arrays.asList(Messages.Identity_115, Messages.Identity_116, Messages.Identity_117,Messages.Identity_118,Messages.Identity_119,Messages.Identity_120,Messages.Identity_121,Messages.Identity_122,Messages.Identity_123,Messages.Identity_124));
-											break;
+									rawValues = iMgr.getAllMpRSAPrivKeyParameters(allKeys_keydata.get(selectedKey_Keydata.getText()), password_keydata.getText());
+									String str_otherPrimeinfo = rawValues.get(rawValues.size()-4);
+									String []split_opi = str_otherPrimeinfo.split(" ");
+									
+									values = new Vector<String>();
+									for (int i = 0; i < 4; i++){
+										values.add(rawValues.get(i));
 									}
-									//TODO fix
+									
+									switch (split_opi.length){
+									case 1: {
+										descriptions = new Vector<String>(Arrays.asList(Messages.Identity_98, Messages.Identity_99, Messages.Identity_100,Messages.Identity_101,Messages.Identity_102,Messages.Identity_103,Messages.Identity_104,Messages.Identity_105));
+										values.add(split_opi[0]);	
+										break;
+										}	
+											
+									case 2: {
+										descriptions = new Vector<String>(Arrays.asList(Messages.Identity_106, Messages.Identity_107, Messages.Identity_108,Messages.Identity_109,Messages.Identity_110,Messages.Identity_111,Messages.Identity_112,Messages.Identity_113,Messages.Identity_114));
+										values.add(split_opi[0]);
+										values.add(split_opi[1]);
+										break;
+										}
+											
+											
+									case 3: {
+										descriptions = new Vector<String>(Arrays.asList(Messages.Identity_115, Messages.Identity_116, Messages.Identity_117,Messages.Identity_118,Messages.Identity_119,Messages.Identity_120,Messages.Identity_121,Messages.Identity_122,Messages.Identity_123,Messages.Identity_124));
+										values.add(split_opi[0]);
+										values.add(split_opi[1]);
+										values.add(split_opi[2]);
+										break;
+										}	
+									} 
+									
+									for (int i = rawValues.size()-3; i < rawValues.size(); i++){
+										values.add(rawValues.get(i));
+									}
 								}
 							}
 							if (values.size() == 0){
