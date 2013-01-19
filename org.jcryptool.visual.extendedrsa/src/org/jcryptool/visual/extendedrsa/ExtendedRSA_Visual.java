@@ -33,6 +33,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizards.ManageVisibleIdentitesWizard;
 import org.jcryptool.visual.extendedrsa.ui.wizards.NewIdentityWizard;
@@ -141,7 +142,7 @@ public class ExtendedRSA_Visual extends ViewPart{
 			}
 		});
 		btn_delID.setText(Messages.ExtendedRSA_Visual_9);
-		btn_delID.setEnabled(IdentityManager.getInstance().getContacts().size()>2);
+		btn_delID.setEnabled(ContactManager.getInstance().getContactSize()>2);
 		
 		btn_newID.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
@@ -225,9 +226,11 @@ public class ExtendedRSA_Visual extends ViewPart{
 	        	}
         	}
         	if (count == 0){
+        		//create an MpRSA-Key
         		iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_25, Messages.ExtendedRSA_Visual_26, 1024);
         	}
         	if (count2 == 0){
+        		//create an RSA-Key
         		iMgr.createIdentity(BOB, Messages.ExtendedRSA_Visual_27, Messages.ExtendedRSA_Visual_28, 1024);
         	}
             

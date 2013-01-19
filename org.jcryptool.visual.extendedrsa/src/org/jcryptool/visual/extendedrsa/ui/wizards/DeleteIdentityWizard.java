@@ -15,6 +15,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ExtendedTabFolder;
 import org.jcryptool.visual.extendedrsa.Identity;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
@@ -55,7 +56,7 @@ public class DeleteIdentityWizard extends Wizard{
 		
 		KeyStoreManager.getInstance().deleteContact(contactToDelete);
 		
-		if (IdentityManager.getInstance().getContacts().size()>3){
+		if (ContactManager.getInstance().getContactSize()>2){
 			delID.setEnabled(true);
 		}else{
 			delID.setEnabled(false);
