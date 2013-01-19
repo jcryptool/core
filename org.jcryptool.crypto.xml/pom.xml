@@ -10,4 +10,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>org.jcryptool.crypto.xml</artifactId>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>.</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
 </project>
