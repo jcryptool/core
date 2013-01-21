@@ -12,6 +12,7 @@ package org.jcryptool.core.logging.dialogs;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -27,9 +28,14 @@ public class JCTMessageDialog {
      *
      * @param error to display
      */
-    public static void showErrorDialog(Status error, String message) {
-        ExceptionDetailsErrorDialog.openError(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                Messages.MessageDialog_error, message, error);
+    public static void showErrorDialog(final Status error, final String message) {
+    	Display.getDefault().asyncExec(new Runnable() {
+    	    public void run() {
+    	    	ExceptionDetailsErrorDialog.openError(null,
+    	                Messages.MessageDialog_error, message, error);
+    	    }
+    	});
+        
     }
 
     /**
