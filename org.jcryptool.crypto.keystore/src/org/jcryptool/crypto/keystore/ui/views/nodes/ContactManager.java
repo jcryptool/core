@@ -9,9 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.nodes;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.security.KeyStoreException;
 import java.util.ArrayList;
@@ -52,29 +52,29 @@ public class ContactManager {
 
     private ITreeNode invisibleRoot;
     
-    private static String DEFAULT_CONTACTS_XML;
     private static String USER_CONTACTS_XML;
 
     private ContactManager() {
     	
     	try {
 	    	USER_CONTACTS_XML = Platform.getInstanceLocation().getURL().getPath() + "contacts.xml";
-	    	IFileStore userContacts = EFS.getStore(new URI("file://"+USER_CONTACTS_XML));
+	    	IFileStore userContacts = EFS.getLocalFileSystem().fromLocalFile(new File(USER_CONTACTS_XML));
+	    	
 	    	if(!userContacts.fetchInfo().exists())
 	    	{
 	    		URL url = FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID), new Path("contactstore/contacts.xml"), null);
 	        	try {
-	    			DEFAULT_CONTACTS_XML = FileLocator.toFileURL(url).getPath();
+	    			url = FileLocator.toFileURL(url);
 	    		} catch (IOException e) {
-	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to locate default contacts file", e, true);
+//	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_0, e, true);
 	    		}
 	        	
-	        	IFileStore defaultContacts = EFS.getStore(new URI("file://"+DEFAULT_CONTACTS_XML));
+	        	IFileStore defaultContacts = EFS.getLocalFileSystem().fromLocalFile(new File(url.getPath()));
 	        	
 	        	defaultContacts.copy(userContacts, 0, null);
 	    	}
     	} catch (Exception e) {
-    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Could not create contact manager.", e, true);
+//    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_5, e, true);
 		}
     	
     }
