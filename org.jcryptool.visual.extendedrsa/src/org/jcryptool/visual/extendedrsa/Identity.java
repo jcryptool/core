@@ -25,6 +25,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
@@ -32,12 +35,14 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
@@ -208,6 +213,7 @@ public class Identity extends TabItem {
 	private Text keydataN;
 	private Label attack_success;
 	private Button reconstructKey;
+	private Label clipboardtext;
 	
 	private final String EXPLAIN_INIT = Messages.Identity_0;
 	private final String EXPLAIN_ENCRYPT = Messages.Identity_1;
@@ -240,10 +246,14 @@ public class Identity extends TabItem {
 	private final String FROM = Messages.Identity_174;
 	private final String TO = Messages.Identity_175;
 	private final String NO_VALID_GcdE = Messages.Identity_222;
+	private final String CLIPBOARDTEXT_TEXT = Messages.Identity_179;
 	
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
-
+    
+    /** a {@link VerifyListener} instance that makes sure only HEX-digits are entered. */
+    private static final VerifyListener VL_HEX = Lib.getVerifyListener(Lib.HEXDIGIT);
+    
     /** a {@link ModifyListener} instance that calls {@link #calcParams()} whenever a value is changed. */
     private final ModifyListener ml = new ModifyListener() {
         public void modifyText(ModifyEvent e) {
@@ -521,6 +531,7 @@ public class Identity extends TabItem {
 				                publicAlias = iMgr.getPublicForPrivateRSA(privateAlias);
 							}
 							
+							lbl_pwWrong.setText(Messages.Identity_180);
 			                pwPrivKey.setEnabled(true);
 			                pwPrivKey.setText(NOTHING);
 			                decryptMessage.setEnabled(false);
@@ -545,8 +556,9 @@ public class Identity extends TabItem {
 					gd_message_2.heightHint = 20;
 					label.setLayoutData(gd_message_2);
 					
-					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL| SWT.READ_ONLY);
+					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 					encryptedMessage_Tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
+					encryptedMessage_Tab2.addVerifyListener(VL_HEX);
 					encryptedMessage_Tab2.addModifyListener(new ModifyListener() {
 						
 						@Override
@@ -634,7 +646,7 @@ public class Identity extends TabItem {
 					pwPrivKey.setLayoutData(gd_key);
 					
 					lbl_pwWrong = new Label (actionGroup_2, SWT.WRAP);
-					lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+					lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 					GridData gd_pwWrong = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2);
 					gd_pwWrong.heightHint = 20;
 					lbl_pwWrong.setLayoutData(gd_pwWrong);
@@ -656,6 +668,7 @@ public class Identity extends TabItem {
 							RSAPrivateCrtKey privkey = iMgr.getPrivateKey(privateAlias, pwPrivKey.getText());
 							if(privkey == null){
 								//can't catch the 'java.security.UnrecoverableKeyException'
+								lbl_pwWrong.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 								lbl_pwWrong.setText(PW_WRONG);
 							}else{
 								lbl_pwWrong.setText(NOTHING);
@@ -1421,6 +1434,7 @@ public class Identity extends TabItem {
 					keyMgmt_2.setText(Messages.Identity_66);
 					tab2 = new Composite(tf_keyMgmt, SWT.NONE);
 					tab2.setLayout(new GridLayout(1, false));
+					
 					keyMgmt_2.setControl(tab2);
 					
 					Label lbl_init_tab2 = new Label(tab2, SWT.NONE);
@@ -1430,7 +1444,7 @@ public class Identity extends TabItem {
 					lbl_init_tab2.setLayoutData(gd_init_tab2);
 					
 					lbl_notification_tab2 = new Label(tab2, SWT.NONE);
-					GridData gd_noti_tab2 = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+					GridData gd_noti_tab2 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 					gd_noti_tab2.heightHint = 20;
 					lbl_notification_tab2.setLayoutData(gd_noti_tab2);
 					
@@ -1687,6 +1701,7 @@ public class Identity extends TabItem {
 						@Override
 						public void widgetSelected(SelectionEvent e) {
 							keyData.removeAll();
+							clipboardtext.setVisible(false);
 							
 							if (selectedKey_Keydata.getItem(selectedKey_Keydata.getSelectionIndex()).contains(Messages.Identity_83)){
 								showKeydata.setEnabled(true);
@@ -1720,6 +1735,7 @@ public class Identity extends TabItem {
 						
 						@Override
 						public void widgetSelected(SelectionEvent e) {
+							clipboardtext.setVisible(true);
 							keyData.removeAll();
 							Vector<String> descriptions = null;
 							Vector<String> values = null;
@@ -1829,12 +1845,33 @@ public class Identity extends TabItem {
 					
 					new Label(tab3, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 					
+					clipboardtext = new Label(tab3, SWT.NONE);
+					clipboardtext.setText(CLIPBOARDTEXT_TEXT);
+					clipboardtext.setVisible(false);
+					GridData gd_cli = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+					gd_cli.heightHint = 20;
+					clipboardtext.setLayoutData(gd_cli);
+					
 					keyData = new Table(tab3, SWT.BORDER|SWT.FULL_SELECTION);
 					GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 					gd_table.heightHint = 130;
 					keyData.setLayoutData(gd_table);
 					keyData.setHeaderVisible(true);
 					keyData.setLinesVisible(true);
+					keyData.addSelectionListener(new SelectionListener() {
+						
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							//copy the selected value to the clipboard
+							String selectedValue = keyData.getItem(keyData.getSelectionIndex()).getText(1);
+							final Clipboard cb = new Clipboard(extTF.getDisplay());
+							TextTransfer textTransfer = TextTransfer.getInstance();
+							cb.setContents(new Object[] { selectedValue },new Transfer[] { textTransfer });
+						}
+						
+						@Override
+						public void widgetDefaultSelected(SelectionEvent e) {}
+					});
 					
 					
 					column_parameter = new TableColumn(keyData, SWT.NONE);
@@ -2209,7 +2246,6 @@ public class Identity extends TabItem {
 										phi = divisors.get(0).subtract(BigInteger.ONE).multiply(divisors.get(1).subtract(BigInteger.ONE)).multiply(divisors.get(2).subtract(BigInteger.ONE)).multiply(divisors.get(3).subtract(BigInteger.ONE)).multiply(divisors.get(4).subtract(BigInteger.ONE));
 										break;
 								}
-								//TODO
 								TableItem ti_e = new TableItem(keyData_attacked, SWT.NONE);
 								ti_e.setText(new String[]{Messages.Identity_154,NOTHING+e});
 								

@@ -124,7 +124,9 @@ public class Messages extends NLS {
 	public static String Identity_176;
 	public static String Identity_177;
 	public static String Identity_178;
+	public static String Identity_179;
 	public static String Identity_18;
+	public static String Identity_180;
 	public static String Identity_19;
 	public static String Identity_2;
 	public static String Identity_20;

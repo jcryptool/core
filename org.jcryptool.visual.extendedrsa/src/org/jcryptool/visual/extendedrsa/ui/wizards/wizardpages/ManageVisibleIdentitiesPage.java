@@ -11,7 +11,6 @@
 package org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Vector;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -26,8 +25,6 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
-import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
-import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
 
 /**
