@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -55,14 +55,14 @@ import de.flexiprovider.api.keys.Key;
 
 /**
  * @author t-kern
- *
+ * 
  */
 public class KeyStoreManager {
     /** Hard-coded standard password for the platform keystore */
-    private static final char[] KEYSTORE_PASSWORD = {'j', 'c', 'r', 'y', 'p', 't', 'o', 'o', 'l'};
+    private static final char[] KEYSTORE_PASSWORD = { 'j', 'c', 'r', 'y', 'p', 't', 'o', 'o', 'l' };
 
     /** Hard-coded standard password for the keys */
-    private static final char[] KEY_PASSWORD = {'1', '2', '3', '4'};
+    private static final char[] KEY_PASSWORD = { '1', '2', '3', '4' };
 
     /** The current keystore (single keystore design!) */
     private KeyStore keyStore = null;
@@ -183,7 +183,7 @@ public class KeyStoreManager {
 
     /**
      * extracts the private alias matching the known {@link #publicAlias}
-     *
+     * 
      * @return the private alias or <code>null</code> if none is found or there was a problem accessing the keystore
      */
     public KeyStoreAlias getPrivateForPublic(final KeyStoreAlias publicAlias) {
@@ -248,9 +248,7 @@ public class KeyStoreManager {
      * Updates the private key in a key pair. Necessary for some one-time signature algorithms
      */
     public void updateKeyPair(PrivateKey privateKey, char[] password, KeyStoreAlias privateAlias) {
-        // Check that private key is in the keystore and that we don't change
-        // the
-        // password
+        // Check that private key is in the keystore and that we don't change the password
         try {
             getPrivateKey(privateAlias, password);
         } catch (Exception e) {
@@ -310,7 +308,7 @@ public class KeyStoreManager {
     /**
      * tries to retrieve the key from keystore using the default password if the operation succeeds, the default
      * password will be updated, if it fails, the user have to enter a password into a prompt window
-     *
+     * 
      * @param alias
      * @return
      */
@@ -324,20 +322,19 @@ public class KeyStoreManager {
             char[] prompt_password = PasswordPrompt.prompt(PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                     .getShell());
             if (prompt_password == null) {
-                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
-                        Messages.getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID, Messages
+                        .getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
                 return null;
             }
             try {
                 Key key = KeyStoreManager.getInstance().getKey(alias, prompt_password);
                 return key;
             } catch (UnrecoverableEntryException ex) {
-                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
-                        Messages.getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID, Messages
+                        .getString("ExAccessKeystorePassword"), e)); //$NON-NLS-1$
                 return null;
             } catch (Exception ex) {
-                LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
-                        Messages.getString("ExAccessKeystorePassword"), e, true);
+                LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.getString("ExAccessKeystorePassword"), e, true);
                 return null;
             }
         }
@@ -345,6 +342,7 @@ public class KeyStoreManager {
 
     /**
      * let the function decide which key type the alias is associated with
+     * 
      * @param alias
      * @param password
      * @return key from the keystore
@@ -353,26 +351,28 @@ public class KeyStoreManager {
     public Key getKey(final IKeyStoreAlias alias, final char[] password) throws Exception {
         Key key = null;
         switch (alias.getKeyStoreEntryType()) {
-            case SECRETKEY:
-                key = (Key) KeyStoreManager.getInstance().getSecretKey(alias, password);
-                break;
-            case KEYPAIR_PRIVATE_KEY:
-                key = (Key) KeyStoreManager.getInstance().getPrivateKey(alias, password);
-                break;
-            case KEYPAIR_PUBLIC_KEY:
-                Certificate cert = KeyStoreManager.getInstance().getPublicKey(alias);
-                if(cert == null) return null;
-                key = (Key) cert.getPublicKey();
-                break;
-            case PUBLICKEY:
-                Certificate certpub = KeyStoreManager.getInstance().getPublicKey(alias);
-                if(certpub == null) return null;
-                key = (Key) certpub.getPublicKey();
-                break;
-            default:
-                LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
-                        Messages.getString("ExKeyTypeUnsupported") + alias.getKeyStoreEntryType(), null, true);
-                break;
+        case SECRETKEY:
+            key = (Key) KeyStoreManager.getInstance().getSecretKey(alias, password);
+            break;
+        case KEYPAIR_PRIVATE_KEY:
+            key = (Key) KeyStoreManager.getInstance().getPrivateKey(alias, password);
+            break;
+        case KEYPAIR_PUBLIC_KEY:
+            Certificate cert = KeyStoreManager.getInstance().getPublicKey(alias);
+            if (cert == null)
+                return null;
+            key = (Key) cert.getPublicKey();
+            break;
+        case PUBLICKEY:
+            Certificate certpub = KeyStoreManager.getInstance().getPublicKey(alias);
+            if (certpub == null)
+                return null;
+            key = (Key) certpub.getPublicKey();
+            break;
+        default:
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
+                    Messages.getString("ExKeyTypeUnsupported") + alias.getKeyStoreEntryType(), null, true);
+            break;
         }
         return key;
     }
@@ -456,7 +456,7 @@ public class KeyStoreManager {
 
     /**
      * Loads a keystore from the filesystem.
-     *
+     * 
      * @param fullyQualifiedName The full name of the keystore file, including path information
      * @param password The password with which the keystore is protected
      */

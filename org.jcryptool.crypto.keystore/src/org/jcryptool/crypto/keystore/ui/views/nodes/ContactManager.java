@@ -41,7 +41,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 public class ContactManager {
     /** Singleton instance */
     private static ContactManager instance;
-    
+
     private static ContactStore contactStore;
 
     /** All contacts and their respective meta information */
@@ -51,11 +51,10 @@ public class ContactManager {
     private static List<IKeyStoreListener> listeners = new ArrayList<IKeyStoreListener>();
 
     private ITreeNode invisibleRoot;
-    
     private static String USER_CONTACTS_XML;
 
     private ContactManager() {
-    	
+  	
     	try {
 	    	USER_CONTACTS_XML = Platform.getInstanceLocation().getURL().getPath() + "contacts.xml";
 	    	IFileStore userContacts = EFS.getLocalFileSystem().fromLocalFile(new File(USER_CONTACTS_XML));
@@ -66,7 +65,7 @@ public class ContactManager {
 	        	try {
 	    			url = FileLocator.toFileURL(url);
 	    		} catch (IOException e) {
-//	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_0, e, true);
+	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_0, e, true);
 	    		}
 	        	
 	        	IFileStore defaultContacts = EFS.getLocalFileSystem().fromLocalFile(new File(url.getPath()));
@@ -74,9 +73,8 @@ public class ContactManager {
 	        	defaultContacts.copy(userContacts, 0, null);
 	    	}
     	} catch (Exception e) {
-//    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_5, e, true);
+    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_5, e, true);
 		}
-    	
     }
 
     public synchronized static ContactManager getInstance() {
@@ -118,58 +116,55 @@ public class ContactManager {
     }
 
     private void init() {
-    	
         try {
-			contactsDesc = loadContacts(getContactStore());
-		} catch (Exception ex) {
-			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to load contacts", ex, true);
-			return;
-		}
-        
+            contactsDesc = loadContacts(getContactStore());
+        } catch (Exception ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_6, ex, true);
+            return;
+        }
+
         Enumeration<String> aliases = null;
         try {
             aliases = KeyStoreManager.getInstance().getAliases();
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true); //$NON-NLS-1$
         }
-        Map<String, List<KeyStoreAlias>> aliasesHashed = new HashMap<String,List<KeyStoreAlias>>();
-        while(aliases.hasMoreElements())
-        {
-        	KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
-        	if(!aliasesHashed.containsKey(alias.getContactName()))
-        		aliasesHashed.put(alias.getContactName(), new ArrayList<KeyStoreAlias>());
-        	aliasesHashed.get(alias.getContactName()).add(alias);
+        Map<String, List<KeyStoreAlias>> aliasesHashed = new HashMap<String, List<KeyStoreAlias>>();
+        while (aliases.hasMoreElements()) {
+            KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+            if (!aliasesHashed.containsKey(alias.getContactName()))
+                aliasesHashed.put(alias.getContactName(), new ArrayList<KeyStoreAlias>());
+            aliasesHashed.get(alias.getContactName()).add(alias);
         }
-        
-        for(Entry<String, IContactDescriptor> entry : contactsDesc.entrySet())
-        {
-        	if(aliasesHashed.containsKey(entry.getKey()))
-        	{
-        		for(KeyStoreAlias alias : aliasesHashed.get(entry.getKey()))
-        			addEntryToContact(entry.getValue(), alias);
-        	}
+
+        for (Entry<String, IContactDescriptor> entry : contactsDesc.entrySet()) {
+            if (aliasesHashed.containsKey(entry.getKey())) {
+                for (KeyStoreAlias alias : aliasesHashed.get(entry.getKey()))
+                    addEntryToContact(entry.getValue(), alias);
+            }
         }
-        
+
         notifyListeners();
     }
 
-    private Map<String, IContactDescriptor> loadContacts(ContactStore cStore) throws FileNotFoundException, JAXBException {
-    	Map<String, IContactDescriptor> contacts = Collections
+    private Map<String, IContactDescriptor> loadContacts(ContactStore cStore) throws FileNotFoundException,
+            JAXBException {
+        Map<String, IContactDescriptor> contacts = Collections
                 .synchronizedMap(new HashMap<String, IContactDescriptor>());
-    	for(Contact contact : getContactStore().getContacts())
-        	contacts.put(contact.getName(), new ContactDescriptorNode(contact));
-    	return contacts;
-	}
-    
-    private void storeContacts(ContactStore cStore) throws JAXBException {
-    	cStore.write(USER_CONTACTS_XML);
-	}
+        for (Contact contact : getContactStore().getContacts())
+            contacts.put(contact.getName(), new ContactDescriptorNode(contact));
+        return contacts;
+    }
 
-	private ContactStore getContactStore() throws FileNotFoundException, JAXBException {
-		if(contactStore == null)
-			contactStore = ContactStore.read(USER_CONTACTS_XML);
-		return contactStore;
-	}
+    private void storeContacts(ContactStore cStore) throws JAXBException {
+        cStore.write(USER_CONTACTS_XML);
+    }
+
+    private ContactStore getContactStore() throws FileNotFoundException, JAXBException {
+        if (contactStore == null)
+            contactStore = ContactStore.read(USER_CONTACTS_XML);
+        return contactStore;
+    }
 
     private void addEntryToContact(IContactDescriptor contact, KeyStoreAlias alias) {
         LogUtil.logInfo("Adding entry to contact " + alias.getAliasString()); //$NON-NLS-1$
@@ -184,58 +179,55 @@ public class ContactManager {
             contact.addKeyPair(null, alias);
         }
     }
-    
+
     public boolean contactExists(String name) {
         return contactsDesc.containsKey(name);
     }
-    
-    public IContactDescriptor newContact(String name)
-    {
-    	Contact contact = new Contact();
-    	contact.setName(name);
-    	return newContact(contact);
+
+    public IContactDescriptor newContact(String name) {
+        Contact contact = new Contact();
+        contact.setName(name);
+        return newContact(contact);
     }
-    
-	public IContactDescriptor newContact(Contact contact) {
-		IContactDescriptor newContactDesc = new ContactDescriptorNode(contact);
-		addContact(newContactDesc);
-		return newContactDesc;
-	}
+
+    public IContactDescriptor newContact(Contact contact) {
+        IContactDescriptor newContactDesc = new ContactDescriptorNode(contact);
+        addContact(newContactDesc);
+        return newContactDesc;
+    }
 
     private void addContact(IContactDescriptor contactDesc) {
         if (contactExists(contactDesc.getContact().getName())) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Contact already exists", null, true); //$NON-NLS-1$
+            LogUtil.logInfo("Contact already exists"); //$NON-NLS-1$
             return;
         }
         try {
-			getContactStore().getContacts().add(contactDesc.getContact());
-			storeContacts(getContactStore());
-		} catch (Exception e) {
-			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Exception while adding contact", e, true);
-			return;
-		}
-        invisibleRoot.addChild((ContactDescriptorNode)contactDesc);
+            getContactStore().getContacts().add(contactDesc.getContact());
+            storeContacts(getContactStore());
+        } catch (Exception e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_7, e, true);
+            return;
+        }
+        invisibleRoot.addChild((ContactDescriptorNode) contactDesc);
         contactsDesc.put(contactDesc.getContact().getName(), contactDesc);
         notifyListeners();
     }
 
-	public void removeContact(String contactName) {
+    public void removeContact(String contactName) {
         LogUtil.logInfo("Removing contact " + contactName); //$NON-NLS-1$
-        
+
         try {
-        	for(Contact c : getContactStore().getContacts())
-        	{
-        		if(c.getName().equals(contactName))
-        		{
-        			getContactStore().getContacts().remove(c);
-        			break;
-        		}
-        	}
-			storeContacts(getContactStore());
-		} catch (Exception e) {
-			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Exception while removing contact", e, true);
-			return;
-		}
+            for (Contact c : getContactStore().getContacts()) {
+                if (c.getName().equals(contactName)) {
+                    getContactStore().getContacts().remove(c);
+                    break;
+                }
+            }
+            storeContacts(getContactStore());
+        } catch (Exception e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_8, e, true);
+            return;
+        }
 
         invisibleRoot.removeChild((ContactDescriptorNode) contactsDesc.get(contactName));
         contactsDesc.remove(contactName);
@@ -265,7 +257,7 @@ public class ContactManager {
             LogUtil.logInfo("removing a key pair"); //$NON-NLS-1$
             contactsDesc.get(alias.getContactName()).removeKeyPair(alias);
         }
-        
+
         notifyListeners();
     }
 
@@ -278,7 +270,7 @@ public class ContactManager {
             IContactDescriptor contact = newContact(new Contact(alias.getContactName(), null, null, null, null));
             contact.addCertificate(alias);
         }
-        
+
         notifyListeners();
     }
 
@@ -288,38 +280,38 @@ public class ContactManager {
         if (contactExists(privateKey.getContactName())) {
             contactsDesc.get(privateKey.getContactName()).addKeyPair(privateKey, publicKey);
         } else {
-        	IContactDescriptor contact = newContact(new Contact(privateKey.getContactName(), null, null, null, null) );
+            IContactDescriptor contact = newContact(new Contact(privateKey.getContactName(), null, null, null, null));
             contact.addKeyPair(privateKey, publicKey);
         }
-        
+
         notifyListeners();
     }
-    
+
     public void addSecretKey(KeyStoreAlias alias) {
         LogUtil.logInfo("Adding secret key " + alias.getAliasString()); //$NON-NLS-1$
 
         if (contactExists(alias.getContactName())) {
             contactsDesc.get(alias.getContactName()).addSecretKey(alias);
         } else {
-        	IContactDescriptor contact = newContact(new Contact(alias.getContactName(), null, null, null, null));
+            IContactDescriptor contact = newContact(new Contact(alias.getContactName(), null, null, null, null));
             contact.addSecretKey(alias);
         }
-        
+
         notifyListeners();
     }
 
-	public Iterator<Contact> getContacts() {
-    	try {
-			return getContactStore().getContacts().iterator();
-		} catch (Exception e) {
-			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to retrieve contacts", e, true);
-		}
-    	return null;
+    public Iterator<Contact> getContacts() {
+        try {
+            return getContactStore().getContacts().iterator();
+        } catch (Exception e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_9, e, true);
+        }
+
+        return new ArrayList<Contact>().iterator();
     }
 
     public int getContactSize() {
         LogUtil.logInfo("Contacts size is " + contactsDesc.size()); //$NON-NLS-1$
         return contactsDesc.size();
     }
-
 }
