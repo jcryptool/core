@@ -37,6 +37,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -303,6 +305,7 @@ public class Identity extends TabItem {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		
 		label = new Label(composite, SWT.CENTER);
+		
 		label.setFont(FontService.getNormalBoldFont());
 		label.setText(Messages.Identity_28);
 		label.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,false, 1, 1));
@@ -372,6 +375,7 @@ public class Identity extends TabItem {
 					});
 					encryptedMessage = new Text(actionGroup_1, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL|SWT.READ_ONLY);
 					encryptedMessage.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
+					encryptedMessage.setFont(new Font(getDisplay(), "Courier", 10, SWT.NONE));
 					
 					createSpacer(actionGroup_1);
 					createSpacer(actionGroup_1);
@@ -530,8 +534,10 @@ public class Identity extends TabItem {
 								privateAlias = privKeys.get(decryptionKeys.getText());
 				                publicAlias = iMgr.getPublicForPrivateRSA(privateAlias);
 							}
+							if (identityName.equals("Alice Whitehat") || identityName.equals("Bob Whitehat")){
+								lbl_pwWrong.setText(Messages.Identity_180);
+							}
 							
-							lbl_pwWrong.setText(Messages.Identity_180);
 			                pwPrivKey.setEnabled(true);
 			                pwPrivKey.setText(NOTHING);
 			                decryptMessage.setEnabled(false);
@@ -558,6 +564,7 @@ public class Identity extends TabItem {
 					
 					encryptedMessage_Tab2= new Text(actionGroup_2, SWT.MULTI | SWT.WRAP | SWT.BORDER | SWT.V_SCROLL);
 					encryptedMessage_Tab2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 33));
+					encryptedMessage_Tab2.setFont(new Font(getDisplay(), "Courier", 10, SWT.NONE));
 					encryptedMessage_Tab2.addVerifyListener(VL_HEX);
 					encryptedMessage_Tab2.addModifyListener(new ModifyListener() {
 						
