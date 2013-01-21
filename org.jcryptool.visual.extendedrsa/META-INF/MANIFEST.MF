@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.extendedrsa;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.extendedrsa.Activator
 Require-Bundle: 
  org.jcryptool.crypto;bundle-version="0.9.5",
@@ -27,3 +27,4 @@ Export-Package:
  org.jcryptool.visual.extendedrsa,
  org.jcryptool.visual.extendedrsa.ui.wizards,
  org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages
+Bundle-Vendor: %Bundle-Vendor
