@@ -2538,11 +2538,12 @@ public class Identity extends TabItem {
 		actionGroup_1.setText(Messages.Identity_162);
 		actionLayout_1 = new GridLayout(2, true);
 		actionLayout_1.horizontalSpacing = 80;
-
 		actionGroup_1.setLayout(actionLayout_1);
 		group_1 = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 		group_1.exclude = false;
 		actionGroup_1.setLayoutData(group_1);
+		
+		
 		initActions = new Label(actionGroup_1, SWT.WRAP);
 		initActions.setText(Messages.Identity_163+identityName+Messages.Identity_164);
 		GridData gd_initActions = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
