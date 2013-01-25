@@ -522,6 +522,7 @@ public class Identity extends TabItem {
                             encryptedMessage_Tab2.setText(currentMsg.getEncryptedMessage());
 
                             HashMap<String, KeyStoreAlias> privKeys = iMgr.getPrivateKeys(Identity.this.identityName);
+
                             decryptionKeys.setEnabled(true);
                             decryptionKeys.setItems(privKeys.keySet().toArray(new String[privKeys.size()]));
 
@@ -1433,8 +1434,8 @@ public class Identity extends TabItem {
                                     errorLabel_1.setText(Messages.Identity_65);
                                 }
 
-                                iMgr.saveRSAKeyToKeystore(Identity.this.identityName, password1.getText(), bi_rsaN,
-                                        bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
+                                iMgr.saveRSAKeyToKeystore(Identity.this.identityName, password1.getText(), null,
+                                        bi_rsaN, bi_rsaP, bi_rsaQ, bi_rsaE, bi_rsaD);
 
                                 fillPrimesTo(combo_rsaP);
                                 fillPrimesTo(combo_rsaQ);
@@ -1450,7 +1451,7 @@ public class Identity extends TabItem {
                                     errorLabel_1.setText(Messages.Identity_170);
                                 }
 
-                                iMgr.saveMpRSAKeyToKeystore(Identity.this.identityName, password1.getText(),
+                                iMgr.saveMpRSAKeyToKeystore(Identity.this.identityName, password1.getText(), null,
                                         validCount, bi_ExtrsaN, bi_ExtrsaP, bi_ExtrsaQ, bi_ExtrsaR, bi_ExtrsaS,
                                         bi_ExtrsaT, bi_ExtrsaE, bi_ExtrsaD);
 
@@ -1800,9 +1801,18 @@ public class Identity extends TabItem {
                                 values = iMgr.getAllRSAPubKeyParameters(allKeys_keydata.get(selectedKey_Keydata
                                         .getText()));
                             } else {
-                                String keyDescription = selectedKey_Keydata.getText().substring(
-                                        selectedKey_Keydata.getText().lastIndexOf(' ') + 1);
-                                if (keyDescription.startsWith(Messages.Identity_89)) {
+                                String keyAlgorithm;
+
+                                if (selectedKey_Keydata.getText().contains(":")) {
+                                    String part1 = selectedKey_Keydata.getText().substring(
+                                            selectedKey_Keydata.getText().indexOf("Bit - ") + 6);
+                                    keyAlgorithm = part1.substring(0, selectedKey_Keydata.getText().indexOf(' '))
+                                            .trim();
+                                } else {
+                                    keyAlgorithm = selectedKey_Keydata.getText()
+                                            .substring(selectedKey_Keydata.getText().lastIndexOf('-') + 1).trim();
+                                }
+                                if (keyAlgorithm.startsWith(Messages.Identity_89)) {
                                     descriptions = new Vector<String>(Arrays.asList(Messages.Identity_90,
                                             Messages.Identity_91, Messages.Identity_92, Messages.Identity_93,
                                             Messages.Identity_94, Messages.Identity_95, Messages.Identity_96));
@@ -2017,7 +2027,7 @@ public class Identity extends TabItem {
 
                                 String name = keyToAttack.getText()
                                         .substring(0, keyToAttack.getText().indexOf('-') - 1);
-                                attack_hint.setText(Messages.Identity_131 + name + Messages.Identity_132
+                                attack_hint.setText(Messages.Identity_131 + name + Messages.Identity_132 + " "
                                         + actualKey.get(0).bitLength() + Messages.Identity_133);
                                 keydataN.setVisible(true);
                                 keydataN.setText(Messages.Identity_173 + actualKey.get(0));
@@ -2081,16 +2091,18 @@ public class Identity extends TabItem {
                             lbl_noKeyToAttack.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 
                             if (allTableItems.length < 5) {
-                                // create mprsa-key
+                                // create RSA-key
                                 BigInteger rec_p = new BigInteger(allTableItems[0].getText(1));
                                 BigInteger rec_q = new BigInteger(allTableItems[1].getText(1));
                                 BigInteger rec_N = rec_p.multiply(rec_q);
                                 BigInteger rec_e = new BigInteger(allTableItems[2].getText(1));
                                 BigInteger rec_d = new BigInteger(allTableItems[3].getText(1));
-                                iMgr.saveRSAKeyToKeystore(identityName, "1234", rec_N, rec_p, rec_q, rec_e, rec_d);
+                                iMgr.saveRSAKeyToKeystore(
+                                        keyToAttack.getText().substring(0, keyToAttack.getText().indexOf('-') - 1),
+                                        "1234", identityName, rec_N, rec_p, rec_q, rec_e, rec_d);
                                 lbl_noKeyToAttack.setText(Messages.Identity_177);
                             } else {
-                                // create rsa key
+                                // create MpRSA key
                                 BigInteger rec_p = new BigInteger(allTableItems[0].getText(1));
                                 BigInteger rec_q = new BigInteger(allTableItems[1].getText(1));
                                 BigInteger rec_r = new BigInteger(allTableItems[2].getText(1));
@@ -2100,8 +2112,10 @@ public class Identity extends TabItem {
                                     BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r);
                                     BigInteger rec_e = new BigInteger(allTableItems[3].getText(1));
                                     BigInteger rec_d = new BigInteger(allTableItems[4].getText(1));
-                                    iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 3, rec_N, rec_p, rec_q, rec_r,
-                                            BigInteger.ZERO, BigInteger.ZERO, rec_e, rec_d);
+                                    iMgr.saveMpRSAKeyToKeystore(
+                                            keyToAttack.getText().substring(0, keyToAttack.getText().indexOf('-') - 1),
+                                            "1234", identityName, 3, rec_N, rec_p, rec_q, rec_r, BigInteger.ZERO,
+                                            BigInteger.ZERO, rec_e, rec_d);
                                     break;
                                 }
                                 case 6: {
@@ -2109,8 +2123,10 @@ public class Identity extends TabItem {
                                     BigInteger rec_N = rec_p.multiply(rec_q).multiply(rec_r).multiply(rec_s);
                                     BigInteger rec_e = new BigInteger(allTableItems[4].getText(1));
                                     BigInteger rec_d = new BigInteger(allTableItems[5].getText(1));
-                                    iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 4, rec_N, rec_p, rec_q, rec_r,
-                                            rec_s, BigInteger.ZERO, rec_e, rec_d);
+                                    iMgr.saveMpRSAKeyToKeystore(
+                                            keyToAttack.getText().substring(0, keyToAttack.getText().indexOf('-') - 1),
+                                            "1234", identityName, 4, rec_N, rec_p, rec_q, rec_r, rec_s,
+                                            BigInteger.ZERO, rec_e, rec_d);
                                     break;
                                 }
                                 case 7: {
@@ -2120,8 +2136,10 @@ public class Identity extends TabItem {
                                             .multiply(rec_t);
                                     BigInteger rec_e = new BigInteger(allTableItems[5].getText(1));
                                     BigInteger rec_d = new BigInteger(allTableItems[6].getText(1));
-                                    iMgr.saveMpRSAKeyToKeystore(identityName, "1234", 5, rec_N, rec_p, rec_q, rec_r,
-                                            rec_s, rec_t, rec_e, rec_d);
+                                    iMgr.saveMpRSAKeyToKeystore(
+                                            keyToAttack.getText().substring(0, keyToAttack.getText().indexOf('-') - 1),
+                                            "1234", identityName, 5, rec_N, rec_p, rec_q, rec_r, rec_s, rec_t, rec_e,
+                                            rec_d);
                                     break;
                                 }
                                 }
@@ -2374,7 +2392,6 @@ public class Identity extends TabItem {
     }
 
     private void fillRecipientKeys() {
-        // Vector<String> rec = iMgr.getPublicKeys(this.identityName);
         if (!messageRecipient.getText().equals(NOTHING)) {
             rec = iMgr.getPublicKeys(messageRecipient.getText());
             recipientKeys.setItems(rec.keySet().toArray(new String[rec.size()]));
@@ -2614,14 +2631,15 @@ public class Identity extends TabItem {
         }
 
         for (String s : iMgr.getContacts()) {
-            // if (!s.equals(this.identityName) && !recipients.contains(s)){
             if (!recipients.contains(s)) {
                 if (IdentityManager.getInstance().countOwnKeys(s) > 0) {
                     recipients.add(s);
                 }
             }
         }
-        messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
+        if (messageRecipient != null) {
+            messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
+        }
     }
 
     /**
@@ -2901,7 +2919,7 @@ public class Identity extends TabItem {
             if (!bi_ExtrsaP.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaP)
                     && combo_ExrsaP.getText().length() > 0) {
                 errorLabel_1.setText(NO_PRIME_P);
-            } else if (bi_ExtrsaP != null && bi_ExtrsaP.compareTo(minimum) < 0) {
+            } else if (bi_ExtrsaP.compareTo(minimum) < 0) {
                 errorLabel_1.setText(VALUE_TOO_SMALL);
             }
 

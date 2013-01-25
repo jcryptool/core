@@ -268,15 +268,17 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
      * 
      * @param name the name of the alias
      * @param password for the private key
+     * @param crackedBy specifies the name of the identity, who has cracked the key. If the key hasn't been cracked,
+     *            enter 'null'!
      * @param modulus N
      * @param firstPrime p
      * @param secondPrime q
      * @param pubExponent e
      * @param privExponent d
      */
-    public void saveRSAKeyToKeystore(final String name, final String password, final BigInteger modulus,
-            final BigInteger firstPrime, final BigInteger secondPrime, final BigInteger pubExponent,
-            final BigInteger privExponent) {
+    public void saveRSAKeyToKeystore(final String name, final String password, final String crackedBy,
+            final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime,
+            final BigInteger pubExponent, final BigInteger privExponent) {
         if (name == null || password == null || modulus.compareTo(BigInteger.ZERO) <= 0
                 || firstPrime.compareTo(BigInteger.ZERO) <= 0 || secondPrime.compareTo(BigInteger.ZERO) <= 0
                 || pubExponent.compareTo(BigInteger.ZERO) <= 0 || privExponent.compareTo(BigInteger.ZERO) <= 0) {
@@ -285,16 +287,30 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
         final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
         final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
-        final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY,
-                getConcreteAlgorithm("RSA"), new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus
-                        .toString())).hashCode() + "", pubkey.getClass().getName());
+        final KeyStoreAlias publicAlias;
+        if (crackedBy != null) {
+            publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, getConcreteAlgorithm("RSA")
+                    + " (cracked by: " + crackedBy + ") ", new BigInteger(modulus.toString()).bitLength(),
+                    (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
+        } else {
+            publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, getConcreteAlgorithm("RSA"),
+                    new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "",
+                    pubkey.getClass().getName());
+        }
         setPublicAlias(publicAlias);
 
         final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(
                 firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
-        final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY,
-                getConcreteAlgorithm("RSA"), new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus
-                        .toString())).hashCode() + "", privkey.getClass().getName());
+        final KeyStoreAlias privateAlias;
+        if (crackedBy != null) {
+            privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, getConcreteAlgorithm("RSA")
+                    + " (cracked by: " + crackedBy + ") ", new BigInteger(modulus.toString()).bitLength(),
+                    (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
+        } else {
+            privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, getConcreteAlgorithm("RSA"),
+                    new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "",
+                    privkey.getClass().getName());
+        }
         setPrivateAlias(privateAlias);
 
         KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey),
@@ -308,6 +324,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
      * 
      * @param name of the alias
      * @param password for the private key
+     * @param crackedBy specifies the name of the identity, who has cracked the key. If the key hasn't been cracked,
+     *            enter 'null'!
      * @param primeNumber number of used primes
      * @param modulus the N
      * @param firstPrime p
@@ -318,8 +336,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
      * @param pubExponent e
      * @param privExponent d
      */
-    public void saveMpRSAKeyToKeystore(final String name, final String password, final int primeNumber,
-            final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime,
+    public void saveMpRSAKeyToKeystore(final String name, final String password, final String crackedBy,
+            final int primeNumber, final BigInteger modulus, final BigInteger firstPrime, final BigInteger secondPrime,
             final BigInteger thirdPrime, final BigInteger fourthPrime, final BigInteger fifthPrime,
             final BigInteger pubExponent, final BigInteger privExponent) {
         if (name == null || password == null || primeNumber < 3 || primeNumber > 5
@@ -345,9 +363,16 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
         final FlexiBigInt n = new FlexiBigInt(modulus), e = new FlexiBigInt(pubExponent);
         final RSAPublicKey pubkey = new RSAPublicKey(n, e);
 
-        final KeyStoreAlias publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "MpRSA", new BigInteger(
-                modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass()
-                .getName());
+        final KeyStoreAlias publicAlias;
+        if (crackedBy != null) {
+            publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "MpRSA" + " (cracked by: " + crackedBy
+                    + ") ", new BigInteger(modulus.toString()).bitLength(),
+                    (name.concat(modulus.toString())).hashCode() + "", pubkey.getClass().getName());
+        } else {
+            publicAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "MpRSA", new BigInteger(
+                    modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey
+                    .getClass().getName());
+        }
         setPublicAlias(publicAlias);
 
         RSAOtherPrimeInfo[] otherPrimeInfo = null;
@@ -374,9 +399,17 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
         final MpRSAPrivateKey privkey = new MpRSAPrivateKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(
                 firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO,
                 otherPrimeInfo);
-        final KeyStoreAlias privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "MpRSA",
-                new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "",
-                privkey.getClass().getName());
+        final KeyStoreAlias privateAlias;
+        if (crackedBy != null) {
+            privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "MpRSA" + " (cracked by: " + crackedBy
+                    + ") ", new BigInteger(modulus.toString()).bitLength(),
+                    (name.concat(modulus.toString())).hashCode() + "", privkey.getClass().getName());
+        } else {
+            privateAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "MpRSA", new BigInteger(
+                    modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", privkey
+                    .getClass().getName());
+
+        }
         setPrivateAlias(privateAlias);
 
         KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey),
@@ -498,7 +531,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                 alias = new KeyStoreAlias(aliases.nextElement());
 
                 if (alias.getClassName().equals(RSAPublicKey.class.getName())
-                        && alias.getContactName().equals(identity)) {
+                        && (alias.getContactName().equals(identity) || alias.getOperation().contains(identity))) {
                     if (!keymgmt.containsKey(alias.getHashValue())) {
                         keyID = keymgmt.size() + 1;
                         keymgmt.put(alias.getHashValue(), keyID);
@@ -510,8 +543,24 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     if (operation[0].length() == 0) {
                         operation[0] = Messages.IdentityManager_14;
                     }
-                    pubkeys.put(alias.getContactName() + Messages.IdentityManager_15 + alias.getKeyLength()
-                            + Messages.IdentityManager_16 + operation[0] + Messages.IdentityManager_17 + keyID, alias);
+                    if (!alias.getOperation().contains(identity)) {
+                        pubkeys.put(alias.getContactName() + Messages.IdentityManager_15 + alias.getKeyLength()
+                                + Messages.IdentityManager_16 + operation[0] + Messages.IdentityManager_17 + keyID,
+                                alias);
+                    } else {
+                        pubkeys.put(
+                                alias.getContactName()
+                                        + Messages.IdentityManager_15
+                                        + alias.getKeyLength()
+                                        + Messages.IdentityManager_16
+                                        + operation[0]
+                                        + Messages.IdentityManager_17
+                                        + keyID
+                                        + Messages.IdentityManager_23
+                                        + Messages.IdentityManager_22
+                                        + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
+                                                alias.getOperation().lastIndexOf(')')), alias);
+                    }
                 }
             }
         } catch (KeyStoreException e) {
@@ -559,35 +608,95 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
      */
     public TreeMap<String, KeyStoreAlias> loadAllKeysForIdentityAndOtherPublics(String identity) {
         TreeMap<String, KeyStoreAlias> keys = new TreeMap<String, KeyStoreAlias>();
+        Vector<Integer> addedKeysLog = new Vector<Integer>();
         KeyStoreAlias alias = null;
         try {
             aliases = KeyStoreManager.getInstance().getAliases();
+
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 // load RSA public and private keys for a certain identity and all other public keys for other
-                // identities
+                // identities (even cracked keys)
                 if (((alias.getClassName().equals(RSAPublicKey.class.getName())
                         || alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) || alias.getClassName()
                         .equals(MpRSAPrivateKey.class.getName())) && alias.getContactName().equals(identity))
                         || alias.getClassName().equals(RSAPublicKey.class.getName())
-                        && !alias.getContactName().equals(identity)) {
+                        && !alias.getContactName().equals(identity) || alias.getOperation().contains(identity)) {
+                    String pairPart = "";
                     if (!allKeysForID.containsKey(alias.getHashValue())) {
                         genKeyID = allKeysForID.size() + 1;
                         allKeysForID.put(alias.getHashValue(), genKeyID);
+                        addedKeysLog.add(genKeyID);
                     } else {
                         genKeyID = allKeysForID.get(alias.getHashValue());
+                        addedKeysLog.add(genKeyID);
+                    }
+                    /**
+                     * print the available keys in the following style: 1a – Alice Whitehat – MpPrivateKey 1b – Alice
+                     * Whitehat – RSAPublicKey 2 – Bob Whitehat – RSAPublicKey 3 – Eve Whitehat – RSAPublicKey 4a – Eve
+                     * Whitehat – MpPrivateKey (cracked by Alice Whitehat) 4b – Eve Whitehat – RSAPublicKey (cracked by
+                     * Alice Whitehat)
+                     */
+
+                    if ((alias.getContactName().equals(identity) || alias.getOperation().contains(identity))
+                            && alias.getClassName().equals(RSAPublicKey.class.getName())) {
+                        pairPart = "b";
+                    } else if ((alias.getContactName().equals(identity) || alias.getOperation().contains(identity))
+                            && (alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) || alias.getClassName()
+                                    .equals(MpRSAPrivateKey.class.getName()))) {
+                        pairPart = "a";
                     }
 
-                    keys.put(
-                            Messages.IdentityManager_21 + genKeyID + Messages.IdentityManager_22
-                                    + alias.getContactName() + Messages.IdentityManager_23 + alias.getKeyLength()
-                                    + Messages.IdentityManager_24
-                                    + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1), alias);
+                    if (alias.getOperation().contains(identity)) {
+                        keys.put(
+                                genKeyID
+                                        + pairPart
+                                        + Messages.IdentityManager_23
+                                        + alias.getContactName()
+                                        + Messages.IdentityManager_23
+                                        + alias.getKeyLength()
+                                        + Messages.IdentityManager_24
+                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
+                                        + Messages.IdentityManager_23
+                                        + Messages.IdentityManager_22
+                                        + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
+                                                alias.getOperation().lastIndexOf(')')), alias);
+                    } else {
+                        keys.put(genKeyID + pairPart + Messages.IdentityManager_23 + alias.getContactName()
+                                + Messages.IdentityManager_23 + alias.getKeyLength() + Messages.IdentityManager_24
+                                + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1), alias);
+
+                    }
                 }
             }
 
         } catch (KeyStoreException e) {
             LogUtil.logError(e);
+        }
+
+        Iterator<String> avKeys = keys.keySet().iterator();
+
+        if (avKeys.hasNext()) {
+            Vector<String> elementsToRemove = new Vector<String>();
+            String nextNext = "";
+
+            String act = avKeys.next();
+            while (avKeys.hasNext()) {
+                if (avKeys.hasNext()) {
+                    nextNext = avKeys.next();
+
+                    String part1 = act.substring(0, act.indexOf('-')).trim();
+                    String part2 = nextNext.substring(0, nextNext.indexOf('-')).trim();
+
+                    if (part1.charAt(0) == part2.charAt(0)) {
+                        if (part1.length() == 1 && part2.length() == 2) {
+                            elementsToRemove.add(act);
+                        }
+                    }
+                }
+                act = nextNext;
+            }
+            keys.keySet().removeAll(elementsToRemove);
         }
 
         return keys;
@@ -736,18 +845,34 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
             for (Enumeration<String> aliases = KeyStoreManager.getInstance().getAliases(); aliases.hasMoreElements();) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 if ((alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) || (alias.getClassName()
-                        .equals(MpRSAPrivateKey.class.getName()))) && alias.getContactName().equals(identityName)) {
+                        .equals(MpRSAPrivateKey.class.getName())))
+                        && (alias.getContactName().equals(identityName) || alias.getOperation().contains(identityName))) {
                     if (!privKeymgmt.containsKey(alias.getHashValue())) {
                         privKeyID = privKeymgmt.size() + 1;
                         privKeymgmt.put(alias.getHashValue(), privKeyID);
                     } else {
                         privKeyID = privKeymgmt.get(alias.getHashValue());
                     }
-                    keyStoreItems.put(
-                            alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength()
-                                    + Messages.IdentityManager_27
-                                    + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
-                                    + Messages.IdentityManager_28 + privKeyID, alias);
+                    if (!alias.getOperation().contains(identityName)) {
+                        keyStoreItems.put(
+                                alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength()
+                                        + Messages.IdentityManager_27
+                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
+                                        + Messages.IdentityManager_28 + privKeyID, alias);
+                    } else {
+                        keyStoreItems.put(
+                                alias.getContactName()
+                                        + Messages.IdentityManager_26
+                                        + alias.getKeyLength()
+                                        + Messages.IdentityManager_27
+                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
+                                        + Messages.IdentityManager_28
+                                        + privKeyID
+                                        + Messages.IdentityManager_23
+                                        + Messages.IdentityManager_22
+                                        + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
+                                                alias.getOperation().lastIndexOf(')')), alias);
+                    }
                 }
             }
         } catch (KeyStoreException e) {

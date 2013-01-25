@@ -19,10 +19,10 @@
 <p>Die Sicherheit des RSA-Schemas basiert auf zwei mathematischen Problemen: Erstens ist es schwierig, f&uuml;r gro&szlig;e Zahlen eine Wurzel modulo N zu berechnen (RSA-Problem). Zweitens ist die Faktorisierung von N = p*q schwierig, wenn die Faktoren ausreichend gro&szlig; gew&auml;hlt werden (RSA- Schl&uuml;sselproblem). </p>
 
 <h3>RSA-Schl&uuml;sselgenerierung</h3>
-<p>Eine besondere Charakteristik des RSA-Kryptosystems ist, dass umfangreiche Berechnungen n&ouml;tig sind, um einen RSA Schl&uuml;ssel zu generieren. Erst danach kann die Ver- und Entschl&uuml;sselung durchgef&uuml;hrt werden kann.</p>
+<p>Eine besondere Charakteristik des RSA-Kryptosystems ist, dass umfangreiche Berechnungen n&ouml;tig sind, um einen RSA-Schl&uuml;ssel zu generieren. Erst danach kann die Ver- und Entschl&uuml;sselung durchgef&uuml;hrt werden kann.</p>
 <p>Als erstes werden die RSA-Parameter p, q, N und die Eulersche Zahl phi(N) mit Hilfe von zwei zuf&auml;lligen Primzahlen, p und q, berechnet. Der sogenannte RSA-Modulus N wird als Produkt von p und q berechnet: N = p*q. Die Eulersche Zahl phi(N) ergibt sich als Produkt (p-1)*(q-1). Im Standardfall werden hiernach p und q gel&ouml;scht (somit kennt sie auch der Schl&uuml;sselerzeuger nicht mehr und braucht sie auch nicht geheim zu halten).</p>
 <p>Als zweiter Schritt wird der &ouml;ffentliche Exponent e bestimmt. Mit dessen Hilfe sowie phi(N), wird der private Exponent d berechnet. Der Exponent e wird wie folgt gew&auml;hlt: 1 < e < phi(N), mit der Voraussetzung, dass e relativ prim zu phi(N) ist. Ein besonders beliebter Wert f&uuml;r e ist 2^16+1 = 65537. Diese Zahl ist meistens co-prim zu phi(N) und besonders gut f&uuml;r "square and multiply" Exponentiationen geeignet. Dies resultiert in sehr schnellen Operationen mit dem &ouml;ffentlichen Schl&uuml;ssel.</p>
-<p>Der private Exponent d = e^(-1) mod phi(N) wird als multiplikative Inverse des &ouml;ffentlichen Exponentens e modulo phi(N) berechnet. Anders geschrieben: e*d = 1 mod ((p-1)(q-1)). Nach der Schl&uuml;sselerzeugung k&ouml;nnen N und e &ouml;ffentlich gemacht werden. Anschlie&szlig;end kann jeder eine Nachricht f&uuml;r den Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d verschl&uuml;sseln oder eine digitale Signatur &uuml;berpr&uuml;fen - einzig und allein durch die Verwendung des &ouml;ffentlichen Schl&uuml;ssels.</p>
+<p>Der private Exponent d = e^(-1) mod phi(N) wird als multiplikative Inverse des &ouml;ffentlichen Exponenten e modulo phi(N) berechnet. Anders geschrieben: e*d = 1 mod ((p-1)(q-1)). Nach der Schl&uuml;sselerzeugung k&ouml;nnen N und e &ouml;ffentlich gemacht werden. Anschlie&szlig;end kann jeder eine Nachricht f&uuml;r den Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d verschl&uuml;sseln oder eine digitale Signatur &uuml;berpr&uuml;fen -- einzig und allein durch die Verwendung des &ouml;ffentlichen Schl&uuml;ssels.</p>
 
 <h3>RSA Ver- / Entschl&uuml;sselung</h3>
 <p>Um Daten mit RSA zu <b>verschl&uuml;sseln</b>, wird das Chiffrat mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels e des Empf&auml;ngers und des Klartexts berechnet. Die Verschl&uuml;sselungsfunktion ist c = m^e mod N. Das hei&szlig;t, dass jeder eine Nachricht mit Hilfe des &ouml;ffentlichen Schl&uuml;ssels verschl&uuml;sseln kann. Allerdings kann nur der Besitzer des zugeh&ouml;rigen privaten Schl&uuml;ssels d die Nachricht wieder entschl&uuml;sseln.
@@ -30,13 +30,13 @@ Um ein Chiffrat mit RSA zu <b>entschl&uuml;sseln</b>, muss der private Schl&uuml
 
 
 <h2>Faktorisierungsangriff</h2>
-<p>Ziel des Faktorisierungsangriffes ist es, den &ouml;ffentlich bekannten Modulus N zu faktorisieren und so die Primfaktoren zu rekonstruieren. Mit diesen Primzahlen kann dann - genau wie bei der urspr&uuml;nglichen Schl&uuml;sselerstellung - der private Schl&uuml;ssel (der geheime Parameter d) berechnet werden. Dadurch kann der Angreifer Nachrichten lesen, die nicht f&uuml;r ihn bestimmt sind.</p>
-<p>Durch Verwendung von Primzahlen von mehr als 612 bit L&auml;nge (was im 2-Primzahl-Fall zu Modulen von mehr als 1024 bit L&auml;nge f&uuml;hrt) kann man diesen Angriff vermeiden - auch heutige Supercomputer haben dann keine Chance (in einem Zeitraum von wenigen Jahren).</p>
+<p>Ziel des Faktorisierungsangriffes ist es, den &ouml;ffentlich bekannten Modulus N zu faktorisieren und so die Primfaktoren zu rekonstruieren. Mit diesen Primzahlen kann dann -- genau wie bei der urspr&uuml;nglichen Schl&uuml;sselerstellung -- der private Schl&uuml;ssel (der geheime Parameter d) berechnet werden. Dadurch kann der Angreifer Nachrichten lesen, die nicht f&uuml;r ihn bestimmt sind.</p>
+<p>Durch Verwendung von Primzahlen von mehr als 612 bit L&auml;nge (was im 2-Primzahl-Fall zu Modulen von mehr als 1024 bit L&auml;nge f&uuml;hrt) kann man diesen Angriff vermeiden -- auch heutige Supercomputer haben dann keine Chance (in einem Zeitraum von wenigen Jahren).</p>
 <p>In dieser Visualisierung ist ein Faktorisierungsangriff implementiert, um vor allem kleine Schl&uuml;ssel zu faktorisieren. Dazu wird versucht, die Teiler des &ouml;ffentlichen Modulus zu finden. Sobald alle Teiler gefunden sind, sind die Primzahlen zur Schl&uuml;sselrekonstruktion bekannt und der Faktorisierungsangriff wird erfolgreich beendet.</p>
 
 <p>Weitere Informationen finden sich z.B. unter:</p>
 <ul>
-	<li><a href="http://de.wikipedia.org/wiki/RSA-Kryptosystem">http://de.wikipedia.org/wiki/RSA-Kryptosystem</a></li>
-	<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">the CrypTool-script, chapter 4</a></li>
+	<li><a href="https://de.wikipedia.org/wiki/RSA-Kryptosystem">https://de.wikipedia.org/wiki/RSA-Kryptosystem</a></li>
+	<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">dem CrypTool-Skript, Kapitel 4</a></li>
 </ul>
 </body>

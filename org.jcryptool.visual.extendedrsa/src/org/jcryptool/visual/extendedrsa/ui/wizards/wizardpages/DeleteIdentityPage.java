@@ -32,6 +32,7 @@ import org.jcryptool.visual.extendedrsa.IdentityManager;
 public class DeleteIdentityPage extends WizardPage {
 
     private Combo selectedIdentity;
+
     public DeleteIdentityPage(ExtendedTabFolder tabfolder) {
         super(Messages.DeleteIdentityPage_0, Messages.DeleteIdentityPage_1, null);
         setDescription(Messages.DeleteIdentityPage_2);
