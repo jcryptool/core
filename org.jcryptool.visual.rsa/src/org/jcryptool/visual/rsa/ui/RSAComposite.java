@@ -756,6 +756,7 @@ public class RSAComposite extends Composite {
                 column.setText("" + (i - 1)); //$NON-NLS-1$
             }
         }
+
         new TableItem(fastExpTable, SWT.NONE);
         new TableItem(fastExpTable, SWT.NONE).setText(getNeeded(exponent));
         // last thing: pack
@@ -1055,14 +1056,45 @@ public class RSAComposite extends Composite {
         l.setText(Messages.RSAComposite_inherit_from);
         inheritCombo = new Combo(optionsGroup, SWT.DROP_DOWN | SWT.READ_ONLY);
         inheritCombo.add(""); //$NON-NLS-1$
-        inheritCombo.add(Messages.RSAComposite_encrypt);
-        inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
-        inheritCombo.add(Messages.RSAComposite_decrypt);
-        inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
-        inheritCombo.add(Messages.RSAComposite_sign);
-        inheritCombo.setData("3", Action.SignAction); //$NON-NLS-1$
-        inheritCombo.add(Messages.RSAComposite_verify);
-        inheritCombo.setData("4", Action.VerifyAction); //$NON-NLS-1$
+        switch (data.getAction()) {
+        	case EncryptAction: {
+        		inheritCombo.add(Messages.RSAComposite_decrypt);
+                inheritCombo.setData("1", Action.DecryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_sign);
+                inheritCombo.setData("2", Action.SignAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_verify);
+                inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+                break;
+        	}
+        	case SignAction: {
+                inheritCombo.add(Messages.RSAComposite_encrypt);
+                inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_decrypt);
+                inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_verify);
+                inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+        		break;
+        	}
+        	case DecryptAction: {
+                inheritCombo.add(Messages.RSAComposite_encrypt);
+                inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_sign);
+                inheritCombo.setData("2", Action.SignAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_verify);
+                inheritCombo.setData("3", Action.VerifyAction); //$NON-NLS-1$
+                break;
+        	}
+        	case VerifyAction: {
+                inheritCombo.add(Messages.RSAComposite_encrypt);
+                inheritCombo.setData("1", Action.EncryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_decrypt);
+                inheritCombo.setData("2", Action.DecryptAction); //$NON-NLS-1$
+                inheritCombo.add(Messages.RSAComposite_sign);
+                inheritCombo.setData("3", Action.SignAction); //$NON-NLS-1$
+        		break;
+        	}
+        }
+        
         inheritCombo.addSelectionListener(new SelectionAdapter() {
 
             @Override

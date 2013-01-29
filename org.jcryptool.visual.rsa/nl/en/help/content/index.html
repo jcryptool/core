@@ -21,8 +21,7 @@
   As this encryption algorithm only works on numbers, first the plaintext letters must be converted. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. <br/>
   However, the number of each plaintext letter must be smaller than the product N. This becomes clear when you examine the encryption and decryption functions (m = plaintext letter, c = ciphertext letter): c = m^e mod N and m = c^d mod N.<br/>
   Calculating modulo you can also first determine the remainder from each factor and then the rest of its product modulo N. It would not always be possible to obtain a unique ciphertext character if m could be bigger than N.<br/>
-  The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/>
-  For further information please refer to <a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">http://en.wikipedia.org/wiki/RSA_(algorithm)</a>. </p>
+  The security of the RSA scheme is based on two mathematical problems. First, it is hard to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).<br/></p>
 
   <h3 id="Enc">a) RSA Key Generation</h3>
   <p> A special characteristic of the RSA cryptosystem is that extensive calculations are necessary to generate the RSA key before RSA en-/decryption or signing can take place.<br/>
@@ -52,6 +51,11 @@
   <p> Next, click the <strong>Enter text</strong> button on the left. You can enter a text using ASCII characters. Every character will be converted to hex and can be seen in the "Entered text" field. If you mark the <strong>Enter numbers directly</strong> checkbox, you can insert decimal numbers separated by "SPACE". These numbers are converted to ASCII characters and can be seen in the "Entered text" field. On the next page it is possible to apply some filters on the text.</p>
   <p> Now, all required information is available and it is possible to start the operation. If you just want to see the result, you can click on the button below the <strong>Enter text</strong> button. To see the calculation of each number click on the <strong>Start</strong> button in the "Step-by-step calculations" field. If you go stepwise or directly through all steps, the result can be seen in the "Result" field. </p>
   <p> On the bottom, you can see additional options. There, you have the possibility to choose whether the key and result should be displayed in dec or hex values, inherit values from one of the three other tabs, and show additional help while performing the operation. </p>
+  <p>For further information please refer to: <br/>
+  <ul>
+  <li><a href="http://en.wikipedia.org/wiki/RSA_(algorithm)">Wikipedia RSA</a></li>
+  <li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-en.pdf">CrypTool-Script, Chapter 4</a></li>
+  </ul>
   <br/>
 </body>
 </html>
