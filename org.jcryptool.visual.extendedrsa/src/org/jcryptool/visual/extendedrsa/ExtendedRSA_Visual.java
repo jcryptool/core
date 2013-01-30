@@ -52,7 +52,6 @@ public class ExtendedRSA_Visual extends ViewPart {
     private Composite composite;
     private GridLayout gl;
     private Composite headComposite;
-    private Label label;
     private StyledText head_description;
     private Group grp_id_mgmt;
     private Button btn_newID;
@@ -86,7 +85,7 @@ public class ExtendedRSA_Visual extends ViewPart {
         headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         headComposite.setLayout(new GridLayout());
 
-        label = new Label(headComposite, SWT.NONE);
+        Label label = new Label(headComposite, SWT.NONE);
         label.setFont(FontService.getHeaderFont());
         label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
         label.setText(Messages.ExtendedRSA_Visual_4);

@@ -534,12 +534,10 @@ public class Identity extends TabItem {
                                     count++;
                                 } else {
                                     decryptionKeys.select(count);
+                                    privateAlias = privKeys.get(decryptionKeys.getText());
                                 }
                             }
-                            if (currentMsg.getRecipient().getContactName().equals(Identity.this.identityName)) {
-                                privateAlias = privKeys.get(decryptionKeys.getText());
-                                iMgr.getPublicForPrivateRSA(privateAlias);
-                            }
+
                             if (identityName.equals("Alice Whitehat") || identityName.equals("Bob Whitehat")) {
                                 lbl_pwWrong.setText(Messages.Identity_180);
                             }
@@ -604,7 +602,6 @@ public class Identity extends TabItem {
 
                             HashMap<String, KeyStoreAlias> privKeys = iMgr.getPrivateKeys(Identity.this.identityName);
                             privateAlias = privKeys.get(decryptionKeys.getText());
-                            iMgr.getPublicForPrivateRSA(privateAlias);
                             pwPrivKey.setText(NOTHING);
                         }
 
@@ -2405,7 +2402,7 @@ public class Identity extends TabItem {
         for (SecureMessage sec : extTF.getMessageQueue()) {
             // if (sec.getRecipient().getContactName().equals(identityName)){
             String subject = NOTHING;
-            if (sec.getSubject().equals(Messages.Identity_158)) {
+            if (sec.getSubject().isEmpty()) {
                 subject = Messages.Identity_159;
             } else {
                 subject = sec.getSubject();
@@ -2631,15 +2628,14 @@ public class Identity extends TabItem {
         }
 
         for (String s : iMgr.getContacts()) {
+            // if (!s.equals(this.identityName) && !recipients.contains(s)){
             if (!recipients.contains(s)) {
                 if (IdentityManager.getInstance().countOwnKeys(s) > 0) {
                     recipients.add(s);
                 }
             }
         }
-        if (messageRecipient != null) {
-            messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
-        }
+        messageRecipient.setItems(recipients.toArray(new String[recipients.size()]));
     }
 
     /**
@@ -2919,7 +2915,7 @@ public class Identity extends TabItem {
             if (!bi_ExtrsaP.equals(Constants.MINUS_ONE) && !Lib.isPrime(bi_ExtrsaP)
                     && combo_ExrsaP.getText().length() > 0) {
                 errorLabel_1.setText(NO_PRIME_P);
-            } else if (bi_ExtrsaP.compareTo(minimum) < 0) {
+            } else if (bi_ExtrsaP != null && bi_ExtrsaP.compareTo(minimum) < 0) {
                 errorLabel_1.setText(VALUE_TOO_SMALL);
             }
 

@@ -248,22 +248,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
     }
 
     /**
-     * setter for the private alias for the contact
-     * 
-     * @param privateAlias the privateAlias to set
-     */
-    public final void setPrivateAlias(final KeyStoreAlias privateAlias) {
-    }
-
-    /**
-     * setter for the public alias for the contact
-     * 
-     * @param publicAlias the publicAlias to set
-     */
-    public final void setPublicAlias(final KeyStoreAlias publicAlias) {
-    }
-
-    /**
      * method to create a classic RSA-key with chosen parameters
      * 
      * @param name the name of the alias
@@ -297,7 +281,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "",
                     pubkey.getClass().getName());
         }
-        setPublicAlias(publicAlias);
 
         final RSAPrivateCrtKey privkey = new RSAPrivateCrtKey(n, e, new FlexiBigInt(privExponent), new FlexiBigInt(
                 firstPrime), new FlexiBigInt(secondPrime), FlexiBigInt.ZERO, FlexiBigInt.ZERO, FlexiBigInt.ZERO);
@@ -311,7 +294,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     new BigInteger(modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "",
                     privkey.getClass().getName());
         }
-        setPrivateAlias(privateAlias);
 
         KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey),
                 password, privateAlias, publicAlias);
@@ -373,7 +355,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     modulus.toString()).bitLength(), (name.concat(modulus.toString())).hashCode() + "", pubkey
                     .getClass().getName());
         }
-        setPublicAlias(publicAlias);
 
         RSAOtherPrimeInfo[] otherPrimeInfo = null;
 
@@ -410,7 +391,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     .getClass().getName());
 
         }
-        setPrivateAlias(privateAlias);
 
         KeyStoreManager.getInstance().addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey),
                 password, privateAlias, publicAlias);
@@ -539,7 +519,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                         keyID = keymgmt.get(alias.getHashValue());
                     }
                     String[] operation = alias.getOperation().split(Messages.IdentityManager_13);
-                    // for self-made rsa-keys.. no operation is available
+                    // for self-made rsa-keys.. if no operation is available
                     if (operation[0].length() == 0) {
                         operation[0] = Messages.IdentityManager_14;
                     }
@@ -647,6 +627,19 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                         pairPart = "a";
                     }
 
+                    String keytype = "";
+                    if (alias.getClassName().contains("PublicKey") && alias.getOperation().equals("MpRSA")) {
+                        keytype = "MpRSAPublicKey";
+                    } else if ((alias.getClassName().toString().contains("Private") && alias.getOperation().equals(
+                            "MpRSA"))
+                            || (alias.getClassName().toString().contains("PublicKey") && alias.getOperation().contains(
+                                    "RSA"))) {
+                        keytype = alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1);
+                    } else if (alias.getClassName().toString().contains("Private")
+                            && alias.getClassName().contains("Crt")) {
+                        keytype = "RSAPrivateKey";
+                    }
+
                     if (alias.getOperation().contains(identity)) {
                         keys.put(
                                 genKeyID
@@ -656,7 +649,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                                         + Messages.IdentityManager_23
                                         + alias.getKeyLength()
                                         + Messages.IdentityManager_24
-                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
+                                        + keytype
                                         + Messages.IdentityManager_23
                                         + Messages.IdentityManager_22
                                         + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
@@ -664,7 +657,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     } else {
                         keys.put(genKeyID + pairPart + Messages.IdentityManager_23 + alias.getContactName()
                                 + Messages.IdentityManager_23 + alias.getKeyLength() + Messages.IdentityManager_24
-                                + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1), alias);
+                                + keytype, alias);
 
                     }
                 }
@@ -853,19 +846,24 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     } else {
                         privKeyID = privKeymgmt.get(alias.getHashValue());
                     }
+                    String keytype = "";
+                    if (alias.getClassName().toString().contains("Private") && alias.getClassName().contains("Crt")) {
+                        keytype = "RSAPrivateKey";
+                    } else {
+                        keytype = "MpRSAPrivateKey";
+                    }
+
                     if (!alias.getOperation().contains(identityName)) {
-                        keyStoreItems.put(
-                                alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength()
-                                        + Messages.IdentityManager_27
-                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
-                                        + Messages.IdentityManager_28 + privKeyID, alias);
+                        keyStoreItems.put(alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength()
+                                + Messages.IdentityManager_27 + keytype + Messages.IdentityManager_28 + privKeyID,
+                                alias);
                     } else {
                         keyStoreItems.put(
                                 alias.getContactName()
                                         + Messages.IdentityManager_26
                                         + alias.getKeyLength()
                                         + Messages.IdentityManager_27
-                                        + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
+                                        + keytype
                                         + Messages.IdentityManager_28
                                         + privKeyID
                                         + Messages.IdentityManager_23

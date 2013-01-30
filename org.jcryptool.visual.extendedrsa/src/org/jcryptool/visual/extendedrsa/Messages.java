@@ -4,7 +4,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.extendedrsa.messages";
-    public static String ExtendedRSA_Visual_0;
     public static String ExtendedRSA_Visual_1;
     public static String ExtendedRSA_Visual_10;
     public static String ExtendedRSA_Visual_11;
@@ -99,9 +98,6 @@ public class Messages extends NLS {
     public static String Identity_153;
     public static String Identity_154;
     public static String Identity_155;
-    public static String Identity_156;
-    public static String Identity_157;
-    public static String Identity_158;
     public static String Identity_159;
     public static String Identity_16;
     public static String Identity_160;
@@ -116,7 +112,6 @@ public class Messages extends NLS {
     public static String Identity_169;
     public static String Identity_17;
     public static String Identity_170;
-    public static String Identity_171;
     public static String Identity_172;
     public static String Identity_173;
     public static String Identity_174;
@@ -214,7 +209,6 @@ public class Messages extends NLS {
     public static String Identity_94;
     public static String Identity_95;
     public static String Identity_96;
-    public static String Identity_97;
     public static String Identity_98;
     public static String Identity_99;
     public static String IdentityManager_0;
@@ -231,7 +225,6 @@ public class Messages extends NLS {
     public static String IdentityManager_19;
     public static String IdentityManager_2;
     public static String IdentityManager_20;
-    public static String IdentityManager_21;
     public static String IdentityManager_22;
     public static String IdentityManager_23;
     public static String IdentityManager_24;
