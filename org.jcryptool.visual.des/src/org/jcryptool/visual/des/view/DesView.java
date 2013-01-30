@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.des.algorithm.DESController;
@@ -45,7 +44,6 @@ import org.jcryptool.visual.des.algorithm.DESController;
 public class DesView extends ViewPart {
 	// Auto Gen
 	public static final String ID = "org.jcryptool.visual.des.view.DesView"; //$NON-NLS-1$
-	private final FormToolkit toolkit = new FormToolkit(Display.getCurrent());
 
 
 	// Controller
@@ -235,7 +233,6 @@ public class DesView extends ViewPart {
 	}
 
 	public void dispose() {
-		toolkit.dispose();
 		super.dispose();
 	}
 

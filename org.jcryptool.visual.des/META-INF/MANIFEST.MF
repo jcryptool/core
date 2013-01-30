@@ -11,8 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.ui.forms.widgets,
- org.jcryptool.core.logging.utils
+Import-Package: org.jcryptool.core.logging.utils
 Bundle-Vendor: %Bundle-Vendor.0
 
 
