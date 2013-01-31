@@ -4,8 +4,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.sidechannelattack.dpa.views.messages"; //$NON-NLS-1$
-	public static String Constants_0;
-	public static String Constants_1;
 	public static String Constants_10;
 	public static String Constants_100;
 	public static String Constants_101;
@@ -27,7 +25,6 @@ public class Messages extends NLS {
 	public static String Constants_116;
 	public static String Constants_117;
 	public static String Constants_118;
-	public static String Constants_119;
 	public static String Constants_12;
 	public static String Constants_120;
 	public static String Constants_121;
@@ -39,8 +36,6 @@ public class Messages extends NLS {
 	public static String Constants_127;
 	public static String Constants_128;
 	public static String Constants_129;
-	public static String Constants_13;
-	public static String Constants_130;
 	public static String Constants_131;
 	public static String Constants_132;
 	public static String Constants_133;
@@ -49,26 +44,15 @@ public class Messages extends NLS {
 	public static String Constants_136;
 	public static String Constants_137;
 	public static String Constants_138;
-	public static String Constants_139;
 	public static String Constants_14;
-	public static String Constants_140;
-	public static String Constants_141;
-	public static String Constants_142;
-	public static String Constants_143;
-	public static String Constants_144;
-	public static String Constants_145;
-	public static String Constants_146;
 	public static String Constants_147;
 	public static String Constants_148;
-	public static String Constants_149;
 	public static String Constants_15;
 	public static String Constants_16;
 	public static String Constants_17;
 	public static String Constants_18;
 	public static String Constants_19;
-	public static String Constants_2;
 	public static String Constants_20;
-	public static String Constants_21;
 	public static String Constants_22;
 	public static String Constants_23;
 	public static String Constants_24;
@@ -77,10 +61,6 @@ public class Messages extends NLS {
 	public static String Constants_27;
 	public static String Constants_28;
 	public static String Constants_29;
-	public static String Constants_3;
-	public static String Constants_30;
-	public static String Constants_31;
-	public static String Constants_32;
 	public static String Constants_33;
 	public static String Constants_34;
 	public static String Constants_35;
@@ -88,27 +68,15 @@ public class Messages extends NLS {
 	public static String Constants_37;
 	public static String Constants_38;
 	public static String Constants_39;
-	public static String Constants_4;
-	public static String Constants_40;
-	public static String Constants_41;
 	public static String Constants_42;
 	public static String Constants_43;
 	public static String Constants_44;
-	public static String Constants_45;
 	public static String Constants_46;
 	public static String Constants_47;
 	public static String Constants_48;
 	public static String Constants_49;
-	public static String Constants_5;
 	public static String Constants_50;
-	public static String Constants_51;
-	public static String Constants_52;
-	public static String Constants_53;
-	public static String Constants_54;
 	public static String Constants_55;
-	public static String Constants_56;
-	public static String Constants_57;
-	public static String Constants_58;
 	public static String Constants_59;
 	public static String Constants_6;
 	public static String Constants_60;
@@ -132,7 +100,6 @@ public class Messages extends NLS {
 	public static String Constants_77;
 	public static String Constants_78;
 	public static String Constants_79;
-	public static String Constants_8;
 	public static String Constants_80;
 	public static String Constants_81;
 	public static String Constants_82;
@@ -161,7 +128,6 @@ public class Messages extends NLS {
 	public static String curve;
 	public static String reset;
 	public static String outputtable;
-	//public static String DPAView_roundCol_text;
 	public static String k;
 	public static String result;
 	public static String noprotection0;
