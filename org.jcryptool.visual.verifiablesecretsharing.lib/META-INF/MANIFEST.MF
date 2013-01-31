@@ -65,6 +65,7 @@ Export-Package: com.keypoint,
  org.jfree.ui.action,
  org.jfree.ui.tabbedui,
  org.jfree.util
+Require-Bundle: org.eclipse.swt;bundle-version="3.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
