@@ -71,9 +71,13 @@ public final class Utils {
     private Utils() {
     }
 
-    public static boolean isDocumentWellFormed(final InputStream content) {
+    public static boolean isDocumentWellFormed(byte[] content) {
+        if (content == null || content.length == 0) {
+            return false;
+        }
+        
         try {
-            prepareDocumentBuilder(true, false).parse(content);
+            parse(content);
 
             return true;
         } catch (Exception ex) {

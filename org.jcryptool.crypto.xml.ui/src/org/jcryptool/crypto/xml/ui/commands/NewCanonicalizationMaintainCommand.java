@@ -51,11 +51,13 @@ public class NewCanonicalizationMaintainCommand extends AbstractAlgorithmAction 
 
         try {
             InputStream editorContent = getActiveEditorInputStream();
+            byte[] content = new byte[editorContent.available()];
+            editorContent.read(content);
 
-            boolean wellFormed = Utils.isDocumentWellFormed(editorContent);
+            boolean wellFormed = Utils.isDocumentWellFormed(content);
 
-            if (wellFormed && editorContent != null) {
-                byte[] outputBytes = canonicalize(editorContent);
+            if (wellFormed) {
+                byte[] outputBytes = canonicalize(content);
 
                 if (outputBytes != null && outputBytes.length > 0) {
                     IEditorInput output = AbstractEditorService.createOutputFile(outputBytes,
@@ -86,13 +88,13 @@ public class NewCanonicalizationMaintainCommand extends AbstractAlgorithmAction 
     /**
      * Calls the canonicalization method of the Apache XML Security API and executes the canonicalization.
      * 
-     * @param stream The XML document to canonicalize as InputStream
+     * @param stream The XML document to canonicalize as byte[]
      * @return The canonicalized XML
      * @throws Exception Exception during canonicalization
      */
-    private byte[] canonicalize(final InputStream stream) throws Exception {
+    private byte[] canonicalize(byte[] content) throws Exception {
         CreateCanonicalization canonicalization = new CreateCanonicalization();
-        canonicalization.init(stream, getCanonicalizationAlgorithm());
+        canonicalization.init(content, getCanonicalizationAlgorithm());
 
         return ((HybridDataObject) canonicalization.execute()).getOutput();
     }
