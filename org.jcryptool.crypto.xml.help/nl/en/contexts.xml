@@ -23,20 +23,10 @@
 		<topic href="html/signature/sign.html" label="XML Signature Wizard"/>
 		<topic href="html/signature/page_resource.html" label="Resource and Signature Type"/>
 	</context>
-	<context id="wizard_signature_open_key">
+	<context id="wizard_signature_key">
 		<description>Provide all required information for the &lt;b&gt;key to use&lt;/b&gt; in the current signing process.</description>
 		<topic href="html/signature/sign.html" label="XML Signature Wizard"/>
 		<topic href="html/signature/page_open_key.html" label="Open a key"/>
-	</context>
-	<context id="wizard_signature_create_key">
-		<description>Provide all required information to &lt;b&gt;insert a new key&lt;/b&gt; into a keystore. This key will be used in the current signing process and is stored in the selected keystore.</description>
-		<topic href="html/signature/sign.html" label="XML Signature Wizard"/>
-		<topic href="html/signature/page_create_key.html" label="Create a key"/>
-	</context>
-	<context id="wizard_signature_create_keystore">
-		<description>Provide all required information to &lt;b&gt;create a new keystore&lt;/b&gt; together with &lt;b&gt;a new key&lt;/b&gt;. This key will be used in the current signing process and is stored in the current project folder as [Keystore Name].jks.</description>
-		<topic href="html/signature/sign.html" label="XML Signature Wizard"/>
-		<topic href="html/signature/page_create_keystore.html" label="Create a keystore and key"/>
 	</context>
 	<context id="wizard_signature_algorithms">
 		<description>Select a &lt;b&gt;canonicalization and a transformation algorithm&lt;/b&gt;, a &lt;b&gt;message digest and a signature algorithm&lt;/b&gt;. The &lt;b&gt;signature properties&lt;/b&gt; are optional. A new property can be added by clicking on the + button. The &lt;b&gt;signature id&lt;/b&gt; is optional but makes it much easier to identify the signature. The characters &lt;, &gt;, &amp;, &quot;, &apos; and blanks are not allowed as id (signature id and signature property id), the maximum length is 20 characters. Selecting the &lt;b&gt;Start Encryption Wizard afterwards&lt;/b&gt; checkbox opens the Encryption Wizard after a successful digital signature operation.</description>
