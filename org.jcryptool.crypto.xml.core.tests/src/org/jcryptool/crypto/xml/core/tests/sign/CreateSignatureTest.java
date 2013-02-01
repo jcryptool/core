@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Dominik Schadow - initial API and implementation
+ * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.core.tests.sign;
 
@@ -21,15 +18,16 @@ import org.jcryptool.crypto.xml.core.cryptography.Keystore;
 import org.jcryptool.crypto.xml.core.sign.CreateSignature;
 import org.jcryptool.crypto.xml.core.sign.Signature;
 import org.jcryptool.crypto.xml.core.tests.XMLSecurityToolsCoreTestPlugin;
-import org.jcryptool.crypto.xml.core.utils.IGlobals;
 import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.core.verify.VerifySignature;
 import org.w3c.dom.Document;
 
 /**
- * <p>JUnit test class for {@link org.jcryptool.crypto.xml.core.sign.CreateSignature}.</p>
- *
+ * <p>
+ * JUnit test class for {@link org.jcryptool.crypto.xml.core.sign.CreateSignature}.
+ * </p>
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -47,26 +45,26 @@ public class CreateSignatureTest extends TestCase {
 
     /**
      * Sets up the Apache XML Security API and prepares the SignatureWizard object.
-     *
+     * 
      * @throws Exception to indicate any exceptional condition
      */
     protected void setUp() throws Exception {
         org.apache.xml.security.Init.init();
 
-        Keystore sampleKeyStore = new Keystore(XMLSecurityToolsCoreTestPlugin.getTestFileLocation(KEYSTORE_PATH), KEYSTORE_PASSWORD,
-                IGlobals.KEYSTORE_TYPE);
+        Keystore sampleKeyStore = new Keystore(XMLSecurityToolsCoreTestPlugin.getTestFileLocation(KEYSTORE_PATH),
+                KEYSTORE_PASSWORD, "JCEKS");
         sampleKeyStore.load();
 
         signature = new Signature();
         signature.setBsp(false);
         signature.setLaunchEncryptionWizard(false);
         signature.setCanonicalizationAlgorithm("Exclusive with comments");
-        signature.setKeyName(KEY_ALIAS);
+        // FIXME
+        // signature.setKeyName(KEY_ALIAS);
         signature.setKeyPassword(KEY_PASSWORD.toCharArray());
         signature.setDetachedFile(null);
-        signature.setDocument(Utils.parse(new File(XMLSecurityToolsCoreTestPlugin.getTestFileLocation("resources/FirstSteps.xml"))));
-        signature.setKeystore(sampleKeyStore);
-        signature.setKeystorePassword(KEYSTORE_PASSWORD.toCharArray());
+        signature.setDocument(Utils.parse(new File(XMLSecurityToolsCoreTestPlugin
+                .getTestFileLocation("resources/FirstSteps.xml"))));
         signature.setMessageDigestAlgorithm("SHA 1");
         signature.setResource("document");
         signature.setSignatureAlgorithm("DSA with SHA 1 (DSS)");
@@ -79,7 +77,7 @@ public class CreateSignatureTest extends TestCase {
 
     /**
      * Kills the SignatureWizard object and deletes the signed XML document.
-     *
+     * 
      * @throws Exception to indicate any exceptional condition
      */
     public void tearDown() throws Exception {
@@ -98,7 +96,7 @@ public class CreateSignatureTest extends TestCase {
     /**
      * Test method for
      * {@link org.jcryptool.crypto.xml.core.sign.CreateSignature#sign(org.jcryptool.crypto.xml.core.sign.Signature, org.eclipse.jface.text.ITextSelection)}
-     *
+     * 
      */
     public void testSign() {
         CreateSignature sign = new CreateSignature();
@@ -116,8 +114,7 @@ public class CreateSignatureTest extends TestCase {
             fos.flush();
             fos.close();
 
-            ArrayList<VerificationResult> signatures = verify
-                    .verify(signedFilename, SIGNATURE_ID);
+            ArrayList<VerificationResult> signatures = verify.verify(signedFilename, SIGNATURE_ID);
             assertEquals("valid", (signatures.get(0)).getStatus());
 
             signatures = verify.verify(signedFilename, "wrongID");
