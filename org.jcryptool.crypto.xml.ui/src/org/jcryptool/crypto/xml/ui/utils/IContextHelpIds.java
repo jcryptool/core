@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010 Dominik Schadow - http://www.xml-sicherheit.de
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -15,7 +15,7 @@ package org.jcryptool.crypto.xml.ui.utils;
  * help file is included in the <b>org.jcryptool.crypto.xml.help</b> plug-in.</p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public interface IContextHelpIds {
     String PREFIX = "org.jcryptool.crypto.xml.help.";
@@ -25,15 +25,11 @@ public interface IContextHelpIds {
     String PREFERENCES_ENCRYPTION = PREFIX + "preferences_encryption";
     String XPATH_DIALOG = PREFIX + "xpath_dialog";
     String WIZARD_DECRYPTION_RESOURCE = PREFIX + "wizard_decryption_resource";
-    String WIZARD_DECRYPTION_KEYSTORE = PREFIX + "wizard_decryption_keystore";
+    String WIZARD_DECRYPTION_KEY = PREFIX + "wizard_decryption_key";
     String WIZARD_ENCRYPTION_RESOURCE = PREFIX + "wizard_encryption_resource";
-    String WIZARD_ENCRYPTION_OPEN_KEY = PREFIX + "wizard_encryption_open_key";
-    String WIZARD_ENCRYPTION_CREATE_KEY = PREFIX + "wizard_encryption_create_key";
-    String WIZARD_ENCRYPTION_CREATE_KEYSTORE = PREFIX + "wizard_encryption_create_keystore";
+    String WIZARD_ENCRYPTION_KEY = PREFIX + "wizard_encryption_key";
     String WIZARD_ENCRYPTION_ALGORITHMS = PREFIX + "wizard_encryption_algorithms";
     String WIZARD_SIGNATURE_RESOURCE = PREFIX + "wizard_signature_resource";
-    String WIZARD_SIGNATURE_OPEN_KEY = PREFIX + "wizard_signature_open_key";
-    String WIZARD_SIGNATURE_CREATE_KEY = PREFIX + "wizard_signature_create_key";
-    String WIZARD_SIGNATURE_CREATE_KEYSTORE = PREFIX + "wizard_signature_create_keystore";
+    String WIZARD_SIGNATURE_KEY = PREFIX + "wizard_signature_key";
     String WIZARD_SIGNATURE_ALGORITHMS = PREFIX + "wizard_signature_algorithms";
 }

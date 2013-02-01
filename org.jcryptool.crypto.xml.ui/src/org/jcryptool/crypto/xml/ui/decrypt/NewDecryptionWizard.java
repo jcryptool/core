@@ -30,8 +30,8 @@ import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 public class NewDecryptionWizard extends Wizard implements INewWizard {
     /** PageResource first wizard page. */
     private PageResource pageResource = null;
-    /** PageKeystore second wizard page. */
-    private PageKeystore pageKeystore = null;
+    /** PageKey second wizard page. */
+    private PageKey pageKey = null;
     /** XML document to decrypt. */
     private InputStream data;
     /** The Decryption model. */
@@ -91,8 +91,8 @@ public class NewDecryptionWizard extends Wizard implements INewWizard {
         pageResource = new PageResource(decryption, data);
         addPage(pageResource);
 
-        pageKeystore = new PageKeystore(decryption);
-        addPage(pageKeystore);
+        pageKey = new PageKey(decryption);
+        addPage(pageKey);
     }
 
     /**
@@ -102,11 +102,11 @@ public class NewDecryptionWizard extends Wizard implements INewWizard {
      * @return Wizard completion status
      */
     public boolean canFinish() {
-        if (this.getContainer().getCurrentPage() != pageKeystore) {
+        if (this.getContainer().getCurrentPage() != pageKey) {
             return false;
         }
 
-        return pageKeystore.isPageComplete();
+        return pageKey.isPageComplete();
     }
 
     /**
@@ -115,7 +115,7 @@ public class NewDecryptionWizard extends Wizard implements INewWizard {
      * @return true
      */
     public boolean performFinish() {
-        return pageKeystore.performFinish();
+        return pageKey.performFinish();
     }
 
     /**

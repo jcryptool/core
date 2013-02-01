@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Dominik Schadow - initial API and implementation
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.sign;
 
@@ -16,7 +13,6 @@ import java.io.InputStream;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -42,16 +38,14 @@ import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 import org.w3c.dom.Document;
 
 /**
- * <p>First wizard page to create an XML signature. Lets the user select the resource to sign
- * (<i>document</i>, <i>selection</i>, <i>XPath</i>) and the signature type (<i>enveloping</i>,
- * <i>enveloped</i>, <i>detached</i>).<br>
- * The option to create a <i>Basic Security Profile</i> compliant signature can be activated on this
- * page too.<br>
- * Also lets the user select to open an existing <i>X.509 certificate</i> or to create a new
- * certificate. The next wizard page is based on this decision.</p>
- *
+ * <p>
+ * First wizard page to create an XML signature. Lets the user select the resource to sign (<i>document</i>,
+ * <i>selection</i>, <i>XPath</i>) and the signature type (<i>enveloping</i>, <i>enveloped</i>, <i>detached</i>).<br>
+ * The option to create a <i>Basic Security Profile</i> compliant signature can be activated on this page too.
+ * </p>
+ * 
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class PageResource extends WizardPage implements Listener {
     /** Wizard page name. */
@@ -74,12 +68,6 @@ public class PageResource extends WizardPage implements Listener {
     private Button bSelection = null;
     /** Radio to sign with the XPath expression. */
     private Button bXpath = null;
-    /** Radio to create a new certificate and a new Keystore. */
-    private Button bCreateKeystore = null;
-    /** Radio to create a new certificate in an existing Keystore. */
-    private Button bCreateCertificate = null;
-    /** Radio to open an existing certificate in an existing Keystore. */
-    private Button bOpenCertificate = null;
     /** Textfield for the detached file to sign. */
     private Text tDetachedFile = null;
     /** Textfield for the XPath expression to sign. */
@@ -100,7 +88,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Constructor for the resource page of the wizard.
-     *
+     * 
      * @param signature The signature wizard model
      * @param data The selected file
      * @param textSelection Status of text selection in editor
@@ -124,7 +112,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Creates the wizard page with the layout settings.
-     *
+     * 
      * @param parent The parent Composite
      */
     public void createControl(final Composite parent) {
@@ -136,14 +124,15 @@ public class PageResource extends WizardPage implements Listener {
         addListeners();
         setControl(container);
         loadSettings();
+        saveDataToModel();
 
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), IContextHelpIds.WIZARD_SIGNATURE_RESOURCE);
     }
 
     /**
-     * Fills this wizard page with content. Four groups (<i>Resource</i>, <i>Signature Type</i>,
-     * <i>Key</i> and <i>Basic Security Profile</i>) and all their widgets are inserted.
-     *
+     * Fills this wizard page with content. Three groups (<i>Resource</i>, <i>Signature Type</i> and <i>Basic Security
+     * Profile</i>) and all their widgets are inserted.
+     * 
      * @param parent The parent Composite
      */
     private void createPageContent(final Composite parent) {
@@ -154,7 +143,7 @@ public class PageResource extends WizardPage implements Listener {
         layout.marginRight = IGlobals.MARGIN / 2;
         parent.setLayout(layout);
 
-        // Four groups
+        // Three groups
         Group gResource = new Group(parent, SWT.SHADOW_ETCHED_IN);
         gResource.setLayout(layout);
         gResource.setText(Messages.resource);
@@ -173,20 +162,11 @@ public class PageResource extends WizardPage implements Listener {
         data.right = new FormAttachment(IGlobals.GROUP_NUMERATOR);
         gType.setLayoutData(data);
 
-        Group gKey = new Group(parent, SWT.SHADOW_ETCHED_IN);
-        gKey.setLayout(layout);
-        gKey.setText(Messages.keystoreAndKey);
-        data = new FormData();
-        data.top = new FormAttachment(gType, IGlobals.MARGIN, SWT.DEFAULT);
-        data.left = new FormAttachment(0, 0);
-        data.right = new FormAttachment(IGlobals.GROUP_NUMERATOR);
-        gKey.setLayoutData(data);
-
         Group gBsp = new Group(parent, SWT.SHADOW_ETCHED_IN);
         gBsp.setLayout(layout);
         gBsp.setText(Messages.basicSecurityProfile);
         data = new FormData();
-        data.top = new FormAttachment(gKey, IGlobals.MARGIN, SWT.DEFAULT);
+        data.top = new FormAttachment(gType, IGlobals.MARGIN, SWT.DEFAULT);
         data.left = new FormAttachment(0, 0);
         data.right = new FormAttachment(IGlobals.GROUP_NUMERATOR);
         gBsp.setLayoutData(data);
@@ -270,29 +250,6 @@ public class PageResource extends WizardPage implements Listener {
         data.left = new FormAttachment(tDetachedFile, IGlobals.MARGIN);
         selectDetachedFile.setLayoutData(data);
 
-        // Elements for group "Certificate"
-        bOpenCertificate = new Button(gKey, SWT.RADIO);
-        bOpenCertificate.setText(Messages.useKey);
-        bOpenCertificate.setSelection(true);
-        data = new FormData();
-        data.top = new FormAttachment(gKey);
-        data.left = new FormAttachment(gKey);
-        bOpenCertificate.setLayoutData(data);
-
-        bCreateCertificate = new Button(gKey, SWT.RADIO);
-        bCreateCertificate.setText(Messages.createKey);
-        data = new FormData();
-        data.top = new FormAttachment(bOpenCertificate, IGlobals.MARGIN);
-        data.left = new FormAttachment(gKey);
-        bCreateCertificate.setLayoutData(data);
-
-        bCreateKeystore = new Button(gKey, SWT.RADIO);
-        bCreateKeystore.setText(Messages.createKeystoreAndKey);
-        data = new FormData();
-        data.top = new FormAttachment(bCreateCertificate, IGlobals.MARGIN);
-        data.left = new FormAttachment(gKey);
-        bCreateKeystore.setLayoutData(data);
-
         // Elements for group "Basic Security Profile"
         bBsp = new Button(gBsp, SWT.CHECK);
         bBsp.setText(Messages.bspCompliant);
@@ -367,7 +324,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Shows a message to the user to complete the fields on this page.
-     *
+     * 
      * @param message The message for the user
      * @param status The status type of the message
      */
@@ -385,8 +342,7 @@ public class PageResource extends WizardPage implements Listener {
      * Selection dialog to select the XPath for the element to sign.
      */
     private void openXPathDialog() {
-        XpathDialog dialog = new XpathDialog(getShell(), new LabelProvider(), doc,
-                Messages.xpathPopup);
+        XpathDialog dialog = new XpathDialog(getShell(), new LabelProvider(), doc, Messages.xpathPopup);
         if (dialog.getReturnCode() == 0) {
             Object[] selected = dialog.getResult();
             if (selected.length == 1) {
@@ -401,8 +357,8 @@ public class PageResource extends WizardPage implements Listener {
     private void selectDetachedFile() {
         FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterNames(new String[] {IConstants.XML_FILTER_NAME, IConstants.ALL_FILTER_NAME});
-        dialog.setFilterExtensions(new String[] {IConstants.XML_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
+        dialog.setFilterNames(new String[] { IConstants.XML_FILTER_NAME, IConstants.ALL_FILTER_NAME });
+        dialog.setFilterExtensions(new String[] { IConstants.XML_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION });
         String filename = dialog.open();
         if (filename != null && !filename.isEmpty()) {
             tDetachedFile.setText(filename);
@@ -410,9 +366,8 @@ public class PageResource extends WizardPage implements Listener {
     }
 
     /**
-     * Handles the events from this wizard page. Affects mainly the (de-) activation state of radio
-     * buttons.
-     *
+     * Handles the events from this wizard page. Affects mainly the (de-) activation state of radio buttons.
+     * 
      * @param e The triggered event
      */
     public void handleEvent(final Event e) {
@@ -476,32 +431,6 @@ public class PageResource extends WizardPage implements Listener {
     }
 
     /**
-     * Saves the data to the model first. Then returns the next wizard page after all the necessary
-     * data is entered correctly. The next page is by default <i>PageOpenCertificate</i>. If the
-     * user chooses to create a new certificate and a new keystore the next wizard page is
-     * <i>PageCreateKeystore</i>. If the user chooses to create a new certificate in an existing
-     * keystore the next wizard page is <i>PageCreateCertificate</i>.
-     *
-     * @return IWizardPage The next wizard page
-     */
-    public IWizardPage getNextPage() {
-        saveDataToModel();
-
-        if (bCreateCertificate.getSelection()) {
-            PageCreateKey page = ((NewSignatureWizard) getWizard()).getPageCreateKey();
-            page.onEnterPage();
-            return page;
-        } else if (bCreateKeystore.getSelection()) {
-            PageCreateKeystore page = ((NewSignatureWizard) getWizard()).getPageCreateKeystore();
-            page.onEnterPage();
-            return page;
-        } else {
-            PageOpenKey page = ((NewSignatureWizard) getWizard()).getPageOpenKey();
-            return page;
-        }
-    }
-
-    /**
      * Saves the selections on this wizard page to the model. Called on exit of the page.
      */
     private void saveDataToModel() {
@@ -530,8 +459,8 @@ public class PageResource extends WizardPage implements Listener {
      * Loads the stored settings for this wizard page.
      */
     private void loadSettings() {
-        bBsp.setSelection(getDialogSettings().get(SETTING_BSP_COMPLIANT_SIGNATURE) != null
-                ? getDialogSettings().getBoolean(SETTING_BSP_COMPLIANT_SIGNATURE) : false);
+        bBsp.setSelection(getDialogSettings().get(SETTING_BSP_COMPLIANT_SIGNATURE) != null ? getDialogSettings()
+                .getBoolean(SETTING_BSP_COMPLIANT_SIGNATURE) : false);
     }
 
     /**
