@@ -340,6 +340,50 @@ public class KeyStoreManager {
         }
     }
 
+    public ArrayList<KeyStoreAlias> getAllPublicKeys() {
+        ArrayList<KeyStoreAlias> publicKeys = new ArrayList<KeyStoreAlias>();
+
+        try {
+            Enumeration<String> aliases = keyStore.aliases();
+
+            while (aliases.hasMoreElements()) {
+                KeyStoreAlias localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
+                if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) {
+                    if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PUBLIC_KEY)) {
+                        publicKeys.add(localKeyStoreAlias);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            LogUtil.logError(e);
+        }
+
+        return publicKeys;
+    }
+
+    public ArrayList<KeyStoreAlias> getAllPrivateKeys() {
+        ArrayList<KeyStoreAlias> privateKeys = new ArrayList<KeyStoreAlias>();
+
+        try {
+            Enumeration<String> aliases = keyStore.aliases();
+
+            while (aliases.hasMoreElements()) {
+                KeyStoreAlias localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
+                if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.KEYPAIR.getType())) { // asymmetric
+                    if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
+                        privateKeys.add(localKeyStoreAlias);
+                    }
+                } else if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.SECRETKEY.getType())) { // symmetric
+                    privateKeys.add(localKeyStoreAlias);
+                }
+            }
+        } catch (Exception e) {
+            LogUtil.logError(e);
+        }
+
+        return privateKeys;
+    }
+
     /**
      * let the function decide which key type the alias is associated with
      * 
@@ -382,6 +426,24 @@ public class KeyStoreManager {
             final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
                     alias.getAliasString(), new KeyStore.PasswordProtection(password));
             return entry.getCertificateChain();
+        } catch (final NoSuchAlgorithmException e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a private key", e,
+                    true);
+        } catch (final UnrecoverableEntryException e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "UnrecoverableEntryException while accessing a private key", e,
+                    true);
+        } catch (final KeyStoreException e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a private key", e, true);
+        }
+
+        return null;
+    }
+
+    public Certificate getCertificate(final KeyStoreAlias alias, final char[] password) throws Exception {
+        try {
+            final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
+                    alias.getAliasString(), new KeyStore.PasswordProtection(password));
+            return entry.getCertificate();
         } catch (final NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a private key", e,
                     true);
