@@ -373,8 +373,6 @@ public class KeyStoreManager {
                     if (localKeyStoreAlias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
                         privateKeys.add(localKeyStoreAlias);
                     }
-                } else if (localKeyStoreAlias.getKeyStoreEntryType().getType().contains(KeyType.SECRETKEY.getType())) { // symmetric
-                    privateKeys.add(localKeyStoreAlias);
                 }
             }
         } catch (Exception e) {
