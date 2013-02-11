@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.TableItem;
  * @author randallco@users.sourceforge.net
  */
 public class HexTable extends Composite implements IPropertyChangeListener {
-	private static final int threshold = 30;
+	private static final int threshold = 100;
 
 	private Table table;
 	// this is the underlying data store
