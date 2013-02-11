@@ -832,9 +832,16 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     protected void createConsoleGroup(Composite parent) {
         if (specification.hasConsoleRepresentation()) {
-            consoleGroup = new Group(parent, SWT.NONE);
+            Label separator = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+            GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            layoutData2.verticalIndent = 10;
+			separator.setLayoutData(layoutData2);
+        	
+        	consoleGroup = new Group(parent, SWT.NONE);
             consoleGroup.setLayout(new GridLayout(2, false));
-            consoleGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+            GridData layoutData3 = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            layoutData3.verticalIndent = 10;
+			consoleGroup.setLayoutData(layoutData3);
             consoleGroup.setText(Messages.AbstractClassicCryptoPage_1);
 
             {
@@ -845,25 +852,13 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 lblConsoleDescr.setLayoutData(layoutData);
                 lblConsoleDescr.setText(Messages.AbstractClassicCryptoPage_2);
 
-                lblConsoleFurther = new Label(consoleGroup, SWT.WRAP);
-                layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-                layoutData.widthHint = 320;
-                layoutData.verticalIndent = 5;
-                layoutData.horizontalSpan = 2;
-                lblConsoleFurther.setLayoutData(layoutData);
-                lblConsoleFurther.setText(Messages.AbstractClassicCryptoPage_3);
-
-                // consoleButton = new Button(consoleGroup, SWT.PUSH);
-                // layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
-                // layoutData.verticalIndent = 5;
-                // consoleButton.setLayoutData(layoutData);
-                // consoleButton.setText("Generate command line: ");
-                // consoleButton.addSelectionListener(new SelectionAdapter() {
-                // @Override
-                // public void widgetSelected(SelectionEvent e) {
-                // updateCommandLineString();
-                // }
-                // });
+//                lblConsoleFurther = new Label(consoleGroup, SWT.WRAP);
+//                layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+//                layoutData.widthHint = 320;
+//                layoutData.verticalIndent = 5;
+//                layoutData.horizontalSpan = 2;
+//                lblConsoleFurther.setLayoutData(layoutData);
+//                lblConsoleFurther.setText(Messages.AbstractClassicCryptoPage_3);
 
                 txtConsoleCommand = new Text(consoleGroup, SWT.BORDER | SWT.CENTER);
                 txtConsoleCommand.setEditable(false);
