@@ -82,6 +82,8 @@ public class AlgorithmWizard extends Wizard {
             } else {
                 setAlgorithmParameterSpec(Reflector.getInstance().getDefaultParamSpecs(spec));
             }
+            if(algorithmParameters == null)
+            	return false;
             LogUtil.logInfo("Algorithm: " + algorithmName);
             return true;
         } else {
