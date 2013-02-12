@@ -59,7 +59,7 @@ public class PerformOperationManager {
                     listeners.add(newListener);
                 } catch (CoreException e) {
                     LogUtil.logError(FlexiProviderOperationsPlugin.PLUGIN_ID,
-                            "CoreException while creating a new INewOperationListener", e, false); //$NON-NLS-1$
+                            "CoreException while creating a new IPerfomOperationListener", e, false); //$NON-NLS-1$
                 }
             }
         }
