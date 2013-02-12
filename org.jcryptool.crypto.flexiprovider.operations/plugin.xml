@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="performFlexiProviderOperation" name="Perform FlexiProvider Operations" schema="schema/performFlexiProviderOperation.exsd"/>
+   <extension-point id="checkFlexiProviderOperation" name="Check FlexiProvider Operations" schema="schema/checkFlexiProviderOperation.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <view

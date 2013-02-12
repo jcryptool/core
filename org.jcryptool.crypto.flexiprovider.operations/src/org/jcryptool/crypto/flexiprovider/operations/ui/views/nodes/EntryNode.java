@@ -19,6 +19,7 @@ import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
+import org.jcryptool.crypto.flexiprovider.operations.engines.CheckOperationManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.algorithms.AlgorithmNode;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.io.IONode;
@@ -156,7 +157,7 @@ public class EntryNode extends TreeNode implements IFlexiProviderOperation {
                         setOperation(OperationType.VERIFY);
                     }
                 } else if (type.equals(RegistryType.ASYMMETRIC_BLOCK_CIPHER)
-                        || type.equals(RegistryType.ASYMMETRIC_BLOCK_CIPHER)) {
+                        || type.equals(RegistryType.ASYMMETRIC_HYBRID_CIPHER)) {
                     if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
                         // set decrypt
                         setOperation(OperationType.DECRYPT);
@@ -165,6 +166,8 @@ public class EntryNode extends TreeNode implements IFlexiProviderOperation {
                         setOperation(OperationType.ENCRYPT);
                     }
                 }
+                if(!CheckOperationManager.getInstance().fireCheckOperation(this))
+                	setKeyStoreAlias(null);
             } else {
                 keyNode.setAlias(null);
                 setOperation(OperationType.UNKNOWN);
