@@ -37,7 +37,7 @@ public class AsymmetricHybridCipherEngine extends CipherEngine {
         Key key = null;
         try {
             cipher = Registry.getAsymmetricHybridCipher(operation.getAlgorithmDescriptor().getAlgorithmName());
-            if (operation.getOperation().equals(OperationType.ENCRYPT)) {
+            if (operation.getOperation().equals(OperationType.DECRYPT)) {
 
                 // password may be contained in the ActionItem, otherwise prompt
                 if (operation.getPassword() != null) {
@@ -75,10 +75,14 @@ public class AsymmetricHybridCipherEngine extends CipherEngine {
             JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                     Messages.ExAccessKeystorePassword, e));
             return null;
-        } catch (Exception e) {
-            LogUtil.logError(e);
-            return null;
-        }
+        } catch (UnsupportedOperationException e) {
+        	LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
+                    "UnsupportedOperationException while initializing a cipher engine", e, true); //$NON-NLS-1$
+	        return null;
+	    }catch (Exception e) {
+	            LogUtil.logError(e);
+	            return null;
+	        }
 
         return new KeyObject(key, password);
     }
