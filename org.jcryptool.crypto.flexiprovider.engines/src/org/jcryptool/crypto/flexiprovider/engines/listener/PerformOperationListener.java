@@ -20,14 +20,7 @@ import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescri
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.BlockCipherDescriptor;
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.SecureRandomDescriptor;
 import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEngine;
-import org.jcryptool.crypto.flexiprovider.engines.cipher.AsymmetricBlockCipherEngine;
-import org.jcryptool.crypto.flexiprovider.engines.cipher.AsymmetricHybridCipherEngine;
-import org.jcryptool.crypto.flexiprovider.engines.cipher.BlockCipherEngine;
-import org.jcryptool.crypto.flexiprovider.engines.cipher.CipherEngine;
-import org.jcryptool.crypto.flexiprovider.engines.mac.MacEngine;
-import org.jcryptool.crypto.flexiprovider.engines.messagedigest.MessageDigestEngine;
-import org.jcryptool.crypto.flexiprovider.engines.securerandom.SecureRandomEngine;
-import org.jcryptool.crypto.flexiprovider.engines.signature.SignatureEngine;
+import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEngineFactory;
 import org.jcryptool.crypto.flexiprovider.operations.engines.IPerfomOperationListener;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.keys.IKeyStoreAlias;
@@ -36,33 +29,7 @@ public class PerformOperationListener implements IPerfomOperationListener {
     @SuppressWarnings("incomplete-switch")
     public void performOperation(IFlexiProviderOperation operation) {
         LogUtil.logInfo("perform operation triggered: " + operation.getEntryName()); //$NON-NLS-1$
-        FlexiProviderEngine engine = null;
-        switch (operation.getRegistryType()) {
-            case ASYMMETRIC_BLOCK_CIPHER:
-                engine = new AsymmetricBlockCipherEngine();
-                break;
-            case ASYMMETRIC_HYBRID_CIPHER:
-                engine = new AsymmetricHybridCipherEngine();
-                break;
-            case BLOCK_CIPHER:
-                engine = new BlockCipherEngine();
-                break;
-            case CIPHER:
-                engine = new CipherEngine();
-                break;
-            case MAC:
-                engine = new MacEngine();
-                break;
-            case MESSAGE_DIGEST:
-                engine = new MessageDigestEngine();
-                break;
-            case SECURE_RANDOM:
-                engine = new SecureRandomEngine();
-                break;
-            case SIGNATURE:
-                engine = new SignatureEngine();
-                break;
-        }
+        FlexiProviderEngine engine = FlexiProviderEngineFactory.createEngine(operation.getRegistryType());
         if (engine != null) {
             engine.perform(engine.init(operation));
             addActionItem(operation);
