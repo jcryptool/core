@@ -41,7 +41,7 @@ import de.flexiprovider.api.keys.Key;
 import de.flexiprovider.common.util.ByteUtils;
 
 public class CipherEngine extends FlexiProviderEngine {
-    private Cipher cipher;
+    protected Cipher cipher;
 
     @Override
     public KeyObject init(IFlexiProviderOperation operation) {
@@ -67,6 +67,7 @@ public class CipherEngine extends FlexiProviderEngine {
             } catch (UnrecoverableEntryException e) {
                 JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.ExAccessKeystorePassword, e));
+                return null;
             } catch (Exception e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "Exception while accessing a secret key", e, true); //$NON-NLS-1$
@@ -89,12 +90,15 @@ public class CipherEngine extends FlexiProviderEngine {
             } catch (NoSuchAlgorithmException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "NoSuchAlgorithmException while initializing a cipher engine", e, true); //$NON-NLS-1$
+                return null;
             } catch (InvalidKeyException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.CipherEngine_2, e, true);
+                return null;
             } catch (InvalidAlgorithmParameterException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "InvalidAlgorithmParameterException while initializing a cipher engine", e, true); //$NON-NLS-1$
+                return null;
             }
         }
         return new KeyObject(key, password);
@@ -105,18 +109,9 @@ public class CipherEngine extends FlexiProviderEngine {
             LogUtil.logInfo("perfoming cipher"); //$NON-NLS-1$
             InputStream inputStream = initInput(operation.getInput());
             OutputStream outputStream = initOutput(operation.getOutput());
-            int blockSize = cipher.getBlockSize();
-            byte[] currentBlock = new byte[blockSize];
-            int i;
-            byte[] outputBuffer;
             try {
-                while ((i = inputStream.read(currentBlock)) != -1) {
-                    outputBuffer = cipher.update(currentBlock, 0, i);
-                    outputStream.write(outputBuffer);
-                }
-                outputBuffer = cipher.doFinal();
-                LogUtil.logInfo("dofinal: " + ByteUtils.toHexString(outputBuffer)); //$NON-NLS-1$
-                outputStream.write(outputBuffer);
+            	performCipher(inputStream, outputStream);
+                
                 inputStream.close();
                 outputStream.close();
                 if (operation.getOutput().equals("<Editor>")) { //$NON-NLS-1$
@@ -140,5 +135,22 @@ public class CipherEngine extends FlexiProviderEngine {
             }
         }
     }
+
+	protected void performCipher(InputStream inputStream,
+			OutputStream outputStream) throws IOException,
+			IllegalBlockSizeException, BadPaddingException {
+		byte[] outputBuffer;
+		byte[] currentBlock = new byte[cipher.getBlockSize()];
+		
+		int length;
+		while ((length = inputStream.read(currentBlock)) != -1) {
+		    outputBuffer = cipher.update(currentBlock, 0, length);
+		    outputStream.write(outputBuffer);
+		}
+		outputBuffer = cipher.doFinal();
+		
+		LogUtil.logInfo("dofinal: " + ByteUtils.toHexString(outputBuffer)); //$NON-NLS-1$
+        outputStream.write(outputBuffer);
+	}
 
 }
