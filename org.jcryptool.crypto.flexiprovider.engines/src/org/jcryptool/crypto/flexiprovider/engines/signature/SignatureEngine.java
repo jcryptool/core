@@ -82,16 +82,21 @@ public class SignatureEngine extends FlexiProviderEngine {
         } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                     "NoSuchAlgorithmException while initializing a signature", e, true); //$NON-NLS-1$
+            return null;
         } catch (InvalidAlgorithmParameterException e) {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                     "InvalidAlgorithmParameterException while initializing a signature", e, true); //$NON-NLS-1$
+            return null;
         } catch (InvalidKeyException e) {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, Messages.SignatureEngine_5, e, true);
+            return null;
         } catch (UnrecoverableEntryException e) {
             JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                     Messages.ExAccessKeystorePassword, e));
+            return null;
         } catch (Exception e) {
             LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "Exception while initializing a signature", e, true); //$NON-NLS-1$
+            return null;
         }
         return usedKey;
     }
