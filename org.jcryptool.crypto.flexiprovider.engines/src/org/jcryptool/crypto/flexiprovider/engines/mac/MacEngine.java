@@ -65,6 +65,7 @@ public class MacEngine extends FlexiProviderEngine {
             } catch (UnrecoverableEntryException e) {
                 JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.ExAccessKeystorePassword, e));
+                return null;
             } catch (Exception e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "Exception while accessing a secret key", e, true); //$NON-NLS-1$
@@ -86,12 +87,15 @@ public class MacEngine extends FlexiProviderEngine {
             } catch (NoSuchAlgorithmException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "NoSuchAlgorithmException while initializing a mac", e, true); //$NON-NLS-1$
+                return null;
             } catch (InvalidKeyException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         Messages.MacEngine_2, e, true);
+                return null;
             } catch (InvalidAlgorithmParameterException e) {
                 LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID,
                         "InvalidAlgorithmParameterException while initializing a mac", e, true); //$NON-NLS-1$
+                return null;
             }
         }
         return new KeyObject(key, password);
