@@ -34,6 +34,9 @@ public class Alphabet extends AbstractAlphabet {
 	private boolean basic = false;
 
 	private String shortName;
+	
+	public Alphabet() {
+	}
 
 	/**
 	 * Constructor using a String for initialization

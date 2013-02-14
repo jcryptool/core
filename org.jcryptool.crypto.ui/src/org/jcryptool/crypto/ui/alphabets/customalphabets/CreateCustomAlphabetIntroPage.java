@@ -40,8 +40,7 @@ public class CreateCustomAlphabetIntroPage extends WizardPage {
 	public CreateCustomAlphabetIntroPage() {
 		super(Messages.CreateCustomAlphabetIntroPage_wizard_super);
 		setTitle(Messages.CreateCustomAlphabetIntroPage_title);
-		setDescription(Messages.CreateCustomAlphabetIntroPage_descr1 +
-				Messages.CreateCustomAlphabetIntroPage_descr2);
+		setDescription(Messages.CreateCustomAlphabetIntroPage_descr1);
 	}
 
 	/**

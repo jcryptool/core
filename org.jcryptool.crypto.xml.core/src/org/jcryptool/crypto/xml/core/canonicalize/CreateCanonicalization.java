@@ -8,7 +8,6 @@
 package org.jcryptool.crypto.xml.core.canonicalize;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.apache.xml.security.c14n.Canonicalizer;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -34,17 +33,14 @@ public class CreateCanonicalization extends AbstractModernAlgorithm {
     /**
      * Canonicalizes the selected XML document with the determined canonicalization method identified by the given URI.
      *
-     * @param input The XML document to canonicalize as InputStream
+     * @param input The XML document to canonicalize as byte[]
      * @param uri Defines the canonicalization URI (with or without comments)
      * @return Byte array of XML data
      * @throws IOException Any IO exception during processing
      */
-    public void init(final InputStream input, final String uri) throws IOException {
+    public void init(byte[] content, final String uri) throws IOException {
         this.uri = uri;
         dataObject = new HybridDataObject();
-
-        byte[] content = new byte[input.available()];
-        input.read(content);
 
         dataObject.setInput(content);
     }

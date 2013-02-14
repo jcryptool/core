@@ -189,4 +189,12 @@ public class ClassicAlgorithmSpecification {
 		return true;
 	}
 	
+	/**
+	 * @return whether this algorithm can be executed using the JCrypTool command line
+	 */
+	public boolean hasConsoleRepresentation() {
+		//TODO: calculate dynamically by checking if the console extension point was used
+		return true;
+	}
+	
 }

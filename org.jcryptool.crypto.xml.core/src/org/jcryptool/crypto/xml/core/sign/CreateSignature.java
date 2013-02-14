@@ -1,20 +1,15 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Dominik Schadow - initial API and implementation
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.core.sign;
 
 import java.io.File;
 import java.security.PrivateKey;
-import java.security.cert.CertificateExpiredException;
-import java.security.cert.CertificateNotYetValidException;
-import java.security.cert.X509Certificate;
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 
 import javax.xml.namespace.NamespaceContext;
@@ -33,7 +28,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jcryptool.core.operations.algorithm.modern.AbstractModernAlgorithm;
 import org.jcryptool.core.operations.dataobject.IDataObject;
-import org.jcryptool.crypto.xml.core.cryptography.Keystore;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.xml.core.utils.SignatureNamespaceContext;
 import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.core.utils.XmlSecurityConstants;
@@ -41,11 +37,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * <p>Creates the XML signature for the selected XML document (fragment) based
- * on the user settings in the <i>XML Signature Wizard</i>.</p>
- *
+ * <p>
+ * Creates the XML signature for the selected XML document (fragment) based on the user settings in the <i>XML Signature
+ * Wizard</i>.
+ * </p>
+ * 
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class CreateSignature extends AbstractModernAlgorithm {
     /** The XML signature. */
@@ -62,12 +60,10 @@ public class CreateSignature extends AbstractModernAlgorithm {
     private String expression = null;
     /** The signature type. */
     private String signatureType = null;
-    /** The Java Keystore. */
-    private Keystore keystore = null;
     /** The certificate password. */
     private char[] keyPassword = null;
-    /** The certificate name. */
-    private String keyName = null;
+    /** The key alias. */
+    private KeyStoreAlias keyAlias = null;
     /** The optional signature ID. */
     private String signatureId = null;
     /** The message digest algorithm. */
@@ -84,20 +80,18 @@ public class CreateSignature extends AbstractModernAlgorithm {
     private ArrayList<DigitalSignatureProperty> properties = null;
 
     /**
-     * <p>Prepares the signing of the XML document (fragment) selected in an Eclipse view (like navigator or package
-     * explorer) or in an opened editor based on the user settings in the <i>XML Signature Wizard</i> or the
-     * workspace preferences.</p>
-     *
-     * <p>Loads the Java Keystore and prepares the private key for the signature process.</p>
-     *
+     * <p>
+     * Prepares the signing of the XML document (fragment) selected in the active editor based on the user settings in
+     * the <i>XML Signature Wizard</i> or the preferences.
+     * </p>
+     * 
      * @param model Signature wizard model with all settings from the wizard
      * @param selection The selected text in the editor
      * @param monitor Progress monitor indicating the signing progress
      * @throws Exception to indicate any exceptional condition
      * @return The signed XML document
      */
-    public Document sign(Signature model, String selection, IProgressMonitor monitor)
-        throws Exception {
+    public Document sign(Signature model, String selection, IProgressMonitor monitor) throws Exception {
         Document signedDoc = null;
 
         try {
@@ -109,12 +103,8 @@ public class CreateSignature extends AbstractModernAlgorithm {
 
             monitor.worked(1);
 
-            keystore.load();
-
-            monitor.worked(1);
-
             // Get the private key for signing
-            PrivateKey privateKey = (PrivateKey) keystore.getPrivateKey(keyName, keyPassword);
+            PrivateKey privateKey = KeyStoreManager.getInstance().getPrivateKey(keyAlias, keyPassword);
 
             monitor.worked(1);
 
@@ -142,12 +132,16 @@ public class CreateSignature extends AbstractModernAlgorithm {
     }
 
     /**
-     * <p>Loads the user settings from the <i>XML Signature Wizard</i> out of the <code>SignatureWizard</code>
-     * object into different member variables.</p>
-     *
-     * <p>Determines the correct and fully qualified names of the selected algorithms for direct use with the Apache XML
-     * Security API.</p>
-     *
+     * <p>
+     * Loads the user settings from the <i>XML Signature Wizard</i> out of the <code>SignatureWizard</code> object into
+     * different member variables.
+     * </p>
+     * 
+     * <p>
+     * Determines the correct and fully qualified names of the selected algorithms for direct use with the Apache XML
+     * Security API.
+     * </p>
+     * 
      * @param signature The SignatureWizard object
      * @param selection A possibly existing text selection
      * @throws Exception to indicate any exceptional condition
@@ -155,7 +149,7 @@ public class CreateSignature extends AbstractModernAlgorithm {
     private void loadSettings(Signature signature, String selection) throws Exception {
         doc = signature.getDocument();
         // FIXME determine base URI
-        baseURI = "";//xmlFile.toURI().toString();
+        baseURI = "";// xmlFile.toURI().toString();
         resource = signature.getResource();
         expression = null;
 
@@ -171,9 +165,8 @@ public class CreateSignature extends AbstractModernAlgorithm {
             detachedFile = signature.getDetachedFile();
         }
 
-        keystore = signature.getKeystore();
         keyPassword = signature.getKeyPassword();
-        keyName = signature.getKeyName();
+        keyAlias = signature.getKeyAlias();
 
         if (signature.getSignatureProperties() != null) {
             properties = signature.getSignatureProperties();
@@ -187,14 +180,17 @@ public class CreateSignature extends AbstractModernAlgorithm {
         signatureAlgorithm = XmlSecurityConstants.getSignatureAlgorithm(signature.getSignatureAlgorithm());
         canonicalizationAlgorithm = XmlSecurityConstants.getCanonicalizationAlgorithm(signature
                 .getCanonicalizationAlgorithm());
-        transformationAlgorithm = XmlSecurityConstants.getTransformationAlgorithm(signature.getTransformationAlgorithm());
+        transformationAlgorithm = XmlSecurityConstants.getTransformationAlgorithm(signature
+                .getTransformationAlgorithm());
     }
 
     /**
-     * <p>Creates a detached signature. The selected XML document is regarded as context document and will contain the
+     * <p>
+     * Creates a detached signature. The selected XML document is regarded as context document and will contain the
      * reference to the signed XML document (detached document). The detached document won't be changed at all, only its
-     * hash value will be calculated.</p>
-     *
+     * hash value will be calculated.
+     * </p>
+     * 
      * @param privateKey The private key to create the signature
      * @param doc The context XML document which contains the signature
      * @return The signed XML document
@@ -228,9 +224,11 @@ public class CreateSignature extends AbstractModernAlgorithm {
     }
 
     /**
-     * <p>Creates an enveloped signature. Adds the signature element to the current root element, so the signed document
-     * (fragment) surrounds the signature.</p>
-     *
+     * <p>
+     * Creates an enveloped signature. Adds the signature element to the current root element, so the signed document
+     * (fragment) surrounds the signature.
+     * </p>
+     * 
      * @param privateKey The private key to create the signature
      * @param doc The XML document to sign
      * @return The signed XML document
@@ -252,8 +250,8 @@ public class CreateSignature extends AbstractModernAlgorithm {
 
             Transforms transforms = new Transforms(doc);
             transforms.addTransform(Transforms.TRANSFORM_ENVELOPED_SIGNATURE);
-            transforms.addTransform(Transforms.TRANSFORM_XPATH2FILTER, XPath2FilterContainer.newInstanceIntersect(doc,
-                    finalXpath).getElement());
+            transforms.addTransform(Transforms.TRANSFORM_XPATH2FILTER,
+                    XPath2FilterContainer.newInstanceIntersect(doc, finalXpath).getElement());
             if (transformationAlgorithm != null && !"None".equals(transformationAlgorithm)) {
                 transforms.addTransform(transformationAlgorithm);
             }
@@ -261,8 +259,8 @@ public class CreateSignature extends AbstractModernAlgorithm {
         } else if ("xpath".equalsIgnoreCase(resource)) {
             Transforms transforms = new Transforms(doc);
             transforms.addTransform(Transforms.TRANSFORM_ENVELOPED_SIGNATURE);
-            transforms.addTransform(Transforms.TRANSFORM_XPATH2FILTER, XPath2FilterContainer.newInstanceIntersect(doc,
-                    expression).getElement());
+            transforms.addTransform(Transforms.TRANSFORM_XPATH2FILTER,
+                    XPath2FilterContainer.newInstanceIntersect(doc, expression).getElement());
             if (transformationAlgorithm != null && !"None".equals(transformationAlgorithm)) {
                 transforms.addTransform(transformationAlgorithm);
             }
@@ -287,10 +285,12 @@ public class CreateSignature extends AbstractModernAlgorithm {
     }
 
     /**
-     * <p>Creates an enveloping signature. Removes the signed node(s) or text content from its original location
-     * and stores it inside the <code>object</code> element in the XML Signature. The nodes name is used
-     * as id for the <code>object</code> element.</p>
-     *
+     * <p>
+     * Creates an enveloping signature. Removes the signed node(s) or text content from its original location and stores
+     * it inside the <code>object</code> element in the XML Signature. The nodes name is used as id for the
+     * <code>object</code> element.
+     * </p>
+     * 
      * @param privateKey The private key to create the signature
      * @param doc The XML document to sign
      * @return The signed XML document
@@ -374,13 +374,19 @@ public class CreateSignature extends AbstractModernAlgorithm {
     }
 
     /**
-     * <p>Adds the entered signature properties to the signature element. The additional reference per property element
-     * causes every property to be signed as well.</p>
-     *
-     * <p>A signature property is only used if and only if the id and target value are not empty.</p>
-     *
-     * <p>IDs must be unique in the selected XML document!</p>
-     *
+     * <p>
+     * Adds the entered signature properties to the signature element. The additional reference per property element
+     * causes every property to be signed as well.
+     * </p>
+     * 
+     * <p>
+     * A signature property is only used if and only if the id and target value are not empty.
+     * </p>
+     * 
+     * <p>
+     * IDs must be unique in the selected XML document!
+     * </p>
+     * 
      * @param doc The XML document to add the properties to
      * @throws Exception to indicate any exceptional condition
      */
@@ -407,28 +413,23 @@ public class CreateSignature extends AbstractModernAlgorithm {
     }
 
     /**
-     * <p>Adds the certificate and public key information from the keystore. All certificate information is needed for
-     * successful verification with the <b>XML Security Tools</b>.</p>
-     *
-     * <p>Aborts the adding if the certificate expired or is not yet valid.</p>
-     *
+     * <p>
+     * Adds the certificate and public key information from the keystore. All certificate information is needed for
+     * successful verification with the <b>XML Security Tools</b>.
+     * </p>
+     * 
+     * <p>
+     * Aborts the adding if the certificate expired or is not yet valid.
+     * </p>
+     * 
      * @return Certificate successfully added
      * @throws Exception to indicate any exceptional condition
      */
     private boolean addCertificate() throws Exception {
         boolean addedCertificate = false;
-        X509Certificate cert = (X509Certificate) keystore.getCertificate(keyName);
+        Certificate cert = KeyStoreManager.getInstance().getCertificate(keyAlias, keyPassword);
 
         if (cert != null) {
-            try {
-                cert.checkValidity();
-            } catch (CertificateExpiredException cee) {
-                addedCertificate = false;
-            } catch (CertificateNotYetValidException cnyve) {
-                addedCertificate = false;
-            }
-
-            sig.addKeyInfo(cert);
             sig.addKeyInfo(cert.getPublicKey());
             addedCertificate = true;
         }

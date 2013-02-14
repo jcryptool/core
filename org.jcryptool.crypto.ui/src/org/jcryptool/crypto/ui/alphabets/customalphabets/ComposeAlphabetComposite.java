@@ -216,11 +216,13 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			comp_block_controls.setLayout(gl_comp_block_controls);
 
 			btnVorhandeneAlphabeteAls = new Button(comp_block_controls, SWT.CHECK);
-			btnVorhandeneAlphabeteAls.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+			btnVorhandeneAlphabeteAls.setLayoutData(layoutData);
 			btnVorhandeneAlphabeteAls.setText(Messages.getString("ComposeAlphabetComposite.2")); //$NON-NLS-1$
 			Image showExistingImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
 			btnVorhandeneAlphabeteAls.setImage(showExistingImg);
 			btnVorhandeneAlphabeteAls.setVisible(false);
+			layoutData.exclude = true;
 			showExistingAlphasAsBlocks = new ButtonInput() {
 				@Override
 				protected InputVerificationResult verifyUserChange() {
@@ -409,8 +411,9 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 
 	private void initializeAvailableBlocks() {
 		addAvailableBlockAlphabets(getDefaultBlocks(), BlockType.DEFAULT);
-		gd_compBlocks.minimumWidth = compBlocks.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-		gd_compBlocks.widthHint = gd_compBlocks.minimumWidth;
+		int widthInitial = compBlocks.computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
+		gd_compBlocks.minimumWidth = 40;
+		gd_compBlocks.widthHint = widthInitial;
 		compBlocks.setLayoutData(gd_compBlocks);
 		if(showExistingAlphasAsBlocks.getContent()) {
 			addAvailableBlockAlphabets(getExistingAlphabetBlocks(), BlockType.PREEXISTING);

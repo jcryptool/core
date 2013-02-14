@@ -3,14 +3,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
   	<groupId>org.jcryptool</groupId>
-  	<artifactId>product</artifactId>
+  	<artifactId>org.jcryptool.releng</artifactId>
   	<version>1.0.0</version>
-	<relativePath>../core/org.jcryptool.repository/parent</relativePath>
+	<relativePath>../core/org.jcryptool.releng</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jcryptool</groupId>
-  <artifactId>crypto.parent</artifactId>
-  <version>1.0.0</version>
+  <artifactId>org.jcryptool.crypto.parent</artifactId>
   <packaging>pom</packaging>
   <name>JCrypTool Crypto</name>
   <modules>  
@@ -64,6 +62,7 @@
 	<module>org.jcryptool.visual.des</module>
 	<module>org.jcryptool.visual.ecc</module>
 	<module>org.jcryptool.visual.ecdh</module>
+	<module>org.jcryptool.visual.extendedrsa</module>
 	<module>org.jcryptool.visual.elGamal</module>
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>

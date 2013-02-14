@@ -225,7 +225,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public void widgetSelected(SelectionEvent e) {
 							if(btnCustomAlphabet.getSelection()) {
 								customAlphaByBtn = makeCustomAlphabet(e);
-								if(customAlphaByCombo != null) {
+								if(customAlphaByBtn != null) {
 									reloadAlphabetCombo();
 								}
 								
@@ -290,7 +290,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		Shell parentShell = new Shell(Display.getDefault());
 		WizardDialog d = new WizardDialog(parentShell, wiz);
 		d.open();
-		if(d.getReturnCode() == Dialog.OK) {
+		int returnCode = d.getReturnCode();
+		if(returnCode == Dialog.OK) {
 			return wiz.getAlphabet();
 		}
 		
@@ -659,6 +660,16 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			applyEnabledMap();
 		}
 		super.setEnabled(enabled);
+	}
+	
+	public boolean isCustomAlphabetSelected() {
+		if(mode.isWithCustomButton()) {
+			return btnCustomAlphabet.getSelection();
+		}
+		if(mode.isWithCustomComboEntry()) {
+			return !isRegisteredAlphabetSetInCombo();
+		}
+		return false;
 	}
 
 	private void applyEnabledMap() {

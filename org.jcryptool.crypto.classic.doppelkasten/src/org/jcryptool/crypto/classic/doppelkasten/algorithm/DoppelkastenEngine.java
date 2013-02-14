@@ -219,8 +219,8 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
 
         for (int i = 0; i < key.length; i++)
             origKeyString.append(alphaChars[key[i]]);
-        keyString1 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[0];
-        keyString2 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[1];
+        keyString1 = origKeyString.toString().split(DoppelkastenAlgorithmSpecification.KEY_SEPARATOR)[0];
+        keyString2 = origKeyString.toString().split(DoppelkastenAlgorithmSpecification.KEY_SEPARATOR)[1];
 
         for (int i = 0; i < input.length; i++)
             rohtext.append(alphaChars[input[i]]);
@@ -306,8 +306,8 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
 
         for (int i = 0; i < key.length; i++)
             origKeyString.append(alphaChars[key[i]]);
-        keyString1 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[0];
-        keyString2 = origKeyString.toString().split("SLGFLBSDFGKSDFGSDFGLK")[1];
+        keyString1 = origKeyString.toString().split(DoppelkastenAlgorithmSpecification.KEY_SEPARATOR)[0];
+        keyString2 = origKeyString.toString().split(DoppelkastenAlgorithmSpecification.KEY_SEPARATOR)[1];
 
         for (int i = 0; i < input.length; i++)
             rohtext.append(alphaChars[input[i]]);

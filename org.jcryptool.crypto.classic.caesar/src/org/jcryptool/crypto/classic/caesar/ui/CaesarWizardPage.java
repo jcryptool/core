@@ -35,5 +35,18 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),
                 CaesarPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }
+    
+    @Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "-k " + quoteCmdlineArgIfNecessary(getKey());
+    	
+    	String result = "caesar " + encDec + " -ed " + key;
+
+    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
+    }
 
 }

@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.core.operations;bundle-version="0.9.5",
  org.jcryptool.crypto.classic.model;bundle-version="0.9.5",
  org.jcryptool.commands.core;bundle-version="0.9.5",
- org.apache.commons.cli;bundle-version="1.2.0"
+ org.apache.commons.cli;bundle-version="1.2.0",
+ org.jcryptool.core.util
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.delastelle,
  org.jcryptool.crypto.classic.delastelle.algorithm,

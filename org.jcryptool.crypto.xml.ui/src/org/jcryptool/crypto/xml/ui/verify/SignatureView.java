@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -45,7 +45,7 @@ import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
  * the number of all discovered signatures and the number of valid, invalid and unknown ones.</p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class SignatureView extends ViewPart {
     /** TableViewer in the view. */

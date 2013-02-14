@@ -10,12 +10,6 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -35,33 +29,25 @@ import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.core.operations.editors.EditorsManager;
-import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 
 /**
  * @author SLeischnig
  *
  */
-public class SimpleAnalysisUI extends org.eclipse.swt.widgets.Composite {
+public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	private Button button1;
 	private Composite composite1;
 	private Group group1;
 	private Label label1;
 	private Button button2;
-	private Spinner spinner2;
-	private Spinner spinner1;
 	private Button button4;
-	private Button button3;
 	private Composite composite2;
 	private Group group4;
 	private Label label2;
 	private Group group2;
-	private CustomFreqCanvas myGraph;
 
-	private String text;
 	private FreqAnalysisCalc myAnalysis;
-	private int myLength, myOffset;
 	TransformData myModifySettings;
 
 
@@ -267,87 +253,17 @@ public class SimpleAnalysisUI extends org.eclipse.swt.widgets.Composite {
 
 	}
 
-	/**
-	 * takes the input control's values and sets the final analysis parameters
-	 */
-	private void setFinalVigParameters()
-	{
-		myLength = 1; if(! button3.getSelection()) {
-			myLength = spinner1.getSelection();
-		}
-		myOffset = 0; if(! button3.getSelection()) {
-			myOffset = spinner2.getSelection();
-		}
-	}
+	
 
 	/**
 	 * frequency analysis main procedure
 	 */
-	private void analyze()
+	@Override
+	protected void analyze()
 	{
 		myAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, myModifySettings);
 		myGraph.setAnalysis(myAnalysis);
 	}
-
-	/**
-	 * rebuilds the frequency analysis graph
-	 */
-	private void recalcGraph()
-	{
-		if(checkEditor() && text != null)
-		{
-			setFinalVigParameters();
-			analyze();
-			myGraph.redraw();
-		}
-	}
-
-	/**checks, whether an editor is opened or not.
-	 */
-	private boolean checkEditor()
-	{
-		InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-		if(stream==null) {
-			return false;
-		} return true;
-	}
-
-	/** get the text from an opened editor
-	 */
-	private String getEditorText()
-	{
-		String text=""; //$NON-NLS-1$
-		InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-		text = InputStreamToString(stream);
-		return text;
-	}
-
-	/**
-     * reads the current value from an input stream
-     *
-     * @param in the input stream
-     */
-    private String InputStreamToString(InputStream in) {
-    	BufferedReader reader = null;
-		try {
-			reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-		} catch (UnsupportedEncodingException e1) {
-			LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
-		}
-
-    	StringBuffer myStrBuf = new StringBuffer();
-        int charOut = 0;
-        String output = ""; //$NON-NLS-1$
-        try {
-            while ((charOut = reader.read()) != -1) {
-            	myStrBuf.append(String.valueOf((char) charOut));
-            }
-        } catch (IOException e) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
-        }
-        output = myStrBuf.toString();
-        return output;
-    }
 
 	/** excludes a control from the Layout calculation
 	 * @param that

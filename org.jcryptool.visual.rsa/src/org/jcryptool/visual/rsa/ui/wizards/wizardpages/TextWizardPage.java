@@ -72,21 +72,8 @@ public abstract class TextWizardPage extends WizardPage {
 			this.getNextPage().setVisible(false);
 		}
 		else if (!numbers){
-//			System.out.println("Enable Next Page");
 			this.getNextPage().setVisible(true);
 		}
-		
-//    	if (planeButton.getSelection()) {
-//			PlanePage page = ((HolidayWizard)getWizard()).planePage;
-//			page.onEnterPage();
-//			return page;
-//		}
-//	    // Returns the next page depending on the selected button
-//		if (carButton.getSelection()) { 
-//			CarPage page = ((HolidayWizard)getWizard()).carPage;
-//			return page;
-//		}
-		//return null;
 	}
 
 }

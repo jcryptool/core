@@ -21,9 +21,16 @@ public class CustomAlphabetWizard extends Wizard {
 	private AbstractAlphabet selectedAlphabet = null;
 	
 	public CustomAlphabetWizard() {
+		setHelpAvailable(false);
+		System.out.println(this.isHelpAvailable());
 		setWindowTitle(Messages.CustomAlphabetWizard_windowtitle);
 		page1 = new CreateCustomAlphabetIntroPage();
 		page2 = new CreateCustomAlphabetsWizardPage();
+	}
+	
+	@Override
+	public boolean isHelpAvailable() {
+		return false;
 	}
 	
 	@Override

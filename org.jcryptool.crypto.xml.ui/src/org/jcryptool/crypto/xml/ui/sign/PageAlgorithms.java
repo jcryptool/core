@@ -1,8 +1,8 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
  * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.sign;
@@ -59,9 +59,9 @@ import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
  * <i>signature algorithm</i> and the <i>canonicalization</i> and <i>transformation algorithm</i>. Optional <i>Signature
  * Properties</i> can be provided. The <i>Signature ID</i> is optional but recommended.
  * </p>
- *
+ * 
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class PageAlgorithms extends WizardPage implements Listener {
     /** Wizard page name. */
@@ -101,7 +101,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Constructor for PageAlgorithms.
-     *
+     * 
      * @param signature The signature wizard model
      */
     public PageAlgorithms(final Signature signature) {
@@ -116,7 +116,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Creates the wizard page with the layout settings.
-     *
+     * 
      * @param parent Parent composite
      */
     public void createControl(final Composite parent) {
@@ -136,7 +136,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
      * Fills this wizard page with content. Five groups (<i>Canonicalization and Transformation Algorithm</i>,
      * <i>Message Digest and Signature Algorithm</i>, <i>Signature Properties</i>, <i>Signature ID</i> and <i>Encryption
      * Wizard</i>) and all their widgets are inserted.
-     *
+     * 
      * @param parent Parent composite
      */
     private void createPageContent(final Composite parent) {
@@ -315,7 +315,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Adds the LabelProvider to the TableViewer.
-     *
+     * 
      * @param viewer The TableViewer
      */
     private void attachLabelProvider(final TableViewer viewer) {
@@ -331,14 +331,14 @@ public class PageAlgorithms extends WizardPage implements Listener {
                 }
 
                 switch (columnIndex) {
-                    case 0:
-                        return ((EditableTableItem) element).getId();
-                    case 1:
-                        return ((EditableTableItem) element).getTarget();
-                    case 2:
-                        return ((EditableTableItem) element).getContent();
-                    default:
-                        return "Invalid column: " + columnIndex;
+                case 0:
+                    return ((EditableTableItem) element).getId();
+                case 1:
+                    return ((EditableTableItem) element).getTarget();
+                case 2:
+                    return ((EditableTableItem) element).getContent();
+                default:
+                    return "Invalid column: " + columnIndex;
                 }
             }
 
@@ -359,7 +359,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Adds the cell editors to the TableViewer.
-     *
+     * 
      * @param viewer The TableViewer
      * @param parent The parent composite
      */
@@ -397,10 +397,10 @@ public class PageAlgorithms extends WizardPage implements Listener {
             }
         });
 
-        viewer.setCellEditors(new CellEditor[] {new TextCellEditor(parent), new TextCellEditor(parent),
-                new TextCellEditor(parent)});
+        viewer.setCellEditors(new CellEditor[] { new TextCellEditor(parent), new TextCellEditor(parent),
+                new TextCellEditor(parent) });
 
-        viewer.setColumnProperties(new String[] {ID_PROPERTY, TARGET_PROPERTY, CONTENT_PROPERTY});
+        viewer.setColumnProperties(new String[] { ID_PROPERTY, TARGET_PROPERTY, CONTENT_PROPERTY });
     }
 
     /**
@@ -485,7 +485,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Shows a message to the user to complete the fields on this page.
-     *
+     * 
      * @param message The message for the user
      * @param status The status type of the message
      */
@@ -501,7 +501,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Called when finishing the wizard.
-     *
+     * 
      * @return Finishing status
      */
     public boolean performFinish() {
@@ -510,7 +510,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Handles the events from this wizard page.
-     *
+     * 
      * @param e The triggered event
      */
     public void handleEvent(final Event e) {
@@ -523,7 +523,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Sets the completed field on the wizard class when all the data is entered and the wizard can be completed.
-     *
+     * 
      * @return Page completion state
      */
     public boolean isPageComplete() {
@@ -536,7 +536,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Saves the selections on this wizard page to the model. Called on exit of the page.
-     *
+     * 
      * @return Saving state
      */
     private boolean saveDataToModel() {
@@ -570,54 +570,41 @@ public class PageAlgorithms extends WizardPage implements Listener {
      */
     public void onEnterPage() {
         File detachedFile = signature.getDetachedFile();
-        String type = signature.getSignatureType();
-        String certificateType = signature.getKeyAlgorithm();
+        String signatureType = signature.getSignatureType();
         String fileType = null;
         if (detachedFile != null) { // Detached file
             String fileName = detachedFile.getName();
             fileType = fileName.substring(fileName.lastIndexOf(".") + 1); //$NON-NLS-1$
         }
         if (signature.getBsp()) { // BSP selected
-            cCanon.setItems(IAlgorithms.CANONICALIZATION_ALOGRITHMS_BSP);
-            cCanon.setText(IAlgorithms.CANONICALIZATION_ALOGRITHMS_BSP[0]);
+            cCanon.setItems(IAlgorithms.CANONICALIZATION_ALGORITHMS_BSP);
+            cCanon.setText(IAlgorithms.CANONICALIZATION_ALGORITHMS_BSP[0]);
             if (fileType == null || fileType.equalsIgnoreCase("xml")) { //$NON-NLS-1$
-                cTransform.setItems(IAlgorithms.TRANSFORMATION_ALOGRITHMS_BSP);
+                cTransform.setItems(IAlgorithms.TRANSFORMATION_ALGORITHMS_BSP);
                 cTransform.select(0);
             } else { // arbitrary data, no transformation
                 cTransform.setItems(IAlgorithms.NONE_ALGORITHM);
                 cTransform.select(0);
             }
-            cMDA.setItems(IAlgorithms.MD_ALOGRITHMS_BSP);
+            cMDA.setItems(IAlgorithms.MD_ALGORITHMS_BSP);
             cMDA.select(0);
-            cSign.setItems(IAlgorithms.SIGNATURE_ALOGRITHMS_BSP);
+            cSign.setItems(IAlgorithms.SIGNATURE_ALGORITHMS_BSP);
             cSign.select(0);
         } else { // BSP not selected
-            cCanon.setItems(IAlgorithms.CANONICALIZATION_ALOGRITHMS);
+            cCanon.setItems(IAlgorithms.CANONICALIZATION_ALGORITHMS);
             cCanon.select(0);
             // detached signature without XML file
-            if (type.equalsIgnoreCase("detached") && !fileType.equalsIgnoreCase("xml")) {
+            if (signatureType.equalsIgnoreCase("detached") && !fileType.equalsIgnoreCase("xml")) {
                 cTransform.setItems(IAlgorithms.NONE_ALGORITHM);
                 cTransform.select(0);
             } else { // enveloped or enveloping or detached signature with XML file
-                cTransform.setItems(IAlgorithms.TRANSFORMATION_ALOGRITHMS);
+                cTransform.setItems(IAlgorithms.TRANSFORMATION_ALGORITHMS);
                 cTransform.select(4);
             }
-            cMDA.setItems(IAlgorithms.MD_ALOGRITHMS);
-            cMDA.setText(IAlgorithms.MD_ALOGRITHMS[2]);
-            // available signature algorithms depend on selected certificate
-            if (certificateType.equals("SHA1withDSA")) {
-                cSign.setItems(IAlgorithms.SIGNATURE_ALOGRITHMS_DSA);
-                cSign.select(0);
-            } else if (certificateType.equals("SHA1withECDSA")) {
-                cSign.setItems(IAlgorithms.SIGNATURE_ALOGRITHMS_EC);
-                cSign.select(0);
-            } else if (certificateType.equals("SHA1withRSA")) {
-                cSign.setItems(IAlgorithms.SIGNATURE_ALOGRITHMS_RSA);
-                cSign.select(3);
-            } else {
-                cSign.setItems(IAlgorithms.SIGNATURE_ALOGRITHMS);
-                cSign.select(0);
-            }
+            cMDA.setItems(IAlgorithms.MD_ALGORITHMS);
+            cMDA.setText(IAlgorithms.MD_ALGORITHMS[2]);
+            cSign.setItems(IAlgorithms.SIGNATURE_ALGORITHMS);
+            cSign.select(0);
         }
         setMessage(null);
     }
@@ -640,7 +627,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Action to add a new property row.
-     *
+     * 
      * @author Dominik Schadow (info@xml-sicherheit.de), www.xml-sicherheit.de
      * @version 2.0.0, 28.01.2007
      */
@@ -662,7 +649,7 @@ public class PageAlgorithms extends WizardPage implements Listener {
 
     /**
      * Action to remove a selected property row.
-     *
+     * 
      * @author Dominik Schadow (info@xml-sicherheit.de), www.xml-sicherheit.de
      * @version 2.0.0, 28.01.2007
      */

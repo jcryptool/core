@@ -65,7 +65,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         try {
             storeAlphabets();
         } catch (IOException e) {
-            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while adding an alphabet", e, true);
+            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while adding an alphabet", e, true); //$NON-NLS-1$
         }
     }
 
@@ -159,8 +159,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
             } catch (ParserConfigurationException e) {
                 LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "A serious configuration error was indicated.", e, false); //$NON-NLS-1$
             } catch (SAXException e) {
-                LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while validating the alphabets xml file. \n"
-                        + " The containing xml is not well-formed.", e, true);
+                LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while validating the alphabets xml file. \n" //$NON-NLS-1$
+                        + " The containing xml is not well-formed.", e, true); //$NON-NLS-1$
 
                 processAlphabetsCreation();
             } catch (IOException e) {
@@ -179,7 +179,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         try {
             storeAlphabets();
         } catch (IOException e) {
-            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while storing the alphabets", e, true);
+            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while storing the alphabets", e, true); //$NON-NLS-1$
         }
     }
 
@@ -188,20 +188,20 @@ public class AlphabetStore extends AbstractAlphabetStore {
         DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         Document document = parser.parse(alphaFile);
         
-        NodeList characterSets = document.getElementsByTagName("characterSet");
+        NodeList characterSets = document.getElementsByTagName("characterSet"); //$NON-NLS-1$
         boolean umlautsFound = false;
         for(int i=0; i<characterSets.getLength(); i++) {
         	Node set = characterSets.item(i);
         	String setContent = set.getTextContent();
         	if(setContent != null) {
-        		if(setContent.contains("ö")) {
+        		if(setContent.contains("ö")) { //$NON-NLS-1$
         			umlautsFound = true;
         			break;
         		}
         	}
         }
         if(!umlautsFound) {
-        	throw new AlphaFileOutOfDateException("no umlauts were found in the present alphabet file; this must be out of date. creating a new file...");
+        	throw new AlphaFileOutOfDateException("no umlauts were found in the present alphabet file; this must be out of date. creating a new file..."); //$NON-NLS-1$
         }
 
         // create a SchemaFactory capable of understanding WXS schemas
@@ -223,19 +223,19 @@ public class AlphabetStore extends AbstractAlphabetStore {
         // ADFGVX
         char[] adfgvxCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray(); //$NON-NLS-1$
         Alphabet adfgvxAlphabet = new Alphabet(adfgvxCharset,
-                "ADFGVX Alphabet", "ADFGVX", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_adfgvx_long, Messages.AlphabetStore_alpha_adfgvx_short, AbstractAlphabet.NO_DISPLAY, true); 
         addInternAlphabet(adfgvxAlphabet);
 
         // Xor with 32 (2^5)
         char[] xor32 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345".toCharArray(); //$NON-NLS-1$
         Alphabet xor32Alphabet = new Alphabet(xor32,
-                "Xor Alphabet with 32 characters", "Xor32", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_xor32_long, Messages.AlphabetStore_alpha_xor32_short, AbstractAlphabet.NO_DISPLAY, true); 
         addInternAlphabet(xor32Alphabet);
 
         // Xor with 64 (2^6)
         char[] xor64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,.".toCharArray(); //$NON-NLS-1$
         Alphabet xor64Alphabet = new Alphabet(xor64,
-                "Xor Alphabet with 64 characters", "Xor64", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_xor64_long, Messages.AlphabetStore_alpha_xor64_short, AbstractAlphabet.NO_DISPLAY, true); 
         addInternAlphabet(xor64Alphabet);
     }
 
@@ -249,7 +249,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         for(int i=0; i<extraChars.length; i++) {
         	set[set.length-extraChars.length+i] = extraChars[i];
         }
-        Alphabet shortAsciiAlphabet = new Alphabet(set, "Printable ASCII", "ASCII", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+        Alphabet shortAsciiAlphabet = new Alphabet(set, Messages.AlphabetStore_alpha_ascii_long, Messages.AlphabetStore_alpha_ascii_short, AbstractAlphabet.NO_DISPLAY, true); 
 
         addInternAlphabet(shortAsciiAlphabet);
 
@@ -262,21 +262,21 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
 
         Alphabet characterAlphabet = new Alphabet(set2,
-                "Upper and lower Latin (A-Z,a-z)", "a-zA-Z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_uplolatin_long, Messages.AlphabetStore_alpha_uplolatin_short, AbstractAlphabet.NO_DISPLAY, true); 
 
         addInternAlphabet(characterAlphabet);
 
         char[] set4 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray(); //$NON-NLS-1$
 
         Alphabet latinUpperCaseAlphabet = new Alphabet(set4,
-                "Upper Latin (A-Z)", "A-Z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_uplatin_long, Messages.AlphabetStore_alpha_uplatin_short, AbstractAlphabet.NO_DISPLAY, true); 
 
         addInternAlphabet(latinUpperCaseAlphabet);
 
         char[] set5 = "abcdefghijklmnopqrstuvwxyz".toCharArray(); //$NON-NLS-1$
 
         Alphabet latinLowerCaseAlphabet = new Alphabet(set5,
-                "Lower Latin (a-z)", "a-z", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_lowlatin_long, Messages.AlphabetStore_alpha_lowlatin_short, AbstractAlphabet.NO_DISPLAY, true); 
 
         addInternAlphabet(latinLowerCaseAlphabet);
 
@@ -285,7 +285,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         char[] set6 = "ABCDEFGHIKLMNOPQRSTUVWXYZ".toCharArray(); //$NON-NLS-1$
 
         Alphabet playfairalphabet = new Alphabet(set6,
-                "Playfair/alike alphabet (25chars, w/o \"J\")", "Playfair", AbstractAlphabet.NO_DISPLAY, true); //$NON-NLS-1$
+                Messages.AlphabetStore_alpha_playfair_long, Messages.AlphabetStore_alpha_playfair_short, AbstractAlphabet.NO_DISPLAY, true); 
 
         addInternAlphabet(playfairalphabet);
     }
@@ -296,7 +296,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         try {
             storeAlphabets();
         } catch (IOException e) {
-            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while removing an alphabet", e, true);
+            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while removing an alphabet", e, true); //$NON-NLS-1$
         }
     }
 
@@ -356,7 +356,7 @@ public class AlphabetStore extends AbstractAlphabetStore {
         try {
             storeAlphabets();
         } catch (IOException e) {
-            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while updating an alphabet", e, true);
+            LogUtil.logError(AlphabetsPlugin.PLUGIN_ID, "Exception while updating an alphabet", e, true); //$NON-NLS-1$
         }
     }
 

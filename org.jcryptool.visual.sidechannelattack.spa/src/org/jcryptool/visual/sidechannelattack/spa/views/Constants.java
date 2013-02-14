@@ -19,7 +19,6 @@ public interface Constants {
 
 	String TOOL_TIP_TEXT_EXPONENT_BINARY = Messages.Constants_144;
 
-	String INFORMATION = Messages.Constants_0;
 	String RESULT = Messages.Constants_1;
 	String MODE = Messages.Constants_10;
 	String INPUT = Messages.Constants_100;
@@ -30,20 +29,15 @@ public interface Constants {
     String IMGADDRESSE_X_ACHSE_ENG = "icons/achse_x.jpg";
     String IMGADDRESSE_SQMUL_ENG = "icons/sam_SqMul.jpg";
 
-    String DEC_ENG = Messages.Constants_102;
     String S_RES = Messages.Constants_103;
     String HIGHEST_BIT_ENG = Messages.Constants_104;
     String FINAL_RESULT_ENG = Messages.Constants_105;
     String INPUT_BASIS_ENG = Messages.Constants_106;
-    String INPUT_RES_1_ENG = Messages.Constants_107;
     String RES_AFTER_SQUARE_ENG = Messages.Constants_108;
     String RES_AFTER_MUL_BIT_1_ENG = Messages.Constants_109;
     String RES_AFTER_MUL_BIT_0_ENG = Messages.Constants_131;
-    String EXP_ENG = Messages.Constants_11;
-    String MODUL_ENG = Messages.Constants_110;
     String R_RES = Messages.Constants_111;
     String HOCH_2_MOD_ENG = Messages.Constants_112;
-    String RSA_PROCESS_TEXT = Messages.Constants_113;
     String MAIN_GROUP_TITLE = Messages.Constants_114;
     String BASIS_LABEL = Messages.Constants_115;
     String EXPONENT_LABEL = Messages.Constants_116;
@@ -53,24 +47,14 @@ public interface Constants {
     String SECOND_COLUMN_IN_TABLE = Messages.Constants_12;
     String THIRD_COLUMN_IN_TABLE = Messages.Constants_120;
 
-    String INITIAL_ITEM_TEXT_1_IN_TABLE = Messages.Constants_121;
-    String INITIAL_ITEM_TEXT_2_IN_TABLE = Messages.Constants_122;
     String INITIAL_ITEM_TEXT_3_IN_TABLE = Messages.Constants_123;
     String OUTPUT_TABLE_ITEM_TEXT = Messages.Constants_124;
-    String INDICATION_OF_VULNERABILITY_TEXT = Messages.Constants_125;
     String EXECUTION_BUTTON_TEXT = Messages.Constants_126;
     String CLEAR_BUTTON_TEXT = Messages.Constants_127;
     String MODULE_LABEL_TEXT = Messages.Constants_128;
 
-    String INITIAL_TABLE_ITEM_SQUARE = Messages.Constants_129;
-    String INITIAL_TABLE_ITEM_MULTIPLY = Messages.Constants_13;
-    String RES_SQUARE_MULTI_ALWAYS_SQUARE = Messages.Constants_130;
-    String RES_SQUARE_MULTI_ALWAYS_MULTI = Messages.Constants_111;
-    String INDICATION_SQUARE_MULTI_ALWAYS = Messages.Constants_132;
-    String SQUARE_MULTI_ALWAYS_ALG_TEXT = Messages.Constants_133;
-
-    String INFORMATION_SAM_TEXT = INDICATION_OF_VULNERABILITY_TEXT;
-    String INFORMATION_SAMA_TEXT = INDICATION_SQUARE_MULTI_ALWAYS;
+    String INFORMATION_SAM_TEXT = Messages.Constants_125;
+    String INFORMATION_SAMA_TEXT = Messages.Constants_132;
     String TOOL_TIP_TEXT_EXPONENT = Messages.Constants_134;
     String TOOL_TIP_TEXT_BASIS = Messages.Constants_135;
     String TOOL_TIP_TEXT_CLEARBUTTON = Messages.Constants_136;

@@ -128,9 +128,13 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
 
         try {
             if (dataObject.getOpmode() == ENCRYPT_MODE) {
-                bout.write(toByteArray(encrypt(sb.toString().toCharArray())));
+                char[] encrypt = encrypt(sb.toString().toCharArray());
+				bout.write(toByteArray(encrypt));
+                this.dataObject.setOutput(encrypt);
             } else {
-                bout.write(toByteArray(decrypt(sb.toString().toCharArray())));
+                char[] decrypt = decrypt(sb.toString().toCharArray());
+				bout.write(toByteArray(decrypt));
+				this.dataObject.setOutput(decrypt);
             }
         } catch (IOException e) {
             LogUtil.logError(e);

@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.model.ui.wizard;
 
 import java.util.ArrayList;
@@ -37,9 +36,9 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
-import org.jcryptool.crypto.classic.alphabets.AlphabetsPlugin;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
@@ -47,509 +46,499 @@ import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.AlphabetAcceptor;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
 
-
 /**
- * Implementation of a generic classic cryptoalgorithm wizard page for en-/decryption.
- * Can be instantiated directly, but is rather intended to be subclassed.
- * <br>
- * This wizard page contains basic controls for en-/decryption parameters, like
- * a key input text box, or an currentAlphabet selection combo.
- *
+ * Implementation of a generic classic cryptoalgorithm wizard page for en-/decryption. Can be instantiated directly, but
+ * is rather intended to be subclassed. <br>
+ * This wizard page contains basic controls for en-/decryption parameters, like a key input text box, or an
+ * currentAlphabet selection combo.
+ * 
  * @author SLeischnig
- *
+ * 
  */
 public class AbstractClassicCryptoPage extends WizardPage {
 
-	SWTResourceManager resources = new SWTResourceManager();
-	
-	protected Group keyGroup;
-	protected Label keyDescriptionLabel;
-	protected Text keyText;
-	protected Group alphabetGroup;
-	protected Composite alphabetInnerGroup;
-	protected Button showAlphabetContent;
-	protected Label alphabetLabel;
-	protected AlphabetSelectorComposite alphabetCombo;
-	protected Button filterCheckBox;
-	protected Group operationGroup;
-	protected Button encryptButton;
-	protected Button decryptButton;
+    SWTResourceManager resources = new SWTResourceManager();
 
-	/** Used to override a VerifyListener  */
-	protected boolean resetFlag = false;
+    protected Group keyGroup;
+    protected Label keyDescriptionLabel;
+    protected Text keyText;
+    protected Group alphabetGroup;
+    protected Composite alphabetInnerGroup;
+    protected Button showAlphabetContent;
+    protected Label alphabetLabel;
+    protected AlphabetSelectorComposite alphabetCombo;
+    protected Button filterCheckBox;
+    protected Group operationGroup;
+    protected Button encryptButton;
+    protected Button decryptButton;
 
-	protected Button transformCheckBox;
-	protected Group transformGroup;
-	protected boolean haveNextPage = true;
+    /** Used to override a VerifyListener */
+    protected boolean resetFlag = false;
 
-	/**
-	 * This standard message is the one displayed when everything is normal, and is generated
-	 * from the message parameter in the constructor and the file/editor name opened.
-	 */
-	protected MWizardMessage normalStatusMsg; //$NON-NLS-1$
-	protected AbstractUIInput<Boolean> operationInput;
-//	protected AbstractUIInput<AbstractAlphabet> alphabetInput;
-	protected AbstractUIInput<Boolean> filterInput;
-	protected TextfieldInput<String> keyInput;
-	protected WidgetBubbleUIInputHandler verificationDisplayHandler;
-	protected Widget operationLastSelected;
-	protected AbstractUIInput<Boolean> transformationInput;
+    protected Button transformCheckBox;
+    protected Group transformGroup;
+    protected boolean haveNextPage = true;
 
-	protected ClassicAlgorithmSpecification specification = new ClassicAlgorithmSpecification();
+    /**
+     * This standard message is the one displayed when everything is normal, and is generated from the message parameter
+     * in the constructor and the file/editor name opened.
+     */
+    protected MWizardMessage normalStatusMsg; //$NON-NLS-1$
+    protected AbstractUIInput<Boolean> operationInput;
+    // protected AbstractUIInput<AbstractAlphabet> alphabetInput;
+    protected AbstractUIInput<Boolean> filterInput;
+    protected TextfieldInput<String> keyInput;
+    protected WidgetBubbleUIInputHandler verificationDisplayHandler;
+    protected Widget operationLastSelected;
+    protected AbstractUIInput<Boolean> transformationInput;
 
+    protected ClassicAlgorithmSpecification specification = new ClassicAlgorithmSpecification();
 
+    /**
+     * Observes every change made to the page, for setting the next page/can finish status.
+     */
+    protected Observer pageObserver = new Observer() {
+        public void update(Observable o, Object arg) {
+            haveNextPage = transformationInput.getContent();
+            setPageComplete(mayFinish());
+            getContainer().updateButtons();
+            updateCommandLineString();
+        }
+    };
+    private Label customAlphaHint;
 
-	/**
-	 * Observes every change made to the page, for setting the next page/can finish status.
-	 */
-	protected Observer pageObserver = new Observer() {
-		public void update(Observable o, Object arg) {
-			setPageComplete(mayFinish());
-			haveNextPage = transformationInput.getContent();
-			getContainer().updateButtons();
-		}
-	};
-	private Label customAlphaHint;
+    protected Group consoleGroup;
 
-	/**
-	 * Creates a new instance of AbstractClassicCryptoPage
-	 */
-	public AbstractClassicCryptoPage() {
-		this("", Messages.AbstractClassicCryptoPage_genericNormalMsg); //$NON-NLS-1$
-	}
+    private Label lblConsoleDescr;
+
+    private Label lblConsoleFurther;
+
+    private Text txtConsoleCommand;
+
+    /**
+     * Creates a new instance of AbstractClassicCryptoPage
+     * 
+     * @wbp.parser.constructor
+     */
+    public AbstractClassicCryptoPage() {
+        this("", Messages.AbstractClassicCryptoPage_genericNormalMsg); //$NON-NLS-1$
+    }
 
     /**
      * Creates a new instance of AbstractClassicCryptoPage, defining its window title.
-     *
+     * 
      * @param title the window title
      */
-	public AbstractClassicCryptoPage(String title) {
-		this(title, Messages.AbstractClassicCryptoPage_genericNormalMsg);
-	}
+    public AbstractClassicCryptoPage(String title) {
+        this(title, Messages.AbstractClassicCryptoPage_genericNormalMsg);
+    }
 
-	/**
-	 * Creates a new instance of AbstractClassicCryptoPage, defining its window title and message.
-	 * @param title the window title
-	 * @param message the message of the page
-	 */
-	public AbstractClassicCryptoPage(String title, final String message) {
-		super("", title, null); //$NON-NLS-1$
-		setTitle(title);
-		normalStatusMsg = new MWizardMessage() {
-			public String getMessage() {
-				return message;
-			}
-			public int getMessageType() {
-				return NONE;
-			}
-			public boolean isStandaloneMessage() {
-				return true;
-			}
-		};
-		setTitleBarMessage(normalStatusMsg);
-	}
+    /**
+     * Creates a new instance of AbstractClassicCryptoPage, defining its window title and message.
+     * 
+     * @param title the window title
+     * @param message the message of the page
+     */
+    public AbstractClassicCryptoPage(String title, final String message) {
+        super("", title, null); //$NON-NLS-1$
+        setTitle(title);
+        normalStatusMsg = new MWizardMessage() {
+            public String getMessage() {
+                return message;
+            }
 
-	public void setAlgorithmSpecification(ClassicAlgorithmSpecification spec) {
-		this.specification = spec;
-	}
+            public int getMessageType() {
+                return NONE;
+            }
 
-	/**
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
-	public void createControl(Composite parent) {
-		GridData pageCompositeLayoutData = new GridData();
-		GridLayout pageCompositeLayout = new GridLayout();
-		pageCompositeLayoutData.grabExcessHorizontalSpace = true; pageCompositeLayoutData.grabExcessVerticalSpace = true;
-		pageCompositeLayoutData.horizontalAlignment = SWT.FILL; pageCompositeLayoutData.verticalAlignment = SWT.FILL;
-		Composite pageComposite = new Composite(parent, SWT.NULL);
-		pageComposite.setLayout(pageCompositeLayout);
-		pageComposite.setLayoutData(pageCompositeLayoutData);
+            public boolean isStandaloneMessage() {
+                return true;
+            }
+        };
+        setTitleBarMessage(normalStatusMsg);
+    }
 
-		createOperationGroup(pageComposite);
-		createAlphabetGroup(pageComposite);
-		createKeyGroup(pageComposite);
-		createTransformGroup(pageComposite);
+    public void setAlgorithmSpecification(ClassicAlgorithmSpecification spec) {
+        this.specification = spec;
+    }
 
-		setPageComplete(mayFinish());
-		setControl(pageComposite);
-		setHelpAvailable();
+    /**
+     * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
+     */
+    public void createControl(Composite parent) {
+        GridData pageCompositeLayoutData = new GridData();
+        GridLayout pageCompositeLayout = new GridLayout();
+        pageCompositeLayoutData.grabExcessHorizontalSpace = true;
+        pageCompositeLayoutData.grabExcessVerticalSpace = true;
+        pageCompositeLayoutData.horizontalAlignment = SWT.FILL;
+        pageCompositeLayoutData.verticalAlignment = SWT.FILL;
+        Composite pageComposite = new Composite(parent, SWT.NULL);
+        pageComposite.setLayout(pageCompositeLayout);
+        pageComposite.setLayoutData(pageCompositeLayoutData);
 
-		createInputObjects();
+        createOperationGroup(pageComposite);
+        createAlphabetGroup(pageComposite);
+        createKeyGroup(pageComposite);
+        createTransformGroup(pageComposite);
+        createConsoleGroup(pageComposite);
 
-		createInputVerificationHandler(parent.getShell());
-		addPageObserver();
-	}
+        setPageComplete(mayFinish());
+        setControl(pageComposite);
+        setHelpAvailable();
 
-	/**
-	 * creates the input objects. extend or override for any further needs.
-	 */
-	protected void createInputObjects() {
-		createOperationInputObjects();
-		createAlphabetInputObjects();
-		createKeyInputObjects();
-		createTransformationInputObject();
-	}
+        createInputObjects();
 
-	/**
-	 * The standard UIInput objects (with selection listener wiring) for the operation selection are created here.
-	 * This should be reimplemented if other input verification/handling is needed.
-	 */
-	protected void createOperationInputObjects() {
-		operationInput = new AbstractUIInput<Boolean>() {
-			@Override
-			public void writeContent(Boolean content) {
-				encryptButton.setSelection(content);
-			}
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-			}
-			@Override
-			public Boolean readContent() {
-				return encryptButton.getSelection();
-			}
-			@Override
-			public String getName() {
-				return Messages.AbstractClassicCryptoPage_operation_input_name;
-			}
-			@Override
-			protected Boolean getDefaultContent() {
-				return true;
-			}
-		};
+        createInputVerificationHandler(parent.getShell());
+        addPageObserver();
+        updateCommandLineString();
+    }
 
-		SelectionAdapter adapter = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				operationLastSelected = e.widget;
-				operationInput.synchronizeWithUserSide();
-			}
-		};
-		encryptButton.addSelectionListener(adapter);
-		decryptButton.addSelectionListener(adapter);
+    /**
+     * creates the input objects. extend or override for any further needs.
+     */
+    protected void createInputObjects() {
+        createOperationInputObjects();
+        createAlphabetInputObjects();
+        createKeyInputObjects();
+        createTransformationInputObject();
+    }
 
-		operationInput.addObserver(new Observer() {
-			public void update(Observable o, Object arg) {
-				if(transformationInput != null) {
-					transformationInput.writeContent(operationInput.getContent());
-					transformationInput.synchronizeWithUserSide();
-				}
-			}
-		});
-	}
+    /**
+     * The standard UIInput objects (with selection listener wiring) for the operation selection are created here. This
+     * should be reimplemented if other input verification/handling is needed.
+     */
+    protected void createOperationInputObjects() {
+        operationInput = new AbstractUIInput<Boolean>() {
+            @Override
+            public void writeContent(Boolean content) {
+                encryptButton.setSelection(content);
+            }
 
-	/**
-	 * The standard UIInput objects (with selection listener wiring) for the currentAlphabet and filter selections are created here.
-	 * This should be reimplemented if other input verification/handling is needed.
-	 */
-	protected void createAlphabetInputObjects() {
-//		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
-//			@Override
-//			protected InputVerificationResult verifyUserChange() {
-//				//Because no invalid Alphabets will be put into the Selection box
-//				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-//			}
-//			@Override
-//			public AbstractAlphabet readContent() {
-//				String selectedAlphabetName = alphabetCombo.getText();
-//				return AlphabetsManager.getInstance().getAlphabetByName(selectedAlphabetName);
-//			}
-//			@Override
-//			public void writeContent(AbstractAlphabet content) {
-//				alphabetCombo.setText(content.getName());
-//			}
-//			@Override
-//			protected AbstractAlphabet getDefaultContent() {
-//				return getDefaultAlphabet();
-//			}
-//			@Override
-//			public String getName() {
-//				return Messages.AbstractClassicCryptoPage_alphabet_input_name;
-//			}
-//		};
+            @Override
+            protected InputVerificationResult verifyUserChange() {
+                return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+            }
 
-		filterInput = new AbstractUIInput<Boolean>() {
-			@Override
-			public void writeContent(Boolean content) {
-				filterCheckBox.setSelection(content);
-			}
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-			}
-			@Override
-			public Boolean readContent() {
-				return filterCheckBox.getSelection();
-			}
-			@Override
-			public String getName() {
-				return Messages.AbstractClassicCryptoPage_filter_input_name;
-			}
-			@Override
-			protected Boolean getDefaultContent() {
-				return AlphabetsPlugin.getDefault().getFilterChars();
-			}
-		};
+            @Override
+            public Boolean readContent() {
+                return encryptButton.getSelection();
+            }
 
-//		SelectionAdapter adapterAlphabet = new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//				alphabetInput.synchronizeWithUserSide();
-//			}
-//		};
-//		alphabetCombo.addSelectionListener(adapterAlphabet);
+            @Override
+            public String getName() {
+                return Messages.AbstractClassicCryptoPage_operation_input_name;
+            }
 
-//		SelectionAdapter adapterFilter = new SelectionAdapter() {
-//			public void widgetSelected(SelectionEvent e) {
-//				filterInput.synchronizeWithUserSide();
-//			}
-//		};
-//		alphabetCombo.addSelectionListener(adapterFilter);
+            @Override
+            protected Boolean getDefaultContent() {
+                return true;
+            }
+        };
 
-		getAlphabetInput().addObserver(new Observer() {
-			public void update(Observable o, Object arg) {
-				if(arg == null) { //when there is really a change
-					if(transformationInput.getContent()) {
-						updateTransformationPage(getAlphabetInput().getContent().getName());
-					}
-				}
-			}
-		});
+        SelectionAdapter adapter = new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                operationLastSelected = e.widget;
+                operationInput.synchronizeWithUserSide();
+            }
+        };
+        encryptButton.addSelectionListener(adapter);
+        decryptButton.addSelectionListener(adapter);
 
-		updateTransformationPage(getAlphabetInput().getContent().getName());
-	}
+        operationInput.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                if (transformationInput != null) {
+                    transformationInput.writeContent(operationInput.getContent());
+                    transformationInput.synchronizeWithUserSide();
+                }
+            }
+        });
+    }
 
-	/**
-	 * @return the input object from the alphabet combo
-	 */
-	protected AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
-		return alphabetCombo.getAlphabetInput();
-	}
+    /**
+     * The standard UIInput objects (with selection listener wiring) for the currentAlphabet and filter selections are
+     * created here. This should be reimplemented if other input verification/handling is needed.
+     */
+    protected void createAlphabetInputObjects() {
 
-	/**
-	 * The standard UIInput objects (with selection listener wiring) for the key selections are created here.
-	 * This should be reimplemented if other input verification/handling is needed.
-	 */
-	protected void createKeyInputObjects() {
-		keyInput = new KeyInput<String>() {
-			@Override
-			protected Text getTextfield() {
-				return keyText;
-			}
-			@Override
-			public String readContent() {
-				return getTextfield().getText();
-			}
-			@Override
-			protected String getDefaultContent() {
-				return ""; //$NON-NLS-1$
-			}
-			@Override
-			public String getName() {
-				return Messages.AbstractClassicCryptoPage_key_input_name;
-			}
-			@Override
-			protected void resetExternallyCaused(AbstractUIInput<?> inputWhichCausedThis) {
-				// reacting to a change of alphabets
-				String keyNow = getTextfield().getText();
-				StringBuilder stringBuilder = new StringBuilder();
-				for(int i=0; i<keyNow.length(); i++) {
-					if(getAlphabetInput().getContent().contains(keyNow.charAt(i))) {
-						stringBuilder.append(keyNow.charAt(i));
-					}
-				}
+        filterInput = new ButtonInput() {
 
-				setTextfieldTextExternal(stringBuilder.toString());
-				reread(inputWhichCausedThis);
-			}
+            @Override
+            protected InputVerificationResult verifyUserChange() {
+                return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+            }
 
-			@Override
-			public AbstractAlphabet getAlphabet() {
-				return getAlphabetInput().getContent();
-			}
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				return KeyVerificator.verify(getTextfield().getText(), getAlphabet(), getKeyVerificators());
-			}
-		};
+            @Override
+            public String getName() {
+                return "nonalpha-chars filter"; //$NON-NLS-1$
+            }
 
-		//changes in the currentAlphabet input must be forwarded to the key input for revalidation
-		getAlphabetInput().addObserver(keyInput);
-	}
+            @Override
+            protected Boolean getDefaultContent() {
+                return true;
+            }
 
+            @Override
+            public Button getButton() {
+                return filterCheckBox;
+            }
+        };
 
-	protected void createTransformationInputObject() {
-		transformationInput = new AbstractUIInput<Boolean>() {
-			@Override
-			protected InputVerificationResult verifyUserChange() {
-				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
-			}
-			@Override
-			public Boolean readContent() {
-				return transformCheckBox.getSelection();
-			}
-			@Override
-			public void writeContent(Boolean content) {
-				transformCheckBox.setSelection(content);
-			}
-			@Override
-			protected Boolean getDefaultContent() {
-				if(operationInput != null) {
-					return operationInput.getContent();
-				}
-				return true;
-			}
-			@Override
-			public String getName() {
-				return Messages.AbstractClassicCryptoPage_transform_name;
-			}
-		};
+        getAlphabetInput().addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                if (arg == null) { // when there is really a change
+                    if (transformationInput.getContent()) {
+                        updateTransformationPage(getAlphabetInput().getContent().getName());
+                    }
+                }
+            }
+        });
 
-		SelectionAdapter adapter = new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				transformationInput.synchronizeWithUserSide();
-			}
-		};
-		transformCheckBox.addSelectionListener(adapter);
+        updateTransformationPage(getAlphabetInput().getContent().getName());
+    }
 
-		//change selection when en/decrypt is selected
-		transformationInput.addObserver(new Observer() {
-			public void update(Observable o, Object arg) {
-				if(arg == null) { //when there is really a change
-					if(transformationInput.getContent()) {
-						updateTransformationPage(getAlphabetInput().getContent().getName());
-					} else {
-						updateTransformationPage("no transformation"); //$NON-NLS-1$
-					}
-				}
-			}
-		});
-	}
+    /**
+     * @return the input object from the alphabet combo
+     */
+    protected AbstractUIInput<AbstractAlphabet> getAlphabetInput() {
+        return alphabetCombo.getAlphabetInput();
+    }
 
-	/**
-	 * Creates a standard input verification handler, which displays ballon popups
-	 * beneath controls, when an error in the input occured.
-	 * @param shell
-	 */
-	protected void createInputVerificationHandler(Shell shell) {
-		verificationDisplayHandler = new WidgetBubbleUIInputHandler(shell) {
-			@Override
-			protected void changeTooltipDurationAtCleaninputButNotHidden(
-					AbstractUIInput<?> input) {
-				// vanish instantly when it is the "not changing the encryption" tooltip
-				if(getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) {
-					tooltipMap.get(input).setTimeToVanish(-1);
-				} else {
-					super.changeTooltipDurationAtCleaninputButNotHidden(input);
-				}
-			}
-			@Override
-			public Control mapInputToWidget(AbstractUIInput<?> input) {
-				if(input.equals(operationInput)) {
-					return (Control) operationLastSelected;
-				}
-				return super.mapInputToWidget(input);
-			}
-		};
-		verificationDisplayHandler.addAsObserverForInput(operationInput);
-		verificationDisplayHandler.addAsObserverForInput(filterInput);
-		verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
-		verificationDisplayHandler.addAsObserverForInput(keyInput);
-		verificationDisplayHandler.addAsObserverForInput(transformationInput);
+    /**
+     * The standard UIInput objects (with selection listener wiring) for the key selections are created here. This
+     * should be reimplemented if other input verification/handling is needed.
+     */
+    protected void createKeyInputObjects() {
+        keyInput = new KeyInput<String>() {
+            @Override
+            protected Text getTextfield() {
+                return keyText;
+            }
 
-		//static mappings (dynamic, like at operation, are handled above in the overridden method)
-		verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
-		verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
-		verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
-		verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
-	}
+            @Override
+            public String readContent() {
+                return getTextfield().getText();
+            }
 
-	/**
-	 * just an alias for the delegated method
-	 */
-	protected List<KeyVerificator> getKeyVerificatorsDelegate() {
-		return getKeyVerificators();
-	}
+            @Override
+            protected String getDefaultContent() {
+                return ""; //$NON-NLS-1$
+            }
 
-	/**
-	 * Provides the key verificators for the standard implementation of the KeyInput.
-	 * This method is meant for usage when nothing else but key verificators have to be
-	 * changed in the key input mechanism apart from the standard implementation.
-	 * Ideally, key verificators should be specified in the Algorithm Specification class.
-	 *
-	 * @return a list of key verificators
-	 */
-	protected List<KeyVerificator> getKeyVerificators() {
-		return specification.getKeyVerificators();
-	}
+            @Override
+            public String getName() {
+                return Messages.AbstractClassicCryptoPage_key_input_name;
+            }
 
-	/**
-	 * Add the {@link #pageObserver} as Observer everywhere, where page status changes are made,
-	 * that could change the finishable/next page status of this page.
-	 */
-	protected void addPageObserver() {
-		operationInput.addObserver(pageObserver);
-		getAlphabetInput().addObserver(pageObserver);
-		filterInput.addObserver(pageObserver);
-		keyInput.addObserver(pageObserver);
-		transformationInput.addObserver(pageObserver);
-	}
+            @Override
+            protected void resetExternallyCaused(AbstractUIInput<?> inputWhichCausedThis) {
+                // reacting to a change of alphabets
+                String keyNow = getTextfield().getText();
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < keyNow.length(); i++) {
+                    if (getAlphabetInput().getContent().contains(keyNow.charAt(i))) {
+                        stringBuilder.append(keyNow.charAt(i));
+                    }
+                }
 
-	/**
-	 * Subclasses should override this procedure to set the Help available flag and id, like
-	 * PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), DelastellePlugin.PLUGIN_ID + ".delastelleWizard");
-	 *
-	 */
-	protected void setHelpAvailable() {
+                setTextfieldTextExternal(stringBuilder.toString());
+                reread(inputWhichCausedThis);
+            }
 
-	}
+            @Override
+            public AbstractAlphabet getAlphabet() {
+                return getAlphabetInput().getContent();
+            }
 
-	/**
-	 * Returns the available alphabets. Meant to be overridden in subclasses.
-	 *
-	 * @return all available alphabets for this wizard page.
-	 */
-	protected List<AbstractAlphabet> getAvailableAlphabets() {
-		if(specification == null) {
-			ArrayList<AbstractAlphabet> result = new ArrayList<AbstractAlphabet>();
-			for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
-				result.add(a);
-			}
+            @Override
+            protected InputVerificationResult verifyUserChange() {
+                return KeyVerificator.verify(getTextfield().getText(), getAlphabet(), getKeyVerificators());
+            }
+        };
 
-			return result;
-		} else {
-			return specification.getAvailablePlainTextAlphabets();
-		}
-	}
+        // changes in the currentAlphabet input must be forwarded to the key input for revalidation
+        getAlphabetInput().addObserver(keyInput);
+    }
 
-	/**
-	 * Returns the currentAlphabet that will be selected first. Meant to be overridden in subclasses.
-	 *
-	 * @return the standard currentAlphabet for this wizard.
-	 */
-	protected AbstractAlphabet getDefaultAlphabet() {
-		if(specification == null) {
-			List<AbstractAlphabet> alphabets = getAvailableAlphabets();
-			if(alphabets.contains(AlphabetsManager.getInstance().getDefaultAlphabet())) {
-				return AlphabetsManager.getInstance().getDefaultAlphabet();
-			}
-		return alphabets.size() > 0 ? alphabets.get(0) : AlphabetsManager.getInstance().getDefaultAlphabet();
-		} else {
-			return specification.getDefaultPlainTextAlphabet();
-		}
+    protected void createTransformationInputObject() {
+        transformationInput = new AbstractUIInput<Boolean>() {
+            @Override
+            protected InputVerificationResult verifyUserChange() {
+                return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+            }
 
-	}
+            @Override
+            public Boolean readContent() {
+                return transformCheckBox.getSelection();
+            }
 
+            @Override
+            public void writeContent(Boolean content) {
+                transformCheckBox.setSelection(content);
+            }
 
-	@Override
-	public IWizardPage getNextPage() {
-		if(haveNextPage) return super.getNextPage();
-		else return null;
-	}
+            @Override
+            protected Boolean getDefaultContent() {
+                if (operationInput != null) {
+                    return operationInput.getContent();
+                }
+                return true;
+            }
 
-	/**
-	 * Returns <code>true</code>, if the page is complete and the wizard may finish.
-	 *
-	 * @return	<code>true</code>, if the page is complete and the wizard may finish
-	 */
+            @Override
+            public String getName() {
+                return Messages.AbstractClassicCryptoPage_transform_name;
+            }
+        };
+
+        SelectionAdapter adapter = new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                transformationInput.synchronizeWithUserSide();
+            }
+        };
+        transformCheckBox.addSelectionListener(adapter);
+
+        // change selection when en/decrypt is selected
+        transformationInput.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                if (arg == null) { // when there is really a change
+                    if (transformationInput.getContent()) {
+                        updateTransformationPage(getAlphabetInput().getContent().getName());
+                    } else {
+                        updateTransformationPage("no transformation"); //$NON-NLS-1$
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Creates a standard input verification handler, which displays ballon popups beneath controls, when an error in
+     * the input occured.
+     * 
+     * @param shell
+     */
+    protected void createInputVerificationHandler(Shell shell) {
+        verificationDisplayHandler = new WidgetBubbleUIInputHandler(shell) {
+            @Override
+            protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput<?> input) {
+                // vanish instantly when it is the "not changing the encryption" tooltip
+                if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) {
+                    tooltipMap.get(input).setTimeToVanish(-1);
+                } else {
+                    super.changeTooltipDurationAtCleaninputButNotHidden(input);
+                }
+            }
+
+            @Override
+            public Control mapInputToWidget(AbstractUIInput<?> input) {
+                if (input.equals(operationInput)) {
+                    return (Control) operationLastSelected;
+                }
+                return super.mapInputToWidget(input);
+            }
+        };
+        verificationDisplayHandler.addAsObserverForInput(operationInput);
+        verificationDisplayHandler.addAsObserverForInput(filterInput);
+        verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
+        verificationDisplayHandler.addAsObserverForInput(keyInput);
+        verificationDisplayHandler.addAsObserverForInput(transformationInput);
+
+        // static mappings (dynamic, like at operation, are handled above in the overridden method)
+        verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
+        verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
+        verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
+        verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
+    }
+
+    /**
+     * just an alias for the delegated method
+     */
+    protected List<KeyVerificator> getKeyVerificatorsDelegate() {
+        return getKeyVerificators();
+    }
+
+    /**
+     * Provides the key verificators for the standard implementation of the KeyInput. This method is meant for usage
+     * when nothing else but key verificators have to be changed in the key input mechanism apart from the standard
+     * implementation. Ideally, key verificators should be specified in the Algorithm Specification class.
+     * 
+     * @return a list of key verificators
+     */
+    protected List<KeyVerificator> getKeyVerificators() {
+        return specification.getKeyVerificators();
+    }
+
+    /**
+     * Add the {@link #pageObserver} as Observer everywhere, where page status changes are made, that could change the
+     * finishable/next page status of this page.
+     */
+    protected void addPageObserver() {
+        operationInput.addObserver(pageObserver);
+        getAlphabetInput().addObserver(pageObserver);
+        filterInput.addObserver(pageObserver);
+        keyInput.addObserver(pageObserver);
+        transformationInput.addObserver(pageObserver);
+    }
+
+    /**
+     * Subclasses should override this procedure to set the Help available flag and id, like
+     * PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), DelastellePlugin.PLUGIN_ID +
+     * ".delastelleWizard");
+     * 
+     */
+    protected void setHelpAvailable() {
+
+    }
+
+    /**
+     * Returns the available alphabets. Meant to be overridden in subclasses.
+     * 
+     * @return all available alphabets for this wizard page.
+     */
+    protected List<AbstractAlphabet> getAvailableAlphabets() {
+        if (specification == null) {
+            ArrayList<AbstractAlphabet> result = new ArrayList<AbstractAlphabet>();
+            for (AbstractAlphabet a : AlphabetsManager.getInstance().getAlphabets()) {
+                result.add(a);
+            }
+
+            return result;
+        } else {
+            return specification.getAvailablePlainTextAlphabets();
+        }
+    }
+
+    /**
+     * Returns the currentAlphabet that will be selected first. Meant to be overridden in subclasses.
+     * 
+     * @return the standard currentAlphabet for this wizard.
+     */
+    protected AbstractAlphabet getDefaultAlphabet() {
+        if (specification == null) {
+            List<AbstractAlphabet> alphabets = getAvailableAlphabets();
+            if (alphabets.contains(AlphabetsManager.getInstance().getDefaultAlphabet())) {
+                return AlphabetsManager.getInstance().getDefaultAlphabet();
+            }
+            return alphabets.size() > 0 ? alphabets.get(0) : AlphabetsManager.getInstance().getDefaultAlphabet();
+        } else {
+            return specification.getDefaultPlainTextAlphabet();
+        }
+
+    }
+
+    @Override
+    public IWizardPage getNextPage() {
+        if (haveNextPage)
+            return super.getNextPage();
+        else
+            return null;
+    }
+
+    /**
+     * Returns <code>true</code>, if the page is complete and the wizard may finish.
+     * 
+     * @return <code>true</code>, if the page is complete and the wizard may finish
+     */
     protected boolean mayFinish() {
         if (keyInput != null && keyInput.getContent().length() > 0) {
             return true;
@@ -557,294 +546,399 @@ public class AbstractClassicCryptoPage extends WizardPage {
         return false;
     }
 
-	/**
-	 * Returns the selected currentAlphabet.
-	 *
-	 * @return	The selected currentAlphabet
-	 */
-	public AbstractAlphabet getSelectedAlphabet() {
-		return getAlphabetInput().getContent();
-	}
+    /**
+     * Returns the selected currentAlphabet.
+     * 
+     * @return The selected currentAlphabet
+     */
+    public AbstractAlphabet getSelectedAlphabet() {
+        return getAlphabetInput().getContent();
+    }
 
-	/**
-	 * Returns the entered key.
-	 *
-	 * @return	The entered key
-	 */
-	public String getKey() {
-		return keyInput.getContent();
-	}
+    /**
+     * @return whether the selected alphabet is a custom one.
+     */
+    public boolean isSelectedAlphaCustom() {
+        return alphabetCombo.isCustomAlphabetSelected();
+    }
 
+    /**
+     * Returns the entered key.
+     * 
+     * @return The entered key
+     */
+    public String getKey() {
+        return keyInput.getContent();
+    }
 
-	/**
-	 * Returns <code>true</code>, if the desired operation is <i>Encrypt</i>.
-	 *
-	 * @return	<code>true</code>, if the desired operation is <i>Encrypt</i>
-	 */
-	public boolean encrypt() {
-		return operationInput.getContent();
-	}
+    /**
+     * Returns <code>true</code>, if the desired operation is <i>Encrypt</i>.
+     * 
+     * @return <code>true</code>, if the desired operation is <i>Encrypt</i>
+     */
+    public boolean encrypt() {
+        return operationInput.getContent();
+    }
 
-	/**
-	 * Returns <code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be filtered out.
-	 *
-	 * @return	<code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be filtered out
-	 */
-	public boolean isNonAlphaFilter() {
-		return filterInput.getContent();
-	}
+    /**
+     * Returns <code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be
+     * filtered out.
+     * 
+     * @return <code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be
+     *         filtered out
+     */
+    public boolean isNonAlphaFilter() {
+        return filterInput.getContent();
+    }
 
-	/**
-	 * This method initializes the operationGroup, provoding the encrypt/decrypt choice.
-	 * Subclasses should override this, if more controls are needed.	 *
-	 */
-	protected void createOperationGroup(Composite parent) {
+    /**
+     * This method initializes the operationGroup, provoding the encrypt/decrypt choice. Subclasses should override
+     * this, if more controls are needed. *
+     */
+    protected void createOperationGroup(Composite parent) {
 
-		operationGroup = new Group(parent, SWT.NONE);
-		GridLayout operationGroupGridLayout = new GridLayout();
-				operationGroupGridLayout.numColumns = 2;
+        operationGroup = new Group(parent, SWT.NONE);
+        GridLayout operationGroupGridLayout = new GridLayout();
+        operationGroupGridLayout.numColumns = 2;
 
-			GridData operationGroupGridData = new GridData();
-				operationGroupGridData.horizontalAlignment = GridData.FILL;
-				operationGroupGridData.grabExcessHorizontalSpace = true;
-				operationGroupGridData.grabExcessVerticalSpace = false;
-				operationGroupGridData.verticalAlignment = SWT.TOP;
+        GridData operationGroupGridData = new GridData();
+        operationGroupGridData.horizontalAlignment = GridData.FILL;
+        operationGroupGridData.grabExcessHorizontalSpace = true;
+        operationGroupGridData.grabExcessVerticalSpace = false;
+        operationGroupGridData.verticalAlignment = SWT.TOP;
 
-			operationGroup.setLayoutData(operationGroupGridData);
-			operationGroup.setLayout(operationGroupGridLayout);
-			operationGroup.setText(Messages.WizardPage_operation);
+        operationGroup.setLayoutData(operationGroupGridData);
+        operationGroup.setLayout(operationGroupGridLayout);
+        operationGroup.setText(Messages.WizardPage_operation);
 
+        encryptButton = new Button(operationGroup, SWT.RADIO);
 
-		encryptButton = new Button(operationGroup, SWT.RADIO);
+        GridData encryptButtonGridData = new GridData();
+        encryptButtonGridData.horizontalAlignment = GridData.FILL;
+        encryptButtonGridData.grabExcessHorizontalSpace = true;
+        encryptButtonGridData.grabExcessVerticalSpace = true;
+        encryptButtonGridData.verticalAlignment = GridData.CENTER;
 
-			GridData encryptButtonGridData = new GridData();
-				encryptButtonGridData.horizontalAlignment = GridData.FILL;
-				encryptButtonGridData.grabExcessHorizontalSpace = true;
-				encryptButtonGridData.grabExcessVerticalSpace = true;
-				encryptButtonGridData.verticalAlignment = GridData.CENTER;
+        encryptButton.setText(Messages.WizardPage_encrypt);
+        encryptButton.setLayoutData(encryptButtonGridData);
 
-			encryptButton.setText(Messages.WizardPage_encrypt);
-			encryptButton.setLayoutData(encryptButtonGridData);
+        decryptButton = new Button(operationGroup, SWT.RADIO);
 
-		decryptButton = new Button(operationGroup, SWT.RADIO);
+        GridData decryptButtonGridData = new GridData();
+        decryptButtonGridData.horizontalAlignment = GridData.FILL;
+        decryptButtonGridData.grabExcessHorizontalSpace = true;
+        decryptButtonGridData.grabExcessVerticalSpace = true;
+        decryptButtonGridData.verticalAlignment = GridData.CENTER;
 
-			GridData decryptButtonGridData = new GridData();
-				decryptButtonGridData.horizontalAlignment = GridData.FILL;
-				decryptButtonGridData.grabExcessHorizontalSpace = true;
-				decryptButtonGridData.grabExcessVerticalSpace = true;
-				decryptButtonGridData.verticalAlignment = GridData.CENTER;
+        decryptButton.setText(Messages.WizardPage_decrypt);
+        decryptButton.setLayoutData(decryptButtonGridData);
 
-			decryptButton.setText(Messages.WizardPage_decrypt);
-			decryptButton.setLayoutData(decryptButtonGridData);
+    }
 
-	}
+    /**
+     * This method initializes alphabetGroup, providing the controls for selecting an currentAlphabet and the filter
+     * checkbox. <br>
+     * Subclasses should override this, if more controls are needed.
+     */
+    protected void createAlphabetGroup(Composite parent) {
+        alphabetGroup = new Group(parent, SWT.NONE);
 
-	/**
-	 * This method initializes alphabetGroup, providing the controls for
-	 * selecting an currentAlphabet and the filter checkbox. <br>
-	 * Subclasses should override this, if more controls are needed.
-	 */
-	protected void createAlphabetGroup(Composite parent) {
-		alphabetGroup = new Group(parent, SWT.NONE);
+        GridLayout alphabetGroupGridLayout = new GridLayout();
 
-		GridLayout alphabetGroupGridLayout = new GridLayout();
+        GridData alphabetGroupGridData = new GridData();
+        alphabetGroupGridData.horizontalAlignment = GridData.FILL;
+        alphabetGroupGridData.grabExcessHorizontalSpace = true;
+        alphabetGroupGridData.grabExcessVerticalSpace = false;
+        alphabetGroupGridData.verticalAlignment = SWT.TOP;
 
-			GridData alphabetGroupGridData = new GridData();
-				alphabetGroupGridData.horizontalAlignment = GridData.FILL;
-				alphabetGroupGridData.grabExcessHorizontalSpace = true;
-				alphabetGroupGridData.grabExcessVerticalSpace = false;
-				alphabetGroupGridData.verticalAlignment = SWT.TOP;
+        alphabetGroup.setLayoutData(alphabetGroupGridData);
+        alphabetGroup.setLayout(alphabetGroupGridLayout);
+        alphabetGroup.setText(Messages.WizardPage_alpha);
 
-			alphabetGroup.setLayoutData(alphabetGroupGridData);
-			alphabetGroup.setLayout(alphabetGroupGridLayout);
-			alphabetGroup.setText(Messages.WizardPage_alpha);
+        alphabetInnerGroup = new Composite(alphabetGroup, SWT.NONE);
 
-		alphabetInnerGroup = new Composite(alphabetGroup, SWT.NONE);
+        GridLayout alphabetInnerGroupGridLayout = new GridLayout();
+        alphabetInnerGroupGridLayout.numColumns = 3;
 
-		GridLayout alphabetInnerGroupGridLayout = new GridLayout();
-				alphabetInnerGroupGridLayout.numColumns = 3;
+        GridData alphabetInnerGroupGridData = new GridData();
+        alphabetInnerGroupGridData.horizontalAlignment = GridData.FILL;
+        alphabetInnerGroupGridData.grabExcessHorizontalSpace = true;
+        alphabetInnerGroupGridData.grabExcessVerticalSpace = false;
+        alphabetInnerGroupGridData.verticalAlignment = SWT.TOP;
 
-			GridData alphabetInnerGroupGridData = new GridData();
-				alphabetInnerGroupGridData.horizontalAlignment = GridData.FILL;
-				alphabetInnerGroupGridData.grabExcessHorizontalSpace = true;
-				alphabetInnerGroupGridData.grabExcessVerticalSpace = false;
-				alphabetInnerGroupGridData.verticalAlignment = SWT.TOP;
+        alphabetInnerGroup.setLayoutData(alphabetInnerGroupGridData);
+        alphabetInnerGroup.setLayout(alphabetInnerGroupGridLayout);
 
-			alphabetInnerGroup.setLayoutData(alphabetInnerGroupGridData);
-			alphabetInnerGroup.setLayout(alphabetInnerGroupGridLayout);
+        alphabetLabel = new Label(alphabetInnerGroup, SWT.NONE);
 
-		alphabetLabel = new Label(alphabetInnerGroup, SWT.NONE);
+        GridData alphabetLabelGridData = new GridData();
+        alphabetLabelGridData.horizontalAlignment = GridData.FILL;
+        alphabetLabelGridData.grabExcessVerticalSpace = true;
 
-			GridData alphabetLabelGridData = new GridData();
-				alphabetLabelGridData.horizontalAlignment = GridData.FILL;
-				alphabetLabelGridData.grabExcessVerticalSpace = true;
+        alphabetLabel.setText(Messages.WizardPage_selectalpha);
+        alphabetLabel.setLayoutData(alphabetLabelGridData);
 
-			alphabetLabel.setText(Messages.WizardPage_selectalpha);
-			alphabetLabel.setLayoutData(alphabetLabelGridData);
+        AlphabetAcceptor acceptor = new AlphabetAcceptor() {
+            @Override
+            public boolean accept(AbstractAlphabet alphabet) {
+                return specification.isValidPlainTextAlphabet(alphabet);
+            }
+        };
+        Mode alphabetSelectionMode = specification.isAllowCustomAlphabetCreation() ?
+        // AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
+        AlphabetSelectorComposite.Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON
+                : AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS;
+        alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, acceptor, getDefaultAlphabet(),
+                alphabetSelectionMode);
 
-		AlphabetAcceptor acceptor = new AlphabetAcceptor() {
-			@Override
-			public boolean accept(AbstractAlphabet alphabet) {
-				return specification.isValidPlainTextAlphabet(alphabet);
-			}
-		};
-		Mode alphabetSelectionMode =
-			specification.isAllowCustomAlphabetCreation()?
-				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS:
-				AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_ONLY_EXISTING_ALPHABETS;
-		alphabetCombo = new AlphabetSelectorComposite(alphabetInnerGroup, acceptor, getDefaultAlphabet(), alphabetSelectionMode);
-		
-		GridData filterComboGridData = new GridData();
-		filterComboGridData.horizontalAlignment = GridData.FILL;
-		filterComboGridData.grabExcessHorizontalSpace = true;
-		filterComboGridData.grabExcessVerticalSpace = true;
-		filterComboGridData.verticalAlignment = GridData.CENTER;
-		
-		alphabetCombo.setLayoutData(filterComboGridData);
-//		alphabetCombo = new Combo(alphabetInnerGroup, SWT.BORDER | SWT.READ_ONLY);
-//		GridData filterComboGridData = new GridData();
-//			filterComboGridData.horizontalAlignment = GridData.FILL;
-//			filterComboGridData.grabExcessHorizontalSpace = true;
-//			filterComboGridData.grabExcessVerticalSpace = true;
-//			filterComboGridData.verticalAlignment = GridData.CENTER;
-//
-//		alphabetCombo.setLayoutData(filterComboGridData);
-		{
-			showAlphabetContent = new Button(alphabetInnerGroup, SWT.PUSH);
-			GridData showAlphabetContentGridData = new GridData();
-			showAlphabetContent.setLayoutData(showAlphabetContentGridData);
-			showAlphabetContent.setText(Messages.AbstractClassicCryptoPage_showSelectedAlpha);
-			showAlphabetContent.addSelectionListener(new SelectionAdapter() {
-				public void widgetSelected(SelectionEvent evt) {
-					ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
-					tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
-					tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet()) + Messages.AbstractClassicCryptoPage_clicktoclose);
-					tooltip.setAutoHide(true);
-					tooltip.setVisible(true);
-				}
-			});
-		}
-		
-		if(specification.isAllowCustomAlphabetCreation()) {
-			new Label(alphabetInnerGroup, SWT.NONE);
-			customAlphaHint = new Label(alphabetInnerGroup,	SWT.NONE);
-			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
-			layoutData.verticalIndent = -5;
-			
-			customAlphaHint.setLayoutData(layoutData);
-			customAlphaHint.setText(Messages.AbstractClassicCryptoPage_customAlphabetHint);
-			customAlphaHint.setForeground(resources.getColor(SWT.COLOR_DARK_GRAY));
-			customAlphaHint.setFont(resources.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
-		}
+        GridData filterComboGridData = new GridData();
+        filterComboGridData.horizontalAlignment = GridData.FILL;
+        filterComboGridData.grabExcessHorizontalSpace = true;
+        filterComboGridData.grabExcessVerticalSpace = true;
+        filterComboGridData.verticalAlignment = GridData.CENTER;
 
-		filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);
+        alphabetCombo.setLayoutData(filterComboGridData);
+        // alphabetCombo = new Combo(alphabetInnerGroup, SWT.BORDER | SWT.READ_ONLY);
+        // GridData filterComboGridData = new GridData();
+        // filterComboGridData.horizontalAlignment = GridData.FILL;
+        // filterComboGridData.grabExcessHorizontalSpace = true;
+        // filterComboGridData.grabExcessVerticalSpace = true;
+        // filterComboGridData.verticalAlignment = GridData.CENTER;
+        //
+        // alphabetCombo.setLayoutData(filterComboGridData);
+        {
+            showAlphabetContent = new Button(alphabetInnerGroup, SWT.PUSH);
+            GridData showAlphabetContentGridData = new GridData();
+            showAlphabetContent.setLayoutData(showAlphabetContentGridData);
+            showAlphabetContent.setText(Messages.AbstractClassicCryptoPage_showSelectedAlpha);
+            showAlphabetContent.addSelectionListener(new SelectionAdapter() {
+                public void widgetSelected(SelectionEvent evt) {
+                    ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
+                    tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
+                    tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet())
+                            + Messages.AbstractClassicCryptoPage_clicktoclose);
+                    tooltip.setAutoHide(true);
+                    tooltip.setVisible(true);
+                }
+            });
+        }
 
-			GridData filterCheckBoxGridData = new GridData();
-				filterCheckBoxGridData.horizontalSpan = 3;
-				if(specification.isAllowCustomAlphabetCreation()) filterCheckBoxGridData.verticalIndent = 3;
-				filterCheckBoxGridData.verticalAlignment = GridData.CENTER;
-				filterCheckBoxGridData.grabExcessHorizontalSpace = true;
-				filterCheckBoxGridData.grabExcessVerticalSpace = true;
-				filterCheckBoxGridData.horizontalAlignment = GridData.FILL;
+        boolean showAlphaCreationHint = false;
+        if (showAlphaCreationHint && specification.isAllowCustomAlphabetCreation()) {
+            new Label(alphabetInnerGroup, SWT.NONE);
+            customAlphaHint = new Label(alphabetInnerGroup, SWT.NONE);
+            GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+            layoutData.verticalIndent = -5;
 
-			filterCheckBox.setText(Messages.WizardPage_filterchars);
-			filterCheckBox.setLayoutData(filterCheckBoxGridData);
-	}
+            customAlphaHint.setLayoutData(layoutData);
+            customAlphaHint.setText(Messages.AbstractClassicCryptoPage_customAlphabetHint);
+            customAlphaHint.setForeground(resources.getColor(SWT.COLOR_DARK_GRAY));
+            customAlphaHint.setFont(resources.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
+        }
 
+        filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);
 
-	/**
-	 * This method initializes transformaGroup, providing the transformation
-	 * controls <br>
-	 * Subclasses should override this, if more controls are needed.	 *
-	 */
-	protected void createTransformGroup(Composite parent) {
-		transformGroup = new Group(parent, SWT.NONE);
+        GridData filterCheckBoxGridData = new GridData();
+        filterCheckBoxGridData.horizontalSpan = 3;
+        if (specification.isAllowCustomAlphabetCreation())
+            filterCheckBoxGridData.verticalIndent = 3;
+        filterCheckBoxGridData.verticalAlignment = GridData.CENTER;
+        filterCheckBoxGridData.grabExcessHorizontalSpace = true;
+        filterCheckBoxGridData.grabExcessVerticalSpace = true;
+        filterCheckBoxGridData.horizontalAlignment = GridData.FILL;
 
-			GridLayout transformGroupGridLayout = new GridLayout();
-				transformGroupGridLayout.numColumns = 2;
+        filterCheckBox.setText(Messages.WizardPage_filterchars);
+        filterCheckBox.setLayoutData(filterCheckBoxGridData);
+    }
 
-			GridData transformGroupGridData = new GridData();
-				transformGroupGridData.horizontalAlignment = GridData.FILL;
-				transformGroupGridData.grabExcessHorizontalSpace = true;
-				transformGroupGridData.grabExcessVerticalSpace = false;
-				transformGroupGridData.verticalAlignment = SWT.TOP;
+    /**
+     * This method initializes transformaGroup, providing the transformation controls <br>
+     * Subclasses should override this, if more controls are needed. *
+     */
+    protected void createTransformGroup(Composite parent) {
+        transformGroup = new Group(parent, SWT.NONE);
 
-			transformGroup.setLayoutData(transformGroupGridData);
-			transformGroup.setLayout(transformGroupGridLayout);
-			transformGroup.setText(Messages.AbstractClassicCryptoPage_preOpTransformLabel);
+        GridLayout transformGroupGridLayout = new GridLayout();
+        transformGroupGridLayout.numColumns = 2;
 
-		transformCheckBox = new Button(transformGroup, SWT.CHECK);
+        GridData transformGroupGridData = new GridData();
+        transformGroupGridData.horizontalAlignment = GridData.FILL;
+        transformGroupGridData.grabExcessHorizontalSpace = true;
+        transformGroupGridData.grabExcessVerticalSpace = false;
+        transformGroupGridData.verticalAlignment = SWT.TOP;
 
-			GridData transformCheckBoxGridData = new GridData();
-				transformCheckBoxGridData.horizontalSpan = 2;
-				transformCheckBoxGridData.verticalAlignment = GridData.CENTER;
-				transformCheckBoxGridData.grabExcessHorizontalSpace = true;
-				transformCheckBoxGridData.grabExcessVerticalSpace = true;
-				transformCheckBoxGridData.horizontalAlignment = GridData.FILL;
+        transformGroup.setLayoutData(transformGroupGridData);
+        transformGroup.setLayout(transformGroupGridLayout);
+        transformGroup.setText(Messages.AbstractClassicCryptoPage_preOpTransformLabel);
 
-			transformCheckBox.setText(Messages.AbstractClassicCryptoPage_applyTransformLabel);
-			transformCheckBox.setLayoutData(transformCheckBoxGridData);
+        transformCheckBox = new Button(transformGroup, SWT.CHECK);
 
-			transformCheckBox.setSelection(true);
-			if(! transformCheckBox.getSelection()) ((AbstractClassicTransformationPage) getNextPage()).setTransformData(new TransformData());
-	}
+        GridData transformCheckBoxGridData = new GridData();
+        transformCheckBoxGridData.horizontalSpan = 2;
+        transformCheckBoxGridData.verticalAlignment = GridData.CENTER;
+        transformCheckBoxGridData.grabExcessHorizontalSpace = true;
+        transformCheckBoxGridData.grabExcessVerticalSpace = true;
+        transformCheckBoxGridData.horizontalAlignment = GridData.FILL;
 
+        transformCheckBox.setText(Messages.AbstractClassicCryptoPage_applyTransformLabel);
+        transformCheckBox.setLayoutData(transformCheckBoxGridData);
 
+        transformCheckBox.setSelection(true);
+        if (!transformCheckBox.getSelection())
+            ((AbstractClassicTransformationPage) getNextPage()).setTransformData(new TransformData());
+    }
 
-	/**
-	 * This method initializes the key input group.
-	 * Subclasses should override this, if more controls are needed.
-	 */
-	protected void createKeyGroup(Composite parent) {
-		keyGroup = new Group(parent, SWT.NONE);
+    /**
+     * This method initializes the key input group. Subclasses should override this, if more controls are needed.
+     */
+    protected void createKeyGroup(Composite parent) {
+        keyGroup = new Group(parent, SWT.NONE);
 
-			GridLayout keyGroupGridLayout = new GridLayout();
-				keyGroupGridLayout.numColumns = 2;
+        GridLayout keyGroupGridLayout = new GridLayout();
+        keyGroupGridLayout.numColumns = 2;
 
-			GridData keyGroupGridData = new GridData();
-				keyGroupGridData.horizontalAlignment = GridData.FILL;
-				keyGroupGridData.grabExcessHorizontalSpace = true;
-				keyGroupGridData.grabExcessVerticalSpace = false;
-				keyGroupGridData.verticalAlignment = SWT.TOP;
+        GridData keyGroupGridData = new GridData();
+        keyGroupGridData.horizontalAlignment = GridData.FILL;
+        keyGroupGridData.grabExcessHorizontalSpace = true;
+        keyGroupGridData.grabExcessVerticalSpace = false;
+        keyGroupGridData.verticalAlignment = SWT.TOP;
 
-			keyGroup.setLayoutData(keyGroupGridData);
-			keyGroup.setLayout(keyGroupGridLayout);
-			keyGroup.setText(Messages.WizardPage_key);
+        keyGroup.setLayoutData(keyGroupGridData);
+        keyGroup.setLayout(keyGroupGridLayout);
+        keyGroup.setText(Messages.WizardPage_key);
 
-		keyDescriptionLabel = new Label(keyGroup, SWT.NONE);
+        keyDescriptionLabel = new Label(keyGroup, SWT.NONE);
 
-			GridData keyDescriptionLabelGridData = new GridData();
-				keyDescriptionLabelGridData.horizontalAlignment = GridData.FILL;
-				keyDescriptionLabelGridData.grabExcessVerticalSpace = true;
-				keyDescriptionLabelGridData.exclude = true;
+        GridData keyDescriptionLabelGridData = new GridData();
+        keyDescriptionLabelGridData.horizontalAlignment = GridData.FILL;
+        keyDescriptionLabelGridData.grabExcessVerticalSpace = true;
+        keyDescriptionLabelGridData.exclude = true;
 
-			keyDescriptionLabel.setText(Messages.WizardPage_enterkey);
-			keyDescriptionLabel.setLayoutData(keyDescriptionLabelGridData);
-			keyDescriptionLabel.setVisible(false);
+        keyDescriptionLabel.setText(Messages.WizardPage_enterkey);
+        keyDescriptionLabel.setLayoutData(keyDescriptionLabelGridData);
+        keyDescriptionLabel.setVisible(false);
 
-		keyText = new Text(keyGroup, SWT.BORDER);
+        keyText = new Text(keyGroup, SWT.BORDER);
 
-			GridData keyTextGridData = new GridData();
-				keyTextGridData.grabExcessHorizontalSpace = true;
-				keyTextGridData.horizontalAlignment = GridData.FILL;
-				keyTextGridData.verticalAlignment = GridData.CENTER;
-				keyTextGridData.grabExcessVerticalSpace = true;
+        GridData keyTextGridData = new GridData();
+        keyTextGridData.grabExcessHorizontalSpace = true;
+        keyTextGridData.horizontalAlignment = GridData.FILL;
+        keyTextGridData.verticalAlignment = GridData.CENTER;
+        keyTextGridData.grabExcessVerticalSpace = true;
 
-			keyText.setLayoutData(keyTextGridData);
-	        keyText.setToolTipText(Messages.AbstractClassicCryptoPage_keyToolTip);
-	}
+        keyText.setLayoutData(keyTextGridData);
+        keyText.setToolTipText(Messages.AbstractClassicCryptoPage_keyToolTip);
+    }
 
-	/**
-	 * Sets a MWizardMessage Object to this WizardPage
-	 * @param message
-	 */
-	protected void setTitleBarMessage(MWizardMessage message) {
-		this.setMessage(message.getMessage(), message.getMessageType());
-	}
+    protected void createConsoleGroup(Composite parent) {
+        if (specification.hasConsoleRepresentation()) {
+            Label separator = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+            GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            layoutData2.verticalIndent = 10;
+			separator.setLayoutData(layoutData2);
+        	
+        	consoleGroup = new Group(parent, SWT.NONE);
+            consoleGroup.setLayout(new GridLayout(2, false));
+            GridData layoutData3 = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            layoutData3.verticalIndent = 10;
+			consoleGroup.setLayoutData(layoutData3);
+            consoleGroup.setText(Messages.AbstractClassicCryptoPage_1);
 
-	/**
+            {
+                lblConsoleDescr = new Label(consoleGroup, SWT.WRAP);
+                GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+                layoutData.widthHint = 320;
+                layoutData.horizontalSpan = 2;
+                lblConsoleDescr.setLayoutData(layoutData);
+                lblConsoleDescr.setText(Messages.AbstractClassicCryptoPage_2);
+
+//                lblConsoleFurther = new Label(consoleGroup, SWT.WRAP);
+//                layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+//                layoutData.widthHint = 320;
+//                layoutData.verticalIndent = 5;
+//                layoutData.horizontalSpan = 2;
+//                lblConsoleFurther.setLayoutData(layoutData);
+//                lblConsoleFurther.setText(Messages.AbstractClassicCryptoPage_3);
+
+                txtConsoleCommand = new Text(consoleGroup, SWT.BORDER | SWT.CENTER);
+                txtConsoleCommand.setEditable(false);
+                layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+                layoutData.verticalIndent = 5;
+                txtConsoleCommand.setLayoutData(layoutData);
+                txtConsoleCommand.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NONE)); //$NON-NLS-1$
+                // TODO: dispose
+            }
+        }
+    }
+
+    /**
+     * @return the alphabet command line part
+     */
+    protected String generateAlphabetPartForCommandLine() {
+        String result = ""; //$NON-NLS-1$
+        if (isSelectedAlphaCustom()) {
+            setCommandLineWarning(String
+                    .format("The custom alphabet %s cannot be used in the command. Specify an existing alphabet with the parameter '-a <alphabet name>'; currently, a standard alphabet will be used.", getAlphabetInput().getContent().getName())); //$NON-NLS-1$
+        } else {
+            result += "-a "; //$NON-NLS-1$
+            if (getAlphabetInput().getContent().getName().contains(" ")) { //$NON-NLS-1$
+                result += "\"" + getAlphabetInput().getContent().getName() + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+            } else {
+                result += getAlphabetInput().getContent().getName();
+            }
+        }
+        return result;
+    }
+
+    protected String quoteCmdlineArgIfNecessary(String arg) {
+        if (arg.contains(" ")) { //$NON-NLS-1$
+            return "\"" + arg + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        return arg;
+    }
+
+    /**
+     * Sets a warning to be displayed in the command line section
+     * 
+     * @param warning if null, the warning disappears
+     */
+    protected void setCommandLineWarning(String warning) {
+        // TODO: handle
+    }
+
+    /**
+     * This method generates a JCT console string which should result in the exact same result which would have been
+     * yielded when finishing this wizard.
+     * 
+     * It is safe to assume when extending this function, that the wizard is filled out correctly, and the "finish"
+     * button is enabled.
+     * 
+     * @return
+     */
+    protected String generateCommandLineString() {
+        return ""; //$NON-NLS-1$
+    }
+
+    protected void updateCommandLineString() {
+        if (isPageComplete()) {
+            txtConsoleCommand.setText(generateCommandLineString());
+        } else {
+            txtConsoleCommand.setText(Messages.AbstractClassicCryptoPage_15);
+        }
+    }
+
+    /**
+     * Sets a MWizardMessage Object to this WizardPage
+     * 
+     * @param message
+     */
+    protected void setTitleBarMessage(MWizardMessage message) {
+        this.setMessage(message.getMessage(), message.getMessageType());
+    }
+
+    /**
      * Excludes a control from Layout calculation
-     *
+     * 
      * @param that
      * @param hideit
      */
@@ -852,28 +946,29 @@ public class AbstractClassicCryptoPage extends WizardPage {
         GridData GData = (GridData) that.getLayoutData();
         GData.exclude = hideit;
         that.setVisible(!hideit);
-        Control[] myArray = {that};
+        Control[] myArray = { that };
         that.getParent().layout(myArray);
     }
 
+    /**
+     * Updates the Transformation Wizard Page to load the Transformation setting for a specified currentAlphabet
+     * 
+     * @param alphabetName the name of the currentAlphabet
+     */
+    protected void updateTransformationPage(String alphabetName) {
+        TransformData myTransformation;
+        if (alphabetName.equals("no transformation"))myTransformation = new TransformData(); //$NON-NLS-1$
+        else
+            myTransformation = AbstractClassicTransformationPage.getTransformFromName(alphabetName);
 
-	/** Updates the Transformation Wizard Page to load the Transformation
-	 * setting for a specified currentAlphabet
-	 * @param alphabetName the name of the currentAlphabet
-	 */
-	protected void updateTransformationPage(String alphabetName) {
-		TransformData myTransformation;
-		if(alphabetName.equals("no transformation")) myTransformation = new TransformData(); //$NON-NLS-1$
-		else myTransformation = AbstractClassicTransformationPage.getTransformFromName(alphabetName);
+        ((AbstractClassicTransformationPage) super.getNextPage()).setTransformData(myTransformation);
+    }
 
-		((AbstractClassicTransformationPage) super.getNextPage()).setTransformData(myTransformation);
-	}
-
-	@Override
-	public void dispose() {
-		super.dispose();
-		if(verificationDisplayHandler != null) verificationDisplayHandler.dispose();
-	}
-
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (verificationDisplayHandler != null)
+            verificationDisplayHandler.dispose();
+    }
 
 }

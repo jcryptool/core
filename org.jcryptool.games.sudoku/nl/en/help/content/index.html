@@ -1,17 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Sudoku Solver</title>
+	</head>
 <body>
-	<h2>Sudoku Solver</h2>
+	<h1>Sudoku Solver</h1>
 	
 	<p>This plugin helps to solve <b>three kinds of sudoku</b>, namely the normal sudoku, killer sudoku and hexadecimal sudoku. </p>	
 	<p>This help file consists of four main sections: <a href="#expl">puzzle explanation</a>, <a href="#tact">sudoku tactics</a>, <a href="#view">plugin instructions</a> and <a href="#filehandling">file handling</a>.</p>
 	
-	<a name="expl"><h3>Puzzle Explanation</h3></a>
+	<h2 id="expl">Puzzle Explanation</h2>
 	
 	<p>The <b>normal</b> variant is well known, it consists of a 9x9 grid where in each position a number ranging from 1 to 9 must be entered. But these numbers must be entered in such a way that it is unique in its row, column and 3x3 sub box (indicated by the bold lines). </p>
 	<p>A <b>hexadecimal</b> sudoku is merely an extension of this puzzle to a 16x16 grid with 4x4 sub boxes. Now, 16 unique numbers must be entered, often denoted by 0 through 9 and A through F, hexadecimal numbers. The restrictions are analogous. </p>
 	<p>Most people consider the <b>killer</b> sudoku as the most difficult of the three types. In this type, different boxes are defined with mathematical operations (addition, subtraction, multiplication and division). The numbers entered in these boxes must have the correct result when the operation is performed. Again, numbers must be unique in its row, column and "operation box". It is also possible that the number must be unique in its 3x3 sub box as well. The plugin allows you to turn this 'box rule' on and off.</p>
 
-	<a name="tact"><h3>Sudoku Tactics</h3></a>
+	<h2 id="tact">Sudoku Tactics</h2>
 	
 	<p>Since sudoku has become popular several tactics have been published online. Some of these tactics are implemented in this solver to aid the user in solving a sudoku puzzle. For the normal sudoku this plugin does not have any built in tactics at this point. This is due to the fact that a normal sudoku can easily be solved by brute force (trying all possibilities).</p>
 	<p>A killer sudoku is much harder to brute force because of the stranger restrictions. Nonetheless, no tactics are built in at this point. This is due to the fact that no "good" tactics could be found at the moment. The brute-force solver calculates the possibilities per square with respect to the mathematical restrictions and starts to try them in a smart way (least possibilities first). </p>
@@ -26,23 +31,22 @@
 		<li><a href="http://www.sudokuoftheday.com/pages/techniques-4.php">Double pair</a></li>
 		<li><a href="http://www.sudokuoftheday.com/pages/techniques-5.php">Multiple lines</a></li>
 	</ul></p>
-	<br />
 
-	<a name="view"><h3>Plugin Instructions</h3></a>
+	<h2 id="view">Plugin Instructions</h2>
 	<p>The plugin has two modes; <b>Enter</b> and <b>Solve</b>. At startup it will be in Enter mode in which either an existing or standard puzzle can be loaded or a puzzle can be entered manually. Entering a Normal or Hexadecimal sudoku is straightforward; simply enter the given numbers in the correct squares. </p>
 	<p>Entering a Killer sudoku is a bit more complicated. Given numbers can be entered, but the areas with mathematical operation and results must be added as well. To do so, consecutively click the squares for one area, turning them red. Once all the squares in an area are selected, choose the operator from the menu on the left and enter the required result. Note that only bordering squares can be chosen in one area. </p>
 	<p>After entering a puzzle switch to Solve mode to start solving. To solve a sudoku, simply click a square and type in the number that should go there. The plugin prevents you from entering a number that violates one of the rules. If you want to make solving a bit easier, you can let the plugin show which numbers are possible for each square. If you're stuck; you can ask for a hint. The plugin will select an empty square at random and fill out the correct number. Note that the Hint-button might not be available immediately when switching to Solve Mode, the plugin will first solve the puzzle in the background. </p>
 	<p>The plugin has the possibility to save and load puzzles so you can stop at any time. Also, you could download puzzles from the internet and open them in JCT. The file format demands are different for each type of puzzle, see <a href="#filehandling">file handling</a>.</p>
 	
-	<a name="filehandling"><h3>File Handling</h3></a>
+	<h2 id="filehandling">File Handling</h2>
 	<p>	The plugin supports different types of file formats for the different puzzles. Below it is explained what is expected in a file.</p>
 	<p>	For normal sudokus, the file format should not matter. The plugin tries to find 81 numbers including a number for empty squares (usually 0 or '.'). </p>
 	<p>Killer sudokus require a strict file format. Each square in a field is denoted by the same character. These characters are unique for each field. The characters should be in place in the file exactly as the puzzle looks. Then below this puzzle, for each character a value must be defined, e.g. a x 24 or b + 12. If '=' is used instead of an operator, the plugin assumes addition. For an example, see <a href="#killerfile">below</a>. </p>
 	<p>For a hexadecimal puzzle, two formats are accepted. Either an empty square is denoted by a '.' or by a space. In the former case, the entries are expected row by row with no spaces in between. In the latter case, the entries are expected row by row with a space in between each entry. Which type is used should be indicated with a 1 or 2 respectively in the first line of the file. </p>
-	The autofill button can be clicked to fill out one square where only one number is possible. The square that is filled out will blink red after this is done. <br />
+	<p>The autofill button can be clicked to fill out one square where only one number is possible. The square that is filled out will blink red after this is done. <br />
 	In case of the hexadecimal puzzle, the strategy buttons apply one of the strategies to the puzzle and fill out the results. The strategy is repeated until no new entries are discovered. </p>
-	<br />
-	<a name="killerfile"><h4>Killer Sudoku Example File</h4></a>
+	
+	<h3 id="killerfile">Killer Sudoku Example File</h3>
 	
 	<pre>
 	+-------+-------+-------+
@@ -89,6 +93,5 @@
 	# x 144
 	& - 1
 	</pre>
-	<br />
 </body>
 </html>

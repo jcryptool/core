@@ -51,9 +51,11 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
         /** the N to set. */
         private BigInteger n;
-
+        private BigInteger e;
+        
         public void run() {
             calcNField.setText(n.toString());
+            calcEField.setText(e.toString());
         }
 
         /**
@@ -61,6 +63,13 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
          */
         public void setN(BigInteger n) {
             this.n = n;
+        }
+        
+        /**
+         * @param e the e to set
+         */
+        public void setE(BigInteger e) {
+            this.e = e;
         }
     }
 
@@ -96,6 +105,9 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /** Field for the calculated replacement-n. */
     private Text calcNField;
+    
+    /** Field for the calculated replacement-e. */
+    private Text calcEField;
 
     /**
      * Constructor for a new wizardpage getting the data object.
@@ -194,6 +206,41 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         eField.addVerifyListener(this);
         eField.setToolTipText(Messages.NewPublicKeyPage_enter_e_popup);
 
+     // new label for <-
+        label = new Label(composite, SWT.CENTER);
+        label.setText("<-");
+        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        // button for moving the value from calcE to e
+        final Button moveButton2 = new Button(composite, SWT.PUSH);
+        moveButton2.setText(Messages.NewPublicKeyPage_use);
+        moveButton2.setToolTipText(Messages.NewPublicKeyPage_use_popup);
+        moveButton2.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+        moveButton2.setEnabled(true);
+        moveButton2.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                eField.setText(calcEField.getText());
+            }
+        });
+
+        // new label for <-
+        label = new Label(composite, SWT.CENTER);
+        label.setText("<-");
+        label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        // field for calculated e value
+        calcEField = new Text(composite, SWT.SINGLE | SWT.LEAD | SWT.BORDER | SWT.READ_ONLY);
+        calcEField.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+        calcRunnable.setE(new BigInteger("17"));
+        Display x = Display.getDefault();
+        x.asyncExec(calcRunnable);
+
+         //new label for <-
+         label = new Label(composite, SWT.CENTER);
+         label.setText("");
+         label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+                
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd1);
 

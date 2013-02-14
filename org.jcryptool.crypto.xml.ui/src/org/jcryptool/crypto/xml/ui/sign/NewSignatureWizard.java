@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2011 Dominik Schadow - http://www.xml-sicherheit.de
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Dominik Schadow - initial API and implementation
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.sign;
 
@@ -23,21 +20,18 @@ import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 
 /**
- * <p>This class prepares and adds all wizard pages to the wizard and launches the
- * <i>XML Signature Wizard</i> afterwards.</p>
- *
+ * <p>
+ * This class prepares and adds all wizard pages to the wizard and launches the <i>XML Signature Wizard</i> afterwards.
+ * </p>
+ * 
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class NewSignatureWizard extends Wizard implements INewWizard {
     /** PageResource first wizard page. */
     private PageResource pageResource = null;
-    /** PageOpenKey second default wizard page. */
-    private PageOpenKey pageOpenKey = null;
-    /** PageCreateKey second alternative wizard page. */
-    private PageCreateKey pageCreateKey = null;
-    /** PageCreateKeystore second alternative wizard page. */
-    private PageCreateKeystore pageCreateKeystore = null;
+    /** PageKey second wizard page. */
+    private PageKey pageKey = null;
     /** PageAlgorithms third wizard page. */
     private PageAlgorithms pageAlgorithms = null;
     /** The XML document to sign. */
@@ -60,7 +54,7 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
 
     /**
      * Return the settings used for all XML Signature Wizard pages.
-     *
+     * 
      * @return The IDialogSettings for the XML Signature Wizard
      */
     private IDialogSettings getSignatureWizardSettings() {
@@ -74,7 +68,7 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
 
     /**
      * Initializes the wizard with a structured selection.
-     *
+     * 
      * @param workbench The workbench
      * @param selection The structured selection
      */
@@ -83,7 +77,7 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
 
     /**
      * Initializes the wizard with a selected file and a text selection.
-     *
+     * 
      * @param data The selected file
      * @param textSelection The text selection
      */
@@ -97,29 +91,22 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * Adds the five pages (<code>PageResource</code>,
-     * <code>PageOpenKey</code>, <code>PageCreateKey</code>,
-     * <code>PageCreateKeystore</code> and <code>PageAlgorithms</code>)
-     * to the wizard.
+     * Adds the three pages (<code>PageResource</code>, <code>PageKey</code> and <code>PageAlgorithms</code>) to the
+     * wizard.
      */
     public void addPages() {
         pageResource = new PageResource(signature, data, textSelection != null ? true : false);
         addPage(pageResource);
-        pageOpenKey = new PageOpenKey(signature);
-        addPage(pageOpenKey);
-        pageCreateKey = new PageCreateKey(signature);
-        addPage(pageCreateKey);
-        pageCreateKeystore = new PageCreateKeystore(signature);
-        addPage(pageCreateKeystore);
+        pageKey = new PageKey(signature);
+        addPage(pageKey);
         pageAlgorithms = new PageAlgorithms(signature);
         addPage(pageAlgorithms);
     }
 
     /**
-     * Checks the currently active wizard page. It is impossible to finish the
-     * <i>XML Signature Wizard</i> from the first or second page. Only the
-     * third wizard page can successfully generate a signature.
-     *
+     * Checks the currently active wizard page. It is impossible to finish the <i>XML Signature Wizard</i> from the
+     * first or second page. Only the third wizard page can successfully generate a signature.
+     * 
      * @return Wizard completion status
      */
     public boolean canFinish() {
@@ -132,56 +119,33 @@ public class NewSignatureWizard extends Wizard implements INewWizard {
 
     /**
      * Finishes the wizard.
-     *
+     * 
      * @return Finishing status
      */
     public boolean performFinish() {
         pageResource.storeSettings();
-        pageOpenKey.storeSettings();
+        pageKey.storeSettings();
         pageAlgorithms.storeSettings();
         return pageAlgorithms.performFinish();
     }
 
     /**
      * Returns the Signature Wizard model.
-     *
+     * 
      * @return The model
      */
     public Signature getModel() {
         return signature;
     }
 
-    /**
-     * @return the pageResource
-     */
     public PageResource getPageResource() {
         return pageResource;
     }
 
-    /**
-     * @return the pageOpenKey
-     */
-    public PageOpenKey getPageOpenKey() {
-        return pageOpenKey;
+    public PageKey getPageKey() {
+        return pageKey;
     }
 
-    /**
-     * @return the pageCreateKey
-     */
-    public PageCreateKey getPageCreateKey() {
-        return pageCreateKey;
-    }
-
-    /**
-     * @return the pageCreateKeystore
-     */
-    public PageCreateKeystore getPageCreateKeystore() {
-        return pageCreateKeystore;
-    }
-
-    /**
-     * @return the pageAlgorithms
-     */
     public PageAlgorithms getPageAlgorithms() {
         return pageAlgorithms;
     }

@@ -2,6 +2,18 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Android Unlock Pattern" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins" topic="$nl$/help/content/index.html">
-	<topic href="$nl$/help/content/index.html" label="Android Unlock Pattern">
+  <topic href="$nl$/help/content/index.html" label="Android Unlock Pattern">
+    <topic href="$nl$/help/content/index.html#design" label="AUP Design">
+    </topic>
+    <topic href="$nl$/help/content/index.html#security" label="AUP Security">
+    </topic>
+    <topic href="$nl$/help/content/index.html#attacks" label="Attacks against AUP">
+    </topic>
+    <topic href="$nl$/help/content/index.html#further" label="Further Graphical Password Methods">
+       <topic href="$nl$/help/content/index.html#das" label="Draw a Secret (DAS)">
+       </topic>
+       <topic href="$nl$/help/content/index.html#win8" label="Windows 8: Picture Password">
+       </topic>
+    </topic>
  </topic>
 </toc>

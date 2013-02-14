@@ -1,5 +1,6 @@
 package org.jcryptool.visual.verifiablesecretsharing;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -8,12 +9,12 @@ import org.osgi.framework.BundleContext;
  */
 public class VerifiableSecretSharingPlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.visual.verifiablesecretsharing"; //$NON-NLS-1$
+    // The plug-in ID
+    public static final String PLUGIN_ID = "org.jcryptool.visual.verifiablesecretsharing"; //$NON-NLS-1$
 
-	// The shared instance
-	private static VerifiableSecretSharingPlugin plugin;
-	
+    // The shared instance
+    private static VerifiableSecretSharingPlugin plugin;
+
     /*
      * (non-Javadoc)
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext )
@@ -32,19 +33,23 @@ public class VerifiableSecretSharingPlugin extends AbstractUIPlugin {
 
         super.stop(context);
     }
-	
-	/**
-	 * The constructor
-	 */
-	public VerifiableSecretSharingPlugin() {
-	}
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static VerifiableSecretSharingPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * The constructor
+     */
+    public VerifiableSecretSharingPlugin() {
+    }
+
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static VerifiableSecretSharingPlugin getDefault() {
+        return plugin;
+    }
+
+    public static ImageDescriptor getImageDescriptor(String path) {
+        return imageDescriptorFromPlugin(PLUGIN_ID, path);
+    }
 }

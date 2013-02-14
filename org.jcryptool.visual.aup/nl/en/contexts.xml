@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
-   <context id="ContextHelpView" title="Android Unlock Pattern">
-      <description>The Android Unlock Pattern plug-in is adopted from Androids unlock pattern. These smartphones can be secured using this method.</description>
+   <context id="ContextHelpView" title="How to use the Android Unlock Pattern?">
+      <description>Choose an operation from the left area.
+
+The first step is the pattern input. The pattern is interpreted from the touch sequence of the circular buttons in the &quot;input area&quot;. The pattern input can be started by pressing the left mouse button on the first button of the desired pattern. Hold the mouse button and traverse subsequent buttons with the cursor to extend the pattern. Finally, the input is completed by releasing the mouse button.
+
+Feedback on your input will appear directly below the input matrix. In case you want to correct your input, the button &quot;Reset input&quot; can be pressed to clear the input area.
+
+When you want to proceed to the next step, press one of the buttons &quot;Continue&quot;, &quot;Save&quot; or &quot;Check&quot;.
+
+The operations&apos; steps are listed in the bottom left &quot;Description&quot; area. The current step is bolded.
+
+The visualisation can be reset at any time by clicking the restart button in the visualisation&apos;s tab title bar. This will delete any previously entered pattern.
+
+      </description>
       <topic href="$nl$/help/content/index.html" label="Android Unlock Pattern"/>
    </context>
 </contexts>

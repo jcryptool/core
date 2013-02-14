@@ -170,7 +170,7 @@ public class FrequencyGui extends Content {
                     tdescrLData.height = 245;
                     thelp.setLayoutData(tdescrLData);
                     thelp.setText(String.format(Messages.FrequencyGui_text_help, plength)
-                            + "\n\nDurch Klick auf \"Bestimmen\" wird ein Lösungsvorschlag automatisch errechnet.");
+                            + Messages.FrequencyGui_0);
                     thelp.setEditable(false);
                     thelp.setEnabled(false);
                     thelp.setFont(FontService.getNormalFont());

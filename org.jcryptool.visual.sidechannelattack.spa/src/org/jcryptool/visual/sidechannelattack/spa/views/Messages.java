@@ -4,24 +4,18 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.sidechannelattack.spa.views.messages"; //$NON-NLS-1$
-	public static String Constants_0;
 	public static String Constants_1;
 	public static String Constants_10;
 	public static String Constants_100;
 	public static String Constants_101;
-	public static String Constants_102;
 	public static String Constants_103;
 	public static String Constants_104;
 	public static String Constants_105;
 	public static String Constants_106;
-	public static String Constants_107;
 	public static String Constants_108;
 	public static String Constants_109;
-	public static String Constants_11;
-	public static String Constants_110;
 	public static String Constants_111;
 	public static String Constants_112;
-	public static String Constants_113;
 	public static String Constants_114;
 	public static String Constants_115;
 	public static String Constants_116;
@@ -30,20 +24,14 @@ public class Messages extends NLS {
 	public static String Constants_119;
 	public static String Constants_12;
 	public static String Constants_120;
-	public static String Constants_121;
-	public static String Constants_122;
 	public static String Constants_123;
 	public static String Constants_124;
 	public static String Constants_125;
 	public static String Constants_126;
 	public static String Constants_127;
 	public static String Constants_128;
-	public static String Constants_129;
-	public static String Constants_13;
-	public static String Constants_130;
 	public static String Constants_131;
 	public static String Constants_132;
-	public static String Constants_133;
 	public static String Constants_134;
 	public static String Constants_135;
 	public static String Constants_136;

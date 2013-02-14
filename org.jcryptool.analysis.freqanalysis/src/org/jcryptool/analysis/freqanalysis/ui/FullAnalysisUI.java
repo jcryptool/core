@@ -9,11 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.analysis.freqanalysis.ui;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
@@ -40,8 +37,6 @@ import org.jcryptool.analysis.freqanalysis.calc.FreqAnalysisCalc;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.core.operations.editors.EditorsManager;
-import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
 
 import com.cloudgarden.resource.SWTResourceManager;
@@ -50,7 +45,7 @@ import com.cloudgarden.resource.SWTResourceManager;
  * @author SLeischnig
  *
  */
-public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
+public class FullAnalysisUI extends AbstractAnalysisUI {
 
     {
         // Register as a resource user - SWTResourceManager will
@@ -61,15 +56,11 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
     private Button button1;
     private Composite composite1;
     private Group group1;
-    private CustomFreqCanvas myGraph;
     private Group group4;
     private Composite composite2;
-    private Button button3;
     private Button button4;
     private Group group2;
-    private Spinner spinner1;
     private Label label1;
-    private Spinner spinner2;
     private TabItem tabItem2;
     private Button btnReferenceTools;
     private Composite composite4;
@@ -81,9 +72,7 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
     private Label label3;
     private Label label2;
 
-    private String text;
     private FreqAnalysisCalc myAnalysis;
-    private int myOffset, myLength;
     private FreqAnalysisCalc overlayAnalysis;
     private String myOverlayAlphabet = ""; //$NON-NLS-1$
     private String reftext;
@@ -148,7 +137,7 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                             appropriateAlphabetToBeDetected = true;
                         }
                         recalcGraph();
-                    }
+                    }                    	
                 }
             });
             composite1 = new Composite(this, SWT.NONE);
@@ -321,15 +310,25 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
                                 btnReferenceTools.setText(Messages.FullAnalysisUI_enabledecrOverlay);
                                 btnReferenceTools.addMouseListener(new MouseAdapter() {
                                     public void mouseDown(MouseEvent evt) {
+                                    	
                                         if (!btnReferenceTools.getSelection()) {
-                                            myGraph.setAnalysis(myLimitedAnalysis);
-                                            enableReferenceTools(true);
+                                        	enableReferenceTools(true);
+                                        	if(myLimitedAnalysis == null)
+                                        		recalcGraph();
+                                        	if(myLimitedAnalysis != null)
+                                        		myGraph.setAnalysis(myLimitedAnalysis);
                                         } else {
-                                            myGraph.setAnalysis(myAnalysis);
-                                            enableReferenceTools(false);
+                                        	enableReferenceTools(false);
+                                        	if(myAnalysis == null)
+                                        		recalcGraph();
+                                        	if(myAnalysis != null)
+                                        		myGraph.setAnalysis(myAnalysis);
                                         }
-                                        myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
-                                        myGraph.redraw();
+                                        if(myAnalysis != null || myLimitedAnalysis != null)
+                                        {
+                                        	myGraph.setOverlayActivated(!btnReferenceTools.getSelection());
+                                        	myGraph.redraw();
+                                        }
                                     }
                                 });
                             }
@@ -453,86 +452,14 @@ public class FullAnalysisUI extends org.eclipse.swt.widgets.Composite {
         layout(myArray);
     }
 
-    /**
-     * takes the input control's values and sets the final analysis parameters
-     */
-    private void setFinalVigParameters() {
-        myLength = 1;
-        if (!button3.getSelection()) {
-            myLength = spinner1.getSelection();
-        }
-        myOffset = 0;
-        if (!button3.getSelection()) {
-            myOffset = spinner2.getSelection();
-        }
-    }
-
-    private void analyze() {
+    @Override
+	protected void analyze() {
         myAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null);
         myLimitedAnalysis = new FreqAnalysisCalc(text, myLength, myOffset, null, myOverlayAlphabet);
         if (btnReferenceTools.getSelection())
             myGraph.setAnalysis(myLimitedAnalysis);
         else
             myGraph.setAnalysis(myAnalysis);
-    }
-
-    /**
-     * rebuilds the frequency analysis graph
-     */
-    private void recalcGraph() {
-        if (checkEditor()) {
-            setFinalVigParameters();
-            analyze();
-            myGraph.redraw();
-        }
-    }
-
-    /**
-     * checks, whether an editor is opened or not.
-     */
-    private boolean checkEditor() {
-        InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-        if (stream == null) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * get the text from an opened editor
-     */
-    private String getEditorText() {
-        String text = ""; //$NON-NLS-1$
-        InputStream stream = EditorsManager.getInstance().getActiveEditorContentInputStream();
-        text = InputStreamToString(stream);
-        return text;
-    }
-
-    /**
-     * reads the current value from an input stream
-     *
-     * @param in the input stream
-     */
-    private String InputStreamToString(InputStream in) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
-        } catch (UnsupportedEncodingException e1) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e1);
-        }
-
-        StringBuffer myStrBuf = new StringBuffer();
-        int charOut = 0;
-        String output = ""; //$NON-NLS-1$
-        try {
-            while ((charOut = reader.read()) != -1) {
-                myStrBuf.append(String.valueOf((char) charOut));
-            }
-        } catch (IOException e) {
-            LogUtil.logError(FreqAnalysisPlugin.PLUGIN_ID, e);
-        }
-        output = myStrBuf.toString();
-        return output;
     }
 
     /**

@@ -15,7 +15,7 @@
    inkscape:version="0.48.2 r9819"
    width="500"
    height="500"
-   sodipodi:docname="green3.svg">
+   sodipodi:docname="yellow.svg">
   <metadata
      id="metadata2932">
     <rdf:RDF>
@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -124,7 +124,7 @@
          offset="0"
          id="stop3604-7" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
+         style="stop-color:#e6e6e6;stop-opacity:1;"
          offset="1"
          id="stop3606-4" />
     </linearGradient>
@@ -250,34 +250,37 @@
      id="namedview2928"
      showgrid="false"
      inkscape:zoom="1.2316035"
-     inkscape:cx="76.001328"
+     inkscape:cx="199.11414"
      inkscape:cy="208.12313"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg2926" />
-  <path
-     style="fill:url(#linearGradient3864);fill-opacity:1;fill-rule:evenodd;stroke:none"
-     d="M 250 0.34375 C 112.11336 0.34375 0.34375 112.11336 0.34375 250 C 0.34375 387.88664 112.11336 499.65625 250 499.65625 C 387.88664 499.65625 499.65625 387.88664 499.65625 250 C 499.65625 112.11336 387.88664 0.34375 250 0.34375 z M 250 175 C 291.42136 175 325 208.57864 325 250 C 325 291.42136 291.42136 325 250 325 C 208.57864 325 175 291.42136 175 250 C 175 208.57864 208.57864 175 250 175 z "
-     id="path2828" />
-  <path
-     sodipodi:type="arc"
-     style="fill:url(#radialGradient3757);fill-opacity:1;fill-rule:evenodd;stroke:none"
-     id="path2977"
-     sodipodi:cx="250.48645"
-     sodipodi:cy="251.54343"
-     sodipodi:rx="249.6745"
-     sodipodi:ry="250.89243"
-     d="m 500.16095,251.54343 a 249.6745,250.89243 0 1 1 -499.34899932,0 249.6745,250.89243 0 1 1 499.34899932,0 z"
-     transform="matrix(1.001306,0,0,0.99644524,-0.8135855,-0.64925)" />
-  <path
-     sodipodi:type="arc"
-     style="fill:url(#radialGradient3867);fill-opacity:1;fill-rule:evenodd;stroke:none"
-     id="path5076-9"
-     sodipodi:cx="369.43661"
-     sodipodi:cy="682.78473"
-     sodipodi:rx="109.43661"
-     sodipodi:ry="110.42255"
-     d="m 478.87322,682.78473 a 109.43661,110.42255 0 1 1 -218.87321,0 109.43661,110.42255 0 1 1 218.87321,0 z"
-     transform="matrix(0.68532829,0,0,0.67920912,-3.1853636,-213.75361)" />
+  <g
+     id="g5012">
+    <path
+       id="path2828"
+       d="M 250 0.34375 C 112.11336 0.34375 0.34375 112.11336 0.34375 250 C 0.34375 387.88664 112.11336 499.65625 250 499.65625 C 387.88664 499.65625 499.65625 387.88664 499.65625 250 C 499.65625 112.11336 387.88664 0.34375 250 0.34375 z M 250 175 C 291.42136 175 325 208.57864 325 250 C 325 291.42136 291.42136 325 250 325 C 208.57864 325 175 291.42136 175 250 C 175 208.57864 208.57864 175 250 175 z "
+       style="fill:url(#linearGradient3864);fill-opacity:1;fill-rule:evenodd;stroke:none" />
+    <path
+       transform="matrix(1.001306,0,0,0.99644524,-0.8135855,-0.64925)"
+       d="m 500.16095,251.54343 c 0,138.56406 -111.78308,250.89242 -249.6745,250.89242 C 112.59503,502.43585 0.81195068,390.10749 0.81195068,251.54343 0.81195068,112.97937 112.59503,0.65100098 250.48645,0.65100098 c 137.89142,0 249.6745,112.32836902 249.6745,250.89242902 z"
+       sodipodi:ry="250.89243"
+       sodipodi:rx="249.6745"
+       sodipodi:cy="251.54343"
+       sodipodi:cx="250.48645"
+       id="path2977"
+       style="fill:url(#radialGradient3757);fill-opacity:1;fill-rule:evenodd;stroke:none"
+       sodipodi:type="arc" />
+    <path
+       transform="matrix(0.68532829,0,0,0.67920912,-3.1853636,-213.75361)"
+       d="m 478.87322,682.78473 c 0,60.98469 -48.99644,110.42255 -109.43661,110.42255 -60.44016,0 -109.4366,-49.43786 -109.4366,-110.42255 0,-60.98469 48.99644,-110.42255 109.4366,-110.42255 60.44017,0 109.43661,49.43786 109.43661,110.42255 z"
+       sodipodi:ry="110.42255"
+       sodipodi:rx="109.43661"
+       sodipodi:cy="682.78473"
+       sodipodi:cx="369.43661"
+       id="path5076-9"
+       style="fill:url(#radialGradient3867);fill-opacity:1;fill-rule:evenodd;stroke:none"
+       sodipodi:type="arc" />
+  </g>
 </svg>

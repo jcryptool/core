@@ -23,7 +23,8 @@ public class Messages extends NLS {
     public static String DecryptionGui_mbox_open;
     public static String DecryptionGui_ttip_back;
     public static String DecryptionGui_ttip_finish;
-    public static String FrequencyGui_button_back;
+    public static String FrequencyGui_0;
+	public static String FrequencyGui_button_back;
     public static String FrequencyGui_button_decrypt;
     public static String FrequencyGui_button_next;
     public static String FrequencyGui_button_options;
@@ -40,7 +41,11 @@ public class Messages extends NLS {
     public static String FrequencyGui_ttip_next;
     public static String FrequencyGui_ttip_options;
     public static String FrequencyGui_ttip_shift;
-    public static String FriedmanGui_button_back;
+    public static String FriedmanGui_0;
+	public static String FriedmanGui_1;
+	public static String FriedmanGui_2;
+	public static String FriedmanGui_3;
+	public static String FriedmanGui_button_back;
     public static String FriedmanGui_button_next;
     public static String FriedmanGui_mbox_length;
     public static String FriedmanGui_mbox_number;
@@ -69,7 +74,8 @@ public class Messages extends NLS {
     public static String QuickDecrypGui_ttip_finish;
     public static String QuickDecrypGui_ttip_frequency;
     public static String QuickDecrypGui_ttip_friedman;
-    public static String SummaryGui_button_analyze;
+    public static String SummaryGui_0;
+	public static String SummaryGui_button_analyze;
     public static String SummaryGui_button_start;
     public static String SummaryGui_combo_warning;
     public static String SummaryGui_group_steps;

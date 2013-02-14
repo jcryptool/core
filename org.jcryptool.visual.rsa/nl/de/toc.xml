@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="RSA" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
-    <topic href="$nl$/help/content/index.html" label="RSA">
+<toc label="RSA-Kryptosystem" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
+    <topic href="$nl$/help/content/index.html" label="RSA-Kryptosystem">
     </topic> 
 </toc>

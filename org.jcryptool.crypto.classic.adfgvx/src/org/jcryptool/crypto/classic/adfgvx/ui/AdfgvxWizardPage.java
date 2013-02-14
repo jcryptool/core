@@ -1060,5 +1060,25 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     protected void setHelpAvailable() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), AdfgvxPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }
+    
+    // adfgvx -D -ed -kS SUBST -kT TRANSP
+    @Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	
+//    	String substKeyString = "";
+//    	for(Character c: substitutionKeyInput.getContent()) substKeyString += c;
+    	String keySubst = "-kS " + quoteCmdlineArgIfNecessary(keyWordText.getText());
+//    	String keySubst = "-kS " + quoteCmdlineArgIfNecessary(getSubstitutionKey());
+    	String keyTransp = "-kT " + quoteCmdlineArgIfNecessary(getTranspositionKey());
+    	
+    	String result = "adfgvx " + encDec + " -ed " + keySubst + " " + keyTransp;
 
+//    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
+    }
+    
+    
 }

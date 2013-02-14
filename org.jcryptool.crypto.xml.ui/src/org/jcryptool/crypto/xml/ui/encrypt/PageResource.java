@@ -1,12 +1,9 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Dominik Schadow - initial API and implementation
+ * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.encrypt;
 
@@ -42,11 +39,13 @@ import org.jcryptool.crypto.xml.ui.utils.IContextHelpIds;
 import org.w3c.dom.Document;
 
 /**
- * <p>First page of the <b>XML Encryption Wizard</b>. Lets the user select the resource to encrypt
- * (<i>document</i>, <i>selection</i>, <i>XPath</i>), the encryption type (<i>enveloping</i>,
- * <i>detached</i>) and a key option (use an existing one, generate a new key, generate a new keystore
- * and a new key). Enables the user to generate a Basic Security Profile compliant encryption.</p>
- *
+ * <p>
+ * First page of the <b>XML Encryption Wizard</b>. Lets the user select the resource to encrypt (<i>document</i>,
+ * <i>selection</i>, <i>XPath</i>), the encryption type (<i>enveloping</i>, <i>detached</i>) and a key option (use an
+ * existing one, generate a new key, generate a new keystore and a new key). Enables the user to generate a Basic
+ * Security Profile compliant encryption.
+ * </p>
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -92,7 +91,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Constructor of this wizard page
-     *
+     * 
      * @param encryption The encryption wizard model
      * @param data The selected file
      * @param textSelection Status of text selection in editor
@@ -116,7 +115,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Creates the wizard page with the layout settings.
-     *
+     * 
      * @param parent Parent composite
      */
     public void createControl(final Composite parent) {
@@ -133,9 +132,9 @@ public class PageResource extends WizardPage implements Listener {
     }
 
     /**
-     * Fills this wizard page with content. Four groups (<i>Resource</i>, <i>Encryption Type</i>,
-     * <i>Key</i> and <i>Basic Security Profile</i>) and all their widgets are inserted.
-     *
+     * Fills this wizard page with content. Four groups (<i>Resource</i>, <i>Encryption Type</i>, <i>Key</i> and
+     * <i>Basic Security Profile</i>) and all their widgets are inserted.
+     * 
      * @param parent Parent composite
      */
     private void createPageContent(final Composite parent) {
@@ -351,7 +350,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Shows a message to the user to complete the fields on this page.
-     *
+     * 
      * @param message The message for the user
      * @param status The status type of the message
      */
@@ -380,15 +379,15 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Opens the platform standard file dialog to select the detached XML document to encrypt.<br/>
-     * A detached encryption creates a <code>CipherReference</code> instead of a
-     * <code>CipherValue</code> element inside <code>CipherData</code>.<br/> Only XML documents are
-     * supported for detached encryption.
+     * A detached encryption creates a <code>CipherReference</code> instead of a <code>CipherValue</code> element inside
+     * <code>CipherData</code>.<br/>
+     * Only XML documents are supported for detached encryption.
      */
     private void selectDetachedFile() {
         FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterNames(new String[] {IConstants.XML_FILTER_NAME});
-        dialog.setFilterExtensions(new String[] {IConstants.XML_FILTER_EXTENSION});
+        dialog.setFilterNames(new String[] { IConstants.XML_FILTER_NAME });
+        dialog.setFilterExtensions(new String[] { IConstants.XML_FILTER_EXTENSION });
         String filename = dialog.open();
         if (filename != null && filename.length() > 0) {
             tDetachedFile.setText(filename);
@@ -397,7 +396,7 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Handles the events from this wizard page.
-     *
+     * 
      * @param e The triggered event
      */
     public void handleEvent(final Event e) {
@@ -439,21 +438,13 @@ public class PageResource extends WizardPage implements Listener {
 
     /**
      * Returns the next wizard page after all the necessary data is entered correctly.
-     *
+     * 
      * @return IWizardPage The next wizard page
      */
     public IWizardPage getNextPage() {
         saveDataToModel();
-        if (bCreateKey.getSelection()) {
-            PageCreateKey page = ((NewEncryptionWizard) getWizard()).getPageCreateKey();
-            return page;
-        } else if (bCreateKeystore.getSelection()) {
-            PageCreateKeystore page = ((NewEncryptionWizard) getWizard()).getPageCreateKeystore();
-            return page;
-        } else {
-            PageOpenKey page = ((NewEncryptionWizard) getWizard()).getPageOpenKey();
-            return page;
-        }
+        PageKey page = ((NewEncryptionWizard) getWizard()).getPageKey();
+        return page;
     }
 
     /**

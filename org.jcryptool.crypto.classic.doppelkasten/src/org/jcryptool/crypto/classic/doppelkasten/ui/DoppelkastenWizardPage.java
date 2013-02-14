@@ -25,6 +25,7 @@ import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.doppelkasten.DoppelkastenPlugin;
 import org.jcryptool.crypto.classic.doppelkasten.algorithm.DoppelkastenAlgorithm;
+import org.jcryptool.crypto.classic.doppelkasten.algorithm.DoppelkastenAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 
@@ -251,6 +252,21 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 			key2Text.setLayoutData(key2TextGridData);
 	        key2Text.setToolTipText("");
 
+    }
+	
+//	doublebox -E -t "TEST TEXT" -k AKEY -k2 KEYTWO
+	@Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "-k " + quoteCmdlineArgIfNecessary(DoppelkastenAlgorithmSpecification.unglueKeys(getKey())[0]);
+    	String key2 = "-k2 " + quoteCmdlineArgIfNecessary(DoppelkastenAlgorithmSpecification.unglueKeys(getKey())[1]);
+    	
+    	String result = "doublebox " + encDec + " -ed " + key + " " + key2;
+
+//    	result += " " + generateAlphabetPartForCommandLine();
+    	
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
     }
 
 }

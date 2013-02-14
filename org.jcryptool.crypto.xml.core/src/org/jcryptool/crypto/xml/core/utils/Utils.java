@@ -1,9 +1,8 @@
 /*******************************************************************************
- * Copyright (c) 2009 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This
- * program and the accompanying materials are made available under the terms of the Eclipse Public
- * License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
+ * Copyright (c) 2012 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
+ * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+ * 
  * Contributors: Dominik Schadow - initial API and implementation
  *******************************************************************************/
 package org.jcryptool.crypto.xml.core.utils;
@@ -53,7 +52,7 @@ import org.xml.sax.XMLReader;
  * <p>
  * Main utility class with different supporting methods used all over the XML Security Tools.
  * </p>
- *
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -72,51 +71,62 @@ public final class Utils {
     private Utils() {
     }
 
+    public static boolean isDocumentWellFormed(byte[] content) {
+        if (content == null || content.length == 0) {
+            return false;
+        }
+        
+        try {
+            parse(content);
+
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
     /**
      * Parses the IFile in a W3C document.
-     *
+     * 
      * @param file The IFile to parse
      * @return The parsed XML document
      * @throws IOException during document preparation
      * @throws SAXException during document generation
      * @throws ParserConfigurationException during document builder factory initialization
      */
-    public static Document parse(final IFile file) throws SAXException, IOException,
-            ParserConfigurationException {
+    public static Document parse(final IFile file) throws SAXException, IOException, ParserConfigurationException {
         return prepareDocumentBuilder(true, false).parse(file.getLocationURI().toString());
     }
 
     /**
      * Parses the File in a W3C document.
-     *
+     * 
      * @param file The file to parse
      * @return The parsed XML document
      * @throws IOException during document preparation
      * @throws SAXException during document generation
      * @throws ParserConfigurationException during document builder factory initialization
      */
-    public static Document parse(final File file) throws SAXException, IOException,
-            ParserConfigurationException {
+    public static Document parse(final File file) throws SAXException, IOException, ParserConfigurationException {
         return prepareDocumentBuilder(true, false).parse(file);
     }
 
     /**
      * Parses the byte array in a W3C document.
-     *
+     * 
      * @param content The byte array to parse
      * @return The parsed XML document
      * @throws IOException during document preparation
      * @throws SAXException during document generation
      * @throws ParserConfigurationException during document builder factory initialization
      */
-    public static Document parse(final byte[] content) throws SAXException, IOException,
-            ParserConfigurationException {
+    public static Document parse(final byte[] content) throws SAXException, IOException, ParserConfigurationException {
         return prepareDocumentBuilder(true, false).parse(new ByteArrayInputStream(content));
     }
 
     /**
      * Parses the InputStream in a W3C document.
-     *
+     * 
      * @param content The InputStream to parse
      * @return The parsed XML document
      * @throws IOException during document preparation
@@ -129,19 +139,17 @@ public final class Utils {
     }
 
     /**
-     * Parses the String in a W3C document. Adds a temporary root element
-     * <code>xmlsectempelement</code> if the String only consists of character data (element
-     * content) and doesn't start/end with &lt; and &gt;.
-     *
+     * Parses the String in a W3C document. Adds a temporary root element <code>xmlsectempelement</code> if the String
+     * only consists of character data (element content) and doesn't start/end with &lt; and &gt;.
+     * 
      * @param content The String to parse
      * @return The parsed XML document
      * @throws IOException during document preparation
      * @throws SAXException during document generation
      * @throws ParserConfigurationException during document builder factory initialization
      */
-    public static Document parse(String content) throws SAXException, IOException,
-            ParserConfigurationException {
-        StringBuffer xml = new StringBuffer();
+    public static Document parse(String content) throws SAXException, IOException, ParserConfigurationException {
+        StringBuilder xml = new StringBuilder();
 
         if (!content.startsWith("<") && !content.endsWith(">")) { //$NON-NLS-1$ //$NON-NLS-2$
             xml.append("<" + TEMPORARY_ELEMENT_LOCAL_NAME + ">"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -151,13 +159,12 @@ public final class Utils {
             xml.append(content);
         }
 
-        return prepareDocumentBuilder(true, false).parse(
-                new InputSource(new StringReader(xml.toString())));
+        return prepareDocumentBuilder(true, false).parse(new InputSource(new StringReader(xml.toString())));
     }
 
     /**
      * Creates a new W3C document.
-     *
+     * 
      * @return The new XML document
      * @throws ParserConfigurationException during document builder factory initialization
      */
@@ -167,7 +174,7 @@ public final class Utils {
 
     /**
      * Prepares a <code>DocumentBuilder</code> to parse XML documents.
-     *
+     * 
      * @param namespaceAware Is DocumentBuilderFactory namespace aware
      * @param validating is DocumentBuilderFactory validating
      * @return The DocumentBuilder
@@ -183,9 +190,9 @@ public final class Utils {
     }
 
     /**
-     * Collects all IDs (signature or encryption, based on the type) in the given XML document and
-     * returns them in a String array.
-     *
+     * Collects all IDs (signature or encryption, based on the type) in the given XML document and returns them in a
+     * String array.
+     * 
      * @param doc The XML document containing the IDs to search for
      * @param type Indicates signature or encryption id search
      * @return All IDs in a String array
@@ -199,9 +206,8 @@ public final class Utils {
             NodeList nodes = null;
 
             if ("encryption".equals(type)) { //$NON-NLS-1$
-                nodes =
-                        doc.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS,
-                                EncryptionConstants._TAG_ENCRYPTEDDATA);
+                nodes = doc.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS,
+                        EncryptionConstants._TAG_ENCRYPTEDDATA);
             } else if ("signature".equals(type)) { //$NON-NLS-1$
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 NamespaceContext ns = new SignatureNamespaceContext();
@@ -227,21 +233,20 @@ public final class Utils {
     }
 
     /**
-     * Collects all IDs (no difference between signature or encryption id) in the given XML document
-     * and stores them in a String array.
-     *
+     * Collects all IDs (no difference between signature or encryption id) in the given XML document and stores them in
+     * a String array.
+     * 
      * @param doc The XML document containing the IDs to search for
      * @return All IDs in a String array
      */
     public static String[] getAllIds(final Document doc) {
-        StringBuffer ids = new StringBuffer(""); //$NON-NLS-1$
+        StringBuilder ids = new StringBuilder(""); //$NON-NLS-1$
 
         try {
             String current = null;
 
-            NodeList encNodes =
-                    doc.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS,
-                            EncryptionConstants._TAG_ENCRYPTEDDATA);
+            NodeList encNodes = doc.getElementsByTagNameNS(EncryptionConstants.EncryptionSpecNS,
+                    EncryptionConstants._TAG_ENCRYPTEDDATA);
 
             XPath xpath = XPathFactory.newInstance().newXPath();
             NamespaceContext ns = new SignatureNamespaceContext();
@@ -274,10 +279,9 @@ public final class Utils {
     }
 
     /**
-     * Returns the XPath for every element of the XML document as an <code>Object</code> array. Gets
-     * the root element first, then calls the method <code>childNodes</code> to determine all
-     * children of the element.
-     *
+     * Returns the XPath for every element of the XML document as an <code>Object</code> array. Gets the root element
+     * first, then calls the method <code>childNodes</code> to determine all children of the element.
+     * 
      * @param doc The XML document
      * @return Object array with the XPath expressions for every node
      */
@@ -295,9 +299,9 @@ public final class Utils {
     }
 
     /**
-     * Determines all child nodes and stores the XPath expression for every node in the HashSet.
-     * Only element nodes are added to the HashSet.
-     *
+     * Determines all child nodes and stores the XPath expression for every node in the HashSet. Only element nodes are
+     * added to the HashSet.
+     * 
      * @param node The node to determine the XPath expression for and possible child nodes
      */
     private static void childNodes(final Node node) {
@@ -317,7 +321,7 @@ public final class Utils {
 
     /**
      * Returns the unique XPath expression for the given node.
-     *
+     * 
      * @param node The node to determine the XPath for
      * @return The XPath expression as string
      */
@@ -347,10 +351,10 @@ public final class Utils {
     }
 
     /**
-     * Determines the unique XPath expression for the selected element or element content in the
-     * editor. Selected element content (character data) is indicated by the temporarily added root
-     * element <code>xmlsectempelement</code>.
-     *
+     * Determines the unique XPath expression for the selected element or element content in the editor. Selected
+     * element content (character data) is indicated by the temporarily added root element
+     * <code>xmlsectempelement</code>.
+     * 
      * @param doc The complete XML document
      * @param selection The selected element or element content as XML document
      * @return The unique XPath expression for the selection
@@ -376,8 +380,7 @@ public final class Utils {
                             foundNode = false;
                             break;
                         }
-                        if (!matchingNode.getTextContent().trim().equals(
-                                selectionNode.getTextContent().trim())) {
+                        if (!matchingNode.getTextContent().trim().equals(selectionNode.getTextContent().trim())) {
                             foundNode = false;
                             break;
                         }
@@ -390,18 +393,17 @@ public final class Utils {
             }
         } else { // only element content is selected
             xpathExpressionToContent = null;
-            xpathExpression =
-                    getXPathToContent(doc.getDocumentElement(),
-                            selection.getDocumentElement().getTextContent());
+            xpathExpression = getXPathToContent(doc.getDocumentElement(), selection.getDocumentElement()
+                    .getTextContent());
         }
 
         return xpathExpression;
     }
 
     /**
-     * Determines the XPath expression to the selected character data (element content). The first
-     * matching content is used, so this XPath may point to another element content.
-     *
+     * Determines the XPath expression to the selected character data (element content). The first matching content is
+     * used, so this XPath may point to another element content.
+     * 
      * @param root The root element of the XML document
      * @param selectedContent The selected character data
      * @return The XPath expression to the selected character data
@@ -410,8 +412,7 @@ public final class Utils {
         NodeList childList = root.getChildNodes();
         Node childNode = null;
 
-        for (int i = 0, length = childList.getLength(); i < length
-                && xpathExpressionToContent == null; i++) {
+        for (int i = 0, length = childList.getLength(); i < length && xpathExpressionToContent == null; i++) {
             childNode = childList.item(i);
             if (childNode.getNodeType() == Node.TEXT_NODE) {
                 if (childNode.getTextContent().equals(selectedContent)) {
@@ -425,19 +426,17 @@ public final class Utils {
     }
 
     /**
-     * Validates the XPath expression entered by the user in a wizard. The user can only continue
-     * with the entered XPath if <i>single</i> is returned.
-     *
+     * Validates the XPath expression entered by the user in a wizard. The user can only continue with the entered XPath
+     * if <i>single</i> is returned.
+     * 
      * @param doc The XML document
      * @param xpathExpression The XPath expression
-     * @return <i>single</i>, <i>multiple</i>, <i>none</i> or <i>attribute</i> depending on the
-     *         entered XPath expression
+     * @return <i>single</i>, <i>multiple</i>, <i>none</i> or <i>attribute</i> depending on the entered XPath expression
      */
     public static String validateXPath(final Document doc, final String xpathExpression) {
         try {
             XPath xpath = XPathFactory.newInstance().newXPath();
-            NodeList nodes =
-                    (NodeList) xpath.evaluate(xpathExpression, doc, XPathConstants.NODESET);
+            NodeList nodes = (NodeList) xpath.evaluate(xpathExpression, doc, XPathConstants.NODESET);
 
             if (nodes.getLength() == 1) {
                 if (nodes.item(0).getNodeType() == Node.ATTRIBUTE_NODE) {
@@ -456,16 +455,15 @@ public final class Utils {
     }
 
     /**
-     * Returns the XML document parsed as a String. The output String can be pretty printed or not
-     * (never pretty print a signed XML document, this will break the signature).
-     *
+     * Returns the XML document parsed as a String. The output String can be pretty printed or not (never pretty print a
+     * signed XML document, this will break the signature).
+     * 
      * @param doc The XML document to convert
      * @param prettyPrint Pretty print the output String
      * @return The Document as a String
      * @exception Exception to indicate any exceptional condition
      */
-    public static String docToString(final Document doc, final boolean prettyPrint)
-            throws Exception {
+    public static String docToString(final Document doc, final boolean prettyPrint) throws Exception {
         StringWriter writer = new StringWriter();
         boolean indentFallback = false;
 
@@ -519,9 +517,9 @@ public final class Utils {
     }
 
     /**
-     * Validates the ID (signature ID or encryption ID) entered by the user. An ID containing &lt;,
-     * &gt;, &qout;, &apos; or &amp; or whitespace is invalid.
-     *
+     * Validates the ID (signature ID or encryption ID) entered by the user. An ID containing &lt;, &gt;, &qout;, &apos;
+     * or &amp; or whitespace is invalid.
+     * 
      * @param id The entered ID
      * @return Validity of the ID
      */
@@ -531,7 +529,7 @@ public final class Utils {
 
     /**
      * Checks whether the valid ID is unique in the current XML document.
-     *
+     * 
      * @param newId The entered ID
      * @param ids All existing IDs in the XML document
      * @return Uniqueness of the ID
@@ -548,11 +546,10 @@ public final class Utils {
     }
 
     /**
-     * Called when there is a text selection and either the XML Signature Wizard or the XML
-     * Encryption Wizard is called. If the selection is invalid, the radio button in the wizard is
-     * disabled. This method returns always <code>true</code> if only element content (no &gt; or
-     * &lt; included) is selected.
-     *
+     * Called when there is a text selection and either the XML Signature Wizard or the XML Encryption Wizard is called.
+     * If the selection is invalid, the radio button in the wizard is disabled. This method returns always
+     * <code>true</code> if only element content (no &gt; or &lt; included) is selected.
+     * 
      * @param textSelection The text selection as a String value
      * @return true or false which activates or deactivates the selection radio button in the wizard
      */
@@ -592,15 +589,12 @@ public final class Utils {
 
     /**
      * Logs the given error message to the workspace default log file.
-     *
+     * 
      * @param ex The error message to log
      * @param message The error message
      */
     public static void logError(final Exception ex, final String message) {
-        IStatus status =
-                new Status(IStatus.ERROR,
-                        XmlSecurityPlugin.getDefault().getBundle().getSymbolicName(), 0, message,
-                        ex);
+        IStatus status = new Status(IStatus.ERROR, XmlSecurityPlugin.getId(), 0, message, ex);
         XmlSecurityPlugin.getDefault().getLog().log(status);
     }
 }

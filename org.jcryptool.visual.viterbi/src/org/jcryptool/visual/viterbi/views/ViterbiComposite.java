@@ -197,7 +197,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
                 }
             }
         });
-        
+
         Group options = new Group(canvas, SWT.BOTTOM);
         options.setLayout(new GridLayout());
         options.setText(Messages.XORComposite_encodingmod_header);
@@ -243,9 +243,11 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent the component to add the ciphertext to
      */
     private void createCipher(final Composite parent) {
-        cipher = new Text(parent, SWT.NONE | SWT.MULTI | SWT.BORDER | SWT.V_SCROLL | SWT.WRAP);
-        cipher.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-        cipher.setEnabled(false);
+        cipher = new Text(parent, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+        cipher.setEditable(false);
+        GridData gd_cipher = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd_cipher.heightHint = 150;
+        cipher.setLayoutData(gd_cipher);
     }
 
     /**
@@ -340,7 +342,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
     	final Canvas canvas = new Canvas(parent, SWT.NONE);
         canvas.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, false, true));
         canvas.setLayout(new GridLayout());
-        
+
         startButton = new Button(canvas, SWT.PUSH);
         startButton.setText(Messages.ViterbiComposite_startButton);
         startButton.setLayoutData(new GridData(CONTINUEBUTTONWIDTH, CONTINUEBUTTONHEIGHT));
@@ -418,7 +420,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         createExportArea(g);
         createLabel2(g);
         createSolution2(g);
-        
+
         final Canvas export = new Canvas(g, SWT.NONE);
         export.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2));
         export.setLayout(new GridLayout());
@@ -426,6 +428,8 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
         Button exportButton = new Button(export, SWT.PUSH);
         exportButton.setText(Messages.ViterbiComposite_exportButton);
         exportButton.setLayoutData(new GridData(LOADBUTTONWIDTH, LOADBUTTONHEIGHT));
+        new Label(g, SWT.NONE);
+        new Label(g, SWT.NONE);
 
         exportButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -477,7 +481,7 @@ public class ViterbiComposite extends Composite implements ViterbiObserver {
      * @param parent
      */
     private void createExportArea(final Composite parent) {
-       
+
     }
 
     /**

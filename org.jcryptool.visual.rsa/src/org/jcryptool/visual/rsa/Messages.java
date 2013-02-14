@@ -152,6 +152,7 @@ public class Messages extends NLS {
 	public static String RSAComposite_valid;
 	public static String RSAComposite_verify;
 	public static String RSAComposite_view;
+	public static String RSAComposite_view_decr;
 	public static String RSAComposite_view_dec;
 	public static String RSAComposite_view_hex;
 	public static String RSAComposite_yes;
@@ -159,6 +160,7 @@ public class Messages extends NLS {
 	public static String RSAData_inherit_password_title;
 	public static String RSAData_ExAccessKeystorePassword;
     public static String RSAData_failedInitPrivParams;
+	public static String RSAData_privateKeyNull;
     public static String RsaTextModifyPage_textmodifydescription;
 	public static String SaveKeypairPage_enter_params_text;
 	public static String SaveKeypairPage_error_passwords_mismatch;

@@ -32,12 +32,8 @@ import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
 public class NewEncryptionWizard extends Wizard implements INewWizard {
     /** PageResource first wizard page. */
     private PageResource pageResource = null;
-    /** PageUseKey second default wizard page. */
-    private PageOpenKey pageOpenKey = null;
-    /** PageCreateKey second alternative wizard page. */
-    private PageCreateKey pageCreateKey = null;
-    /** PageCreateKeystore second alternative wizard page. */
-    private PageCreateKeystore pageCreateKeystore = null;
+    /** PageKey second wizard page. */
+    private PageKey pageKey = null;
     /** PageAlgorithms third wizard page. */
     private PageAlgorithms pageAlgorithms = null;
     /** The XML document to encrypt. */
@@ -115,12 +111,8 @@ public class NewEncryptionWizard extends Wizard implements INewWizard {
     public void addPages() {
         pageResource = new PageResource(encryption, data, textSelection != null ? true : false);
         addPage(pageResource);
-        pageOpenKey = new PageOpenKey(encryption);
-        addPage(pageOpenKey);
-        pageCreateKey = new PageCreateKey(encryption);
-        addPage(pageCreateKey);
-        pageCreateKeystore = new PageCreateKeystore(encryption);
-        addPage(pageCreateKeystore);
+        pageKey = new PageKey(encryption);
+        addPage(pageKey);
         pageAlgorithms = new PageAlgorithms(encryption);
         addPage(pageAlgorithms);
     }
@@ -165,24 +157,10 @@ public class NewEncryptionWizard extends Wizard implements INewWizard {
     }
 
     /**
-     * @return the pageOpenKey
+     * @return the pageKey
      */
-    public PageOpenKey getPageOpenKey() {
-        return pageOpenKey;
-    }
-
-    /**
-     * @return the pageCreateKey
-     */
-    public PageCreateKey getPageCreateKey() {
-        return pageCreateKey;
-    }
-
-    /**
-     * @return the pageCreateKeystore
-     */
-    public PageCreateKeystore getPageCreateKeystore() {
-        return pageCreateKeystore;
+    public PageKey getPageKey() {
+        return pageKey;
     }
 
     /**

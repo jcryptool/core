@@ -16,7 +16,7 @@ import java.security.interfaces.DSAParams;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.certificates.CertFact;
+import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -229,10 +229,10 @@ public class KeySelectionWizard extends Wizard {
 						KeyType.KEYPAIR_PRIVATE_KEY, "", data.getP().bitLength(), data.getContactName().concat(
 								data.getP().toString()).hashCode()
 								+ "", privkey.getClass().getName());
-				ksm.addKeyPair(privkey, CertFact.getDummyCertificate(pubkey), data.getPassword(), privateAlias,
+				ksm.addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), data.getPassword(), privateAlias,
 						publicAlias);
 			} else {
-				ksm.addCertificate(CertFact.getDummyCertificate(pubkey), publicAlias);
+				ksm.addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
 			}
 		} catch (final NoKeyStoreFileException e) {
 		    LogUtil.logError(e);

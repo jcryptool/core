@@ -46,6 +46,7 @@ import org.jcryptool.algorithm.ECCMultiply;
 import org.jcryptool.algorithm.ECCOrderAndPoints;
 import org.jcryptool.algorithm.RandomFactorCreator;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.sidechannelattack.DPAPlugIn;
 
 import com.swtdesigner.SWTResourceManager;
 
@@ -57,8 +58,6 @@ import com.swtdesigner.SWTResourceManager;
  * @version 1.0, 01/09/09
  */
 public class DPAView extends ViewPart implements Constants {
-	public DPAView() {
-	}
 	private Color white = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
     private Text eCCAlgorithmText;
     private Text unsecureText;
@@ -1123,7 +1122,7 @@ public class DPAView extends ViewPart implements Constants {
 
         });
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), DPA_PLUGIN_ID);
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), DPAPlugIn.PLUGIN_ID + ".dpaview");
 
     }
 

@@ -126,7 +126,7 @@ public class XorWizardPage extends AbstractClassicCryptoPage {
 		if (encryptButton.getSelection() || decryptButton.getSelection()) {
 			if (keyMethodInput.getContent() && keyInput.getContent().length() > 0) {
 				return true;
-			} else if (keyMethodInput.getContent() && fileChooser.hasValidFile()) {
+			} else if (!keyMethodInput.getContent() && fileChooser.hasValidFile()) {
 				return true;
 			}
 		}
@@ -205,6 +205,24 @@ public class XorWizardPage extends AbstractClassicCryptoPage {
 		}
 	}
 
+	@Override
+    protected String generateCommandLineString() {
+    	String encDec = operationInput.getContent()?"-E":"-D";
+    	String key = "";
+    	
+    	if(getKeyMethod()) { //keyphrase
+    		key = "-k " + getKey(); 
+    	} else { // vernam from file
+    		key = "-kFile \"" + getPathToKeyFile()+"\"";
+    	}
+    	
+    	String result = "xor " + encDec + " -ed " + key;
+
+    	result += " " + generateAlphabetPartForCommandLine();
+    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	return result;
+    }
+	
     @Override
     protected void setHelpAvailable() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(),

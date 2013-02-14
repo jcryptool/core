@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
+ * Copyright (c) 2013 Dominik Schadow - http://www.xml-sicherheit.de All rights reserved. This program and the
  * accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  *
@@ -39,7 +39,7 @@ import org.xml.sax.InputSource;
  * </p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class VerifyDocument extends AbstractModernAlgorithm {
     /**
@@ -132,7 +132,7 @@ public class VerifyDocument extends AbstractModernAlgorithm {
                                 status = VerificationResult.INVALID;
                             }
                         } else if (pk != null) { // public key
-                            type = ""; //$NON-NLS-1$
+                            type = pk.getFormat();
                             algorithm = pk.getAlgorithm();
                             if (signature.checkSignatureValue(pk)) {
                                 status = VerificationResult.VALID;

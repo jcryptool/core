@@ -1,5 +1,8 @@
 *.class
 */bin*
 */target*
+*/.settings*
 .DS_Store
 workspace
+build.xml
+javaCompiler...args

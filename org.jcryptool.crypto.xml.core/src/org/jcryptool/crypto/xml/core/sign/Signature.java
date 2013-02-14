@@ -13,7 +13,7 @@ package org.jcryptool.crypto.xml.core.sign;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.jcryptool.crypto.xml.core.cryptography.Keystore;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.w3c.dom.Document;
 
 /**
@@ -35,14 +35,8 @@ public class Signature {
     private File detachedFile;
     /** Basic Security Profile. */
     private boolean bsp;
-    /** Keystore. */
-    private Keystore keystore;
-    /** Keystore Password. */
-    private char[] keystorePassword;
-    /** Key algorithm. */
-    private String keyAlgorithm;
-    /** Key name. */
-    private String keyName;
+    /** Key alias. */
+    private KeyStoreAlias keyAlias;
     /** Key password. */
     private char[] keyPassword;
     /** Message Digest Algorithm. */
@@ -116,33 +110,6 @@ public class Signature {
     }
 
     /**
-     * Sets the Java Keystore file.
-     *
-     * @param keystore The Keystore file.
-     */
-    public void setKeystore(final Keystore keystore) {
-        this.keystore = keystore;
-    }
-
-    /**
-     * Sets the password for the Java Keystore.
-     *
-     * @param keystorePassword The keystore password
-     */
-    public void setKeystorePassword(final char[] keystorePassword) {
-        this.keystorePassword = keystorePassword.clone();
-    }
-
-    /**
-     * Sets the key algorithm.
-     *
-     * @param keyAlgorithm The key algorithm
-     */
-    public void setKeyAlgorithm(final String keyAlgorithm) {
-        this.keyAlgorithm = keyAlgorithm;
-    }
-
-    /**
      * Sets the key password.
      *
      * @param keyPassword The key password
@@ -156,8 +123,8 @@ public class Signature {
      *
      * @param keyName The name of the key
      */
-    public void setKeyName(final String keyName) {
-        this.keyName = keyName;
+    public void setKeyAlias(final KeyStoreAlias keyAlias) {
+        this.keyAlias = keyAlias;
     }
 
     /**
@@ -282,33 +249,6 @@ public class Signature {
     }
 
     /**
-     * Returns the selected Java Keystore.
-     *
-     * @return The selected Java Keystore
-     */
-    public Keystore getKeystore() {
-        return keystore;
-    }
-
-    /**
-     * Returns the Java Keystore password.
-     *
-     * @return The keystore password
-     */
-    public char[] getKeystorePassword() {
-        return keystorePassword.clone();
-    }
-
-    /**
-     * Returns the key algorithm.
-     *
-     * @return The key algorithm
-     */
-    public String getKeyAlgorithm() {
-        return keyAlgorithm;
-    }
-
-    /**
      * Returns the key password.
      *
      * @return The key password
@@ -322,8 +262,8 @@ public class Signature {
      *
      * @return The key name
      */
-    public String getKeyName() {
-        return keyName;
+    public KeyStoreAlias getKeyAlias() {
+        return keyAlias;
     }
 
     /**
