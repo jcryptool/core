@@ -420,6 +420,10 @@ public class SudokuComposite extends Composite {
     public void createHead() {
         final Composite head = new Composite(this, SWT.NONE);
         head.setBackground(WHITE);
+        GridData gd = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
+        gd.minimumWidth = 300;
+        gd.widthHint = 300;
+        head.setLayoutData(gd);
         head.setLayout(new GridLayout());
 
         final Label label = new Label(head, SWT.NONE);
@@ -439,7 +443,7 @@ public class SudokuComposite extends Composite {
                 break;
         }
 
-        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
+        final StyledText stDescription = new StyledText(head, SWT.READ_ONLY | SWT.WRAP);
         switch (tabChoice) {
             case NORMAL:
                 stDescription.setText(Messages.SudokuComposite_Normal_Desc);
@@ -451,7 +455,7 @@ public class SudokuComposite extends Composite {
                 stDescription.setText(Messages.SudokuComposite_Hex_Desc);
                 break;
         }
-        stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        stDescription.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, true, false, 1, 1));
     }
 
     public void createMain() {
