@@ -65,12 +65,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
     private static IdentityManager identityManager;
 
     private Enumeration<String> aliases;
-    private Map<String, Integer> keymgmt;
-    private Map<String, Integer> privKeymgmt;
-    private Map<String, Integer> allKeysForID;
+    private Map<String, Integer> keyID_Database;
     private int keyID;
-    private int privKeyID;
-    private int genKeyID;
 
     public static IdentityManager getInstance() {
         if (identityManager == null) {
@@ -80,12 +76,24 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
     }
 
     private IdentityManager() {
-        keymgmt = new HashMap<String, Integer>();
-        privKeymgmt = new HashMap<String, Integer>();
-        allKeysForID = new HashMap<String, Integer>();
+        keyID_Database = new HashMap<String, Integer>();
         keyID = 0;
-        genKeyID = 0;
-        privKeyID = 0;
+
+        // look for all RSA public/private keys in the keystore and give them IDs
+        KeyStoreAlias alias = null;
+        try {
+            aliases = KeyStoreManager.getInstance().getAliases();
+            while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                if (alias.getClassName().equals(RSAPublicKey.class.getName())
+                        || alias.getClassName().equals(RSAPrivateCrtKey.class.getName())
+                        || alias.getClassName().equals(MpRSAPrivateKey.class.getName())) {
+                    getKeyIDFromDB(alias);
+                }
+            }
+        } catch (KeyStoreException e) {
+            LogUtil.logError(e);
+        }
     }
 
     /**
@@ -512,12 +520,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
                 if (alias.getClassName().equals(RSAPublicKey.class.getName())
                         && (alias.getContactName().equals(identity) || alias.getOperation().contains(identity))) {
-                    if (!keymgmt.containsKey(alias.getHashValue())) {
-                        keyID = keymgmt.size() + 1;
-                        keymgmt.put(alias.getHashValue(), keyID);
-                    } else {
-                        keyID = keymgmt.get(alias.getHashValue());
-                    }
                     String[] operation = alias.getOperation().split(Messages.IdentityManager_13);
                     // for self-made rsa-keys.. if no operation is available
                     if (operation[0].length() == 0) {
@@ -525,8 +527,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                     }
                     if (!alias.getOperation().contains(identity)) {
                         pubkeys.put(alias.getContactName() + Messages.IdentityManager_15 + alias.getKeyLength()
-                                + Messages.IdentityManager_16 + operation[0] + Messages.IdentityManager_17 + keyID,
-                                alias);
+                                + Messages.IdentityManager_16 + operation[0] + Messages.IdentityManager_17
+                                + getKeyIDFromDB(alias), alias);
                     } else {
                         pubkeys.put(
                                 alias.getContactName()
@@ -535,7 +537,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                                         + Messages.IdentityManager_16
                                         + operation[0]
                                         + Messages.IdentityManager_17
-                                        + keyID
+                                        + getKeyIDFromDB(alias)
                                         + Messages.IdentityManager_23
                                         + Messages.IdentityManager_22
                                         + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
@@ -551,7 +553,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
     }
 
     /**
-     * Method to get little publicKeys to attack for a certain identity
+     * Method to get publicKeys to attack for a certain identity
      * 
      * @param identity specifies the identity looking for public keys
      */
@@ -560,17 +562,18 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
         KeyStoreAlias alias = null;
         try {
             aliases = KeyStoreManager.getInstance().getAliases();
-            int count = 1;
+
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
+
                 if (alias.getClassName().equals(RSAPublicKey.class.getName())
                         && !alias.getContactName().equals(identity)) {
-                    attackPubkeys.put(
-                            alias.getContactName() + Messages.IdentityManager_18 + alias.getKeyLength()
+                    attackPubkeys
+                            .put(alias.getContactName() + Messages.IdentityManager_18 + alias.getKeyLength()
                                     + Messages.IdentityManager_19
                                     + alias.getClassName().substring(alias.getClassName().lastIndexOf('.') + 1)
-                                    + Messages.IdentityManager_20 + count, alias);
-                    count++;
+                                    + Messages.IdentityManager_18 + Messages.IdentityManager_20 + getKeyIDFromDB(alias),
+                                    alias);
                 }
             }
         } catch (KeyStoreException e) {
@@ -578,6 +581,17 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
         }
 
         return attackPubkeys;
+    }
+
+    private int getKeyIDFromDB(final KeyStoreAlias alias) {
+        if (!keyID_Database.containsKey(alias.getHashValue())) {
+            keyID = keyID_Database.size() + 1;
+            keyID_Database.put(alias.getHashValue(), keyID);
+        } else {
+            keyID = keyID_Database.get(alias.getHashValue());
+        }
+
+        return keyID;
     }
 
     /**
@@ -588,7 +602,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
      */
     public TreeMap<String, KeyStoreAlias> loadAllKeysForIdentityAndOtherPublics(String identity) {
         TreeMap<String, KeyStoreAlias> keys = new TreeMap<String, KeyStoreAlias>();
-        Vector<Integer> addedKeysLog = new Vector<Integer>();
         KeyStoreAlias alias = null;
         try {
             aliases = KeyStoreManager.getInstance().getAliases();
@@ -603,14 +616,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                         || alias.getClassName().equals(RSAPublicKey.class.getName())
                         && !alias.getContactName().equals(identity) || alias.getOperation().contains(identity)) {
                     String pairPart = "";
-                    if (!allKeysForID.containsKey(alias.getHashValue())) {
-                        genKeyID = allKeysForID.size() + 1;
-                        allKeysForID.put(alias.getHashValue(), genKeyID);
-                        addedKeysLog.add(genKeyID);
-                    } else {
-                        genKeyID = allKeysForID.get(alias.getHashValue());
-                        addedKeysLog.add(genKeyID);
-                    }
                     /**
                      * print the available keys in the following style: 1a – Alice Whitehat – MpPrivateKey 1b – Alice
                      * Whitehat – RSAPublicKey 2 – Bob Whitehat – RSAPublicKey 3 – Eve Whitehat – RSAPublicKey 4a – Eve
@@ -642,7 +647,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
                     if (alias.getOperation().contains(identity)) {
                         keys.put(
-                                genKeyID
+                                getKeyIDFromDB(alias)
                                         + pairPart
                                         + Messages.IdentityManager_23
                                         + alias.getContactName()
@@ -655,9 +660,10 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                                         + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
                                                 alias.getOperation().lastIndexOf(')')), alias);
                     } else {
-                        keys.put(genKeyID + pairPart + Messages.IdentityManager_23 + alias.getContactName()
-                                + Messages.IdentityManager_23 + alias.getKeyLength() + Messages.IdentityManager_24
-                                + keytype, alias);
+                        keys.put(
+                                getKeyIDFromDB(alias) + pairPart + Messages.IdentityManager_23 + alias.getContactName()
+                                        + Messages.IdentityManager_23 + alias.getKeyLength()
+                                        + Messages.IdentityManager_24 + keytype, alias);
 
                     }
                 }
@@ -840,12 +846,6 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                 if ((alias.getClassName().equals(RSAPrivateCrtKey.class.getName()) || (alias.getClassName()
                         .equals(MpRSAPrivateKey.class.getName())))
                         && (alias.getContactName().equals(identityName) || alias.getOperation().contains(identityName))) {
-                    if (!privKeymgmt.containsKey(alias.getHashValue())) {
-                        privKeyID = privKeymgmt.size() + 1;
-                        privKeymgmt.put(alias.getHashValue(), privKeyID);
-                    } else {
-                        privKeyID = privKeymgmt.get(alias.getHashValue());
-                    }
                     String keytype = "";
                     if (alias.getClassName().toString().contains("Private") && alias.getClassName().contains("Crt")) {
                         keytype = "RSAPrivateKey";
@@ -855,8 +855,8 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
                     if (!alias.getOperation().contains(identityName)) {
                         keyStoreItems.put(alias.getContactName() + Messages.IdentityManager_26 + alias.getKeyLength()
-                                + Messages.IdentityManager_27 + keytype + Messages.IdentityManager_28 + privKeyID,
-                                alias);
+                                + Messages.IdentityManager_27 + keytype + Messages.IdentityManager_28
+                                + getKeyIDFromDB(alias), alias);
                     } else {
                         keyStoreItems.put(
                                 alias.getContactName()
@@ -865,7 +865,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                                         + Messages.IdentityManager_27
                                         + keytype
                                         + Messages.IdentityManager_28
-                                        + privKeyID
+                                        + getKeyIDFromDB(alias)
                                         + Messages.IdentityManager_23
                                         + Messages.IdentityManager_22
                                         + alias.getOperation().substring(alias.getOperation().lastIndexOf(':') + 2,
