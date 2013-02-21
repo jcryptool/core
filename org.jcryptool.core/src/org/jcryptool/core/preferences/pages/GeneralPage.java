@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -56,7 +57,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     private String[] nl;
     private String[] nlText;
 
-    private String currentLanguage = Platform.getNL();
+    private String currentLanguage = Platform.getNL().substring(0,2);
 
     public GeneralPage() {
         super(GRID);
@@ -68,7 +69,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         nlText = new String[ext.length];
         for (int i = 0; i < ext.length; i++) {
             IConfigurationElement element = (IConfigurationElement) ext[i].getConfigurationElements()[0];
-            nl[i] = element.getAttribute("languageCode"); //$NON-NLS-1$
+            nl[i] = element.getAttribute("languageCode").substring(0,2); //$NON-NLS-1$
             nlText[i] = element.getAttribute("languageDescription"); //$NON-NLS-1$
         }
     }
@@ -99,6 +100,8 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 listLanguage.select(i);
             }
         }
+        if(!Arrays.asList(nl).contains(currentLanguage))
+        	listLanguage.select(0);
 
         return super.createContents(parent);
     }
@@ -124,6 +127,8 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 listLanguage.select(i);
             }
         }
+        if(!Arrays.asList(nl).contains(currentLanguage))
+        	listLanguage.select(0);
 
         setErrorMessage(null);
         super.performDefaults();
@@ -172,6 +177,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                     if (line.equals(nl[i]))
                         line = in.readLine();
                 }
+                
             } else {
                 out.write("-nl"); //$NON-NLS-1$
                 out.newLine();
