@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core;
 
+import java.util.Locale;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
@@ -28,6 +30,12 @@ public class Application implements IApplication {
      * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
      */
     public Object start(IApplicationContext context) throws Exception {
+    	
+    	if(!Locale.getDefault().getLanguage().equals(Locale.GERMAN.getLanguage()) && Locale.getDefault() != Locale.US)
+    	{
+    		System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
+    		Locale.setDefault(Locale.US);
+    	}
         Display display = PlatformUI.createDisplay();
         try {
             int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
