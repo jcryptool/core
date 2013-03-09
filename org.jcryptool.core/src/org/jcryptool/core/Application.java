@@ -21,7 +21,7 @@ import org.eclipse.ui.PlatformUI;
  * This class controls all aspects of the application's execution
  * 
  * @author Dominik Schadow
- * @version 0.5.0
+ * @version 1.0.0
  */
 public class Application implements IApplication {
 
@@ -30,12 +30,15 @@ public class Application implements IApplication {
      * @see org.eclipse.equinox.app.IApplication#start(org.eclipse.equinox.app.IApplicationContext)
      */
     public Object start(IApplicationContext context) throws Exception {
-    	
-    	if(!Locale.getDefault().getLanguage().equals(Locale.GERMAN.getLanguage()) && Locale.getDefault() != Locale.US)
-    	{
-    		System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
-    		Locale.setDefault(Locale.US);
-    	}
+        try {
+            if (Locale.getDefault() != Locale.GERMAN && Locale.getDefault() != Locale.ENGLISH) {
+                System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
+                Locale.setDefault(Locale.ENGLISH);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         Display display = PlatformUI.createDisplay();
         try {
             int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
