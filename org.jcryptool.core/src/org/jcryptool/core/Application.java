@@ -31,7 +31,7 @@ public class Application implements IApplication {
      */
     public Object start(IApplicationContext context) throws Exception {
         try {
-            if (Locale.getDefault() != Locale.GERMAN && Locale.getDefault() != Locale.ENGLISH) {
+            if (!Locale.GERMAN.equals(Locale.getDefault()) && !Locale.ENGLISH.equals(Locale.getDefault())) {
                 System.setProperty("osgi.nl", "en"); // fixes Platform.getNL()
                 Locale.setDefault(Locale.ENGLISH);
             }
