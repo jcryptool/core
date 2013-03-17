@@ -200,7 +200,8 @@ public class EditorsManager {
 		IEditorPart editorPart = getActivePage().getActiveEditor();
 
 		for (final IEditorReference r : getEditorReferences()) {
-			if (r.getEditor(false).equals(editorPart))
+			IEditorPart refEditor = r.getEditor(false);
+			if (refEditor != null && refEditor.equals(editorPart))
 				return r;
 		}
 
@@ -211,7 +212,6 @@ public class EditorsManager {
 	 * @return the title of the active Editor, or null, if there is none.
 	 */
 	public String getActiveEditorTitle() {
-
 		IEditorReference ref = getActiveEditorReference();
 		return ref == null ? null : ref.getPart(false).getTitle();
 	}
