@@ -11,15 +11,17 @@ package org.jcryptool.visual.extendedrsa.ui.wizards.wizardpages;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.GridData;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.extendedrsa.IdentityManager;
+import org.jcryptool.visual.library.Lib;
 
 /**
  * This is the wizardPage for a new Identity.
@@ -33,6 +35,8 @@ public class NewIdentityPage extends WizardPage implements ModifyListener {
     private Text idSurname;
     private Text idOrganisation;
     private Text idRegion;
+    /** a {@link VerifyListener} instance that makes sure only digits are entered. */
+    private static final VerifyListener VL = Lib.getVerifyListener(Lib.CHARACTERS);
 
     public NewIdentityPage() {
         super(Messages.NewIdentityPage_0, Messages.NewIdentityPage_1, null);
@@ -56,6 +60,7 @@ public class NewIdentityPage extends WizardPage implements ModifyListener {
         gd_text.widthHint = 155;
         idName.setLayoutData(gd_text);
         idName.addModifyListener(this);
+        idName.addVerifyListener(VL);
         Label mandatory = new Label(container, SWT.NONE);
         mandatory.setText(Messages.NewIdentityPage_4);
 

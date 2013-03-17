@@ -243,6 +243,8 @@ public class Identity extends TabItem {
     private final String TO = Messages.Identity_175;
     private final String NO_VALID_GcdE = Messages.Identity_222;
     private final String CLIPBOARDTEXT_TEXT = Messages.Identity_179;
+    private final String ALICE = "Alice Whitehat";
+    private final String BOB = "BOB Whitehat";
 
     /** a {@link VerifyListener} instance that makes sure only digits are entered. */
     private static final VerifyListener VL = Lib.getVerifyListener(Lib.DIGIT);
@@ -538,7 +540,7 @@ public class Identity extends TabItem {
                                 }
                             }
 
-                            if (identityName.equals("Alice Whitehat") || identityName.equals("Bob Whitehat")) {
+                            if (identityName.equals(ALICE) || identityName.equals(BOB) || identityName.contains(":")) {
                                 lbl_pwWrong.setText(Messages.Identity_180);
                             }
 
@@ -1744,7 +1746,7 @@ public class Identity extends TabItem {
                     selectedKey_Keydata = new Combo(myKeyData, SWT.READ_ONLY);
                     GridData gd_selKey = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
                     gd_selKey.heightHint = 20;
-                    gd_selKey.widthHint = 250;
+                    gd_selKey.widthHint = 300;
                     selectedKey_Keydata.setLayoutData(gd_selKey);
 
                     selectedKey_Keydata.addSelectionListener(new SelectionListener() {
@@ -1760,13 +1762,24 @@ public class Identity extends TabItem {
                                 password_keydata.setVisible(false);
                                 lbl_enterPW.setVisible(false);
                                 password_keydata.setText(NOTHING);
+                                wrongPW_keydata.setText(NOTHING);
                                 isPubKey = true;
                             } else {
+
                                 showKeydata.setEnabled(false);
                                 password_keydata.setVisible(true);
                                 lbl_enterPW.setVisible(true);
                                 password_keydata.setText(NOTHING);
                                 isPubKey = false;
+                                // if key belongs to alice or bob, or is cracked - show password hint
+                                String comboText = selectedKey_Keydata.getText();
+                                if (comboText.contains(":") || comboText.contains(ALICE) || comboText.contains(BOB)) {
+                                    wrongPW_keydata.setFont(FontService.getNormalFont());
+                                    wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+                                    wrongPW_keydata.setText(Messages.Identity_180);
+                                } else {
+                                    wrongPW_keydata.setText(NOTHING);
+                                }
                             }
                         }
 
@@ -1803,12 +1816,12 @@ public class Identity extends TabItem {
                                 if (selectedKey_Keydata.getText().contains(":")) {
                                     String part1 = selectedKey_Keydata.getText().substring(
                                             selectedKey_Keydata.getText().indexOf("Bit - ") + 6);
-                                    keyAlgorithm = part1.substring(0, selectedKey_Keydata.getText().indexOf(' '))
-                                            .trim();
+                                    keyAlgorithm = part1.substring(0, part1.indexOf(' ')).trim();
                                 } else {
                                     keyAlgorithm = selectedKey_Keydata.getText()
                                             .substring(selectedKey_Keydata.getText().lastIndexOf('-') + 1).trim();
                                 }
+
                                 if (keyAlgorithm.startsWith(Messages.Identity_89)) {
                                     descriptions = new Vector<String>(Arrays.asList(Messages.Identity_90,
                                             Messages.Identity_91, Messages.Identity_92, Messages.Identity_93,
@@ -1867,6 +1880,8 @@ public class Identity extends TabItem {
                                 }
                             }
                             if (values.size() == 0) {
+                                wrongPW_keydata.setFont(FontService.getNormalBoldFont());
+                                wrongPW_keydata.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
                                 wrongPW_keydata.setText(PW_WRONG);
                             } else {
                                 wrongPW_keydata.setText(NOTHING);
@@ -1915,7 +1930,7 @@ public class Identity extends TabItem {
                     createSpacer(myKeyData);
 
                     wrongPW_keydata = new Label(myKeyData, SWT.WRAP);
-                    GridData gd_wrongPW_kd = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+                    GridData gd_wrongPW_kd = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
                     gd_wrongPW_kd.heightHint = 30;
                     gd_wrongPW_kd.widthHint = 200;
                     wrongPW_keydata.setLayoutData(gd_wrongPW_kd);
@@ -2189,7 +2204,7 @@ public class Identity extends TabItem {
 
                     keyData_attacked = new Table(actionGroup_4, SWT.BORDER | SWT.FULL_SELECTION);
                     GridData gd_table = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
-                    gd_table.heightHint = 150;
+                    gd_table.heightHint = 180;
                     keyData_attacked.setLayoutData(gd_table);
                     keyData_attacked.setHeaderVisible(true);
                     keyData_attacked.setLinesVisible(true);
