@@ -53,6 +53,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
@@ -2369,7 +2370,8 @@ public class SudokuComposite extends Composite {
                     UserInputPoint point = inputBoxesNormal.get(textbox);
                     for (int i = 0; i < chars.length; i++) {
                         if (!('1' <= chars[i] && chars[i] <= '9')
-                                || possibleNormal.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
+                                || possibleNormal.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
+                                || createsZeroPossible(new Point(point.x, point.y), Integer.parseInt(input))) {
                             e.doit = false;
                             return;
                         }
@@ -2401,7 +2403,8 @@ public class SudokuComposite extends Composite {
                     UserInputPoint point = inputBoxesKiller.get(textbox);
                     for (int i = 0; i < chars.length; i++) {
                         if (!('1' <= chars[i] && chars[i] <= '9')
-                                || possibleKiller.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
+                                || possibleKiller.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
+                                || createsZeroPossible(new Point(point.x, point.y), Integer.parseInt(input))) {
                             e.doit = false;
                             return;
                         }
@@ -2451,7 +2454,8 @@ public class SudokuComposite extends Composite {
                         input.getChars(0, chars.length, chars, 0);
                         for (int i = 0; i < chars.length; i++) {
                             if (!('0' <= chars[i] && chars[i] <= '9')
-                                    || possibleHex.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1) {
+                                    || possibleHex.get(point.x).get(point.y).indexOf(Integer.parseInt(input)) == -1
+                                    || createsZeroPossible(new Point(point.x, point.y), Integer.parseInt(input))) {
                                 e.doit = false;
                                 return;
                             }
@@ -2463,7 +2467,80 @@ public class SudokuComposite extends Composite {
         });
         return input;
     }
+    
+    public boolean createsZeroPossible(Point point, int input) {
+    	boolean returnValue = false;
+    	if (tabChoice == HEX) {
+    		for (int i = 0; i < 16; i++) {
+    			if (point.y != i && possibleHex.get(point.x).get(i).size() == 1 && possibleHex.get(point.x).get(i).get(0) == input) returnValue = true;
+    			if (point.x != i && possibleHex.get(i).get(point.y).size() == 1 && possibleHex.get(i).get(point.y).get(0) == input) returnValue = true;
+    		}
+    	} else {
+    		for (int i = 0; i < 9; i++) {
+    			if (tabChoice == KILLER) {
+    				if (point.y != i && possibleKiller.get(point.x).get(i).size() == 1 && possibleKiller.get(point.x).get(i).get(0) == input) returnValue = true;
+        			if (point.x != i && possibleKiller.get(i).get(point.y).size() == 1 && possibleKiller.get(i).get(point.y).get(0) == input) returnValue = true;
+    			} else {
+    				if (point.y != i && possibleNormal.get(point.x).get(i).size() == 1 && possibleNormal.get(point.x).get(i).get(0) == input) returnValue = true;
+        			if (point.x != i && possibleNormal.get(i).get(point.y).size() == 1 && possibleNormal.get(i).get(point.y).get(0) == input) returnValue = true;
+    			}
+    		}
+    	}
+    	if (returnValue) {
+    		if (backgroundSolved) {
+	    		MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.YES | SWT.NO);
+	    		dialog.setText(Messages.SudokuComposite_Error);
+	    		dialog.setMessage(Messages.SudokuComposite_CreatesZeroPossible_Solved);
+	    		if (dialog.open() == SWT.YES) {
+	    			showErroneousEntries();
+	    		}
+    		} else {
+	    		MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.OK);
+	    		dialog.setText(Messages.SudokuComposite_Error);
+	    		dialog.setMessage(Messages.SudokuComposite_CreatesZeroPossible_Unsolved);
+	    		dialog.open();
+    		}
+    	}
+    	return returnValue;
+    }
 
+    public void showErroneousEntries() {
+    	if (backgroundSolved) {
+    		switch (tabChoice) {
+    			case NORMAL:
+    				for (int i = 0; i < 9; i++) {
+    					for (int j = 0; j < 9; j++) {
+    						if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
+    							labelCellNormal[i][j].setBackground(RED);
+    							boardTextNormal[i][j].setBackground(RED);
+    						}
+    					}
+    				}
+    				break;
+    			case KILLER:
+    				for (int i = 0; i < 9; i++) {
+    					for (int j = 0; j < 9; j++) {
+    						if (boardKiller[i][j] != 0 && boardKiller[i][j] != tempBoard[i][j]) {
+    							labelCellKiller[i][j].setBackground(RED);
+    							boardTextKiller[i][j].setBackground(RED);
+    						}
+    					}
+    				}
+    				break;
+    			case HEX:
+    				for (int i = 0; i < 16; i++) {
+    					for (int j = 0; j < 16; j++) {
+    						if (boardHex[i][j] != -1 && boardHex[i][j] != tempBoard[i][j]) {
+    							labelCellHex[i][j].setBackground(RED);
+    							boardTextHex[i][j].setBackground(RED);
+    						}
+    					}
+    				}
+    				break;
+    		}
+    	}
+    }
+    
     public void updateBoardDataWithUserInputNormal(Text inputBox, String inputStr) {
         solved = false;
         UserInputPoint point = inputBoxesNormal.get(inputBox);
@@ -2477,6 +2554,8 @@ public class SudokuComposite extends Composite {
         if (num == 0 && boardNormal[point.x][point.y] != 0)
             addPossibleNormal(point.x, point.y, boardNormal[point.x][point.y]);
         boardNormal[point.x][point.y] = num;
+        labelCellNormal[point.x][point.y].setBackground(WHITE);
+        boardTextNormal[point.x][point.y].setBackground(WHITE);
         updatePossibilitiesNormal();
     }
 
@@ -2493,6 +2572,8 @@ public class SudokuComposite extends Composite {
         if (num == 0 && boardKiller[point.x][point.y] != 0)
             addPossibleKiller(point.x, point.y, boardKiller[point.x][point.y]);
         boardKiller[point.x][point.y] = num;
+        labelCellKiller[point.x][point.y].setBackground(WHITE);
+        boardTextKiller[point.x][point.y].setBackground(WHITE);
         updatePossibilitiesKiller(boardKiller, possibleKiller);
     }
 
@@ -2509,7 +2590,8 @@ public class SudokuComposite extends Composite {
         if (num == -1 && boardHex[point.x][point.y] != -1)
             addPossibleHex(point.x, point.y, boardHex[point.x][point.y]);
         boardHex[point.x][point.y] = num;
-
+        labelCellHex[point.x][point.y].setBackground(WHITE);
+        boardTextHex[point.x][point.y].setBackground(WHITE);
         updatePossibilitiesHex(boardHex, possibleHex, true);
     }
 
@@ -3400,6 +3482,18 @@ public class SudokuComposite extends Composite {
     	if (backgroundSolve.getState() == Job.RUNNING) backgroundSolve.cancel();
         solving = true;
         if (backgroundSolved) {
+        	for (int i = 0; i < 9; i++) {
+        		for (int j = 0; j < 9; j++) {
+        			if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) { 
+        				showErroneousEntries();
+        	    		MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.OK);
+        	    		dialog.setText(Messages.SudokuComposite_Error);
+        	    		dialog.setMessage(Messages.SudokuComposite_ContainsErrors);
+        	    		dialog.open();
+        				return false;
+        			}
+        		}
+        	}
         	solved = true;
         	for (int i = 0; i < 9; i++) {
         		for (int j = 0; j < 9; j++) {
@@ -3431,7 +3525,20 @@ public class SudokuComposite extends Composite {
     	if (backgroundSolve.getState() == Job.RUNNING) backgroundSolve.cancel();
         solving = true;
         if (backgroundSolved) {
+        	for (int i = 0; i < 9; i++) {
+        		for (int j = 0; j < 9; j++) {
+        			if (boardKiller[i][j] != 0 && boardKiller[i][j] != tempBoard[i][j]) { 
+        				showErroneousEntries();
+        				MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.OK);
+        	    		dialog.setText(Messages.SudokuComposite_Error);
+        	    		dialog.setMessage(Messages.SudokuComposite_ContainsErrors);
+        	    		dialog.open();
+        				return false;
+        			}
+        		}
+        	}
         	solved = true;
+        	
         	for (int i = 0; i < 9; i++) {
         		for (int j = 0; j < 9; j++) {
         			boardKiller[i][j] = tempBoard[i][j];
@@ -3466,6 +3573,18 @@ public class SudokuComposite extends Composite {
     	if (backgroundSolve.getState() == Job.RUNNING) backgroundSolve.cancel();
         solving = true;
         if (backgroundSolved) {
+        	for (int i = 0; i < 16; i++) {
+        		for (int j = 0; j < 16; j++) {
+        			if (boardHex[i][j] != 0 && boardHex[i][j] != tempBoard[i][j]) { 
+        				showErroneousEntries();
+        	    		MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.OK);
+        	    		dialog.setText(Messages.SudokuComposite_Error);
+        	    		dialog.setMessage(Messages.SudokuComposite_ContainsErrors);
+        	    		dialog.open();
+        				return false;
+        			}
+        		}
+        	}
         	solved = true;
         	for (int i = 0; i < 16; i++) {
         		for (int j = 0; j < 16; j++) {

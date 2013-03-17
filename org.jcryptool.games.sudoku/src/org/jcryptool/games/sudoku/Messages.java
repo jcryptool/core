@@ -34,11 +34,15 @@ public class Messages extends NLS {
 	public static String SudokuComposite_CandidateLineButton_Tooltip;
 	public static String SudokuComposite_ClearButton;
 	public static String SudokuComposite_ClearButton_Tooltip;
+	public static String SudokuComposite_ContainsErrors;
+	public static String SudokuComposite_CreatesZeroPossible_Solved;
+	public static String SudokuComposite_CreatesZeroPossible_Unsolved;
 	public static String SudokuComposite_DivisionButton;
 	public static String SudokuComposite_DivisionButton_Tooltip;
 	public static String SudokuComposite_DoublePairButton;
 	public static String SudokuComposite_DoublePairButton_Tooltip;
 	public static String SudokuComposite_EnterModeButton;
+	public static String SudokuComposite_Error;
 	public static String SudokuComposite_Hex_Desc;
 	public static String SudokuComposite_Hex_Title;
 	public static String SudokuComposite_HiddenSingleButton;
