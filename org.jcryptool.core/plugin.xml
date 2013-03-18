@@ -50,7 +50,7 @@
                label="&amp;Help Contents"
                menubarPath="helpMenu/helpGroup"
                toolbarPath="helpGroup"
-               tooltip="Help Contents">
+               tooltip="%helpButton.tooltip">
          </action>
       </actionSet>
    </extension>
