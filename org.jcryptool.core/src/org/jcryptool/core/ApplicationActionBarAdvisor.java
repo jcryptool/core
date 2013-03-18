@@ -79,7 +79,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private IWorkbenchAction closeAllAction;
     private IWorkbenchAction editActionSetsAction;
     private IWorkbenchAction resetPerspectiveAction;
-    private IWorkbenchAction helpContentAction;
 
     /** Perspectives sub menu. */
     private MenuManager perspectiveMenu;
@@ -125,7 +124,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         // ToolBar Help
         IToolBarManager helpToolBar = new ToolBarManager(coolBar.getStyle());
-        helpToolBar.add(helpContentAction);
 
         coolBar.add(new ToolBarContributionItem(helpToolBar, CorePlugin.PLUGIN_ID + ".helpToolBar")); //$NON-NLS-1$
 
@@ -233,14 +231,12 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * be disabled in the menus.
      */
     private void registerActionsForCommands() {
-        helpContentAction = ActionFactory.HELP_CONTENTS.create(window);
 
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the about action, Mac OS X adds this automatically
             hiddenMenu.add(ActionFactory.ABOUT.create(window));
         }
 
-        register(helpContentAction);
         register(ActionFactory.HELP_SEARCH.create(window));
         register(ActionFactory.DYNAMIC_HELP.create(window));
         register(ActionFactory.INTRO.create(window));

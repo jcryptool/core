@@ -39,6 +39,20 @@
                tooltip="%editors.action.tooltip">
          </action>
       </actionSet>
+      <actionSet
+            id="org.jcryptool.core.actionSet"
+            label="Help Action Set"
+            visible="true">
+         <action
+               class="org.jcryptool.core.actions.HelpContentsAction"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
+               id="org.jcryptool.core.actions.HelpContentsAction"
+               label="&amp;Help Contents"
+               menubarPath="helpMenu/helpGroup"
+               toolbarPath="helpGroup"
+               tooltip="Help Contents">
+         </action>
+      </actionSet>
    </extension>
 
    <extension
