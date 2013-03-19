@@ -102,9 +102,8 @@ public class Grille {
      * @return der entschlüsselte Text
      */
     public String decrypt(String ciphertext) {
-        KeySchablone decKey = key;
         StringBuilder plain = new StringBuilder();
-        for (int i = 0; i < ciphertext.length(); i += decKey.getSize() * decKey.getSize() - decKey.getSize() % 2) {
+        for (int i = 0; i < ciphertext.length(); i += key.getSize() * key.getSize() - key.getSize() % 2) {
             plain.append(decryptSingleBlock(ciphertext, i));
         }
 
@@ -112,7 +111,7 @@ public class Grille {
     }
 
     public String decryptSingleBlock(String ciphertext, int ciphertextBlockPosition) {
-        KeySchablone decKey = key;
+        KeySchablone decKey = key.clone();
         StringBuilder plaintext = new StringBuilder();
         Schablone decrypt = new Schablone(decKey.getSize());
         for (int i = 0; i < decrypt.getSize() * decrypt.getSize(); i++) {
