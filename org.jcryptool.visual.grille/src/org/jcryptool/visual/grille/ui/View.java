@@ -102,7 +102,7 @@ public class View extends ViewPart {
         group_output.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
         group_output.setLayout(new FillLayout());
         group_output.setText(Messages.getString("View.ciphertext")); //$NON-NLS-1$
-        text_output = new Text(group_output, SWT.MULTI | SWT.WRAP);
+        text_output = new Text(group_output, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text_output.addKeyListener(new org.eclipse.swt.events.KeyListener() {
             public void keyPressed(KeyEvent e) {
                 e.doit = false;
@@ -393,7 +393,7 @@ public class View extends ViewPart {
         group_input.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
         group_input.setLayout(new FillLayout());
         group_input.setText(Messages.getString("View.plaintext")); //$NON-NLS-1$
-        text_input = new Text(group_input, SWT.MULTI | SWT.WRAP);
+        text_input = new Text(group_input, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
         text_input.addModifyListener(new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 reset();
@@ -438,8 +438,8 @@ public class View extends ViewPart {
             public void widgetSelected(SelectionEvent e) {	
             	if (Integer.parseInt(spinner_keySize.getText()) % 2 == 1 || Integer.parseInt(spinner_keySize.getText()) >= 11 || Integer.parseInt(spinner_keySize.getText()) <=3)
             		spinner_keySize.setSelection(6);
+            	model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
                 reset();
-                model.setKey(new KeySchablone(Integer.parseInt(spinner_keySize.getText())));
                 canvas_schluessel.removeMouseListener(schluessel_listener);
                 canvas_schluessel.addMouseListener(schluessel_listener);
                 canvas_schluessel.redraw();
@@ -511,6 +511,7 @@ public class View extends ViewPart {
     private void reset() {
         if (demonstration != null)
             demonstration.reset();
+        
         checkOkButton();
         button_step1.setEnabled(false);
         button_step2.setEnabled(false);
