@@ -54,7 +54,7 @@ public class VigenereBreakerGui extends ContentDelegator {
 
     private String filterChiffre(String chiff)
     {
-        TransformData filter = TransformData.fromString("filterBlanks");
+        TransformData filter = TransformData.fromString(TransformData.BLANKS_LABEL);
         filter.setUnmodified();
         filter.setAlphabetTransformationON(true);
         return Transform.transformText(chiff, filter);
