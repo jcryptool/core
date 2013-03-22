@@ -17,6 +17,8 @@ import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 
@@ -50,10 +52,18 @@ public class VigenereBreakerGui extends ContentDelegator {
         }
     }
 
+    private String filterChiffre(String chiff)
+    {
+        TransformData filter = TransformData.fromString("filterBlanks");
+        filter.setUnmodified();
+        filter.setAlphabetTransformationON(true);
+        return Transform.transformText(chiff, filter);
+    }
+
     @Override
     protected void toFriedman(final IEditorReference selection) {
         try {
-            chiffre = DataProvider.getInstance().getEditorContent(selection);
+            chiffre = filterChiffre(DataProvider.getInstance().getEditorContent(selection));
             edtitle = selection.getTitle();
             content.dispose();
             content = new FriedmanGui(this, chiffre, selection);
@@ -92,7 +102,7 @@ public class VigenereBreakerGui extends ContentDelegator {
     protected void toQuick(final IEditorReference selection) {
         try {
             edtitle = selection.getTitle();
-            chiffre = DataProvider.getInstance().getEditorContent(selection);
+            chiffre = filterChiffre(DataProvider.getInstance().getEditorContent(selection));
             content.dispose();
             content = new QuickDecryptGui(this, chiffre, selection);
         } catch (IllegalInputException iiEx) {
