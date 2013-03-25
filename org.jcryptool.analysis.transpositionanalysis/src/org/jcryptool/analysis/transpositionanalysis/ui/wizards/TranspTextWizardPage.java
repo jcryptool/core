@@ -22,6 +22,7 @@ package org.jcryptool.analysis.transpositionanalysis.ui.wizards;
 //-----END DISCLAIMER-----
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -83,15 +84,21 @@ public class TranspTextWizardPage extends WizardPage {
 		Boolean crop;
 		Integer cropLength;
 		Boolean readInDirection;
+		int[] columnOrder;
 
 		public PageConfiguration(TextInputWithSource text, Integer columnCount, Boolean crop, Integer cropLength,
-			Boolean readInDirection) {
+			Boolean readInDirection, int[] columnOrder) {
 			super();
 			this.text = text;
 			this.columnCount = columnCount;
 			this.crop = crop;
 			this.cropLength = cropLength;
 			this.readInDirection = readInDirection;
+			if(columnOrder != null) {
+				this.columnOrder = columnOrder;
+			} else {
+				this.columnOrder = makeStdColumnOrder(columnCount);
+			}
 		}
 
 		public TextInputWithSource getText() {
@@ -118,17 +125,34 @@ public class TranspTextWizardPage extends WizardPage {
 			return getColumnCount().equals(c.getColumnCount()) && getCropLength().equals(c.getCropLength())
 				&& getText().getText().equals(c.getText().getText()) && isCrop().equals(c.isCrop())
 				&& getReadInDirection().equals(c.getReadInDirection());
+			//TODO: add check for column order equality 
 		}
 
 		public boolean equals(PageConfiguration c) {
 			return getColumnCount().equals(c.getColumnCount()) && getCropLength().equals(c.getCropLength())
 				&& getText().equals(c.getText()) && isCrop().equals(c.isCrop())
 				&& getReadInDirection().equals(c.getReadInDirection());
+			//TODO: add check for column order equality 
 		}
 
 		public void setReadInMode(Boolean content) {
 			this.readInDirection = content;
 		}
+
+		public int[] getColumnOrder() {
+			return columnOrder;
+		}
+
+		public void setColumnOrder(int[] columnOrder) {
+			this.columnOrder = columnOrder;
+		}
+	}
+	public static int[] makeStdColumnOrder(Integer columnCount) {
+		int[] columnOrder = new int[columnCount];
+		for(int i=0; i<columnCount; i++) {
+			columnOrder[i] = i;
+		}
+		return columnOrder;
 	}
 
 	private Group group1;
@@ -152,6 +176,7 @@ public class TranspTextWizardPage extends WizardPage {
 	private int init_blocklength = 8;
 	private boolean init_croptext = false;
 	private int init_croplength = 1000;
+	private int[] init_columnOrder = makeStdColumnOrder(init_blocklength);
 	private boolean doAutoCheckbox = true;
 	private List<IEditorReference> editorRefs;
 
@@ -200,6 +225,7 @@ public class TranspTextWizardPage extends WizardPage {
 		setCroplength(init_croplength);
 		setCroptext(init_croptext);
 		setBlocklength(init_blocklength);
+		if(init_columnOrder!=null) setColumnOrder(init_columnOrder);
 		// all others have default values in their corresponding input objects
 		// (text, readInDirection)
 		// -------
@@ -519,8 +545,8 @@ public class TranspTextWizardPage extends WizardPage {
 
 		setPageComplete(true);
 
-		isPageBuilt = true;
 		preview();
+		isPageBuilt = true;
 	}
 
 	/**
@@ -816,7 +842,7 @@ public class TranspTextWizardPage extends WizardPage {
 		PageConfiguration pageConfig = getPageConfiguration();
 		transpositionTable1.setReadInOrder(pageConfig.getReadInDirection());
 		transpositionTable1.setText(pageConfig.getText().getText(), pageConfig.getColumnCount(), !pageConfig.isCrop(),
-			pageConfig.getCropLength());
+			pageConfig.getCropLength(), pageConfig.getColumnOrder(), true);
 		lastPreviewedPageConfig = pageConfig;
 	}
 
@@ -882,6 +908,15 @@ public class TranspTextWizardPage extends WizardPage {
 		setBlocklength(config.getColumnCount());
 		setCroptext(config.isCrop());
 		setCroplength(config.getCropLength());
+		setColumnOrder(config.getColumnOrder());
+	}
+
+	private void setColumnOrder(int[] columnOrder) {
+		if (transpositionTable1 != null && !transpositionTable1.isDisposed()) {
+			transpositionTable1.setColumnOrder(columnOrder);
+		} else {
+			init_columnOrder = columnOrder;
+		}
 	}
 
 	private void parttextCountWidgetSelected(SelectionEvent evt) {
@@ -906,7 +941,7 @@ public class TranspTextWizardPage extends WizardPage {
 
 	public PageConfiguration getPageConfiguration() {
 		return new PageConfiguration(textInput.getContent(), blocklengthSpinner.getSelection(),
-			parttextCheck.getSelection(), parttextCount.getSelection(), directionChooserIn.getInput().getContent());
+			parttextCheck.getSelection(), parttextCount.getSelection(), directionChooserIn.getInput().getContent(), isPageBuilt?transpositionTable1.getColumnOrder():init_columnOrder);
 	}
 
 }

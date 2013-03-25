@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizardPage;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
@@ -258,7 +259,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	 *            redraw/calculation, or not
 	 */
 	private void setText(String text, int columnCount, boolean refresh) {
-		setText(text, columnCount, this.displayEverything, this.displayCount, refresh);
+		setText(text, columnCount, this.displayEverything, this.displayCount, TranspTextWizardPage.makeStdColumnOrder(columnCount), refresh);
 	}
 
 	/**
@@ -276,7 +277,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	 *            the length where the text could be cropped (see above).
 	 */
 	public void setText(String text, int columnCount, boolean fulltext, int croplength) {
-		setText(text, columnCount, fulltext, croplength, true);
+		setText(text, columnCount, fulltext, croplength, TranspTextWizardPage.makeStdColumnOrder(columnCount), true);
 	}
 
 	/**
@@ -295,14 +296,17 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	 * @param refresh
 	 *            redraw/calculation, or not
 	 */
-	private void setText(String text, int columnCount, boolean fulltext, int croplength, boolean refresh) {
+	public void setText(String text, int columnCount, boolean fulltext, int croplength, int[] columnOrder, boolean refresh) {
 		this.setDisplayEverything(fulltext);
 		this.setDisplayCount(croplength);
 		unchangedText = text;
 		setColumnCount(columnCount, false);
 		displayedText = unchangedToDisplayText(unchangedText);
 
-		if (refresh) refresh();
+		if (refresh) {
+			refresh();
+			setColumnOrder(columnOrder);
+		}
 	}
 
 	/**
