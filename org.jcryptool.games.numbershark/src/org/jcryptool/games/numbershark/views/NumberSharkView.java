@@ -309,7 +309,7 @@ public class NumberSharkView extends ViewPart {
 		for (int i = 0; i < numberOfFields; i++) {
 			numberField[i] = new Number(i + 1);
 		}
-		int minPtsToWin = numberOfFields * (numberOfFields + 1) / 4;
+		int minPtsToWin = (numberOfFields * (numberOfFields + 1) / 4)+1;
 		requiredScore.setText(String.valueOf(minPtsToWin));
 		sharkScore.setText(ZERO_SCORE);
 		playerScore.setText(ZERO_SCORE);
