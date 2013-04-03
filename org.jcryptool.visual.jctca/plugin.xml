@@ -7,7 +7,7 @@
       		category="org.jcryptool.visual"
             class="org.jcryptool.visual.jctca.JCTCA_Visual"
             id="org.jcryptool.visual.jctca.JCTCA_Visual"
-            icon=""
+            icon="icons/view.gif"
             name="%view.name"
             restorable="true">
       </view>
