@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+      		category="org.jcryptool.visual"
+            class="org.jcryptool.visual.jctca.JCTCA_Visual"
+            id="org.jcryptool.visual.jctca.JCTCA_Visual"
+            icon=""
+            name="%view.name"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            contextHelpId="org.jcryptool.visual.jctca.JCTCA_Visual"
+            name="%Visual.name"
+            viewId="org.jcryptool.visual.jctca.JCTCA_Visual">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+</plugin>
