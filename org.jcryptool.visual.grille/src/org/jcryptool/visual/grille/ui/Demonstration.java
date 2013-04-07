@@ -23,11 +23,9 @@ public class Demonstration {
 	private Schablone crypt;
 	private int plaintextBlockPosition = 0;
 	private String output;
-	private KeySchablone saved_key;
 
 	public Demonstration(Grille model, String input) {
 		this.key = model.getKey();
-		this.saved_key = key.clone();
 		this.input = input;
 		this.model = model;
 		crypt = new Schablone(key.getSize());
@@ -35,8 +33,8 @@ public class Demonstration {
 	public void reset() {
 		currentStep = 0;
 		plaintextBlockPosition = 0;
-		key = saved_key.clone();
-		model.setKey(key);
+		if(model.getKey().getSize() != key.getSize())
+			key = model.getKey().clone();
 	}
 
 	public void showStep1() {

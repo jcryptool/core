@@ -66,7 +66,7 @@ public class Repeat extends Dialog {
         Shell shell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shell.setText(getText());
         createGui(shell, string);
-        shell.setSize(450, 300);
+        shell.setSize(470, 300);
         shell.open();
         Display display = parent.getDisplay();
         while (!shell.isDisposed()) {
@@ -95,9 +95,9 @@ public class Repeat extends Dialog {
                 // to deceive Bob
                 Double chance = getChance(algoPercentage, Double.valueOf(amount.getSelection()));
                 if (chance < 0.01) {
-                    carolPercent.setText("(<0.01" + Messages.Repeat_1); //$NON-NLS-1$
+                    carolPercent.setText(" <0.01" + Messages.Repeat_1); //$NON-NLS-1$
                 } else {
-                    carolPercent.setText("(" + Double.toString(chance) + Messages.Repeat_1); //$NON-NLS-1$
+                    carolPercent.setText(" " + Double.toString(chance) + Messages.Repeat_1); //$NON-NLS-1$
                 }
             }
         });
@@ -113,7 +113,7 @@ public class Repeat extends Dialog {
         String tmp =
                 Double.toString(getChance(algoPercentage, Double.valueOf(amount.getSelection())));
         if (tmp.equals("0.0"))tmp = "<0.01"; //$NON-NLS-1$ //$NON-NLS-2$
-        carolPercent.setText("(" + tmp + Messages.Repeat_1); //$NON-NLS-1$
+        carolPercent.setText(" " + tmp + Messages.Repeat_1); //$NON-NLS-1$
         carolPercent.setBounds(200, 130, 250, 20);
         carolPercent.setVisible(false);
 

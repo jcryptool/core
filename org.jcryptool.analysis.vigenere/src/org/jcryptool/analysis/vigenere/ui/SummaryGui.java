@@ -252,7 +252,11 @@ public class SummaryGui extends Content {
     	EditorsManager.getInstance().getActiveEditorChangedObservable().addObserver((o1=new Observer() {
 			public void update(Observable o, Object arg) {
 				if(explicitelySelectedEditor == null) {
-					selectEditorComboItem(EditorsManager.getInstance().getActiveEditorReference());
+					if (selectedEditor == null) {
+						selectEditorComboItem(EditorsManager.getInstance().getActiveEditorReference());
+					} else {
+						selectEditorComboItem(selectedEditor);
+					}
 				}
 			}
 		}));
@@ -279,6 +283,9 @@ public class SummaryGui extends Content {
     private void refreshEditors() {
         try {
         	editorReferenceList = DataProvider.getInstance().getEditorReferences();
+		if(EditorsManager.getInstance().isEditorOpen()) {
+		    selectedEditor = EditorsManager.getInstance().getActiveEditorReference();
+		}
 
         	if(!Arrays.asList(editorReferenceList).contains(selectedEditor)) setSelectedEditor(null);
         	if(!Arrays.asList(editorReferenceList).contains(explicitelySelectedEditor)) explicitelySelectedEditor = null;

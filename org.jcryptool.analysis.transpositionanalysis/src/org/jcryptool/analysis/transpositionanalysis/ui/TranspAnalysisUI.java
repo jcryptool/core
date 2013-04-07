@@ -169,6 +169,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (refresh) transpTable.setText(calcText(), blocklength, !crop, croplength);
 	}
 
+	public void setColumnOrder(int[] order) {
+		transpTable.setColumnOrder(order);
+		columnsReordered(transpTable.getColumnOrder());
+	}
+	
 	/**
 	 * @param blocklength
 	 *            the blocklength to set
@@ -733,7 +738,9 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			transpTable.setReadInOrder(readInMode, false);
 			transpTable.setText(calcText(), blocklength, !crop, croplength);
 
+			setColumnOrder(textPageConfiguration.getColumnOrder());
 			columnsReordered(transpTable.getColumnOrder());
+			
 
 			displayTextSource(textPageConfiguration.getText(), true, true);
 			
