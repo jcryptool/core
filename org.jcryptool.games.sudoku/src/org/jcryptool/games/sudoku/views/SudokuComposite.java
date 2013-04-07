@@ -2471,11 +2471,21 @@ public class SudokuComposite extends Composite {
     public boolean createsZeroPossible(Point point, int input) {
     	boolean returnValue = false;
     	if (tabChoice == HEX) {
-    		for (int i = 0; i < 16; i++) {
+    		int x = 4 * (int) Math.floor(point.x / 4);
+            int y = 4 * (int) Math.floor(point.y / 4);
+            for (int i = 0; i < 16; i++) {
     			if (point.y != i && possibleHex.get(point.x).get(i).size() == 1 && possibleHex.get(point.x).get(i).get(0) == input) returnValue = true;
     			if (point.x != i && possibleHex.get(i).get(point.y).size() == 1 && possibleHex.get(i).get(point.y).get(0) == input) returnValue = true;
+    			
     		}
+            for (int i = 0; i < 4; i++) {
+            	for (int j = 0; j < 4; j++) {
+            		if ((point.x != x+i || point.y != y+j) && possibleHex.get(x+i).get(y+j).size() == 1 && possibleHex.get(x+i).get(y+j).size() == input) returnValue = true;
+            	}
+            }
     	} else {
+    		int x = 3 * (int) Math.floor(point.x / 3);
+            int y = 3 * (int) Math.floor(point.y / 3);
     		for (int i = 0; i < 9; i++) {
     			if (tabChoice == KILLER) {
     				if (point.y != i && possibleKiller.get(point.x).get(i).size() == 1 && possibleKiller.get(point.x).get(i).get(0) == input) returnValue = true;
@@ -2483,6 +2493,15 @@ public class SudokuComposite extends Composite {
     			} else {
     				if (point.y != i && possibleNormal.get(point.x).get(i).size() == 1 && possibleNormal.get(point.x).get(i).get(0) == input) returnValue = true;
         			if (point.x != i && possibleNormal.get(i).get(point.y).size() == 1 && possibleNormal.get(i).get(point.y).get(0) == input) returnValue = true;
+    			}
+    		}
+    		for (int i = 0; i < 3; i++) {
+    			for (int j = 0; j < 3; j++) {
+    				if (tabChoice == KILLER) {    				
+    					if ((point.x != x+i || point.y != y+j) && possibleKiller.get(x+i).get(y+j).size() == 1 && possibleKiller.get(x+i).get(y+j).get(0) == input) returnValue = true;
+    				} else {
+    					if ((point.x != x+i || point.y != y+j) && possibleNormal.get(x+i).get(y+j).size() == 1 && possibleNormal.get(x+i).get(y+j).get(0) == input) returnValue = true;
+    				}
     			}
     		}
     	}
