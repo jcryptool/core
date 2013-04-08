@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
+import org.jcryptool.visual.jctca.tabs.UserTab;
 
 
 public class JCTCA_Visual extends ViewPart {
