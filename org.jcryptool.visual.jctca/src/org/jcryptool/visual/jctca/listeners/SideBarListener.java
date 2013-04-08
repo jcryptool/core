@@ -5,16 +5,18 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
+import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
 
 public class SideBarListener implements SelectionListener {
 
 	CreateCert cCert;
 	ShowCert sCert;
+	RevokeCert rCert;
 	Composite comp_right;
-	public SideBarListener(CreateCert cCert, ShowCert sCert, Composite comp_right){
+	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, Composite comp_right){
 		//this.cCert = cCert;
-
+		this.rCert = new RevokeCert(comp_right);
 		this.cCert = new CreateCert(comp_right);
 		this.sCert = new ShowCert(comp_right);
 		//this.sCert = sCert;
@@ -35,6 +37,9 @@ public class SideBarListener implements SelectionListener {
 		if(sCert != null) {
 			sCert.dispose();
 		}
+		if(rCert != null) {
+			rCert.dispose();
+		}
 		String text = btn.getText();
 		System.out.println(text);
 		if(text.equals("Create Certificate")){
@@ -44,6 +49,10 @@ public class SideBarListener implements SelectionListener {
 		else if(text.equals("Show Certificate")){
 			sCert = new ShowCert(comp_right);
 			sCert.setVisible(true);
+		}
+		else if(text.equals("Revoke Certificate")){
+			rCert = new RevokeCert(comp_right);
+			rCert.setVisible(true);
 		}
 		comp_right.layout(true);
 	}
