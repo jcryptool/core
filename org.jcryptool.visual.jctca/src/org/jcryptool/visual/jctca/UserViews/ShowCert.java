@@ -21,17 +21,25 @@ public class ShowCert implements Views {
         composite.setLayout(new GridLayout(2, false));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
-        left = new Composite(composite, SWT.None);
+        left = new Composite(composite, SWT.FILL);
+	    left.setLayout(new GridLayout(1, false));
         right = new Composite(composite, SWT.NONE);
+        right.setLayout(new GridLayout(1, false));
         
         lst_certs = new List(left, SWT.BORDER);
         
         lbl_organization = new Label(right, SWT.NONE);
+        lbl_organization.setText("org");
         lbl_common = new Label(right, SWT.NONE);
+        lbl_common.setText("common");
         lbl_mail = new Label(right, SWT.NONE);
-        
+        lbl_mail.setText("mail");
         composite.setVisible(false);
         
+	}
+	
+	public void dispose(){
+		this.composite.dispose();
 	}
 	
 	public void setVisible(boolean visible){

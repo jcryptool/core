@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class CreateCert implements Views{
 
-	Composite right1;
+	Composite composite;
 	
 	Label lbl_common;
 	Text txt_common;
@@ -43,56 +43,60 @@ public class CreateCert implements Views{
 	Button btn_send;
 	
 	public CreateCert(Composite content){
-        right1 = new Composite(content, SWT.NONE);
-        right1.setLayout(new GridLayout(2, false));
-        right1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+        composite = new Composite(content, SWT.NONE);
+        composite.setLayout(new GridLayout(2, false));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
-        lbl_common = new Label(right1, SWT.NONE);
+        lbl_common = new Label(composite, SWT.NONE);
         lbl_common.setText("Common Name");    
-        txt_common = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_common = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_org = new Label(right1, SWT.None);
+        lbl_org = new Label(composite, SWT.None);
         lbl_org.setText("Organisation");
-        txt_org = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_org = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_orgUnit = new Label(right1, SWT.None);
+        lbl_orgUnit = new Label(composite, SWT.None);
         lbl_orgUnit.setText("Organisational Unit");
-        txt_orgUnit = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_orgUnit = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_city = new Label(right1, SWT.None);
+        lbl_city = new Label(composite, SWT.None);
         lbl_city.setText("City or Locality");
-        txt_city = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_city = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_state = new Label(right1, SWT.None);
+        lbl_state = new Label(composite, SWT.None);
         lbl_state.setText("State or Province");
-        txt_state = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_state = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_country = new Label(right1, SWT.None);
+        lbl_country = new Label(composite, SWT.None);
         lbl_country.setText("Country");
-        txt_country = new Text(right1, SWT.SINGLE | SWT.BORDER);
+        txt_country = new Text(composite, SWT.SINGLE | SWT.BORDER);
         
-        lbl_mail = new Label(right1, SWT.None);
+        lbl_mail = new Label(composite, SWT.None);
         lbl_mail.setText("E-Mail");
-        txt_mail = new Text(right1, SWT.BORDER | SWT.SINGLE);
+        txt_mail = new Text(composite, SWT.BORDER | SWT.SINGLE);
         
-        lbl_proof = new Label(right1, SWT.None);
+        lbl_proof = new Label(composite, SWT.None);
         lbl_proof.setText("Proof of Identity");
-        btn_proof = new Button(right1, SWT.None);
+        btn_proof = new Button(composite, SWT.None);
         btn_proof.setText("Select File");
         
-        lbl_key = new Label(right1, SWT.None);
+        lbl_key = new Label(composite, SWT.None);
         lbl_key.setText("Public Key");
-        btn_key = new Button(right1, SWT.NONE);
+        btn_key = new Button(composite, SWT.NONE);
         btn_key.setText("Select extisting public key");
          
-        lbl_plain = new Label(right1, SWT.None);
-        btn_send = new Button(right1, SWT.NONE);
+        lbl_plain = new Label(composite, SWT.None);
+        btn_send = new Button(composite, SWT.NONE);
         btn_send.setText("Send certificate signing request");
                 
-        right1.setVisible(false);
+        composite.setVisible(false);
+	}
+	
+	public void dispose(){
+		this.composite.dispose();
 	}
 	
 	public void setVisible(boolean visible){
-		this.right1.setVisible(visible);
+		this.composite.setVisible(visible);
 	}
 }

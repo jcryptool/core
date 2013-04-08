@@ -3,15 +3,19 @@ package org.jcryptool.visual.jctca.listeners;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
-import org.jcryptool.visual.jctca.UserViews.Views;
 
 public class SideBarListener implements SelectionListener {
 
-	Views view;
-	public SideBarListener(Views view){
-		this.view = view;
+	CreateCert cCert;
+	ShowCert sCert;
+	Composite comp_right;
+	public SideBarListener(CreateCert cCert, ShowCert sCert, Composite comp_right){
+		this.cCert = cCert;
+		this.sCert = sCert;
+		this.comp_right = comp_right;
 	}
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -21,15 +25,20 @@ public class SideBarListener implements SelectionListener {
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
 		Button btn = (Button)arg0.getSource();
-		view.setVisible(false);
+
+		if(cCert != null) {cCert.dispose();}
+		if(sCert != null) {sCert.dispose();}
 		String text = btn.getText();
 		System.out.println(text);
 		if(text.equals("Create Certificate")){
-		//	cCert.setVisible(true);
+			cCert = new CreateCert(comp_right);
+			cCert.setVisible(true);
 		}
 		else if(text.equals("Show Certificate")){
-		//	sCert.setVisible(true);
+			sCert = new ShowCert(comp_right);
+			sCert.setVisible(true);
 		}
+		comp_right.layout(true);
 	}
 
 }

@@ -47,17 +47,20 @@ public class UserTab {
         Composite right = new Composite(generalGroup, SWT.NONE);
         right.setLayout(new GridLayout(1,false));
         
-        cCert = new CreateCert(right);
-        sCert = new ShowCert(right);
-        SideBarListener listener_side = new SideBarListener(cCert,sCert);
+        GridData data = new GridData();
+        
+        
+ //       sCert = new ShowCert(right);
+ //       cCert = new CreateCert(right);
+        SideBarListener list_side = new SideBarListener(cCert,sCert, right);
         
         Button btn_create_cert = new Button(composite, SWT.PUSH);
         btn_create_cert.setText("Create Certificate");
-        btn_create_cert.addSelectionListener(listener_side);
+        btn_create_cert.addSelectionListener(list_side);
         
         Button btn_show_cert = new Button(composite, SWT.PUSH);
         btn_show_cert.setText("Show Certificate");
-        btn_create_cert.addSelectionListener(listener_side);
+        btn_show_cert.addSelectionListener(list_side);
         
         Button btn_sign_stuff = new Button(composite, SWT.PUSH);
         btn_sign_stuff.setText("Sign File/Text");
