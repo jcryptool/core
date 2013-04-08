@@ -46,7 +46,7 @@ public class JCTCA_Visual extends ViewPart {
     public void createPartControl(Composite parent) {
     	try{
 		    // make the composite scrollable
-		    sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+		    sc = new ScrolledComposite(parent, SWT.BORDER);
 		    composite = new Composite(sc, SWT.NONE);
 		    sc.setContent(composite);
 		    sc.setExpandHorizontal(true);

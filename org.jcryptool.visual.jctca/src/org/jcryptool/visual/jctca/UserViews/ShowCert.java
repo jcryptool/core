@@ -46,10 +46,10 @@ public class ShowCert implements Views {
 
 		lst_certs = new List(left, SWT.NONE);
 		lst_certs.setLayoutData(new GridData(SWT.FILL,SWT.FILL,true,true));
-		lst_certs.add("   Certificate #1 ");
-		lst_certs.add("   Certificate #2 ");
-		lst_certs.add("   Certificate #3 ");
-		lst_certs.add("   Certificate #4 ");
+		lst_certs.add("   Certificate #1   ");
+		lst_certs.add("   Certificate #2   ");
+		lst_certs.add("   Certificate #3   ");
+		lst_certs.add("   Certificate #4   ");
 
 		lbl_common = new Label(right, SWT.NONE);
 		lbl_common.setText("Common Name");

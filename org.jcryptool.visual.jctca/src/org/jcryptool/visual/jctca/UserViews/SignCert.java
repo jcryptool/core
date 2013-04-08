@@ -25,7 +25,7 @@ public class SignCert implements Views {
 		lbl_or.setText("or");
 		
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true,1,20);
-		Text txt_sign = new Text(composite, SWT.LEFT | SWT.MULTI);
+		Text txt_sign = new Text(composite, SWT.LEFT | SWT.MULTI | SWT.BORDER);
 		txt_sign.setText("...type text to sign...");
 		txt_sign.setLayoutData(gd_txt);
 		

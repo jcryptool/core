@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
+import org.jcryptool.visual.jctca.UserViews.SignCert;
 import org.jcryptool.visual.jctca.listeners.SideBarListener;
 
 public class UserTab {
