@@ -2,15 +2,18 @@ package org.jcryptool.visual.jctca;
 
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.jcryptool.core.util.fonts.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
@@ -26,6 +29,9 @@ public class JCTCA_Visual extends ViewPart {
     private final String BOB = "Bob";
     private final String BLANK = "Blank?";
 
+    //define used colors
+    private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+    
     private ScrolledComposite sc;
     private Composite composite;
     private GridLayout gl;
@@ -63,13 +69,15 @@ public class JCTCA_Visual extends ViewPart {
 		        headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		        headComposite.setLayout(new GridLayout());
 		
-		        Label label = new Label(headComposite, SWT.BOLD);
-		 //       label.setFont(FontService.getHeaderFont());
-		   //     label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		    label.setText("JCTCA");
+		    Label headline = new Label(headComposite, SWT.NONE);
+		    headline.setFont(FontService.getHeaderFont());
+		    headline.setBackground(WHITE);
+		    headline.setText("JCTCA - JCrypTool Certificate Authority");
 		    head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
 		    head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		    head_description.setText("Hier wird spaeter einleitender Text fuer das Plugin stehen...");
+		    head_description.setText("Asymmetrische Kryptosysteme sind eine verbreitete Methode, um im Internet dafür zu sorgen," +
+		    		"dass Daten am Übertragungsweg nicht verändert wurden und von einem bestimmten Sender stammen. Eine Certificate Authority" +
+		    		"stellt dabei mit ihrer eigenen Signatur die eindeutige Zuordnung zwischen einem öffentlichen Schlüssel und einer Person her.");
 		    // End - Header
 		
 		    comp_center = new Composite(composite, SWT.NONE);
@@ -85,7 +93,7 @@ public class JCTCA_Visual extends ViewPart {
 		    GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		    gd_explain.widthHint = 300;
 		
-		    grp_explain.setText("Erklaerungsbox");
+		    grp_explain.setText("Erklärung");
 		
 		    txtExplain = new Label(grp_explain, SWT.WRAP);
 		    GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

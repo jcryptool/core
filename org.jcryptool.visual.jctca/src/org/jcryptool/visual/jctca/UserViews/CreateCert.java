@@ -12,20 +12,20 @@ public class CreateCert implements Views{
 
 	Composite composite;
 	
-	Label lbl_common;
-	Text txt_common;
+	Label lbl_firstname;
+	Text txt_firstname;
 	
-	Label lbl_org;
-	Text txt_org;
+	Label lbl_lastname;
+	Text txt_lastname;
 	
-	Label lbl_orgUnit;
-	Text txt_orgUnit;
+	Label lbl_street;
+	Text txt_street;
+	
+	Label lbl_ZIP;
+	Text txt_ZIP;
 	
 	Label lbl_city;
 	Text txt_city;
-	
-	Label lbl_state;
-	Text txt_state;
 	
 	Label lbl_country;
 	Text txt_country;
@@ -50,33 +50,33 @@ public class CreateCert implements Views{
         composite.setLayout(new GridLayout(2, true));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         
-        lbl_common = new Label(composite, SWT.NONE);
-        lbl_common.setText("Common Name");    
-        txt_common = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        txt_common.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        lbl_firstname = new Label(composite, SWT.NONE);
+        lbl_firstname.setText("Vornamen");    
+        txt_firstname = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
-        lbl_org = new Label(composite, SWT.None);
-        lbl_org.setText("Organisation");
-        txt_org = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        txt_org.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        lbl_lastname = new Label(composite, SWT.None);
+        lbl_lastname.setText("Nachname");
+        txt_lastname = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
-        lbl_orgUnit = new Label(composite, SWT.None);
-        lbl_orgUnit.setText("Organisational Unit");
-        txt_orgUnit = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        txt_orgUnit.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        lbl_street = new Label(composite, SWT.None);
+        lbl_street.setText("Straße und Hausnummer");
+        txt_street = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        
+        lbl_ZIP = new Label(composite, SWT.None);
+        lbl_ZIP.setText("Postleitzahl");
+        txt_ZIP = new Text(composite, SWT.SINGLE | SWT.BORDER);
+        txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_city = new Label(composite, SWT.None);
-        lbl_city.setText("City or Locality");
+        lbl_city.setText("Ort");
         txt_city = new Text(composite, SWT.SINGLE | SWT.BORDER);
         txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
-        lbl_state = new Label(composite, SWT.None);
-        lbl_state.setText("State or Province");
-        txt_state = new Text(composite, SWT.SINGLE | SWT.BORDER);
-        txt_state.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        
         lbl_country = new Label(composite, SWT.None);
-        lbl_country.setText("Country");
+        lbl_country.setText("Land");
         txt_country = new Text(composite, SWT.SINGLE | SWT.BORDER);
         txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
@@ -86,25 +86,25 @@ public class CreateCert implements Views{
         txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_proof = new Label(composite, SWT.None);
-        lbl_proof.setText("Proof of Identity");
+        lbl_proof.setText("Identitätsnachweis");
         btn_proof = new Button(composite, SWT.None);
-        btn_proof.setText("Select File");
+        btn_proof.setText("Datei auswählen");
         btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_key = new Label(composite, SWT.None);
-        lbl_key.setText("Public Key");
+        lbl_key.setText("Öffentlicher Schlüssel");
         btn_key = new Button(composite, SWT.NONE);
-        btn_key.setText("Select extisting public key");
+        btn_key.setText("Öffentlichen Schlüssel auswählen");
         btn_key.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain = new Label(composite, SWT.NONE);
         btn_genKey = new Button(composite, SWT.NONE);
-        btn_genKey.setText("Generate a key pair");
+        btn_genKey.setText("Schlüsselpaar generieren");
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain1 = new Label(composite, SWT.None);
         btn_send = new Button(composite, SWT.NONE);
-        btn_send.setText("Send certificate signing request");
+        btn_send.setText("CSR abschicken");
         btn_send.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
                 
         composite.setVisible(false);
