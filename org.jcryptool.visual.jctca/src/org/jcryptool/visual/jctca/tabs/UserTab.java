@@ -23,6 +23,7 @@ public class UserTab {
 	CreateCert cCert;
 	ShowCert sCert;
 	RevokeCert rCert;
+	SignCert siCert;
 	public UserTab(TabFolder parent, int style) {
 	    // define the layout for the whole TabItem now
 		TabItem t = new TabItem(parent, SWT.NONE);
@@ -53,7 +54,7 @@ public class UserTab {
         
  //       sCert = new ShowCert(right);
  //       cCert = new CreateCert(right);
-        SideBarListener list_side = new SideBarListener(cCert,sCert,rCert, right);
+        SideBarListener list_side = new SideBarListener(cCert,sCert,rCert,siCert, right);
         
         Button btn_create_cert = new Button(left, SWT.PUSH);
         btn_create_cert.setText("Create Certificate");
@@ -68,6 +69,7 @@ public class UserTab {
         Button btn_sign_stuff = new Button(left, SWT.PUSH);
         btn_sign_stuff.setText("Sign File/Text");
         btn_sign_stuff.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        btn_sign_stuff.addSelectionListener(list_side);
         
         Button btn_revoke_cert = new Button(left, SWT.PUSH);
         btn_revoke_cert.setText("Revoke Certificate");

@@ -7,18 +7,21 @@ import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
+import org.jcryptool.visual.jctca.UserViews.SignCert;
 
 public class SideBarListener implements SelectionListener {
 
 	CreateCert cCert;
 	ShowCert sCert;
 	RevokeCert rCert;
+	SignCert siCert;
 	Composite comp_right;
-	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, Composite comp_right){
+	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, SignCert siCert, Composite comp_right){
 		//this.cCert = cCert;
 		this.rCert = new RevokeCert(comp_right);
 		this.cCert = new CreateCert(comp_right);
 		this.sCert = new ShowCert(comp_right);
+		this.siCert = new SignCert(comp_right);
 		//this.sCert = sCert;
 		this.comp_right = comp_right;
 	}
@@ -40,6 +43,9 @@ public class SideBarListener implements SelectionListener {
 		if(rCert != null) {
 			rCert.dispose();
 		}
+		if(siCert != null) {
+			siCert.dispose();
+		}
 		String text = btn.getText();
 		System.out.println(text);
 		if(text.equals("Create Certificate")){
@@ -53,6 +59,10 @@ public class SideBarListener implements SelectionListener {
 		else if(text.equals("Revoke Certificate")){
 			rCert = new RevokeCert(comp_right);
 			rCert.setVisible(true);
+		}
+		else if(text.equals("Sign File/Text")){
+			siCert = new SignCert(comp_right);
+			siCert.setVisible(true);
 		}
 		comp_right.layout(true);
 	}

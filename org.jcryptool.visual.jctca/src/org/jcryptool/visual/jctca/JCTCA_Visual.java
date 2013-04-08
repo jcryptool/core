@@ -63,13 +63,13 @@ public class JCTCA_Visual extends ViewPart {
 		        headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		        headComposite.setLayout(new GridLayout());
 		
-		        Label label = new Label(headComposite, SWT.NONE);
+		        Label label = new Label(headComposite, SWT.BOLD);
 		 //       label.setFont(FontService.getHeaderFont());
 		   //     label.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		    label.setText("Meine Mama");
+		    label.setText("JCTCA");
 		    head_description = new StyledText(headComposite, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
 		    head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		    head_description.setText("hat drei busen");
+		    head_description.setText("Hier wird spaeter einleitender Text fuer das Plugin stehen...");
 		    // End - Header
 		
 		    comp_center = new Composite(composite, SWT.NONE);
@@ -85,7 +85,7 @@ public class JCTCA_Visual extends ViewPart {
 		    GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, false, true, 1, 1);
 		    gd_explain.widthHint = 300;
 		
-		    grp_explain.setText("Text 1337");
+		    grp_explain.setText("Erklaerungsbox");
 		
 		    txtExplain = new Label(grp_explain, SWT.WRAP);
 		    GridData gd_txtEplain = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
