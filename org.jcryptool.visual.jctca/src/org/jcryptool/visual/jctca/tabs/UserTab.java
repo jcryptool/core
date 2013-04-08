@@ -47,8 +47,6 @@ public class UserTab {
         Composite right = new Composite(generalGroup, SWT.NONE);
         right.setLayout(new GridLayout(1,false));
         
-        GridData data = new GridData();
-        
         
  //       sCert = new ShowCert(right);
  //       cCert = new CreateCert(right);
@@ -68,16 +66,6 @@ public class UserTab {
         Button btn_revoke_cert = new Button(composite, SWT.PUSH);
         btn_revoke_cert.setText("Revoke Certificate");
         
-        // composite for the labels and dropdows                
-        
-	    //lbl.setVisible(false);
-	    
-        Composite right2 = new Composite(right, SWT.NONE);
-        right2.setLayout(new GridLayout(10, false));
-        Label lbl2 = new Label(right2, SWT.NONE);
-        lbl2.setText("WOHOOOO");
-       // right.setLayoutData(right2);
-       // right.layout(true);
 	
 	}
 

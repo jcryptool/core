@@ -13,8 +13,11 @@ public class SideBarListener implements SelectionListener {
 	ShowCert sCert;
 	Composite comp_right;
 	public SideBarListener(CreateCert cCert, ShowCert sCert, Composite comp_right){
-		this.cCert = cCert;
-		this.sCert = sCert;
+		//this.cCert = cCert;
+
+		this.cCert = new CreateCert(comp_right);
+		this.sCert = new ShowCert(comp_right);
+		//this.sCert = sCert;
 		this.comp_right = comp_right;
 	}
 	@Override
@@ -26,8 +29,12 @@ public class SideBarListener implements SelectionListener {
 	public void widgetSelected(SelectionEvent arg0) {
 		Button btn = (Button)arg0.getSource();
 
-		if(cCert != null) {cCert.dispose();}
-		if(sCert != null) {sCert.dispose();}
+		if(cCert != null) {
+			cCert.dispose();
+		}
+		if(sCert != null) {
+			sCert.dispose();
+		}
 		String text = btn.getText();
 		System.out.println(text);
 		if(text.equals("Create Certificate")){
