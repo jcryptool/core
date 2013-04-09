@@ -47,7 +47,7 @@ public class CreateCert implements Views{
 	Button btn_genKey;
 	
 	Label lbl_exp;
-	
+	Group grp_exp;
 	public CreateCert(Composite content, Group exp){
         composite = new Composite(content, SWT.NONE);
         composite.setLayout(new GridLayout(1, true));
@@ -59,7 +59,7 @@ public class CreateCert implements Views{
 		createCertGroup.setLayoutData(gd_grp);
 		createCertGroup.setText("CSR erstellen");
         
-		Group grp_exp = new Group(exp, SWT.BORDER);
+		grp_exp = new Group(exp, SWT.BORDER);
 		grp_exp.setLayout(new GridLayout(1, false));
 		
         
@@ -123,11 +123,13 @@ public class CreateCert implements Views{
         lbl_exp = new Label(grp_exp, SWT.WRAP);
         lbl_exp.setText("ich bin ein erklaerungstext...");
         
+        exp.layout();
         composite.setVisible(false);
 	}
 	
 	public void dispose(){
 		this.composite.dispose();
+		this.grp_exp.dispose();
 	}
 	
 	public void setVisible(boolean visible){
