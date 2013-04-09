@@ -13,10 +13,14 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.visual.jctca.tabs.CertificationTab;
+import org.jcryptool.visual.jctca.tabs.RegistrationTab;
 import org.jcryptool.visual.jctca.tabs.UserTab;
 
 public class JCTCA_Visual extends ViewPart {
-
+/*TODO: erklaerungsboxen individuell aendern, architekturskizzen einbinden, loooooogik.  */
+	
+	
 	// define used colors
 	private static final Color WHITE = Display.getDefault().getSystemColor(
 			SWT.COLOR_WHITE);
@@ -37,7 +41,6 @@ public class JCTCA_Visual extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		try {
-			// make the composite scrollable
 			sc = new ScrolledComposite(parent, SWT.BORDER);
 			composite = new Composite(sc, SWT.NONE);
 			sc.setContent(composite);
@@ -52,17 +55,17 @@ public class JCTCA_Visual extends ViewPart {
 			// Begin - Header
 			headComposite = new Composite(composite, SWT.NONE);
 			// headComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-			headComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+			headComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 					false));
 			headComposite.setLayout(new GridLayout());
 
 			Label headline = new Label(headComposite, SWT.NONE);
 			headline.setFont(FontService.getHeaderFont());
 			headline.setBackground(WHITE);
-			headline.setText("JCTCA - JCrypTool Certificate Authority");
+			headline.setText("JCrypTool Certificate Authority (JCT-CA)");
 			head_description = new StyledText(headComposite, SWT.READ_ONLY
 					| SWT.MULTI | SWT.WRAP);
-			head_description.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
+			head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE,
 					true, false));
 			head_description
 					.setText("Asymmetrische Kryptosysteme sind eine verbreitete Methode, um im Internet dafür zu sorgen,"
@@ -73,12 +76,12 @@ public class JCTCA_Visual extends ViewPart {
 			comp_center = new Composite(composite, SWT.NONE);
 			// 2 columns (tabs and explanation) --> new GridLayout(2, false);
 			comp_center.setLayout(new GridLayout(2, false));
-			comp_center.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-					false, 1, 1));
+			comp_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+					true, 1, 1));
 
 			tabFolder = new TabFolder(comp_center, SWT.NONE);
-			tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-					false, 1, 1));
+			tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+					true, 1, 1));
 
 			grp_explain = new Group(comp_center, SWT.NONE);
 			grp_explain.setLayout(new GridLayout(1, true));
@@ -97,6 +100,8 @@ public class JCTCA_Visual extends ViewPart {
 			txt_explain.setText("In dieser Ansicht verkörpern Sie den Benutzer, der sich ein neues Zertifikat ausstellen lassen möchte.");
 
 			UserTab user = new UserTab(tabFolder, grp_explain, SWT.NONE);
+			RegistrationTab ra = new RegistrationTab(tabFolder, grp_explain, SWT.NONE);
+			CertificationTab ca = new CertificationTab(tabFolder, grp_explain, SWT.NONE);
 
 		} catch (Exception e) {
 			e.printStackTrace();

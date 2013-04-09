@@ -3,6 +3,7 @@ package org.jcryptool.visual.jctca.UserViews;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -14,7 +15,7 @@ public class ShowCert implements Views {
 	Composite left;
 	Composite right;
 	List lst_certs;
-	Label lbl_plain, lbl_plain1, lbl_plain2, lbl_plain3, lbl_plain4, lbl_plain5, lbl_plain6;
+	Label lbl_plain, lbl_plain1, lbl_plain2, lbl_plain3, lbl_plain4, lbl_plain5, lbl_plain6, lbl_plain7, lbl_plain8;
 	
 	Label lbl_issued_to;
 	Label lbl_issued_by;
@@ -51,13 +52,15 @@ public class ShowCert implements Views {
 	Label lbl_expired_on;
 	Label lbl_value_expired_on;
 
+	Button btn_revoke;
+	
 	public ShowCert(Composite content) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		composite.setLayoutData(gd_comp);
 		
-		Group showCertGroup = new Group(composite, SWT.BORDER);
+		Group showCertGroup = new Group(composite, SWT.NONE);
 		showCertGroup.setLayout(new GridLayout(2, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		showCertGroup.setLayoutData(gd_grp);
@@ -127,12 +130,12 @@ public class ShowCert implements Views {
 		lbl_common_by = new Label(right, SWT.NONE);
 		lbl_common_by.setText("Common Name");
 		lbl_value_common_by = new Label(right, SWT.None);
-		lbl_value_common_by.setText("JCryptool Certificate Authority");
+		lbl_value_common_by.setText("JCrypTool Certificate Authority");
 
 		lbl_org_by = new Label(right, SWT.None);
 		lbl_org_by.setText("Organisation");
 		lbl_value_org_by = new Label(right, SWT.None);
-		lbl_value_org_by.setText("JCryptool");
+		lbl_value_org_by.setText("JCrypTool");
 
 		lbl_orgUnit_by = new Label(right, SWT.None);
 		lbl_orgUnit_by.setText("Organisationseinheit  ");
@@ -154,6 +157,12 @@ public class ShowCert implements Views {
 		lbl_expired_on.setText("Gültig bis");
 		lbl_value_expired_on = new Label(right, SWT.None);
 		lbl_value_expired_on.setText("10/4/4");
+		
+		lbl_plain7 = new Label(right,SWT.NONE);
+		lbl_plain8 = new Label(right,SWT.NONE);
+		btn_revoke = new Button(right,SWT.NONE);
+		btn_revoke.setText("Zertifikat widerrufen");
+		
 		composite.setVisible(false);
 		
 

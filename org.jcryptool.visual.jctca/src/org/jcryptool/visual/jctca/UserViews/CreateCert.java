@@ -47,19 +47,22 @@ public class CreateCert implements Views{
 	Button btn_genKey;
 	
 	Label lbl_exp;
-	Group grp_exp;
+	Composite grp_exp;
+
+	
+	
 	public CreateCert(Composite content, Group exp){
         composite = new Composite(content, SWT.NONE);
         composite.setLayout(new GridLayout(1, true));
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, true));
 
-        Group createCertGroup = new Group(composite, SWT.BORDER);
+        Group createCertGroup = new Group(composite, SWT.NONE);
 		createCertGroup.setLayout(new GridLayout(2, false));
-		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData gd_grp = new GridData(SWT.FILL, SWT.NONE, true, true);
 		createCertGroup.setLayoutData(gd_grp);
 		createCertGroup.setText("CSR erstellen");
         
-		grp_exp = new Group(exp, SWT.BORDER);
+		grp_exp = new Composite(exp, SWT.TOP);
 		grp_exp.setLayout(new GridLayout(1, false));
 		
         
@@ -74,12 +77,12 @@ public class CreateCert implements Views{
         txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_street = new Label(createCertGroup, SWT.None);
-        lbl_street.setText("Straße und Hausnummer");
+        lbl_street.setText("Straße");
         txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_ZIP = new Label(createCertGroup, SWT.None);
-        lbl_ZIP.setText("Postleitzahl");
+        lbl_ZIP.setText("Postleitzahl   ");
         txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
@@ -104,6 +107,7 @@ public class CreateCert implements Views{
         btn_proof.setText("Datei auswählen");
         btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
+        
         lbl_key = new Label(createCertGroup, SWT.None);
         lbl_key.setText("Öffentlicher Schlüssel");
         btn_key = new Button(createCertGroup, SWT.NONE);
@@ -115,15 +119,15 @@ public class CreateCert implements Views{
         btn_genKey.setText("Schlüsselpaar generieren");
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
-        lbl_plain1 = new Label(createCertGroup, SWT.None);
-        btn_send = new Button(createCertGroup, SWT.NONE);
-        btn_send.setText("CSR abschicken");
-        btn_send.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//        lbl_plain1 = new Label(createCertGroup, SWT.None);
+        btn_send = new Button(composite, SWT.NONE);
+        btn_send.setText("         CSR abschicken         ");
+        btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
                 
         lbl_exp = new Label(grp_exp, SWT.WRAP);
-        lbl_exp.setText("ich bin ein erklaerungstext...");
+        lbl_exp.setText("");
         
-        exp.layout();
+        grp_exp.layout();
         composite.setVisible(false);
 	}
 	
@@ -134,5 +138,6 @@ public class CreateCert implements Views{
 	
 	public void setVisible(boolean visible){
 		this.composite.setVisible(visible);
+		this.grp_exp.setVisible(visible);
 	}
 }

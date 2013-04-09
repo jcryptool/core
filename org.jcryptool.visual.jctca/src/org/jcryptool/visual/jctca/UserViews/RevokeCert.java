@@ -17,9 +17,9 @@ public class RevokeCert implements Views {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(1, true));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        Group revokeCertGroup = new Group(composite, SWT.BORDER);
+        Group revokeCertGroup = new Group(composite, SWT.NONE);
 		revokeCertGroup.setLayout(new GridLayout(1, false));
-		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData gd_grp = new GridData(SWT.FILL, SWT.NONE, true, true);
 		revokeCertGroup.setLayoutData(gd_grp);
 		revokeCertGroup.setText("Zertifikat widerrufen");
         

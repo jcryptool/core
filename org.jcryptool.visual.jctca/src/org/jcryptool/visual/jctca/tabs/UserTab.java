@@ -24,7 +24,7 @@ public class UserTab {
 	public UserTab(TabFolder parent, Group exp, int style) {
 	    // define the layout for the whole TabItem now
 		TabItem t = new TabItem(parent, SWT.NONE);
-		t.setText("User");
+		t.setText("Benutzer");
 		Group generalGroup = new Group(parent, SWT.NONE);
 		generalGroup.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		t.setControl(generalGroup);
@@ -69,11 +69,11 @@ public class UserTab {
         btn_sign_stuff.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         btn_sign_stuff.addSelectionListener(list_side);
         
-        Button btn_revoke_cert = new Button(left, SWT.PUSH);
-        btn_revoke_cert.setText("Zertifikat widerrufen");
-        btn_revoke_cert.addSelectionListener(list_side);
-        btn_revoke_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-	
+//        Button btn_revoke_cert = new Button(left, SWT.PUSH);
+//        btn_revoke_cert.setText("Zertifikat widerrufen");
+//        btn_revoke_cert.addSelectionListener(list_side);
+//        btn_revoke_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//	
 	}
 
 }

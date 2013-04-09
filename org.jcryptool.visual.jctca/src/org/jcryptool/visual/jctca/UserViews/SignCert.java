@@ -20,7 +20,7 @@ public class SignCert implements Views {
 		GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		composite.setLayoutData(gd_comp);
 		
-		Group signCertGroup = new Group(composite, SWT.BORDER);
+		Group signCertGroup = new Group(composite, SWT.NONE);
 		signCertGroup.setLayout(new GridLayout(1, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		signCertGroup.setLayoutData(gd_grp);
