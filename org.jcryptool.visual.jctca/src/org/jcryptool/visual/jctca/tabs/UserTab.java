@@ -1,16 +1,11 @@
 package org.jcryptool.visual.jctca.tabs;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
@@ -25,13 +20,15 @@ public class UserTab {
 	ShowCert sCert;
 	RevokeCert rCert;
 	SignCert siCert;
-	public UserTab(TabFolder parent, int style) {
+	Group grp_exp;
+	public UserTab(TabFolder parent, Group exp, int style) {
 	    // define the layout for the whole TabItem now
 		TabItem t = new TabItem(parent, SWT.NONE);
 		t.setText("User");
 		Group generalGroup = new Group(parent, SWT.NONE);
 		generalGroup.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		t.setControl(generalGroup);
+		this.grp_exp = exp;
 
         // 2 columns (actions and the actionswindow)
         generalGroup.setLayout(new GridLayout(2, false));
@@ -55,7 +52,7 @@ public class UserTab {
         
  //       sCert = new ShowCert(right);
  //       cCert = new CreateCert(right);
-        SideBarListener list_side = new SideBarListener(cCert,sCert,rCert,siCert, right);
+        SideBarListener list_side = new SideBarListener(cCert,sCert,rCert,siCert, grp_exp, right);
         
         Button btn_create_cert = new Button(left, SWT.PUSH);
         btn_create_cert.setText("Neues Zertifikat anfordern");
