@@ -17,11 +17,11 @@ public class RevokeCert implements Views {
 		composite.setLayout(new GridLayout(1, true));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		cmb_certs = new Combo(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
-		cmb_certs.add("Cert #1");
-		cmb_certs.add("cert #2");
+		cmb_certs.add("Zertifikat #1");
+		cmb_certs.add("Zertifikat #2");
 		cmb_certs.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_revoke = new Button(composite, SWT.NONE);
-		btn_revoke.setText("Revoke Certificate");
+		btn_revoke.setText("Zertifikat widerrufen");
 		btn_revoke.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		composite.setVisible(false);
