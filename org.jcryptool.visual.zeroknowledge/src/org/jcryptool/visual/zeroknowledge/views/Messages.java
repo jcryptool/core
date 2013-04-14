@@ -13,6 +13,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.zeroknowledge.views.messages"; //$NON-NLS-1$
+    public static String Header_title;
+    public static String Header_text;
     public static String FeigeFiatShamirView_1;
     public static String FeigeFiatShamirView_10;
     public static String FeigeFiatShamirView_2;
