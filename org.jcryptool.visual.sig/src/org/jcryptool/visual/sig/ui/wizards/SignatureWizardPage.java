@@ -3,19 +3,19 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
-public class HashWizardPage extends WizardPage {
+public class SignatureWizardPage extends WizardPage {
 
-	private HashComposite composite;
+	private SignatureComposite composite;
 
 	//Construcor
-	protected HashWizardPage(String pageName) {
+	protected SignatureWizardPage(String pageName) {
 		//TEST!
-		super("Hashwizard");
+		super("Siganture Wizard");
 		setDescription("YEESSSSS");
 	}
 	
 	public void createControl(Composite parent) {
-		composite = new HashComposite(parent, NONE);
+		composite = new SignatureComposite(parent, NONE);
 		//composite.setBounds(x, y, width, height);
 		setControl(composite);
 		setPageComplete(true);

@@ -12,7 +12,15 @@ public class SignatureComposite extends Composite implements PaintListener{
 	//Constructor
 	public SignatureComposite(Composite parent, int style) {
 		super(parent, style);
+		parent.setSize(600, 400); 
+	    //Draw the controls
+	    initialize();
+	}
 		
+	/**
+	* Draws all the controls of the composite
+    */
+	private void initialize() {
 		Group grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText("Signature methods");
 		grpSignatures.setBounds(10, 10, 201, 213);
