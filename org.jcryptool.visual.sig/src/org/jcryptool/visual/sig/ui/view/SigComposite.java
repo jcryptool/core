@@ -56,6 +56,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
     	txtGeneralDescription.setEditable(false);
 		txtGeneralDescription.setBounds(10, 10, 699, 45);
 		txtGeneralDescription.setText(Messages.SigComposite_description);
+		Color white = new Color(Display.getCurrent(),255,255,255);
+		txtGeneralDescription.setBackground(white);
 		
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
