@@ -66,10 +66,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		Label lblHash = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHash.setBounds(34, 246, 136, 14);
 		lblHash.setText(Messages.SigComposite_lblHash); 
-		
-		btnOpenDocumentTemp = new Button(grpSignatureGeneration, SWT.NONE);
-		btnOpenDocumentTemp.setBounds(34, 64, 136, 41);
-		btnOpenDocumentTemp.setText(Messages.SigComposite_btnDocumentTemp);
+		//btnOpenDocumentTemp.setVisible(false);
 		
 		btnHash = new Button(grpSignatureGeneration, SWT.NONE);
 		btnHash.setEnabled(false);
@@ -85,19 +82,6 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnSignature.setEnabled(false);
 		btnSignature.setBounds(248, 365, 136, 60);
 		btnSignature.setText(Messages.SigComposite_btnSignature);
-		
-		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 207, 212, 261);
-		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
-		
-		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
-		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 144, 188, 56);
-		
-		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
-		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 206, 109, 28);
-		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 		
 		tabDescription = new TabFolder(grpSignatureGeneration, SWT.NONE);
 		tabDescription.setBounds(187, 10, 488, 191);
@@ -138,6 +122,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
+		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
+		grpSignedDoc.setBounds(463, 207, 212, 261);
+		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
+		
+		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
+		txtSignature.setText(""); 
+		txtSignature.setBounds(10, 144, 188, 56);
+		
+		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
+		btnOpenInEditor.setEnabled(false);
+		btnOpenInEditor.setBounds(10, 206, 109, 28);
+		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
+		
 		Button btnReset = new Button(grpSignatureGeneration, SWT.NONE);
 		btnReset.setBounds(581, 474, 94, 28);
 		btnReset.setText(Messages.SigComposite_btnReset);
@@ -152,6 +149,10 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		
 		canvas1 = new Canvas(grpSignatureGeneration, SWT.NONE);
 		canvas1.setBounds(34, 21, 628, 392);
+		
+		btnOpenDocumentTemp = new Button(canvas1, SWT.NONE);
+		btnOpenDocumentTemp.setBounds(0, 0, 136, 41);
+		btnOpenDocumentTemp.setText(Messages.SigComposite_btnDocumentTemp);
 
 		createEvents();
 		
@@ -174,8 +175,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	    Rectangle clientArea;
 	    int width;
 	    int height;
-	    int picx = 15;
-	    int picy =0;
+	    int picx = 30;
+	    int picy = 45;
 	    GC gc;
 	    
 		gc = e.gc;
@@ -184,18 +185,25 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         width = clientArea.width; 
         height = clientArea.height; 
         
-        //Insert the image of the document
-        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/Document_brown.png"); 
+        //Insert the image of the key
+        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/key.png"); 
         ImageData imD = id.getImageData();
         Image img = new Image(Display.getCurrent(), imD);
+        gc.drawImage(img, 230, 200);
+        
+        //Insert the image of the document
+        id = SigPlugin.getImageDescriptor("icons/doc.png"); 
+        imD = id.getImageData();
+        img = new Image(Display.getCurrent(), imD);
         //gc.drawImage(img, 10, 0); Bring to front!
-        gc.drawImage(img, width-140, height-180);
+        gc.drawImage(img, width-130, height-170);
         
         gc.setBackground(lightgrey); 
         //Color the all the areas in lightgrey
         //Draw shaft
         gc.fillRectangle(55,50,20,height);
         gc.fillRectangle(0,height-30,width-220,20);
+        gc.fillRectangle(270,300,20,80);
         //Draw head (x1, y1, x2, y2, x3, y3)
     	gc.fillPolygon(new int[] {width-220,height-40, width-220, height, width-200, height-20});
         gc.setBackground(darkgrey);
@@ -217,6 +225,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         else { //Step 4
         	gc.fillRectangle(55,50,20,height);
         	gc.fillRectangle(0,height-30,width-220,20);
+        	gc.fillRectangle(270,300,20,80);
         	gc.fillPolygon(new int[] {width-220,height-40, width-220, height, width-200, height-20});
         	gc.drawImage(img, picx, picy);
         }
