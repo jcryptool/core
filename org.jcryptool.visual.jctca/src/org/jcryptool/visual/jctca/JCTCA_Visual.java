@@ -53,14 +53,13 @@ public class JCTCA_Visual extends ViewPart {
 
 			// Begin - Header
 			headComposite = new Composite(composite, SWT.NONE);
-			// headComposite.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+			headComposite.setBackground(WHITE);
 			headComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 					false));
 			headComposite.setLayout(new GridLayout());
 
 			Label headline = new Label(headComposite, SWT.NONE);
 			headline.setFont(FontService.getHeaderFont());
-			headline.setBackground(WHITE);
 			headline.setText("JCrypTool Certificate Authority (JCT-CA)");
 			head_description = new StyledText(headComposite, SWT.READ_ONLY
 					| SWT.MULTI | SWT.WRAP);
@@ -96,7 +95,7 @@ public class JCTCA_Visual extends ViewPart {
 			gd_txt_explain.heightHint = 300;
 			txt_explain.setLayoutData(gd_txt_explain);
 
-			txt_explain.setText("In dieser Ansicht verkörpern Sie den Benutzer, der sich ein neues Zertifikat ausstellen lassen möchte.");
+			txt_explain.setText("Dies ist Erklärungstext.");
 
 			UserTab user = new UserTab(tabFolder, grp_explain, SWT.NONE);
 			RegistrationTab ra = new RegistrationTab(tabFolder, grp_explain, SWT.NONE);
