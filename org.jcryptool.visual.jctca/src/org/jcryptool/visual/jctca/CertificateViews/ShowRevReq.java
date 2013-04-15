@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.visual.jctca.Activator;
 
 public class ShowRevReq implements Views {
 	Composite composite;
@@ -41,7 +42,7 @@ public class ShowRevReq implements Views {
 	Button btn_verify_identity;
 	Button btn_reject_csr;
 
-	public ShowRevReq(Composite content) {
+	public ShowRevReq(Composite content, Composite exp) {
 		// composite = new Composite(content, SWT.NONE);
 		// composite.setLayout(new GridLayout(1, false));
 		// GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
@@ -114,9 +115,12 @@ public class ShowRevReq implements Views {
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
 
-		Image img_id = new Image(right.getDisplay(),"/home/kerstin/git/minica/org.jcryptool.visual.jctca/src/org/jcryptool/visual/jctca/RegistrarViews/ausweis.jpeg");
+	    Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Show Revocation Request!");
+        
+        String ausweis = "icons/ausweis.jpeg";
 		Label lbl_img = new Label(right, SWT.NONE);
-		lbl_img.setImage(img_id);
+		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 	}
 
 	public void dispose() {

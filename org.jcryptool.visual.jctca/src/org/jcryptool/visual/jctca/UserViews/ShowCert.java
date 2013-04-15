@@ -54,7 +54,7 @@ public class ShowCert implements Views {
 
 	Button btn_revoke;
 	
-	public ShowCert(Composite content) {
+	public ShowCert(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 		GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
@@ -163,9 +163,9 @@ public class ShowCert implements Views {
 		btn_revoke = new Button(right,SWT.NONE);
 		btn_revoke.setText("Zertifikat widerrufen");
 		
+	    Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Show Certificate!");
 		composite.setVisible(false);
-		
-
 	}
 
 	public void dispose() {

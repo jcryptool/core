@@ -14,7 +14,7 @@ public class SignCert implements Views {
 
 	Composite composite;
 
-	public SignCert(Composite content) {		
+	public SignCert(Composite content, Composite exp) {		
 		this.composite = new Composite(content, SWT.NONE);
 		this.composite.setLayout(new GridLayout(1, false));
 		GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
@@ -47,7 +47,8 @@ public class SignCert implements Views {
 		
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
 		btn_sign.setText("Mit ausgewähltem Schlüssel signieren");
-		
+		Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Sign Certificate!");
 		
 		composite.setVisible(false);
 	}

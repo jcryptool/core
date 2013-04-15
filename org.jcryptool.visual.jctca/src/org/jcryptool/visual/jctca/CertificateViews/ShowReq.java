@@ -25,7 +25,7 @@ public class ShowReq implements Views {
 	Button btn_accept_request;
 	Button btn_reject_request;
 	
-	public ShowReq(Composite content) {
+	public ShowReq(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(3, true));
 		GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
@@ -45,7 +45,7 @@ public class ShowReq implements Views {
 //		center.setLayout(new GridLayout(1, true));
 //		center.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, true));
 
-		Tree tree = new Tree(left,SWT.NONE);
+		Tree tree = new Tree(left,SWT.BORDER);
 		
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
@@ -81,6 +81,8 @@ public class ShowReq implements Views {
 		btn_reject_request.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_reject_request.setText("Anfrage ablehnen");
 		
+		Label lbl_exp = (Label)exp.getChildren()[0];	
+        lbl_exp.setText("Hi, I explain what is going on in Show Request!");
 		
 		
 	}

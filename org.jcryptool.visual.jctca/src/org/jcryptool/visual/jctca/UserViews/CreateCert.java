@@ -46,10 +46,6 @@ public class CreateCert implements Views{
 	Label lbl_plain1;
 	Button btn_genKey;
 	
-	Label lbl_exp;
-	Composite grp_exp;
-
-	
 	
 	public CreateCert(Composite content, Group exp){
         composite = new Composite(content, SWT.NONE);
@@ -62,8 +58,6 @@ public class CreateCert implements Views{
 		createCertGroup.setLayoutData(gd_grp);
 		createCertGroup.setText("CSR erstellen");
         
-		grp_exp = new Composite(exp, SWT.TOP);
-		grp_exp.setLayout(new GridLayout(1, false));
 		
         
         lbl_firstname = new Label(createCertGroup, SWT.NONE);
@@ -124,20 +118,17 @@ public class CreateCert implements Views{
         btn_send.setText("         CSR abschicken         ");
         btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
                 
-        lbl_exp = new Label(grp_exp, SWT.WRAP);
-        lbl_exp.setText("");
+        Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Create Certificate!");
         
-        grp_exp.layout();
         composite.setVisible(false);
 	}
 	
 	public void dispose(){
-		this.composite.dispose();
-		this.grp_exp.dispose();
+		this.composite.dispose();		
 	}
 	
 	public void setVisible(boolean visible){
 		this.composite.setVisible(visible);
-		this.grp_exp.setVisible(visible);
 	}
 }

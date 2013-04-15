@@ -7,13 +7,14 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 public class RevokeCert implements Views {
 
 	Composite composite;
 	Combo cmb_certs;
 	Button btn_revoke;
-	public RevokeCert(Composite content){
+	public RevokeCert(Composite content, Composite exp){
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(1, true));
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -31,6 +32,8 @@ public class RevokeCert implements Views {
 		btn_revoke.setText("Zertifikat widerrufen");
 		btn_revoke.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
+		Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Revoke Certificate!");
 		composite.setVisible(false);
 	}
 	

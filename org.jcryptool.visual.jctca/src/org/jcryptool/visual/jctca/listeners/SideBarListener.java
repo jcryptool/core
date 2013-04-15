@@ -18,8 +18,8 @@ public class SideBarListener implements SelectionListener {
 	RevokeCert rCert;
 	SignCert siCert;
 	Composite comp_right;
-	Group comp_exp;
-	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, SignCert siCert, Group comp_exp, Composite comp_right){
+	Group grp_exp;
+	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, SignCert siCert, Group grp_exp, Composite comp_right){
 		//this.cCert = cCert;
 //		this.rCert = new RevokeCert(comp_right);
 //		this.cCert = new CreateCert(comp_right, comp_exp);
@@ -27,7 +27,7 @@ public class SideBarListener implements SelectionListener {
 //		this.siCert = new SignCert(comp_right);
 		//this.sCert = sCert;
 		this.comp_right = comp_right;
-		this.comp_exp = comp_exp;
+		this.grp_exp = grp_exp;
 	}
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -53,22 +53,23 @@ public class SideBarListener implements SelectionListener {
 		String text = btn.getText();
 		System.out.println(text);
 		if(text.equals("Neues Zertifikat anfordern")){
-			cCert = new CreateCert(comp_right, comp_exp);
+			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
 		}
 		else if(text.equals("Zertifikate verwalten")){
-			sCert = new ShowCert(comp_right);
+			sCert = new ShowCert(comp_right, grp_exp);
 			sCert.setVisible(true);
 		}
 		else if(text.equals("Zertifikat widerrufen")){
-			rCert = new RevokeCert(comp_right);
+			rCert = new RevokeCert(comp_right, grp_exp);
 			rCert.setVisible(true);
 		}
 		else if(text.equals("Text oder Datei signieren")){
-			siCert = new SignCert(comp_right);
+			siCert = new SignCert(comp_right, grp_exp);
 			siCert.setVisible(true);
 		}
 		comp_right.layout(true);
+		grp_exp.layout(true);
 	}
 
 }

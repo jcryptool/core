@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.RegistrarViews;
 
+import java.io.InputStream;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -13,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.visual.jctca.Activator;
 
 public class ShowCSR implements Views {
 	Composite composite;
@@ -41,7 +44,7 @@ public class ShowCSR implements Views {
 	Button btn_verify_identity;
 	Button btn_reject_csr;
 
-	public ShowCSR(Composite content) {
+	public ShowCSR(Composite content, Composite exp) {
 		// composite = new Composite(content, SWT.NONE);
 		// composite.setLayout(new GridLayout(1, false));
 		// GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
@@ -113,10 +116,12 @@ public class ShowCSR implements Views {
 		btn_reject_csr.setText("CSR ablehnen");
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
-
-		Image img_id = new Image(right.getDisplay(),"/home/kerstin/git/minica/org.jcryptool.visual.jctca/src/org/jcryptool/visual/jctca/RegistrarViews/ausweis.jpeg");
+		
+	    Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Show CSR!");
+		String ausweis = "icons/ausweis.jpeg";
 		Label lbl_img = new Label(right, SWT.NONE);
-		lbl_img.setImage(img_id);
+		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 	}
 
 	public void dispose() {

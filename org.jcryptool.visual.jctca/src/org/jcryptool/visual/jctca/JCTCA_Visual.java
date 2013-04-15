@@ -46,8 +46,7 @@ public class JCTCA_Visual extends ViewPart {
 			sc.setContent(composite);
 			sc.setExpandHorizontal(true);
 			sc.setExpandVertical(true);
-			sc.setMinSize(composite.computeSize(1000, 680));
-
+			
 			gl = new GridLayout(1, false);
 			gl.verticalSpacing = 20;
 			composite.setLayout(gl);
@@ -90,7 +89,7 @@ public class JCTCA_Visual extends ViewPart {
 			gd_explain.widthHint = 300;
 			grp_explain.setLayoutData(gd_explain);
 			grp_explain.setText("Erklärung");
-
+			
 			txt_explain = new Label(grp_explain, SWT.WRAP);
 			GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true,
 					true, 1, 1);

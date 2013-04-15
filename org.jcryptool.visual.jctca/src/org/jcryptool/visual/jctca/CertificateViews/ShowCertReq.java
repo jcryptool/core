@@ -41,7 +41,7 @@ public class ShowCertReq implements Views {
 	Button btn_verify_identity;
 	Button btn_reject_csr;
 
-	public ShowCertReq(Composite content) {
+	public ShowCertReq(Composite content, Composite exp) {
 		// composite = new Composite(content, SWT.NONE);
 		// composite.setLayout(new GridLayout(1, false));
 		// GridData gd_comp = new GridData(SWT.FILL, SWT.TOP, true, true);
@@ -116,6 +116,9 @@ public class ShowCertReq implements Views {
 
 		Image img_id = new Image(right.getDisplay(),"/home/kerstin/git/minica/org.jcryptool.visual.jctca/src/org/jcryptool/visual/jctca/RegistrarViews/ausweis.jpeg");
 		Label lbl_img = new Label(right, SWT.NONE);
+		
+	    Label lbl_exp = (Label)exp.getChildren()[0];
+        lbl_exp.setText("Hi, I explain what is going on in Show Certificate Request!");
 		lbl_img.setImage(img_id);
 	}
 
