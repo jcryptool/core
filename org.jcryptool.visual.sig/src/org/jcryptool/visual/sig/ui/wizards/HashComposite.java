@@ -26,33 +26,8 @@ public class HashComposite extends Composite implements PaintListener{
 	 * Draws all the controls of the composite
 	 */
 	private void initialize() {
-		
-	    Group grpHashes = new Group(this, SWT.NONE);
 	    GridData gd_grpSignatures = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 	    gd_grpSignatures.widthHint = 141;
-	    grpHashes.setLayoutData(gd_grpSignatures);
-	    grpHashes.setText("Hash methods");
-	    grpHashes.setBounds(10, 10, 250, 170);
-	    
-	    Button btnRadioButton = new Button(grpHashes, SWT.RADIO);
-	    btnRadioButton.setBounds(10, 10, 91, 18);
-	    btnRadioButton.setText("MD5");
-	    
-	    Button btnRadioButton_1 = new Button(grpHashes, SWT.RADIO);
-	    btnRadioButton_1.setBounds(10, 34, 91, 18);
-	    btnRadioButton_1.setText("SHA1");
-	    
-	    Button btnRadioButton_2 = new Button(grpHashes, SWT.RADIO);
-	    btnRadioButton_2.setBounds(10, 58, 91, 18);
-	    btnRadioButton_2.setText("SHA256");
-	    
-	    Button btnRadioButton_3 = new Button(grpHashes, SWT.RADIO);
-	    btnRadioButton_3.setBounds(10, 82, 91, 18);
-	    btnRadioButton_3.setText("SAH384");
-	    
-	    Button btnRadioButton_4 = new Button(grpHashes, SWT.RADIO);
-	    btnRadioButton_4.setBounds(10, 106, 91, 18);
-	    btnRadioButton_4.setText("SHA512");
 			
 		Group grpDescription = new Group(this, SWT.NONE);
 		GridData gd_grpDescription = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -62,6 +37,31 @@ public class HashComposite extends Composite implements PaintListener{
 		grpDescription.setBounds(10, 186, 250, 163);
 		
 		setSize(new Point(273, 360));
+		
+	    Group grpHashes = new Group(this, SWT.NONE);
+	    grpHashes.setLayoutData(gd_grpSignatures);
+	    grpHashes.setText("Hash methods");
+	    grpHashes.setBounds(10, 10, 250, 170);
+	    
+	    Button btnRadioButton = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton.setBounds(10, 19, 91, 18);
+	    btnRadioButton.setText("MD5");
+	    
+	    Button btnRadioButton_1 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_1.setBounds(10, 43, 91, 18);
+	    btnRadioButton_1.setText("SHA1");
+	    
+	    Button btnRadioButton_2 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_2.setBounds(10, 67, 91, 18);
+	    btnRadioButton_2.setText("SHA256");
+	    
+	    Button btnRadioButton_3 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_3.setBounds(10, 91, 91, 18);
+	    btnRadioButton_3.setText("SAH384");
+	    
+	    Button btnRadioButton_4 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_4.setBounds(10, 115, 91, 18);
+	    btnRadioButton_4.setText("SHA512");
 	    }
 
 

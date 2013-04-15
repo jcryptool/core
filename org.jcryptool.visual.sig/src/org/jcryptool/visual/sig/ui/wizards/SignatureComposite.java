@@ -26,23 +26,23 @@ public class SignatureComposite extends Composite implements PaintListener{
 		grpSignatures.setBounds(10, 10, 250, 170);
 		
 		Button btnRadioButton = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton.setBounds(10, 10, 118, 18);
+		btnRadioButton.setBounds(10, 19, 118, 18);
 		btnRadioButton.setText("MD5 with RSA");
 		
 		Button btnRadioButton_1 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_1.setBounds(10, 34, 118, 18);
+		btnRadioButton_1.setBounds(10, 43, 118, 18);
 		btnRadioButton_1.setText("SHA1 with RSA");
 		
 		Button btnRadioButton_2 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_2.setBounds(10, 58, 118, 18);
+		btnRadioButton_2.setBounds(10, 67, 118, 18);
 		btnRadioButton_2.setText("SHA256 with RSA");
 		
 		Button btnRadioButton_3 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_3.setBounds(10, 82, 118, 18);
+		btnRadioButton_3.setBounds(10, 91, 118, 18);
 		btnRadioButton_3.setText("SHA384 with RSA");
 		
 		Button btnRadioButton_4 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_4.setBounds(10, 106, 118, 18);
+		btnRadioButton_4.setBounds(10, 115, 118, 18);
 		btnRadioButton_4.setText("SHA512 with RSA");
 		
 		Group grpDescription = new Group(this, SWT.NONE);
