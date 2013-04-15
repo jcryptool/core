@@ -61,13 +61,13 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
 		grpSignatureGeneration.setBounds(10, 61, 699, 529);
 		
-		btnOpenDocumentTemp = new Button(grpSignatureGeneration, SWT.NONE);
-		btnOpenDocumentTemp.setBounds(34, 64, 136, 41);
-		btnOpenDocumentTemp.setText(Messages.SigComposite_btnDocumentTemp);
-		
 		Label lblHash = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHash.setBounds(34, 246, 136, 14);
 		lblHash.setText(Messages.SigComposite_lblHash); 
+		
+		btnOpenDocumentTemp = new Button(grpSignatureGeneration, SWT.NONE);
+		btnOpenDocumentTemp.setBounds(34, 64, 136, 41);
+		btnOpenDocumentTemp.setText(Messages.SigComposite_btnDocumentTemp);
 		
 		btnHash = new Button(grpSignatureGeneration, SWT.NONE);
 		btnHash.setEnabled(false);
@@ -172,6 +172,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	    Rectangle clientArea;
 	    int width;
 	    int height;
+	    int picx = 15;
+	    int picy =0;
 	    GC gc;
 	    
 		gc = e.gc;
@@ -183,9 +185,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         //Insert the image of the document
         ImageDescriptor id = SigPlugin.getImageDescriptor("icons/Document_brown.png"); 
         ImageData imD = id.getImageData();
-        imD.transparentPixel = 16777215; // white
         Image img = new Image(Display.getCurrent(), imD);
-        gc.drawImage(img, 20, 0);
+        //gc.drawImage(img, 10, 0); Bring to front!
         gc.drawImage(img, width-140, height-180);
         
         gc.setBackground(lightgrey); 
@@ -196,23 +197,26 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         //Draw head (x1, y1, x2, y2, x3, y3)
     	gc.fillPolygon(new int[] {width-220,height-40, width-220, height, width-200, height-20});
         gc.setBackground(darkgrey);
-        
+        gc.drawImage(img, picx, picy);
         //Color the specified areas in darkgrey
         if (btnHash.getEnabled() == false) {
         	//color nothing
         }else if (btnSignature.getEnabled() == false) { //Step 2
         	//draw the first part of the arrow (from Document to btnHash)
         	gc.fillRectangle(55,50,20,height/2-30);
+        	gc.drawImage(img, picx, picy);
         }
         else if (btnOpenInEditor.getEnabled() == false){ //Step 3
         	//draw another part of the arrow (from btnHash to btnSignature)
         	gc.fillRectangle(55,50,20,height);
         	gc.fillRectangle(0,height-30,width/2,20);
+        	gc.drawImage(img, picx, picy);
         }
         else { //Step 4
         	gc.fillRectangle(55,50,20,height);
         	gc.fillRectangle(0,height-30,width-220,20);
         	gc.fillPolygon(new int[] {width-220,height-40, width-220, height, width-200, height-20});
+        	gc.drawImage(img, picx, picy);
         }
        
         gc.dispose(); 
