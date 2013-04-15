@@ -7,6 +7,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.swt.widgets.Button;
 
 //Contains the elements (2 group boxes) of the HashWizard
 public class HashComposite extends Composite implements PaintListener{
@@ -24,21 +27,41 @@ public class HashComposite extends Composite implements PaintListener{
 	 */
 	private void initialize() {
 		
-	    Group grpSignatures = new Group(this, SWT.NONE);
+	    Group grpHashes = new Group(this, SWT.NONE);
 	    GridData gd_grpSignatures = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 	    gd_grpSignatures.widthHint = 141;
-	    grpSignatures.setLayoutData(gd_grpSignatures);
-	    grpSignatures.setText("Signature methods");
-	    grpSignatures.setBounds(10, 10, 201, 170);
+	    grpHashes.setLayoutData(gd_grpSignatures);
+	    grpHashes.setText("Hash methods");
+	    grpHashes.setBounds(10, 10, 250, 170);
+	    
+	    Button btnRadioButton = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton.setBounds(10, 10, 91, 18);
+	    btnRadioButton.setText("MD5");
+	    
+	    Button btnRadioButton_1 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_1.setBounds(10, 34, 91, 18);
+	    btnRadioButton_1.setText("SHA1");
+	    
+	    Button btnRadioButton_2 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_2.setBounds(10, 58, 91, 18);
+	    btnRadioButton_2.setText("SHA256");
+	    
+	    Button btnRadioButton_3 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_3.setBounds(10, 82, 91, 18);
+	    btnRadioButton_3.setText("SAH384");
+	    
+	    Button btnRadioButton_4 = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton_4.setBounds(10, 106, 91, 18);
+	    btnRadioButton_4.setText("SHA512");
 			
 		Group grpDescription = new Group(this, SWT.NONE);
 		GridData gd_grpDescription = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_grpDescription.widthHint = 129;
 		grpDescription.setLayoutData(gd_grpDescription);
 		grpDescription.setText("Description");
-		grpDescription.setBounds(10, 186, 201, 163);
+		grpDescription.setBounds(10, 186, 250, 163);
 		
-		setSize(new Point(250, 400));
+		setSize(new Point(273, 360));
 	    }
 
 

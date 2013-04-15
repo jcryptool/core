@@ -23,19 +23,31 @@ public class SignatureComposite extends Composite implements PaintListener{
 	private void initialize() {
 		Group grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText("Signature methods");
-		grpSignatures.setBounds(10, 10, 201, 213);
+		grpSignatures.setBounds(10, 10, 250, 170);
+		
+		Button btnRadioButton = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton.setBounds(10, 10, 118, 18);
+		btnRadioButton.setText("MD5 with RSA");
+		
+		Button btnRadioButton_1 = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton_1.setBounds(10, 34, 118, 18);
+		btnRadioButton_1.setText("SHA1 with RSA");
+		
+		Button btnRadioButton_2 = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton_2.setBounds(10, 58, 118, 18);
+		btnRadioButton_2.setText("SHA256 with RSA");
+		
+		Button btnRadioButton_3 = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton_3.setBounds(10, 82, 118, 18);
+		btnRadioButton_3.setText("SHA384 with RSA");
+		
+		Button btnRadioButton_4 = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton_4.setBounds(10, 106, 118, 18);
+		btnRadioButton_4.setText("SHA512 with RSA");
 		
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText("Description");
-		grpDescription.setBounds(10, 229, 201, 120);
-		
-		Button btnOk = new Button(this, SWT.NONE);
-		btnOk.setBounds(10, 355, 94, 28);
-		btnOk.setText("OK");
-		
-		Button btnCancel = new Button(this, SWT.NONE);
-		btnCancel.setBounds(117, 355, 94, 28);
-		btnCancel.setText("Cancel");
+		grpDescription.setBounds(10, 188, 250, 163);
 	}
 
 	@Override

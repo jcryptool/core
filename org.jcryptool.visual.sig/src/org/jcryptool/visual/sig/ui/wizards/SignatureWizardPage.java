@@ -11,7 +11,7 @@ public class SignatureWizardPage extends WizardPage {
 	protected SignatureWizardPage(String pageName) {
 		//TEST!
 		super("Siganture Wizard");
-		setDescription("YEESSSSS");
+		setDescription("Select a signature method");
 	}
 	
 	public void createControl(Composite parent) {

@@ -11,7 +11,7 @@ public class HashWizardPage extends WizardPage {
 	protected HashWizardPage(String pageName) {
 		//TEST!
 		super("Hashwizard");
-		setDescription("YEESSSSS");
+		setDescription("Select a hash method");
 	}
 	
 	public void createControl(Composite parent) {

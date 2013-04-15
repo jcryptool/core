@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.Messages;
 import org.jcryptool.visual.sig.ui.wizards.HashWizard;
+import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 public class SigComposite extends Composite implements PaintListener {//,ActionListener{
@@ -263,7 +264,13 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     //Create the HashWirard
                     HashWizard wiz = new HashWizard();
                     //Display it
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    	 @Override
+                    	 protected void configureShell(Shell newShell) {
+                    		 super.configureShell(newShell);
+                    		 newShell.setSize(280, 600);
+                    	 } 
+                    };
                     if (dialog.open() == Window.OK) {
                     	//Enable to select the signature method
                         btnSignature.setEnabled(true); 
@@ -283,8 +290,14 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
             public void widgetSelected(SelectionEvent e) {
                 try {
                     
-                    HashWizard wiz = new HashWizard();
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz);
+                    SignatureWizard wiz = new SignatureWizard();
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                   	 	@Override
+                   	 	protected void configureShell(Shell newShell) {
+                   	 		super.configureShell(newShell);
+                   	 		newShell.setSize(280, 600);
+                   	 } 
+                    };
                     if (dialog.open() == Window.OK) {
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
