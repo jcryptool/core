@@ -22,6 +22,10 @@ public class Messages {
 	public static String SigComposite_txtDescriptionOfStep2;
 	public static String SigComposite_txtDescriptionOfStep3;
 	public static String SigComposite_txtDescriptionOfStep4;
+	public static String SigComposite_lblProgress1;
+	public static String SigComposite_lblProgress2;
+	public static String SigComposite_lblProgress3;
+	public static String SigComposite_lblProgress4;
 	public static String SigComposite_txtSignature;
 	public static String SigComposite_btnSignature;
 	public static String SigComposite_btnHash;
@@ -29,7 +33,7 @@ public class Messages {
 	public static String SigComposite_btnReset;
 	public static String SigComposite_description;
 	public static String SigComposite_group_box_name;
-	public static String SigComposite_btnDocumentTemp;
+	public static String SigComposite_btnChooseImput;
 
 	static {
 		// initialize resource bundle

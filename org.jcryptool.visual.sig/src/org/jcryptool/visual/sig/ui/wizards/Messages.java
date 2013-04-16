@@ -10,6 +10,26 @@ public class Messages {
 	//Name of the files that contain the string values
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.messages";
 	//Create strings for all the values
+	//Group box 1 text
+	public static String HashWizard_grpHashes;
+	//Group box 2 text
+	public static String HashWizard_grpDescription;
+	//The Texts for the descriptions of the methods
+	public static String HashWizard_rdomd5_description;
+	public static String HashWizard_rdosha1_description;
+	public static String HashWizard_rdosha256_description;
+	public static String HashWizard_rdosha384_description;
+	public static String HashWizard_rdosha512_description;
+	//SignatureWizard
+	//Group box 1 text
+	public static String SignatureWizard_grpSignatures;
+	//Group box 2 text
+	public static String SignatureWizard_grpDescription;
+	public static String SignatureWizard_rdomd5_description;
+	public static String SignatureWizard_rdosha1_description;
+	public static String SignatureWizard_rdosha256_description;
+	public static String SignatureWizard_rdosha384_description;
+	public static String SignatureWizard_rdosha512_description;
 	
 	static {
 		// initialize resource bundle

@@ -39,18 +39,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Text txtDescriptionOfStep2;
 	private Text txtDescriptionOfStep3;
 	private Text txtDescriptionOfStep4;
-	TabFolder tabDescription;
+	private TabFolder tabDescription;
 	private Button btnHash;
 	private Button btnSignature;
 	private Button btnOpenInEditor;
-	private Button btnOpenDocumentTemp;
+	private Button btnChooseImput;
+	private Label lblProgress;
 	SigComposite sc = this;
 
 	//Generates all Elements of the GUI
 	public SigComposite(Composite parent, int style, SigView view) {
 		super(parent, style);
 		sc = this;
-		//The color for the textboxes
+		//The color of the textboxes
 		Color grey = new Color(Display.getCurrent(), 220, 220, 220);
 		
 		txtGeneralDescription = new Text(this, SWT.MULTI);
@@ -62,7 +63,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
-		grpSignatureGeneration.setBounds(10, 61, 699, 529);
+		grpSignatureGeneration.setBounds(10, 61, 699, 538);
 		
 		Label lblHash = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHash.setBounds(34, 246, 136, 14);
@@ -124,25 +125,25 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 207, 212, 261);
+		grpSignedDoc.setBounds(463, 207, 212, 258);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
 		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
 		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 144, 188, 56);
+		txtSignature.setBounds(10, 143, 188, 56);
 		
 		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
 		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 206, 109, 28);
+		btnOpenInEditor.setBounds(10, 205, 109, 26);
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 		
 		Button btnReset = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReset.setBounds(581, 474, 94, 28);
+		btnReset.setBounds(581, 485, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
 		
-		Label lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
-		lblProgress.setBounds(492, 481, 83, 14);
-		lblProgress.setText(Messages.SigComposite_lblProgress);  
+		lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
+		lblProgress.setBounds(490, 491, 83, 14);
+		lblProgress.setText(Messages.SigComposite_lblProgress1);  
 		
 		Label lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
 		lblSignature.setText(Messages.SigComposite_lblSignature);
@@ -151,9 +152,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		canvas1 = new Canvas(grpSignatureGeneration, SWT.NONE);
 		canvas1.setBounds(34, 21, 628, 392);
 		
-		btnOpenDocumentTemp = new Button(canvas1, SWT.NONE);
-		btnOpenDocumentTemp.setBounds(0, 0, 136, 41);
-		btnOpenDocumentTemp.setText(Messages.SigComposite_btnDocumentTemp);
+		btnChooseImput = new Button(canvas1, SWT.NONE);
+		btnChooseImput.setBounds(0, 0, 136, 41);
+		btnChooseImput.setText(Messages.SigComposite_btnChooseImput);
 
 		createEvents();
 		
@@ -240,7 +241,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	 */
 	public void createEvents() {
 		//Adds a Listener for the document
-				btnOpenDocumentTemp.addSelectionListener(new SelectionListener() {
+				btnChooseImput.addSelectionListener(new SelectionListener() {
 		            public void widgetDefaultSelected(SelectionEvent e) {
 		            }
 		            public void widgetSelected(SelectionEvent e) {
@@ -250,6 +251,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		                    //Activate the second tab of the description
 		                    tabDescription.setSelection(1);
 		                    canvas1.redraw();
+		                    lblProgress.setText(Messages.SigComposite_lblProgress2);  
 		                } catch (Exception ex) {
 		                }
 		            }
@@ -277,6 +279,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                         //Activate the third tab of the description
                         tabDescription.setSelection(2);
                         canvas1.redraw();
+                        lblProgress.setText(Messages.SigComposite_lblProgress3); 
                     }
                 } catch (Exception ex) {
                 }
@@ -303,6 +306,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	//Activate the second tab of the description
                     	tabDescription.setSelection(3);
                     	canvas1.redraw();
+                    	lblProgress.setText(Messages.SigComposite_lblProgress4); 
                     }
                 } catch (Exception ex) {
                     //LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
