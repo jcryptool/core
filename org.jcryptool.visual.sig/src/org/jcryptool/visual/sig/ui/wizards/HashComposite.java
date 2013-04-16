@@ -7,8 +7,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.widgets.Button;
 
 //Contains the elements (2 group boxes) of the HashWizard
@@ -33,35 +31,35 @@ public class HashComposite extends Composite implements PaintListener{
 		GridData gd_grpDescription = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_grpDescription.widthHint = 129;
 		grpDescription.setLayoutData(gd_grpDescription);
-		grpDescription.setText("Description");
+		grpDescription.setText(Messages.HashWizard_grpDescription);
 		grpDescription.setBounds(10, 186, 250, 163);
 		
 		setSize(new Point(273, 360));
 		
 	    Group grpHashes = new Group(this, SWT.NONE);
 	    grpHashes.setLayoutData(gd_grpSignatures);
-	    grpHashes.setText("Hash methods");
+	    grpHashes.setText(Messages.HashWizard_grpHashes);
 	    grpHashes.setBounds(10, 10, 250, 170);
 	    
 	    Button btnRadioButton = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton.setBounds(10, 19, 91, 18);
-	    btnRadioButton.setText("MD5");
+	    btnRadioButton.setText(Messages.HashWizard_rdomd5);
 	    
 	    Button btnRadioButton_1 = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton_1.setBounds(10, 43, 91, 18);
-	    btnRadioButton_1.setText("SHA1");
+	    btnRadioButton_1.setText(Messages.HashWizard_rdosha1);
 	    
 	    Button btnRadioButton_2 = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton_2.setBounds(10, 67, 91, 18);
-	    btnRadioButton_2.setText("SHA256");
+	    btnRadioButton_2.setText(Messages.HashWizard_rdosha256);
 	    
 	    Button btnRadioButton_3 = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton_3.setBounds(10, 91, 91, 18);
-	    btnRadioButton_3.setText("SAH384");
+	    btnRadioButton_3.setText(Messages.HashWizard_rdosha384);
 	    
 	    Button btnRadioButton_4 = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton_4.setBounds(10, 115, 91, 18);
-	    btnRadioButton_4.setText("SHA512");
+	    btnRadioButton_4.setText(Messages.HashWizard_rdosha512);
 	    }
 
 
