@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.Messages;
 import org.jcryptool.visual.sig.ui.wizards.HashWizard;
+import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
 import org.eclipse.jface.resource.ImageDescriptor;
 
@@ -241,21 +242,34 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	 */
 	public void createEvents() {
 		//Adds a Listener for the document
-				btnChooseImput.addSelectionListener(new SelectionListener() {
-		            public void widgetDefaultSelected(SelectionEvent e) {
-		            }
-		            public void widgetSelected(SelectionEvent e) {
-		                try {
-		                    //Enable to select the hash method
-		                    btnHash.setEnabled(true); 
-		                    //Activate the second tab of the description
-		                    tabDescription.setSelection(1);
-		                    canvas1.redraw();
-		                    lblProgress.setText(Messages.SigComposite_lblProgress2);  
-		                } catch (Exception ex) {
-		                }
-		            }
-		        });
+		btnChooseImput.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	try {
+		    		//Create the HashWirard
+                    InputWizard wiz = new InputWizard();
+                    //Display it
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                    	 @Override
+                    	 protected void configureShell(Shell newShell) {
+                    		 super.configureShell(newShell);
+                    		 newShell.setSize(280, 500);
+                    	 } 
+                    };
+                    if (dialog.open() == Window.OK) {
+                    	//Enable to select the hash method
+                    	btnHash.setEnabled(true); 
+                    	//Activate the second tab of the description
+                    	tabDescription.setSelection(1);
+                    	canvas1.redraw();
+                    	lblProgress.setText(Messages.SigComposite_lblProgress2);  
+                    }//end if
+		        } //end try
+		    	catch (Exception ex) {
+		        }//end catch
+		   }//end widgetSelected
+		});
 				
 		//Adds a Listener for the signature select button
 		btnHash.addSelectionListener(new SelectionListener() {
@@ -280,7 +294,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                         tabDescription.setSelection(2);
                         canvas1.redraw();
                         lblProgress.setText(Messages.SigComposite_lblProgress3); 
-                    }
+                    }//end if
                 } catch (Exception ex) {
                 }
             }
@@ -313,6 +327,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                 }
             }
         });
+		
 	}//end createEvents
 	
 }
