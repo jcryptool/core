@@ -284,7 +284,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 @Override
                     	 protected void configureShell(Shell newShell) {
                     		 super.configureShell(newShell);
-                    		 newShell.setSize(300, 500);
+                    		 newShell.setSize(300, 600);
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
