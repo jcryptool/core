@@ -31,19 +31,19 @@ public class SignatureComposite extends Composite implements PaintListener{
 		
 		Button btnRadioButton_1 = new Button(grpSignatures, SWT.RADIO);
 		btnRadioButton_1.setBounds(10, 43, 118, 18);
-		btnRadioButton_1.setText("Messages.SignatureWizard_rdosha1");
+		btnRadioButton_1.setText(Messages.SignatureWizard_rdosha1);
 		
 		Button btnRadioButton_2 = new Button(grpSignatures, SWT.RADIO);
 		btnRadioButton_2.setBounds(10, 67, 118, 18);
-		btnRadioButton_2.setText("Messages.SignatureWizard_rdosha256");
+		btnRadioButton_2.setText(Messages.SignatureWizard_rdosha256);
 		
 		Button btnRadioButton_3 = new Button(grpSignatures, SWT.RADIO);
 		btnRadioButton_3.setBounds(10, 91, 118, 18);
-		btnRadioButton_3.setText("Messages.SignatureWizard_rdosha384");
+		btnRadioButton_3.setText(Messages.SignatureWizard_rdosha384);
 		
 		Button btnRadioButton_4 = new Button(grpSignatures, SWT.RADIO);
 		btnRadioButton_4.setBounds(10, 115, 118, 18);
-		btnRadioButton_4.setText("Messages.SignatureWizard_rdosha512");
+		btnRadioButton_4.setText(Messages.SignatureWizard_rdosha512);
 		
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
