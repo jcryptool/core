@@ -33,6 +33,7 @@ public class PlayfairWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new PlayfairWizardPage();
 		page.setAlgorithmSpecification(PlayfairAlgorithm.specification);

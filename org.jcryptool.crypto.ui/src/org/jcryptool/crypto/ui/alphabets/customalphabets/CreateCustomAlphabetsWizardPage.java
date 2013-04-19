@@ -113,7 +113,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 					nameInput = new TextfieldInput<String>() {
 
 						@Override
-						protected Text getTextfield() {
+						public Text getTextfield() {
 							return text;
 						}
 

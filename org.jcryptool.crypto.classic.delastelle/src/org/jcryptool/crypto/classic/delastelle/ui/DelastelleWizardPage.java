@@ -27,7 +27,7 @@ public class DelastelleWizardPage extends AbstractClassicCryptoPage {
 	 * Creates a new instance of DelastelleWizardPage.
 	 */
 	public DelastelleWizardPage() {
-		super(Messages.DelastelleWizardPage_delastelle, Messages.DelastelleWizardPage_enterkey); //$NON-NLS-1$
+		super(Messages.DelastelleWizardPage_delastelle, Messages.DelastelleWizardPage_enterkey); 
 	}
 	
 	@Override

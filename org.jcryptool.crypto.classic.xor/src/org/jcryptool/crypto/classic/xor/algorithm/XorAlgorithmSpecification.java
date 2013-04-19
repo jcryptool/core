@@ -53,15 +53,19 @@ public class XorAlgorithmSpecification extends ClassicAlgorithmSpecification {
 			protected InputVerificationResult getFailResult(String key,
 					AbstractAlphabet alphabet) {
 				return new InputVerificationResult() {
+					@Override
 					public boolean isValid() {
 						return false;
 					}
+					@Override
 					public boolean isStandaloneMessage() {
 						return true;
 					}
+					@Override
 					public MessageType getMessageType() {
 						return InputVerificationResult.MessageType.ERROR;
 					}
+					@Override
 					public String getMessage() {
 						return "The key file does not exist.";
 					}

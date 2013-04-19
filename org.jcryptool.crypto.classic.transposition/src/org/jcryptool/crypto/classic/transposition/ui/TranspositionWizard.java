@@ -64,4 +64,14 @@ public class TranspositionWizard extends AbstractClassicWizard {
     	return ((TranspositionWizardPage)page).getTransp2OutOrder();
     }
 
+    public String getTranspKey1EnteredString() {
+    	return ((TranspositionWizardPage)page).getLastSetTranspKey1String();
+    }
+    
+    public String getTranspKey2EnteredString() {
+    	return ((TranspositionWizardPage)page).getLastSetTranspKey2String();
+    }
+    
+    
+
 }

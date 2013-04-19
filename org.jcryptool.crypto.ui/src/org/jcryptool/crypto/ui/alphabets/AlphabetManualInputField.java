@@ -30,7 +30,7 @@ public class AlphabetManualInputField extends Composite {
 			
 			alphabetInput = new TextfieldInput<AtomAlphabet>() {
 				@Override
-				protected Text getTextfield() {
+				public Text getTextfield() {
 					return text;
 				}
 				@Override

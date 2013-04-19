@@ -38,6 +38,7 @@ public class VigenereAlgorithm extends AbstractClassicAlgorithm {
 	 * @param keyData the key data
 	 * @return the generated key as int array
 	 */
+	@Override
 	protected int[] generateKey(char[] keyData) {
 
 		return alphaConv.charArrayToIntArray(keyData);

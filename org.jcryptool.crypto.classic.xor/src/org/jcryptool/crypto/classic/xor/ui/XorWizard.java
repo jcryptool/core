@@ -33,6 +33,7 @@ public class XorWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new XorWizardPage();
 		page.setAlgorithmSpecification(XorAlgorithm.specification);

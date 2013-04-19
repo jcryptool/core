@@ -40,6 +40,7 @@ public class VigenerePlugin extends AbstractUIPlugin {
 	/**
 	 * The method uses the superclass method which refreshes the plug-in actions.
 	 */
+	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 	}
@@ -49,6 +50,7 @@ public class VigenerePlugin extends AbstractUIPlugin {
 	 * preference and dialog stores and shuts down 
      * its image registry (if they are in use).
 	 */
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);

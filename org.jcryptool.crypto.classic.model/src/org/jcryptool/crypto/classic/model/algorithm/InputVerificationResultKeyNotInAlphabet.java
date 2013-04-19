@@ -27,19 +27,25 @@ public class InputVerificationResultKeyNotInAlphabet extends
 		this.position = position;
 	}
 
+	@Override
 	public boolean isStandaloneMessage() {
 		return false;
 	}
+	@Override
 	public MessageType getMessageType() {
 		return InputVerificationResult.MessageType.WARNING;
 	}
+	@Override
 	public String getMessage() {
 		return String.format(Messages.AbstractClassicCryptoPage_reason_notinalphabet, erroneusChar.toString());
 	}
+	@Override
 	public boolean isValid() {
 		return false;
 	}
+	@Override
 	public String toString() {return "NOALPHABETKEY_FAIL";} //$NON-NLS-1$
+	@Override
 	public Object getResultType() {
 		return RESULT_TYPE_KEY_NOT_IN_ALPHABET;
 	}

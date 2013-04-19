@@ -90,7 +90,7 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 				return (initialKey!=null)?initialKey:new TranspositionKey(new int[]{});
 			}
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return textKey;
 			}
 			@SuppressWarnings("rawtypes")

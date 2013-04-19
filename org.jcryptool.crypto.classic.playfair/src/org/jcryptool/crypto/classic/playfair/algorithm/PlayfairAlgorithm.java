@@ -38,7 +38,8 @@ public class PlayfairAlgorithm extends AbstractClassicAlgorithm {
      * @param keyData the key data
      * @return the generated key as int array
      */
-    protected int[] generateKey(char[] keyData) {
+    @Override
+	protected int[] generateKey(char[] keyData) {
         return alphaConv.charArrayToIntArray(keyData);
     }
 

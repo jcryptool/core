@@ -62,6 +62,7 @@ public class AbstractClassicTransformationPage extends WizardPage {
 		setMessage(message);
 	}
 
+	@Override
 	public void createControl(Composite parent) {
 		Composite pageComposite = new Composite(parent, SWT.NULL);
 			GridData pageCompositeLayoutData = new GridData();

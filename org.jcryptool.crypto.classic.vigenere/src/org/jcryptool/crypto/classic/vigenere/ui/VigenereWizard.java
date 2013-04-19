@@ -34,7 +34,8 @@ public class VigenereWizard extends AbstractClassicWizard {
     /**
      * @see org.eclipse.jface.wizard.Wizard#addPages()
      */
-    public void addPages() {
+    @Override
+	public void addPages() {
     	page = new VigenereWizardPage();
     	page.setAlgorithmSpecification(VigenereAlgorithm.specification);
 		addPage(page);

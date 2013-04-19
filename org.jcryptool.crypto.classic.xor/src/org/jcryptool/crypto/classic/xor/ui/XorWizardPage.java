@@ -81,6 +81,7 @@ public class XorWizardPage extends AbstractClassicCryptoPage {
 		};
 		setInputFromText(keyMethodInput.getContent());
 		keyMethodInput.addObserver(new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 				if(arg==null) {
 					setInputFromText(keyMethodInput.getContent());

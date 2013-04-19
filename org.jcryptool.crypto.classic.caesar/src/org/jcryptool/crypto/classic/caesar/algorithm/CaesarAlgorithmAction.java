@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.caesar.algorithm;
 
+import java.util.Observer;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -24,6 +26,8 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.caesar.CaesarPlugin;
 import org.jcryptool.crypto.classic.caesar.ui.CaesarWizard;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
 
 /**
  * The CaesarAlgorithmAction class is a specific implementation of AbstractClassicAlgorithmAction2.
@@ -41,14 +45,16 @@ public class CaesarAlgorithmAction extends AbstractAlgorithmAction {
     /**
      * This methods performs the action. Therefore the currentAlphabet input is a standard input.
      */
-    public void run() {
+    @Override
+	public void run() {
         final CaesarWizard wizard = new CaesarWizard();
         final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.CaesarAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.CaesarAlgorithmAction_1;
 
@@ -87,7 +93,16 @@ public class CaesarAlgorithmAction extends AbstractAlgorithmAction {
 			            
 			            monitor.worked(4);
 			            
-			            CaesarAlgorithmAction.super.finalizeRun(algorithm);
+			            ClassicAlgorithmConfigurationWithKey config = new ClassicAlgorithmConfigurationWithKey(
+								wizard.encrypt(),
+								"Caesar",
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getKey()
+							);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+			            CaesarAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(CaesarPlugin.PLUGIN_ID, ex);
                     } finally {

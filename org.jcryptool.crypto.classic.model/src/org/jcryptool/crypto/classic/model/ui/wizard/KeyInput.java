@@ -16,6 +16,7 @@ import org.jcryptool.crypto.classic.model.algorithm.InputVerificationResultKeyNo
 
 public abstract class KeyInput<T> extends TextfieldInput<T> {
 
+	@Override
 	protected boolean canAutocorrect(InputVerificationResult result) {
 		// offers autocorrection for chars which are not accepted lowercase, but uppercase, or the other way round
 		if(result instanceof InputVerificationResultKeyNotInAlphabet) {
@@ -30,6 +31,7 @@ public abstract class KeyInput<T> extends TextfieldInput<T> {
 		return false;
 	}
 
+	@Override
 	protected void autocorrect(InputVerificationResult result) {
 		if(result instanceof InputVerificationResultKeyNotInAlphabet) {
 			String correctedKey = getTextfield().getText();

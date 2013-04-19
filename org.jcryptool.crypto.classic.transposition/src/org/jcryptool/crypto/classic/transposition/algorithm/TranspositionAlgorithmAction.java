@@ -12,6 +12,7 @@ package org.jcryptool.crypto.classic.transposition.algorithm;
 
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,6 +27,7 @@ import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionWizard;
 
@@ -110,7 +112,23 @@ public class TranspositionAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(4);
 						
-						TranspositionAlgorithmAction.super.finalizeRun(algorithm);
+						String transpKey2EnteredString = wizard.getTranspKey2EnteredString();
+						if(wizard.getKey2().length() == 0) transpKey2EnteredString = "";
+						TranspositionConfiguration config = new TranspositionConfiguration(
+								wizard.encrypt(),
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getTranspKey1EnteredString(),
+								transpKey2EnteredString,
+								wizard.getTransp1InOrder(),
+								wizard.getTransp2InOrder(),
+								wizard.getTransp1OutOrder(),
+								wizard.getTransp2OutOrder()								
+							);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+						
+						TranspositionAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(TranspositionPlugin.PLUGIN_ID, ex);
                     } finally {

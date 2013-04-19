@@ -37,18 +37,23 @@ public class CaesarAlgorithmSpecification extends
 		@Override
 		protected InputVerificationResult getFailResult(String key, AbstractAlphabet alphabet) {
 			return new InputVerificationResult() {
+				@Override
 				public boolean isStandaloneMessage() {
 					return false;
 				}
+				@Override
 				public MessageType getMessageType() {
 					return InputVerificationResult.MessageType.WARNING;
 				}
+				@Override
 				public String getMessage() {
 					return org.jcryptool.crypto.classic.caesar.ui.Messages.CaesarWizardPage_keyTooLong;
 				}
+				@Override
 				public boolean isValid() {
 					return false;
 				}
+				@Override
 				public String toString() {return "TOO_BIG_KEY_FAIL";} //$NON-NLS-1$
 			};
 		}

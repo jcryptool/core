@@ -10,6 +10,8 @@
 package org.jcryptool.crypto.classic.transposition.ui;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -39,6 +41,10 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
     private TranspositionKeyInputComposite key1InputComposite;
 
     private TranspositionKeyInputComposite key2InputComposite;
+
+	protected String lastSetTranspKey1String = "";
+
+	protected String lastSetTranspKey2String = "";
 
     public TranspositionWizardPage() {
         super(Messages.TranspositionWizardPage_transposition, Messages.TranspositionWizardPage_enterkey1); 
@@ -104,9 +110,29 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
         transformationInput.addObserver(pageObserver);
         key1InputComposite.setObserverToAllInputs(pageObserver);
         key2InputComposite.setObserverToAllInputs(pageObserver);
+        key1InputComposite.getKeyInput().addObserver(new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+				TranspositionWizardPage.this.lastSetTranspKey1String = key1InputComposite.getTextfieldString();
+			}
+		});
+        key2InputComposite.getKeyInput().addObserver(new Observer() {
+        	@Override
+        	public void update(Observable o, Object arg) {
+        		TranspositionWizardPage.this.lastSetTranspKey2String = key2InputComposite.getTextfieldString();
+        	}
+        });
     }
 
-    @Override
+    public String getLastSetTranspKey1String() {
+		return lastSetTranspKey1String;
+	}
+
+	public String getLastSetTranspKey2String() {
+		return lastSetTranspKey2String;
+	}
+
+	@Override
     protected void setHelpAvailable() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), TranspositionPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }

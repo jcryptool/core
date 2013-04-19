@@ -41,7 +41,8 @@ public class CaesarAlgorithm extends AbstractClassicAlgorithm {
      * @param keyData the key data
      * @return the generated key as int array
      */
-    protected int[] generateKey(char[] keyData) {
+    @Override
+	protected int[] generateKey(char[] keyData) {
         int[] tmp = null;
         try {
             int value = (alphaConv.getAlphaIndex(keyData[0]) + 1) % alphaConv.getAlphaLength();

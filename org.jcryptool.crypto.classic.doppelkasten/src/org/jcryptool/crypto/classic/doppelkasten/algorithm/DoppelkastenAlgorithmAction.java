@@ -12,6 +12,7 @@ package org.jcryptool.crypto.classic.doppelkasten.algorithm;
 
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,6 +29,7 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.doppelkasten.DoppelkastenPlugin;
 import org.jcryptool.crypto.classic.doppelkasten.ui.DoppelkastenWizard;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 
 /**
  * The CaesarAlgorithmAction class is a specific
@@ -51,6 +53,7 @@ public class DoppelkastenAlgorithmAction extends AbstractAlgorithmAction{
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final DoppelkastenWizard wizard = new DoppelkastenWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -58,7 +61,8 @@ public class DoppelkastenAlgorithmAction extends AbstractAlgorithmAction{
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.DoppelkastenAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.DoppelkastenAlgorithmAction_1;
 
@@ -104,7 +108,24 @@ public class DoppelkastenAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(4);
 						
-						DoppelkastenAlgorithmAction.super.finalizeRun(algorithm);
+						String[] ungluedKeys = DoppelkastenAlgorithmSpecification.unglueKeys(wizard.getKey());
+						if(ungluedKeys.length == 2) {
+							String key1 = ungluedKeys[0];
+							String key2 = DoppelkastenAlgorithmSpecification.unglueKeys(wizard.getKey())[1];
+							DoppelkastenConfiguration config = new DoppelkastenConfiguration(
+									wizard.encrypt(),
+									wizard.getSelectedAlphabet(), 
+									wizard.isNonAlphaFilter(), 
+									wizard.getTransformData(), 
+									key1, 
+									key2
+									);
+							Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+							DoppelkastenAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
+						} else {
+							LogUtil.logError(DoppelkastenPlugin.PLUGIN_ID, "Could not unglue keys for algorithm configuration storage.");
+							DoppelkastenAlgorithmAction.super.finalizeRun(algorithm);
+						}
                     } catch (final Exception ex) {
                         LogUtil.logError(DoppelkastenPlugin.PLUGIN_ID, ex);
                     } finally {

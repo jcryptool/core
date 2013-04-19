@@ -73,7 +73,8 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
         return new ByteArrayInputStream(bytes);
     }
 
-    protected String InputStreamToString(InputStream in) {
+    @Override
+	protected String InputStreamToString(InputStream in) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new InputStreamReader(in, IConstants.UTF8_ENCODING));
@@ -95,7 +96,8 @@ public class AdfgvxAlgorithm extends AbstractClassicAlgorithm {
         return output;
     }
 
-    public IDataObject execute() {
+    @Override
+	public IDataObject execute() {
         // 1st prepare currentAlphabet table, every char is associated has an int value
         this.alphaConv = new AlphaConverter(this.dataObject.getAlphabet().getCharacterSet());
         // 2nd key

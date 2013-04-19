@@ -44,19 +44,19 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         // für den Fall Doppelkasten-Verschlüsselung (links der 1., rechts der
         // 2. B.)
         if (verent) {
-            x_1 = KeyList1[(int) (chr_1)][0];
-            y_1 = KeyList1[(int) (chr_1)][1];
-            x_2 = KeyList2[(int) (chr_2)][0];
-            y_2 = KeyList2[(int) (chr_2)][1];
+            x_1 = KeyList1[(chr_1)][0];
+            y_1 = KeyList1[(chr_1)][1];
+            x_2 = KeyList2[(chr_2)][0];
+            y_2 = KeyList2[(chr_2)][1];
         }
 
         // für den Fall Doppelkasten-Entschlüsselung (rechts der 1., links der
         // 2. B.)
         else {
-            x_2 = KeyList1[(int) (chr_2)][0];
-            y_2 = KeyList1[(int) (chr_2)][1];
-            x_1 = KeyList2[(int) (chr_1)][0];
-            y_1 = KeyList2[(int) (chr_1)][1];
+            x_2 = KeyList1[(chr_2)][0];
+            y_2 = KeyList1[(chr_2)][1];
+            x_1 = KeyList2[(chr_1)][0];
+            y_1 = KeyList2[(chr_1)][1];
         }
         // #+#+#+
         // wenn beide Buchstaben in einer Zeile stehen
@@ -68,10 +68,10 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 // q_1=KeyList1[(int)(KeySquare[((x_2+4) % 5)+5][y_2])][2];
                 // p_2=KeyList2[(int)(KeySquare[((x_1+4) % 5)+0][y_1])][1];
                 // q_2=KeyList2[(int)(KeySquare[((x_1+4) % 5)+0][y_1])][2];
-                p_1 = KeyList1[(int) (KeySquare2[((x_2 + 4) % 5)][y_2])][0];
-                q_1 = KeyList1[(int) (KeySquare2[((x_2 + 4) % 5)][y_2])][1];
-                p_2 = KeyList2[(int) (KeySquare1[((x_1 + 4) % 5) + 0][y_1])][0];
-                q_2 = KeyList2[(int) (KeySquare1[((x_1 + 4) % 5) + 0][y_1])][1];
+                p_1 = KeyList1[(KeySquare2[((x_2 + 4) % 5)][y_2])][0];
+                q_1 = KeyList1[(KeySquare2[((x_2 + 4) % 5)][y_2])][1];
+                p_2 = KeyList2[(KeySquare1[((x_1 + 4) % 5) + 0][y_1])][0];
+                q_2 = KeyList2[(KeySquare1[((x_1 + 4) % 5) + 0][y_1])][1];
             }
 
             else // bei der Entschlüsselung
@@ -80,10 +80,10 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
                 // q_1=KeyList2[ord(KeySquare[((x_2+1) mod 5)+0,y_2]),2];
                 // p_2=KeyList1[ord(KeySquare[((x_1+1) mod 5)+5,y_1]),1];
                 // q_2=KeyList1[ord(KeySquare[((x_1+1) mod 5)+5,y_1]),2];
-                p_1 = KeyList2[(int) (KeySquare1[((x_2 + 1) % 5)][y_2])][0];
-                q_1 = KeyList2[(int) (KeySquare1[((x_2 + 1) % 5)][y_2])][1];
-                p_2 = KeyList1[(int) (KeySquare2[((x_1 + 1) % 5) + 0][y_1])][0];
-                q_2 = KeyList1[(int) (KeySquare2[((x_1 + 1) % 5) + 0][y_1])][1];
+                p_1 = KeyList2[(KeySquare1[((x_2 + 1) % 5)][y_2])][0];
+                q_1 = KeyList2[(KeySquare1[((x_2 + 1) % 5)][y_2])][1];
+                p_2 = KeyList1[(KeySquare2[((x_1 + 1) % 5) + 0][y_1])][0];
+                q_2 = KeyList1[(KeySquare2[((x_1 + 1) % 5) + 0][y_1])][1];
             }
 
             // wenn das Zwischenergebnis-Bigramm nicht in einer Zeile steht
@@ -121,16 +121,16 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
             // Ermitteln der Koordinaten des Zwischenergebnis-Bigramms
             if (verent) // bei der Verschlüsselung
             {
-                p_1 = KeyList1[(int) (getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][0];
-                q_1 = KeyList1[(int) (getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][1];
-                p_2 = KeyList2[(int) (getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][0];
-                q_2 = KeyList2[(int) (getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][1];
+                p_1 = KeyList1[(getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][0];
+                q_1 = KeyList1[(getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][1];
+                p_2 = KeyList2[(getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][0];
+                q_2 = KeyList2[(getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][1];
             } else // bei der Entschlüsselung
             {
-                p_1 = KeyList2[(int) (getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][0];
-                q_1 = KeyList2[(int) (getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][1];
-                p_2 = KeyList1[(int) (getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][0];
-                q_2 = KeyList1[(int) (getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][1];
+                p_1 = KeyList2[(getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][0];
+                q_1 = KeyList2[(getKeySquareVal(x_2, y_1, KeySquare1, KeySquare2))][1];
+                p_2 = KeyList1[(getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][0];
+                q_2 = KeyList1[(getKeySquareVal(x_1, y_2, KeySquare1, KeySquare2))][1];
             }
             // wenn das Zwischenergebnis-Bigramm nicht in einer Zeile steht
             if (q_1 != q_2) {
@@ -159,7 +159,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
         String key2 = key.toUpperCase();
         int i = 0;
         while (i < key2.length()) {
-            int charval = (int) key2.charAt(i);
+            int charval = key2.charAt(i);
             if (charval < 65 || charval > 90)
                 key2 = key2.substring(0, i - 1).concat(key2.substring(i + 1));
             else
@@ -208,7 +208,8 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the decrypted data as an int array.
      */
-    public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
+    @Override
+	public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
         String bigrammneu;
@@ -242,13 +243,13 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
             for (int j = 0; j <= 4; j++) {
                 if (i < 5) // Liste für den ersten Teil des Doppelkastens
                 {
-                    keyList1[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
-                    keyList1[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
+                    keyList1[(getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
+                    keyList1[(getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
                 }
                 if (i >= 5) // Liste für den zweiten Teil des Doppelkastens
                 {
-                    keyList2[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
-                    keyList2[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
+                    keyList2[(getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
+                    keyList2[(getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
                 }
             }
         }
@@ -258,7 +259,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
 
             zufallsbuchstabe = rohtext.charAt(rohtext.length() - 1);
             while (zufallsbuchstabe == rohtext.charAt(rohtext.length() - 1)) {
-                int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
+                int randomIndex = (int) (Math.floor(Math.random() * rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
             rohtext.append(zufallsbuchstabe);
@@ -295,7 +296,8 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the encrypted data as an int array.
      */
-    public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
+    @Override
+	public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
         String bigrammneu;
@@ -329,13 +331,13 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
             for (int j = 0; j <= 4; j++) {
                 if (i < 5) // Liste für den ersten Teil des Doppelkastens
                 {
-                    keyList1[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
-                    keyList1[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
+                    keyList1[(getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
+                    keyList1[(getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
                 }
                 if (i >= 5) // Liste für den zweiten Teil des Doppelkastens
                 {
-                    keyList2[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
-                    keyList2[(int) (getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
+                    keyList2[(getKeySquareVal(i, j, keySquare1, keySquare2))][0] = i;
+                    keyList2[(getKeySquareVal(i, j, keySquare1, keySquare2))][1] = j;
                 }
             }
         }
@@ -345,7 +347,7 @@ public class DoppelkastenEngine implements IClassicAlgorithmEngine {
 
             zufallsbuchstabe = rohtext.charAt(rohtext.length() - 1);
             while (zufallsbuchstabe == rohtext.charAt(rohtext.length() - 1)) {
-                int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
+                int randomIndex = (int) (Math.floor(Math.random() * rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
             rohtext.append(zufallsbuchstabe);

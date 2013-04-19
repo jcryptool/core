@@ -10,6 +10,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.vigenere.algorithm;
 
+import java.util.Observer;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -23,6 +25,8 @@ import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
 import org.jcryptool.crypto.classic.vigenere.VigenerePlugin;
 import org.jcryptool.crypto.classic.vigenere.ui.VigenereWizard;
 
@@ -47,7 +51,8 @@ public class VigenereAlgorithmAction extends AbstractAlgorithmAction {
      * This methods performs the action. Therefore the currentAlphabet input
      * is a standard input.
      */
-    public void run() {
+    @Override
+	public void run() {
         final VigenereWizard wizard = new VigenereWizard();
         final AbstractClassicAlgorithm algorithm = new VigenereAlgorithm();
         WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -55,7 +60,8 @@ public class VigenereAlgorithmAction extends AbstractAlgorithmAction {
 
         if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.VigenereAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.VigenereAlgorithmAction_1;
 
@@ -91,7 +97,17 @@ public class VigenereAlgorithmAction extends AbstractAlgorithmAction {
 
                         monitor.worked(4);
 
-                        VigenereAlgorithmAction.super.finalizeRun(algorithm);
+						ClassicAlgorithmConfigurationWithKey config = new ClassicAlgorithmConfigurationWithKey(
+								wizard.encrypt(),
+								"Vigenère",
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getKey()
+								);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+
+                        VigenereAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(VigenerePlugin.PLUGIN_ID, ex);
                     } finally {

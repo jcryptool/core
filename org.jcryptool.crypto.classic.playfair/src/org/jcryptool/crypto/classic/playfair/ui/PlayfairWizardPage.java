@@ -25,7 +25,7 @@ public class PlayfairWizardPage extends AbstractClassicCryptoPage {
      * Creates a new instance of CaesarWizardPage.
      */
     public PlayfairWizardPage() {
-        super(Messages.PlayfairWizardPage_playfair, Messages.PlayfairWizardPage_enterkey1); //$NON-NLS-1$
+        super(Messages.PlayfairWizardPage_playfair, Messages.PlayfairWizardPage_enterkey1); 
     }
 
     @Override

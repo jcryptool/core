@@ -34,6 +34,7 @@ public class DoppelkastenWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new DoppelkastenWizardPage();
 		page.setAlgorithmSpecification(DoppelkastenAlgorithm.specification);
