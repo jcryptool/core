@@ -125,19 +125,6 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
-		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 207, 212, 258);
-		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
-		
-		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
-		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 143, 188, 56);
-		
-		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
-		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 205, 109, 26);
-		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
-		
 		Button btnReset = new Button(grpSignatureGeneration, SWT.NONE);
 		btnReset.setBounds(581, 485, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
@@ -156,6 +143,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnChooseImput = new Button(canvas1, SWT.NONE);
 		btnChooseImput.setBounds(0, 0, 136, 41);
 		btnChooseImput.setText(Messages.SigComposite_btnChooseImput);
+		
+		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
+		grpSignedDoc.setBounds(463, 207, 212, 258);
+		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
+		
+		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
+		txtSignature.setText(""); 
+		txtSignature.setBounds(10, 143, 188, 56);
+		
+		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
+		btnOpenInEditor.setEnabled(false);
+		btnOpenInEditor.setBounds(10, 205, 109, 26);
+		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 
 		createEvents();
 		

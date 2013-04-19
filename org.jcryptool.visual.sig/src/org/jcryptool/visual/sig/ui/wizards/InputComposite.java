@@ -13,6 +13,7 @@ public class InputComposite extends Composite implements PaintListener{
 		super(parent, style);
 		
 		Button rdoFromFile = new Button(this, SWT.RADIO);
+		rdoFromFile.setSelection(true);
 		rdoFromFile.setBounds(10, 10, 91, 18);
 		rdoFromFile.setText(Messages.InputWizard_rdoFromFile);
 		

@@ -42,6 +42,7 @@ public class HashComposite extends Composite implements PaintListener{
 	    grpHashes.setBounds(10, 10, 250, 170);
 	    
 	    Button btnRadioButton = new Button(grpHashes, SWT.RADIO);
+	    btnRadioButton.setSelection(true);
 	    btnRadioButton.setBounds(10, 19, 91, 18);
 	    btnRadioButton.setText(Messages.HashWizard_rdomd5);
 	    

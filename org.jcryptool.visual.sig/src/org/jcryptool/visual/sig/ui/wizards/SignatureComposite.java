@@ -26,6 +26,7 @@ public class SignatureComposite extends Composite implements PaintListener{
 		grpSignatures.setBounds(10, 10, 250, 170);
 		
 		Button btnRadioButton = new Button(grpSignatures, SWT.RADIO);
+		btnRadioButton.setSelection(true);
 		btnRadioButton.setBounds(10, 19, 118, 18);
 		btnRadioButton.setText(Messages.SignatureWizard_rdomd5);
 		
