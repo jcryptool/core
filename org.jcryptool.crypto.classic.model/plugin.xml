@@ -11,13 +11,13 @@
        point="org.eclipse.ui.commands">
     <category
           id="org.jcryptool.crypto.classic.model.commands.category"
-          name="Classic algorithm parameters viewer">
+          name="%category.name">
     </category>
     <command
           categoryId="org.jcryptool.crypto.classic.model.commands.category"
-          description="Show the parameters of the classic algorithm that created the original content of the active editor."
+          description="%command.description"
           id="org.jcryptool.crypto.classic.model.commands.sampleCommand"
-          name="Show en-/decryption parameters">
+          name="%command.name">
     </command>
  </extension>
  <extension
@@ -30,7 +30,7 @@
  <extension
        point="org.eclipse.ui.menus">
     <menuContribution
-          locationURI="menu:edit">
+          locationURI="menu:file">
        <command
              commandId="org.jcryptool.crypto.classic.model.commands.sampleCommand"
              id="org.jcryptool.crypto.classic.model.menus.sampleCommand"

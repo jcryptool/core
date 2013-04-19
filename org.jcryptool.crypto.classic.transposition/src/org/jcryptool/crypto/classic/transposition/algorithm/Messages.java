@@ -26,6 +26,10 @@ public class Messages extends NLS {
 	public static String TranspositionAlgorithmCmd_rowwise_sentence_end;
 	public static String TranspositionAlgorithmCmd_columnwise_sentence_end;
 	public static String TranspositionAlgorithmCmd_seeabove;
+	public static String TranspositionConfiguration_0;
+	public static String TranspositionConfiguration_2;
+	public static String TranspositionConfiguration_3;
+	public static String TranspositionConfiguration_6;
 	public static String TranspositionTable_columnwise;
 	public static String TranspositionTable_rowwise;
 	static {
