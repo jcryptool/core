@@ -10,6 +10,8 @@
 package org.jcryptool.core.operations.algorithm;
 
 import java.io.InputStream;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -119,40 +121,61 @@ public abstract class AbstractAlgorithmAction extends Action {
      * @param algorithm the abstract algorithm
      */
     protected void finalizeRun(AbstractAlgorithm algorithm) {
-        dataObject = algorithm.execute();
-
-        if (editorPart == null) {
-            editorPart = getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-        }
-        final String editorId = editorPart.getSite().getId();
-
-        if (algorithm instanceof AbstractClassicAlgorithm) {
-            if (((IClassicDataObject) dataObject).getOutputIS() != null) {
-                output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutputIS());
-                //TODO: fix special character issues with IS input as well
-            } else {
-                output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutput());
-            }
-
-            addActionItem(algorithm);
-
-            performOpenEditor(output, editorId);
-        } else if (algorithm instanceof AbstractModernAlgorithm) {
-            if (((IModernDataObject) dataObject).getOutputIS() != null) {
-                output = AbstractEditorService.createOutputFile(((IModernDataObject) dataObject).getOutputIS());
-            } else {
-                output = AbstractEditorService.createOutputFile(((IModernDataObject) dataObject).getOutput());
-            }
-
-            addActionItem(algorithm);
-
-            // modern algorithms are based on bytes, not characters; using the
-            // text editor would be inappropriate
-            performOpenEditor(output, IOperationsConstants.ID_HEX_EDITOR);
-        } else {
-            LogUtil.logWarning("Action recording for algorithms of type " + //$NON-NLS-1$
-                    algorithm.getClass() + " is not implemented"); //$NON-NLS-1$
-        }
+    	Observer dummyObserver = new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+			}
+		};
+		finalizeRun(algorithm, dummyObserver);
+    }
+    
+    /**
+     * This method completes the algorithm action In this connection the polymorphism is taken advantage of by using an
+     * abstract algorithm object which is passed as the parameter.
+     * The observer-parameter will be notified when an editor opens as result of the algorithm finalization.
+     *
+     * Subclasses should use this method to finalize the to be implemented <i>run()</i> method.
+     *
+     * @param algorithm the abstract algorithm
+     * @param o an observer which will be notified when an editor is opened. The "observable" argument will always be null; the "arg" argument will be either null (if opening the editor failed) or the IEditorPart reference to the opened editor.
+     * 
+     * @throws NullPointerException if the provided observer object is null
+     */
+    protected void finalizeRun(AbstractAlgorithm algorithm, Observer o) {
+    	dataObject = algorithm.execute();
+    	
+    	if (editorPart == null) {
+    		editorPart = getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+    	}
+    	final String editorId = editorPart.getSite().getId();
+    	
+    	if (algorithm instanceof AbstractClassicAlgorithm) {
+    		if (((IClassicDataObject) dataObject).getOutputIS() != null) {
+    			output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutputIS());
+    			//TODO: fix special character issues with IS input as well
+    		} else {
+    			output = AbstractEditorService.createOutputFile(((IClassicDataObject) dataObject).getOutput());
+    		}
+    		
+    		addActionItem(algorithm);
+    		
+    		performOpenEditor(output, editorId, o);
+    	} else if (algorithm instanceof AbstractModernAlgorithm) {
+    		if (((IModernDataObject) dataObject).getOutputIS() != null) {
+    			output = AbstractEditorService.createOutputFile(((IModernDataObject) dataObject).getOutputIS());
+    		} else {
+    			output = AbstractEditorService.createOutputFile(((IModernDataObject) dataObject).getOutput());
+    		}
+    		
+    		addActionItem(algorithm);
+    		
+    		// modern algorithms are based on bytes, not characters; using the
+    		// text editor would be inappropriate
+    		performOpenEditor(output, IOperationsConstants.ID_HEX_EDITOR, o);
+    	} else {
+    		LogUtil.logWarning("Action recording for algorithms of type " + //$NON-NLS-1$
+    				algorithm.getClass() + " is not implemented"); //$NON-NLS-1$
+    	}
     }
 
     /**
@@ -200,25 +223,58 @@ public abstract class AbstractAlgorithmAction extends Action {
      * @param editorId The ID of the Editor that is supposed to open
      */
     protected void performOpenEditor(final IEditorInput input, final String editorId) {
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                try {
-                    getActiveWorkbenchWindow().getActivePage().openEditor(input, editorId);
-                } catch (PartInitException ex) {
-                    try {
-                        getActiveWorkbenchWindow().getActivePage()
-                                .openEditor(input, IOperationsConstants.ID_HEX_EDITOR);
-                    } catch (PartInitException e) {
-                        LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
-
-                        MessageDialog.openError(getActiveWorkbenchWindow().getShell(),
-                                Messages.AbstractAlgorithmAction_1,
-                                NLS.bind(Messages.AbstractAlgorithmAction_2, new Object[] {editorId}));
-                    }
-                }
-            }
-        });
+        Observer dummyObserver = new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+			}
+		};
+    	performOpenEditor(input, editorId, dummyObserver);
     }
+    
+    /**
+     * Tries to open the given IEditorInput in the Editor associated with the given ID. This method must be executed in
+     * an async way since a Job may be used to execute the cryptographic operation.
+     *
+     * @param input The IEditorInput that shall be displayed
+     * @param editorId The ID of the Editor that is supposed to open
+     * @param o an observer which will be notified when the editor is opened. The "observable" argument will always be null; the "arg" argument will be either null (if opening the editor failed) or the IEditorPart reference to the opened editor.
+     * 
+     * @throws NullPointerException if the provided observer object is null
+     */
+    protected void performOpenEditor(final IEditorInput input, final String editorId, final Observer o) {
+    	if(o == null) {
+    		throw new NullPointerException("provided observer for performOpenEditor method was null.");
+    	}
+    	Display.getDefault().asyncExec(new Runnable() {
+    		public void run() {
+    			try {
+    				IEditorPart editorRef = getActiveWorkbenchWindow().getActivePage().openEditor(input, editorId);
+    				o.update(null, editorRef);
+    			} catch (PartInitException ex) {
+    				try {
+    					IEditorPart editorRef = getActiveWorkbenchWindow().getActivePage()
+    							.openEditor(input, IOperationsConstants.ID_HEX_EDITOR);
+    					o.update(null, editorRef);
+    				} catch (PartInitException e) {
+    					o.update(null, null);
+    					LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
+    					
+    					MessageDialog.openError(getActiveWorkbenchWindow().getShell(),
+    							Messages.AbstractAlgorithmAction_1,
+    							NLS.bind(Messages.AbstractAlgorithmAction_2, new Object[] {editorId}));
+    				} catch (Exception e) {
+    					o.update(null, null);
+    					LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
+    					
+    					MessageDialog.openError(getActiveWorkbenchWindow().getShell(),
+    							Messages.AbstractAlgorithmAction_1,
+    							NLS.bind(Messages.AbstractAlgorithmAction_2, new Object[] {editorId}));
+    				}
+    			}
+    		}
+    	});
+    }
+    
 
     /**
      * Getter for the algorithm type
@@ -295,4 +351,5 @@ public abstract class AbstractAlgorithmAction extends Action {
         manager = EditorsManager.getInstance();
         return manager.getContentInputStream(editorPart);
     }
+    
 }

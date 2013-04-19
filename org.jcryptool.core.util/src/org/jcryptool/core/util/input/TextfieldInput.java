@@ -92,6 +92,6 @@ public abstract class TextfieldInput<Content> extends AbstractUIInput<Content> {
 	/**
 	 * @return the textfield this TextfieldInput is about.
 	 */
-	protected abstract org.eclipse.swt.widgets.Text getTextfield();
+	public abstract org.eclipse.swt.widgets.Text getTextfield();
 
 }
