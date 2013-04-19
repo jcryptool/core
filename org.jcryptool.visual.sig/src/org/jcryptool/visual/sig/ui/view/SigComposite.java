@@ -248,12 +248,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		    public void widgetSelected(SelectionEvent e) {
 		    	try {
 		    		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
-		    		//disable buttons
-		    		btnHash.setEnabled(false);
-		    		btnOpenInEditor.setEnabled(false);
-		    		btnSignature.setEnabled(false);
-		    		//redraw canvas
-		    		canvas1.redraw();
+		    		Reset();
 		    		//Create the HashWirard
                     InputWizard wiz = new InputWizard();
                     //Display it
@@ -336,5 +331,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         });
 		
 	}//end createEvents
+	
+	/**
+	 * Resets the arrow and disables the buttons of future steps if the user clicks the button 
+	 * of a previous step.
+	 */
+	private void Reset () {
+		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
+		//disable buttons
+		btnHash.setEnabled(false);
+		btnOpenInEditor.setEnabled(false);
+		btnSignature.setEnabled(false);
+		//redraw canvas
+		canvas1.redraw();
+	}
 	
 }
