@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.visual.zeroknowledge.views.zkHeaderComposite;
+import org.jcryptool.visual.zeroknowledge.views.ZKHeaderComposite;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MBob;
@@ -81,7 +81,7 @@ public class MagicDoorView extends ViewPart implements Observer, Protocol {
         pageComposite.setLayoutData(gridData);
         
      
-		zkHeaderComposite headerComp = new zkHeaderComposite(pageComposite);
+		ZKHeaderComposite headerComp = new ZKHeaderComposite(pageComposite);
 		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
 				4, 1));
 

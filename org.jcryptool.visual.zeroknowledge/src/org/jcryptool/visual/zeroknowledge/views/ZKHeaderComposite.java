@@ -10,13 +10,13 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.util.fonts.FontService;
 
-public class zkHeaderComposite extends Composite{
+public class ZKHeaderComposite extends Composite{
 	private static final Color WHITE = Display.getDefault().getSystemColor(
 			SWT.COLOR_WHITE);
 	/**
 	 * Generates the head of the tab. The head has a title and a description.
 	 */
-	public zkHeaderComposite(Composite parent) {
+	public ZKHeaderComposite(Composite parent) {
 		super(parent, SWT.NONE);
 		this.setBackground(WHITE);
 		this.setLayout(new GridLayout(1, false));
