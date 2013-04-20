@@ -34,6 +34,7 @@ public class Messages {
 	public static String SigComposite_description;
 	public static String SigComposite_group_box_name;
 	public static String SigComposite_btnChooseImput;
+	public static String SigComposite_lblHeader;
 
 	static {
 		// initialize resource bundle

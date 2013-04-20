@@ -10,6 +10,8 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -54,17 +56,25 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		sc = this;
 		//The color of the textboxes
 		Color grey = new Color(Display.getCurrent(), 220, 220, 220);
-		
-		txtGeneralDescription = new Text(this, SWT.MULTI);
-    	txtGeneralDescription.setEditable(false);
-		txtGeneralDescription.setBounds(10, 10, 699, 45);
-		txtGeneralDescription.setText(Messages.SigComposite_description);
 		Color white = new Color(Display.getCurrent(),255,255,255);
+		
+		Label lblHeader = new Label(this, SWT.NONE);
+		lblHeader.setBounds(10, 10, 699, 21);
+		lblHeader.setText(Messages.SigComposite_lblHeader);
+		lblHeader.setBackground(white);
+		FontData fontData = lblHeader.getFont().getFontData()[0];
+		Font font = new Font(this.getDisplay(), new FontData(fontData.getName(), 12, SWT.BOLD));
+	    lblHeader.setFont(font);
+				
+		txtGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI);
+		txtGeneralDescription.setEditable(false);
+		txtGeneralDescription.setBounds(10, 15, 699, 59);
+		txtGeneralDescription.setText(Messages.SigComposite_description);
 		txtGeneralDescription.setBackground(white);
 		
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
-		grpSignatureGeneration.setBounds(10, 61, 699, 538);
+		grpSignatureGeneration.setBounds(10, 75, 699, 538);
 		
 		Label lblHash = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHash.setBounds(34, 246, 136, 14);
@@ -345,5 +355,4 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		//redraw canvas
 		canvas1.redraw();
 	}
-	
 }
