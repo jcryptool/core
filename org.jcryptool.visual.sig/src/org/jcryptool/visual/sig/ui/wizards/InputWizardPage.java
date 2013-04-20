@@ -11,6 +11,7 @@ public class InputWizardPage extends WizardPage {
 	protected InputWizardPage(String pageName) {
 		//TEST!
 		super("Input wizard");
+		setTitle(Messages.InputWizard_title);
 		setDescription(Messages.InputWizard_header);
 	}
 	

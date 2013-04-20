@@ -42,6 +42,7 @@ public class Messages {
 	public static String SignatureWizard_rdosha512;
 	public static String SignatureWizard_header;
 	public static String HashWizard_header;
+	public static String InputWizard_title;
 	public static String InputWizard_header;
 	public static String InputWizard_rdoFromFile;
 	public static String InputWizard_rdoFromEditor;
