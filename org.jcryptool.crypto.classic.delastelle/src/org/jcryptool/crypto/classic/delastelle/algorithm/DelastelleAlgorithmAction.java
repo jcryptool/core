@@ -12,6 +12,7 @@ package org.jcryptool.crypto.classic.delastelle.algorithm;
 
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -29,6 +30,8 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.delastelle.DelastellePlugin;
 import org.jcryptool.crypto.classic.delastelle.ui.DelastelleWizard;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
 
 /**
  * The CaesarAlgorithmAction class is a specific
@@ -52,6 +55,7 @@ public class DelastelleAlgorithmAction extends AbstractAlgorithmAction{
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final DelastelleWizard wizard = new DelastelleWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -59,7 +63,8 @@ public class DelastelleAlgorithmAction extends AbstractAlgorithmAction{
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.DelastelleAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.DelastelleAlgorithmAction_1;
 
@@ -108,7 +113,17 @@ public class DelastelleAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(4);
 						
-						DelastelleAlgorithmAction.super.finalizeRun(algorithm);
+			            ClassicAlgorithmConfigurationWithKey config = new ClassicAlgorithmConfigurationWithKey(
+			            		wizard.encrypt(),
+			            		"Bifid",
+			            		wizard.getSelectedAlphabet(), 
+			            		wizard.isNonAlphaFilter(), 
+			            		wizard.getTransformData(), 
+			            		wizard.getKey()
+			            		);
+			            Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+
+						DelastelleAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(DelastellePlugin.PLUGIN_ID, ex);
                     } finally {

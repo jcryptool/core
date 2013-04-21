@@ -28,7 +28,8 @@ public class SubstitutionEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the encrypted data as an int array.
      */
-    public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet,
+    @Override
+	public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet,
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
         int[] ciphertext = new int[input.length];
@@ -53,7 +54,8 @@ public class SubstitutionEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the decrypted data as an int array.
      */
-    public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet,
+    @Override
+	public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet,
             char nullchar, char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar,
             AlphaConverter alphaConv, char[] key2, int pastChars) {
         int[] plaintext = new int[input.length];
@@ -113,7 +115,7 @@ public class SubstitutionEngine implements IClassicAlgorithmEngine {
         for (int k = 0; k < key.length; k++) { // For each letter in the key
             boolean found = false;
             for (int i = 0; i < tempKey.size(); i++) {
-                if (key[k] == ((Integer) tempKey.get(i)).intValue()) {
+                if (key[k] == tempKey.get(i).intValue()) {
                     found = true;
                 }
             }

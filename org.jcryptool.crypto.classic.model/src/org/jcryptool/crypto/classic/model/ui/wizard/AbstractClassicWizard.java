@@ -38,6 +38,7 @@ public class AbstractClassicWizard extends Wizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new AbstractClassicCryptoPage();
 		addPage(page);

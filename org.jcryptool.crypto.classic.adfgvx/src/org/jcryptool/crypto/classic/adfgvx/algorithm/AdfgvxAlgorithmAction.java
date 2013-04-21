@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.classic.adfgvx.algorithm;
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -27,6 +28,7 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.adfgvx.AdfgvxPlugin;
 import org.jcryptool.crypto.classic.adfgvx.ui.AdfgvxWizard;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 
 public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 	/**
@@ -40,6 +42,7 @@ public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final AdfgvxWizard wizard = new AdfgvxWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -47,7 +50,8 @@ public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 		
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.AdfgvxAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.AdfgvxAlgorithmAction_1;
 
@@ -72,7 +76,7 @@ public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(2);
 			
-						AbstractClassicAlgorithm algorithm = new AdfgvxAlgorithm();
+						final AbstractClassicAlgorithm algorithm = new AdfgvxAlgorithm();
 			
 						if (wizard.encrypt()) {
 							// explicit encrypt
@@ -90,7 +94,16 @@ public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(4);
 						
-						AdfgvxAlgorithmAction.super.finalizeRun(algorithm);
+						AdfgvxConfiguration config = new AdfgvxConfiguration(
+								wizard.encrypt(),
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getSubstitutionKeyAsEntered(), 
+								wizard.getTranspositionKey()
+							);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+						AdfgvxAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
 						
                     } catch (final Exception ex) {
                         LogUtil.logError(AdfgvxPlugin.PLUGIN_ID, ex);
@@ -100,14 +113,14 @@ public class AdfgvxAlgorithmAction extends AbstractAlgorithmAction{
 
                     return Status.OK_STATUS;
                 }
+
             };
             job.setUser(true);
             job.schedule();
 
 		}
-
 	}
-
+	
 	@Override
 	public void run(IDataObject dataobject) {
 		AbstractClassicAlgorithm algorithm = new AdfgvxAlgorithm();

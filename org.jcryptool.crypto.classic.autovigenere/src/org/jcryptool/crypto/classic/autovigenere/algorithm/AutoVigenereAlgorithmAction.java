@@ -12,6 +12,7 @@ package org.jcryptool.crypto.classic.autovigenere.algorithm;
 
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,6 +29,8 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.autovigenere.AutoVigenerePlugin;
 import org.jcryptool.crypto.classic.autovigenere.ui.AutoVigenereWizard;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
 
 
 /**
@@ -52,6 +55,7 @@ public class AutoVigenereAlgorithmAction extends AbstractAlgorithmAction{
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final AutoVigenereWizard wizard = new AutoVigenereWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -59,7 +63,8 @@ public class AutoVigenereAlgorithmAction extends AbstractAlgorithmAction{
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.AutoVigenereAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.AutoVigenereAlgorithmAction_1;
 
@@ -104,7 +109,17 @@ public class AutoVigenereAlgorithmAction extends AbstractAlgorithmAction{
 						
 						monitor.worked(4);
 						
-						AutoVigenereAlgorithmAction.super.finalizeRun(algorithm);
+						
+						ClassicAlgorithmConfigurationWithKey config = new ClassicAlgorithmConfigurationWithKey(
+								wizard.encrypt(),
+								"Autokey-Vigenère",
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getKey()
+							);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+						AutoVigenereAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(AutoVigenerePlugin.PLUGIN_ID, ex);
                     } finally {
@@ -127,6 +142,7 @@ public class AutoVigenereAlgorithmAction extends AbstractAlgorithmAction{
 		ClassicDataObject d = (ClassicDataObject)dataobject;
 		algorithm.init(d);
 
+		
 		super.finalizeRun(algorithm);
 	}
 

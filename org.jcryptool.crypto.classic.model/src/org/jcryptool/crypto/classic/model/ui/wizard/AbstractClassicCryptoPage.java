@@ -83,7 +83,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * This standard message is the one displayed when everything is normal, and is generated from the message parameter
      * in the constructor and the file/editor name opened.
      */
-    protected MWizardMessage normalStatusMsg; //$NON-NLS-1$
+    protected MWizardMessage normalStatusMsg; 
     protected AbstractUIInput<Boolean> operationInput;
     // protected AbstractUIInput<AbstractAlphabet> alphabetInput;
     protected AbstractUIInput<Boolean> filterInput;
@@ -98,7 +98,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * Observes every change made to the page, for setting the next page/can finish status.
      */
     protected Observer pageObserver = new Observer() {
-        public void update(Observable o, Object arg) {
+        @Override
+		public void update(Observable o, Object arg) {
             haveNextPage = transformationInput.getContent();
             setPageComplete(mayFinish());
             getContainer().updateButtons();
@@ -143,15 +144,18 @@ public class AbstractClassicCryptoPage extends WizardPage {
         super("", title, null); //$NON-NLS-1$
         setTitle(title);
         normalStatusMsg = new MWizardMessage() {
-            public String getMessage() {
+            @Override
+			public String getMessage() {
                 return message;
             }
 
-            public int getMessageType() {
+            @Override
+			public int getMessageType() {
                 return NONE;
             }
 
-            public boolean isStandaloneMessage() {
+            @Override
+			public boolean isStandaloneMessage() {
                 return true;
             }
         };
@@ -165,7 +169,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
     /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
-    public void createControl(Composite parent) {
+    @Override
+	public void createControl(Composite parent) {
         GridData pageCompositeLayoutData = new GridData();
         GridLayout pageCompositeLayout = new GridLayout();
         pageCompositeLayoutData.grabExcessHorizontalSpace = true;
@@ -236,7 +241,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         };
 
         SelectionAdapter adapter = new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 operationLastSelected = e.widget;
                 operationInput.synchronizeWithUserSide();
             }
@@ -245,7 +251,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         decryptButton.addSelectionListener(adapter);
 
         operationInput.addObserver(new Observer() {
-            public void update(Observable o, Object arg) {
+            @Override
+			public void update(Observable o, Object arg) {
                 if (transformationInput != null) {
                     transformationInput.writeContent(operationInput.getContent());
                     transformationInput.synchronizeWithUserSide();
@@ -284,7 +291,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         };
 
         getAlphabetInput().addObserver(new Observer() {
-            public void update(Observable o, Object arg) {
+            @Override
+			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
                     if (transformationInput.getContent()) {
                         updateTransformationPage(getAlphabetInput().getContent().getName());
@@ -310,7 +318,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     protected void createKeyInputObjects() {
         keyInput = new KeyInput<String>() {
             @Override
-            protected Text getTextfield() {
+            public Text getTextfield() {
                 return keyText;
             }
 
@@ -391,7 +399,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
         };
 
         SelectionAdapter adapter = new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @Override
+			public void widgetSelected(SelectionEvent e) {
                 transformationInput.synchronizeWithUserSide();
             }
         };
@@ -399,7 +408,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
         // change selection when en/decrypt is selected
         transformationInput.addObserver(new Observer() {
-            public void update(Observable o, Object arg) {
+            @Override
+			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
                     if (transformationInput.getContent()) {
                         updateTransformationPage(getAlphabetInput().getContent().getName());
@@ -712,7 +722,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
             showAlphabetContent.setLayoutData(showAlphabetContentGridData);
             showAlphabetContent.setText(Messages.AbstractClassicCryptoPage_showSelectedAlpha);
             showAlphabetContent.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent evt) {
+                @Override
+				public void widgetSelected(SelectionEvent evt) {
                     ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
                     tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
                     tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet())
@@ -732,8 +743,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
             customAlphaHint.setLayoutData(layoutData);
             customAlphaHint.setText(Messages.AbstractClassicCryptoPage_customAlphabetHint);
-            customAlphaHint.setForeground(resources.getColor(SWT.COLOR_DARK_GRAY));
-            customAlphaHint.setFont(resources.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
+            customAlphaHint.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+            customAlphaHint.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
         }
 
         filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);

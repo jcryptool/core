@@ -36,6 +36,7 @@ public class SubstitutionWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new SubstitutionWizardPage();
 		page.setAlgorithmSpecification(SubstitutionAlgorithm.specification);

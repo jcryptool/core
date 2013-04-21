@@ -156,6 +156,7 @@ public class WidgetBubbleUIInputHandler implements
 		}
 	}
 
+	@Override
 	public void handleVerificationResultMsg(AbstractUIInput<?> origin,
 			InputVerificationResult result) {
 
@@ -233,6 +234,7 @@ public class WidgetBubbleUIInputHandler implements
 		widgetMap.put(input, mapping);
 	}
 
+	@Override
 	public Control mapInputToWidget(AbstractUIInput<?> input) {
 		return null;
 	}
@@ -246,6 +248,7 @@ public class WidgetBubbleUIInputHandler implements
 		}
 	}
 
+	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof AbstractUIInput<?>) {
 			AbstractUIInput<?> input = (AbstractUIInput<?>) o;

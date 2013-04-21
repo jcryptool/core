@@ -19,6 +19,9 @@ public class Messages extends NLS {
 	public static String DoppelkastenCmd_firstKeyDetails;
 	public static String DoppelkastenCmd_secondKeyDetails;
 	public static String DoppelkastenCmd_specifyKeys;
+	public static String DoppelkastenConfiguration_0;
+	public static String DoppelkastenConfiguration_1;
+	public static String DoppelkastenConfiguration_2;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -94,7 +94,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 	private WidgetBubbleUIInputHandler verificationDisplayHandler;
 	private Label labelTitle;
 	private Composite compTitle;
-	private List<KeyVerificator> verificators;
+	private List<KeyVerificator> verificators = new LinkedList<KeyVerificator>();
 
 
 	public TranspositionKeyInputComposite(Composite parent, boolean hasChoice) {
@@ -304,7 +304,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 				return new TranspositionKey(new int[]{});
 			}
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return textKey;
 			}
 			@SuppressWarnings("rawtypes")
@@ -446,28 +446,66 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 		return isActiveInput;
 	}
 
-	private void updateForEnabledState(boolean enabled) {
+	public void updateForEnabledState(boolean enabled) {
+		updateForEnabledState(enabled, false);
+	}
+	
+	public void updateForEnabledState(boolean enabled, boolean preferNoneditableIfPossible) {
 		Control[] allCtrls = new Control[]{
 //			checkEnabled,
 			labelInOrder,
-			compReadIn,
+//			compReadIn,
 			checkInOrderRowwise,
 			checkOutOrderColumnwise,
-			compReadOut,
+//			compReadOut,
 			labelOutOrder,
 			checkOutOrderRowwise,
 //			textPreview,
 			textKey,
-			compTranspositionKey,
+//			compTranspositionKey,
 			labelTranspositionKey,
 			checkInOrderColumnwise,
-			compInputCtrls,
-			labelTitle,
+//			compInputCtrls,
+//			labelTitle,
 //			compTitle
 		};
 
 		for(Control c: allCtrls) {
-			c.setEnabled(enabled);
+			if(c instanceof Text && c != textPreview && preferNoneditableIfPossible) {
+				((Text) c).setEditable(enabled);
+			} else {
+				c.setEnabled(enabled);
+			}
+		}
+
+	}
+	
+	public void makeEditable(boolean editable) {
+		Control[] allCtrls = new Control[]{
+//			checkEnabled,
+//			labelInOrder,
+//			compReadIn,
+			checkInOrderRowwise,
+			checkOutOrderColumnwise,
+//			compReadOut,
+//			labelOutOrder,
+			checkOutOrderRowwise,
+//			textPreview,
+			textKey,
+//			compTranspositionKey,
+//			labelTranspositionKey,
+			checkInOrderColumnwise,
+//			compInputCtrls,
+//			labelTitle,
+//			compTitle
+		};
+
+		for(Control c: allCtrls) {
+			if(c instanceof Text && c != textPreview) {
+				((Text) c).setEditable(editable);
+			} else {
+				c.setEnabled(editable);
+			}
 		}
 
 	}

@@ -28,6 +28,14 @@ public class Messages extends NLS {
 	public static String ClassicAlgorithmCmd_keyDetails;
 	public static String ClassicAlgorithmCmd_notwellformedMsg;
 	public static String ClassicAlgorithmCmd_specifyKeyMsg;
+	public static String ClassicAlgorithmConfiguration_1;
+	public static String ClassicAlgorithmConfiguration_2;
+	public static String ClassicAlgorithmConfiguration_3;
+	public static String ClassicAlgorithmConfiguration_4;
+	public static String ClassicAlgorithmConfiguration_5;
+	public static String ClassicAlgorithmConfiguration_6;
+	public static String ClassicAlgorithmConfiguration_7;
+	public static String ClassicAlgorithmConfiguration_8;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

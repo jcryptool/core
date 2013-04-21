@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.classic.substitution.algorithm;
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -25,6 +26,8 @@ import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
 import org.jcryptool.crypto.classic.substitution.ui.SubstitutionWizard;
 
@@ -41,6 +44,7 @@ public class SubstitutionAlgorithmAction extends AbstractAlgorithmAction {
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 
 		final SubstitutionWizard wizard = new SubstitutionWizard();
@@ -49,7 +53,8 @@ public class SubstitutionAlgorithmAction extends AbstractAlgorithmAction {
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.SubstitutionAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.SubstitutionAlgorithmAction_1;
 
@@ -95,7 +100,18 @@ public class SubstitutionAlgorithmAction extends AbstractAlgorithmAction {
 						
 						monitor.worked(4);
 						
-						SubstitutionAlgorithmAction.super.finalizeRun(algorithm);
+						
+						ClassicAlgorithmConfigurationWithKey config = new ClassicAlgorithmConfigurationWithKey(
+								wizard.encrypt(),
+								"S",
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getKey()
+								);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+
+						SubstitutionAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(SubstitutionPlugin.PLUGIN_ID, ex);
                     } finally {

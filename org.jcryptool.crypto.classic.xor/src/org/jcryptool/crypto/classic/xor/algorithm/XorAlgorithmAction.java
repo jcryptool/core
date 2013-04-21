@@ -11,6 +11,7 @@
 package org.jcryptool.crypto.classic.xor.algorithm;
 
 import java.io.InputStream;
+import java.util.Observer;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -25,6 +26,7 @@ import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
+import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.xor.XorPlugin;
 import org.jcryptool.crypto.classic.xor.ui.XorWizard;
 
@@ -41,6 +43,7 @@ public class XorAlgorithmAction extends AbstractAlgorithmAction {
 	/**
 	 * This methods performs the action
 	 */
+	@Override
 	public void run() {
 		final XorWizard wizard = new XorWizard();
 		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
@@ -48,7 +51,8 @@ public class XorAlgorithmAction extends AbstractAlgorithmAction {
 
 		if (dialog.open() == Window.OK) {
             Job job = new Job(Messages.XorAlgorithmAction_0) {
-                public IStatus run(final IProgressMonitor monitor) {
+                @Override
+				public IStatus run(final IProgressMonitor monitor) {
                     try {
                         String jobTitle = Messages.XorAlgorithmAction_1;
 
@@ -97,7 +101,18 @@ public class XorAlgorithmAction extends AbstractAlgorithmAction {
 						
 						monitor.worked(4);
 						
-						XorAlgorithmAction.super.finalizeRun(algorithm);
+						XORConfiguration config = new XORConfiguration(
+								wizard.encrypt(),
+								wizard.getSelectedAlphabet(), 
+								wizard.isNonAlphaFilter(), 
+								wizard.getTransformData(), 
+								wizard.getKeyMethod(),
+								wizard.getKey(),
+								wizard.getPathToKeyFile()
+								);
+						Observer editorOpenObserver = ClassicAlgorithmConfiguration.createEditorOpenHandler(algorithm, config);
+
+						XorAlgorithmAction.super.finalizeRun(algorithm, editorOpenObserver);
                     } catch (final Exception ex) {
                         LogUtil.logError(XorPlugin.PLUGIN_ID, ex);
                     } finally {

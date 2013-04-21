@@ -20,6 +20,8 @@ public class Messages extends NLS {
 	public static String AdfgvxCmd_specifyTranspKey;
 	public static String AdfgvxCmd_substKeyDescription;
 	public static String AdfgvxCmd_transpKeyDescription;
+	public static String AdfgvxConfiguration_1;
+	public static String AdfgvxConfiguration_2;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

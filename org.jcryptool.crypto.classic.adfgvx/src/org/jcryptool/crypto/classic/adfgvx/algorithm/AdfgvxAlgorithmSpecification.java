@@ -48,20 +48,25 @@ public class AdfgvxAlgorithmSpecification extends ClassicAlgorithmSpecification 
 		protected InputVerificationResult getFailResult(String key,
 				AbstractAlphabet alphabet) {
 			return new InputVerificationResult() {
+				@Override
 				public boolean isValid() {
 					return false;
 				}
+				@Override
 				public boolean isStandaloneMessage() {
 					return false;
 				}
+				@Override
 				public MessageType getMessageType() {
 					return InputVerificationResult.MessageType.WARNING;
 				}
+				@Override
 				public String getMessage() {
 					return org.jcryptool.crypto.classic.adfgvx.ui.Messages.AdfgvxWizardPage_onlyoccuronce;
 				}
+				@Override
 				public String getResultType() {
-					return RESULT_TYPE_DOUBLET_IN_KEY; //$NON-NLS-1$
+					return RESULT_TYPE_DOUBLET_IN_KEY; 
 				}
 			};
 		}

@@ -74,10 +74,10 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 	 */
 	@SuppressWarnings("static-access")
 	protected void createKeyOptions(Options options) {
-		options.addOption(OptionBuilder.withLongOpt(KEY_LONG_OPTIONNAME).hasArg(true) //$NON-NLS-1$
-				.withArgName(KEY_ARGUMENT1_NAME).isRequired().withDescription( //$NON-NLS-1$
+		options.addOption(OptionBuilder.withLongOpt(KEY_LONG_OPTIONNAME).hasArg(true) 
+				.withArgName(KEY_ARGUMENT1_NAME).isRequired().withDescription( 
 						getKeyDetailString()).create(
-						KEY_OPTIONNAME)); //$NON-NLS-1$
+						KEY_OPTIONNAME)); 
 	}
 
 	/**
@@ -93,10 +93,10 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 			String availableAlphabetsString = createAvailabeAlphabetsString(availableAlphabets);
 			AbstractAlphabet defaultAlphabet = getSpecification().getDefaultPlainTextAlphabet();
 			
-			options.addOption(OptionBuilder.withLongOpt(ALPHABET_LONG_OPTIONNAME).hasArg(true) //$NON-NLS-1$
+			options.addOption(OptionBuilder.withLongOpt(ALPHABET_LONG_OPTIONNAME).hasArg(true) 
 					.withArgName("ALPHABET").withDescription( //$NON-NLS-1$
 							NLS.bind(Messages.ClassicAlgorithmCmd_alphabetsDetails, new Object[] {availableAlphabetsString, defaultAlphabet.getShortName()}))
-					.create(ALPHABET_OPTION_NAME)); //$NON-NLS-1$
+					.create(ALPHABET_OPTION_NAME)); 
 		}			
 		
 	}
@@ -166,8 +166,8 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 	 * @throws ParseException
 	 */
 	protected char[] handleKeyOption(CommandLine commandLine, StringBuilder parseResultOut) throws ParseException {
-		if (commandLine.hasOption(KEY_OPTIONNAME)) { //$NON-NLS-1$
-			String key = commandLine.getOptionValue(KEY_OPTIONNAME); //$NON-NLS-1$
+		if (commandLine.hasOption(KEY_OPTIONNAME)) { 
+			String key = commandLine.getOptionValue(KEY_OPTIONNAME); 
 			//verificate the key
 			
 			List<KeyVerificator> verificators = getSpecification().getKeyVerificators();
@@ -183,8 +183,8 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 	
 	protected AbstractAlphabet handleAlphabetOption(CommandLine commandLine) throws ParseException {
 		if(getSpecification().getAvailablePlainTextAlphabets().size() > 1) {
-			if (commandLine.hasOption(ALPHABET_OPTION_NAME)) { //$NON-NLS-1$
-				String alphabetName = commandLine.getOptionValue(ALPHABET_OPTION_NAME); //$NON-NLS-1$
+			if (commandLine.hasOption(ALPHABET_OPTION_NAME)) { 
+				String alphabetName = commandLine.getOptionValue(ALPHABET_OPTION_NAME); 
 				AbstractAlphabet resultShort = AlphabetsManager.getInstance().getAlphabetByShortName(alphabetName);
 				AbstractAlphabet resultLong = AlphabetsManager.getInstance().getAlphabetByName(alphabetName);
 				if(resultShort != null) {
@@ -236,6 +236,7 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 			InputStream inputStream, AbstractAlphabet alphabet2, char[] key,
 			boolean filter);
 
+	@Override
 	@SuppressWarnings("static-access")
 	public Options createOptions() {
 		Options options = new Options();
@@ -245,17 +246,17 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 		// Alphabet input options
 		createAlphabetOptions(options);
 		// Option not to filter nonalphabetic characters (if option is set, filtering does NOT occur) -> filtering by default. 
-		options.addOption(OptionBuilder.withLongOpt(NOFILTER_LONG_OPTIONNAME).hasArg( //$NON-NLS-1$
+		options.addOption(OptionBuilder.withLongOpt(NOFILTER_LONG_OPTIONNAME).hasArg( 
 				false).withDescription(Messages.ClassicAlgorithmCmd_filteroption).create(
-				NOFILTER_OPTIONNAME)); //$NON-NLS-1$
+				NOFILTER_OPTIONNAME)); 
 	
 		// Encoding or decoding options group:
 		
 		OptionGroup codingMode = new OptionGroup();
-		codingMode.addOption(OptionBuilder.withLongOpt(MODEENCRYPTION_LONG_OPTIONNAME).hasArg( //$NON-NLS-1$
-				false).withDescription(Messages.ClassicAlgorithmCmd_encryptMode).create(MODEENCRYPTION_OPTIONNAME)); //$NON-NLS-1$
-		codingMode.addOption(OptionBuilder.withLongOpt(MODEDECRYPTION_LONG_OPTIONNAME).hasArg( //$NON-NLS-1$
-				false).withDescription(Messages.ClassicAlgorithmCmd_decryptMode).create(MODEDECRYPTION_OPTIONNAME)); //$NON-NLS-1$
+		codingMode.addOption(OptionBuilder.withLongOpt(MODEENCRYPTION_LONG_OPTIONNAME).hasArg( 
+				false).withDescription(Messages.ClassicAlgorithmCmd_encryptMode).create(MODEENCRYPTION_OPTIONNAME)); 
+		codingMode.addOption(OptionBuilder.withLongOpt(MODEDECRYPTION_LONG_OPTIONNAME).hasArg( 
+				false).withDescription(Messages.ClassicAlgorithmCmd_decryptMode).create(MODEDECRYPTION_OPTIONNAME)); 
 		codingMode.setRequired(true);
 		options.addOptionGroup(codingMode);
 	
@@ -270,6 +271,7 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 		return options;
 	}
 
+	@Override
 	public void execute(CommandLine commandLine) throws IllegalCommandException {
 		/**
 		 * Order of argument reading:
@@ -304,13 +306,13 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 			// read other options
 			
 			int cryptMode = -1;
-			if (commandLine.hasOption(MODEDECRYPTION_OPTIONNAME)) { //$NON-NLS-1$
+			if (commandLine.hasOption(MODEDECRYPTION_OPTIONNAME)) { 
 				cryptMode = AbstractAlgorithm.DECRYPT_MODE;
 			} else {
 				cryptMode = AbstractAlgorithm.ENCRYPT_MODE;
 			}
 	
-			boolean filter = ! commandLine.hasOption(NOFILTER_OPTIONNAME); //$NON-NLS-1$
+			boolean filter = ! commandLine.hasOption(NOFILTER_OPTIONNAME); 
 	
 			
 			// handle options contributed by subclasses
@@ -347,6 +349,7 @@ public abstract class ClassicAlgorithmCmd extends AbstractCommand {
 	}
 
 
+	@Override
 	public String getResult() {
 		return result.toString();
 	}

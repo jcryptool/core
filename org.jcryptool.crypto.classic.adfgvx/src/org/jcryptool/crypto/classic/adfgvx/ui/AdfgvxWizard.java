@@ -33,6 +33,7 @@ public class AdfgvxWizard extends AbstractClassicWizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new AdfgvxWizardPage();
 		page.setAlgorithmSpecification(AdfgvxAlgorithm.specification);
@@ -48,6 +49,15 @@ public class AdfgvxWizard extends AbstractClassicWizard {
 	 */
 	public String getSubstitutionKey() {
 		return ((AdfgvxWizardPage)page).getSubstitutionKey();
+	}
+
+	/**
+	 * Returns the substitution key as it was entered in the text field
+	 * 
+	 * @return	The substitution key input
+	 */
+	public String getSubstitutionKeyAsEntered() {
+		return ((AdfgvxWizardPage)page).getSubstitutionKeyAsEntered();
 	}
 	
 	/**

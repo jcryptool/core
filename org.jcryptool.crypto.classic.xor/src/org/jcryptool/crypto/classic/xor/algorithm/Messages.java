@@ -19,6 +19,9 @@ public class Messages extends NLS {
 	public static String XorCmd_keyDetailsFilepath;
 	public static String XorCmd_keyDetailsString;
 	public static String XorCmd_onlyOneKeyMsg;
+	public static String XORConfiguration_0;
+	public static String XORConfiguration_1;
+	public static String XORConfiguration_2;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

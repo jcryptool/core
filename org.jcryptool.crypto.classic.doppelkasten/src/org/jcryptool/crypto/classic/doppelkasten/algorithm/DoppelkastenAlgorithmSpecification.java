@@ -41,7 +41,7 @@ public class DoppelkastenAlgorithmSpecification extends
 	}
 	
 	public static String glueKeys(String key1, String key2) {
-		return (key1 + KEY_SEPARATOR + key2); //$NON-NLS-1$
+		return (key1 + KEY_SEPARATOR + key2); 
 	}
 	
 	public static String[] unglueKeys(String gluedKeys) {

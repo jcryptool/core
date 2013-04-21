@@ -62,7 +62,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 	protected void createKeyInputObjects() {
 		keyInput = new KeyInput<String>() {
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return keyText;
 			}
 			@Override
@@ -110,7 +110,7 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 	private void createSecondKeyInput() {
 		key2Input = new TextfieldInput<String>() {
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return key2Text;
 			}
 			@Override
@@ -181,8 +181,9 @@ public class DoppelkastenWizardPage extends AbstractClassicCryptoPage {
 
     
 
-    public String getKey() {
-	    return DoppelkastenAlgorithm.specification.glueKeys(keyInput.getContent(), key2Input.getContent());
+    @Override
+	public String getKey() {
+	    return DoppelkastenAlgorithmSpecification.glueKeys(keyInput.getContent(), key2Input.getContent());
 	}
 
 

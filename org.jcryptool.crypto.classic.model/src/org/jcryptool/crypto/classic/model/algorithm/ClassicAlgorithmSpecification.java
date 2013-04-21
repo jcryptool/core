@@ -46,20 +46,25 @@ public class ClassicAlgorithmSpecification {
 			@Override
 			protected InputVerificationResult getFailResult(String key, AbstractAlphabet alphabet) {
 				return new InputVerificationResult() {
+					@Override
 					public boolean isStandaloneMessage() {
 						return true;
 					}
+					@Override
 					public MessageType getMessageType() {
 						return InputVerificationResult.MessageType.INFORMATION;
 					}
+					@Override
 					public String getMessage() {
 						//key instructions to be inserted. Format: whole sentences.
 						String mask = Messages.AbstractClassicCryptoPage_keyBalloonTipWithInstruction;
 						return String.format(mask, instructions);
 					}
+					@Override
 					public boolean isValid() {
 						return true;
 					}
+					@Override
 					public String toString() {return "NOKEY_FAIL";} //$NON-NLS-1$
 					
 					@Override

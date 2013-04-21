@@ -593,7 +593,7 @@ public class TranspTextWizardPage extends WizardPage {
 
 		textOnlyInput = new TextonlyInput() {
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return txtInputText;
 			}
 		};

@@ -46,7 +46,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
         String key2 = key.toUpperCase();
         int i = 0;
         while (i < key2.length()) {
-            int charval = (int) key2.charAt(i);
+            int charval = key2.charAt(i);
             if (charval < 65 || charval > 90)
                 key2 = key2.substring(0, i - 1).concat(key2.substring(i + 1));
             else
@@ -94,7 +94,8 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the decrypted data as an int array.
      */
-    public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
+    @Override
+	public int[] doDecryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
 
@@ -117,7 +118,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
 
             zufallsbuchstabe = rohtext.charAt(rohtext.length() - 1);
             while (zufallsbuchstabe == rohtext.charAt(rohtext.length() - 1)) {
-                int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
+                int randomIndex = (int) (Math.floor(Math.random() * rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
             rohtext.append(zufallsbuchstabe);
@@ -130,10 +131,10 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 // Bigramm herausnehmen und Koordinaten einlesem
                 bigrammalt1 = rohtext.charAt(i - 1);
                 bigrammalt2 = rohtext.charAt(i);
-                x_1 = keyList[(int) (bigrammalt1)][0];
-                y_1 = keyList[(int) (bigrammalt1)][1];
-                x_2 = keyList[(int) (bigrammalt2)][0];
-                y_2 = keyList[(int) (bigrammalt2)][1];
+                x_1 = keyList[(bigrammalt1)][0];
+                y_1 = keyList[(bigrammalt1)][1];
+                x_2 = keyList[(bigrammalt2)][0];
+                y_2 = keyList[(bigrammalt2)][1];
                 // Bigramm durch ver-/entschlüsseltes Bigramm mittels
                 // Umordnung der Koordinaten ersetzen
                 bigrammneu = String.valueOf((char) (byte) keySquare[y_2][y_1]).concat(
@@ -161,7 +162,8 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
      * @param alphaLength the length of the currentAlphabet.
      * @return the encrypted data as an int array.
      */
-    public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
+    @Override
+	public int[] doEncryption(int[] input, int[] key, int alphaLength, int[] alphabet, char nullchar,
             char[] alphaChars, char[] keyChars, char[] inputNoNonAlphaChar, AlphaConverter alphaConv, char[] key2,
             int pastChars) {
         char bigrammalt1, bigrammalt2;
@@ -183,7 +185,7 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
 
             zufallsbuchstabe = rohtext.charAt(rohtext.length() - 1);
             while (zufallsbuchstabe == rohtext.charAt(rohtext.length() - 1)) {
-                int randomIndex = (int) ((double) Math.floor(Math.random() * (double) rohtext.length()));
+                int randomIndex = (int) (Math.floor(Math.random() * rohtext.length()));
                 zufallsbuchstabe = rohtext.charAt(randomIndex);
             }
             rohtext.append(zufallsbuchstabe);
@@ -196,10 +198,10 @@ public class DelastelleEngine implements IClassicAlgorithmEngine {
                 // Bigramm herausnehmen und Koordinaten einlesem
                 bigrammalt1 = rohtext.charAt(i - 1);
                 bigrammalt2 = rohtext.charAt(i);
-                x_1 = keyList[(int) (bigrammalt1)][0];
-                y_1 = keyList[(int) (bigrammalt1)][1];
-                x_2 = keyList[(int) (bigrammalt2)][0];
-                y_2 = keyList[(int) (bigrammalt2)][1];
+                x_1 = keyList[(bigrammalt1)][0];
+                y_1 = keyList[(bigrammalt1)][1];
+                x_2 = keyList[(bigrammalt2)][0];
+                y_2 = keyList[(bigrammalt2)][1];
                 // Bigramm durch ver-/entschlüsseltes Bigramm mittels
                 // Umordnung der Koordinaten ersetzen
                 bigrammneu = String.valueOf((char) (byte) keySquare[y_2][y_1]).concat(

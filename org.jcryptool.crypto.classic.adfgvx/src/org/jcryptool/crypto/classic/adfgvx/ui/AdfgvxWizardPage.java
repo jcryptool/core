@@ -120,6 +120,8 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     private TextfieldInput<List<Character>> substitutionKeyInput;
     private TextfieldInput<String> transpositionKeyInput;
 
+	protected String rawSubstKeyInput;
+
     /**
      * Creates a new instance of AdfgvxWizardPage.
      */
@@ -183,7 +185,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             public List<Character> readContent() {
-                if (getTextfield().getText().equals(""))return getDefaultResult(); //$NON-NLS-1$
+                if (getTextfield().getText().equals("")) return getDefaultResult(); //$NON-NLS-1$
                 return toCharacters(factory.getCipherAlphabet(adfgvxAlphabet,
                         getTextfield().getText().toUpperCase().toCharArray()));
             }
@@ -199,7 +201,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             }
 
             @Override
-            protected Text getTextfield() {
+            public Text getTextfield() {
                 return keyWordText;
             }
 
@@ -217,9 +219,13 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
         };
 
         substitutionKeyInput.addObserver(new Observer() {
-            public void update(Observable o, Object arg) {
+            @Override
+			public void update(Observable o, Object arg) {
                 if (arg == null) {
                     labelsSetText(fromCharacters(substitutionKeyInput.getContent()));
+                    
+                    //save text field input for other uses
+                    AdfgvxWizardPage.this.rawSubstKeyInput = substitutionKeyInput.getTextfield().getText();
                 }
             }
         });
@@ -248,7 +254,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             }
 
             @Override
-            protected Text getTextfield() {
+            public Text getTextfield() {
                 return transpositionKeyText;
             }
 
@@ -266,7 +272,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             @Override
             protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput input) {
                 // vanish instantly when it is the "not changing the encryption" tooltip
-                if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { //$NON-NLS-1$
+                if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { 
                     tooltipMap.get(input).setTimeToVanish(-1);
                 } else {
                     super.changeTooltipDurationAtCleaninputButNotHidden(input);
@@ -327,6 +333,13 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
      */
     public String getSubstitutionKey() {
         return substKeyFromMatrixAlph(substitutionKeyInput.getContent());
+    }
+    
+    /**
+     * @return "" if there was no subst key input yet, or the substitution key as entered in the textfield.
+     */
+    public String getSubstitutionKeyAsEntered() {
+    	return rawSubstKeyInput == null?"":rawSubstKeyInput;
     }
 
     /**

@@ -52,6 +52,7 @@ public class FilechooserComposite extends org.eclipse.swt.widgets.Composite {
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
 	*/
+	@Override
 	protected void checkSubclass() {
 	}
 
@@ -65,7 +66,7 @@ public class FilechooserComposite extends org.eclipse.swt.widgets.Composite {
 		initGUI();
 		fileInput = new TextfieldInput<String>() {
 			@Override
-			protected Text getTextfield() {
+			public Text getTextfield() {
 				return textFile;
 			}
 			@Override
@@ -111,6 +112,7 @@ public class FilechooserComposite extends org.eclipse.swt.widgets.Composite {
 				btnBrowse.setLayoutData(btnBrowseLData);
 				btnBrowse.setText(Messages.FilechooserComposite_browse);
 				btnBrowse.addSelectionListener(new SelectionAdapter() {
+					@Override
 					public void widgetSelected(SelectionEvent evt) {
 						FileDialog dialog = new FileDialog(getShell(), SWT.OPEN);
 				        dialog.setFilterPath(DirectoryService.getUserHomeDir());
