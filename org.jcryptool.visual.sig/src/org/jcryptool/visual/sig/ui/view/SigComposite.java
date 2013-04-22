@@ -49,6 +49,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Button btnChooseImput;
 	private Label lblProgress;
 	SigComposite sc = this;
+	//hash and signature contain the selected method; default is 0
+	private int hash = 0; //0-4
+	private int signature = 0; //0-4
 
 	//Generates all Elements of the GUI
 	public SigComposite(Composite parent, int style, SigView view) {
@@ -266,7 +269,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 @Override
                     	 protected void configureShell(Shell newShell) {
                     		 super.configureShell(newShell);
-                    		 newShell.setSize(300, 500);
+                    		 newShell.setSize(500, 500);
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
