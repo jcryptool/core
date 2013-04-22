@@ -32,6 +32,7 @@ import org.jcryptool.visual.sig.ui.wizards.HashWizard;
 import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.custom.StyledText;
 
 public class SigComposite extends Composite implements PaintListener {//,ActionListener{
 	private Text txtHash;
@@ -69,7 +70,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		Font font = new Font(this.getDisplay(), new FontData(fontData.getName(), 12, SWT.BOLD));
 	    lblHeader.setFont(font);
 				
-		txtGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI);
+		txtGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
 		txtGeneralDescription.setEditable(false);
 		txtGeneralDescription.setBounds(10, 15, 699, 59);
 		txtGeneralDescription.setText(Messages.SigComposite_description);
