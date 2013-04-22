@@ -5,20 +5,26 @@ import org.eclipse.jface.wizard.Wizard;
 public class InputWizard extends Wizard{
 	//The only page of the wizard (for selecting the Hash method)
 	InputWizardPage page;
-	private String name;
-
+	InputFileWizardPage pageFile;
+	InputEditorWizardPage pageEditor;
+	
 	//Constructor
 	public InputWizard() {
 		super();
-		name = "test";
 	}	
 	
 	@Override
 	public void addPages() {
-		//Create page
-		page = new InputWizardPage(name);
-		//Add the page to the wizard
+		//Create pages
+		page = new InputWizardPage("Input Wizard");
+		pageFile = new InputFileWizardPage("InputFile Wizard");
+		pageEditor = new InputEditorWizardPage("InputEditor Wizard");
+		
+		//Add the pages to the wizard
 		addPage(page);
+		addPage(pageFile);
+		addPage(pageEditor);
+
 	}
 
 	@Override
