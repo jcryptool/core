@@ -17,7 +17,6 @@ public class HashWizardPage extends WizardPage {
 	
 	public void createControl(Composite parent) {
 		composite = new HashComposite(parent, NONE);
-		//composite.setBounds(x, y, width, height);
 		setControl(composite);
 		setPageComplete(true);
 	}

@@ -50,6 +50,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Button btnReset;
 	private Label lblProgress;
 	private Label lblHash;
+	private Label lblSignature;
 	SigComposite sc = this;
 	//hash and signature contain the selected method; default is 0
 	private int hash = 0; //0-4
@@ -59,7 +60,11 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
 	private int signature = 0; //0-4
-	private String[] signatures = {"", "", "", "", ""};
+	private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdomd5, 
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha1,
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha256,
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha384,
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha512};
 
 	/**
 	 * @return the hash
@@ -182,7 +187,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		lblProgress.setBounds(490, 491, 83, 14);
 		lblProgress.setText(Messages.SigComposite_lblProgress1);  
 		
-		Label lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
+		lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
 		lblSignature.setText(Messages.SigComposite_lblSignature);
 		lblSignature.setBounds(248, 431, 136, 14);
 		
@@ -371,6 +376,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                    	 } 
                     };
                     if (dialog.open() == Window.OK) {
+                    	//get signature method (integer)
+                    	signature = wiz.getSignature();
+                    	lblSignature.setText(signatures[signature]);
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
                     	tabDescription.setSelection(3);
@@ -403,8 +411,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private void Reset (int step) {
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
-			case 0: btnHash.setEnabled(false); //btnSignature.setEnabled(false); btnOpenInEditor.setEnabled(false); break;
-			case 1: btnSignature.setEnabled(false); //btnOpenInEditor.setEnabled(false); break;
+			case 0: btnHash.setEnabled(false); lblHash.setText(""); //btnSignature.setEnabled(false); btnOpenInEditor.setEnabled(false); break;
+			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); //btnOpenInEditor.setEnabled(false); break;
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
 		}

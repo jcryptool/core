@@ -8,7 +8,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 
 public class SignatureComposite extends Composite implements PaintListener{
-
+	private Group grpSignatures;
+	
 	//Constructor
 	public SignatureComposite(Composite parent, int style) {
 		super(parent, style);
@@ -21,7 +22,7 @@ public class SignatureComposite extends Composite implements PaintListener{
 	* Draws all the controls of the composite
     */
 	private void initialize() {
-		Group grpSignatures = new Group(this, SWT.NONE);
+		grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
 		grpSignatures.setBounds(10, 10, 250, 170);
 		
@@ -55,5 +56,12 @@ public class SignatureComposite extends Composite implements PaintListener{
 	public void paintControl(PaintEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * @return the grpSignatures
+	 */
+	public Group getgrpSignatures() {
+		return grpSignatures;
 	}
 }

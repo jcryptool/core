@@ -2,6 +2,7 @@ package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
 public class SignatureWizardPage extends WizardPage {
 
@@ -9,16 +10,21 @@ public class SignatureWizardPage extends WizardPage {
 
 	//Construcor
 	protected SignatureWizardPage(String pageName) {
-		//TEST!
 		super(Messages.SignatureWizard_header);
 		setDescription(Messages.SignatureWizard_header);
 	}
 	
 	public void createControl(Composite parent) {
 		composite = new SignatureComposite(parent, NONE);
-		//composite.setBounds(x, y, width, height);
 		setControl(composite);
 		setPageComplete(true);
+	}
+	
+	/**
+	 * @return the grpSignatures
+	 */
+	public Group getGrpSignatures() {
+		return composite.getgrpSignatures();
 	}
 
 }

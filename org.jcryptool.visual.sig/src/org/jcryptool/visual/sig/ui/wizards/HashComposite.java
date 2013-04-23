@@ -12,10 +12,6 @@ import org.eclipse.swt.widgets.Button;
 //Contains the elements (2 group boxes) of the HashWizard
 public class HashComposite extends Composite implements PaintListener {
 	private Group grpHashes;
-	public Button btnRadioButton_1;
-	public Button btnRadioButton_2;
-	public Button btnRadioButton_3;
-	public Button btnRadioButton_4;
 
 	//Constructor
 	 public HashComposite(Composite parent, int style) {
