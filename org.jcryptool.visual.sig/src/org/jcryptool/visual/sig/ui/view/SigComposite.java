@@ -48,11 +48,40 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Button btnSignature;
 	private Button btnOpenInEditor;
 	private Button btnChooseImput;
+	private Button btnReset;
 	private Label lblProgress;
 	SigComposite sc = this;
 	//hash and signature contain the selected method; default is 0
 	private int hash = 0; //0-4
 	private int signature = 0; //0-4
+
+	/**
+	 * @return the hash
+	 */
+	public int getHash() {
+		return hash;
+	}
+
+	/**
+	 * @param hash the hash to set
+	 */
+	public void setHash(int hash) {
+		this.hash = hash;
+	}
+
+	/**
+	 * @return the signature
+	 */
+	public int getSignature() {
+		return signature;
+	}
+
+	/**
+	 * @param signature the signature to set
+	 */
+	public void setSignature(int signature) {
+		this.signature = signature;
+	}
 
 	//Generates all Elements of the GUI
 	public SigComposite(Composite parent, int style, SigView view) {
@@ -139,7 +168,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
-		Button btnReset = new Button(grpSignatureGeneration, SWT.NONE);
+		btnReset = new Button(grpSignatureGeneration, SWT.NONE);
 		btnReset.setBounds(581, 485, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
 		
@@ -262,7 +291,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		    public void widgetSelected(SelectionEvent e) {
 		    	try {
 		    		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
-		    		Reset();
+		    		Reset(0);
 		    		//Create the HashWirard
                     InputWizard wiz = new InputWizard();
                     //Display it
@@ -287,12 +316,13 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		   }//end widgetSelected
 		});
 				
-		//Adds a Listener for the signature select button
+		//Adds a Listener for the hash select button
 		btnHash.addSelectionListener(new SelectionListener() {
             public void widgetDefaultSelected(SelectionEvent e) {
             }
             public void widgetSelected(SelectionEvent e) {
                 try {
+                	Reset(1);
                     //Create the HashWirard
                     HashWizard wiz = new HashWizard();
                     //Display it
@@ -322,7 +352,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
             }
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    
+                	Reset(2);
                     SignatureWizard wiz = new SignatureWizard();
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                    	 	@Override
@@ -344,19 +374,33 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
             }
         });
 		
+		//Adds a Listener for the reset button
+				btnReset.addSelectionListener(new SelectionListener() {
+		            public void widgetDefaultSelected(SelectionEvent e) {
+		            }
+		            public void widgetSelected(SelectionEvent e) {
+		                Reset(0);
+		            }
+		        });
+		
 	}//end createEvents
 	
 	/**
 	 * Resets the arrow and disables the buttons of future steps if the user clicks the button 
-	 * of a previous step.
+	 * of a previous step. Also clears all description-tabs of future steps and jumps to the current tab.
+	 * 
+	 * @param step the step to which the progress will be reset (valid numbers: 0-2)
 	 */
-	private void Reset () {
+	private void Reset (int step) {
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
-		//disable buttons
-		btnHash.setEnabled(false);
-		btnOpenInEditor.setEnabled(false);
-		btnSignature.setEnabled(false);
-		//redraw canvas
+		switch (step) {
+			case 0: btnHash.setEnabled(false); //btnSignature.setEnabled(false); btnOpenInEditor.setEnabled(false); break;
+			case 1: btnSignature.setEnabled(false); //btnOpenInEditor.setEnabled(false); break;
+			case 2: btnOpenInEditor.setEnabled(false); break;
+			default: break;	
+		}
+		tabDescription.setSelection(step);
+		//redraw canvas (to reset the arrows)
 		canvas1.redraw();
 	}
 }
