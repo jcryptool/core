@@ -21,6 +21,7 @@ import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
 import org.jcryptool.visual.jctca.tabs.CertificationTab;
 import org.jcryptool.visual.jctca.tabs.RegistrationTab;
+import org.jcryptool.visual.jctca.tabs.SecondUserTab;
 import org.jcryptool.visual.jctca.tabs.UserTab;
 
 public class JCTCA_Visual extends ViewPart {
@@ -181,6 +182,7 @@ public class JCTCA_Visual extends ViewPart {
 				SWT.NONE);
 		CertificationTab ca = new CertificationTab(tabFolder, grp_explain,
 				SWT.NONE);
+		SecondUserTab scndUser = new SecondUserTab(tabFolder, grp_explain, SWT.NONE);
 		composite.layout(true);
 	}
 

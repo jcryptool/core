@@ -35,7 +35,7 @@ public class TabItemListener implements SelectionListener {
 		System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
-			lbl_exp.setText("In der Benutzer-Ansicht haben Sie die Möglichkeit, ein neues Zertifikat anzufordern, Ihre bereits ausgestellten Zertifikate zu verwalten sowie Texte oder Dateien mit dem zu einem Ihrer ausgestellten Zertifikate gehörigen privaten Schlüssel zu signieren.\n\n"
+			lbl_exp.setText("In der Ansicht \"Benutzer\" haben Sie die Möglichkeit, ein neues Zertifikat anzufordern, Ihre bereits ausgestellten Zertifikate zu verwalten sowie Texte oder Dateien mit dem zu einem Ihrer ausgestellten Zertifikate gehörigen privaten Schlüssel zu signieren.\n\n"
 					// +
 					// "Unter \"Neues Zertifikat anfordern\" haben Sie die Möglichkeit, ein Zertifikat für einen öffentlichen Schlüssel anzufordern. Sollten Sie noch kein Schlüsselpaar haben, so können Sie sich eines generieren lassen.\nUnter \"Zertifikate verwalten\" können Sie sich, wenn Sie bereits ausgestellte Zertifikate haben, diese anzeigen lassen. Dort haben Sie außerdem die Möglichkeit, Zertifikate zu widerrufen.\nUnter \"Text oder Datei signieren\" können Sie Signaturen für von Ihnen eingegebenen Text oder Dateien auf Ihrem Computer erstellen.\n\n"
 					+ "Wählen Sie eine der Aktionen aus, um fortzufahren und weitere Informationen dazu zu erhalten.\nWenn Sie dieses Plugin zum ersten Mal ausführen, empfiehlt es sich, mit \"Neues Zertifikat anfordern\" zu beginnen.");
@@ -59,6 +59,11 @@ public class TabItemListener implements SelectionListener {
 					"Ähnlich zum CSR ist das Format der CRL im X.509 Standard festgeschrieben. Mehr dazu lesen Sie in der Onlinehilfe.\n\n" +
 					"Linkerhand finden Sie eine Liste an Zertifikatsanfragen (CSRs, von engl. \"Certificate Signing Request\") und Widerrufsanfragen (RRs, von engl. \"Revocation Request\"). Wenn Sie eine Zertifikatsanfrage annehmen, so wird dem Antragsteller ein Zertifikat ausgestellt. Sie können dieses dann in der Benutzer-Ansicht einsehen und verwenden. Wenn Sie eine Widerrufsanfrage annehmen, so wird das betroffene Zertifikat der CRL hinzugefügt.\n" +
 					"Mehr zu den technischen Hintergründen von Zertifikatsausstellung und CRLs lesen Sie in der Onlinehilfe.");
+		} else if (parent.getSelectionIndex() == 3) {
+			lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, die von Ihnen erstellen Signaturen zu überprüfen.\n" +
+					"Linkerhand können Sie Texte oder Dateien auswählen, für die Sie in der Ansicht \"Benutzer\" Signaturen erstellt haben. Der Text oder Dateiname wird anschließend zusammen mit der dazugehörigen Signatur angezeigt. Mittels \"Signatur überprüfen\" können Sie prüfen, ob diese Signatur gültig und vertrauenswürdig ist.\n" +
+					"Achten Sie aber darauf, dass standardmäßig nicht geprüft wird, ob das Zertifikat, mit dem Sie diese Signatur prüfen, widerrufen wurde. Das ist hier so, weil auch viele Anwendungen (wie E-Mail-Clients oder Webbrowsern) standardmäßig nicht überprüfen, ob ein Zertifikat widerrufen wurde. Dies muss oft vom Benutzer selbst eingestellt werden.\n" +
+					"Beachten Sie außerdem, dass Signaturen, die erstellt wurden, bevor das Zertifikat widerrufen wurde, ihre Gültigkeit behalten. Ein Widerruf hat nur zur Folge, dass keine weiteren gültigen Signaturen mehr erstellt werden können. Mehr über den Widerruf von Zertifikaten und technische Hintergründe zur Signaturprüfung lesen Sie in der Onlinehilfe.");
 		}
 		parent.layout(true);
 		grp_exp.layout(true);
