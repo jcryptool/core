@@ -32,7 +32,6 @@ import org.jcryptool.visual.sig.ui.wizards.HashWizard;
 import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.custom.StyledText;
 
 public class SigComposite extends Composite implements PaintListener {//,ActionListener{
 	private Text txtHash;
@@ -50,10 +49,17 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Button btnChooseImput;
 	private Button btnReset;
 	private Label lblProgress;
+	private Label lblHash;
 	SigComposite sc = this;
 	//hash and signature contain the selected method; default is 0
 	private int hash = 0; //0-4
+	private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5, 
+			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha1,
+			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha256,
+			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
+			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
 	private int signature = 0; //0-4
+	private String[] signatures = {"", "", "", "", ""};
 
 	/**
 	 * @return the hash
@@ -109,7 +115,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
 		grpSignatureGeneration.setBounds(10, 75, 699, 538);
 		
-		Label lblHash = new Label(grpSignatureGeneration, SWT.NONE);
+		lblHash = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHash.setBounds(34, 246, 136, 14);
 		lblHash.setText(Messages.SigComposite_lblHash); 
 		//btnOpenDocumentTemp.setVisible(false);
@@ -334,6 +340,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
+                    	//get hash method (integer)
+                    	hash = wiz.getHash();
+                    	lblHash.setText(hashes[hash]);
                     	//Enable to select the signature method
                         btnSignature.setEnabled(true); 
                         //Activate the third tab of the description

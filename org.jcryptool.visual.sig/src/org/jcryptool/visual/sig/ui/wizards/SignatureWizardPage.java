@@ -10,7 +10,7 @@ public class SignatureWizardPage extends WizardPage {
 	//Construcor
 	protected SignatureWizardPage(String pageName) {
 		//TEST!
-		super("Siganture Wizard");
+		super(Messages.SignatureWizard_header);
 		setDescription(Messages.SignatureWizard_header);
 	}
 	

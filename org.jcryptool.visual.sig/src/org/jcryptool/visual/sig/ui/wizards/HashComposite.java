@@ -10,12 +10,17 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 
 //Contains the elements (2 group boxes) of the HashWizard
-public class HashComposite extends Composite implements PaintListener{
+public class HashComposite extends Composite implements PaintListener {
+	private Group grpHashes;
+	public Button btnRadioButton_1;
+	public Button btnRadioButton_2;
+	public Button btnRadioButton_3;
+	public Button btnRadioButton_4;
 
 	//Constructor
 	 public HashComposite(Composite parent, int style) {
 	        super(parent, style);
-	        parent.setSize(600, 400); 
+	        //parent.setSize(600, 400); 
 	        //Draw the controls
 	        initialize();
 	    }
@@ -36,7 +41,7 @@ public class HashComposite extends Composite implements PaintListener{
 		
 		setSize(new Point(273, 360));
 		
-	    Group grpHashes = new Group(this, SWT.NONE);
+	    grpHashes = new Group(this, SWT.NONE);
 	    grpHashes.setLayoutData(gd_grpSignatures);
 	    grpHashes.setText(Messages.HashWizard_grpHashes);
 	    grpHashes.setBounds(10, 10, 250, 170);
@@ -61,6 +66,7 @@ public class HashComposite extends Composite implements PaintListener{
 	    Button btnRadioButton_4 = new Button(grpHashes, SWT.RADIO);
 	    btnRadioButton_4.setBounds(10, 115, 91, 18);
 	    btnRadioButton_4.setText(Messages.HashWizard_rdosha512);
+	    
 	    }
 
 
@@ -69,4 +75,12 @@ public class HashComposite extends Composite implements PaintListener{
 		// TODO Auto-generated method stub
 		
 	}
+
+	/**
+	 * @return the grpHashes
+	 */
+	public Group getGrpHashes() {
+		return grpHashes;
+	}
+
 }

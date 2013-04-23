@@ -12,7 +12,7 @@ public class SignatureComposite extends Composite implements PaintListener{
 	//Constructor
 	public SignatureComposite(Composite parent, int style) {
 		super(parent, style);
-		parent.setSize(600, 400); 
+		//parent.setSize(600, 400); 
 	    //Draw the controls
 	    initialize();
 	}

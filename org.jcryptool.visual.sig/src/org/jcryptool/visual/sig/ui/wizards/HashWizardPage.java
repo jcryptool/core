@@ -2,6 +2,7 @@ package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
 public class HashWizardPage extends WizardPage {
 
@@ -10,7 +11,7 @@ public class HashWizardPage extends WizardPage {
 	//Construcor
 	protected HashWizardPage(String pageName) {
 		//TEST!
-		super("Hashwizard");
+		super(Messages.HashWizard_header);
 		setDescription(Messages.HashWizard_header);
 	}
 	
@@ -19,6 +20,13 @@ public class HashWizardPage extends WizardPage {
 		//composite.setBounds(x, y, width, height);
 		setControl(composite);
 		setPageComplete(true);
+	}
+	
+	/**
+	 * @return the grpHashes
+	 */
+	public Group getGrpHashes() {
+		return composite.getGrpHashes();
 	}
 
 }
