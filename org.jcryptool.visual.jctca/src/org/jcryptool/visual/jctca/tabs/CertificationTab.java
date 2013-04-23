@@ -1,12 +1,16 @@
 package org.jcryptool.visual.jctca.tabs;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.CertificateViews.ShowReq;
+import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class CertificationTab {
 
@@ -20,5 +24,8 @@ public class CertificationTab {
 		t.setControl(generalGroup);
 		ShowReq sReq= new ShowReq(generalGroup, exp);
 		generalGroup.setLayout(new GridLayout(1, false));
+		
+		
+	
 	}
 }

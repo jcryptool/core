@@ -13,8 +13,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class ShowReq implements Views {
 	Composite composite;
@@ -80,6 +82,7 @@ public class ShowReq implements Views {
 		btn_reject_request = new Button(showSelectedRequest, SWT.NONE);
 		btn_reject_request.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_reject_request.setText("Anfrage ablehnen");
+		
 		
 		Label lbl_exp = (Label)exp.getChildren()[0];	
         lbl_exp.setText("Hi, I explain what is going on in Show Request!");

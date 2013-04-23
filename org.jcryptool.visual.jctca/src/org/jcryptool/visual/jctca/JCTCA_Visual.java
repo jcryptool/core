@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
+import org.jcryptool.visual.jctca.listeners.TabItemListener;
 import org.jcryptool.visual.jctca.tabs.CertificationTab;
 import org.jcryptool.visual.jctca.tabs.RegistrationTab;
 import org.jcryptool.visual.jctca.tabs.UserTab;
@@ -157,7 +158,12 @@ public class JCTCA_Visual extends ViewPart {
 		txt_explain.setLayoutData(gd_txt_explain);
 
 		txt_explain.setText("In dieser Ansicht verkörpern Sie den Benutzer, der sich ein neues Zertifikat ausstellen lassen möchte.");
-
+		
+		
+		//TODO: besser machen
+		TabItemListener tabItemListener = new TabItemListener(tabFolder, grp_explain);
+		tabFolder.addSelectionListener(tabItemListener);
+		
 		UserTab user = new UserTab(tabFolder, grp_explain, SWT.NONE);
 		RegistrationTab ra = new RegistrationTab(tabFolder, grp_explain, SWT.NONE);
 		CertificationTab ca = new CertificationTab(tabFolder, grp_explain, SWT.NONE);

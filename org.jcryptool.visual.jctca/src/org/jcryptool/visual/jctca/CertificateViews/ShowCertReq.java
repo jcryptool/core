@@ -118,8 +118,8 @@ public class ShowCertReq implements Views {
 		String ausweis = "icons/ausweis.jpeg";
 		Label lbl_img = new Label(right, SWT.NONE);
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
-	    Label lbl_exp = (Label)exp.getChildren()[0];
-        lbl_exp.setText("Hi, I explain what is going on in Show Certificate Request!");
+//	    Label lbl_exp = (Label)exp.getChildren()[0];
+//        lbl_exp.setText("Hi, I explain what is going on in Show Certificate Request!");
 			}
 
 	public void dispose() {

@@ -13,6 +13,7 @@ import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
 import org.jcryptool.visual.jctca.UserViews.SignCert;
 import org.jcryptool.visual.jctca.listeners.SideBarListener;
+import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class UserTab {
 
@@ -21,6 +22,7 @@ public class UserTab {
 	RevokeCert rCert;
 	SignCert siCert;
 	Group grp_exp;
+	TabFolder parent;
 	public UserTab(TabFolder parent, Group exp, int style) {
 	    // define the layout for the whole TabItem now
 		TabItem t = new TabItem(parent, SWT.NONE);
@@ -29,6 +31,7 @@ public class UserTab {
 		generalGroup.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
 		t.setControl(generalGroup);
 		this.grp_exp = exp;
+		this.parent = parent;
 
         // 2 columns (actions and the actionswindow)
         generalGroup.setLayout(new GridLayout(2, false));
