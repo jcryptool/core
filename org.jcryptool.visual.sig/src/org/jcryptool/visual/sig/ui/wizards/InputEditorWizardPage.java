@@ -26,6 +26,9 @@ public class InputEditorWizardPage extends WizardPage {
 		setPageComplete(true);
 	}
 	
-	
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return compositeEditor.getContent();
+	}
 
 }

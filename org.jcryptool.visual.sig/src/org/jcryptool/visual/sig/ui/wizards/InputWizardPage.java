@@ -2,6 +2,7 @@ package org.jcryptool.visual.sig.ui.wizards;
 
 
 //import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
@@ -32,4 +33,16 @@ public class InputWizardPage extends WizardPage {
 		
 	}*/
 
+	@Override
+	public IWizardPage getNextPage() {
+		if (composite.rdoFromFile.getSelection()) {
+			
+			return null;
+		}
+		return getWizard().getPage("InputEditor Wizard");
+	}
+
+	public boolean fileChoosen() {
+		return composite.rdoFromFile.getSelection();
+	}
 }

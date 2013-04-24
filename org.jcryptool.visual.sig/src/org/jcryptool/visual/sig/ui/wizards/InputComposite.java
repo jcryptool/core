@@ -40,6 +40,8 @@ public class InputComposite extends Composite implements PaintListener{
 		
 	}
 	
-	
+	public boolean fileIsChoosen(){
+		return rdoFromFile.getSelection();
+	}
 
 }

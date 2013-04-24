@@ -9,6 +9,8 @@ public class InputEditorComposite extends Composite {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
