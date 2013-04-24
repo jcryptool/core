@@ -12,6 +12,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 
 public class InputComposite extends Composite implements PaintListener {
+	
 	Button rdoFromFile;
 	Button rdoFromEditor;
 
@@ -44,7 +45,6 @@ public class InputComposite extends Composite implements PaintListener {
 	@Override
 	public void paintControl(PaintEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public boolean fileIsChoosen() {

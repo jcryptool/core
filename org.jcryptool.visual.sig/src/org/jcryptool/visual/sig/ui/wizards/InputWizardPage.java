@@ -17,7 +17,6 @@ public class InputWizardPage extends WizardPage {
 
 	// Constructor
 	protected InputWizardPage(String pageName) {
-		// TEST!
 		super(pageName);
 		setTitle(Messages.InputWizard_title);
 		setDescription(Messages.InputWizard_header);
@@ -51,21 +50,17 @@ public class InputWizardPage extends WizardPage {
 		strFile = fd.open();
 		file = new File(strFile);
 		return null;
-
 	}
 
 	public IWizardPage getNextPage() {
 		if (fileChoosen()) {
 			return openFileDialog();
-
 		} else {
 			return getWizard().getPage("InputEditor Wizard");
 		}
-
 	}
 
 	public boolean canFlipToNextPage() {
 		return true;
-
 	}
 }

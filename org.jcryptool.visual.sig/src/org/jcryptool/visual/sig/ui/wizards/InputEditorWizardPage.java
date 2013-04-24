@@ -28,17 +28,18 @@ public class InputEditorWizardPage extends WizardPage {
 		setPageComplete(true);
 	}
 
-	// not needed .. later
-	public String getContent() {
-		// TODO Auto-generated method stub
-		return compositeEditor.getContent();
-	}
-
+	/*
 	public boolean editorChoosen() {
 		return composite.rdoFromEditor.getSelection();
 	}
+	*/
 	
-
-	
-
+	/*
+	 * tried to disabled the finish button.
+	 * TODO how to enable the finish button?
+	public boolean isPageComplete() {
+		return false;
+		
+	}
+	*/
 }

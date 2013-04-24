@@ -10,13 +10,10 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 public class InputWizard extends Wizard {
-	// The pages of the wizard to select a document
-	// or to enter a text
+	
+	// The pages of the wizard to select a document or to enter a text
 	private InputWizardPage page;
 	private InputEditorWizardPage pageEditor;
-
-	// private File file = null; // used later!!
-	private String content;
 
 	// Constructor
 	public InputWizard() {
@@ -33,18 +30,9 @@ public class InputWizard extends Wizard {
 		addPage(pageEditor);
 	}
 
-	// TODO OpenFile-Dialog should appear when user clicks the next button, not
-	// the finish button.
-	// implemented here only to try the Dialog
 	@Override
 	public boolean performFinish() {
 		return true;
 	}
 
-	/* 
-	 * used later..
-	public String getContent() {
-		return content;
-	}
-	*/
 }
