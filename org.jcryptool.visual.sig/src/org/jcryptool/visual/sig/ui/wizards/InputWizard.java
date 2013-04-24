@@ -15,7 +15,7 @@ public class InputWizard extends Wizard {
 	private InputWizardPage page;
 	private InputEditorWizardPage pageEditor;
 
-	private File file = null; // used later
+	// private File file = null; // used later!!
 	private String content;
 
 	// Constructor
@@ -38,27 +38,13 @@ public class InputWizard extends Wizard {
 	// implemented here only to try the Dialog
 	@Override
 	public boolean performFinish() {
-
-		if (page.fileChoosen()) {
-			String strFile = null;
-			FileDialog fd = new FileDialog(Display.getCurrent()
-					.getActiveShell(), SWT.OPEN);
-			// fd.setFilterExtensions(new String[] { "*.txt", "*.*" });
-			fd.setText("Open file");
-			strFile = fd.open();
-			file = new File(strFile);
-
-		} else {
-			// no content from editor yet
-			content = pageEditor.getContent();
-
-		}
-
 		return true;
 	}
 
+	/* 
+	 * used later..
 	public String getContent() {
 		return content;
 	}
-
+	*/
 }
