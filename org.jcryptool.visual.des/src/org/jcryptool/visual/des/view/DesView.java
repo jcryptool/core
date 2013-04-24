@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.des.algorithm.DESController;
 
 
@@ -54,6 +55,8 @@ public class DesView extends ViewPart {
 	ScrolledComposite wrapper = null;
 	TabFolder tfolder = null;
 	TabItem tabAlg = null;;
+	Label lblAlgTitle = null;
+	Label lblAlgInformationText = null;
 	Composite comAlg = null;
 	Composite comAlgHeader = null;
 	Label lblAlgorithm = null;
@@ -68,6 +71,7 @@ public class DesView extends ViewPart {
 	Group grpAlgInformation = null;
 	Group grpAlgStatus = null;
 	Text txtAlgStatus = null;
+	Composite comAlgMainTop = null;
 	Composite comAlgInputMode = null;
 	Composite comAlgInputKey = null;
 	Composite comAlgInputData = null;
@@ -120,6 +124,8 @@ public class DesView extends ViewPart {
 	Composite comFPoints = null;
 	Composite comFPointsHeader = null;
 	Label lblFPoints = null;
+	Label lblFPointsTitle = null;
+	Label lblFPointsInformationText = null;
 	Composite comFPointsMain = null;
 	Composite comFPointsMainDown = null;
 	Composite comFPointsMainLeft = null;
@@ -158,6 +164,8 @@ public class DesView extends ViewPart {
 	Composite comSBox = null;
 	Composite comSBoxHeader = null;
 	Label lblSBox = null;
+	Label lblSBoxTitle = null;
+	Label lblSBoxInformationText = null;
 	Composite comSBoxMain = null;
 	Composite comSBoxMainDown = null;
 	Composite comSBoxMainLeft = null;
@@ -221,7 +229,7 @@ public class DesView extends ViewPart {
 	    createSBoxTab();
 
 	    // Wrapper Final
-	    wrapper.setMinSize(1100, 760);
+	    wrapper.setMinSize(1100,780);
 		wrapper.setContent(tfolder);
 
 	    // Create DES Controller
@@ -274,11 +282,28 @@ public class DesView extends ViewPart {
 		comAlgMain = new Composite(comAlg, SWT.NONE);
 		comAlgMain.setLayout(new FormLayout());
 
+		lblAlgTitle = new Label(comAlgMain, SWT.NONE);
+		FormData fd_lblAlgTitle = new FormData();
+		fd_lblAlgTitle.left = new FormAttachment(0,10);
+		fd_lblAlgTitle.top = new FormAttachment(0,10);
+		lblAlgTitle.setLayoutData(fd_lblAlgTitle);
+		lblAlgTitle.setFont(FontService.getHeaderFont());
+		lblAlgTitle.setBounds(0, 3, 650, 15);
+		lblAlgTitle.setText(Messages.DesView_title);
+		
+		lblAlgInformationText = new Label(comAlgMain, SWT.NONE);
+		FormData fd_lblAlgInformationText = new FormData();
+		fd_lblAlgInformationText.top = new FormAttachment(lblAlgTitle,10);
+		fd_lblAlgInformationText.left = new FormAttachment(0,10);
+		lblAlgInformationText.setLayoutData(fd_lblAlgInformationText);
+		lblAlgInformationText.setBounds(0, 3, 650, 30);
+		lblAlgInformationText.setText(Messages.DesView_text);
+
 		comAlgMainLeft = new Composite(comAlgMain, SWT.NONE);
 		comAlgMainLeft.setLayout(new FillLayout(SWT.HORIZONTAL));
 		FormData fd_comAlgMainLeft = new FormData(250,500);
 		fd_comAlgMainLeft.left = new FormAttachment(0,10);
-		fd_comAlgMainLeft.top = new FormAttachment(0,10);
+		fd_comAlgMainLeft.top = new FormAttachment(lblAlgInformationText,10);
 		comAlgMainLeft.setLayoutData(fd_comAlgMainLeft);
 
 		comAlgMainRight = new Composite(comAlgMain, SWT.NONE);
@@ -286,7 +311,7 @@ public class DesView extends ViewPart {
 		FormData fd_comAlgMainRight = new FormData(600,500);
 		fd_comAlgMainRight.left = new FormAttachment(comAlgMainLeft, 10);
 		fd_comAlgMainRight.right = new FormAttachment(100, -10);
-		fd_comAlgMainRight.top = new FormAttachment(0,10);
+		fd_comAlgMainRight.top = new FormAttachment(lblAlgInformationText,10);
 		comAlgMainRight.setLayoutData(fd_comAlgMainRight);
 
 		comAlgMainDown = new Composite(comAlgMain, SWT.NONE);
@@ -918,6 +943,8 @@ public class DesView extends ViewPart {
 		fd_btnAlgEvaluate.left = new FormAttachment(btnAlgReset, 10);
 		btnAlgEvaluate.setLayoutData(fd_btnAlgEvaluate);
 		btnAlgEvaluate.setText(Messages.DesView_107);
+		
+	
 
 		btnAlgEvaluate.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -1019,17 +1046,36 @@ public class DesView extends ViewPart {
 		comFPointsMain = new Composite(comFPoints, SWT.NONE);
 		comFPointsMain.setLayout(new FormLayout());
 
+		
+		lblFPointsTitle = new Label(comFPointsMain, SWT.NONE);
+		FormData fd_lblFPointsTitle = new FormData();
+		fd_lblFPointsTitle.left = new FormAttachment(0,10);
+		fd_lblFPointsTitle.top = new FormAttachment(0,10);
+		lblFPointsTitle.setLayoutData(fd_lblFPointsTitle);
+		lblFPointsTitle.setFont(FontService.getHeaderFont());
+		lblFPointsTitle.setBounds(0, 3, 650, 15);
+		lblFPointsTitle.setText(Messages.DesView_title);
+		
+		lblFPointsInformationText = new Label(comFPointsMain, SWT.NONE);
+		FormData fd_lblFPointsInformationText = new FormData();
+		fd_lblFPointsInformationText.top = new FormAttachment(lblFPointsTitle,10);
+		fd_lblFPointsInformationText.left = new FormAttachment(0,10);
+		lblFPointsInformationText.setLayoutData(fd_lblFPointsInformationText);
+		lblFPointsInformationText.setBounds(0, 3, 650, 30);
+		lblFPointsInformationText.setText(Messages.DesView_text);
+		
+		
 		comFPointsMainLeft = new Composite(comFPointsMain, SWT.NONE);
 		comFPointsMainLeft.setLayout(new FillLayout(SWT.HORIZONTAL));
 		FormData fd_comFPointsMainLeft = new FormData(250,480);
 		fd_comFPointsMainLeft.left = new FormAttachment(0,10);
-		fd_comFPointsMainLeft.top = new FormAttachment(0,10);
+		fd_comFPointsMainLeft.top = new FormAttachment(lblFPointsInformationText,10);
 		comFPointsMainLeft.setLayoutData(fd_comFPointsMainLeft);
 
 		comFPointsMainRight = new Composite(comFPointsMain, SWT.NONE);
 		comFPointsMainRight.setLayout(new FormLayout());
 		FormData fd_comFPointsMainRight = new FormData(600,480);
-		fd_comFPointsMainRight.top = new FormAttachment(0,10);
+		fd_comFPointsMainRight.top = new FormAttachment(lblFPointsInformationText,10);
 		fd_comFPointsMainRight.left = new FormAttachment(comFPointsMainLeft,10);
 		fd_comFPointsMainRight.right = new FormAttachment(100,-10);
 		comFPointsMainRight.setLayoutData(fd_comFPointsMainRight);
@@ -1442,17 +1488,35 @@ public class DesView extends ViewPart {
 		comSBoxMain = new Composite(comSBox, SWT.NONE);
 		comSBoxMain.setLayout(new FormLayout());
 
+		lblSBoxTitle = new Label(comSBoxMain, SWT.NONE);
+		FormData fd_lblSBoxTitle = new FormData();
+		fd_lblSBoxTitle.left = new FormAttachment(0,10);
+		fd_lblSBoxTitle.top = new FormAttachment(0,10);
+		lblSBoxTitle.setLayoutData(fd_lblSBoxTitle);
+		lblSBoxTitle.setFont(FontService.getHeaderFont());
+		lblSBoxTitle.setBounds(0, 3, 650, 15);
+		lblSBoxTitle.setText(Messages.DesView_title);
+		
+		lblSBoxInformationText = new Label(comSBoxMain, SWT.NONE);
+		FormData fd_lblInformationText = new FormData();
+		fd_lblInformationText.top = new FormAttachment(lblSBoxTitle,10);
+		fd_lblInformationText.left = new FormAttachment(0,10);
+		lblSBoxInformationText.setLayoutData(fd_lblInformationText);
+		lblSBoxInformationText.setBounds(0, 3, 650, 30);
+		lblSBoxInformationText.setText(Messages.DesView_text);
+		
+		
 		comSBoxMainLeft = new Composite(comSBoxMain, SWT.NONE);
 		comSBoxMainLeft.setLayout(new FillLayout(SWT.HORIZONTAL));
 		FormData fd_comSBoxMainLeft = new FormData(250,480);
 		fd_comSBoxMainLeft.left = new FormAttachment(0,10);
-		fd_comSBoxMainLeft.top = new FormAttachment(0,10);
+		fd_comSBoxMainLeft.top = new FormAttachment(lblSBoxInformationText,10);
 		comSBoxMainLeft.setLayoutData(fd_comSBoxMainLeft);
 
 		comSBoxMainRight = new Composite(comSBoxMain, SWT.NONE);
 		comSBoxMainRight.setLayout(new FormLayout());
 		FormData fd_comSBoxMainRight = new FormData(600,480);
-		fd_comSBoxMainRight.top = new FormAttachment(0,10);
+		fd_comSBoxMainRight.top = new FormAttachment(lblSBoxInformationText,10);
 		fd_comSBoxMainRight.left = new FormAttachment(comSBoxMainLeft,10);
 		fd_comSBoxMainRight.right = new FormAttachment(100,-10);
 		comSBoxMainRight.setLayoutData(fd_comSBoxMainRight);
