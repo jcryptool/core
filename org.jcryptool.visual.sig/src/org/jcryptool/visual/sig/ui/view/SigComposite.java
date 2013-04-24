@@ -375,7 +375,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                    	 		newShell.setSize(300, 600);
                    	 } 
                     };
-                    if (dialog.open() == Window.OK) {
+                    if (dialog.open() == Window.OK) { 
                     	//get signature method (integer)
                     	signature = wiz.getSignature();
                     	lblSignature.setText(signatures[signature]);
