@@ -411,10 +411,17 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private void Reset (int step) {
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
-			case 0: btnHash.setEnabled(false); lblHash.setText(""); //btnSignature.setEnabled(false); btnOpenInEditor.setEnabled(false); break;
-			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); //btnOpenInEditor.setEnabled(false); break;
+			case 0: btnHash.setEnabled(false); lblHash.setText(""); 
+			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); 
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
+		}
+		//Temporary!!
+		switch (step) {
+			case 0: lblProgress.setText(Messages.SigComposite_lblProgress1); break;
+			case 1: lblProgress.setText(Messages.SigComposite_lblProgress2); break;
+			case 2: lblProgress.setText(Messages.SigComposite_lblProgress3); break;
+			default: break;
 		}
 		tabDescription.setSelection(step);
 		//redraw canvas (to reset the arrows)
