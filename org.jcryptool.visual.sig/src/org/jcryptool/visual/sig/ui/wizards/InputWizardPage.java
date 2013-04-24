@@ -59,15 +59,13 @@ public class InputWizardPage extends WizardPage {
 			return openFileDialog();
 
 		} else {
-			// no content from editor yet
-			// content = pageEditor.getContent();
-			return null;
+			return getWizard().getPage("InputEditor Wizard");
 		}
 
 	}
-	
+
 	public boolean canFlipToNextPage() {
 		return true;
-		
+
 	}
 }

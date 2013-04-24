@@ -15,8 +15,5 @@ public class InputEditorComposite extends Composite {
 		return null;
 	}
 
-	public IWizardPage getNextPage() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 }
