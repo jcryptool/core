@@ -26,7 +26,7 @@ public class InputWizardPage extends WizardPage {
 		composite = new InputComposite(parent, NONE);
 		// composite.setBounds(x, y, width, height);
 		setControl(composite);
-		setPageComplete(true);
+		setPageComplete(false);
 	}
 
 	/*
