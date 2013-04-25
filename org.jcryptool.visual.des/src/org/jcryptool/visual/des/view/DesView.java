@@ -282,6 +282,8 @@ public class DesView extends ViewPart {
 		comAlgMain = new Composite(comAlg, SWT.NONE);
 		comAlgMain.setLayout(new FormLayout());
 
+		
+		// create title
 		lblAlgTitle = new Label(comAlgMain, SWT.NONE);
 		FormData fd_lblAlgTitle = new FormData();
 		fd_lblAlgTitle.left = new FormAttachment(0,10);
@@ -291,6 +293,7 @@ public class DesView extends ViewPart {
 		lblAlgTitle.setBounds(0, 3, 650, 15);
 		lblAlgTitle.setText(Messages.DesView_title);
 		
+		// create title - text
 		lblAlgInformationText = new Label(comAlgMain, SWT.NONE);
 		FormData fd_lblAlgInformationText = new FormData();
 		fd_lblAlgInformationText.top = new FormAttachment(lblAlgTitle,10);
@@ -1046,7 +1049,7 @@ public class DesView extends ViewPart {
 		comFPointsMain = new Composite(comFPoints, SWT.NONE);
 		comFPointsMain.setLayout(new FormLayout());
 
-		
+		// create title
 		lblFPointsTitle = new Label(comFPointsMain, SWT.NONE);
 		FormData fd_lblFPointsTitle = new FormData();
 		fd_lblFPointsTitle.left = new FormAttachment(0,10);
@@ -1056,6 +1059,7 @@ public class DesView extends ViewPart {
 		lblFPointsTitle.setBounds(0, 3, 650, 15);
 		lblFPointsTitle.setText(Messages.DesView_title);
 		
+		// create title - text
 		lblFPointsInformationText = new Label(comFPointsMain, SWT.NONE);
 		FormData fd_lblFPointsInformationText = new FormData();
 		fd_lblFPointsInformationText.top = new FormAttachment(lblFPointsTitle,10);
@@ -1488,6 +1492,7 @@ public class DesView extends ViewPart {
 		comSBoxMain = new Composite(comSBox, SWT.NONE);
 		comSBoxMain.setLayout(new FormLayout());
 
+		// create title
 		lblSBoxTitle = new Label(comSBoxMain, SWT.NONE);
 		FormData fd_lblSBoxTitle = new FormData();
 		fd_lblSBoxTitle.left = new FormAttachment(0,10);
@@ -1497,6 +1502,7 @@ public class DesView extends ViewPart {
 		lblSBoxTitle.setBounds(0, 3, 650, 15);
 		lblSBoxTitle.setText(Messages.DesView_title);
 		
+		// create title - text
 		lblSBoxInformationText = new Label(comSBoxMain, SWT.NONE);
 		FormData fd_lblInformationText = new FormData();
 		fd_lblInformationText.top = new FormAttachment(lblSBoxTitle,10);
