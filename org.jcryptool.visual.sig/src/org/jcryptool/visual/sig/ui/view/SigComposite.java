@@ -303,7 +303,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		    	try {
 		    		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		    		Reset(0);
-		    		/*
+		    		
 		    		//Create the HashWirard
                     InputWizard wiz = new InputWizard();
                     //Display it
@@ -320,16 +320,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	//Activate the second tab of the description
                     	tabDescription.setSelection(1);
                     	canvas1.redraw();
-                    	lblProgress.setText(Messages.SigComposite_lblProgress2);  
+                    	 lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));  
                     }//end if
-                    */
-                  //Enable to select the hash method
+                    
+		    		/*
+		    		//--------------
+                    //Enable to select the hash method
                 	btnHash.setEnabled(true); 
                 	//Activate the second tab of the description
                 	tabDescription.setSelection(1);
                 	canvas1.redraw();
                 	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));    
-                	
+                	//-----------------
+                	 */
 		        } //end try
 		    	catch (Exception ex) {
 		        }//end catch

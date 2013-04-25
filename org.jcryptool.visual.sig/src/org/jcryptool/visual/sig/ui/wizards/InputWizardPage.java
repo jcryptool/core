@@ -49,6 +49,7 @@ public class InputWizardPage extends WizardPage {
 		fd.setText("Open file");
 		strFile = fd.open();
 		file = new File(strFile);
+		setPageComplete(true);
 		return null;
 	}
 
