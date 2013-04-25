@@ -44,6 +44,9 @@ public class SignCert implements Views {
 		cmb_priv_key.add("Privater Schlüssel #4");
 		cmb_priv_key.select(0);
 
+		Button btn_detail = new Button (signCertGroup, SWT.CHECK);
+		btn_detail.setText("Signiervorgang visualisieren");
+		
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
 		btn_sign.setText("Mit ausgewähltem Schlüssel signieren");
 		Label lbl_exp = (Label) exp.getChildren()[0];

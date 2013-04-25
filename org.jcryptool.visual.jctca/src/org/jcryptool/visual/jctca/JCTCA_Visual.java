@@ -183,6 +183,8 @@ public class JCTCA_Visual extends ViewPart {
 		CertificationTab ca = new CertificationTab(tabFolder, grp_explain,
 				SWT.NONE);
 		SecondUserTab scndUser = new SecondUserTab(tabFolder, grp_explain, SWT.NONE);
+		
+		tabFolder.setSelection(0);
 		composite.layout(true);
 	}
 

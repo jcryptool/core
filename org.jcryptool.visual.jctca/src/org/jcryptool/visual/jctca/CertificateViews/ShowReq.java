@@ -84,8 +84,8 @@ public class ShowReq implements Views {
 		btn_reject_request.setText("Anfrage ablehnen");
 		
 		
-		Label lbl_exp = (Label)exp.getChildren()[0];	
-        lbl_exp.setText("Hi, I explain what is going on in Show Request!");
+//		Label lbl_exp = (Label)exp.getChildren()[0];	
+//       lbl_exp.setText("Hi, I explain what is going on in Show Request!");
 		
 		
 	}

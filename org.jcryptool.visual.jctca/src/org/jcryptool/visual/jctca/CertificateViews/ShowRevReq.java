@@ -115,8 +115,8 @@ public class ShowRevReq implements Views {
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
 
-	    Label lbl_exp = (Label)exp.getChildren()[0];
-        lbl_exp.setText("Hi, I explain what is going on in Show Revocation Request!");
+//	    Label lbl_exp = (Label)exp.getChildren()[0];
+//        lbl_exp.setText("Hi, I explain what is going on in Show Revocation Request!");
         
         String ausweis = "icons/ausweis.jpeg";
 		Label lbl_img = new Label(right, SWT.NONE);

@@ -39,16 +39,16 @@ public class TabItemListener implements SelectionListener {
 					// +
 					// "Unter \"Neues Zertifikat anfordern\" haben Sie die Möglichkeit, ein Zertifikat für einen öffentlichen Schlüssel anzufordern. Sollten Sie noch kein Schlüsselpaar haben, so können Sie sich eines generieren lassen.\nUnter \"Zertifikate verwalten\" können Sie sich, wenn Sie bereits ausgestellte Zertifikate haben, diese anzeigen lassen. Dort haben Sie außerdem die Möglichkeit, Zertifikate zu widerrufen.\nUnter \"Text oder Datei signieren\" können Sie Signaturen für von Ihnen eingegebenen Text oder Dateien auf Ihrem Computer erstellen.\n\n"
 					+ "Wählen Sie eine der Aktionen aus, um fortzufahren und weitere Informationen dazu zu erhalten.\nWenn Sie dieses Plugin zum ersten Mal ausführen, empfiehlt es sich, mit \"Neues Zertifikat anfordern\" zu beginnen.");
-			Group x = (Group) (parent.getChildren()[0]);
-			Control[] foo = x.getChildren();
-			System.out.println(foo.length);
-			System.out.println(foo[0].getClass());
-			System.out.println(foo[1].getClass());
-			Composite right = (Composite) foo[1];
-			if (right.getChildren().length > 0) {
-				Composite right2 = (Composite) right.getChildren()[0];
-				right2.dispose();
-				x.layout(true);
+			
+			Control[] x = (parent.getChildren());
+			if(x.length>0){
+				Control[] foo = ((Group)x[0]).getChildren();
+				Composite right = (Composite) foo[1];
+				if (right.getChildren().length > 0) {
+					Composite right2 = (Composite) right.getChildren()[0];
+					right2.dispose();
+					((Group)x[0]).layout(true);
+				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
 			lbl_exp.setText("Die \"Registration Authority\" (RA) ist die Entität einer PKI, die dafür zuständig ist, festzustellen, ob Zertifikatsanfragen authentisch sind oder nicht. Im Zusammenhang mit einem persönlichen Zertifikat wie in diesem Fall bedeutet das, dass der Antragsteller auch wirklich die Person ist, für die das Zertifikat beantragt wird.\n\n"
