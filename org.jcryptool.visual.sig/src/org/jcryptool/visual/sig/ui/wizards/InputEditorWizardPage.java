@@ -1,13 +1,12 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
 public class InputEditorWizardPage extends WizardPage {
 
 	private InputEditorComposite compositeEditor;
-	private InputComposite composite;
+	//private InputComposite composite;
 
 	protected InputEditorWizardPage(String pageName) {
 		super(pageName);
@@ -34,12 +33,4 @@ public class InputEditorWizardPage extends WizardPage {
 	}
 	*/
 	
-	/*
-	 * tried to disabled the finish button.
-	 * TODO how to enable the finish button?
-	public boolean isPageComplete() {
-		return false;
-		
-	}
-	*/
 }

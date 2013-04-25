@@ -16,19 +16,14 @@ public class InputEditorComposite extends Composite {
 	public InputEditorComposite(Composite parent, int style) {
 		super(parent, style);
 		
-		Label lblEnterTextHere = new Label(this, SWT.NONE);
-		lblEnterTextHere.setBounds(10, 10, 86, 15);
-		// TODO
-		lblEnterTextHere.setText("textbox");
-		
 		text = new Text(this, SWT.BORDER | SWT.WRAP);
-		text.setBounds(10, 31, 430, 124);
+		text.setBounds(10, 10, 430, 215);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         
         Label lblToSaveThe = new Label(this, SWT.NONE);
-        lblToSaveThe.setBounds(10, 161, 167, 15);
-        lblToSaveThe.setText("to save the text click ...");
+        lblToSaveThe.setBounds(10, 231, 167, 15);
+        lblToSaveThe.setText("to save the text click finish");
 		// TODO Auto-generated constructor stub
 	}
 
