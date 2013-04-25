@@ -6,9 +6,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 
 public class SignatureComposite extends Composite implements PaintListener{
 	private Group grpSignatures;
+	private Text txtDescription;
 	
 	//Constructor
 	public SignatureComposite(Composite parent, int style) {
@@ -50,6 +52,9 @@ public class SignatureComposite extends Composite implements PaintListener{
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
 		grpDescription.setBounds(10, 188, 250, 163);
+		
+		txtDescription = new Text(grpDescription, SWT.BORDER);
+		txtDescription.setBounds(10, 10, 226, 126);
 	}
 
 	@Override

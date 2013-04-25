@@ -8,10 +8,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 
 //Contains the elements (2 group boxes) of the HashWizard
 public class HashComposite extends Composite implements PaintListener {
 	private Group grpHashes;
+	private Text txtDescription;
 
 	//Constructor
 	 public HashComposite(Composite parent, int style) {
@@ -34,6 +36,9 @@ public class HashComposite extends Composite implements PaintListener {
 		grpDescription.setLayoutData(gd_grpDescription);
 		grpDescription.setText(Messages.HashWizard_grpDescription);
 		grpDescription.setBounds(10, 186, 250, 163);
+		
+		txtDescription = new Text(grpDescription, SWT.BORDER);
+		txtDescription.setBounds(10, 10, 226, 126);
 		
 		setSize(new Point(273, 360));
 		
@@ -78,5 +83,4 @@ public class HashComposite extends Composite implements PaintListener {
 	public Group getGrpHashes() {
 		return grpHashes;
 	}
-
 }

@@ -46,7 +46,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Button btnHash;
 	private Button btnSignature;
 	private Button btnOpenInEditor;
-	private Button btnChooseImput;
+	private Button btnChooseInput;
 	private Button btnReset;
 	private Label lblProgress;
 	private Label lblHash;
@@ -185,7 +185,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		
 		lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
 		lblProgress.setBounds(490, 491, 83, 14);
-		lblProgress.setText(Messages.SigComposite_lblProgress1);  
+		lblProgress.setText(String.format(Messages.SigComposite_lblProgress,1));  
 		
 		lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
 		lblSignature.setText(Messages.SigComposite_lblSignature);
@@ -194,9 +194,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		canvas1 = new Canvas(grpSignatureGeneration, SWT.NONE);
 		canvas1.setBounds(34, 21, 628, 392);
 		
-		btnChooseImput = new Button(canvas1, SWT.NONE);
-		btnChooseImput.setBounds(0, 0, 136, 41);
-		btnChooseImput.setText(Messages.SigComposite_btnChooseImput);
+		btnChooseInput = new Button(canvas1, SWT.NONE);
+		btnChooseInput.setBounds(0, 0, 136, 41);
+		btnChooseInput.setText(Messages.SigComposite_btnChooseInput);
 		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
 		grpSignedDoc.setBounds(463, 207, 212, 258);
@@ -296,13 +296,14 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	 */
 	public void createEvents() {
 		//Adds a Listener for the document
-		btnChooseImput.addSelectionListener(new SelectionListener() {
+		btnChooseInput.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) {
 		    }
 		    public void widgetSelected(SelectionEvent e) {
 		    	try {
 		    		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		    		Reset(0);
+		    		/*
 		    		//Create the HashWirard
                     InputWizard wiz = new InputWizard();
                     //Display it
@@ -321,6 +322,14 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	canvas1.redraw();
                     	lblProgress.setText(Messages.SigComposite_lblProgress2);  
                     }//end if
+                    */
+                  //Enable to select the hash method
+                	btnHash.setEnabled(true); 
+                	//Activate the second tab of the description
+                	tabDescription.setSelection(1);
+                	canvas1.redraw();
+                	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));    
+                	
 		        } //end try
 		    	catch (Exception ex) {
 		        }//end catch
@@ -353,7 +362,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                         //Activate the third tab of the description
                         tabDescription.setSelection(2);
                         canvas1.redraw();
-                        lblProgress.setText(Messages.SigComposite_lblProgress3); 
+                        lblProgress.setText(String.format(Messages.SigComposite_lblProgress,3));   
                     }//end if
                 } catch (Exception ex) {
                 }
@@ -383,7 +392,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	//Activate the second tab of the description
                     	tabDescription.setSelection(3);
                     	canvas1.redraw();
-                    	lblProgress.setText(Messages.SigComposite_lblProgress4); 
+                    	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
                     }
                 } catch (Exception ex) {
                     //LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -409,6 +418,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	 * @param step the step to which the progress will be reset (valid numbers: 0-2)
 	 */
 	private void Reset (int step) {
+		String s = String.format(Messages.SigComposite_lblProgress, step+1);
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
 			case 0: btnHash.setEnabled(false); lblHash.setText(""); 
@@ -417,12 +427,13 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			default: break;	
 		}
 		//Temporary!!
-		switch (step) {
-			case 0: lblProgress.setText(Messages.SigComposite_lblProgress1); break;
-			case 1: lblProgress.setText(Messages.SigComposite_lblProgress2); break;
-			case 2: lblProgress.setText(Messages.SigComposite_lblProgress3); break;
-			default: break;
-		}
+//		switch (step) {
+//			case 0: lblProgress.setText(Messages.SigComposite_lblProgress); break;
+//			case 1: lblProgress.setText(Messages.SigComposite_lblProgress); break;
+//			case 2: lblProgress.setText(Messages.SigComposite_lblProgress); break;
+//			default: break;
+//		}
+		lblProgress.setText(s);
 		tabDescription.setSelection(step);
 		//redraw canvas (to reset the arrows)
 		canvas1.redraw();
