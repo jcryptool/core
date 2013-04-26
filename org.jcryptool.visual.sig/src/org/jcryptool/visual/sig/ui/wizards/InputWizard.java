@@ -32,7 +32,7 @@ public class InputWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		return true;
+		return page.isPageComplete() || pageEditor.isPageComplete();
 	}
 
 }

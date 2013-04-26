@@ -1,6 +1,8 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -8,23 +10,51 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 
 public class InputEditorComposite extends Composite {
-	
-	// Limit for the length of the text that might be entered into the plaintext field
+
+	// Limit for the length of the text that might be entered into the plaintext
+	// field
 	private static final int TEXTLIMIT = 150;
-	private Text text;
+	private Text text = null;
+	//private String content = null;
+	
 
 	public InputEditorComposite(Composite parent, int style) {
 		super(parent, style);
-		
+
 		text = new Text(this, SWT.BORDER | SWT.WRAP);
 		text.setBounds(10, 10, 430, 215);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        text.setTextLimit(TEXTLIMIT);
-        
-        Label lblToSaveThe = new Label(this, SWT.NONE);
-        lblToSaveThe.setBounds(10, 231, 167, 15);
-        lblToSaveThe.setText("to save the text click finish");
+		text.setTextLimit(TEXTLIMIT);
+
+		Label lblToSaveThe = new Label(this, SWT.NONE);
+		lblToSaveThe.setBounds(10, 231, 167, 15);
+		lblToSaveThe.setText("to save the text click finish");
 		// TODO Auto-generated constructor stub
+
+		// ????
+		// setPageComplete() in InputeditorWizardPage ... how can I access??
+/*		
+		text.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				// TODO Auto-generated method stub
+				setPageComplete(!((Text) e.widget).getText().equals(""));
+			}
+
+		});	
+*/		
+		//content = getText();
+	}
+/*
+	// temporary created to undo error in line 42...
+	protected void setPageComplete(boolean b) {
+		// TODO Auto-generated method stub
+	}
+*/
+	public String getText() {
+		return text.getText();
+		
 	}
 
 }

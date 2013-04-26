@@ -15,6 +15,9 @@ public class InputWizardPage extends WizardPage {
 	private InputComposite composite;
 	File file = null;
 
+	private boolean enableNext = true;
+	private boolean enableFinish = false;
+	
 	// Constructor
 	protected InputWizardPage(String pageName) {
 		super(pageName);
@@ -26,16 +29,9 @@ public class InputWizardPage extends WizardPage {
 		composite = new InputComposite(parent, NONE);
 		// composite.setBounds(x, y, width, height);
 		setControl(composite);
-		setPageComplete(false);
+		setPageComplete(enableFinish);
 	}
 
-	/*
-	 * public IWizardPage getNextPage() { if
-	 * (composite.rdoFromFile.getSelection()) { return
-	 * getWizard().getPage("file"); } return getWizard().getPage("editor");
-	 * 
-	 * }
-	 */
 
 	public boolean fileChoosen() {
 		return composite.rdoFromFile.getSelection();
@@ -49,12 +45,14 @@ public class InputWizardPage extends WizardPage {
 		fd.setText("Open file");
 		strFile = fd.open();
 		file = new File(strFile);
-		setPageComplete(true);
+		setPageComplete(enableFinish);
 		return null;
 	}
 
 	public IWizardPage getNextPage() {
 		if (fileChoosen()) {
+			enableNext = false;
+			enableFinish = true;
 			return openFileDialog();
 		} else {
 			return getWizard().getPage("InputEditor Wizard");
@@ -62,6 +60,7 @@ public class InputWizardPage extends WizardPage {
 	}
 
 	public boolean canFlipToNextPage() {
-		return true;
+		return enableNext;
 	}
+
 }

@@ -6,7 +6,6 @@ import org.eclipse.swt.widgets.Composite;
 public class InputEditorWizardPage extends WizardPage {
 
 	private InputEditorComposite compositeEditor;
-	//private InputComposite composite;
 
 	protected InputEditorWizardPage(String pageName) {
 		super(pageName);
@@ -14,7 +13,6 @@ public class InputEditorWizardPage extends WizardPage {
 
 		setTitle(Messages.InputEditorWizard_title);
 		setDescription(Messages.InputEditorWizard_header);
-		setPageComplete(true);
 
 	}
 
@@ -25,12 +23,8 @@ public class InputEditorWizardPage extends WizardPage {
 		compositeEditor = new InputEditorComposite(parent, NONE);
 		// composite.setBounds(x, y, width, height);
 		setControl(compositeEditor);
+		setPageComplete(false);
 	}
 
-	/*
-	public boolean editorChoosen() {
-		return composite.rdoFromEditor.getSelection();
-	}
-	*/
-	
+
 }
