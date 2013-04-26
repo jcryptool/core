@@ -22,10 +22,6 @@ public class Messages {
 	public static String SigComposite_txtDescriptionOfStep2;
 	public static String SigComposite_txtDescriptionOfStep3;
 	public static String SigComposite_txtDescriptionOfStep4;
-	//public static String SigComposite_lblProgress1;
-	//public static String SigComposite_lblProgress2;
-	//public static String SigComposite_lblProgress3;
-	//public static String SigComposite_lblProgress4;
 	public static String SigComposite_txtSignature;
 	public static String SigComposite_btnSignature;
 	public static String SigComposite_btnHash;

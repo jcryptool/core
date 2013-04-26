@@ -2,15 +2,24 @@ package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 
-public class SignatureComposite extends Composite implements PaintListener{
+public class SignatureComposite extends Composite implements PaintListener, SelectionListener{
 	private Group grpSignatures;
 	private Text txtDescription;
+	private Button rdo1;
+	private Button rdo2;
+	private Button rdo3;
+	private Button rdo4;
+	private Button rdo5;
 	
 	//Constructor
 	public SignatureComposite(Composite parent, int style) {
@@ -28,33 +37,43 @@ public class SignatureComposite extends Composite implements PaintListener{
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
 		grpSignatures.setBounds(10, 10, 250, 170);
 		
-		Button btnRadioButton = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton.setSelection(true);
-		btnRadioButton.setBounds(10, 19, 118, 18);
-		btnRadioButton.setText(Messages.SignatureWizard_rdomd5);
+		rdo1 = new Button(grpSignatures, SWT.RADIO);
+		rdo1.setSelection(true);
+		rdo1.setBounds(10, 19, 118, 18);
+		rdo1.setText(Messages.SignatureWizard_rdomd5);
 		
-		Button btnRadioButton_1 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_1.setBounds(10, 43, 118, 18);
-		btnRadioButton_1.setText(Messages.SignatureWizard_rdosha1);
+		rdo2 = new Button(grpSignatures, SWT.RADIO);
+		rdo2.setBounds(10, 43, 118, 18);
+		rdo2.setText(Messages.SignatureWizard_rdosha1);
 		
-		Button btnRadioButton_2 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_2.setBounds(10, 67, 118, 18);
-		btnRadioButton_2.setText(Messages.SignatureWizard_rdosha256);
+		rdo3 = new Button(grpSignatures, SWT.RADIO);
+		rdo3.setBounds(10, 67, 118, 18);
+		rdo3.setText(Messages.SignatureWizard_rdosha256);
 		
-		Button btnRadioButton_3 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_3.setBounds(10, 91, 118, 18);
-		btnRadioButton_3.setText(Messages.SignatureWizard_rdosha384);
+		rdo4 = new Button(grpSignatures, SWT.RADIO);
+		rdo4.setBounds(10, 91, 118, 18);
+		rdo4.setText(Messages.SignatureWizard_rdosha384);
 		
-		Button btnRadioButton_4 = new Button(grpSignatures, SWT.RADIO);
-		btnRadioButton_4.setBounds(10, 115, 118, 18);
-		btnRadioButton_4.setText(Messages.SignatureWizard_rdosha512);
+		rdo5 = new Button(grpSignatures, SWT.RADIO);
+		rdo5.setBounds(10, 115, 118, 18);
+		rdo5.setText(Messages.SignatureWizard_rdosha512);
 		
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
 		grpDescription.setBounds(10, 188, 250, 163);
 		
-		txtDescription = new Text(grpDescription, SWT.BORDER);
+		txtDescription = new Text(grpDescription, SWT.WRAP);
+		txtDescription.setEditable(false);
 		txtDescription.setBounds(10, 10, 226, 126);
+		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
+		txtDescription.setText(Messages.HashWizard_rdomd5_description);
+		
+		 //Add event listeners
+	    rdo1.addSelectionListener(this);
+	    rdo2.addSelectionListener(this);
+	    rdo3.addSelectionListener(this);
+	    rdo4.addSelectionListener(this);
+	    rdo5.addSelectionListener(this);
 	}
 
 	@Override
@@ -68,5 +87,30 @@ public class SignatureComposite extends Composite implements PaintListener{
 	 */
 	public Group getgrpSignatures() {
 		return grpSignatures;
+	}
+
+	@Override
+	public void widgetSelected(SelectionEvent e) {
+		if (rdo1.getSelection()) 
+			txtDescription.setText(Messages.HashWizard_rdomd5_description);
+
+		if (rdo2.getSelection()) 
+			txtDescription.setText(Messages.HashWizard_rdosha1_description);
+		
+		if (rdo3.getSelection()) 
+			txtDescription.setText(Messages.HashWizard_rdosha256_description);
+		
+		if (rdo4.getSelection()) 
+			txtDescription.setText(Messages.HashWizard_rdosha384_description);
+		
+		if (rdo5.getSelection()) 
+			txtDescription.setText(Messages.HashWizard_rdosha512_description);
+		
+	}//end widgetSelected
+
+	@Override
+	public void widgetDefaultSelected(SelectionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

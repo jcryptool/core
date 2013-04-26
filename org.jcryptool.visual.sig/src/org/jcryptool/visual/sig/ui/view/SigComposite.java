@@ -120,7 +120,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
 		grpSignatureGeneration.setBounds(10, 75, 699, 538);
 		
-		lblHash = new Label(grpSignatureGeneration, SWT.NONE);
+		lblHash = new Label(grpSignatureGeneration, SWT.NONE | SWT.TRANSPARENT);
 		lblHash.setBounds(34, 246, 136, 14);
 		lblHash.setText(Messages.SigComposite_lblHash); 
 		//btnOpenDocumentTemp.setVisible(false);
@@ -130,7 +130,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnHash.setBounds(34, 184, 136, 60);
 		btnHash.setText(Messages.SigComposite_btnHash);
 		
-		txtHash = new Text(grpSignatureGeneration, SWT.BORDER);
+		txtHash = new Text(grpSignatureGeneration, SWT.BORDER | SWT.WRAP);
 		txtHash.setBounds(34, 365, 136, 56);
 		txtHash.setEditable(false);
 		txtHash.setText("<Hash>");
@@ -146,7 +146,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0); 
 		
-		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI);
+		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP);
 		txtDescriptionOfStep1.setBackground(grey);
 		txtDescriptionOfStep1.setEditable(false);
 		txtDescriptionOfStep1.setText(Messages.SigComposite_txtDescriptionOfStep1);
@@ -155,7 +155,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1); 
 		
-		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE);
+		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
 		txtDescriptionOfStep2.setBackground(grey);
 		txtDescriptionOfStep2.setEditable(false);
 		txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2);
@@ -164,7 +164,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2); 
 		
-		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE);
+		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
 		txtDescriptionOfStep3.setBackground(grey);
 		txtDescriptionOfStep3.setEditable(false);
 		txtDescriptionOfStep3.setText(Messages.SigComposite_txtDescriptionOfStep3);
@@ -173,7 +173,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 		
-		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE);
+		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
 		txtDescriptionOfStep4.setBackground(grey);
 		txtDescriptionOfStep4.setEditable(false);
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
@@ -202,7 +202,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		grpSignedDoc.setBounds(463, 207, 212, 258);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
-		txtSignature = new Text(grpSignedDoc, SWT.BORDER);
+		txtSignature = new Text(grpSignedDoc, SWT.BORDER | SWT.WRAP);
 		txtSignature.setText(""); 
 		txtSignature.setBounds(10, 143, 188, 56);
 		

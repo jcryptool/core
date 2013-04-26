@@ -25,6 +25,7 @@ public class Messages {
 	public static String HashWizard_rdosha256;
 	public static String HashWizard_rdosha384;
 	public static String HashWizard_rdosha512;
+	public static String InputWizard_FileOpenDialog;
 	//SignatureWizard
 	//Group box 1 text
 	public static String SignatureWizard_grpSignatures;

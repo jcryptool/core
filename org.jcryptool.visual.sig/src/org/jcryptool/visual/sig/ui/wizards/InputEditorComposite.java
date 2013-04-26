@@ -1,6 +1,5 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -15,10 +14,10 @@ public class InputEditorComposite extends Composite {
 	// field
 	private static final int TEXTLIMIT = 150;
 	private Text text = null;
-	//private String content = null;
+	private InputEditorWizardPage page;
 	
 
-	public InputEditorComposite(Composite parent, int style) {
+	public InputEditorComposite(Composite parent, int style, InputEditorWizardPage p) {
 		super(parent, style);
 
 		text = new Text(this, SWT.BORDER | SWT.WRAP);
@@ -29,29 +28,30 @@ public class InputEditorComposite extends Composite {
 		Label lblToSaveThe = new Label(this, SWT.NONE);
 		lblToSaveThe.setBounds(10, 231, 167, 15);
 		lblToSaveThe.setText("to save the text click finish");
-		// TODO Auto-generated constructor stub
+		
+		page = p;
 
-		// ????
-		// setPageComplete() in InputeditorWizardPage ... how can I access??
-/*		
 		text.addModifyListener(new ModifyListener() {
-
 			@Override
 			public void modifyText(ModifyEvent e) {
-				// TODO Auto-generated method stub
-				setPageComplete(!((Text) e.widget).getText().equals(""));
+				if (text.getText().length() > 0) {
+					page.setPageComplete(true);
+					page.canFlipToNextPage();
+					page.getWizard().getContainer().updateButtons();
+					
+					//boolean b = page.getWizard().canFinish();
+					//b = page.isPageComplete();
+					//page.setPageComplete(true);
+				}
+				else {
+					page.setPageComplete(false);
+					page.getWizard().getContainer().updateButtons();
+					page.setErrorMessage("Please enter a text");
+				}
 			}
+		});		
+	}//end Constructor
 
-		});	
-*/		
-		//content = getText();
-	}
-/*
-	// temporary created to undo error in line 42...
-	protected void setPageComplete(boolean b) {
-		// TODO Auto-generated method stub
-	}
-*/
 	public String getText() {
 		return text.getText();
 		

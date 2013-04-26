@@ -1,20 +1,16 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import java.io.File;
-
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 
 public class InputComposite extends Composite implements PaintListener {
 	
-	Button rdoFromFile;
-	Button rdoFromEditor;
+	private Button rdoFromFile;
+	private Button rdoFromEditor;
 
 	// Constructor
 	public InputComposite(Composite parent, int style) {
@@ -47,12 +43,18 @@ public class InputComposite extends Composite implements PaintListener {
 		// TODO Auto-generated method stub
 	}
 
-	public boolean fileIsChoosen() {
-		return rdoFromFile.getSelection();
+	/**
+	 * @return the rdoFromFile
+	 */
+	public Button getRdoFromFile() {
+		return rdoFromFile;
 	}
 
-	public IWizardPage getNextPage() {
-		return null;
+	/**
+	 * @return the rdoFromEditor
+	 */
+	public Button getRdoFromEditor() {
+		return rdoFromEditor;
 	}
 
 }
