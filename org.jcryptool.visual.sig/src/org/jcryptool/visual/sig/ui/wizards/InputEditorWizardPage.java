@@ -13,6 +13,7 @@ public class InputEditorWizardPage extends WizardPage {
 
 		setTitle(Messages.InputEditorWizard_title);
 		setDescription(Messages.InputEditorWizard_header);
+		setPageComplete(true);
 
 	}
 
@@ -23,7 +24,7 @@ public class InputEditorWizardPage extends WizardPage {
 		compositeEditor = new InputEditorComposite(parent, NONE);
 		// composite.setBounds(x, y, width, height);
 		setControl(compositeEditor);
-		setPageComplete(false);
+		
 	}
 
 
