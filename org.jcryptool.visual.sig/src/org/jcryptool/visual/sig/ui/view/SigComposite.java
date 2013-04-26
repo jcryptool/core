@@ -118,7 +118,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
-		grpSignatureGeneration.setBounds(10, 75, 699, 538);
+		grpSignatureGeneration.setBounds(10, 75, 699, 548);
 		
 		lblHash = new Label(grpSignatureGeneration, SWT.NONE | SWT.TRANSPARENT);
 		lblHash.setBounds(34, 246, 136, 14);
@@ -180,11 +180,11 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
 		btnReset = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReset.setBounds(581, 485, 94, 26);
+		btnReset.setBounds(581, 495, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
 		
 		lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
-		lblProgress.setBounds(490, 491, 83, 14);
+		lblProgress.setBounds(490, 501, 83, 14);
 		lblProgress.setText(String.format(Messages.SigComposite_lblProgress,1));  
 		
 		lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
@@ -199,12 +199,12 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnChooseInput.setText(Messages.SigComposite_btnChooseInput);
 		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 207, 212, 258);
+		grpSignedDoc.setBounds(463, 215, 212, 258);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
 		txtSignature = new Text(grpSignedDoc, SWT.BORDER | SWT.WRAP);
 		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 143, 188, 56);
+		txtSignature.setBounds(10, 133, 188, 56);
 		
 		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
 		btnOpenInEditor.setEnabled(false);
@@ -253,7 +253,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
         imD = id.getImageData();
         img = new Image(Display.getCurrent(), imD);
         //gc.drawImage(img, 10, 0); Bring to front!
-        gc.drawImage(img, width-130, height-170);
+        //Draw second document icon
+        gc.drawImage(img, width-130, height-160);
         
         gc.setBackground(lightgrey); 
         //Color the all the areas in lightgrey

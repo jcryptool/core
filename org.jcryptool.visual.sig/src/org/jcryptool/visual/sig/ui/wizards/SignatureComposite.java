@@ -60,11 +60,11 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 		
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
-		grpDescription.setBounds(10, 188, 250, 163);
+		grpDescription.setBounds(10, 195, 250, 163);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP);
 		txtDescription.setEditable(false);
-		txtDescription.setBounds(10, 10, 226, 126);
+		txtDescription.setBounds(10, 20, 226, 116);
 		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
 		txtDescription.setText(Messages.HashWizard_rdomd5_description);
 		

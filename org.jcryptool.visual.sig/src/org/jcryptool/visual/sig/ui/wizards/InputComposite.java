@@ -1,6 +1,5 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;

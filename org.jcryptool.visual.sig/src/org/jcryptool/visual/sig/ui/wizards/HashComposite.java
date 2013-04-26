@@ -43,7 +43,7 @@ public class HashComposite extends Composite implements PaintListener, Selection
 		gd_grpDescription.widthHint = 129;
 		grpDescription.setLayoutData(gd_grpDescription);
 		grpDescription.setText(Messages.HashWizard_grpDescription);
-		grpDescription.setBounds(10, 186, 250, 163);
+		grpDescription.setBounds(10, 190, 250, 163);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP);
 		txtDescription.setEditable(false);
