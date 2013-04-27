@@ -2479,18 +2479,18 @@ public class SudokuComposite extends Composite {
             for (int i = 0; i < 16; i++) {
     			if (point.y != i && possibleHex.get(point.x).get(i).size() == 1 && possibleHex.get(point.x).get(i).get(0) == input) returnValue = true;
     			if (point.x != i && possibleHex.get(i).get(point.y).size() == 1 && possibleHex.get(i).get(point.y).get(0) == input) returnValue = true;
-    			if (point.y != i && possibleHex.get(point.x).get(i).indexOf(input) != -1) affectedPointsH.add(new Point(point.x,i));
-    			if (point.x != i && possibleHex.get(i).get(point.y).indexOf(input) != -1) affectedPointsV.add(new Point(i,point.y));
+    			if (point.y != i && boardHex[point.x][i] == -1) affectedPointsH.add(new Point(point.x,i));
+    			if (point.x != i && boardHex[i][point.y] == -1) affectedPointsV.add(new Point(i,point.y));
     		}
             for (int i = 0; i < 4; i++) {
             	for (int j = 0; j < 4; j++) {
             		if ((point.x != x+i || point.y != y+j) && possibleHex.get(x+i).get(y+j).size() == 1 && possibleHex.get(x+i).get(y+j).size() == input) returnValue = true;
-            		if ((point.x != x+i || point.y != y+j) && possibleHex.get(x+i).get(y+j).indexOf(input) != -1) affectedPointsS.add(new Point(x+i,y+j));
+            		if ((point.x != x+i || point.y != y+j) && boardHex[x+i][y+j] == -1) affectedPointsS.add(new Point(x+i,y+j));
             	}
             }
-	            if (checkSubset(affectedPointsH, possibleHex)
-	            	|| checkSubset(affectedPointsV, possibleHex)
-	            	|| checkSubset(affectedPointsS, possibleHex)) returnValue = true;
+	            if (checkSubset(affectedPointsH, possibleHex, input)
+	            	|| checkSubset(affectedPointsV, possibleHex, input)
+	            	|| checkSubset(affectedPointsS, possibleHex, input)) returnValue = true;
     	} else {
         	affectedPointsH = new Vector<Point>();
         	affectedPointsV = new Vector<Point>();
@@ -2501,18 +2501,18 @@ public class SudokuComposite extends Composite {
     		for (int i = 0; i < 9; i++) {
     				if (point.y != i && possibleKiller.get(point.x).get(i).size() == 1 && possibleKiller.get(point.x).get(i).get(0) == input) returnValue = true;
         			if (point.x != i && possibleKiller.get(i).get(point.y).size() == 1 && possibleKiller.get(i).get(point.y).get(0) == input) returnValue = true;
-        			if (point.y != i && possibleKiller.get(point.x).get(i).indexOf(input) != -1) affectedPointsH.add(new Point(point.x,i));
-        			if (point.x != i && possibleKiller.get(i).get(point.y).indexOf(input) != -1) affectedPointsV.add(new Point(i,point.y));        			
+        			if (point.y != i && boardKiller[point.x][i] == 0) affectedPointsH.add(new Point(point.x,i));
+        			if (point.x != i && boardKiller[i][point.y] == 0) affectedPointsV.add(new Point(i,point.y));        			
     			} 
 	    		for (int i = 0; i < 3; i++) {
 	    			for (int j = 0; j < 3; j++) { 				
 	    					if ((point.x != x+i || point.y != y+j) && possibleKiller.get(x+i).get(y+j).size() == 1 && possibleKiller.get(x+i).get(y+j).get(0) == input) returnValue = true;
-	    					if ((point.x != x+i || point.y != y+j) && possibleKiller.get(x+i).get(y+j).indexOf(input) != -1) affectedPointsS.add(new Point(x+i,y+j));
+	    					if ((point.x != x+i || point.y != y+j) && boardKiller[x+i][y+j] == 0) affectedPointsS.add(new Point(x+i,y+j));
 	    			}
 	    		}
-	            if (checkSubset(affectedPointsH, possibleKiller)
-	            	|| checkSubset(affectedPointsV, possibleKiller)
-	            	|| checkSubset(affectedPointsS, possibleKiller)) returnValue = true;
+	            if (checkSubset(affectedPointsH, possibleKiller, input)
+	            	|| checkSubset(affectedPointsV, possibleKiller, input)
+	            	|| checkSubset(affectedPointsS, possibleKiller, input)) returnValue = true;
 			} else {
 	        	affectedPointsH = new Vector<Point>();
 	        	affectedPointsV = new Vector<Point>();
@@ -2520,23 +2520,23 @@ public class SudokuComposite extends Composite {
 				for (int i = 0; i < 9; i++) {
     				if (point.y != i && possibleNormal.get(point.x).get(i).size() == 1 && possibleNormal.get(point.x).get(i).get(0) == input) returnValue = true;
         			if (point.x != i && possibleNormal.get(i).get(point.y).size() == 1 && possibleNormal.get(i).get(point.y).get(0) == input) returnValue = true;
-        			if (point.y != i && possibleNormal.get(point.x).get(i).indexOf(input) != -1) affectedPointsH.add(new Point(point.x,i));
-        			if (point.x != i && possibleNormal.get(i).get(point.y).indexOf(input) != -1) affectedPointsV.add(new Point(i,point.y));
+        			if (point.y != i && boardNormal[point.x][i] == 0) affectedPointsH.add(new Point(point.x,i));
+        			if (point.x != i && boardNormal[i][point.y] == 0) affectedPointsV.add(new Point(i,point.y));
     			}
 				for (int i = 0; i < 3; i++) {
 	    			for (int j = 0; j < 3; j++) {
 	    					if ((point.x != x+i || point.y != y+j) && possibleNormal.get(x+i).get(y+j).size() == 1 && possibleNormal.get(x+i).get(y+j).get(0) == input) returnValue = true;
-	    					if ((point.x != x+i || point.y != y+j) && possibleNormal.get(x+i).get(y+j).indexOf(input) != -1) affectedPointsS.add(new Point(x+i,y+j));
+	    					if ((point.x != x+i || point.y != y+j) && boardNormal[x+i][y+j] == 0) affectedPointsS.add(new Point(x+i,y+j));
 	    			}
 	    		}
-	            if (checkSubset(affectedPointsH, possibleNormal)
-	            	|| checkSubset(affectedPointsV, possibleNormal)
-	            	|| checkSubset(affectedPointsS, possibleNormal)) returnValue = true;
+	            if (checkSubset(affectedPointsH, possibleNormal, input)
+	            	|| checkSubset(affectedPointsV, possibleNormal, input)
+	            	|| checkSubset(affectedPointsS, possibleNormal, input)) returnValue = true;
     		}
     		
     	}
     	if (returnValue) {
-    		if (backgroundSolved) {
+    		if (backgroundSolved && checkErroneousEntries()) {
 	    		MessageBox dialog = new MessageBox(this.getShell(), SWT.ICON_ERROR | SWT.YES | SWT.NO);
 	    		dialog.setText(Messages.SudokuComposite_Error);
 	    		dialog.setMessage(Messages.SudokuComposite_CreatesZeroPossible_Solved);
@@ -2559,29 +2559,72 @@ public class SudokuComposite extends Composite {
      * @param possible the list containing the possibilities per box
      * @return
      */
-   public boolean checkSubset(Vector<Point> affectedPoints, List<List<List<Integer>>> possible) { 
+   public boolean checkSubset(Vector<Point> affectedPoints, List<List<List<Integer>>> possible, int input) { 
     	Vector<Point> sortedPoints = new Vector<Point>();
+    	Vector<Integer> sortedSize = new Vector<Integer>();
     	Vector<Integer> maxSubset = new Vector<Integer>();
     	int size = 1, maxIndex = 0;
     	while (sortedPoints.size() != affectedPoints.size()) {
     		for (int i = 0; i < affectedPoints.size(); i++) {
-    			if (possible.get(affectedPoints.get(i).x).get(affectedPoints.get(i).y).size() == size) sortedPoints.add(affectedPoints.get(i));
+    			if ((possible.get(affectedPoints.get(i).x).get(affectedPoints.get(i).y).indexOf(input) == -1 ?
+    					possible.get(affectedPoints.get(i).x).get(affectedPoints.get(i).y).size() :
+    					possible.get(affectedPoints.get(i).x).get(affectedPoints.get(i).y).size() - 1) == size) { 
+    				sortedPoints.add(affectedPoints.get(i));
+    				sortedSize.add(size);
+    			}
     		}
     		size++;
     	}
     	for (int i = 0; i < sortedPoints.size(); i++) {
-    		size = possible.get(sortedPoints.get(i).x).get(sortedPoints.get(i).y).size();
-    		for (int j = 0; j < sortedPoints.size() && possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).size() <= size; j++) {
+    		size = sortedSize.get(i);
+    		maxSubset = new Vector<Integer>();
+    		for (int j = 0; j < sortedPoints.size() && sortedSize.get(j) <= size; j++) {
     			maxIndex = j;
             	for (int k = 0; k < possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).size(); k++) {
-            			if (maxSubset.indexOf(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k)) == -1)
+            			if (possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k) != input &&
+            					maxSubset.indexOf(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k)) == -1)
             				maxSubset.add(possible.get(sortedPoints.get(j).x).get(sortedPoints.get(j).y).get(k));
             	}
             }
-    		if (maxSubset.size()-1 < maxIndex+1) return true;
+    		if (maxSubset.size() < maxIndex+1) return true;
     	}        
         return false;
     }
+   
+   public boolean checkErroneousEntries() {
+	   if (backgroundSolved) {
+			switch (tabChoice) {
+				case NORMAL:
+					for (int i = 0; i < 9; i++) {
+						for (int j = 0; j < 9; j++) {
+							if (boardNormal[i][j] != 0 && boardNormal[i][j] != tempBoard[i][j]) {
+								return true;
+							}
+						}
+					}
+					break;
+				case KILLER:
+					for (int i = 0; i < 9; i++) {
+						for (int j = 0; j < 9; j++) {
+							if (boardKiller[i][j] != 0 && boardKiller[i][j] != tempBoard[i][j]) {
+								return true;
+							}
+						}
+					}
+					break;
+				case HEX:
+					for (int i = 0; i < 16; i++) {
+						for (int j = 0; j < 16; j++) {
+							if (boardHex[i][j] != -1 && boardHex[i][j] != tempBoard[i][j]) {
+								return true;
+							}
+						}
+					}
+					break;
+			}
+		}
+	   return false;
+   }
 
     public void showErroneousEntries() {
     	if (backgroundSolved) {

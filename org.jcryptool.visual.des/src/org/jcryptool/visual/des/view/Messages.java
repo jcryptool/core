@@ -4,6 +4,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.des.view.messages"; //$NON-NLS-1$
+	public static String DesView_title;
+	public static String DesView_text;
 	public static String DESController_12;
 	public static String DESController_13;
 	public static String DESController_14;
@@ -314,6 +316,13 @@ public class Messages extends NLS {
 	public static String DesView_97;
 	public static String DesView_98;
 	public static String DesView_99;
+	public static String DesView_lblNewLabel_text;
+	public static String DesView_lblNewLabel_text_1;
+	public static String DesView_lblNewLabel_text_2;
+	public static String DesView_lblNewLabel_text_3;
+	public static String DesView_lblBlablablabla_text;
+	public static String DesView_lblBam_text;
+	public static String DesView_lblNewLabel_text_4;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
