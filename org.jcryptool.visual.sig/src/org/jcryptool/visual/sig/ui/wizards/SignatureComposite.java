@@ -62,7 +62,7 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
 		grpDescription.setBounds(10, 195, 250, 163);
 		
-		txtDescription = new Text(grpDescription, SWT.WRAP);
+		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
 		txtDescription.setEditable(false);
 		txtDescription.setBounds(10, 20, 226, 116);
 		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));

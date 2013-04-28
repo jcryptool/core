@@ -121,7 +121,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		grpSignatureGeneration.setBounds(10, 75, 699, 548);
 		
 		lblHash = new Label(grpSignatureGeneration, SWT.NONE | SWT.TRANSPARENT);
-		lblHash.setBounds(34, 246, 136, 14);
+		lblHash.setBounds(34, 246, 52, 14);
 		lblHash.setText(Messages.SigComposite_lblHash); 
 		//btnOpenDocumentTemp.setVisible(false);
 		
@@ -141,12 +141,12 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnSignature.setText(Messages.SigComposite_btnSignature);
 		
 		tabDescription = new TabFolder(grpSignatureGeneration, SWT.NONE);
-		tabDescription.setBounds(187, 10, 488, 191);
+		tabDescription.setBounds(187, 20, 488, 191);
 		
 		TabItem tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0); 
 		
-		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP);
+		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.TRANSPARENT);
 		txtDescriptionOfStep1.setBackground(grey);
 		txtDescriptionOfStep1.setEditable(false);
 		txtDescriptionOfStep1.setText(Messages.SigComposite_txtDescriptionOfStep1);
@@ -155,7 +155,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1); 
 		
-		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
+		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
 		txtDescriptionOfStep2.setBackground(grey);
 		txtDescriptionOfStep2.setEditable(false);
 		txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2);
@@ -164,7 +164,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2); 
 		
-		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
+		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
 		txtDescriptionOfStep3.setBackground(grey);
 		txtDescriptionOfStep3.setEditable(false);
 		txtDescriptionOfStep3.setText(Messages.SigComposite_txtDescriptionOfStep3);
@@ -173,7 +173,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 		
-		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE | SWT.WRAP);
+		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
 		txtDescriptionOfStep4.setBackground(grey);
 		txtDescriptionOfStep4.setEditable(false);
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
@@ -191,7 +191,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		lblSignature.setText(Messages.SigComposite_lblSignature);
 		lblSignature.setBounds(248, 431, 136, 14);
 		
-		canvas1 = new Canvas(grpSignatureGeneration, SWT.NONE);
+		canvas1 = new Canvas(grpSignatureGeneration, SWT.NONE | SWT.TRANSPARENT);
 		canvas1.setBounds(34, 21, 628, 392);
 		
 		btnChooseInput = new Button(canvas1, SWT.NONE);
@@ -199,16 +199,16 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnChooseInput.setText(Messages.SigComposite_btnChooseInput);
 		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 215, 212, 258);
+		grpSignedDoc.setBounds(463, 220, 212, 269);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
 		txtSignature = new Text(grpSignedDoc, SWT.BORDER | SWT.WRAP);
 		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 133, 188, 56);
+		txtSignature.setBounds(10, 135, 188, 56);
 		
 		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
 		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 205, 109, 26);
+		btnOpenInEditor.setBounds(10, 215, 109, 26);
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 
 		createEvents();
