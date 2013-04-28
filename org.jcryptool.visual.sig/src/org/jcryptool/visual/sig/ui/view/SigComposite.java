@@ -180,11 +180,11 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
 		btnReset = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReset.setBounds(581, 495, 94, 26);
+		btnReset.setBounds(581, 500, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
 		
 		lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
-		lblProgress.setBounds(490, 501, 83, 14);
+		lblProgress.setBounds(490, 506, 83, 14);
 		lblProgress.setText(String.format(Messages.SigComposite_lblProgress,1));  
 		
 		lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
@@ -204,11 +204,11 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		
 		txtSignature = new Text(grpSignedDoc, SWT.BORDER | SWT.WRAP);
 		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 135, 188, 56);
+		txtSignature.setBounds(10, 145, 188, 56);
 		
 		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
 		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 215, 109, 26);
+		btnOpenInEditor.setBounds(10, 220, 109, 26);
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 
 		createEvents();
