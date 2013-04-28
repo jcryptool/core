@@ -1038,14 +1038,14 @@ public class DesView extends ViewPart {
 
         comFPointsMainLeft = new Composite(comFPointsMain, SWT.NONE);
         comFPointsMainLeft.setLayout(new FillLayout(SWT.HORIZONTAL));
-        FormData fd_comFPointsMainLeft = new FormData(250, 480);
+        FormData fd_comFPointsMainLeft = new FormData(250, 510);
         fd_comFPointsMainLeft.left = new FormAttachment(0, 10);
         fd_comFPointsMainLeft.top = new FormAttachment(lblFPointsInformationText, 10);
         comFPointsMainLeft.setLayoutData(fd_comFPointsMainLeft);
 
         comFPointsMainRight = new Composite(comFPointsMain, SWT.NONE);
         comFPointsMainRight.setLayout(new FormLayout());
-        FormData fd_comFPointsMainRight = new FormData(600, 480);
+        FormData fd_comFPointsMainRight = new FormData(600,510);
         fd_comFPointsMainRight.top = new FormAttachment(lblFPointsInformationText, 10);
         fd_comFPointsMainRight.left = new FormAttachment(comFPointsMainLeft, 10);
         fd_comFPointsMainRight.right = new FormAttachment(100, -10);
