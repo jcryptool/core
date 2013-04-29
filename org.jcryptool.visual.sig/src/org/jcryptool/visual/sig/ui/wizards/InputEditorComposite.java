@@ -26,8 +26,8 @@ public class InputEditorComposite extends Composite {
 		text.setTextLimit(TEXTLIMIT);
 
 		Label lblToSaveThe = new Label(this, SWT.NONE);
-		lblToSaveThe.setBounds(10, 231, 167, 15);
-		lblToSaveThe.setText("to save the text click finish");
+		lblToSaveThe.setBounds(10, 231, 289, 15);
+		lblToSaveThe.setText(Messages.InputEditorWizard_Label);
 		
 		page = p;
 

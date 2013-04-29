@@ -27,7 +27,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 		
 		Button btnBrowse = new Button(this, SWT.NONE);
 		btnBrowse.setBounds(339, 6, 94, 28);
-		btnBrowse.setText("Browse");
+		btnBrowse.setText(Messages.InputFileWirard_btnBrowse);
 		btnBrowse.addSelectionListener(this);
 		
 		page = p;
