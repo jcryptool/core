@@ -14,7 +14,7 @@ public class HashWizard extends Wizard{
 	//Constructor
 	public HashWizard() {
 		super();
-		name = "test";
+		name = "HashWizard";
 	}	
 	
 	@Override

@@ -43,6 +43,11 @@ public class Messages {
 	public static String SignatureWizard_rdosha512;
 	public static String SignatureWizard_header;
 	public static String HashWizard_header;
+	public static String HashWizard_WindowTitle;
+	public static String SignatureWizard_WindowTitle;
+	public static String InputWizard_WindowTitle;
+	public static String InputEditorWizard_WindowTitle;
+	public static String InputFileWizard_WindowTitle;
 	
 	//InputWizard
 	//Page 1

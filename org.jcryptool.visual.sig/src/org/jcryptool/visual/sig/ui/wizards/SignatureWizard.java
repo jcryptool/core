@@ -14,7 +14,7 @@ public class SignatureWizard extends Wizard{
 	//Constructor
 	public SignatureWizard() {
 		super();
-		name = "test";
+		name = "SignatureWizard";
 	}	
 	
 	@Override

@@ -10,9 +10,10 @@ public class HashWizardPage extends WizardPage {
 
 	//Construcor
 	protected HashWizardPage(String pageName) {
-		//TEST!
+		//Header is the fat text
 		super(Messages.HashWizard_header);
 		setDescription(Messages.HashWizard_header);
+		setTitle(Messages.HashWizard_WindowTitle);
 	}
 	
 	public void createControl(Composite parent) {

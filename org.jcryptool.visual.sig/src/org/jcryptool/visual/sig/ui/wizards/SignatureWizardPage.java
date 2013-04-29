@@ -10,8 +10,10 @@ public class SignatureWizardPage extends WizardPage {
 
 	//Construcor
 	protected SignatureWizardPage(String pageName) {
+		//Header is the fat text above the description
 		super(Messages.SignatureWizard_header);
 		setDescription(Messages.SignatureWizard_header);
+		setTitle(Messages.SignatureWizard_WindowTitle);
 	}
 	
 	public void createControl(Composite parent) {
