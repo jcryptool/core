@@ -43,15 +43,15 @@ public class HashComposite extends Composite implements PaintListener, Selection
 		gd_grpDescription.widthHint = 129;
 		grpDescription.setLayoutData(gd_grpDescription);
 		grpDescription.setText(Messages.HashWizard_grpDescription);
-		grpDescription.setBounds(10, 187, 250, 163);
+		grpDescription.setBounds(10, 187, 250, 246);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
 		txtDescription.setEditable(false);
 		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
-		txtDescription.setBounds(10, 18, 226, 135);
+		txtDescription.setBounds(10, 18, 226, 201);
 		txtDescription.setText(Messages.HashWizard_rdomd5_description);
 		
-		setSize(new Point(273, 360));
+		setSize(new Point(273, 443));
 		
 	    grpHashes = new Group(this, SWT.NONE);
 	    grpHashes.setLayoutData(gd_grpSignatures);

@@ -31,16 +31,14 @@ public class Messages {
 	public static String SignatureWizard_grpSignatures;
 	//Group box 2 text
 	public static String SignatureWizard_grpDescription;
-	public static String SignatureWizard_rdomd5_description;
-	public static String SignatureWizard_rdosha1_description;
-	public static String SignatureWizard_rdosha256_description;
-	public static String SignatureWizard_rdosha384_description;
-	public static String SignatureWizard_rdosha512_description;
-	public static String SignatureWizard_rdomd5;
-	public static String SignatureWizard_rdosha1;
-	public static String SignatureWizard_rdosha256;
-	public static String SignatureWizard_rdosha384;
-	public static String SignatureWizard_rdosha512;
+	public static String SignatureWizard_DSA_description;
+	public static String SignatureWizard_RSA_description;
+	public static String SignatureWizard_ECDSA_description;
+	public static String SignatureWizard_RSAandMGF1_description;
+	public static String SignatureWizard_DSA;
+	public static String SignatureWizard_RSA;
+	public static String SignatureWizard_ECDSA;
+	public static String SignatureWizard_RSAandMGF1;
 	public static String SignatureWizard_header;
 	public static String HashWizard_header;
 	public static String HashWizard_WindowTitle;

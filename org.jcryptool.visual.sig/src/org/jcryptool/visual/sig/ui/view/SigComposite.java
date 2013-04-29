@@ -59,12 +59,12 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha256,
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
-	private int signature = 0; //0-4
-	private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdomd5, 
-			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha1,
-			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha256,
-			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha384,
-			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha512};
+	private int signature = 0; //0-3
+	private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_DSA, 
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
+			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
+			//org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha512};
 
 	/**
 	 * @return the hash
@@ -354,7 +354,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 @Override
                     	 protected void configureShell(Shell newShell) {
                     		 super.configureShell(newShell);
-                    		 newShell.setSize(300, 600);
+                    		 newShell.setSize(300, 650);
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
@@ -385,7 +385,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                    	 	@Override
                    	 	protected void configureShell(Shell newShell) {
                    	 		super.configureShell(newShell);
-                   	 		newShell.setSize(300, 600);
+                   	 		newShell.setSize(300, 650);
                    	 } 
                     };
                     if (dialog.open() == Window.OK) { 
