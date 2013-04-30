@@ -2,7 +2,6 @@ package org.jcryptool.visual.jctca.listeners;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
@@ -26,19 +25,18 @@ public class PluginBtnListener implements SelectionListener{
 	public void widgetSelected(SelectionEvent arg0) {
 		String text = ((Button)arg0.getSource()).getText();
 		
-		if(text.equals("Weiter zum Plugin")){
+		if(text.equals(Messages.PluginBtnListener_strcmp_continue)){
 			visual.disposeCompCenter();
 			visual.showCenter();
 		}
-		else if(text.equals("Zertifikat erzeugen")){
-			Image img = Activator.getImageDescriptor("icons/minica_create_cert.jpg").createImage();
-			lbl_img.setImage(img);
+		else if(text.equals(Messages.PluginBtnListener_strcmp_create_cert)){
+			lbl_img.setImage(Activator.getImageDescriptor(Messages.PluginBtnListener_create_cert_arch_path).createImage());
 		}
-		else if(text.equals("Zertifikat widerrufen")){
-			lbl_img.setImage(Activator.getImageDescriptor("icons/minica_revoke.jpg").createImage());
+		else if(text.equals(Messages.PluginBtnListener_strcmp_rev_cert)){
+			lbl_img.setImage(Activator.getImageDescriptor(Messages.PluginBtnListener_rev_cert_arch_path).createImage());
 		}
-		else if(text.equals("Signatur überprüfen")){
-			lbl_img.setImage(Activator.getImageDescriptor("icons/minica_check.jpg").createImage());
+		else if(text.equals(Messages.PluginBtnListener_strcmp_check_sig)){
+			lbl_img.setImage(Activator.getImageDescriptor(Messages.PluginBtnListener_check_sig_arch_path).createImage());
 		}
 	}
 

@@ -24,34 +24,34 @@ public class SignCert implements Views {
 		signCertGroup.setLayout(new GridLayout(1, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		signCertGroup.setLayoutData(gd_grp);
-		signCertGroup.setText("Text oder Datei signieren");
+		signCertGroup.setText(Messages.SignCert_sig_headline);
 
 		Button btn_select_file = new Button(signCertGroup, SWT.NONE);
-		btn_select_file.setText("Datei auswählen...");
+		btn_select_file.setText(Messages.SignCert_get_file_btn);
 		Label lbl_or = new Label(signCertGroup, SWT.CENTER);
-		lbl_or.setText("oder");
+		lbl_or.setText(Messages.SignCert_or_headline);
 
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 20);
 		Text txt_sign = new Text(signCertGroup, SWT.LEFT | SWT.MULTI
 				| SWT.BORDER);
-		txt_sign.setText("...Text zum Signieren eingeben...");
+		txt_sign.setText(Messages.SignCert_dummy_enter_text);
 		txt_sign.setLayoutData(gd_txt);
 
 		Combo cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
-		cmb_priv_key.add("Privater Schlüssel #1");
-		cmb_priv_key.add("Privater Schlüssel #2");
-		cmb_priv_key.add("Privater Schlüssel #3");
-		cmb_priv_key.add("Privater Schlüssel #4");
+		cmb_priv_key.add(Messages.SignCert_dummy_privkey0);
+		cmb_priv_key.add(Messages.SignCert_dummy_privkey1);
+		cmb_priv_key.add(Messages.SignCert_dummy_privkey2);
+		cmb_priv_key.add(Messages.SignCert_dummy_privkey3);
 		cmb_priv_key.select(0);
 
 		Button btn_detail = new Button (signCertGroup, SWT.CHECK);
-		btn_detail.setText("Signiervorgang visualisieren");
+		btn_detail.setText(Messages.SignCert_visualized_sig_btn);
 		
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
-		btn_sign.setText("Mit ausgewähltem Schlüssel signieren");
+		btn_sign.setText(Messages.SignCert_sign_with_key_btn);
 		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, eine Datei auf Ihrem Computer oder den hier eingegebenen Text zu signieren. Signiert wird immer mit dem privaten Schlüssel eines Schlüsselpaares. Aus den privaten Schlüssel, für deren korrespondierenden öffentlichen Schlüssel Sie bereits Zertifikate ausgestellt bekommen haben, können Sie in der Dropdownliste auswählen. Der Text oder die Datei wird mit dem ausgewählten Schlüssel signiert. Die signierten Daten und die dazugehörige Signatur stehen danach in der Ansicht \"2. Benutzer\" zur Überprüfung zur Verfügung.\n\n"
-				+ "Wenn Sie genauer wissen wollen, was beim Erstellen einer Signatur mathematisch passiert, können Sie mittels \"Signiervorgang visualisieren\" in ein JCrypTool-Plugin wechseln, das sich genauer mit Signaturen auseinandersetzt. Die Daten und Signaturen, die Sie in diesem Plugin erstellen, stehen danach ebenfalls in der Ansicht \"2. Benutzer\" zur Verfügung.");
+		lbl_exp.setText(Messages.SignCert_exp_txt0
+				+ Messages.SignCert_exp_txt1);
 
 		composite.setVisible(false);
 	}

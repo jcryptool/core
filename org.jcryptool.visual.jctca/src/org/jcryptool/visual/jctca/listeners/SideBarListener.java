@@ -52,19 +52,19 @@ public class SideBarListener implements SelectionListener {
 		}
 		String text = btn.getText();
 		System.out.println(text);
-		if(text.equals("Neues Zertifikat anfordern")){
+		if(text.equals(Messages.SideBarListener_strcmp_get_cert)){
 			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
 		}
-		else if(text.equals("Zertifikate verwalten")){
+		else if(text.equals(Messages.SideBarListener_strcmp_manage_cert)){
 			sCert = new ShowCert(comp_right, grp_exp);
 			sCert.setVisible(true);
 		}
-		else if(text.equals("Zertifikat widerrufen")){
+		else if(text.equals(Messages.SideBarListener_strcmp_rev_cert)){
 			rCert = new RevokeCert(comp_right, grp_exp);
 			rCert.setVisible(true);
 		}
-		else if(text.equals("Text oder Datei signieren")){
+		else if(text.equals(Messages.SideBarListener_strcmp_sign_data)){
 			siCert = new SignCert(comp_right, grp_exp);
 			siCert.setVisible(true);
 		}

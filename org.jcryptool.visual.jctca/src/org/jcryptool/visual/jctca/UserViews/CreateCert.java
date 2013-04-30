@@ -56,73 +56,73 @@ public class CreateCert implements Views{
 		createCertGroup.setLayout(new GridLayout(2, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.NONE, true, true);
 		createCertGroup.setLayoutData(gd_grp);
-		createCertGroup.setText("CSR erstellen");
+		createCertGroup.setText(Messages.CreateCert_create_csr_headline);
         
 		
         
         lbl_firstname = new Label(createCertGroup, SWT.NONE);
-        lbl_firstname.setText("Vornamen");    
+        lbl_firstname.setText(Messages.CreateCert_first_name);    
         txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_lastname = new Label(createCertGroup, SWT.None);
-        lbl_lastname.setText("Nachname");
+        lbl_lastname.setText(Messages.CreateCert_last_name);
         txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_street = new Label(createCertGroup, SWT.None);
-        lbl_street.setText("Straße");
+        lbl_street.setText(Messages.CreateCert_street);
         txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_ZIP = new Label(createCertGroup, SWT.None);
-        lbl_ZIP.setText("Postleitzahl   ");
+        lbl_ZIP.setText(Messages.CreateCert_zip);
         txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_city = new Label(createCertGroup, SWT.None);
-        lbl_city.setText("Ort");
+        lbl_city.setText(Messages.CreateCert_city);
         txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_country = new Label(createCertGroup, SWT.None);
-        lbl_country.setText("Land");
+        lbl_country.setText(Messages.CreateCert_country);
         txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_mail = new Label(createCertGroup, SWT.None);
-        lbl_mail.setText("E-Mail");
+        lbl_mail.setText(Messages.CreateCert_email);
         txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
         txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_proof = new Label(createCertGroup, SWT.None);
-        lbl_proof.setText("Identitätsnachweis");
+        lbl_proof.setText(Messages.CreateCert_identity_file);
         btn_proof = new Button(createCertGroup, SWT.None);
-        btn_proof.setText("Datei auswählen");
+        btn_proof.setText(Messages.CreateCert_chose_file_btn);
         btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         
         lbl_key = new Label(createCertGroup, SWT.None);
-        lbl_key.setText("Öffentlicher Schlüssel");
+        lbl_key.setText(Messages.CreateCert_pub_key);
         btn_key = new Button(createCertGroup, SWT.NONE);
-        btn_key.setText("Öffentlichen Schlüssel auswählen");
+        btn_key.setText(Messages.CreateCert_chose_pub_key_btn);
         btn_key.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain = new Label(createCertGroup, SWT.NONE);
         btn_genKey = new Button(createCertGroup, SWT.NONE);
-        btn_genKey.setText("Schlüsselpaar generieren");
+        btn_genKey.setText(Messages.CreateCert_gen_keypair_btn);
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
 //        lbl_plain1 = new Label(createCertGroup, SWT.None);
         btn_send = new Button(composite, SWT.NONE);
-        btn_send.setText("         CSR abschicken         ");
+        btn_send.setText(Messages.CreateCert_send_csr_btn);
         btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
                 
         Label lbl_exp = (Label)exp.getChildren()[0];
-        lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, ein neues Zertifikat anzufordern.\nSie können dazu die hier vorgeschlagenen Musterdaten verwenden oder das Formular mit Ihren eigenen Daten befüllen. Da dieses Zertifikat auf den Namen einer natürlichen Person lauten soll, ist es notwendig, dem PKI-Betreiber diese Identität zu belegen. Für dieses Plugin wird angenommen, dass hierfür ein Foto oder Farbscan eines gültigen Lichtbildausweises ausreichend ist. Ein Musterausweis wird vom Plugin zur Verfügung gestellt. Sie haben aber auch die Möglichkeit, eine Bilddatei von Ihrem Computer an die Zertifikatsanfrage anzufügen. Mehr dazu, welche Wege PKI-Betreiber in der realen Welt gehen, um Ihre Identität festzustellen, lesen Sie in der Onlinehilfe.\n\n" +
-        		"Unter \"Öffentlicher Schlüssel auswählen\" wählen Sie den öffentlichen Schlüssel, für den Sie das Zertifikat anfordern wollen. Sollten Sie über noch kein Schlüsselpaar verfügen, so können Sie mittels \"Schlüsselpaar generieren\" eines generieren lassen.\n\n" +
-        		"Wenn Sie fertig sind, können Sie Ihre Anfrage mittels \"CSR abschicken\" an den fiktiven PKI-Betreiber weiterleiten. Wechseln Sie anschließend in den Tab \"Registration Authority,\" um mit diesem Plugin fortzufahren und mehr zum Prozess der Identitätsfeststellung zu erfahren.\n\n" +
-        		"Im Fachjargon heißt eine Zertifikatsanfrage \"Certificate Signing Request\" oder \"CSR.\" Dieser muss einem bestimmten Format entsprechen, welches im X.509 Standard festgelegt ist. Mehr zu diesem Standard und den technischen Details einer Zertifikatsanfrage lesen Sie in der Onlinehilfe.");
+        lbl_exp.setText(Messages.CreateCert_exp_txt0 +
+        		Messages.CreateCert_exp_txt1 +
+        		Messages.CreateCert_exp_txt2 +
+        		Messages.CreateCert_exp_txt3);
         composite.setVisible(false);
 	}
 	

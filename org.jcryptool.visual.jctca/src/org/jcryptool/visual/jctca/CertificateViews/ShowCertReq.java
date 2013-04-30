@@ -52,7 +52,7 @@ public class ShowCertReq implements Views {
 		showCSRGroup.setLayout(new GridLayout(3, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		showCSRGroup.setLayoutData(gd_grp);
-		showCSRGroup.setText("CSR verifizieren");
+		showCSRGroup.setText(Messages.ShowCertReq_csr_headline);
 
 		left = new Composite(showCSRGroup, SWT.NONE);
 		left.setLayout(new GridLayout(1, true));
@@ -66,56 +66,56 @@ public class ShowCertReq implements Views {
 
 		lst_csr = new List(left, SWT.BORDER);
 		lst_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		lst_csr.add("   CSR #1   ");
-		lst_csr.add("   CSR #2   ");
-		lst_csr.add("   CSR #3   ");
-		lst_csr.add("   CSR #4   ");
+		lst_csr.add(Messages.ShowCertReq_dummy_csr0);
+		lst_csr.add(Messages.ShowCertReq_dummy_csr1);
+		lst_csr.add(Messages.ShowCertReq_dummy_csr2);
+		lst_csr.add(Messages.ShowCertReq_dummy_csr3);
 
 		lbl_firstname = new Label(center, SWT.NONE);
-		lbl_firstname.setText("Vornamen");
+		lbl_firstname.setText(Messages.ShowCertReq_first_name);
 		lbl_value_firstname = new Label(center, SWT.NONE);
-		lbl_value_firstname.setText("Erika");
+		lbl_value_firstname.setText(Messages.ShowCertReq_dummy_first_name);
 
 		lbl_lastname = new Label(center, SWT.None);
-		lbl_lastname.setText("Nachname");
+		lbl_lastname.setText(Messages.ShowCertReq_last_name);
 		lbl_value_lastname = new Label(center, SWT.None);
-		lbl_value_lastname.setText("Mustermann");
+		lbl_value_lastname.setText(Messages.ShowCertReq_dummy_last_name);
 
 		lbl_street = new Label(center, SWT.None);
-		lbl_street.setText("Straße");
+		lbl_street.setText(Messages.ShowCertReq_street);
 		lbl_value_street = new Label(center, SWT.None);
-		lbl_value_street.setText("Musterstrasse 12");
+		lbl_value_street.setText(Messages.ShowCertReq_dummy_street);
 
 		lbl_ZIP = new Label(center, SWT.None);
-		lbl_ZIP.setText("Postleitzahl");
+		lbl_ZIP.setText(Messages.ShowCertReq_zip_code);
 		lbl_value_ZIP = new Label(center, SWT.None);
-		lbl_value_ZIP.setText("13357");
+		lbl_value_ZIP.setText(Messages.ShowCertReq_dummy_zip_code);
 
 		lbl_city = new Label(center, SWT.None);
-		lbl_city.setText("Ort");
+		lbl_city.setText(Messages.ShowCertReq_city);
 		lbl_value_city = new Label(center, SWT.None);
-		lbl_value_city.setText("Berlin");
+		lbl_value_city.setText(Messages.ShowCertReq_dummy_city);
 
 		lbl_country = new Label(center, SWT.None);
-		lbl_country.setText("Land");
+		lbl_country.setText(Messages.ShowCertReq_country);
 		lbl_value_country = new Label(center, SWT.None);
-		lbl_value_country.setText("Deutschland");
+		lbl_value_country.setText(Messages.ShowCertReq_dummy_country);
 
 		lbl_mail = new Label(center, SWT.None);
-		lbl_mail.setText("E-Mail");
+		lbl_mail.setText(Messages.ShowCertReq_email);
 		lbl_value_mail = new Label(center, SWT.None);
-		lbl_value_mail.setText("e.mustermann@gmail.com");
+		lbl_value_mail.setText(Messages.ShowCertReq_dummy_email);
 
 		btn_verify_identity = new Button(center, SWT.NONE);
-		btn_verify_identity.setText("Identität verifizieren");
+		btn_verify_identity.setText(Messages.ShowCertReq_verify_identity);
 		btn_verify_identity.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
 				true, true));
 		btn_reject_csr = new Button(center, SWT.NONE);
-		btn_reject_csr.setText("CSR ablehnen");
+		btn_reject_csr.setText(Messages.ShowCertReq_csr_deny);
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
 
-		String ausweis = "icons/ausweis.jpeg";
+		String ausweis = Messages.ShowCertReq_dummy_ausweis_path;
 		Label lbl_img = new Label(right, SWT.NONE);
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 //	    Label lbl_exp = (Label)exp.getChildren()[0];

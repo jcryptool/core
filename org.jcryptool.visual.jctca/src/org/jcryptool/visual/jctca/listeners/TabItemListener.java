@@ -35,10 +35,10 @@ public class TabItemListener implements SelectionListener {
 		System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
-			lbl_exp.setText("In der Ansicht \"Benutzer\" haben Sie die Möglichkeit, ein neues Zertifikat anzufordern, Ihre bereits ausgestellten Zertifikate zu verwalten sowie Texte oder Dateien mit dem zu einem Ihrer ausgestellten Zertifikate gehörigen privaten Schlüssel zu signieren.\n\n"
+			lbl_exp.setText(Messages.TabItemListener_exp_txt_user_tab0
 					// +
 					// "Unter \"Neues Zertifikat anfordern\" haben Sie die Möglichkeit, ein Zertifikat für einen öffentlichen Schlüssel anzufordern. Sollten Sie noch kein Schlüsselpaar haben, so können Sie sich eines generieren lassen.\nUnter \"Zertifikate verwalten\" können Sie sich, wenn Sie bereits ausgestellte Zertifikate haben, diese anzeigen lassen. Dort haben Sie außerdem die Möglichkeit, Zertifikate zu widerrufen.\nUnter \"Text oder Datei signieren\" können Sie Signaturen für von Ihnen eingegebenen Text oder Dateien auf Ihrem Computer erstellen.\n\n"
-					+ "Wählen Sie eine der Aktionen aus, um fortzufahren und weitere Informationen dazu zu erhalten.\nWenn Sie dieses Plugin zum ersten Mal ausführen, empfiehlt es sich, mit \"Neues Zertifikat anfordern\" zu beginnen.");
+					+ Messages.TabItemListener_exp_txt_user_tab1);
 			
 			Control[] x = (parent.getChildren());
 			if(x.length>0){
@@ -51,19 +51,19 @@ public class TabItemListener implements SelectionListener {
 				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
-			lbl_exp.setText("Die \"Registration Authority\" (RA) ist die Entität einer PKI, die dafür zuständig ist, festzustellen, ob Zertifikatsanfragen authentisch sind oder nicht. Im Zusammenhang mit einem persönlichen Zertifikat wie in diesem Fall bedeutet das, dass der Antragsteller auch wirklich die Person ist, für die das Zertifikat beantragt wird.\n\n"
-					+ "Linkerhand finden Sie eine Liste von Zertifikatsanfragen. Darunter befinden sich die Anfragen, die Sie selbst in der Ansicht \"Benutzer\" erstellt haben. Mittels \"Identität verifizieren\" können Sie diese als korrekt erklären und an die CA weiterleiten. Doch vorsicht, es befinden sich auch Anfragen darunter, die nicht mit den jeweiligen Ausweisen übereinstimmen. Achten Sie darauf, keine dieser Anfragen an die CA weiterzuleiten!\n\n"
-					+ "Die Tätigkeit der RA ist für das Funktionieren einer PKI absolut entscheidend. Nur durch die ausführliche und korrekte Prüfung der RA kann verhindert werden, dass sich etwa Personen mit kriminellen Absichten als andere Personen ausgeben können. Es ist also für jeden PKI-Betreiber notwendig, hier größte Vorsicht und Genauigkeit walten zu lassen. Mehr über die Tätigkeit einer RA und zu verschiedenen Verfahren, die von PKI-Betreibern in der realen Welt angewandt werden, um die Identität eines Antragstellers sicherzustellen, finden Sie in der Onlinehilfe.");
+			lbl_exp.setText(Messages.TabItemListener_exp_txt_ra_tab0
+					+ Messages.TabItemListener_exp_txt_ra_tab1
+					+ Messages.TabItemListener_exp_txt_ra_tab2);
 		} else if (parent.getSelectionIndex() == 2) {
-			lbl_exp.setText("Die \"Certification Authority\" (CA) hat zwei Aufgaben in einer PKI: Einerseits bearbeitet sie von der RA verifizierte Zertifikatsanfragen und stellt darin beantragte Zertifikate aus. Andererseits unterhält sie eine \"Certificate Revocation List\" (CRL). Möchte der Zertifikatsbesitzer, dass sein Zertifikat nicht länger gültig ist, so fügt die CA das betroffene Zertifikat dieser CRL hinzu. Der Zertifikatswiderruf, mögliche Gründe und seine Auswirkungen werden in der Ansicht \"Benutzer\" genauer behandelt. Die CA muss lediglich dafür sorgen, Widerrufsanfragen zeitnahe zu bearbeiten und die CRL auf dem neuesten Stand zu halten.\n" +
-					"Ähnlich zum CSR ist das Format der CRL im X.509 Standard festgeschrieben. Mehr dazu lesen Sie in der Onlinehilfe.\n\n" +
-					"Linkerhand finden Sie eine Liste an Zertifikatsanfragen (CSRs, von engl. \"Certificate Signing Request\") und Widerrufsanfragen (RRs, von engl. \"Revocation Request\"). Wenn Sie eine Zertifikatsanfrage annehmen, so wird dem Antragsteller ein Zertifikat ausgestellt. Sie können dieses dann in der Benutzer-Ansicht einsehen und verwenden. Wenn Sie eine Widerrufsanfrage annehmen, so wird das betroffene Zertifikat der CRL hinzugefügt.\n" +
-					"Mehr zu den technischen Hintergründen von Zertifikatsausstellung und CRLs lesen Sie in der Onlinehilfe.");
+			lbl_exp.setText(Messages.TabItemListener_exp_txt_ca_tab0 +
+					Messages.TabItemListener_exp_txt_ca_tab1 +
+					Messages.TabItemListener_exp_txt_ca_tab2 +
+					Messages.TabItemListener_exp_txt_ca_tab3);
 		} else if (parent.getSelectionIndex() == 3) {
-			lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, die von Ihnen in der Ansicht \"Benutzer\" erstellen Signaturen zu überprüfen.\n" +
-					"Linkerhand können Sie Texte oder Dateien auswählen, für die Sie in der Ansicht \"Benutzer\" Signaturen erstellt haben. Der Text oder Dateiname wird anschließend zusammen mit der dazugehörigen Signatur angezeigt. Mittels \"Signatur überprüfen\" können Sie prüfen, ob diese Signatur gültig und vertrauenswürdig ist.\n" +
-					"Achten Sie aber darauf, dass standardmäßig nicht geprüft wird, ob das Zertifikat, mit dem Sie diese Signatur prüfen, widerrufen wurde. Das ist hier so, weil auch viele Anwendungen (wie E-Mail-Clients oder Webbrowser) standardmäßig nicht überprüfen, ob ein Zertifikat widerrufen wurde. Dies muss oft vom Benutzer selbst eingestellt werden.\n" +
-					"Beachten Sie außerdem, dass Signaturen, die erstellt wurden, bevor das Zertifikat widerrufen wurde, ihre Gültigkeit behalten. Ein Widerruf hat nur zur Folge, dass keine weiteren gültigen Signaturen mehr erstellt werden können. Mehr über den Widerruf von Zertifikaten und technische Hintergründe zur Signaturprüfung lesen Sie in der Onlinehilfe.");
+			lbl_exp.setText(Messages.TabItemListener_exp_txt_sec_user_tab0 +
+					Messages.TabItemListener_exp_txt_sec_user_tab1 +
+					Messages.TabItemListener_exp_txt_sec_user_tab2 +
+					Messages.TabItemListener_exp_txt_sec_user_tab3);
 		}
 		parent.layout(true);
 		grp_exp.layout(true);
