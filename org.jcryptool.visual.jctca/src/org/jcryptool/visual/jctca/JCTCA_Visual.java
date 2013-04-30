@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
+import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
 import org.jcryptool.visual.jctca.tabs.CertificationTab;
 import org.jcryptool.visual.jctca.tabs.RegistrationTab;
@@ -113,8 +114,10 @@ public class JCTCA_Visual extends ViewPart {
 		String create_img = "icons/minica_create_cert.jpg";
 		Image help = Activator.getImageDescriptor(create_img).createImage();
 		// comp_image.setBackgroundImage(help);
-		lbl_img = new Label(comp_image, SWT.NONE);
+		lbl_img = new Label(comp_image, SWT.WRAP);
+		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		lbl_img.setImage(help);
+		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image, comp_center));
 
 		comp_btns = new Composite(comp_center, SWT.NONE);
 		comp_btns.setLayout(new GridLayout(4, false));
@@ -172,7 +175,6 @@ public class JCTCA_Visual extends ViewPart {
 		txt_explain
 				.setToolTipText("Zusätzliche Erklärungen zu den jeweiligen Schritten.");
 
-		// TODO: besser machen
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);
 		tabFolder.addSelectionListener(tabItemListener);
