@@ -51,7 +51,7 @@ public class SignCert implements Views {
 		btn_sign.setText("Mit ausgewähltem Schlüssel signieren");
 		Label lbl_exp = (Label) exp.getChildren()[0];
 		lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, eine Datei auf Ihrem Computer oder den hier eingegebenen Text zu signieren. Signiert wird immer mit dem privaten Schlüssel eines Schlüsselpaares. Aus den privaten Schlüssel, für deren korrespondierenden öffentlichen Schlüssel Sie bereits Zertifikate ausgestellt bekommen haben, können Sie in der Dropdownliste auswählen. Der Text oder die Datei wird mit dem ausgewählten Schlüssel signiert. Die signierten Daten und die dazugehörige Signatur stehen danach in der Ansicht \"2. Benutzer\" zur Überprüfung zur Verfügung.\n\n"
-				+ "Wenn Sie genauer wissen wollen, was beim Erstellen einer Signatur mathematisch passiert, können Sie mittels \"Visualisiert signieren\" in ein JCrypTool-Plugin wechseln, das sich genauer mit Signaturen auseinandersetzt. Die Daten und Signaturen, die Sie in diesem Plugin erstellen, stehen danach ebenfalls in der Ansicht \"2. Benutzer\" zur Verfügung.");
+				+ "Wenn Sie genauer wissen wollen, was beim Erstellen einer Signatur mathematisch passiert, können Sie mittels \"Signiervorgang visualisieren\" in ein JCrypTool-Plugin wechseln, das sich genauer mit Signaturen auseinandersetzt. Die Daten und Signaturen, die Sie in diesem Plugin erstellen, stehen danach ebenfalls in der Ansicht \"2. Benutzer\" zur Verfügung.");
 
 		composite.setVisible(false);
 	}

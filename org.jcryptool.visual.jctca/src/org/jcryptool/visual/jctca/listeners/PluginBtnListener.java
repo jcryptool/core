@@ -2,6 +2,7 @@ package org.jcryptool.visual.jctca.listeners;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
@@ -30,7 +31,8 @@ public class PluginBtnListener implements SelectionListener{
 			visual.showCenter();
 		}
 		else if(text.equals("Zertifikat erzeugen")){
-			lbl_img.setImage(Activator.getImageDescriptor("icons/minica_create_cert.jpg").createImage());
+			Image img = Activator.getImageDescriptor("icons/minica_create_cert.jpg").createImage();
+			lbl_img.setImage(img);
 		}
 		else if(text.equals("Zertifikat widerrufen")){
 			lbl_img.setImage(Activator.getImageDescriptor("icons/minica_revoke.jpg").createImage());
