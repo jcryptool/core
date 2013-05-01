@@ -54,6 +54,8 @@ public class FlexiProviderEngineFactory {
 	        case SIGNATURE:
 	            engine = new SignatureEngine();
 	            break;
+			default:
+				break;
 		}
 		return engine;
 	}
