@@ -312,7 +312,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 @Override
                     	 protected void configureShell(Shell newShell) {
                     		 super.configureShell(newShell);
-                    		 newShell.setSize(500, 500);
+                    		 //set size of the wizard-window (x,y)
+                    		 newShell.setSize(550, 500);
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
@@ -354,7 +355,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 @Override
                     	 protected void configureShell(Shell newShell) {
                     		 super.configureShell(newShell);
-                    		 newShell.setSize(300, 650);
+                    		 //set size of the wizard-window (x,y)
+                    		 newShell.setSize(350, 650);
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
@@ -385,7 +387,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                    	 	@Override
                    	 	protected void configureShell(Shell newShell) {
                    	 		super.configureShell(newShell);
-                   	 		newShell.setSize(300, 650);
+                   	 	    //set size of the wizard-window (x,y)
+                   	 		newShell.setSize(350, 650);
                    	 } 
                     };
                     if (dialog.open() == Window.OK) { 

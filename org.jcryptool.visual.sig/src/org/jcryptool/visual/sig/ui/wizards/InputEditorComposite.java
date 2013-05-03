@@ -12,7 +12,7 @@ public class InputEditorComposite extends Composite {
 
 	// Limit for the length of the text that might be entered into the plaintext
 	// field
-	private static final int TEXTLIMIT = 150;
+	private static final int TEXTLIMIT = 1000;
 	private Text text = null;
 	private InputEditorWizardPage page;
 	

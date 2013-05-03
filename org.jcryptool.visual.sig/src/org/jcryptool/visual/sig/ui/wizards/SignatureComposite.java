@@ -34,7 +34,7 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 	private void initialize() {
 		grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
-		grpSignatures.setBounds(10, 10, 250, 151);
+		grpSignatures.setBounds(10, 10, 300, 151);
 		
 		rdo1 = new Button(grpSignatures, SWT.RADIO);
 		rdo1.setSelection(true);
@@ -55,11 +55,11 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 	
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
-		grpDescription.setBounds(10, 171, 250, 255);
+		grpDescription.setBounds(10, 171, 300, 255);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
 		txtDescription.setEditable(false);
-		txtDescription.setBounds(10, 15, 226, 213);
+		txtDescription.setBounds(10, 15, 275, 213);
 		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
 		txtDescription.setText(Messages.SignatureWizard_DSA_description);
 		
