@@ -4,6 +4,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -37,8 +38,8 @@ public class CreateCert implements Views{
 	Label lbl_proof;
 	Button btn_proof;
 	
-	Label lbl_key;
-	Button btn_key;
+	Label lbl_public_key;
+	Combo combo_public_key;
 	
 	Label lbl_plain;
 	Button btn_send;
@@ -102,11 +103,10 @@ public class CreateCert implements Views{
         btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         
-        lbl_key = new Label(createCertGroup, SWT.None);
-        lbl_key.setText(Messages.CreateCert_pub_key);
-        btn_key = new Button(createCertGroup, SWT.NONE);
-        btn_key.setText(Messages.CreateCert_chose_pub_key_btn);
-        btn_key.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        lbl_public_key = new Label(createCertGroup, SWT.None);
+        lbl_public_key.setText(Messages.CreateCert_pub_key);
+        combo_public_key = new Combo(createCertGroup, SWT.DROP_DOWN);
+        combo_public_key.add("Dummy public key");
         
         lbl_plain = new Label(createCertGroup, SWT.NONE);
         btn_genKey = new Button(createCertGroup, SWT.NONE);
