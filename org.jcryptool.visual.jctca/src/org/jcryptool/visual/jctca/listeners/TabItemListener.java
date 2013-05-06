@@ -32,7 +32,6 @@ public class TabItemListener implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
-		System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_user_tab0

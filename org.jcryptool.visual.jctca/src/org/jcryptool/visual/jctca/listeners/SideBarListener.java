@@ -51,7 +51,6 @@ public class SideBarListener implements SelectionListener {
 			siCert.dispose();
 		}
 		String text = btn.getText();
-		System.out.println(text);
 		if(text.equals(Messages.SideBarListener_strcmp_get_cert)){
 			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
