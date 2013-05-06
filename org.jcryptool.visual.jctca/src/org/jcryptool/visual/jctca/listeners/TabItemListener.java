@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -7,7 +9,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
@@ -32,6 +38,7 @@ public class TabItemListener implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
+		System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_user_tab0
@@ -53,6 +60,17 @@ public class TabItemListener implements SelectionListener {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_ra_tab0
 					+ Messages.TabItemListener_exp_txt_ra_tab1
 					+ Messages.TabItemListener_exp_txt_ra_tab2);
+			Group g1 = (Group)parent.getChildren()[1];
+			Group g2 = (Group)g1.getChildren()[0];
+			Composite c = (Composite)g2.getChildren()[0];
+			List lst_csr = (List)c.getChildren()[0];
+			lst_csr.removeAll();
+			ArrayList<CSR> csrs = Util.getCSR();
+			for(int i = 0; csrs != null && i<csrs.size(); i++){
+				CSR csr = csrs.get(i);
+				lst_csr.add("CSR #" + (i+1));
+			}
+			c.layout();
 		} else if (parent.getSelectionIndex() == 2) {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_ca_tab0 +
 					Messages.TabItemListener_exp_txt_ca_tab1 +
