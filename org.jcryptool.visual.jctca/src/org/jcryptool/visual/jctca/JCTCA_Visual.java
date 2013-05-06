@@ -27,8 +27,8 @@ import org.jcryptool.visual.jctca.tabs.UserTab;
 
 public class JCTCA_Visual extends ViewPart {
 	/*
-	 * TODO: einleitungstext ändern -- bei architekturskizzen wird der aktuelle angezeigt
-	 * looooooooogik
+	 * TODO: einleitungstext ändern -- bei architekturskizzen wird der aktuelle
+	 * angezeigt looooooooogik
 	 */
 
 	JCTCA_Visual visual;
@@ -74,7 +74,7 @@ public class JCTCA_Visual extends ViewPart {
 		root.setExpandVertical(true);
 
 		gl = new GridLayout(1, false);
-		gl.verticalSpacing = 20;
+//		gl.verticalSpacing = 20;
 		composite.setLayout(gl);
 
 		// Begin - Header
@@ -92,8 +92,7 @@ public class JCTCA_Visual extends ViewPart {
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
-		head_description
-				.setText(Messages.JCTCA_Visual_intro_txt);
+		head_description.setText(Messages.JCTCA_Visual_intro_txt);
 		// End - Header
 		showArchitecture();
 
@@ -106,6 +105,12 @@ public class JCTCA_Visual extends ViewPart {
 		comp_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 
+		comp_btns = new Composite(comp_center, SWT.NONE);
+		comp_btns.setLayout(new GridLayout(4, false));
+		GridData btns_ld = new GridData(SWT.FILL, SWT.NONE, true, false, 1,1);
+		btns_ld.minimumHeight=30;
+		comp_btns.setLayoutData(btns_ld);
+		
 		comp_image = new Composite(comp_center, SWT.FILL);
 		comp_image.setLayout(new GridLayout(1, false));
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
@@ -118,11 +123,6 @@ public class JCTCA_Visual extends ViewPart {
 		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		lbl_img.setImage(help);
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image, comp_center));
-
-		comp_btns = new Composite(comp_center, SWT.NONE);
-		comp_btns.setLayout(new GridLayout(4, false));
-		comp_btns.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
 
 		btn_showCreate = new Button(comp_btns, SWT.PUSH);
 		btn_showCreate.setText(Messages.JCTCA_Visual_create_cert_arch_headline);
@@ -164,16 +164,14 @@ public class JCTCA_Visual extends ViewPart {
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText(Messages.JCTCA_Visual_explain_headline);
-		grp_explain
-				.setToolTipText(Messages.JCTCA_Visual_explain_tooltip0);
+		grp_explain.setToolTipText(Messages.JCTCA_Visual_explain_tooltip0);
 
 		txt_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1);
 		gd_txt_explain.heightHint = 300;
 		txt_explain.setLayoutData(gd_txt_explain);
-		txt_explain
-				.setToolTipText(Messages.JCTCA_Visual_explain_tooltip1);
+		txt_explain.setToolTipText(Messages.JCTCA_Visual_explain_tooltip1);
 
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);
@@ -184,8 +182,9 @@ public class JCTCA_Visual extends ViewPart {
 				SWT.NONE);
 		CertificationTab ca = new CertificationTab(tabFolder, grp_explain,
 				SWT.NONE);
-		SecondUserTab scndUser = new SecondUserTab(tabFolder, grp_explain, SWT.NONE);
-		
+		SecondUserTab scndUser = new SecondUserTab(tabFolder, grp_explain,
+				SWT.NONE);
+
 		tabFolder.setSelection(0);
 		composite.layout(true);
 	}
