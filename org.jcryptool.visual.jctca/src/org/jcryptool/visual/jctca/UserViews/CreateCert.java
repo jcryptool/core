@@ -1,13 +1,20 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import java.security.KeyStore;
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.jctca.listeners.CreateCertListener;
 
 public class CreateCert implements Views{
 
@@ -38,13 +45,13 @@ public class CreateCert implements Views{
 	Button btn_proof;
 	
 	Label lbl_key;
-	Button btn_key;
+	Button btn_genKey;
 	
 	Label lbl_plain;
 	Button btn_send;
 	
 	Label lbl_plain1;
-	Button btn_genKey;
+	Combo cmb_genKey;
 	
 	
 	public CreateCert(Composite content, Group exp){
@@ -104,18 +111,23 @@ public class CreateCert implements Views{
         
         lbl_key = new Label(createCertGroup, SWT.None);
         lbl_key.setText(Messages.CreateCert_pub_key);
-        btn_key = new Button(createCertGroup, SWT.NONE);
-        btn_key.setText(Messages.CreateCert_chose_pub_key_btn);
-        btn_key.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        
-        lbl_plain = new Label(createCertGroup, SWT.NONE);
         btn_genKey = new Button(createCertGroup, SWT.NONE);
-        btn_genKey.setText(Messages.CreateCert_gen_keypair_btn);
+        btn_genKey.setText(Messages.CreateCert_gen_pub_key_btn);
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
-//        lbl_plain1 = new Label(createCertGroup, SWT.None);
+        lbl_plain = new Label(createCertGroup, SWT.NONE);
+        cmb_genKey = new Combo(createCertGroup, SWT.NONE);
+        cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        
+        loadKeysFromKeystore();
+        
+        CreateCertListener lst = new CreateCertListener(txt_firstname, txt_lastname, txt_street, txt_ZIP, txt_city, txt_country, txt_mail, cmb_genKey);
+        btn_genKey.addSelectionListener(lst);
+        btn_proof.addSelectionListener(lst);
+        //        lbl_plain1 = new Label(createCertGroup, SWT.None);
         btn_send = new Button(composite, SWT.NONE);
         btn_send.setText(Messages.CreateCert_send_csr_btn);
+        btn_send.addSelectionListener(lst);
         btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
                 
         Label lbl_exp = (Label)exp.getChildren()[0];
@@ -132,5 +144,14 @@ public class CreateCert implements Views{
 	
 	public void setVisible(boolean visible){
 		this.composite.setVisible(visible);
+	}
+	
+	private void loadKeysFromKeystore(){
+		KeyStoreManager mng = KeyStoreManager.getInstance();
+		ArrayList<KeyStoreAlias> pubKeys = mng.getAllPublicKeys();
+		for(int i = 0; i<pubKeys.size(); i++){
+			KeyStoreAlias pub = pubKeys.get(i);
+			cmb_genKey.add(pub.getContactName()+ " Hash: "+pub.getHashValue());
+		}
 	}
 }

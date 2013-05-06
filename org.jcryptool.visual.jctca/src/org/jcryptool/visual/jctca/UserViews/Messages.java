@@ -5,7 +5,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.jctca.UserViews.messages"; //$NON-NLS-1$
 	public static String CreateCert_chose_file_btn;
-	public static String CreateCert_chose_pub_key_btn;
+	public static String CreateCert_gen_pub_key_btn;
 	public static String CreateCert_city;
 	public static String CreateCert_country;
 	public static String CreateCert_create_csr_headline;
