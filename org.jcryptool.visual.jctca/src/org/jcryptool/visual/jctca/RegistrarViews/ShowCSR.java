@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
+import org.jcryptool.visual.jctca.listeners.CSRListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class ShowCSR implements Views {
@@ -71,11 +72,7 @@ public class ShowCSR implements Views {
 
 		lst_csr = new List(left, SWT.BORDER);
 		lst_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		lst_csr.add(Messages.ShowCSR_dummy_csr0);
-		lst_csr.add(Messages.ShowCSR_dummy_csr1);
-		lst_csr.add(Messages.ShowCSR_dummy_csr2);
-		lst_csr.add(Messages.ShowCSR_dummy_csr3);
-
+		
 		lbl_firstname = new Label(center, SWT.NONE);
 		lbl_firstname.setText(Messages.ShowCSR_first_name);
 		lbl_value_firstname = new Label(center, SWT.NONE);
@@ -128,6 +125,7 @@ public class ShowCSR implements Views {
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 		util.set_image_name("ausweis");
 		lbl_img.addControlListener(new ResizeListener(lbl_img, right));
+		lst_csr.addSelectionListener(new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_img));
 	}
 
 	public void dispose() {
