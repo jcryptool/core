@@ -23,14 +23,14 @@
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="$nl$/toc.xml"
+            file="$nl$/help/toc.xml"
             primary="false">
       </toc>
    </extension>
    <extension
          point="org.eclipse.help.contexts">
       <contexts
-            file="$nl$/contexts.xml">
+            file="$nl$/help/contexts.xml">
       </contexts>
    </extension>
 </plugin>

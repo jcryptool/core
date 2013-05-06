@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -9,6 +11,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 
 public class ShowCert implements Views {
 	Composite composite;
@@ -54,6 +58,8 @@ public class ShowCert implements Views {
 
 	Button btn_revoke;
 	
+	KeyStoreManager ksm = KeyStoreManager.getInstance();
+	
 	public ShowCert(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
@@ -75,10 +81,18 @@ public class ShowCert implements Views {
 
 		lst_certs = new List(left, SWT.BORDER);
 		lst_certs.setLayoutData(new GridData(SWT.NONE,SWT.FILL,false,true));
-		lst_certs.add(Messages.ShowCert_dummy_cert0);
-		lst_certs.add(Messages.ShowCert_dummy_cert1);
-		lst_certs.add(Messages.ShowCert_dummy_cert2);
-		lst_certs.add(Messages.ShowCert_dummy_cert3);
+		
+		//get all public keys from JCT Keystore and iterate over them
+		for(KeyStoreAlias ksAlias : ksm.getAllPublicKeys()){
+			//for each public key, save the name
+			String certListEntry = ksAlias.getContactName() + " (" + ksAlias.getHashValue() + ") ";
+			lst_certs.add(certListEntry);
+		}
+		
+		//lst_certs.add(Messages.ShowCert_dummy_cert0);
+		//lst_certs.add(Messages.ShowCert_dummy_cert1);
+		//lst_certs.add(Messages.ShowCert_dummy_cert2);
+		//lst_certs.add(Messages.ShowCert_dummy_cert3);
 
 		lbl_issued_to = new Label(right,SWT.NONE);
 		lbl_issued_to.setFont(FontService.getNormalBoldFont());
@@ -170,7 +184,7 @@ public class ShowCert implements Views {
         		Messages.ShowCert_exp_txt3);
 		composite.setVisible(false);
 	}
-
+	
 	public void dispose() {
 		this.composite.dispose();
 	}
