@@ -13,8 +13,11 @@ Require-Bundle: org.jcryptool.crypto;bundle-version="1.0.0",
  org.jcryptool.crypto.keystore;bundle-version="1.0.0",
  org.eclipse.help;bundle-version="3.5.0",
  org.eclipse.swt,
- org.eclipse.ui;bundle-version="3.7.0"
+ org.eclipse.ui;bundle-version="3.7.0",
+ org.bouncycastle,
+ net.sourceforge.codec;bundle-version="2.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
-Import-Package: org.jcryptool.core.util,
+Import-Package: org.bouncycastle.asn1.pkcs,
+ org.jcryptool.core.util,
  org.jcryptool.core.util.fonts

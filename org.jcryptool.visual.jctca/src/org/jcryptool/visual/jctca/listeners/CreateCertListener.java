@@ -36,6 +36,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.UserViews.Messages;
 
+@SuppressWarnings("deprecation")
 public class CreateCertListener implements SelectionListener{
 	Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town,txt_country, txt_mail;
 	Combo cmb_keys;
@@ -85,7 +86,7 @@ public class CreateCertListener implements SelectionListener{
 			path = f.open();
 			src.setText(path);
 		}
-		else if(text.equals(Messages.CreateCert_gen_pub_key_btn)){
+		else if(text.equals("\u00d6ffentlichen Schl\u00fcssel ausw\u00e4hlen")){
 			String first = txt_first_name.getText();
 			String last = txt_last_name.getText();
 			String street = txt_street.getText();
