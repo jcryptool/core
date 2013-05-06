@@ -50,7 +50,6 @@ public class ResizeListener implements ControlListener {
 			height_scaled = comp_image.getBounds().height;
 			width_scaled = (int) (width - (height - height_scaled) * ratio);
 		}
-		System.out.println(image_name);
 		if(image_name == "create"){
 			help = Activator.getImageDescriptor(
 					Messages.PluginBtnListener_create_cert_arch_path)
@@ -63,7 +62,7 @@ public class ResizeListener implements ControlListener {
 					Messages.PluginBtnListener_check_sig_arch_path)
 					.createImage();
 		}else {
-			System.out.println("ohje");
+			help = Activator.getImageDescriptor("icons/ausweis.jpeg").createImage();
 		}
 
 		img_scaled = new Image(img.getDisplay(), help.getImageData().scaledTo(

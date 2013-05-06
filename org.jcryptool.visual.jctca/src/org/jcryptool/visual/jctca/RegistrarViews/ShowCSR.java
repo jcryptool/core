@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.Activator;
+import org.jcryptool.visual.jctca.ResizeHelper;
+import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class ShowCSR implements Views {
@@ -120,9 +122,12 @@ public class ShowCSR implements Views {
 		
 //		Label lbl_exp = (Label)exp.getChildren()[0];
 //		lbl_exp.setText("Hi, I explain what is going on in Show CSR!");
+		ResizeHelper util = new ResizeHelper();
 		String ausweis = Messages.ShowCSR_dummy_ausweis_path;
 		Label lbl_img = new Label(right, SWT.NONE);
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
+		util.set_image_name("ausweis");
+		lbl_img.addControlListener(new ResizeListener(lbl_img, right));
 	}
 
 	public void dispose() {
