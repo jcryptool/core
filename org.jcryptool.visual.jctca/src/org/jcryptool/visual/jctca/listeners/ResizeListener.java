@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
+import org.jcryptool.visual.jctca.ResizeHelper;
 
 public class ResizeListener implements ControlListener {
 
@@ -15,11 +16,12 @@ public class ResizeListener implements ControlListener {
 	Label img;
 	Composite comp_image;
 	Composite composite;
+	ResizeHelper util;
+	Image help;
 
-	public ResizeListener(Label img, Composite comp_image, Composite composite) {
+	public ResizeListener(Label img, Composite comp_image) {
 		this.img = img;
 		this.comp_image = comp_image;
-		this.composite = composite;
 	}
 
 	@Override
@@ -30,29 +32,40 @@ public class ResizeListener implements ControlListener {
 
 	@Override
 	public void controlResized(ControlEvent e) {
-		// comp_image = bild mit aktueller groesse
-		String create_img = "icons/minica_create_cert.jpg";
-		String revoke_img = "icons/minica_revoke.jpg";
-		String check_img = "icons/minica_check.jpg";
-		String ausweis_img = "icons/ausweis.jpeg";
-
-
+		ResizeHelper util = new ResizeHelper();
+		String image_name = util.get_image_name();
+		
+		System.out.println(e.getSource());
 		image = img.getImage();
 		int width = image.getBounds().width;
 		int height = image.getBounds().height;
+		double ratio = (double)width / (double)height;
 		int width_scaled = 1;
 		int height_scaled = 1;
 		
-		
-		if ((comp_image.getBounds().width / comp_image.getBounds().height) < 2.91) {
+		if ((comp_image.getBounds().width / comp_image.getBounds().height) < ratio) {
 			width_scaled = comp_image.getBounds().width;
-			height_scaled = (int) (height - ((width - width_scaled) / 2.91));
+			height_scaled = (int) (height - ((width - width_scaled) / ratio));
 		} else {
 			height_scaled = comp_image.getBounds().height;
-			width_scaled = (int) (width - (height - height_scaled) * 2.91);
+			width_scaled = (int) (width - (height - height_scaled) * ratio);
 		}
-		
-		Image help = Activator.getImageDescriptor(create_img).createImage();
+		System.out.println(image_name);
+		if(image_name == "create"){
+			help = Activator.getImageDescriptor(
+					Messages.PluginBtnListener_create_cert_arch_path)
+					.createImage();
+		}else if(image_name == "revoke") {
+			help = Activator.getImageDescriptor(
+					Messages.PluginBtnListener_rev_cert_arch_path).createImage();			
+		}else if(image_name == "check") {
+			help = Activator.getImageDescriptor(
+					Messages.PluginBtnListener_check_sig_arch_path)
+					.createImage();
+		}else {
+			System.out.println("ohje");
+		}
+
 		img_scaled = new Image(img.getDisplay(), help.getImageData().scaledTo(
 				width_scaled, height_scaled));
 		img.setImage(img_scaled);
