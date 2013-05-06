@@ -119,30 +119,30 @@ public class JCTCA_Visual extends ViewPart {
 		String create_img = Messages.JCTCA_Visual_arch_pic_path;
 		Image help = Activator.getImageDescriptor(create_img).createImage();
 		// comp_image.setBackgroundImage(help);
-		lbl_img = new Label(comp_image, SWT.WRAP);
+		lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);
 		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		lbl_img.setImage(help);
-		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image, comp_center));
-
+		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
 		btn_showCreate = new Button(comp_btns, SWT.PUSH);
 		btn_showCreate.setText(Messages.JCTCA_Visual_create_cert_arch_headline);
 		btn_showCreate.addSelectionListener(new PluginBtnListener(visual,
-				lbl_img));
+				lbl_img, head_description));
 
 		btn_showRevoke = new Button(comp_btns, SWT.PUSH);
 		btn_showRevoke.setText(Messages.JCTCA_Visual_revoke_cert_arch_headline);
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
-				lbl_img));
+				lbl_img,head_description));
+		
 
 		btn_showSign = new Button(comp_btns, SWT.PUSH);
 		btn_showSign.setText(Messages.JCTCA_Visual_check_sig_arch_headline);
 		btn_showSign
-				.addSelectionListener(new PluginBtnListener(visual, lbl_img));
+				.addSelectionListener(new PluginBtnListener(visual, lbl_img, head_description));
 
 		btn_proceed = new Button(comp_btns, SWT.PUSH);
 		btn_proceed.setText(Messages.JCTCA_Visual_continue_to_plugin);
 		btn_proceed
-				.addSelectionListener(new PluginBtnListener(visual, lbl_img));
+				.addSelectionListener(new PluginBtnListener(visual, lbl_img,head_description));
 		composite.layout(true);
 	}
 
