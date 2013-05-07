@@ -42,7 +42,6 @@ public class TabItemListener implements SelectionListener {
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_user_tab0
-					// +
 					// "Unter \"Neues Zertifikat anfordern\" haben Sie die Möglichkeit, ein Zertifikat für einen öffentlichen Schlüssel anzufordern. Sollten Sie noch kein Schlüsselpaar haben, so können Sie sich eines generieren lassen.\nUnter \"Zertifikate verwalten\" können Sie sich, wenn Sie bereits ausgestellte Zertifikate haben, diese anzeigen lassen. Dort haben Sie außerdem die Möglichkeit, Zertifikate zu widerrufen.\nUnter \"Text oder Datei signieren\" können Sie Signaturen für von Ihnen eingegebenen Text oder Dateien auf Ihrem Computer erstellen.\n\n"
 					+ Messages.TabItemListener_exp_txt_user_tab1);
 			
@@ -66,6 +65,7 @@ public class TabItemListener implements SelectionListener {
 			List lst_csr = (List)c.getChildren()[0];
 			lst_csr.removeAll();
 			ArrayList<CSR> csrs = Util.getCSR();
+			System.out.println(csrs.size());
 			for(int i = 0; csrs != null && i<csrs.size(); i++){
 				CSR csr = csrs.get(i);
 				lst_csr.add("CSR #" + (i+1));

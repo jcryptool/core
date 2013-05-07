@@ -111,7 +111,7 @@ public class CreateCert implements Views{
         lbl_key = new Label(createCertGroup, SWT.None);
         lbl_key.setText(Messages.CreateCert_pub_key);
         btn_genKey = new Button(createCertGroup, SWT.NONE);
-        btn_genKey.setText("\u00d6ffentlichen Schl\u00fcssel ausw\u00e4hlen");
+        btn_genKey.setText("Neues Schl\u00fcsselpaar generieren");
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain = new Label(createCertGroup, SWT.NONE);
