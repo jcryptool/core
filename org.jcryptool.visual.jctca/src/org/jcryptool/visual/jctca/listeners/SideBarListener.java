@@ -20,12 +20,12 @@ public class SideBarListener implements SelectionListener {
 	Composite comp_right;
 	Group grp_exp;
 	public SideBarListener(CreateCert cCert, ShowCert sCert, RevokeCert rCert, SignCert siCert, Group grp_exp, Composite comp_right){
-		//this.cCert = cCert;
+//		this.cCert = cCert;
 //		this.rCert = new RevokeCert(comp_right);
 //		this.cCert = new CreateCert(comp_right, comp_exp);
 //		this.sCert = new ShowCert(comp_right);
 //		this.siCert = new SignCert(comp_right);
-		//this.sCert = sCert;
+		this.sCert = sCert;
 		this.comp_right = comp_right;
 		this.grp_exp = grp_exp;
 	}
@@ -51,19 +51,19 @@ public class SideBarListener implements SelectionListener {
 			siCert.dispose();
 		}
 		String text = btn.getText();
-		if(text.equals(Messages.SideBarListener_strcmp_get_cert)){
+		if(text.equals("Neues Zertifikat anfordern")){
 			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
 		}
-		else if(text.equals(Messages.SideBarListener_strcmp_manage_cert)){
+		else if(text.equals("Eigene Zertifikate verwalten")){
 			sCert = new ShowCert(comp_right, grp_exp);
 			sCert.setVisible(true);
 		}
-		else if(text.equals(Messages.SideBarListener_strcmp_rev_cert)){
-			rCert = new RevokeCert(comp_right, grp_exp);
-			rCert.setVisible(true);
-		}
-		else if(text.equals(Messages.SideBarListener_strcmp_sign_data)){
+//		else if(text.equals("Zertifikat widerrufen")){
+//			rCert = new RevokeCert(comp_right, grp_exp);
+//			rCert.setVisible(true);
+//		}
+		else if(text.equals("Text oder Datei signieren")){
 			siCert = new SignCert(comp_right, grp_exp);
 			siCert.setVisible(true);
 		}

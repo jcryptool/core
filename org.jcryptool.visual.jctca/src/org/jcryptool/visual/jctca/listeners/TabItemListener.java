@@ -68,7 +68,7 @@ public class TabItemListener implements SelectionListener {
 			System.out.println(csrs.size());
 			for(int i = 0; csrs != null && i<csrs.size(); i++){
 				CSR csr = csrs.get(i);
-				lst_csr.add("CSR #" + (i+1));
+				lst_csr.add(Messages.TabItemListener_csr_item_number + (i+1));
 			}
 			c.layout();
 		} else if (parent.getSelectionIndex() == 2) {

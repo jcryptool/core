@@ -11,9 +11,7 @@ import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.ArrayList;
 
-
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
-import org.bouncycastle.asn1.x509.RSAPublicKeyStructure;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
@@ -26,8 +24,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.keys.KeyType;
@@ -36,7 +32,6 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.UserViews.Messages;
 
-@SuppressWarnings("deprecation")
 public class CreateCertListener implements SelectionListener{
 	Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town,txt_country, txt_mail;
 	Combo cmb_keys;
@@ -62,13 +57,15 @@ public class CreateCertListener implements SelectionListener{
 		Button src = (Button)arg0.getSource();
 		String text = src.getText();
 		KeyStoreManager mng = KeyStoreManager.getInstance();
-		
-		if(text.equals(Messages.CreateCert_send_csr_btn)){
+
+		if(text.equals("CSR abschicken")){
 			KeyStoreAlias pubAlias = null;
 			KeyStoreAlias privAlias = null;
-			
+
 			String selected = cmb_keys.getText();
-			String hash = selected.split(" Hash: ")[1];
+			System.out.println(selected);
+			String hash = selected.split("Hash")[1];
+			System.out.println(hash);
 			ArrayList<KeyStoreAlias> aliases = mng.getAllPublicKeys();
 			for(int i = 0; i<aliases.size(); i++){
 				if(aliases.get(i).getHashValue().equals(hash)){
@@ -77,16 +74,16 @@ public class CreateCertListener implements SelectionListener{
 				}
 			}
 			Util.addCSR(txt_first_name.getText(), txt_last_name.getText(), txt_street.getText(), txt_zip.getText(), 
-								txt_town.getText(), txt_country.getText(), txt_mail.getText(), path, pubAlias, privAlias);
-			Util.showMessageBox("CSR abgeschickt", "Bitte beim Registrar fortfahren!", SWT.ICON_INFORMATION);
+					txt_town.getText(), txt_country.getText(), txt_mail.getText(), path, pubAlias, privAlias);
+			Util.showMessageBox("CSR abgeschickt", "Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"", SWT.ICON_INFORMATION);
 		}
-		else if(text.equals(Messages.CreateCert_chose_file_btn) || text.equals(path)){
+		else if(text.equals("Datei auswählen") || text.equals(path)){
 			FileDialog f = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-			f.setFilterExtensions(new String[]{"*.jpg", "*.gif","*.bmp", "*.png"});
+			f.setFilterExtensions(new String[]{Messages.CreateCertListener_fileext_jpg, Messages.CreateCertListener_fileext_gif,Messages.CreateCertListener_fileext_bmp, Messages.CreateCertListener_fileext_png});
 			path = f.open();
 			src.setText(path);
 		}
-		else if(text.equals("Neues Schl\u00fcsselpaar generieren")){
+		else if(text.equals("Neues Schlüsselpaar generieren")){
 			String first = txt_first_name.getText();
 			String last = txt_last_name.getText();
 			String street = txt_street.getText();
@@ -107,19 +104,19 @@ public class CreateCertListener implements SelectionListener{
 					// used to get proper encoding for the certificate
 					RSAPublicKey pkStruct = new RSAPublicKey(publicKey.getModulus(), publicKey.getExponent());
 					// JCE format needed for the certificate - because getEncoded() is necessary...
-					PublicKey pubKey = KeyFactory.getInstance("RSA").generatePublic(
+					PublicKey pubKey = KeyFactory.getInstance(Messages.CreateCertListener_instance_of_keyfactory_pubkey).generatePublic(
 		                    	new RSAPublicKeySpec(publicKey.getModulus(), publicKey.getExponent()));
 					// and this one for the KeyStore  
-					PrivateKey privKey = KeyFactory.getInstance("RSA").generatePrivate(
+					PrivateKey privKey = KeyFactory.getInstance(Messages.CreateCertListener_instance_of_keyfactory_prikey).generatePrivate(
 								new RSAPrivateCrtKeySpec(publicKey.getModulus(), publicKey.getExponent(),
 									privateKey.getExponent(), privateKey.getP(), privateKey.getQ(), 
 				                    privateKey.getDP(), privateKey.getDQ(), privateKey.getQInv()));
 					String name = first + " " + last;
-					KeyStoreAlias privAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "private key", 1024, (name.concat(privKey.toString())).hashCode()+"",privKey.getClass().getName());
-					KeyStoreAlias pubAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "public key", 1024, (name.concat(pubKey.toString())).hashCode()+"",pubKey.getClass().getName());
+					KeyStoreAlias privAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "private key", 1024, (name.concat(privKey.toString())).hashCode()+" ",privKey.getClass().getName());
+					KeyStoreAlias pubAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "public key", 1024, (name.concat(pubKey.toString())).hashCode()+" ",pubKey.getClass().getName());
 					mng.addKeyPair(privKey, CertificateFactory.createJCrypToolCertificate(pubKey) , new String(KeyStoreManager.getDefaultKeyPassword()), privAlias, pubAlias);
 					System.out.println(pubAlias.getContactName());
-					cmb_keys.add(pubAlias.getContactName() + " Hash: " + pubAlias.getHashValue());
+					cmb_keys.add(pubAlias.getContactName() + "(Hash: " + pubAlias.getHashValue() +")");
 					cmb_keys.getParent().layout();
 					cmb_keys.select(cmb_keys.getItemCount()-1);
 				} catch (InvalidKeySpecException e) {
@@ -131,7 +128,8 @@ public class CreateCertListener implements SelectionListener{
 				}
 			}
 			else{
-				Util.showMessageBox("Warnung", "Kein Feld darf leer sein!", SWT.ICON_INFORMATION);			}
+				Util.showMessageBox("Leeres Feld!", "Bitte füllen Sie alle Felder aus.", SWT.ICON_INFORMATION);
+			}
 		}
 		
 	}

@@ -85,7 +85,7 @@ public class ShowCert implements Views {
 		//get all public keys from JCT Keystore and iterate over them
 		for(KeyStoreAlias ksAlias : ksm.getAllPublicKeys()){
 			//for each public key, save the name
-			String certListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit) ";
+			String certListEntry = ksAlias.getContactName() + Messages.ShowCert_list_open_bracket + ksAlias.getKeyLength() + Messages.ShowCert_list_bit_and_close_bracket;
 			lst_certs.add(certListEntry);
 		}
 		

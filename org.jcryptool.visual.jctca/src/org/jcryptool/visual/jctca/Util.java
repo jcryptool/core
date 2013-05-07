@@ -1,12 +1,7 @@
 package org.jcryptool.visual.jctca;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle.Control;
 
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;

@@ -3,13 +3,10 @@ package org.jcryptool.visual.jctca.listeners;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
-import org.jcryptool.visual.jctca.Util;
-import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 
 public class ResizeListener implements ControlListener {
 
@@ -52,17 +49,12 @@ public class ResizeListener implements ControlListener {
 			height_scaled = comp_image.getBounds().height;
 			width_scaled = (int) (width - (height - height_scaled) * ratio);
 		}
-		if(image_name == "create"){
-			help = Activator.getImageDescriptor(
-					Messages.PluginBtnListener_create_cert_arch_path)
-					.createImage();
-		}else if(image_name == "revoke") {
-			help = Activator.getImageDescriptor(
-					Messages.PluginBtnListener_rev_cert_arch_path).createImage();			
-		}else if(image_name == "check") {
-			help = Activator.getImageDescriptor(
-					Messages.PluginBtnListener_check_sig_arch_path)
-					.createImage();
+		if(image_name == "Architekturskizze Zertifikatserzeugung"){
+			help = Activator.getImageDescriptor("icons/minica_create_cert.jpg").createImage();
+		}else if(image_name == "Architekturskizze Zertifikatswideruf") {
+			help = Activator.getImageDescriptor("icons/minica_revoke.jpg").createImage();			
+		}else if(image_name == "Architekturskizze Signaturprüfung") {
+			help = Activator.getImageDescriptor("icons/minica_check.jpg").createImage();
 		}else {
 			help = Activator.getImageDescriptor("icons/ausweis.jpeg").createImage();
 		}

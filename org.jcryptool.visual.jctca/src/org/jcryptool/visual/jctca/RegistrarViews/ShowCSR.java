@@ -132,7 +132,7 @@ public class ShowCSR implements Views {
 		Label lbl_img = new Label(right, SWT.RESIZE);
 		right.addControlListener(new ResizeListener(lbl_img, right));
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
-		util.set_image_name("ausweis");
+		util.set_image_name(Messages.ShowCSR_ausweis_name);
 		lst_csr.addSelectionListener(new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_img));
 		
 	}

@@ -4,8 +4,6 @@ import org.eclipse.swt.SWT;
 import org.jcryptool.core.util.fonts.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
@@ -25,10 +23,17 @@ import org.jcryptool.visual.jctca.tabs.RegistrationTab;
 import org.jcryptool.visual.jctca.tabs.SecondUserTab;
 import org.jcryptool.visual.jctca.tabs.UserTab;
 
+/**
+ * 
+ * This class implements the Certificate Authority visual for the JCrypTool.
+ * 
+ * @author Marco Macala, Kerstin Reisinger
+ *
+ */
+
 public class JCTCA_Visual extends ViewPart {
 	/*
-	 * TODO: einleitungstext ändern -- bei architekturskizzen wird der aktuelle
-	 * angezeigt looooooooogik
+	 * TODO: loooogik
 	 */
 
 	JCTCA_Visual visual;
@@ -43,20 +48,20 @@ public class JCTCA_Visual extends ViewPart {
 	private StyledText head_description;
 	private Composite comp_center;
 	private TabFolder tabFolder;
-	private Label txt_explain;
+	private Label lbl_explain;
 	private Group grp_explain;
 
 	private Composite comp_image;
 
-	private Composite comp_btns;
+	private Composite comp_buttons;
 
 	private Button btn_showCreate;
 
 	private Button btn_showRevoke;
 
-	private Button btn_showSign;
+	private Button btn_showCheck;
 
-	private Button btn_proceed;
+	private Button btn_continue;
 
 	private Label lbl_img;
 
@@ -74,10 +79,10 @@ public class JCTCA_Visual extends ViewPart {
 		root.setExpandVertical(true);
 
 		gl = new GridLayout(1, false);
-//		gl.verticalSpacing = 20;
+		//		gl.verticalSpacing = 20;
 		composite.setLayout(gl);
 
-		// Begin - Header
+		//Begin - headline area
 		headComposite = new Composite(composite, SWT.NONE);
 		headComposite.setBackground(WHITE);
 		headComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
@@ -87,62 +92,68 @@ public class JCTCA_Visual extends ViewPart {
 		Label headline = new Label(headComposite, SWT.NONE);
 		headline.setFont(FontService.getHeaderFont());
 		headline.setBackground(WHITE);
+		//Set the headline text to the title of the plugin
 		headline.setText(Messages.JCTCA_Visual_headline);
 		head_description = new StyledText(headComposite, SWT.READ_ONLY
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
-		head_description.setText(Messages.JCTCA_Visual_intro_txt);
+		//set the short introduction text for the certifcate creation picture because this is the first text that needs to be shown
+		head_description.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, hat er die Möglichkeit, sich für diesen Schlüssel ein Zertifikat ausstellen zu lassen. Zu diesem Zweck erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll und leitet den CSR, wenn dies der Fall ist, an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR ihre eigene Signatur hinzu, wodurch dieser zu einem von dieser CA ausgestellten Zertifikat wird. Dieses Zertifikat geht zurück an den Antragsteller. Die RA und die CA werden gemeinsam auch als \"Public Key Infrastructure\" (PKI) bezeichnet.");
 		// End - Header
 		showArchitecture();
 
 	}
-
-	// TODO: Einleitungstext anzeigen, nicht den allgemeinen Erklärungstext
+	/**
+	 * 
+	 * Displays the architecture pictures of jct-ca
+	 * 
+	 */
+	
 	public void showArchitecture() {
 		comp_center = new Composite(composite, SWT.NONE);
 		comp_center.setLayout(new GridLayout(1, false));
 		comp_center.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 
-		comp_btns = new Composite(comp_center, SWT.NONE);
-		comp_btns.setLayout(new GridLayout(4, false));
+		comp_buttons = new Composite(comp_center, SWT.NONE);
+		comp_buttons.setLayout(new GridLayout(4, false));
 		GridData btns_ld = new GridData(SWT.FILL, SWT.NONE, true, false, 1,1);
 		btns_ld.minimumHeight=30;
-		comp_btns.setLayoutData(btns_ld);
-		
+		comp_buttons.setLayoutData(btns_ld);
+
 		comp_image = new Composite(comp_center, SWT.FILL);
 		comp_image.setLayout(new GridLayout(1, false));
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
-
-		String create_img = Messages.JCTCA_Visual_arch_pic_path;
-		Image help = Activator.getImageDescriptor(create_img).createImage();
+		//set path_to_create_img and load image at that path into help
+		String path_to_create_img = "icons/minica_create_cert.jpg";
+		Image help = Activator.getImageDescriptor(path_to_create_img).createImage();
 		// comp_image.setBackgroundImage(help);
 		lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);
 		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
 		lbl_img.setImage(help);
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
-		btn_showCreate = new Button(comp_btns, SWT.PUSH);
-		btn_showCreate.setText(Messages.JCTCA_Visual_create_cert_arch_headline);
+		btn_showCreate = new Button(comp_buttons, SWT.PUSH);
+		btn_showCreate.setText("Zertifikatserzeugung zeigen");
 		btn_showCreate.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
-		btn_showRevoke = new Button(comp_btns, SWT.PUSH);
-		btn_showRevoke.setText(Messages.JCTCA_Visual_revoke_cert_arch_headline);
+		btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
+		btn_showRevoke.setText("Zertifikatswiderruf zeigen");
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img,head_description));
-		
 
-		btn_showSign = new Button(comp_btns, SWT.PUSH);
-		btn_showSign.setText(Messages.JCTCA_Visual_check_sig_arch_headline);
-		btn_showSign
-				.addSelectionListener(new PluginBtnListener(visual, lbl_img, head_description));
 
-		btn_proceed = new Button(comp_btns, SWT.PUSH);
-		btn_proceed.setText(Messages.JCTCA_Visual_continue_to_plugin);
-		btn_proceed
-				.addSelectionListener(new PluginBtnListener(visual, lbl_img,head_description));
+		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
+		btn_showCheck.setText("Signaturprüfung zeigen");
+		btn_showCheck
+		.addSelectionListener(new PluginBtnListener(visual, lbl_img, head_description));
+
+		btn_continue = new Button(comp_buttons, SWT.PUSH);
+		btn_continue.setText("Mit Plugin fortfahren");
+		btn_continue
+		.addSelectionListener(new PluginBtnListener(visual, lbl_img,head_description));
 		composite.layout(true);
 	}
 
@@ -163,25 +174,29 @@ public class JCTCA_Visual extends ViewPart {
 				1);
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
-		grp_explain.setText(Messages.JCTCA_Visual_explain_headline);
-		grp_explain.setToolTipText(Messages.JCTCA_Visual_explain_tooltip0);
+		grp_explain.setText("Erklärung");
+		grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
 
-		txt_explain = new Label(grp_explain, SWT.WRAP);
+		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1);
 		gd_txt_explain.heightHint = 300;
-		txt_explain.setLayoutData(gd_txt_explain);
-		txt_explain.setToolTipText(Messages.JCTCA_Visual_explain_tooltip1);
+		lbl_explain.setLayoutData(gd_txt_explain);
+		lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
 
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);
 		tabFolder.addSelectionListener(tabItemListener);
 
+		@SuppressWarnings("unused")
 		UserTab user = new UserTab(tabFolder, grp_explain, SWT.NONE);
+		@SuppressWarnings("unused")
 		RegistrationTab ra = new RegistrationTab(tabFolder, grp_explain,
 				SWT.NONE);
+		@SuppressWarnings("unused")
 		CertificationTab ca = new CertificationTab(tabFolder, grp_explain,
 				SWT.NONE);
+		@SuppressWarnings("unused")
 		SecondUserTab scndUser = new SecondUserTab(tabFolder, grp_explain,
 				SWT.NONE);
 

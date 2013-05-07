@@ -7,6 +7,8 @@ import org.eclipse.swt.widgets.Label;
 public class ResizeHelper {
 	Image image;
 	Image img_scaled;
+	//internal name of image - this is important because we're chosing images based on string compares
+	//if this isn't set properly, stuff will break!
 	static String image_name; 
 	
 	public void resize_image(Label img, Composite comp_image, Image help) {
@@ -31,15 +33,28 @@ public class ResizeHelper {
 		comp_image.layout();
 	}
 
+	/**
+	 * 
+	 * set the internal name of an image
+	 * 
+	 * @param image_name internal name of the image
+	 */
 	public void set_image_name(String image_name){
-		this.image_name = image_name;
+		ResizeHelper.image_name = image_name;
 		
 	}
-	
+	/**
+	 * 
+	 * Get the internal name of an image (i.e.: "Architekturskizze Zertifikat erzeugen")
+	 * 
+	 * @return name of the image as String
+	 */
 	public String get_image_name() {
 		if(image_name == null) {
-			image_name = "create";
+			//Default to create certificate intro scheme, because this is the first image displayed in the view
+			//and therefor has to be shown if the user hasn't clicked any buttons yet
+			image_name = "Architekturskizze Zertifikatserzeugung";
 		}
-		return this.image_name;
+		return ResizeHelper.image_name;
 	}
 }

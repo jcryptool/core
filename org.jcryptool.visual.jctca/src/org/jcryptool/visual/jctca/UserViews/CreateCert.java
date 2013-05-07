@@ -72,43 +72,43 @@ public class CreateCert implements Views{
         lbl_firstname.setText(Messages.CreateCert_first_name);    
         txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_firstname.setText("Erika");
+        txt_firstname.setText(Messages.CreateCert_prefilled_firstname);
         
         lbl_lastname = new Label(createCertGroup, SWT.None);
         lbl_lastname.setText(Messages.CreateCert_last_name);
         txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_lastname.setText("Musterfrau");
+        txt_lastname.setText(Messages.CreateCert_prefilled_lastname);
         
         lbl_street = new Label(createCertGroup, SWT.None);
         lbl_street.setText(Messages.CreateCert_street);
         txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_street.setText("Musterstrasse 12");
+        txt_street.setText(Messages.CreateCert_prefilled_street);
         
         lbl_ZIP = new Label(createCertGroup, SWT.None);
         lbl_ZIP.setText(Messages.CreateCert_zip);
         txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_ZIP.setText("51021");
+        txt_ZIP.setText(Messages.CreateCert_prefilled_zip);
         
         lbl_city = new Label(createCertGroup, SWT.None);
         lbl_city.setText(Messages.CreateCert_city);
         txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_city.setText("Berlin");
+        txt_city.setText(Messages.CreateCert_prefilled_city);
         
         lbl_country = new Label(createCertGroup, SWT.None);
         lbl_country.setText(Messages.CreateCert_country);
         txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_country.setText("Deutschland");
+        txt_country.setText(Messages.CreateCert_prefilled_country);
         
         lbl_mail = new Label(createCertGroup, SWT.None);
         lbl_mail.setText(Messages.CreateCert_email);
         txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
         txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        txt_mail.setText("muster@frau.de");
+        txt_mail.setText(Messages.CreateCert_prefilled_email);
         lbl_proof = new Label(createCertGroup, SWT.None);
         lbl_proof.setText(Messages.CreateCert_identity_file);
         btn_proof = new Button(createCertGroup, SWT.None);
@@ -117,27 +117,30 @@ public class CreateCert implements Views{
         
         
         lbl_key = new Label(createCertGroup, SWT.None);
-        lbl_key.setText(Messages.CreateCert_pub_key);
+        lbl_key.setText("Öffentlicher Schlüssel");
         btn_genKey = new Button(createCertGroup, SWT.NONE);
-        btn_genKey.setText("Neues Schl\u00fcsselpaar generieren");
+        btn_genKey.setText("Neues Schlüsselpaar generieren");
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain = new Label(createCertGroup, SWT.NONE);
         lbl_plain2 = new Label(createCertGroup, SWT.FILL | SWT.CENTER);
         lbl_plain2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        lbl_plain2.setText("oder vorhandenen \u00f6ffentlichen Schl\u00fcssel ausw\u00e4hlen");
+        lbl_plain2.setText(Messages.CreateCert_text_chose_public_key);
         lbl_plain3 = new Label(createCertGroup, SWT.NONE);
         cmb_genKey = new Combo(createCertGroup, SWT.NONE);
         cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         loadKeysFromKeystore();
         
+        //chose a default value so that we don't get a array out of bound exception if user doesn't chose an entry
+        cmb_genKey.select(0);
+        
         CreateCertListener lst = new CreateCertListener(txt_firstname, txt_lastname, txt_street, txt_ZIP, txt_city, txt_country, txt_mail, cmb_genKey);
         btn_genKey.addSelectionListener(lst);
         btn_proof.addSelectionListener(lst);
-        //        lbl_plain1 = new Label(createCertGroup, SWT.None);
+        //lbl_plain1 = new Label(createCertGroup, SWT.None);
         btn_send = new Button(composite, SWT.NONE);
-        btn_send.setText(Messages.CreateCert_send_csr_btn);
+        btn_send.setText("CSR abschicken");
         btn_send.addSelectionListener(lst);
         btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
                 
@@ -162,7 +165,7 @@ public class CreateCert implements Views{
 		ArrayList<KeyStoreAlias> pubKeys = mng.getAllPublicKeys();
 		for(int i = 0; i<pubKeys.size(); i++){
 			KeyStoreAlias pub = pubKeys.get(i);
-			cmb_genKey.add(pub.getContactName()+ " Hash: "+pub.getHashValue());
+			cmb_genKey.add(pub.getContactName()+ " (Hash: " + pub.getHashValue() + ")");
 		}
 	}
 }
