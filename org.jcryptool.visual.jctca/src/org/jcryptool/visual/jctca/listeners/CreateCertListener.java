@@ -86,7 +86,7 @@ public class CreateCertListener implements SelectionListener{
 			path = f.open();
 			src.setText(path);
 		}
-		else if(text.equals("\u00d6ffentlichen Schl\u00fcssel ausw\u00e4hlen")){
+		else if(text.equals("Neues Schl\u00fcsselpaar generieren")){
 			String first = txt_first_name.getText();
 			String last = txt_last_name.getText();
 			String street = txt_street.getText();

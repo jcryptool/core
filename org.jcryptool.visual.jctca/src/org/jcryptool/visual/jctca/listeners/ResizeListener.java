@@ -8,6 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
+import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 
 public class ResizeListener implements ControlListener {
 

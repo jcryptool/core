@@ -53,7 +53,11 @@ public class CSRListener implements SelectionListener{
 			town.setText(csr.getTown());
 			country.setText(csr.getCountry());
 			mail.setText(csr.getMail());
+			//img.addControlListener(new ResizeListener(img, img.getParent()));
 			img.setImage(new Image(Display.getCurrent(), csr.getProof()));
+
+			
+			
 		}
 	}
 

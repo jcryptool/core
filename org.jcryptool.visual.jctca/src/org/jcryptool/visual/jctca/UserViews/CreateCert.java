@@ -50,6 +50,8 @@ public class CreateCert implements Views{
 	Button btn_send;
 	
 	Label lbl_plain1;
+	Label lbl_plain2;
+	Label lbl_plain3;
 	Combo cmb_genKey;
 	
 	
@@ -70,37 +72,43 @@ public class CreateCert implements Views{
         lbl_firstname.setText(Messages.CreateCert_first_name);    
         txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_firstname.setText("Erika");
         
         lbl_lastname = new Label(createCertGroup, SWT.None);
         lbl_lastname.setText(Messages.CreateCert_last_name);
         txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_lastname.setText("Musterfrau");
         
         lbl_street = new Label(createCertGroup, SWT.None);
         lbl_street.setText(Messages.CreateCert_street);
         txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_street.setText("Musterstrasse 12");
         
         lbl_ZIP = new Label(createCertGroup, SWT.None);
         lbl_ZIP.setText(Messages.CreateCert_zip);
         txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_ZIP.setText("51021");
         
         lbl_city = new Label(createCertGroup, SWT.None);
         lbl_city.setText(Messages.CreateCert_city);
         txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_city.setText("Berlin");
         
         lbl_country = new Label(createCertGroup, SWT.None);
         lbl_country.setText(Messages.CreateCert_country);
         txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        txt_country.setText("Deutschland");
         
         lbl_mail = new Label(createCertGroup, SWT.None);
         lbl_mail.setText(Messages.CreateCert_email);
         txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
         txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        
+        txt_mail.setText("muster@frau.de");
         lbl_proof = new Label(createCertGroup, SWT.None);
         lbl_proof.setText(Messages.CreateCert_identity_file);
         btn_proof = new Button(createCertGroup, SWT.None);
@@ -111,10 +119,14 @@ public class CreateCert implements Views{
         lbl_key = new Label(createCertGroup, SWT.None);
         lbl_key.setText(Messages.CreateCert_pub_key);
         btn_genKey = new Button(createCertGroup, SWT.NONE);
-        btn_genKey.setText("\u00d6ffentlichen Schl\u00fcssel ausw\u00e4hlen");
+        btn_genKey.setText("Neues Schl\u00fcsselpaar generieren");
         btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         lbl_plain = new Label(createCertGroup, SWT.NONE);
+        lbl_plain2 = new Label(createCertGroup, SWT.FILL | SWT.CENTER);
+        lbl_plain2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        lbl_plain2.setText("oder vorhandenen \u00f6ffentlichen Schl\u00fcssel ausw\u00e4hlen");
+        lbl_plain3 = new Label(createCertGroup, SWT.NONE);
         cmb_genKey = new Combo(createCertGroup, SWT.NONE);
         cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
