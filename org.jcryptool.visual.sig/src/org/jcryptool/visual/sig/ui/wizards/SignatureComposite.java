@@ -1,7 +1,5 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -12,7 +10,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 
-public class SignatureComposite extends Composite implements PaintListener, SelectionListener{
+public class SignatureComposite extends Composite implements SelectionListener{
 	private Group grpSignatures;
 	private Text txtDescription;
 	private Button rdo1;
@@ -70,12 +68,6 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 	    rdo4.addSelectionListener(this);
 	    //rdo5.addSelectionListener(this);
 	}
-
-	@Override
-	public void paintControl(PaintEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	/**
 	 * @return the grpSignatures
@@ -89,13 +81,13 @@ public class SignatureComposite extends Composite implements PaintListener, Sele
 		if (rdo1.getSelection()) 
 			txtDescription.setText(Messages.SignatureWizard_DSA_description);
 
-		if (rdo2.getSelection()) 
+		else if (rdo2.getSelection()) 
 			txtDescription.setText(Messages.SignatureWizard_RSA_description);
 		
-		if (rdo3.getSelection()) 
+		else if (rdo3.getSelection()) 
 			txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
 		
-		if (rdo4.getSelection()) 
+		else if (rdo4.getSelection()) 
 			txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
 		
 	}//end widgetSelected

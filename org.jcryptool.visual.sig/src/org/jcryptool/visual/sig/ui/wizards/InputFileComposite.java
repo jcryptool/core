@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.sig.SigPlugin;
 
 public class InputFileComposite extends Composite implements PaintListener, SelectionListener {
 	
@@ -49,7 +51,9 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 			txtPath.setText(file.getAbsolutePath());
 			page.setPageComplete(true);
 		}
-		catch (Exception ex) {}
+		catch (Exception ex) {
+			LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+		}
 		
 	}
 

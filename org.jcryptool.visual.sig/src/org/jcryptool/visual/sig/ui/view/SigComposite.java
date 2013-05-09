@@ -26,11 +26,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.Messages;
 import org.jcryptool.visual.sig.ui.wizards.HashWizard;
 import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.SignatureWizard;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 public class SigComposite extends Composite implements PaintListener {//,ActionListener{
@@ -215,6 +219,12 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		//Adding the PantListener to all the canvas so the arrows can be drawn
 		canvas1.addPaintListener(this);
 		//canvas2.addPaintListener(this);
+		
+		//Adds reset button to the toolbar
+		IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
+        Action action = new Action("wub", IAction.AS_PUSH_BUTTON) {public void run() {Reset(0);}}; //$NON-NLS-1$
+        action.setImageDescriptor(SigPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
+        toolBarMenu.add(action);
  
 	}
 
@@ -336,6 +346,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                 	 */
 		        } //end try
 		    	catch (Exception ex) {
+		    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
 		        }//end catch
 		   }//end widgetSelected
 		});
@@ -370,6 +381,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress,3));   
                     }//end if
                 } catch (Exception ex) {
+                	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                 }
             }
         });
@@ -401,7 +413,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
                     }
                 } catch (Exception ex) {
-                    //LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+                	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                 }
             }
         });
@@ -432,13 +444,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
 		}
-		//Temporary!!
-//		switch (step) {
-//			case 0: lblProgress.setText(Messages.SigComposite_lblProgress); break;
-//			case 1: lblProgress.setText(Messages.SigComposite_lblProgress); break;
-//			case 2: lblProgress.setText(Messages.SigComposite_lblProgress); break;
-//			default: break;
-//		}
+
 		lblProgress.setText(s);
 		tabDescription.setSelection(step);
 		//redraw canvas (to reset the arrows)

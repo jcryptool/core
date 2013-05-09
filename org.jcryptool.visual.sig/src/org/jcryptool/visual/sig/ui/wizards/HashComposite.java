@@ -1,7 +1,5 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -15,7 +13,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 
 //Contains the elements (2 group boxes) of the HashWizard
-public class HashComposite extends Composite implements PaintListener, SelectionListener {
+public class HashComposite extends Composite implements SelectionListener {
 	private Group grpHashes;
 	private Text txtDescription;
 	private Button rdo1;
@@ -88,13 +86,6 @@ public class HashComposite extends Composite implements PaintListener, Selection
 	    
 	    }
 
-
-	@Override
-	public void paintControl(PaintEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	/**
 	 * @return the grpHashes
 	 */
@@ -106,17 +97,17 @@ public class HashComposite extends Composite implements PaintListener, Selection
 	public void widgetSelected(SelectionEvent e) {
 		if (rdo1.getSelection()) 
 			txtDescription.setText(Messages.HashWizard_rdomd5_description);
-
-		if (rdo2.getSelection()) 
+		
+		else if (rdo2.getSelection()) 
 			txtDescription.setText(Messages.HashWizard_rdosha1_description);
 		
-		if (rdo3.getSelection()) 
+		else if (rdo3.getSelection()) 
 			txtDescription.setText(Messages.HashWizard_rdosha256_description);
 		
-		if (rdo4.getSelection()) 
+		else if (rdo4.getSelection()) 
 			txtDescription.setText(Messages.HashWizard_rdosha384_description);
 		
-		if (rdo5.getSelection()) 
+		else if (rdo5.getSelection()) 
 			txtDescription.setText(Messages.HashWizard_rdosha512_description);
 		
 	}//end widgetSelected
