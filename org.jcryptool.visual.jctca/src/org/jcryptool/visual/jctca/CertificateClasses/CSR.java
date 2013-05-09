@@ -14,6 +14,8 @@ public class CSR {
 	private String proof;
 	private KeyStoreAlias privAlias;
 	private KeyStoreAlias pubAlias;
+	private boolean forwardenabled;
+	private boolean rejectenabled;
 	
 	public CSR(String first, String last, String street, String zip,
 			String town, String country, String mail, String proof,
@@ -29,6 +31,8 @@ public class CSR {
 		this.proof = proof;
 		this.privAlias = privAlias;
 		this.pubAlias = pubAlias;
+		this.forwardenabled = false;
+		this.rejectenabled = false;
 	}
 
 	public String getFirst() {
@@ -111,5 +115,21 @@ public class CSR {
 		this.pubAlias = pubAlias;
 	}
 
+
+	public boolean isForwardenabled() {
+		return forwardenabled;
+	}
+
+	public void setForwardenabled(boolean forwardenabled) {
+		this.forwardenabled = forwardenabled;
+	}
+
+	public boolean isRejectenabled() {
+		return rejectenabled;
+	}
+
+	public void setRejectenabled(boolean rejectenabled) {
+		this.rejectenabled = rejectenabled;
+	}
 	
 }
