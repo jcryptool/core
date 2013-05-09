@@ -19,7 +19,7 @@ public class Util {
 	}
 	
 	public static CSR getCSR(int i){
-		if(csr != null && csr.size()>i){
+		if(csr != null && csr.size()>i && i>=0){
 			return csr.get(i);
 		}
 		return null;

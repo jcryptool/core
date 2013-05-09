@@ -22,7 +22,6 @@ public class TabItemListener implements SelectionListener {
 	public TabItemListener(TabFolder parent, Composite grp_exp) {
 		this.parent = parent;
 		this.grp_exp = grp_exp;
-
 	}
 
 	@Override
@@ -59,12 +58,12 @@ public class TabItemListener implements SelectionListener {
 			List lst_csr = (List)c.getChildren()[0];
 			lst_csr.removeAll();
 			ArrayList<CSR> csrs = Util.getCSR();
-			System.out.println(csrs.size());
 			for(int i = 0; csrs != null && i<csrs.size(); i++){
 				CSR csr = csrs.get(i);
 				lst_csr.add(Messages.TabItemListener_csr_item_number + (i+1));
 			}
 			c.layout();
+			lst_csr.select(0);
 		} else if (parent.getSelectionIndex() == 2) {
 			lbl_exp.setText(Messages.TabItemListener_exp_txt_ca_tab0 +
 					Messages.TabItemListener_exp_txt_ca_tab1 +

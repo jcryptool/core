@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
+import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.CSRListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
@@ -47,8 +48,11 @@ public class ShowCSR implements Views {
 	Label lbl_value_mail;
 
 	Button btn_verify_identity;
+	
+	Button btn_forward_csr;
 	Button btn_reject_csr;
 
+	
 	public ShowCSR(Composite content, Composite exp) {
 		// composite = new Composite(content, SWT.NONE);
 		// composite.setLayout(new GridLayout(1, false));
@@ -58,7 +62,7 @@ public class ShowCSR implements Views {
 		Group showCSRGroup = new Group(content, SWT.NONE);
 		showCSRGroup.setLayout(new GridLayout(3, false));
 		//set SWT.FILL auf SWT.NONE, um grp nicht vollst. auszufuellen - bild bleibt dann kleiner
-		GridData gd_grp = new GridData(SWT.NONE, SWT.FILL, true, true);
+		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		showCSRGroup.setLayoutData(gd_grp);
 		showCSRGroup.setText(Messages.ShowCSR_verify_csr_headline);
 
@@ -112,28 +116,44 @@ public class ShowCSR implements Views {
 		lbl_value_mail = new Label(center, SWT.FILL);
 		lbl_value_mail.setText(Messages.ShowCSR_dummy_email);
 
+		
+		
 		btn_verify_identity = new Button(center, SWT.NONE);
 		btn_verify_identity.setText(Messages.ShowCSR_verify_identity);
 		GridData btn_ld = new GridData(SWT.FILL, SWT.FILL,
 				true, true);
 		btn_ld.minimumWidth = 140;
+		btn_ld.horizontalSpan =2;
 		btn_verify_identity.setLayoutData(btn_ld);
+		
+		
+		btn_forward_csr = new Button(center, SWT.NONE);
+		btn_forward_csr.setText("CSR weiterleiten");
+		btn_forward_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		btn_forward_csr.setEnabled(false);
 		
 		btn_reject_csr = new Button(center, SWT.NONE);
 		btn_reject_csr.setText(Messages.ShowCSR_csr_deny);
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
-		btn_reject_csr.setLayoutData(btn_ld);
+		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		btn_reject_csr.setEnabled(false);
 		
 //		Label lbl_exp = (Label)exp.getChildren()[0];
 //		lbl_exp.setText("Hi, I explain what is going on in Show CSR!");
-		ResizeHelper util = new ResizeHelper();
-		String ausweis = Messages.ShowCSR_dummy_ausweis_path;
-		Label lbl_img = new Label(right, SWT.RESIZE);
-		right.addControlListener(new ResizeListener(lbl_img, right));
-		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
-		util.set_image_name(Messages.ShowCSR_ausweis_name);
-		lst_csr.addSelectionListener(new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_img));
+//		ResizeHelper util = new ResizeHelper();
+//		String ausweis = Messages.ShowCSR_dummy_ausweis_path;
+//		Label lbl_img = new Label(right, SWT.RESIZE);
+//		right.addControlListener(new ResizeListener(lbl_img, right));
+//		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
+//		util.set_image_name(Messages.ShowCSR_ausweis_name);
+
+		lst_csr.addSelectionListener(new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP, lbl_value_city, lbl_value_country, lbl_value_mail, btn_forward_csr, btn_reject_csr));
+		VerifyIdentity verify = new VerifyIdentity(Display.getCurrent().getActiveShell(), lst_csr, btn_forward_csr, btn_reject_csr);
+		btn_verify_identity.addSelectionListener(verify);
+		
+		Util.addCSR(Messages.ShowCSR_dummy_first_name, Messages.ShowCSR_dummy_last_name, Messages.ShowCSR_dummy_street, Messages.ShowCSR_dummy_zip, Messages.ShowCSR_dummy_city, Messages.ShowCSR_dummy_country, Messages.ShowCSR_dummy_email, "icons/ausweis.jpeg", null, null);
+		Util.addCSR("Böser","Angreiffer" , "Blackhatstreet 42", "1337", "Bösestadt", "Blackhattonia", "blackhat@example.com", "icons/ausweis_blackhat.jpg", null, null);
 		
 	}
 
