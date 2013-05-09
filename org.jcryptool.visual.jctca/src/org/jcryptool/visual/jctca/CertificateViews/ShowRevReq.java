@@ -1,11 +1,6 @@
 package org.jcryptool.visual.jctca.CertificateViews;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -115,18 +110,20 @@ public class ShowRevReq implements Views {
 		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 				true));
 
-//	    Label lbl_exp = (Label)exp.getChildren()[0];
-//        lbl_exp.setText("Hi, I explain what is going on in Show Revocation Request!");
-        
-        String ausweis = Messages.ShowRevReq_dummy_ausweis_path;
+		// Label lbl_exp = (Label)exp.getChildren()[0];
+		// lbl_exp.setText("Hi, I explain what is going on in Show Revocation Request!");
+
+		String ausweis = Messages.ShowRevReq_dummy_ausweis_path;
 		Label lbl_img = new Label(right, SWT.NONE);
 		lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 	}
 
+	@Override
 	public void dispose() {
 		this.composite.dispose();
 	}
 
+	@Override
 	public void setVisible(boolean visible) {
 		composite.setVisible(visible);
 	}

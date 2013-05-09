@@ -1,14 +1,6 @@
 package org.jcryptool.visual.jctca.SecondUserViews;
 
-import java.awt.Color;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -16,11 +8,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.jcryptool.visual.jctca.listeners.TabItemListener;
 
 public class ShowSigData implements Views {
 	Composite composite;
@@ -84,8 +73,7 @@ public class ShowSigData implements Views {
 
 		lbl_signature = new Label(showSelectedRequest, SWT.LEFT | SWT.BORDER
 				| SWT.WRAP);
-		lbl_signature
-				.setText(Messages.ShowSigData_dummy_dummysig);
+		lbl_signature.setText(Messages.ShowSigData_dummy_dummysig);
 		lbl_signature.setLayoutData(gd_txt);
 
 		btn_check_signature = new Button(showSelectedRequest, SWT.NONE);
@@ -99,10 +87,12 @@ public class ShowSigData implements Views {
 
 	}
 
+	@Override
 	public void dispose() {
 		this.composite.dispose();
 	}
 
+	@Override
 	public void setVisible(boolean visible) {
 		composite.setVisible(visible);
 	}

@@ -44,14 +44,13 @@ public class SignCert implements Views {
 		cmb_priv_key.add(Messages.SignCert_dummy_privkey3);
 		cmb_priv_key.select(0);
 
-		Button btn_detail = new Button (signCertGroup, SWT.CHECK);
+		Button btn_detail = new Button(signCertGroup, SWT.CHECK);
 		btn_detail.setText(Messages.SignCert_visualized_sig_btn);
-		
+
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
 		btn_sign.setText(Messages.SignCert_sign_with_key_btn);
 		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText(Messages.SignCert_exp_txt0
-				+ Messages.SignCert_exp_txt1);
+		lbl_exp.setText(Messages.SignCert_exp_txt0 + Messages.SignCert_exp_txt1);
 
 		composite.setVisible(false);
 	}
@@ -61,6 +60,7 @@ public class SignCert implements Views {
 		composite.setVisible(visible);
 	}
 
+	@Override
 	public void dispose() {
 		composite.dispose();
 	}

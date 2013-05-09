@@ -1,7 +1,6 @@
 package org.jcryptool.visual.jctca;
 
 import org.eclipse.swt.SWT;
-import org.jcryptool.core.util.fonts.*;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Color;
@@ -15,6 +14,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.jctca.listeners.PluginBtnListener;
 import org.jcryptool.visual.jctca.listeners.ResizeListener;
 import org.jcryptool.visual.jctca.listeners.TabItemListener;
@@ -28,7 +28,7 @@ import org.jcryptool.visual.jctca.tabs.UserTab;
  * This class implements the Certificate Authority visual for the JCrypTool.
  * 
  * @author Marco Macala, Kerstin Reisinger
- *
+ * 
  */
 
 public class JCTCA_Visual extends ViewPart {
@@ -79,10 +79,10 @@ public class JCTCA_Visual extends ViewPart {
 		root.setExpandVertical(true);
 
 		gl = new GridLayout(1, false);
-//		gl.verticalSpacing = 20;
+		// gl.verticalSpacing = 20;
 		composite.setLayout(gl);
 
-		//Begin - headline area
+		// Begin - headline area
 		head_composite = new Composite(composite, SWT.NONE);
 		head_composite.setBackground(WHITE);
 		head_composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
@@ -92,24 +92,27 @@ public class JCTCA_Visual extends ViewPart {
 		Label headline = new Label(head_composite, SWT.NONE);
 		headline.setFont(FontService.getHeaderFont());
 		headline.setBackground(WHITE);
-		//Set the headline text to the title of the plugin
+		// Set the headline text to the title of the plugin
 		headline.setText("JCrypTool Certificate Authority (JCT-CA)");
 		head_description = new StyledText(head_composite, SWT.READ_ONLY
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
-		//set the short introduction text for the certifcate creation picture because this is the first text that needs to be shown
-		head_description.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zurück an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
-		//End - Header
+		// set the short introduction text for the certifcate creation picture
+		// because this is the first text that needs to be shown
+		head_description
+				.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zurück an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
+		// End - Header
 		showArchitecture();
 
 	}
+
 	/**
 	 * 
 	 * Displays the architecture pictures of jct-ca
 	 * 
 	 */
-	
+
 	public void showArchitecture() {
 		comp_center = new Composite(composite, SWT.NONE);
 		comp_center.setLayout(new GridLayout(1, false));
@@ -118,20 +121,21 @@ public class JCTCA_Visual extends ViewPart {
 
 		comp_buttons = new Composite(comp_center, SWT.NONE);
 		comp_buttons.setLayout(new GridLayout(4, false));
-		GridData btns_ld = new GridData(SWT.FILL, SWT.NONE, true, false, 1,1);
-		btns_ld.minimumHeight=30;
+		GridData btns_ld = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
+		btns_ld.minimumHeight = 30;
 		comp_buttons.setLayoutData(btns_ld);
 
 		comp_image = new Composite(comp_center, SWT.FILL);
 		comp_image.setLayout(new GridLayout(1, false));
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
-		//set path_to_create_img and load image at that path into help
+		// set path_to_create_img and load image at that path into help
 		String path_to_create_img = "icons/minica_create_cert.jpg";
-		Image help = Activator.getImageDescriptor(path_to_create_img).createImage();
+		Image help = Activator.getImageDescriptor(path_to_create_img)
+				.createImage();
 		// comp_image.setBackgroundImage(help);
 		lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);
-		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,1));
+		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lbl_img.setImage(help);
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
 		btn_showCreate = new Button(comp_buttons, SWT.PUSH);
@@ -142,18 +146,17 @@ public class JCTCA_Visual extends ViewPart {
 		btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
 		btn_showRevoke.setText("Zertifikatswiderruf zeigen");
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
-				lbl_img,head_description));
-
+				lbl_img, head_description));
 
 		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
 		btn_showCheck.setText("Signaturprüfung zeigen");
-		btn_showCheck
-		.addSelectionListener(new PluginBtnListener(visual, lbl_img, head_description));
+		btn_showCheck.addSelectionListener(new PluginBtnListener(visual,
+				lbl_img, head_description));
 
 		btn_continue = new Button(comp_buttons, SWT.PUSH);
 		btn_continue.setText("Mit Plugin fortfahren");
-		btn_continue
-		.addSelectionListener(new PluginBtnListener(visual, lbl_img,head_description));
+		btn_continue.addSelectionListener(new PluginBtnListener(visual,
+				lbl_img, head_description));
 		composite.layout(true);
 	}
 
@@ -175,14 +178,14 @@ public class JCTCA_Visual extends ViewPart {
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText("Erklärung");
-		//grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
+		// grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
 
 		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1);
 		gd_txt_explain.heightHint = 300;
 		lbl_explain.setLayoutData(gd_txt_explain);
-		//lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
+		// lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
 
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);

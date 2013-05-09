@@ -3,7 +3,7 @@ package org.jcryptool.visual.jctca.CertificateClasses;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 public class CSR {
-	
+
 	private String first;
 	private String last;
 	private String street;
@@ -16,7 +16,7 @@ public class CSR {
 	private KeyStoreAlias pubAlias;
 	private boolean forwardenabled;
 	private boolean rejectenabled;
-	
+
 	public CSR(String first, String last, String street, String zip,
 			String town, String country, String mail, String proof,
 			KeyStoreAlias privAlias, KeyStoreAlias pubAlias) {
@@ -115,7 +115,6 @@ public class CSR {
 		this.pubAlias = pubAlias;
 	}
 
-
 	public boolean isForwardenabled() {
 		return forwardenabled;
 	}
@@ -131,5 +130,5 @@ public class CSR {
 	public void setRejectenabled(boolean rejectenabled) {
 		this.rejectenabled = rejectenabled;
 	}
-	
+
 }

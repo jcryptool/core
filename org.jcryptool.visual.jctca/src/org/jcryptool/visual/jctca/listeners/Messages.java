@@ -4,28 +4,6 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.jctca.listeners.messages"; //$NON-NLS-1$
-	public static String PluginBtnListener_check_sig_arch_path;
-	public static String PluginBtnListener_create_cert_arch_path;
-	public static String PluginBtnListener_introdoctory_text_revoke;
-	public static String PluginBtnListener_introductory_text_check;
-	public static String PluginBtnListener_introductory_text_create;
-	public static String PluginBtnListener_introductory_text_plugin;
-	public static String PluginBtnListener_rev_cert_arch_path;
-	public static String PluginBtnListener_strcmp_check;
-	public static String PluginBtnListener_strcmp_check_sig;
-	public static String PluginBtnListener_strcmp_continue;
-	public static String PluginBtnListener_strcmp_create;
-	public static String PluginBtnListener_strcmp_create_cert;
-	public static String PluginBtnListener_strcmp_rev_cert;
-	public static String PluginBtnListener_strcmp_revoke;
-	public static String ResizeListener_ausweis_path;
-	public static String ResizeListener_strcmp_check;
-	public static String ResizeListener_strcmp_create;
-	public static String ResizeListener_strcmp_revoke;
-	public static String SideBarListener_strcmp_get_cert;
-	public static String SideBarListener_strcmp_manage_cert;
-	public static String SideBarListener_strcmp_rev_cert;
-	public static String SideBarListener_strcmp_sign_data;
 	public static String TabItemListener_csr_item_number;
 	public static String TabItemListener_exp_txt_ca_tab0;
 	public static String TabItemListener_exp_txt_ca_tab1;

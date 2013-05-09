@@ -2,29 +2,27 @@ package org.jcryptool.visual.jctca.listeners;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 
-public class CSRListener implements SelectionListener{
+public class CSRListener implements SelectionListener {
 
-	
-	Label first; 
+	Label first;
 	Label last;
-	Label street; 
-	Label zip; 
+	Label street;
+	Label zip;
 	Label town;
 	Label country;
 	Label mail;
 	Button btn_forward;
 	Button btn_reject;
-		
+
 	public CSRListener(Label first, Label last, Label street, Label zip,
-			Label town, Label country, Label mail, Button btn_forward, Button btn_reject) {
+			Label town, Label country, Label mail, Button btn_forward,
+			Button btn_reject) {
 		super();
 		this.first = first;
 		this.last = last;
@@ -40,15 +38,15 @@ public class CSRListener implements SelectionListener{
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
-		List lst = (List)arg0.getSource();
+		List lst = (List) arg0.getSource();
 		int index = lst.getSelectionIndex();
 		CSR csr = Util.getCSR(index);
-		if(csr != null){
+		if (csr != null) {
 			first.setText(csr.getFirst());
 			last.setText(csr.getLast());
 			street.setText(csr.getStreet());

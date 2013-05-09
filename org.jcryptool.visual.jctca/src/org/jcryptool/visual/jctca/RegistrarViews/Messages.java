@@ -4,11 +4,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.jctca.RegistrarViews.messages"; //$NON-NLS-1$
-	public static String ShowCSR_ausweis_name;
 	public static String ShowCSR_city;
 	public static String ShowCSR_country;
 	public static String ShowCSR_csr_deny;
-	public static String ShowCSR_dummy_ausweis_path;
 	public static String ShowCSR_dummy_city;
 	public static String ShowCSR_dummy_country;
 	public static String ShowCSR_dummy_email;
