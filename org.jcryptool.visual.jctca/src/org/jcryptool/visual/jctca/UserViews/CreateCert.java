@@ -153,7 +153,7 @@ public class CreateCert implements Views{
 	}
 	
 	public void dispose(){
-		this.composite.dispose();		
+		this.composite.dispose();
 	}
 	
 	public void setVisible(boolean visible){

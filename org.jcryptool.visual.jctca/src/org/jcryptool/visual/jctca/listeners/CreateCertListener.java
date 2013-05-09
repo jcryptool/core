@@ -112,8 +112,8 @@ public class CreateCertListener implements SelectionListener{
 									privateKey.getExponent(), privateKey.getP(), privateKey.getQ(), 
 				                    privateKey.getDP(), privateKey.getDQ(), privateKey.getQInv()));
 					String name = first + " " + last;
-					KeyStoreAlias privAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "private key", 1024, (name.concat(privKey.toString())).hashCode()+" ",privKey.getClass().getName());
-					KeyStoreAlias pubAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "public key", 1024, (name.concat(pubKey.toString())).hashCode()+" ",pubKey.getClass().getName());
+					KeyStoreAlias privAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, (name.concat(privKey.toString())).hashCode()+" ",privKey.getClass().getName());
+					KeyStoreAlias pubAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, (name.concat(pubKey.toString())).hashCode()+" ",pubKey.getClass().getName());
 					mng.addKeyPair(privKey, CertificateFactory.createJCrypToolCertificate(pubKey) , new String(KeyStoreManager.getDefaultKeyPassword()), privAlias, pubAlias);
 					System.out.println(pubAlias.getContactName());
 					cmb_keys.add(pubAlias.getContactName() + "(Hash: " + pubAlias.getHashValue() +")");

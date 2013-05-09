@@ -44,7 +44,7 @@ public class JCTCA_Visual extends ViewPart {
 	private ScrolledComposite root;
 	private Composite composite;
 	private GridLayout gl;
-	private Composite headComposite;
+	private Composite head_composite;
 	private StyledText head_description;
 	private Composite comp_center;
 	private TabFolder tabFolder;
@@ -79,28 +79,28 @@ public class JCTCA_Visual extends ViewPart {
 		root.setExpandVertical(true);
 
 		gl = new GridLayout(1, false);
-		//		gl.verticalSpacing = 20;
+//		gl.verticalSpacing = 20;
 		composite.setLayout(gl);
 
 		//Begin - headline area
-		headComposite = new Composite(composite, SWT.NONE);
-		headComposite.setBackground(WHITE);
-		headComposite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
+		head_composite = new Composite(composite, SWT.NONE);
+		head_composite.setBackground(WHITE);
+		head_composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
-		headComposite.setLayout(new GridLayout());
+		head_composite.setLayout(new GridLayout());
 
-		Label headline = new Label(headComposite, SWT.NONE);
+		Label headline = new Label(head_composite, SWT.NONE);
 		headline.setFont(FontService.getHeaderFont());
 		headline.setBackground(WHITE);
 		//Set the headline text to the title of the plugin
-		headline.setText(Messages.JCTCA_Visual_headline);
-		head_description = new StyledText(headComposite, SWT.READ_ONLY
+		headline.setText("JCrypTool Certificate Authority (JCT-CA)");
+		head_description = new StyledText(head_composite, SWT.READ_ONLY
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
 		//set the short introduction text for the certifcate creation picture because this is the first text that needs to be shown
-		head_description.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, hat er die Möglichkeit, sich für diesen Schlüssel ein Zertifikat ausstellen zu lassen. Zu diesem Zweck erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll und leitet den CSR, wenn dies der Fall ist, an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR ihre eigene Signatur hinzu, wodurch dieser zu einem von dieser CA ausgestellten Zertifikat wird. Dieses Zertifikat geht zurück an den Antragsteller. Die RA und die CA werden gemeinsam auch als \"Public Key Infrastructure\" (PKI) bezeichnet.");
-		// End - Header
+		head_description.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zurück an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
+		//End - Header
 		showArchitecture();
 
 	}
@@ -175,14 +175,14 @@ public class JCTCA_Visual extends ViewPart {
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText("Erklärung");
-		grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
+		//grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
 
 		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1);
 		gd_txt_explain.heightHint = 300;
 		lbl_explain.setLayoutData(gd_txt_explain);
-		lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
+		//lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
 
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);

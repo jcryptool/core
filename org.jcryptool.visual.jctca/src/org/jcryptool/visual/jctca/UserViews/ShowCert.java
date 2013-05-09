@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -13,6 +14,7 @@ import org.eclipse.swt.widgets.List;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.jctca.Util;
 
 public class ShowCert implements Views {
 	Composite composite;
@@ -82,17 +84,9 @@ public class ShowCert implements Views {
 		lst_certs = new List(left, SWT.BORDER);
 		lst_certs.setLayoutData(new GridData(SWT.NONE,SWT.FILL,false,true));
 		
-		//get all public keys from JCT Keystore and iterate over them
-		for(KeyStoreAlias ksAlias : ksm.getAllPublicKeys()){
-			//for each public key, save the name
-			String certListEntry = ksAlias.getContactName() + Messages.ShowCert_list_open_bracket + ksAlias.getKeyLength() + Messages.ShowCert_list_bit_and_close_bracket;
-			lst_certs.add(certListEntry);
+		for (String s : Util.getAllRSAAndDSAPublicKeys(ksm)){
+			lst_certs.add(s);
 		}
-		
-		//lst_certs.add(Messages.ShowCert_dummy_cert0);
-		//lst_certs.add(Messages.ShowCert_dummy_cert1);
-		//lst_certs.add(Messages.ShowCert_dummy_cert2);
-		//lst_certs.add(Messages.ShowCert_dummy_cert3);
 
 		lbl_issued_to = new Label(right,SWT.NONE);
 		lbl_issued_to.setFont(FontService.getNormalBoldFont());

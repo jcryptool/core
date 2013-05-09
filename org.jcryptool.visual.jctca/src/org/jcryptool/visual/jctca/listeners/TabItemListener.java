@@ -4,20 +4,14 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
-import org.jcryptool.visual.jctca.UserViews.CreateCert;
-import org.jcryptool.visual.jctca.UserViews.RevokeCert;
-import org.jcryptool.visual.jctca.UserViews.ShowCert;
-import org.jcryptool.visual.jctca.UserViews.SignCert;
 
 // TODO: dispose left side of usertab
 

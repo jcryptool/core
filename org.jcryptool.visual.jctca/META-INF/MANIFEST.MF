@@ -6,18 +6,11 @@ Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.jcryptool.crypto;bundle-version="1.0.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
- org.jcryptool.visual.library;bundle-version="1.0.0",
- de.flexiprovider;bundle-version="1.7.0",
- org.jcryptool.crypto.flexiprovider;bundle-version="1.0.0",
- org.jcryptool.crypto.flexiprovider.keystore;bundle-version="1.0.0",
  org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.eclipse.help;bundle-version="3.5.0",
- org.eclipse.swt,
  org.eclipse.ui;bundle-version="3.7.0",
  org.bouncycastle,
  net.sourceforge.codec;bundle-version="2.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
 Import-Package: org.bouncycastle.asn1.pkcs,
- org.jcryptool.core.util,
  org.jcryptool.core.util.fonts
