@@ -6,7 +6,7 @@
       <view
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sig.ui.view.SigView"
-            icon="icons/sample.gif"
+            icon="icons/view.gif"
             id="org.jcryptool.visual.sig.view"
             name="%view.name"
             restorable="true">
@@ -19,12 +19,13 @@
             file="$nl$/toc.xml"
             primary="false"/>
    </extension>
+    -->
    <extension point="org.eclipse.help.contexts">
       <contexts
             file="$nl$/contexts.xml">
       </contexts>
    </extension>
-   -->
+  
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual

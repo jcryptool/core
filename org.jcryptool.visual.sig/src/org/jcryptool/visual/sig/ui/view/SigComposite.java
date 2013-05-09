@@ -64,7 +64,6 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
-			//org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_rdosha512};
 
 	/**
 	 * @return the hash
