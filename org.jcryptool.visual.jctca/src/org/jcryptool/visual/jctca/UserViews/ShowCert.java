@@ -9,8 +9,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.listeners.UserShowCertsListener;
 
 public class ShowCert implements Views {
 	Composite composite;
@@ -88,22 +90,18 @@ public class ShowCert implements Views {
 		lbl_common = new Label(right, SWT.NONE);
 		lbl_common.setText(Messages.ShowCert_common_name);
 		lbl_value_common = new Label(right, SWT.None);
-		lbl_value_common.setText(Messages.ShowCert_dummy_common_name);
 
 		lbl_org = new Label(right, SWT.None);
 		lbl_org.setText(Messages.ShowCert_organisation);
 		lbl_value_org = new Label(right, SWT.None);
-		lbl_value_org.setText(Messages.ShowCert_dummy_organisation);
 
 		lbl_orgUnit = new Label(right, SWT.None);
 		lbl_orgUnit.setText(Messages.ShowCert_ou);
 		lbl_value_orgUnit = new Label(right, SWT.None);
-		lbl_value_orgUnit.setText(Messages.ShowCert_dummy_ou);
 
 		lbl_city = new Label(right, SWT.None);
 		lbl_city.setText(Messages.ShowCert_city);
 		lbl_value_city = new Label(right, SWT.None);
-		lbl_value_city.setText(Messages.ShowCert_dummy_city);
 
 		// lbl_state = new Label(right, SWT.None);
 		// lbl_state.setText("Bundesland");
@@ -113,12 +111,10 @@ public class ShowCert implements Views {
 		lbl_country = new Label(right, SWT.None);
 		lbl_country.setText(Messages.ShowCert_country);
 		lbl_value_country = new Label(right, SWT.None);
-		lbl_value_country.setText(Messages.ShowCert_dummy_country);
 
 		lbl_mail = new Label(right, SWT.None);
 		lbl_mail.setText(Messages.ShowCert_email);
 		lbl_value_mail = new Label(right, SWT.None);
-		lbl_value_mail.setText(Messages.ShowCert_dummy_email);
 
 		lbl_plain1 = new Label(right, SWT.NONE);
 		lbl_plain2 = new Label(right, SWT.NONE);
@@ -130,17 +126,14 @@ public class ShowCert implements Views {
 		lbl_common_by = new Label(right, SWT.NONE);
 		lbl_common_by.setText(Messages.ShowCert_common_name_issuer);
 		lbl_value_common_by = new Label(right, SWT.None);
-		lbl_value_common_by.setText(Messages.ShowCert_dummy_cn_issuer);
 
 		lbl_org_by = new Label(right, SWT.None);
 		lbl_org_by.setText(Messages.ShowCert_org_issuer);
 		lbl_value_org_by = new Label(right, SWT.None);
-		lbl_value_org_by.setText(Messages.ShowCert_dummy_org_issuer);
 
 		lbl_orgUnit_by = new Label(right, SWT.None);
 		lbl_orgUnit_by.setText(Messages.ShowCert_ou_issuer);
 		lbl_value_orgUnit_by = new Label(right, SWT.None);
-		lbl_value_orgUnit_by.setText(Messages.ShowCert_dummy_ou_issuer);
 
 		lbl_plain4 = new Label(right, SWT.NONE);
 		lbl_plain5 = new Label(right, SWT.NONE);
@@ -152,12 +145,13 @@ public class ShowCert implements Views {
 		lbl_issued_on = new Label(right, SWT.None);
 		lbl_issued_on.setText(Messages.ShowCert_issued_on);
 		lbl_value_issued_on = new Label(right, SWT.None);
-		lbl_value_issued_on.setText(Messages.ShowCert_dummy_issued_on);
 		lbl_expired_on = new Label(right, SWT.None);
 		lbl_expired_on.setText(Messages.ShowCert_expires_on);
 		lbl_value_expired_on = new Label(right, SWT.None);
-		lbl_value_expired_on.setText(Messages.ShowCert_dummy_expires_on);
-
+		
+		UserShowCertsListener uscListener = new UserShowCertsListener(lbl_value_common, lbl_value_org, lbl_value_orgUnit, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_value_common_by, lbl_value_org_by, lbl_value_orgUnit_by, lbl_value_issued_on, lbl_value_expired_on);
+		lst_certs.addSelectionListener(uscListener);
+		
 		lbl_plain7 = new Label(right, SWT.NONE);
 		lbl_plain8 = new Label(right, SWT.NONE);
 		btn_revoke = new Button(right, SWT.NONE);
@@ -171,8 +165,17 @@ public class ShowCert implements Views {
 
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
-		for (String s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			lst_certs.add(s);
+		int i = 0;
+		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
+			if (ksAlias.getOperation().contains("RSA")) {
+				ListEntry += "RSA)";
+			} else {
+				ListEntry += "DSA)";
+			}
+			lst_certs.add(ListEntry);
+			lst_certs.setData(Integer.toString(i), ksAlias);
+			i++;
 		}
 	}
 

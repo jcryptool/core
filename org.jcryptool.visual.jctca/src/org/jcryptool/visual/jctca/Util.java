@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
@@ -36,25 +37,20 @@ public class Util {
 
 	/**
 	 * Find all RSA and DSA public keys in a given keystore ksm and return them
-	 * in an array of well formatted strings
+	 * in an array of KeyStoreAlias
 	 * 
 	 * @param ksm
 	 *            - KeyStoreManager from where to get the keys
-	 * @return ArrayList of strings well formatted for use with the JCT-CA
-	 *         visual
+	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA public key pairs
 	 */
-	public static ArrayList<String> getAllRSAAndDSAPublicKeys(
+	public static ArrayList<KeyStoreAlias> getAllRSAAndDSAPublicKeys(
 			KeyStoreManager ksm) {
-		ArrayList<String> RSAAndDSAPublicKeys = new ArrayList<String>();
+		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
-			if (ksAlias.getOperation().contains("RSA")) {
-				String KeyListEntry = ksAlias.getContactName() + " ("
-						+ ksAlias.getKeyLength() + "bit RSA)";
-				RSAAndDSAPublicKeys.add(KeyListEntry);
-			} else if (ksAlias.getOperation().contains("DSA")) {
-				String KeyListEntry = ksAlias.getContactName() + " ("
-						+ ksAlias.getKeyLength() + "bit DSA)";
-				RSAAndDSAPublicKeys.add(KeyListEntry);
+			if (ksAlias.getOperation().contains("RSA") && (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
+				RSAAndDSAPublicKeys.add(ksAlias);
+			} else if (ksAlias.getOperation().contains("DSA") && (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
+				RSAAndDSAPublicKeys.add(ksAlias);
 			}
 		}
 		return RSAAndDSAPublicKeys;

@@ -124,7 +124,7 @@ public class CreateCert implements Views {
 		cmb_genKey = new Combo(createCertGroup, SWT.NONE);
 		cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		addRSAAndDSAKeysToDropdown();
+//		addRSAAndDSAKeysToDropdown();
 
 		CreateCertListener lst = new CreateCertListener(txt_firstname,
 				txt_lastname, txt_street, txt_ZIP, txt_city, txt_country,
@@ -154,13 +154,13 @@ public class CreateCert implements Views {
 		this.composite.setVisible(visible);
 	}
 
-	private void addRSAAndDSAKeysToDropdown() {
-		KeyStoreManager ksm = KeyStoreManager.getInstance();
-		for (String s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			cmb_genKey.add(s);
-		}
+//	private void addRSAAndDSAKeysToDropdown() {
+//		KeyStoreManager ksm = KeyStoreManager.getInstance();
+//		for (String s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+//			cmb_genKey.add(s);
+//		}
 		// chose a default value so that we don't get a array out of bound
 		// exception if user doesn't chose an entry
-		cmb_genKey.select(0);
-	}
+//		cmb_genKey.select(0);
+//	}
 }
