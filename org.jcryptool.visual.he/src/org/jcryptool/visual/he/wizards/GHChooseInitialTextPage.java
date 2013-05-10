@@ -58,14 +58,14 @@ public class GHChooseInitialTextPage extends WizardPage{
         Label label;
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        label.setText(Messages.GHChooseIntialTextPage_Textfield + Integer.toString((int)Math.pow(2, logMod)) + " " + Messages.GHChooseIntialTextPage_Textfield2);
+        label.setText(Messages.GHChooseIntialTextPage_Textfield + " " + Integer.toString((int)Math.pow(2, logMod)) + " " + Messages.GHChooseIntialTextPage_Textfield2);
         text = new Text(composite, SWT.BORDER | SWT.WRAP);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(9);
 
         label = new Label(composite, SWT.NONE);
         label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        label.setText(Messages.GHChooseOperationTextPage_UsedText + Integer.toString((int)Math.pow(2, logMod)) + Messages.GHChooseOperationTextPage_UsedText2);
+        label.setText(Messages.GHChooseOperationTextPage_UsedText);
 
         final Text usedText = new Text(composite, SWT.BORDER | SWT.WRAP);
         usedText.setEditable(false);
