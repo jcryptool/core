@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 import org.jcryptool.visual.jctca.listeners.CSRListener;
 
 public class ShowCSR implements Views {
@@ -135,21 +136,21 @@ public class ShowCSR implements Views {
 		// right.addControlListener(new ResizeListener(lbl_img, right));
 		// lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 		// util.set_image_name(Messages.ShowCSR_ausweis_name);
-
-		lst_csr.addSelectionListener(new CSRListener(lbl_value_firstname,
-				lbl_value_lastname, lbl_value_street, lbl_value_ZIP,
-				lbl_value_city, lbl_value_country, lbl_value_mail,
-				btn_forward_csr, btn_reject_csr));
+		CSRListener lst = new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP,
+											lbl_value_city, lbl_value_country, lbl_value_mail,btn_forward_csr, btn_reject_csr, lst_csr);
+		lst_csr.addSelectionListener(lst);
+		btn_reject_csr.addSelectionListener(lst);
+		btn_forward_csr.addSelectionListener(lst);
 		VerifyIdentity verify = new VerifyIdentity(Display.getCurrent()
 				.getActiveShell(), lst_csr, btn_forward_csr, btn_reject_csr);
 		btn_verify_identity.addSelectionListener(verify);
-
-		Util.addCSR(Messages.ShowCSR_dummy_first_name,
+		RegistrarCSR csr = RegistrarCSR.getInstance();
+		csr.addCSR(Messages.ShowCSR_dummy_first_name,
 				Messages.ShowCSR_dummy_last_name,
 				Messages.ShowCSR_dummy_street, Messages.ShowCSR_dummy_zip,
 				Messages.ShowCSR_dummy_city, Messages.ShowCSR_dummy_country,
 				Messages.ShowCSR_dummy_email, "icons/ausweis.jpeg", null, null);
-		Util.addCSR("Böser", "Angreiffer", "Blackhatstreet 42", "1337",
+		csr.addCSR("Böser", "Angreiffer", "Blackhatstreet 42", "1337",
 				"Bösestadt", "Blackhattonia", "blackhat@example.com",
 				"icons/ausweis_blackhat.jpg", null, null);
 

@@ -30,6 +30,7 @@ import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 import org.jcryptool.visual.jctca.UserViews.Messages;
 
 public class CreateCertListener implements SelectionListener {
@@ -77,7 +78,7 @@ public class CreateCertListener implements SelectionListener {
 					privAlias = mng.getPrivateForPublic(pubAlias);
 				}
 			}
-			Util.addCSR(txt_first_name.getText(), txt_last_name.getText(),
+			RegistrarCSR.getInstance().addCSR(txt_first_name.getText(), txt_last_name.getText(),
 					txt_street.getText(), txt_zip.getText(),
 					txt_town.getText(), txt_country.getText(),
 					txt_mail.getText(), path, pubAlias, privAlias);

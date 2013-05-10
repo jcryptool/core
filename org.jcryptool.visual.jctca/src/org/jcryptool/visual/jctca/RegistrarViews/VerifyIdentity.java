@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
+import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
 public class VerifyIdentity extends Dialog implements SelectionListener {
 	Shell parent;
@@ -37,7 +38,6 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 			Button reject_csr) {
 		super(parent, SWT.APPLICATION_MODAL);
 		this.parent = parent;
-		this.parent.setText("Itentitätsprüfung");
 		this.csr = csr;
 		this.forward_csr = forward_csr;
 		this.reject_csr = reject_csr;
@@ -109,7 +109,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 
 		if (text.equals(Messages.ShowCSR_verify_identity)) {
 			int selected = csr.getSelectionIndex();
-			CSR c = Util.getCSR(selected);
+			CSR c = RegistrarCSR.getInstance().getCSR(selected);
 			if (c != null) {
 				this.open(c);
 			}

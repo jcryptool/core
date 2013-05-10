@@ -2,39 +2,30 @@ package org.jcryptool.visual.jctca;
 
 import java.util.ArrayList;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
+import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
 public class Util {
+	
+	
+	public static void createRootNodes(Tree tree){
+		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
+		tree_item_csr.setText(Messages.ShowReq_CertReqs);
+		
+		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
+		tree_item_crl.setText(Messages.ShowReq_RevReqs);
 
-	private static ArrayList<CSR> csr;
-
-	public static ArrayList<CSR> getCSR() {
-		return csr;
+		tree.getItems()[0].setExpanded(true);
+		tree.getItems()[1].setExpanded(true);
 	}
-
-	public static CSR getCSR(int i) {
-		if (csr != null && csr.size() > i && i >= 0) {
-			return csr.get(i);
-		}
-		return null;
-	}
-
-	public static void addCSR(String txt_first_name, String txt_last_name,
-			String txt_street, String txt_zip, String txt_town,
-			String txt_country, String txt_mail, String path,
-			KeyStoreAlias pubAlias, KeyStoreAlias privAlias) {
-		if (csr == null) {
-			csr = new ArrayList<CSR>();
-		}
-		csr.add(new CSR(txt_first_name, txt_last_name, txt_street, txt_zip,
-				txt_town, txt_country, txt_mail, path, pubAlias, privAlias));
-	}
-
-	/**
+	/**	
 	 * Find all RSA and DSA public keys in a given keystore ksm and return them
 	 * in an array of well formatted strings
 	 * 
