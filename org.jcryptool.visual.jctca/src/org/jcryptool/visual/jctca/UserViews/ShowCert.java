@@ -76,6 +76,7 @@ public class ShowCert implements Views {
 		left.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, true));
 		right = new Composite(showCertGroup, SWT.NONE);
 		right.setLayout(new GridLayout(2, false));
+		right.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
 		lst_certs = new List(left, SWT.BORDER);
 		lst_certs.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, true));

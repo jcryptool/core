@@ -6,8 +6,10 @@ package org.jcryptool.visual.jctca.listeners;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -85,8 +87,30 @@ public class UserShowCertsListener implements SelectionListener {
 		//create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getSubjectDN().toString());
 		//I don't know what this next line does exactly, it just works
-		RDN cn = x500name.getRDNs(BCStyle.CN)[0];
-		lbl_value_common.setText(cn.getFirst().getValue().toString());
+		RDN rdn = x500name.getRDNs(BCStyle.CN)[0];
+		lbl_value_common.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.O)[0];
+		lbl_value_org.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.OU)[0];
+		lbl_value_orgUnit.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.L)[0];
+		lbl_value_city.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.C)[0];
+		lbl_value_country.setText(rdn.getFirst().getValue().toString());
+		//rdn = x500name.getRDNs(BCStyle.E)[0];
+		//lbl_value_mail.setText(rdn.getFirst().getValue().toString());
+		
+		
+		x500name = new X500Name(pubKey.getIssuerDN().toString());
+		rdn = x500name.getRDNs(BCStyle.CN)[0];
+		lbl_value_common_by.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.O)[0];
+		lbl_value_org_by.setText(rdn.getFirst().getValue().toString());
+		rdn = x500name.getRDNs(BCStyle.OU)[0];
+		lbl_value_orgUnit_by.setText(rdn.getFirst().getValue().toString());
+		
+		lbl_value_issued_on.setText(pubKey.getNotBefore().toString());
+		lbl_value_expired_on.setText(pubKey.getNotAfter().toString());
 		
 		lbl_value_common.getParent().layout();
 		
