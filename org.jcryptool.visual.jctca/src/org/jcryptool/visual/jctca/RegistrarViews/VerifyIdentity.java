@@ -37,7 +37,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 			Button reject_csr) {
 		super(parent, SWT.APPLICATION_MODAL);
 		this.parent = parent;
-		this.parent.setText("Itentitätsprüfung");
+//		this.parent.setText("Itentitätsprüfung");
 		this.csr = csr;
 		this.forward_csr = forward_csr;
 		this.reject_csr = reject_csr;

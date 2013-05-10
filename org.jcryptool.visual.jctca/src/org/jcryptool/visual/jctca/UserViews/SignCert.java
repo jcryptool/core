@@ -9,10 +9,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.jctca.Util;
 
 public class SignCert implements Views {
 
 	Composite composite;
+	Combo cmb_priv_key;
 
 	public SignCert(Composite content, Composite exp) {
 		this.composite = new Composite(content, SWT.NONE);
@@ -37,11 +41,8 @@ public class SignCert implements Views {
 		txt_sign.setText(Messages.SignCert_dummy_enter_text);
 		txt_sign.setLayoutData(gd_txt);
 
-		Combo cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
-		cmb_priv_key.add(Messages.SignCert_dummy_privkey0);
-		cmb_priv_key.add(Messages.SignCert_dummy_privkey1);
-		cmb_priv_key.add(Messages.SignCert_dummy_privkey2);
-		cmb_priv_key.add(Messages.SignCert_dummy_privkey3);
+		cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
+		addRSAAndDSAPrivateKeysToDropdown();
 		cmb_priv_key.select(0);
 
 		Button btn_detail = new Button(signCertGroup, SWT.CHECK);
@@ -55,6 +56,19 @@ public class SignCert implements Views {
 		composite.setVisible(false);
 	}
 
+	private void addRSAAndDSAPrivateKeysToDropdown(){
+		KeyStoreManager ksm = KeyStoreManager.getInstance();
+		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
+			if (ksAlias.getOperation().contains("RSA")) {
+				ListEntry += "RSA)";
+			} else {
+				ListEntry += "DSA)";
+			}
+			cmb_priv_key.add(ListEntry);
+		}
+	}
+	
 	@Override
 	public void setVisible(boolean visible) {
 		composite.setVisible(visible);
