@@ -42,7 +42,7 @@ public class CAListener implements SelectionListener{
 		Object src = arg0.getSource();
 		if(src.equals(requests)||src.equals(keys)){
 			TreeItem[] sel = requests.getSelection();
-			if(sel!=null && sel[0].getParent()!= null && keys.getSelectionIndex()>=0){
+			if(sel!=null && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
 				accept.setEnabled(true);
 				reject.setEnabled(true);
 			}
@@ -94,6 +94,9 @@ public class CAListener implements SelectionListener{
 			CertificateCSRR.getInstance().removeRR(rr);
 			//TODO RR
 		}
+		sel.dispose();
+		accept.setEnabled(false);
+		reject.setEnabled(false);
 	}
 
 }

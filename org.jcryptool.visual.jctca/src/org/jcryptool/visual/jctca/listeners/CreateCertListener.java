@@ -85,7 +85,9 @@ public class CreateCertListener implements SelectionListener {
 					Messages.CreateCertListener_fileext_bmp,
 					Messages.CreateCertListener_fileext_png });
 			path = f.open();
-			src.setText(path);
+			if(path!=null){
+				src.setText(path);
+			}
 		} else if (text.equals("Neues Schlüsselpaar generieren")) {
 			String first = txt_first_name.getText();
 			String last = txt_last_name.getText();
