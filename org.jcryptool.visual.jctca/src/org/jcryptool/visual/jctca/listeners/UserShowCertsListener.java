@@ -4,7 +4,6 @@
 package org.jcryptool.visual.jctca.listeners;
 
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 
 import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
