@@ -73,6 +73,7 @@ public class CSRListener implements SelectionListener {
 				}
 			}
 		}
+		 mail.getParent().layout();
 	}
 	
 	public void setLabels(CSR csr){
@@ -85,6 +86,7 @@ public class CSRListener implements SelectionListener {
 		mail.setText(csr.getMail());
 		btn_forward.setEnabled(csr.isForwardenabled());
 		btn_reject.setEnabled(csr.isRejectenabled());
+		mail.getParent().layout();
 	}
 
 }

@@ -16,7 +16,6 @@ import org.jcryptool.visual.jctca.listeners.CSRListener;
 public class ShowCSR implements Views {
 	Composite composite;
 	Composite left;
-	Composite right;
 	Composite center;
 	Composite grp_exp;
 
@@ -58,70 +57,85 @@ public class ShowCSR implements Views {
 
 		left = new Composite(showCSRGroup, SWT.NONE);
 		left.setLayout(new GridLayout(1, true));
-		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
+		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		center = new Composite(showCSRGroup, SWT.NONE);
 		center.setLayout(new GridLayout(2, false));
 		center.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
-
+		
+		
 		lst_csr = new List(left, SWT.BORDER);
-		GridData lst_ld = new GridData(SWT.FILL, SWT.FILL, true, true);
-		lst_ld.minimumWidth = 52; // damit unter Linux die Liste auch korrekt
+		GridData lst_ld = new GridData(SWT.FILL, SWT.NONE, true, true);
+		lst_ld.minimumWidth = 60; // damit unter Linux die Liste auch korrekt
 									// angezeigt wird
 		lst_csr.setLayoutData(lst_ld);
 
 		lbl_firstname = new Label(center, SWT.NONE);
 		lbl_firstname.setText(Messages.ShowCSR_first_name);
 		lbl_value_firstname = new Label(center, SWT.FILL);
+		GridData lbl_gd = new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1);
 		lbl_value_firstname.setText(Messages.ShowCSR_dummy_first_name);
+		lbl_value_firstname.setLayoutData(lbl_gd);
 
 		lbl_lastname = new Label(center, SWT.None);
 		lbl_lastname.setText(Messages.ShowCSR_last_name);
 		lbl_value_lastname = new Label(center, SWT.FILL);
 		lbl_value_lastname.setText(Messages.ShowCSR_dummy_last_name);
+		lbl_value_lastname.setLayoutData(lbl_gd);
 
 		lbl_street = new Label(center, SWT.None);
 		lbl_street.setText(Messages.ShowCSR_street);
 		lbl_value_street = new Label(center, SWT.FILL);
 		lbl_value_street.setText(Messages.ShowCSR_dummy_street);
+		lbl_value_street.setLayoutData(lbl_gd);
 
 		lbl_ZIP = new Label(center, SWT.None);
 		lbl_ZIP.setText(Messages.ShowCSR_zip);
 		lbl_value_ZIP = new Label(center, SWT.FILL);
 		lbl_value_ZIP.setText(Messages.ShowCSR_dummy_zip);
+		lbl_value_ZIP.setLayoutData(lbl_gd);
 
 		lbl_city = new Label(center, SWT.None);
 		lbl_city.setText(Messages.ShowCSR_city);
 		lbl_value_city = new Label(center, SWT.FILL);
 		lbl_value_city.setText(Messages.ShowCSR_dummy_city);
+		lbl_value_city.setLayoutData(lbl_gd);
 
 		lbl_country = new Label(center, SWT.None);
 		lbl_country.setText(Messages.ShowCSR_country);
 		lbl_value_country = new Label(center, SWT.FILL);
 		lbl_value_country.setText(Messages.ShowCSR_dummy_country);
+		lbl_value_country.setLayoutData(lbl_gd);
 
 		lbl_mail = new Label(center, SWT.None);
 		lbl_mail.setText(Messages.ShowCSR_email);
 		lbl_value_mail = new Label(center, SWT.FILL);
 		lbl_value_mail.setText(Messages.ShowCSR_dummy_email);
+		lbl_value_mail.setLayoutData(lbl_gd);
 
-		btn_verify_identity = new Button(center, SWT.NONE);
+		
+		Composite center_btn = new Composite(center, SWT.NONE);
+		center_btn.setLayout(new GridLayout(2,true));
+		GridData btn_gd = new GridData();
+		btn_gd.horizontalSpan=2;
+		center_btn.setLayoutData(btn_gd);
+		btn_verify_identity = new Button(center_btn, SWT.NONE);
 		btn_verify_identity.setText(Messages.ShowCSR_verify_identity);
-		GridData btn_ld = new GridData(SWT.FILL, SWT.FILL, true, true);
-		btn_ld.minimumWidth = 140;
+		GridData btn_ld = new GridData(SWT.FILL, SWT.NONE, false, true);
+		// btn_ld.minimumWidth = 140;
 		btn_ld.horizontalSpan = 2;
 		btn_verify_identity.setLayoutData(btn_ld);
 
-		btn_forward_csr = new Button(center, SWT.NONE);
+		btn_forward_csr = new Button(center_btn, SWT.NONE);
 		btn_forward_csr.setText("CSR weiterleiten");
-		btn_forward_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+		btn_forward_csr.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false,
 				true));
 		btn_forward_csr.setEnabled(false);
 
-		btn_reject_csr = new Button(center, SWT.NONE);
+		btn_reject_csr = new Button(center_btn, SWT.NONE);
 		btn_reject_csr.setText(Messages.ShowCSR_csr_deny);
-		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false,
 				true));
-		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
+		btn_reject_csr.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false,
 				true));
 		btn_reject_csr.setEnabled(false);
 
@@ -133,8 +147,10 @@ public class ShowCSR implements Views {
 		// right.addControlListener(new ResizeListener(lbl_img, right));
 		// lbl_img.setImage(Activator.getImageDescriptor(ausweis).createImage());
 		// util.set_image_name(Messages.ShowCSR_ausweis_name);
-		CSRListener lst = new CSRListener(lbl_value_firstname, lbl_value_lastname, lbl_value_street, lbl_value_ZIP,
-											lbl_value_city, lbl_value_country, lbl_value_mail,btn_forward_csr, btn_reject_csr, lst_csr);
+		CSRListener lst = new CSRListener(lbl_value_firstname,
+				lbl_value_lastname, lbl_value_street, lbl_value_ZIP,
+				lbl_value_city, lbl_value_country, lbl_value_mail,
+				btn_forward_csr, btn_reject_csr, lst_csr);
 		lst_csr.addSelectionListener(lst);
 		btn_reject_csr.addSelectionListener(lst);
 		btn_forward_csr.addSelectionListener(lst);
