@@ -20,23 +20,21 @@ import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
 import org.bouncycastle.x509.X509V1CertificateGenerator;
-import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 
 public class CertificateCSRR {
 	private static CertificateCSRR instance = null;
 	private ArrayList<CSR> approved_csrs;
-	private ArrayList<RR> revocations;
+	private ArrayList<RR> revRequests;
 	private ArrayList<AsymmetricCipherKeyPair> caKeys;
 	private ArrayList<X509Certificate> certs;
+	private ArrayList<CRLEntry> crl;
 	private CertificateCSRR(){
 		approved_csrs = new ArrayList<CSR>();
-		revocations = new ArrayList<RR>();
+		revRequests = new ArrayList<RR>();
 		caKeys = new ArrayList<AsymmetricCipherKeyPair>();
 		certs = new ArrayList<X509Certificate>();
-		
-		KeyStoreManager mng = KeyStoreManager.getInstance();
-		
+		crl = new ArrayList<CRLEntry>();
 	    // GENERATE THE PUBLIC/PRIVATE RSA KEY PAIR
 		RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
 		SecureRandom sr = new SecureRandom();
@@ -48,12 +46,12 @@ public class CertificateCSRR {
 		BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate
 		
 		AsymmetricCipherKeyPair keypair =null;
-		for(int i = 0; i<2; i++){
+		for(int i = 0; i<5; i++){
 			keypair= gen.generateKeyPair();	
 			KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
 		    // yesterday
 		    Date validityBeginDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
-		    // in 2 years
+		    // in 2 hours
 		    Date validityEndDate = new Date(System.currentTimeMillis() + 2 * 365 * 24 * 60 * 60 * 1000);
 		    X509V1CertificateGenerator certGen = new X509V1CertificateGenerator();
 		    X509Name dnName = new X509Name("CN=JCrypTool, O=JCrypTool, OU=JCT-CA Visual");
@@ -70,24 +68,8 @@ public class CertificateCSRR {
 			try {
 				Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 				cert = certGen.generate(kp.getPrivate(), "BC");
-			} catch (CertificateEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidKeyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchProviderException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SignatureException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				
 			}
 			caKeys.add(keypair);
 			certs.add(cert);
@@ -118,7 +100,7 @@ public class CertificateCSRR {
 	}
 	
 	public ArrayList<RR> getRevocations(){
-		return revocations;
+		return revRequests;
 	}
 
 	public ArrayList<AsymmetricCipherKeyPair> getCAKeys() {
@@ -133,6 +115,9 @@ public class CertificateCSRR {
 		this.approved_csrs.remove(c);
 	}
 	public void removeRR(RR r){
-		this.revocations.remove(r);
+		this.revRequests.remove(r);
+	}
+	public ArrayList<CRLEntry> getCRL(){
+		return crl;
 	}
 }

@@ -5,7 +5,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
-import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;

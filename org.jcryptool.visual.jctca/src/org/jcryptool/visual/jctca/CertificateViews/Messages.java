@@ -27,16 +27,6 @@ public class Messages extends NLS {
 	public static String ShowCertReq_verify_identity;
 	public static String ShowCertReq_zip_code;
 	public static String ShowReq_CertReqs;
-	public static String ShowReq_DummyCAkey0;
-	public static String ShowReq_DummyCAkey1;
-	public static String ShowReq_DummyCAkey2;
-	public static String ShowReq_DummyCAkey3;
-	public static String ShowReq_DummyCSR0;
-	public static String ShowReq_DummyCSR1;
-	public static String ShowReq_DummyCSR2;
-	public static String ShowReq_DummyRR0;
-	public static String ShowReq_DummyRR1;
-	public static String ShowReq_DummyRR2;
 	public static String ShowReq_editCSR_RR;
 	public static String ShowReq_ReqDeny;
 	public static String ShowReq_ReqGrant;

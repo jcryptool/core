@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.visual.jctca.Activator;
-import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
