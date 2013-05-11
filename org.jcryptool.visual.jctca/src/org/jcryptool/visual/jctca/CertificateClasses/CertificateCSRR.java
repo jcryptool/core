@@ -38,7 +38,7 @@ public class CertificateCSRR {
 			if(pubAlias.getContactName().contains("JCTCA")){
 				certsExist = true;
 				KeyStoreAlias privAlias = mng.getPrivateForPublic(pubAlias);
-				java.security.cert.Certificate c = mng.getPublicKey(pubAlias);
+				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
 				System.out.println(c.getClass().toString());
 				if(c instanceof X509Certificate){
 					certs.add((X509Certificate)c);

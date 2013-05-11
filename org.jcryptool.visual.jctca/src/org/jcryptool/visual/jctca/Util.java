@@ -204,6 +204,9 @@ public class Util {
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
+			if (ksAlias.getContactName().contains("JCTCA Root Certificates")){
+				continue;
+			}
 			if (ksAlias.getOperation().contains("RSA")
 					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
 				RSAAndDSAPublicKeys.add(ksAlias);
@@ -226,7 +229,7 @@ public class Util {
 	public static boolean isSignedByJCTCA(KeyStoreAlias ksAlias) {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		// TODO Auto-generated method stub
-		X509Certificate pubKey = (X509Certificate) ksm.getPublicKey(ksAlias);
+		X509Certificate pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
 		// create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
 		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];

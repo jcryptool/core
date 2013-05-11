@@ -45,7 +45,7 @@ public class CAListener implements SelectionListener{
 			enableButtons(src);
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof CSR)) {
 			handleCSR(src);
-		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof CSR)) {
+		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof RR)) {
 			handleRR(src);
 		}
 	}

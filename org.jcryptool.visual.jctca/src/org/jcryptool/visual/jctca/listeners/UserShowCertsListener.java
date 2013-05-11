@@ -84,7 +84,7 @@ public class UserShowCertsListener implements SelectionListener {
 		int selected = lst.getSelectionIndex();
 		KeyStoreAlias ksAlias = (KeyStoreAlias) lst.getData(Integer.toString(selected));
 		//get public key for the ksAlias and cast it to a X509 Certificate
-		X509Certificate pubKey = (X509Certificate) ksm.getPublicKey(ksAlias);
+		X509Certificate pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
 		//create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getSubjectDN().toString());
 		//Todo: make better code
