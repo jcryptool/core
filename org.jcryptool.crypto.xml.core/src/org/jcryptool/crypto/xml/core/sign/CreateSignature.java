@@ -427,7 +427,7 @@ public class CreateSignature extends AbstractModernAlgorithm {
      */
     private boolean addCertificate() throws Exception {
         boolean addedCertificate = false;
-        Certificate cert = KeyStoreManager.getInstance().getCertificate(keyAlias, keyPassword);
+        Certificate cert = KeyStoreManager.getInstance().getCertificate(keyAlias);
 
         if (cert != null) {
             sig.addKeyInfo(cert.getPublicKey());
