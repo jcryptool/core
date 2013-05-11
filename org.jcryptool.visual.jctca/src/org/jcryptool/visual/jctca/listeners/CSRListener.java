@@ -1,10 +1,12 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
@@ -59,13 +61,17 @@ public class CSRListener implements SelectionListener {
 			if(txt.equals(Messages.ShowCSR_csr_deny)){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
-				//TODO Messagebox die informiert, dass richtig gehandelt wurde wenn fake CSR entfernt wurde
+				if(csr.getPrivAlias()==null){
+					Util.showMessageBox("Gratulation", "Sie haben richtig gehandelt und die falsche Anfrage entfernt. Das System/Imperium kann weiterbestehen!", SWT.ICON_WARNING);
+				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
 			}
 			else if(txt.equals("CSR weiterleiten")){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
-				//TODO messagebox die informiert, dass fasch gehandelt wurde, wenn fake CSR bestätigt wird
+				if(csr.getPrivAlias()==null){
+					Util.showMessageBox("FEHLER!", "Sie haben die falsche Anfrage weitergeleitet und deinem Angreifer ermöglicht, dass er ein gültiges Zertifikat erhält. Das System/Imperium wird fallen!", SWT.ICON_WARNING);
+				}
 				this.setLabels(new CSR("","","","","","","","", null, null));
 				if(csr.getPubAlias()!=null){
 					CertificateCSRR.getInstance().addCSR(csr);
