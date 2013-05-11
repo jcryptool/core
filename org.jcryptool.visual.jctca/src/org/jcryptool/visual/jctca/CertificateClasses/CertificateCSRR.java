@@ -66,9 +66,22 @@ public class CertificateCSRR {
 			try {
 				Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 				cert = certGen.generate(kp.getPrivate(), "BC");
-			} catch (CertificateEncodingException | InvalidKeyException
-					| IllegalStateException | NoSuchProviderException
-					| NoSuchAlgorithmException | SignatureException e) {
+			} catch (CertificateEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchProviderException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SignatureException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
