@@ -90,10 +90,12 @@ public class TabItemListener implements SelectionListener {
 			for(CSR csr : csr_list){
 				TreeItem tree_item_crl = new TreeItem(csrRoot, SWT.NONE);
 				tree_item_crl.setText("  " + csr.getFirst() + " " + csr.getLast());
+				tree_item_crl.setData(csr);
 			}
 			for(RR rr : rr_list){
 				TreeItem tree_item_crl = new TreeItem(rrRoot, SWT.NONE);
 				tree_item_crl.setText("TODO");
+				tree_item_crl.setData(rr);
 			}
 			csrRoot.setExpanded(true);
 			rrRoot.setExpanded(true);

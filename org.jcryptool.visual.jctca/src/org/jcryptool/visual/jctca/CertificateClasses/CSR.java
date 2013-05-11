@@ -19,7 +19,7 @@ public class CSR {
 
 	public CSR(String first, String last, String street, String zip,
 			String town, String country, String mail, String proof,
-			KeyStoreAlias privAlias, KeyStoreAlias pubAlias) {
+			KeyStoreAlias pubAlias, KeyStoreAlias privAlias) {
 		super();
 		this.first = first;
 		this.last = last;

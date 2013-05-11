@@ -60,13 +60,17 @@ public class CSRListener implements SelectionListener {
 			if(txt.equals(Messages.ShowCSR_csr_deny)){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
+				//TODO Messagebox die informiert, dass richtig gehandelt wurde wenn fake CSR entfernt wurde
 				this.setLabels(new CSR("","","","","","","", "", null, null));
 			}
 			else if(txt.equals("CSR weiterleiten")){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
+				//TODO messagebox die informiert, dass fasch gehandelt wurde, wenn fake CSR bestätigt wird
 				this.setLabels(new CSR("","","","","","","","", null, null));
-				CertificateCSRR.getInstance().addCSR(csr);
+				if(csr.getPubAlias()!=null){
+					CertificateCSRR.getInstance().addCSR(csr);
+				}
 			}
 		}
 	}

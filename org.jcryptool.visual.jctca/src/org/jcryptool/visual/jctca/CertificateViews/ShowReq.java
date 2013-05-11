@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
+import org.jcryptool.visual.jctca.listeners.CAListener;
 
 public class ShowReq implements Views {
 	Composite composite;
@@ -62,11 +63,21 @@ public class ShowReq implements Views {
 		btn_accept_request
 				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_accept_request.setText(Messages.ShowReq_ReqGrant);
+		btn_accept_request.setEnabled(false);
+		
 		btn_reject_request = new Button(showSelectedRequest, SWT.NONE);
 		btn_reject_request
 				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_reject_request.setText(Messages.ShowReq_ReqDeny);
+		btn_reject_request.setEnabled(false);
 
+		CAListener lst = new CAListener(tree, lst_private_keys_ca, btn_accept_request, btn_reject_request);
+		tree.addSelectionListener(lst);
+		lst_private_keys_ca.addSelectionListener(lst);
+		btn_accept_request.addSelectionListener(lst);
+		btn_reject_request.addSelectionListener(lst);
+		
+		
 		// Label lbl_exp = (Label)exp.getChildren()[0];
 		// lbl_exp.setText("Hi, I explain what is going on in Show Request!");
 

@@ -67,17 +67,8 @@ public class CreateCertListener implements SelectionListener {
 			KeyStoreAlias pubAlias = null;
 			KeyStoreAlias privAlias = null;
 
-			String selected = cmb_keys.getText();
-			System.out.println(selected);
-			String hash = selected.split("Hash")[1];
-			System.out.println(hash);
-			ArrayList<KeyStoreAlias> aliases = mng.getAllPublicKeys();
-			for (int i = 0; i < aliases.size(); i++) {
-				if (aliases.get(i).getHashValue().equals(hash)) {
-					pubAlias = aliases.get(i);
-					privAlias = mng.getPrivateForPublic(pubAlias);
-				}
-			}
+			pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getItem(cmb_keys.getSelectionIndex()));
+			privAlias = mng.getPrivateForPublic(pubAlias);
 			RegistrarCSR.getInstance().addCSR(txt_first_name.getText(), txt_last_name.getText(),
 					txt_street.getText(), txt_zip.getText(),
 					txt_town.getText(), txt_country.getText(),
@@ -150,17 +141,18 @@ public class CreateCertListener implements SelectionListener {
 							privKey.getClass().getName());
 					KeyStoreAlias pubAlias = new KeyStoreAlias(name,
 							KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,
-							(name.concat(pubKey.toString())).hashCode() + " ",
+							(name.concat(privKey.toString())).hashCode() + " ",
 							pubKey.getClass().getName());
 					mng.addKeyPair(privKey, CertificateFactory
 							.createJCrypToolCertificate(pubKey), new String(
 							KeyStoreManager.getDefaultKeyPassword()),
 							privAlias, pubAlias);
 					System.out.println(pubAlias.getContactName());
-					cmb_keys.add(pubAlias.getContactName() + "(Hash: "
-							+ pubAlias.getHashValue() + ")");
+					String entry = pubAlias.getContactName() + "(Hash: " + pubAlias.getHashValue() + ")";
+					cmb_keys.add(entry);
 					cmb_keys.getParent().layout();
 					cmb_keys.select(cmb_keys.getItemCount() - 1);
+					cmb_keys.setData(entry, pubAlias);
 				} catch (InvalidKeySpecException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

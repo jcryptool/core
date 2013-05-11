@@ -38,6 +38,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 			Button reject_csr) {
 		super(parent, SWT.APPLICATION_MODAL);
 		this.parent = parent;
+
 		this.csr = csr;
 		this.forward_csr = forward_csr;
 		this.reject_csr = reject_csr;
@@ -51,6 +52,9 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		createContents(shell);
 		String proof = c.getProof();
 		Image i = null;
+		if(proof == null){
+			proof = "icons\\ausweis.jpeg";
+		}
 		if (proof.contains("icons\\") || proof.contains("icons/")) {
 			i = Activator.getImageDescriptor(proof).createImage();
 		} else {

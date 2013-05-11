@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.CreateCertListener;
@@ -156,8 +157,10 @@ public class CreateCert implements Views {
 
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
-		for (String s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			cmb_genKey.add(s);
+		for (KeyStoreAlias s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+			String entry = s.getContactName() + "(Hash: " + s.getHashValue() + ")";
+			cmb_genKey.add(entry);
+			cmb_genKey.setData(entry,s);
 		}
 		// chose a default value so that we don't get a array out of bound
 		// exception if user doesn't chose an entry
