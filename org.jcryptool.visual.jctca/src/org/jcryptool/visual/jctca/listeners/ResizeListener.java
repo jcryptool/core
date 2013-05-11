@@ -50,17 +50,17 @@ public class ResizeListener implements ControlListener {
 				height_scaled = comp_image.getBounds().height;
 				width_scaled = (int) (width - (height - height_scaled) * ratio);
 			}
-			if (image_name == "Architekturskizze Zertifikatserzeugung") {
+			if (image_name == "Architekturskizze Zertifikatserzeugung") {//$NON-NLS-1$
 				help = Activator.getImageDescriptor(
-						"icons/minica_create_cert.jpg").createImage();
-			} else if (image_name == "Architekturskizze Zertifikatswiderruf") {
-				help = Activator.getImageDescriptor("icons/minica_revoke.jpg")
+						"icons/minica_create.png").createImage();//$NON-NLS-1$
+			} else if (image_name == "Architekturskizze Zertifikatswiderruf") {//$NON-NLS-1$
+				help = Activator.getImageDescriptor("icons/minica_revoke.png")//$NON-NLS-1$
 						.createImage();
-			} else if (image_name == "Architekturskizze Signaturprüfung") {
-				help = Activator.getImageDescriptor("icons/minica_check.jpg")
+			} else if (image_name == "Architekturskizze Signaturprüfung") {//$NON-NLS-1$
+				help = Activator.getImageDescriptor("icons/minica_check.png")//$NON-NLS-1$
 						.createImage();
 			} else {
-				help = Activator.getImageDescriptor("icons/ausweis.jpeg")
+				help = Activator.getImageDescriptor("icons/ausweis.jpeg")//$NON-NLS-1$
 						.createImage();
 			}
 

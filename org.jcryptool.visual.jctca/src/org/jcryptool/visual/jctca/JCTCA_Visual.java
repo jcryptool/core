@@ -98,7 +98,7 @@ public class JCTCA_Visual extends ViewPart {
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
 				false));
-		// set the short introduction text for the certifcate creation picture
+		// set the short introduction text for the certificate creation picture
 		// because this is the first text that needs to be shown
 		head_description
 				.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zurück an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
@@ -130,31 +130,34 @@ public class JCTCA_Visual extends ViewPart {
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 		// set path_to_create_img and load image at that path into help
-		String path_to_create_img = "icons/minica_create.png";
+		String path_to_create_img = "icons/minica_create.png"; //$NON-NLS-1$
 		Image help = Activator.getImageDescriptor(path_to_create_img)
 				.createImage();
-		// comp_image.setBackgroundImage(help);
 		lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);
 		lbl_img.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		lbl_img.setImage(help);
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
 		btn_showCreate = new Button(comp_buttons, SWT.PUSH);
 		btn_showCreate.setText("Zertifikatserzeugung zeigen");
+		btn_showCreate.setData(0); //set data for the listener - see PluginBtnListener.java
 		btn_showCreate.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
 		btn_showRevoke.setText("Zertifikatswiderruf zeigen");
+		btn_showRevoke.setData(1);
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
 		btn_showCheck.setText("Signaturprüfung zeigen");
+		btn_showCheck.setData(2);
 		btn_showCheck.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_continue = new Button(comp_buttons, SWT.PUSH);
 		btn_continue.setText("Mit Plugin fortfahren");
+		btn_continue.setData(3);
 		btn_continue.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 		composite.layout(true);
@@ -178,14 +181,12 @@ public class JCTCA_Visual extends ViewPart {
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText("Erklärung");
-		// grp_explain.setToolTipText("Zusätzliche Erklärung zum aktuellen Schritt");
-
+		
 		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1);
 		gd_txt_explain.heightHint = 300;
 		lbl_explain.setLayoutData(gd_txt_explain);
-		// lbl_explain.setToolTipText("Zusätzliche Erklärungen zum aktuellen Schritt");
 
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				grp_explain);
@@ -213,8 +214,8 @@ public class JCTCA_Visual extends ViewPart {
 
 	@Override
 	public void setFocus() {
-		// TODO Auto-generated method stub
-
+		
 	}
+
 
 }

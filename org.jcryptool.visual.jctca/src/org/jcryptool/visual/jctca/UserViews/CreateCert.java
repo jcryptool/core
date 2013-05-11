@@ -62,53 +62,53 @@ public class CreateCert implements Views {
 		createCertGroup.setLayout(new GridLayout(2, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.NONE, true, true);
 		createCertGroup.setLayoutData(gd_grp);
-		createCertGroup.setText(Messages.CreateCert_create_csr_headline);
+		createCertGroup.setText("CSR erstellen");
 
 		lbl_firstname = new Label(createCertGroup, SWT.NONE);
-		lbl_firstname.setText(Messages.CreateCert_first_name);
+		lbl_firstname.setText("Vorname(n):");
 		txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_firstname.setText(Messages.CreateCert_prefilled_firstname);
+		txt_firstname.setText("Erika");
 
 		lbl_lastname = new Label(createCertGroup, SWT.None);
-		lbl_lastname.setText(Messages.CreateCert_last_name);
+		lbl_lastname.setText("Nachname:");
 		txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_lastname.setText(Messages.CreateCert_prefilled_lastname);
+		txt_lastname.setText("Mustermann");
 
 		lbl_street = new Label(createCertGroup, SWT.None);
-		lbl_street.setText(Messages.CreateCert_street);
+		lbl_street.setText("Straße:");
 		txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_street.setText(Messages.CreateCert_prefilled_street);
+		txt_street.setText("Beilsteiner Straße 42");
 
 		lbl_ZIP = new Label(createCertGroup, SWT.None);
-		lbl_ZIP.setText(Messages.CreateCert_zip);
+		lbl_ZIP.setText("Postleitzahl:");
 		txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_ZIP.setText(Messages.CreateCert_prefilled_zip);
+		txt_ZIP.setText("12681");
 
 		lbl_city = new Label(createCertGroup, SWT.None);
-		lbl_city.setText(Messages.CreateCert_city);
+		lbl_city.setText("Stadt:");
 		txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_city.setText(Messages.CreateCert_prefilled_city);
+		txt_city.setText("Berlin");
 
 		lbl_country = new Label(createCertGroup, SWT.None);
-		lbl_country.setText(Messages.CreateCert_country);
+		lbl_country.setText("Land");
 		txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
 		txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_country.setText(Messages.CreateCert_prefilled_country);
+		txt_country.setText("Deutschland");
 
 		lbl_mail = new Label(createCertGroup, SWT.None);
-		lbl_mail.setText(Messages.CreateCert_email);
+		lbl_mail.setText("E-Mailadresse:");
 		txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
 		txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		txt_mail.setText(Messages.CreateCert_prefilled_email);
+		txt_mail.setText("eri-muster@example.com");
 		lbl_proof = new Label(createCertGroup, SWT.None);
-		lbl_proof.setText(Messages.CreateCert_identity_file);
+		lbl_proof.setText("Farbkopie eines Lichtbildausweises:");
 		btn_proof = new Button(createCertGroup, SWT.None);
-		btn_proof.setText(Messages.CreateCert_chose_file_btn);
+		btn_proof.setText("Datei auswählen");
 		btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		lbl_key = new Label(createCertGroup, SWT.None);
@@ -132,16 +132,13 @@ public class CreateCert implements Views {
 				txt_mail, cmb_genKey);
 		btn_genKey.addSelectionListener(lst);
 		btn_proof.addSelectionListener(lst);
-		// lbl_plain1 = new Label(createCertGroup, SWT.None);
 		btn_send = new Button(composite, SWT.NONE);
 		btn_send.setText("CSR abschicken");
 		btn_send.addSelectionListener(lst);
 		btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
 
 		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText(Messages.CreateCert_exp_txt0
-				+ Messages.CreateCert_exp_txt1 + Messages.CreateCert_exp_txt2
-				+ Messages.CreateCert_exp_txt3);
+		lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, ein neues Zertifikat anzufordern. Sie können dazu die hier vorgeschlagenen Musterdaten verwenden oder das Formular mit Ihren eigenen Daten befüllen. Da dieses Zertifikat auf den Namen einer natürlichen Person lauten soll, ist es notwendig, dem PKI-Betreiber diese Identität zu belegen. Für dieses Plugin wird angenommen, dass hierfür ein Foto oder Farbscan eines gültigen Lichtbildausweises ausreichend ist. Ein Musterausweis wird vom Plugin zur Verfügung gestellt. Sie haben aber auch die Möglichkeit, eine Bilddatei von Ihrem Computer an die Zertifikatsanfrage anzufügen. Mehr dazu, welche Wege PKI-Betreiber in der realen Welt gehen, um Ihre Identität festzustellen, lesen Sie in der Onlinehilfe.\n\nUnter \"Öffentlicher Schlüssel auswählen\" wählen Sie den öffentlichen Schlüssel, für den Sie das Zertifikat anfordern wollen. Sollten Sie über noch kein Schlüsselpaar verfügen, so können Sie mittels \"Schlüsselpaar generieren\" eines generieren lassen.\n\nWenn Sie fertig sind, können Sie Ihre Anfrage mittels \"CSR abschicken\" an den fiktiven PKI-Betreiber weiterleiten. Wechseln Sie anschließend in den Tab \"Registration Authority,\" um mit diesem Plugin fortzufahren und mehr zum Prozess der Identitätsfeststellung zu erfahren.");
 		composite.setVisible(false);
 	}
 
@@ -158,7 +155,7 @@ public class CreateCert implements Views {
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			String entry = s.getContactName() + " (Hash: " + s.getHashValue() + ") ";
+			String entry = s.getContactName() + " (Hash: " + s.getHashValue() + ") ";//$NON-NLS-1$
 			cmb_genKey.add(entry);
 			cmb_genKey.setData(entry,s);
 		}

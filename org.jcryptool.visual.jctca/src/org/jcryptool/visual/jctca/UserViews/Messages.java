@@ -4,28 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.jctca.UserViews.messages"; //$NON-NLS-1$
-	public static String CreateCert_chose_file_btn;
-	public static String CreateCert_city;
-	public static String CreateCert_country;
-	public static String CreateCert_create_csr_headline;
-	public static String CreateCert_email;
-	public static String CreateCert_exp_txt0;
-	public static String CreateCert_exp_txt1;
-	public static String CreateCert_exp_txt2;
-	public static String CreateCert_exp_txt3;
-	public static String CreateCert_first_name;
-	public static String CreateCert_identity_file;
-	public static String CreateCert_last_name;
-	public static String CreateCert_prefilled_city;
-	public static String CreateCert_prefilled_country;
-	public static String CreateCert_prefilled_email;
-	public static String CreateCert_prefilled_firstname;
-	public static String CreateCert_prefilled_lastname;
-	public static String CreateCert_prefilled_street;
-	public static String CreateCert_prefilled_zip;
-	public static String CreateCert_street;
 	public static String CreateCert_text_chose_public_key;
-	public static String CreateCert_zip;
 	public static String CreateCertListener_fileext_bmp;
 	public static String CreateCertListener_fileext_gif;
 	public static String CreateCertListener_fileext_jpg;

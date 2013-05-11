@@ -18,24 +18,20 @@ public class SideBarListener implements SelectionListener {
 	Group grp_exp;
 
 	public SideBarListener(CreateCert cCert, ShowCert sCert, SignCert siCert, Group grp_exp, Composite comp_right) {
-		// this.cCert = cCert;
-		// this.rCert = new RevokeCert(comp_right);
-		// this.cCert = new CreateCert(comp_right, comp_exp);
-		// this.sCert = new ShowCert(comp_right);
-		// this.siCert = new SignCert(comp_right);
-		this.sCert = sCert;
 		this.comp_right = comp_right;
 		this.grp_exp = grp_exp;
 	}
 
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
 		Button btn = (Button) arg0.getSource();
+		//get what button was pressed: 0 - create cert, 1 - manage certs, 2 - sign stuff
+		int pressed = (int) btn.getData();
 
 		if (cCert != null) {
 			cCert.dispose();
@@ -46,18 +42,21 @@ public class SideBarListener implements SelectionListener {
 		if (siCert != null) {
 			siCert.dispose();
 		}
-		String text = btn.getText();
-		if (text.equals("Neues Zertifikat anfordern")) {
+		switch (pressed) {
+		case 0:
 			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
-		} else if (text.equals("Eigene Zertifikate verwalten")) {
+			break;
+		case 1:
 			sCert = new ShowCert(comp_right, grp_exp);
 			sCert.setVisible(true);
-		} else if (text.equals("Text oder Datei signieren")) {
+			break;
+		case 2:
 			siCert = new SignCert(comp_right, grp_exp);
 			siCert.setVisible(true);
+			break;
 		}
-
+		
 		comp_right.layout(true);
 		grp_exp.layout(true);
 	}
