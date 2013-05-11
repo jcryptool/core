@@ -63,19 +63,26 @@ public class CreateCertListener implements SelectionListener {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 
 		if (text.equals("CSR abschicken")) {
-			KeyStoreAlias pubAlias = null;
-			KeyStoreAlias privAlias = null;
+			if(checkFields()){
+				KeyStoreAlias pubAlias = null;
+				KeyStoreAlias privAlias = null;
 
-			pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getItem(cmb_keys.getSelectionIndex()));
-			privAlias = mng.getPrivateForPublic(pubAlias);
-			RegistrarCSR.getInstance().addCSR(txt_first_name.getText(), txt_last_name.getText(),
-					txt_street.getText(), txt_zip.getText(),
-					txt_town.getText(), txt_country.getText(),
-					txt_mail.getText(), path, pubAlias, privAlias);
-			Util.showMessageBox(
-					"CSR abgeschickt",
-					"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
-					SWT.ICON_INFORMATION);
+				pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getItem(cmb_keys.getSelectionIndex()));
+				privAlias = mng.getPrivateForPublic(pubAlias);
+				RegistrarCSR.getInstance().addCSR(txt_first_name.getText(), txt_last_name.getText(),
+						txt_street.getText(), txt_zip.getText(),
+						txt_town.getText(), txt_country.getText(),
+						txt_mail.getText(), path, pubAlias, privAlias);
+				Util.showMessageBox(
+						"CSR abgeschickt",
+						"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
+						SWT.ICON_INFORMATION);
+			}
+			else{
+				Util.showMessageBox("Leeres Feld!",
+						"Bitte füllen Sie alle Felder aus.",
+						SWT.ICON_INFORMATION);
+			}
 		} else if (text.equals("Datei auswählen") || text.equals(path)) {
 			FileDialog f = new FileDialog(
 					Display.getCurrent().getActiveShell(), SWT.OPEN);
@@ -89,17 +96,7 @@ public class CreateCertListener implements SelectionListener {
 				src.setText(path);
 			}
 		} else if (text.equals("Neues Schlüsselpaar generieren")) {
-			String first = txt_first_name.getText();
-			String last = txt_last_name.getText();
-			String street = txt_street.getText();
-			String zip = txt_zip.getText();
-			String town = txt_town.getText();
-			String country = txt_country.getText();
-			String mail = txt_mail.getText();
-			if (first.length() != 0 && last.length() != 0
-					&& street.length() != 0 && zip.length() != 0
-					&& town.length() != 0 && country.length() != 0
-					&& mail.length() != 0) {
+			if(checkFields()) {
 				RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
 				SecureRandom sr = new SecureRandom();
 				gen.init(new RSAKeyGenerationParameters(BigInteger.valueOf(3),
@@ -135,7 +132,7 @@ public class CreateCertListener implements SelectionListener {
 													.getDP(), privateKey
 													.getDQ(), privateKey
 													.getQInv()));
-					String name = first + " " + last;
+					String name = txt_first_name.getText() + " " + txt_last_name.getText();
 					KeyStoreAlias privAlias = new KeyStoreAlias(name,
 							KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024,
 							(name.concat(privKey.toString())).hashCode() + " ",
@@ -167,7 +164,20 @@ public class CreateCertListener implements SelectionListener {
 						SWT.ICON_INFORMATION);
 			}
 		}
-
+	}
+	
+	public boolean checkFields(){
+		String first = txt_first_name.getText();
+		String last = txt_last_name.getText();
+		String street = txt_street.getText();
+		String zip = txt_zip.getText();
+		String town = txt_town.getText();
+		String country = txt_country.getText();
+		String mail = txt_mail.getText();
+		return first.length() != 0 && last.length() != 0
+				&& street.length() != 0 && zip.length() != 0
+				&& town.length() != 0 && country.length() != 0
+				&& mail.length() != 0;
 	}
 
 }
