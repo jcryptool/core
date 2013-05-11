@@ -47,101 +47,128 @@ import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
 @SuppressWarnings("deprecation")
 public class Util {
-	
-	public static X509Certificate certificateForKeyPair(CSR csr, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
+
+	public static X509Certificate certificateForKeyPair(CSR csr,
+			BigInteger serialNumber, X509Certificate caCert, Date expiryDate,
+			Date startDate, PrivateKey caKey) {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
-		PublicKey pub = mng.getPublicKey(csr.getPubAlias()).getPublicKey(); 
-        PrivateKey priv;
+		PublicKey pub = mng.getPublicKey(csr.getPubAlias()).getPublicKey();
+		PrivateKey priv;
 		try {
-			priv = mng.getPrivateKey(csr.getPrivAlias(), mng.getDefaultKeyPassword());
-			return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(), csr.getStreet(), csr.getTown(),"" ,"" , csr.getMail() ,pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
+			priv = mng.getPrivateKey(csr.getPrivAlias(),
+					mng.getDefaultKeyPassword());
+			return Util.certificateForKeyPair(
+					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),
+					csr.getStreet(), csr.getTown(), "", "", csr.getMail(), pub,
+					priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@SuppressWarnings("deprecation")
-	public static X509Certificate certificateForKeyPair(String principal, String country, String street, String city, String unit, String organisation, String mail, PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
+	public static X509Certificate certificateForKeyPair(String principal,
+			String country, String street, String city, String unit,
+			String organisation, String mail, PublicKey pub, PrivateKey priv,
+			BigInteger serialNumber, X509Certificate caCert, Date expiryDate,
+			Date startDate, PrivateKey caKey) {
 		try {
-			KeyPair keyPair = new KeyPair(pub, 
-					                      priv);              // public/private key pair that we are creating certificate for
-	
+			KeyPair keyPair = new KeyPair(pub, priv); // public/private key pair
+														// that we are creating
+														// certificate for
+
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
-			X509Name subjectName = new X509Name("CN="+principal + ", " +//commonname
-															"ST="+street+", "+ //street
-															"L="+city+", "+
-															"C="+country + ", " +  //land
-															"OU="+unit+", "+ //organisationseinheit
-															"O="+organisation+", "+ //organisation
-															"E=" + mail); //evtl SERIALNUMBER 
-			//organisation
-			//organisationseinheit
-			//ort
-			//land
-			//mail
-			
+			X509Name subjectName = new X509Name("CN=" + principal + ", " + // commonname
+					"ST=" + street + ", " + // street
+					"L=" + city + ", " + "C=" + country + ", " + // land
+					"OU=" + unit + ", " + // organisationseinheit
+					"O=" + organisation + ", " + // organisation
+					"E=" + mail); // evtl SERIALNUMBER
+			// organisation
+			// organisationseinheit
+			// ort
+			// land
+			// mail
+
 			certGen.setSerialNumber(serialNumber);
-			if(caCert!=null){
+			if (caCert != null) {
 				certGen.setIssuerDN(caCert.getSubjectX500Principal());
-				certGen.addExtension(X509Extensions.AuthorityKeyIdentifier, false,new AuthorityKeyIdentifierStructure(caCert));
-				certGen.addExtension(X509Extensions.SubjectKeyIdentifier, false,new SubjectKeyIdentifierStructure(keyPair.getPublic()));
-			}
-			else{
-				certGen.addExtension(X509Extensions.BasicConstraints, true, new BasicConstraints(false));
-				certGen.addExtension(X509Extensions.KeyUsage, true, new KeyUsage(KeyUsage.digitalSignature| KeyUsage.keyEncipherment));
-				certGen.addExtension(X509Extensions.ExtendedKeyUsage, true, new ExtendedKeyUsage(KeyPurposeId.id_kp_serverAuth));
+				certGen.addExtension(X509Extensions.AuthorityKeyIdentifier,
+						false, new AuthorityKeyIdentifierStructure(caCert));
+				certGen.addExtension(X509Extensions.SubjectKeyIdentifier,
+						false,
+						new SubjectKeyIdentifierStructure(keyPair.getPublic()));
+			} else {
+				certGen.addExtension(X509Extensions.BasicConstraints, true,
+						new BasicConstraints(false));
+				certGen.addExtension(X509Extensions.KeyUsage, true,
+						new KeyUsage(KeyUsage.digitalSignature
+								| KeyUsage.keyEncipherment));
+				certGen.addExtension(X509Extensions.ExtendedKeyUsage, true,
+						new ExtendedKeyUsage(KeyPurposeId.id_kp_serverAuth));
 			}
 			certGen.setNotBefore(startDate);
 			certGen.setNotAfter(expiryDate);
 			certGen.setSubjectDN(subjectName);
 			certGen.setPublicKey(keyPair.getPublic());
 			certGen.setSignatureAlgorithm("SHA512withRSA");
-			
-			X509Certificate cert = certGen.generate(caKey, "BC"); 
+
+			X509Certificate cert;
+
+			cert = certGen.generate(caKey, "BC");
 			return cert;
-		} catch (CertificateParsingException | InvalidKeyException | CertificateEncodingException | IllegalStateException | NoSuchProviderException | NoSuchAlgorithmException | SignatureException e) {
+		} catch (CertificateEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (Exception e) {
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchProviderException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SignatureException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CertificateParsingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return null;
 
-		  // note: private key of CA
+		// note: private key of CA
 	}
 
-	public static KeyPair asymmetricKeyPairToNormalKeyPair(AsymmetricCipherKeyPair keypair){
+	public static KeyPair asymmetricKeyPairToNormalKeyPair(
+			AsymmetricCipherKeyPair keypair) {
 		RSAKeyParameters publicKey = (RSAKeyParameters) keypair.getPublic();
-		RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair.getPrivate();
+		RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair
+				.getPrivate();
 		@SuppressWarnings("unused")
-		RSAPublicKey pkStruct = new RSAPublicKey(
-				publicKey.getModulus(), publicKey.getExponent());
+		RSAPublicKey pkStruct = new RSAPublicKey(publicKey.getModulus(),
+				publicKey.getExponent());
 		// JCE format needed for the certificate - because
 		// getEncoded() is necessary...
 		PublicKey pubKey;
 		try {
-			pubKey = KeyFactory
-					.getInstance("RSA")
-					.generatePublic(
-							new RSAPublicKeySpec(
-									publicKey.getModulus(), publicKey
-											.getExponent()));
-			PrivateKey privKey = KeyFactory
-					.getInstance(
-							"RSA")
-					.generatePrivate(
-							new RSAPrivateCrtKeySpec(publicKey
-									.getModulus(), publicKey
-									.getExponent(), privateKey
-									.getExponent(), privateKey.getP(),
-									privateKey.getQ(), privateKey
-											.getDP(), privateKey
-											.getDQ(), privateKey
-											.getQInv()));
-			
+			pubKey = KeyFactory.getInstance("RSA").generatePublic(
+					new RSAPublicKeySpec(publicKey.getModulus(), publicKey
+							.getExponent()));
+			PrivateKey privKey = KeyFactory.getInstance("RSA").generatePrivate(
+					new RSAPrivateCrtKeySpec(publicKey.getModulus(), publicKey
+							.getExponent(), privateKey.getExponent(),
+							privateKey.getP(), privateKey.getQ(), privateKey
+									.getDP(), privateKey.getDQ(), privateKey
+									.getQInv()));
+
 			return new KeyPair(pubKey, privKey);
 		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
@@ -153,7 +180,8 @@ public class Util {
 		// and this one for the KeyStore
 		return null;
 	}
-	public static void createRootNodes(Tree tree){
+
+	public static void createRootNodes(Tree tree) {
 		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
 		tree_item_csr.setText(Messages.ShowReq_CertReqs);
 		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
@@ -162,21 +190,25 @@ public class Util {
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);
 	}
-	/**	
+
+	/**
 	 * Find all RSA and DSA public keys in a given keystore ksm and return them
 	 * in an array of KeyStoreAlias
 	 * 
 	 * @param ksm
 	 *            - KeyStoreManager from where to get the keys
-	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA public key pairs
+	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA
+	 *         public key pairs
 	 */
 	public static ArrayList<KeyStoreAlias> getAllRSAAndDSAPublicKeys(
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
-			if (ksAlias.getOperation().contains("RSA") && (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
+			if (ksAlias.getOperation().contains("RSA")
+					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
 				RSAAndDSAPublicKeys.add(ksAlias);
-			} else if (ksAlias.getOperation().contains("DSA") && (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
+			} else if (ksAlias.getOperation().contains("DSA")
+					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
 				RSAAndDSAPublicKeys.add(ksAlias);
 			}
 		}
@@ -195,7 +227,7 @@ public class Util {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		// TODO Auto-generated method stub
 		X509Certificate pubKey = (X509Certificate) ksm.getPublicKey(ksAlias);
-		//create X500Name from the X509 certificate Subjects distinguished name
+		// create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
 		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];
 		if (rdn.getFirst().getValue().toString().equals("JCT-CA Visual")) {
@@ -204,5 +236,5 @@ public class Util {
 			return false;
 		}
 	}
-	
+
 }
