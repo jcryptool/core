@@ -57,7 +57,7 @@ public class Util {
 		PrivateKey priv;
 		try {
 			priv = mng.getPrivateKey(csr.getPrivAlias(),
-					mng.getDefaultKeyPassword());
+					KeyStoreManager.getDefaultKeyPassword());
 			return Util.certificateForKeyPair(
 					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),
 					csr.getStreet(), csr.getTown(), "", "", csr.getMail(), pub,
@@ -69,7 +69,6 @@ public class Util {
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static X509Certificate certificateForKeyPair(String principal,
 			String country, String street, String city, String unit,
 			String organisation, String mail, PublicKey pub, PrivateKey priv,
@@ -193,18 +192,18 @@ public class Util {
 
 	/**
 	 * Find all RSA and DSA public keys in a given keystore ksm and return them
-	 * in an array of KeyStoreAlias
+	 * in an array of KeyStoreAlias. omits JCT-CA Root Certificates
 	 * 
 	 * @param ksm
 	 *            - KeyStoreManager from where to get the keys
-	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA
+	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA, excluding JCT-CA Root Certificates
 	 *         public key pairs
 	 */
 	public static ArrayList<KeyStoreAlias> getAllRSAAndDSAPublicKeys(
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
-			if (ksAlias.getContactName().contains("JCTCA Root Certificates")){
+			if (ksAlias.getContactName().contains("JCT-CA Root Certificates")){
 				continue;
 			}
 			if (ksAlias.getOperation().contains("RSA")

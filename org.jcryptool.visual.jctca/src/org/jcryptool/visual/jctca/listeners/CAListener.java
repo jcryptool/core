@@ -66,6 +66,7 @@ public class CAListener implements SelectionListener{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void handleCSR(Object src) {
 		if(src.equals(accept)){
 			TreeItem sel = requests.getSelection()[0];

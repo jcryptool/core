@@ -18,6 +18,7 @@ public class CertificationTab {
 		generalGroup.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, true,
 				1, 1));
 		t.setControl(generalGroup);
+		@SuppressWarnings("unused")
 		ShowReq sReq = new ShowReq(generalGroup, exp);
 		generalGroup.setLayout(new GridLayout(1, false));
 		

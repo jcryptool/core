@@ -10,7 +10,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
-import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+//import org.bouncycastle.asn1.pkcs.RSAPublicKey;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
@@ -109,8 +109,8 @@ public class CreateCertListener implements SelectionListener {
 						.getPrivate();
 				try {
 					// used to get proper encoding for the certificate
-					RSAPublicKey pkStruct = new RSAPublicKey(
-							publicKey.getModulus(), publicKey.getExponent());
+					//RSAPublicKey pkStruct = new RSAPublicKey(
+					//		publicKey.getModulus(), publicKey.getExponent());
 					// JCE format needed for the certificate - because
 					// getEncoded() is necessary...
 					PublicKey pubKey = KeyFactory

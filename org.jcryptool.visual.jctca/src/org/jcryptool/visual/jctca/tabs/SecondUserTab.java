@@ -18,6 +18,7 @@ public class SecondUserTab {
 		generalGroup.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, true,
 				1, 1));
 		t.setControl(generalGroup);
+		@SuppressWarnings("unused")
 		ShowSigData sSig = new ShowSigData(generalGroup, exp);
 		generalGroup.setLayout(new GridLayout(1, false));
 
