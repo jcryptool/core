@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.certificates.CertificateFactory;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -153,10 +154,10 @@ public class CreateCertListener implements SelectionListener {
 					cmb_keys.setData(entry, pubAlias);
 				} catch (InvalidKeySpecException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LogUtil.logError(e);
 				} catch (NoSuchAlgorithmException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LogUtil.logError(e);
 				}
 			} else {
 				Util.showMessageBox("Leeres Feld!",
