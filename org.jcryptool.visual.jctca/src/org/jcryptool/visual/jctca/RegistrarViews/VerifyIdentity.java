@@ -53,7 +53,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		String proof = c.getProof();
 		Image i = null;
 		if(proof == null){
-			proof = "icons\\ausweis.jpeg";
+			proof = "icons/ausweis.jpeg";
 		}
 		if (proof.contains("icons\\") || proof.contains("icons/")) {
 			i = Activator.getImageDescriptor(proof).createImage();
