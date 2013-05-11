@@ -18,13 +18,12 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.security.auth.x500.X500Principal;
-
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
-import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
 import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.X509Extensions;
@@ -32,7 +31,6 @@ import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
-import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.bouncycastle.x509.extension.AuthorityKeyIdentifierStructure;
 import org.bouncycastle.x509.extension.SubjectKeyIdentifierStructure;
@@ -47,8 +45,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
-import codec.x509.GeneralName;
-
+@SuppressWarnings("deprecation")
 public class Util {
 
 	public static X509Certificate certificateForKeyPair(CSR csr,
@@ -155,6 +152,7 @@ public class Util {
 		RSAKeyParameters publicKey = (RSAKeyParameters) keypair.getPublic();
 		RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair
 				.getPrivate();
+		@SuppressWarnings("unused")
 		RSAPublicKey pkStruct = new RSAPublicKey(publicKey.getModulus(),
 				publicKey.getExponent());
 		// JCE format needed for the certificate - because
@@ -223,6 +221,20 @@ public class Util {
 		box.setText(title);
 		box.setMessage(text);
 		box.open();
+	}
+
+	public static boolean isSignedByJCTCA(KeyStoreAlias ksAlias) {
+		KeyStoreManager ksm = KeyStoreManager.getInstance();
+		// TODO Auto-generated method stub
+		X509Certificate pubKey = (X509Certificate) ksm.getPublicKey(ksAlias);
+		// create X500Name from the X509 certificate Subjects distinguished name
+		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
+		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];
+		if (rdn.getFirst().getValue().toString().equals("JCT-CA Visual")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

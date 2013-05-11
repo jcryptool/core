@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import org.bouncycastle.asn1.x500.X500Name;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -12,6 +13,7 @@ import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.listeners.RevokeButtonListener;
 import org.jcryptool.visual.jctca.listeners.UserShowCertsListener;
 
 public class ShowCert implements Views {
@@ -150,13 +152,17 @@ public class ShowCert implements Views {
 		lbl_expired_on.setText(Messages.ShowCert_expires_on);
 		lbl_value_expired_on = new Label(right, SWT.None);
 		
-		UserShowCertsListener uscListener = new UserShowCertsListener(lbl_value_common, lbl_value_org, lbl_value_orgUnit, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_value_common_by, lbl_value_org_by, lbl_value_orgUnit_by, lbl_value_issued_on, lbl_value_expired_on);
+		btn_revoke = new Button(right, SWT.PUSH);
+		btn_revoke.setText("Zertifikat widerrufen");
+		
+		UserShowCertsListener uscListener = new UserShowCertsListener(lbl_value_common, lbl_value_org, lbl_value_orgUnit, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_value_common_by, lbl_value_org_by, lbl_value_orgUnit_by, lbl_value_issued_on, lbl_value_expired_on, btn_revoke);
 		lst_certs.addSelectionListener(uscListener);
+		
+		RevokeButtonListener revbtnListener = new RevokeButtonListener();
+		btn_revoke.addSelectionListener(revbtnListener);
 		
 		lbl_plain7 = new Label(right, SWT.NONE);
 		lbl_plain8 = new Label(right, SWT.NONE);
-		btn_revoke = new Button(right, SWT.NONE);
-		btn_revoke.setText(Messages.ShowCert_rev_cert_btn);
 
 		Label lbl_exp = (Label) exp.getChildren()[0];
 		lbl_exp.setText(Messages.ShowCert_exp_txt0 + Messages.ShowCert_exp_txt1
@@ -168,6 +174,9 @@ public class ShowCert implements Views {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		int i = 0;
 		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+			if (Util.isSignedByJCTCA(ksAlias) == false) {
+				continue;
+			}
 			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
 			if (ksAlias.getOperation().contains("RSA")) {
 				ListEntry += "RSA)";
