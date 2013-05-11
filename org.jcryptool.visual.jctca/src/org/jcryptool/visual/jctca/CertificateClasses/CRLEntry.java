@@ -15,6 +15,7 @@ public class CRLEntry {
 	int sn;
 	Date revokeTime;
 	/**
+	 * generate new CRL Entry for the given serial number (hash)
 	 * 
 	 * @param sn Serial number of the certificate to be revoked
 	 * @param time timestamp of revocation
