@@ -32,11 +32,6 @@ public class Messages extends NLS {
 	public static String CreateCertListener_fileext_png;
 	public static String CreateCertListener_instance_of_keyfactory_prikey;
 	public static String CreateCertListener_instance_of_keyfactory_pubkey;
-	public static String RevokeCert_dummy_cert0;
-	public static String RevokeCert_dummy_cert1;
-	public static String RevokeCert_exp_txt;
-	public static String RevokeCert_rev_cert_btn;
-	public static String RevokeCert_rev_cert_headline;
 	public static String ShowCert_city;
 	public static String ShowCert_common_name;
 	public static String ShowCert_common_name_issuer;

@@ -8,7 +8,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.visual.jctca.CertificateClasses.RR;
 import org.jcryptool.visual.jctca.UserViews.dialogs.RevokeCertDialog;
 
 /**
