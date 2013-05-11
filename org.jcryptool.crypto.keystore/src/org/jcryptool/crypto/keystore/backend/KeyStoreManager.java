@@ -76,7 +76,7 @@ public class KeyStoreManager {
         ProviderManager2.getInstance();
         try {
             this.keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
                     "KeyStoreException while accessing an instance of JCEKS keystore", e, true);
         }
@@ -89,38 +89,37 @@ public class KeyStoreManager {
     }
 
     public synchronized static KeyStoreManager getInstance() {
-
         if (instance == null) {
             instance = new KeyStoreManager();
         }
         return instance;
     }
 
-    public void createNewKeyStore(final URI uri) {
+    public void createNewKeyStore(URI uri) {
         try {
-            final KeyStore newKeyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
-            final IFileStore store = EFS.getStore(uri);
+            KeyStore newKeyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
+            IFileStore store = EFS.getStore(uri);
             newKeyStore.load(null, KEYSTORE_PASSWORD);
             newKeyStore.store(store.openOutputStream(EFS.APPEND, null), KEYSTORE_PASSWORD);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while creating a new keystore", e, true);
-        } catch (final CoreException e) {
+        } catch (CoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CoreException while creating a new keystore", e, true);
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while creating a new keystore", e,
                     true);
-        } catch (final CertificateException e) {
+        } catch (CertificateException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CertificateException while creating a new keystore", e, true);
-        } catch (final IOException e) {
+        } catch (IOException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "IOException while creating a new keystore", e, true);
         }
     }
 
-    public void deleteContact(final String contactName) {
+    public void deleteContact(String contactName) {
         Enumeration<String> en;
         try {
             en = this.getAliases();
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true);
             return;
         }
@@ -130,7 +129,7 @@ public class KeyStoreManager {
             if (current.getContactName().equals(contactName)) {
                 try {
                     this.keyStore.deleteEntry(current.getAliasString());
-                } catch (final KeyStoreException e) {
+                } catch (KeyStoreException e) {
                     LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while trying to delete an entry", e,
                             true);
                 }
@@ -140,12 +139,11 @@ public class KeyStoreManager {
         ContactManager.getInstance().removeContact(contactName);
     }
 
-    public void delete(final KeyStoreAlias alias) {
+    public void delete(KeyStoreAlias alias) {
         try {
             if (alias.getKeyStoreEntryType().equals(KeyType.KEYPAIR_PRIVATE_KEY)) {
                 // if it is a private key, make sure that the corresponding
-                // public key gets deleted,
-                // as well
+                // public key gets deleted as well
                 KeyStoreAlias pub = this.getPublicForPrivate(alias);
                 if (pub != null) {
                     this.keyStore.deleteEntry(pub.getAliasString());
@@ -159,14 +157,14 @@ public class KeyStoreManager {
             this.keyStore.deleteEntry(alias.getAliasString());
             this.storeKeyStore();
             ContactManager.getInstance().removeEntry(alias);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while deleting an entry", e, true);
         }
     }
 
-    private KeyStoreAlias getPublicForPrivate(final KeyStoreAlias privateAlias) {
+    private KeyStoreAlias getPublicForPrivate(KeyStoreAlias privateAlias) {
         try {
-            final Enumeration<String> en = this.getAliases();
+            Enumeration<String> en = this.getAliases();
             KeyStoreAlias tmp;
             while (en != null && en.hasMoreElements()) {
                 tmp = new KeyStoreAlias(en.nextElement());
@@ -175,7 +173,7 @@ public class KeyStoreManager {
                     return tmp;
                 }
             }
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true);
         }
         return null;
@@ -186,14 +184,14 @@ public class KeyStoreManager {
      * 
      * @return the private alias or <code>null</code> if none is found or there was a problem accessing the keystore
      */
-    public KeyStoreAlias getPrivateForPublic(final KeyStoreAlias publicAlias) {
+    public KeyStoreAlias getPrivateForPublic(KeyStoreAlias publicAlias) {
         if (publicAlias == null)
             return null;
 
         Enumeration<String> aliases;
         try {
             aliases = this.getAliases();
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(e);
             return null;
         }
@@ -208,30 +206,30 @@ public class KeyStoreManager {
         return null;
     }
 
-    public void addCertificate(final Certificate certificate, final KeyStoreAlias alias) {
+    public void addCertificate(Certificate certificate, KeyStoreAlias alias) {
         try {
             this.keyStore.setEntry(alias.getAliasString(), new KeyStore.TrustedCertificateEntry(certificate), null);
             this.storeKeyStore();
             ContactManager.getInstance().addCertificate(alias);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while adding a certificate", e, true);
         }
     }
 
-    public void addSecretKey(final SecretKey key, final String password, final KeyStoreAlias alias) {
+    public void addSecretKey(SecretKey key, String password, KeyStoreAlias alias) {
         try {
             this.keyStore.setEntry(alias.getAliasString(), new KeyStore.SecretKeyEntry(key),
                     new KeyStore.PasswordProtection(password.toCharArray()));
             this.storeKeyStore();
             ContactManager.getInstance().addSecretKey(alias);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while adding a secret key", e, true);
         }
     }
 
-    public void addKeyPair(final PrivateKey privateKey, final Certificate publicKey, final String password,
-            final KeyStoreAlias privateAlias, final KeyStoreAlias publicAlias) {
-        final Certificate[] certs = new Certificate[1];
+    public void addKeyPair(PrivateKey privateKey, Certificate publicKey, String password, KeyStoreAlias privateAlias,
+            KeyStoreAlias publicAlias) {
+        Certificate[] certs = new Certificate[1];
         certs[0] = publicKey;
         try {
             this.keyStore.setEntry(privateAlias.getAliasString(), new KeyStore.PrivateKeyEntry(privateKey, certs),
@@ -239,7 +237,7 @@ public class KeyStoreManager {
             this.keyStore.setEntry(publicAlias.getAliasString(), new KeyStore.TrustedCertificateEntry(publicKey), null);
             this.storeKeyStore();
             ContactManager.getInstance().addKeyPair(privateAlias, publicAlias);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while adding a key pair", e, true);
         }
     }
@@ -269,36 +267,36 @@ public class KeyStoreManager {
         }
     }
 
-    public Certificate getPublicKey(final IKeyStoreAlias alias) {
+    public Certificate getPublicKey(IKeyStoreAlias alias) {
         try {
-            final KeyStore.TrustedCertificateEntry entry = (KeyStore.TrustedCertificateEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), new KeyStore.PasswordProtection(null));
+            KeyStore.TrustedCertificateEntry entry = (KeyStore.TrustedCertificateEntry) this.keyStore.getEntry(
+                    alias.getAliasString(), null);
             return entry.getTrustedCertificate();
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a public key", e, true);
-        } catch (final UnrecoverableEntryException e) {
+        } catch (UnrecoverableEntryException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "UnrecoverableEntryException while accessing a public key", e,
                     false);
             MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
                     Messages.getString("Label.ProblemOccured"), //$NON-NLS-1$
                     Messages.getString("Label.KeyNotAccessable")); //$NON-NLS-1$
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a public key", e, true);
         }
         return null;
     }
 
-    public PrivateKey getPrivateKey(final IKeyStoreAlias alias, final char[] password) throws Exception {
+    public PrivateKey getPrivateKey(IKeyStoreAlias alias, char[] password) throws Exception {
         try {
-            final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), new KeyStore.PasswordProtection(password));
+            KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(alias.getAliasString(),
+                    new KeyStore.PasswordProtection(password));
             return entry.getPrivateKey();
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a private key", e,
                     true);
-        } catch (final UnrecoverableEntryException e) {
+        } catch (UnrecoverableEntryException e) {
             throw e;
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a private key", e, true);
         }
 
@@ -390,7 +388,7 @@ public class KeyStoreManager {
      * @return key from the keystore
      * @throws Exception
      */
-    public Key getKey(final IKeyStoreAlias alias, final char[] password) throws Exception {
+    public Key getKey(IKeyStoreAlias alias, char[] password) throws Exception {
         Key key = null;
         switch (alias.getKeyStoreEntryType()) {
         case SECRETKEY:
@@ -419,18 +417,18 @@ public class KeyStoreManager {
         return key;
     }
 
-    public Certificate[] getCertificateChain(final KeyStoreAlias alias, final char[] password) {
+    public Certificate[] getCertificateChain(KeyStoreAlias alias, char[] password) {
         try {
-            final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), new KeyStore.PasswordProtection(password));
+            KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(alias.getAliasString(),
+                    new KeyStore.PasswordProtection(password));
             return entry.getCertificateChain();
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a private key", e,
                     true);
-        } catch (final UnrecoverableEntryException e) {
+        } catch (UnrecoverableEntryException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "UnrecoverableEntryException while accessing a private key", e,
                     true);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a private key", e, true);
         }
 
@@ -440,23 +438,23 @@ public class KeyStoreManager {
     public Certificate getCertificate(KeyStoreAlias alias) {
         try {
             return this.keyStore.getCertificate(alias.getAliasString());
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing certificate", e, true);
         }
 
         return null;
     }
 
-    public SecretKey getSecretKey(final IKeyStoreAlias alias, final char[] password) throws Exception {
+    public SecretKey getSecretKey(IKeyStoreAlias alias, char[] password) throws Exception {
         try {
-            final KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), new KeyStore.PasswordProtection(password));
+            KeyStore.SecretKeyEntry entry = (KeyStore.SecretKeyEntry) this.keyStore.getEntry(alias.getAliasString(),
+                    new KeyStore.PasswordProtection(password));
             return entry.getSecretKey();
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a secret key", e, true);
-        } catch (final UnrecoverableEntryException e) {
+        } catch (UnrecoverableEntryException e) {
             throw e;
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a secret key", e, true);
         }
         return null;
@@ -480,7 +478,7 @@ public class KeyStoreManager {
                 }
                 this.keyStoreFileStore = EFS.getStore(currentKeyStoreURI);
                 this.load(this.keyStoreFileStore, KEYSTORE_PASSWORD);
-            } catch (final CoreException e) {
+            } catch (CoreException e) {
                 LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CoreException while accessing the keystore file store.", e,
                         false);
                 throw new NoKeyStoreFileException(new Status(IStatus.WARNING,
@@ -493,14 +491,14 @@ public class KeyStoreManager {
                 this.keyStoreFileStore = EFS.getStore(KeyStorePlugin.getPlatformKeyStoreURI());
                 LogUtil.logInfo("PlatformKS: " + KeyStorePlugin.getPlatformKeyStore()); //$NON-NLS-1$
                 KeyStorePlugin.setCurrentKeyStore(KeyStorePlugin.getPlatformKeyStoreName());
-                if (KeyStorePlugin.getAvailableKeyStores().size() == 0) {
-                    final List<String> newList = new ArrayList<String>(1);
+                if (KeyStorePlugin.getAvailableKeyStores().isEmpty()) {
+                    List<String> newList = new ArrayList<String>(1);
                     newList.add(KeyStorePlugin.getPlatformKeyStore());
                     KeyStorePlugin.setAvailableKeyStores(newList);
                 }
                 KeyStorePlugin.savePreferences();
                 this.createNewPlatformKeyStore();
-            } catch (final CoreException e) {
+            } catch (CoreException e) {
                 LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CoreException", e, true);
             }
         }
@@ -512,29 +510,29 @@ public class KeyStoreManager {
      * @param fullyQualifiedName The full name of the keystore file, including path information
      * @param password The password with which the keystore is protected
      */
-    private void load(final IFileStore keyStoreFileStore, final char[] password) {
+    private void load(IFileStore keyStoreFileStore, char[] password) {
         InputStream is = null;
         try {
             is = new BufferedInputStream(keyStoreFileStore.openInputStream(EFS.NONE, null));
             this.keyStore.load(is, password);
-        } catch (final CoreException e) {
+        } catch (CoreException e) {
             if (URIUtil.equals(keyStoreFileStore.toURI(), KeyStorePlugin.getPlatformKeyStoreURI())) {
                 this.createNewPlatformKeyStore();
             } else {
                 LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
                         "CoreException while opening an input stream on a file store", e, true);
             }
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorihtmException while loading a keystore", e, true);
-        } catch (final CertificateException e) {
+        } catch (CertificateException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CertificateException while loading a keystore", e, true);
-        } catch (final IOException e) {
+        } catch (IOException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "IOException while loading a keystore", e, true);
         } finally {
             if (is != null) {
                 try {
                     is.close();
-                } catch (final IOException e) {
+                } catch (IOException e) {
                     LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to close BufferdInputStream", e, true);
                 }
             }
@@ -544,39 +542,38 @@ public class KeyStoreManager {
     private void createNewPlatformKeyStore() {
         try {
             this.keyStore.load(null, KEYSTORE_PASSWORD);
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException", e, true);
-        } catch (final CertificateException e) {
+        } catch (CertificateException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CertificateException", e, true);
-        } catch (final IOException e) {
+        } catch (IOException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "IOException", e, true);
         }
 
         BufferedInputStream is = null;
 
         try {
-            final File flexiProvider = new File(DirectoryService.getWorkspaceDir(),
-                    KeyStorePlugin.getFlexiProviderFolder());
+            File flexiProvider = new File(DirectoryService.getWorkspaceDir(), KeyStorePlugin.getFlexiProviderFolder());
 
             if (!flexiProvider.exists()) {
                 flexiProvider.mkdir();
             }
 
-            final URL url = KeyStorePlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
-            final File file = new File(FileLocator.toFileURL(url).getFile() + "keystore" + File.separatorChar //$NON-NLS-1$
+            URL url = KeyStorePlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
+            File file = new File(FileLocator.toFileURL(url).getFile() + "keystore" + File.separatorChar //$NON-NLS-1$
                     + "jctKeystore.ksf"); //$NON-NLS-1$
-            final IFileStore jctKeystore = EFS.getStore(file.toURI());
+            IFileStore jctKeystore = EFS.getStore(file.toURI());
             jctKeystore.copy(EFS.getStore(KeyStorePlugin.getPlatformKeyStoreURI()), EFS.NONE, null);
 
             is = new BufferedInputStream(this.keyStoreFileStore.openInputStream(EFS.NONE, null));
             this.keyStore.load(is, KEYSTORE_PASSWORD);
-        } catch (final Exception e) {
+        } catch (Exception e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Exception", e, false);
         } finally {
             if (is != null) {
                 try {
                     is.close();
-                } catch (final IOException e) {
+                } catch (IOException e) {
                     LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Failed to close BufferdInputStream", e, false);
                 }
             }
@@ -589,15 +586,15 @@ public class KeyStoreManager {
             os = new BufferedOutputStream(this.keyStoreFileStore.openOutputStream(EFS.NONE, null));
             this.keyStore.store(os, KEYSTORE_PASSWORD);
             os.close();
-        } catch (final CoreException e) {
+        } catch (CoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CoreException while storing a keystore", e, true);
-        } catch (final IOException e) {
+        } catch (IOException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "IOException while storing a keystore", e, false);
-        } catch (final KeyStoreException e) {
+        } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while storing a keystore", e, true);
-        } catch (final NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while storing a keystore", e, true);
-        } catch (final CertificateException e) {
+        } catch (CertificateException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "CertificateException while storing a keystore", e, true);
         }
     }
