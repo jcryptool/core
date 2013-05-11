@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
@@ -91,7 +92,7 @@ public class CAListener implements SelectionListener{
 				mng.addKeyPair(priv,cert, new String(KeyStoreManager.getDefaultKeyPassword()), csr.getPrivAlias(),csr.getPubAlias());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LogUtil.logError(e);
 			}
 		}
 		else if(src.equals(reject)){

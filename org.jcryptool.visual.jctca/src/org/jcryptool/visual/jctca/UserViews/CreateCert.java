@@ -158,7 +158,7 @@ public class CreateCert implements Views {
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias s : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			String entry = s.getContactName() + "(Hash: " + s.getHashValue() + ")";
+			String entry = s.getContactName() + " (Hash: " + s.getHashValue() + ") ";
 			cmb_genKey.add(entry);
 			cmb_genKey.setData(entry,s);
 		}
