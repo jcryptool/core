@@ -21,15 +21,18 @@ import java.util.Date;
 import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.GeneralNames;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
 import org.bouncycastle.asn1.x509.KeyUsage;
 import org.bouncycastle.asn1.x509.X509Extensions;
+import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
+import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.bouncycastle.x509.extension.AuthorityKeyIdentifierStructure;
 import org.bouncycastle.x509.extension.SubjectKeyIdentifierStructure;
@@ -54,7 +57,7 @@ public class Util {
         PrivateKey priv;
 		try {
 			priv = mng.getPrivateKey(csr.getPrivAlias(), mng.getDefaultKeyPassword());
-			return Util.certificateForKeyPair(pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
+			return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(), csr.getStreet()+"/"+ csr.getTown(),"" ,"" , csr.getMail() ,pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,14 +66,24 @@ public class Util {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static X509Certificate certificateForKeyPair(PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
+	public static X509Certificate certificateForKeyPair(String principal, String country, String street, String unit, String organisation, String mail, PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
 		try {
 			KeyPair keyPair = new KeyPair(pub, 
 					                      priv);              // public/private key pair that we are creating certificate for
 	
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
-			X500Principal              subjectName = new X500Principal("CN=Test V3 Certificate");
-	
+			X509Name subjectName = new X509Name("CN="+principal + ", " +//commonname
+															"ST="+street+", "+ //street
+															"C="+country + ", " +  //land
+															"OU="+unit+", "+ //organisationseinheit
+															"O="+organisation+", "+ //organisation
+															"EMAILADDRESS=" + mail); //evtl SERIALNUMBER 
+			//organisation
+			//organisationseinheit
+			//ort
+			//land
+			//mail
+			
 			certGen.setSerialNumber(serialNumber);
 			if(caCert!=null){
 				certGen.setIssuerDN(caCert.getSubjectX500Principal());

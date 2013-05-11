@@ -15,6 +15,7 @@ import java.util.Date;
 
 import javax.security.auth.x500.X500Principal;
 
+import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
@@ -51,7 +52,7 @@ public class CertificateCSRR {
 		    // in 2 years
 		    Date validityEndDate = new Date(System.currentTimeMillis() + 2 * 365 * 24 * 60 * 60 * 1000);
 		    X509V1CertificateGenerator certGen = new X509V1CertificateGenerator();
-		    X500Principal dnName = new X500Principal("CN=JCTCA");
+		    X509Name dnName = new X509Name("CN=JCrypTool, O=JCrypTool, OU=JCT-CA Visual");
 
 		    certGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
 		    certGen.setSubjectDN(dnName);
