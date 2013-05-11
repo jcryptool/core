@@ -6,8 +6,10 @@ package org.jcryptool.visual.jctca.listeners;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.jctca.CertificateClasses.RR;
+import org.jcryptool.visual.jctca.UserViews.dialogs.RevokeCertDialog;
 
 /**
  * @author sho
@@ -28,7 +30,9 @@ public class RevokeButtonListener implements SelectionListener {
 		if (ksAlias == null){
 			return;
 		}
-		
+		Shell shell = new Shell();
+		RevokeCertDialog dialog = new RevokeCertDialog(shell);
+		dialog.open();
 	}
 
 	/* (non-Javadoc)

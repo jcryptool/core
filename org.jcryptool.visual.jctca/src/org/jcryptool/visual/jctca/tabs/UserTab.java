@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
-import org.jcryptool.visual.jctca.UserViews.RevokeCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
 import org.jcryptool.visual.jctca.UserViews.SignCert;
 import org.jcryptool.visual.jctca.listeners.SideBarListener;
@@ -18,7 +17,6 @@ public class UserTab {
 
 	CreateCert cCert;
 	ShowCert sCert;
-	RevokeCert rCert;
 	SignCert siCert;
 	Group grp_exp;
 	TabFolder parent;
@@ -46,7 +44,7 @@ public class UserTab {
 		right.setLayout(new GridLayout(1, true));
 		right.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		SideBarListener list_side = new SideBarListener(cCert, sCert, rCert,
+		SideBarListener list_side = new SideBarListener(cCert, sCert, 
 				siCert, grp_exp, right);
 
 		Button btn_create_cert = new Button(left, SWT.PUSH);
