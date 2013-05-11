@@ -151,7 +151,7 @@ public class ShowCert implements Views {
 		lbl_expired_on.setText(Messages.ShowCert_expires_on);
 		lbl_value_expired_on = new Label(right, SWT.None);
 		
-		btn_revoke = new Button(right, SWT.NONE);
+		btn_revoke = new Button(right, SWT.PUSH);
 		btn_revoke.setText("Zertifikat widerrufen");
 		
 		UserShowCertsListener uscListener = new UserShowCertsListener(lbl_value_common, lbl_value_org, lbl_value_orgUnit, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_value_common_by, lbl_value_org_by, lbl_value_orgUnit_by, lbl_value_issued_on, lbl_value_expired_on, btn_revoke);

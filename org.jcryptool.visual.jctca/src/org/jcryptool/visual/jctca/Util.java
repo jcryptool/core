@@ -18,10 +18,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.security.auth.x500.X500Principal;
-
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
-import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
@@ -31,7 +28,6 @@ import org.bouncycastle.asn1.x509.X509Name;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.params.RSAKeyParameters;
 import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
-import org.bouncycastle.jce.X509Principal;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.bouncycastle.x509.extension.AuthorityKeyIdentifierStructure;
 import org.bouncycastle.x509.extension.SubjectKeyIdentifierStructure;
@@ -46,6 +42,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
+@SuppressWarnings("deprecation")
 public class Util {
 	
 	public static X509Certificate certificateForKeyPair(CSR csr, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
@@ -53,7 +50,7 @@ public class Util {
 		PublicKey pub = mng.getPublicKey(csr.getPubAlias()).getPublicKey(); 
         PrivateKey priv;
 		try {
-			priv = mng.getPrivateKey(csr.getPrivAlias(), mng.getDefaultKeyPassword());
+			priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.getDefaultKeyPassword());
 			return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(), csr.getStreet()+"/"+ csr.getTown(),"" ,"" , csr.getMail() ,pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -62,7 +59,6 @@ public class Util {
 		return null;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static X509Certificate certificateForKeyPair(String principal, String country, String street, String unit, String organisation, String mail, PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
 		try {
 			KeyPair keyPair = new KeyPair(pub, 
@@ -115,6 +111,7 @@ public class Util {
 	public static KeyPair asymmetricKeyPairToNormalKeyPair(AsymmetricCipherKeyPair keypair){
 		RSAKeyParameters publicKey = (RSAKeyParameters) keypair.getPublic();
 		RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair.getPrivate();
+		@SuppressWarnings("unused")
 		RSAPublicKey pkStruct = new RSAPublicKey(
 				publicKey.getModulus(), publicKey.getExponent());
 		// JCE format needed for the certificate - because
@@ -188,5 +185,5 @@ public class Util {
 		box.setMessage(text);
 		box.open();
 	}
-
+	
 }

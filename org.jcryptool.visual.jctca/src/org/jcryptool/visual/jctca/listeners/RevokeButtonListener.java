@@ -7,6 +7,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.visual.jctca.CertificateClasses.RR;
 
 /**
  * @author sho
@@ -20,7 +21,14 @@ public class RevokeButtonListener implements SelectionListener {
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		// TODO Auto-generated method stub
-
+		
+		Button btn_revoke = (Button) e.getSource();
+		KeyStoreAlias ksAlias = (KeyStoreAlias) btn_revoke.getData("selected");
+		//tell the button to do nothing if no cert was selected
+		if (ksAlias == null){
+			return;
+		}
+		
 	}
 
 	/* (non-Javadoc)
@@ -29,10 +37,7 @@ public class RevokeButtonListener implements SelectionListener {
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Event triggered");
-		Button btn_revoke = (Button) e.getSource();
-		KeyStoreAlias ksAlias = (KeyStoreAlias) btn_revoke.getData("selected");
-		System.out.println(ksAlias.toString());
+
 	}
 
 }
