@@ -130,7 +130,7 @@ public class JCTCA_Visual extends ViewPart {
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 		// set path_to_create_img and load image at that path into help
-		String path_to_create_img = "icons/minica_create_cert.jpg";
+		String path_to_create_img = "icons/minica_create.png";
 		Image help = Activator.getImageDescriptor(path_to_create_img)
 				.createImage();
 		// comp_image.setBackgroundImage(help);

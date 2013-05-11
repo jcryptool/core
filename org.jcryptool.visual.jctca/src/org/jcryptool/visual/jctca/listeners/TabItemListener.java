@@ -18,7 +18,6 @@ import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
-import org.jcryptool.visual.jctca.listeners.Messages;
 
 // TODO: dispose left side of usertab
 

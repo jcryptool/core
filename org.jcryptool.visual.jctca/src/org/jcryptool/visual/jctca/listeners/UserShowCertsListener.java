@@ -10,6 +10,7 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -33,6 +34,8 @@ public class UserShowCertsListener implements SelectionListener {
 	Label lbl_value_common_by;
 	Label lbl_value_org_by;
 	Label lbl_value_orgUnit_by;
+	
+	Button btn_revoke;
 
 	/**
 	 * Create new selection listener for the certificate list in manage certificates of the user tab of the jct-ca visual
@@ -48,13 +51,14 @@ public class UserShowCertsListener implements SelectionListener {
 	 * @param lbl_value_orgUnit_by
 	 * @param lbl_value_issued_on
 	 * @param lbl_value_expired_on
+	 * @param btn_revoke 
 	 */
 	public UserShowCertsListener(Label lbl_value_common, Label lbl_value_org,
 			Label lbl_value_orgUnit, Label lbl_value_city,
 			Label lbl_value_country, Label lbl_value_mail,
 			Label lbl_value_common_by, Label lbl_value_org_by,
 			Label lbl_value_orgUnit_by, Label lbl_value_issued_on,
-			Label lbl_value_expired_on) {
+			Label lbl_value_expired_on, Button btn_revoke) {
 		this.lbl_value_common = lbl_value_common;
 		this.lbl_value_org = lbl_value_org;
 		this.lbl_value_orgUnit = lbl_value_orgUnit;
@@ -66,6 +70,7 @@ public class UserShowCertsListener implements SelectionListener {
 		this.lbl_value_orgUnit_by = lbl_value_orgUnit_by;
 		this.lbl_value_issued_on = lbl_value_issued_on;
 		this.lbl_value_expired_on = lbl_value_expired_on;
+		this.btn_revoke = btn_revoke;
 	}
 
 	Label lbl_value_issued_on;
@@ -107,6 +112,8 @@ public class UserShowCertsListener implements SelectionListener {
 		
 		lbl_value_issued_on.setText(pubKey.getNotBefore().toString());
 		lbl_value_expired_on.setText(pubKey.getNotAfter().toString());
+		
+		btn_revoke.setData("selected", ksAlias);
 		
 		lbl_value_common.getParent().layout();
 		
