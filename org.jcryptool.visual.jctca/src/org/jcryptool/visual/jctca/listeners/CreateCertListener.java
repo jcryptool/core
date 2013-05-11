@@ -140,7 +140,7 @@ public class CreateCertListener implements SelectionListener {
 							privKey.getClass().getName());
 					KeyStoreAlias pubAlias = new KeyStoreAlias(name,
 							KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,
-							(name.concat(privKey.toString())).hashCode() + " ",
+								(name.concat(privKey.toString())).hashCode() + " ",
 							pubKey.getClass().getName());
 					mng.addKeyPair(privKey, CertificateFactory
 							.createJCrypToolCertificate(pubKey), new String(

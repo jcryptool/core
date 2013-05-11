@@ -72,7 +72,7 @@ public class CAListener implements SelectionListener{
 			KeyStoreManager mng = KeyStoreManager.getInstance();
 			CertificateCSRR csrr = CertificateCSRR.getInstance();
 			Date startDate = new Date(System.currentTimeMillis());// time from which certificate is valid
-			Date expiryDate = new Date(System.currentTimeMillis()+ (5*60*60*1000));
+			Date expiryDate = new Date(System.currentTimeMillis()+ (10*5*60*60*1000));
 			System.out.println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay());
 			BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate
 			
