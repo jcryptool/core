@@ -1,6 +1,5 @@
 package org.jcryptool.visual.jctca.UserViews;
 
-import org.bouncycastle.asn1.x500.X500Name;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
