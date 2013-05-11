@@ -389,32 +389,26 @@ public class KeyStoreManager {
      * @throws Exception
      */
     public Key getKey(IKeyStoreAlias alias, char[] password) throws Exception {
-        Key key = null;
         switch (alias.getKeyStoreEntryType()) {
         case SECRETKEY:
-            key = (Key) KeyStoreManager.getInstance().getSecretKey(alias, password);
-            break;
+            return (Key) KeyStoreManager.getInstance().getSecretKey(alias, password);
         case KEYPAIR_PRIVATE_KEY:
-            key = (Key) KeyStoreManager.getInstance().getPrivateKey(alias, password);
-            break;
+            return (Key) KeyStoreManager.getInstance().getPrivateKey(alias, password);
         case KEYPAIR_PUBLIC_KEY:
             Certificate cert = KeyStoreManager.getInstance().getPublicKey(alias);
             if (cert == null)
                 return null;
-            key = (Key) cert.getPublicKey();
-            break;
+            return (Key) cert.getPublicKey();
         case PUBLICKEY:
             Certificate certpub = KeyStoreManager.getInstance().getPublicKey(alias);
             if (certpub == null)
                 return null;
-            key = (Key) certpub.getPublicKey();
-            break;
+            return (Key) certpub.getPublicKey();
         default:
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
                     Messages.getString("ExKeyTypeUnsupported") + alias.getKeyStoreEntryType(), null, true);
-            break;
+            return null;
         }
-        return key;
     }
 
     public Certificate[] getCertificateChain(KeyStoreAlias alias, char[] password) {
