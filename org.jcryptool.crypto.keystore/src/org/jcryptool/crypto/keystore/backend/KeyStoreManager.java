@@ -272,7 +272,7 @@ public class KeyStoreManager {
     public Certificate getPublicKey(final IKeyStoreAlias alias) {
         try {
             final KeyStore.TrustedCertificateEntry entry = (KeyStore.TrustedCertificateEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), null);
+                    alias.getAliasString(), new KeyStore.PasswordProtection(null));
             return entry.getTrustedCertificate();
         } catch (final NoSuchAlgorithmException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a public key", e, true);
@@ -419,7 +419,7 @@ public class KeyStoreManager {
         return key;
     }
 
-    public Certificate[] getCertificateChain(final KeyStoreAlias alias, final char[] password) throws Exception {
+    public Certificate[] getCertificateChain(final KeyStoreAlias alias, final char[] password) {
         try {
             final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
                     alias.getAliasString(), new KeyStore.PasswordProtection(password));
@@ -437,19 +437,11 @@ public class KeyStoreManager {
         return null;
     }
 
-    public Certificate getCertificate(final KeyStoreAlias alias, final char[] password) throws Exception {
+    public Certificate getCertificate(KeyStoreAlias alias) {
         try {
-            final KeyStore.PrivateKeyEntry entry = (KeyStore.PrivateKeyEntry) this.keyStore.getEntry(
-                    alias.getAliasString(), new KeyStore.PasswordProtection(password));
-            return entry.getCertificate();
-        } catch (final NoSuchAlgorithmException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while accessing a private key", e,
-                    true);
-        } catch (final UnrecoverableEntryException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "UnrecoverableEntryException while accessing a private key", e,
-                    true);
+            return this.keyStore.getCertificate(alias.getAliasString());
         } catch (final KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing a private key", e, true);
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing certificate", e, true);
         }
 
         return null;
