@@ -8,6 +8,7 @@ import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.security.auth.x500.X500Principal;
@@ -70,8 +71,9 @@ public class CAListener implements SelectionListener{
 			CSR csr = (CSR)sel.getData();
 			KeyStoreManager mng = KeyStoreManager.getInstance();
 			CertificateCSRR csrr = CertificateCSRR.getInstance();
-			Date startDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);// time from which certificate is valid
-			Date expiryDate = new Date(System.currentTimeMillis() + 2 * 365 * 24 * 60 * 60 * 1000);// time after which certificate is not valid
+			Date startDate = new Date(System.currentTimeMillis());// time from which certificate is valid
+			Date expiryDate = new Date(System.currentTimeMillis()+ (5*60*60*1000));
+			System.out.println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay());
 			BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate
 			
 			AsymmetricCipherKeyPair keypair = csrr.getCAKey(keys.getSelectionIndex());

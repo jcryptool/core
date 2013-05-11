@@ -61,10 +61,7 @@ public class ShowCSR implements Views {
 		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false));
 		center = new Composite(showCSRGroup, SWT.NONE);
 		center.setLayout(new GridLayout(2, false));
-		center.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, false));
-		right = new Composite(showCSRGroup, SWT.RESIZE);
-		right.setLayout(new GridLayout(1, false));
-		right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		center.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
 		lst_csr = new List(left, SWT.BORDER);
 		GridData lst_ld = new GridData(SWT.FILL, SWT.FILL, true, true);

@@ -57,7 +57,7 @@ public class Util {
         PrivateKey priv;
 		try {
 			priv = mng.getPrivateKey(csr.getPrivAlias(), mng.getDefaultKeyPassword());
-			return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(), csr.getStreet()+"/"+ csr.getTown(),"" ,"" , csr.getMail() ,pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
+			return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(), csr.getStreet(), csr.getTown(),"" ,"" , csr.getMail() ,pub, priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class Util {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static X509Certificate certificateForKeyPair(String principal, String country, String street, String unit, String organisation, String mail, PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
+	public static X509Certificate certificateForKeyPair(String principal, String country, String street, String city, String unit, String organisation, String mail, PublicKey pub, PrivateKey priv, BigInteger serialNumber, X509Certificate caCert, Date expiryDate, Date startDate, PrivateKey caKey){
 		try {
 			KeyPair keyPair = new KeyPair(pub, 
 					                      priv);              // public/private key pair that we are creating certificate for
@@ -74,10 +74,11 @@ public class Util {
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
 			X509Name subjectName = new X509Name("CN="+principal + ", " +//commonname
 															"ST="+street+", "+ //street
+															"L="+city+", "+
 															"C="+country + ", " +  //land
 															"OU="+unit+", "+ //organisationseinheit
 															"O="+organisation+", "+ //organisation
-															"EMAILADDRESS=" + mail); //evtl SERIALNUMBER 
+															"E=" + mail); //evtl SERIALNUMBER 
 			//organisation
 			//organisationseinheit
 			//ort

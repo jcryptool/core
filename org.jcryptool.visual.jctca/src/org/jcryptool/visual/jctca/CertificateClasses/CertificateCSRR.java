@@ -20,6 +20,7 @@ import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
 import org.bouncycastle.x509.X509V1CertificateGenerator;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 
 public class CertificateCSRR {
@@ -33,6 +34,9 @@ public class CertificateCSRR {
 		revocations = new ArrayList<RR>();
 		caKeys = new ArrayList<AsymmetricCipherKeyPair>();
 		certs = new ArrayList<X509Certificate>();
+		
+		KeyStoreManager mng = KeyStoreManager.getInstance();
+		
 	    // GENERATE THE PUBLIC/PRIVATE RSA KEY PAIR
 		RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
 		SecureRandom sr = new SecureRandom();
@@ -44,7 +48,7 @@ public class CertificateCSRR {
 		BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate
 		
 		AsymmetricCipherKeyPair keypair =null;
-		for(int i = 0; i<5; i++){
+		for(int i = 0; i<2; i++){
 			keypair= gen.generateKeyPair();	
 			KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
 		    // yesterday
