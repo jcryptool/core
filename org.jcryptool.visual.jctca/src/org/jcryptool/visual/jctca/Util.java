@@ -44,6 +44,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateViews.Messages;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 @SuppressWarnings("deprecation")
 public class Util {
@@ -63,7 +64,7 @@ public class Util {
 					priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
 		}
 		return null;
 	}
@@ -121,25 +122,24 @@ public class Util {
 			return cert;
 		} catch (CertificateEncodingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (NoSuchProviderException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (SignatureException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (CertificateParsingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 
 		return null;
@@ -172,10 +172,10 @@ public class Util {
 			return new KeyPair(pubKey, privKey);
 		} catch (InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 		// and this one for the KeyStore
 		return null;
