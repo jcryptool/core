@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+import org.bouncycastle.asn1.x500.RDN;
+import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x500.style.BCStyle;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.ExtendedKeyUsage;
 import org.bouncycastle.asn1.x509.KeyPurposeId;
@@ -186,6 +189,20 @@ public class Util {
 		box.setText(title);
 		box.setMessage(text);
 		box.open();
+	}
+
+	public static boolean isSignedByJCTCA(KeyStoreAlias ksAlias) {
+		KeyStoreManager ksm = KeyStoreManager.getInstance();
+		// TODO Auto-generated method stub
+		X509Certificate pubKey = (X509Certificate) ksm.getPublicKey(ksAlias);
+		//create X500Name from the X509 certificate Subjects distinguished name
+		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
+		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];
+		if (rdn.getFirst().getValue().toString().equals("JCT-CA Visual")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 }

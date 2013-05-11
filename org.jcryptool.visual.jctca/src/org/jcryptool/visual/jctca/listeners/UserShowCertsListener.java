@@ -91,41 +91,18 @@ public class UserShowCertsListener implements SelectionListener {
 		//Todo: make better code
 		//I don't know what this next line does exactly, it just works
 		RDN rdn = x500name.getRDNs(BCStyle.CN)[0];
-		if (rdn != null) {
-			lbl_value_common.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_common.setText("<nicht Teil des Zertifikats>");
-		}
-		rdn = x500name.getRDNs(BCStyle.O)[0];
-		if (rdn != null){
-			lbl_value_org.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_org.setText("<nicht Teil des Zertifikats>");
-		}
-		rdn = x500name.getRDNs(BCStyle.OU)[0];
-		if (rdn != null) {
-			lbl_value_orgUnit.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_org.setText("<nicht Teil des Zertifikats>");
-		}
+		lbl_value_common.setText(rdn.getFirst().getValue().toString());
+		
+		lbl_value_org.setText("<nicht Teil des Zertifikats>");
+		lbl_value_orgUnit.setText("<nicht Teil des Zertifikats>");
+		
 		rdn = x500name.getRDNs(BCStyle.L)[0];
-		if (rdn != null) {
-			lbl_value_city.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_city.setText("<nicht Teil des Zertifikats>");
-		}
+		lbl_value_city.setText(rdn.getFirst().getValue().toString());
+
 		rdn = x500name.getRDNs(BCStyle.C)[0];
-		if (rdn != null) {
-			lbl_value_country.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_country.setText("<nicht Teil des Zertifikats>");
-		}
+		lbl_value_country.setText(rdn.getFirst().getValue().toString());
 		rdn = x500name.getRDNs(BCStyle.E)[0];
-		if (rdn != null) {
-			lbl_value_mail.setText(rdn.getFirst().getValue().toString());
-		} else {
-			lbl_value_mail.setText("<nicht Teil des Zertifikats>");
-		}
+		lbl_value_mail.setText(rdn.getFirst().getValue().toString());
 		
 		
 		x500name = new X500Name(pubKey.getIssuerDN().toString());

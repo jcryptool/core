@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import org.bouncycastle.asn1.x500.X500Name;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -173,6 +174,9 @@ public class ShowCert implements Views {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		int i = 0;
 		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
+			if (Util.isSignedByJCTCA(ksAlias) == false) {
+				continue;
+			}
 			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
 			if (ksAlias.getOperation().contains("RSA")) {
 				ListEntry += "RSA)";
