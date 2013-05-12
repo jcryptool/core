@@ -65,6 +65,8 @@ public class CSRListener implements SelectionListener {
 					Util.showMessageBox("Gratulation!", "Sehr gut! Dieser CSR war gefälscht. Sie haben ihn abgelehnt und dadurch verhindert, dass sich diese Person als eine andere ausgeben könnte.", SWT.ICON_WARNING);
 				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
+				Util.showMessageBox("CSR abgelehnt", "Sie haben den CSR abgelehnt. Um ein Zertifikat zu erstellen wechseln Sie bitte in die Ansicht Benutzer um erneut einen CSR zu erstellen.", SWT.ICON_WARNING);
+
 			}
 			else if(data.equals(1)){
 				csrs.remove(index);
@@ -75,6 +77,7 @@ public class CSRListener implements SelectionListener {
 				this.setLabels(new CSR("","","","","","","","", null, null));
 				if(csr.getPubAlias()!=null){
 					CertificateCSRR.getInstance().addCSR(csr);
+					Util.showMessageBox("CSR weitergeleitet", "Der CSR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Registration Authority zunächst fertig. Bitte wechseln Sie in die Ansicht Certification Authority.", SWT.ICON_WARNING);
 				}
 			}
 		}
