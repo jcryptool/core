@@ -139,25 +139,25 @@ public class JCTCA_Visual extends ViewPart {
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
 		btn_showCreate = new Button(comp_buttons, SWT.PUSH);
 		btn_showCreate.setText("Zertifikatserzeugung zeigen");
-		btn_showCreate.setData(0); //set data for the listener - see PluginBtnListener.java
+		btn_showCreate.setData(new Integer(0)); //set data for the listener - see PluginBtnListener.java
 		btn_showCreate.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
 		btn_showRevoke.setText("Zertifikatswiderruf zeigen");
-		btn_showRevoke.setData(1);
+		btn_showRevoke.setData(new Integer(1));
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
 		btn_showCheck.setText("Signaturprüfung zeigen");
-		btn_showCheck.setData(2);
+		btn_showCheck.setData(new Integer(2));
 		btn_showCheck.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_continue = new Button(comp_buttons, SWT.PUSH);
 		btn_continue.setText("Mit Plugin fortfahren");
-		btn_continue.setData(3);
+		btn_continue.setData(new Integer(3));
 		btn_continue.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 		composite.layout(true);
