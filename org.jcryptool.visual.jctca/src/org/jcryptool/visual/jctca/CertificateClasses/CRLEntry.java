@@ -3,6 +3,7 @@
  */
 package org.jcryptool.visual.jctca.CertificateClasses;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
 public class CRLEntry {
 	
 	//Serial number of revoked certificate
-	int sn;
+	BigInteger sn;
 	Date revokeTime;
 	/**
 	 * generate new CRL Entry for the given serial number (hash)
@@ -21,7 +22,7 @@ public class CRLEntry {
 	 * @param time timestamp of revocation
 	 * 
 	 */
-	public CRLEntry(int sn, Date time) {
+	public CRLEntry(BigInteger sn, Date time) {
 		this.sn = sn;
 		this.revokeTime = time;
 	}
@@ -31,7 +32,7 @@ public class CRLEntry {
 	 * 
 	 * @return Serial number of revoked certificates
 	 */
-	public int GetSerial() {
+	public BigInteger GetSerial() {
 		return sn;
 	}
 

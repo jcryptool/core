@@ -93,7 +93,7 @@ public class TabItemListener implements SelectionListener {
 			}
 			for(RR rr : rr_list){
 				TreeItem tree_item_crl = new TreeItem(rrRoot, SWT.NONE);
-				tree_item_crl.setText("TODO");
+				tree_item_crl.setText(rr.getAlias().getContactName() + " - " + rr.getReason());
 				tree_item_crl.setData(rr);
 			}
 			csrRoot.setExpanded(true);

@@ -3,8 +3,11 @@ package org.jcryptool.visual.jctca.listeners;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.PrivateKey;
+import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.eclipse.swt.events.SelectionEvent;
@@ -14,8 +17,11 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.CRLEntry;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RR;
@@ -49,11 +55,7 @@ public class CAListener implements SelectionListener{
 			handleRR(src);
 		}
 	}
-	
-	private void handleRR(Object src) {
 		
-		
-	}
 	private void enableButtons(Object src) {
 		TreeItem[] sel = requests.getSelection();
 		if(sel!=null && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
@@ -63,6 +65,35 @@ public class CAListener implements SelectionListener{
 		else{
 			accept.setEnabled(false);
 			reject.setEnabled(false);
+		}
+	}
+	
+	private void handleRR(Object src) {
+		if(src.equals(accept)){
+			TreeItem sel = requests.getSelection()[0];
+			RR rr = (RR)sel.getData();
+			KeyStoreAlias pubAlias = rr.getAlias();
+			KeyStoreManager mng = KeyStoreManager.getInstance();
+			Certificate c = mng.getPublicKey(pubAlias);
+			if(c instanceof X509Certificate){
+				X509Certificate cert = (X509Certificate)c;
+				BigInteger sn = cert.getSerialNumber();
+				Date revokeTime = new Date(System.currentTimeMillis());
+				CRLEntry crle = new CRLEntry(sn, revokeTime);
+				CertificateCSRR.getInstance().addCRLEntry(crle);
+//				mng.addCertificate(cert, new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.PUBLICKEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()));
+				KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(CertificateCSRR.getInstance().getCAKey(0));
+				mng.addKeyPair(kp.getPrivate(), 
+								cert, 
+								KeyStoreManager.getDefaultKeyPassword().toString(), 
+								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()), 
+								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString()));
+				this.removeEntry(sel);
+			}
+		}
+		else if(src.equals(reject)){
+			TreeItem sel = requests.getSelection()[0];
+			this.removeEntry(sel);
 		}
 	}
 	

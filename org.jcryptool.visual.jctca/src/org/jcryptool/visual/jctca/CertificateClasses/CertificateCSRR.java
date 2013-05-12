@@ -34,15 +34,33 @@ public class CertificateCSRR {
 		caKeys = new ArrayList<AsymmetricCipherKeyPair>();
 		certs = new ArrayList<X509Certificate>();
 		crl = new ArrayList<CRLEntry>();
+		checkCertificatesAndCRL();
+	}
+	
+	public static CertificateCSRR getInstance(){
+		if(instance==null){
+			instance = new CertificateCSRR();
+		}
+		return instance;
+	}
+	
+	public void checkCertificatesAndCRL(){
 		boolean certsExist = false;
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		for(KeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
-			System.out.println(pubAlias.getContactName());
-			if(pubAlias.getContactName().contains("JCT-CA")){
+			if(pubAlias.getContactName().contains("JCT-CA Root Certificates")){
 				certsExist = true;
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
 				if(c instanceof X509Certificate){
 					certs.add((X509Certificate)c);
+				}
+			}
+			else if(pubAlias.getContactName().contains("JCT-CA Certificate Revocation List")){
+				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
+				if(c instanceof X509Certificate){
+					long time = Long.parseLong(pubAlias.getOperation());
+					X509Certificate cert = (X509Certificate)c;
+					crl.add(new CRLEntry(cert.getSerialNumber(), new Date(time)));
 				}
 			}
 		}
@@ -90,14 +108,6 @@ public class CertificateCSRR {
 			}
 		}
 	}
-	
-	public static CertificateCSRR getInstance(){
-		if(instance==null){
-			instance = new CertificateCSRR();
-		}
-		return instance;
-	}
-	
 	public void addCSR(CSR c){
 		approved_csrs.add(c);
 	}
@@ -135,4 +145,18 @@ public class CertificateCSRR {
 	public ArrayList<CRLEntry> getCRL(){
 		return crl;
 	}
+
+	public void addRR(RR rr) {
+		this.revRequests.add(rr);
+	}
+	
+	public void addCRLEntry(CRLEntry crle){
+		this.crl.add(crle);
+	}
+
+	public ArrayList<CRLEntry> getRevoked() {
+		// TODO Auto-generated method stub
+		return crl;
+	}
+	
 }
