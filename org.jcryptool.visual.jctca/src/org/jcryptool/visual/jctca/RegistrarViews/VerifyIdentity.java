@@ -54,9 +54,9 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		String proof = c.getProof();
 		Image i = null;
 		if(proof == null){
-			proof = "icons/ausweis.jpeg";
+			proof = "icons/ausweis.jpeg";//$NON-NLS-1$
 		}
-		if (proof.contains("icons\\") || proof.contains("icons/")) {
+		if (proof.contains("icons\\") || proof.contains("icons/")) {//$NON-NLS-1$
 			i = Activator.getImageDescriptor(proof).createImage();
 		} else {
 			i = new Image(Display.getCurrent(), c.getProof());
@@ -81,14 +81,14 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		main.setLayout(new GridLayout(4, false));
 
 		btn_true = new Button(main, SWT.PUSH);
-		btn_true.setText("Match");
+		btn_true.setText("Identität als korrekt markieren");
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 2;
 		btn_true.setLayoutData(data);
 		btn_true.addSelectionListener(this);
 
 		btn_false = new Button(main, SWT.PUSH);
-		btn_false.setText("Reject");
+		btn_false.setText("Identität als gefälscht markieren");
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.horizontalSpan = 2;
 		btn_false.setLayoutData(data);
@@ -108,7 +108,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		grp_exp.setLayout(new GridLayout(1, false));
 		
 		lbl_exp = new Label(grp_exp, SWT.WRAP);
-		lbl_exp.setText("Erklärungstext zur iöngrejjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj uöibbergionäagrenäiegraäpinagreäionagreäogaäobagreäioagreäoagräiagäionagrnöagreöibuagröibrgeaöbdentitätsprüfung");
+		lbl_exp.setText("Sie sehen nun den Identitätsnachweis, der vom Antragsteller mit dem CSR übersendet wurde. In diesem Schritt müssen Sie bestätigen, ob es sich beim Antragsteller tatsächlich um die Person handelt, für die er oder sie sich ausgibt. Dabei sind vor allem zwei Dinge wichtig: Erstens, wirkt der Ausweis gefälscht? Und zweitens, stimmen die Daten am Ausweis mit den Angaben des Antragstellers überein?\n\n Die Tätigkeit der RA ist für die Vertrauenswürdigkeit einer PKI absolut entscheident. Nur durch die ausführliche und korrekte Prüfung der RA kann verhindert werden, dass sich kriminelle Personen als andere ausgeben können. Wie PKI-Betreiber in der Realität die Identität der Benutzer feststellen, lesen Sie in der Onlinehilfe.");
 		data = new GridData(SWT.FILL, SWT.FILL, false, false,1,1);
 		lbl_exp.setLayoutData(data);
 		data.widthHint = 350;

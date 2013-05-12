@@ -205,16 +205,11 @@ public class Util {
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
-			if (ksAlias.getContactName().contains("JCT-CA Root Certificates")){
-				continue;
-			}
 			if (ksAlias.getOperation().contains("RSA")
-					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
+					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)
+					&& !(ksAlias.getContactName().contains("JCT-CA Root Certificates"))) {
 				RSAAndDSAPublicKeys.add(ksAlias);
-			} else if (ksAlias.getOperation().contains("DSA")
-					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)) {
-				RSAAndDSAPublicKeys.add(ksAlias);
-			}
+			} 
 		}
 		return RSAAndDSAPublicKeys;
 	}

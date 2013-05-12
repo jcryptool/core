@@ -110,12 +110,14 @@ public class CreateCert implements Views {
 		btn_proof = new Button(createCertGroup, SWT.None);
 		btn_proof.setText("Datei auswählen");
 		btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btn_proof.setData(new Integer(0));
 		
 		lbl_key = new Label(createCertGroup, SWT.None);
 		lbl_key.setText("Öffentlicher Schlüssel");
 		btn_genKey = new Button(createCertGroup, SWT.NONE);
 		btn_genKey.setText("Neues Schlüsselpaar generieren");
 		btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btn_genKey.setData(new Integer(1));
 
 		lbl_plain = new Label(createCertGroup, SWT.NONE);
 		lbl_plain2 = new Label(createCertGroup, SWT.FILL | SWT.CENTER);
@@ -136,6 +138,7 @@ public class CreateCert implements Views {
 		btn_send.setText("CSR abschicken");
 		btn_send.addSelectionListener(lst);
 		btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
+		btn_send.setData(2);
 
 		Label lbl_exp = (Label) exp.getChildren()[0];
 		lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, ein neues Zertifikat anzufordern. Sie können dazu die hier vorgeschlagenen Musterdaten verwenden oder das Formular mit Ihren eigenen Daten befüllen. Da dieses Zertifikat auf den Namen einer natürlichen Person lauten soll, ist es notwendig, dem PKI-Betreiber diese Identität zu belegen. Für dieses Plugin wird angenommen, dass hierfür ein Foto oder Farbscan eines gültigen Lichtbildausweises ausreichend ist. Ein Musterausweis wird vom Plugin zur Verfügung gestellt. Sie haben aber auch die Möglichkeit, eine Bilddatei von Ihrem Computer an die Zertifikatsanfrage anzufügen. Mehr dazu, welche Wege PKI-Betreiber in der realen Welt gehen, um Ihre Identität festzustellen, lesen Sie in der Onlinehilfe.\n\nUnter \"Öffentlicher Schlüssel auswählen\" wählen Sie den öffentlichen Schlüssel, für den Sie das Zertifikat anfordern wollen. Sollten Sie über noch kein Schlüsselpaar verfügen, so können Sie mittels \"Schlüsselpaar generieren\" eines generieren lassen.\n\nWenn Sie fertig sind, können Sie Ihre Anfrage mittels \"CSR abschicken\" an den fiktiven PKI-Betreiber weiterleiten. Wechseln Sie anschließend in den Tab \"Registration Authority,\" um mit diesem Plugin fortzufahren und mehr zum Prozess der Identitätsfeststellung zu erfahren.");

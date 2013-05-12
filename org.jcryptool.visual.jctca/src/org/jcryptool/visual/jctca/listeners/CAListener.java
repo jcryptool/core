@@ -58,7 +58,8 @@ public class CAListener implements SelectionListener{
 		
 	private void enableButtons(Object src) {
 		TreeItem[] sel = requests.getSelection();
-		if(sel!=null && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
+		//TODO: throws ArrayIndexOutOfBoundsException
+		if(sel!=null && sel.length > 0 && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
 			accept.setEnabled(true);
 			reject.setEnabled(true);
 		}

@@ -40,9 +40,7 @@ public class TabItemListener implements SelectionListener {
 		// System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
-			lbl_exp.setText(Messages.TabItemListener_exp_txt_user_tab0
-			// "Unter \"Neues Zertifikat anfordern\" haben Sie die Möglichkeit, ein Zertifikat für einen öffentlichen Schlüssel anzufordern. Sollten Sie noch kein Schlüsselpaar haben, so können Sie sich eines generieren lassen.\nUnter \"Zertifikate verwalten\" können Sie sich, wenn Sie bereits ausgestellte Zertifikate haben, diese anzeigen lassen. Dort haben Sie außerdem die Möglichkeit, Zertifikate zu widerrufen.\nUnter \"Text oder Datei signieren\" können Sie Signaturen für von Ihnen eingegebenen Text oder Dateien auf Ihrem Computer erstellen.\n\n"
-					+ Messages.TabItemListener_exp_txt_user_tab1);
+			lbl_exp.setText("In der Ansicht \"Benutzer\" haben Sie die Möglichkeit, neue Zertifikate anzufordern, bereits ausgestellte Zertifikate zu verwalten sowie Texte oder Dateien zu signieren.\n\nWählen Sie eine der Aktionen aus, um fortzufahren und weitere Informationen zu erhalten. Wenn Sie dieses Plugin zum ersten Mal ausführen, empfiehlt es sich, mit \"Neues Zertifikat anfordern\" zu beginnen.");
 
 			Control[] x = (parent.getChildren());
 			if (x.length > 0) {
@@ -55,9 +53,7 @@ public class TabItemListener implements SelectionListener {
 				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
-			lbl_exp.setText(Messages.TabItemListener_exp_txt_ra_tab0
-					+ Messages.TabItemListener_exp_txt_ra_tab1
-					+ Messages.TabItemListener_exp_txt_ra_tab2);
+			lbl_exp.setText("Die \"Registration Authority\" (RA) ist der Teil einer PKI, der für die Identitätsprüfung eines CSR zuständig ist. Im Zusammenhang mit einem persönlichen Zertifikat wie in diesem Fall muss also geprüft werden, ob der Antragsteller auch wirklich die Person ist, auf die das Zertifikat  ausgestellt werden soll.\n\nLinkerhand sehen Sie eine Liste von Zertifikatsanfragen. Wenn Sie eine davon auswählen, können Sie durch einen Klick auf den Button \"Identitätsprüfung vornehmen\" diesen prüfen. Sobald Sie das gemacht haben, können Sie den CSR entweder ablehnen oder an die CA weiterleiten.\n\nMehr über die Tätigkeit der RA erfahren Sie in der Onlinehilfe.");
 			Group g1 = (Group) parent.getChildren()[1];
 			Group g2 = (Group) g1.getChildren()[0];
 			Composite c = (Composite) g2.getChildren()[0];
@@ -66,7 +62,7 @@ public class TabItemListener implements SelectionListener {
 			ArrayList<CSR> csrs = RegistrarCSR.getInstance().getCSR();
 			for (int i = 0; csrs != null && i < csrs.size(); i++) {
 				//CSR csr = csrs.get(i);
-				lst_csr.add(Messages.TabItemListener_csr_item_number + (i + 1));
+				lst_csr.add("CSR #" + (i + 1));//$NON-NLS-1$
 			}
 			c.layout();
 			lst_csr.select(0);
