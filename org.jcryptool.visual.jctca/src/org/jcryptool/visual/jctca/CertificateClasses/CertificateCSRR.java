@@ -2,6 +2,7 @@ package org.jcryptool.visual.jctca.CertificateClasses;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.Security;
 import java.security.cert.X509Certificate;
@@ -36,10 +37,10 @@ public class CertificateCSRR {
 		boolean certsExist = false;
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		for(KeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
+			System.out.println(pubAlias.getContactName());
 			if(pubAlias.getContactName().contains("JCT-CA")){
 				certsExist = true;
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
-				System.out.println(c.getClass().toString());
 				if(c instanceof X509Certificate){
 					certs.add((X509Certificate)c);
 				}

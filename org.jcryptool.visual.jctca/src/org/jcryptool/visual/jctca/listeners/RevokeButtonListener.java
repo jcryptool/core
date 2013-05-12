@@ -32,6 +32,10 @@ public class RevokeButtonListener implements SelectionListener {
 		Shell shell = new Shell();
 		RevokeCertDialog dialog = new RevokeCertDialog(shell);
 		dialog.open();
+		//0 - OK
+		//1  CANCEL
+		System.out.println(dialog.getReturnCode());
+		System.out.println(dialog.getReason());
 	}
 
 	/* (non-Javadoc)
