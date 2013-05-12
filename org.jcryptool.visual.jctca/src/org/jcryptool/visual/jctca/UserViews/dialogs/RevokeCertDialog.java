@@ -28,7 +28,7 @@ public class RevokeCertDialog extends Dialog {
 		super(parentShell);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	protected Control createDialogArea(Composite parent) {
 		Composite container = (Composite) super.createDialogArea(parent);
@@ -36,10 +36,10 @@ public class RevokeCertDialog extends Dialog {
 		container.setLayout(gl);
 		GridData gd = new GridData(SWT.FILL, SWT.FILL, false, false, 1,1);
 		gd.widthHint = 600;
-		
+
 		container.setLayoutData(gd);
-		
-		
+
+
 		Label lbl_explain = new Label(container, SWT.WRAP);
 		gd.widthHint = 550;
 		lbl_explain.setLayoutData(gd);
@@ -48,13 +48,14 @@ public class RevokeCertDialog extends Dialog {
 		reason = new Combo(container, SWT.DROP_DOWN);
 		reason.add("Privater Schlüssel kompromittiert");
 		reason.add("Privater Schlüssel verloren");
-		
+
 		
 		container.layout();
-		
+
 		return container;
-		
+
 	}
+
 	
 	@Override
 	protected void okPressed(){

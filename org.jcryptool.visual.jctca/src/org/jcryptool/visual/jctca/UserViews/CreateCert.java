@@ -110,7 +110,7 @@ public class CreateCert implements Views {
 		btn_proof = new Button(createCertGroup, SWT.None);
 		btn_proof.setText("Datei auswählen");
 		btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
+		
 		lbl_key = new Label(createCertGroup, SWT.None);
 		lbl_key.setText("Öffentlicher Schlüssel");
 		btn_genKey = new Button(createCertGroup, SWT.NONE);
@@ -120,7 +120,7 @@ public class CreateCert implements Views {
 		lbl_plain = new Label(createCertGroup, SWT.NONE);
 		lbl_plain2 = new Label(createCertGroup, SWT.FILL | SWT.CENTER);
 		lbl_plain2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		lbl_plain2.setText(Messages.CreateCert_text_chose_public_key);
+		lbl_plain2.setText("Öffentlichen Schlüssel auswählen");
 		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
 		cmb_genKey = new Combo(createCertGroup, SWT.NONE);
 		cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));

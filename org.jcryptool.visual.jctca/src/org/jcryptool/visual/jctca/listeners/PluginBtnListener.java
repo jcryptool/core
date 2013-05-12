@@ -37,7 +37,8 @@ public class PluginBtnListener implements SelectionListener {
 		//get the button that was pressed
 		Button btn = (Button) arg0.getSource();
 		//check what button it was: 0 = create, 1 = revoke, 2 = check, 3 = continue to plugin (see JCTCA_Visual.java)
-		int pressed = (int) btn.getData();
+		Integer data = (Integer) btn.getData();
+		int pressed = data.intValue();
 		ResizeHelper util = new ResizeHelper();
 		
 		//take action according to button pressed

@@ -31,7 +31,8 @@ public class SideBarListener implements SelectionListener {
 	public void widgetSelected(SelectionEvent arg0) {
 		Button btn = (Button) arg0.getSource();
 		//get what button was pressed: 0 - create cert, 1 - manage certs, 2 - sign stuff
-		int pressed = (int) btn.getData();
+		Integer data = (Integer) btn.getData();
+		int pressed = data.intValue();
 
 		if (cCert != null) {
 			cCert.dispose();
