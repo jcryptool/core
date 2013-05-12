@@ -10,7 +10,6 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
-import org.jcryptool.visual.jctca.RegistrarViews.Messages;
 
 public class CSRListener implements SelectionListener {
 
