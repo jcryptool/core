@@ -10,7 +10,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
 
-//import org.bouncycastle.asn1.pkcs.RSAPublicKey;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
@@ -31,9 +30,9 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
-import org.jcryptool.visual.jctca.UserViews.Messages;
 
 public class CreateCertListener implements SelectionListener {
+	KeyStoreManager mng = KeyStoreManager.getInstance();
 	Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town,
 			txt_country, txt_mail;
 	Combo cmb_keys;
@@ -60,105 +59,33 @@ public class CreateCertListener implements SelectionListener {
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
 		Button src = (Button) arg0.getSource();
-		String text = src.getText();
-		KeyStoreManager mng = KeyStoreManager.getInstance();
+		Integer data = (Integer) src.getData();
+		int pressed = data.intValue();// 0 - btn_proof, 1 - btn_genKey, 2 -
+										// btn_send_csr
 
-		if (text.equals("CSR abschicken")) {
-			if(checkFields()){
-				KeyStoreAlias pubAlias = null;
-				KeyStoreAlias privAlias = null;
-
-				pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getItem(cmb_keys.getSelectionIndex()));
-				privAlias = mng.getPrivateForPublic(pubAlias);
-				RegistrarCSR.getInstance().addCSR(txt_first_name.getText(), txt_last_name.getText(),
-						txt_street.getText(), txt_zip.getText(),
-						txt_town.getText(), txt_country.getText(),
-						txt_mail.getText(), path, pubAlias, privAlias);
-				Util.showMessageBox(
-						"CSR abgeschickt",
-						"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
-						SWT.ICON_INFORMATION);
+		switch (pressed) {
+		case 0:
+			FileDialog f = new FileDialog(
+					Display.getCurrent().getActiveShell(), SWT.OPEN);
+			f.setFilterExtensions(new String[] {
+					"*.jpg", "*.gif", "*.bmp", "*.gif" });//$NON-NLS-1$
+			path = f.open();
+			if (path != null) {
+				src.setText(path);
 			}
-			else{
+			break;
+		case 1:
+			if (checkFields()) {
+				generateNewRSAKeyPair();
+			} else {
 				Util.showMessageBox("Leeres Feld!",
 						"Bitte füllen Sie alle Felder aus.",
 						SWT.ICON_INFORMATION);
 			}
-		} else if (text.equals("Datei auswählen") || text.equals(path)) {
-			FileDialog f = new FileDialog(
-					Display.getCurrent().getActiveShell(), SWT.OPEN);
-			f.setFilterExtensions(new String[] {
-					Messages.CreateCertListener_fileext_jpg,
-					Messages.CreateCertListener_fileext_gif,
-					Messages.CreateCertListener_fileext_bmp,
-					Messages.CreateCertListener_fileext_png });
-			path = f.open();
-			if(path!=null){
-				src.setText(path);
-			}
-		} else if (text.equals("Neues Schlüsselpaar generieren")) {
-			if(checkFields()) {
-				RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
-				SecureRandom sr = new SecureRandom();
-				gen.init(new RSAKeyGenerationParameters(BigInteger.valueOf(3),
-						sr, 1024, 80));
-				AsymmetricCipherKeyPair keypair = gen.generateKeyPair();
-				RSAKeyParameters publicKey = (RSAKeyParameters) keypair
-						.getPublic();
-				RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair
-						.getPrivate();
-				try {
-					// used to get proper encoding for the certificate
-					//RSAPublicKey pkStruct = new RSAPublicKey(
-					//		publicKey.getModulus(), publicKey.getExponent());
-					// JCE format needed for the certificate - because
-					// getEncoded() is necessary...
-					PublicKey pubKey = KeyFactory
-							.getInstance(
-									Messages.CreateCertListener_instance_of_keyfactory_pubkey)
-							.generatePublic(
-									new RSAPublicKeySpec(
-											publicKey.getModulus(), publicKey
-													.getExponent()));
-					// and this one for the KeyStore
-					PrivateKey privKey = KeyFactory
-							.getInstance(
-									Messages.CreateCertListener_instance_of_keyfactory_prikey)
-							.generatePrivate(
-									new RSAPrivateCrtKeySpec(publicKey
-											.getModulus(), publicKey
-											.getExponent(), privateKey
-											.getExponent(), privateKey.getP(),
-											privateKey.getQ(), privateKey
-													.getDP(), privateKey
-													.getDQ(), privateKey
-													.getQInv()));
-					String name = txt_first_name.getText() + " " + txt_last_name.getText();
-					KeyStoreAlias privAlias = new KeyStoreAlias(name,
-							KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024,
-							(name.concat(privKey.toString())).hashCode() + " ",
-							privKey.getClass().getName());
-					KeyStoreAlias pubAlias = new KeyStoreAlias(name,
-							KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,
-								(name.concat(privKey.toString())).hashCode() + " ",
-							pubKey.getClass().getName());
-					mng.addKeyPair(privKey, CertificateFactory
-							.createJCrypToolCertificate(pubKey), new String(
-							KeyStoreManager.getDefaultKeyPassword()),
-							privAlias, pubAlias);
-					System.out.println(pubAlias.getContactName());
-					String entry = pubAlias.getContactName() + "(Hash: " + pubAlias.getHashValue() + ")";
-					cmb_keys.add(entry);
-					cmb_keys.getParent().layout();
-					cmb_keys.select(cmb_keys.getItemCount() - 1);
-					cmb_keys.setData(entry, pubAlias);
-				} catch (InvalidKeySpecException e) {
-					// TODO Auto-generated catch block
-					LogUtil.logError(e);
-				} catch (NoSuchAlgorithmException e) {
-					// TODO Auto-generated catch block
-					LogUtil.logError(e);
-				}
+			break;
+		case 2:
+			if (checkFields()) {
+				sendCSR();
 			} else {
 				Util.showMessageBox("Leeres Feld!",
 						"Bitte füllen Sie alle Felder aus.",
@@ -166,8 +93,78 @@ public class CreateCertListener implements SelectionListener {
 			}
 		}
 	}
-	
-	public boolean checkFields(){
+
+	private void sendCSR() {
+		KeyStoreAlias pubAlias = null;
+		KeyStoreAlias privAlias = null;
+
+		pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys.getItem(cmb_keys
+				.getSelectionIndex()));
+		privAlias = mng.getPrivateForPublic(pubAlias);
+		RegistrarCSR.getInstance().addCSR(txt_first_name.getText(),
+				txt_last_name.getText(), txt_street.getText(),
+				txt_zip.getText(), txt_town.getText(), txt_country.getText(),
+				txt_mail.getText(), path, pubAlias, privAlias);
+		Util.showMessageBox(
+				"CSR abgeschickt",
+				"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
+				SWT.ICON_INFORMATION);
+	}
+
+	private void generateNewRSAKeyPair() {
+		RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
+		SecureRandom sr = new SecureRandom();
+		gen.init(new RSAKeyGenerationParameters(BigInteger.valueOf(3), sr,
+				1024, 80));
+		AsymmetricCipherKeyPair keypair = gen.generateKeyPair();
+		RSAKeyParameters publicKey = (RSAKeyParameters) keypair.getPublic();
+		RSAPrivateCrtKeyParameters privateKey = (RSAPrivateCrtKeyParameters) keypair
+				.getPrivate();
+		try {
+			// JCE format needed for the certificate - because
+			// getEncoded() is necessary...
+			PublicKey pubKey = KeyFactory.getInstance("RSA")//$NON-NLS-1$
+					.generatePublic(
+							new RSAPublicKeySpec(publicKey.getModulus(),
+									publicKey.getExponent()));
+			// and this one for the KeyStore
+			PrivateKey privKey = KeyFactory.getInstance("RSA")//$NON-NLS-1$
+					.generatePrivate(
+							new RSAPrivateCrtKeySpec(publicKey.getModulus(),
+									publicKey.getExponent(), privateKey
+											.getExponent(), privateKey.getP(),
+									privateKey.getQ(), privateKey.getDP(),
+									privateKey.getDQ(), privateKey.getQInv()));
+			String name = txt_first_name.getText() + " "
+					+ txt_last_name.getText();
+			KeyStoreAlias privAlias = new KeyStoreAlias(name,
+					KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
+					(name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
+					privKey.getClass().getName());
+			KeyStoreAlias pubAlias = new KeyStoreAlias(name,
+					KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,//$NON-NLS-1$
+					(name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
+					pubKey.getClass().getName());
+			mng.addKeyPair(privKey,
+					CertificateFactory.createJCrypToolCertificate(pubKey),
+					new String(KeyStoreManager.getDefaultKeyPassword()),
+					privAlias, pubAlias);
+			System.out.println(pubAlias.getContactName());
+			String entry = pubAlias.getContactName()
+					+ "(Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$
+			cmb_keys.add(entry);
+			cmb_keys.getParent().layout();
+			cmb_keys.select(cmb_keys.getItemCount() - 1);
+			cmb_keys.setData(entry, pubAlias);
+		} catch (InvalidKeySpecException e) {
+			LogUtil.logError(e);
+		} catch (NoSuchAlgorithmException e) {
+			LogUtil.logError(e);
+		}
+
+	}
+
+	public boolean checkFields() {
 		String first = txt_first_name.getText();
 		String last = txt_last_name.getText();
 		String street = txt_street.getText();

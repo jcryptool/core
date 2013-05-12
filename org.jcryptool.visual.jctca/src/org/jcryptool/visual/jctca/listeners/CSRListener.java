@@ -57,8 +57,8 @@ public class CSRListener implements SelectionListener {
 		}
 		else if(src instanceof Button && csr != null){
 			Button btn = (Button)src;
-			String txt = btn.getText();
-			if(txt.equals(Messages.ShowCSR_csr_deny)){
+			Integer data = (Integer) btn.getData();
+			if(data.equals(0)){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
@@ -66,7 +66,7 @@ public class CSRListener implements SelectionListener {
 				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
 			}
-			else if(txt.equals("CSR weiterleiten")){
+			else if(data.equals(1)){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
