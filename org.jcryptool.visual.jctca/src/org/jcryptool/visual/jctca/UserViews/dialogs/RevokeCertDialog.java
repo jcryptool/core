@@ -45,7 +45,6 @@ public class RevokeCertDialog extends Dialog {
 		lbl_explain.setText("Sie sind kurz davor, Ihr Zertifikat zu widerrufen. Dies wird zur Folge haben, dass Signaturen nach dem Widerrufszeitpunkt nicht mehr gültig sind. Wenn Sie Ihr Zertifikat tatäslich widerrufen wollen, wählen Sie einen der Gründe aus der Dropdownliste aus und klicken Sie auf \"Widerruf an die RA weiterleiten\"");
 
 		reason = new Combo(container, SWT.DROP_DOWN);
-		reason = new Combo(container, SWT.DROP_DOWN);
 		reason.add("Privater Schlüssel kompromittiert");
 		reason.add("Privater Schlüssel verloren");
 		reason.select(0);
