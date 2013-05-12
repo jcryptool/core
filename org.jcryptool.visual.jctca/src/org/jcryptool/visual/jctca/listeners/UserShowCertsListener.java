@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.jctca.Util;
 
 /**
  * @author sho
@@ -87,7 +88,6 @@ public class UserShowCertsListener implements SelectionListener {
 		X509Certificate pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
 		//create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getSubjectDN().toString());
-		//Todo: make better code
 		//I don't know what this next line does exactly, it just works
 		RDN rdn = x500name.getRDNs(BCStyle.CN)[0];
 		lbl_value_common.setText(rdn.getFirst().getValue().toString());
@@ -116,7 +116,14 @@ public class UserShowCertsListener implements SelectionListener {
 		lbl_value_expired_on.setText(pubKey.getNotAfter().toString());
 		
 		btn_revoke.setData("selected", ksAlias);
-		
+		if(Util.isCertificateRevoked(pubKey.getSerialNumber())){
+			btn_revoke.setEnabled(false);
+			btn_revoke.setText("Zertifikat wurde bereits widerrufen");
+		}
+		else{
+			btn_revoke.setEnabled(true);
+			btn_revoke.setText("Zertifikat widerrufen");
+		}
 		lbl_value_common.getParent().layout();
 		
 	}

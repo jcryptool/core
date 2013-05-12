@@ -43,7 +43,9 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.jctca.CertificateClasses.CRLEntry;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
+import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
 @SuppressWarnings("deprecation")
@@ -232,6 +234,16 @@ public class Util {
 		} else {
 			return false;
 		}
+	}
+
+	public static boolean isCertificateRevoked(BigInteger serialNumber) {
+		ArrayList<CRLEntry> crl = CertificateCSRR.getInstance().getRevoked();
+		for(CRLEntry crle : crl){
+			if(serialNumber.compareTo(crle.GetSerial())==0){
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

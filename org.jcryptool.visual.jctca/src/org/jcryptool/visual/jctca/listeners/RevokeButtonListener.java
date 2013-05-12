@@ -3,11 +3,14 @@
  */
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
+import org.jcryptool.visual.jctca.CertificateClasses.RR;
 import org.jcryptool.visual.jctca.UserViews.dialogs.RevokeCertDialog;
 
 /**
@@ -32,10 +35,10 @@ public class RevokeButtonListener implements SelectionListener {
 		Shell shell = new Shell();
 		RevokeCertDialog dialog = new RevokeCertDialog(shell);
 		dialog.open();
-		//0 - OK
-		//1  CANCEL
-		System.out.println(dialog.getReturnCode());
-		System.out.println(dialog.getReason());
+		if(dialog.getReturnCode() == Dialog.OK){
+			RR rr = new RR(ksAlias, dialog.getReason());
+			CertificateCSRR.getInstance().addRR(rr);
+		}
 	}
 
 	/* (non-Javadoc)
