@@ -62,7 +62,7 @@ public class CSRListener implements SelectionListener {
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
-					Util.showMessageBox("Gratulation", "Sie haben richtig gehandelt und die falsche Anfrage entfernt. Das System/Imperium kann weiterbestehen!", SWT.ICON_WARNING);
+					Util.showMessageBox("Gratulation!", "Sehr gut! Dieser CSR war gefälscht. Sie haben ihn abgelehnt und dadurch verhindert, dass sich diese Person als eine andere ausgeben könnte.", SWT.ICON_WARNING);
 				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
 			}
@@ -70,7 +70,7 @@ public class CSRListener implements SelectionListener {
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
-					Util.showMessageBox("FEHLER!", "Sie haben die falsche Anfrage weitergeleitet und deinem Angreifer ermöglicht, dass er ein gültiges Zertifikat erhält. Das System/Imperium wird fallen!", SWT.ICON_WARNING);
+					Util.showMessageBox("Vorsicht!", "Sie hätten gerade einen gefälschten CSR weitergeleitet und dem Antragsteller somit ermöglicht, sich als eine andere Person auszugeben. Das darf einem echten PKI-Betreiber nicht passieren!", SWT.ICON_WARNING);
 				}
 				this.setLabels(new CSR("","","","","","","","", null, null));
 				if(csr.getPubAlias()!=null){
