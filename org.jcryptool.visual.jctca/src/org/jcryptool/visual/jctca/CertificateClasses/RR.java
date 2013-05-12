@@ -3,9 +3,11 @@ package org.jcryptool.visual.jctca.CertificateClasses;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 public class RR {
-	
-	public RR(KeyStoreAlias ksAlias) {
-		// TODO Auto-generated constructor stub
+	KeyStoreAlias pubAlias;
+	String reason;
+	public RR(KeyStoreAlias ksAlias, String reason) {
+		pubAlias = ksAlias;
+		this.reason = reason;
 	}
 
 }

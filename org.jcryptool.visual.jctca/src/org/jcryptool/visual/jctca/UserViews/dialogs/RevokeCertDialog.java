@@ -19,7 +19,8 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class RevokeCertDialog extends Dialog {
-
+	String txt_reason;
+	Combo reason;
 	/**
 	 * @param parentShell
 	 */
@@ -44,9 +45,10 @@ public class RevokeCertDialog extends Dialog {
 		lbl_explain.setLayoutData(gd);
 		lbl_explain.setText("Sie sind kurz davor, Ihr Zertifikat zu widerrufen. Dies wird zur Folge haben, dass Signaturen nach dem Widerrufszeitpunkt nicht mehr gültig sind. Wenn Sie Ihr Zertifikat tatäslich widerrufen wollen, wählen Sie einen der Gründe aus der Dropdownliste aus und klicken Sie auf \"Widerruf an die RA weiterleiten\"");
 		
-		Combo reason = new Combo(container, SWT.DROP_DOWN);
+		reason = new Combo(container, SWT.DROP_DOWN);
 		reason.add("Privater Schlüssel kompromittiert");
 		reason.add("Privater Schlüssel verloren");
+		
 		
 		container.layout();
 		
@@ -54,10 +56,19 @@ public class RevokeCertDialog extends Dialog {
 		
 	}
 	
+	@Override
+	protected void okPressed(){
+		txt_reason = reason.getText();
+		super.okPressed();
+	}
 	  @Override
 	  protected void createButtonsForButtonBar(Composite parent) {
 	    createButton(parent, IDialogConstants.OK_ID, "Widerruf an RA weiterleiten", true);
 	    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
+	  }
+	  
+	  public String getReason(){
+		  return txt_reason;
 	  }
 	  
 	  @Override
