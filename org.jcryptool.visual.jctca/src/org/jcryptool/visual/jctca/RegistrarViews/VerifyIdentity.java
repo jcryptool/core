@@ -125,22 +125,22 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
-		Button src = (Button) arg0.getSource();
-		String text = src.getText();
+		Button btn = (Button) arg0.getSource();
+		Integer data = (Integer) btn.getData();
 
-		if (text.equals(Messages.ShowCSR_verify_identity)) {
+		if (data != null && data.equals(0)) {
 			int selected = csr.getSelectionIndex();
 			CSR c = RegistrarCSR.getInstance().getCSR(selected);
 			if (c != null) {
 				this.open(c);
 			}
-		} else if (src.equals(btn_true)) {
+		} else if (btn.equals(btn_true)) {
 			forward_csr.setEnabled(true);
 			reject_csr.setEnabled(true);
 			c.setForwardenabled(true);
 			c.setRejectenabled(true);
 			parent.setVisible(false);
-		} else if (src.equals(btn_false)) {
+		} else if (btn.equals(btn_false)) {
 			forward_csr.setEnabled(false);
 			reject_csr.setEnabled(true);
 			c.setForwardenabled(false);
