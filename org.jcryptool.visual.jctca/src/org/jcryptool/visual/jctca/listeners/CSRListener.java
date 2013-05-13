@@ -62,12 +62,11 @@ public class CSRListener implements SelectionListener {
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
 					Util.showMessageBox("Vorsicht!", "Sie hätten gerade einen gefälschten CSR weitergeleitet und dem Antragsteller somit ermöglicht, sich als eine andere Person auszugeben. Das darf einem echten PKI-Betreiber nicht passieren!", SWT.ICON_WARNING);
+					return;
 				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
 				CertificateCSRR.getInstance().addCSR(csr);
 				Util.showMessageBox("CSR weitergeleitet", "Der CSR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Ansicht \"Registration Authority\" zunächst fertig. Bitte wechseln Sie in die Ansicht \"Certification Authority\".", SWT.ICON_INFORMATION);
-
-				
 			}
 			else if(data.equals(1)){
 				csrs.remove(index);
@@ -78,9 +77,7 @@ public class CSRListener implements SelectionListener {
 				this.setLabels(new CSR("","","","","","","","", null, null));
 				if(csr.getPubAlias()!=null){
 					Util.showMessageBox("CSR abgelehnt", "Sie haben den CSR abgelehnt. Wechseln Sie bitte in die Ansicht \"Benutzer\" um erneut einen CSR zu erstellen.", SWT.ICON_INFORMATION);
-
-				}
-			
+				}			
 			}
 		}
 		 mail.getParent().layout();
