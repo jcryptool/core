@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.visual.jctca.Util;
 
 /**
  * @author sho
@@ -40,7 +41,7 @@ public class RevokeCertDialog extends Dialog {
 		Label lbl_explain = new Label(container, SWT.WRAP);
 		gd.widthHint = 550;
 		lbl_explain.setLayoutData(gd);
-		lbl_explain.setText("Sie sind kurz davor, Ihr Zertifikat zu widerrufen. Dies wird zur Folge haben, dass Signaturen nach dem Widerrufszeitpunkt nicht mehr gültig sind. Wenn Sie Ihr Zertifikat tatsächlich widerrufen wollen, wählen Sie einen der Gründe aus der Dropdownliste aus und klicken Sie auf \"Widerruf an die RA weiterleiten\"");
+		lbl_explain.setText("Sie sind kurz davor, Ihr Zertifikat zu widerrufen. Dies wird zur Folge haben, dass Signaturen nach dem Widerrufszeitpunkt nicht mehr gültig sind. Wenn Sie Ihr Zertifikat tatsächlich widerrufen wollen, wählen Sie einen der Gründe aus der Dropdownliste aus und klicken Sie auf \"Widerruf an die CA weiterleiten\"");
 
 		reason = new Combo(container, SWT.DROP_DOWN);
 		GridData reason_gd = new GridData(SWT.LEFT, SWT.NONE, false, false);
@@ -60,11 +61,12 @@ public class RevokeCertDialog extends Dialog {
 	@Override
 	protected void okPressed(){
 		txt_reason = reason.getText();
+		Util.showMessageBox("RR weitergeleitet", "Der RR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Ansicht \"Benutzer\" zunächst fertig. Bitte wechseln Sie in die Ansicht \"Certification Authority\".", SWT.ICON_INFORMATION);
 		super.okPressed();
 	}
 	  @Override
 	  protected void createButtonsForButtonBar(Composite parent) {
-	    createButton(parent, IDialogConstants.OK_ID, "Widerruf an RA weiterleiten", true);
+	    createButton(parent, IDialogConstants.OK_ID, "Widerruf an CA weiterleiten", true);
 	    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	  }
 	  

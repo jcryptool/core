@@ -153,6 +153,9 @@ public class ShowCert implements Views {
 		
 		btn_revoke = new Button(right, SWT.PUSH);
 		btn_revoke.setText("Zertifikat widerrufen");
+		GridData revoke_gd = new GridData();
+		revoke_gd.horizontalSpan=2;
+		btn_revoke.setLayoutData(revoke_gd);
 		
 		UserShowCertsListener uscListener = new UserShowCertsListener(lbl_value_common, lbl_value_org, lbl_value_orgUnit, lbl_value_city, lbl_value_country, lbl_value_mail, lbl_value_common_by, lbl_value_org_by, lbl_value_orgUnit_by, lbl_value_issued_on, lbl_value_expired_on, btn_revoke);
 		lst_certs.addSelectionListener(uscListener);

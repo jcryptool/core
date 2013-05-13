@@ -61,23 +61,26 @@ public class CSRListener implements SelectionListener {
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
-					Util.showMessageBox("Gratulation!", "Sehr gut! Dieser CSR war gefälscht. Sie haben ihn abgelehnt und dadurch verhindert, dass sich diese Person als eine andere ausgeben könnte.", SWT.ICON_WARNING);
+					Util.showMessageBox("Vorsicht!", "Sie hätten gerade einen gefälschten CSR weitergeleitet und dem Antragsteller somit ermöglicht, sich als eine andere Person auszugeben. Das darf einem echten PKI-Betreiber nicht passieren!", SWT.ICON_WARNING);
 				}
 				this.setLabels(new CSR("","","","","","","", "", null, null));
-				Util.showMessageBox("CSR abgelehnt", "Sie haben den CSR abgelehnt. Um ein Zertifikat zu erstellen wechseln Sie bitte in die Ansicht Benutzer um erneut einen CSR zu erstellen.", SWT.ICON_WARNING);
+				CertificateCSRR.getInstance().addCSR(csr);
+				Util.showMessageBox("CSR weitergeleitet", "Der CSR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Ansicht \"Registration Authority\" zunächst fertig. Bitte wechseln Sie in die Ansicht \"Certification Authority\".", SWT.ICON_INFORMATION);
 
+				
 			}
 			else if(data.equals(1)){
 				csrs.remove(index);
 				regCSR.removeCSR(csr);
 				if(csr.getPrivAlias()==null){
-					Util.showMessageBox("Vorsicht!", "Sie hätten gerade einen gefälschten CSR weitergeleitet und dem Antragsteller somit ermöglicht, sich als eine andere Person auszugeben. Das darf einem echten PKI-Betreiber nicht passieren!", SWT.ICON_WARNING);
+					Util.showMessageBox("Gratulation!", "Sehr gut! Dieser CSR war gefälscht. Sie haben ihn abgelehnt und dadurch verhindert, dass sich diese Person als eine andere ausgeben könnte.", SWT.ICON_INFORMATION);
 				}
 				this.setLabels(new CSR("","","","","","","","", null, null));
 				if(csr.getPubAlias()!=null){
-					CertificateCSRR.getInstance().addCSR(csr);
-					Util.showMessageBox("CSR weitergeleitet", "Der CSR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Registration Authority zunächst fertig. Bitte wechseln Sie in die Ansicht Certification Authority.", SWT.ICON_WARNING);
+					Util.showMessageBox("CSR abgelehnt", "Sie haben den CSR abgelehnt. Wechseln Sie bitte in die Ansicht \"Benutzer\" um erneut einen CSR zu erstellen.", SWT.ICON_INFORMATION);
+
 				}
+			
 			}
 		}
 		 mail.getParent().layout();

@@ -107,7 +107,7 @@ public class CreateCertListener implements SelectionListener {
 				txt_mail.getText(), path, pubAlias, privAlias);
 		Util.showMessageBox(
 				"CSR abgeschickt",
-				"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Benutzer Ansicht zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
+				"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Ansicht \"Benutzer\" zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
 				SWT.ICON_INFORMATION);
 	}
 
@@ -151,7 +151,7 @@ public class CreateCertListener implements SelectionListener {
 					privAlias, pubAlias);
 			System.out.println(pubAlias.getContactName());
 			String entry = pubAlias.getContactName()
-					+ "(Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$
+					+ " (Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$
 			cmb_keys.add(entry);
 			cmb_keys.getParent().layout();
 			cmb_keys.select(cmb_keys.getItemCount() - 1);

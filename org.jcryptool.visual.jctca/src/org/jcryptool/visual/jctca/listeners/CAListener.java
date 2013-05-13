@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -90,11 +91,15 @@ public class CAListener implements SelectionListener{
 								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()), 
 								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString()));
 				this.removeEntry(sel);
+				Util.showMessageBox("Zertifikat widerrufen", "Sie haben erfolgreich Ihr Zertifikat widerrufen.", SWT.ICON_INFORMATION);
+
 			}
 		}
 		else if(src.equals(reject)){
 			TreeItem sel = requests.getSelection()[0];
 			this.removeEntry(sel);
+			Util.showMessageBox("Zertifikat nicht widerrufen", "Das Zertifikat wurde nicht widerrufen.", SWT.ICON_INFORMATION);
+
 		}
 	}
 	
@@ -118,6 +123,8 @@ public class CAListener implements SelectionListener{
 				PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.getDefaultKeyPassword());
 				this.removeEntry(sel);
 				mng.addKeyPair(priv,cert, new String(KeyStoreManager.getDefaultKeyPassword()), csr.getPrivAlias(),csr.getPubAlias());
+				Util.showMessageBox("Zertifikat erstellt", "Gratuliere, Sie haben ein Zertifikat erstellt. Dieses finden Sie nun in der Ansicht \"Benutzer\" unter \"Eigene Zertifikate verwalten.\"", SWT.ICON_INFORMATION);
+
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				LogUtil.logError(e);
@@ -126,6 +133,8 @@ public class CAListener implements SelectionListener{
 		else if(src.equals(reject)){
 			TreeItem sel = requests.getSelection()[0];
 			this.removeEntry(sel);
+			Util.showMessageBox("Zertifikat nicht erstellt", "Sie haben den CSR abgelehnt. Wechseln Sie bitte in die Ansicht \"Benutzer\" um erneut einen CSR zu erstellen.", SWT.ICON_INFORMATION);
+
 		}
 		
 	}
