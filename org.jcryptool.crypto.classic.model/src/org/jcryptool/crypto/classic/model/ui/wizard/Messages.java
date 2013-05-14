@@ -17,13 +17,10 @@ public class Messages extends NLS {
 	public static String AbstractClassicCryptoPage_1;
 	public static String AbstractClassicCryptoPage_15;
 	public static String AbstractClassicCryptoPage_2;
-	public static String AbstractClassicCryptoPage_3;
-	public static String AbstractClassicCryptoPage_alphabet_input_name;
 	public static String AbstractClassicCryptoPage_alphabetcontent_balloon_title;
 	public static String AbstractClassicCryptoPage_applyTransformLabel;
 	public static String AbstractClassicCryptoPage_clicktoclose;
 	public static String AbstractClassicCryptoPage_customAlphabetHint;
-	public static String AbstractClassicCryptoPage_filter_input_name;
 	public static String AbstractClassicCryptoPage_genericNormalMsg;
     public static String AbstractClassicCryptoPage_key_input_name;
 	public static String AbstractClassicCryptoPage_keyToolTip;

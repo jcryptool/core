@@ -193,7 +193,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
         createInputObjects();
 
-        createInputVerificationHandler(parent.getShell());
+        createInputVerificationHandler(this.getShell());
         addPageObserver();
         updateCommandLineString();
     }
@@ -724,10 +724,14 @@ public class AbstractClassicCryptoPage extends WizardPage {
             showAlphabetContent.addSelectionListener(new SelectionAdapter() {
                 @Override
 				public void widgetSelected(SelectionEvent evt) {
+                	verificationDisplayHandler.disposeTooltips();
                     ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
                     tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
-                    tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet())
-                            + Messages.AbstractClassicCryptoPage_clicktoclose);
+                    tooltip.setMessage(
+                    		AbstractAlphabet.alphabetContentAsString(
+                    				getAlphabetInput().getContent().getCharacterSet()
+                    				)
+                    		+ Messages.AbstractClassicCryptoPage_clicktoclose);
                     tooltip.setAutoHide(true);
                     tooltip.setVisible(true);
                 }
@@ -979,7 +983,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     public void dispose() {
         super.dispose();
         if (verificationDisplayHandler != null)
-            verificationDisplayHandler.dispose();
+            verificationDisplayHandler.disposeTooltips();
     }
 
 }

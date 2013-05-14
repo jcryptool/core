@@ -242,10 +242,11 @@ public class WidgetBubbleUIInputHandler implements
 	/**
 	 * Disposed all tooltips.
 	 */
-	public void dispose() {
+	public void disposeTooltips() {
 		for(Entry<AbstractUIInput<?>, SingleVanishTooltipLauncher> entry: tooltipMap.entrySet()) {
 			entry.getValue().dispose();
 		}
+		tooltipMap.clear();
 	}
 
 	@Override

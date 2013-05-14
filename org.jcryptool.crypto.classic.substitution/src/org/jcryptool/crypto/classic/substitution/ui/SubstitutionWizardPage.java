@@ -10,6 +10,16 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.substitution.ui;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
@@ -21,6 +31,8 @@ import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
  *
  */
 public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
+
+	private Button keyEditorBtn;
 
 	public SubstitutionWizardPage() {
 		super(Messages.SubstitutionWizardPage_substitution, Messages.SubstitutionWizardPage_enterkey1);
@@ -44,5 +56,67 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
     	if(!isNonAlphaFilter()) result += " --noFilter";
     	return result;
     }
+
+	@Override
+	protected void createKeyInputObjects() {
+		// TODO Auto-generated method stub
+		super.createKeyInputObjects();
+	}
+
+	@Override
+	protected void createKeyGroup(Composite parent) {
+		keyGroup = new Group(parent, SWT.NONE);
+
+        GridLayout keyGroupGridLayout = new GridLayout();
+        keyGroupGridLayout.numColumns = 4;
+
+        GridData keyGroupGridData = new GridData();
+        keyGroupGridData.horizontalAlignment = GridData.FILL;
+        keyGroupGridData.grabExcessHorizontalSpace = true;
+        keyGroupGridData.grabExcessVerticalSpace = false;
+        keyGroupGridData.verticalAlignment = SWT.TOP;
+
+        keyGroup.setLayoutData(keyGroupGridData);
+        keyGroup.setLayout(keyGroupGridLayout);
+        keyGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_key);
+
+        keyDescriptionLabel = new Label(keyGroup, SWT.NONE);
+
+        GridData keyDescriptionLabelGridData = new GridData();
+        keyDescriptionLabelGridData.horizontalAlignment = GridData.FILL;
+        keyDescriptionLabelGridData.grabExcessVerticalSpace = true;
+        keyDescriptionLabelGridData.exclude = false;
+
+        keyDescriptionLabel.setText("Set key by password:");
+        keyDescriptionLabel.setLayoutData(keyDescriptionLabelGridData);
+        keyDescriptionLabel.setVisible(true);
+
+        keyText = new Text(keyGroup, SWT.BORDER);
+
+        GridData keyTextGridData = new GridData();
+        keyTextGridData.grabExcessHorizontalSpace = true;
+        keyTextGridData.horizontalAlignment = GridData.FILL;
+        keyTextGridData.verticalAlignment = GridData.CENTER;
+        keyTextGridData.grabExcessVerticalSpace = true;
+
+        keyText.setLayoutData(keyTextGridData);
+        keyText.setToolTipText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.AbstractClassicCryptoPage_keyToolTip);
+        
+        Label lblKeyOrSeparator = new Label(keyGroup, SWT.NONE);
+        lblKeyOrSeparator.setText("or");
+        
+        keyEditorBtn = new Button(keyGroup, SWT.PUSH);
+        keyEditorBtn.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+        keyEditorBtn.setText("Set substitutions manually");
+        
+        keyEditorBtn.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		SubstitutionKeyEditor.launchKeyEditorDialog(getShell(), getSelectedAlphabet(), keyInput.getContent());
+        	}
+		});
+	}
+    
+    
     
 }

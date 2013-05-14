@@ -21,7 +21,6 @@ public class Messages extends NLS {
 	public static String AdfgvxWizardPage_enterTranspKey;
 	public static String AdfgvxWizardPage_inputNameSubstitution;
 	public static String AdfgvxWizardPage_inputNameTransposition;
-	public static String AdfgvxWizardPage_onlyoccuronce;
 	public static String AdfgvxWizardPage_step1;
 	public static String AdfgvxWizardPage_step2;
 	public static String AdfgvxWizardPage_substitutionHint;

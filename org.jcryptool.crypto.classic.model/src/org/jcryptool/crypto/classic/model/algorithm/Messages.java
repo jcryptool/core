@@ -36,6 +36,7 @@ public class Messages extends NLS {
 	public static String ClassicAlgorithmConfiguration_6;
 	public static String ClassicAlgorithmConfiguration_7;
 	public static String ClassicAlgorithmConfiguration_8;
+	public static String AdfgvxWizardPage_onlyoccuronce;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

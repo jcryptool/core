@@ -11,13 +11,16 @@
 package org.jcryptool.crypto.classic.model.algorithm;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
 
 /**
  * Specifies aspects of classic algorithms like plain text and cipher text combinations. Implementations
@@ -103,6 +106,45 @@ public class ClassicAlgorithmSpecification {
 			return new InputVerificationResultKeyNotInAlphabet(character, alphabet, i);
 		}
 	};
+	public static KeyVerificator NO_DOUBLETS = new KeyVerificator() {
+		@Override
+		protected boolean verifyKeyInput(String key, AbstractAlphabet alphabet) {
+			Set<Character> occurence = new HashSet<Character>();
+			for(int i=0; i<key.length(); i++) {
+				if(occurence.contains(key.charAt(i))) return false; else {
+					occurence.add(key.charAt(i));
+				}
+			}
+			return true;
+		}
+		@Override
+		protected InputVerificationResult getFailResult(String key,
+				AbstractAlphabet alphabet) {
+			return new InputVerificationResult() {
+				@Override
+				public boolean isValid() {
+					return false;
+				}
+				@Override
+				public boolean isStandaloneMessage() {
+					return false;
+				}
+				@Override
+				public MessageType getMessageType() {
+					return InputVerificationResult.MessageType.WARNING;
+				}
+				@Override
+				public String getMessage() {
+					return Messages.AdfgvxWizardPage_onlyoccuronce;
+				}
+				@Override
+				public String getResultType() {
+					return RESULT_TYPE_DOUBLET_IN_KEY; 
+				}
+			};
+		}
+	};
+	public static final String RESULT_TYPE_DOUBLET_IN_KEY = "DOUBLET";
 	
 	
 	/**
@@ -176,7 +218,6 @@ public class ClassicAlgorithmSpecification {
 	 * Provides verificators for a String input for a key.
 	 * This method is meant for usage when nothing else but key verificators have to be
 	 * changed in the key input mechanism apart from the standard implementation.
-	 * Ideally, key verificators should be specified in the Algorithm Specification class.
 	 *
 	 * @return a list of key verificators
 	 */
