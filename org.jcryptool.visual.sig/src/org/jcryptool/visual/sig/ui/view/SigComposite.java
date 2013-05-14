@@ -1,5 +1,3 @@
-//This class contains all the code required for the GUI
-
 package org.jcryptool.visual.sig.ui.view;
 
 import org.eclipse.jface.window.Window;
@@ -36,8 +34,14 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.visual.sig.algorithm.*;
 
-public class SigComposite extends Composite implements PaintListener {//,ActionListener{
+/**
+ * This class contains all the code required for the design and function of main GUI
+ * @author Grebe
+ *
+ */
+public class SigComposite extends Composite implements PaintListener {
 	private Text txtHash;
 	private Text txtGeneralDescription;
 	private Text txtSignature;
@@ -56,8 +60,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 	private Label lblHash;
 	private Label lblSignature;
 	SigComposite sc = this;
-	//hash and signature contain the selected method; default is 0
-	private int hash = 0; //0-4
+	private int hash = 0; //Values: 0-4. Hash and signature contain the selected method; default is 0
 	private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5, 
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha1,
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha256,
@@ -68,6 +71,9 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
+	
+	private Hash hashObject;
+	//private Signature signatureObject;
 
 	/**
 	 * @return the hash
@@ -134,9 +140,8 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnHash.setText(Messages.SigComposite_btnHash);
 		
 		txtHash = new Text(grpSignatureGeneration, SWT.BORDER | SWT.WRAP);
-		txtHash.setBounds(34, 365, 136, 56);
+		txtHash.setBounds(34, 365, 136, 60);
 		txtHash.setEditable(false);
-		txtHash.setText("<Hash>");
 		
 		btnSignature = new Button(grpSignatureGeneration, SWT.NONE);
 		btnSignature.setEnabled(false);
@@ -213,6 +218,10 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		btnOpenInEditor.setEnabled(false);
 		btnOpenInEditor.setBounds(10, 220, 109, 26);
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
+		
+		Label lblHashhex = new Label(grpSignatureGeneration, SWT.NONE);
+		lblHashhex.setBounds(34, 431, 59, 14);
+		lblHashhex.setText("Hash (Hex)");
 
 		createEvents();
 		
@@ -326,12 +335,11 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
-                    	//Enable to select the hash method
-                    	btnHash.setEnabled(true); 
-                    	//Activate the second tab of the description
-                    	tabDescription.setSelection(1);
+                    	btnHash.setEnabled(true); //Enable to select the hash method
+                    	tabDescription.setSelection(1); //Activate the second tab of the description
+                    	//txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2 + " " + org.jcryptool.visual.sig.algorithm.Input.data[0]);
                     	canvas1.redraw();
-                    	 lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));  
+                    	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));  
                     }//end if
                     
 		    		/*
@@ -370,15 +378,19 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
                     	 } 
                     };
                     if (dialog.open() == Window.OK) {
-                    	//get hash method (integer)
-                    	hash = wiz.getHash();
+                    	hash = wiz.getHash(); //get hash method (an integer)
                     	lblHash.setText(hashes[hash]);
-                    	//Enable to select the signature method
-                        btnSignature.setEnabled(true); 
-                        //Activate the third tab of the description
-                        tabDescription.setSelection(2);
+                    	
+                    	hashObject = new Hash(hashes[hash]); //Initialize the hashObject with the chosen input and
+                    	hashObject.setHashmethod(hashes[hash]);
+                    	hashObject.hashInput();
+                    	
+                    	//Update the GUI:
+                        btnSignature.setEnabled(true); //Enable to select the signature method
+                        tabDescription.setSelection(2); //Activate the third tab of the description
                         canvas1.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress,3));   
+                        txtHash.setText(org.jcryptool.visual.sig.algorithm.Hash.hash);
                     }//end if
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -440,7 +452,7 @@ public class SigComposite extends Composite implements PaintListener {//,ActionL
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
 			case 0: btnHash.setEnabled(false); lblHash.setText(""); 
-			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); 
+			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); txtHash.setText("");
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
 		}

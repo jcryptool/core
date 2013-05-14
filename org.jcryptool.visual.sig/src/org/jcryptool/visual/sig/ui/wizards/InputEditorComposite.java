@@ -10,8 +10,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class InputEditorComposite extends Composite {
 
-	// Limit for the length of the text that might be entered into the plaintext
-	// field
+	// Limit for the length of the text that might be entered into the plaintext field
 	private static final int TEXTLIMIT = 1000;
 	private Text text = null;
 	private InputEditorWizardPage page;
@@ -37,11 +36,8 @@ public class InputEditorComposite extends Composite {
 				if (text.getText().length() > 0) {
 					page.setPageComplete(true);
 					page.canFlipToNextPage();
+					org.jcryptool.visual.sig.algorithm.Input.data = text.getText().getBytes();
 					page.getWizard().getContainer().updateButtons();
-					
-					//boolean b = page.getWizard().canFinish();
-					//b = page.isPageComplete();
-					//page.setPageComplete(true);
 				}
 				else {
 					page.setPageComplete(false);

@@ -3,7 +3,7 @@ package org.jcryptool.visual.sig;
 import org.eclipse.osgi.util.NLS;
 /**
  * Holds the messages for the signature visualization (for the main view)
- *
+ * @author Grebe
  */
 public class Messages {
 	//Name of the files that contain the string values

@@ -3,6 +3,11 @@ package org.jcryptool.visual.sig;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+/**
+ * 
+ * @author Grebe
+ *
+ */
 public class SigPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
