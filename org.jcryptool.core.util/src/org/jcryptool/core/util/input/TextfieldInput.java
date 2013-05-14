@@ -20,6 +20,8 @@ import org.eclipse.swt.graphics.Point;
  * This AbstractUIInput derivate already includes resetting the cursor and text in
  * Text fields after resetting its content. Also, it sets the listeners
  * already in the constructor.
+ * 
+ * @see {@link AbstractUIInput}
  *
  * @author Simon L
  */
