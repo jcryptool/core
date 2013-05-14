@@ -50,7 +50,6 @@ public class NewAlphabetBlockWizardPage extends WizardPage {
 			lblContent.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseDown(MouseEvent e) {
-					System.out.println(isPageComplete());
 				}
 			});
 			{

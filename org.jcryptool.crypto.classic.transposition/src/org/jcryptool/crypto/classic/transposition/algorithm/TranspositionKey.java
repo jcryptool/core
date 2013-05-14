@@ -169,9 +169,6 @@ public class TranspositionKey {
 		public String newkey;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(new TranspositionKey("21", "abc".toCharArray()));
-	}
 	public static KeyFromStringParseResult generateKeyFromStringMode(String argString, char[] alphabet) {
 		KeyFromStringParseResult result = new KeyFromStringParseResult();
 		KeyFromStringParseResult.Mode mode = KeyFromStringParseResult.Mode.DEFAULT;

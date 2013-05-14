@@ -22,7 +22,6 @@ public class CustomAlphabetWizard extends Wizard {
 	
 	public CustomAlphabetWizard() {
 		setHelpAvailable(false);
-		System.out.println(this.isHelpAvailable());
 		setWindowTitle(Messages.CustomAlphabetWizard_windowtitle);
 		page1 = new CreateCustomAlphabetIntroPage();
 		page2 = new CreateCustomAlphabetsWizardPage();
