@@ -51,6 +51,7 @@ public class Hash {
 	    //Test
 	    hash = new String(md, "UTF8");
 	    hash = new String (bytesToHex(md));
+	    org.jcryptool.visual.sig.algorithm.Input.hash = md;
 	    //Test: recreate the message digest from the plaintext
 	}
     
