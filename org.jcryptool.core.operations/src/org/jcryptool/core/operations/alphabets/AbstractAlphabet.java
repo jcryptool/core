@@ -132,15 +132,32 @@ public abstract class AbstractAlphabet {
 		
 		return sb.toString();
 	}
-	
+
 	public static String getPrintableCharRepresentation(char c) {
 		if(specialCharactersForPrinting.containsKey(Character.valueOf(c))) {
 			return specialCharactersForPrinting.get(Character.valueOf(c));
-		} else if((int) c < 32) {
+//		} else if(!isCharacterOnKeyboard(c)) {
+		} else if((int)c < 32) {
 			return "{" + String.valueOf((int) c) + "}"; //$NON-NLS-1$ //$NON-NLS-2$
 		} else {
 			return String.valueOf(c);
 		}
+	}
+
+	private static boolean isCharacterOnKeyboard(char c) {
+		boolean isControlChar = Character.isISOControl(c);
+		boolean isNonANSIChar = (int)c > 125;
+		boolean isGermanUmlaut = 
+				Character.valueOf(c).equals('ä') ||
+				Character.valueOf(c).equals('ö') ||
+				Character.valueOf(c).equals('ü') ||
+				Character.valueOf(c).equals('Ä') ||
+				Character.valueOf(c).equals('Ö') ||
+				Character.valueOf(c).equals('Ü') ||
+				Character.valueOf(c).equals('ß')
+				;
+		
+		return (!isControlChar && !isNonANSIChar) || isGermanUmlaut;
 	}
 
 	/**
@@ -162,6 +179,8 @@ public abstract class AbstractAlphabet {
 		for(Entry<Character, String> replacement: specialCharactersForPrinting.entrySet()) {
 			newAlpha = newAlpha.replace(replacement.getValue(), String.valueOf(replacement.getKey()));
 		}
+		
+		//TODO!: delete doublets
 		
 		return newAlpha.toCharArray();
 	}
