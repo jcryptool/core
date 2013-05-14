@@ -43,7 +43,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * @deprecated the additional parameters will soon be managed in the alphabets manager
 	 */
 	public AtomAlphabet(List<Character> characters, boolean isBasic, boolean isDefault, String name, String shortName) {
-		this.content = characters;
+		this.content = filterDoublets(characters);
 		setName(name);
 		setShortName(shortName);
 		setBasic(isBasic);
@@ -59,7 +59,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * @param characters the characters of the alphabet
 	 */
 	public AtomAlphabet(List<Character> characters) {
-		this.content = filterDoublets(characters);
+		this(characters, false, false, null, null);
 	}
 	
 

@@ -55,12 +55,14 @@ public class Alphabet extends AbstractAlphabet {
 		characterSet = set;
 		displayMissingCharacters = display;
 		this.name = name;
+		this.shortName = name;
 	}
 
 	public Alphabet(char[] set, String name, int display, boolean basic) {
 		characterSet = set;
 		displayMissingCharacters = display;
 		this.name = name;
+		this.shortName = name;
 		this.basic = basic;
 	}
 
