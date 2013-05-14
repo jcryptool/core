@@ -84,6 +84,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 			try {
 				baos = new ByteArrayOutputStream();
 				is = new FileInputStream(file);
+			
 		        while ( (read = is.read(array)) != -1 ) {
 		            baos.write(array, 0, read);
 		        }//end while
@@ -101,9 +102,9 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 		        } catch ( Exception e) {
 		        	LogUtil.logError(SigPlugin.PLUGIN_ID, e);
 		        }//end catch
+		        
 		    }//end finally
-			org.jcryptool.visual.sig.algorithm.Input.data = array;
-			//input.setInput(array);
+			org.jcryptool.visual.sig.algorithm.Input.data = array; //Store the data
 		} else {
 			//array =
 		}

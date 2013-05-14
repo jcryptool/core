@@ -9,50 +9,26 @@ import java.security.*;
  *
  */
 public class Hash {
-	private String hashmethod;
-	/**
-	 * @return the hashmethod
-	 */
-	public String getHashmethod() {
-		return hashmethod;
-	}
-
-	/**
-	 * @param hashmethod the hashmethod to set
-	 */
-	public void setHashmethod(String hashmethod) {
-		this.hashmethod = hashmethod;
-	}
-
 	public static String hash;
-	
-	/**
-	 * Standard constructor that sets the default method
-	 */
-	public Hash () {
-		hashmethod = "MD5"; //MD5
-	}
-	
-	/**
-	 * Constructor that sets hash method and the input
-	 */
-	public Hash (String hashmethod) {
-		hashmethod = this.hashmethod;
-	}
+	//public static String hashmethod;
 
-	public void hashInput () throws Exception {
-		//Get input:
+	/**
+	 * This method hashes an input stored in Input.java with a given hash method
+	 * @throws Exception
+	 * @param hashmethod The name of the method (a string)
+	 */
+	public static byte[] hashInput (String hashmethod) throws Exception {
+		//Get input: 
 		byte[] input = org.jcryptool.visual.sig.algorithm.Input.data; //Contains the input (a file or plain text)
 		//Get an MD5 message digest object and compute the plaintext digest
 	    MessageDigest messageDigest = MessageDigest.getInstance(hashmethod); //Argument is a string!
 	    messageDigest.update(input);
 	    //Output:
 	    byte[] md = messageDigest.digest();
-	    //Test
-	    hash = new String(md, "UTF8");
-	    hash = new String (bytesToHex(md));
-	    org.jcryptool.visual.sig.algorithm.Input.hash = md;
-	    //Test: recreate the message digest from the plaintext
+	    //hash = new String(md, "UTF8"); //UTF8 String
+	    hash = new String (bytesToHex(md)); //Hex String
+	    org.jcryptool.visual.sig.algorithm.Input.hash = md; //Store the generated hash
+	    return md;
 	}
     
 	//To display the sting in hex

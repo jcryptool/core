@@ -34,7 +34,6 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.jcryptool.visual.sig.algorithm.*;
 
 /**
  * This class contains all the code required for the design and function of main GUI
@@ -71,9 +70,6 @@ public class SigComposite extends Composite implements PaintListener {
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
-	
-	private Hash hashObject;
-	//private Signature signatureObject;
 
 	/**
 	 * @return the hash
@@ -381,9 +377,8 @@ public class SigComposite extends Composite implements PaintListener {
                     	hash = wiz.getHash(); //get hash method (an integer)
                     	lblHash.setText(hashes[hash]);
                     	
-                    	hashObject = new Hash(hashes[hash]); //Initialize the hashObject with the chosen input and
-                    	hashObject.setHashmethod(hashes[hash]);
-                    	hashObject.hashInput();
+                    	//org.jcryptool.visual.sig.algorithm.Hash.hashmethod = hashes[hash]; //Set the hash method
+                    	org.jcryptool.visual.sig.algorithm.Hash.hashInput(hashes[hash]); //Hash the input
                     	
                     	//Update the GUI:
                         btnSignature.setEnabled(true); //Enable to select the signature method
