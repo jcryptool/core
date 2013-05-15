@@ -378,7 +378,7 @@ public class SigComposite extends Composite implements PaintListener {
                     	lblHash.setText(hashes[hash]);
                     	
                     	//org.jcryptool.visual.sig.algorithm.Hash.hashmethod = hashes[hash]; //Set the hash method
-                    	org.jcryptool.visual.sig.algorithm.Hash.hashInput(hashes[hash]); //Hash the input
+                    	org.jcryptool.visual.sig.algorithm.Hash.hashInput(hashes[hash], org.jcryptool.visual.sig.algorithm.Input.data); //Hash the input
                     	
                     	//Update the GUI:
                         btnSignature.setEnabled(true); //Enable to select the signature method

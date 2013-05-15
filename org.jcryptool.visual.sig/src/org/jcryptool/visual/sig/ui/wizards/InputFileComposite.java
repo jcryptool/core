@@ -1,9 +1,11 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+
+import javax.swing.JOptionPane;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -12,6 +14,8 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -54,16 +58,24 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 			strFile = fd.open();
 			
 			file = new File(strFile);
-			convertInput(file);
+			//convertInput(file);
+			org.jcryptool.visual.sig.algorithm.Input.data = getBytesFromFile(file);
+			if (org.jcryptool.visual.sig.algorithm.Input.data == null) {
+				 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
+                 messageBox.setText(Messages.InputWizard_WarningTitle); 
+                 messageBox.setMessage(Messages.InputWizard_WarningMessage);
+                 messageBox.open();				
+                 throw new Exception ("The file " + file.getName() + " appears to be empty");
+			}
 			
 			txtPath.setText(file.getAbsolutePath());
 			//org.jcryptool.visual.sig.algorithm.Input.path = file.getAbsolutePath();
 			page.setPageComplete(true);
 		}
 		catch (Exception ex) {
+			
 			LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
 		}
-		
 	}
 
 	@Override
@@ -74,41 +86,43 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 	/**
 	 * Converts the input file to a byte array
 	 * @param file The file elected by the user 
+	 * @return The byte array
 	 */
-	public void convertInput(File file) throws Exception {
-		byte[] array = new byte[4096]; //Maximum size??
-		int read = 0;
-		if (file != null){
-			ByteArrayOutputStream baos = null;
-			InputStream is = null;
-			try {
-				baos = new ByteArrayOutputStream();
-				is = new FileInputStream(file);
-			
-		        while ( (read = is.read(array)) != -1 ) {
-		            baos.write(array, 0, read);
-		        }//end while
-			} finally { 
-		        try {
-		             if ( baos != null ) 
-		                 baos.close();
-		        } catch ( Exception e) {
-		        	LogUtil.logError(SigPlugin.PLUGIN_ID, e);
-		        }//end catch
-
-		        try {
-		             if ( is != null ) 
-		                  is.close();
-		        } catch ( Exception e) {
-		        	LogUtil.logError(SigPlugin.PLUGIN_ID, e);
-		        }//end catch
-		        
-		    }//end finally
-			org.jcryptool.visual.sig.algorithm.Input.data = array; //Store the data
-		} else {
-			//array =
-		}
-	}//end convertInput
-	
+	public byte[] getBytesFromFile(File file) throws IOException {
+		 
+	    InputStream is = new FileInputStream(file);
+	 
+	    // Get the size of the file
+	    long length = file.length();
+	 
+	    /*
+	     * You cannot create an array using a long type. It needs to be an int
+	     * type. Before converting to an int type, check to ensure that file is
+	     * not loarger than Integer.MAX_VALUE;
+	     */
+	    if (length > Integer.MAX_VALUE || length <= 0) {
+	        //File is too large to process or empty
+	    	is.close();
+	        return null;
+	    }
+	 
+	    // Create the byte array to hold the data
+	    byte[] bytes = new byte[(int)length];
+	 
+	    // Read in the bytes
+	    int offset = 0;
+	    int numRead = 0;
+	    while ((offset < bytes.length) && ((numRead=is.read(bytes, offset, bytes.length-offset)) >= 0)) {
+	        offset += numRead;
+	    }
+	    /*
+	    // Ensure all the bytes have been read in
+	    if (offset < bytes.length) {
+	        throw new IOException("Could not completely read file " + file.getName());
+	    }
+	 	*/
+	    is.close();
+	    return bytes;
+	}
 	
 }

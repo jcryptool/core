@@ -48,6 +48,8 @@ public class Messages {
 	public static String InputFileWizard_WindowTitle;
 	public static String InputEditorWizard_Label;
 	public static String InputFileWirard_btnBrowse;
+	public static String InputWizard_WarningTitle;
+	public static String InputWizard_WarningMessage;
 	
 	//InputWizard
 	//Page 1
