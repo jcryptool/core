@@ -7,7 +7,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
-
+/*
+ * Listener for resizing images in the plugin
+ */
 public class ResizeListener implements ControlListener {
 
 	Image image;
