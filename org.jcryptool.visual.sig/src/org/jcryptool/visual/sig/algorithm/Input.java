@@ -1,5 +1,8 @@
 package org.jcryptool.visual.sig.algorithm;
 
+import java.security.*;
+import javax.crypto.*;
+
 //This class is used to share data between classes
 public class Input {
 	
@@ -11,5 +14,5 @@ public class Input {
 	
 	public static byte[] signature; //Contains the signature of the input data
 	
-	public static long privateKey; //Contains the private key used to sign the data
+	public static KeyAlias privateKey; //Contains the private key used to sign the data
 }
