@@ -421,8 +421,10 @@ public class SigComposite extends Composite implements PaintListener {
                     	signature = wiz.getSignature();
                     	lblSignature.setText(signatures[signature]);
                     	
+                    	// index of String[] sigmethods witch contains all possible methods
+                    	int s = chooseSignature(hash, signature);                    	
                     	// Creates the signature for the calculated hash.
-                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(signatures[signature], org.jcryptool.visual.sig.algorithm.Input.hash);
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sigmethods[s], org.jcryptool.visual.sig.algorithm.Input.hash);
                     	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
@@ -468,5 +470,38 @@ public class SigComposite extends Composite implements PaintListener {
 		tabDescription.setSelection(step);
 		//redraw canvas (to reset the arrows)
 		canvas1.redraw();
+	}
+	/**
+	 * Helper method to take the correct signature method with the correct hash method.
+	 * (Not every signature method matches with every hash method).
+	 * 
+	 * @param ha chosen hash method
+	 * @param si chosen signature method
+	 * @return index of String[] sigmethods witch contains all possible methods
+	 */
+	private int chooseSignature(int ha, int si) {
+		int x = 123;
+		
+		if (ha == 0 && si == 0) x = 0;
+		
+		if (ha == 1 && si == 0) x = 1;
+		if (ha == 1 && si == 1) x = 2;
+		if (ha == 1 && si == 2) x = 3;
+		if (ha == 1 && si == 3) x = 4;
+		
+		if (ha == 2 && si == 0) x = 5;
+		if (ha == 2 && si == 2) x = 6;
+		if (ha == 2 && si == 3) x = 7;
+		
+		if (ha == 3 && si == 0) x = 8;
+		if (ha == 3 && si == 2) x = 9;
+		if (ha == 3 && si == 3) x = 10;
+		
+		if (ha == 4 && si == 0) x = 11;
+		if (ha == 4 && si == 2) x = 12;
+		if (ha == 4 && si == 3) x = 13;
+		
+		return x;
+		
 	}
 }
