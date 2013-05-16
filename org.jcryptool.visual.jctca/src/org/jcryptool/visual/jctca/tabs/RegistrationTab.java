@@ -9,7 +9,12 @@ import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.RegistrarViews.ShowCSR;
 
 public class RegistrationTab {
-
+	/**
+	 * Generating Registration Tab 
+	 * @param parent TabFolder to which the new TabItem is added
+	 * @param exp Group in which the explanation is shown
+	 * @param style well, yeah, don't know
+	 **/
 	public RegistrationTab(TabFolder parent, Group exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);

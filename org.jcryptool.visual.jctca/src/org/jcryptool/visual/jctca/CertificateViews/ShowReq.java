@@ -15,6 +15,7 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.listeners.CAListener;
 
+
 public class ShowReq implements Views {
 	Composite composite;
 	Composite left;
@@ -24,25 +25,30 @@ public class ShowReq implements Views {
 	Button btn_accept_request;
 	Button btn_reject_request;
 
+	/**
+	 * Certificate Authority View
+	 * Shows CSRs and RRs and a list of root certificate for signing
+	 * 
+	 * @param content composite for showing the content of this view
+	 * @param exp composite for showing the explanation of this view
+	 **/
 	public ShowReq(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(3, true));
 		GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		composite.setLayoutData(gd_comp);
 
+		//left = composite for tree
 		left = new Composite(composite, SWT.NONE);
 		left.setLayout(new GridLayout(1, true));
 		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
+		// showSelectedRequest = group for list of root certificates and two buttons (accept and reject) 
 		Group showSelectedRequest = new Group(composite, SWT.NONE);
 		showSelectedRequest.setLayout(new GridLayout(2, true));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		showSelectedRequest.setLayoutData(gd_grp);
 		showSelectedRequest.setText(Messages.ShowReq_editCSR_RR);
-
-		// center = new Composite(showSelectedRequest, SWT.NONE);
-		// center.setLayout(new GridLayout(1, true));
-		// center.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, true));
 
 		Tree tree = new Tree(left, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -76,17 +82,20 @@ public class ShowReq implements Views {
 		btn_accept_request.addSelectionListener(lst);
 		btn_reject_request.addSelectionListener(lst);
 		
-		
-		// Label lbl_exp = (Label)exp.getChildren()[0];
-		// lbl_exp.setText("Hi, I explain what is going on in Show Request!");
-
 	}
 
+	/**
+	 * Disposes the composite with all the content of this view
+	 **/
 	@Override
 	public void dispose() {
 		this.composite.dispose();
 	}
 
+	/**
+	 * Sets the composite of this view visible
+	 * @param visible boolean: true for visible, false for not visible
+	 **/
 	@Override
 	public void setVisible(boolean visible) {
 		composite.setVisible(visible);
