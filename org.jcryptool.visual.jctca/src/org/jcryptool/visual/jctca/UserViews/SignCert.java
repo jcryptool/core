@@ -1,8 +1,6 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -11,8 +9,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
@@ -67,7 +63,7 @@ public class SignCert implements Views {
 		
 		cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
 		cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false, true));
-		addRSAAndDSAPrivateKeysToDropdown();
+		addRSAPrivateKeysToDropdown();
 		cmb_priv_key.select(0);
 
 		Button btn_detail = new Button(signCertGroup, SWT.CHECK);
@@ -83,16 +79,14 @@ public class SignCert implements Views {
 		composite.setVisible(false);
 	}
 
-	private void addRSAAndDSAPrivateKeysToDropdown(){
+	private void addRSAPrivateKeysToDropdown(){
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			String listEntry = ksAlias.getContactName() + Messages.SignCert_8 + ksAlias.getKeyLength() + Messages.SignCert_9;
-			if (ksAlias.getOperation().contains(Messages.SignCert_10)) {
-				listEntry += Messages.SignCert_11;
-			} else {
-				listEntry += Messages.SignCert_12;
+			String listEntry = ksAlias.getContactName() + "(" + ksAlias.getKeyLength() + "bit";
+			if (ksAlias.getOperation().contains("RSA")) {
+				listEntry += "RSA";
 			}
-			listEntry+=Messages.SignCert_13 + ksAlias.getHashValue() + Messages.SignCert_14;
+			listEntry+=" (Hash:" + ksAlias.getHashValue() + ")";
 			
 			cmb_priv_key.add(listEntry);
 		}

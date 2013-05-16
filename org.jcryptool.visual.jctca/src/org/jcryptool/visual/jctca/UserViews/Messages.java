@@ -52,13 +52,6 @@ public class Messages extends NLS {
 	public static String ShowCert_lbl_subject_o;
 	public static String ShowCert_lbl_subject_ou;
 	public static String ShowCert_lbl_validity_perios;
-	public static String SignCert_10;
-	public static String SignCert_11;
-	public static String SignCert_12;
-	public static String SignCert_13;
-	public static String SignCert_14;
-	public static String SignCert_8;
-	public static String SignCert_9;
 	public static String SignCert_btn_cancel_file_selection;
 	public static String SignCert_btn_chose_file;
 	public static String SignCert_btn_sign_with_key;

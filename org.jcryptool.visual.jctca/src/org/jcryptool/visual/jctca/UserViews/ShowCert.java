@@ -167,7 +167,7 @@ public class ShowCert implements Views {
 		composite.setVisible(false);
 	}
 
-	private void addRSAAndDSAKeysToDropdown() {
+	private void addRSAAndDSAKeysToDropdown(){
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		int i = 0;
 		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {

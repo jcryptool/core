@@ -12,7 +12,7 @@ public class Messages extends NLS {
 	private Messages() {
 	}
 
-	public static String CAListener_msg_boxtitle_cert_revoked;
+	public static String CAListener_msgbox_title_cert_revoked;
 	public static String CAListener_msgbox_text_cert_created;
 	public static String CAListener_msgbox_text_cert_not_created;
 	public static String CAListener_msgbox_text_cert_not_revoked;
