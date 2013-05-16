@@ -245,5 +245,15 @@ public class Util {
 		}
 		return false;
 	}
+	
+	public static KeyStoreAlias getAliasForHash(String hash) {
+		KeyStoreManager mng = KeyStoreManager.getInstance();
+		for(KeyStoreAlias al : mng.getAllPublicKeys()){
+			if(al.getHashValue().equals(hash)) {
+				return al;
+			}
+		}
+		return null;
+	}
 
 }
