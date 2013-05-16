@@ -5,7 +5,7 @@ import javax.crypto.*;
 
 public class SigGeneration {
 	public static String signature;
-	
+
 	/**
 	 * This method signed a hash stored in Hash.jave with a given signature
 	 * method.
@@ -19,25 +19,21 @@ public class SigGeneration {
 	 */
 	public static byte[] SignInput(String signaturemethod, byte[] input)
 			throws Exception {
-		
+
 		// get String to generate the key
 		String keySig = null;
-		if (signaturemethod == "SHA1withDSA") {
-			keySig = "DSA";
+		// Generators are currently available for RSA and DSA.
+		if (signaturemethod == "MD5withRSA" || signaturemethod == "SHA1withRSA"
+				|| signaturemethod == "SHA256withRSA"
+				|| signaturemethod == "SHA384withRSA"
+				|| signaturemethod == "SHA512withRSA"
+				|| signaturemethod == "SHA1withRSAandMGF1"
+				|| signaturemethod == "SHA256withRSAandMGF1"
+				|| signaturemethod == "SHA384withRSAandMGF1"
+				|| signaturemethod == "SHA512withRSAandMGF1") {
+			keySig = "RSA";
 		} else {
-			if (signaturemethod == "MD5withRSA"
-					|| signaturemethod == "SHA1withRSA"
-					|| signaturemethod == "SHA256withRSA"
-					|| signaturemethod == "SHA384withRSA"
-					|| signaturemethod == "SHA512withRSA"
-					|| signaturemethod == "SHA1withRSAandMGF1"
-					|| signaturemethod == "SHA256withRSAandMGF1"
-					|| signaturemethod == "SHA384withRSAandMGF1"
-					|| signaturemethod == "SHA512withRSAandMGF1") {
-				keySig = "RSA";
-			} else {
-				keySig = "EC";
-			}
+			keySig = "DSA";
 		}
 
 		// Generate keypair
@@ -51,10 +47,10 @@ public class SigGeneration {
 		sig.initSign(key.getPrivate());
 		sig.update(input);
 		byte[] signatureArray = sig.sign();
-		
-		signature = new String (Hash.bytesToHex(signatureArray)); //Hex String
+
+		signature = new String(Hash.bytesToHex(signatureArray)); // Hex String
 		org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;
-		
+
 		return signatureArray;
 	}
 
