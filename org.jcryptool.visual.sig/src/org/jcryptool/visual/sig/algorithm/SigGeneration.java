@@ -4,7 +4,8 @@ import java.security.*;
 import javax.crypto.*;
 
 public class SigGeneration {
-
+	public static String signature;
+	
 	/**
 	 * This method signed a hash stored in Hash.jave with a given signature
 	 * method.
@@ -18,9 +19,9 @@ public class SigGeneration {
 	 */
 	public static byte[] SignInput(String signaturemethod, byte[] input)
 			throws Exception {
-		String keySig = null;
-
+		
 		// get String to generate the key
+		String keySig = null;
 		if (signaturemethod == "SHA1withDSA") {
 			keySig = "DSA";
 		} else {
@@ -44,28 +45,17 @@ public class SigGeneration {
 		keyGen.initialize(1024);
 		KeyPair key = keyGen.generateKeyPair();
 
-		/*
-		 * //Encrypt the md to create Signature Cipher cipher =
-		 * Cipher.getInstance(signaturemethod); cipher.init(Cipher.ENCRYPT_MODE,
-		 * key.getPrivate());
-		 * 
-		 * byte[] cipherText = cipher.doFinal(input);
-		 * org.jcryptool.visual.sig.algorithm.Input.signature = cipherText;
-		 * 
-		 * return cipherText;
-		 */
-
-		// TODO!!!
-
 		// Get a signature object using the MD5 and RSA combo
-		// and sign the input with the private key,ay
+		// and sign the input with the private key
 		Signature sig = Signature.getInstance(signaturemethod);
 		sig.initSign(key.getPrivate());
 		sig.update(input);
-		byte[] signature = sig.sign();
-		org.jcryptool.visual.sig.algorithm.Input.signature = signature;
+		byte[] signatureArray = sig.sign();
 		
-		return signature;
+		signature = new String (Hash.bytesToHex(signatureArray)); //Hex String
+		org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;
+		
+		return signatureArray;
 	}
 
 }
