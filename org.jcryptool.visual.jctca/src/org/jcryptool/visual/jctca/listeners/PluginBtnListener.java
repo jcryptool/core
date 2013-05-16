@@ -11,6 +11,9 @@ import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.JCTCA_Visual;
 import org.jcryptool.visual.jctca.ResizeHelper;
 
+/*
+ * Listener Class for the buttons at the start of the plugin
+ */
 public class PluginBtnListener implements SelectionListener {
 
 	JCTCA_Visual visual;
@@ -36,7 +39,7 @@ public class PluginBtnListener implements SelectionListener {
 		Composite comp_image = lbl_img.getParent();
 		//get the button that was pressed
 		Button btn = (Button) arg0.getSource();
-		//check what button it was: 0 = create, 1 = revoke, 2 = check, 3 = continue to plugin (see JCTCA_Visual.java)
+		//check which button it was: 0 = create, 1 = revoke, 2 = check, 3 = continue to plugin (see JCTCA_Visual.java)
 		Integer data = (Integer) btn.getData();
 		int pressed = data.intValue();
 		ResizeHelper util = new ResizeHelper();
