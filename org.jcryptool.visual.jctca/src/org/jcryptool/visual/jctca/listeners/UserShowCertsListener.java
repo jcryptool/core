@@ -93,7 +93,7 @@ public class UserShowCertsListener implements SelectionListener {
 		lbl_value_common.setText(rdn.getFirst().getValue().toString());
 		
 		lbl_value_org.setText(Messages.UserShowCertsListener_not_part_of_cert);
-		lbl_value_orgUnit.setText("<nicht Teil des Zertifikats>");
+		lbl_value_orgUnit.setText(Messages.UserShowCertsListener_not_part_of_cert);
 		
 		rdn = x500name.getRDNs(BCStyle.L)[0];
 		lbl_value_city.setText(rdn.getFirst().getValue().toString());

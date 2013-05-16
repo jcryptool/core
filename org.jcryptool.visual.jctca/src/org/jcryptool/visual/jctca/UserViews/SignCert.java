@@ -46,7 +46,7 @@ public class SignCert implements Views {
 		cmp_mini.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false,true,1,1));
 		
 		selected_file = new Label(cmp_mini, SWT.NONE);
-		selected_file.setText("");
+		selected_file.setText(""); //$NON-NLS-1$
 		Button btn_deselect_file = new Button(cmp_mini,SWT.NONE);
 		btn_deselect_file.setText(Messages.SignCert_btn_cancel_file_selection);
 		btn_deselect_file.setData("deselect");//$NON-NLS-1$

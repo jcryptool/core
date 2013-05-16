@@ -28,21 +28,21 @@ public class SigVisPluginOpenListener implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		if (lbl_file.getText() != "") {
+		if (lbl_file.getText() != "") { //$NON-NLS-1$
 			System.out.println(lbl_file.getText());
 		}else{
 			System.out.println(txt_sign.getText());
 		}
 		String selected = cmb_keys.getText();
-		String hash = selected.split("Hash: ")[1];
-		hash = hash.split(" ")[0];
+		String hash = selected.split("Hash: ")[1]; //$NON-NLS-1$
+		hash = hash.split(" ")[0]; //$NON-NLS-1$
 		KeyStoreAlias pubAlias = Util.getAliasForHash(hash);
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
 		if (btn_check.getSelection() == true) {
 			try {
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage()
-						.showView("org.jcryptool.visual.sig.view");
+						.showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
 			} catch (PartInitException e1) {
 				LogUtil.logError(e1);
 			}

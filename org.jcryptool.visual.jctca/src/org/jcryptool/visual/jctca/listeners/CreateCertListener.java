@@ -87,8 +87,8 @@ public class CreateCertListener implements SelectionListener {
 			if (checkFields()) {
 				sendCSR();
 			} else {
-				Util.showMessageBox("Leeres Feld!",
-						"Bitte füllen Sie alle Felder aus.",
+				Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
+						Messages.CreateCertListener_msgbox_text_not_all_fields_set,
 						SWT.ICON_INFORMATION);
 			}
 		}
