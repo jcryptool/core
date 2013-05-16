@@ -11,5 +11,5 @@ public class Input {
 	
 	public static byte[] signature; //Contains the signature of the input data
 	
-	public static byte[] privateKey; //Contains the private key used to sign the data
+	public static long privateKey; //Contains the private key used to sign the data
 }
