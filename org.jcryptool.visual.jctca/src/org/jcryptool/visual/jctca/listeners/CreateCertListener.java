@@ -68,7 +68,7 @@ public class CreateCertListener implements SelectionListener {
 			FileDialog f = new FileDialog(
 					Display.getCurrent().getActiveShell(), SWT.OPEN);
 			f.setFilterExtensions(new String[] {
-					"*.jpg", "*.gif", "*.bmp", "*.gif" });//$NON-NLS-1$
+					"*.jpg", "*.gif", "*.bmp", "*.gif" });//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			path = f.open();
 			if (path != null) {
 				src.setText(path);
@@ -78,8 +78,8 @@ public class CreateCertListener implements SelectionListener {
 			if (checkFields()) {
 				generateNewRSAKeyPair();
 			} else {
-				Util.showMessageBox("Leeres Feld!",
-						"Bitte füllen Sie alle Felder aus.",
+				Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
+						Messages.CreateCertListener_msgbox_text_not_all_fields_set,
 						SWT.ICON_INFORMATION);
 			}
 			break;
@@ -106,8 +106,8 @@ public class CreateCertListener implements SelectionListener {
 				txt_zip.getText(), txt_town.getText(), txt_country.getText(),
 				txt_mail.getText(), path, pubAlias, privAlias);
 		Util.showMessageBox(
-				"CSR abgeschickt",
-				"Ihr CSR wurde an die RA weitergeleitet. Damit sind Sie in der Ansicht \"Benutzer\" zunächst einmal fertig. Bitte wechseln Sie in die Ansicht \"Registration Authority.\"",
+				Messages.CreateCertListener_msgbox_title_csr_to_ca,
+				Messages.CreateCertListener_msgbox_text_csr_to_ca,
 				SWT.ICON_INFORMATION);
 	}
 
@@ -135,7 +135,7 @@ public class CreateCertListener implements SelectionListener {
 											.getExponent(), privateKey.getP(),
 									privateKey.getQ(), privateKey.getDP(),
 									privateKey.getDQ(), privateKey.getQInv()));
-			String name = txt_first_name.getText() + " "
+			String name = txt_first_name.getText() + " " //$NON-NLS-1$
 					+ txt_last_name.getText();
 			KeyStoreAlias privAlias = new KeyStoreAlias(name,
 					KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
@@ -151,7 +151,7 @@ public class CreateCertListener implements SelectionListener {
 					privAlias, pubAlias);
 			System.out.println(pubAlias.getContactName());
 			String entry = pubAlias.getContactName()
-					+ " (Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$
+					+ " (Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$ //$NON-NLS-2$
 			cmb_keys.add(entry);
 			cmb_keys.getParent().layout();
 			cmb_keys.select(cmb_keys.getItemCount() - 1);

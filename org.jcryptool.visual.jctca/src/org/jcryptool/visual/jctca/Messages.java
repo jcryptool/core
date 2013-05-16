@@ -11,4 +11,14 @@ public class Messages extends NLS {
 
 	private Messages() {
 	}
+
+	public static String JCTCA_Visual_archpic_create_text;
+	public static String JCTCA_Visual_btn_continue_to_plugin;
+	public static String JCTCA_Visual_btn_show_archpic_check;
+	public static String JCTCA_Visual_btn_show_archpic_create;
+	public static String JCTCA_Visual_btn_show_archpic_revoke;
+	public static String JCTCA_Visual_grp_explain_headline;
+	public static String JCTCA_Visual_Plugin_Headline;
+	public static String Util_CSR_Tree_Head;
+	public static String Util_RR_Tree_Head;
 }

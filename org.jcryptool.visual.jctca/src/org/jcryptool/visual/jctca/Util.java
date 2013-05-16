@@ -46,7 +46,6 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CRLEntry;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
-import org.jcryptool.visual.jctca.CertificateViews.Messages;
 
 @SuppressWarnings("deprecation")
 public class Util {
@@ -61,8 +60,8 @@ public class Util {
 			priv = mng.getPrivateKey(csr.getPrivAlias(),
 					KeyStoreManager.getDefaultKeyPassword());
 			return Util.certificateForKeyPair(
-					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),
-					csr.getStreet(), csr.getTown(), "", "", csr.getMail(), pub,
+					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),//$NON-NLS-1$
+					csr.getStreet(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
 					priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -82,17 +81,12 @@ public class Util {
 														// certificate for
 
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
-			X509Name subjectName = new X509Name("CN=" + principal + ", " + // commonname
-					"ST=" + street + ", " + // street
-					"L=" + city + ", " + "C=" + country + ", " + // land
-					"OU=" + unit + ", " + // organisationseinheit
-					"O=" + organisation + ", " + // organisation
-					"E=" + mail); // evtl SERIALNUMBER
-			// organisation
-			// organisationseinheit
-			// ort
-			// land
-			// mail
+			X509Name subjectName = new X509Name("CN=" + principal + ", " + //$NON-NLS-1$ //$NON-NLS-2$
+					"ST=" + street + ", " + //$NON-NLS-1$ //$NON-NLS-2$
+					"L=" + city + ", " + "C=" + country + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					"OU=" + unit + ", " + //$NON-NLS-1$ //$NON-NLS-2$
+					"O=" + organisation + ", " + //$NON-NLS-1$ //$NON-NLS-2$
+					"E=" + mail); //$NON-NLS-1$
 
 			certGen.setSerialNumber(serialNumber);
 			if (caCert != null) {
@@ -115,11 +109,11 @@ public class Util {
 			certGen.setNotAfter(expiryDate);
 			certGen.setSubjectDN(subjectName);
 			certGen.setPublicKey(keyPair.getPublic());
-			certGen.setSignatureAlgorithm("SHA512withRSA");
+			certGen.setSignatureAlgorithm("SHA512withRSA");//$NON-NLS-1$
 
 			X509Certificate cert;
 
-			cert = certGen.generate(caKey, "BC");
+			cert = certGen.generate(caKey, "BC");//$NON-NLS-1$
 			return cert;
 		} catch (CertificateEncodingException e) {
 			// TODO Auto-generated catch block
@@ -160,10 +154,10 @@ public class Util {
 		// getEncoded() is necessary...
 		PublicKey pubKey;
 		try {
-			pubKey = KeyFactory.getInstance("RSA").generatePublic(
+			pubKey = KeyFactory.getInstance("RSA").generatePublic(//$NON-NLS-1$
 					new RSAPublicKeySpec(publicKey.getModulus(), publicKey
 							.getExponent()));
-			PrivateKey privKey = KeyFactory.getInstance("RSA").generatePrivate(
+			PrivateKey privKey = KeyFactory.getInstance("RSA").generatePrivate(//$NON-NLS-1$
 					new RSAPrivateCrtKeySpec(publicKey.getModulus(), publicKey
 							.getExponent(), privateKey.getExponent(),
 							privateKey.getP(), privateKey.getQ(), privateKey
@@ -184,9 +178,9 @@ public class Util {
 
 	public static void createRootNodes(Tree tree) {
 		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
-		tree_item_csr.setText(Messages.ShowReq_CertReqs);
+		tree_item_csr.setText(Messages.Util_CSR_Tree_Head);
 		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
-		tree_item_crl.setText(Messages.ShowReq_RevReqs);
+		tree_item_crl.setText(Messages.Util_RR_Tree_Head);
 
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);
@@ -205,9 +199,9 @@ public class Util {
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
-			if (ksAlias.getOperation().contains("RSA")
+			if (ksAlias.getOperation().contains("RSA")//$NON-NLS-1$
 					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)
-					&& !(ksAlias.getContactName().contains("JCT-CA Root Certificates"))) {
+					&& !(ksAlias.getContactName().contains("JCT-CA Root Certificates"))) {//$NON-NLS-1$
 				RSAAndDSAPublicKeys.add(ksAlias);
 			} 
 		}
@@ -229,7 +223,7 @@ public class Util {
 		// create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
 		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];
-		if (rdn.getFirst().getValue().toString().equals("JCT-CA Visual")) {
+		if (rdn.getFirst().getValue().toString().equals("JCT-CA Visual")) {//$NON-NLS-1$
 			return true;
 		} else {
 			return false;

@@ -24,7 +24,7 @@ public class UserTab {
 	public UserTab(TabFolder parent, Group exp, int style) {
 		// define the layout for the whole TabItem
 		TabItem tab = new TabItem(parent, SWT.NONE);
-		tab.setText("Benutzer");
+		tab.setText(Messages.UserTab_tabitem_name);
 		Group grp_userTab = new Group(parent, SWT.NONE);
 		grp_userTab.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
 				false, 1, 1));
@@ -48,19 +48,19 @@ public class UserTab {
 				siCert, grp_exp, right);
 
 		Button btn_create_cert = new Button(left, SWT.PUSH);
-		btn_create_cert.setText("Neues Zertifikat anfordern");
+		btn_create_cert.setText(Messages.UserTab_btn_get_new_cert);
 		btn_create_cert.setData(0); //set data for listener - see SideBarListener.java
 		btn_create_cert.addSelectionListener(list_side);
 		btn_create_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		Button btn_show_cert = new Button(left, SWT.PUSH);
-		btn_show_cert.setText("Eigene Zertifikate verwalten");
+		btn_show_cert.setText(Messages.UserTab_btn_manage_certs);
 		btn_show_cert.setData(1);
 		btn_show_cert.addSelectionListener(list_side);
 		btn_show_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		Button btn_sign_stuff = new Button(left, SWT.PUSH);
-		btn_sign_stuff.setText("Text oder Datei signieren");
+		btn_sign_stuff.setText(Messages.UserTab_btn_sign_text_or_file);
 		btn_sign_stuff.setData(2);
 		btn_sign_stuff.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_sign_stuff.addSelectionListener(list_side);

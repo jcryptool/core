@@ -88,17 +88,17 @@ public class CAListener implements SelectionListener{
 				mng.addKeyPair(kp.getPrivate(), 
 								cert, 
 								KeyStoreManager.getDefaultKeyPassword().toString(), 
-								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()), 
-								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString()));
+								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				this.removeEntry(sel);
-				Util.showMessageBox("Zertifikat widerrufen", "Sie haben erfolgreich Ihr Zertifikat widerrufen.", SWT.ICON_INFORMATION);
+				Util.showMessageBox(Messages.CAListener_msg_boxtitle_cert_revoked, Messages.CAListener_msgbox_text_cert_revoked, SWT.ICON_INFORMATION);
 
 			}
 		}
 		else if(src.equals(reject)){
 			TreeItem sel = requests.getSelection()[0];
 			this.removeEntry(sel);
-			Util.showMessageBox("Zertifikat nicht widerrufen", "Das Zertifikat wurde nicht widerrufen.", SWT.ICON_INFORMATION);
+			Util.showMessageBox(Messages.CAListener_msgbox_title_cert_not_revoked, Messages.CAListener_msgbox_text_cert_not_revoked, SWT.ICON_INFORMATION);
 
 		}
 	}
@@ -112,8 +112,8 @@ public class CAListener implements SelectionListener{
 			CertificateCSRR csrr = CertificateCSRR.getInstance();
 			Date startDate = new Date(System.currentTimeMillis());// time from which certificate is valid
 			Date expiryDate = new Date(System.currentTimeMillis()+ (10*5*60*60*1000));
-			System.out.println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay());
-			BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate
+			System.out.println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate //$NON-NLS-1$
 			
 			AsymmetricCipherKeyPair keypair = csrr.getCAKey(keys.getSelectionIndex());
 			KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
@@ -123,7 +123,7 @@ public class CAListener implements SelectionListener{
 				PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.getDefaultKeyPassword());
 				this.removeEntry(sel);
 				mng.addKeyPair(priv,cert, new String(KeyStoreManager.getDefaultKeyPassword()), csr.getPrivAlias(),csr.getPubAlias());
-				Util.showMessageBox("Zertifikat erstellt", "Gratuliere, Sie haben ein Zertifikat erstellt. Dieses finden Sie nun in der Ansicht \"Benutzer\" unter \"Eigene Zertifikate verwalten.\"", SWT.ICON_INFORMATION);
+				Util.showMessageBox(Messages.CAListener_msgbox_title_cert_created, Messages.CAListener_msgbox_text_cert_created, SWT.ICON_INFORMATION);
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -133,7 +133,7 @@ public class CAListener implements SelectionListener{
 		else if(src.equals(reject)){
 			TreeItem sel = requests.getSelection()[0];
 			this.removeEntry(sel);
-			Util.showMessageBox("Zertifikat nicht erstellt", "Sie haben den CSR abgelehnt. Wechseln Sie bitte in die Ansicht \"Benutzer\" um erneut einen CSR zu erstellen.", SWT.ICON_INFORMATION);
+			Util.showMessageBox(Messages.CAListener_msgbox_title_cert_not_created, Messages.CAListener_msgbox_text_cert_not_created, SWT.ICON_INFORMATION);
 
 		}
 		

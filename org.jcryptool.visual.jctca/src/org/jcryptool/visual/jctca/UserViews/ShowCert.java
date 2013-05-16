@@ -72,7 +72,7 @@ public class ShowCert implements Views {
 		showCertGroup.setLayout(new GridLayout(2, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		showCertGroup.setLayoutData(gd_grp);
-		showCertGroup.setText("Zertifikate verwalten");
+		showCertGroup.setText(Messages.ShowCert_headline);
 
 		left = new Composite(showCertGroup, SWT.NONE);
 		left.setLayout(new GridLayout(1, true));
@@ -88,68 +88,68 @@ public class ShowCert implements Views {
 
 		lbl_issued_to = new Label(right, SWT.NONE);
 		lbl_issued_to.setFont(FontService.getNormalBoldFont());
-		lbl_issued_to.setText("Ausgestellt f\u00FCr: ");
+		lbl_issued_to.setText(Messages.ShowCert_lbl_issued_to);
 		lbl_plain = new Label(right, SWT.NONE);
 
 		lbl_common = new Label(right, SWT.NONE);
-		lbl_common.setText("Common Name: ");
+		lbl_common.setText(Messages.ShowCert_lbl_subject_cn);
 		lbl_value_common = new Label(right, SWT.None);
 
 		lbl_org = new Label(right, SWT.None);
-		lbl_org.setText("Organisation: ");
+		lbl_org.setText(Messages.ShowCert_lbl_subject_o);
 		lbl_value_org = new Label(right, SWT.None);
 
 		lbl_orgUnit = new Label(right, SWT.None);
-		lbl_orgUnit.setText("Organisationseinheit: ");
+		lbl_orgUnit.setText(Messages.ShowCert_lbl_subject_ou);
 		lbl_value_orgUnit = new Label(right, SWT.None);
 
 		lbl_city = new Label(right, SWT.None);
-		lbl_city.setText("Ort: ");
+		lbl_city.setText(Messages.ShowCert_lbl_subject_l);
 		lbl_value_city = new Label(right, SWT.None);
 
 		lbl_country = new Label(right, SWT.None);
-		lbl_country.setText("Land: ");
+		lbl_country.setText(Messages.ShowCert_lbl_subject_c);
 		lbl_value_country = new Label(right, SWT.None);
 
 		lbl_mail = new Label(right, SWT.None);
-		lbl_mail.setText("E-Mail: ");
+		lbl_mail.setText(Messages.ShowCert_lbl_subject_e);
 		lbl_value_mail = new Label(right, SWT.None);
 
 		lbl_plain1 = new Label(right, SWT.NONE);
 		lbl_plain2 = new Label(right, SWT.NONE);
 		lbl_issued_by = new Label(right, SWT.NONE);
 		lbl_issued_by.setFont(FontService.getNormalBoldFont());
-		lbl_issued_by.setText("Ausgestellt von");
+		lbl_issued_by.setText(Messages.ShowCert_lbl_issued_by);
 		lbl_plain3 = new Label(right, SWT.NONE);
 
 		lbl_common_by = new Label(right, SWT.NONE);
-		lbl_common_by.setText("Common Name: ");
+		lbl_common_by.setText(Messages.ShowCert_lbl_issuer_cn);
 		lbl_value_common_by = new Label(right, SWT.None);
 
 		lbl_org_by = new Label(right, SWT.None);
-		lbl_org_by.setText("Organisation: ");
+		lbl_org_by.setText(Messages.ShowCert_lbl_issuer_o);
 		lbl_value_org_by = new Label(right, SWT.None);
 
 		lbl_orgUnit_by = new Label(right, SWT.None);
-		lbl_orgUnit_by.setText("Organisationseinheit: ");
+		lbl_orgUnit_by.setText(Messages.ShowCert_lbl_issuer_ou);
 		lbl_value_orgUnit_by = new Label(right, SWT.None);
 
 		lbl_plain4 = new Label(right, SWT.NONE);
 		lbl_plain5 = new Label(right, SWT.NONE);
 		lbl_issue_date = new Label(right, SWT.NONE);
 		lbl_issue_date.setFont(FontService.getNormalBoldFont());
-		lbl_issue_date.setText("G\u00FCltigkeitsdatum");
+		lbl_issue_date.setText(Messages.ShowCert_lbl_validity_perios);
 		lbl_plain6 = new Label(right, SWT.NONE);
 
 		lbl_issued_on = new Label(right, SWT.None);
-		lbl_issued_on.setText("Ausgestellt am: ");
+		lbl_issued_on.setText(Messages.ShowCert_lbl_issued_on);
 		lbl_value_issued_on = new Label(right, SWT.None);
 		lbl_expired_on = new Label(right, SWT.None);
-		lbl_expired_on.setText("G\u00FCltig bis: ");
+		lbl_expired_on.setText(Messages.ShowCert_lbl_expires_on);
 		lbl_value_expired_on = new Label(right, SWT.None);
 		
 		btn_revoke = new Button(right, SWT.PUSH);
-		btn_revoke.setText("Zertifikat widerrufen");
+		btn_revoke.setText(Messages.ShowCert_btn_revoke_cert);
 		GridData revoke_gd = new GridData();
 		revoke_gd.horizontalSpan=2;
 		btn_revoke.setLayoutData(revoke_gd);
@@ -163,7 +163,7 @@ public class ShowCert implements Views {
 		lbl_plain8 = new Label(right, SWT.NONE);
 
 		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText("In dieser Ansicht k\u00F6nnen Sie Ihre bereits ausgestellten Zertifikate ansehen. Die hier angezeigten Felder entsprechen dem X.509 Standard für digitale Zertifikate. Zuerst können Sie sehen, für wen das Zertifikat ausgestellt wurde. Der Common Name ist in diesem Fall der Name, den Sie bei der Erstellung Ihres CSR angegeben haben. Hier könnte aber auch eine E-Mail-Adresse oder der Name einer Firma stehen. Mehr zu den verschiedenen Arten von Zertifikaten lesen Sie in der Onlinehilfe.\n");
+		lbl_exp.setText(Messages.ShowCert_explain_text);
 		composite.setVisible(false);
 	}
 
@@ -174,11 +174,11 @@ public class ShowCert implements Views {
 			if (Util.isSignedByJCTCA(ksAlias) == false) {
 				continue;
 			}
-			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
-			if (ksAlias.getOperation().contains("RSA")) {
-				ListEntry += "RSA)";
+			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$
+			if (ksAlias.getOperation().contains("RSA")) { //$NON-NLS-1$
+				ListEntry += "RSA)"; //$NON-NLS-1$
 			} else {
-				ListEntry += "DSA)";
+				ListEntry += "DSA)"; //$NON-NLS-1$
 			}
 			lst_certs.add(ListEntry);
 			lst_certs.setData(Integer.toString(i), ksAlias);

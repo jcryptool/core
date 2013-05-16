@@ -35,50 +35,54 @@ public class ShowReq implements Views {
 		GridData gd_comp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		composite.setLayoutData(gd_comp);
 
-		//left = composite for tree
+		// left = composite for tree
 		left = new Composite(composite, SWT.NONE);
 		left.setLayout(new GridLayout(1, true));
 		left.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		// showSelectedRequest = group for list of root certificates and two buttons (accept and reject) 
+		// showSelectedRequest = group for list of root certificates and two
+		// buttons (accept and reject)
 		Group showSelectedRequest = new Group(composite, SWT.NONE);
 		showSelectedRequest.setLayout(new GridLayout(2, true));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		showSelectedRequest.setLayoutData(gd_grp);
-		showSelectedRequest.setText(Messages.ShowReq_editCSR_RR);
+		showSelectedRequest.setText(Messages.ShowReq_grp_show_request_headline);
 
 		Tree tree = new Tree(left, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
+
 		Util.createRootNodes(tree);
 
 		lst_private_keys_ca = new List(showSelectedRequest, SWT.NONE);
 		lst_private_keys_ca.setLayoutData(new GridData(SWT.FILL, SWT.NONE,
 				true, true, 2, 1));
-		ArrayList<AsymmetricCipherKeyPair> caKeys = CertificateCSRR.getInstance().getCAKeys();
+		ArrayList<AsymmetricCipherKeyPair> caKeys = CertificateCSRR
+				.getInstance().getCAKeys();
 		int cnt = 1;
-		for(AsymmetricCipherKeyPair key : caKeys){
-			lst_private_keys_ca.add("Zertifikat " + cnt + ": " + key.getPublic().hashCode());
+		for (AsymmetricCipherKeyPair key : caKeys) {
+			lst_private_keys_ca.add(Messages.ShowReq_root_ca_entry_text + cnt
+					+ ": " + key.getPublic().hashCode());//$NON-NLS-1$
 			cnt++;
 		}
 		btn_accept_request = new Button(showSelectedRequest, SWT.NONE);
 		btn_accept_request
 				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_accept_request.setText(Messages.ShowReq_ReqGrant);
+		btn_accept_request.setText(Messages.ShowReq_btn_grant_cert);
 		btn_accept_request.setEnabled(false);
-		
+
 		btn_reject_request = new Button(showSelectedRequest, SWT.NONE);
 		btn_reject_request
 				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_reject_request.setText(Messages.ShowReq_ReqDeny);
+		btn_reject_request.setText(Messages.ShowReq_btn_reject_request);
 		btn_reject_request.setEnabled(false);
 
-		CAListener lst = new CAListener(tree, lst_private_keys_ca, btn_accept_request, btn_reject_request);
+		CAListener lst = new CAListener(tree, lst_private_keys_ca,
+				btn_accept_request, btn_reject_request);
 		tree.addSelectionListener(lst);
 		lst_private_keys_ca.addSelectionListener(lst);
 		btn_accept_request.addSelectionListener(lst);
 		btn_reject_request.addSelectionListener(lst);
-		
+
 	}
 
 	@Override

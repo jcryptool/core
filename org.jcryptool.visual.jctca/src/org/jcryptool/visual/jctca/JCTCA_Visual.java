@@ -93,7 +93,7 @@ public class JCTCA_Visual extends ViewPart {
 		headline.setFont(FontService.getHeaderFont());
 		headline.setBackground(WHITE);
 		// Set the headline text to the title of the plugin
-		headline.setText("JCrypTool Certificate Authority (JCT-CA)");
+		headline.setText(Messages.JCTCA_Visual_Plugin_Headline);
 		head_description = new StyledText(head_composite, SWT.READ_ONLY
 				| SWT.MULTI | SWT.WRAP);
 		head_description.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true,
@@ -101,7 +101,7 @@ public class JCTCA_Visual extends ViewPart {
 		// set the short introduction text for the certificate creation picture
 		// because this is the first text that needs to be shown
 		head_description
-				.setText("M\u00F6chte ein Benutzer beweisen, dass ein \u00F6ffentlicher Schl\u00FCssel tats\u00E4chlich zu einem privaten Schl\u00FCssel in seinem Besitz geh\u00F6rt, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) f\u00FCr seinen \u00F6ffentlichen Schl\u00FCssel und leitet diesen zusammen mit einem Identit\u00E4tsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA \u00FCberpr\u00FCft, ob es sich beim Antragsteller auch tats\u00E4chlich um die Person handelt, f\u00FCr die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA f\u00FCgt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zur\u00FCck an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
+				.setText(Messages.JCTCA_Visual_archpic_create_text);
 		// End - Header
 		showArchitecture();
 
@@ -138,25 +138,25 @@ public class JCTCA_Visual extends ViewPart {
 		lbl_img.setImage(help);
 		lbl_img.addControlListener(new ResizeListener(lbl_img, comp_image));
 		btn_showCreate = new Button(comp_buttons, SWT.PUSH);
-		btn_showCreate.setText("Zertifikatserzeugung zeigen");
+		btn_showCreate.setText(Messages.JCTCA_Visual_btn_show_archpic_create);
 		btn_showCreate.setData(new Integer(0)); //set data for the listener - see PluginBtnListener.java
 		btn_showCreate.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showRevoke = new Button(comp_buttons, SWT.PUSH);
-		btn_showRevoke.setText("Zertifikatswiderruf zeigen");
+		btn_showRevoke.setText(Messages.JCTCA_Visual_btn_show_archpic_revoke);
 		btn_showRevoke.setData(new Integer(1));
 		btn_showRevoke.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
-		btn_showCheck.setText("Signaturpr\u00FCfung zeigen");
+		btn_showCheck.setText(Messages.JCTCA_Visual_btn_show_archpic_check);
 		btn_showCheck.setData(new Integer(2));
 		btn_showCheck.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
 
 		btn_continue = new Button(comp_buttons, SWT.PUSH);
-		btn_continue.setText("Mit Plugin fortfahren");
+		btn_continue.setText(Messages.JCTCA_Visual_btn_continue_to_plugin);
 		btn_continue.setData(new Integer(3));
 		btn_continue.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
@@ -180,7 +180,7 @@ public class JCTCA_Visual extends ViewPart {
 				1);
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
-		grp_explain.setText("Erkl\u00E4rung");
+		grp_explain.setText(Messages.JCTCA_Visual_grp_explain_headline);
 		
 		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,

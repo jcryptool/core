@@ -30,16 +30,16 @@ public class SelectFileListener implements SelectionListener{
 	public void widgetSelected(SelectionEvent e) {
 		Button src = (Button) e.getSource();
 		FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-		String path = "";
-		if(path!=null && src.getData().equals("select")){
+		String path = ""; //$NON-NLS-1$
+		if(path!=null && src.getData().equals("select")){ //$NON-NLS-1$
 			path = fd.open();
 			lbl_selected_file.setText(path);
 			txt_text.setEnabled(false);
 			//set fontcolor to gray - looks like disabled
 			txt_text.setForeground(dark_gray);
 			deselect.setVisible(true);
-		}else if(path!=null && src.getData().equals("deselect")) {
-			lbl_selected_file.setText("");
+		}else if(path!=null && src.getData().equals("deselect")) { //$NON-NLS-1$
+			lbl_selected_file.setText(""); //$NON-NLS-1$
 			txt_text.setEnabled(true);
 			//set fontcolor to black - looks like enabled
 			txt_text.setForeground(black);

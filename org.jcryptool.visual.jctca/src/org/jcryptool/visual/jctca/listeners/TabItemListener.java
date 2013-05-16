@@ -40,7 +40,7 @@ public class TabItemListener implements SelectionListener {
 		// System.out.println(parent.getSelectionIndex());
 		Label lbl_exp = (Label) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
-			lbl_exp.setText("In der Ansicht \"Benutzer\" haben Sie die Möglichkeit, neue Zertifikate anzufordern, bereits ausgestellte Zertifikate zu verwalten sowie Texte oder Dateien zu signieren.\n\nWählen Sie eine der Aktionen aus, um fortzufahren und weitere Informationen zu erhalten. Wenn Sie dieses Plugin zum ersten Mal ausführen, empfiehlt es sich, mit \"Neues Zertifikat anfordern\" zu beginnen.");
+			lbl_exp.setText(Messages.TabItemListener_tab_user_explain);
 
 			Control[] x = (parent.getChildren());
 			if (x.length > 0) {
@@ -53,7 +53,7 @@ public class TabItemListener implements SelectionListener {
 				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
-			lbl_exp.setText("Die \"Registration Authority\" (RA) ist der Teil einer PKI, der für die Identitätsprüfung eines CSR zuständig ist. Im Zusammenhang mit einem persönlichen Zertifikat wie in diesem Fall muss also geprüft werden, ob der Antragsteller auch wirklich die Person ist, auf die das Zertifikat  ausgestellt werden soll.\n\nLinkerhand sehen Sie eine Liste von Zertifikatsanfragen. Wenn Sie eine davon auswählen, können Sie durch einen Klick auf den Button \"Identitätsprüfung vornehmen\" diesen prüfen. Sobald Sie das gemacht haben, können Sie den CSR entweder ablehnen oder an die CA weiterleiten.\n\nMehr über die Tätigkeit der RA erfahren Sie in der Onlinehilfe.");
+			lbl_exp.setText(Messages.TabItemListener_tab_ra_explain);
 			Group g1 = (Group) parent.getChildren()[1];
 			Group g2 = (Group) g1.getChildren()[0];
 			Composite c = (Composite) g2.getChildren()[0];
@@ -67,10 +67,7 @@ public class TabItemListener implements SelectionListener {
 			c.layout();
 			lst_csr.select(0);
 		} else if (parent.getSelectionIndex() == 2) {
-			lbl_exp.setText(Messages.TabItemListener_exp_txt_ca_tab0
-					+ Messages.TabItemListener_exp_txt_ca_tab1
-					+ Messages.TabItemListener_exp_txt_ca_tab2
-					+ Messages.TabItemListener_exp_txt_ca_tab3);
+			lbl_exp.setText(Messages.TabItemListener_tab_ca_explain);
 
 			Group g1 = (Group) parent.getChildren()[2];
 			Composite c = (Composite) g1.getChildren()[0];
@@ -84,12 +81,12 @@ public class TabItemListener implements SelectionListener {
 			ArrayList<RR> rr_list = CertificateCSRR.getInstance().getRevocations();
 			for(CSR csr : csr_list){
 				TreeItem tree_item_crl = new TreeItem(csrRoot, SWT.NONE);
-				tree_item_crl.setText("  " + csr.getFirst() + " " + csr.getLast());
+				tree_item_crl.setText("  " + csr.getFirst() + " " + csr.getLast());//$NON-NLS-1$ //$NON-NLS-2$
 				tree_item_crl.setData(csr);
 			}
 			for(RR rr : rr_list){
 				TreeItem tree_item_crl = new TreeItem(rrRoot, SWT.NONE);
-				tree_item_crl.setText(rr.getAlias().getContactName() + " - " + rr.getReason());
+				tree_item_crl.setText(rr.getAlias().getContactName() + " - " + rr.getReason());//$NON-NLS-1$
 				tree_item_crl.setData(rr);
 			}
 			csrRoot.setExpanded(true);
@@ -97,12 +94,7 @@ public class TabItemListener implements SelectionListener {
 			c1.layout();
 			
 		} else if (parent.getSelectionIndex() == 3) {
-			lbl_exp.setText(Messages.TabItemListener_exp_txt_sec_user_tab0
-					+ Messages.TabItemListener_exp_txt_sec_user_tab1
-					+ Messages.TabItemListener_exp_txt_sec_user_tab2
-					+ Messages.TabItemListener_exp_txt_sec_user_tab3);
-		} else if (parent.getSelectionIndex() == 4) {
-			lbl_exp.setText("Ein Tab, um den Keystore zu erkunden und zu verwalten.");
+			lbl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
 		}
 		parent.layout(true);
 		grp_exp.layout(true);

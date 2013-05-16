@@ -27,7 +27,7 @@ public class RevokeButtonListener implements SelectionListener {
 		// TODO Auto-generated method stub
 		
 		Button btn_revoke = (Button) e.getSource();
-		KeyStoreAlias ksAlias = (KeyStoreAlias) btn_revoke.getData("selected");
+		KeyStoreAlias ksAlias = (KeyStoreAlias) btn_revoke.getData("selected"); //$NON-NLS-1$
 		//tell the button to do nothing if no cert was selected
 		if (ksAlias == null){
 			return;

@@ -41,14 +41,14 @@ public class RevokeCertDialog extends Dialog {
 		Label lbl_explain = new Label(container, SWT.WRAP);
 		gd.widthHint = 550;
 		lbl_explain.setLayoutData(gd);
-		lbl_explain.setText("Sie sind kurz davor, Ihr Zertifikat zu widerrufen. Dies wird zur Folge haben, dass Signaturen nach dem Widerrufszeitpunkt nicht mehr gültig sind. Wenn Sie Ihr Zertifikat tatsächlich widerrufen wollen, wählen Sie einen der Gründe aus der Dropdownliste aus und klicken Sie auf \"Widerruf an die CA weiterleiten\"");
+		lbl_explain.setText(Messages.RevokeCertDialog_explain_text_revoke_cert);
 
 		reason = new Combo(container, SWT.DROP_DOWN);
 		GridData reason_gd = new GridData(SWT.LEFT, SWT.NONE, false, false);
 		reason_gd.widthHint=530;
 		reason.setLayoutData(reason_gd);
-		reason.add("Privater Schlüssel wurde kompromittiert.");
-		reason.add("Privater Schlüssel wurde verloren.");
+		reason.add(Messages.RevokeCertDialog_reason_privkey_compromised);
+		reason.add(Messages.RevokeCertDialog_reason_privkey_lost);
 		reason.select(0);
 		reason.pack(true);
 
@@ -61,12 +61,12 @@ public class RevokeCertDialog extends Dialog {
 	@Override
 	protected void okPressed(){
 		txt_reason = reason.getText();
-		Util.showMessageBox("RR weitergeleitet", "Der RR wurde an die Certification Authority weitergeleitet. Damit sind Sie in der Ansicht \"Benutzer\" zunächst fertig. Bitte wechseln Sie in die Ansicht \"Certification Authority\".", SWT.ICON_INFORMATION);
+		Util.showMessageBox(Messages.RevokeCertDialog_msgbox_title_rr_to_ca, Messages.RevokeCertDialog_msgbox_text_rr_to_ca, SWT.ICON_INFORMATION);
 		super.okPressed();
 	}
 	  @Override
 	  protected void createButtonsForButtonBar(Composite parent) {
-	    createButton(parent, IDialogConstants.OK_ID, "Widerruf an CA weiterleiten", true);
+	    createButton(parent, IDialogConstants.OK_ID, Messages.RevokeCertDialog_btn_send_rr_to_ca, true);
 	    createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CANCEL_LABEL, false);
 	  }
 	  
@@ -77,7 +77,7 @@ public class RevokeCertDialog extends Dialog {
 	  @Override
 	  protected void configureShell(Shell shell){
 		  super.configureShell(shell);
-		  shell.setText("Zertifikat widerrufen");
+		  shell.setText(Messages.RevokeCertDialog_headline);
 	  }
 
 }

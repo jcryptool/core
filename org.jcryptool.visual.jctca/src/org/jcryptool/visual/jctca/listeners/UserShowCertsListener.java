@@ -92,7 +92,7 @@ public class UserShowCertsListener implements SelectionListener {
 		RDN rdn = x500name.getRDNs(BCStyle.CN)[0];
 		lbl_value_common.setText(rdn.getFirst().getValue().toString());
 		
-		lbl_value_org.setText("<nicht Teil des Zertifikats>");
+		lbl_value_org.setText(Messages.UserShowCertsListener_not_part_of_cert);
 		lbl_value_orgUnit.setText("<nicht Teil des Zertifikats>");
 		
 		rdn = x500name.getRDNs(BCStyle.L)[0];
@@ -115,14 +115,14 @@ public class UserShowCertsListener implements SelectionListener {
 		lbl_value_issued_on.setText(pubKey.getNotBefore().toString());
 		lbl_value_expired_on.setText(pubKey.getNotAfter().toString());
 		
-		btn_revoke.setData("selected", ksAlias);
+		btn_revoke.setData("selected", ksAlias); //$NON-NLS-1$
 		if(Util.isCertificateRevoked(pubKey.getSerialNumber())){
 			btn_revoke.setEnabled(false);
-			btn_revoke.setText("Zertifikat wurde bereits widerrufen");
+			btn_revoke.setText(Messages.UserShowCertsListener_btn_revoke_cert_was_revoked);
 		}
 		else{
 			btn_revoke.setEnabled(true);
-			btn_revoke.setText("Zertifikat widerrufen");
+			btn_revoke.setText(Messages.UserShowCertsListener_btn_revoke_cert);
 		}
 		lbl_value_common.getParent().layout();
 		
