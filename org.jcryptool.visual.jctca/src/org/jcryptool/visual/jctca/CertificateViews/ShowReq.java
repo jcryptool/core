@@ -15,11 +15,7 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.listeners.CAListener;
 
-/*
- * Certficiate Authority View
- * Shows CSRs and RRs and a list of root certificate for signing
- * 
- */
+
 public class ShowReq implements Views {
 	Composite composite;
 	Composite left;
@@ -29,6 +25,13 @@ public class ShowReq implements Views {
 	Button btn_accept_request;
 	Button btn_reject_request;
 
+	/**
+	 * Certificate Authority View
+	 * Shows CSRs and RRs and a list of root certificate for signing
+	 * 
+	 * @param content composite for showing the content of this view
+	 * @param exp composite for showing the explanation of this view
+	 **/
 	public ShowReq(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(3, true));
@@ -81,11 +84,18 @@ public class ShowReq implements Views {
 		
 	}
 
+	/**
+	 * Disposes the composite with all the content of this view
+	 **/
 	@Override
 	public void dispose() {
 		this.composite.dispose();
 	}
 
+	/**
+	 * Sets the composite of this view visible
+	 * @param visible boolean: true for visible, false for not visible
+	 **/
 	@Override
 	public void setVisible(boolean visible) {
 		composite.setVisible(visible);

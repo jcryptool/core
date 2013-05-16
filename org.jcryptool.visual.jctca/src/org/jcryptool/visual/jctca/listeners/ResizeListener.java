@@ -7,9 +7,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.ResizeHelper;
-/*
+/**
  * Listener for resizing images in the plugin
- */
+ * @param img label, which contains the resized image
+ * @param comp_image composite, which contains the label img
+ **/
 public class ResizeListener implements ControlListener {
 
 	Image image;
@@ -31,12 +33,15 @@ public class ResizeListener implements ControlListener {
 
 	}
 
+	/**
+	 * function for resizing the image to fit in the containing composite
+	 * @param e triggered event
+	 **/
 	@Override
 	public void controlResized(ControlEvent e) {
 		ResizeHelper util = new ResizeHelper();
 		String image_name = util.get_image_name();
 
-		System.out.println(e.getSource());
 		image = img.getImage();
 		if (image != null) {
 			int width = image.getBounds().width;
@@ -45,13 +50,16 @@ public class ResizeListener implements ControlListener {
 			int width_scaled = 1;
 			int height_scaled = 1;
 
+			//if image is smaller
 			if ((comp_image.getBounds().width / comp_image.getBounds().height) < ratio) {
 				width_scaled = comp_image.getBounds().width;
 				height_scaled = (int) (height - ((width - width_scaled) / ratio));
 			} else {
+				//if image is bigger
 				height_scaled = comp_image.getBounds().height;
 				width_scaled = (int) (width - (height - height_scaled) * ratio);
 			}
+			//load matching image
 			if (image_name == "Architekturskizze Zertifikatserzeugung") {//$NON-NLS-1$
 				help = Activator.getImageDescriptor(
 						"icons/minica_create.png").createImage();//$NON-NLS-1$
@@ -66,6 +74,7 @@ public class ResizeListener implements ControlListener {
 						.createImage();
 			}
 
+			//create image in new size
 			img_scaled = new Image(img.getDisplay(), help.getImageData()
 					.scaledTo(width_scaled, height_scaled));
 			img.setImage(img_scaled);

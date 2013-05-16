@@ -9,7 +9,12 @@ import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.CertificateViews.ShowReq;
 
 public class CertificationTab {
-
+	/**
+	 * Generating Certification Tab 
+	 * @param parent TabFolder to which the new TabItem is added
+	 * @param exp Group in which the explanation is shown
+	 * @param style well, yeah, don't know
+	 **/
 	public CertificationTab(TabFolder parent, Group exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);
