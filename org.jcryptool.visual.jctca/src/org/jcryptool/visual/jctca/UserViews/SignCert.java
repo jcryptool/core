@@ -1,6 +1,8 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -9,10 +11,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.SelectFileListener;
+import org.jcryptool.visual.jctca.listeners.SigVisPluginOpenListener;
 
 public class SignCert implements Views {
 
@@ -41,6 +46,7 @@ public class SignCert implements Views {
 		cmp_mini.setLayoutData(new GridData(SWT.FILL, SWT.NONE, false,true,1,1));
 		
 		selected_file = new Label(cmp_mini, SWT.NONE);
+		selected_file.setText("");
 		Button btn_deselect_file = new Button(cmp_mini,SWT.NONE);
 		btn_deselect_file.setText(Messages.SignCert_btn_cancel_file_selection);
 		btn_deselect_file.setData("deselect");//$NON-NLS-1$
@@ -69,6 +75,8 @@ public class SignCert implements Views {
 
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
 		btn_sign.setText(Messages.SignCert_btn_sign_with_key);
+		btn_sign.addSelectionListener(new SigVisPluginOpenListener(btn_detail, selected_file, txt_sign, cmb_priv_key));
+			
 		Label lbl_exp = (Label) exp.getChildren()[0];
 		lbl_exp.setText(Messages.SignCert_explain_text);
 

@@ -9,7 +9,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
+/**
+ * Listener for selecting file in Tab "User" - Sign files or text
+ * @param lbl_selected_file label for shwowing the name of the selected file
+ * @param txt_text text area for typing in text to sign
+ * @param deselect button for deselect selected file
+ **/
 public class SelectFileListener implements SelectionListener{
 	
 	Label lbl_selected_file;
@@ -26,6 +31,12 @@ public class SelectFileListener implements SelectionListener{
 		this.deselect = deselect;
 	}
 
+	/**
+	 * Function if select file button is clicked
+	 * if a file is selected, disable text area and show button to deselect file
+	 * if a file is deselected enable text area and set button for delesection visible(false)
+	 * @param e triggered event
+	 **/
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		Button src = (Button) e.getSource();

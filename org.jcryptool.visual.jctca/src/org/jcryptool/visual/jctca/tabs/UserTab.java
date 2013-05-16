@@ -20,7 +20,12 @@ public class UserTab {
 	SignCert siCert;
 	Group grp_exp;
 	TabFolder parent;
-
+	/**
+	 * Generating User Tab 
+	 * @param parent TabFolder to which the new TabItem is added
+	 * @param exp Group in which the explanation is shown
+	 * @param style well, yeah, don't know
+	 **/
 	public UserTab(TabFolder parent, Group exp, int style) {
 		// define the layout for the whole TabItem
 		TabItem tab = new TabItem(parent, SWT.NONE);

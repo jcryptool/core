@@ -18,16 +18,51 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 
+
+/**
+ * Class containing everything regarding CSRs that have been sent to the CA,
+ * Revocation Requests, the CRL, CA-Certificates+Keys and the CRL.
+ * 
+ * Accessible from everywhere via .getInstance()
+ * @author mmacala
+ *
+ */
 @SuppressWarnings("deprecation")
 public class CertificateCSRR {
+	/**
+	 * the object instance of this class
+	 */
 	private static CertificateCSRR instance = null;
+	
+	/**
+	 * the CSRs that have been approved by the RA
+	 */
 	private ArrayList<CSR> approved_csrs;
+	
+	/**
+	 * revocation requests sent from users
+	 */
 	private ArrayList<RR> revRequests;
+	
+	/**
+	 * the keys from the CA to sign certificates
+	 */
 	private ArrayList<AsymmetricCipherKeyPair> caKeys;
+	
+	/**
+	 * the certificates from the CA
+	 */
 	private ArrayList<X509Certificate> certs;
+	
+	/**
+	 * the CRL containing all revoked Certificates
+	 */
 	private ArrayList<CRLEntry> crl;
-
-	private CertificateCSRR() {
+	
+	/**
+	 * private constructor, use getInstance()
+	 */
+	private CertificateCSRR(){
 		approved_csrs = new ArrayList<CSR>();
 		revRequests = new ArrayList<RR>();
 		caKeys = new ArrayList<AsymmetricCipherKeyPair>();
@@ -35,26 +70,37 @@ public class CertificateCSRR {
 		crl = new ArrayList<CRLEntry>();
 		checkCertificatesAndCRL();
 	}
-
-	public static CertificateCSRR getInstance() {
-		if (instance == null) {
+	
+	/**
+	 * Get the Instance of this class
+	 * @return Instance of CertificateCSRR
+	 */
+	public static CertificateCSRR getInstance(){
+		if(instance==null){
 			instance = new CertificateCSRR();
 		}
 		return instance;
 	}
-
-	public void checkCertificatesAndCRL() {
+	
+	/**
+	 * Checks if there are root certificates in the keystore. if not, creates and adds them to the keystore.
+	 * Also loads the revoked requests from the keystore and adds them to the CRL.
+	 */
+	public void checkCertificatesAndCRL(){
 		boolean certsExist = false;
 		KeyStoreManager mng = KeyStoreManager.getInstance();
-		for (KeyStoreAlias pubAlias : mng.getAllPublicKeys()) {
-			if (pubAlias.getContactName().contains("JCT-CA Root Certificates")) {//$NON-NLS-1$
+		//iterate through all public key aliases
+		for(KeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
+			if(pubAlias.getContactName().contains("JCT-CA Root Certificates")){//$NON-NLS-1$
+				//root certificates have been found, do not create new ones
 				certsExist = true;
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
 				if (c instanceof X509Certificate) {
 					certs.add((X509Certificate) c);
 				}
-			} else if (pubAlias.getContactName().contains(
-					"JCT-CA Certificate Revocation List")) {//$NON-NLS-1$
+			}
+			else if(pubAlias.getContactName().contains("JCT-CA Certificate Revocation List")){//$NON-NLS-1$
+				//revoked certificates have been found. add them to the CRL-ArrayList
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
 				if (c instanceof X509Certificate) {
 					long time = Long.parseLong(pubAlias.getOperation());
@@ -63,16 +109,19 @@ public class CertificateCSRR {
 				}
 			}
 		}
-		if (!certsExist) {
+		if(!certsExist){
+			//no certificates exist, create new ones
+			
 			// GENERATE THE PUBLIC/PRIVATE RSA KEY PAIR
 			RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
 			SecureRandom sr = new SecureRandom();
-			gen.init(new RSAKeyGenerationParameters(BigInteger.valueOf(3), sr,
-					1024, 80));
-
-			AsymmetricCipherKeyPair keypair = null;
-			for (int i = 0; i < 5; i++) {
-				keypair = gen.generateKeyPair();
+			gen.init(new RSAKeyGenerationParameters(BigInteger.valueOf(3),
+					sr, 1024, 80));
+			
+			AsymmetricCipherKeyPair keypair =null;
+			for(int i = 0; i<5; i++){
+				//generates 5 new self signed certificates and adds them to the keystore
+				keypair= gen.generateKeyPair();	
 				KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
 				// yesterday
 				Date validityBeginDate = new Date(System.currentTimeMillis()
@@ -97,7 +146,6 @@ public class CertificateCSRR {
 				try {
 					Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
 					cert = certGen.generate(kp.getPrivate(), "BC");//$NON-NLS-1$
-
 				} catch (Exception e) {
 
 				}
@@ -111,55 +159,109 @@ public class CertificateCSRR {
 			}
 		}
 	}
-
-	public void addCSR(CSR c) {
+	
+	/**
+	 * adds a CSR to the list, will then be shown in the CA view as an approved CSR
+	 * @param c - the CSR to be added
+	 */
+	public void addCSR(CSR c){
 		approved_csrs.add(c);
 	}
-
-	public ArrayList<CSR> getApproved() {
+	
+	/**
+	 * arraylist containing the approved 
+	 * @return arraylist with the CSRs
+	 */
+	public ArrayList<CSR> getApproved(){
 		return approved_csrs;
 	}
-
-	public AsymmetricCipherKeyPair getCAKey(int i) {
+	
+	/**
+	 * private ca-key for the index
+	 * @param i - the index 
+	 * @return private key
+	 */
+	public AsymmetricCipherKeyPair getCAKey(int i){
 		return caKeys.get(i);
 	}
-
-	public X509Certificate getCACert(int i) {
+	
+	/**
+	 * public ca-key for the index
+	 * @param i - the index
+	 * @return public key
+	 */
+	public X509Certificate getCACert(int i){
 		return certs.get(i);
 	}
-
-	public ArrayList<RR> getRevocations() {
+	
+	/**
+	 * list containing the revocation requests
+	 * @return the revocation requests
+	 */
+	public ArrayList<RR> getRevocations(){
 		return revRequests;
 	}
 
+	/**
+	 * list containing all private ca-keys
+	 * @return the private ca-keys
+	 */
 	public ArrayList<AsymmetricCipherKeyPair> getCAKeys() {
 		return caKeys;
 	}
 
-	public void removeCSR(int i) {
+	/**
+	 * removes a csr from the approved CSR-List
+	 * @param i - the index
+	 */
+	public void removeCSR(int i){
 		this.approved_csrs.remove(i);
 	}
 
-	public void removeCSR(CSR c) {
+	/**
+	 * removes a csr from the approved CSR-List
+	 * @param c - the csr object from the list, that should be removed
+	 */
+	public void removeCSR(CSR c){
 		this.approved_csrs.remove(c);
 	}
-
-	public void removeRR(RR r) {
+	
+	/**
+	 * removes a rr from the RR-List
+	 * @param r - the revocation request object from the list, that should be removed
+	 */
+	public void removeRR(RR r){
 		this.revRequests.remove(r);
 	}
-
-	public ArrayList<CRLEntry> getCRL() {
+	
+	/**
+	 * gets the current CRL
+	 * @return the CRL
+	 */
+	public ArrayList<CRLEntry> getCRL(){
 		return crl;
 	}
 
+	/**
+	 * adds the given rr to the rr-List
+	 * @param rr - the rr to be added
+	 */
 	public void addRR(RR rr) {
 		this.revRequests.add(rr);
 	}
-
-	public void addCRLEntry(CRLEntry crle) {
+	
+	/**
+	 * adds the given crl-entry to the crl-list
+	 * @param crle - the crl-entry to be added
+	 */
+	public void addCRLEntry(CRLEntry crle){
 		this.crl.add(crle);
 	}
 
+	/**
+	 * gets the list containing the revoked certificates
+	 * @return the revoked certificates
+	 */
 	public ArrayList<CRLEntry> getRevoked() {
 		// TODO Auto-generated method stub
 		return crl;

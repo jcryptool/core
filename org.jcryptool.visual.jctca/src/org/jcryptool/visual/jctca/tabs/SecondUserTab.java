@@ -9,7 +9,12 @@ import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.SecondUserViews.ShowSigData;
 
 public class SecondUserTab {
-
+	/**
+	 * Generating SecondUser Tab 
+	 * @param parent TabFolder to which the new TabItem is added
+	 * @param exp Group in which the explanation is shown
+	 * @param style well, yeah, don't know
+	 **/
 	public SecondUserTab(TabFolder parent, Group exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);
