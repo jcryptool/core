@@ -413,11 +413,16 @@ public class SigComposite extends Composite implements PaintListener {
                     	//get signature method (integer)
                     	signature = wiz.getSignature();
                     	lblSignature.setText(signatures[signature]);
+                    	
+                    	// Creates the signature for the calculated hash.
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(signatures[signature], org.jcryptool.visual.sig.algorithm.Input.hash);
+                    	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
                     	tabDescription.setSelection(3);
                     	canvas1.redraw();
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
+                    	// TODO show signature in textbox!!!
                     }
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
