@@ -425,7 +425,7 @@ public class SigComposite extends Composite implements PaintListener {
                     	int s = chooseSignature();     
                     	String sig = sigmethods[s];               	
                     	// Creates the signature for the calculated hash.
-                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sig, org.jcryptool.visual.sig.algorithm.Input.hash);
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sig, org.jcryptool.visual.sig.algorithm.Input.data);
                     	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
