@@ -58,7 +58,7 @@ public class ResizeListener implements ControlListener {
 			} else if (image_name == "Architekturskizze Zertifikatswiderruf") {//$NON-NLS-1$
 				help = Activator.getImageDescriptor("icons/minica_revoke.png")//$NON-NLS-1$
 						.createImage();
-			} else if (image_name == "Architekturskizze Signaturprüfung") {//$NON-NLS-1$
+			} else if (image_name == "Architekturskizze Signaturpr\u00FCfung") {//$NON-NLS-1$
 				help = Activator.getImageDescriptor("icons/minica_check.png")//$NON-NLS-1$
 						.createImage();
 			} else {

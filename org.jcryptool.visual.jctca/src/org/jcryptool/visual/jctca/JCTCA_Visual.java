@@ -101,7 +101,7 @@ public class JCTCA_Visual extends ViewPart {
 		// set the short introduction text for the certificate creation picture
 		// because this is the first text that needs to be shown
 		head_description
-				.setText("Möchte ein Benutzer beweisen, dass ein öffentlicher Schlüssel tatsächlich zu einem privaten Schlüssel in seinem Besitz gehört, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) für seinen öffentlichen Schlüssel und leitet diesen zusammen mit einem Identitätsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA überprüft, ob es sich beim Antragsteller auch tatsächlich um die Person handelt, für die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA fügt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zurück an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
+				.setText("M\u00F6chte ein Benutzer beweisen, dass ein \u00F6ffentlicher Schl\u00FCssel tats\u00E4chlich zu einem privaten Schl\u00FCssel in seinem Besitz geh\u00F6rt, kann er sich ein Zertifikat ausstellen lassen. Dazu erstellt der Benutzer einen \"Certificate Signing Request\" (CSR) f\u00FCr seinen \u00F6ffentlichen Schl\u00FCssel und leitet diesen zusammen mit einem Identit\u00E4tsnachweis (beispielsweise einer Ausweiskopie) an eine sogenannte \"Registration Authority\" (RA) weiter. Die RA \u00FCberpr\u00FCft, ob es sich beim Antragsteller auch tats\u00E4chlich um die Person handelt, f\u00FCr die das Zertifikat ausgestellt werden soll. Wenn dies der Fall ist, leitet sie den CSR an eine \"Certification Authority\" (CA) weiter. Die CA f\u00FCgt dem CSR dann ihre eigene Signatur hinzu, wodurch der CSR zu einem von dieser CA ausgestellten Zertifikat wird. Das Zertifikat geht zur\u00FCck an den Antragsteller. Die RA, die CA und die damit verbundenen Prozesse werden auch als \"Public-Key-Infrastruktur\" (PKI) bezeichnet.");
 		// End - Header
 		showArchitecture();
 
@@ -150,7 +150,7 @@ public class JCTCA_Visual extends ViewPart {
 				lbl_img, head_description));
 
 		btn_showCheck = new Button(comp_buttons, SWT.PUSH);
-		btn_showCheck.setText("Signaturprüfung zeigen");
+		btn_showCheck.setText("Signaturpr\u00FCfung zeigen");
 		btn_showCheck.setData(new Integer(2));
 		btn_showCheck.addSelectionListener(new PluginBtnListener(visual,
 				lbl_img, head_description));
@@ -180,7 +180,7 @@ public class JCTCA_Visual extends ViewPart {
 				1);
 		gd_explain.widthHint = 400;
 		grp_explain.setLayoutData(gd_explain);
-		grp_explain.setText("Erklärung");
+		grp_explain.setText("Erkl\u00E4rung");
 		
 		lbl_explain = new Label(grp_explain, SWT.WRAP);
 		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true,
