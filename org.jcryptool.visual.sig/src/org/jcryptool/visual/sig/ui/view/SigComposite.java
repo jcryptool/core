@@ -462,7 +462,7 @@ public class SigComposite extends Composite implements PaintListener {
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
 			case 0: btnHash.setEnabled(false); lblHash.setText(""); 
-			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); txtHash.setText("");
+			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); txtHash.setText(""); txtSignature.setText("");
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
 		}
