@@ -7,14 +7,21 @@ import java.math.BigInteger;
 import java.util.Date;
 
 /**
+ * An entry in the CRL containing the revocation time and the serial number of the revoked certificate
  * @author sho
- *
  */
 public class CRLEntry {
 	
-	//Serial number of revoked certificate
+	/**
+	 * serial number of the revoked certificate
+	 */
 	BigInteger sn;
+	
+	/**
+	 * time when the certificate has been revoked
+	 */
 	Date revokeTime;
+	
 	/**
 	 * generate new CRL Entry for the given serial number (hash)
 	 * 
