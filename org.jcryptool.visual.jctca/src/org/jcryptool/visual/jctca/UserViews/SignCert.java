@@ -30,11 +30,11 @@ public class SignCert implements Views {
 		signCertGroup.setLayout(new GridLayout(1, false));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.TOP, true, true);
 		signCertGroup.setLayoutData(gd_grp);
-		signCertGroup.setText(Messages.SignCert_sig_headline);
+		signCertGroup.setText("Signatur erstellen");
 
 		Button btn_select_file = new Button(signCertGroup, SWT.PUSH);
-		btn_select_file.setText(Messages.SignCert_get_file_btn);
-		btn_select_file.setData("select");
+		btn_select_file.setText("Datei ausw\u00E4hlen");
+		btn_select_file.setData("select");//$NON-NLS-1$
 		
 		Composite cmp_mini = new Composite(signCertGroup, SWT.NONE);
 		cmp_mini.setLayout(new GridLayout(2,false));
@@ -43,16 +43,16 @@ public class SignCert implements Views {
 		selected_file = new Label(cmp_mini, SWT.NONE);
 		Button btn_deselect_file = new Button(cmp_mini,SWT.NONE);
 		btn_deselect_file.setText("Auswahl aufheben");
-		btn_deselect_file.setData("deselect");
+		btn_deselect_file.setData("deselect");//$NON-NLS-1$
 		btn_deselect_file.setVisible(false);
 		
 		Label lbl_or = new Label(signCertGroup, SWT.CENTER);
-		lbl_or.setText(Messages.SignCert_or_headline);
+		lbl_or.setText("oder");
 
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 20);
 		Text txt_sign = new Text(signCertGroup, SWT.LEFT | SWT.MULTI
 				| SWT.BORDER);
-		txt_sign.setText(Messages.SignCert_dummy_enter_text);
+		txt_sign.setText("Text zum Signieren eingeben...");
 		txt_sign.setLayoutData(gd_txt);
 
 		
@@ -65,12 +65,12 @@ public class SignCert implements Views {
 		cmb_priv_key.select(0);
 
 		Button btn_detail = new Button(signCertGroup, SWT.CHECK);
-		btn_detail.setText(Messages.SignCert_visualized_sig_btn);
+		btn_detail.setText("Signaturvorgang visualisiert anzeigen");
 
 		Button btn_sign = new Button(signCertGroup, SWT.NONE);
-		btn_sign.setText(Messages.SignCert_sign_with_key_btn);
+		btn_sign.setText("Text mit ausgew\u00E4hltem Schl\u00FCssel signieren");
 		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText(Messages.SignCert_exp_txt0 + Messages.SignCert_exp_txt1);
+		lbl_exp.setText("In dieser Ansicht haben Sie die Möglichkeit, eine Datei auf Ihrem Computer oder den hier eingegebenen Text zu signieren. Signiert wird immer mit dem privaten Schlüssel eines Schlüsselpaares. Aus den privaten Schlüssel, für deren korrespondierenden öffentlichen Schlüssel Sie bereits Zertifikate ausgestellt bekommen haben, können Sie in der Dropdownliste auswählen. Der Text oder die Datei wird mit dem ausgewählten Schlüssel signiert. Die signierten Daten und die dazugehörige Signatur stehen danach in der Ansicht \"2. Benutzer\" zur Überprüfung zur Verfügung.\n\nWenn Sie genauer wissen wollen, was beim Erstellen einer Signatur mathematisch passiert, können Sie mittels \"Visualisiert signieren\" in ein JCrypTool-Plugin wechseln, das sich genauer mit Signaturen auseinandersetzt. Die Daten und Signaturen, die Sie in diesem Plugin erstellen, stehen danach ebenfalls in der Ansicht \"2. Benutzer\" zur Verfügung.\n\n\"Organisation\" und \"Organisationseinheit\" dienen dazu, Firmen, Organisationen und beispielsweise Abteilungen dieser Firma oder Organisation anzugeben. Da dieses Zertifikat auf eine Privatperson ausgestellt wurde, sind diese Felder einfach leer.\n\nNach den Angaben zum Zertifikatsinhaber folgen die Informationen über die CA, welche das Zertifikat ausgestellt hat. Zuletzt beinhaltet ein Zertifikat immer auch ein Ausstellungsdatum und ein Gültigkeitsdatum. Wie sich dieses Gültigkeitsdatum auf Signaturen auswirkt, wird in der Ansicht \"2. Benutzer\" behandelt.\n\nMittels \"Zertifikat widerrufen\" können Sie ein Zertifikat, das laut Gültigkeitsdatum noch gültig wäre, als ungültig erklären. Dies kann beispielsweise notwendig sein, weil der private Schlüssel kompromittiert (also gestohlen oder gebrochen) oder verloren wurde, weil etwa in eine CA eingebrochen wurde oder einfach auch, weil eine Person aus der im Zertifikat angegebenen Organisation ausgeschieden ist. Mehr zu Information dazu lesen Sie in der Onlinehilfe.");
 
 		composite.setVisible(false);
 	}

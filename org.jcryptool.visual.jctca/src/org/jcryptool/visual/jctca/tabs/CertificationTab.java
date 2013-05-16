@@ -13,7 +13,7 @@ public class CertificationTab {
 	public CertificationTab(TabFolder parent, Group exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);
-		t.setText(Messages.CertificationTab_headline);
+		t.setText("Certification Authority (CA)");
 		Group generalGroup = new Group(parent, SWT.NONE);
 		generalGroup.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, true,
 				1, 1));

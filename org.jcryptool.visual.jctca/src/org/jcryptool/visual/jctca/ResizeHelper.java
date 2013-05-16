@@ -57,9 +57,9 @@ public class ResizeHelper {
 		if (image_name == null) {
 			// Default to create certificate intro scheme, because this is the
 			// first image displayed in the view
-			// and therefor has to be shown if the user hasn't clicked any
+			// and therefore has to be shown if the user hasn't clicked any
 			// buttons yet
-			image_name = "Architekturskizze Zertifikatserzeugung";
+			image_name = "Architekturskizze Zertifikatserzeugung";//$NON-NLS-1$
 		}
 		return ResizeHelper.image_name;
 	}

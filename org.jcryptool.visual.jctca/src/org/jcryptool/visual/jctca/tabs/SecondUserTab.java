@@ -13,7 +13,7 @@ public class SecondUserTab {
 	public SecondUserTab(TabFolder parent, Group exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);
-		t.setText(Messages.SecondUserTab_headline);
+		t.setText("2. Benutzer");
 		Group generalGroup = new Group(parent, SWT.NONE);
 		generalGroup.setLayoutData(new GridData(SWT.TOP, SWT.TOP, true, true,
 				1, 1));
