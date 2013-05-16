@@ -27,6 +27,11 @@ import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RR;
 
+/**
+ * Listener that handles events fired in the CA View
+ * @author mmacala
+ *
+ */
 public class CAListener implements SelectionListener{
 
 	Tree requests;
@@ -34,12 +39,20 @@ public class CAListener implements SelectionListener{
 	Button accept;
 	Button reject;
 	
+	/**
+	 * Constructor for the Listener
+	 * @param requests - the ree in which the requests are shown
+	 * @param keys - the list in which the root certificates are listed
+	 * @param accept - the accept button 
+	 * @param reject - the reject button
+	 */
 	public CAListener(Tree requests, List keys, Button accept, Button reject){
 		this.requests = requests;
 		this.keys = keys;
 		this.accept = accept;
 		this.reject = reject;
 	}
+	
 	@Override
 	public void widgetDefaultSelected(SelectionEvent arg0) {
 		
@@ -48,7 +61,9 @@ public class CAListener implements SelectionListener{
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
 		Object src = arg0.getSource();
+		
 		if (src.equals(requests) || src.equals(keys)) {
+			//when something was selected in the list or the tree, check if the buttons should be enabled
 			enableButtons(src);
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof CSR)) {
 			handleCSR(src);
@@ -59,7 +74,6 @@ public class CAListener implements SelectionListener{
 		
 	private void enableButtons(Object src) {
 		TreeItem[] sel = requests.getSelection();
-		//TODO: throws ArrayIndexOutOfBoundsException
 		if(sel!=null && sel.length > 0 && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
 			accept.setEnabled(true);
 			reject.setEnabled(true);
