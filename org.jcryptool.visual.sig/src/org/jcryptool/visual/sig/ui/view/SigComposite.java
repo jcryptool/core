@@ -70,6 +70,13 @@ public class SigComposite extends Composite implements PaintListener {
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
+	
+	//Contains all possible signature methods
+	private String[] sigmethods = {"MD5withRSA", 
+								   "SHA1withRSA", "SHA1withDSA", "SHA1withECDSA", "SHA1withRSAandMGF1", 
+								   "SHA256withRSA", "SHA256withECDSA", "SHA256withRSAandMGF1",
+								   "SHA384withRSA", "SHA384withECDSA", "SHA384withRSAandMGF1",
+								   "SHA512withRSA", "SHA512withECDSA", "SHA512withRSAandMGF1"};
 
 	/**
 	 * @return the hash
