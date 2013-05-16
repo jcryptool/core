@@ -422,7 +422,7 @@ public class SigComposite extends Composite implements PaintListener {
                     	tabDescription.setSelection(3);
                     	canvas1.redraw();
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
-                    	// TODO show signature in textbox!!!
+                    	txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signature.toString());
                     }
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);

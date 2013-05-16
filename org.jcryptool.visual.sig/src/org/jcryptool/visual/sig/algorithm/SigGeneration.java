@@ -2,8 +2,6 @@ package org.jcryptool.visual.sig.algorithm;
 
 import java.security.*;
 import javax.crypto.*;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.visual.sig.SigPlugin;
 
 public class SigGeneration {
 	
@@ -27,8 +25,8 @@ public class SigGeneration {
         cipher.init(Cipher.ENCRYPT_MODE, key.getPrivate());
         
         byte[] cipherText = cipher.doFinal(input);
+        org.jcryptool.visual.sig.algorithm.Input.signature = cipherText;
         
-		
 		return cipherText;
 	}
 

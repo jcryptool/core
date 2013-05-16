@@ -7,5 +7,7 @@ public class Input {
 	public static String path = ""; //Contains the path to the input data
 	
 	public static byte[] hash; //Contains the hash of the input data
+	
+	public static byte[] signature; //Contains the signature of the input data
 
 }
