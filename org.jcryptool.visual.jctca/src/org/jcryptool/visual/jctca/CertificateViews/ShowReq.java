@@ -15,12 +15,16 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.listeners.CAListener;
 
-
+/**
+ * Class that contains the GUI components used in the CA view that shows the approved CSRs and 
+ * Revocation Requests.
+ * @author mmacala
+ *
+ */
 public class ShowReq implements Views {
 	Composite composite;
 	Composite left;
 	Composite center;
-
 	List lst_private_keys_ca;
 	Button btn_accept_request;
 	Button btn_reject_request;
