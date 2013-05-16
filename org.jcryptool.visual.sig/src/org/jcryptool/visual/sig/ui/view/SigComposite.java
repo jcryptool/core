@@ -73,7 +73,7 @@ public class SigComposite extends Composite implements PaintListener {
 	
 	//Contains all possible signature methods
 	private String[] sigmethods = {"MD5withRSA", 
-								   "SHA1withRSA", "SHA1withDSA", "SHA1withECDSA", "SHA1withRSAandMGF1", 
+								   "SHA1withDSA", "SHA1withRSA", "SHA1withECDSA", "SHA1withRSAandMGF1", 
 								   "SHA256withRSA", "SHA256withECDSA", "SHA256withRSAandMGF1",
 								   "SHA384withRSA", "SHA384withECDSA", "SHA384withRSAandMGF1",
 								   "SHA512withRSA", "SHA512withECDSA", "SHA512withRSAandMGF1"};
@@ -422,9 +422,10 @@ public class SigComposite extends Composite implements PaintListener {
                     	lblSignature.setText(signatures[signature]);
                     	
                     	// index of String[] sigmethods witch contains all possible methods
-                    	int s = chooseSignature(hash, signature);                    	
+                    	int s = chooseSignature();     
+                    	String sig = sigmethods[s];               	
                     	// Creates the signature for the calculated hash.
-                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sigmethods[s], org.jcryptool.visual.sig.algorithm.Input.hash);
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sig, org.jcryptool.visual.sig.algorithm.Input.hash);
                     	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
@@ -472,34 +473,36 @@ public class SigComposite extends Composite implements PaintListener {
 		canvas1.redraw();
 	}
 	/**
-	 * Helper method to take the correct signature method with the correct hash method.
+	 * Helper method to get the correct signature method with the correct hash method.
 	 * (Not every signature method matches with every hash method).
 	 * 
 	 * @param ha chosen hash method
 	 * @param si chosen signature method
 	 * @return index of String[] sigmethods witch contains all possible methods
 	 */
-	private int chooseSignature(int ha, int si) {
+	private int chooseSignature() {
 		int x = 123;
 		
-		if (ha == 0 && si == 0) x = 0;
+		// Temporary solution
 		
-		if (ha == 1 && si == 0) x = 1;
-		if (ha == 1 && si == 1) x = 2;
-		if (ha == 1 && si == 2) x = 3;
-		if (ha == 1 && si == 3) x = 4;
+		if (hash == 0 && signature == 1) x = 0; //MD5withRSA
 		
-		if (ha == 2 && si == 0) x = 5;
-		if (ha == 2 && si == 2) x = 6;
-		if (ha == 2 && si == 3) x = 7;
+		if (hash == 1 && signature == 0) x = 1; //SHA1withDSA
+		if (hash == 1 && signature == 1) x = 2; //SHA1withRSA
+		if (hash == 1 && signature == 2) x = 3; //SHA1withECDSA
+		if (hash == 1 && signature == 3) x = 4; //SHA1withRSAandMGF1
 		
-		if (ha == 3 && si == 0) x = 8;
-		if (ha == 3 && si == 2) x = 9;
-		if (ha == 3 && si == 3) x = 10;
+		if (hash == 2 && signature == 1) x = 5; //SHA256withRSA
+		if (hash == 2 && signature == 2) x = 6; //SHA256withECDSA
+		if (hash == 2 && signature == 3) x = 7; //SHA256withRSAandMGF1
 		
-		if (ha == 4 && si == 0) x = 11;
-		if (ha == 4 && si == 2) x = 12;
-		if (ha == 4 && si == 3) x = 13;
+		if (hash == 3 && signature == 1) x = 8; //SHA384withRSA
+		if (hash == 3 && signature == 2) x = 9; //SHA384withECDSA
+		if (hash == 3 && signature == 3) x = 10; //SHA384withRSAandMGF1
+		
+		if (hash == 4 && signature == 1) x = 11; //SHA512withRSA
+		if (hash == 4 && signature == 2) x = 12; //SHA512withECDSA
+		if (hash == 4 && signature == 3) x = 13; //SHA512withRSAandMGF1
 		
 		return x;
 		
