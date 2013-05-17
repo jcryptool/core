@@ -34,10 +34,14 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			System.out.println(txt_sign.getText());
 		}
 		String selected = cmb_keys.getText();
-		String hash = selected.split("Hash: ")[1]; //$NON-NLS-1$
-		hash = hash.split(" ")[0]; //$NON-NLS-1$
-		KeyStoreAlias pubAlias = Util.getAliasForHash(hash);
+		String key_hash = selected.split("Hash: ")[1]; //$NON-NLS-1$
+		key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
+		KeyStoreAlias pubAlias = Util.getAliasForHash(key_hash);
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
+		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
+		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText()!="" ? lbl_file.getText() : txt_sign.getText()).getBytes();
+		org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
+		byte[] hash, sig;
 		if (btn_check.getSelection() == true) {
 			try {
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -47,7 +51,9 @@ public class SigVisPluginOpenListener implements SelectionListener {
 				LogUtil.logError(e1);
 			}
 		} else {
-			//signiervorgang
+			hash = org.jcryptool.visual.sig.algorithm.Input.data;
+			hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
+			sig = org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
 		}
 
 	}
