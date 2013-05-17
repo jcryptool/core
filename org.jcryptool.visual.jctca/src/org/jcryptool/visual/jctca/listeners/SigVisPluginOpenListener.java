@@ -52,8 +52,18 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			}
 		} else {
 			hash = org.jcryptool.visual.sig.algorithm.Input.data;
-			hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
-			sig = org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+			try {
+				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e1);
+			}
+			try {
+				sig = org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e1);
+			}
 		}
 
 	}
