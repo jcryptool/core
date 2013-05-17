@@ -38,7 +38,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			System.out.println(txt_sign.getText());
 		}
 		String selected = cmb_keys.getText();
-		String key_hash = selected.split("Hash: ")[1]; //$NON-NLS-1$
+		String key_hash = selected.split("Hash:")[1]; //$NON-NLS-1$
 		key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
 		KeyStoreAlias pubAlias = Util.getAliasForHash(key_hash);
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
@@ -56,12 +56,22 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			}
 		} else {
 			hash = org.jcryptool.visual.sig.algorithm.Input.data;
-			hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
-			org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+			try {
+				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e1);
+			}
+			try {
+				org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e1);
+			}
 		}
-		sig = orgjcryptool.visual.sig.algorithm.Input.signature;
+		sig = org.jcryptool.visual.sig.algorithm.Input.signature;
 		Signature signature = new Signature(sig, lbl_file.getText(), txt_sign.getText(), new Date(System.currentTimeMillis()), privAlias, pubAlias);
-		CertificateCSRR.getInstance().
+		CertificateCSRR.getInstance().addSignature(signature);
 	}
 
 	@Override
