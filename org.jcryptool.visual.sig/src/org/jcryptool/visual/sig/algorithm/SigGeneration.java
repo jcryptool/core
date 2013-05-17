@@ -24,17 +24,14 @@ public class SigGeneration {
 		// get String to generate the key
 		String keySig = null;
 		// Generators are currently available for RSA and DSA.
-		if (signaturemethod == "MD5withRSA" || signaturemethod == "SHA1withRSA"
-				|| signaturemethod == "SHA256withRSA"
-				|| signaturemethod == "SHA384withRSA"
-				|| signaturemethod == "SHA512withRSA"
-				|| signaturemethod == "SHA1withRSAandMGF1"
-				|| signaturemethod == "SHA256withRSAandMGF1"
-				|| signaturemethod == "SHA384withRSAandMGF1"
-				|| signaturemethod == "SHA512withRSAandMGF1") {
-			keySig = "RSA";
-		} else {
+		if (signaturemethod == "SHA1withDSA"
+				|| signaturemethod == "SHA1withECDSA"
+				|| signaturemethod == "SHA256withECDSA"
+				|| signaturemethod == "SHA384withECDSA"
+				|| signaturemethod == "SHA512withECDSA") {
 			keySig = "DSA";
+		} else {
+			keySig = "RSA";
 		}
 
 		byte[] signatureArray = null;
