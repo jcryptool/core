@@ -60,6 +60,10 @@ public class CertificateCSRR {
 	private ArrayList<CRLEntry> crl;
 	
 	/**
+	 * contains all generated signatures
+	 */
+	private ArrayList<Signature> sigList;
+	/**
 	 * private constructor, use getInstance()
 	 */
 	private CertificateCSRR(){
@@ -68,6 +72,7 @@ public class CertificateCSRR {
 		caKeys = new ArrayList<AsymmetricCipherKeyPair>();
 		certs = new ArrayList<X509Certificate>();
 		crl = new ArrayList<CRLEntry>();
+		sigList = new ArrayList<Signature>();
 		checkCertificatesAndCRL();
 	}
 	
@@ -267,4 +272,18 @@ public class CertificateCSRR {
 		return crl;
 	}
 
+	/**
+	 * gets the list containing the generated signatures
+	 */
+	public ArrayList<Signature> getSignatures(){
+		return sigList;
+	}
+	
+	/**
+	 * adds a signature to the list of signatures 
+	 * @param sig - the signature to be added
+	 */
+	public void addSignature(Signature sig){
+		this.sigList.add(sig);
+	}
 }

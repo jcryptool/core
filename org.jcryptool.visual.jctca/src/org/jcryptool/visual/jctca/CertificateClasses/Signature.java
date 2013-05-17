@@ -13,14 +13,18 @@ public class Signature {
 	
 	Date time;
 	
-	KeyStoreAlias key;
+	KeyStoreAlias privAlias;
 	
-	public Signature(byte[] signature, String path, String text, Date time, KeyStoreAlias key){
+	KeyStoreAlias pubalias;
+	
+	
+	public Signature(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias, KeyStoreAlias pubAlias){
 		this.signature = signature;
 		this.path = path;
 		this.text = text;
 		this.time = time;
-		this.key = key;
+		this.privAlias = privAlias;
+		this.pubalias = pubAlias;
 	}
 
 	/**
@@ -80,16 +84,16 @@ public class Signature {
 	}
 
 	/**
-	 * @return the key
+	 * @return the alias
 	 */
-	public KeyStoreAlias getKey() {
-		return key;
+	public KeyStoreAlias getPrivAlias() {
+		return privAlias;
 	}
 
 	/**
-	 * @param key the key to set
+	 * @param privAlias the Alias to set
 	 */
-	public void setKey(KeyStoreAlias key) {
-		this.key = key;
+	public void setPrivAlias(KeyStoreAlias privAlias) {
+		this.privAlias = privAlias;
 	}
 }

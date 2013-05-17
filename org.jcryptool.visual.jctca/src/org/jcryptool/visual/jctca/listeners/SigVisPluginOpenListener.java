@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import java.util.Date;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -12,6 +14,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
+import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
 public class SigVisPluginOpenListener implements SelectionListener {
 	Button btn_check;
@@ -53,9 +57,11 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		} else {
 			hash = org.jcryptool.visual.sig.algorithm.Input.data;
 			hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
-			sig = org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+			org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
 		}
-
+		sig = orgjcryptool.visual.sig.algorithm.Input.signature;
+		Signature signature = new Signature(sig, lbl_file.getText(), txt_sign.getText(), new Date(System.currentTimeMillis()), privAlias, pubAlias);
+		CertificateCSRR.getInstance().
 	}
 
 	@Override
