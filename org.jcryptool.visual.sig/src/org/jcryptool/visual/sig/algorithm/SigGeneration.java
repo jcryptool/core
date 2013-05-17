@@ -3,6 +3,9 @@ package org.jcryptool.visual.sig.algorithm;
 import java.security.*;
 import javax.crypto.*;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.sig.SigPlugin;
+
 public class SigGeneration {
 	public static String signature;
 
@@ -36,21 +39,30 @@ public class SigGeneration {
 			keySig = "DSA";
 		}
 
-		// Generate keypair
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance(keySig);
-		keyGen.initialize(1024);
-		KeyPair key = keyGen.generateKeyPair();
+		byte[] signatureArray = null;
 
-		// Get a signature object using the MD5 and RSA combo
-		// and sign the input with the private key
-		Signature sig = Signature.getInstance(signaturemethod);
-		sig.initSign(key.getPrivate());
-		sig.update(input);
-		byte[] signatureArray = sig.sign();
+		try {
+			// Generate keypair
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance(keySig);
+			keyGen.initialize(1024);
+			KeyPair key = keyGen.generateKeyPair();
 
-		signature = new String(Hash.bytesToHex(signatureArray)); // Hex String
-		org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;
+			// Get a signature object using the MD5 and RSA combo
+			// and sign the input with the private key
+			Signature sig = Signature.getInstance(signaturemethod);
+			sig.initSign(key.getPrivate());
+			sig.update(input);
+			signatureArray = sig.sign();
 
+			signature = new String(Hash.bytesToHex(signatureArray)); // Hex
+																		// String
+			org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;
+
+			return signatureArray;
+		
+		} catch (Exception ex) {
+			LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+		}
 		return signatureArray;
 	}
 
