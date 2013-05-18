@@ -1,5 +1,8 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
@@ -48,10 +51,7 @@ public class SecondUserListener implements SelectionListener{
 				TreeItem it = tree.getSelection()[0];
 				if(it.getData()!=null){
 					Signature sig = (Signature)it.getData();
-					
-					org.jcryptool.visual.sig.algorithm.Input.privateKey = sig.getPrivAlias();
-					org.jcryptool.visual.sig.algorithm.Input.data = (sig.getPath()!="" ? sig.getPath() : sig.getText()).getBytes();
-					org.jcryptool.visual.sig.algorithm.Input.path = sig.getPath();
+					byte[] data = (sig.getPath()!="" ? sig.getPath() : sig.getText()).getBytes();
 					byte[] hash, signature;
 					if (btn_get_CRL.getSelection()) {
 						KeyStoreAlias pubAlias = sig.getPubAlias();
@@ -66,25 +66,24 @@ public class SecondUserListener implements SelectionListener{
 							}
 						}
 					} 
-					hash = org.jcryptool.visual.sig.algorithm.Input.data;
 					try {
-						hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
-					} catch (Exception e1) {
+						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA");
+						checkSig.initVerify(KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias()).getPublicKey());
+						if(checkSig.verify(sig.getSignature())){
+							Util.showMessageBox("Match","Die Signaturen stimmen überein. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_WARNING);
+						}
+						else{
+							Util.showMessageBox("Fail", "Die Signaturen stimmen NICHT überein.", SWT.ICON_ERROR);
+						}
+					} catch (SignatureException e) {
 						// TODO Auto-generated catch block
-						LogUtil.logError(e1);
-					}
-					try {
-						org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
-					} catch (Exception e1) {
+						e.printStackTrace();
+					} catch (InvalidKeyException e) {
 						// TODO Auto-generated catch block
-						LogUtil.logError(e1);
-					}
-					byte[] newSignature = org.jcryptool.visual.sig.algorithm.Input.signature;
-					if(Arrays.equals(sig.getSignature(), newSignature)){
-						Util.showMessageBox("Match","Die Signaturen stimmen überein. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_WARNING);
-					}
-					else{
-						Util.showMessageBox("Fail", "Die Signaturen stimmen NICHT überein.", SWT.ICON_ERROR);
+						e.printStackTrace();
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			}

@@ -40,7 +40,9 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		String selected = cmb_keys.getText();
 		String key_hash = selected.split("Hash:")[1]; //$NON-NLS-1$
 		key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
-		KeyStoreAlias pubAlias = Util.getAliasForHash(key_hash);
+		System.out.println("KEY HASH: " + key_hash);
+		KeyStoreAlias hello = Util.getAliasForHash(key_hash);
+		KeyStoreAlias pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getText());
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
 		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
 		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText()!="" ? lbl_file.getText() : txt_sign.getText()).getBytes();

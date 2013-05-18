@@ -87,7 +87,7 @@ public class SignCert implements Views {
 				listEntry += "RSA";
 			}
 			listEntry+=" (Hash:" + ksAlias.getHashValue() + ")";
-			
+			cmb_priv_key.setData(listEntry, ksAlias);
 			cmb_priv_key.add(listEntry);
 		}
 	}
