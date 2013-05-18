@@ -176,11 +176,21 @@ public class Util {
 		return null;
 	}
 
-	public static void createRootNodes(Tree tree) {
+	public static void createCARootNodes(Tree tree) {
 		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
 		tree_item_csr.setText(Messages.Util_CSR_Tree_Head);
 		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
 		tree_item_crl.setText(Messages.Util_RR_Tree_Head);
+
+		tree.getItems()[0].setExpanded(true);
+		tree.getItems()[1].setExpanded(true);
+	}
+	
+	public static void create2ndUserRootNodes(Tree tree) {
+		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
+		tree_item_csr.setText("Signierte Texte");
+		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
+		tree_item_crl.setText("Signierte Dateien");
 
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);
@@ -240,6 +250,19 @@ public class Util {
 		return false;
 	}
 	
+	public static boolean isDateBeforeRevocation(BigInteger serialNumber, Date signDate) {
+		ArrayList<CRLEntry> crl = CertificateCSRR.getInstance().getRevoked();
+		for(CRLEntry crle : crl){
+			if(serialNumber.compareTo(crle.GetSerial())==0){
+				Date revokeDate = crle.getRevokeTime();
+				if(signDate.before(revokeDate)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static KeyStoreAlias getAliasForHash(String hash) {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		for(KeyStoreAlias al : mng.getAllPublicKeys()){
@@ -248,6 +271,18 @@ public class Util {
 			}
 		}
 		return null;
+	}
+	
+	public static String bytesToHex(byte[] bytes) {
+	    final char[] hexArray = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+	    char[] hexChars = new char[bytes.length * 2];
+	    int v;
+	    for ( int j = 0; j < bytes.length; j++ ) {
+	        v = bytes[j] & 0xFF;
+	        hexChars[j * 2] = hexArray[v >>> 4];
+	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+	    }
+	    return new String(hexChars);
 	}
 
 }

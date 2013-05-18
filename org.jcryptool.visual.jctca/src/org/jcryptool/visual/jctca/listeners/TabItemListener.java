@@ -18,6 +18,7 @@ import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
+import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
 // TODO: dispose left side of usertab
 
@@ -74,7 +75,7 @@ public class TabItemListener implements SelectionListener {
 			Composite c1 = (Composite)c.getChildren()[0];
 			Tree tree = (Tree)c1.getChildren()[0];
 			tree.removeAll();
-			Util.createRootNodes(tree);
+			Util.createCARootNodes(tree);
 			TreeItem csrRoot = tree.getItem(0);
 			TreeItem rrRoot = tree.getItem(1);
 			ArrayList<CSR> csr_list = CertificateCSRR.getInstance().getApproved();
@@ -95,6 +96,31 @@ public class TabItemListener implements SelectionListener {
 			
 		} else if (parent.getSelectionIndex() == 3) {
 			lbl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
+			Group g1 = (Group) parent.getChildren()[3];
+			Composite c = (Composite) g1.getChildren()[0];
+			Composite c1 = (Composite)c.getChildren()[0];
+			Tree tree = (Tree)c1.getChildren()[0];
+			tree.removeAll();
+			Util.create2ndUserRootNodes(tree);
+			TreeItem textSig = tree.getItem(0);
+			TreeItem fileSig = tree.getItem(1);
+			ArrayList<Signature> sigs = CertificateCSRR.getInstance().getSignatures();
+			TreeItem it = null;
+			for(Signature sig: sigs){
+				if(sig.getPath()==null || sig.getPath()==""){
+					it = new TreeItem(textSig, SWT.NONE);
+					String text = sig.getText();
+					it.setText(text.substring(0, Math.min(text.length(), 20)));
+				}
+				else{
+					it = new TreeItem(fileSig, SWT.NONE);
+					String path = sig.getPath();
+					it.setText(sig.getPath().substring(Math.max(0, path.length()-20), path.length()));
+				}
+				it.setData(sig);
+			}
+			textSig.setExpanded(true);
+			fileSig.setExpanded(true);
 		}
 		parent.layout(true);
 		grp_exp.layout(true);
