@@ -12,6 +12,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.sig.algorithm.*;
 
 public class SigVisPluginOpenListener implements SelectionListener {
 	Button btn_check;
@@ -38,6 +39,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		hash = hash.split(" ")[0]; //$NON-NLS-1$
 		KeyStoreAlias pubAlias = Util.getAliasForHash(hash);
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
+		//org.jcryptool.visual.sig.algorithm.Input.Data = hash.getBytes();
 		if (btn_check.getSelection() == true) {
 			try {
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
