@@ -58,7 +58,7 @@ public class ShowReq implements Views {
 		Tree tree = new Tree(left, SWT.BORDER);
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 
-		Util.createRootNodes(tree);
+		Util.createCARootNodes(tree);
 
 		lst_private_keys_ca = new List(showSelectedRequest, SWT.NONE);
 		lst_private_keys_ca.setLayoutData(new GridData(SWT.FILL, SWT.NONE,

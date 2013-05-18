@@ -42,5 +42,9 @@ public class CRLEntry {
 	public BigInteger GetSerial() {
 		return sn;
 	}
+	
+	public Date getRevokeTime(){
+		return revokeTime;
+	}
 
 }

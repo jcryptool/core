@@ -10,6 +10,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.listeners.SecondUserListener;
 
 public class ShowSigData implements Views {
 	Composite composite;
@@ -42,10 +44,7 @@ public class ShowSigData implements Views {
 		Tree tree = new Tree(left, SWT.BORDER);
 
 		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
-		tree_item_csr.setText(Messages.ShowSigData_signed_texts_tree_headline);
-		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
-		tree_item_crl.setText(Messages.ShowSigData_signed_files_tree_headline);
+		Util.create2ndUserRootNodes(tree);
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);
 
@@ -66,7 +65,9 @@ public class ShowSigData implements Views {
 		btn_get_CRL = new Button(showSelectedRequest, SWT.CHECK);
 		btn_get_CRL.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_get_CRL.setText(Messages.ShowSigData_checkbox_check_revoke_status);
-
+		SecondUserListener listener = new SecondUserListener(btn_check_signature, btn_get_CRL, tree,lbl_text, lbl_signature );
+		tree.addSelectionListener(listener);
+		btn_check_signature.addSelectionListener(listener);
 	}
 
 	@Override
