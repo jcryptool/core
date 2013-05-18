@@ -21,6 +21,7 @@ public class Messages extends NLS {
 	public static String AndroidUnlockPattern_ModeSetText;
 	public static String AndroidUnlockPattern_GroupHeadingModes;
 	public static String AndroidUnlockPattern_Heading;
+	public static String AndroidUnlockPattern_HeadingInfoText;
 	public static String AndroidUnlockPattern_helpBox_descText;
 	public static String AndroidUnlockPattern_InfoTextChoose;
 	public static String AndroidUnlockPattern_ModeChangeText;
