@@ -41,6 +41,8 @@ public class Messages extends NLS {
 	public static String CRTGroup_0;
     public static String CRTGroup_error_no_equations_text;
     public static String CRTGroup_error_no_equations_title;
+    public static String CRTGroup_Header;
+    public static String CRTGroup_HeaderInfoText;
     static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
