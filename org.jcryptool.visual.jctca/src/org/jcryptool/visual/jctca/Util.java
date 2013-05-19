@@ -266,7 +266,7 @@ public class Util {
 	public static KeyStoreAlias getAliasForHash(String hash) {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		for(KeyStoreAlias al : mng.getAllPublicKeys()){
-			if(al.getHashValue().equals(hash)) {
+			if(al.getHashValue().compareTo(hash)==0) {
 				return al;
 			}
 		}
