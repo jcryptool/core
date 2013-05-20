@@ -2,6 +2,8 @@ package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -14,6 +16,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.CreateCertListener;
+import org.jcryptool.visual.jctca.listeners.PubKeyListener;
 
 public class CreateCert implements Views {
 
@@ -113,19 +116,22 @@ public class CreateCert implements Views {
 		btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_proof.setData(new Integer(0));
 		
-		lbl_key = new Label(createCertGroup, SWT.None);
-		lbl_key.setText(Messages.CreateCert_lbl_pubkey);
+		Label lbl_selectPubKey = new Label(createCertGroup, SWT.None);
+		lbl_selectPubKey.setText(Messages.CreateCert_lbl_pubkey);
+		
+		
 		btn_genKey = new Button(createCertGroup, SWT.NONE);
 		btn_genKey.setText(Messages.CreateCert_btn_create_keypair);
 		btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_genKey.setData(new Integer(1));
 
 		lbl_plain = new Label(createCertGroup, SWT.NONE);
-		lbl_plain2 = new Label(createCertGroup, SWT.FILL | SWT.CENTER);
-		lbl_plain2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		lbl_plain2.setText(Messages.CreateCert_btn_select_pubkey);
+		Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
+		btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
 		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
 		cmb_genKey = new Combo(createCertGroup, SWT.NONE);
+		cmb_genKey.setEnabled(false);
 		cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
 		addRSAAndDSAKeysToDropdown();
@@ -141,6 +147,8 @@ public class CreateCert implements Views {
 		btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
 		btn_send.setData(2);
 
+		btn_selectPubKey.addSelectionListener(new PubKeyListener(cmb_genKey));
+		
 		Label lbl_exp = (Label) exp.getChildren()[0];
 		lbl_exp.setText(Messages.CreateCert_explain_text);
 		composite.setVisible(false);

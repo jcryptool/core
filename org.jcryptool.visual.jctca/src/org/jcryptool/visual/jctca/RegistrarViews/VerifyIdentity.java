@@ -27,7 +27,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 
 	Button btn_true;
 	Button btn_false;
-
+	Button btn_cancel;
 	List csr;
 	Button forward_csr;
 	Button reject_csr;
@@ -35,6 +35,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 	CSR c;
 	Group grp_exp;
 	Label lbl_exp;
+
 	public VerifyIdentity(Shell parent, List csr, Button forward_csr,
 			Button reject_csr) {
 		super(parent, SWT.APPLICATION_MODAL);
@@ -46,14 +47,14 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 	}
 
 	public String open(CSR c) {
-		Shell shell = new Shell(getParent(), getStyle());
+		Shell shell = new Shell(getParent(), SWT.TITLE);
 		this.c = c;
 		parent = shell;
 		shell.setText(getText());
 		createContents(shell);
 		String proof = c.getProof();
 		Image i = null;
-		if(proof == null){
+		if (proof == null) {
 			proof = "icons/ausweis.jpeg";//$NON-NLS-1$
 		}
 		if (proof.contains("icons\\") || proof.contains("icons/")) {//$NON-NLS-1$ //$NON-NLS-2$
@@ -76,43 +77,55 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 
 	private void createContents(final Shell shell) {
 		shell.setLayout(new GridLayout(1, true));
+		shell.setText("Identitätsprüfung"); // zeigt den Titel an
 
 		main = new Composite(shell, SWT.FILL);
 		main.setLayout(new GridLayout(4, false));
+		Composite btns = new Composite(main, SWT.None);
+		btns.setLayout(new GridLayout(3, true));
+		GridData gd_btns = new GridData(GridData.FILL_HORIZONTAL);
+		gd_btns.horizontalSpan = 4;
+		btns.setLayoutData(gd_btns);
 
-		btn_true = new Button(main, SWT.PUSH);
+		btn_true = new Button(btns, SWT.PUSH);
 		btn_true.setText(Messages.VerifyIdentity_btn_mark_identity_correct);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalSpan = 2;
+		// data.horizontalSpan = 2;
 		btn_true.setLayoutData(data);
 		btn_true.addSelectionListener(this);
 
-		btn_false = new Button(main, SWT.PUSH);
+		btn_false = new Button(btns, SWT.PUSH);
 		btn_false.setText(Messages.VerifyIdentity_btn_mark_identity_fake);
 		data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalSpan = 2;
+		// data.horizontalSpan = 2;
 		btn_false.setLayoutData(data);
 		btn_false.addSelectionListener(this);
 
-		shell.setDefaultButton(btn_false);
+		btn_cancel = new Button(btns, SWT.PUSH);
+		btn_cancel.setText("Abbrechen");
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		btn_cancel.setLayoutData(data);
+		btn_cancel.addSelectionListener(this);
+
+		shell.setDefaultButton(btn_cancel);
 
 		data = new GridData(1, 1, true, true);
 		data.horizontalSpan = 3;
 		img = new Label(main, SWT.FILL);
 		img.setLayoutData(data);
-		
+
 		grp_exp = new Group(main, SWT.FILL);
 		grp_exp.setText(Messages.VerifyIdentity_grp_explain_headline);
 		data = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		grp_exp.setLayoutData(data);
 		grp_exp.setLayout(new GridLayout(1, false));
-		
+
 		lbl_exp = new Label(grp_exp, SWT.WRAP);
 		lbl_exp.setText(Messages.VerifyIdentity_explain_text);
-		data = new GridData(SWT.FILL, SWT.FILL, false, false,1,1);
+		data = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		lbl_exp.setLayoutData(data);
 		data.widthHint = 350;
-		
+
 		grp_exp.layout();
 
 	}
@@ -146,6 +159,13 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 			c.setForwardenabled(false);
 			c.setRejectenabled(true);
 			parent.setVisible(false);
+		} else if (btn.equals(btn_cancel)) {
+			forward_csr.setEnabled(false);
+			reject_csr.setEnabled(false);
+			c.setForwardenabled(false);
+			c.setRejectenabled(false);
+			parent.setVisible(false);
+
 		}
 
 	}
