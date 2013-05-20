@@ -178,7 +178,7 @@ public class JCTCA_Visual extends ViewPart {
 		grp_explain = new Group(comp_center, SWT.NONE);
 		grp_explain.setLayout(new GridLayout(1, true));
 		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_explain.minimumWidth = 300;
+		gd_explain.minimumWidth = 150;
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText(Messages.JCTCA_Visual_grp_explain_headline);
 
@@ -199,10 +199,9 @@ public class JCTCA_Visual extends ViewPart {
 		
 
 		// label for showing explanation texts
-		comp_vscroll.setBackground(WHITE);
 		comp_vscroll.setSize(comp_vscroll.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		stl_explain = new StyledText(comp_vscroll, SWT.READ_ONLY| SWT.MULTI | SWT.WRAP);
-		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.NONE, true, false,1,1);
+		stl_explain = new StyledText(comp_vscroll, SWT.READ_ONLY| SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
+		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.NONE, true, true,1,1);
 		stl_explain.setLayoutData(gd_txt_explain);
 		
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
