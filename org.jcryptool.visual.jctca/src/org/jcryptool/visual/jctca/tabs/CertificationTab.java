@@ -1,8 +1,10 @@
 package org.jcryptool.visual.jctca.tabs;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -15,7 +17,7 @@ public class CertificationTab {
 	 * @param exp Group in which the explanation is shown
 	 * @param style well, yeah, don't know
 	 **/
-	public CertificationTab(TabFolder parent, Group exp, int style) {
+	public CertificationTab(TabFolder parent, Composite exp, int style) {
 
 		TabItem t = new TabItem(parent, SWT.NONE);
 		t.setText(Messages.CertificationTab_tabitem_name);
