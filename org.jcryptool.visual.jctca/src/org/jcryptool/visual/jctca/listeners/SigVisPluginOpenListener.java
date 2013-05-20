@@ -51,7 +51,19 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText()!="" ? lbl_file.getText() : txt_sign.getText()).getBytes();
 		org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
 		byte[] hash, sig;
-
+		hash = org.jcryptool.visual.sig.algorithm.Input.data;
+		try {
+			hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
+			org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e1);
+		}
+		
+		sig = org.jcryptool.visual.sig.algorithm.Input.signature;
+		Signature signature = new Signature(sig, lbl_file.getText(), txt_sign.getText(), new Date(System.currentTimeMillis()), privAlias, pubAlias);
+		CertificateCSRR.getInstance().addSignature(signature);
+		
 		if (btn_check.getSelection() == true) {
 			try {
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -60,25 +72,8 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			} catch (PartInitException e1) {
 				LogUtil.logError(e1);
 			}
-		} else {
-			hash = org.jcryptool.visual.sig.algorithm.Input.data;
-			try {
-				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput("SHA-256", hash);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				LogUtil.logError(e1);
-			}
-			try {
-				org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", hash);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				LogUtil.logError(e1);
-			}
 		}
-		sig = org.jcryptool.visual.sig.algorithm.Input.signature;
-		Signature signature = new Signature(sig, lbl_file.getText(), txt_sign.getText(), new Date(System.currentTimeMillis()), privAlias, pubAlias);
-		CertificateCSRR.getInstance().addSignature(signature);
-		if(btn_check.getSelection()==false){
+		else {
 			Util.showMessageBox("Erfolg", "Die signierte Nachricht wurde versendet!", SWT.ICON_INFORMATION);
 		}
 		this.lbl_file.setText("");

@@ -1,5 +1,8 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -176,13 +179,27 @@ public class ShowCert implements Views {
 			if (Util.isSignedByJCTCA(ksAlias) == false) {
 				continue;
 			}
-			String ListEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$
-			if (ksAlias.getOperation().contains("RSA")) { //$NON-NLS-1$
-				ListEntry += "RSA)"; //$NON-NLS-1$
-			} else {
-				ListEntry += "DSA)"; //$NON-NLS-1$
+			Certificate cert = ksm.getPublicKey(ksAlias);
+			String listEntry = "";
+			if(cert instanceof X509Certificate){
+				X509Certificate x509 = (X509Certificate)cert;
+				String[] subject = x509.getSubjectDN().toString().split("CN=");
+				if(subject.length>1){
+					listEntry = x509.getSubjectDN().toString().split("CN=")[1] + " ("+ksAlias.getKeyLength() + "bit ";
+				}
+				else{
+					listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
+				}
 			}
-			lst_certs.add(ListEntry);
+			else{
+				listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			if (ksAlias.getOperation().contains("RSA")) { //$NON-NLS-1$
+				listEntry += "RSA)"; //$NON-NLS-1$
+			} else {
+				listEntry += "DSA)"; //$NON-NLS-1$
+			}
+			lst_certs.add(listEntry);
 			lst_certs.setData(Integer.toString(i), ksAlias);
 			i++;
 		}
