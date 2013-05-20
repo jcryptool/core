@@ -1,10 +1,12 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
 import org.jcryptool.visual.jctca.UserViews.SignCert;
@@ -17,7 +19,7 @@ public class SideBarListener implements SelectionListener {
 	Composite comp_right;
 	Group grp_exp;
 
-	public SideBarListener(CreateCert cCert, ShowCert sCert, SignCert siCert, Group grp_exp, Composite comp_right) {
+	public SideBarListener(Group grp_exp, Composite comp_right) {
 		this.comp_right = comp_right;
 		this.grp_exp = grp_exp;
 	}
@@ -58,7 +60,7 @@ public class SideBarListener implements SelectionListener {
 			break;
 		}
 		
-		comp_right.layout(true);
+		comp_right.layout(true, true);
 		grp_exp.layout(true);
 	}
 

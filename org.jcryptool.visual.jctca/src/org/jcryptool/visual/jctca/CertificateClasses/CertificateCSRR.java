@@ -286,4 +286,8 @@ public class CertificateCSRR {
 	public void addSignature(Signature sig){
 		this.sigList.add(sig);
 	}
+
+	public void removeSignature(Signature sig) {
+		this.sigList.remove(sig);
+	}
 }

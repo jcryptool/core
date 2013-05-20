@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -162,8 +163,8 @@ public class ShowCert implements Views {
 		lbl_plain7 = new Label(right, SWT.NONE);
 		lbl_plain8 = new Label(right, SWT.NONE);
 
-		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText(Messages.ShowCert_explain_text);
+		StyledText stl_exp = (StyledText) exp.getChildren()[0];
+		stl_exp.setText(Messages.ShowCert_explain_text);
 		composite.setVisible(false);
 	}
 

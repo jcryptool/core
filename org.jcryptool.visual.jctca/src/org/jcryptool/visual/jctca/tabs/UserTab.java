@@ -49,8 +49,7 @@ public class UserTab {
 		right.setLayout(new GridLayout(1, true));
 		right.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		SideBarListener list_side = new SideBarListener(cCert, sCert, 
-				siCert, grp_exp, right);
+		SideBarListener list_side = new SideBarListener(grp_exp, right);
 
 		Button btn_create_cert = new Button(left, SWT.PUSH);
 		btn_create_cert.setText(Messages.UserTab_btn_get_new_cert);

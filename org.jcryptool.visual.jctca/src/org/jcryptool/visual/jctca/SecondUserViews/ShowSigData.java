@@ -21,7 +21,8 @@ public class ShowSigData implements Views {
 	List lst_private_keys_ca;
 	Button btn_check_signature;
 	Button btn_get_CRL;
-
+	Button btn_deleteEntry;
+	
 	Label lbl_text;
 	Label lbl_signature;
 
@@ -57,17 +58,24 @@ public class ShowSigData implements Views {
 				| SWT.WRAP);
 		lbl_signature.setLayoutData(gd_txt);
 
+		btn_get_CRL = new Button(showSelectedRequest, SWT.CHECK);
+		btn_get_CRL.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btn_get_CRL.setText(Messages.ShowSigData_checkbox_check_revoke_status);
+		
 		btn_check_signature = new Button(showSelectedRequest, SWT.NONE);
 		btn_check_signature
 				.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_check_signature.setText(Messages.ShowSigData_btn_check_sig);
-
-		btn_get_CRL = new Button(showSelectedRequest, SWT.CHECK);
-		btn_get_CRL.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_get_CRL.setText(Messages.ShowSigData_checkbox_check_revoke_status);
-		SecondUserListener listener = new SecondUserListener(btn_check_signature, btn_get_CRL, tree,lbl_text, lbl_signature );
+		btn_check_signature.setEnabled(false);
+		
+		btn_deleteEntry = new Button(showSelectedRequest, SWT.NONE);
+		btn_deleteEntry.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		btn_deleteEntry.setText("Eintrag löschen");
+		btn_deleteEntry.setEnabled(false);
+		SecondUserListener listener = new SecondUserListener(btn_check_signature, btn_get_CRL, tree,lbl_text, lbl_signature, btn_deleteEntry );
 		tree.addSelectionListener(listener);
 		btn_check_signature.addSelectionListener(listener);
+		btn_deleteEntry.addSelectionListener(listener);
 	}
 
 	@Override

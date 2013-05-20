@@ -2,6 +2,7 @@ package org.jcryptool.visual.jctca.listeners;
 
 import java.util.Date;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -74,6 +75,11 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		sig = org.jcryptool.visual.sig.algorithm.Input.signature;
 		Signature signature = new Signature(sig, lbl_file.getText(), txt_sign.getText(), new Date(System.currentTimeMillis()), privAlias, pubAlias);
 		CertificateCSRR.getInstance().addSignature(signature);
+		if(btn_check.getSelection()==false){
+			Util.showMessageBox("Erfolg", "Die signierte Nachricht wurde versendet!", SWT.ICON_INFORMATION);
+		}
+		this.lbl_file.setText("");
+		this.txt_sign.setText("Text zum Signieren eingeben...");
 	}
 
 	@Override
