@@ -32,7 +32,11 @@ public class SubstitutionAlgorithmSpecification extends
 		return isValidPlainTextAlphabet(plainTextAlphabet) && isValidCipherTextAlphabet(cipherTextAlphabet)
 		&& plainTextAlphabet.getCharacterSet().length == cipherTextAlphabet.getCharacterSet().length;
 	}
-
+	
+	public SubstitutionKey.PasswordToKeyMethod getDefaultKeyCreationMethod() {
+		return new SubstitutionKey.PasswordToKeyMethod(true, true, true);
+	}
+	
 	public char[] keyInputStringToDataobjectFormat(String keyInput) {
 		return keyInput.toCharArray();
 	}

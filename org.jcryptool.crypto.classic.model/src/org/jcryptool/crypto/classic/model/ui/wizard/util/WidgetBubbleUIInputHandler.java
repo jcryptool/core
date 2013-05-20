@@ -10,7 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.model.ui.wizard.util;
 
-import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -36,8 +37,9 @@ import org.jcryptool.crypto.classic.model.ui.wizard.Messages;
 public class WidgetBubbleUIInputHandler implements
 		WidgetRelatedUIInputResultHandler, Observer {
 
+	private static final int READ_TIME_PER_CHARACTER = 100;
 	private static final int STATIC_ADDITIVE_FADETIME_DIMINISHMENT = 400;
-	private static final int STANDARD_TIP_SHOWTIME = 14000;
+	private static final int STANDARD_TIP_SHOWTIME = 10000;
 	private static final double RECURRING_FADETIME_DIMINISHMENT = 0.42;
 
 	public static final int STD_RESULT_TYPE = Integer.MIN_VALUE;
@@ -47,7 +49,7 @@ public class WidgetBubbleUIInputHandler implements
 
 	private Shell shell;
 
-	private Map<AbstractUIInput<?>, Object> lastDisplayedResultTypes = new HashMap<AbstractUIInput<?>, Object>();
+	private Map<AbstractUIInput<?>, List<InputVerificationResult>> lastDisplayedResults = new IdentityHashMap<AbstractUIInput<?>, List<InputVerificationResult>>();
 
 	/**
 	 * Creates a new Handler, displaying Balloon Tooltips on the specified shell.
@@ -57,8 +59,8 @@ public class WidgetBubbleUIInputHandler implements
 	public WidgetBubbleUIInputHandler(Shell shell) {
 		super();
 		this.shell = shell;
-		this.widgetMap = new HashMap<AbstractUIInput<?>, Control>();
-		this.tooltipMap = new HashMap<AbstractUIInput<?>, SingleVanishTooltipLauncher>();
+		this.widgetMap = new IdentityHashMap<AbstractUIInput<?>, Control>();
+		this.tooltipMap = new IdentityHashMap<AbstractUIInput<?>, SingleVanishTooltipLauncher>();
 	}
 
 	/**
@@ -97,11 +99,46 @@ public class WidgetBubbleUIInputHandler implements
 	 */
 	protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput<?> input) {
 		if(tooltipMap.get(input) != null) {
-			int remainingTime = (int) tooltipMap.get(input).getTimeToVanish();
-			int newRemainingTime = (int) (remainingTime*RECURRING_FADETIME_DIMINISHMENT) - STATIC_ADDITIVE_FADETIME_DIMINISHMENT;
-
-			tooltipMap.get(input).setTimeToVanish(newRemainingTime);
+			InputVerificationResult lastDisplayedValidationResult = getLastDisplayedValidationResult(input);
+			
+			//cases:
+			if(lastDisplayedValidationResult == null) {
+				// no previous validation: do nothing (should not be possible though)
+				
+			} else if(lastDisplayedValidationResult.isValid()) {
+				// last displayed tooltip was valid
+				int remainingTime = (int) tooltipMap.get(input).getTimeToVanish();
+				int newRemainingTime = diminishRemainingTimeForTooltipWithoutInvalidation(remainingTime);
+				
+				tooltipMap.get(input).setTimeToVanish(newRemainingTime);
+			} else {
+				// last displayed tooltip wasn't valid -> subsequently diminish fadetime
+				int remainingTime = (int) tooltipMap.get(input).getTimeToVanish();
+				int newRemainingTime = diminishRemainingTimeForTooltipWithPreviousInvalidation(remainingTime);
+				
+				tooltipMap.get(input).setTimeToVanish(newRemainingTime);
+			}
 		}
+	}
+
+	private InputVerificationResult getLastDisplayedValidationResult(AbstractUIInput<?> input) {
+		List<InputVerificationResult> lastResults = lastDisplayedResults.get(input);
+		if(lastResults == null || lastResults.size() == 0) return null;
+		return lastResults.get(lastResults.size()-1);
+	}
+
+	private int diminishRemainingTimeForTooltipWithoutInvalidation(int remainingTime) {
+		return 0;
+	}
+
+	private int diminishRemainingTimeForTooltipWithPreviousInvalidation(int remainingTime) {
+		int newRemainingTime;
+		if(remainingTime < 1000*60*60) {
+			newRemainingTime = (int) (remainingTime*RECURRING_FADETIME_DIMINISHMENT) - STATIC_ADDITIVE_FADETIME_DIMINISHMENT;
+		} else {
+			newRemainingTime = remainingTime;
+		}
+		return newRemainingTime;
 	}
 
 	/**
@@ -149,11 +186,10 @@ public class WidgetBubbleUIInputHandler implements
 
 	protected int calcTooltipDuration(AbstractUIInput<?> origin,
 			InputVerificationResult result) {
-		if(result.isStandaloneMessage()) {
-			return 700 * (result.getMessage().length() / 7);
-		} else {
-			return (int) (STANDARD_TIP_SHOWTIME*0.7 + 700 * (result.getMessage().length() / 7));
-		}
+		int persistence = (result.getMessagePersistenceCategory()==InputVerificationResult.PERSISTENCE_DEFAULT)?
+				STANDARD_TIP_SHOWTIME:result.getMessagePersistenceCategory();
+		
+		return (int) (persistence + READ_TIME_PER_CHARACTER * result.getMessage().length() );
 	}
 
 	@Override
@@ -165,7 +201,7 @@ public class WidgetBubbleUIInputHandler implements
 			if(displayBalloon)
 			{
 				displayBalloonFor(origin, result);
-				lastDisplayedResultTypes.put(origin, result.getResultType());
+				archiveDisplayedInputVerificationResult(origin, result);
 			} else {
 				changeTooltipDurationAtCleaninputButNotHidden(origin);
 			}
@@ -173,8 +209,26 @@ public class WidgetBubbleUIInputHandler implements
 
 	}
 
+	private void archiveDisplayedInputVerificationResult(AbstractUIInput<?> origin, InputVerificationResult result) {
+		List<InputVerificationResult> verificationResults = lastDisplayedResults.get(origin);
+		if(verificationResults == null) {
+			verificationResults = new LinkedList<InputVerificationResult>();
+		}
+		verificationResults.add(result);
+		lastDisplayedResults.put(origin, verificationResults);
+	}
+
 	public Object getLastDisplayedResultType(AbstractUIInput<?> input) {
-		return lastDisplayedResultTypes.get(input);
+		List<InputVerificationResult> verificationResults = lastDisplayedResults.get(input);
+		if(verificationResults != null) {
+			if(verificationResults.size()>0) {
+				return verificationResults.get(verificationResults.size()-1);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -187,7 +241,7 @@ public class WidgetBubbleUIInputHandler implements
 		String title = calcTitleForBalloon(origin, result);
 		String msg = calcMsgForBalloon(origin, result);
 		Control ctrl = getWidgetFor(origin);
-		Point ctrlcoords = ctrl.toDisplay(new Point(ctrl.getBounds().width-2, 2));
+		Point ctrlcoords = positionTooltip(ctrl);
 		int duration = calcTooltipDuration(origin, result);
 
 		if(duration > 0) {
@@ -198,6 +252,10 @@ public class WidgetBubbleUIInputHandler implements
 			SingleVanishTooltipLauncher launcher = tooltipMap.get(origin);
 			launcher.showNewTooltip(ctrlcoords, duration, title, msg);
 		}
+	}
+
+	public Point positionTooltip(Control ctrl) {
+		return ctrl.toDisplay(new Point(ctrl.getBounds().width-2, 2));
 	}
 
 	/**

@@ -1,6 +1,9 @@
 package org.jcryptool.crypto.classic.substitution.algorithm;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,102 @@ import java.util.Map.Entry;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
 public class SubstitutionKey {
+	
+	public static class PasswordToKeyMethod {
+		
+		private boolean passwordDirection;
+		private boolean restDirection;
+		private boolean passwordFirst;
+
+		
+		/**
+		 * Creates a key creation method. 
+		 * 
+		 * @param passwordFirst whether the password should build the first, or the last part of the key
+		 * @param passwordDirection whether the password should be filled in lexically (from left to right,
+		 * regardless of passwordFirst), which corresponds to 'true', or antilexically.
+		 * @param restDirection whether the rest of the alphabet should be filled up lexically (from left to right,
+		 * regardless of passwordFirst), which corresponds to 'true', or antilexically.
+		 */
+		public PasswordToKeyMethod(boolean passwordFirst, boolean passwordDirection, boolean restDirection) {
+			this.passwordFirst = passwordFirst;
+			this.passwordDirection = passwordDirection;
+			this.restDirection = restDirection;
+		}
+
+		public static Comparator<Character> comparatorForFillInDirection(boolean passwordDirection) {
+			return genericComparator(passwordDirection);
+		}
+		
+		private static Comparator<Character> genericComparator(boolean lexicalDirection) {
+			final int lexicalDirectionMultiplicator = lexicalDirection?1:-1;
+			return new Comparator<Character>() {
+				@Override
+				public int compare(Character o1, Character o2) {
+					if(o1==null && o2==null) {
+						return 0;
+					} else if(o1==null && o2!=null) {
+						return 1*lexicalDirectionMultiplicator;
+					} else if(o1!=null && o2==null) {
+						return -1*lexicalDirectionMultiplicator;
+					} else {
+						return o1.compareTo(o2)*lexicalDirectionMultiplicator;
+					}
+				}
+			};
+		}
+		
+		
+		public static SubstitutionKey createKey(String password, AbstractAlphabet alphabet, boolean passwordDirection, boolean restDirection, boolean passwordFirst) {
+			LinkedList<Character> substitutionList = fillSubstitutionListWithPassword(password, alphabet, passwordDirection,
+					restDirection, passwordFirst);
+			
+			try {
+				return new SubstitutionKey(substitutionList, alphabet);
+			} catch (SubstitutionKeyValidityException e) {
+				throw new RuntimeException("Unexpected: substitution key method should never fail.");
+			}
+		}
+
+		public static LinkedList<Character> fillSubstitutionListWithPassword(String password, AbstractAlphabet alphabet,
+				boolean passwordDirection, boolean restDirection, boolean passwordFirst) {
+			LinkedList<Character> substitutionList = new LinkedList<Character>();
+			LinkedHashSet<Character> filteredPasswordSet = new LinkedHashSet<Character>();
+			for(char c: password.toCharArray()) {
+				if(alphabet.contains(c)) filteredPasswordSet.add(c);
+			}
+			LinkedList<Character> filteredPassword = new LinkedList<Character>(filteredPasswordSet);
+			
+			LinkedList<Character> restList = new LinkedList<Character>();
+			for(char c: alphabet.getCharacterSet()) {
+				if(!filteredPassword.contains(Character.valueOf(c))) restList.add(c);
+			}
+			
+			List<Character> listTofillIn = new LinkedList<Character>(
+					passwordFirst?filteredPassword:restList
+					);
+			boolean fillInDirection = passwordFirst?passwordDirection:restDirection;
+			if(!fillInDirection) Collections.reverse(listTofillIn);
+			substitutionList.addAll(listTofillIn);
+
+			
+			listTofillIn = new LinkedList<Character>(
+					passwordFirst?restList:filteredPassword
+					);
+			fillInDirection = passwordFirst?restDirection:passwordDirection;
+			if(!fillInDirection) Collections.reverse(listTofillIn);
+			substitutionList.addAll(listTofillIn);
+			
+			if(substitutionList.size() != alphabet.getCharacterSet().length) {
+				throw new RuntimeException("Unexpected: substitutionKey creation: created substitution list length is not correct (should never happen)");
+			}
+			return substitutionList;
+		}
+		
+		public SubstitutionKey createKey(String password, AbstractAlphabet alphabet) {
+			return PasswordToKeyMethod.createKey(password, alphabet, passwordDirection, restDirection, passwordFirst);
+		}
+	}
 
 	private Map<Character, Character> substitutions;
 
@@ -18,6 +117,20 @@ public class SubstitutionKey {
 		this.substitutions = substitutions;
 	}
 
+	public SubstitutionKey(LinkedList<Character> substitutionList, AbstractAlphabet alphabet) throws SubstitutionKeyValidityException {
+		this(mappingFromSubstitutionList(substitutionList, alphabet));
+	}
+
+	private static Map<Character, Character> mappingFromSubstitutionList(LinkedList<Character> substitutionList, AbstractAlphabet alphabet) {
+		Map<Character, Character> mapping = new HashMap<Character, Character>();
+		char[] characterSet = alphabet.getCharacterSet();
+		for (int i = 0; i < characterSet.length; i++) {
+			char c = characterSet[i];
+			mapping.put(c, substitutionList.get(i));
+		}
+		return mapping;
+	}
+
 	public static Map<Character, Character> invertSubstitution(Map<Character, Character> substitutionMapping) {
 		Map<Character, Character> result = new HashMap<Character, Character>();
 		for(Entry<Character, Character> mapping: substitutionMapping.entrySet()) {
@@ -25,6 +138,10 @@ public class SubstitutionKey {
 		}
 		
 		return result;
+	}
+	
+	public static SubstitutionKey createIdentitySubstitution(AbstractAlphabet alphabet) {
+		return new PasswordToKeyMethod(true, true, true).createKey("", alphabet);
 	}
 	
 	public Character getSubstitutionFor(Character c) {
@@ -78,6 +195,38 @@ public class SubstitutionKey {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Given a plaintext alphabet, this method returns the substitutions to the
+	 * plaintext characters in the order in which they appear in the alphabet.<br><br>
+	 * 
+	 * If the alphabet contains characters that are not mapped by this substitution key, 
+	 * they are filled up at the end of the String.
+	 * 
+	 * @param alphabet the plaintext alphabet
+	 * @return
+	 */
+	public String toStringSubstitutionCharList(AbstractAlphabet alphabet) {
+		StringBuffer keyIdeal = new StringBuffer();
+		for(char c: alphabet.getCharacterSet()) {
+			Character substitutionFor = this.getSubstitutionFor(c);
+			if(substitutionFor != null) {
+				keyIdeal.append(substitutionFor);
+			}
+		}
+		//filling up...
+		LinkedList<Character> substList = PasswordToKeyMethod.fillSubstitutionListWithPassword(
+				keyIdeal.toString(), 
+				alphabet, 
+				true, 
+				true, 
+				true); 
+		StringBuilder stringKeyBuilder = new StringBuilder();
+		for(Character c: substList) {
+			stringKeyBuilder.append(c);
+		}
+		return stringKeyBuilder.toString();
 	}
 	
 	@Override

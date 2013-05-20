@@ -7,21 +7,21 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -30,13 +30,13 @@ import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
-
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithm;
+import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey;
+import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey.PasswordToKeyMethod;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKeyValidityException;
 import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLetterInputField;
 import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLetterInputField.Mode;
@@ -169,6 +169,8 @@ public class SubstitutionKeyEditor extends Composite {
 	
 	private List<Observer> observers;
 
+	private PasswordToKeyMethod keyCreationMethod;
+
 	/**
 	 * Create the composite.
 	 * 
@@ -181,6 +183,7 @@ public class SubstitutionKeyEditor extends Composite {
 		this.inputs = new HashMap<Character, TextfieldInput<Character>>();
 		this.charInputControls = new HashMap<Character, SubstitutionLetterInputField>();
 		this.observers = new LinkedList<Observer>();
+		this.keyCreationMethod = new SubstitutionAlgorithmSpecification().getDefaultKeyCreationMethod();
 		charMapping = new HashMap<Character, Character>();
 		UNDETERMINED_SUBST_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
 		createGUI(plaintextAlphabet);
@@ -204,7 +207,8 @@ public class SubstitutionKeyEditor extends Composite {
 		final SubstitutionKeyEditor editor = new SubstitutionKeyEditor(mainComposite, SWT.NONE, alphabet);
 		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		editor.setPasswordExternal(initialPassword);
+//		PasswordToKeyMethod method = new SubstitutionKey.PasswordToKeyMethod(true, true, true);
+		editor.setPasswordExternal(initialPassword, true);
 		
 		Label separator = new Label(mainComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData separatorLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -327,7 +331,7 @@ public class SubstitutionKeyEditor extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				if(!txtPassword.getText().equals("")) {
-					setKeyByPassword(passwordInput.getContent());
+					setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
 				}
 			}
 		});
@@ -405,35 +409,10 @@ public class SubstitutionKeyEditor extends Composite {
 		complete = checkMappingComplete();
 	}
 
-	protected void setKeyByPassword(String text) {
-		List<Character> alpha = new LinkedList<Character>();
-		List<Character> seenChars = new LinkedList<Character>();
-		List<Character> keyChars = new LinkedList<Character>();
+	protected void setKeyByPassword(String text, PasswordToKeyMethod passwordToKeyMethod) {
+		SubstitutionKey keyToSet = passwordToKeyMethod.createKey(text, plaintextAlphabet);
 		
-		for(char c: this.plaintextAlphabet.getCharacterSet()) {
-			alpha.add(c);
-		}
-		
-		for(char c: text.toCharArray()) {
-			if(!seenChars.contains(c) && alpha.contains(c)) {
-				keyChars.add(c);
-				seenChars.add(c);
-			}
-		}
-		
-		for(char c: plaintextAlphabet.getCharacterSet()) {
-			if(!keyChars.contains(c)) {
-				keyChars.add(c);
-			}
-		}
-		
-		for (int i = 0; i < keyChars.size(); i++) {
-			Character c = keyChars.get(i);
-			Character plainChar = alpha.get(i);
-			TextfieldInput<Character> input = inputs.get(plainChar);
-			input.writeContent(c);
-			input.synchronizeWithUserSide();
-		}
+		setCharMappingExternal(keyToSet.getSubstitutions());
 	}
 
 	private void updateUnusedCharsList() {
@@ -569,12 +548,28 @@ public class SubstitutionKeyEditor extends Composite {
 		return true;
 	}
 	
+	public void setKeyCreationMethod(SubstitutionKey.PasswordToKeyMethod method) {
+		this.keyCreationMethod = method;
+	}
+	
+	public AbstractAlphabet getAlphabet() {
+		return plaintextAlphabet;
+	}
+	
+	public String getPassword() {
+		return passwordInput.getContent();
+	}
+	
+	public PasswordToKeyMethod getKeyCreationMethod() {
+		return keyCreationMethod;
+	}
+	
 	/**
 	 * populates the substitutions with a password like it would happen when using the password text field.
 	 * 
 	 * @param password the password
 	 */
-	public void setPasswordExternal(String password) {
+	public void setPasswordExternal(String password, boolean apply) {
 		passwordInput.writeContent("");
 		passwordInput.synchronizeWithUserSide();
 		for(char c: password.toCharArray()) {
@@ -582,7 +577,10 @@ public class SubstitutionKeyEditor extends Composite {
 			passwordInput.synchronizeWithUserSide();
 			
 		}
-		setKeyByPassword(passwordInput.getContent());
+		
+		if(apply) {
+			setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
+		}
 	}
 	
 	/**
@@ -592,5 +590,13 @@ public class SubstitutionKeyEditor extends Composite {
 	 */
 	public void addObserver(Observer o) {
 		this.observers.add(o);
+	}
+
+	public void setCharMappingExternal(Map<Character, Character> mapping) {
+		for(Character plaintextChar: inputs.keySet()) {
+			TextfieldInput<Character> input = inputs.get(plaintextChar);
+			input.writeContent(mapping.get(plaintextChar));
+			input.synchronizeWithUserSide();
+		}
 	}
 }

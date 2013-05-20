@@ -6,10 +6,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MenuEvent;
-import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,19 +15,15 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
-import org.jcryptool.crypto.classic.substitution.ui.SubstitutionKeyEditor;
 
 public class SubstitutionLetterInputField extends Composite {
 
@@ -385,6 +378,9 @@ public class SubstitutionLetterInputField extends Composite {
 				lexicalPos2 = i;
 			}
 		}
+		//reverse lexical pos, because bigger numbers mean the object is earlier in the order
+		lexicalPos1 = (alphaSet.length-lexicalPos1)-1;
+		lexicalPos2 = (alphaSet.length-lexicalPos2)-1;
 		
 		Integer specialCharVal1 = isSpecialCharacterForPopupMenu(c1)?1:0;
 		Integer specialCharVal2 = isSpecialCharacterForPopupMenu(c2)?1:0;
