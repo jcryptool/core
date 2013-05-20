@@ -3,6 +3,7 @@ package org.jcryptool.visual.jctca.listeners;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -40,9 +41,9 @@ public class TabItemListener implements SelectionListener {
 	@Override
 	public void widgetSelected(SelectionEvent arg0) {
 		// System.out.println(parent.getSelectionIndex());
-		Label lbl_exp = (Label) grp_exp.getChildren()[0];
+		StyledText stl_exp = (StyledText) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
-			lbl_exp.setText(Messages.TabItemListener_tab_user_explain);
+			stl_exp.setText(Messages.TabItemListener_tab_user_explain);
 
 			Control[] x = (parent.getChildren());
 			if (x.length > 0) {
@@ -55,7 +56,7 @@ public class TabItemListener implements SelectionListener {
 				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
-			lbl_exp.setText(Messages.TabItemListener_tab_ra_explain);
+			stl_exp.setText(Messages.TabItemListener_tab_ra_explain);
 			Group g1 = (Group) parent.getChildren()[1];
 			Group g2 = (Group) g1.getChildren()[0];
 			Composite c = (Composite) g2.getChildren()[0];
@@ -69,7 +70,7 @@ public class TabItemListener implements SelectionListener {
 			c.layout();
 			lst_csr.select(0);
 		} else if (parent.getSelectionIndex() == 2) {
-			lbl_exp.setText(Messages.TabItemListener_tab_ca_explain);
+			stl_exp.setText(Messages.TabItemListener_tab_ca_explain);
 
 			Group g1 = (Group) parent.getChildren()[2];
 			Composite c = (Composite) g1.getChildren()[0];
@@ -96,7 +97,7 @@ public class TabItemListener implements SelectionListener {
 			c1.layout();
 			
 		} else if (parent.getSelectionIndex() == 3) {
-			lbl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
+			stl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
 			Group g1 = (Group) parent.getChildren()[3];
 			Composite c = (Composite) g1.getChildren()[0];
 			Composite c1 = (Composite)c.getChildren()[0];

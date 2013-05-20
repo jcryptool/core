@@ -49,7 +49,7 @@ public class JCTCA_Visual extends ViewPart {
 	private StyledText head_description;
 	private Composite comp_center;
 	private TabFolder tabFolder;
-	private Label lbl_explain;
+	private StyledText stl_explain;
 	private Group grp_explain;
 
 	private Composite comp_image;
@@ -198,14 +198,12 @@ public class JCTCA_Visual extends ViewPart {
 		comp_vscroll.setLayoutData(gd_explain);
 		
 
-		
 		// label for showing explanation texts
-		lbl_explain = new Label(comp_vscroll, SWT.WRAP);
-		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, false);
-		lbl_explain.setLayoutData(gd_txt_explain);
 		comp_vscroll.setBackground(WHITE);
 		comp_vscroll.setSize(comp_vscroll.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
+		stl_explain = new StyledText(comp_vscroll, SWT.READ_ONLY| SWT.MULTI | SWT.WRAP);
+		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.NONE, true, false,1,1);
+		stl_explain.setLayoutData(gd_txt_explain);
 		
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				comp_vscroll);
@@ -224,7 +222,7 @@ public class JCTCA_Visual extends ViewPart {
 				SWT.NONE);
 
 		tabFolder.setSelection(0);
-		composite.layout(true);
+		composite.layout(true, true);
 	}
 
 	public void disposeCompCenter() {

@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -81,8 +82,8 @@ public class SignCert implements Views {
 		btn_sign.setText(Messages.SignCert_btn_sign_with_key);
 		btn_sign.addSelectionListener(new SigVisPluginOpenListener(btn_detail, selected_file, txt_sign, cmb_priv_key));
 			
-		Label lbl_exp = (Label) exp.getChildren()[0];
-		lbl_exp.setText(Messages.SignCert_explain_text);
+		StyledText stl_exp = (StyledText) exp.getChildren()[0];
+		stl_exp.setText(Messages.SignCert_explain_text);
 
 		composite.setVisible(false);
 	}

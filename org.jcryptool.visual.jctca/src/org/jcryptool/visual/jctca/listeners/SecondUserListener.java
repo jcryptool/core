@@ -20,6 +20,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
 public class SecondUserListener implements SelectionListener{
@@ -28,13 +29,15 @@ public class SecondUserListener implements SelectionListener{
 	Tree tree;
 	Label lbl_text;
 	Label lbl_signature;
+	Button btn_deleteEntry;
 	public SecondUserListener(Button btn_check_signature, Button btn_get_CRL,
-			Tree tree, Label lbl_text, Label lbl_signature) {
+			Tree tree, Label lbl_text, Label lbl_signature, Button btn_deleteEntry) {
 		this.btn_check_signature = btn_check_signature;
 		this.btn_get_CRL = btn_get_CRL;
 		this.tree = tree;
 		this.lbl_signature = lbl_signature;
 		this.lbl_text = lbl_text;
+		this.btn_deleteEntry = btn_deleteEntry;
 	}
 
 	@Override
@@ -53,6 +56,7 @@ public class SecondUserListener implements SelectionListener{
 					Signature sig = (Signature)it.getData();
 					byte[] data = (sig.getPath()!="" ? sig.getPath() : sig.getText()).getBytes();
 					byte[] hash, signature;
+					boolean certRevoked = false; //hilfsvariable um festzustellen ob Zertifikat widerrufen wurde, aber die signatur vor dem widerruf erstellt wurde
 					if (btn_get_CRL.getSelection()) {
 						KeyStoreAlias pubAlias = sig.getPubAlias();
 						Certificate cert = KeyStoreManager.getInstance().getCertificate(pubAlias);
@@ -63,17 +67,32 @@ public class SecondUserListener implements SelectionListener{
 									Util.showMessageBox("Zertifikat widerrufen", "Die Signatur wurde nach dem widerruf des Zertifikats erstellt!", SWT.ICON_WARNING);
 									return;
 								}
+								else{
+									certRevoked = true;
+								}
 							}
 						}
-					} 
+					}
 					try {
 						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA");
-						checkSig.initVerify(KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias()).getPublicKey());
-						if(checkSig.verify(sig.getSignature())){
-							Util.showMessageBox("Match","Die Signaturen stimmen überein. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_WARNING);
+						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias());
+						if(cert.getNotAfter().after(sig.getTime())){
+							checkSig.initVerify(cert.getPublicKey());
+							
+							if(checkSig.verify(sig.getSignature())){
+								if(certRevoked){
+									Util.showMessageBox("Erfolg", "Die Signatur ist korrekt. Das Zertifikat wurde zwar widerrufen, die signatur wurde aber vor dem Widerruf erstellt.", SWT.ICON_INFORMATION);
+								}
+								else{
+									Util.showMessageBox("Erfolg","Die Signatur ist korrekt. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_INFORMATION);
+								}
+							}
+							else{
+								Util.showMessageBox("Signatur falsch", "Die Signatur ist nicht korrekt.", SWT.ICON_ERROR);
+							}
 						}
 						else{
-							Util.showMessageBox("Fail", "Die Signaturen stimmen NICHT überein.", SWT.ICON_ERROR);
+							Util.showMessageBox("Zertifikat abgelaufen","Signatur wurde nach dem Ablauf des Zertifikats erstellt" , SWT.ICON_ERROR);
 						}
 					} catch (SignatureException e) {
 						// TODO Auto-generated catch block
@@ -94,12 +113,26 @@ public class SecondUserListener implements SelectionListener{
 				Signature sig = (Signature)sel.getData();
 				lbl_signature.setText(Util.bytesToHex(sig.getSignature()));
 				lbl_text.setText(sig.getPath()=="" ? sig.getText() : sig.getPath());
+				btn_deleteEntry.setEnabled(true);
+				btn_check_signature.setEnabled(true);
 			}
 			else {
+				lbl_signature.setText("");
+				lbl_text.setText("");
+				btn_check_signature.setEnabled(false);
+				btn_deleteEntry.setEnabled(false);
+			}
+		}
+		else if(src.equals(btn_deleteEntry)){
+			TreeItem sel = tree.getSelection()[0];
+			if(sel!=null && sel.getData()!=null){
+				Signature sig = (Signature)sel.getData();
+				CertificateCSRR.getInstance().removeSignature(sig);
+				sel.dispose();
+				tree.layout();
 				lbl_signature.setText("");
 				lbl_text.setText("");
 			}
 		}
 	}
-
 }
