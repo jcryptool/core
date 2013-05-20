@@ -10,6 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.substitution;
 
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -18,6 +21,10 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	 * The plug-in ID
 	 */
 	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.substitution";
+
+	public static final String TINY_ARROW_DOWN = "arrow_down";
+
+	public static final String TINY_ARROW_RIGHT = "arrow_right";
 
 	/**
 	 * The shared instance
@@ -28,7 +35,7 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public SubstitutionPlugin() {
-		plugin = this;
+		
 	}
 	
 	/**
@@ -38,6 +45,7 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		plugin = this;
 	}
 
 	/**
@@ -58,6 +66,27 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	 */
 	public static SubstitutionPlugin getDefault() {
 		return plugin;
+	}
+	
+	/**
+	 * Returns an image descriptor for the image file at the given plug-in
+	 * relative path
+	 * 
+	 * @param path
+	 *            the path
+	 * @return the image descriptor
+	 */
+	public static ImageDescriptor getImageDescriptor(String path) {
+		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+	
+	@Override
+	protected void initializeImageRegistry(ImageRegistry reg) {
+		ImageDescriptor imageDescriptorKeys = getImageDescriptor("icons/tiny_arrow_down.png");
+		Image createImage = imageDescriptorKeys.createImage();
+		reg.put(TINY_ARROW_DOWN, createImage);
+		ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/tiny_arrow_right.png");
+		reg.put(TINY_ARROW_RIGHT, imageDescriptorFile.createImage());
 	}
 
 }

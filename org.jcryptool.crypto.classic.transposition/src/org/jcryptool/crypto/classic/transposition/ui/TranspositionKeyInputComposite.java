@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -29,11 +28,9 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
-import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm;
-import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 
 import com.cloudgarden.resource.SWTResourceManager;
@@ -351,35 +348,7 @@ public class TranspositionKeyInputComposite extends org.eclipse.swt.widgets.Comp
 	}
 
 	private void createInputHandler() {
-		verificationDisplayHandler = new WidgetBubbleUIInputHandler(new Shell()) {
-			@SuppressWarnings("rawtypes")
-			@Override
-			protected int calcTooltipDuration(AbstractUIInput origin,
-					InputVerificationResult result) {
-				if(! isActiveInput.getContent()) return 0;
-
-				// set infinite duration for the "not changing the encryption" tooltip
-				if(result.getResultType() == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { 
-					return Integer.MAX_VALUE;
-				}
-
-				return super.calcTooltipDuration(origin, result);
-			}
-			@SuppressWarnings("rawtypes")
-			@Override
-			protected void changeTooltipDurationAtCleaninputButNotHidden(
-					AbstractUIInput input) {
-				// vanish instantly when it is the "not changing the encryption" tooltip
-				if(getLastDisplayedResultType(input) == TranspositionAlgorithmSpecification.RESULT_TYPE_KEY_NOEFFECT) { 
-					tooltipMap.get(input).setTimeToVanish(-1);
-				} else if(getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { 
-					tooltipMap.get(input).setTimeToVanish(-1);
-				} else {
-					super.changeTooltipDurationAtCleaninputButNotHidden(input);
-				}
-			}
-
-		};
+		verificationDisplayHandler = new WidgetBubbleUIInputHandler(getShell());
 
 		verificationDisplayHandler.addAsObserverForInput(keyInput);
 		verificationDisplayHandler.addAsObserverForInput(isActiveInput);

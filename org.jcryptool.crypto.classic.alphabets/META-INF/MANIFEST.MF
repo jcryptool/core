@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.crypto.classic.alphabets,
+ org.jcryptool.crypto.classic.alphabets.composite,
  org.jcryptool.crypto.classic.alphabets.preferences,
  org.jcryptool.crypto.classic.alphabets.tools,
  org.jcryptool.crypto.classic.alphabets.ui

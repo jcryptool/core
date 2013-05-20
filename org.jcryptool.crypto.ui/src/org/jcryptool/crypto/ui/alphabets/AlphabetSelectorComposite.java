@@ -225,11 +225,14 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						public void widgetSelected(SelectionEvent e) {
 							if(btnCustomAlphabet.getSelection()) {
 								customAlphaByBtn = makeCustomAlphabet(e);
-								if(customAlphaByBtn != null) {
+								boolean customAlphaWasMade = customAlphaByBtn!=null;
+								
+								if(customAlphaWasMade) {
 									reloadAlphabetCombo();
 								}
-								
+
 								alphabetInput.synchronizeWithUserSide();
+								
 
 								if(btnCustomAlphabet.getSelection()) {
 									showCustomAlphabetSelection();
@@ -327,7 +330,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 
 		if(registeredAlphas.contains(alphaB4Reset)) {
-			alphabetInput.writeContent(alphaB4Reset);
+			comboAlphas.select(getIndexForRegisteredAlphabet(alphaB4Reset));
+//			alphabetInput.writeContent(alphaB4Reset);
 		}
 		if(afterResetSelectCustomAlphaItem) {
 			comboAlphas.select(getComboIndexForUnregisteredAlphabet());

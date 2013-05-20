@@ -10,7 +10,11 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.substitution.algorithm;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 
 /**
@@ -28,9 +32,20 @@ public class SubstitutionAlgorithmSpecification extends
 		return isValidPlainTextAlphabet(plainTextAlphabet) && isValidCipherTextAlphabet(cipherTextAlphabet)
 		&& plainTextAlphabet.getCharacterSet().length == cipherTextAlphabet.getCharacterSet().length;
 	}
-
+	
+	public SubstitutionKey.PasswordToKeyMethod getDefaultKeyCreationMethod() {
+		return new SubstitutionKey.PasswordToKeyMethod(true, true, true);
+	}
+	
 	public char[] keyInputStringToDataobjectFormat(String keyInput) {
 		return keyInput.toCharArray();
+	}
+	
+	@Override
+	public List<KeyVerificator> getKeyVerificators() {
+		List<KeyVerificator> result = new LinkedList<KeyVerificator>(super.getKeyVerificators());
+		result.add(NO_DOUBLETS);
+		return result;
 	}
 	
 }

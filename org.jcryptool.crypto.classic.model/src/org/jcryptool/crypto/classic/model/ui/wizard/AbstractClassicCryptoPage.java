@@ -116,6 +116,8 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     private Text txtConsoleCommand;
 
+	protected Composite pageComposite;
+
     /**
      * Creates a new instance of AbstractClassicCryptoPage
      * 
@@ -177,7 +179,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
         pageCompositeLayoutData.grabExcessVerticalSpace = true;
         pageCompositeLayoutData.horizontalAlignment = SWT.FILL;
         pageCompositeLayoutData.verticalAlignment = SWT.FILL;
-        Composite pageComposite = new Composite(parent, SWT.NULL);
+        pageComposite = new Composite(parent, SWT.NULL);
         pageComposite.setLayout(pageCompositeLayout);
         pageComposite.setLayoutData(pageCompositeLayoutData);
 
@@ -187,13 +189,13 @@ public class AbstractClassicCryptoPage extends WizardPage {
         createTransformGroup(pageComposite);
         createConsoleGroup(pageComposite);
 
-        setPageComplete(mayFinish());
         setControl(pageComposite);
         setHelpAvailable();
 
         createInputObjects();
+        setPageComplete(mayFinish());
 
-        createInputVerificationHandler(parent.getShell());
+        createInputVerificationHandler(this.getShell());
         addPageObserver();
         updateCommandLineString();
     }
@@ -447,17 +449,27 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 return super.mapInputToWidget(input);
             }
         };
-        verificationDisplayHandler.addAsObserverForInput(operationInput);
-        verificationDisplayHandler.addAsObserverForInput(filterInput);
-        verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
-        verificationDisplayHandler.addAsObserverForInput(keyInput);
-        verificationDisplayHandler.addAsObserverForInput(transformationInput);
+		if (operationInput != null)
+			verificationDisplayHandler.addAsObserverForInput(operationInput);
+		if (filterInput != null)
+			verificationDisplayHandler.addAsObserverForInput(filterInput);
+		if (getAlphabetInput() != null)
+			verificationDisplayHandler.addAsObserverForInput(getAlphabetInput());
+		if (keyInput != null)
+			verificationDisplayHandler.addAsObserverForInput(keyInput);
+		if (transformationInput != null)
+			verificationDisplayHandler.addAsObserverForInput(transformationInput);
 
-        // static mappings (dynamic, like at operation, are handled above in the overridden method)
-        verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
-        verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
-        verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
-        verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
+		// static mappings (dynamic, like at operation, are handled above in the
+		// overridden method)
+		if (getAlphabetInput() != null)
+			verificationDisplayHandler.addInputWidgetMapping(getAlphabetInput(), alphabetCombo);
+		if (filterInput != null)
+			verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
+		if (keyInput != null)
+			verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
+		if (transformationInput != null) 
+			verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
     }
 
     /**
@@ -483,11 +495,11 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * finishable/next page status of this page.
      */
     protected void addPageObserver() {
-        operationInput.addObserver(pageObserver);
-        getAlphabetInput().addObserver(pageObserver);
-        filterInput.addObserver(pageObserver);
-        keyInput.addObserver(pageObserver);
-        transformationInput.addObserver(pageObserver);
+        if(operationInput != null) operationInput.addObserver(pageObserver);
+        if(getAlphabetInput() != null) getAlphabetInput().addObserver(pageObserver);
+        if(filterInput != null) filterInput.addObserver(pageObserver);
+        if(keyInput != null) keyInput.addObserver(pageObserver);
+        if(transformationInput != null) transformationInput.addObserver(pageObserver);
     }
 
     /**
@@ -562,7 +574,11 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * @return The selected currentAlphabet
      */
     public AbstractAlphabet getSelectedAlphabet() {
-        return getAlphabetInput().getContent();
+        if(getAlphabetInput() != null) {
+        	return getAlphabetInput().getContent();
+        } else {
+        	return specification.getDefaultPlainTextAlphabet();
+        }
     }
 
     /**
@@ -573,9 +589,9 @@ public class AbstractClassicCryptoPage extends WizardPage {
     }
 
     /**
-     * Returns the entered key.
+     * Returns the entered key. This method should only be used, when the wizard page is complete.
      * 
-     * @return The entered key
+     * @return The key in string form
      */
     public String getKey() {
         return keyInput.getContent();
@@ -724,10 +740,14 @@ public class AbstractClassicCryptoPage extends WizardPage {
             showAlphabetContent.addSelectionListener(new SelectionAdapter() {
                 @Override
 				public void widgetSelected(SelectionEvent evt) {
+                	verificationDisplayHandler.disposeTooltips();
                     ToolTip tooltip = new ToolTip(getShell(), SWT.BALLOON);
                     tooltip.setText(Messages.AbstractClassicCryptoPage_alphabetcontent_balloon_title);
-                    tooltip.setMessage(String.valueOf(getAlphabetInput().getContent().getCharacterSet())
-                            + Messages.AbstractClassicCryptoPage_clicktoclose);
+                    tooltip.setMessage(
+                    		AbstractAlphabet.alphabetContentAsString(
+                    				getAlphabetInput().getContent().getCharacterSet()
+                    				)
+                    		+ Messages.AbstractClassicCryptoPage_clicktoclose);
                     tooltip.setAutoHide(true);
                     tooltip.setVisible(true);
                 }
@@ -875,6 +895,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
                 txtConsoleCommand.setEditable(false);
                 layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
                 layoutData.verticalIndent = 5;
+                layoutData.widthHint = generateWidthHintForConsoleTextfield();
                 txtConsoleCommand.setLayoutData(layoutData);
                 txtConsoleCommand.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NONE)); //$NON-NLS-1$
                 // TODO: dispose
@@ -882,7 +903,11 @@ public class AbstractClassicCryptoPage extends WizardPage {
         }
     }
 
-    /**
+    private int generateWidthHintForConsoleTextfield() {
+		return 250;
+	}
+
+	/**
      * @return the alphabet command line part
      */
     protected String generateAlphabetPartForCommandLine() {
@@ -979,7 +1004,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     public void dispose() {
         super.dispose();
         if (verificationDisplayHandler != null)
-            verificationDisplayHandler.dispose();
+            verificationDisplayHandler.disposeTooltips();
     }
 
 }

@@ -254,10 +254,10 @@ public class TranspositionWizardPage extends AbstractClassicCryptoPage {
     public void dispose() {
         super.dispose();
         if (key1InputComposite != null && key1InputComposite.getVerificationDisplayHandler() != null) {
-            key1InputComposite.getVerificationDisplayHandler().dispose();
+            key1InputComposite.getVerificationDisplayHandler().disposeTooltips();
         }
         if (key2InputComposite != null && key2InputComposite.getVerificationDisplayHandler() != null) {
-            key2InputComposite.getVerificationDisplayHandler().dispose();
+            key2InputComposite.getVerificationDisplayHandler().disposeTooltips();
         }
     }
     

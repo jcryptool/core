@@ -48,6 +48,9 @@ public class TranspositionAlgorithmSpecification extends
 				public MessageType getMessageType() {return InputVerificationResult.MessageType.INFORMATION;}
 				@Override
 				public boolean isValid() {return true;}
+				public int getMessagePersistenceCategory() {
+					return InputVerificationResult.PERSISTENCE_FOREVER;
+				};
 				@Override
 				public String getMessage() {
 					String mask = org.jcryptool.crypto.classic.transposition.ui.Messages.TranspositionWizardPage_firstnotalter;
