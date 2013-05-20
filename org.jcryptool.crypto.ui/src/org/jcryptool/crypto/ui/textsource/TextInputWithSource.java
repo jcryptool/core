@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs;
+package org.jcryptool.crypto.ui.textsource;
 
 import java.io.File;
 

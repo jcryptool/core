@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.transpositionanalysis.ui;
+package org.jcryptool.crypto.ui.textsource;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -25,14 +25,12 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.util.PathEditorInput;
+import org.jcryptool.crypto.ui.CryptoUIPlugin;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
 public class TextInputWithSourceDisplayer extends Composite {
@@ -187,12 +185,12 @@ public class TextInputWithSourceDisplayer extends Composite {
                 if (generatedImageFromExtension != null) {
                     return generatedImageFromExtension;
                 } else {
-                    return TranspositionAnalysisPlugin.getDefault().getImageRegistry()
-                            .get(TranspositionAnalysisPlugin.FILE_INPUT_ICON);
+                    return CryptoUIPlugin.getDefault().getImageRegistry()
+                            .get(CryptoUIPlugin.FILE_INPUT_ICON);
                 }
             } else {
-                return TranspositionAnalysisPlugin.getDefault().getImageRegistry()
-                        .get(TranspositionAnalysisPlugin.FILE_INPUT_ICON);
+                return CryptoUIPlugin.getDefault().getImageRegistry()
+                        .get(CryptoUIPlugin.FILE_INPUT_ICON);
             }
         } else if (text.getSourceType() == TextSourceType.JCTEDITOR) {
             if (text.editorReference != null) {
@@ -202,8 +200,8 @@ public class TextInputWithSourceDisplayer extends Composite {
                         .get(JCTTextEditorPlugin.JCT_TEXT_EDITOR_ICON);
             }
         } else { // USERINPUT
-            return TranspositionAnalysisPlugin.getDefault().getImageRegistry()
-                    .get(TranspositionAnalysisPlugin.KEYBOARD_INPUT_ICON);
+            return CryptoUIPlugin.getDefault().getImageRegistry()
+                    .get(CryptoUIPlugin.KEYBOARD_INPUT_ICON);
         }
     }
 

@@ -20,6 +20,8 @@ import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
+import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
 public abstract class TextWithSourceInput extends AbstractUIInput<TextInputWithSource> {
 

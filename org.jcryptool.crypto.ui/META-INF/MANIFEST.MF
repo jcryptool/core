@@ -8,10 +8,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.logging,
  org.jcryptool.core.operations,
- org.jcryptool.core.util
+ org.jcryptool.core.util,
+ org.jcryptool.editor.text
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.crypto.ui.alphabets,
  org.jcryptool.crypto.ui.alphabets.customalphabets,
- org.jcryptool.crypto.ui.textmodify.wizard
+ org.jcryptool.crypto.ui.textmodify.wizard,
+ org.jcryptool.crypto.ui.textsource
 Bundle-Vendor: jcryptool.org

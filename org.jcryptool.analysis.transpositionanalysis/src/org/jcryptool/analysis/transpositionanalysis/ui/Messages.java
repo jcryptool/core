@@ -21,11 +21,6 @@ public class Messages extends NLS {
 	public static String KeyViewer_prettyversion;
 	public static String ReadDirectionChooser_0;
 	public static String ReadDirectionChooser_1;
-	public static String TextInputWithSourceDisplayer_editorOpenHint;
-	public static String TextInputWithSourceDisplayer_fileOpenHint;
-	public static String TextInputWithSourceDisplayer_manualinput;
-	public static String TextInputWithSourceDisplayer_originLabelBeginning;
-	public static String TextInputWithSourceDisplayer_userinputOpenHint;
 	public static String TranspAnalysisUI_decipher;
 	public static String TranspAnalysisUI_Export;
 	public static String TranspAnalysisUI_keyfound;

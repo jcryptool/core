@@ -33,10 +33,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
-import org.jcryptool.analysis.transpositionanalysis.ui.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizard;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.TranspTextWizardPage.PageConfiguration;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
@@ -47,6 +45,9 @@ import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionTable;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizard;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionKeyInputWizardPage;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer.Style;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
 /**

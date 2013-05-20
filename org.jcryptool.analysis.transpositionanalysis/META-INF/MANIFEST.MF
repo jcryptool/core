@@ -8,7 +8,8 @@ Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.eclipse.help.ui;bundle-version="3.5.100",
  org.jcryptool.core.util;bundle-version="0.9.5",
  org.jcryptool.editor.text,
- org.jcryptool.crypto.classic.transposition
+ org.jcryptool.crypto.classic.transposition,
+ org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,

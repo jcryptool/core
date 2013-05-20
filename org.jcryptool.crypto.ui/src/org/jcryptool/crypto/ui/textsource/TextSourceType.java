@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs;
+package org.jcryptool.crypto.ui.textsource;
 
 /**
  * Enumerating possible sources from which a text in the JCrypTool can originate

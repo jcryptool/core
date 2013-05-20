@@ -51,8 +51,6 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin;
 import org.jcryptool.analysis.transpositionanalysis.ui.TranspositionTableComposite;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextInputWithSource;
-import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextSourceType;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextWithSourceInput;
 import org.jcryptool.analysis.transpositionanalysis.ui.wizards.inputs.TextonlyInput;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -60,6 +58,8 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
+import org.jcryptool.crypto.ui.textsource.TextSourceType;
 import org.jcryptool.visual.aco.model.PseudoRandomChars;
 /**
  * This code was edited or generated using CloudGarden's Jigloo
