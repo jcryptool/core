@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -70,10 +70,10 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     private Action exportSecretKeyAction = new ExportSecretKeyAction(this);
     private Action exportKeyPairAction = new ExportKeyPairAction(this);
     private Action exportPublicKeyAction = new ExportCertificateAction(this);
-    
+
     private Action newContactAction = new NewContactAction(this);
     private Action deleteContactAction = new DeleteContactAction(this);
-    
+
     private Action deleteSecretKeyAction = new DeleteSecretKeyAction(this);
     private Action deleteKeyPairAction = new DeleteKeyPairAction(this);
     private Action deleteCertificateAction = new DeleteCertificateAction(this);
@@ -94,7 +94,8 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     public KeystoreView() {
         LogUtil.logInfo("Starting Keystore View"); //$NON-NLS-1$
 
-        if(!KeyStorePlugin.isInitialized()) KeyStorePlugin.initialize();
+        if (!KeyStorePlugin.isInitialized())
+            KeyStorePlugin.initialize();
     }
 
     /**
@@ -102,12 +103,12 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
      */
     @Override
     public void createPartControl(Composite parent) {
-        
+
         keyStoreNameLabel = new Label(parent, SWT.NULL);
         keyStoreNameLabel.setText(KeyStorePlugin.getCurrentKeyStore());
         viewer = new KeystoreViewer(parent);
         getSite().setSelectionProvider(viewer);
-        
+
         parent.setLayout(new GridLayout());
         hookContextMenu();
         contributeToActionBars();
@@ -121,33 +122,34 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         menuMgr.addMenuListener(new IMenuListener() {
 
             public void menuAboutToShow(IMenuManager manager) {
-                if(viewer.getTree().getSelection().length == 0) return;
-                
+                if (viewer.getTree().getSelection().length == 0) {
+                    fillAddContactMenu(manager);
+                    return;
+                }
+
                 Object selection = viewer.getTree().getSelection()[0].getData();
                 if (selection instanceof ContactDescriptorNode) {
                     selectedNodeType = NodeType.CONTACT_NODE;
                     selectedNodeInfo = ((ContactDescriptorNode) selection).getName();
                     fillContactContextMenu(manager);
                 } else if (selection instanceof SecretKeyNode) {
-                    LogUtil.logInfo("right-click on a secretkey"); //$NON-NLS-1$
                     LogUtil.logInfo(((SecretKeyNode) selection).getAlias().getAliasString());
                     selectedNodeType = NodeType.SECRETKEY_NODE;
                     selectedNodeAlias = ((SecretKeyNode) selection).getAlias();
                     selectedSecretKeyNode = ((SecretKeyNode) selection);
                     fillSecretKeyContextMenu(manager);
                 } else if (selection instanceof KeyPairNode) {
-                    LogUtil.logInfo("right-click on a keypair"); //$NON-NLS-1$
-                    if(((KeyPairNode) selection).getPrivateKeyAlias() != null) LogUtil.logInfo(((KeyPairNode) selection).getPrivateKeyAlias().getAliasString());
+                    if (((KeyPairNode) selection).getPrivateKeyAlias() != null)
+                        LogUtil.logInfo(((KeyPairNode) selection).getPrivateKeyAlias().getAliasString());
                     selectedNodeType = NodeType.KEYPAIR_NODE;
                     selectedNodeAlias = ((KeyPairNode) selection).getPrivateKeyAlias();
-//                    if(selectedNodeAlias == null) {
-//                    	System.err.println("key pair contained only one key");
-//                    	selectedNodeAlias = ((KeyPairNode) selection).getPublicKeyAlias();
-//                    }
+                    // if(selectedNodeAlias == null) {
+                    // System.err.println("key pair contained only one key");
+                    // selectedNodeAlias = ((KeyPairNode) selection).getPublicKeyAlias();
+                    // }
                     selectedKeyPairNode = ((KeyPairNode) selection);
                     fillKeyPairContextMenu(manager);
                 } else if (selection instanceof CertificateNode) {
-                    LogUtil.logInfo("right click on a public key"); //$NON-NLS-1$
                     KeyStoreAlias alias = ((CertificateNode) selection).getAlias();
                     if (alias.getKeyStoreEntryType().equals(KeyType.PUBLICKEY)) {
                         selectedNodeType = NodeType.PUBLICKEY_NODE;
@@ -190,8 +192,12 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         manager.add(deleteKeyPairAction);
     }
 
+    private void fillAddContactMenu(IMenuManager manager) {
+        manager.add(newContactAction);
+    }
+
     private void fillContactContextMenu(IMenuManager manager) {
-    	manager.add(newContactAction);
+        manager.add(newContactAction);
         manager.add(deleteContactAction);
     }
 
