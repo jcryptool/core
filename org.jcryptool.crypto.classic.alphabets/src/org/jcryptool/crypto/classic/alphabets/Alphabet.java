@@ -21,7 +21,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
  */
 public class Alphabet extends AbstractAlphabet {
 
-	private String name;
+	private String name = "";
 
 	private char substituteCharacter = ' ';
 
@@ -33,11 +33,8 @@ public class Alphabet extends AbstractAlphabet {
 
 	private boolean basic = false;
 
-	private String shortName;
+	private String shortName = "";
 	
-	public Alphabet() {
-	}
-
 	/**
 	 * Constructor using a String for initialization
 	 * 
