@@ -39,7 +39,7 @@ public class WidgetBubbleUIInputHandler implements
 
 	private static final int READ_TIME_PER_CHARACTER = 100;
 	private static final int STATIC_ADDITIVE_FADETIME_DIMINISHMENT = 400;
-	private static final int STANDARD_TIP_SHOWTIME = 10000;
+	public static final int STANDARD_TIP_SHOWTIME = 10000;
 	private static final double RECURRING_FADETIME_DIMINISHMENT = 0.42;
 
 	public static final int STD_RESULT_TYPE = Integer.MIN_VALUE;

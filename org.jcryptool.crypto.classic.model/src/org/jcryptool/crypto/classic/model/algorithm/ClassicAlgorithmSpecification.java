@@ -20,6 +20,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.InputVerificationResult;
+import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 
 /**
  * Specifies aspects of classic algorithms like plain text and cipher text combinations. Implementations
@@ -127,6 +128,10 @@ public class ClassicAlgorithmSpecification {
 				@Override
 				public boolean isStandaloneMessage() {
 					return false;
+				}
+				@Override
+				public int getMessagePersistenceCategory() {
+					return (int)Math.round(WidgetBubbleUIInputHandler.STANDARD_TIP_SHOWTIME*0.6);
 				}
 				@Override
 				public MessageType getMessageType() {

@@ -294,7 +294,7 @@ public class SubstitutionKeyEditor extends Composite {
 		setLayout(new GridLayout(1, false));
 
 		Label lblHereYouCan = new Label(this, SWT.NONE);
-		lblHereYouCan.setText("Here you can edit the substitution mapping for the selected plaintext alphabet ():");
+		lblHereYouCan.setText("Here you can edit the substitution mapping for the characters of the selected alphabet:");
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));

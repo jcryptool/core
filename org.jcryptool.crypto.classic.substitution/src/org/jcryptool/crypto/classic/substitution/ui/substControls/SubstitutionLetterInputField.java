@@ -188,7 +188,7 @@ public class SubstitutionLetterInputField extends Composite {
 		borderGridLayout.marginHeight = 1;
 		borderComposite.setLayout(borderGridLayout);
 		
-		text = new Text(borderComposite, SWT.NONE);
+		text = new Text(borderComposite, SWT.CENTER);
 		GridData txtLayoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
 		txtLayoutData.widthHint = 15;
 		text.setLayoutData(txtLayoutData);
