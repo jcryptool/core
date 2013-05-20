@@ -143,7 +143,7 @@ public class AupView extends ViewPart {
 		final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL
 				| SWT.V_SCROLL);
 		sc.setMinHeight(500);
-		sc.setMinWidth(500);
+		sc.setMinWidth(600);
 		// Create a child composite to hold the controls
 		final Composite child = new Composite(sc, SWT.NONE);
 		child.setLayout(new FormLayout());
@@ -231,8 +231,10 @@ public class AupView extends ViewPart {
 	private void initLayout() {
 
 		headingBox.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+		headingBox.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		headingBox.setLayout(new FormLayout());
 		final FormData fd_headingBox = new FormData(-1, -1);
+		fd_headingBox.bottom = new FormAttachment(controlBox, -6);
 		fd_headingBox.left = new FormAttachment(0);
 		fd_headingBox.right = new FormAttachment(100);
 		fd_headingBox.top = new FormAttachment(0);
@@ -241,8 +243,8 @@ public class AupView extends ViewPart {
 		// top
 		controlBox.setLayout(new FormLayout());
 		final FormData fd_controlBox = new FormData(-1, -1);
-		fd_controlBox.bottom = new FormAttachment(centerbox, 0, SWT.BOTTOM);
-		fd_controlBox.top = new FormAttachment(headingBox, 6);
+		fd_controlBox.top = new FormAttachment(0, 79);
+		fd_controlBox.bottom = new FormAttachment(helpBox, -6);
 		fd_controlBox.right = new FormAttachment(centerbox, -6);
 		fd_controlBox.left = new FormAttachment(0);
 		controlBox.setLayoutData(fd_controlBox);
@@ -288,14 +290,15 @@ public class AupView extends ViewPart {
 		clayout.horizontalSpacing = 15;
 		clayout.verticalSpacing = 15;
 		centerbox.setLayout(clayout);
-		final FormData fdCb = new FormData(0, 0);
-		fdCb.bottom = new FormAttachment(100, -170);
+		final FormData fdCb = new FormData(0, -1);
 		fdCb.top = new FormAttachment(headingBox, 6);
+		fdCb.bottom = new FormAttachment(helpBox, -6);
 		fdCb.left = new FormAttachment(0, 156);
 		fdCb.right = new FormAttachment(100, -10);
 		centerbox.setLayoutData(fdCb);
 
 		Label heading = new Label(headingBox, SWT.NONE);
+		heading.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		heading.setFont(FontService.getHeaderFont());
 		FormData fd_heading = new FormData();
 		fd_heading.top = new FormAttachment(0, 10);
@@ -303,11 +306,21 @@ public class AupView extends ViewPart {
 		heading.setLayoutData(fd_heading);
 		heading.setText(Messages.AndroidUnlockPattern_Heading);
 		
+		Label lblHeaderInfoText = new Label(headingBox, SWT.NONE);
+		lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+		FormData fd_lblHeaderInfoText = new FormData();
+		fd_lblHeaderInfoText.right = new FormAttachment(heading, 120, SWT.RIGHT);
+		fd_lblHeaderInfoText.bottom = new FormAttachment(100, -16);
+		fd_lblHeaderInfoText.top = new FormAttachment(heading, 5);
+		fd_lblHeaderInfoText.left = new FormAttachment(heading, 0, SWT.LEFT);
+		lblHeaderInfoText.setLayoutData(fd_lblHeaderInfoText);
+		lblHeaderInfoText.setText(Messages.AndroidUnlockPattern_HeadingInfoText);
+		
 		GridLayout gl_helpBox = new GridLayout(2, true);
 		gl_helpBox.horizontalSpacing = 25;
 		helpBox.setLayout(gl_helpBox);
 		final FormData fd_helpBox = new FormData(180, -1);
-		fd_helpBox.top = new FormAttachment(centerbox, 6);
+		fd_helpBox.top = new FormAttachment(100, -164);
 		fd_helpBox.bottom = new FormAttachment(100, -10);
 		fd_helpBox.left = new FormAttachment(0, 10);
 		fd_helpBox.right = new FormAttachment(100, -10);

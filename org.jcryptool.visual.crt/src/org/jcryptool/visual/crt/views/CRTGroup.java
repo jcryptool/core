@@ -75,6 +75,9 @@ public class CRTGroup extends Composite implements Constants {
     public static boolean execute;
     private ScrolledComposite scrolledComposite_1;
     private ScrolledComposite scrolledComposite_2;
+    private Composite compositeTitleArea;
+    private Label lblHeader;
+    private Label lblHeaderInfoText;
 
     /**
      * Create the composite
@@ -103,7 +106,26 @@ public class CRTGroup extends Composite implements Constants {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
         content.setLayout(gridLayout);
-        scrolledGroup.setMinSize(content.computeSize(740, 520));
+        scrolledGroup.setMinSize(content.computeSize(740, 600));
+        
+        compositeTitleArea = new Composite(content, SWT.NONE);
+        compositeTitleArea.setLayout(new GridLayout(1, false));
+        compositeTitleArea.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        compositeTitleArea.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
+    
+        
+        lblHeader = new Label(compositeTitleArea, SWT.NONE);
+        lblHeader.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        lblHeader.setFont(FontService.getHeaderFont());
+        lblHeader.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        lblHeader.setBounds(10, 0, 666, 24);
+        lblHeader.setText(Messages.CRTGroup_Header);
+        
+        lblHeaderInfoText = new Label(compositeTitleArea, SWT.NONE);
+        lblHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        lblHeaderInfoText.setBounds(10, 30, 666, 45);
+        lblHeaderInfoText.setText(Messages.CRTGroup_HeaderInfoText);
 
         step1Group = new Group(content, SWT.NONE);
         final GridLayout gridLayout_step1Group = new GridLayout();
@@ -626,8 +648,7 @@ public class CRTGroup extends Composite implements Constants {
         resultMoreText = new Text(resultGroup, SWT.NONE);
         resultMoreText.setEnabled(false);
         resultMoreText.setEditable(false);
-        final GridData gd_resultMoreText = new GridData(SWT.FILL, SWT.BOTTOM, true, true, 2, 1);
-        resultMoreText.setLayoutData(gd_resultMoreText);
+        resultMoreText.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true, true, 2, 1));
         resultMoreText.setText(MESSAGE_MORE_SOLUTION);
 
         nextButton = new Button(resultGroup, SWT.NONE);
@@ -651,8 +672,7 @@ public class CRTGroup extends Composite implements Constants {
             }
         });
         nextButton.setEnabled(false);
-        final GridData gd_nextButton = new GridData(SWT.FILL, SWT.BOTTOM, false, true);
-        nextButton.setLayoutData(gd_nextButton);
+        nextButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
         nextButton.setText(MESSAGE_NEXT);
 
         previousButton = new Button(resultGroup, SWT.NONE);
@@ -680,8 +700,7 @@ public class CRTGroup extends Composite implements Constants {
             }
         });
         previousButton.setEnabled(false);
-        final GridData gd_previousButton = new GridData(SWT.FILL, SWT.BOTTOM, false, true);
-        previousButton.setLayoutData(gd_previousButton);
+        previousButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true));
         previousButton.setText(MESSAGE_PREVIOUS);
 
         scrolledVerify = new Group(content, SWT.V_SCROLL);
@@ -706,6 +725,7 @@ public class CRTGroup extends Composite implements Constants {
         step2Text.setFont(FontService.getSmallFont());
         step3Text.setFont(FontService.getSmallFont());
         step4Text.setFont(FontService.getSmallFont());
+        new Label(content, SWT.NONE);
 
         scrolledGroup.setContent(content);
         //
