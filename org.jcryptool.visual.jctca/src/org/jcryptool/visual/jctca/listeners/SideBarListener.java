@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -15,9 +16,9 @@ public class SideBarListener implements SelectionListener {
 	ShowCert sCert;
 	SignCert siCert;
 	Composite comp_right;
-	Group grp_exp;
+	Composite grp_exp;
 
-	public SideBarListener(CreateCert cCert, ShowCert sCert, SignCert siCert, Group grp_exp, Composite comp_right) {
+	public SideBarListener(CreateCert cCert, ShowCert sCert, SignCert siCert, Composite grp_exp, Composite comp_right) {
 		this.comp_right = comp_right;
 		this.grp_exp = grp_exp;
 	}

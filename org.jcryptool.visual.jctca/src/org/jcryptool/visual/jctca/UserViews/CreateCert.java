@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -53,7 +54,7 @@ public class CreateCert implements Views {
 	Label lbl_plain3;
 	Combo cmb_genKey;
 
-	public CreateCert(Composite content, Group exp) {
+	public CreateCert(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
 		composite.setLayout(new GridLayout(1, true));
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, true));
