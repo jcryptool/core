@@ -112,12 +112,14 @@ public class TabItemListener implements SelectionListener {
 				if(sig.getPath()==null || sig.getPath()==""){
 					it = new TreeItem(textSig, SWT.NONE);
 					String text = sig.getText();
-					it.setText(text.substring(0, Math.min(text.length(), 20)));
+					it.setText(sig.getTime().toString());
+//					it.setText(text.substring(0, Math.min(text.length(), 20)));
 				}
 				else{
 					it = new TreeItem(fileSig, SWT.NONE);
 					String path = sig.getPath();
-					it.setText(sig.getPath().substring(Math.max(0, path.length()-20), path.length()));
+					it.setText(sig.getTime().toString());
+//					it.setText(sig.getPath().substring(Math.max(0, path.length()-20), path.length()));
 				}
 				it.setData(sig);
 			}
