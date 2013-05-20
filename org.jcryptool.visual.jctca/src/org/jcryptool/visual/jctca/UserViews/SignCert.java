@@ -82,7 +82,7 @@ public class SignCert implements Views {
 	private void addRSAPrivateKeysToDropdown(){
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias ksAlias : Util.getAllRSAAndDSAPublicKeys(ksm)) {
-			String listEntry = ksAlias.getContactName() + "(" + ksAlias.getKeyLength() + "bit";
+			String listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
 			if (ksAlias.getOperation().contains("RSA")) {
 				listEntry += "RSA";
 			}
