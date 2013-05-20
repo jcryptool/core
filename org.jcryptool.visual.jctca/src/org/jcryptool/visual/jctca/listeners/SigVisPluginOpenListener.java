@@ -14,6 +14,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
+import org.jcryptool.visual.sig.algorithm.*;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
@@ -44,10 +45,12 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		KeyStoreAlias hello = Util.getAliasForHash(key_hash);
 		KeyStoreAlias pubAlias = (KeyStoreAlias)cmb_keys.getData(cmb_keys.getText());
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
+		
 		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
 		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText()!="" ? lbl_file.getText() : txt_sign.getText()).getBytes();
 		org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
 		byte[] hash, sig;
+
 		if (btn_check.getSelection() == true) {
 			try {
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
