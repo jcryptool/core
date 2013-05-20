@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.tabs;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -18,7 +19,7 @@ public class UserTab {
 	CreateCert cCert;
 	ShowCert sCert;
 	SignCert siCert;
-	Group grp_exp;
+	Composite grp_exp;
 	TabFolder parent;
 	/**
 	 * Generating User Tab 
@@ -26,7 +27,7 @@ public class UserTab {
 	 * @param exp Group in which the explanation is shown
 	 * @param style well, yeah, don't know
 	 **/
-	public UserTab(TabFolder parent, Group exp, int style) {
+	public UserTab(TabFolder parent, Composite exp, int style) {
 		// define the layout for the whole TabItem
 		TabItem tab = new TabItem(parent, SWT.NONE);
 		tab.setText(Messages.UserTab_tabitem_name);
