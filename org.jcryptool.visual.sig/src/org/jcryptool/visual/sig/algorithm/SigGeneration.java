@@ -44,6 +44,7 @@ public class SigGeneration {
 
 			// Get a signature object using the MD5 and RSA combo
 			// and sign the input with the private key
+			//Signature sig = Signature.getInstance(signaturemethod);
 			Signature sig = Signature.getInstance(signaturemethod);
 			sig.initSign(key.getPrivate());
 			sig.update(input);

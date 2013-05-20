@@ -10,3 +10,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Activator: org.jcryptool.visual.sig.SigPlugin
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.crypto.keystore.backend
+Export-Package: org.jcryptool.visual.sig.algorithm
