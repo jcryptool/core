@@ -252,9 +252,10 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
 		InputVerificationResult verificationResult;
 
 		if( (verificationResult=verifyUserChangeWithAutocorrection()).isValid() ) { //if the user made a semantically OK action
+			Content previousContent = getContent();
 			boolean changed = setInputContent(readContent(), verificationResult); //read out the user input into the content
 
-			if(changed) {
+			if(decideNotifyObserversAboutUserSideSynchronization(changed, previousContent, getContent(), verificationResult)) {
 				this.setChanged();
 				notifyObservers(verificationResult); //send ui the verification result
 			}
@@ -275,6 +276,27 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
 			this.setChanged();
 			notifyObservers(verificationResult); //notify UI/whatever observer
 		}
+	}
+
+	/**
+	 * this method decides whether to inform all observers about:
+	 *  - synchronizing with the user side when
+	 *  - the validation returned 'valid'
+	 *  
+	 *  <br><br>
+	 *  by default, the observers are informed when the content of this UIInput object did actually change
+	 *  (see {@link #setInputContent(Object, InputVerificationResult)} return contract).
+	 *  <br>
+	 *  Override this function to define your own strategy.
+	 * 
+	 * @param changed
+	 * @param previousContent
+	 * @param newContent
+	 * @param verificationResult
+	 * @return
+	 */
+	protected boolean decideNotifyObserversAboutUserSideSynchronization(boolean changed, Content previousContent, Content newContent, InputVerificationResult verificationResult) {
+		return changed;
 	}
 
 	/**

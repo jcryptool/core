@@ -43,6 +43,9 @@ public abstract class InputVerificationResult {
 			return "OK";} //$NON-NLS-1$
 	};
 
+	public static final int PERSISTENCE_DEFAULT = 0;
+	public static final int PERSISTENCE_FOREVER = 1000*60*60*24; //1 day in eternity ;)
+
 	public static enum MessageType {
 		ERROR(4), WARNING(3), INFORMATION(2), NONE(1);
 
@@ -84,6 +87,10 @@ public abstract class InputVerificationResult {
 	public Object getResultType() {
 		return RESULT_TYPE_DEFAULT;
 	}
+	
+	public int getMessagePersistenceCategory() {
+		return InputVerificationResult.PERSISTENCE_DEFAULT;
+	}
 
 	/**
 	 * @return whether the message is a piece of text that has to be inserted
@@ -100,28 +107,14 @@ public abstract class InputVerificationResult {
 	public abstract boolean isValid();
 	
 	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage) {
-		return new InputVerificationResult() {
-			@Override
-			public String getMessage() {
-				return message;
-			}
-			@Override
-			public MessageType getMessageType() {
-				return messageType;
-			}
-			@Override
-			public boolean isStandaloneMessage() {
-				return isStandaloneMessage;
-			}
+		return generateIVR(isValid, message, messageType, isStandaloneMessage, RESULT_TYPE_DEFAULT, PERSISTENCE_DEFAULT);
+	}
 
-			@Override
-			public boolean isValid() {
-				return isValid;
-			}
-		};
+	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage, final Object resultType) {
+		return generateIVR(isValid, message, messageType, isStandaloneMessage, resultType, PERSISTENCE_DEFAULT);
 	}
 	
-	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage, final Object resultType) {
+	public static InputVerificationResult generateIVR(final boolean isValid, final String message, final MessageType messageType, final boolean isStandaloneMessage, final Object resultType, final int messagePersistence) {
 		return new InputVerificationResult() {
 			@Override
 			public String getMessage() {
@@ -134,6 +127,10 @@ public abstract class InputVerificationResult {
 			@Override
 			public Object getResultType() {
 				return resultType;
+			}
+			@Override
+			public int getMessagePersistenceCategory() {
+				return messagePersistence;
 			}
 			@Override
 			public boolean isStandaloneMessage() {
