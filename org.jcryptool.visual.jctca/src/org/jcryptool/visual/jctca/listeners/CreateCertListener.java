@@ -85,6 +85,7 @@ public class CreateCertListener implements SelectionListener {
 			break;
 		case 2:
 			if (checkFields()) {
+				generateNewRSAKeyPair();
 				sendCSR();
 			} else {
 				Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,

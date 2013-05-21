@@ -18,6 +18,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.CreateCertListener;
 import org.jcryptool.visual.jctca.listeners.PubKeyListener;
+import org.jcryptool.visual.jctca.listeners.RadioButtonListener;
 
 public class CreateCert implements Views {
 
@@ -117,30 +118,42 @@ public class CreateCert implements Views {
 		btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		btn_proof.setData(new Integer(0));
 		
-		Label lbl_selectPubKey = new Label(createCertGroup, SWT.None);
-		lbl_selectPubKey.setText(Messages.CreateCert_lbl_pubkey);
-		
-		
-		btn_genKey = new Button(createCertGroup, SWT.NONE);
-		btn_genKey.setText(Messages.CreateCert_btn_create_keypair);
-		btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_genKey.setData(new Integer(1));
 
-		lbl_plain = new Label(createCertGroup, SWT.NONE);
-		Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
-		btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
-		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
+		
+		
+		
+//		btn_genKey = new Button(createCertGroup, SWT.NONE);
+//		btn_genKey.setText(Messages.CreateCert_btn_create_keypair);
+//		btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//		btn_genKey.setData(new Integer(1));
+//		btn_genKey.setEnabled(false);
+
+		Button btn_radio_selectPubKey = new Button(createCertGroup, SWT.RADIO);
+		btn_radio_selectPubKey.setText("Öffentlichen Schlüssel auswählen");
+		btn_radio_selectPubKey.setData("select");
+//		Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
+//		btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//		btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
+//		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
 		cmb_genKey = new Combo(createCertGroup, SWT.NONE);
 		cmb_genKey.setEnabled(false);
 		cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+		Button btn_radio_generatePubKey = new Button(createCertGroup, SWT.RADIO);
+		btn_radio_generatePubKey.setText("Neues Schlüsselpaar beim Absenden generieren");
+		btn_radio_generatePubKey.setData("generate");
+		btn_radio_generatePubKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2,1));
+		btn_radio_generatePubKey.setSelection(true);
+		
+		btn_radio_generatePubKey.addSelectionListener(new RadioButtonListener(cmb_genKey));
+		btn_radio_selectPubKey.addSelectionListener(new RadioButtonListener(cmb_genKey));
+		
 		addRSAAndDSAKeysToDropdown();
 
 		CreateCertListener lst = new CreateCertListener(txt_firstname,
 				txt_lastname, txt_street, txt_ZIP, txt_city, txt_country,
 				txt_mail, cmb_genKey);
-		btn_genKey.addSelectionListener(lst);
+//		btn_genKey.addSelectionListener(lst);
 		btn_proof.addSelectionListener(lst);
 		btn_send = new Button(composite, SWT.NONE);
 		btn_send.setText(Messages.CreateCert_btn_send_csr_to_ra);
@@ -148,7 +161,7 @@ public class CreateCert implements Views {
 		btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
 		btn_send.setData(2);
 
-		btn_selectPubKey.addSelectionListener(new PubKeyListener(cmb_genKey));
+//		btn_selectPubKey.addSelectionListener(new PubKeyListener(cmb_genKey));
 		
 		StyledText stl_exp = (StyledText) exp.getChildren()[0];
 		stl_exp.setText(Messages.CreateCert_explain_text);
