@@ -172,16 +172,17 @@ public class JCTCA_Visual extends ViewPart {
 				1, 1));
 
 		tabFolder = new TabFolder(comp_center, SWT.NONE);
-		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1,
-				1));
+		tabFolder.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
 		grp_explain = new Group(comp_center, SWT.NONE);
 		grp_explain.setLayout(new GridLayout(1, true));
 		GridData gd_explain = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_explain.minimumWidth = 150;
+//		gd_explain.minimumWidth = 150;
+//		gd_explain.widthHint = 10;
+	
 		grp_explain.setLayoutData(gd_explain);
 		grp_explain.setText(Messages.JCTCA_Visual_grp_explain_headline);
-
+		
 		// scrolled composite for vertical scrollbar
 		ScrolledComposite scrolled_comp = new ScrolledComposite(grp_explain,
 				SWT.V_SCROLL);
@@ -189,20 +190,26 @@ public class JCTCA_Visual extends ViewPart {
 		scrolled_comp.setLayoutData(gd_explain);
 		scrolled_comp.setExpandVertical(true);
 		scrolled_comp.setExpandHorizontal(true);
-
-
+		
+//		scrolled_comp.setBackground(Display.getDefault().getSystemColor(
+//			SWT.COLOR_RED));
 		// content of scrolled composite
 		Composite comp_vscroll = new Composite(scrolled_comp,SWT.FILL);
-		comp_vscroll.setLayout(new GridLayout(1,false));
+		comp_vscroll.setLayout(new GridLayout(1,true));
 		scrolled_comp.setContent(comp_vscroll);
+		
 		comp_vscroll.setLayoutData(gd_explain);
+		comp_vscroll.setSize(comp_vscroll.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//		comp_vscroll.setBackground(Display.getDefault().getSystemColor(
+//			SWT.COLOR_BLUE));
 		
 
 		// label for showing explanation texts
-		comp_vscroll.setSize(comp_vscroll.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		stl_explain = new StyledText(comp_vscroll, SWT.READ_ONLY| SWT.MULTI | SWT.WRAP | SWT.V_SCROLL);
-		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.NONE, true, true,1,1);
+		GridData gd_txt_explain = new GridData(SWT.FILL, SWT.FILL, true, true);
 		stl_explain.setLayoutData(gd_txt_explain);
+//		stl_explain.setBackground(Display.getDefault().getSystemColor(
+//			SWT.COLOR_GREEN));
 		
 		TabItemListener tabItemListener = new TabItemListener(tabFolder,
 				comp_vscroll);
