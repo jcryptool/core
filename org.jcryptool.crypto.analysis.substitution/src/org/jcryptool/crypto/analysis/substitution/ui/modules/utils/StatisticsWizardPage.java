@@ -20,10 +20,10 @@ public class StatisticsWizardPage extends WizardPage {
 	 * Create the wizard.
 	 */
 	public StatisticsWizardPage(AbstractAlphabet alphabet) {
-		super("Reference statistic");
+		super(Messages.StatisticsWizardPage_0);
 		this.alphabet = alphabet;
-		setTitle("Reference statistic");
-		setDescription("Load a reference statistic for the substitution analysis.");
+		setTitle(Messages.StatisticsWizardPage_1);
+		setDescription(Messages.StatisticsWizardPage_2);
 	}
 
 	/**

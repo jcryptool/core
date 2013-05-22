@@ -33,7 +33,7 @@ import org.jcryptool.crypto.ui.util.NestedEnableDisableSwitcher;
 
 public class SubstitutionAnalysisConfigPanel extends Composite {
 
-	public static final String TEXTTRANSFORM_HINT = "Optional können Sie auf der nächsten Wizardseite generische Änderungen am Text vornehmen, wie z. B. Leerzeichen und Zeilenumbrüche löschen.";
+	public static final String TEXTTRANSFORM_HINT = Messages.SubstitutionAnalysisConfigPanel_0;
 
 	public static class State {
 		public AbstractAlphabet getAlphabet() {
@@ -118,9 +118,9 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		
 		private String replaceIllegalCharacters(String text) {
 			// TODO warn user
-			String result = text.replaceAll(Pattern.quote("\n"), "");
-			result = result.replaceAll(Pattern.quote("\r"), "");
-			result = result.replaceAll(Pattern.quote("\t"), "");
+			String result = text.replaceAll(Pattern.quote("\n"), ""); //$NON-NLS-1$ //$NON-NLS-2$
+			result = result.replaceAll(Pattern.quote("\r"), ""); //$NON-NLS-1$ //$NON-NLS-2$
+			result = result.replaceAll(Pattern.quote("\t"), ""); //$NON-NLS-1$ //$NON-NLS-2$
 			return result;
 		}
 
@@ -286,23 +286,23 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		
 		Label lblSubstitutionAnalysis = new Label(this, SWT.NONE);
 		lblSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblSubstitutionAnalysis.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-		lblSubstitutionAnalysis.setText("Substitution analysis");
+		lblSubstitutionAnalysis.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD)); //$NON-NLS-1$
+		lblSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_8);
 		
 		Label lblBlablabla = new Label(this, SWT.NONE);
 		GridData lblBlablablaLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		lblBlablablaLData.verticalIndent = 5;
 		lblBlablabla.setLayoutData(lblBlablablaLData);
-		lblBlablabla.setText("For the analysis, you need to provide the following information:");
+		lblBlablabla.setText(Messages.SubstitutionAnalysisConfigPanel_9);
 		
 		grpCiphertext = new Group(this, SWT.NONE);
 		grpCiphertext.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpCiphertext.setText("Ciphertext");
+		grpCiphertext.setText(Messages.SubstitutionAnalysisConfigPanel_10);
 		grpCiphertext.setLayout(new GridLayout(1, false));
 		
 		Label lblPleaseSelectA = new Label(grpCiphertext, SWT.NONE);
 		lblPleaseSelectA.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		lblPleaseSelectA.setText("Please select a ciphertext:");
+		lblPleaseSelectA.setText(Messages.SubstitutionAnalysisConfigPanel_11);
 		
 		textSelector = new TextLoadController(grpCiphertext, this, SWT.NONE, true, true);
 		textSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
@@ -313,17 +313,17 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		
 		grpAlphabet = new Group(this, SWT.NONE);
 		grpAlphabet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		grpAlphabet.setText("Alphabet");
+		grpAlphabet.setText(Messages.SubstitutionAnalysisConfigPanel_12);
 		grpAlphabet.setLayout(new GridLayout(1, false));
 		
 		Label lblTheAlphabetWhich = new Label(grpAlphabet, SWT.WRAP);
 		GridData lblTheAlphabetWhichLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
 		lblTheAlphabetWhich.setLayoutData(lblTheAlphabetWhichLData);
 		lblTheAlphabetWhichLData.widthHint = WIDTH_HINT_GENERAL;
-		lblTheAlphabetWhich.setText("The alphabet which contains the characters of the encrypted text is selected automatically.\r\nBecause the statistical data is calculated based on which characters appear in the alphabet, you may want to fine-adjust.");
+		lblTheAlphabetWhich.setText(Messages.SubstitutionAnalysisConfigPanel_13);
 		
 		Label lblNewLabel = new Label(grpAlphabet, SWT.NONE);
-		lblNewLabel.setText("Alphabet:");
+		lblNewLabel.setText(Messages.SubstitutionAnalysisConfigPanel_14);
 		
 		alphaSelector = new AlphabetSelectorComposite(grpAlphabet, AlphabetsManager.getInstance().getDefaultAlphabet(), AlphabetSelectorComposite.Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS);
 		alphaSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
@@ -332,14 +332,14 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		grpStatisticalData = new Group(this, SWT.NONE);
 		grpStatisticalData.setLayout(new GridLayout(1, false));
 		grpStatisticalData.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpStatisticalData.setText("Statistical data");
+		grpStatisticalData.setText(Messages.SubstitutionAnalysisConfigPanel_15);
 		
 		Label lblStatistics = new Label(grpStatisticalData, SWT.WRAP);
 		GridData lblStatisticsLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStatistics.setLayoutData(lblStatisticsLData);
 		lblStatisticsLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStatistics.setText("For the analysis, the some reference statistics (frequency of single characters, 2- and 3-tuples) of a typical text are needed."+ "\n" +
-				"Every language is different: You should select a reference, which matches the language of the ciphertext. If you don't find your language in the predefined statistics sets, please specify a custom reference text.");
+		lblStatistics.setText(Messages.SubstitutionAnalysisConfigPanel_16+ "\n" + //$NON-NLS-2$
+				Messages.SubstitutionAnalysisConfigPanel_18);
 		
 		statisticsSelector = new StatisticsSelector(grpStatisticalData, this, SWT.NONE);
 		statisticsSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
@@ -348,17 +348,17 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		grpAnalysisStart = new Group(this, SWT.NONE);
 		grpAnalysisStart.setLayout(new GridLayout(1, false));
 		grpAnalysisStart.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpAnalysisStart.setText("Analysis!");
+		grpAnalysisStart.setText(Messages.SubstitutionAnalysisConfigPanel_19);
 		
 		Label lblStartAnalysis = new Label(grpAnalysisStart, SWT.WRAP);
 		GridData lblStartAnalysisLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStartAnalysis.setLayoutData(lblStartAnalysisLData);
 		lblStartAnalysisLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStartAnalysis.setText("The configurations are now complete; Start the analysis of the ciphertext by clicking on the button."+"\n" +
-				"To start a new analysis from there. just reset using the button on the view toolbar in the upper right corner.");
+		lblStartAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_20+"\n" + //$NON-NLS-2$
+				Messages.SubstitutionAnalysisConfigPanel_22);
 		
 		startBtn = new Button(grpAnalysisStart, SWT.PUSH);
-		startBtn.setText("Start the analysis");
+		startBtn.setText(Messages.SubstitutionAnalysisConfigPanel_23);
 		makeStartBtnListener();
 		
 		grpCiphertextEnabler = new NestedEnableDisableSwitcher(grpCiphertext);
@@ -418,7 +418,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		} else {
 			//TODO: save source and transformData in state or think about sth else;
 			//shortcut taken here... just setting default data for source and transformation
-			statisticsSelector.setCustomStatistics(state.statistics, new TextInputWithSource("abcde"), new TransformData(), true);
+			statisticsSelector.setCustomStatistics(state.statistics, new TextInputWithSource("abcde"), new TransformData(), true); //$NON-NLS-1$
 		}
 	}
 

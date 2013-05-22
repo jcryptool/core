@@ -56,19 +56,19 @@ public class SubstitutionAnalysisText extends Composite {
 
 		Label lblCipher = new Label(scrollCompMain, SWT.NONE);
 		lblCipher.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
-		lblCipher.setText("Ciphertext:");
+		lblCipher.setText(Messages.SubstitutionAnalysisText_0);
 		
 		textCipher = new Text(scrollCompMain, SWT.NONE);
 		textCipher.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false));
 		textCipher.setEditable(false);
-		textCipher.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
+		textCipher.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
 
 		Label lblPlain = new Label(scrollCompMain, SWT.NONE);
 		lblPlain.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
-		lblPlain.setText("Plaintext:");
+		lblPlain.setText(Messages.SubstitutionAnalysisText_2);
 		
 		textPlain = new Text(scrollCompMain, SWT.NONE);
-		textPlain.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
+		textPlain.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
 		textPlain.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false));
 		textPlain.setEditable(false);
 		

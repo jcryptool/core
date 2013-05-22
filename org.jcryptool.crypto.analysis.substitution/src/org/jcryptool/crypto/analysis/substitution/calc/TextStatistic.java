@@ -77,11 +77,11 @@ public class TextStatistic {
 	}
 
 	public TextStatistic(String string, String name) {
-		this(string, name, "Generic");
+		this(string, name, "Generic"); //$NON-NLS-1$
 	}
 	
 	public TextStatistic(String string) {
-		this(string, "Generic", "Generic");
+		this(string, "Generic", "Generic"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	private static String convertFileToText(File textFile, TransformData preAnalysisTransformation) {
@@ -251,19 +251,19 @@ public class TextStatistic {
 	}
 	public String toStringShort() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("character counts: %s\n", characterOccurrences.toString()));
-		sb.append(String.format("doublet counts: %s\n", doubletOccurrences.toString()));
-		sb.append(String.format("triplet counts: %s", tripletOccurrences.toString()));
+		sb.append(String.format("character counts: %s\n", characterOccurrences.toString())); //$NON-NLS-1$
+		sb.append(String.format("doublet counts: %s\n", doubletOccurrences.toString())); //$NON-NLS-1$
+		sb.append(String.format("triplet counts: %s", tripletOccurrences.toString())); //$NON-NLS-1$
 		return sb.toString();
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Statistics; chars: %s", characterOccurrences.toString());
+		return String.format("Statistics; chars: %s", characterOccurrences.toString()); //$NON-NLS-1$
 	}
 	
 	public static TextStatistic getDummyStatistic() {
-		return new TextStatistic("abcdefghijklmnopqrstuvwxyz");
+		return new TextStatistic("abcdefghijklmnopqrstuvwxyz"); //$NON-NLS-1$
 	}
 
 	public Map<Character, Integer> getCharacterOccurrences() {

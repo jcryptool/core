@@ -76,7 +76,7 @@ public class TextLoadController extends Composite {
 	private Button createButtonLoadCtrls() {
 		btnLoadText = new Button(this, SWT.NONE);
 		btnLoadText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnLoadText.setText("Load text...");
+		btnLoadText.setText(Messages.TextLoadController_0);
 		
 		btnLoadText.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -95,10 +95,10 @@ public class TextLoadController extends Composite {
 		
 		if(showFrontLabel) {
 			Label lblLoadedText = new Label(compDisplayer, SWT.NONE);
-			lblLoadedText.setText("Loaded text:");
+			lblLoadedText.setText(Messages.TextLoadController_1);
 		}
 		
-		displayer = new TextInputWithSourceDisplayer(compDisplayer, this, new TextInputWithSource(""), new TextInputWithSourceDisplayer.Style(true, false));
+		displayer = new TextInputWithSourceDisplayer(compDisplayer, this, new TextInputWithSource(""), new TextInputWithSourceDisplayer.Style(true, false)); //$NON-NLS-1$
 		displayer.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false));
 		
 		createTransformDisplays(compDisplayer);
@@ -109,7 +109,7 @@ public class TextLoadController extends Composite {
 		
 		loadTextLink = new Link(compDisplayer, SWT.NONE);
 		loadTextLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, oneRow?1:2, 1));
-		loadTextLink.setText("<A>choose another text...</A>");
+		loadTextLink.setText(Messages.TextLoadController_3);
 		
 		loadTextLink.addSelectionListener(new SelectionAdapter() {
 			@Override

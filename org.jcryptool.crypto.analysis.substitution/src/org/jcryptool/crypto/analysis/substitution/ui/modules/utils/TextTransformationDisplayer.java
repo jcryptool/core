@@ -45,7 +45,7 @@ public class TextTransformationDisplayer extends Composite {
 	}
 	
 	private String makeStringForDisplayingData(TransformData data) {
-		return (data==null||data.isUnmodified())?"":data.toReadableString();
+		return (data==null||data.isUnmodified())?"":data.toReadableString(); //$NON-NLS-1$
 	}
 
 	@Override

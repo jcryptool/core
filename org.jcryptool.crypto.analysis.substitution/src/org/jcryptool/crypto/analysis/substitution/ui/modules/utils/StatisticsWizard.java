@@ -9,7 +9,7 @@ public class StatisticsWizard extends Wizard {
 	private StatisticsWizardPage page1;
 
 	public StatisticsWizard(AbstractAlphabet alphabet) {
-		setWindowTitle("Reference statistic loader");
+		setWindowTitle(Messages.StatisticsWizard_0);
 		page1 = new StatisticsWizardPage(alphabet);
 	}
 

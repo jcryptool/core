@@ -50,7 +50,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	/**
 	 * The ID of the view as specified by the extension.
 	 */
-	public static final String ID = "org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView";
+	public static final String ID = "org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"; //$NON-NLS-1$
 
 	private Action action1;
 	private Composite mainComposite;
@@ -109,7 +109,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 		makeActions();
 		contributeToActionBars();
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(getMainComposite(), "org.jcryptool.crypto.analysis.substitution.viewer");
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(getMainComposite(), "org.jcryptool.crypto.analysis.substitution.viewer"); //$NON-NLS-1$
 	}
 
 	private void createAppropriatePanel(State state) {
@@ -126,7 +126,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 			setMainPanel(panel);
 			this.analysisPanel = panel;
 		} else {
-			throw new RuntimeException("unsupported state in substitution analysis");
+			throw new RuntimeException("unsupported state in substitution analysis"); //$NON-NLS-1$
 		}
 	}
 
@@ -138,7 +138,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	}
 
 	private static boolean generateUpperLowerCaseMode(AbstractAlphabet alphabet) {
-		String ref = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String ref = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
 		LinkedList<Character> refList = new LinkedList<Character>();
 		for(char c: ref.toCharArray()) refList.add(c);
 		
@@ -191,8 +191,8 @@ public class SubstitutionAnalysisView extends ViewPart {
 				resetAnalysis();
 			}
 		};
-		action1.setText("Reset analysis");
-		action1.setToolTipText("Starts the analysis over.");
+		action1.setText(Messages.SubstitutionAnalysisView_4);
+		action1.setToolTipText(Messages.SubstitutionAnalysisView_5);
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 			getImageDescriptor(ISharedImages.IMG_TOOL_NEW_WIZARD));
 		
@@ -206,7 +206,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 				getMainComposite().getShell(),
-			"Substitution analysis",
+			Messages.SubstitutionAnalysisView_6,
 			message);
 	}
 

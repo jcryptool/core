@@ -65,18 +65,18 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 	static {
 		predefinedTextFiles = new LinkedHashMap<DynamicPredefinedStatisticsProvider.Info, File>();
 		
-		File kafka = fileFromPath("refTexts/Die_Verwandlung_1_2.txt");
-		File poe = fileFromPath("refTexts/The_Murders_in_the_Rue_Morgue.txt");
+		File kafka = fileFromPath("refTexts/Die_Verwandlung_1_2.txt"); //$NON-NLS-1$
+		File poe = fileFromPath("refTexts/The_Murders_in_the_Rue_Morgue.txt"); //$NON-NLS-1$
 		
 		if(kafka != null && kafka.exists()) {
-			predefinedTextFiles.put(new Info("Die Verwandlung (Kafka)", "German"), kafka);
+			predefinedTextFiles.put(new Info("Die Verwandlung (Kafka)", Messages.DynamicPredefinedStatisticsProvider_3), kafka); //$NON-NLS-1$
 		}
 		if(poe != null && poe.exists()) {
-			predefinedTextFiles.put(new Info("The Murders in the Rue Morgue (Poe)", "English"), poe);
+			predefinedTextFiles.put(new Info("The Murders in the Rue Morgue (Poe)", Messages.DynamicPredefinedStatisticsProvider_5), poe); //$NON-NLS-1$
 		}
 		
 		if(predefinedTextFiles.isEmpty()) {
-			String message = "Could not locate reference text files for statistics";
+			String message = "Could not locate reference text files for statistics"; //$NON-NLS-1$
 			LogUtil.logError(Activator.PLUGIN_ID, message);
 			System.out.println(message);
 			

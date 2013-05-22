@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Substitution analysis
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.crypto.analysis.substitution; singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Bundle-Activator: org.jcryptool.crypto.analysis.substitution.Activator

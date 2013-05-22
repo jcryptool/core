@@ -55,7 +55,7 @@ public class SubstitutionLetterInputField extends Composite {
 	
 		@Override
 		public String getMessage() {
-			return String.format("Please enter a character.");
+			return String.format(Messages.SubstitutionLetterInputField_0);
 		}
 	
 		@Override
@@ -90,7 +90,7 @@ public class SubstitutionLetterInputField extends Composite {
 		@Override
 		public String getMessage() {
 			return String
-					.format("The input '%s' is neither a single character nor an accepted character representation.",
+					.format(Messages.SubstitutionLetterInputField_1,
 							textfieldContent);
 		}
 	
@@ -128,7 +128,7 @@ public class SubstitutionLetterInputField extends Composite {
 	
 		@Override
 		public String getMessage() {
-			return String.format("The character '%s' is not part of the alphabet.", String.valueOf(parsedContent));
+			return String.format(Messages.SubstitutionLetterInputField_2, String.valueOf(parsedContent));
 		}
 	
 		@Override
@@ -247,7 +247,7 @@ public class SubstitutionLetterInputField extends Composite {
 					MenuItem sep = new MenuItem(popupMenu, SWT.SEPARATOR);
 					MenuItem descr = new MenuItem(popupMenu, SWT.NONE);
 					descr.setEnabled(false);
-					descr.setText("Characters already in use:");
+					descr.setText(Messages.SubstitutionLetterInputField_3);
 				}
 				usedCharsSeparatorNotYetTried = false;
 			}
@@ -339,7 +339,7 @@ public class SubstitutionLetterInputField extends Composite {
 			@Override
 			public void writeContent(Character content) {
 				if (content == null) {
-					setTextfieldTextExternal("");
+					setTextfieldTextExternal(""); //$NON-NLS-1$
 				} else {
 					setTextfieldTextExternal(AbstractAlphabet.getPrintableCharRepresentation(content));
 				}
@@ -352,7 +352,7 @@ public class SubstitutionLetterInputField extends Composite {
 	
 			@Override
 			public String getName() {
-				return "character";
+				return "character"; //$NON-NLS-1$
 			}
 	
 		};
@@ -400,13 +400,13 @@ public class SubstitutionLetterInputField extends Composite {
 	
 	private static String getSpecialCharacterStringForPopupMenu(Character c) {
 		if((int)(c) >= 126) {
-			return String.format("%s (%s)", String.valueOf(c), String.format("{%d}", (int)c));
+			return String.format("%s (%s)", String.valueOf(c), String.format("{%d}", (int)c)); //$NON-NLS-1$ //$NON-NLS-2$
 		} else if((int)(c) < 32) {
 			return AbstractAlphabet.getPrintableCharRepresentation(c);
 		} else if((int)(c) == 32) {
-			return "[Whitespace]";
+			return Messages.SubstitutionLetterInputField_4;
 		} else {
-			return String.format("%s", String.valueOf(c), AbstractAlphabet.getPrintableCharRepresentation(c));
+			return String.format("%s", String.valueOf(c), AbstractAlphabet.getPrintableCharRepresentation(c)); //$NON-NLS-1$
 		}
 	}
 

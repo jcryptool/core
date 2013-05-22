@@ -65,7 +65,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		setLayout(new GridLayout(2, false));
 		
 		Group grpSubstitutionAnalysis = new Group(this, SWT.NONE);
-		grpSubstitutionAnalysis.setText("Substitution analysis");
+		grpSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisPanel_0);
 		grpSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpSubstitutionAnalysis.setLayout(new GridLayout(1, false));
 		
@@ -73,21 +73,21 @@ public class SubstitutionAnalysisPanel extends Composite {
 		
 		Group grpLetterFrequencyStatistics = new Group(this, SWT.NONE);
 		grpLetterFrequencyStatistics.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, true, 1, 3));
-		grpLetterFrequencyStatistics.setText("Letter frequency statistics");
+		grpLetterFrequencyStatistics.setText(Messages.SubstitutionAnalysisPanel_1);
 		grpLetterFrequencyStatistics.setLayout(new GridLayout(1, false));
 		
 		initLetterFreqGroup(grpLetterFrequencyStatistics);
 		
 		Group grpSubstitutions = new Group(this, SWT.NONE);
 		grpSubstitutions.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpSubstitutions.setText("Substitutions");
+		grpSubstitutions.setText(Messages.SubstitutionAnalysisPanel_2);
 		grpSubstitutions.setLayout(new GridLayout(1, false));
 		
 		initSubstGroup(grpSubstitutions);
 		
 		Group grpPreviewOfThe = new Group(this, SWT.NONE);
 		grpPreviewOfThe.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		grpPreviewOfThe.setText("Preview of the deciphered text");
+		grpPreviewOfThe.setText(Messages.SubstitutionAnalysisPanel_3);
 		grpPreviewOfThe.setLayout(new GridLayout(1, false));
 		
 		initPreviewGroup(grpPreviewOfThe);
@@ -98,7 +98,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		GridData lblTheSubstitutionAnalysisLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		lblTheSubstitutionAnalysisLayoutData.widthHint = MAIN_LBL_WIDTH_HINT;
 		lblTheSubstitutionAnalysis.setLayoutData(lblTheSubstitutionAnalysisLayoutData);
-		lblTheSubstitutionAnalysis.setText("The substitution analysis consists of figuring out, which characters in the ciphertext have to be replaced by which former plaintext characters.\r\nThe reference- and ciphertext statistics help you with that. Single characters/pairs/triplets with similar frequencies very possible correspond to each other. Try to substitute these reference characters with their corresponding ciphertext characters with the substitution editor below, and observe how the plaintext changes.");
+		lblTheSubstitutionAnalysis.setText(Messages.SubstitutionAnalysisPanel_4);
 	}
 
 	private void initPreviewGroup(Group grpPreviewOfThe) {
@@ -106,7 +106,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		previewer.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, true));
 		
 		Button exportButton = new Button(grpPreviewOfThe, SWT.PUSH);
-		exportButton.setText("Open the plaintext in a new editor");
+		exportButton.setText(Messages.SubstitutionAnalysisPanel_5);
 		Image image = JCTTextEditorPlugin.getDefault().getImageRegistry()
                         .get(JCTTextEditorPlugin.JCT_TEXT_EDITOR_ICON);
 		exportButton.setImage(image);
@@ -114,7 +114,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String calcPlaintext = calculatePlaintext();
-				TextInputWithSourceDisplayer.openTextInEditor(calcPlaintext, "substAnalysisOutput.txt");
+				TextInputWithSourceDisplayer.openTextInEditor(calcPlaintext, "substAnalysisOutput.txt"); //$NON-NLS-1$
 			}
 		});
 	}
@@ -146,23 +146,23 @@ public class SubstitutionAnalysisPanel extends Composite {
 		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
 		lblKeyPreviewLayoutData.widthHint = MAIN_LBL_WIDTH_HINT;
 		lblKeyPreview.setLayoutData(lblKeyPreviewLayoutData);
-		lblKeyPreview.setText("Below, the substitution will be displayed as String. In the first field, the substitution as set above will be shown; This is the substitution for ciphertext to plaintext conversion. A '?' marks all positions where a substitution was not yet set (fields outlined red above)\nThe other direction (plaintext to ciphertext) will be displayed in the second field, when possible (when every character in the editor above has got a substitution set).");
+		lblKeyPreview.setText(Messages.SubstitutionAnalysisPanel_7);
 		
 		Label k1PreviewLabel = new Label(keyPreview, SWT.NONE);
-		k1PreviewLabel.setText("cipher to plaintext substitution:");
+		k1PreviewLabel.setText(Messages.SubstitutionAnalysisPanel_8);
 		
 		k1PreviewText = new Text(keyPreview, SWT.BORDER);
 		k1PreviewText.setEditable(false);
 		k1PreviewText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		k1PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
+		k1PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
 
 		Label k2PreviewLabel = new Label(keyPreview, SWT.NONE);
-		k2PreviewLabel.setText("plaintext to cipher substitution:");
+		k2PreviewLabel.setText(Messages.SubstitutionAnalysisPanel_10);
 		
 		k2PreviewText = new Text(keyPreview, SWT.BORDER);
 		k2PreviewText.setEditable(false);
 		k2PreviewText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		k2PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
+		k2PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
 		
 	}
 
@@ -173,7 +173,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		Map<Character, Character> key1Data = substEditor.getCharMapping();
 		String key1String = generateKey1String(key1Data, alphabet);
 		
-		String key2String = "<The substitutions must be completely filled out>";
+		String key2String = Messages.SubstitutionAnalysisPanel_12;
 		if(substEditor.isCompleteData()) {
 			try {
 				SubstitutionKey key = new SubstitutionKey(SubstitutionKey.invertSubstitution(key1Data));
@@ -207,7 +207,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 		
 		final Button loadStatisticsButton = new Button(grpLetterFrequencyStatistics, SWT.PUSH);
 		loadStatisticsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		loadStatisticsButton.setText("Load another reference statistic");
+		loadStatisticsButton.setText(Messages.SubstitutionAnalysisPanel_13);
 		loadStatisticsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {

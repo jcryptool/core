@@ -61,11 +61,11 @@ public class StatisticsDisplayer extends Composite {
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblShowFrequenciesOf = new Label(composite, SWT.NONE);
-		lblShowFrequenciesOf.setText("Show frequencies of:");
+		lblShowFrequenciesOf.setText(Messages.StatisticsDisplayer_0);
 		
 		combo = new Combo(composite, SWT.NONE);
 		combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		combo.setItems(new String[] {"Single characters", "Character pairs", "Character triples"});
+		combo.setItems(new String[] {Messages.StatisticsDisplayer_1, Messages.StatisticsDisplayer_2, Messages.StatisticsDisplayer_3});
 		
 		combo.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -88,11 +88,11 @@ public class StatisticsDisplayer extends Composite {
 		
 		Label lblReferenceText = new Label(composite_1, SWT.NONE);
 		lblReferenceText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		lblReferenceText.setText("Reference text");
+		lblReferenceText.setText(Messages.StatisticsDisplayer_4);
 		
 		Label lblCiphertext = new Label(composite_1, SWT.NONE);
 		lblCiphertext.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-		lblCiphertext.setText("Ciphertext");
+		lblCiphertext.setText(Messages.StatisticsDisplayer_5);
 		
 		scReference = new ScrolledComposite(composite_1, SWT.BORDER | SWT.V_SCROLL);
 		GridData scReferenceLData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);

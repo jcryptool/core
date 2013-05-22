@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Substitution analysis"
+            name="%view.name"
             icon="icons/sample.gif"
             category="org.jcryptool.crypto.analysis"
             class="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
@@ -22,7 +22,7 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             contextHelpId="org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"
-            name="Substitution analysis"
+            name="%analysis.name"
             viewId="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
    </extension>

@@ -30,7 +30,7 @@ import org.jcryptool.crypto.ui.util.NestedEnableDisableSwitcher;
 
 public class StatisticsSelector extends Composite {
 
-	private static final String NOCONTENT_COMBO_STRING = "<no predefined statistics available for the selected alphabet>";
+	private static final String NOCONTENT_COMBO_STRING = Messages.StatisticsSelector_0;
 	private AbstractAlphabet alpha;
 	private List<Observer> observers;
 	private Composite layoutRoot;
@@ -68,7 +68,7 @@ public class StatisticsSelector extends Composite {
 				}
 			}
 		});
-		btnPredefined.setText("Select precalculated statistics:");
+		btnPredefined.setText(Messages.StatisticsSelector_1);
 		
 		comboPredefined = new Combo(this, SWT.NONE);
 		GridData comboLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
@@ -86,7 +86,7 @@ public class StatisticsSelector extends Composite {
 		});
 		
 		btnCustom = new Button(this, SWT.RADIO);
-		btnCustom.setText("Analyze custom reference text");
+		btnCustom.setText(Messages.StatisticsSelector_2);
 		
 		btnCustom.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -100,9 +100,9 @@ public class StatisticsSelector extends Composite {
 		
 		referenceTextSelector = new TextLoadController(this, layoutRoot, SWT.NONE, false, true);
 		referenceTextSelector.setControlHatcherAfterWizText(new ControlHatcher.LabelHatcher(
-				SubstitutionAnalysisConfigPanel.TEXTTRANSFORM_HINT+"\n\n"+
-						"Dies ist zu empfehlen, da der Referenztext möglichst nur dieselben Zeichen wie der Geheimtext haben sollte, um möglichst aussagekräftige " +
-						"Statistiken für die Analyse zu erhalten. Um einen Groß- und Kleinbuchstabentext für die Analyse eines nur-Großbuchstaben-Geheimtextes fitzumachen, kann z. B. die Großbuchstabentransformation angewandt werden."
+				SubstitutionAnalysisConfigPanel.TEXTTRANSFORM_HINT+"\n\n"+ //$NON-NLS-1$
+						Messages.StatisticsSelector_4 +
+						Messages.StatisticsSelector_5
 				));
 		referenceTextSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
 		
@@ -290,7 +290,7 @@ public class StatisticsSelector extends Composite {
 
 	private String generateComboStringItemFor(TextStatistic s, int i) {
 		//TODO: implement
-		return String.format("%d: Sprache: %s | %s", i, s.getLanguage(), s.getName());
+		return String.format(Messages.StatisticsSelector_6, i, s.getLanguage(), s.getName());
 	}
 
 	private void setPredefinedSectionEnabled(boolean b) {
@@ -300,7 +300,7 @@ public class StatisticsSelector extends Composite {
 		if(!b) {
 			comboPredefined.setText(NOCONTENT_COMBO_STRING);
 		} else {
-			comboPredefined.setText("");
+			comboPredefined.setText(""); //$NON-NLS-1$
 		}
 	}
 	
@@ -348,8 +348,8 @@ public class StatisticsSelector extends Composite {
 	static{
 		myStats = new LinkedList<TextStatistic>();
 		myStats.add(TextStatistic.getDummyStatistic());
-		myStats.add(new TextStatistic("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"));
-		myStats.add(new TextStatistic("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "));
+		myStats.add(new TextStatistic("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")); //$NON-NLS-1$
+		myStats.add(new TextStatistic("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ")); //$NON-NLS-1$
 	}
 	
 	private PredefinedStatisticsProvider getDefaultStatisticsProvider() {
