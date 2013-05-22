@@ -2,8 +2,6 @@ package org.jcryptool.crypto.analysis.substitution.ui.wizard.loadtext;
 
 import java.io.File;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -27,6 +25,7 @@ import org.eclipse.ui.IEditorReference;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
@@ -56,12 +55,20 @@ public class LoadTextWizardPage extends WizardPage {
 	private TextInputWithSource initTextObject;
 	private boolean isPageBuilt;
 	private UIInputTextWithSource textInput;
+	private ControlHatcher beforeWizardTextParasiteLabel;
+	private ControlHatcher afterWizardTextParasiteLabel;
 
 	/**
 	 * Create the wizard.
 	 */
 	public LoadTextWizardPage() {
+		this(null, null);
+	}
+
+	public LoadTextWizardPage(ControlHatcher beforeWizardTextParasiteLabel, ControlHatcher afterWizardTextParasiteLabel) {
 		super("Load text");
+		this.beforeWizardTextParasiteLabel = beforeWizardTextParasiteLabel;
+		this.afterWizardTextParasiteLabel = afterWizardTextParasiteLabel;
 		setTitle("Load text");
 		setDescription("Load a text for the substitution analysis");
 	}
@@ -72,8 +79,15 @@ public class LoadTextWizardPage extends WizardPage {
 	 */
 	public void createControl(Composite parent) {
 		container = new Composite(parent, SWT.NULL);
-		container.setLayout(new GridLayout(2, false));
+		container.setLayout(new GridLayout(1, false));
 		container.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+		if(beforeWizardTextParasiteLabel != null) {
+			Control control = beforeWizardTextParasiteLabel.hatch(container);
+			GridData lData = (GridData) control.getLayoutData();
+			lData.verticalSpan = 1;
+//			lData.verticalIndent = 1;
+		}
 		
 		{
 			grpText = new Group(container, SWT.NONE);
@@ -202,6 +216,14 @@ public class LoadTextWizardPage extends WizardPage {
 					}
 				}
 			}
+		}
+		
+		if(afterWizardTextParasiteLabel != null) {
+//			new Label(container, SWT.NONE);
+			Control control = afterWizardTextParasiteLabel.hatch(container);
+			GridData lData = (GridData) control.getLayoutData();
+			lData.verticalSpan = 1;
+			lData.verticalIndent = 10;
 		}
 
 		setControl(container);

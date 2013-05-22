@@ -1,25 +1,29 @@
 package org.jcryptool.crypto.analysis.substitution.ui.modules;
 
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
+import org.jcryptool.crypto.analysis.substitution.Activator;
 import org.jcryptool.crypto.analysis.substitution.calc.TextStatistic;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.util.NestedEnableDisableSwitcher;
@@ -95,6 +99,11 @@ public class StatisticsSelector extends Composite {
 		});
 		
 		referenceTextSelector = new TextLoadController(this, layoutRoot, SWT.NONE, false, true);
+		referenceTextSelector.setControlHatcherAfterWizText(new ControlHatcher.LabelHatcher(
+				SubstitutionAnalysisConfigPanel.TEXTTRANSFORM_HINT+"\n\n"+
+						"Dies ist zu empfehlen, da der Referenztext möglichst nur dieselben Zeichen wie der Geheimtext haben sollte, um möglichst aussagekräftige " +
+						"Statistiken für die Analyse zu erhalten. Um einen Groß- und Kleinbuchstabentext für die Analyse eines nur-Großbuchstaben-Geheimtextes fitzumachen, kann z. B. die Großbuchstabentransformation angewandt werden."
+				));
 		referenceTextSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
 		
 		referenceTextSelector.addObserver(new Observer() {
@@ -294,13 +303,36 @@ public class StatisticsSelector extends Composite {
 			comboPredefined.setText("");
 		}
 	}
+	
+	private static List<Character> alphaContentAsList(AbstractAlphabet alpha) {
+		LinkedList<Character> result = new LinkedList<Character>();
+		for(char c: alpha.getCharacterSet()) result.add(c);
+		return result;
+	}
 
 	public static List<TextStatistic> getSuitableStatistics(AbstractAlphabet newAlpha, PredefinedStatisticsProvider statisticsProvider) {
 		List<TextStatistic> suitableStatistics = new LinkedList<TextStatistic>();
 		List<TextStatistic> allStatistics = statisticsProvider.getPredefinedStatistics();
+		
+		Set<String> names = new LinkedHashSet<String>();
+		LinkedHashMap<TextStatistic, Double> scoreMap = new LinkedHashMap<TextStatistic, Double>();
 		for(TextStatistic statistic: allStatistics) {
-			if(statistic.dataFitsCipherAlphabet(newAlpha)) {
-				suitableStatistics.add(statistic);
+			double score = TextStatistic.compareTwoAlphabets(alphaContentAsList(newAlpha), statistic.getTextCharacters());
+			scoreMap.put(statistic, score);
+			names.add(statistic.getName());
+		}
+		for(String name: names) {
+			Double maxVal = Double.MIN_VALUE;
+			TextStatistic best = null;
+			
+			for(Entry<TextStatistic, Double> entry: scoreMap.entrySet()) {
+				if(entry.getKey().getName().equals(name) && entry.getValue()>maxVal) {
+					best = entry.getKey();
+					maxVal = entry.getValue();
+				}
+			}
+			if(best != null) {
+				suitableStatistics.add(best);
 			}
 		}
 		return suitableStatistics;
@@ -321,13 +353,7 @@ public class StatisticsSelector extends Composite {
 	}
 	
 	private PredefinedStatisticsProvider getDefaultStatisticsProvider() {
-		return new PredefinedStatisticsProvider() {
-			
-			@Override
-			public List<TextStatistic> getPredefinedStatistics() {
-				return new LinkedList<TextStatistic>(StatisticsSelector.myStats);
-			}
-		};
+		return Activator.getPredefinedStatisticsProvider();
 	}
 
 	private AbstractAlphabet getDefaultAlphabetInitialization() {
@@ -355,6 +381,10 @@ public class StatisticsSelector extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	public boolean hasPredefinedStatistics() {
+		return !predefinedStatistics.isEmpty();
 	}
 
 }

@@ -1,7 +1,13 @@
 package org.jcryptool.crypto.analysis.substitution;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.analysis.substitution.calc.DynamicPredefinedStatisticsProvider;
+import org.jcryptool.crypto.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
 import org.osgi.framework.BundleContext;
 
@@ -60,8 +66,25 @@ public class Activator extends AbstractUIPlugin {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
 	}
 
+	
+	private static PredefinedStatisticsProvider statisticsProvider = null;
+	
 	public static PredefinedStatisticsProvider getPredefinedStatisticsProvider() {
-		// TODO Auto-generated method stub
-		return null;
+		if(statisticsProvider == null) {
+			try {
+				statisticsProvider = new DynamicPredefinedStatisticsProvider();
+			} catch (Exception e) {
+				LogUtil.logError(PLUGIN_ID, e);
+				return new PredefinedStatisticsProvider() {
+					
+					@Override
+					public List<TextStatistic> getPredefinedStatistics() {
+						return Collections.EMPTY_LIST;
+					}
+				};
+			}
+		}
+		return statisticsProvider;
+		
 	}
 }

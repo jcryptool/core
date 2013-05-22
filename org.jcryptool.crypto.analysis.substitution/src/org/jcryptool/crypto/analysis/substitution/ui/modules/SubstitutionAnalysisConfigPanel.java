@@ -10,31 +10,40 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.crypto.analysis.substitution.Activator;
 import org.jcryptool.crypto.analysis.substitution.calc.TextStatistic;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
-import org.jcryptool.crypto.ui.util.NestedEnable;
 import org.jcryptool.crypto.ui.util.NestedEnableDisableSwitcher;
 
 public class SubstitutionAnalysisConfigPanel extends Composite {
 
+	public static final String TEXTTRANSFORM_HINT = "Optional können Sie auf der nächsten Wizardseite generische Änderungen am Text vornehmen, wie z. B. Leerzeichen und Zeilenumbrüche löschen.";
+
 	public static class State {
+		public AbstractAlphabet getAlphabet() {
+			return alphabet;
+		}
+
+		public TextStatistic getStatistics() {
+			return statistics;
+		}
+
 		TextInputWithSource loadedText;
 		TransformData selectedTransformation;
 		AbstractAlphabet alphabet;
@@ -73,7 +82,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 			this.ready = enabledStateStartAnalysis; 
 		}
 		
-		private boolean isReady() {
+		public boolean isReady() {
 			return this.ready;
 		}
 
@@ -241,6 +250,9 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		private void newAlphabetArrivedUpdates(AbstractAlphabet previousAlphabet) {
 			if(this.alphabet != null) {
 				panel.getStatisticsSelector().setAlphabet(this.alphabet);
+				if(panel.getStatisticsSelector().hasPredefinedStatistics()) {
+					panel.getStatisticsSelector().setPredefinedStatistics(0, true);
+				}
 			}
 		}
 		
@@ -294,6 +306,9 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		
 		textSelector = new TextLoadController(grpCiphertext, this, SWT.NONE, true, true);
 		textSelector.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
+		textSelector.setControlHatcherAfterWizText(new ControlHatcher.LabelHatcher(
+				TEXTTRANSFORM_HINT
+				));
 		makeTextSelectorListener();
 		
 		grpAlphabet = new Group(this, SWT.NONE);
@@ -454,7 +469,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		});
 	}
 
-	private State getState() {
+	public State getState() {
 		return this.panelState;
 	}
 	

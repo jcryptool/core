@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,15 +14,13 @@ import java.util.Set;
 
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
-import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
 public class TextStatistic {
 	
-	private static final int MIN_TRIPLET_COUNT_FOR_CURBING = 25;
-	private static final int MIN_DOUBLET_COUNT_FOR_CURBING = 25;
+	private static final int MIN_TRIPLET_COUNT_FOR_CURBING = 35;
+	private static final int MIN_DOUBLET_COUNT_FOR_CURBING = 35;
 
-	private static final double ALPHABETS_DATA_FITS_THRESHHOLD = 0.99;
+	private static final double ALPHABETS_DATA_FITS_THRESHHOLD = 0.8;
 
 	public String getLanguage() {
 		return language;
@@ -66,6 +65,7 @@ public class TextStatistic {
 		
 		newDoubletOccurrences = curbDoublets(newDoubletOccurrences);
 		newTripletOccurrences = curbTriplets(newTripletOccurrences);
+		newCharacterOccurrences = curbUnetts(newCharacterOccurrences);
 		
 		this.characterOccurrences = newCharacterOccurrences;
 		this.doubletOccurrences = newDoubletOccurrences;
@@ -89,17 +89,42 @@ public class TextStatistic {
 		return null;
 	}
 
-	private Map<String, Integer> curbTriplets(Map<String, Integer> newTripletOccurrences) {
+	private LinkedHashMap<String, Integer> curbTriplets(Map<String, Integer> newTripletOccurrences) {
 		int curbCount = Math.min(MIN_TRIPLET_COUNT_FOR_CURBING, newTripletOccurrences.size());
 		return curbMapHighestValuesRemain(newTripletOccurrences, curbCount);
 	}
 
-	private Map<String, Integer> curbDoublets(Map<String, Integer> newDoubletOccurrences) {
+	private LinkedHashMap<String, Integer> curbDoublets(Map<String, Integer> newDoubletOccurrences) {
 		int curbCount = Math.min(MIN_DOUBLET_COUNT_FOR_CURBING, newDoubletOccurrences.size());
 		return curbMapHighestValuesRemain(newDoubletOccurrences, curbCount);
 	}
+	
+	private LinkedHashMap<Character, Integer> curbUnetts(Map<Character, Integer> newUnettOccurrences) {
+		int curbCount = Math.min(Integer.MAX_VALUE, newUnettOccurrences.size());
+		return curbMapHighestValuesRemainChar(newUnettOccurrences, curbCount);
+	}
 
-	private Map<String, Integer> curbMapHighestValuesRemain(Map<String, Integer> map, int curbCount) {
+	private LinkedHashMap<Character, Integer> curbMapHighestValuesRemainChar(Map<Character, Integer> map,
+			int curbCount) {
+		LinkedList<Entry<Character, Integer>> sortedEntries = new LinkedList<Map.Entry<Character, Integer>>();
+		sortedEntries.addAll(map.entrySet());
+		Comparator<Entry<Character, Integer>> comparator = new Comparator<Entry<Character, Integer>>() {
+			@Override
+			public int compare(Entry<Character, Integer> o1, Entry<Character, Integer> o2) {
+				return (-1)*(o1.getValue().compareTo(o2.getValue()));
+			}
+		};
+		Collections.sort(sortedEntries, comparator);
+		
+		LinkedHashMap<Character, Integer> result = new LinkedHashMap<Character, Integer>();
+		for (int i = 0; i < curbCount; i++) {
+			final Entry<Character, Integer> e = sortedEntries.get(i);
+			result.put(e.getKey(), e.getValue());
+		}
+		return result;
+	}
+
+	private LinkedHashMap<String, Integer> curbMapHighestValuesRemain(Map<String, Integer> map, int curbCount) {
 		LinkedList<Entry<String, Integer>> sortedEntries = new LinkedList<Map.Entry<String, Integer>>();
 		sortedEntries.addAll(map.entrySet());
 		Comparator<Entry<String, Integer>> comparator = new Comparator<Entry<String, Integer>>() {
@@ -110,7 +135,7 @@ public class TextStatistic {
 		};
 		Collections.sort(sortedEntries, comparator);
 		
-		HashMap<String, Integer> result = new HashMap<String, Integer>();
+		LinkedHashMap<String, Integer> result = new LinkedHashMap<String, Integer>();
 		for (int i = 0; i < curbCount; i++) {
 			final Entry<String, Integer> e = sortedEntries.get(i);
 			result.put(e.getKey(), e.getValue());
@@ -191,19 +216,28 @@ public class TextStatistic {
 	}
 
 	public static double compareTwoAlphabets(List<Character> remoteCharacters, Set<Character> thisCharacters) {
-		Set<Character> disjunction = new HashSet<Character>();
-		disjunction.addAll(thisCharacters);
-		disjunction.addAll(remoteCharacters);
+		Set<Character> disjunction = calcAlphaDisjunction(remoteCharacters, thisCharacters);
+		Set<Character> conjunction = calcAlphaConjunction(remoteCharacters, thisCharacters);
 		
+		if(disjunction.size() == 0) return 0;
+		return (double)(conjunction.size()) / (double)(disjunction.size());
+	}
+
+	private static Set<Character> calcAlphaConjunction(List<Character> remoteCharacters, Set<Character> thisCharacters) {
 		Set<Character> conjunction = new HashSet<Character>();
 		for(Character c: thisCharacters) {
 			if(remoteCharacters.contains(c)) {
 				conjunction.add(c);
 			}
 		}
-		
-		if(disjunction.size() == 0) return 0;
-		return (double)(conjunction.size()) / (double)(disjunction.size());
+		return conjunction;
+	}
+
+	private static Set<Character> calcAlphaDisjunction(List<Character> remoteCharacters, Set<Character> thisCharacters) {
+		Set<Character> disjunction = new HashSet<Character>();
+		disjunction.addAll(thisCharacters);
+		disjunction.addAll(remoteCharacters);
+		return disjunction;
 	}
 	
 	public double getFrequencyForCharacter(Character c) {
@@ -230,5 +264,17 @@ public class TextStatistic {
 	
 	public static TextStatistic getDummyStatistic() {
 		return new TextStatistic("abcdefghijklmnopqrstuvwxyz");
+	}
+
+	public Map<Character, Integer> getCharacterOccurrences() {
+		return characterOccurrences;
+	}
+
+	public Map<String, Integer> getDoubletOccurrences() {
+		return doubletOccurrences;
+	}
+
+	public Map<String, Integer> getTripletOccurrences() {
+		return tripletOccurrences;
 	}
 }

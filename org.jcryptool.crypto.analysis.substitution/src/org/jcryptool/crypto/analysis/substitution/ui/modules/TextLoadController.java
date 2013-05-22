@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.TextTransformationDisplayer;
 import org.jcryptool.crypto.analysis.substitution.ui.wizard.loadtext.LoadTextWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
@@ -34,6 +35,9 @@ public class TextLoadController extends Composite {
 	private Button btnLoadText;
 	private boolean showFrontLabel;
 	private boolean oneRow;
+	
+	private ControlHatcher beforeWizardTextParasiteLabel = null;
+	private ControlHatcher afterWizardTextParasiteLabel = null;
 
 	public TextInputWithSource getText() {
 		return text;
@@ -151,7 +155,7 @@ public class TextLoadController extends Composite {
 	}
 
 	private void loadTextByWizard(TextInputWithSource textToLoad, TransformData dataToLoad) {
-		LoadTextWizard w = new LoadTextWizard();
+		LoadTextWizard w = new LoadTextWizard(beforeWizardTextParasiteLabel, afterWizardTextParasiteLabel);
 		w.setTextPageConfig(textToLoad);
 		w.setTransformData(dataToLoad);
 		
@@ -219,5 +223,12 @@ public class TextLoadController extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	
+	public void setControlHatcherBeforeWizText(ControlHatcher hatcherB4) {
+		this.beforeWizardTextParasiteLabel = hatcherB4;
+	}
+	public void setControlHatcherAfterWizText(ControlHatcher hatcherAfter) {
+		this.afterWizardTextParasiteLabel = hatcherAfter;
 	}
 }

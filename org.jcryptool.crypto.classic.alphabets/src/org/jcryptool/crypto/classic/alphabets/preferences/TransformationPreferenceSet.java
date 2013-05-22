@@ -29,7 +29,7 @@ public class TransformationPreferenceSet {
     private static Map<String, TransformData> standardSettings() {
     	HashMap<String, TransformData> result = new HashMap<String, TransformData>();
     	
-    	result.put("Printable ASCII",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_ascii_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Printable ASCII"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -39,7 +39,7 @@ public class TransformationPreferenceSet {
     					false  // umlaut transformation activate flag
     			)
     	);
-    	result.put("Upper and lower Latin (A-Z,a-z)",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_uplolatin_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Upper and lower Latin (A-Z,a-z)"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -49,7 +49,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("Upper Latin (A-Z)",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_uplatin_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Upper Latin (A-Z)"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -59,7 +59,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("Lower Latin (a-z)",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_lowlatin_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Lower Latin (a-z)"),
     					false, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -69,7 +69,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("Playfair/alike alphabet (25chars, w/o \"J\")",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_playfair_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Playfair/alike alphabet (25chars, w/o \"J\")"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -79,7 +79,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("ADFGVX Alphabet",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_adfgvx_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -89,7 +89,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("Xor Alphabet with 32 characters",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_xor32_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 32 characters"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -99,7 +99,7 @@ public class TransformationPreferenceSet {
     					true  // umlaut transformation activate flag
     					)
     			);
-    	result.put("Xor Alphabet with 64 characters",
+    	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_xor64_long,
     			new TransformData(
     					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 64 characters"),
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
@@ -112,6 +112,10 @@ public class TransformationPreferenceSet {
     	
     	return result;
     	
+    }
+    
+    public static boolean hasStandardSetting(String alphabetName) {
+    	return standardSettings().containsKey(alphabetName);
     }
     
     public static TransformData getDefaultSetting(String alphabetName) {

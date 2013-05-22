@@ -1,34 +1,30 @@
 package org.jcryptool.crypto.analysis.substitution.views;
 
 
-import java.lang.Thread.State;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.SWT;
-import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.crypto.analysis.substitution.ui.modules.StatisticsSelector;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
+import org.jcryptool.crypto.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.crypto.analysis.substitution.ui.modules.SubstitutionAnalysisConfigPanel;
-import org.jcryptool.crypto.analysis.substitution.ui.modules.TextLoadController;
-import org.jcryptool.crypto.analysis.substitution.ui.wizard.loadtext.LoadTextWizard;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.SubstitutionAnalysisPanel;
 import org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView.State.Step;
-import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
-import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 
 
 /**
@@ -57,15 +53,15 @@ public class SubstitutionAnalysisView extends ViewPart {
 	public static final String ID = "org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView";
 
 	private Action action1;
-	private Action action2;
-
 	private Composite mainComposite;
 
 	private State state;
 
 	private Composite mainPanel;
 
-	private Composite configPanel;
+	private SubstitutionAnalysisConfigPanel configPanel;
+
+	private SubstitutionAnalysisPanel analysisPanel;
 
 	/*
 	 * The content provider class is responsible for
@@ -123,22 +119,55 @@ public class SubstitutionAnalysisView extends ViewPart {
 		if(state.getStep() == Step.CONFIG) {
 			SubstitutionAnalysisConfigPanel panel = createConfigPanel(mainComposite);
 			setMainPanel(panel);
-			this.configPanel = this.mainPanel;
+			this.configPanel = panel;
 		} else if(state.getStep() == Step.ANALYSIS) {
-			//TODO: implement
+			org.jcryptool.crypto.analysis.substitution.ui.modules.SubstitutionAnalysisConfigPanel.State data = this.configPanel.getState();
+			SubstitutionAnalysisPanel panel = createAnalysisPanel(mainComposite, data.getTextForAnalysis(), data.getAlphabet(), data.getStatistics());
+			setMainPanel(panel);
+			this.analysisPanel = panel;
 		} else {
 			throw new RuntimeException("unsupported state in substitution analysis");
 		}
 	}
 
-	private void setMainPanel(SubstitutionAnalysisConfigPanel panel) {
+	private SubstitutionAnalysisPanel createAnalysisPanel(Composite mainComposite, String textForAnalysis, AbstractAlphabet alphabet,
+			TextStatistic statistics) {
+		SubstitutionAnalysisPanel substitutionAnalysisPanel = new SubstitutionAnalysisPanel(mainComposite, SWT.NONE, textForAnalysis, alphabet, statistics, generateUpperLowerCaseMode(alphabet));
+		substitutionAnalysisPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		return substitutionAnalysisPanel;
+	}
+
+	private static boolean generateUpperLowerCaseMode(AbstractAlphabet alphabet) {
+		String ref = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		LinkedList<Character> refList = new LinkedList<Character>();
+		for(char c: ref.toCharArray()) refList.add(c);
+		
+		Set<Character> compareAlphaSet = new HashSet<Character>();
+		for(char c: alphabet.getCharacterSet()) compareAlphaSet.add(c);
+		
+		double compareValue = TextStatistic.compareTwoAlphabets(refList, compareAlphaSet);
+		if(compareValue > 0.9) return true;
+		return false;
+	}
+
+	private void setMainPanel(Composite panel) {
 		this.mainPanel = panel;
 		getMainComposite().layout(new Control[]{this.mainPanel});
 	}
 
 	private SubstitutionAnalysisConfigPanel createConfigPanel(Composite parent) {
-		SubstitutionAnalysisConfigPanel panel = new SubstitutionAnalysisConfigPanel(parent, SWT.NONE);
+		final SubstitutionAnalysisConfigPanel panel = new SubstitutionAnalysisConfigPanel(parent, SWT.NONE);
 		panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		panel.addObserver(new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				if(panel.getState().isReady()) {
+					state = new State(State.Step.ANALYSIS);
+					createAppropriatePanel(state);
+				}
+			}
+		});
 		return panel;
 	}
 
@@ -150,35 +179,28 @@ public class SubstitutionAnalysisView extends ViewPart {
 
 	private void fillLocalPullDown(IMenuManager manager) {
 		manager.add(action1);
-		manager.add(new Separator());
-		manager.add(action2);
 	}
 
 	private void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(action1);
-		manager.add(action2);
 	}
 
 	private void makeActions() {
 		action1 = new Action() {
 			public void run() {
-				showMessage("Action 1 executed");
+				resetAnalysis();
 			}
 		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
+		action1.setText("Reset analysis");
+		action1.setToolTipText("Starts the analysis over.");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+			getImageDescriptor(ISharedImages.IMG_TOOL_NEW_WIZARD));
 		
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+	}
+
+	protected void resetAnalysis() {
+		this.state = new State(Step.CONFIG);
+		createAppropriatePanel(state);
 	}
 
 	private void showMessage(String message) {

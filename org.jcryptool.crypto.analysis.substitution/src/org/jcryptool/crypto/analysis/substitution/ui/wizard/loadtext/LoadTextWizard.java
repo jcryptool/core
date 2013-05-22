@@ -2,6 +2,7 @@ package org.jcryptool.crypto.analysis.substitution.ui.wizard.loadtext;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 public class LoadTextWizard extends Wizard {
@@ -13,8 +14,12 @@ public class LoadTextWizard extends Wizard {
 	private TransformData transformData;
 
 	public LoadTextWizard() {
+		this(null, null);
+	}
+
+	public LoadTextWizard(ControlHatcher beforeWizardTextParasiteLabel, ControlHatcher afterWizardTextParasiteLabel) {
 		setWindowTitle("Load text");
-		firstPage = new LoadTextWizardPage();
+		firstPage = new LoadTextWizardPage(beforeWizardTextParasiteLabel, afterWizardTextParasiteLabel);
 		page2 = new TranspTextModifyPage();
 	}
 
@@ -69,4 +74,5 @@ public class LoadTextWizard extends Wizard {
 		finished = true;
 		return true;
 	}
+
 }

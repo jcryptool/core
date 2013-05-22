@@ -544,7 +544,7 @@ public class TextInputWithSourceDisplayer extends Composite {
         performOpenEditor(editorInput, editorId);
     }
 
-    private static void openFileInEditor(File file) {
+    public static void openFileInEditor(File file) {
         IEditorPart editorPart = getActiveWorkbenchWindow().getActivePage().getActiveEditor();
         final String editorId = editorPart == null ? "org.jcryptool.editor.text.editor.JCTTextEditor" : editorPart
                 .getSite().getId();
