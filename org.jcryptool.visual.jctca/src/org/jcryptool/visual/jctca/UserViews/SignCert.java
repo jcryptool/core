@@ -30,6 +30,7 @@ public class SignCert implements Views {
 	Combo cmb_priv_key;
 	Group selectSthGroup;
 	Label selected_file;
+	
 
 	public SignCert(Composite content, Composite exp) {
 		this.composite = new Composite(content, SWT.NONE);
@@ -53,8 +54,12 @@ public class SignCert implements Views {
 		
 		Group signCertGroup = new Group(composite, SWT.NONE);
 		signCertGroup.setLayout(new GridLayout(1, false));
-		signCertGroup.setLayoutData(gd_grp);
+		signCertGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		signCertGroup.setText(Messages.SignCert_headline);
+		
+		Composite signBtnComp = new Composite(composite, SWT.NONE);
+		signBtnComp.setLayout(new GridLayout(1, false));
+		signBtnComp.setLayoutData(gd_comp);
 		
 		Button btn_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
@@ -78,7 +83,6 @@ public class SignCert implements Views {
 		btn_select_file.setText(Messages.SignCert_btn_chose_file);
 		btn_select_file.setData("select");//$NON-NLS-1$
 		btn_select_file.setEnabled(false);
-		
 		
 		selected_file = new Label(selectSthGroup, SWT.NONE);
 		selected_file.setText(""); //$NON-NLS-1$
@@ -111,16 +115,14 @@ public class SignCert implements Views {
 		btn_non_detail.addSelectionListener(new RadioButtonListener(true, btn_radio_signFile, btn_radio_signText, btn_select_file, selected_file));
 		btn_detail.addSelectionListener(new RadioButtonListener(false, btn_radio_signFile, btn_radio_signText, btn_select_file,selected_file));
 
-		
-		
+				
 		cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
-		cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false,1,1));
 		addRSAPrivateKeysToDropdown();
 		cmb_priv_key.select(0);
 
-
-
-		Button btn_sign = new Button(signCertGroup, SWT.NONE);
+		Button btn_sign = new Button(signBtnComp, SWT.PUSH);
+		btn_sign.setLayoutData(gd_comp);
 		btn_sign.setText(Messages.SignCert_btn_sign_with_key);
 		btn_sign.addSelectionListener(new SigVisPluginOpenListener(btn_detail, selected_file, txt_sign, cmb_priv_key));
 			
