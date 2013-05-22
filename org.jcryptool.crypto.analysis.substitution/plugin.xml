@@ -5,17 +5,17 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="%view.name"
-            icon="icons/sample.gif"
             category="org.jcryptool.analysis"
-            class="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
-            id="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
+            class="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
+            fastViewWidthRatio="0.7"
+            icon="icons/sample.gif"
+            id="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
+            name="%view.name">
       </view>
    </extension>
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
-            contextHelpId="org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"
             name="%analysis.name2"
             viewId="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
