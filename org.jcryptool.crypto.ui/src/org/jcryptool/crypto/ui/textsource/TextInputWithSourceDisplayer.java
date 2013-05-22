@@ -51,11 +51,16 @@ public class TextInputWithSourceDisplayer extends Composite {
 
     public static class Style {
         boolean images;
+        boolean showFrontLabel;
 
+        public Style(boolean images, boolean showFrontLabel) {
+			this.images = images;
+			this.showFrontLabel = showFrontLabel;
+        	
+        }
+        
         public Style(boolean images) {
-            super();
-            this.images = images;
-
+            this(images, true);
         }
 
     }
@@ -87,7 +92,7 @@ public class TextInputWithSourceDisplayer extends Composite {
             // for displaying either an icon (if this is set in the style) or
             // textual description of the input type.
             lblPrimaryInputType = new Label(this, SWT.NONE);
-            GridData lblPrimaryInputTypeLData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+            GridData lblPrimaryInputTypeLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
             lblPrimaryInputType.setLayoutData(lblPrimaryInputTypeLData);
         }
         {
@@ -95,7 +100,7 @@ public class TextInputWithSourceDisplayer extends Composite {
             // (file/editor/manual..)
             // (and the manual input source if this is the case)
             lblPrimaryInputDescription = new Label(this, SWT.NONE);
-            GridData lblPrimaryInputDescriptionLData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+            GridData lblPrimaryInputDescriptionLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
             lblPrimaryInputDescriptionLData.horizontalSpan = 1;
             lblPrimaryInputDescriptionLData.horizontalIndent = 5;
             lblPrimaryInputDescription.setLayoutData(lblPrimaryInputDescriptionLData);
@@ -109,26 +114,26 @@ public class TextInputWithSourceDisplayer extends Composite {
             originCompositeLayout.marginWidth = 0;
             originCompositeLayout.horizontalSpacing = 0;
             originComposite.setLayout(originCompositeLayout);
-            GridData originCompositeLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
+            GridData originCompositeLayoutData = new GridData(SWT.BEGINNING, SWT.CENTER, true, false);
             originCompositeLayoutData.horizontalIndent = 5;
             originComposite.setLayoutData(originCompositeLayoutData);
             {
                 lblOriginCaption = new Label(originComposite, SWT.NONE);
-                lblOriginCaption.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+                lblOriginCaption.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
                 lblOriginCaption.setText(Messages.TextInputWithSourceDisplayer_originLabelBeginning);
             }
             {
                 // displaying the manual input origin composite
                 manualOriginDisplayer = new TextInputWithSourceDisplayer(originComposite, layoutRoot, initialInput,
                         displayStyle, false);
-                GridData manualOriginDisplayerLData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+                GridData manualOriginDisplayerLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
                 // manualOriginDisplayerLData.horizontalIndent = 5;
                 manualOriginDisplayerLData.horizontalSpan = 1;
                 manualOriginDisplayer.setLayoutData(manualOriginDisplayerLData);
             }
             {
                 lblOriginCaptionEnd = new Label(originComposite, SWT.NONE);
-                lblOriginCaptionEnd.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+                lblOriginCaptionEnd.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false));
                 lblOriginCaptionEnd.setText(")"); //$NON-NLS-1$
             }
         }

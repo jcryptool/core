@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Substitution analysis
+Bundle-SymbolicName: org.jcryptool.crypto.analysis.substitution; singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: org.jcryptool.crypto.analysis.substitution.Activator
+Bundle-Vendor: jcryptool.org
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.logging,
+ org.jcryptool.core.util,
+ org.jcryptool.crypto.ui,
+ org.jcryptool.crypto.classic.alphabets;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

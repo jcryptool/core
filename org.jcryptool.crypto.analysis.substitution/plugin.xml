@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Substitution analysis"
+            icon="icons/sample.gif"
+            category="org.jcryptool.crypto.analysis"
+            class="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
+            id="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.analysis">
+      <analysis
+            contextHelpId="org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"
+            name="Substitution analysis"
+            viewId="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
+      </analysis>
+   </extension>
+
+</plugin>

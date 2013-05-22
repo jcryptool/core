@@ -310,6 +310,15 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 	}
 
+	public void setAcceptedAlphabets(Collection<? extends AbstractAlphabet> alphas) {
+		this.acceptor = createAcceptorFromCollection(alphas);
+		reloadAlphabetCombo();
+	}
+	public void setAcceptedAlphabetsToAll() {
+		this.acceptor = createAllAlphabetsAcceptor();
+		reloadAlphabetCombo();
+	}
+	
 	private void reloadAlphabetCombo() {
 		boolean afterResetSelectCustomAlphaItem = false;
 		if(comboAlphas.getSelectionIndex() == getComboIndexForUnregisteredAlphabet()) {
@@ -476,9 +485,13 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 						comboAlphas.select(-1);
 					}
 				} else {
-					customAlphaByCombo = content;
-					comboAlphas.select(getComboIndexForUnregisteredAlphabet());
-					showCustomAlphabetSelection(content);
+					if(mode.isWithCustomComboEntry()) {
+						customAlphaByCombo = content;
+						comboAlphas.select(getComboIndexForUnregisteredAlphabet());
+						showCustomAlphabetSelection(content);
+					} else if(mode.isWithCustomButton()) {
+						customAlphaByBtn = content;
+					}
 				}
 
 				if(mode.isWithCustomButton()) {
