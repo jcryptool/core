@@ -7,22 +7,16 @@
       <view
             name="%view.name"
             icon="icons/sample.gif"
-            category="org.jcryptool.crypto.analysis"
+            category="org.jcryptool.analysis"
             class="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
             id="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
       </view>
    </extension>
    <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="contexts.xml">
-      </contexts>
-   </extension>
-   <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
             contextHelpId="org.jcryptool.analysis.transpositionanalysis.transpositionanalysis"
-            name="%analysis.name"
+            name="%analysis.name2"
             viewId="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
    </extension>
