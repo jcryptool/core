@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.LinkedHashMap;
@@ -46,7 +48,7 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		}
 	}
 	
-	private static Map<Info, File> predefinedTextFiles;
+	private static Map<Info, String> predefinedTextFiles;
 	private List<TextStatistic> statistics;
 	
 	public static File fileFromPath(String path) {
@@ -64,17 +66,13 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 	}
 	
 	static {
-		predefinedTextFiles = new LinkedHashMap<DynamicPredefinedStatisticsProvider.Info, File>();
+		predefinedTextFiles = new LinkedHashMap<DynamicPredefinedStatisticsProvider.Info, String>();
 		
-		File kafka = fileFromPath("refTexts/Die_Verwandlung_1_2.txt"); //$NON-NLS-1$
-		File poe = fileFromPath("refTexts/The_Murders_in_the_Rue_Morgue.txt"); //$NON-NLS-1$
+		String kafka = "refTexts/Die_Verwandlung_1_2.txt"; //$NON-NLS-1$
+		String poe = "refTexts/The_Murders_in_the_Rue_Morgue.txt"; //$NON-NLS-1$
 		
-		if(kafka != null && kafka.exists()) {
 			predefinedTextFiles.put(new Info("Die Verwandlung (Kafka)", Messages.DynamicPredefinedStatisticsProvider_3), kafka); //$NON-NLS-1$
-		}
-		if(poe != null && poe.exists()) {
 			predefinedTextFiles.put(new Info("The Murders in the Rue Morgue (Poe)", Messages.DynamicPredefinedStatisticsProvider_5), poe); //$NON-NLS-1$
-		}
 		
 		if(predefinedTextFiles.isEmpty()) {
 			String message = "Could not locate reference text files for statistics"; //$NON-NLS-1$
@@ -84,13 +82,22 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		}
 	}
 	
-	public static void main(String[] args) {
-		for(File f: predefinedTextFiles.values()) System.out.println(f.exists());
-	}
+	private static InputStream openMyTestStream(final String filename) {
+        try {
+            URL installURL = Activator.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
+            URL url = new URL(installURL, filename);
+            return (url.openStream());
+        } catch (MalformedURLException e) {
+            LogUtil.logError(Activator.PLUGIN_ID, e);
+        } catch (IOException e) {
+            LogUtil.logError(Activator.PLUGIN_ID, e);
+        }
+        return null;
+    }
 	
-	private static String getTextFromFile(File f) throws FileNotFoundException {
-		FileInputStream fis = new FileInputStream(f);
-		return EditorUtils.inputStreamToString(fis);
+	private static String getTextFromFile(String path) throws FileNotFoundException {
+		InputStream s = openMyTestStream(path);
+		return EditorUtils.inputStreamToString(s);
 	}
 	
 	public DynamicPredefinedStatisticsProvider() {
@@ -98,10 +105,10 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		statistics = analyzeFiles(predefinedTextFiles, alphabets);
 	}
 	
-	private static List<TextStatistic> analyzeFiles(Map<Info, File> predefinedTextFiles, Map<AbstractAlphabet, TransformData> alphabets) {
+	private static List<TextStatistic> analyzeFiles(Map<Info, String> predefinedTextFiles, Map<AbstractAlphabet, TransformData> alphabets) {
 		List<TextStatistic> result = new LinkedList<TextStatistic>();
-		for(Entry<Info, File> fileEntry: predefinedTextFiles.entrySet()) {
-			File f = fileEntry.getValue();
+		for(Entry<Info, String> fileEntry: predefinedTextFiles.entrySet()) {
+			String f = fileEntry.getValue();
 			Info i = fileEntry.getKey();
 			for(Entry<AbstractAlphabet, TransformData> alphaEntry: alphabets.entrySet()) {
 				try {

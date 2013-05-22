@@ -289,8 +289,7 @@ public class StatisticsSelector extends Composite {
 	}
 
 	private String generateComboStringItemFor(TextStatistic s, int i) {
-		//TODO: implement
-		return String.format(Messages.StatisticsSelector_6, i, s.getLanguage(), s.getName());
+		return String.format(Messages.StatisticsSelector_6, s.getLanguage(), s.getName());
 	}
 
 	private void setPredefinedSectionEnabled(boolean b) {
