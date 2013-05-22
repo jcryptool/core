@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.analysis.substitution.Activator;
+import org.jcryptool.analysis.substitution.calc.DynamicPredefinedStatisticsProvider;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.utils.ControlHatcher;
 import org.jcryptool.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
@@ -146,15 +147,15 @@ public class StatisticsSelector extends Composite {
 		// TODO: hint, that the statistics will be filtered by the selected alphabet
 		String textToAnalyze;
 		
-		textToAnalyze = Transform.transformText(text.getText(), transformData);
+		textToAnalyze = text.getText();
 		
-		TransformData alphabetAutoTransform = new TransformData();
-		alphabetAutoTransform.setAlphabetTransformationON(true);
-		alphabetAutoTransform.setSelectedAlphabet(getAlphabet());
-		
-		textToAnalyze = Transform.transformText(text.getText(), transformData);
+		textToAnalyze = prepareCustomTextForAnalysis(transformData, textToAnalyze);
 		
 		return new TextStatistic(textToAnalyze);
+	}
+
+	private String prepareCustomTextForAnalysis(TransformData selectedTransformData, String textToAnalyze) {
+		return DynamicPredefinedStatisticsProvider.prepareFileTextForAnalysis(textToAnalyze, selectedTransformData, getAlphabet());
 	}
 
 	private void initializePredefinedStatistics(AbstractAlphabet alphabet) {

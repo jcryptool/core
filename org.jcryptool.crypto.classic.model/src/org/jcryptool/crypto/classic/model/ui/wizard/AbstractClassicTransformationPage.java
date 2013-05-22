@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;
 import org.jcryptool.crypto.classic.model.ClassicCryptoModelPlugin;
@@ -119,18 +120,19 @@ public class AbstractClassicTransformationPage extends WizardPage {
 	}
 
 	/** load the standard Transformation for a specified currentAlphabet from the global settings.
-	 * @param alphaName the name of the currentAlphabet
+	 * @param abstractAlphabet the name of the currentAlphabet
 	 * @return the Transformation
 	 */
-	public static TransformData getTransformFromName(String alphaName) {
+	public static TransformData getTransformFromName(AbstractAlphabet abstractAlphabet) {
+		String name = abstractAlphabet.getName();
 		Preferences preferences = ConfigurationScope.INSTANCE.getNode(TransformationsPreferencePage.PREFID);
 		Preferences mainnode = preferences.node(TransformationsPreferencePage.SUBNODE);
-		Preferences myNode = mainnode.node(alphaName);
+		Preferences myNode = mainnode.node(name);
 		if(nodeExists(myNode)) {
 			TransformData loadedPreferenceSet = TransformationsPreferencePage.getDataFromNode(myNode);
 			return loadedPreferenceSet;
 		}
-		else return TransformationPreferenceSet.getDefaultSetting(alphaName);
+		else return TransformationPreferenceSet.getDefaultByHeuristic(abstractAlphabet);
 	}
 
 	/** Loads a specific transformation set in the wizard.

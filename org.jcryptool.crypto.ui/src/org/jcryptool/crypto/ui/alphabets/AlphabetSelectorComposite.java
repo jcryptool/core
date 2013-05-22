@@ -488,7 +488,9 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 					if(mode.isWithCustomComboEntry()) {
 						customAlphaByCombo = content;
 						comboAlphas.select(getComboIndexForUnregisteredAlphabet());
-						showCustomAlphabetSelection(content);
+						if(content != null) {
+							showCustomAlphabetSelection(content);
+						}
 					} else if(mode.isWithCustomButton()) {
 						customAlphaByBtn = content;
 					}

@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
@@ -116,7 +117,7 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 					AbstractAlphabet alpha = alphaEntry.getKey();
 					TransformData tr = alphaEntry.getValue();
 					
-					String transformedText = Transform.transformText(fileText, tr);
+					String transformedText = prepareFileTextForAnalysis(fileText, tr, alpha);
 					TextStatistic statistic = new TextStatistic(transformedText, i.getName(), i.getLanguage());
 					result.add(statistic);
 				} catch (FileNotFoundException e) {
@@ -125,6 +126,14 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 			}
 		}
 		return result;
+	}
+
+	public static String prepareFileTextForAnalysis(String fileText, TransformData tr, AbstractAlphabet alpha) {
+		String text = Transform.transformText(fileText, tr);
+		text = text.replaceAll(Pattern.quote("\n"), "");
+		text = text.replaceAll(Pattern.quote("\r"), "");
+		text = text.replaceAll(Pattern.quote("\t"), "");
+		return text;
 	}
 
 	/** prooves, if a specific node in the transformation settings exists
@@ -136,53 +145,23 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		return false;
 	}
 	
-	/** load the standard Transformation for a specified currentAlphabet from the global settings.
-	 * @param alphaName the name of the currentAlphabet
-	 * @return the Transformation
-	 */
-	public static TransformData getTransformFromName(String alphaName) {
-		Preferences preferences = ConfigurationScope.INSTANCE.getNode(TransformationsPreferencePage.PREFID);
-		Preferences mainnode = preferences.node(TransformationsPreferencePage.SUBNODE);
-		Preferences myNode = mainnode.node(alphaName);
-		if(nodeExists(myNode)) {
-			TransformData loadedPreferenceSet = TransformationsPreferencePage.getDataFromNode(myNode);
-			return loadedPreferenceSet;
-		}
-		else return null;
-	}
-	
 	private Map<AbstractAlphabet, TransformData> getAlphabetTransformDataMapping() {
 		LinkedHashMap<AbstractAlphabet, TransformData> result = new LinkedHashMap<AbstractAlphabet, TransformData>();
-//		for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
-//			TransformData d = getTransformFromName(a.getName());
-//			if(d != null) {
-//				result.put(a, d);
-//			} else if(TransformationPreferenceSet.hasStandardSetting(a.getName())){
-//				TransformData defaultSetting = TransformationPreferenceSet.getDefaultSetting(a.getName());
-//				result.put(a, defaultSetting);
-//			}
-//		}
-//		return result;
-		AtomAlphabet aA09 = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-		AtomAlphabet aA = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
-		AtomAlphabet a = new AtomAlphabet("abcdefghijklmnopqrstuvwxyz");
-		AtomAlphabet A = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		AtomAlphabet printable = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöüÄÖÜ01234567890.,-!?= ");
-		
-		TransformData taA09 = new TransformData(aA09, false, false, true, true, true);
-		TransformData taA = new TransformData(aA, false, false, true, true, true);
-		TransformData ta = new TransformData(a, true, false, true, true, true);
-		TransformData tA = new TransformData(A, true, true, true, true, true);
-		TransformData tPrintable = new TransformData(printable, false, false, false, true, false);
-		
-		result.put(aA09, taA09);
-		result.put(aA, taA);
-		result.put(a, ta);
-		result.put(A, tA);
-		result.put(printable, tPrintable);
+		AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
+		for(AbstractAlphabet alpha: alphas) {
+			if(!isExcludedAlphabet(alpha)) {
+				result.put(alpha, TransformationPreferenceSet.getDefaultByHeuristic(alpha));
+			}
+		}
 		
 		return result;
-		
+	}
+
+	private boolean isExcludedAlphabet(AbstractAlphabet alpha) {
+		if(!alpha.isBasic()) return true;
+		if(alpha.getName().toLowerCase().contains("xor")) return true;
+		if(alpha.getName().toLowerCase().contains("adfgvx")) return true;
+		return false;
 	}
 
 	@Override

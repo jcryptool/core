@@ -297,13 +297,13 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
                     if (transformationInput.getContent()) {
-                        updateTransformationPage(getAlphabetInput().getContent().getName());
+                        updateTransformationPage(getAlphabetInput().getContent());
                     }
                 }
             }
         });
 
-        updateTransformationPage(getAlphabetInput().getContent().getName());
+        updateTransformationPage(getAlphabetInput().getContent());
     }
 
     /**
@@ -414,9 +414,9 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			public void update(Observable o, Object arg) {
                 if (arg == null) { // when there is really a change
                     if (transformationInput.getContent()) {
-                        updateTransformationPage(getAlphabetInput().getContent().getName());
+                        updateTransformationPage(getAlphabetInput().getContent());
                     } else {
-                        updateTransformationPage("no transformation"); //$NON-NLS-1$
+                        updateTransformationPage(null); //$NON-NLS-1$
                     }
                 }
             }
@@ -989,13 +989,15 @@ public class AbstractClassicCryptoPage extends WizardPage {
     /**
      * Updates the Transformation Wizard Page to load the Transformation setting for a specified currentAlphabet
      * 
-     * @param alphabetName the name of the currentAlphabet
+     * @param abstractAlphabet the name of the currentAlphabet
      */
-    protected void updateTransformationPage(String alphabetName) {
+    protected void updateTransformationPage(AbstractAlphabet abstractAlphabet) {
         TransformData myTransformation;
-        if (alphabetName.equals("no transformation"))myTransformation = new TransformData(); //$NON-NLS-1$
-        else
-            myTransformation = AbstractClassicTransformationPage.getTransformFromName(alphabetName);
+        if (abstractAlphabet == null) {
+        	myTransformation = new TransformData(); //$NON-NLS-1$
+        } else {
+            myTransformation = AbstractClassicTransformationPage.getTransformFromName(abstractAlphabet);
+        }
 
         ((AbstractClassicTransformationPage) super.getNextPage()).setTransformData(myTransformation);
     }

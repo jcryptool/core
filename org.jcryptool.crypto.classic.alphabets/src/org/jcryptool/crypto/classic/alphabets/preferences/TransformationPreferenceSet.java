@@ -10,9 +10,11 @@
 package org.jcryptool.crypto.classic.alphabets.preferences;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 
 /**
@@ -25,6 +27,72 @@ public class TransformationPreferenceSet {
 	// Will be the subnode's name
     public static final String ID_TRANSFORM_DATA = "TransformData";
 
+    
+    private static TransformData getDefaultByHeuristic(List<Character> alphabet) {
+    	TransformData result = new TransformData();
+    	
+    	int casing = determineCasing(alphabet);
+    	if(casing == 0) {
+    		result.setUppercaseTransformationOn(false);
+    	} else {
+    		result.setUppercaseTransformationOn(true);
+    		result.setDoUppercase(casing<0?false:true);
+    	}
+    	
+    	result.setUmlautTransformationON(!determineUmlauts(alphabet));
+    	result.setLeerTransformationON(!determineLeer(alphabet));
+    	result.setAlphabetTransformationON(false);
+    	
+    	return result;
+    }
+    
+    public static TransformData getDefaultByHeuristic(AbstractAlphabet alphabet) {
+    	return getDefaultByHeuristic(AbstractAlphabet.alphaToList(alphabet));
+    }
+    
+    private static boolean determineLeer(List<Character> alphabet) {
+		char[] leer = new char[]{' ','\n','\r','\t'};
+		for(char c:leer) if(alphabet.contains(c)) return true;
+		return false;
+	}
+
+	private static boolean determineUmlauts(List<Character> alphabet) {
+		char[] umlauts = new char[]{'ä','ö','ü','Ä','Ö','Ü','ß'};
+		for(char umlaut:umlauts) if(alphabet.contains(umlaut)) return true;
+		return false;
+	}
+
+	/**
+     * 0: upper and lowercase...
+     * 
+     * 
+     * @param alphabet
+     * @return
+     */
+    private static int determineCasing(List<Character> alphabet) {
+		String latinAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		char[] uppercaseChars = latinAlpha.toCharArray(); 
+		char[] lowercaseChars = latinAlpha.toLowerCase().toCharArray();
+		int score = 0;
+		int found = 0;
+		for(char c: uppercaseChars) {
+			if(alphabet.contains(c)) {
+				score ++;
+				found ++;
+			}
+		}
+		for(char c: lowercaseChars) {
+			if(alphabet.contains(c)) {
+				score --;
+				found ++;
+			}
+		}
+		
+		if(Math.abs(score) < found/4 && Math.abs(found-latinAlpha.length()) < 4) {
+			return 0;
+		}
+		return (int) Math.signum(score);
+	}
 
     private static Map<String, TransformData> standardSettings() {
     	HashMap<String, TransformData> result = new HashMap<String, TransformData>();
