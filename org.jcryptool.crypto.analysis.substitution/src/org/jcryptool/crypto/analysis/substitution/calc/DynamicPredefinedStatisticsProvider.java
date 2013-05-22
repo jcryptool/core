@@ -22,6 +22,7 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorUtils;
 import org.jcryptool.crypto.analysis.substitution.Activator;
 import org.jcryptool.crypto.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
+import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;
 import org.osgi.framework.Bundle;
@@ -145,16 +146,36 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 	
 	private Map<AbstractAlphabet, TransformData> getAlphabetTransformDataMapping() {
 		LinkedHashMap<AbstractAlphabet, TransformData> result = new LinkedHashMap<AbstractAlphabet, TransformData>();
-		for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
-			TransformData d = getTransformFromName(a.getName());
-			if(d != null) {
-				result.put(a, d);
-			} else if(TransformationPreferenceSet.hasStandardSetting(a.getName())){
-				TransformData defaultSetting = TransformationPreferenceSet.getDefaultSetting(a.getName());
-				result.put(a, defaultSetting);
-			}
-		}
+//		for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
+//			TransformData d = getTransformFromName(a.getName());
+//			if(d != null) {
+//				result.put(a, d);
+//			} else if(TransformationPreferenceSet.hasStandardSetting(a.getName())){
+//				TransformData defaultSetting = TransformationPreferenceSet.getDefaultSetting(a.getName());
+//				result.put(a, defaultSetting);
+//			}
+//		}
+//		return result;
+		AtomAlphabet aA09 = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+		AtomAlphabet aA = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+		AtomAlphabet a = new AtomAlphabet("abcdefghijklmnopqrstuvwxyz");
+		AtomAlphabet A = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		AtomAlphabet printable = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöüÄÖÜ01234567890.,-!?= ");
+		
+		TransformData taA09 = new TransformData(aA09, false, false, true, true, true);
+		TransformData taA = new TransformData(aA09, false, false, true, true, true);
+		TransformData ta = new TransformData(aA09, true, false, true, true, true);
+		TransformData tA = new TransformData(aA09, true, true, true, true, true);
+		TransformData tPrintable = new TransformData(printable, false, false, false, true, false);
+		
+		result.put(aA09, taA09);
+		result.put(aA, taA);
+		result.put(a, ta);
+		result.put(A, tA);
+		result.put(printable, tPrintable);
+		
 		return result;
+		
 	}
 
 	@Override

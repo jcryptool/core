@@ -109,7 +109,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 		makeActions();
 		contributeToActionBars();
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(getMainComposite(), "org.jcryptool.crypto.analysis.substitution.viewer"); //$NON-NLS-1$
+//		PlatformUI.getWorkbench().getHelpSystem().setHelp(getMainComposite(), "org.jcryptool.crypto.analysis.substitution.viewer"); //$NON-NLS-1$
 	}
 
 	private void createAppropriatePanel(State state) {

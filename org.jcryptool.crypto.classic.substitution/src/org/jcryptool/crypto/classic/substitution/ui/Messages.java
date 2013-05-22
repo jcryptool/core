@@ -13,7 +13,16 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.substitution.ui.messages"; //$NON-NLS-1$
+	public static String SubstitutionKeyEditor_0;
+	public static String SubstitutionKeyEditor_1;
+	public static String SubstitutionKeyEditor_2;
+	public static String SubstitutionKeyEditor_3;
+	public static String SubstitutionKeyEditor_4;
+	public static String SubstitutionKeyEditor_5;
+	public static String SubstitutionKeyEditor_7;
 	public static String SubstitutionWizard_substitution;
+	public static String SubstitutionWizardPage_7;
+	public static String SubstitutionWizardPage_8;
 	public static String SubstitutionWizardPage_enterkey1;
 	public static String SubstitutionWizardPage_substitution;
 	static {

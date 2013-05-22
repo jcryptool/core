@@ -20,11 +20,11 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	/**
 	 * The plug-in ID
 	 */
-	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.substitution";
+	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.substitution"; //$NON-NLS-1$
 
-	public static final String TINY_ARROW_DOWN = "arrow_down";
+	public static final String TINY_ARROW_DOWN = "arrow_down"; //$NON-NLS-1$
 
-	public static final String TINY_ARROW_RIGHT = "arrow_right";
+	public static final String TINY_ARROW_RIGHT = "arrow_right"; //$NON-NLS-1$
 
 	/**
 	 * The shared instance
@@ -82,10 +82,10 @@ public class SubstitutionPlugin extends AbstractUIPlugin {
 	
 	@Override
 	protected void initializeImageRegistry(ImageRegistry reg) {
-		ImageDescriptor imageDescriptorKeys = getImageDescriptor("icons/tiny_arrow_down.png");
+		ImageDescriptor imageDescriptorKeys = getImageDescriptor("icons/tiny_arrow_down.png"); //$NON-NLS-1$
 		Image createImage = imageDescriptorKeys.createImage();
 		reg.put(TINY_ARROW_DOWN, createImage);
-		ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/tiny_arrow_right.png");
+		ImageDescriptor imageDescriptorFile = getImageDescriptor("icons/tiny_arrow_right.png"); //$NON-NLS-1$
 		reg.put(TINY_ARROW_RIGHT, imageDescriptorFile.createImage());
 	}
 

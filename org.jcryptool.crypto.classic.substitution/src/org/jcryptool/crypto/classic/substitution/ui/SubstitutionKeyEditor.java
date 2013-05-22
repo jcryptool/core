@@ -54,7 +54,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 		@Override
 		public String getMessage() {
-			return String.format("Please enter a substitution for '%s'.", String.valueOf(plaintextChar));
+			return String.format(Messages.SubstitutionKeyEditor_0, String.valueOf(plaintextChar));
 		}
 
 		@Override
@@ -89,7 +89,7 @@ public class SubstitutionKeyEditor extends Composite {
 		@Override
 		public String getMessage() {
 			return String
-					.format("The substitution '%s' for plaintext character '%s' is neither a single character nor an accepted character representation.",
+					.format(Messages.SubstitutionKeyEditor_1,
 							textfieldContent, String.valueOf(plaintextChar));
 		}
 
@@ -127,7 +127,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 		@Override
 		public String getMessage() {
-			return String.format("The substitution character '%s' is not part of the alphabet", String.valueOf(parsedContent));
+			return String.format(Messages.SubstitutionKeyEditor_2, String.valueOf(parsedContent));
 		}
 
 		@Override
@@ -193,108 +193,12 @@ public class SubstitutionKeyEditor extends Composite {
 		public SubstitutionKey key = null;
 	}
 	
-	public static SubstitutionKey launchKeyEditorDialog(Shell parent, final AbstractAlphabet alphabet, String initialPassword) {
-		final SubstitutionKeyHolder result = new SubstitutionKeyHolder();
-		
-		final Shell s = new Shell(parent, SWT.SHELL_TRIM | SWT.APPLICATION_MODAL);
-		s.setLayout(new GridLayout(1, false));
-		s.setText("Substitution key");
-		
-		Composite mainComposite = new Composite(s, SWT.NONE);
-		mainComposite.setLayout(new GridLayout(1, false));
-		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		final SubstitutionKeyEditor editor = new SubstitutionKeyEditor(mainComposite, SWT.NONE, alphabet);
-		editor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-
-//		PasswordToKeyMethod method = new SubstitutionKey.PasswordToKeyMethod(true, true, true);
-		editor.setPasswordExternal(initialPassword, true);
-		
-		Label separator = new Label(mainComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
-		GridData separatorLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		separatorLData.verticalIndent = 10;
-		separator.setLayoutData(separatorLData);
-		
-		Composite compDialogCtrls = new Composite(mainComposite, SWT.NONE);
-		GridLayout compDialogCtrlsLayout = new GridLayout(2, false);
-		compDialogCtrlsLayout.marginWidth = 0;
-		compDialogCtrlsLayout.marginHeight = 0;
-		compDialogCtrls.setLayout(compDialogCtrlsLayout);
-		
-		GridData compDialogCtrlsLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		compDialogCtrlsLData.verticalIndent = 10;
-		compDialogCtrls.setLayoutData(compDialogCtrlsLData);
-		
-		Button cancelBtn = new Button(compDialogCtrls, SWT.PUSH);
-		cancelBtn.setText("Cancel");
-		
-		cancelBtn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				result.key = null;
-				s.close();
-			}
-		});
-		
-		final Button finishBtn = new Button(compDialogCtrls, SWT.PUSH);
-		finishBtn.setLayoutData(new GridData(SWT.TRAIL, SWT.CENTER, true, false));
-		finishBtn.setText("Finish");
-
-		finishBtn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if(editor.isCompleteData()) {
-					Map<Character, Character> mapping = editor.getCharMapping();
-					SubstitutionKey substKey;
-					try {
-						substKey = new SubstitutionKey(mapping);
-						result.key = substKey;
-						s.close();
-					} catch (SubstitutionKeyValidityException ex) {
-						LogUtil.logError(SubstitutionPlugin.PLUGIN_ID, "Substitution editor data caused validity exception when trying to create a substitution key from it.", ex, false);
-						result.key = null;
-						s.close();
-					}
-				} else {
-					result.key = null;
-					LogUtil.logError(SubstitutionPlugin.PLUGIN_ID, "Finish button in substitution key editor was enabled, but data was not complete.");
-					s.close();
-				}
-			}
-		});
-		
-		Observer observer = new Observer() {
-			@Override
-			public void update(Observable o, Object arg) {
-				finishBtn.setEnabled(editor.isCompleteData());
-			}
-		};
-		editor.addObserver(observer);
-		observer.update(null, null); //Quick'n'Dirty update of the dialog buttons
-		
-		editor.pack();
-		s.layout();
-		s.pack();
-//		s.setLocation(
-//				s.getDisplay().getBounds().width-(s.getSize().x/2), 
-//				y
-//				);
-		s.open();
-
-		while (!s.isDisposed()) {
-			if (!s.getDisplay().readAndDispatch()) {
-				s.getDisplay().sleep();
-			}
-		}
-		
-		return result.key;
-	}
 	
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 
 		Label lblHereYouCan = new Label(this, SWT.NONE);
-		lblHereYouCan.setText("Here you can edit the substitution mapping for the characters of the selected alphabet:");
+		lblHereYouCan.setText(Messages.SubstitutionKeyEditor_3);
 
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -319,18 +223,18 @@ public class SubstitutionKeyEditor extends Composite {
 		scrolledComposite.setMinSize(scrollCompMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		Label lblNewLabel = new Label(this, SWT.NONE);
-		lblNewLabel.setText("You can set the mapping by password (and edit it manually)");
+		lblNewLabel.setText(Messages.SubstitutionKeyEditor_4);
 
 		Composite composite_1 = new Composite(this, SWT.NONE);
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		composite_1.setLayout(new GridLayout(2, false));
 
 		Button btnSet = new Button(composite_1, SWT.NONE);
-		btnSet.setText("Set password:");
+		btnSet.setText(Messages.SubstitutionKeyEditor_5);
 		btnSet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(!txtPassword.getText().equals("")) {
+				if(!txtPassword.getText().equals("")) { //$NON-NLS-1$
 					setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
 				}
 			}
@@ -360,7 +264,7 @@ public class SubstitutionKeyEditor extends Composite {
 		GridData lblPasswordExplanationLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		lblPasswordExplanationLData.widthHint = (int) (WIDTH_HINT_GLOBAL * 0.9);
 		lblPasswordExplanation.setLayoutData(lblPasswordExplanationLData);
-		lblPasswordExplanation.setText("Characters which appear multiple times in the password will be ignored; the remaining characters will be taken for the first substitutions. The rest of the alphabet will be filled in subsequently.");
+		lblPasswordExplanation.setText(Messages.SubstitutionKeyEditor_7);
 		
 		passwordInput = new KeyInput<String>() {
 
@@ -386,12 +290,12 @@ public class SubstitutionKeyEditor extends Composite {
 
 			@Override
 			protected String getDefaultContent() {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 
 			@Override
 			public String getName() {
-				return "password";
+				return "password"; //$NON-NLS-1$
 			}
 		};
 		passwordInput.writeContent(passwordInput.getContent());
@@ -570,7 +474,7 @@ public class SubstitutionKeyEditor extends Composite {
 	 * @param password the password
 	 */
 	public void setPasswordExternal(String password, boolean apply) {
-		passwordInput.writeContent("");
+		passwordInput.writeContent(""); //$NON-NLS-1$
 		passwordInput.synchronizeWithUserSide();
 		for(char c: password.toCharArray()) {
 			passwordInput.writeContent(passwordInput.getContent()+c);

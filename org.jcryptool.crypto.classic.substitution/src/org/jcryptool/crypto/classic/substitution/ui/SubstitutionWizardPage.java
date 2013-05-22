@@ -58,14 +58,14 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
     
     @Override
     protected String generateCommandLineString() {
-    	String encDec = operationInput.getContent()?"-E":"-D";
-    	String key = "-k " + quoteCmdlineArgIfNecessary(getKey());
+    	String encDec = operationInput.getContent()?"-E":"-D"; //$NON-NLS-1$ //$NON-NLS-2$
+    	String key = "-k " + quoteCmdlineArgIfNecessary(getKey()); //$NON-NLS-1$
     	
-    	String result = "substitution " + encDec + " -ed " + key;
+    	String result = "substitution " + encDec + " -ed " + key; //$NON-NLS-1$ //$NON-NLS-2$
 
-    	result += " " + generateAlphabetPartForCommandLine();
+    	result += " " + generateAlphabetPartForCommandLine(); //$NON-NLS-1$
     	
-    	if(!isNonAlphaFilter()) result += " --noFilter";
+    	if(!isNonAlphaFilter()) result += " --noFilter"; //$NON-NLS-1$
     	return result;
     }
 
@@ -172,7 +172,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 				for(Character c: incompleteMapping.keySet()) {
 					if(incompleteMapping.get(c) == null) charsToBeMapped.add(c);
 				}
-				String msgFormatString = "The key is incomplete; For the character(s) %s a substitution needs to be defined.";
+				String msgFormatString = Messages.SubstitutionWizardPage_7;
 				String charsString = charsToBeMapped.toString();
 				return InputVerificationResult.generateIVR(
 						true, 
@@ -186,7 +186,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 			private InputVerificationResult generateKeyDoesNotChangePlaintextVerificationResult() {
 				return InputVerificationResult.generateIVR(
 						true, 
-						"This substitution will not change the plaintext at encryption or decryption.", 
+						Messages.SubstitutionWizardPage_8, 
 						MessageType.INFORMATION, 
 						true, 
 						InputVerificationResult.RESULT_TYPE_DEFAULT, 
@@ -230,7 +230,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 
 			@Override
 			protected void saveDefaultRawUserInput() {
-				this.keyEditorPassword = "";
+				this.keyEditorPassword = ""; //$NON-NLS-1$
 				this.mapping = SubstitutionKey.createIdentitySubstitution(getSelectedAlphabet()).getSubstitutions();
 			}
 
@@ -250,7 +250,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 
 			@Override
 			public String getName() {
-				return "substitution key";
+				return "substitution key"; //$NON-NLS-1$
 			}
 		};
 	}
@@ -270,7 +270,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 		
 		keyGroup.setLayoutData(keyGroupGridData);
 		keyGroup.setLayout(keyGroupGridLayout);
-		keyGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_key);
+		keyGroup.setText("");
 
 		initializeKeyEditor(keyGroup, getSelectedAlphabet());
 	}
@@ -278,7 +278,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	@Override
 	public String getKey() {
 		if(getSubstKeyInput().getContent() == null) {
-			throw new NullPointerException("getKey method should only be called when the wizard page is complete.");
+			throw new NullPointerException("getKey method should only be called when the wizard page is complete."); //$NON-NLS-1$
 		}
 		return this.getSubstKeyInput().getContent().toStringSubstitutionCharList(getSelectedAlphabet());
 	}
@@ -316,7 +316,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	protected String generatePasswortStringForPostAlphaChange(String oldPassword, SubstitutionKey oldKey,
 			Map<Character, Character> oldCharMapping, AbstractAlphabet oldAlpha, AbstractAlphabet newAlpha) {
 		// attention: substitution key may be null (when previously, the editor was not completely filled)
-		return "";
+		return ""; //$NON-NLS-1$
 	}
 
 	private void initializeKeyEditor(Group parent, AbstractAlphabet alphabet) {
