@@ -1,9 +1,11 @@
 package org.jcryptool.analysis.substitution.ui.modules.utils;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -12,6 +14,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -25,12 +28,16 @@ import org.jcryptool.analysis.substitution.calc.TextStatistic;
 
 public class StatisticsDisplayer extends Composite {
 
+	private static final int BAR_SPACING = 3;
 	private static final int BAR_HEIGHT = 12;
 	private static final int SCROLL_COMP_WIDTH_HINT = 120;
-	private static final int GRAPH_HORZ_SPACING = 2;
+	private static final int TEXT_WIDTH_MAX = 25;
+	private static final int GRAPH_HORZ_SPACING = 0;
+	private Color DEFAULT_BAR_COLOR;
+	private Color DEFAULT_MAPPED_LABEL_COLOR;
+	
 	private TextStatistic referenceStatistic;
 	private TextStatistic ciphertextStatistic;
-	private Color DEFAULT_BAR_COLOR;
 	private List<Composite> referenceGraphs;
 	private List<Composite> cipherGraphs;
 	private Combo combo;
@@ -38,16 +45,28 @@ public class StatisticsDisplayer extends Composite {
 	private ScrolledComposite scCipher;
 	private Composite compReferenceMain;
 	private Composite compCipherMain;
+	
+	private Map<Character, Character> charMapping;
+	private boolean upperLowerCaseMode;
+	private HashMap<String, Label> mappedLabels;
+	private boolean isShowMappedLabels;
+	private Button btnShowMappedLabels;
+	private Composite layoutRoot;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public StatisticsDisplayer(Composite parent, int style, TextStatistic referenceStatistic, TextStatistic ciphertextStatistic) {
+	public StatisticsDisplayer(Composite parent, Composite layoutRoot, int style, TextStatistic referenceStatistic, TextStatistic ciphertextStatistic, boolean upperLowerCaseMode) {
 		super(parent, style);
+		this.layoutRoot = layoutRoot;
+		this.upperLowerCaseMode = upperLowerCaseMode;
+		charMapping = new HashMap<Character, Character>();
+		this.mappedLabels = new HashMap<String, Label>();
 		
 		this.DEFAULT_BAR_COLOR = getDisplay().getSystemColor(SWT.COLOR_BLUE);
+		this.DEFAULT_MAPPED_LABEL_COLOR = getDisplay().getSystemColor(SWT.COLOR_RED);
 		
 		this.referenceStatistic = referenceStatistic;
 		this.ciphertextStatistic = ciphertextStatistic;
@@ -79,8 +98,20 @@ public class StatisticsDisplayer extends Composite {
 			}
 		});
 		
+		btnShowMappedLabels = new Button(this, SWT.CHECK);
+		btnShowMappedLabels.setText(Messages.StatisticsDisplayer_6);
+		btnShowMappedLabels.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				showAllMappedLabels(btnShowMappedLabels.getSelection());
+			}
+		});
+		
+//		Label lblClickHint = new Label(this, SWT.NONE);
+//		lblShowFrequenciesOf.setText("");
+		
 		Composite composite_1 = new Composite(this, SWT.NONE);
-		GridLayout gl_composite_1 = new GridLayout(2, true);
+		GridLayout gl_composite_1 = new GridLayout(2, false);
 		gl_composite_1.marginHeight = 0;
 		gl_composite_1.marginWidth = 0;
 		composite_1.setLayout(gl_composite_1);
@@ -104,14 +135,14 @@ public class StatisticsDisplayer extends Composite {
 		compReferenceMain = new Composite(scReference, SWT.NONE);
 		compReferenceMain.setLayout(new GridLayout(1, false));
 		
-		referenceGraphs = fillSCWithStatistic(scReference, compReferenceMain, referenceStatistic);
+		referenceGraphs = fillSCWithStatistic(scReference, compReferenceMain, referenceStatistic, false);
 		
 		scReference.setContent(compReferenceMain);
 		scReference.setMinSize(compReferenceMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		
 		scCipher = new ScrolledComposite(composite_1, SWT.BORDER | SWT.V_SCROLL);
 		GridData scCipherLData = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
-		scCipherLData.widthHint = SCROLL_COMP_WIDTH_HINT;
+		scCipherLData.widthHint = calcWidthHintCipherComp(this.isShowMappedLabels);
 		scCipher.setLayoutData(scCipherLData);
 		scCipher.setExpandHorizontal(true);
 		scCipher.setExpandVertical(true);
@@ -119,7 +150,7 @@ public class StatisticsDisplayer extends Composite {
 		compCipherMain = new Composite(scCipher, SWT.NONE);
 		compCipherMain.setLayout(new GridLayout(1, false));
 		
-		cipherGraphs = fillSCWithStatistic(scCipher, compCipherMain, ciphertextStatistic);
+		cipherGraphs = fillSCWithStatistic(scCipher, compCipherMain, ciphertextStatistic, true);
 		
 		scCipher.setContent(compCipherMain);
 		scCipher.setMinSize(compCipherMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -129,8 +160,7 @@ public class StatisticsDisplayer extends Composite {
 
 	}
 
-	
-	
+
 	private void initialize() {
 		selectGraphType(1);
 	}
@@ -156,6 +186,8 @@ public class StatisticsDisplayer extends Composite {
 		if(combo.getSelectionIndex() != index) {
 			combo.select(index);
 		}
+		
+		showAllMappedLabels(this.isShowMappedLabels);
 	}
 
 
@@ -208,7 +240,7 @@ public class StatisticsDisplayer extends Composite {
 	}
 
 
-	private List<Composite> fillSCWithStatistic(ScrolledComposite scCipher, Composite compCipherMain, TextStatistic ciphertextStatistic2) {
+	private List<Composite> fillSCWithStatistic(ScrolledComposite scCipher, Composite compCipherMain, TextStatistic ciphertextStatistic2, boolean isCipher) {
 		LinkedList<LinkedHashMap<String, Double>> data = new LinkedList<LinkedHashMap<String, Double>>();
 		data.add(generateOrderedUnettsMap(ciphertextStatistic2));
 		data.add(generateOrderedDoubletMap(ciphertextStatistic2));
@@ -216,18 +248,18 @@ public class StatisticsDisplayer extends Composite {
 		
 		LinkedList<Composite> graphs = new LinkedList<Composite>();
 		for(LinkedHashMap<String, Double> graphData: data) {
-			Composite graph = createGraphCompositeFromData(graphData, compCipherMain);
+			Composite graph = createGraphCompositeFromData(graphData, compCipherMain, isCipher);
 			graphs.add(graph);
 		}
 		
 		return graphs;
 	}
 
-	private Composite createGraphCompositeFromData(LinkedHashMap<String, Double> graphData, Composite compCipherMain) {
+	private Composite createGraphCompositeFromData(LinkedHashMap<String, Double> graphData, Composite compCipherMain, boolean isCipherBox) {
 		double biggestDouble = graphData.isEmpty()?1:graphData.entrySet().iterator().next().getValue();
 		
 		Composite graph = new Composite(compCipherMain, SWT.NONE);
-		GridLayout layout = new GridLayout(2, false);
+		GridLayout layout = new GridLayout(3, false);
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		layout.horizontalSpacing = GRAPH_HORZ_SPACING;
@@ -240,21 +272,98 @@ public class StatisticsDisplayer extends Composite {
 		for(Map.Entry<String, Double> entry: graphData.entrySet()) {
 			String text = entry.getKey();
 			double percentOfWidth = entry.getValue()/biggestDouble;
-			int pixels = (int) Math.round(percentOfWidth*(double)calcMaxBarWidth(compCipherMain));
-			
-			Label label = new Label(graph, SWT.NONE);
-			label.setText('['+text+']');
-			Composite bar = generateBar(graph, pixels, DEFAULT_BAR_COLOR);
+			makeOneFreqItem(compCipherMain, graph, text, percentOfWidth, isCipherBox);
 		}
 		
 		return graph;
 	}
 
-	private static Composite generateBar(Composite parent, int width, Color barColor) {
+
+
+	private void makeOneFreqItem(Composite compCipherMain, Composite graph, String text, double percentOfWidth, boolean isCipherBox) {
+		int pixels = (int) Math.round(percentOfWidth*(double)calcMaxBarWidth(compCipherMain));
+		String textForLabel = text;
+		textForLabel = applyUpperLowerCaseMode(isCipherBox, textForLabel);
+		String textForMappedLabel = text;
+		textForMappedLabel = generateMappedLabelString(text, this.charMapping);
+		
+		if(isCipherBox) {
+			Label mappedLabel = new Label(graph, SWT.NONE);
+			GridData layoutData = new GridData(SWT.TRAIL, SWT.CENTER, false, false);
+			mappedLabel.setLayoutData(layoutData);
+			mappedLabel.setText(textForMappedLabel);
+			mappedLabel.setForeground(DEFAULT_MAPPED_LABEL_COLOR);
+			
+			this.mappedLabels.put(text, mappedLabel);
+
+			Label label = new Label(graph, SWT.NONE);
+			label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+			label.setText('['+textForLabel+']');
+			setMappedLabelVisible(mappedLabel, this.isShowMappedLabels);
+			
+			Composite bar = generateBar(graph, pixels, DEFAULT_BAR_COLOR, isCipherBox);
+		} else {
+			Composite bar = generateBar(graph, pixels, DEFAULT_BAR_COLOR, isCipherBox);
+			
+			Label label = new Label(graph, SWT.NONE);
+			GridData layoutData = new GridData(SWT.TRAIL, SWT.CENTER, false, false);
+			layoutData.horizontalIndent = BAR_SPACING;
+			label.setLayoutData(layoutData);
+			label.setText('['+textForLabel+']');
+			
+			Label l = new Label(graph, SWT.NONE);
+			l.setText(" "); //$NON-NLS-1$
+		}
+		
+	}
+
+
+
+	private void setMappedLabelVisible(Label mappedLabel, boolean visible) {
+		GridData lData = (GridData) mappedLabel.getLayoutData();
+		mappedLabel.setVisible(visible);
+		mappedLabel.setText(""); //$NON-NLS-1$
+//		lData.exclude = !visible;
+	}
+
+
+
+	private String applyUpperLowerCaseMode(boolean isCipher, String text) {
+		if(upperLowerCaseMode) {
+			if(isCipher) {
+				text = text.toUpperCase();
+			} else {
+				text = text.toLowerCase();
+			}
+		}
+		return text;
+	}
+
+	private String generateMappedLabelString(String text, Map<Character, Character> charMapping) {
+		char[] ciphertextStringArray = applyUpperLowerCaseMode(true, text).toCharArray();
+		char[] plaintextStringArray = applyUpperLowerCaseMode(true, text).toCharArray();
+		for (int i = 0; i < plaintextStringArray.length; i++) {
+			char c = plaintextStringArray[i];
+			Character subst = charMapping.get(c);
+			if(subst != null) {
+				subst = applyUpperLowerCaseMode(false, Character.toString(subst)).charAt(0);
+				plaintextStringArray[i] = subst;
+				ciphertextStringArray[i] = subst;
+			}
+		}
+		String plaintext = String.valueOf(plaintextStringArray);
+		String ciphertext = String.valueOf(ciphertextStringArray);
+		return "["+ciphertext+"]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+
+
+	private static Composite generateBar(Composite parent, int width, Color barColor, boolean isCipherBox) {
 		Composite comp = new Composite(parent, SWT.NONE);
-		GridData layoutData = new GridData(SWT.BEGINNING, SWT.CENTER, true, false);
+		GridData layoutData = new GridData(isCipherBox?SWT.BEGINNING:SWT.TRAIL, SWT.CENTER, true, false);
 		layoutData.widthHint = width;
 		layoutData.heightHint = BAR_HEIGHT;
+		if(isCipherBox) layoutData.horizontalIndent = BAR_SPACING;
 		comp.setLayoutData(layoutData);
 		comp.setBackground(barColor);
 		return comp;
@@ -262,7 +371,48 @@ public class StatisticsDisplayer extends Composite {
 
 
 	private double calcMaxBarWidth(Composite compCipherMain) {
-		return SCROLL_COMP_WIDTH_HINT-35;
+		return SCROLL_COMP_WIDTH_HINT-TEXT_WIDTH_MAX-10;
+	}
+
+	public void setCharMapping(Map<Character, Character> mapping) {
+		this.charMapping = new HashMap<Character, Character>(mapping);
+		refreshMappedLabels();
+	}
+
+	protected void showAllMappedLabels(boolean selection) {
+		this.isShowMappedLabels = selection;
+		refreshMappedLabels();
+		Control[] mappedLabelCtrls = new Control[this.mappedLabels.size()+2];
+		mappedLabelCtrls[0] = scCipher;
+		mappedLabelCtrls[1] = compCipherMain;
+		int i=2;
+		for(Entry<String, Label> entry: this.mappedLabels.entrySet()) {
+			String labelData = entry.getKey();
+			Label label = entry.getValue();
+			
+//			label.setText(generateMappedLabelString(labelData, charMapping));
+			setMappedLabelVisible(label, selection);
+			mappedLabelCtrls[i] = label;
+			i++;
+		}
+		scCipher.setMinSize(compCipherMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		GridData layoutCipher = (GridData) scCipher.getLayoutData();
+		layoutCipher.widthHint = calcWidthHintCipherComp(selection);
+		refreshMappedLabels();
+		layoutRoot.layout(mappedLabelCtrls);
+	}
+	
+	private int calcWidthHintCipherComp(boolean mappedLabelsVisible) {
+		return SCROLL_COMP_WIDTH_HINT+(mappedLabelsVisible?TEXT_WIDTH_MAX:0);
+	}
+
+
+	private void refreshMappedLabels() {
+		for(Entry<String, Label> entry: this.mappedLabels.entrySet()) {
+			Label label = entry.getValue();
+			String data = entry.getKey();
+			if(label.isVisible()) label.setText(generateMappedLabelString(data, this.charMapping));
+		}
 	}
 
 

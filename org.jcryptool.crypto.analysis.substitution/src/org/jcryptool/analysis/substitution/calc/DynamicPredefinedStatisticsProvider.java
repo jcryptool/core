@@ -106,23 +106,24 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		statistics = analyzeFiles(predefinedTextFiles, alphabets);
 	}
 	
-	private static List<TextStatistic> analyzeFiles(Map<Info, String> predefinedTextFiles, Map<AbstractAlphabet, TransformData> alphabets) {
+	private static List<TextStatistic> analyzeFiles(Map<Info, String> predefinedTextFiles,
+			Map<AbstractAlphabet, TransformData> alphabets) {
 		List<TextStatistic> result = new LinkedList<TextStatistic>();
-		for(Entry<Info, String> fileEntry: predefinedTextFiles.entrySet()) {
+		for (Entry<Info, String> fileEntry : predefinedTextFiles.entrySet()) {
 			String f = fileEntry.getValue();
 			Info i = fileEntry.getKey();
-			for(Entry<AbstractAlphabet, TransformData> alphaEntry: alphabets.entrySet()) {
-				try {
-					String fileText = getTextFromFile(f);
+			try {
+				String fileText = getTextFromFile(f);
+				for (Entry<AbstractAlphabet, TransformData> alphaEntry : alphabets.entrySet()) {
 					AbstractAlphabet alpha = alphaEntry.getKey();
 					TransformData tr = alphaEntry.getValue();
-					
+
 					String transformedText = prepareFileTextForAnalysis(fileText, tr, alpha);
 					TextStatistic statistic = new TextStatistic(transformedText, i.getName(), i.getLanguage());
 					result.add(statistic);
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
 				}
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 		return result;

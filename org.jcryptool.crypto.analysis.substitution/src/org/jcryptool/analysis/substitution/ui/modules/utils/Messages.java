@@ -10,6 +10,7 @@ public class Messages extends NLS {
 	public static String StatisticsDisplayer_3;
 	public static String StatisticsDisplayer_4;
 	public static String StatisticsDisplayer_5;
+	public static String StatisticsDisplayer_6;
 	public static String StatisticsWizard_0;
 	public static String StatisticsWizardPage_0;
 	public static String StatisticsWizardPage_1;

@@ -170,6 +170,8 @@ public class SubstitutionAnalysisPanel extends Composite {
 		Map<Character, Character> mapping = substEditor.getCharMapping();
 		previewer.setMapping(mapping);
 		
+		statisticsDisplayer.setCharMapping(mapping);
+		
 		Map<Character, Character> key1Data = substEditor.getCharMapping();
 		String key1String = generateKey1String(key1Data, alphabet);
 		
@@ -202,7 +204,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 	}
 
 	private void initLetterFreqGroup(final Group grpLetterFrequencyStatistics) {
-		statisticsDisplayer = new StatisticsDisplayer(grpLetterFrequencyStatistics, SWT.NONE, referenceStatistic, cipherStatistic);
+		statisticsDisplayer = new StatisticsDisplayer(grpLetterFrequencyStatistics, this, SWT.NONE, referenceStatistic, cipherStatistic, upperLowerCipherMode);
 		statisticsDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 		
 		final Button loadStatisticsButton = new Button(grpLetterFrequencyStatistics, SWT.PUSH);

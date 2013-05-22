@@ -234,12 +234,18 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 
 		private void newTextArrivedUpdates(TextInputWithSource previousLoadedText) {
 			if(this.loadedText != null) {
+				AbstractAlphabet lastAlphabet = panel.getAlphaSelector().getAlphabetInput().getContent();
+				
 				TransformData tr = this.selectedTransformation!=null?this.selectedTransformation:new TransformData();
 				List<AbstractAlphabet> selectableAlphabets = findSelectableAlphabetsForText(this.loadedText.getText(), tr);
 				AbstractAlphabet bestAlphabet = findFittingAlphabetForText(this.loadedText.getText(), tr);
 				panel.getAlphaSelector().setAcceptedAlphabets(selectableAlphabets);
 				panel.getAlphaSelector().getAlphabetInput().writeContent(bestAlphabet);
 				panel.getAlphaSelector().getAlphabetInput().synchronizeWithUserSide();
+				
+				if(lastAlphabet.equals(bestAlphabet)) {
+					notifyAlphabetChange(bestAlphabet);
+				}
 			}
 		}
 
