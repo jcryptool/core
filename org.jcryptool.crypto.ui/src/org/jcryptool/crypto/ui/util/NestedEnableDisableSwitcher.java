@@ -4,6 +4,7 @@ import org.eclipse.swt.widgets.Control;
 
 public class NestedEnableDisableSwitcher extends NestedEnable {
 
+	public boolean alwaysRefresh = false;
 	private boolean startState;
 
 	public NestedEnableDisableSwitcher(Control root) {
@@ -13,7 +14,7 @@ public class NestedEnableDisableSwitcher extends NestedEnable {
 
 	@Override
 	public void setEnabled(boolean b) {
-		if(getRoot().isEnabled() == startState) {
+		if(alwaysRefresh || getRoot().isEnabled() == startState) {
 			reset();
 		}
 		super.setEnabled(b);

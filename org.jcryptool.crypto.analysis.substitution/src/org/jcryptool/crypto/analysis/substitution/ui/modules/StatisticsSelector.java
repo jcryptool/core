@@ -118,7 +118,9 @@ public class StatisticsSelector extends Composite {
 			}
 		});
 		customControlsEnabler = new NestedEnableDisableSwitcher(referenceTextSelector);
+		customControlsEnabler.alwaysRefresh = true;
 		predefinedControlsEnabler = new NestedEnableDisableSwitcher(comboPredefined);
+		predefinedControlsEnabler.alwaysRefresh = true;
 		
 		setInitialState();
 		

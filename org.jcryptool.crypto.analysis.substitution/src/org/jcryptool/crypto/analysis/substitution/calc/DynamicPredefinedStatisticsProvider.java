@@ -170,9 +170,9 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		AtomAlphabet printable = new AtomAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöüÄÖÜ01234567890.,-!?= ");
 		
 		TransformData taA09 = new TransformData(aA09, false, false, true, true, true);
-		TransformData taA = new TransformData(aA09, false, false, true, true, true);
-		TransformData ta = new TransformData(aA09, true, false, true, true, true);
-		TransformData tA = new TransformData(aA09, true, true, true, true, true);
+		TransformData taA = new TransformData(aA, false, false, true, true, true);
+		TransformData ta = new TransformData(a, true, false, true, true, true);
+		TransformData tA = new TransformData(A, true, true, true, true, true);
 		TransformData tPrintable = new TransformData(printable, false, false, false, true, false);
 		
 		result.put(aA09, taA09);
