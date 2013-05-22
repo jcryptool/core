@@ -23,6 +23,10 @@ Color dark_gray = Display.getDefault().getSystemColor(
 Button btn_select_file;
 Boolean enabled;
 Group select;
+Button btn1;
+Button btn2;
+Button btn3;
+Label selected_file;
 	
 	public RadioButtonListener(Combo cmb_select) {
 		this.cmb_select = cmb_select;
@@ -32,11 +36,16 @@ Group select;
 		this.lbl_selected_file = lbl_selected_file;
 		this.txt_text = txt_text;
 		this.btn_select_file = btn_select_file;
+
 	}
 	
-	public RadioButtonListener(boolean enabled, Group select) {
+	public RadioButtonListener(boolean enabled, Button btn1, Button btn2, Button btn3, Label selected_file) {
 		this.enabled = enabled;
 		this.select = select;
+		this.btn1 = btn1;
+		this.btn2 = btn2;
+		this.btn3= btn3;
+		this.selected_file = selected_file;
 	}
 	
 	@Override
@@ -58,7 +67,10 @@ Group select;
 			txt_text.setForeground(black);
 			btn_select_file.setEnabled(false);
 		}else if(btn_selected.getData().equals("detail")) {
-			select.setEnabled(enabled);
+			btn1.setEnabled(enabled);
+			btn2.setEnabled(enabled);
+			btn3.setEnabled(enabled);
+			selected_file.setEnabled(enabled);
 		}
 		
 

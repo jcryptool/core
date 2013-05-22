@@ -43,10 +43,7 @@ public class SelectFileListener implements SelectionListener{
 		String path = ""; //$NON-NLS-1$
 			path = fd.open();
 			lbl_selected_file.setText(path);
-
 			lbl_selected_file.getParent().layout();
-		
-		
 	}
 
 	@Override

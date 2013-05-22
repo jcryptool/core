@@ -57,6 +57,7 @@ public class CreateCert implements Views {
 	Label lbl_plain1;
 	Label lbl_plain2;
 	Label lbl_plain3;
+	Label lbl_plain4;
 	Combo cmb_genKey;
 
 	public CreateCert(Composite content, Composite exp) {
@@ -128,21 +129,27 @@ public class CreateCert implements Views {
 //		btn_genKey.setData(new Integer(1));
 //		btn_genKey.setEnabled(false);
 
+		Label lbl_pubKey = new Label(createCertGroup, SWT.NONE);
+		lbl_pubKey.setText("Öffentlicher Schlüssel:");
+		
 		Button btn_radio_selectPubKey = new Button(createCertGroup, SWT.RADIO);
 		btn_radio_selectPubKey.setText("Öffentlichen Schlüssel auswählen");
 		btn_radio_selectPubKey.setData("select");
 //		Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
 //		btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 //		btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
-//		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
+		lbl_plain3 = new Label(createCertGroup, SWT.NONE);
+		GridData gd_cmb = new GridData(GridData.FILL_HORIZONTAL);
+		gd_cmb.horizontalIndent=26;
 		cmb_genKey = new Combo(createCertGroup, SWT.NONE);
 		cmb_genKey.setEnabled(false);
-		cmb_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
+		cmb_genKey.setLayoutData(gd_cmb);
+		
+		lbl_plain4 = new Label(createCertGroup, SWT.NONE);
 		Button btn_radio_generatePubKey = new Button(createCertGroup, SWT.RADIO);
 		btn_radio_generatePubKey.setText("Neues Schlüsselpaar beim Absenden generieren");
 		btn_radio_generatePubKey.setData("generate");
-		btn_radio_generatePubKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 2,1));
+		btn_radio_generatePubKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1,1));
 		btn_radio_generatePubKey.setSelection(true);
 		
 		btn_radio_generatePubKey.addSelectionListener(new RadioButtonListener(cmb_genKey));

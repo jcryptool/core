@@ -48,39 +48,54 @@ public class SignCert implements Views {
 		selectSthGroup.setLayoutData(gd_grp);
 		selectSthGroup.setText("Was soll signiert werden?");
 		
+		Composite selectSthComp = new Composite(selectSthGroup, SWT.NONE);
+		selectSthComp.setLayout(new GridLayout(2, false));
+		
 		Group signCertGroup = new Group(composite, SWT.NONE);
 		signCertGroup.setLayout(new GridLayout(1, false));
 		signCertGroup.setLayoutData(gd_grp);
 		signCertGroup.setText(Messages.SignCert_headline);
-
+		
 		Button btn_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
 		btn_detail.setData("detail");
-		btn_detail.addSelectionListener(new RadioButtonListener(false, selectSthGroup));
 		
 		Button btn_non_detail = new Button(cmp_mini, SWT.RADIO);
-		btn_non_detail.setText("Signaturvorgang nicht visualisieren");
+		btn_non_detail.setText("Signaturvorgang direkt durchführen");
 		btn_non_detail.setData("detail");
-		btn_non_detail.addSelectionListener(new RadioButtonListener(true, selectSthGroup));
 		
-		Button btn_radio_signFile = new Button(selectSthGroup, SWT.RADIO);
-		btn_radio_signFile.setText("Datei signieren");
+		Label lbl_detail = new Label(cmp_mini, SWT.WRAP);
+		lbl_detail.setText("*Wenn der Signaturvorgang visualisiert wird, erfolgen die Eingaben, was und wie signiert \r\nwerden soll, in einem anderen Fenster.");
+		lbl_detail.setForeground(dark_gray);
+		lbl_detail.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 2,2));
+		
+		Button btn_radio_signFile = new Button(selectSthComp, SWT.RADIO);
+		btn_radio_signFile.setText("Datei");
 		btn_radio_signFile.setData("file");
-
+		btn_radio_signFile.setEnabled(false);
 		
-		Button btn_select_file = new Button(selectSthGroup, SWT.PUSH);
+		Button btn_select_file = new Button(selectSthComp, SWT.PUSH);
 		btn_select_file.setText(Messages.SignCert_btn_chose_file);
 		btn_select_file.setData("select");//$NON-NLS-1$
 		btn_select_file.setEnabled(false);
 		
+		
 		selected_file = new Label(selectSthGroup, SWT.NONE);
 		selected_file.setText(""); //$NON-NLS-1$
-
+		GridData gd_lbl = new GridData();
+		gd_lbl.horizontalIndent=30;
+		selected_file.setLayoutData(gd_lbl);
+		
+		GridData gd_btn = new GridData();
 		Button btn_radio_signText = new Button(selectSthGroup, SWT.RADIO);
-		btn_radio_signText.setText("Text signieren");
+		btn_radio_signText.setText("Text");
 		btn_radio_signText.setData("text");
+		gd_btn.horizontalIndent=5;		
+		btn_radio_signText.setLayoutData(gd_btn);
+		btn_radio_signText.setEnabled(false);
 		
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 20);
+		gd_txt.horizontalIndent=30;
 		Text txt_sign = new Text(selectSthGroup, SWT.LEFT | SWT.MULTI
 				| SWT.BORDER);
 		txt_sign.setText(Messages.SignCert_textbox_sample_text);
@@ -92,6 +107,11 @@ public class SignCert implements Views {
 		btn_radio_signText.addSelectionListener(new RadioButtonListener(selected_file, txt_sign, btn_select_file));
 		
 		btn_select_file.addSelectionListener(new SelectFileListener(selected_file, txt_sign ));
+		
+		btn_non_detail.addSelectionListener(new RadioButtonListener(true, btn_radio_signFile, btn_radio_signText, btn_select_file, selected_file));
+		btn_detail.addSelectionListener(new RadioButtonListener(false, btn_radio_signFile, btn_radio_signText, btn_select_file,selected_file));
+
+		
 		
 		cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
 		cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
