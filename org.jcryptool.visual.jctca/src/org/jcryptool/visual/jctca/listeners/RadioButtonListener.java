@@ -69,8 +69,10 @@ Label selected_file;
 		}else if(btn_selected.getData().equals("detail")) {
 			btn1.setEnabled(enabled);
 			btn2.setEnabled(enabled);
-			btn3.setEnabled(enabled);
 			selected_file.setEnabled(enabled);
+			if(enabled==false) {
+				btn3.setEnabled(enabled);
+			}
 		}
 		
 
