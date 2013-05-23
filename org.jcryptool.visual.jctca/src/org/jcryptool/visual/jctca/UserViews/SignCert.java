@@ -49,9 +49,7 @@ public class SignCert implements Views {
 		selectSthGroup.setLayoutData(gd_grp);
 		selectSthGroup.setText("Was soll signiert werden?");
 		
-		Composite selectSthComp = new Composite(selectSthGroup, SWT.NONE);
-		selectSthComp.setLayout(new GridLayout(2, false));
-		
+
 		Group signCertGroup = new Group(composite, SWT.NONE);
 		signCertGroup.setLayout(new GridLayout(1, false));
 		signCertGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -60,6 +58,10 @@ public class SignCert implements Views {
 		Composite signBtnComp = new Composite(composite, SWT.NONE);
 		signBtnComp.setLayout(new GridLayout(1, false));
 		signBtnComp.setLayoutData(gd_comp);
+		
+		Composite selectSthComp = new Composite(selectSthGroup, SWT.NONE);
+		selectSthComp.setLayout(new GridLayout(3, false));
+		selectSthComp.setLayoutData(gd_comp);
 		
 		Button btn_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
@@ -84,23 +86,24 @@ public class SignCert implements Views {
 		btn_select_file.setData("select");//$NON-NLS-1$
 		btn_select_file.setEnabled(false);
 		
-		selected_file = new Label(selectSthGroup, SWT.NONE);
+		selected_file = new Label(selectSthComp, SWT.NONE); //selectSthGroup
 		selected_file.setText(""); //$NON-NLS-1$
 		GridData gd_lbl = new GridData();
-		gd_lbl.horizontalIndent=30;
+		//gd_lbl.horizontalIndent=30;
 		selected_file.setLayoutData(gd_lbl);
 		
 		GridData gd_btn = new GridData();
-		Button btn_radio_signText = new Button(selectSthGroup, SWT.RADIO);
+		Button btn_radio_signText = new Button(selectSthComp, SWT.RADIO);
 		btn_radio_signText.setText("Text");
 		btn_radio_signText.setData("text");
-		gd_btn.horizontalIndent=5;		
+		//gd_btn.horizontalIndent=5;		
 		btn_radio_signText.setLayoutData(gd_btn);
 		btn_radio_signText.setEnabled(false);
 		
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 20);
-		gd_txt.horizontalIndent=30;
-		Text txt_sign = new Text(selectSthGroup, SWT.LEFT | SWT.MULTI
+		//gd_txt.horizontalIndent=30;
+		gd_txt.horizontalSpan=2;
+		Text txt_sign = new Text(selectSthComp, SWT.LEFT | SWT.MULTI
 				| SWT.BORDER);
 		txt_sign.setText(Messages.SignCert_textbox_sample_text);
 		txt_sign.setLayoutData(gd_txt);

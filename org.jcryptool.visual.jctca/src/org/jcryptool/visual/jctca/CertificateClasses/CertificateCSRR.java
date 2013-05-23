@@ -124,15 +124,15 @@ public class CertificateCSRR {
 					sr, 1024, 80));
 			
 			AsymmetricCipherKeyPair keypair =null;
-			for(int i = 0; i<5; i++){
+			for(int i = 0; i<2; i++){
 				//generates 5 new self signed certificates and adds them to the keystore
 				keypair= gen.generateKeyPair();	
 				KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
 				// yesterday
 				Date validityBeginDate = new Date(System.currentTimeMillis()
 						- 24 * 60 * 60 * 1000);
-				// in 2 hours
-				Date validityEndDate = new Date(System.currentTimeMillis() + 2
+				// in 10 years
+				Date validityEndDate = new Date(System.currentTimeMillis() + 10
 						* 365 * 24 * 60 * 60 * 1000);
 				X509V1CertificateGenerator certGen = new X509V1CertificateGenerator();
 				X509Name dnName = new X509Name(

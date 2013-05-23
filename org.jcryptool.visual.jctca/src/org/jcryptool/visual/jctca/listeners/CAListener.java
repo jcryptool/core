@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -35,9 +36,15 @@ import org.jcryptool.visual.jctca.CertificateClasses.RR;
 public class CAListener implements SelectionListener{
 
 	Tree requests;
-	List keys;
 	Button accept;
 	Button reject;
+	private Label lbl_value_city;
+	private Label lbl_value_country;
+	private Label lbl_value_firstname;
+	private Label lbl_value_lastname;
+	private Label lbl_value_mail;
+	private Label lbl_value_street;
+	private Label lbl_value_ZIP;
 	
 	/**
 	 * Constructor for the Listener
@@ -45,12 +52,25 @@ public class CAListener implements SelectionListener{
 	 * @param keys - the list in which the root certificates are listed
 	 * @param accept - the accept button 
 	 * @param reject - the reject button
+	 * @param lbl_value_ZIP 
+	 * @param lbl_value_street 
+	 * @param lbl_value_mail 
+	 * @param lbl_value_lastname 
+	 * @param lbl_value_firstname 
+	 * @param lbl_value_country 
+	 * @param lbl_value_city 
 	 */
-	public CAListener(Tree requests, List keys, Button accept, Button reject){
+	public CAListener(Tree requests, Button accept, Button reject, Label lbl_value_city, Label lbl_value_country, Label lbl_value_firstname, Label lbl_value_lastname, Label lbl_value_mail, Label lbl_value_street, Label lbl_value_ZIP){
 		this.requests = requests;
-		this.keys = keys;
 		this.accept = accept;
 		this.reject = reject;
+		this.lbl_value_city = lbl_value_city;
+		this.lbl_value_country = lbl_value_country;
+		this.lbl_value_firstname = lbl_value_firstname;
+		this.lbl_value_lastname = lbl_value_lastname;
+		this.lbl_value_mail = lbl_value_mail;
+		this.lbl_value_street = lbl_value_street;
+		this.lbl_value_ZIP = lbl_value_ZIP;
 	}
 	
 	@Override
@@ -62,9 +82,10 @@ public class CAListener implements SelectionListener{
 	public void widgetSelected(SelectionEvent arg0) {
 		Object src = arg0.getSource();
 		
-		if (src.equals(requests) || src.equals(keys)) {
+		if (src.equals(requests)) {
 			//when something was selected in the list or the tree, check if the buttons should be enabled
 			enableButtons(src);
+			loadData();
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof CSR)) {
 			handleCSR(src);
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof RR)) {
@@ -72,9 +93,34 @@ public class CAListener implements SelectionListener{
 		}
 	}
 		
+	private void loadData() {
+		setLabels("","","","","","","");
+		if(requests.getSelectionCount()==1){
+			TreeItem sel = requests.getSelection()[0];
+			if(sel.getData() instanceof CSR){
+				CSR csr = (CSR)sel.getData();
+				setLabels(csr.getTown(),csr.getCountry(),csr.getFirst(),csr.getLast(),csr.getMail(),csr.getStreet(),csr.getZip());
+			}
+			else if(sel.getData() instanceof RR){
+				
+			}
+		}
+	}
+
+	private void setLabels(String town, String country, String first,
+			String last, String mail, String street, String zip) {
+		lbl_value_city.setText(town);
+		lbl_value_country.setText(country);
+		lbl_value_firstname.setText(first);
+		lbl_value_lastname.setText(last);
+		lbl_value_mail.setText(mail);
+		lbl_value_street.setText(street);
+		lbl_value_ZIP.setText(zip);
+	}
+
 	private void enableButtons(Object src) {
 		TreeItem[] sel = requests.getSelection();
-		if(sel!=null && sel.length > 0 && sel[0].getParentItem()!= null && keys.getSelectionIndex()>=0){
+		if(sel!=null && sel.length > 0 && sel[0].getParentItem()!= null){
 			accept.setEnabled(true);
 			reject.setEnabled(true);
 		}
@@ -129,9 +175,9 @@ public class CAListener implements SelectionListener{
 			System.out.println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			BigInteger serialNumber = new BigInteger(System.currentTimeMillis()+"");// serial number for certificate //$NON-NLS-1$
 			
-			AsymmetricCipherKeyPair keypair = csrr.getCAKey(keys.getSelectionIndex());
+			AsymmetricCipherKeyPair keypair = csrr.getCAKey(0);
 			KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(keypair);
-			X509Certificate caCert = csrr.getCACert(keys.getSelectionIndex());
+			X509Certificate caCert = csrr.getCACert(0);
 			X509Certificate cert = Util.certificateForKeyPair(csr, serialNumber, caCert,expiryDate, startDate, kp.getPrivate());
 			try {
 				PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.getDefaultKeyPassword());

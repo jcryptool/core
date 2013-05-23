@@ -185,7 +185,7 @@ public class ShowCert implements Views {
 				X509Certificate x509 = (X509Certificate)cert;
 				String[] subject = x509.getSubjectDN().toString().split("CN=");
 				if(subject.length>1){
-					listEntry = x509.getSubjectDN().toString().split("CN=")[1] + " ("+ksAlias.getKeyLength() + "bit ";
+					listEntry = x509.getSubjectDN().toString().split("CN=")[1].split(",")[0] + " ("+ksAlias.getKeyLength() + "bit ";
 				}
 				else{
 					listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
