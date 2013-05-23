@@ -131,7 +131,6 @@ public class SignCert implements Views {
 			
 		StyledText stl_exp = (StyledText) exp.getChildren()[0];
 		stl_exp.setText(Messages.SignCert_explain_text);
-
 		composite.setVisible(false);
 	}
 
