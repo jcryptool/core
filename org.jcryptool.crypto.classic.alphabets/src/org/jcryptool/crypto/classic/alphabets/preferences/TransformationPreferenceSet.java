@@ -22,10 +22,10 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
  *         Preference Format
  */
 public class TransformationPreferenceSet {
-    private static final String ALPHA_DATA_SEPARATOR = "{alpha-data-separator}";
+    private static final String ALPHA_DATA_SEPARATOR = "{alpha-data-separator}"; //$NON-NLS-1$
 
 	// Will be the subnode's name
-    public static final String ID_TRANSFORM_DATA = "TransformData";
+    public static final String ID_TRANSFORM_DATA = "TransformData"; //$NON-NLS-1$
 
     
     private static TransformData getDefaultByHeuristic(List<Character> alphabet) {
@@ -51,13 +51,13 @@ public class TransformationPreferenceSet {
     }
     
     private static boolean determineLeer(List<Character> alphabet) {
-		char[] leer = new char[]{' ','\n','\r','\t'};
+		char[] leer = Messages.getString("TransformationPreferenceSet_2").toCharArray(); //$NON-NLS-1$
 		for(char c:leer) if(alphabet.contains(c)) return true;
 		return false;
 	}
 
 	private static boolean determineUmlauts(List<Character> alphabet) {
-		char[] umlauts = new char[]{'ä','ö','ü','Ä','Ö','Ü','ß'};
+		char[] umlauts = Messages.getString("TransformationPreferenceSet_3").toCharArray(); //$NON-NLS-1$
 		for(char umlaut:umlauts) if(alphabet.contains(umlaut)) return true;
 		return false;
 	}
@@ -70,7 +70,7 @@ public class TransformationPreferenceSet {
      * @return
      */
     private static int determineCasing(List<Character> alphabet) {
-		String latinAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String latinAlpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
 		char[] uppercaseChars = latinAlpha.toCharArray(); 
 		char[] lowercaseChars = latinAlpha.toLowerCase().toCharArray();
 		int score = 0;
@@ -99,7 +99,7 @@ public class TransformationPreferenceSet {
     	
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_ascii_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Printable ASCII"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Printable ASCII"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
     					false, // delete-blanks-transformation activate flag
@@ -109,7 +109,7 @@ public class TransformationPreferenceSet {
     	);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_uplolatin_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Upper and lower Latin (A-Z,a-z)"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Upper and lower Latin (A-Z,a-z)"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -119,7 +119,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_uplatin_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Upper Latin (A-Z)"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Upper Latin (A-Z)"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -129,7 +129,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_lowlatin_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Lower Latin (a-z)"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Lower Latin (a-z)"), //$NON-NLS-1$
     					false, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -139,7 +139,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_playfair_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Playfair/alike alphabet (25chars, w/o \"J\")"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Playfair/alike alphabet (25chars, w/o \"J\")"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -149,7 +149,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_adfgvx_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet"),
+    					AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -159,7 +159,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_xor32_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 32 characters"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 32 characters"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					true, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag
@@ -169,7 +169,7 @@ public class TransformationPreferenceSet {
     			);
     	result.put(org.jcryptool.crypto.classic.alphabets.tools.Messages.AlphabetStore_alpha_xor64_long,
     			new TransformData(
-    					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 64 characters"),
+    					AlphabetsManager.getInstance().getAlphabetByName("Xor Alphabet with 64 characters"), //$NON-NLS-1$
     					true, //(if "UPPERCASE" or "LOWERCASE" is selected as standard, if this transformation is activated) 
     					false, // upper/lowercase transformation activate flag
     					true, // delete-blanks-transformation activate flag

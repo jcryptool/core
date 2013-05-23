@@ -103,7 +103,10 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 	
 	public DynamicPredefinedStatisticsProvider() {
 		Map<AbstractAlphabet, TransformData> alphabets = getAlphabetTransformDataMapping();
+		long startTime = System.currentTimeMillis();
 		statistics = analyzeFiles(predefinedTextFiles, alphabets);
+		long endTime = System.currentTimeMillis();
+//		System.out.println(String.format("############# Dauer: %d", endTime-startTime));
 	}
 	
 	private static List<TextStatistic> analyzeFiles(Map<Info, String> predefinedTextFiles,
