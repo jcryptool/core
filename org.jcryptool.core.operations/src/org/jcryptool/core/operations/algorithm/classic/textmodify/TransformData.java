@@ -133,7 +133,11 @@ public class TransformData {
     }
 
     private static AbstractAlphabet getDefaultFilterAlphabet() {
-        return AlphabetsManager.getInstance().getDefaultAlphabet();
+        if(OperationsPlugin.getDefault() != null) {
+        	AlphabetsManager instance = AlphabetsManager.getInstance();
+        	return instance.getDefaultAlphabet();
+        }
+        return null;
     }
 
     public boolean isUnmodified() {

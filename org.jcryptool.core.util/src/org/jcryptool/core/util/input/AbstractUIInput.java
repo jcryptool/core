@@ -126,7 +126,7 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
 		saveDefaultRawUserInput();
 		resetUserInput();
 	}
-
+	
 	/**
 	 * This method should be called, when the user tried to make a change DIRECTLY concerning
 	 * this input (applies not when another input was changed, that has influence on

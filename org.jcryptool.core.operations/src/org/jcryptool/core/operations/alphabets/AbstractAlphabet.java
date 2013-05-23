@@ -10,8 +10,14 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.operations.alphabets;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +39,10 @@ public abstract class AbstractAlphabet {
 
 	public static final int HIGHLIGHT = 3;
 
+	public List<Character> asList() {
+		return alphaToList(this);
+	}
+	
 	/**
 	 * @deprecated functionality to be moved to the AlphabetManager
 	 */
@@ -184,5 +194,70 @@ public abstract class AbstractAlphabet {
 		
 		return newAlpha.toCharArray();
 	}
+	
+	public static List<Character> alphaToList(AbstractAlphabet alpha) {
+		List<Character> result = new LinkedList<Character>();
+		for(char c: alpha.getCharacterSet()) result.add(c);
+		return result;
+	}
+	
+	public static AbstractAlphabet getMostSimilarAlphaTo(AbstractAlphabet alpha, List<AbstractAlphabet> compareBase) {
+		LinkedList<List<Character>> alphas = new LinkedList<List<Character>>();
+		for(AbstractAlphabet a: compareBase) alphas.add(alphaToList(a));
+		List<Character> best = getMostSimilarAlphaTo(
+				alphaToList(alpha), 
+				alphas);
+		if(best != null) {
+			int index = alphas.indexOf(best);
+			return compareBase.get(index);
+		} else {
+			return null;
+		}
+	}
+	
+	public static List<Character> getMostSimilarAlphaTo(List<Character> alpha, List<List<Character>> compareBase) {
+		double bestScore = Double.MIN_VALUE;
+		List<Character> bestScoredAlpha = null;
+		for(List<Character> compareBaseElement: compareBase) {
+			double score = compareTwoAlphabets(alpha, compareBaseElement);
+			if(score > bestScore) {
+				bestScore = score;
+				bestScoredAlpha = compareBaseElement;
+			}
+		}
+		return bestScoredAlpha;
+	}
+	
+	public static double compareTwoAlphabets(AbstractAlphabet a1, AbstractAlphabet a2) {
+		return compareTwoAlphabets(
+				alphaToList(a1), 
+				alphaToList(a2));
+	}
+	
+	public static double compareTwoAlphabets(Collection<? extends Character> remoteCharacters, Collection<? extends Character> thisCharacters) {
+		Set<Character> disjunction = calcAlphaDisjunction(remoteCharacters, thisCharacters);
+		Set<Character> conjunction = calcAlphaConjunction(remoteCharacters, thisCharacters);
+		
+		if(disjunction.size() == 0) return 0;
+		return (double)(conjunction.size()) / (double)(disjunction.size());
+	}
+
+	public static Set<Character> calcAlphaConjunction(Collection<? extends Character> remoteCharacters, Collection<? extends Character> thisCharacters) {
+		Set<Character> conjunction = new LinkedHashSet<Character>();
+		for(Character c: thisCharacters) {
+			if(remoteCharacters.contains(c)) {
+				conjunction.add(c);
+			}
+		}
+		return conjunction;
+	}
+
+	public static Set<Character> calcAlphaDisjunction(Collection<? extends Character> remoteCharacters, Collection<? extends Character> thisCharacters) {
+		Set<Character> disjunction = new LinkedHashSet<Character>();
+		disjunction.addAll(thisCharacters);
+		disjunction.addAll(remoteCharacters);
+		return disjunction;
+	}
+	
 	
 }
