@@ -10,11 +10,13 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.classic.substitution.ui;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -272,7 +274,8 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	
 	private static boolean verifyKeyReallyChangesPlaintext(AbstractAlphabet selectedAlphabet,
 			SubstitutionKey generateSubstKeyFromCompleteMapping) {
-		for(char c: selectedAlphabet.getCharacterSet()) {
+		Set<Character> keyCharset = new HashSet<Character>(generateSubstKeyFromCompleteMapping.getSubstitutions().keySet());
+		for(char c: keyCharset) {
 			if(!generateSubstKeyFromCompleteMapping.getSubstitutionFor(c).equals(Character.valueOf(c))) {
 				return true;
 			}
