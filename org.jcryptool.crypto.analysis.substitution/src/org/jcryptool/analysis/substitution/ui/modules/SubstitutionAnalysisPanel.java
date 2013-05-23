@@ -204,8 +204,21 @@ public class SubstitutionAnalysisPanel extends Composite {
 	}
 
 	private void initLetterFreqGroup(final Group grpLetterFrequencyStatistics) {
-		statisticsDisplayer = new StatisticsDisplayer(grpLetterFrequencyStatistics, this, SWT.NONE, referenceStatistic, cipherStatistic, upperLowerCipherMode);
+		statisticsDisplayer = new StatisticsDisplayer(grpLetterFrequencyStatistics, this, SWT.NONE, referenceStatistic, cipherStatistic, alphabet, upperLowerCipherMode);
 		statisticsDisplayer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
+
+		statisticsDisplayer.addObserver(new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				if(arg instanceof Map) {
+					Map<Character, Character> map = (Map<Character, Character>) arg;
+					for(Map.Entry<Character, Character> e: map.entrySet()) {
+						substEditor.setSingleSubstitution(e.getKey(), e.getValue());
+					}
+				}
+			}
+		});
 		
 		final Button loadStatisticsButton = new Button(grpLetterFrequencyStatistics, SWT.PUSH);
 		loadStatisticsButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));

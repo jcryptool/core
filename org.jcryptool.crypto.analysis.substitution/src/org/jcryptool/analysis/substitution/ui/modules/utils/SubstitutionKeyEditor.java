@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionLetterInputField.Mode;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
@@ -41,14 +42,23 @@ public class SubstitutionKeyEditor extends Composite {
 	
 	private List<Observer> observers;
 
+
+
+	private LinkedList<Character> plaintextChars;
+
+
+
+	private boolean displayUndefinedChars = false;
+
 	/**
 	 * Create the composite.
 	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet) {
+	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet, List<Character> subset) {
 		super(parent, style);
+		this.plaintextChars = new LinkedList<Character>(AbstractAlphabet.calcAlphaConjunction(plaintextAlphabet.asList(), subset));
 		this.plaintextAlphabet = plaintextAlphabet;
 		this.inputs = new HashMap<Character, TextfieldInput<Character>>();
 		this.charInputControls = new HashMap<Character, SubstitutionLetterInputField>();
@@ -57,31 +67,48 @@ public class SubstitutionKeyEditor extends Composite {
 		UNDETERMINED_SUBST_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
 		createGUI(plaintextAlphabet);
 	}
+	
+	/**
+	 * Create the composite.
+	 * 
+	 * @param parent
+	 * @param style
+	 */
+	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet) {
+		this(parent, style, plaintextAlphabet, plaintextAlphabet.asList());
+	}
+	
+	public void setDisplayUndefinedChars(boolean displayUndefinedChars) {
+		this.displayUndefinedChars = displayUndefinedChars;
+	}
 
 	
 	
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 
-		Label lblHereYouCan = new Label(this, SWT.NONE);
-		lblHereYouCan.setText(Messages.SubstitutionKeyEditor_0);
+//		Label lblHereYouCan = new Label(this, SWT.NONE);
+//		lblHereYouCan.setText(Messages.SubstitutionKeyEditor_0);
 
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
+		GridLayout layout = new GridLayout(1, false);
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
-		scrolledComposite = new ScrolledComposite(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		scrolledComposite = new ScrolledComposite(composite, this.getStyle() | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
-		layoutData.widthHint = WIDTH_HINT_GLOBAL;
+//		layoutData.widthHint = (int) Math.round(WIDTH_HINT_GLOBAL * ((double)plaintextChars.size() / (double)plaintextAlphabet.getCharacterSet().length) );
 		scrolledComposite.setLayoutData(layoutData);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
 
 		scrollCompMain = new Composite(scrolledComposite, SWT.NONE);
-		scrollCompMain.setLayout(new GridLayout(plaintextAlphabet.getCharacterSet().length, false));
+		scrollCompMain.setLayout(new GridLayout(1, false));
 		scrollCompMain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		scrolledComposite.setContent(scrollCompMain);
-
+		
 		createSubstitutionControls(plaintextAlphabet);
 		this.charMapping = readMapping();
 		updateUnusedCharsList();
@@ -102,7 +129,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 	private Map<Character, Character> readMapping() {
 		HashMap<Character, Character> result = new HashMap<Character, Character>();
-		for(char c: plaintextAlphabet.getCharacterSet()) {
+		for(Character c: plaintextChars) {
 			TextfieldInput<Character> input = inputs.get(Character.valueOf(c));
 			result.put(c, input.getContent());
 		}
@@ -111,14 +138,21 @@ public class SubstitutionKeyEditor extends Composite {
 
 	private void createSubstitutionControls(AbstractAlphabet plaintextAlphabet) {
 		char[] characterSet = plaintextAlphabet.getCharacterSet();
-		for (int i = 0; i < characterSet.length; i++) {
-			char c = characterSet[i];
-			Composite substAtomControl = createSingleSubstitutionControl(scrollCompMain, c, i);
+		Composite centerComp = new Composite(scrollCompMain, SWT.NONE);
+		GridLayout layout = new GridLayout(plaintextChars.size(), false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		centerComp.setLayout(layout);
+		centerComp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+		
+		for (int i = 0; i < plaintextChars.size(); i++) {
+			char c = plaintextChars.get(i);
+			Composite substAtomControl = createSingleSubstitutionControl(centerComp, c, i);
 		}
 	}
 
-	private Composite createSingleSubstitutionControl(Composite scrollCompMain2, final char plaintextChar, final int posInAlpha) {
-		Composite comp = new Composite(scrollCompMain2, SWT.NONE);
+	private Composite createSingleSubstitutionControl(Composite parent, final char plaintextChar, final int posInAlpha) {
+		Composite comp = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(1, false);
 		comp.setLayout(layout);
 		GridData layoutData = new GridData();
@@ -183,7 +217,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 	private void setTextfieldSubstitutionUndetermined(SubstitutionLetterInputField characterInputControls, boolean undetermined) {
 		Color colorToSet = undetermined ? UNDETERMINED_SUBST_COLOR : null;
-		characterInputControls.setTextfieldBorderColor(colorToSet);
+		if(displayUndefinedChars) characterInputControls.setTextfieldBorderColor(colorToSet);
 	}
 
 //	private boolean isTextfieldSetToUndetermined(TextfieldInput<?> input) {
@@ -244,6 +278,14 @@ public class SubstitutionKeyEditor extends Composite {
 			TextfieldInput<Character> input = inputs.get(plaintextChar);
 			input.writeContent(mapping.get(plaintextChar));
 			input.synchronizeWithUserSide();
+		}
+	}
+
+	public void setSingleSubstitution(Character key, Character value) {
+		if(getAlphabet().contains(value) && plaintextChars.contains(key)) {
+			TextfieldInput<Character> textfieldInput = inputs.get(key);
+			textfieldInput.writeContent(value);
+			textfieldInput.synchronizeWithUserSide();
 		}
 	}
 }

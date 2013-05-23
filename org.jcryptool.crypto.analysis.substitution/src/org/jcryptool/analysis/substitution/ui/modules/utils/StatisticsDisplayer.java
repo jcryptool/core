@@ -1,16 +1,22 @@
 package org.jcryptool.analysis.substitution.ui.modules.utils;
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,7 +30,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Widget;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
 public class StatisticsDisplayer extends Composite {
 
@@ -52,14 +60,21 @@ public class StatisticsDisplayer extends Composite {
 	private boolean isShowMappedLabels;
 	private Button btnShowMappedLabels;
 	private Composite layoutRoot;
+	private IdentityHashMap<Control, String> controlDataMap;
+	private AbstractAlphabet alphabet;
+	private List<Observer> observers;
 
 	/**
 	 * Create the composite.
 	 * @param parent
 	 * @param style
 	 */
-	public StatisticsDisplayer(Composite parent, Composite layoutRoot, int style, TextStatistic referenceStatistic, TextStatistic ciphertextStatistic, boolean upperLowerCaseMode) {
+	public StatisticsDisplayer(Composite parent, Composite layoutRoot, int style, TextStatistic referenceStatistic, TextStatistic ciphertextStatistic, AbstractAlphabet alphabet, boolean upperLowerCaseMode) {
 		super(parent, style);
+		this.alphabet = alphabet;
+		observers = new LinkedList<Observer>();
+		this.controlDataMap = new IdentityHashMap<Control, String>();
+		
 		this.layoutRoot = layoutRoot;
 		this.upperLowerCaseMode = upperLowerCaseMode;
 		charMapping = new HashMap<Character, Character>();
@@ -107,8 +122,11 @@ public class StatisticsDisplayer extends Composite {
 			}
 		});
 		
-//		Label lblClickHint = new Label(this, SWT.NONE);
-//		lblShowFrequenciesOf.setText("");
+		Label lblClickHint = new Label(this, SWT.WRAP);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		layoutData.widthHint = SCROLL_COMP_WIDTH_HINT*2;
+		lblClickHint.setLayoutData(layoutData);
+		lblClickHint.setText(Messages.StatisticsDisplayer_7 );
 		
 		Composite composite_1 = new Composite(this, SWT.NONE);
 		GridLayout gl_composite_1 = new GridLayout(2, false);
@@ -280,7 +298,7 @@ public class StatisticsDisplayer extends Composite {
 
 
 
-	private void makeOneFreqItem(Composite compCipherMain, Composite graph, String text, double percentOfWidth, boolean isCipherBox) {
+	private void makeOneFreqItem(Composite compCipherMain, Composite graph, final String text, double percentOfWidth, boolean isCipherBox) {
 		int pixels = (int) Math.round(percentOfWidth*(double)calcMaxBarWidth(compCipherMain));
 		String textForLabel = text;
 		textForLabel = applyUpperLowerCaseMode(isCipherBox, textForLabel);
@@ -294,12 +312,31 @@ public class StatisticsDisplayer extends Composite {
 			mappedLabel.setText(textForMappedLabel);
 			mappedLabel.setForeground(DEFAULT_MAPPED_LABEL_COLOR);
 			
+			mappedLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
+			
 			this.mappedLabels.put(text, mappedLabel);
+			this.controlDataMap.put(mappedLabel, text);
 
 			Label label = new Label(graph, SWT.NONE);
 			label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 			label.setText('['+textForLabel+']');
+			label.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
 			setMappedLabelVisible(mappedLabel, this.isShowMappedLabels);
+			
+			this.controlDataMap.put(label, text);
+			
+			MouseListener selectionListener = new MouseAdapter() {
+				@Override
+				public void mouseDown(MouseEvent e) {
+					Widget lbl = e.widget;
+					String data = text;
+					if(data != null) {
+						displaySubstSetter(data, lbl);
+					}
+				}
+			};
+			mappedLabel.addMouseListener(selectionListener);
+			label.addMouseListener(selectionListener);
 			
 			Composite bar = generateBar(graph, pixels, DEFAULT_BAR_COLOR, isCipherBox);
 		} else {
@@ -317,6 +354,29 @@ public class StatisticsDisplayer extends Composite {
 		
 	}
 
+
+
+	protected void displaySubstSetter(String data, Widget lbl) {
+		Map<Character, Character> map = SubstitutionChooser.getMappingBySelectorShell(alphabet, data);
+		if(map != null) {
+			List<Character> removeSet = new LinkedList<Character>();
+			for(Character c: map.keySet()) {
+
+				if(map.get(c) == null) {
+					removeSet.add(c);
+				}
+			}
+			for(Character c: removeSet) map.remove(c);
+			notifyParentAboutNewSubst(map);
+		}
+	}
+
+
+	private void notifyParentAboutNewSubst(Map<Character, Character> map) {
+		for(Observer o: observers) {
+			o.update(null, map);
+		}
+	}
 
 
 	private void setMappedLabelVisible(Label mappedLabel, boolean visible) {
@@ -420,5 +480,9 @@ public class StatisticsDisplayer extends Composite {
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+	
+	public void addObserver(Observer o) {
+		this.observers.add(o);
 	}
 }

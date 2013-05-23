@@ -11,12 +11,15 @@ public class Messages extends NLS {
 	public static String StatisticsDisplayer_4;
 	public static String StatisticsDisplayer_5;
 	public static String StatisticsDisplayer_6;
+	public static String StatisticsDisplayer_7;
 	public static String StatisticsWizard_0;
 	public static String StatisticsWizardPage_0;
 	public static String StatisticsWizardPage_1;
 	public static String StatisticsWizardPage_2;
 	public static String SubstitutionAnalysisText_0;
 	public static String SubstitutionAnalysisText_2;
+	public static String SubstitutionChooser_1;
+	public static String SubstitutionChooser_2;
 	public static String SubstitutionKeyEditor_0;
 	public static String SubstitutionLetterInputField_0;
 	public static String SubstitutionLetterInputField_1;

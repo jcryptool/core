@@ -344,7 +344,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		GridData lblStatisticsLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStatistics.setLayoutData(lblStatisticsLData);
 		lblStatisticsLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStatistics.setText(Messages.SubstitutionAnalysisConfigPanel_16+ "\n" + //$NON-NLS-2$
+		lblStatistics.setText(Messages.SubstitutionAnalysisConfigPanel_16+ "\n" + //$NON-NLS-2$ //$NON-NLS-1$
 				Messages.SubstitutionAnalysisConfigPanel_18);
 		
 		statisticsSelector = new StatisticsSelector(grpStatisticalData, this, SWT.NONE);
@@ -360,7 +360,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		GridData lblStartAnalysisLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStartAnalysis.setLayoutData(lblStartAnalysisLData);
 		lblStartAnalysisLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStartAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_20+"\n" + //$NON-NLS-2$
+		lblStartAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_20+"\n" + //$NON-NLS-2$ //$NON-NLS-1$
 				Messages.SubstitutionAnalysisConfigPanel_22);
 		
 		startBtn = new Button(grpAnalysisStart, SWT.PUSH);

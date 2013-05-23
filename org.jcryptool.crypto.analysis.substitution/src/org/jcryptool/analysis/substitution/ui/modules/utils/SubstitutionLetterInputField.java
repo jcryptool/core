@@ -23,10 +23,12 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
+import org.jcryptool.crypto.classic.model.algorithm.InputVerificationResultKeyNotInAlphabet;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
 
 public class SubstitutionLetterInputField extends Composite {
 
+	private static final String RESULTTYPE_ALPHAPROBLEM = "alpha-problem";
 	private Mode mode;
 	private AbstractAlphabet alphabet;
 	private Text text;
@@ -144,6 +146,10 @@ public class SubstitutionLetterInputField extends Composite {
 		@Override
 		public boolean isValid() {
 			return false;
+		}
+		@Override
+		public Object getResultType() {
+			return RESULTTYPE_ALPHAPROBLEM;
 		}
 	
 	}
@@ -353,6 +359,54 @@ public class SubstitutionLetterInputField extends Composite {
 			@Override
 			public String getName() {
 				return "character"; //$NON-NLS-1$
+			}
+			
+			@Override
+			protected boolean canAutocorrect(InputVerificationResult result) {
+				// offers autocorrection for chars which are not accepted lowercase, but uppercase, or the other way round
+				if(result.getResultType().equals(RESULTTYPE_ALPHAPROBLEM)) {
+					Character errorChar = null;
+					for(Character c: getTextfield().getText().toCharArray()) {
+						if(!alphabet.contains(c)) {
+							errorChar = c;
+						}
+					}
+					if(errorChar == null) return false;
+					if(alphabet.contains(Character.toUpperCase(errorChar))) {
+						return true;
+					}
+					if(alphabet.contains(Character.toLowerCase(errorChar))) {
+						return true;
+					}
+				}
+				return false;
+			}
+
+			@Override
+			protected void autocorrect(InputVerificationResult result) {
+				if(result.getResultType().equals(RESULTTYPE_ALPHAPROBLEM)) {
+					String correctedKey = getTextfield().getText();
+					Character errorChar = null;
+					for(Character c: getTextfield().getText().toCharArray()) {
+						if(!alphabet.contains(c)) {
+							errorChar = c;
+						}
+					}
+					int pos = correctedKey.indexOf(errorChar);
+					
+					
+					correctedKey = getTextfield().getText().substring(0, pos);
+					if(alphabet.contains(Character.toUpperCase(errorChar))) {
+						correctedKey += Character.toUpperCase(errorChar);
+					} else if(alphabet.contains(Character.toLowerCase(errorChar))) {
+						correctedKey += Character.toLowerCase(errorChar);
+					}
+					if(pos < getTextfield().getText().length()-1) {
+						correctedKey += getTextfield().getText().substring(pos+1);
+					}
+
+					setTextfieldTextExternal(correctedKey);
+				}
 			}
 	
 		};

@@ -72,6 +72,11 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
     @Override
     protected boolean mayFinish() {
     	boolean mayFinish = this.getSubstKeyInput() != null && this.getSubstKeyInput().getContent() != null;
+    	if(getSubstKeyInput().getContent() != null) {
+    		if(!verifyKeyReallyChangesPlaintext(getSelectedAlphabet(), getSubstKeyInput().getContent())) {
+    			return false;
+    		}
+    	}
 		return mayFinish;
     }
     
@@ -155,16 +160,6 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 					Map<Character, Character> incompleteMapping = getKeyEditor().getCharMapping();
 					return generateIncompleteMappingVerificationResult(incompleteMapping);
 				}
-			}
-
-			private boolean verifyKeyReallyChangesPlaintext(AbstractAlphabet selectedAlphabet,
-					SubstitutionKey generateSubstKeyFromCompleteMapping) {
-				for(char c: selectedAlphabet.getCharacterSet()) {
-					if(!generateSubstKeyFromCompleteMapping.getSubstitutionFor(c).equals(Character.valueOf(c))) {
-						return true;
-					}
-				}
-				return false;
 			}
 
 			private InputVerificationResult generateIncompleteMappingVerificationResult(Map<Character, Character> incompleteMapping) {
@@ -273,6 +268,16 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 		keyGroup.setText("");
 
 		initializeKeyEditor(keyGroup, getSelectedAlphabet());
+	}
+	
+	private static boolean verifyKeyReallyChangesPlaintext(AbstractAlphabet selectedAlphabet,
+			SubstitutionKey generateSubstKeyFromCompleteMapping) {
+		for(char c: selectedAlphabet.getCharacterSet()) {
+			if(!generateSubstKeyFromCompleteMapping.getSubstitutionFor(c).equals(Character.valueOf(c))) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
