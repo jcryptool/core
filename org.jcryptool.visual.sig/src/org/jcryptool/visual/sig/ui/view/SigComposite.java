@@ -248,7 +248,7 @@ public class SigComposite extends Composite implements PaintListener {
         toolBarMenu.add(action);
         
         //Check if called by JCT-CA
-        if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
         	btnReturn.setVisible(true); //Set button to return visible
 		} 
  
