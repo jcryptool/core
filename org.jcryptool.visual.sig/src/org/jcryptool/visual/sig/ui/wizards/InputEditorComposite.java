@@ -23,6 +23,7 @@ public class InputEditorComposite extends Composite {
 		text.setBounds(10, 10, 430, 215);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		text.setTextLimit(TEXTLIMIT);
+		text.setFocus();
 
 		Label lblToSaveThe = new Label(this, SWT.NONE);
 		lblToSaveThe.setBounds(10, 231, 289, 15);

@@ -15,6 +15,7 @@ public class SignatureWizard extends Wizard{
 	public SignatureWizard() {
 		super();
 		name = "SignatureWizard";
+		setWindowTitle(Messages.SignatureWizard_Title);
 	}	
 	
 	@Override

@@ -15,6 +15,7 @@ public class HashWizard extends Wizard{
 	public HashWizard() {
 		super();
 		name = "HashWizard";
+		setWindowTitle(Messages.HashWizard_Title);
 	}	
 	
 	@Override

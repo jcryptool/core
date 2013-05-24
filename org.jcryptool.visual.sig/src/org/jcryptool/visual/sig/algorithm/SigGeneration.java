@@ -5,7 +5,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 
 public class SigGeneration {
-	public static String signature;
+	public String signature;
 
 	/**
 	 * This method signed a hash stored in Hash.jave with a given signature
@@ -18,9 +18,14 @@ public class SigGeneration {
 	 * @return
 	 * @throws Exception
 	 */
-	public static byte[] SignInput(String signaturemethod, byte[] input)
-			throws Exception {
-
+	public static byte[] SignInput(String signaturemethod, byte[] input) throws Exception {
+		//Check if called by JCT-CA
+		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+			//Not called, use key from keystore
+		} else {
+			//Called, use their key
+		}
+		
 		// get String to generate the key
 		String keySig = null;
 		// Generators are currently available for RSA and DSA.
@@ -50,9 +55,8 @@ public class SigGeneration {
 			sig.update(input);
 			signatureArray = sig.sign();
 
-			signature = new String(Hash.bytesToHex(signatureArray)); // Hex
-																		// String
-			org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;
+			org.jcryptool.visual.sig.algorithm.Input.signature = signatureArray;															// String
+			org.jcryptool.visual.sig.algorithm.Input.signatureHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(signatureArray);
 
 			return signatureArray;
 		

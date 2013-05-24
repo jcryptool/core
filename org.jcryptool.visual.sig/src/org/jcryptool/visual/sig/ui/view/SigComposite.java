@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -43,7 +44,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 public class SigComposite extends Composite implements PaintListener {
 	private Text txtHash;
 	private Text txtGeneralDescription;
-	private Text txtSignature;
 	private Canvas canvas1;
 	private Text txtDescriptionOfStep1;
 	private Text txtDescriptionOfStep2;
@@ -58,6 +58,7 @@ public class SigComposite extends Composite implements PaintListener {
 	private Label lblProgress;
 	private Label lblHash;
 	private Label lblSignature;
+	private Button btnReturn;
 	SigComposite sc = this;
 	private int hash = 0; //Values: 0-4. Hash and signature contain the selected method; default is 0
 	private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5, 
@@ -209,22 +210,24 @@ public class SigComposite extends Composite implements PaintListener {
 		btnChooseInput.setBounds(0, 0, 136, 41);
 		btnChooseInput.setText(Messages.SigComposite_btnChooseInput);
 		
+		btnOpenInEditor = new Button(canvas1, SWT.NONE);
+		btnOpenInEditor.setBounds(451, 352, 167, 40);
+		btnOpenInEditor.setEnabled(false);
+		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
+		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
 		grpSignedDoc.setBounds(463, 220, 212, 269);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
-		txtSignature = new Text(grpSignedDoc, SWT.BORDER | SWT.WRAP);
-		txtSignature.setText(""); 
-		txtSignature.setBounds(10, 145, 188, 56);
-		
-		btnOpenInEditor = new Button(grpSignedDoc, SWT.NONE);
-		btnOpenInEditor.setEnabled(false);
-		btnOpenInEditor.setBounds(10, 220, 109, 26);
-		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
-		
 		Label lblHashhex = new Label(grpSignatureGeneration, SWT.NONE);
 		lblHashhex.setBounds(34, 431, 59, 14);
-		lblHashhex.setText("Hash (Hex)");
+		lblHashhex.setText("Hash (hex)");
+		
+		btnReturn = new Button(grpSignatureGeneration, SWT.NONE);
+		btnReturn.setBounds(10, 499, 117, 28);
+		btnReturn.setText(Messages.SigComposite_btnReturn);
+		btnReturn.setVisible(false); //Invisible by default
+		
 
 		createEvents();
 		
@@ -234,9 +237,14 @@ public class SigComposite extends Composite implements PaintListener {
 		
 		//Adds reset button to the toolbar
 		IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
-        Action action = new Action("wub", IAction.AS_PUSH_BUTTON) {public void run() {Reset(0);}}; //$NON-NLS-1$
+        Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {Reset(0);}}; //$NON-NLS-1$
         action.setImageDescriptor(SigPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
         toolBarMenu.add(action);
+        
+        //Check if called by JCT-CA
+        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+        	btnReturn.setVisible(true); //Set button to return visible
+		} 
  
 	}
 
@@ -432,7 +440,7 @@ public class SigComposite extends Composite implements PaintListener {
                     	tabDescription.setSelection(3);
                     	canvas1.redraw();
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
-                    	txtSignature.setText(org.jcryptool.visual.sig.algorithm.SigGeneration.signature);
+                    	//txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
                     }
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -449,6 +457,34 @@ public class SigComposite extends Composite implements PaintListener {
 		            }
 		        });
 		
+				//Adds a Listener for OpenInEditor
+				btnOpenInEditor.addSelectionListener(new SelectionListener() {
+					public void widgetDefaultSelected(SelectionEvent e) {
+				    }
+				    public void widgetSelected(SelectionEvent e) {
+			    		MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+		                messageBox.setText(Messages.SigComposite_MessageTitle); 
+		                messageBox.setMessage(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+		                messageBox.open();		        
+				   }//end widgetSelected
+				});
+				
+				//Adds a Listener for Return Button
+				btnOpenInEditor.addSelectionListener(new SelectionListener() {
+					public void widgetDefaultSelected(SelectionEvent e) {
+				    }
+				    public void widgetSelected(SelectionEvent e) {
+				    	try {
+				    		//Close view
+				    		
+				    		//go to JCT-CA view
+				        } //end try
+				    	catch (Exception ex) {
+				    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+				        }//end catch
+				   }//end widgetSelected
+				});
+		
 	}//end createEvents
 	
 	/**
@@ -461,8 +497,8 @@ public class SigComposite extends Composite implements PaintListener {
 		String s = String.format(Messages.SigComposite_lblProgress, step+1);
 		//If the user already finished other steps, reset everything to this step (keep the chosen algorithms)
 		switch (step) {
-			case 0: btnHash.setEnabled(false); lblHash.setText(""); 
-			case 1: btnSignature.setEnabled(false); lblSignature.setText(""); txtHash.setText(""); txtSignature.setText("");
+			case 0: btnHash.setEnabled(false); //lblHash.setText(""); 
+			case 1: btnSignature.setEnabled(false); txtHash.setText(""); //txtSignature.setText(""); lblSignature.setText(""); 
 			case 2: btnOpenInEditor.setEnabled(false); break;
 			default: break;	
 		}
@@ -507,4 +543,5 @@ public class SigComposite extends Composite implements PaintListener {
 		return x;
 		
 	}
+	
 }

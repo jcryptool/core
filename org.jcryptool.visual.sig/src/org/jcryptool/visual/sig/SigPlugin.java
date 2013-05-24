@@ -11,7 +11,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class SigPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.jcryptool.visual.sig"; //$NON-NLS-1$
+    public static final String PLUGIN_ID = "org.jcryptool.visual.sig"; 
 
     /**
      * Returns an image descriptor for the image file at the given plug-in

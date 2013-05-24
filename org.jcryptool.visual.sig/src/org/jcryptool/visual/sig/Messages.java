@@ -27,10 +27,12 @@ public class Messages {
 	public static String SigComposite_btnHash;
 	public static String SigComposite_btnOpenInEditor;
 	public static String SigComposite_btnReset;
+	public static String SigComposite_btnReturn;
 	public static String SigComposite_description;
 	public static String SigComposite_group_box_name;
 	public static String SigComposite_btnChooseInput;
 	public static String SigComposite_lblHeader;
+	public static String SigComposite_MessageTitle;
 
 	static {
 		// initialize resource bundle

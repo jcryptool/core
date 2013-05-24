@@ -59,7 +59,7 @@ public class HashComposite extends Composite implements SelectionListener {
 	    rdo1 = new Button(grpHashes, SWT.RADIO);
 	    rdo1.setSelection(true);
 	    rdo1.setBounds(10, 19, 91, 18);
-	    rdo1.setText(Messages.HashWizard_rdomd5);
+	    rdo1.setText("MD5 (128)");
 	    
 	    rdo2 = new Button(grpHashes, SWT.RADIO);
 	    rdo2.setBounds(10, 43, 91, 18);
@@ -84,7 +84,15 @@ public class HashComposite extends Composite implements SelectionListener {
 	    rdo4.addSelectionListener(this);
 	    rdo5.addSelectionListener(this);
 	    
-	    }
+	    //If called by JCT-CA only SHA-256 can be used!
+	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+			rdo1.setEnabled(false);
+			rdo2.setEnabled(false);
+			rdo4.setEnabled(false);
+			rdo5.setEnabled(false);
+			rdo3.setSelection(true);
+		}    
+	}
 
 	/**
 	 * @return the grpHashes

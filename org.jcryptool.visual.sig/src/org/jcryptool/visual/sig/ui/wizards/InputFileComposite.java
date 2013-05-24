@@ -24,6 +24,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 	private Text txtPath;
 	private File file = null;
 	private InputFileWizardPage page;
+	private int maxSize = 10485760; //Maximal size of the file (10 MB)
 
 	public InputFileComposite(Composite parent, int style, InputFileWizardPage p) {
 		super(parent, style);
@@ -37,6 +38,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 		btnBrowse.setBounds(339, 6, 94, 28);
 		btnBrowse.setText(Messages.InputFileWirard_btnBrowse);
 		btnBrowse.addSelectionListener(this);
+		btnBrowse.setFocus();
 		
 		page = p;
 	}
@@ -55,14 +57,24 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 			strFile = fd.open();
 			
 			file = new File(strFile);
-			//convertInput(file);
-			org.jcryptool.visual.sig.algorithm.Input.data = getBytesFromFile(file);
+			//long l = file.length();
+			if (file.length() > maxSize) {
+				MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
+                messageBox.setText(Messages.InputWizard_WarningTitle); 
+                messageBox.setMessage(Messages.InputWizard_WarningMessageTooLarge);
+                messageBox.open();				
+                throw new Exception ("The file " + file.getName() + " is too large.");
+			}
+			
+			//Call a method that converts the input file to a byte array and save the returned array in Input.java
+			org.jcryptool.visual.sig.algorithm.Input.data = getBytesFromFile(file); 
+			
 			if (org.jcryptool.visual.sig.algorithm.Input.data == null) {
 				 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                  messageBox.setText(Messages.InputWizard_WarningTitle); 
-                 messageBox.setMessage(Messages.InputWizard_WarningMessage);
+                 messageBox.setMessage(Messages.InputWizard_WarningMessageEmpty);
                  messageBox.open();				
-                 throw new Exception ("The file " + file.getName() + " appears to be empty");
+                 throw new Exception ("The file " + file.getName() + " appears to be empty.");
 			}
 			
 			txtPath.setText(file.getAbsolutePath());
@@ -86,18 +98,14 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 	 * @return The byte array
 	 */
 	public byte[] getBytesFromFile(File file) throws IOException {
-		 
+		int maxSize = 10485760; //10 MB
 	    InputStream is = new FileInputStream(file);
 	 
-	    // Get the size of the file
+	    // Get the size (in bytes) of the file
 	    long length = file.length();
 	 
-	    /*
-	     * You cannot create an array using a long type. It needs to be an int
-	     * type. Before converting to an int type, check to ensure that file is
-	     * not loarger than Integer.MAX_VALUE;
-	     */
-	    if (length > Integer.MAX_VALUE || length <= 0) {
+	    //Check if the file isn't 0 or larger than 10 MB
+	    if (length > maxSize || length <= 0) {	
 	        //File is too large to process or empty
 	    	is.close();
 	        return null;

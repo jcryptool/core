@@ -13,6 +13,7 @@ public class InputWizard extends Wizard {
 	// Constructor
 	public InputWizard() {
 		super();
+		setWindowTitle(Messages.InputWizard_Title);
 	}
 
 	@Override

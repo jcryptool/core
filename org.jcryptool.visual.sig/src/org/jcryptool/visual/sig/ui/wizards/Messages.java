@@ -49,7 +49,11 @@ public class Messages {
 	public static String InputEditorWizard_Label;
 	public static String InputFileWirard_btnBrowse;
 	public static String InputWizard_WarningTitle;
-	public static String InputWizard_WarningMessage;
+	public static String InputWizard_WarningMessageTooLarge;
+	public static String InputWizard_WarningMessageEmpty;
+	public static String InputWizard_Title;
+	public static String HashWizard_Title;
+	public static String SignatureWizard_Title;
 	
 	//InputWizard
 	//Page 1
