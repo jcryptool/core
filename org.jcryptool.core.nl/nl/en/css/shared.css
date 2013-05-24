@@ -167,15 +167,3 @@ img.icon {
     margin: 3px 8px 0 6px;
     float: left;
 }
-
-/* footer */
-div#footer {
-    padding: 15px;
-}
-
-div#footer p {
-    font-size: 11px;
-    line-height: 13px;
-    text-align: center;
-    color: #999;
-}
