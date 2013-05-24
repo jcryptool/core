@@ -15,4 +15,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.jctca.Activator
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts
-Export-Package: org.jcryptool.visual.jctca.CertificateClasses
+Export-Package: org.jcryptool.visual.jctca.listeners
