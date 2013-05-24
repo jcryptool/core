@@ -13,12 +13,15 @@ public class SignatureNotifier {
 		
 	}
 	
-	public void signatureDone(){
-		byte[] sig = org.jcryptool.visual.sig.algorithm.Input.signature;
-		String file = org.jcryptool.visual.sig.algorithm.Input.path;
-		String text = new String(org.jcryptool.visual.sig.algorithm.Input.data);
-		KeyStoreAlias privAlias = org.jcryptool.visual.sig.algorithm.Input.privateKey;
-		KeyStoreAlias pubAlias = org.jcryptool.visual.sig.algorithm.Input.publicKey;
+	/**
+	 * has to be called when something has been signed in de SigVis Plugin
+	 * @param sig - the signature
+	 * @param file - the path to the file if a file has been signed, otherwise null
+	 * @param text - the taxt that has been signed, otherwise null
+	 * @param privAlias - KeyStoreAlias of the private Key
+	 * @param pubAlias - KeyStoreAlias of the public Key
+	 */
+	public void signatureDone(byte[] sig, String file, String text, KeyStoreAlias privAlias, KeyStoreAlias pubAlias){
 		Signature signature = new Signature(sig, file,text, new Date(System.currentTimeMillis()), privAlias, pubAlias);
 		CertificateCSRR.getInstance().addSignature(signature);
 	}
