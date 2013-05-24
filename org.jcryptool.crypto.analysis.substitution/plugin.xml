@@ -7,9 +7,8 @@
       <view
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
-            fastViewWidthRatio="0.7"
             icon="icons/sample.gif"
-            id="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView"
+            id="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
             name="%view.name">
       </view>
    </extension>
@@ -17,7 +16,7 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             name="%analysis.name2"
-            viewId="org.jcryptool.crypto.analysis.substitution.views.SubstitutionAnalysisView">
+            viewId="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView">
       </analysis>
    </extension>
 
