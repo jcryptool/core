@@ -85,13 +85,13 @@ public class HashComposite extends Composite implements SelectionListener {
 	    rdo5.addSelectionListener(this);
 	    
 	    //If called by JCT-CA only SHA-256 can be used!
-	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
-			rdo1.setEnabled(false);
-			rdo2.setEnabled(false);
-			rdo4.setEnabled(false);
-			rdo5.setEnabled(false);
-			rdo3.setSelection(true);
-		}    
+//	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+//			rdo1.setEnabled(false);
+//			rdo2.setEnabled(false);
+//			rdo4.setEnabled(false);
+//			rdo5.setEnabled(false);
+//			rdo3.setSelection(true);
+//		}    
 	}
 
 	/**

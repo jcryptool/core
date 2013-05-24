@@ -44,10 +44,12 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		rdo2.setText(Messages.SignatureWizard_RSA);
 		
 		rdo3 = new Button(grpSignatures, SWT.RADIO);
+		rdo3.setEnabled(false);
 		rdo3.setBounds(10, 67, 118, 18);
 		rdo3.setText(Messages.SignatureWizard_ECDSA);
 		
 		rdo4 = new Button(grpSignatures, SWT.RADIO);
+		rdo4.setEnabled(false);
 		rdo4.setBounds(10, 91, 118, 18);
 		rdo4.setText(Messages.SignatureWizard_RSAandMGF1);
 	
@@ -72,6 +74,8 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
 			rdo1.setEnabled(false);
 			rdo2.setSelection(true);
+			rdo3.setEnabled(false);
+			rdo4.setEnabled(false);
 		}   
 	}
 	

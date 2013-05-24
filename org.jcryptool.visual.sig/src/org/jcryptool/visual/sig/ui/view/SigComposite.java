@@ -67,6 +67,7 @@ public class SigComposite extends Composite implements PaintListener {
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
 			org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
 	private int signature = 0; //0-3
+	private String sigstring = "";
 	private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_DSA, 
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
 			org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
@@ -353,16 +354,6 @@ public class SigComposite extends Composite implements PaintListener {
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));  
                     }//end if
                     
-		    		/*
-		    		//--------------
-                    //Enable to select the hash method
-                	btnHash.setEnabled(true); 
-                	//Activate the second tab of the description
-                	tabDescription.setSelection(1);
-                	canvas1.redraw();
-                	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,2));    
-                	//-----------------
-                	 */
 		        } //end try
 		    	catch (Exception ex) {
 		    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -392,7 +383,7 @@ public class SigComposite extends Composite implements PaintListener {
                     	hash = wiz.getHash(); //get hash method (an integer)
                     	lblHash.setText(hashes[hash]);
                     	
-                    	//org.jcryptool.visual.sig.algorithm.Hash.hashmethod = hashes[hash]; //Set the hash method
+                    	//Arguments: Hash method, data to hash
                     	org.jcryptool.visual.sig.algorithm.Hash.hashInput(hashes[hash], org.jcryptool.visual.sig.algorithm.Input.data); //Hash the input
                     	
                     	//Update the GUI:
@@ -400,7 +391,7 @@ public class SigComposite extends Composite implements PaintListener {
                         tabDescription.setSelection(2); //Activate the third tab of the description
                         canvas1.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress,3));   
-                        txtHash.setText(org.jcryptool.visual.sig.algorithm.Hash.hash);
+                        txtHash.setText(org.jcryptool.visual.sig.algorithm.Input.hashHex);
                     }//end if
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -429,11 +420,11 @@ public class SigComposite extends Composite implements PaintListener {
                     	signature = wiz.getSignature();
                     	lblSignature.setText(signatures[signature]);
                     	
-                    	// index of String[] sigmethods witch contains all possible methods
-                    	int s = chooseSignature();     
-                    	String sig = sigmethods[s];               	
-                    	// Creates the signature for the calculated hash.
-                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(sig, org.jcryptool.visual.sig.algorithm.Input.data);
+                    	//index of String[] sigmethods witch contains all possible methods
+                    	     
+                    	//String sig = sigmethods[s];               	
+                    	//Creates the signature for the calculated hash. Arguments: Signature methods, data to sign
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(chooseSignature() , org.jcryptool.visual.sig.algorithm.Input.data);
                     	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description
@@ -516,31 +507,56 @@ public class SigComposite extends Composite implements PaintListener {
 	 * @param si chosen signature method
 	 * @return index of String[] sigmethods witch contains all possible methods
 	 */
-	private int chooseSignature() {
-		int x = 123;
+	private String chooseSignature() {
+		String sigstring = "";
 		
 		// Temporary solution
 		
-		if (hash == 0 && signature == 1) x = 0; //MD5withRSA
+		if (hashes[hash].contains("MD5")) {
+			sigstring = "MD5withRSA";
+		}
 		
-		if (hash == 1 && signature == 0) x = 1; //SHA1withDSA
-		if (hash == 1 && signature == 1) x = 2; //SHA1withRSA
-		if (hash == 1 && signature == 2) x = 3; //SHA1withECDSA
-		if (hash == 1 && signature == 3) x = 4; //SHA1withRSAandMGF1
+		if (hashes[hash].contains("SHA-1")) {
+			sigstring = "SHA1with";
+		}
+		if (hashes[hash].contains("SHA-256")) {
+			sigstring = "SHA256with";
+		}
+		if (hashes[hash].contains("SHA-384")) {
+			sigstring = "SHA384with";
+		}
+		if (hashes[hash].contains("SHA-512")) {
+			sigstring = "SHA512with";
+		}
 		
-		if (hash == 2 && signature == 1) x = 5; //SHA256withRSA
-		if (hash == 2 && signature == 2) x = 6; //SHA256withECDSA
-		if (hash == 2 && signature == 3) x = 7; //SHA256withRSAandMGF1
+		if (signatures[signature].contains("RSA")) {
+			sigstring = sigstring + "RSA";
+		}
+		if (signatures[signature].contains("DSA")) {
+			sigstring = sigstring + "DSA";
+		}
 		
-		if (hash == 3 && signature == 1) x = 8; //SHA384withRSA
-		if (hash == 3 && signature == 2) x = 9; //SHA384withECDSA
-		if (hash == 3 && signature == 3) x = 10; //SHA384withRSAandMGF1
 		
-		if (hash == 4 && signature == 1) x = 11; //SHA512withRSA
-		if (hash == 4 && signature == 2) x = 12; //SHA512withECDSA
-		if (hash == 4 && signature == 3) x = 13; //SHA512withRSAandMGF1
+//		if (hash == 0 && signature == 1) x = 0; //MD5withRSA
+//		
+//		if (hash == 1 && signature == 0) x = 1; //SHA1withDSA
+//		if (hash == 1 && signature == 1) x = 2; //SHA1withRSA
+//		if (hash == 1 && signature == 2) x = 3; //SHA1withECDSA
+//		if (hash == 1 && signature == 3) x = 4; //SHA1withRSAandMGF1
+//		
+//		if (hash == 2 && signature == 1) x = 5; //SHA256withRSA
+//		if (hash == 2 && signature == 2) x = 6; //SHA256withECDSA
+//		if (hash == 2 && signature == 3) x = 7; //SHA256withRSAandMGF1
+//		
+//		if (hash == 3 && signature == 1) x = 8; //SHA384withRSA
+//		if (hash == 3 && signature == 2) x = 9; //SHA384withECDSA
+//		if (hash == 3 && signature == 3) x = 10; //SHA384withRSAandMGF1
+//		
+//		if (hash == 4 && signature == 1) x = 11; //SHA512withRSA
+//		if (hash == 4 && signature == 2) x = 12; //SHA512withECDSA
+//		if (hash == 4 && signature == 3) x = 13; //SHA512withRSAandMGF1
 		
-		return x;
+		return sigstring;
 		
 	}
 	
