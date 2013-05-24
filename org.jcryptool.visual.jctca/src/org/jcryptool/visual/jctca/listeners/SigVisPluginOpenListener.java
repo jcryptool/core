@@ -18,6 +18,7 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.sig.algorithm.*;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
+import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 
 public class SigVisPluginOpenListener implements SelectionListener {
 	Button btn_check;
