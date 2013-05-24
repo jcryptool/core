@@ -117,7 +117,7 @@ public class ShowReq implements Views {
 		lbl_value_country.setLayoutData(lbl_gd);
 
 		lbl_mail = new Label(right, SWT.None);
-		lbl_mail.setText("E-Mailadresse:");
+		lbl_mail.setText("E-Mail-Adresse:");
 		lbl_value_mail = new Label(right, SWT.FILL);
 		lbl_value_mail.setText("");
 		lbl_value_mail.setLayoutData(lbl_gd);
