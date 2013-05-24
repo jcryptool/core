@@ -17,7 +17,8 @@ import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 public class SigGeneration {
 	public String signature;
 	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
-
+	private static PrivateKey k = null;
+	
 	/**
 	 * This method signed a hash stored in Hash.jave with a given signature
 	 * method.
@@ -31,37 +32,34 @@ public class SigGeneration {
 	 */
 	public static byte[] SignInput(String signaturemethod, byte[] input) throws Exception {
 		//Check if called by JCT-CA
-		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
-			//Not called, use key from keystore
-		} else {
-			//Called, use their key
+		if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
+			KeyStoreManager ksm = KeyStoreManager.getInstance();
+			ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+			org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
+			k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
 		}
 		
 		byte[] signature = null; //Stores the signature
 		//signaturemethod = "DSA";
-		PrivateKey k = null;
+		
         
 		try {
 			
-			//Get string to generate key
-			if (signaturemethod.contains("DSA")) {
-				k = initKeystoreDSA();
-			} else {
-				if (signaturemethod.contains("RSA")) {
-					k = initKeystoreRSA();
+			if (k == null) { //Get key
+				
+				if (signaturemethod.contains("DSA")) {
+					k = initKeystoreDSA();
 				} else {
-					if (signaturemethod.contains("ECDSA")) {
-						//method = "ECDSA";
+					if (signaturemethod.contains("RSA")) {
+						k = initKeystoreRSA();
+					} else {
+						if (signaturemethod.contains("ECDSA")) {
+							//method = "ECDSA";
+						}
 					}
 				}
 			}
-			
-			//Test
-//			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-//		    keyGen.initialize(1024);
-//		    KeyPair key = keyGen.generateKeyPair();
-		    
-		        
+			        
 			// Get a signature object using the specified combo and sign the data with the private key
 			Signature sig = Signature.getInstance(signaturemethod);
 	        //sig.initSign(key.getPrivate());

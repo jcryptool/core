@@ -25,6 +25,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.Perspective;
+import org.eclipse.ui.internal.Workbench;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.Messages;
@@ -243,7 +248,7 @@ public class SigComposite extends Composite implements PaintListener {
         toolBarMenu.add(action);
         
         //Check if called by JCT-CA
-        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+        if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
         	btnReturn.setVisible(true); //Set button to return visible
 		} 
  
@@ -467,7 +472,12 @@ public class SigComposite extends Composite implements PaintListener {
 				    public void widgetSelected(SelectionEvent e) {
 				    	try {
 				    		//Close view
-				    		
+				    		IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
+				    		//Perspective perspective = page.getPerspective();
+				    		IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
+				    		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
+				    		page.closePerspective(null, false, true);
+			    		//perspective.getViewFactory.releaseView(ref);
 				    		//go to JCT-CA view
 				        } //end try
 				    	catch (Exception ex) {
@@ -515,7 +525,6 @@ public class SigComposite extends Composite implements PaintListener {
 		if (hashes[hash].contains("MD5")) {
 			sigstring = "MD5withRSA";
 		}
-		
 		if (hashes[hash].contains("SHA-1")) {
 			sigstring = "SHA1with";
 		}
@@ -535,26 +544,6 @@ public class SigComposite extends Composite implements PaintListener {
 		if (signatures[signature].contains("DSA")) {
 			sigstring = sigstring + "DSA";
 		}
-		
-		
-//		if (hash == 0 && signature == 1) x = 0; //MD5withRSA
-//		
-//		if (hash == 1 && signature == 0) x = 1; //SHA1withDSA
-//		if (hash == 1 && signature == 1) x = 2; //SHA1withRSA
-//		if (hash == 1 && signature == 2) x = 3; //SHA1withECDSA
-//		if (hash == 1 && signature == 3) x = 4; //SHA1withRSAandMGF1
-//		
-//		if (hash == 2 && signature == 1) x = 5; //SHA256withRSA
-//		if (hash == 2 && signature == 2) x = 6; //SHA256withECDSA
-//		if (hash == 2 && signature == 3) x = 7; //SHA256withRSAandMGF1
-//		
-//		if (hash == 3 && signature == 1) x = 8; //SHA384withRSA
-//		if (hash == 3 && signature == 2) x = 9; //SHA384withECDSA
-//		if (hash == 3 && signature == 3) x = 10; //SHA384withRSAandMGF1
-//		
-//		if (hash == 4 && signature == 1) x = 11; //SHA512withRSA
-//		if (hash == 4 && signature == 2) x = 12; //SHA512withECDSA
-//		if (hash == 4 && signature == 3) x = 13; //SHA512withRSAandMGF1
 		
 		return sigstring;
 		
