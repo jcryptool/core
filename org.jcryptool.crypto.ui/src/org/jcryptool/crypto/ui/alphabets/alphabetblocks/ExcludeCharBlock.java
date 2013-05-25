@@ -2,6 +2,7 @@ package org.jcryptool.crypto.ui.alphabets.alphabetblocks;
 
 import java.util.List;
 
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.ExcludeCharAlphabet;
 
@@ -30,17 +31,17 @@ public class ExcludeCharBlock extends BlockAlphabet implements HasOriginalBlockA
 	}
 
 	private static String generateLeaveOutName(BlockAlphabet origAlpha, char leaveOutChar) {
-		if(origAlpha.getBlockName().equals(AtomAlphabet.alphabetContentAsString(origAlpha.getCharacterSet()))) {
+		if(origAlpha.getBlockName().equals(AbstractAlphabet.alphabetContentAsString(origAlpha.getCharacterSet()))) {
 			List<Character> chars = ExcludeCharAlphabet.createExclusionCharset(origAlpha, leaveOutChar);
 			char[] charsArray = new char[chars.size()];
 			for (int i = 0; i < chars.size(); i++) {
 				charsArray[i] = chars.get(i);
 			}
-			return AtomAlphabet.alphabetContentAsString(charsArray);
+			return AbstractAlphabet.alphabetContentAsString(charsArray);
 		} else if(origAlpha instanceof ExcludeCharBlock) {
-			return origAlpha.getBlockName()+", "+ AtomAlphabet.getPrintableCharRepresentation(leaveOutChar);
+			return origAlpha.getBlockName()+", "+ AbstractAlphabet.getPrintableCharRepresentation(leaveOutChar);
 		} else {
-			return origAlpha.getBlockName() + " without " + AtomAlphabet.getPrintableCharRepresentation(leaveOutChar);
+			return origAlpha.getBlockName() + " without " + AbstractAlphabet.getPrintableCharRepresentation(leaveOutChar);
 		}
 	}
 

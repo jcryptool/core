@@ -101,6 +101,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 		return mainComposite;
 	}
 	
+	@Override
 	public void createPartControl(Composite parent) {
 		mainComposite = new Composite(parent, SWT.NONE);
 		mainComposite.setLayout(new GridLayout(1, false));
@@ -188,6 +189,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 
 	private void makeActions() {
 		action1 = new Action() {
+			@Override
 			public void run() {
 				resetAnalysis();
 			}
@@ -214,6 +216,7 @@ public class SubstitutionAnalysisView extends ViewPart {
 	/**
 	 * Passing the focus request to the viewer's control.
 	 */
+	@Override
 	public void setFocus() {
 		getMainComposite().setFocus();
 	}

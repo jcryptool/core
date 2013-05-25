@@ -121,10 +121,10 @@ public class FriedmanGraph extends Graph {
 			for(int i=currentShift; i<currentShift+barCount; i++)
 			{
 				//Only shift when the bar is no overlay bar.
-				barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex());
+				barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex());
 				//barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(), biggestBarIndex);
-				((Bar)bars.get(i)).setBox(barBox); ((Bar)bars.get(i)).setGC(gc);
-				((Bar)bars.get(i)).drawBar();
+				bars.get(i).setBox(barBox); bars.get(i).setGC(gc);
+				bars.get(i).drawBar();
 			}
 		}
 	}
@@ -153,8 +153,8 @@ public class FriedmanGraph extends Graph {
 
         thisFontColor.setColor(gc);
         for (int i=currentShift; i<currentShift+barCount; i++) {
-            textBox = calculateTextContainer(descDrawingRect, ((Bar) bars.get(i)).getIndex());
-            ((Bar) bars.get(i)).drawLowerLabel(textBox, gc);
+            textBox = calculateTextContainer(descDrawingRect, bars.get(i).getIndex());
+            bars.get(i).drawLowerLabel(textBox, gc);
         }
     }
 
@@ -213,7 +213,7 @@ public class FriedmanGraph extends Graph {
 		int beforeWhich = -1;
 		for(int i=0; i<bars.size(); i++)
 		{
-			if(compareBarOrder(myBar, (Bar)bars.get(i)) && beforeWhich == -1) {
+			if(compareBarOrder(myBar, bars.get(i)) && beforeWhich == -1) {
 				beforeWhich = i;
 			}
 		}
@@ -268,7 +268,7 @@ public class FriedmanGraph extends Graph {
 	public final boolean setDraggedPixels(final int myPixelsDifference, final boolean isMouseButtonHold) {
 		if(calcBiggestBarIndex() > 0)
 		{
-			int myShift = (-1)* (int)Math.round((double)myPixelsDifference / calculateBarHorizSpace());
+			int myShift = (-1)* (int)Math.round(myPixelsDifference / calculateBarHorizSpace());
 			boolean changed = savedShift + myShift != getCurrentShift();
 			setCurrentShift(Math.max(savedShift + myShift, 0));
 			//setCurrentShift(modulo(getCurrentShift(), calcBiggestBarIndex()));
@@ -315,7 +315,7 @@ public class FriedmanGraph extends Graph {
 		boolean changed=false;
 		if(bars.size() > 0)
 		{
-			double newBarCount = (double)barCount / zoomFactor;
+			double newBarCount = barCount / zoomFactor;
 			int newCount = (int)Math.round(newBarCount);
 			if(newCount >= barCount) {
 				newCount = barCount - 1;
@@ -345,7 +345,7 @@ public class FriedmanGraph extends Graph {
 		boolean changed=false;
 		if(bars.size() > 0)
 		{
-			double newBarCount = (double)barCount * zoomFactor;
+			double newBarCount = barCount * zoomFactor;
 			int newCount = (int)Math.round(newBarCount);
 			if(newCount <= barCount) {
 				newCount = barCount + 1;

@@ -75,7 +75,8 @@ public class OptionsDialogGui extends Dialog {
                 bapply.setLayoutData(bapplyLData);
                 bapply.setText(Messages.OptionsDialogGui_button_preview);
                 bapply.addSelectionListener(new SelectionAdapter() {
-                    public void widgetSelected(SelectionEvent event) {
+                    @Override
+					public void widgetSelected(SelectionEvent event) {
                         applyPressed();
                     }
                 });

@@ -116,7 +116,8 @@ public class PreviewViewer extends org.eclipse.swt.widgets.Dialog {
                 Listener listener = new Listener() {
                     int lastIndex = text1.getTopIndex();
 
-                    public void handleEvent(Event e) {
+                    @Override
+					public void handleEvent(Event e) {
                         int index = text1.getTopIndex();
                         if (index != lastIndex) {
                             lastIndex = index;
@@ -145,7 +146,8 @@ public class PreviewViewer extends org.eclipse.swt.widgets.Dialog {
                 Listener listener = new Listener() {
                     int lastIndex = text2.getTopIndex();
 
-                    public void handleEvent(Event e) {
+                    @Override
+					public void handleEvent(Event e) {
                         int index = text2.getTopIndex();
                         if (index != lastIndex) {
                             lastIndex = index;
@@ -168,7 +170,8 @@ public class PreviewViewer extends org.eclipse.swt.widgets.Dialog {
             	buttonClose.setLayoutData(buttonCloseLData);
             	buttonClose.setText(Messages.PreviewViewer_close);
             	buttonClose.addSelectionListener(new SelectionAdapter() {
-            		public void widgetSelected(SelectionEvent evt) {
+            		@Override
+					public void widgetSelected(SelectionEvent evt) {
             			dialogShell.close();
             		}
             	});
@@ -180,7 +183,7 @@ public class PreviewViewer extends org.eclipse.swt.widgets.Dialog {
         dialogShell
                 .setLocation(getParent()
                         .toDisplay(
-                                (int) Math.round((getParent().getBounds().width - dialogShell
+                                Math.round((getParent().getBounds().width - dialogShell
                                         .getBounds().width) / 2), 10));
         dialogShell.open();
         Display display = dialogShell.getDisplay();

@@ -15,7 +15,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.jcryptool.analysis.substitution.calc.TextStatistic;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionLetterInputField.Mode;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
@@ -50,14 +50,19 @@ public class SubstitutionKeyEditor extends Composite {
 
 	private boolean displayUndefinedChars = false;
 
+
+
+	private boolean showIllustrativeMapper;
+
 	/**
 	 * Create the composite.
 	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet, List<Character> subset) {
+	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet, boolean showIllustrativeMapper, List<Character> subset) {
 		super(parent, style);
+		this.showIllustrativeMapper = showIllustrativeMapper;
 		this.plaintextChars = new LinkedList<Character>(AbstractAlphabet.calcAlphaConjunction(plaintextAlphabet.asList(), subset));
 		this.plaintextAlphabet = plaintextAlphabet;
 		this.inputs = new HashMap<Character, TextfieldInput<Character>>();
@@ -75,7 +80,7 @@ public class SubstitutionKeyEditor extends Composite {
 	 * @param style
 	 */
 	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet) {
-		this(parent, style, plaintextAlphabet, plaintextAlphabet.asList());
+		this(parent, style, plaintextAlphabet, true, plaintextAlphabet.asList());
 	}
 	
 	public void setDisplayUndefinedChars(boolean displayUndefinedChars) {
@@ -139,11 +144,35 @@ public class SubstitutionKeyEditor extends Composite {
 	private void createSubstitutionControls(AbstractAlphabet plaintextAlphabet) {
 		char[] characterSet = plaintextAlphabet.getCharacterSet();
 		Composite centerComp = new Composite(scrollCompMain, SWT.NONE);
-		GridLayout layout = new GridLayout(plaintextChars.size(), false);
+		GridLayout layout = new GridLayout(plaintextChars.size()+(showIllustrativeMapper?2:0), false);
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		centerComp.setLayout(layout);
 		centerComp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
+		
+		if(showIllustrativeMapper) {
+			Composite compIllustration = new Composite(centerComp, SWT.NONE);
+			GridLayout layoutIllustration = new GridLayout(1, false);
+			compIllustration.setLayout(layoutIllustration);
+			GridData layoutData = new GridData();
+			compIllustration.setLayoutData(layoutData);
+
+			Label plainChar = new Label(compIllustration, SWT.NONE);
+			plainChar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+			plainChar.setText(Messages.SubstitutionKeyEditor_1);
+
+			Label arrow = new Label(compIllustration, SWT.NONE);
+			arrow.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
+			arrow.setText(String.valueOf((char) 8595));
+
+			final IllustrationSubstitutionLetterInputField characterInputControl = new IllustrationSubstitutionLetterInputField(compIllustration, plaintextAlphabet);
+			
+			//spaceholder
+			Label placeholder = new Label(centerComp, SWT.NONE);
+			GridData layoutDataPlaceHolder = new GridData();
+			layoutDataPlaceHolder.widthHint = 15;
+			placeholder.setLayoutData(layoutDataPlaceHolder);
+		}
 		
 		for (int i = 0; i < plaintextChars.size(); i++) {
 			char c = plaintextChars.get(i);
@@ -161,6 +190,7 @@ public class SubstitutionKeyEditor extends Composite {
 		Label plainChar = new Label(comp, SWT.NONE);
 		plainChar.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		plainChar.setText(AbstractAlphabet.getPrintableCharRepresentation(plaintextChar));
+		plainChar.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
 
 		Label arrow = new Label(comp, SWT.NONE);
 		arrow.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));

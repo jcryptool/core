@@ -1,5 +1,6 @@
 package org.jcryptool.crypto.ui.alphabets.alphabetblocks;
 
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 
@@ -14,7 +15,7 @@ public class RevertBlock extends BlockAlphabet implements HasOriginalBlockAlpha 
 				builder.append("\\r");
 			} else if(c == '\n') {
 				builder.append("\\n");
-			} else if ((int) c<32) {
+			} else if (c<32) {
 				builder.append("{"+((int) c)+"}");
 			} else {
 				builder.append(String.valueOf(c));
@@ -32,8 +33,8 @@ public class RevertBlock extends BlockAlphabet implements HasOriginalBlockAlpha 
 	private static String generateReverseName(BlockAlphabet alpha) {
 		if(alpha instanceof RangeBlockAlphabet) {
 			return RangeBlockAlphabet.generateRangeName(((RangeBlockAlphabet) alpha).getEndCharacter(), ((RangeBlockAlphabet) alpha).getStartCharacter());
-		} else if(alpha.getBlockName().equals(AtomAlphabet.alphabetContentAsString(alpha.getCharacterSet()))) {
-			return AtomAlphabet.alphabetContentAsString(reverseString(String.valueOf(alpha.getCharacterSet())).toCharArray());
+		} else if(alpha.getBlockName().equals(AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()))) {
+			return AbstractAlphabet.alphabetContentAsString(reverseString(String.valueOf(alpha.getCharacterSet())).toCharArray());
 		} else {
 			return "Reverse( "+alpha.getName()+" )";
 		}

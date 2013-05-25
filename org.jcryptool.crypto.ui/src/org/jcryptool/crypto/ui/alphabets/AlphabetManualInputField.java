@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
@@ -39,7 +40,7 @@ public class AlphabetManualInputField extends Composite {
 				}
 				@Override
 				public AtomAlphabet readContent() {
-					char[] chars = AtomAlphabet.parseAlphaContentFromString(getTextfield().getText());
+					char[] chars = AbstractAlphabet.parseAlphaContentFromString(getTextfield().getText());
 					return new AtomAlphabet(chars);
 				}
 				@Override
@@ -52,7 +53,7 @@ public class AlphabetManualInputField extends Composite {
 				}
 				@Override
 				public void writeContent(AtomAlphabet content) {
-					setTextfieldTextExternal(AtomAlphabet.alphabetContentAsString(content.getCharacterSet()));
+					setTextfieldTextExternal(AbstractAlphabet.alphabetContentAsString(content.getCharacterSet()));
 				}
 			};
 		}
@@ -83,7 +84,7 @@ public class AlphabetManualInputField extends Composite {
 
 	public void writeCharset(char[] characterSet) {
 		if(text != null && !text.isDisposed()) {
-			alphabetInput.setTextfieldTextExternal(AtomAlphabet.alphabetContentAsString(characterSet));
+			alphabetInput.setTextfieldTextExternal(AbstractAlphabet.alphabetContentAsString(characterSet));
 			alphabetInput.synchronizeWithUserSide();
 		}
 	}

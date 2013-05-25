@@ -81,7 +81,8 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
                 button2.setLayoutData(button2LData);
                 button2.setText(Messages.FriedmanGraphUI_start);
                 button2.addSelectionListener(new SelectionAdapter() {
-                    public void widgetSelected(SelectionEvent e) {
+                    @Override
+					public void widgetSelected(SelectionEvent e) {
                         startAnalysis(e);
                     }
                 });
@@ -124,7 +125,8 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
                 button9.setText(Messages.FriedmanGraphUI_showastable);
                 button9.setEnabled(false);
                 button9.addSelectionListener(new SelectionAdapter() {
-                    public void widgetSelected(SelectionEvent e) {
+                    @Override
+					public void widgetSelected(SelectionEvent e) {
                         showTableDialog(e);
                     }
                 });
@@ -153,7 +155,8 @@ public class FriedmanGraphUI extends org.eclipse.swt.widgets.Composite implement
     private boolean didSomeCalc;
     private TextViewer myDialog;
 
-    public final void execute(final boolean executeCalc) {
+    @Override
+	public final void execute(final boolean executeCalc) {
         if (executeCalc) {
             executeMainfunction();
         }

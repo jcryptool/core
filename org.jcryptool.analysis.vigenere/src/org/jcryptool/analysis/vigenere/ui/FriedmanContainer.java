@@ -79,7 +79,8 @@ public class FriedmanContainer {
 
         // sort the list by highest number of analysis values.
         Collections.sort(list, new Comparator<FriedmanData>() {
-            public int compare(FriedmanData o1, FriedmanData o2) {
+            @Override
+			public int compare(FriedmanData o1, FriedmanData o2) {
                 double t = o2.getValue() - o1.getValue();
                 if (0 < t) {
                     return 1;
@@ -146,7 +147,8 @@ public class FriedmanContainer {
         }
 
         Collections.sort(peaks, new Comparator<FriedmanData>() {
-            public int compare(FriedmanData o1, FriedmanData o2) {
+            @Override
+			public int compare(FriedmanData o1, FriedmanData o2) {
                 return o1.getIndex() - o2.getIndex();
             }
         });

@@ -56,6 +56,7 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 		this.addMouseMoveListener(this);
 		
 		this.addMouseTrackListener(new MouseTrackAdapter() {
+			@Override
 			public void mouseExit(final MouseEvent evt) {
 				dragging = false;
 				if(graph.setDraggedPixels(0, false)) {
@@ -64,6 +65,7 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 			}
 		});
 		this.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseUp(final MouseEvent evt) {
 				if(dragging && draggingEnabled)
 				{
@@ -93,12 +95,14 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 				}
 			}
 			
+			@Override
 			public void mouseDown(final MouseEvent evt) {
 				dragging = true;
 				dragBeginX = evt.x; dragBeginY = evt.y;
 				clicking = true;
 			}
 			
+			@Override
 			public void mouseDoubleClick(final MouseEvent evt) {
 				graph.resetDrag(40);
 				redraw();
@@ -129,8 +133,8 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 		graph.resetBars();
 		for(int i=0; i<myAnalysis.getAnalysis().length; i++)
 		{
-				barHeight = (double)(myAnalysis.getAnalysis()[i]) / (maxValue);
-				graph.addBar(new LabelBar(barHeight, i, 10, ""+myAnalysis.getAnalysis()[i], ""+(int)(i+1))); //$NON-NLS-1$ //$NON-NLS-2$
+				barHeight = (myAnalysis.getAnalysis()[i]) / (maxValue);
+				graph.addBar(new LabelBar(barHeight, i, 10, ""+myAnalysis.getAnalysis()[i], ""+(i+1))); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	graph.optimizeBarHeights(1);
 
@@ -150,6 +154,7 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 	    return maximum;
 	}
 
+	@Override
 	public final void paintControl(final PaintEvent e)
 	{
 		GC gc = e.gc;
@@ -163,6 +168,7 @@ public class CustomFriedmanCanvas extends org.eclipse.swt.widgets.Canvas impleme
 		graph.paintArea();
 	}
 
+	@Override
 	public final void mouseMove(final MouseEvent e) {
 		
 		if(dragging && draggingEnabled)

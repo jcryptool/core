@@ -33,6 +33,7 @@ import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
+import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKeyValidityException;
 
@@ -86,6 +87,25 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
     protected void addPageObserver() {
     	super.addPageObserver();
     	this.getSubstKeyInput().addObserver(this.pageObserver);
+    }
+    
+    @Override
+    protected void createOperationInputObjects() {
+    	// TODO Auto-generated method stub
+    	super.createOperationInputObjects();
+    	Observer o = new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				if(operationInput.getContent()) {
+					keyGroup.setText(Messages.SubstitutionWizardPage_0);
+				} else {
+					keyGroup.setText(Messages.SubstitutionWizardPage_1);
+				}
+			}
+		};
+		operationInput.addObserver(o);
+		o.update(null, null);
     }
     
 	@Override
@@ -247,7 +267,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 
 			@Override
 			public String getName() {
-				return "substitution key"; //$NON-NLS-1$
+				return Messages.SubstitutionWizardPage_2; 
 			}
 		};
 	}
@@ -267,7 +287,7 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 		
 		keyGroup.setLayoutData(keyGroupGridData);
 		keyGroup.setLayout(keyGroupGridLayout);
-		keyGroup.setText("");
+		keyGroup.setText(""); //$NON-NLS-1$
 
 		initializeKeyEditor(keyGroup, getSelectedAlphabet());
 	}
@@ -328,8 +348,16 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 	}
 
 	private void initializeKeyEditor(Group parent, AbstractAlphabet alphabet) {
-		this.keyEditor = new SubstitutionKeyEditor(keyGroup, SWT.NONE, alphabet);
+		this.keyEditor = new SubstitutionKeyEditor(keyGroup, SWT.NONE, alphabet, getSpecification());
 		this.keyEditor.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+	}
+
+	private SubstitutionAlgorithmSpecification getSpecification() {
+		if(specification instanceof SubstitutionAlgorithmSpecification) {
+			SubstitutionAlgorithmSpecification substitutionAlgorithmSpecification = (SubstitutionAlgorithmSpecification) specification;
+			return substitutionAlgorithmSpecification;
+		}
+		return new SubstitutionAlgorithmSpecification();
 	}
     
     

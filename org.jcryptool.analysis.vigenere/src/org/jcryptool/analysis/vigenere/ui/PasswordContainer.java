@@ -56,7 +56,8 @@ public class PasswordContainer {
      *             <code>1</code> for the index instead.
      * 
      */
-    protected int findLowestOpen() throws NoContentException {
+    @Deprecated
+	protected int findLowestOpen() throws NoContentException {
         for (PasswordElementGui elem : list) {
             if (!elem.isFound()) {
                 return elem.getNumber();

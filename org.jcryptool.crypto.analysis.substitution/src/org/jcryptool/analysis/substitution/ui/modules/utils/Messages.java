@@ -4,6 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.analysis.substitution.ui.modules.utils.messages"; //$NON-NLS-1$
+	public static String IllustrationSubstitutionLetterInputField_1;
 	public static String StatisticsDisplayer_0;
 	public static String StatisticsDisplayer_1;
 	public static String StatisticsDisplayer_2;
@@ -21,6 +22,7 @@ public class Messages extends NLS {
 	public static String SubstitutionChooser_1;
 	public static String SubstitutionChooser_2;
 	public static String SubstitutionKeyEditor_0;
+	public static String SubstitutionKeyEditor_1;
 	public static String SubstitutionLetterInputField_0;
 	public static String SubstitutionLetterInputField_1;
 	public static String SubstitutionLetterInputField_2;

@@ -107,6 +107,21 @@ public class SubstitutionKey {
 		public SubstitutionKey createKey(String password, AbstractAlphabet alphabet) {
 			return PasswordToKeyMethod.createKey(password, alphabet, passwordDirection, restDirection, passwordFirst);
 		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(obj != null) {
+				if(obj instanceof PasswordToKeyMethod) {
+					PasswordToKeyMethod passwordToKeyMethod = (PasswordToKeyMethod) obj;
+					return 
+							(passwordToKeyMethod.passwordDirection == this.passwordDirection) && 
+							(passwordToKeyMethod.passwordFirst == this.passwordFirst) && 
+							(passwordToKeyMethod.restDirection == this.restDirection); 
+				}
+				return false;
+			}
+			return false;
+		}
 	}
 
 	private Map<Character, Character> substitutions;

@@ -1,9 +1,10 @@
-package org.jcryptool.analysis.substitution.ui.modules;
+package org.jcryptool.analysis.substitution.ui.modules.utils;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observer;
 
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -15,8 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.jcryptool.analysis.substitution.ui.modules.utils.ControlHatcher;
-import org.jcryptool.analysis.substitution.ui.modules.utils.TextTransformationDisplayer;
+import org.jcryptool.analysis.substitution.ui.modules.Messages;
 import org.jcryptool.analysis.substitution.ui.wizard.loadtext.LoadTextWizard;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
@@ -162,7 +162,7 @@ public class TextLoadController extends Composite {
 		WizardDialog d = new WizardDialog(this.getShell(), w);
 		d.open();
 		
-		if(d.getReturnCode() == WizardDialog.OK) {
+		if(d.getReturnCode() == Window.OK) {
 			TextInputWithSource loadedText = w.getTextPageConfig();
 			TransformData loadedTransformation = w.getTransformData();
 			

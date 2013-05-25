@@ -252,15 +252,22 @@ public class AbstractClassicCryptoPage extends WizardPage {
         encryptButton.addSelectionListener(adapter);
         decryptButton.addSelectionListener(adapter);
 
-        operationInput.addObserver(new Observer() {
+        Observer operationObserver = new Observer() {
             @Override
 			public void update(Observable o, Object arg) {
                 if (transformationInput != null) {
                     transformationInput.writeContent(operationInput.getContent());
                     transformationInput.synchronizeWithUserSide();
                 }
+                if(operationInput.getContent()) {
+                	filterCheckBox.setText(Messages.WizardPage_filterchars_enc);
+                } else {
+                	filterCheckBox.setText(Messages.WizardPage_filterchars_dec);
+                }
             }
-        });
+        };
+		operationInput.addObserver(operationObserver);
+        operationObserver.update(null, null);
     }
 
     /**
@@ -416,7 +423,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
                     if (transformationInput.getContent()) {
                         updateTransformationPage(getAlphabetInput().getContent());
                     } else {
-                        updateTransformationPage(null); //$NON-NLS-1$
+                        updateTransformationPage(null); 
                     }
                 }
             }
@@ -778,7 +785,6 @@ public class AbstractClassicCryptoPage extends WizardPage {
         filterCheckBoxGridData.grabExcessVerticalSpace = true;
         filterCheckBoxGridData.horizontalAlignment = GridData.FILL;
 
-        filterCheckBox.setText(Messages.WizardPage_filterchars);
         filterCheckBox.setLayoutData(filterCheckBoxGridData);
     }
 
@@ -994,7 +1000,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     protected void updateTransformationPage(AbstractAlphabet abstractAlphabet) {
         TransformData myTransformation;
         if (abstractAlphabet == null) {
-        	myTransformation = new TransformData(); //$NON-NLS-1$
+        	myTransformation = new TransformData(); 
         } else {
             myTransformation = AbstractClassicTransformationPage.getTransformFromName(abstractAlphabet);
         }

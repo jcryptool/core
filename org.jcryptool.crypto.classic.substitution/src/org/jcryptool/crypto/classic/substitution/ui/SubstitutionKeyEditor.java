@@ -9,6 +9,8 @@ import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -42,7 +44,9 @@ import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLe
 import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLetterInputField.Mode;
 
 public class SubstitutionKeyEditor extends Composite {
-	private static final int WIDTH_HINT_GLOBAL = 500;
+	private static final PasswordToKeyMethod keyMethodAntilexical = new PasswordToKeyMethod(true, true, false);
+
+	private static final int WIDTH_HINT_GLOBAL = 600;
 
 	public static class NoCharacterVerificationResult extends InputVerificationResult {
 
@@ -171,15 +175,26 @@ public class SubstitutionKeyEditor extends Composite {
 
 	private PasswordToKeyMethod keyCreationMethod;
 
+	private Button btnSet;
+
+	private Button restOfAlphaLexical;
+
+	private Button restOfAlphaAntilexical;
+
+	private SubstitutionAlgorithmSpecification spec;
+
+	private Button btnReset;
+
 	/**
 	 * Create the composite.
 	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet) {
+	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet, SubstitutionAlgorithmSpecification spec) {
 		super(parent, style);
 		this.plaintextAlphabet = plaintextAlphabet;
+		this.spec = spec;
 		this.inputs = new HashMap<Character, TextfieldInput<Character>>();
 		this.charInputControls = new HashMap<Character, SubstitutionLetterInputField>();
 		this.observers = new LinkedList<Observer>();
@@ -227,21 +242,75 @@ public class SubstitutionKeyEditor extends Composite {
 
 		Composite composite_1 = new Composite(this, SWT.NONE);
 		composite_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		composite_1.setLayout(new GridLayout(2, false));
+		composite_1.setLayout(new GridLayout(1, false));
 
-		Button btnSet = new Button(composite_1, SWT.NONE);
+
+		txtPassword = new Text(composite_1, SWT.BORDER);
+		txtPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.keyCode == SWT.CR) {
+					setKeyByPassword();
+				}
+			}
+		});
+		
+		Composite compSetPassword = new Composite(composite_1, SWT.NONE);
+		GridLayout compSetPasswordLayout = new GridLayout(4, false);
+		compSetPasswordLayout.marginWidth = 0;
+		compSetPasswordLayout.marginHeight = 0;
+		compSetPassword.setLayout(compSetPasswordLayout);
+		GridData compSetPasswordLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		compSetPassword.setLayoutData(compSetPasswordLData);
+		
+		btnSet = new Button(compSetPassword, SWT.NONE);
+		btnSet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		btnSet.setText(Messages.SubstitutionKeyEditor_5);
 		btnSet.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if(!txtPassword.getText().equals("")) { //$NON-NLS-1$
-					setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
-				}
+				setKeyByPassword();
 			}
 		});
-
-		txtPassword = new Text(composite_1, SWT.BORDER);
-		txtPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		
+		Label restOfAlphaLabel = new Label(compSetPassword, SWT.NONE);
+		restOfAlphaLabel.setText(Messages.SubstitutionKeyEditor_6);
+		
+		Composite compRestDirection = new Composite(compSetPassword, SWT.NONE);
+		GridLayout compRestDirectionLayout = new GridLayout(1, false);
+		compRestDirectionLayout.marginWidth = 0;
+		compRestDirectionLayout.marginHeight = 0;
+		compRestDirection.setLayout(compRestDirectionLayout);
+		GridData compRestDirectionLData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2);
+		compRestDirection.setLayoutData(compRestDirectionLData);
+		
+		restOfAlphaLexical = new Button(compRestDirection, SWT.RADIO);
+		restOfAlphaLexical.setText(Messages.SubstitutionKeyEditor_8);
+		boolean lexicalBtnSelection = !spec.getDefaultKeyCreationMethod().equals(keyMethodAntilexical);
+		restOfAlphaLexical.setSelection(
+				lexicalBtnSelection
+				);
+		
+		restOfAlphaAntilexical = new Button(compRestDirection, SWT.RADIO);
+		restOfAlphaAntilexical.setText(Messages.SubstitutionKeyEditor_9);
+		restOfAlphaAntilexical.setSelection(
+				!lexicalBtnSelection
+				);
+		
+		
+		btnReset = new Button(compSetPassword, SWT.NONE);
+		btnReset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+		btnReset.setText(Messages.SubstitutionKeyEditor_10);
+		btnReset.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				setKeyByPassword("", new PasswordToKeyMethod(true, true, true)); //$NON-NLS-1$
+				passwordInput.writeContent(""); //$NON-NLS-1$
+				passwordInput.synchronizeWithUserSide();
+			}
+		});
 		
 		Composite compKeyExplanation = new Composite(composite_1, SWT.NONE);
 		GridLayout compKeyExplanationLayout = new GridLayout(2, false);
@@ -311,6 +380,12 @@ public class SubstitutionKeyEditor extends Composite {
 		passwordInput.addObserver(inputHandler);
 		
 		complete = checkMappingComplete();
+	}
+	
+	private void setKeyByPassword() {
+		if(!txtPassword.getText().equals("")) { //$NON-NLS-1$
+			setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
+		}
 	}
 
 	protected void setKeyByPassword(String text, PasswordToKeyMethod passwordToKeyMethod) {
@@ -465,7 +540,11 @@ public class SubstitutionKeyEditor extends Composite {
 	}
 	
 	public PasswordToKeyMethod getKeyCreationMethod() {
-		return keyCreationMethod;
+		if(restOfAlphaLexical.getSelection()) {
+			return new SubstitutionKey.PasswordToKeyMethod(true, true, true);
+		} else {
+			return new SubstitutionKey.PasswordToKeyMethod(true, true, false);
+		}
 	}
 	
 	/**

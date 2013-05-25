@@ -37,7 +37,8 @@ public class FreqAnalysisView extends ViewPart implements IFreqAnalysisAccess {
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
-    public final void createPartControl(final Composite parent) {
+    @Override
+	public final void createPartControl(final Composite parent) {
         myUI = new FreqAnalysisUI(parent, SWT.NONE);
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
                 FreqAnalysisPlugin.PLUGIN_ID + ".freqanalysis"); //$NON-NLS-1$
@@ -54,11 +55,13 @@ public class FreqAnalysisView extends ViewPart implements IFreqAnalysisAccess {
     /**
      * Passing the focus request to the viewer's control.
      */
-    public void setFocus() {
+    @Override
+	public void setFocus() {
         myUI.setFocus();
     }
 
-    public final void execute(final boolean simpleView, final int keyLength, final int keyPos,
+    @Override
+	public final void execute(final boolean simpleView, final int keyLength, final int keyPos,
             final int overlayIndex, final boolean resetShift, final boolean executeCalc,
             final boolean whichTab, final boolean activateOverlay) {
         myUI.execute(simpleView, keyLength, keyPos, overlayIndex, resetShift, executeCalc,

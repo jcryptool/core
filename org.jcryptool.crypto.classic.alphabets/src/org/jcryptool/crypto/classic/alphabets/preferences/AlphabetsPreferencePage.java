@@ -275,7 +275,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
 		lblFilterHint.setText(Messages.getString("AlphabetsPreferencePage.12")); //$NON-NLS-1$
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
     }
 
     /**
@@ -283,7 +284,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
      *
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
-    public void handleEvent(Event event) {
+    @Override
+	public void handleEvent(Event event) {
         if (event.widget.equals(this.availableAlphabetsTable)) {
 
             TableItem item = getSelectedTableItem(this.availableAlphabetsTable.getSelection());
@@ -509,7 +511,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
     /**
      * @see org.eclipse.jface.preference.PreferencePage#performOk()
      */
-    public boolean performOk() {
+    @Override
+	public boolean performOk() {
         performApply();
         return super.performOk();
     }
@@ -517,7 +520,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
     /**
      * @see org.eclipse.jface.preference.PreferencePage#performDefaults()
      */
-    public void performDefaults() {
+    @Override
+	public void performDefaults() {
         // alphabets
     	
     	AbstractAlphabet[] alphabets = AlphabetsManager.getInstance().getAlphabets();
@@ -548,7 +552,8 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
     /**
      * @see org.eclipse.jface.preference.PreferencePage#performApply()
      */
-    public void performApply() {
+    @Override
+	public void performApply() {
         // alphabets
 
         // write to alphabetsmanager and save

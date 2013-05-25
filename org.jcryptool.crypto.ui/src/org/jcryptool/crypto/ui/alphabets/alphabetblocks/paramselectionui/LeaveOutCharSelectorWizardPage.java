@@ -9,6 +9,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.BlockAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
@@ -32,6 +33,7 @@ public class LeaveOutCharSelectorWizardPage extends WizardPage {
 	 * Create contents of the wizard.
 	 * @param parent
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		setControl(container);
@@ -67,7 +69,7 @@ public class LeaveOutCharSelectorWizardPage extends WizardPage {
 
 	private void fillCombo(BlockAlphabet alpha) {
 		for(char c: alpha.getCharacterSet()) {
-			String displayString = AtomAlphabet.getPrintableCharRepresentation(c);
+			String displayString = AbstractAlphabet.getPrintableCharRepresentation(c);
 			combo.add(displayString);
 		}
 	}

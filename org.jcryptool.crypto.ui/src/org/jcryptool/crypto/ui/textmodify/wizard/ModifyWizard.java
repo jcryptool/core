@@ -44,7 +44,8 @@ public class ModifyWizard extends Wizard {
     /**
      * @see org.eclipse.jface.wizard.Wizard#addPages()
      */
-    public final void addPages() {
+    @Override
+	public final void addPages() {
         page = new ModifyWizardPage();
         page.setAlphabetSelectionMode(alphabetSelectionMode);
         addPage(page);

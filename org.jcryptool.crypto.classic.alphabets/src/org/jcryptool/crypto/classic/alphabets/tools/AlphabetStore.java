@@ -60,7 +60,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
      *
      * @param alpha
      */
-    public void addAlphabet(AbstractAlphabet alpha) {
+    @Override
+	public void addAlphabet(AbstractAlphabet alpha) {
         alphabets.addElement(convertAbstractAlphaToAlpha(alpha));
         try {
             storeAlphabets();
@@ -82,7 +83,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         alphabets.addElement(alpha);
     }
 
-    public Alphabet[] getAlphabets() {
+    @Override
+	public Alphabet[] getAlphabets() {
         Alphabet[] alphas = new Alphabet[alphabets.size()];
 
         alphabets.toArray(alphas);
@@ -90,7 +92,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         return alphas;
     }
 
-    public Alphabet getAlphabetByName(String name) {
+    @Override
+	public Alphabet getAlphabetByName(String name) {
         Enumeration<Alphabet> enumerator = alphabets.elements();
 
         while (enumerator.hasMoreElements()) {
@@ -117,7 +120,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         return null;
     }
 
-    public void setAlphabets(AbstractAlphabet[] alphas) {
+    @Override
+	public void setAlphabets(AbstractAlphabet[] alphas) {
         Vector<Alphabet> v = new Vector<Alphabet>(alphas.length);
 
         for (int i = 0; i < alphas.length; i++) {
@@ -141,7 +145,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
     }
 
     boolean hardResetDebug = false;
-    public void init() {
+    @Override
+	public void init() {
         // if alphabets is not null the alphabet store will only be initialized
         if (alphabets == null) {
             try {
@@ -290,7 +295,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         addInternAlphabet(playfairalphabet);
     }
 
-    public void removeAlphabet(AbstractAlphabet alphabet) {
+    @Override
+	public void removeAlphabet(AbstractAlphabet alphabet) {
         alphabets.remove(alphabet);
 
         try {
@@ -317,7 +323,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
     }
 
-    public void storeAlphabets() throws IOException {
+    @Override
+	public void storeAlphabets() throws IOException {
         if (alphaPath == null || new File(alphaPath).canWrite()) {
             AlphabetPersistence.saveAlphabetsToXML(alphabets, new OutputStreamWriter(new FileOutputStream(alphaPath),
                     Charset.forName(IConstants.UTF8_ENCODING)));
@@ -348,7 +355,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         return alphaTitles;
     }
 
-    public void updateAlphabet(String alphabetTitle, char[] newCharacterSet) {
+    @Override
+	public void updateAlphabet(String alphabetTitle, char[] newCharacterSet) {
         Alphabet modAlpha = getAlphabetByName(alphabetTitle);
 
         modAlpha.setCharacterSet(newCharacterSet);
@@ -360,7 +368,8 @@ public class AlphabetStore extends AbstractAlphabetStore {
         }
     }
 
-    public String[] getSelfCreatedAlphaList() {
+    @Override
+	public String[] getSelfCreatedAlphaList() {
         Vector<String> v = new Vector<String>();
         Enumeration<Alphabet> e = alphabets.elements();
         while (e.hasMoreElements()) {

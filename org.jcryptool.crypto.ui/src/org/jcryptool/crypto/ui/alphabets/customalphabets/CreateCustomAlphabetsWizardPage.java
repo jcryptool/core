@@ -83,6 +83,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 	/**
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		parentComp = parent;
 		pageComposite = new Composite(parent, SWT.NULL);	

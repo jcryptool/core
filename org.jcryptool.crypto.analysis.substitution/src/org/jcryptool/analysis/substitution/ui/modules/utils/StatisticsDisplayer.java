@@ -6,8 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Observer;
 import java.util.Map.Entry;
+import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -16,7 +16,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -24,13 +23,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ScrollBar;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
@@ -39,7 +37,7 @@ public class StatisticsDisplayer extends Composite {
 	private static final int BAR_SPACING = 3;
 	private static final int BAR_HEIGHT = 12;
 	private static final int SCROLL_COMP_WIDTH_HINT = 120;
-	private static final int TEXT_WIDTH_MAX = 25;
+	private static final int TEXT_WIDTH_MAX = 35;
 	private static final int GRAPH_HORZ_SPACING = 0;
 	private Color DEFAULT_BAR_COLOR;
 	private Color DEFAULT_MAPPED_LABEL_COLOR;
@@ -91,7 +89,9 @@ public class StatisticsDisplayer extends Composite {
 		setLayout(gridLayout);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setLayout(new GridLayout(2, false));
+		GridLayout layout = new GridLayout(2, false);
+		layout.marginWidth = 0;
+		composite.setLayout(layout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		
 		Label lblShowFrequenciesOf = new Label(composite, SWT.NONE);
@@ -217,13 +217,15 @@ public class StatisticsDisplayer extends Composite {
 		
 		
 		Listener listenerC = new Listener() {
-            public void handleEvent(Event e) {
+            @Override
+			public void handleEvent(Event e) {
                 vBarR.setSelection(Math.min(vBarR.getMaximum(), vBarC.getSelection()));
                 scReference.setOrigin(0, vBarC.getSelection());
             }
         };
         Listener listenerR = new Listener() {
-            public void handleEvent(Event e) {
+            @Override
+			public void handleEvent(Event e) {
             	vBarC.setSelection(Math.min(vBarC.getMaximum(), vBarR.getSelection()));
             	scCipher.setOrigin(0, vBarR.getSelection());
             }
@@ -299,7 +301,7 @@ public class StatisticsDisplayer extends Composite {
 
 
 	private void makeOneFreqItem(Composite compCipherMain, Composite graph, final String text, double percentOfWidth, boolean isCipherBox) {
-		int pixels = (int) Math.round(percentOfWidth*(double)calcMaxBarWidth(compCipherMain));
+		int pixels = (int) Math.round(percentOfWidth*calcMaxBarWidth(compCipherMain));
 		String textForLabel = text;
 		textForLabel = applyUpperLowerCaseMode(isCipherBox, textForLabel);
 		String textForMappedLabel = text;
@@ -311,6 +313,7 @@ public class StatisticsDisplayer extends Composite {
 			mappedLabel.setLayoutData(layoutData);
 			mappedLabel.setText(textForMappedLabel);
 			mappedLabel.setForeground(DEFAULT_MAPPED_LABEL_COLOR);
+			mappedLabel.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
 			
 			mappedLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
 			
@@ -322,6 +325,7 @@ public class StatisticsDisplayer extends Composite {
 			label.setText('['+textForLabel+']');
 			label.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
 			setMappedLabelVisible(mappedLabel, this.isShowMappedLabels);
+			label.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
 			
 			this.controlDataMap.put(label, text);
 			
@@ -347,6 +351,7 @@ public class StatisticsDisplayer extends Composite {
 			layoutData.horizontalIndent = BAR_SPACING;
 			label.setLayoutData(layoutData);
 			label.setText('['+textForLabel+']');
+			label.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
 			
 			Label l = new Label(graph, SWT.NONE);
 			l.setText(" "); //$NON-NLS-1$

@@ -77,6 +77,7 @@ public class LoadTextWizardPage extends WizardPage {
 	 * Create contents of the wizard.
 	 * @param parent
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, false));
@@ -244,6 +245,7 @@ public class LoadTextWizardPage extends WizardPage {
 		runnable.run();
 
 		new Thread() {
+			@Override
 			public void run() {
 				try {
 					Thread.sleep(20);
@@ -251,6 +253,7 @@ public class LoadTextWizardPage extends WizardPage {
 					LogUtil.logError(e);
 				}
 				Runnable r = new Runnable() {
+					@Override
 					public void run() {
 						txtInputText.setTopIndex(topIndex);
 					}

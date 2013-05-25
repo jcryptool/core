@@ -73,7 +73,8 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
         this.addMouseMoveListener(this);
 
         this.addMouseTrackListener(new MouseTrackAdapter() {
-            public void mouseExit(final MouseEvent evt) {
+            @Override
+			public void mouseExit(final MouseEvent evt) {
                 dragging = false;
                 if (getFrequencyGraph().setDraggedPixels(0, false)) {
                     redraw(); // reset the drag
@@ -81,7 +82,8 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
             }
         });
         this.addMouseListener(new MouseAdapter() {
-            public void mouseUp(final MouseEvent evt) {
+            @Override
+			public void mouseUp(final MouseEvent evt) {
                 if (dragging && draggingEnabled) {
                     int myPixelsDifference = evt.x - dragBeginX;
                     getFrequencyGraph().setDraggedPixels(myPixelsDifference, false);
@@ -89,12 +91,14 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
                 dragging = false;
             }
 
-            public void mouseDown(final MouseEvent evt) {
+            @Override
+			public void mouseDown(final MouseEvent evt) {
                 dragging = true;
                 dragBeginX = evt.x;
             }
 
-            public void mouseDoubleClick(final MouseEvent evt) {
+            @Override
+			public void mouseDoubleClick(final MouseEvent evt) {
                 getFrequencyGraph().resetDrag();
                 redraw();
             }
@@ -140,11 +144,12 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
          * @author SLeischnig comparates two frequency analysis data sets for sorting
          */
         class MyComparator implements Comparator<FreqAnalysisData> {
-            public int compare(final FreqAnalysisData a, final FreqAnalysisData b) {
-                if ((int) (a.ch) > (int) (b.ch)) {
+            @Override
+			public int compare(final FreqAnalysisData a, final FreqAnalysisData b) {
+                if ((a.ch) > (b.ch)) {
                     return 1;
                 }
-                if ((int) (a.ch) == (int) (b.ch)) {
+                if ((a.ch) == (b.ch)) {
                     return 0;
                 }
                 return -1;
@@ -216,7 +221,8 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
         return maximum;
     }
 
-    public final void paintControl(final PaintEvent e) {
+    @Override
+	public final void paintControl(final PaintEvent e) {
         GC gc = e.gc;
         int width = 0, height = 0;
         width = this.getSize().x;
@@ -228,7 +234,8 @@ public class CustomFreqCanvas extends org.eclipse.swt.widgets.Canvas implements 
         getFrequencyGraph().paintArea();
     }
 
-    public final void mouseMove(final MouseEvent e) {
+    @Override
+	public final void mouseMove(final MouseEvent e) {
 
         if (dragging && draggingEnabled) {
             int myPixelsDifference = e.x - dragBeginX;

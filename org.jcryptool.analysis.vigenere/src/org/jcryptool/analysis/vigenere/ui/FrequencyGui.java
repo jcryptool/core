@@ -243,7 +243,8 @@ public class FrequencyGui extends Content {
                     bshift.setFont(FontService.getNormalFont());
                     bshift.setToolTipText(Messages.FrequencyGui_ttip_shift);
                     bshift.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             shift();
                         }
                     });
@@ -259,7 +260,8 @@ public class FrequencyGui extends Content {
                     bdecrypt.setFont(FontService.getNormalFont());
                     bdecrypt.setToolTipText(Messages.FrequencyGui_ttip_decrypt);
                     bdecrypt.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent evt) {
+                        @Override
+						public void widgetSelected(SelectionEvent evt) {
                             decrypt();
                         }
                     });
@@ -276,7 +278,8 @@ public class FrequencyGui extends Content {
                     bback.setFont(FontService.getNormalFont());
                     bback.setToolTipText(Messages.FrequencyGui_ttip_back);
                     bback.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             back();
                         }
                     });
@@ -293,7 +296,8 @@ public class FrequencyGui extends Content {
                     bnext.setFont(FontService.getNormalFont());
                     bnext.setToolTipText(Messages.FrequencyGui_ttip_next);
                     bnext.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             next();
                         }
                     });
@@ -310,7 +314,8 @@ public class FrequencyGui extends Content {
                     boptions.setFont(FontService.getNormalFont());
                     boptions.setToolTipText(Messages.FrequencyGui_ttip_options);
                     boptions.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             showOptions();
                         }
                     });

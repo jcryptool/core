@@ -20,19 +20,17 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
 
-public class SubstitutionLetterInputField extends Composite {
+public class IllustrationSubstitutionLetterInputField extends Composite {
 
 	private static final String RESULTTYPE_ALPHAPROBLEM = "alpha-problem"; //$NON-NLS-1$
 	private Mode mode;
 	private AbstractAlphabet alphabet;
 	private Text text;
-	private TextfieldInput<Character> charInput;
 	private List<Character> charactersInUse = new LinkedList<Character>();
 	private Composite borderComposite;
 
@@ -166,19 +164,15 @@ public class SubstitutionLetterInputField extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public SubstitutionLetterInputField(Composite parent, Mode mode, AbstractAlphabet alphabet) {
+	public IllustrationSubstitutionLetterInputField(Composite parent, AbstractAlphabet alphabet) {
 		super(parent, SWT.NONE);
-		this.mode = mode;
+		this.mode = Mode.VERTICAL_POPUP;
 		this.alphabet = alphabet;
 //		UNDETERMINED_SUBST_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
 		
 		initGUI(mode, alphabet);
 	}
 	
-	public TextfieldInput<Character> getCharInput() {
-		return charInput;
-	}
-
 	private void initGUI(Mode mode, AbstractAlphabet alphabet) {
 		int columns = mode==Mode.HORIZONTAL_POPUP?2:1;
 		GridLayout layout = new GridLayout(columns, false);
@@ -196,12 +190,10 @@ public class SubstitutionLetterInputField extends Composite {
 		
 		text = new Text(borderComposite, SWT.CENTER);
 		GridData txtLayoutData = new GridData(SWT.CENTER, SWT.CENTER, false, false);
-		txtLayoutData.widthHint = 15;
+		txtLayoutData.widthHint = 20;
 		text.setLayoutData(txtLayoutData);
-		text.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL));
-		
-		charInput = createSubstTextfieldInput(alphabet, text);
-		charInput.writeContent(charInput.getContent());
+		text.setText(Messages.IllustrationSubstitutionLetterInputField_1);
+		text.setEditable(false);
 		
 		if(mode.hasMenu()) {
 			final Label menuBtnLabel = new Label(this, SWT.NONE);
@@ -218,7 +210,8 @@ public class SubstitutionLetterInputField extends Composite {
 					btnImage = SubstitutionPlugin.getDefault().getImageRegistry().get(SubstitutionPlugin.TINY_ARROW_DOWN);
 				}
 				menuBtnLabel.setImage(btnImage);
-				menuBtnLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
+				menuBtnLabel.setVisible(false);
+//				menuBtnLabel.setCursor(getDisplay().getSystemCursor(SWT.CURSOR_HAND));
 			} else {
 				//decorate label elsewise
 			}
@@ -272,8 +265,6 @@ public class SubstitutionLetterInputField extends Composite {
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				charInput.writeContent(c);
-				charInput.synchronizeWithUserSide();
 				popupMenu.dispose();
 			}
 		});
@@ -314,9 +305,9 @@ public class SubstitutionLetterInputField extends Composite {
 				Character parsedContent = parseCharacterFromInputString(txt);
 				if (parsedContent == null) {
 					if (txt.length() == 0) {
-						return new SubstitutionLetterInputField.NoCharacterVerificationResult();
+						return new IllustrationSubstitutionLetterInputField.NoCharacterVerificationResult();
 					} else if (txt.length() > 1) {
-						return new SubstitutionLetterInputField.NoCharRepresentationDetectedVerificationResult(txt, parsedContent);
+						return new IllustrationSubstitutionLetterInputField.NoCharRepresentationDetectedVerificationResult(txt, parsedContent);
 					}
 				} else {
 					boolean inAlphabet = false;
@@ -327,7 +318,7 @@ public class SubstitutionLetterInputField extends Composite {
 						}
 					}
 					if (!inAlphabet) {
-						return new SubstitutionLetterInputField.CharNotInAlphabetVerificationResult(txt, parsedContent,
+						return new IllustrationSubstitutionLetterInputField.CharNotInAlphabetVerificationResult(txt, parsedContent,
 								alphabet);
 					} else {
 						return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;

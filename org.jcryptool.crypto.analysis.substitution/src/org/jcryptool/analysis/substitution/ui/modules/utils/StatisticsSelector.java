@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.substitution.ui.modules;
+package org.jcryptool.analysis.substitution.ui.modules.utils;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -20,9 +20,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.analysis.substitution.Activator;
 import org.jcryptool.analysis.substitution.calc.DynamicPredefinedStatisticsProvider;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
-import org.jcryptool.analysis.substitution.ui.modules.utils.ControlHatcher;
-import org.jcryptool.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
+import org.jcryptool.analysis.substitution.ui.modules.Messages;
+import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisConfigPanel;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
@@ -258,7 +257,7 @@ public class StatisticsSelector extends Composite {
 		}
 	}
 	
-	protected void setPredefinedStatistics(int indexOfPredefinedStatistic, boolean notifyObservers) {
+	public void setPredefinedStatistics(int indexOfPredefinedStatistic, boolean notifyObservers) {
 		if(indexOfPredefinedStatistic > -1) {
 			this.selectedStatistic = predefinedStatistics.get(indexOfPredefinedStatistic);
 			

@@ -347,7 +347,7 @@ public class DataProvider {
             list.add(a.getName());
         }
 
-        return (String[]) list.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -357,7 +357,8 @@ public class DataProvider {
      * @deprecated since preferences are stored. Index identification is now handled internally in
      *             {@link OptionsDialogGui}.
      */
-    public int getDefaultIndexAlphabets() {
+    @Deprecated
+	public int getDefaultIndexAlphabets() {
         String defalph = AlphabetsManager.getInstance().getDefaultAlphabet().getName();
         String[] alphs = getAlphabets();
 
@@ -382,7 +383,7 @@ public class DataProvider {
         list.add(org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_germanreftextname2);
         list.add(org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_englishreftextname1);
 
-        return (String[]) list.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 
     /**
@@ -392,7 +393,8 @@ public class DataProvider {
      * @deprecated since preferences are stored. Index identification is now handled internally in
      *             {@link OptionsDialogGui}.
      */
-    public int getDefaultIndexReferences() {
+    @Deprecated
+	public int getDefaultIndexReferences() {
         String defref = org.jcryptool.analysis.freqanalysis.ui.Messages.FullAnalysisUI_germanreftextname1;
         String[] refs = listReferenceTexts();
 

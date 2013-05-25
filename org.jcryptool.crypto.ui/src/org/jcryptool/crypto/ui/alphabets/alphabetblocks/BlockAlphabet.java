@@ -1,5 +1,6 @@
 package org.jcryptool.crypto.ui.alphabets.alphabetblocks;
 
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 
@@ -13,7 +14,7 @@ public class BlockAlphabet extends AtomAlphabet {
 	}
 	
 	public BlockAlphabet(String characters) {
-		this(characters, AtomAlphabet.alphabetContentAsString(characters.toCharArray()));
+		this(characters, AbstractAlphabet.alphabetContentAsString(characters.toCharArray()));
 	}
 
 	public String getBlockName() {

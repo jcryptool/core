@@ -54,7 +54,7 @@ public class CustomAlphabetItem extends Composite {
 			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 			layoutData.widthHint = 150;
 			lblContent.setLayoutData(layoutData);
-			lblContent.setText(AtomAlphabet.alphabetContentAsString(alpha.getCharacterSet()));
+			lblContent.setText(AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()));
 			lblContent.addMouseListener(clickListener);
 		}
 	}

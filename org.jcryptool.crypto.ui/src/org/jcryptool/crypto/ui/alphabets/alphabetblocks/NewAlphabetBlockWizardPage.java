@@ -14,6 +14,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.ui.alphabets.AlphabetManualInputField;
 import org.jcryptool.crypto.ui.alphabets.Messages;
@@ -41,6 +42,7 @@ public class NewAlphabetBlockWizardPage extends WizardPage {
 	 * Create contents of the wizard.
 	 * @param parent
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		setControl(container);
@@ -108,7 +110,7 @@ public class NewAlphabetBlockWizardPage extends WizardPage {
 	}
 
 	protected void setAlphaName(AtomAlphabet alpha) {
-		String alphabetContentAsString = AtomAlphabet.alphabetContentAsString(alpha.getCharacterSet());
+		String alphabetContentAsString = AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet());
 		text.setText(alphabetContentAsString);
 		myWizard().setName(alphabetContentAsString);
 	}

@@ -204,7 +204,8 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                     alphabetCombo = new Combo(composite2, SWT.NONE);
                     alphabetCombo.setLayoutData(alphabetComboLData);
                     alphabetCombo.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent evt) {
+                        @Override
+						public void widgetSelected(SelectionEvent evt) {
                             boolean siteChanged = false;
                             if (alphabetCombo.getText() != actualAlphabetName) {
                                 for (int i = 0; i < alphabets.length; i++) {
@@ -223,7 +224,8 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
                         }
                     });
                     alphabetCombo.addModifyListener(new ModifyListener() {
-                        public void modifyText(ModifyEvent evt) {
+                        @Override
+						public void modifyText(ModifyEvent evt) {
 
                         }
                     });
@@ -303,7 +305,8 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
         setPrefsToDefault();
     }
 
-    public void init(IWorkbench workbench) {
+    @Override
+	public void init(IWorkbench workbench) {
 
     }
 

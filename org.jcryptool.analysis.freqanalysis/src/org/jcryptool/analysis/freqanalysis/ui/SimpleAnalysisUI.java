@@ -75,6 +75,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 			button1.setText(Messages.SimpleAnalysisUI_startanalysis);
 			button1.addMouseListener(new MouseAdapter() {
 
+				@Override
 				public void mouseDown(MouseEvent evt) {
 					//----------------- Begin of Handler
 					// Main Function Button
@@ -148,6 +149,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 						button3.setText(Messages.SimpleAnalysisUI_monoalphabetic);
 						button3.setSelection(true);
 						button3.addSelectionListener(new SelectionAdapter() {
+							@Override
 							public void widgetSelected(SelectionEvent evt) {
 								polyOnOffSelected(evt);
 							}
@@ -157,6 +159,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 						button4 = new Button(composite2, SWT.RADIO | SWT.LEFT);
 						button4.setText(Messages.SimpleAnalysisUI_polyalphabetic);
 						button4.addSelectionListener(new SelectionAdapter() {
+							@Override
 							public void widgetSelected(SelectionEvent evt) {
 								polyOnOffSelected(evt);
 							}
@@ -174,11 +177,13 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 						spinner1 = new Spinner(group2, SWT.NONE);
 						spinner1.setLayoutData(spinner1LData);
 						spinner1.addMouseListener(new MouseAdapter() {
+							@Override
 							public void mouseDown(MouseEvent evt) {
 								recalcGraph();
 							}
 						});
 						spinner1.addSelectionListener(new SelectionAdapter() {
+							@Override
 							public void widgetSelected(SelectionEvent evt) {
 								changedVigOptions();
 							}
@@ -195,11 +200,13 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 						spinner2 = new Spinner(group2, SWT.NONE);
 						spinner2.setLayoutData(spinner2LData);
 						spinner2.addMouseListener(new MouseAdapter() {
+							@Override
 							public void mouseDown(MouseEvent evt) {
 								recalcGraph();
 							}
 						});
 						spinner2.addSelectionListener(new SelectionAdapter() {
+							@Override
 							public void widgetSelected(SelectionEvent evt) {
 								changedVigOptions();
 							}
@@ -220,6 +227,7 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 					button2.setLayoutData(button2LData);
 					button2.setText(Messages.SimpleAnalysisUI_filtersettings);
 					button2.addMouseListener(new MouseAdapter() {
+						@Override
 						public void mouseDown(MouseEvent evt) {
 							myModifySettings = getTransformWizardSettings(myModifySettings);
 							recalcGraph();

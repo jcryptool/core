@@ -21,7 +21,8 @@ import org.jcryptool.analysis.friedman.IFriedmanAccess;
 import org.jcryptool.analysis.friedman.ui.FriedmanGraphUI;
 
 public class FriedmanView extends ViewPart implements IFriedmanAccess {
-    public void execute(boolean executeCalc) {
+    @Override
+	public void execute(boolean executeCalc) {
         myUI.execute(executeCalc);
     }
 
@@ -34,7 +35,8 @@ public class FriedmanView extends ViewPart implements IFriedmanAccess {
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
-    public void createPartControl(Composite parent) {
+    @Override
+	public void createPartControl(Composite parent) {
         myUI = new FriedmanGraphUI(parent, SWT.NONE);
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,
                 "org.jcryptool.analysis.friedman.friedman"); //$NON-NLS-1$
@@ -51,7 +53,8 @@ public class FriedmanView extends ViewPart implements IFriedmanAccess {
     /**
      * Passing the focus request to the viewer's control.
      */
-    public void setFocus() {
+    @Override
+	public void setFocus() {
         myUI.setFocus();
     }
 }

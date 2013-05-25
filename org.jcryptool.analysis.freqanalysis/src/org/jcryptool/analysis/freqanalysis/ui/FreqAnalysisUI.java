@@ -67,7 +67,8 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
             button1.setLayoutData(button1LData);
             button1.setText(Messages.FreqAnalysisUI_descision1label);
             button1.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent evt) {
+                @Override
+				public void widgetSelected(SelectionEvent evt) {
                     switchComposites(evt);
                 }
             });
@@ -79,7 +80,8 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
             button2.setLayoutData(button2LData);
             button2.setText(Messages.FreqAnalysisUI_descision2label);
             button2.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent evt) {
+                @Override
+				public void widgetSelected(SelectionEvent evt) {
                     switchComposites(evt);
                 }
             });

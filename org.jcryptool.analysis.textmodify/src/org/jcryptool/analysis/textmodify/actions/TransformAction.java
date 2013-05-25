@@ -98,7 +98,8 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
      *
      * @see IWorkbenchWindowActionDelegate#run
      */
-    public void run(IAction action) {
+    @Override
+	public void run(IAction action) {
         if (EditorsManager.getInstance().isEditorOpen()) {
             String text = getEditorText();
             final TransformData transform = getTransformWizardSettings(new TransformData());
@@ -110,7 +111,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
                 IEditorInput customEditorInput = AbstractEditorService.createOutputFile(is);
                 ((PathEditorInput) customEditorInput).setTooltip(Messages.TransformAction_tooltip1
                         + oldEditorName
-                        + "; " + Messages.TransformAction_tooltip2 + transform.toString()); //$NON-NLS-2$ //$NON-NLS-1$
+                        + "; " + Messages.TransformAction_tooltip2 + transform.toString()); //$NON-NLS-1$
 
                 try {
                     EditorsManager.getInstance().openNewTextEditor(customEditorInput);
@@ -128,7 +129,8 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
      *
      * @see IWorkbenchWindowActionDelegate#selectionChanged
      */
-    public void selectionChanged(IAction action, ISelection selection) {
+    @Override
+	public void selectionChanged(IAction action, ISelection selection) {
     }
 
     /**
@@ -136,7 +138,8 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
      *
      * @see IWorkbenchWindowActionDelegate#dispose
      */
-    public void dispose() {
+    @Override
+	public void dispose() {
     }
 
     /**
@@ -145,6 +148,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
      *
      * @see IWorkbenchWindowActionDelegate#init
      */
-    public void init(IWorkbenchWindow window) {
+    @Override
+	public void init(IWorkbenchWindow window) {
     }
 }

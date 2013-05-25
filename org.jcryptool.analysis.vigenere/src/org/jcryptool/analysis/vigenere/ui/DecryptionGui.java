@@ -189,7 +189,8 @@ public class DecryptionGui extends Content {
                     bback.setFont(FontService.getNormalFont());
                     bback.setToolTipText(Messages.DecryptionGui_ttip_back);
                     bback.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent evt) {
+                        @Override
+						public void widgetSelected(SelectionEvent evt) {
                             back();
                         }
                     });
@@ -215,7 +216,8 @@ public class DecryptionGui extends Content {
                     bend.setFont(FontService.getNormalFont());
                     bend.setToolTipText(Messages.DecryptionGui_ttip_finish);
                     bend.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             openEditor();
                         }
                     });

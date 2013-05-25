@@ -239,7 +239,8 @@ public class QuickDecryptGui extends Content {
                     bend.setFont(FontService.getNormalFont());
                     bend.setToolTipText(Messages.QuickDecrypGui_ttip_finish);
                     bend.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             openEditor();
                         }
                     });
@@ -315,7 +316,8 @@ public class QuickDecryptGui extends Content {
                     bback.setText(Messages.QuickDecrypGui_button_back);
                     bback.setToolTipText(Messages.QuickDecrypGui_ttip_back);
                     bback.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             back();
                         }
                     });
@@ -394,7 +396,8 @@ public class QuickDecryptGui extends Content {
                         bfriedman.setFont(FontService.getNormalFont());
                         bfriedman.setToolTipText(Messages.QuickDecrypGui_ttip_friedman);
                         bfriedman.addSelectionListener(new SelectionAdapter() {
-                            public void widgetSelected(SelectionEvent evt) {
+                            @Override
+							public void widgetSelected(SelectionEvent evt) {
                                 showFriedman();
                             }
                         });
@@ -411,7 +414,8 @@ public class QuickDecryptGui extends Content {
                         bfreq.setFont(FontService.getNormalFont());
                         bfreq.setToolTipText(Messages.QuickDecrypGui_ttip_frequency);
                         bfreq.addSelectionListener(new SelectionAdapter() {
-                            public void widgetSelected(SelectionEvent evt) {
+                            @Override
+							public void widgetSelected(SelectionEvent evt) {
                                 showFrequency();
                             }
                         });

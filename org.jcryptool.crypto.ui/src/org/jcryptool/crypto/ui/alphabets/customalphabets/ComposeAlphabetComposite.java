@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -121,6 +122,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
 	*/
+	@Override
 	protected void checkSubclass() {
 	}
 
@@ -402,7 +404,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 		WizardDialog dialog = new WizardDialog(getShell(), wiz);
 
 		dialog.open();
-		if(dialog.getReturnCode() == Dialog.OK) {
+		if(dialog.getReturnCode() == Window.OK) {
 			return new BlockAlphabet(String.valueOf(wiz.getAlpha().getCharacterSet()), wiz.getName());
 		} else {
 			return null;
@@ -796,7 +798,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				alphas.add(selectedBlockAlphabets.get(a));
 			}
 			result = new CompositeAlphabet(alphas);
-			text_ResultCharacters.setText(AtomAlphabet.alphabetContentAsString(result.getCharacterSet()));
+			text_ResultCharacters.setText(AbstractAlphabet.alphabetContentAsString(result.getCharacterSet()));
 			lbl_ResultLength.setText(""+result.getCharacterSet().length); //$NON-NLS-1$
 		} else {
 			text_ResultCharacters.setText(""); //$NON-NLS-1$

@@ -34,8 +34,13 @@ public class Messages extends NLS {
 	public static String SubstitutionAnalysisPanel_3;
 	public static String SubstitutionAnalysisPanel_4;
 	public static String SubstitutionAnalysisPanel_5;
+	public static String SubstitutionAnalysisPanel_6;
 	public static String SubstitutionAnalysisPanel_7;
 	public static String SubstitutionAnalysisPanel_8;
+	public static String SubstitutionAnalysisPanel_9;
+	public static String SubstitutionKeyEditor_8;
+	public static String SubstitutionKeyEditor_9;
+	public static String SubstKeyViewer_0;
 	public static String TextLoadController_0;
 	public static String TextLoadController_1;
 	public static String TextLoadController_3;

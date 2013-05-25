@@ -69,6 +69,7 @@ public class Alphabet extends AbstractAlphabet {
 		this.shortName = shortName;
 	}
 
+	@Override
 	public boolean isDefaultAlphabet() {
 		return defaultAlphabet;
 	}
@@ -81,6 +82,7 @@ public class Alphabet extends AbstractAlphabet {
 	 * @since 0.01
 	 */
 
+	@Override
 	public char[] getCharacterSet() {
 		// preventing unwanted changes to the charset
 		return characterSet.clone();
@@ -93,6 +95,7 @@ public class Alphabet extends AbstractAlphabet {
 	 * @version 0.01
 	 * @since 0.01
 	 */
+	@Override
 	public int getDisplayMissingCharacters() {
 		return displayMissingCharacters;
 	}
@@ -104,6 +107,7 @@ public class Alphabet extends AbstractAlphabet {
 	 * @version 0.01
 	 * @since 0.01
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -117,38 +121,47 @@ public class Alphabet extends AbstractAlphabet {
 	 * @since 0.01
 	 */
 
+	@Override
 	public char getSubstituteCharacter() {
 		return substituteCharacter;
 	}
 
+	@Override
 	public void setDefaultAlphabet(boolean b) {
 		defaultAlphabet = b;
 	}
 
+	@Override
 	public void setCharacterSet(char[] characterSet) {
 		this.characterSet = characterSet;
 	}
 
+	@Override
 	public boolean isBasic() {
 		return basic;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
 
+	@Override
 	public String getShortName() {
 		return shortName;
 	}
 
+	@Override
 	public void setBasic(boolean basic) {
 		this.basic = basic;
 	}
 
+	@Override
 	public boolean contains(char e) {
 		for (int i = 0; i < characterSet.length; i++) {
 			if (characterSet[i] == e) {

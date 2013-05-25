@@ -327,7 +327,8 @@ public class FrequencyContainer {
             FrequencyData[] dta = countCharacters(chiffretext, passlenght, i);
 
             Arrays.sort(dta, new Comparator<FrequencyData>() {
-                public int compare(FrequencyData o1, FrequencyData o2) {
+                @Override
+				public int compare(FrequencyData o1, FrequencyData o2) {
                     return o2.getCount() - o1.getCount();
                 }
             });
@@ -384,7 +385,7 @@ public class FrequencyContainer {
         // get number of characters in chosen alphabet
         int l = alphtext.length();
         // look up index of character 'e' in this alphabet.
-        int p = alphtext.indexOf('e'); //$NON-NLS-1$
+        int p = alphtext.indexOf('e'); 
         // look up index of this character.
         int c = alphtext.indexOf(character);
         // shift: index of 'e' - index of this character + length.
@@ -426,7 +427,7 @@ public class FrequencyContainer {
             list.add(new FrequencyData(i0, i1));
         }
 
-        return (FrequencyData[]) list.toArray(new FrequencyData[0]);
+        return list.toArray(new FrequencyData[0]);
     }
 
     protected String showCompletePass(String in) {
@@ -641,7 +642,8 @@ public class FrequencyContainer {
      * @return the length of the password.
      * @deprecated no longer needed.
      */
-    protected int getPassLenght() {
+    @Deprecated
+	protected int getPassLenght() {
         return passlenght;
     }
 

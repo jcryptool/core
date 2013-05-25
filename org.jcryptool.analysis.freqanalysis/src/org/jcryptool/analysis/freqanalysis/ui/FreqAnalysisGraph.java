@@ -84,7 +84,7 @@ public class FreqAnalysisGraph extends Graph {
     private int modulo(final int a, final int mod) {
         int howmany = 0;
         if (a < 0) {
-            howmany = (int) Math.round(Math.ceil((-1.0) * (double) a / (double) mod));
+            howmany = (int) Math.round(Math.ceil((-1.0) * a / mod));
             return a + howmany * mod;
         } else {
             return a % mod;
@@ -150,19 +150,19 @@ public class FreqAnalysisGraph extends Graph {
 
         for (int i = 0; i < bars.size(); i++) {
             // Only shift when the bar is no overlay bar.
-            if (((Bar) bars.get(i)) instanceof OverlayBar
-                    || ((Bar) bars.get(i)) instanceof OverlayLabelBar) {
-                barBox = calculateBarContainer(barDrawingRect, ((Bar) bars.get(i)).getIndex(),
+            if ((bars.get(i)) instanceof OverlayBar
+                    || (bars.get(i)) instanceof OverlayLabelBar) {
+                barBox = calculateBarContainer(barDrawingRect, bars.get(i).getIndex(),
                         biggestBarIndex);
             } else {
-                barBox = calculateBarContainerShifted(barDrawingRect, ((Bar) bars.get(i))
+                barBox = calculateBarContainerShifted(barDrawingRect, bars.get(i)
                         .getIndex(), biggestBarIndex);
             }
             // barBox = calculateBarContainer(barDrawingRect, ((Bar)bars.get(i)).getIndex(),
             // biggestBarIndex);
-            ((Bar) bars.get(i)).setBox(barBox);
-            ((Bar) bars.get(i)).setGC(gc);
-            ((Bar) bars.get(i)).drawBar();
+            bars.get(i).setBox(barBox);
+            bars.get(i).setGC(gc);
+            bars.get(i).drawBar();
         }
     }
 
@@ -202,9 +202,9 @@ public class FreqAnalysisGraph extends Graph {
 
         thisFontColor.setColor(gc);
         for (int i = 0; i < bars.size(); i++) {
-            textBox = calculateTextContainer(descDrawingRect, ((Bar) bars.get(i)).getIndex(),
+            textBox = calculateTextContainer(descDrawingRect, bars.get(i).getIndex(),
                     biggestBarIndex);
-            ((Bar) bars.get(i)).drawLowerLabel(textBox, gc);
+            bars.get(i).drawLowerLabel(textBox, gc);
         }
     }
 
@@ -272,7 +272,7 @@ public class FreqAnalysisGraph extends Graph {
     public final boolean setDraggedPixels(final int myPixelsDifference,
             final boolean isMouseButtonHold) {
         if (calcBiggestBarIndex() > 0) {
-            int myShift = (int) Math.round((double) myPixelsDifference / calculateBarHorizSpace());
+            int myShift = (int) Math.round(myPixelsDifference / calculateBarHorizSpace());
             boolean changed = savedShift + myShift != getCurrentShift();
             setCurrentShift(savedShift + myShift);
             setCurrentShift(modulo(getCurrentShift(), calcBiggestBarIndex() + 1));

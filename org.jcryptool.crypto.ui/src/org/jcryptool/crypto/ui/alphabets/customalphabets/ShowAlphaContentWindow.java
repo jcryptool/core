@@ -75,7 +75,7 @@ public class ShowAlphaContentWindow extends Shell {
 				text = new Text(composite, SWT.BORDER|SWT.MULTI);
 				text.setEditable(false);
 				text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-				text.setText(AtomAlphabet.alphabetContentAsString(alpha.getCharacterSet()));
+				text.setText(AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()));
 			}
 		}
 	}

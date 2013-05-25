@@ -23,6 +23,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.Activator;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.utils.ControlHatcher;
+import org.jcryptool.analysis.substitution.ui.modules.utils.StatisticsSelector;
+import org.jcryptool.analysis.substitution.ui.modules.utils.TextLoadController;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
@@ -288,7 +290,9 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 	public SubstitutionAnalysisConfigPanel(Composite parent, int style) {
 		super(parent, style);
 		this.observers = new LinkedList<Observer>();
-		setLayout(new GridLayout(1, false));
+		GridLayout thisLayout = new GridLayout(1, false);
+		thisLayout.verticalSpacing = 13;
+		setLayout(thisLayout);
 		
 		Label lblSubstitutionAnalysis = new Label(this, SWT.NONE);
 		lblSubstitutionAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -320,7 +324,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		grpAlphabet = new Group(this, SWT.NONE);
 		grpAlphabet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		grpAlphabet.setText(Messages.SubstitutionAnalysisConfigPanel_12);
-		grpAlphabet.setLayout(new GridLayout(1, false));
+		grpAlphabet.setLayout(new GridLayout(2, false));
 		
 		Label lblTheAlphabetWhich = new Label(grpAlphabet, SWT.WRAP);
 		GridData lblTheAlphabetWhichLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
@@ -344,7 +348,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		GridData lblStatisticsLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStatistics.setLayoutData(lblStatisticsLData);
 		lblStatisticsLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStatistics.setText(Messages.SubstitutionAnalysisConfigPanel_16+ "\n" + //$NON-NLS-2$ //$NON-NLS-1$
+		lblStatistics.setText(Messages.SubstitutionAnalysisConfigPanel_16+ "\n" + //$NON-NLS-1$ 
 				Messages.SubstitutionAnalysisConfigPanel_18);
 		
 		statisticsSelector = new StatisticsSelector(grpStatisticalData, this, SWT.NONE);
@@ -360,7 +364,7 @@ public class SubstitutionAnalysisConfigPanel extends Composite {
 		GridData lblStartAnalysisLData = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		lblStartAnalysis.setLayoutData(lblStartAnalysisLData);
 		lblStartAnalysisLData.widthHint = WIDTH_HINT_GENERAL;
-		lblStartAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_20+"\n" + //$NON-NLS-2$ //$NON-NLS-1$
+		lblStartAnalysis.setText(Messages.SubstitutionAnalysisConfigPanel_20+"\n" + //$NON-NLS-1$ 
 				Messages.SubstitutionAnalysisConfigPanel_22);
 		
 		startBtn = new Button(grpAnalysisStart, SWT.PUSH);

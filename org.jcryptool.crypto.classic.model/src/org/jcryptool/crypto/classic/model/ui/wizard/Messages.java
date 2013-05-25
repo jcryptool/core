@@ -36,7 +36,8 @@ public class Messages extends NLS {
 	public static String WizardPage_decrypt;
 	public static String WizardPage_encrypt;
 	public static String WizardPage_enterkey;
-	public static String WizardPage_filterchars;
+	public static String WizardPage_filterchars_enc;
+	public static String WizardPage_filterchars_dec;
 	public static String WizardPage_key;
 	public static String WizardPage_operation;
 	public static String WizardPage_selectalpha;

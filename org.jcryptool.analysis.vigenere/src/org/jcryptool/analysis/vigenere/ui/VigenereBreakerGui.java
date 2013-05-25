@@ -17,9 +17,9 @@ import org.jcryptool.analysis.vigenere.exceptions.IllegalInputException;
 import org.jcryptool.analysis.vigenere.exceptions.NoContentException;
 import org.jcryptool.analysis.vigenere.interfaces.DataProvider;
 import org.jcryptool.analysis.vigenere.views.VigenereBreakerView;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 
 public class VigenereBreakerGui extends ContentDelegator {

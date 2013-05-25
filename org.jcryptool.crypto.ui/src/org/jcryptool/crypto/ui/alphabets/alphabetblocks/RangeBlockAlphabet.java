@@ -28,8 +28,8 @@ public class RangeBlockAlphabet extends BlockAlphabet {
 
 	public static String generateCharRange(Character startCharacter,
 			Character endCharacter) {
-		int start = (int) startCharacter;
-		int end = (int) endCharacter;
+		int start = startCharacter;
+		int end = endCharacter;
 		int step = (end-start)/Math.abs(end-start);
 		
 		StringBuilder builder = new StringBuilder();

@@ -18,10 +18,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 
 public class SubstitutionChooser extends Shell {
 
@@ -124,7 +122,7 @@ public class SubstitutionChooser extends Shell {
 //		Label l = new Label(comp, SWT.NONE);
 //		l.setText("Geben Sie mindestens eine Substitution ein (Geheimtext -> Klartext):");
 		
-		editor = new SubstitutionKeyEditor(this, SWT.NONE, alpha, chars);
+		editor = new SubstitutionKeyEditor(this, SWT.NONE, alpha, false, chars);
 		editor.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
 		editor.setCharMappingExternal(new HashMap<Character, Character>());
 		

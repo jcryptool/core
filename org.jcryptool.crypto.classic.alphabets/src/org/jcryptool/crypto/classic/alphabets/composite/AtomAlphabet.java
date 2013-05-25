@@ -44,6 +44,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * 
 	 * @deprecated the additional parameters will soon be managed in the alphabets manager
 	 */
+	@Deprecated
 	public AtomAlphabet(List<Character> characters, boolean isBasic, boolean isDefault, String name, String shortName) {
 		this.content = characters;
 		setName(name);
@@ -100,9 +101,11 @@ public class AtomAlphabet extends AbstractAlphabet {
 		return ref;
 	}
 
+	@Override
 	public char[] getCharacterSet() {
 		return StringAlphabetFactory.toCharArray(content);
 	}
+	@Override
 	public boolean contains(char e) {
 		return content.contains(e);
 	}
@@ -159,9 +162,11 @@ public class AtomAlphabet extends AbstractAlphabet {
 		this.shortName = shortName;
 	}
 
-	public String getShortName() {return shortName != null ? shortName : generateShortName();} //$NON-NLS-1$
+	@Override
+	public String getShortName() {return shortName != null ? shortName : generateShortName();} 
 
-	public String getName() {return name != null ? name : generateName();} //$NON-NLS-1$
+	@Override
+	public String getName() {return name != null ? name : generateName();} 
 
 	/**
 	 * Method for creating a generated short name for the alphabet if no short name is explicitely set
@@ -169,6 +174,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * @return a generated name
 	 * @deprecated like {@link #getShortName()}
 	 */
+	@Deprecated
 	private String generateShortName() {
 		return generateName();
 	}
@@ -179,6 +185,7 @@ public class AtomAlphabet extends AbstractAlphabet {
 	 * @return a generated name
 	 * @deprecated like {@link #getName()}
 	 */
+	@Deprecated
 	private String generateName() {
 		return alphabetContentAsString(getCharacterSet());
 	}

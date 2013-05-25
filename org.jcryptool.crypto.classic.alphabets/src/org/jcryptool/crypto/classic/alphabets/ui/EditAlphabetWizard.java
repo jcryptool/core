@@ -38,6 +38,7 @@ public class EditAlphabetWizard extends Wizard {
 	/**
 	 * @see org.eclipse.jface.wizard.Wizard#addPages()
 	 */
+	@Override
 	public void addPages() {
 		page = new EditAlphabetWizardPage(alphabet);
 		addPage(page);

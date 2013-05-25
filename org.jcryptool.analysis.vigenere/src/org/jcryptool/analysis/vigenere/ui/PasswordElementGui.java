@@ -94,7 +94,8 @@ public class PasswordElementGui {
             comp.setLayout(compositeLayout);
             comp.setCursor(new Cursor(parent.getDisplay(), SWT.CURSOR_HAND));
             comp.addMouseListener(new MouseAdapter() {
-                public void mouseDown(MouseEvent event) {
+                @Override
+				public void mouseDown(MouseEvent event) {
                     focus();
                 }
             });

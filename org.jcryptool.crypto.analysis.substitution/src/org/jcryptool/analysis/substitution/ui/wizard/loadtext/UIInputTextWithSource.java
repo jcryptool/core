@@ -109,7 +109,8 @@ public abstract class UIInputTextWithSource extends AbstractUIInput<TextInputWit
 			try {
 				// reset user input origin
 				userinputSource = null;
-				return new TextInputWithSource(getTextFromFile(getSelectedFile()), getSelectedFile());
+				String textFromFile = getTextFromFile(getSelectedFile());
+				return new TextInputWithSource(textFromFile, getSelectedFile());
 			} catch (FileNotFoundException ex) {
 				// should not happen since existence of file has been
 				// tested

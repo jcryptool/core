@@ -203,7 +203,8 @@ public class ModifySelectionComposite extends Composite implements Listener {
     /**
      * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
      */
-    public final void handleEvent(final Event event) {
+    @Override
+	public final void handleEvent(final Event event) {
         if (event.widget == uppercase) {
             doUppercase = uppercase.getSelection();
         } else if (event.widget == lowercase) {

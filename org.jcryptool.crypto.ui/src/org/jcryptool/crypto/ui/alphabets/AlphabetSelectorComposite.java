@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -95,6 +96,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
 	*/
+	@Override
 	protected void checkSubclass() {
 	}
 
@@ -294,7 +296,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		WizardDialog d = new WizardDialog(parentShell, wiz);
 		d.open();
 		int returnCode = d.getReturnCode();
-		if(returnCode == Dialog.OK) {
+		if(returnCode == Window.OK) {
 			return wiz.getAlphabet();
 		}
 		
@@ -401,30 +403,38 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			protected InputVerificationResult verifyUserChange() {
 				if(mode.isWithCustomComboEntry() && !isRegisteredAlphabetSetInCombo() && customAlphaByCombo == null) {
 					return new InputVerificationResult() {
+						@Override
 						public boolean isValid() {
 							return false;
 						}
+						@Override
 						public boolean isStandaloneMessage() {
 							return false;
 						}
+						@Override
 						public MessageType getMessageType() {
 							return InputVerificationResult.MessageType.NONE;
 						}
+						@Override
 						public String getMessage() {
 							return "<this should not be visible> reset when custom alphabet wizard has been cancelled"; //$NON-NLS-1$
 						}
 					};
 				} else if (mode.isWithCustomButton() && btnCustomAlphabet.getSelection() && customAlphaByBtn == null) {
 					return new InputVerificationResult() {
+						@Override
 						public boolean isValid() {
 							return false;
 						}
+						@Override
 						public boolean isStandaloneMessage() {
 							return false;
 						}
+						@Override
 						public MessageType getMessageType() {
 							return InputVerificationResult.MessageType.NONE;
 						}
+						@Override
 						public String getMessage() {
 							return "<this should not be visible> reset when custom alphabet wizard has been cancelled"; //$NON-NLS-1$
 						}
@@ -549,6 +559,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 		
 		alphabetInput.addObserver(new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 				comboAlphas.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
 				if(mode.isWithCustomButton()) {

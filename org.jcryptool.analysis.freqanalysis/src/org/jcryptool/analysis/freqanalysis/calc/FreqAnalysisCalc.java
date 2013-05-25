@@ -137,18 +137,18 @@ public class FreqAnalysisCalc {
 	 */
 	public final String charToReprString(final char input)
 	{
-	    if((int)input == 9) {
+	    if(input == 9) {
 	        return "TAB"; //$NON-NLS-1$
-	    }else if((int)input == 10) {
+	    }else if(input == 10) {
 	        return "LF"; //$NON-NLS-1$
-	    }else if ((int)input == 13) {
+	    }else if (input == 13) {
 	        return "CR"; //$NON-NLS-1$
-	    }else if((int)input < 32) {
+	    }else if(input < 32) {
 			return "."+(int)input; //$NON-NLS-1$
-		}else if((int)input == 32) {
+		}else if(input == 32) {
 			return " "; //$NON-NLS-1$
 		}
-		else if((int)input > 32) {
+		else if(input > 32) {
 			return String.valueOf(input);
 		}
 		return "UNKNOWN"; //$NON-NLS-1$
@@ -185,9 +185,10 @@ public class FreqAnalysisCalc {
 		 */
 		class MyComparator implements Comparator<FreqAnalysisData>
 		{
-			  public int compare(FreqAnalysisData a, FreqAnalysisData b) {
-			    if((int)(a.ch)>(int)(b.ch)) return 1;
-			    if((int)(a.ch)==(int)(b.ch)) return 0;
+			  @Override
+			public int compare(FreqAnalysisData a, FreqAnalysisData b) {
+			    if((a.ch)>(b.ch)) return 1;
+			    if((a.ch)==(b.ch)) return 0;
 			    return -1;
 			  }
 			  // No need to override equals.
@@ -226,6 +227,7 @@ public class FreqAnalysisCalc {
 
 	}
 
+	@Override
 	public String toString() { return outputAnalysis; }
 
 

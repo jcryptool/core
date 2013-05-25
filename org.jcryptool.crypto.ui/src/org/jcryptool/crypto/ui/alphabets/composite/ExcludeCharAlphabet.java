@@ -28,6 +28,7 @@ public class ExcludeCharAlphabet extends AtomAlphabet {
 	 * 
 	 * @deprecated the additional parameters will soon be managed in the alphabets manager
 	 */
+	@Deprecated
 	public ExcludeCharAlphabet(AtomAlphabet baseAlphabet, Character excludedChar, boolean isBasic, boolean isDefault, String name, String shortName) {
 		super(createExclusionCharset(baseAlphabet, excludedChar), isBasic, isDefault, name, shortName);
 		this.baseAlphabet = baseAlphabet;

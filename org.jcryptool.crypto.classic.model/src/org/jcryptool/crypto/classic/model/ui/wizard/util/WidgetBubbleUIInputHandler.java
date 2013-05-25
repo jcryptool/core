@@ -189,7 +189,7 @@ public class WidgetBubbleUIInputHandler implements
 		int persistence = (result.getMessagePersistenceCategory()==InputVerificationResult.PERSISTENCE_DEFAULT)?
 				STANDARD_TIP_SHOWTIME:result.getMessagePersistenceCategory();
 		
-		return (int) (persistence + READ_TIME_PER_CHARACTER * result.getMessage().length() );
+		return persistence + READ_TIME_PER_CHARACTER * result.getMessage().length();
 	}
 
 	@Override

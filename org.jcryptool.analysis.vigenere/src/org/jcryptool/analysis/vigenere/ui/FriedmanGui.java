@@ -171,7 +171,8 @@ public class FriedmanGui extends Content {
                     bback.setFont(FontService.getNormalFont());
                     bback.setToolTipText(Messages.FriedmanGui_ttip_back);
                     bback.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             back();
                         }
                     });
@@ -226,7 +227,8 @@ public class FriedmanGui extends Content {
                     bnext.setFont(FontService.getSmallFont());
                     bnext.setToolTipText(Messages.FriedmanGui_ttip_next);
                     bnext.addSelectionListener(new SelectionAdapter() {
-                        public void widgetSelected(SelectionEvent event) {
+                        @Override
+						public void widgetSelected(SelectionEvent event) {
                             start();
                         }
                     });
@@ -255,7 +257,8 @@ public class FriedmanGui extends Content {
                     tlength.setFocus();
                     tlength.setFont(FontService.getSmallFont());
                     tlength.addKeyListener(new KeyAdapter() {
-                        public void keyPressed(KeyEvent event) {
+                        @Override
+						public void keyPressed(KeyEvent event) {
                             if (13 == event.keyCode) {
                                 start();
                             }
@@ -270,7 +273,8 @@ public class FriedmanGui extends Content {
             launcher.showNewTooltip(tlength.toDisplay(new Point(tlength.getBounds().width - 1, 1)), 20000,
                     Messages.FriedmanGui_1, Messages.FriedmanGui_2);
             this.addDisposeListener(new DisposeListener() {
-                public void widgetDisposed(DisposeEvent e) {
+                @Override
+				public void widgetDisposed(DisposeEvent e) {
                     launcher.dispose();
                 }
             });

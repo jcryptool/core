@@ -1,10 +1,13 @@
 package org.jcryptool.analysis.substitution.ui.modules;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -17,16 +20,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.calc.TextStatistic;
 import org.jcryptool.analysis.substitution.ui.modules.utils.StatisticsDisplayer;
 import org.jcryptool.analysis.substitution.ui.modules.utils.StatisticsWizard;
+import org.jcryptool.analysis.substitution.ui.modules.utils.SubstKeyViewer;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionAnalysisText;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionKeyEditor;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey;
-import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKeyValidityException;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 import org.jcryptool.editor.text.JCTTextEditorPlugin;
 
@@ -41,9 +41,9 @@ public class SubstitutionAnalysisPanel extends Composite {
 	private SubstitutionKeyEditor substEditor;
 	private boolean upperLowerCipherMode;
 	private SubstitutionAnalysisText previewer;
-	private Text k1PreviewText;
-	private Text k2PreviewText;
-
+	private Button restOfAlphaLexical;
+	private Button restOfAlphaAntilexical;
+	private Button btnFillMappings;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -132,6 +132,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 			@Override
 			public void update(Observable o, Object arg) {
 				preview();
+				btnFillMappings.setEnabled(!substEditor.isCompleteData());
 			}
 		});
 		
@@ -142,28 +143,83 @@ public class SubstitutionAnalysisPanel extends Composite {
 		keyPreview.setLayout(layout);
 		keyPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-		Label lblKeyPreview = new Label(keyPreview, SWT.WRAP);
-		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 4, 1);
-		lblKeyPreviewLayoutData.widthHint = MAIN_LBL_WIDTH_HINT;
+		Button lblKeyPreview = new Button(keyPreview, SWT.PUSH);
+		GridData lblKeyPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
 		lblKeyPreview.setLayoutData(lblKeyPreviewLayoutData);
 		lblKeyPreview.setText(Messages.SubstitutionAnalysisPanel_7);
-		
-		Label k1PreviewLabel = new Label(keyPreview, SWT.NONE);
-		k1PreviewLabel.setText(Messages.SubstitutionAnalysisPanel_8);
-		
-		k1PreviewText = new Text(keyPreview, SWT.BORDER);
-		k1PreviewText.setEditable(false);
-		k1PreviewText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		k1PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
+		lblKeyPreview.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				exportMapping();
+			}
+		});
 
-		Label k2PreviewLabel = new Label(keyPreview, SWT.NONE);
-		k2PreviewLabel.setText(Messages.SubstitutionAnalysisPanel_10);
+		btnFillMappings = new Button(keyPreview, SWT.PUSH);
+		GridData lblbtnFillMappings = new GridData(SWT.TRAIL, SWT.CENTER, true, false, 1, 1);
+		btnFillMappings.setLayoutData(lblbtnFillMappings);
+		btnFillMappings.setText(Messages.SubstitutionAnalysisPanel_6);
+		btnFillMappings.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				substEditor.setCharMappingExternal(fillUpMissingCharacters(substEditor.getCharMapping(), alphabet, restOfAlphaLexical.getSelection()));
+			}
+		});
 		
-		k2PreviewText = new Text(keyPreview, SWT.BORDER);
-		k2PreviewText.setEditable(false);
-		k2PreviewText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		k2PreviewText.setFont(SWTResourceManager.getFont("Courier New", 10, SWT.NORMAL)); //$NON-NLS-1$
+		Composite compRestDirection = new Composite(keyPreview, SWT.NONE);
+		GridLayout compRestDirectionLayout = new GridLayout(1, false);
+		compRestDirectionLayout.marginWidth = 0;
+		compRestDirectionLayout.marginHeight = 0;
+		compRestDirection.setLayout(compRestDirectionLayout);
+		GridData compRestDirectionLData = new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 1, 1);
+		compRestDirection.setLayoutData(compRestDirectionLData);
 		
+		restOfAlphaLexical = new Button(compRestDirection, SWT.RADIO);
+		restOfAlphaLexical.setText(org.jcryptool.crypto.classic.substitution.ui.Messages.SubstitutionKeyEditor_8);
+		boolean lexicalBtnSelection = true;
+		restOfAlphaLexical.setSelection(
+				lexicalBtnSelection
+				);
+		
+		restOfAlphaAntilexical = new Button(compRestDirection, SWT.RADIO);
+		restOfAlphaAntilexical.setText(org.jcryptool.crypto.classic.substitution.ui.Messages.SubstitutionKeyEditor_9);
+		restOfAlphaAntilexical.setSelection(
+				!lexicalBtnSelection
+				);
+		
+		Button btnResetMappings = new Button(keyPreview, SWT.PUSH);
+		GridData lblbtnResetMappings = new GridData(SWT.TRAIL, SWT.CENTER, true, false, 1, 1);
+		btnResetMappings.setLayoutData(lblbtnResetMappings);
+		btnResetMappings.setText(Messages.SubstitutionAnalysisPanel_9);
+		btnResetMappings.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				substEditor.setCharMappingExternal(new HashMap<Character, Character>());
+			}
+		});
+	}
+
+	protected Map<Character, Character> fillUpMissingCharacters(Map<Character, Character> charMapping,
+			AbstractAlphabet alphabet2, boolean direction) {
+		Map<Character, Character> fillupMap = new HashMap<Character, Character>();
+		LinkedList<Character> restCharacters = new LinkedList<Character>(alphabet2.asList());
+		if(!direction) {
+			Collections.reverse(restCharacters);
+		}
+		for(Character c: charMapping.values()) if(c != null) restCharacters.remove(c);
+		for(Character c: alphabet2.asList()) {
+			if(charMapping.get(c) != null) {
+				fillupMap.put(c, charMapping.get(c));
+			} else {
+				if(! restCharacters.isEmpty()) {
+					fillupMap.put(c, restCharacters.removeFirst());
+				}
+			}
+		}
+		return fillupMap;
+	}
+
+	protected void exportMapping() {
+		SubstKeyViewer.show(substEditor.getCharMapping(), alphabet);
 	}
 
 	protected void preview() {
@@ -172,35 +228,6 @@ public class SubstitutionAnalysisPanel extends Composite {
 		
 		statisticsDisplayer.setCharMapping(mapping);
 		
-		Map<Character, Character> key1Data = substEditor.getCharMapping();
-		String key1String = generateKey1String(key1Data, alphabet);
-		
-		String key2String = Messages.SubstitutionAnalysisPanel_12;
-		if(substEditor.isCompleteData()) {
-			try {
-				SubstitutionKey key = new SubstitutionKey(SubstitutionKey.invertSubstitution(key1Data));
-				key2String = key.toStringSubstitutionCharList(alphabet);
-			} catch (SubstitutionKeyValidityException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		k1PreviewText.setText(key1String);
-		k2PreviewText.setText(key2String);
-		
-	}
-
-	private String generateKey1String(Map<Character, Character> key1Data, AbstractAlphabet alphabet) {
-		StringBuilder sb = new StringBuilder();
-		for(char c: alphabet.getCharacterSet()) {
-			Character mapping = key1Data.get(c);
-			if(mapping != null) {
-				sb.append(mapping);
-			} else {
-				sb.append('?');
-			}
-		}
-		return sb.toString();
 	}
 
 	private void initLetterFreqGroup(final Group grpLetterFrequencyStatistics) {
@@ -230,7 +257,7 @@ public class SubstitutionAnalysisPanel extends Composite {
 				WizardDialog d = new WizardDialog(getShell(), w);
 				int result = d.open();
 				
-				if(result == WizardDialog.OK) {
+				if(result == Window.OK) {
 					TextStatistic stat = w.getStatistics();
 					
 					if(stat != null) {

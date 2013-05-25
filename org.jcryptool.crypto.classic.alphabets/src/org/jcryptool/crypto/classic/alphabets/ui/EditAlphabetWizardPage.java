@@ -59,6 +59,7 @@ public class EditAlphabetWizardPage extends WizardPage implements Listener {
 	/**
 	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		Composite pageComposite = new Composite(parent, SWT.NULL);		
 		pageComposite.setSize(new Point(350, 175));
@@ -74,6 +75,7 @@ public class EditAlphabetWizardPage extends WizardPage implements Listener {
 	/**
 	 * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
 	 */
+	@Override
 	public void handleEvent(Event event) {
 		if (event.widget == nameText) {
 			name = nameText.getText();
@@ -151,6 +153,7 @@ public class EditAlphabetWizardPage extends WizardPage implements Listener {
 		
 		nameText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				setErrorMessage(null);
 				if (e.character != SWT.BS && e.character != SWT.DEL) {
@@ -205,6 +208,7 @@ public class EditAlphabetWizardPage extends WizardPage implements Listener {
 		charsText.addListener(SWT.Modify, this);
 		charsText.addVerifyListener(new VerifyListener() {
 
+			@Override
 			public void verifyText(VerifyEvent e) {
 				setErrorMessage(null);
 				if (e.character != SWT.BS && e.character != SWT.DEL) {

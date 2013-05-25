@@ -128,7 +128,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
             button1.setText(Messages.FullAnalysisUI_startanalysis);
             button1.addMouseListener(new MouseAdapter() {
 
-                public void mouseDown(final MouseEvent evt) {
+                @Override
+				public void mouseDown(final MouseEvent evt) {
                     if (checkEditor()) {
                         text = getEditorText();
                         if (btnReferenceTools.getSelection()) {
@@ -217,7 +218,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                     button3.setText(Messages.FullAnalysisUI_monoalphabetic);
                                     button3.setSelection(true);
                                     button3.addSelectionListener(new SelectionAdapter() {
-                                        public void widgetSelected(SelectionEvent evt) {
+                                        @Override
+										public void widgetSelected(SelectionEvent evt) {
                                             polyOnOffSelected(evt);
                                         }
                                     });
@@ -226,7 +228,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                     button4 = new Button(composite2, SWT.RADIO | SWT.LEFT);
                                     button4.setText(Messages.FullAnalysisUI_polyalphabetic);
                                     button4.addSelectionListener(new SelectionAdapter() {
-                                        public void widgetSelected(SelectionEvent evt) {
+                                        @Override
+										public void widgetSelected(SelectionEvent evt) {
                                             polyOnOffSelected(evt);
                                         }
                                     });
@@ -248,12 +251,14 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                     spinner1 = new Spinner(group2, SWT.NONE);
                                     spinner1.setLayoutData(spinner1LData);
                                     spinner1.addMouseListener(new MouseAdapter() {
-                                        public void mouseDown(MouseEvent evt) {
+                                        @Override
+										public void mouseDown(MouseEvent evt) {
                                             recalcGraph();
                                         }
                                     });
                                     spinner1.addSelectionListener(new SelectionAdapter() {
-                                        public void widgetSelected(SelectionEvent evt) {
+                                        @Override
+										public void widgetSelected(SelectionEvent evt) {
                                             changedVigOptions();
                                         }
                                     });
@@ -269,12 +274,14 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                     spinner2 = new Spinner(group2, SWT.NONE);
                                     spinner2.setLayoutData(spinner2LData);
                                     spinner2.addMouseListener(new MouseAdapter() {
-                                        public void mouseDown(MouseEvent evt) {
+                                        @Override
+										public void mouseDown(MouseEvent evt) {
                                             recalcGraph();
                                         }
                                     });
                                     spinner2.addSelectionListener(new SelectionAdapter() {
-                                        public void widgetSelected(SelectionEvent evt) {
+                                        @Override
+										public void widgetSelected(SelectionEvent evt) {
                                             changedVigOptions();
                                         }
                                     });
@@ -309,7 +316,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                 btnReferenceTools.setLayoutData(button2LData);
                                 btnReferenceTools.setText(Messages.FullAnalysisUI_enabledecrOverlay);
                                 btnReferenceTools.addMouseListener(new MouseAdapter() {
-                                    public void mouseDown(MouseEvent evt) {
+                                    @Override
+									public void mouseDown(MouseEvent evt) {
                                     	
                                         if (!btnReferenceTools.getSelection()) {
                                         	enableReferenceTools(true);
@@ -343,16 +351,17 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
 
                                 // add reftexts
                                 reftexts.add(new Reftext(Messages.FullAnalysisUI_germanreftextname1,
-                                        Messages.FullAnalysisUI_0)); //$NON-NLS-2$
+                                        Messages.FullAnalysisUI_0)); 
                                 reftexts.add(new Reftext(Messages.FullAnalysisUI_germanreftextname2,
-                                        Messages.FullAnalysisUI_1)); //$NON-NLS-2$
+                                        Messages.FullAnalysisUI_1)); 
                                 reftexts.add(new Reftext(Messages.FullAnalysisUI_englishreftextname1,
-                                        Messages.FullAnalysisUI_2)); //$NON-NLS-2$
+                                        Messages.FullAnalysisUI_2)); 
 
                                 for (int i = 0; i < reftexts.size(); i++)
                                     combo1.add(reftexts.get(i).name);
                                 combo1.addSelectionListener(new SelectionAdapter() {
-                                    public void widgetSelected(SelectionEvent evt) {
+                                    @Override
+									public void widgetSelected(SelectionEvent evt) {
                                         combo1WidgetSelected(evt);
                                     }
                                 });
@@ -373,7 +382,8 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                 combo2LData.horizontalAlignment = GridData.FILL;
                                 combo2.setLayoutData(combo2LData);
                                 combo2.addSelectionListener(new SelectionAdapter() {
-                                    public void widgetSelected(SelectionEvent evt) {
+                                    @Override
+									public void widgetSelected(SelectionEvent evt) {
                                         combo2WidgetSelected(evt);
                                     }
                                 });
@@ -569,7 +579,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
         if (bestAlphaString != null && !bestAlphaString.equals(prevAlpha)) {
             if (combo2.isVisible() && combo2.isEnabled()) {
                 tipLauncher.showNewTooltip(combo2.toDisplay(new Point(
-                        (int) Math.round((double) (combo2.getSize().x) * 0.612), combo2.getSize().y)), 9000,
+                        (int) Math.round((combo2.getSize().x) * 0.612), combo2.getSize().y)), 9000,
                         "", Messages.FullAnalysisUI_5); //$NON-NLS-1$
             }
         }

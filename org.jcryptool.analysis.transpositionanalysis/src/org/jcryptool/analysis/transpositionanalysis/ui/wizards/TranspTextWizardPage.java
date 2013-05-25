@@ -22,7 +22,6 @@ package org.jcryptool.analysis.transpositionanalysis.ui.wizards;
 //-----END DISCLAIMER-----
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -561,6 +560,7 @@ public class TranspTextWizardPage extends WizardPage {
 		runnable.run();
 
 		new Thread() {
+			@Override
 			public void run() {
 				try {
 					Thread.sleep(20);
@@ -568,6 +568,7 @@ public class TranspTextWizardPage extends WizardPage {
 					LogUtil.logError(e);
 				}
 				Runnable r = new Runnable() {
+					@Override
 					public void run() {
 						txtInputText.setTopIndex(topIndex);
 					}

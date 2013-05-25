@@ -209,7 +209,8 @@ public class SummaryGui extends Content {
             	bstart.setToolTipText(Messages.SummaryGui_ttip_start);
             	bstart.setFont(FontService.getNormalFont());
             	bstart.addSelectionListener(new SelectionAdapter() {
-            		public void widgetSelected(SelectionEvent evt) {
+            		@Override
+					public void widgetSelected(SelectionEvent evt) {
             			start();
             		}
             	});
@@ -226,7 +227,8 @@ public class SummaryGui extends Content {
             	bdecrypt.setToolTipText(Messages.SummaryGui_ttip_analyze);
             	bdecrypt.setFont(FontService.getNormalFont());
             	bdecrypt.addSelectionListener(new SelectionAdapter() {
-            		public void widgetSelected(SelectionEvent event) {
+            		@Override
+					public void widgetSelected(SelectionEvent event) {
             			quickanalysis();
             		}
             	});
@@ -250,6 +252,7 @@ public class SummaryGui extends Content {
 		 */
     	final Observer o1;
     	EditorsManager.getInstance().getActiveEditorChangedObservable().addObserver((o1=new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 				if(explicitelySelectedEditor == null) {
 					if (selectedEditor == null) {
@@ -263,12 +266,14 @@ public class SummaryGui extends Content {
 
     	final Observer o2;
     	EditorsManager.getInstance().getEditorAvailabilityObservable().addObserver((o2=new Observer() {
+			@Override
 			public void update(Observable o, Object arg) {
 				refreshEditors();
 			}
 		}));
 
     	this.addDisposeListener(new DisposeListener() {
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				EditorsManager.getInstance().getActiveEditorChangedObservable().deleteObserver(o1);
 				EditorsManager.getInstance().getEditorAvailabilityObservable().deleteObserver(o2);

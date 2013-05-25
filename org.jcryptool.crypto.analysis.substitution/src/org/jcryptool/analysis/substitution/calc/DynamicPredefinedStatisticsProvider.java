@@ -1,7 +1,6 @@
 package org.jcryptool.analysis.substitution.calc;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +15,6 @@ import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.jcryptool.analysis.substitution.Activator;
 import org.jcryptool.analysis.substitution.ui.modules.utils.PredefinedStatisticsProvider;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -25,9 +23,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorUtils;
-import org.jcryptool.crypto.classic.alphabets.composite.AtomAlphabet;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
-import org.jcryptool.crypto.classic.alphabets.preferences.TransformationsPreferencePage;
 import org.osgi.framework.Bundle;
 import org.osgi.service.prefs.Preferences;
 
@@ -137,6 +133,10 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
 		text = text.replaceAll(Pattern.quote("\n"), "");
 		text = text.replaceAll(Pattern.quote("\r"), "");
 		text = text.replaceAll(Pattern.quote("\t"), "");
+		
+		TransformData alphaTransformation = new TransformData(alpha, false, false, false, true, false);
+		text = Transform.transformText(text, alphaTransformation);
+		
 		return text;
 	}
 

@@ -8,7 +8,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.jcryptool.analysis.substitution.ui.modules.StatisticsSelector;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
 public class StatisticsWizardPage extends WizardPage {
@@ -30,6 +29,7 @@ public class StatisticsWizardPage extends WizardPage {
 	 * Create contents of the wizard.
 	 * @param parent
 	 */
+	@Override
 	public void createControl(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout());

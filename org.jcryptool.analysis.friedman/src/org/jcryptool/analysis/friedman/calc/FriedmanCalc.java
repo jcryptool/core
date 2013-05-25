@@ -73,7 +73,7 @@ public class FriedmanCalc {
 		String compare = shiftfriedman(text, shift);
 		int count = 0;
 		for(int i=0; i<text.length(); i++) if(text.charAt(i) == compare.charAt(i)) count++;
-		return (double)(count/(double)text.length());
+		return count/(double)text.length();
 	}
 
 	/**
@@ -101,10 +101,11 @@ public class FriedmanCalc {
 	{
 
 	 	analysis = friedmantest(text, maxShift);
-	 	for(int i=0; i<analysis.length; i++) outputAnalysis = outputAnalysis.concat((int)(i+1) + ":\t" + twoDigits.format(analysis[i]) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+	 	for(int i=0; i<analysis.length; i++) outputAnalysis = outputAnalysis.concat(i+1 + ":\t" + twoDigits.format(analysis[i]) + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 
+	@Override
 	public String toString() { return outputAnalysis; }
 
 	public double[] getAnalysis() {
