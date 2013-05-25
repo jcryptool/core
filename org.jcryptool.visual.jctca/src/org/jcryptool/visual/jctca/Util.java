@@ -61,7 +61,7 @@ public class Util {
 					KeyStoreManager.getDefaultKeyPassword());
 			return Util.certificateForKeyPair(
 					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),//$NON-NLS-1$
-					csr.getStreet(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
+					csr.getStreet(),csr.getZip(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
 					priv, serialNumber, caCert, expiryDate, startDate, caKey);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -71,7 +71,7 @@ public class Util {
 	}
 
 	public static X509Certificate certificateForKeyPair(String principal,
-			String country, String street, String city, String unit,
+			String country, String street,String zip, String city, String unit,
 			String organisation, String mail, PublicKey pub, PrivateKey priv,
 			BigInteger serialNumber, X509Certificate caCert, Date expiryDate,
 			Date startDate, PrivateKey caKey) {
@@ -83,7 +83,7 @@ public class Util {
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
 			X509Name subjectName = new X509Name("CN=" + principal + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"ST=" + street + ", " + //$NON-NLS-1$ //$NON-NLS-2$
-					"L=" + city + ", " + "C=" + country + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					"L=" +zip +" " + city + ", " + "C=" + country + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 					"OU=" + unit + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"O=" + organisation + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"E=" + mail); //$NON-NLS-1$

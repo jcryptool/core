@@ -39,7 +39,7 @@ public class RevokeCertDialog extends Dialog {
 		container.setLayoutData(gd);
 
 		Label lbl_explain = new Label(container, SWT.WRAP);
-		gd.widthHint = 550;
+		gd.widthHint = 600;
 		lbl_explain.setLayoutData(gd);
 		lbl_explain.setText(Messages.RevokeCertDialog_explain_text_revoke_cert);
 
