@@ -65,12 +65,11 @@ public class ShowReq implements Views {
 
 		// showSelectedRequest = group for list of root certificates and two
 		// buttons (accept and reject)
-		Group right = new Group(composite, SWT.NONE);
+		Composite right = new Composite(composite, SWT.NONE);
 		right.setLayout(new GridLayout(2, true));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_grp.widthHint = 500;
 		right.setLayoutData(gd_grp);
-		right.setText(Messages.ShowReq_grp_show_request_headline);
 
 		Tree tree = new Tree(left, SWT.BORDER);
 		GridData gd_tree= new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -117,7 +116,7 @@ public class ShowReq implements Views {
 		lbl_value_country.setLayoutData(lbl_gd);
 
 		lbl_mail = new Label(right, SWT.None);
-		lbl_mail.setText("E-Mailadresse:");
+		lbl_mail.setText("E-Mail-Adresse:");
 		lbl_value_mail = new Label(right, SWT.FILL);
 		lbl_value_mail.setText("");
 		lbl_value_mail.setLayoutData(lbl_gd);
