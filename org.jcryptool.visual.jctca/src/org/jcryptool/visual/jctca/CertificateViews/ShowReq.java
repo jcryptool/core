@@ -65,12 +65,11 @@ public class ShowReq implements Views {
 
 		// showSelectedRequest = group for list of root certificates and two
 		// buttons (accept and reject)
-		Group right = new Group(composite, SWT.NONE);
+		Composite right = new Composite(composite, SWT.NONE);
 		right.setLayout(new GridLayout(2, true));
 		GridData gd_grp = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gd_grp.widthHint = 500;
 		right.setLayoutData(gd_grp);
-		right.setText(Messages.ShowReq_grp_show_request_headline);
 
 		Tree tree = new Tree(left, SWT.BORDER);
 		GridData gd_tree= new GridData(SWT.FILL, SWT.FILL, true, false);
