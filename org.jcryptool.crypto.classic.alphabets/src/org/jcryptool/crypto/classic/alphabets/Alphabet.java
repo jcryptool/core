@@ -35,6 +35,12 @@ public class Alphabet extends AbstractAlphabet {
 
 	private String shortName = "";
 	
+	public Alphabet() {
+		this.name = "";
+		this.shortName = "";
+		this.characterSet = new char[0];
+	}
+	
 	/**
 	 * Constructor using a String for initialization
 	 * 
