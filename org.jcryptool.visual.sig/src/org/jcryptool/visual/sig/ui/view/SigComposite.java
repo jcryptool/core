@@ -230,7 +230,7 @@ public class SigComposite extends Composite implements PaintListener {
 		lblHashhex.setText("Hash (hex)");
 		
 		btnReturn = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReturn.setBounds(10, 499, 117, 28);
+		btnReturn.setBounds(10, 499, 125, 28);
 		btnReturn.setText(Messages.SigComposite_btnReturn);
 		btnReturn.setVisible(false); //Invisible by default
 		
