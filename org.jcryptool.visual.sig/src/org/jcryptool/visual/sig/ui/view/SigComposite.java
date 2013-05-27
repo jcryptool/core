@@ -445,47 +445,47 @@ public class SigComposite extends Composite implements PaintListener {
         });
 		
 		//Adds a Listener for the reset button
-				btnReset.addSelectionListener(new SelectionListener() {
-		            public void widgetDefaultSelected(SelectionEvent e) {
-		            }
-		            public void widgetSelected(SelectionEvent e) {
-		                Reset(0);
-		            }
-		        });
-		
-				//Adds a Listener for OpenInEditor
-				btnOpenInEditor.addSelectionListener(new SelectionListener() {
-					public void widgetDefaultSelected(SelectionEvent e) {
-				    }
-				    public void widgetSelected(SelectionEvent e) {
-			    		MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
-		                messageBox.setText(Messages.SigComposite_MessageTitle); 
-		                messageBox.setMessage(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
-		                messageBox.open();		        
-				   }//end widgetSelected
-				});
+		btnReset.addSelectionListener(new SelectionListener() {
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+            public void widgetSelected(SelectionEvent e) {
+                Reset(0);
+            }
+        });
+
+		//Adds a Listener for OpenInEditor
+		btnOpenInEditor.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+	    		MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+                messageBox.setText(Messages.SigComposite_MessageTitle); 
+                messageBox.setMessage(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+                messageBox.open();		        
+		   }//end widgetSelected
+		});
 				
-				//Adds a Listener for Return Button
-				btnOpenInEditor.addSelectionListener(new SelectionListener() {
-					public void widgetDefaultSelected(SelectionEvent e) {
-				    }
-				    public void widgetSelected(SelectionEvent e) {
-				    	try {
-				    		//Close view
-				    		IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
-				    		//Perspective perspective = page.getPerspective();
-				    		IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
-				    		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
-				    		page.closePerspective(null, false, true);
-			    		//perspective.getViewFactory.releaseView(ref);
-				    		//go to JCT-CA view
-				        } //end try
-				    	catch (Exception ex) {
-				    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
-				        }//end catch
-				   }//end widgetSelected
-				});
-		
+		//Adds a Listener for Return Button
+		btnReturn.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	try {
+		    		//Close view
+		    		IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
+		    		//Perspective perspective = page.getPerspective();
+		    		IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
+		    		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
+		    		page.closePerspective(null, false, true);
+		    		//Go to JCT-CA view
+		    		
+		        } //end try
+		    	catch (Exception ex) {
+		    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+		        }//end catch
+		   }//end widgetSelected
+		});
+
 	}//end createEvents
 	
 	/**
@@ -523,7 +523,7 @@ public class SigComposite extends Composite implements PaintListener {
 		// Temporary solution
 		
 		if (hashes[hash].contains("MD5")) {
-			sigstring = "MD5withRSA";
+			sigstring = "MD5with";
 		}
 		if (hashes[hash].contains("SHA-1")) {
 			sigstring = "SHA1with";
