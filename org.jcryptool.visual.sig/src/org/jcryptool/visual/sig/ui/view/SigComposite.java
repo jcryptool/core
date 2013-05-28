@@ -411,7 +411,7 @@ public class SigComposite extends Composite implements PaintListener {
             public void widgetSelected(SelectionEvent e) {
                 try {
                 	Reset(2);
-                    SignatureWizard wiz = new SignatureWizard();
+                    SignatureWizard wiz = new SignatureWizard(hash);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                    	 	@Override
                    	 	protected void configureShell(Shell newShell) {

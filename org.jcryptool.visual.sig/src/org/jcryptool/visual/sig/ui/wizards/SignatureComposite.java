@@ -18,9 +18,12 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private Button rdo3;
 	private Button rdo4;
 	
+	private int method;
+	
 	//Constructor
-	public SignatureComposite(Composite parent, int style) {
+	public SignatureComposite(Composite parent, int style, int m) {
 		super(parent, style);
+		method = m;
 		//parent.setSize(600, 400); 
 	    //Draw the controls
 	    initialize();
@@ -44,12 +47,10 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		rdo2.setText(Messages.SignatureWizard_RSA);
 		
 		rdo3 = new Button(grpSignatures, SWT.RADIO);
-		rdo3.setEnabled(false);
 		rdo3.setBounds(10, 67, 118, 18);
 		rdo3.setText(Messages.SignatureWizard_ECDSA);
 		
 		rdo4 = new Button(grpSignatures, SWT.RADIO);
-		rdo4.setEnabled(false);
 		rdo4.setBounds(10, 91, 118, 18);
 		rdo4.setText(Messages.SignatureWizard_RSAandMGF1);
 	
@@ -68,9 +69,17 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    rdo2.addSelectionListener(this);
 	    rdo3.addSelectionListener(this);
 	    rdo4.addSelectionListener(this);
-	    //rdo5.addSelectionListener(this);
 	    
-	  //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
+	    //Enable/disable methods
+	    switch (method) {
+	    	case 0: rdo2.setEnabled(true); rdo1.setEnabled(false); rdo3.setEnabled(false); rdo4.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); break; //MD5: RSA
+	    	case 1: rdo1.setEnabled(true); rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setSelection(true); rdo2.setSelection(false); break; //SHA1: RSA, DSA, ECDSA, RSA + MGF1
+	    	case 2:
+	    	case 3:
+	    	case 4: rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); break; //SHA256+: RSA, ECDSA, RSA + MGF1
+	    }//end switch
+	    
+	    //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
 	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
 			rdo1.setEnabled(false);
 			rdo1.setSelection(false);
@@ -78,6 +87,12 @@ public class SignatureComposite extends Composite implements SelectionListener{
 			rdo3.setEnabled(false);
 			rdo4.setEnabled(false);
 		}   
+	    
+	    //Temporary
+	    /*
+	    rdo3.setEnabled(false);
+	    rdo4.setEnabled(false);
+	    */
 	}
 	
 	/**

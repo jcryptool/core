@@ -10,18 +10,20 @@ public class SignatureWizard extends Wizard{
 	private String name;
 	//Integer representing the chosen signature (0-4)
 	private int signature;
+	private int method = 0;
 
 	//Constructor
-	public SignatureWizard() {
+	public SignatureWizard(int m) {
 		super();
 		name = "SignatureWizard";
+		method = m;
 		setWindowTitle(Messages.SignatureWizard_Title);
 	}	
 	
 	@Override
 	public void addPages() {
 		//Create page
-		page = new SignatureWizardPage(name);
+		page = new SignatureWizardPage(name, method);
 		//Add the page to the wizard
 		addPage(page);
 	}
