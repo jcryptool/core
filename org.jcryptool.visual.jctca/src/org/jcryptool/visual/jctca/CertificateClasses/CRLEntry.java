@@ -43,6 +43,10 @@ public class CRLEntry {
 		return sn;
 	}
 	
+	/**
+	 * get the time when the certificate has been revoked
+	 * @return the date and time of revocation
+	 */
 	public Date getRevokeTime(){
 		return revokeTime;
 	}
