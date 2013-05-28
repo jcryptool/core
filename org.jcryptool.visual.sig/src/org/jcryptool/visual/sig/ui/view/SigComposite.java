@@ -478,7 +478,7 @@ public class SigComposite extends Composite implements PaintListener {
 		    		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
 		    		page.closePerspective(null, false, true);
 		    		//Go to JCT-CA view (org.jcryptool.visual.jctca)
-		    		 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.jctca.view");
+		    		//PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.jctca.view");
 		        } //end try
 		    	catch (Exception ex) {
 		    		LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
