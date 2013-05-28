@@ -73,6 +73,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	  //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
 	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
 			rdo1.setEnabled(false);
+			rdo1.setSelection(false);
 			rdo2.setSelection(true);
 			rdo3.setEnabled(false);
 			rdo4.setEnabled(false);
