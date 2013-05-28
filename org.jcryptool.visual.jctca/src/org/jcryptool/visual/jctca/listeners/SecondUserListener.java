@@ -23,6 +23,12 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
+/**
+ * listener on all the components in the second user view where you can verify
+ * signed messages
+ * @author mmacala
+ *
+ */
 public class SecondUserListener implements SelectionListener{
 	Button btn_check_signature;
 	Button btn_get_CRL;
@@ -30,6 +36,7 @@ public class SecondUserListener implements SelectionListener{
 	Label lbl_text;
 	Label lbl_signature;
 	Button btn_deleteEntry;
+	
 	public SecondUserListener(Button btn_check_signature, Button btn_get_CRL,
 			Tree tree, Label lbl_text, Label lbl_signature, Button btn_deleteEntry) {
 		this.btn_check_signature = btn_check_signature;
@@ -58,12 +65,13 @@ public class SecondUserListener implements SelectionListener{
 					byte[] hash, signature;
 					boolean certRevoked = false; //hilfsvariable um festzustellen ob Zertifikat widerrufen wurde, aber die signatur vor dem widerruf erstellt wurde
 					if (btn_get_CRL.getSelection()) {
+						//should revocation status be checkeD?
 						KeyStoreAlias pubAlias = sig.getPubAlias();
 						Certificate cert = KeyStoreManager.getInstance().getCertificate(pubAlias);
 						if(cert instanceof X509Certificate){
 							X509Certificate x509 = (X509Certificate)cert;
-							if(Util.isCertificateRevoked(x509.getSerialNumber())){
-								if(!Util.isDateBeforeRevocation(x509.getSerialNumber(), sig.getTime())){
+							if(Util.isCertificateRevoked(x509.getSerialNumber())){	//certificate has been revoked
+								if(!Util.isDateBeforeRevocation(x509.getSerialNumber(), sig.getTime())){//signature is after revokation
 									Util.showMessageBox("Zertifikat widerrufen", "Die Signatur wurde nach dem widerruf des Zertifikats erstellt!", SWT.ICON_WARNING);
 									return;
 								}
@@ -76,22 +84,21 @@ public class SecondUserListener implements SelectionListener{
 					try {
 						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA");
 						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias());
-						if(cert.getNotAfter().after(sig.getTime())){
+						if(cert.getNotAfter().after(sig.getTime())){//signature after valid date of the certificate?
 							checkSig.initVerify(cert.getPublicKey());
-							
-							if(checkSig.verify(sig.getSignature())){
-								if(certRevoked){
+							if(checkSig.verify(sig.getSignature())){ //signature is valid
+								if(certRevoked){ //certificate is revoked, but signature is before the revocation
 									Util.showMessageBox("Erfolg", "Die Signatur ist korrekt. Das Zertifikat wurde zwar widerrufen, die signatur wurde aber vor dem Widerruf erstellt.", SWT.ICON_INFORMATION);
 								}
-								else{
+								else{ //certificate is not revoked
 									Util.showMessageBox("Erfolg","Die Signatur ist korrekt. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_INFORMATION);
 								}
 							}
-							else{
+							else{ //signature is invalid
 								Util.showMessageBox("Signatur falsch", "Die Signatur ist nicht korrekt.", SWT.ICON_ERROR);
 							}
 						}
-						else{
+						else{ //certificate is out of date and the signature has been created afterwards
 							Util.showMessageBox("Zertifikat abgelaufen","Signatur wurde nach dem Ablauf des Zertifikats erstellt" , SWT.ICON_ERROR);
 						}
 					} catch (SignatureException e) {
@@ -109,7 +116,7 @@ public class SecondUserListener implements SelectionListener{
 		}
 		else if(src.equals(tree)){
 			TreeItem sel = tree.getSelection()[0];
-			if(sel != null && sel.getData() != null){
+			if(sel != null && sel.getData() != null){ //get the content from the selected signature and set the fields according to it
 				Signature sig = (Signature)sel.getData();
 				lbl_signature.setText(Util.bytesToHex(sig.getSignature()));
 				lbl_text.setText(sig.getPath()=="" ? sig.getText() : sig.getPath());
@@ -123,7 +130,7 @@ public class SecondUserListener implements SelectionListener{
 				btn_deleteEntry.setEnabled(false);
 			}
 		}
-		else if(src.equals(btn_deleteEntry)){
+		else if(src.equals(btn_deleteEntry)){ //delete an entry from the signature list
 			TreeItem sel = tree.getSelection()[0];
 			if(sel!=null && sel.getData()!=null){
 				Signature sig = (Signature)sel.getData();

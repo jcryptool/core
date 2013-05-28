@@ -4,6 +4,11 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 
+/**
+ * ???
+ * @author mmacala
+ *
+ */
 public class PubKeyListener implements SelectionListener {
 Combo cmb_genKey;
 	

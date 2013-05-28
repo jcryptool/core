@@ -18,8 +18,8 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 
 /**
+ * Listener in the "Show Certificates" view. fills up the labels on the right side if a certificate has been selected
  * @author sho
- *
  */
 public class UserShowCertsListener implements SelectionListener {
 	

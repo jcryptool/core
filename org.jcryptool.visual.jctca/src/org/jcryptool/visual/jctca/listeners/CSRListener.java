@@ -11,6 +11,11 @@ import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
+/**
+ * Listener on the components in the RA view
+ * @author mmacala
+ *
+ */
 public class CSRListener implements SelectionListener {
 
 	Label first;
@@ -23,6 +28,20 @@ public class CSRListener implements SelectionListener {
 	Button btn_forward;
 	Button btn_reject;
 	List csrs;
+	
+	/**
+	 * constructor with all the needed widgets
+	 * @param first
+	 * @param last
+	 * @param street
+	 * @param zip
+	 * @param town
+	 * @param country
+	 * @param mail
+	 * @param btn_forward
+	 * @param btn_reject
+	 * @param csrs
+	 */
 	public CSRListener(Label first, Label last, Label street, Label zip,
 			Label town, Label country, Label mail, Button btn_forward,
 			Button btn_reject, List csrs) {
@@ -83,6 +102,10 @@ public class CSRListener implements SelectionListener {
 		 mail.getParent().layout();
 	}
 	
+	/**
+	 * sets the labels according to the information provided in the CSR
+	 * @param csr
+	 */
 	public void setLabels(CSR csr){
 		first.setText(csr.getFirst());
 		last.setText(csr.getLast());

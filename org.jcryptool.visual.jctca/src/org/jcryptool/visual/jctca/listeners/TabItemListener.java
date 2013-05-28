@@ -24,6 +24,12 @@ import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
 // TODO: dispose left side of usertab
 
+/**
+ * listens on the tabitem changes and sets the explaining text accordingly. also fills up the
+ * lists and trees in the other views when switching to them
+ * @author mmacala
+ *
+ */
 public class TabItemListener implements SelectionListener {
 	TabFolder parent;
 	Composite grp_exp;
@@ -43,8 +49,8 @@ public class TabItemListener implements SelectionListener {
 		// System.out.println(parent.getSelectionIndex());
 		StyledText stl_exp = (StyledText) grp_exp.getChildren()[0];
 		if (parent.getSelectionIndex() == 0) {
+			//User View
 			stl_exp.setText(Messages.TabItemListener_tab_user_explain);
-
 			Control[] x = (parent.getChildren());
 			if (x.length > 0) {
 				Control[] foo = ((Group) x[0]).getChildren();
@@ -56,6 +62,7 @@ public class TabItemListener implements SelectionListener {
 				}
 			}
 		} else if (parent.getSelectionIndex() == 1) {
+			//RA View, fills up the list with CSRs
 			stl_exp.setText(Messages.TabItemListener_tab_ra_explain);
 			Group g1 = (Group) parent.getChildren()[1];
 			Group g2 = (Group) g1.getChildren()[0];
@@ -70,8 +77,8 @@ public class TabItemListener implements SelectionListener {
 			c.layout();
 			lst_csr.select(0);
 		} else if (parent.getSelectionIndex() == 2) {
+			//CA View, fills up the tree with CSRs and RRs
 			stl_exp.setText(Messages.TabItemListener_tab_ca_explain);
-
 			Group g1 = (Group) parent.getChildren()[2];
 			Composite c = (Composite) g1.getChildren()[0];
 			Composite c1 = (Composite)c.getChildren()[0];
@@ -97,6 +104,7 @@ public class TabItemListener implements SelectionListener {
 			c1.layout();
 			
 		} else if (parent.getSelectionIndex() == 3) {
+			//2nd User View, fills up the tree with the signatures
 			stl_exp.setText(Messages.TabItemListener_tab_secuser_explain);
 			Group g1 = (Group) parent.getChildren()[3];
 			Composite c = (Composite) g1.getChildren()[0];
@@ -113,13 +121,11 @@ public class TabItemListener implements SelectionListener {
 					it = new TreeItem(textSig, SWT.NONE);
 					String text = sig.getText();
 					it.setText(sig.getTime().toString());
-//					it.setText(text.substring(0, Math.min(text.length(), 20)));
 				}
 				else{
 					it = new TreeItem(fileSig, SWT.NONE);
 					String path = sig.getPath();
 					it.setText(sig.getTime().toString());
-//					it.setText(sig.getPath().substring(Math.max(0, path.length()-20), path.length()));
 				}
 				it.setData(sig);
 			}
@@ -129,5 +135,4 @@ public class TabItemListener implements SelectionListener {
 		parent.layout(true);
 		grp_exp.layout(true);
 	}
-
 }

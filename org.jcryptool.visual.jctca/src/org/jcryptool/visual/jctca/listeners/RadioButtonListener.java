@@ -12,6 +12,11 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * listener on the radiobuttons in the user view where you can sign stuff :P
+ * @author mmacala
+ *
+ */
 public class RadioButtonListener implements SelectionListener {
 Combo cmb_select;
 Label lbl_selected_file;
@@ -28,6 +33,7 @@ Button btn2;
 Button btn3;
 Label selected_file;
 	
+
 	public RadioButtonListener(Combo cmb_select) {
 		this.cmb_select = cmb_select;
 	}
