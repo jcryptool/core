@@ -18,6 +18,11 @@ import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
+/**
+ * the dialog shown to the user when whe wants to verify an identity
+ * @author mmacala
+ *
+ */
 public class VerifyIdentity extends Dialog implements SelectionListener {
 	Shell parent;
 

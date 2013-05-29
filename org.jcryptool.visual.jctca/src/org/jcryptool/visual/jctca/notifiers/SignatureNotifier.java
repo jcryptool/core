@@ -7,6 +7,11 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 
+/**
+ * used by the sigvis plugin to notify this plugin if a signature was done successfully
+ * @author mmacala
+ *
+ */
 public class SignatureNotifier {
 	
 	public SignatureNotifier(){

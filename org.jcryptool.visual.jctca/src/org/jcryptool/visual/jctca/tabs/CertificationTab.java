@@ -10,6 +10,11 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.CertificateViews.ShowReq;
 
+/**
+ * creates the tabitem and the view for the CA
+ * @author mmacala
+ *
+ */
 public class CertificationTab {
 	/**
 	 * Generating Certification Tab 

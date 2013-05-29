@@ -124,8 +124,7 @@ public class UserShowCertsListener implements SelectionListener {
 			btn_revoke.setEnabled(true);
 			btn_revoke.setText(Messages.UserShowCertsListener_btn_revoke_cert);
 		}
-		lbl_value_common.getParent().layout();
-		
+		lbl_value_common.getParent().layout();		
 	}
 
 	@Override
