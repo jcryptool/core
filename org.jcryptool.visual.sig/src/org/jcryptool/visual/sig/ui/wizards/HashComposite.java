@@ -11,6 +11,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 //Contains the elements (2 group boxes) of the HashWizard
 public class HashComposite extends Composite implements SelectionListener {
@@ -21,6 +23,8 @@ public class HashComposite extends Composite implements SelectionListener {
 	private Button rdo3;
 	private Button rdo4;
 	private Button rdo5;
+	private Menu menuHash;
+	private MenuItem mntmHash;
 
 	//Constructor
 	 public HashComposite(Composite parent, int style) {
@@ -45,9 +49,24 @@ public class HashComposite extends Composite implements SelectionListener {
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
 		txtDescription.setEditable(false);
-		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
+		//txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
+		txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		txtDescription.setBounds(10, 18, 275, 201);
 		txtDescription.setText(Messages.HashWizard_rdomd5_description);
+		
+		menuHash = new Menu(txtDescription);
+		txtDescription.setMenu(menuHash);
+		
+		mntmHash = new MenuItem(menuHash, SWT.NONE);
+		mntmHash.setText(Messages.Wizard_menu);
+		//To select all text
+		mntmHash.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescription.selectAll();
+		    }//end widgetSelected
+		});
 		
 		setSize(new Point(321, 443));
 		

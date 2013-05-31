@@ -34,6 +34,7 @@ public class Messages {
 	public static String SigComposite_lblHeader;
 	public static String SigComposite_MessageTitle;
 	public static String SigComposite_txtDescriptionOfStep4_Success;
+	public static String SigComposite_menu;
 
 	static {
 		// initialize resource bundle

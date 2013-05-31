@@ -23,6 +23,8 @@ import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class SignatureComposite extends Composite implements SelectionListener{
 	private Group grpSignatures;
@@ -37,6 +39,8 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	
 	private int method;
+	private Menu menuSig;
+	private MenuItem mntmSig;
 	
 	//Constructor
 	public SignatureComposite(Composite parent, int style, int m) {
@@ -79,8 +83,23 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
 		txtDescription.setEditable(false);
 		txtDescription.setBounds(10, 15, 275, 213);
-		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
+		//txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
+		txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		txtDescription.setText(Messages.SignatureWizard_DSA_description);
+		
+		menuSig = new Menu(txtDescription);
+		txtDescription.setMenu(menuSig);
+		
+		mntmSig = new MenuItem(menuSig, SWT.NONE);
+		mntmSig.setText(Messages.Wizard_menu);
+		//To select all text
+		mntmSig.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescription.selectAll();
+		    }//end widgetSelected
+		});
 		
 		 //Add event listeners
 	    rdo1.addSelectionListener(this);

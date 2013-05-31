@@ -44,6 +44,8 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 /**
  * This class contains all the code required for the design and function of main GUI
@@ -68,6 +70,10 @@ public class SigComposite extends Composite implements PaintListener {
 	private Label lblHash;
 	private Label lblSignature;
 	private Button btnReturn;
+	private MenuItem mntm1;
+	private MenuItem mntm2;
+	private MenuItem mntm3;
+	private MenuItem mntm4;
 	SigComposite sc = this;
 	private int hash = 0; //Values: 0-4. Hash and signature contain the selected method; default is 0
 	private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5, 
@@ -150,7 +156,7 @@ public class SigComposite extends Composite implements PaintListener {
 		
 		btnHash = new Button(grpSignatureGeneration, SWT.NONE);
 		btnHash.setEnabled(false);
-		btnHash.setBounds(34, 184, 136, 60);
+		btnHash.setBounds(34, 190, 136, 60);
 		btnHash.setText(Messages.SigComposite_btnHash);
 		
 		txtHash = new Text(grpSignatureGeneration, SWT.BORDER | SWT.WRAP);
@@ -169,37 +175,61 @@ public class SigComposite extends Composite implements PaintListener {
 		tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0); 
 		
 		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.TRANSPARENT);
-		txtDescriptionOfStep1.setBackground(grey);
+		//txtDescriptionOfStep1.setBackground(white);
 		txtDescriptionOfStep1.setEditable(false);
 		txtDescriptionOfStep1.setText(Messages.SigComposite_txtDescriptionOfStep1);
 		tbtmStep1.setControl(txtDescriptionOfStep1);
+		
+		Menu menu1 = new Menu(txtDescriptionOfStep1);
+		txtDescriptionOfStep1.setMenu(menu1);
+		
+		mntm1 = new MenuItem(menu1, SWT.NONE);
+		mntm1.setText(Messages.SigComposite_menu);
 		
 		TabItem tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1); 
 		
 		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
-		txtDescriptionOfStep2.setBackground(grey);
+		//txtDescriptionOfStep2.setBackground(white);
 		txtDescriptionOfStep2.setEditable(false);
 		txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2);
 		tbtmStep2.setControl(txtDescriptionOfStep2);
+		
+		Menu menu2 = new Menu(txtDescriptionOfStep2);
+		txtDescriptionOfStep2.setMenu(menu2);
+		
+		mntm2 = new MenuItem(menu2, SWT.NONE);
+		mntm2.setText(Messages.SigComposite_menu);
 		
 		TabItem tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2); 
 		
 		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
-		txtDescriptionOfStep3.setBackground(grey);
+		//txtDescriptionOfStep3.setBackground(white);
 		txtDescriptionOfStep3.setEditable(false);
 		txtDescriptionOfStep3.setText(Messages.SigComposite_txtDescriptionOfStep3);
 		tbtmStep3.setControl(txtDescriptionOfStep3);
+		
+		Menu menu3 = new Menu(txtDescriptionOfStep3);
+		txtDescriptionOfStep3.setMenu(menu3);
+		
+		mntm3 = new MenuItem(menu3, SWT.NONE);
+		mntm3.setText(Messages.SigComposite_menu);
 		
 		TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 		
 		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
-		txtDescriptionOfStep4.setBackground(grey);
+		//txtDescriptionOfStep4.setBackground(white);
 		txtDescriptionOfStep4.setEditable(false);
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
 		tbtmStep4.setControl(txtDescriptionOfStep4);
+		
+		Menu menu4 = new Menu(txtDescriptionOfStep4);
+		txtDescriptionOfStep4.setMenu(menu4);
+		
+		mntm4 = new MenuItem(menu4, SWT.NONE);
+		mntm4.setText(Messages.SigComposite_menu);
 		
 		btnReset = new Button(grpSignatureGeneration, SWT.NONE);
 		btnReset.setBounds(579, 457, 94, 26);
@@ -273,7 +303,7 @@ public class SigComposite extends Composite implements PaintListener {
 	    int height;
 	    //Coordinates of the document icon
 	    int picx = 30;
-	    int picy = 49;
+	    int picy = 55;
 	    GC gc;
 	    
 		gc = e.gc;
@@ -299,7 +329,7 @@ public class SigComposite extends Composite implements PaintListener {
         gc.setBackground(lightgrey); 
         //Color the all the areas in lightgrey
         //Draw shaft
-        gc.fillRectangle(55,50,20,height);
+        gc.fillRectangle(55,60,20,height);
         gc.fillRectangle(0,height-30,width-220,20);
         gc.fillRectangle(270,300,20,80);
         //Draw head (x1, y1, x2, y2, x3, y3)
@@ -311,17 +341,17 @@ public class SigComposite extends Composite implements PaintListener {
         	//color nothing
         }else if (btnSignature.getEnabled() == false) { //Step 2
         	//draw the first part of the arrow (from Document to btnHash)
-        	gc.fillRectangle(55,50,20,height/2-30);
+        	gc.fillRectangle(55,60,20,height/2-30);
         	gc.drawImage(img, picx, picy);
         }
         else if (btnOpenInEditor.getEnabled() == false){ //Step 3
         	//draw another part of the arrow (from btnHash to btnSignature)
-        	gc.fillRectangle(55,50,20,height);
+        	gc.fillRectangle(55,60,20,height);
         	gc.fillRectangle(0,height-30,width/2,20);
         	gc.drawImage(img, picx, picy);
         }
         else { //Step 4
-        	gc.fillRectangle(55,50,20,height);
+        	gc.fillRectangle(55,60,20,height);
         	gc.fillRectangle(0,height-30,width-220,20);
         	gc.fillRectangle(270,300,20,80);
         	gc.fillPolygon(new int[] {width-220,height-40, width-220, height, width-200, height-20});
@@ -491,20 +521,42 @@ public class SigComposite extends Composite implements PaintListener {
 		   }//end widgetSelected
 		});
 		
-		txtDescriptionOfStep1.addKeyListener( new KeyListener() {
-			      @Override
-			      public void keyPressed(KeyEvent e) {
-			          if (((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == 'a')) {
-			              ((Text) e.widget).selectAll();
-			          }
-			      }
-
-				@Override
-				public void keyReleased(KeyEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+		//To select all text
+		mntm1.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescriptionOfStep1.selectAll();
+		    }//end widgetSelected
 		});
+		
+		//To select all text
+		mntm2.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescriptionOfStep2.selectAll();
+		    }//end widgetSelected
+		});
+			
+		//To select all text
+		mntm3.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescriptionOfStep3.selectAll();
+		    }//end widgetSelected
+		});
+		
+		//To select all text
+		mntm3.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtDescriptionOfStep4.selectAll();
+		    }//end widgetSelected
+		});
+				
 	}//end createEvents
 	
 	/**
@@ -567,14 +619,4 @@ public class SigComposite extends Composite implements PaintListener {
 		return sigstring;
 		
 	}
-	
-	private KeyListener ctrlAListener = new KeyAdapter() {
-	      @Override
-	      public void keyPressed(KeyEvent e) {
-	          if (((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == 'a')) {
-	              ((Text) e.widget).selectAll();
-	          }
-	      }
-	  };
-	
 }
