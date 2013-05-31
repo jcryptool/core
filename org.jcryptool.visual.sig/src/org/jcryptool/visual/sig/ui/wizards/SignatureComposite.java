@@ -1,5 +1,9 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
+import java.security.KeyStoreException;
+import java.util.Enumeration;
+import java.util.HashMap;
+
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -9,6 +13,16 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
+
+import de.flexiprovider.core.dsa.DSAPrivateKey;
+import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
 public class SignatureComposite extends Composite implements SelectionListener{
 	private Group grpSignatures;
@@ -17,6 +31,9 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private Button rdo2;
 	private Button rdo3;
 	private Button rdo4;
+	private Combo combo;
+	private KeyStoreAlias alias = null;
+	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	
 	private int method;
 	
@@ -35,7 +52,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private void initialize() {
 		grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
-		grpSignatures.setBounds(10, 10, 300, 151);
+		grpSignatures.setBounds(10, 65, 300, 151);
 		
 		rdo1 = new Button(grpSignatures, SWT.RADIO);
 		rdo1.setSelection(true);
@@ -56,7 +73,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
-		grpDescription.setBounds(10, 171, 300, 255);
+		grpDescription.setBounds(10, 230, 300, 255);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
 		txtDescription.setEditable(false);
@@ -70,13 +87,42 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    rdo3.addSelectionListener(this);
 	    rdo4.addSelectionListener(this);
 	    
+	    combo = new Combo(this, SWT.READ_ONLY);
+	    combo.setBounds(10, 35, 300, 22);
+	    combo.addSelectionListener(this);
+	    
+	    Label lblSelectAKey = new Label(this, SWT.NONE);
+	    lblSelectAKey.setBounds(10, 15, 176, 14);
+	    lblSelectAKey.setText("Select a key");
+	    
 	    //Enable/disable methods
 	    switch (method) {
-	    	case 0: rdo2.setEnabled(true); rdo1.setEnabled(false); rdo3.setEnabled(false); rdo4.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); break; //MD5: RSA
-	    	case 1: rdo1.setEnabled(true); rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setSelection(true); rdo2.setSelection(false); break; //SHA1: RSA, DSA, ECDSA, RSA + MGF1
+	    	case 0: //MD5: RSA
+	    		rdo2.setEnabled(true); 
+	    		rdo1.setEnabled(false); 
+	    		rdo3.setEnabled(false); 
+	    		rdo4.setEnabled(false); 
+	    		
+	    		rdo2.setSelection(true); 
+	    		rdo1.setSelection(false); 
+	    		
+	    		initializeKeySelection(1); 
+	    		
+	    		break; 
+	    	case 1: //SHA1: RSA, DSA, ECDSA, RSA + MGF1
+	    		rdo1.setEnabled(true); 
+	    		rdo2.setEnabled(true); 
+	    		rdo3.setEnabled(true); 
+	    		rdo4.setEnabled(true); 
+	    		
+	    		rdo1.setSelection(true); 
+	    		rdo2.setSelection(false); 
+	    		
+	    		initializeKeySelection(0); 
+	    		break; 
 	    	case 2:
 	    	case 3:
-	    	case 4: rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); break; //SHA256+: RSA, ECDSA, RSA + MGF1
+	    	case 4: rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); initializeKeySelection(2); break; //SHA256+: RSA, ECDSA, RSA + MGF1
 	    }//end switch
 	    
 	    //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
@@ -101,26 +147,95 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	public Group getgrpSignatures() {
 		return grpSignatures;
 	}
+	
+	/**
+	 * @return the KeyStoreAlias
+	 */
+	public KeyStoreAlias getAlias() {
+		return alias;
+	}
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		if (rdo1.getSelection()) 
+		alias = keystoreitems.get(combo.getText());
+		if (rdo1.getSelection()) {
 			txtDescription.setText(Messages.SignatureWizard_DSA_description);
-
-		else if (rdo2.getSelection()) 
-			txtDescription.setText(Messages.SignatureWizard_RSA_description);
-		
-		else if (rdo3.getSelection()) 
-			txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
-		
-		else if (rdo4.getSelection()) 
-			txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
-		
+			//Clean up
+			keystoreitems.clear();
+			combo.removeAll();
+			initializeKeySelection(0);
+		} else {
+			if (rdo2.getSelection()) {
+				txtDescription.setText(Messages.SignatureWizard_RSA_description);
+				//Clean up
+				keystoreitems.clear();
+				combo.removeAll();
+				initializeKeySelection(1);
+			} else {
+				if (rdo3.getSelection()) {
+					txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
+					//Clean up
+					keystoreitems.clear();
+					combo.removeAll();
+				} else {
+					if (rdo4.getSelection()) {
+						txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
+						//Clean up
+						keystoreitems.clear();
+						combo.removeAll();
+					}
+				}
+			}
+		}
 	}//end widgetSelected
 
 	@Override
 	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * Either loads available keys for the given method and fills them into the combo field or 
+	 * shows the given key from JCTCA an disables the combo field
+	 * 
+	 * @param method The signature method (integer, 1=DSA, 2=RSA, 3=ECDSA)
+	 */
+	private void initializeKeySelection (int method) {
+		KeyStoreManager ksm = KeyStoreManager.getInstance();
+        try {
+            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+            KeyStoreAlias alias;
+            Enumeration<String> aliases = ksm.getAliases();
+            while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                alias.getAliasString();
+                if (method == 0) { //DSA
+	                if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
+	                	//Fill in keys
+	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
+	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
+	                } //end if
+	              
+                } else {
+                	if (method == 1) { //RSA
+                		if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
+    	                	//Fill in keys
+    	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
+    	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
+    	                } //end if
+                		
+                	} else {
+                		if (method == 2) { //ECDSA
+                			//Generate Curve
+                		}
+                	}
+                }
+            }//end while
+            combo.select(0);
+        } catch (NoKeyStoreFileException e) {
+            LogUtil.logError(e);
+        } catch (KeyStoreException e) {
+            LogUtil.logError(e);
+        }
 	}
 }

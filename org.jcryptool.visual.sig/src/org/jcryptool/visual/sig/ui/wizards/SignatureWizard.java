@@ -1,6 +1,7 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 
@@ -11,6 +12,7 @@ public class SignatureWizard extends Wizard{
 	//Integer representing the chosen signature (0-4)
 	private int signature;
 	private int method = 0;
+	private KeyStoreAlias alias = null;
 
 	//Constructor
 	public SignatureWizard(int m) {
@@ -42,6 +44,9 @@ public class SignatureWizard extends Wizard{
 			}
 			i++;
 		}
+		
+		//Get the Alias
+		alias = page.getAlias();
 		return true;
 	}
 
@@ -50,5 +55,12 @@ public class SignatureWizard extends Wizard{
 	 */
 	public int getSignature() {
 		return signature;
+	}
+	
+	/**
+	 * @return the KeyStoreAlias
+	 */
+	public KeyStoreAlias getAlias() {
+		return alias;
 	}
 }

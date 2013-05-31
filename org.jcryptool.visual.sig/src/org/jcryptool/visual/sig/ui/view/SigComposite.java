@@ -40,6 +40,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
  * This class contains all the code required for the design and function of main GUI
@@ -423,13 +424,11 @@ public class SigComposite extends Composite implements PaintListener {
                     if (dialog.open() == Window.OK) { 
                     	//get signature method (integer)
                     	signature = wiz.getSignature();
+                    	KeyStoreAlias alias = wiz.getAlias();
                     	lblSignature.setText(signatures[signature]);
-                    	
-                    	//index of String[] sigmethods witch contains all possible methods
-                    	     
-                    	//String sig = sigmethods[s];               	
-                    	//Creates the signature for the calculated hash. Arguments: Signature methods, data to sign
-                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(chooseSignature() , org.jcryptool.visual.sig.algorithm.Input.data);
+                    	               	
+                    	//Creates the signature for the calculated hash. Arguments: Signature methods, data to sign, Key
+                    	org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(chooseSignature() , org.jcryptool.visual.sig.algorithm.Input.data, alias);
                     	
                     	btnOpenInEditor.setEnabled(true);
                     	//Activate the second tab of the description

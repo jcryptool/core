@@ -3,6 +3,7 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 public class SignatureWizardPage extends WizardPage {
 
@@ -29,6 +30,13 @@ public class SignatureWizardPage extends WizardPage {
 	 */
 	public Group getGrpSignatures() {
 		return composite.getgrpSignatures();
+	}
+	
+	/**
+	 * @return the KeyStoreAlias
+	 */
+	public KeyStoreAlias getAlias() {
+		return composite.getAlias();
 	}
 
 }
