@@ -3,6 +3,9 @@ package org.jcryptool.visual.sig.ui.view;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -487,7 +490,21 @@ public class SigComposite extends Composite implements PaintListener {
 		        }//end catch
 		   }//end widgetSelected
 		});
+		
+		txtDescriptionOfStep1.addKeyListener( new KeyListener() {
+			      @Override
+			      public void keyPressed(KeyEvent e) {
+			          if (((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == 'a')) {
+			              ((Text) e.widget).selectAll();
+			          }
+			      }
 
+				@Override
+				public void keyReleased(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+		});
 	}//end createEvents
 	
 	/**
@@ -550,5 +567,14 @@ public class SigComposite extends Composite implements PaintListener {
 		return sigstring;
 		
 	}
+	
+	private KeyListener ctrlAListener = new KeyAdapter() {
+	      @Override
+	      public void keyPressed(KeyEvent e) {
+	          if (((e.stateMask & SWT.CTRL) == SWT.CTRL) && (e.keyCode == 'a')) {
+	              ((Text) e.widget).selectAll();
+	          }
+	      }
+	  };
 	
 }

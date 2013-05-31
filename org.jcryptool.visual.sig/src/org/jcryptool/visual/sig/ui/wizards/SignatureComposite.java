@@ -33,6 +33,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private Button rdo4;
 	private Combo combo;
 	private KeyStoreAlias alias = null;
+	private int keyType = 0;
 	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	
 	private int method;
@@ -106,7 +107,10 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    		rdo2.setSelection(true); 
 	    		rdo1.setSelection(false); 
 	    		
-	    		initializeKeySelection(1); 
+	    		txtDescription.setText(Messages.SignatureWizard_RSA_description);
+	    		
+	    		keyType = 1;
+	    		//initializeKeySelection(1); 
 	    		
 	    		break; 
 	    	case 1: //SHA1: RSA, DSA, ECDSA, RSA + MGF1
@@ -118,11 +122,28 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    		rdo1.setSelection(true); 
 	    		rdo2.setSelection(false); 
 	    		
-	    		initializeKeySelection(0); 
+	    		txtDescription.setText(Messages.SignatureWizard_DSA_description);
+	    		
+	    		keyType = 0;
+	    		//initializeKeySelection(0); 
 	    		break; 
 	    	case 2:
 	    	case 3:
-	    	case 4: rdo2.setEnabled(true); rdo3.setEnabled(true); rdo4.setEnabled(true); rdo1.setEnabled(false); rdo2.setSelection(true); rdo1.setSelection(false); initializeKeySelection(2); break; //SHA256+: RSA, ECDSA, RSA + MGF1
+	    	case 4: //SHA256+: RSA, ECDSA, RSA + MGF1
+	    		rdo2.setEnabled(true); 
+	    		rdo3.setEnabled(true); 
+	    		rdo4.setEnabled(true); 
+	    		rdo1.setEnabled(false);
+	    		
+	    		rdo2.setSelection(true); 
+	    		rdo1.setSelection(false);
+	    		
+	    		txtDescription.setText(Messages.SignatureWizard_RSA_description);
+	    		
+	    		keyType = 1;
+	    		//initializeKeySelection(1); 
+	    		
+	    		break; 
 	    }//end switch
 	    
 	    //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
@@ -132,7 +153,14 @@ public class SignatureComposite extends Composite implements SelectionListener{
 			rdo2.setSelection(true);
 			rdo3.setEnabled(false);
 			rdo4.setEnabled(false);
-		}   
+			combo.setVisible(false);
+			lblSelectAKey.setVisible(false);
+			grpSignatures.setBounds(10, 10, 300, 151);
+			grpDescription.setBounds(10,175,300,255);
+		} else {
+			//Load the keys
+		    initializeKeySelection(keyType); 
+		}
 	    
 	    //Temporary
 	    /*
