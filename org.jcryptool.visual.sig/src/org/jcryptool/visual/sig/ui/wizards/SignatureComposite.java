@@ -75,7 +75,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
 		grpDescription.setBounds(10, 230, 300, 255);
 		
-		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
+		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
 		txtDescription.setEditable(false);
 		txtDescription.setBounds(10, 15, 275, 213);
 		txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));

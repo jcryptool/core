@@ -33,6 +33,7 @@ public class Messages {
 	public static String SigComposite_btnChooseInput;
 	public static String SigComposite_lblHeader;
 	public static String SigComposite_MessageTitle;
+	public static String SigComposite_txtDescriptionOfStep4_Success;
 
 	static {
 		// initialize resource bundle

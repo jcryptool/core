@@ -199,11 +199,11 @@ public class SigComposite extends Composite implements PaintListener {
 		tbtmStep4.setControl(txtDescriptionOfStep4);
 		
 		btnReset = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReset.setBounds(581, 500, 94, 26);
+		btnReset.setBounds(579, 457, 94, 26);
 		btnReset.setText(Messages.SigComposite_btnReset);
 		
 		lblProgress = new Label(grpSignatureGeneration, SWT.NONE);
-		lblProgress.setBounds(490, 506, 83, 14);
+		lblProgress.setBounds(490, 463, 83, 14);
 		lblProgress.setText(String.format(Messages.SigComposite_lblProgress,1));  
 		
 		lblSignature = new Label(grpSignatureGeneration, SWT.NONE);
@@ -223,7 +223,7 @@ public class SigComposite extends Composite implements PaintListener {
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 		
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
-		grpSignedDoc.setBounds(463, 220, 212, 269);
+		grpSignedDoc.setBounds(463, 251, 212, 191);
 		grpSignedDoc.setText(Messages.SigComposite_grpSignedDoc); 
 		
 		Label lblHashhex = new Label(grpSignatureGeneration, SWT.NONE);
@@ -231,7 +231,7 @@ public class SigComposite extends Composite implements PaintListener {
 		lblHashhex.setText("Hash (hex)");
 		
 		btnReturn = new Button(grpSignatureGeneration, SWT.NONE);
-		btnReturn.setBounds(10, 499, 125, 28);
+		btnReturn.setBounds(550, 493, 125, 28);
 		btnReturn.setText(Messages.SigComposite_btnReturn);
 		btnReturn.setVisible(false); //Invisible by default
 		
@@ -268,8 +268,9 @@ public class SigComposite extends Composite implements PaintListener {
 	    Rectangle clientArea;
 	    int width;
 	    int height;
+	    //Coordinates of the document icon
 	    int picx = 30;
-	    int picy = 45;
+	    int picy = 49;
 	    GC gc;
 	    
 		gc = e.gc;
@@ -290,7 +291,7 @@ public class SigComposite extends Composite implements PaintListener {
         img = new Image(Display.getCurrent(), imD);
         //gc.drawImage(img, 10, 0); Bring to front!
         //Draw second document icon
-        gc.drawImage(img, width-130, height-160);
+        gc.drawImage(img, width-130, height-130);
         
         gc.setBackground(lightgrey); 
         //Color the all the areas in lightgrey
@@ -418,7 +419,7 @@ public class SigComposite extends Composite implements PaintListener {
                    	 	protected void configureShell(Shell newShell) {
                    	 		super.configureShell(newShell);
                    	 	    //set size of the wizard-window (x,y)
-                   	 		newShell.setSize(350, 650);
+                   	 		newShell.setSize(350, 700);
                    	 } 
                     };
                     if (dialog.open() == Window.OK) { 
@@ -436,6 +437,8 @@ public class SigComposite extends Composite implements PaintListener {
                     	canvas1.redraw();
                     	lblProgress.setText(String.format(Messages.SigComposite_lblProgress,4));   
                     	//txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+                    	//WTF!!!!!!!!1!1!
+                    	txtDescriptionOfStep4.setText(txtDescriptionOfStep4.getText() + Messages.SigComposite_txtDescriptionOfStep4_Success);
                     }
                 } catch (Exception ex) {
                 	LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
