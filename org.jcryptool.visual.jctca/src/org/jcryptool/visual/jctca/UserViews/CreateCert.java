@@ -20,6 +20,11 @@ import org.jcryptool.visual.jctca.listeners.CreateCertListener;
 import org.jcryptool.visual.jctca.listeners.PubKeyListener;
 import org.jcryptool.visual.jctca.listeners.RadioButtonListener;
 
+/**
+ * view for creating certificates
+ * @author mmacala
+ *
+ */
 public class CreateCert implements Views {
 
 	Composite composite;
@@ -186,6 +191,9 @@ public class CreateCert implements Views {
 		this.composite.setVisible(visible);
 	}
 
+	/**
+	 * Loads the RSA public keys from the Keystore and adds them to the drop down menu
+	 */
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias s : Util.getAllRSAAndDSAPublicKeys(ksm)) {

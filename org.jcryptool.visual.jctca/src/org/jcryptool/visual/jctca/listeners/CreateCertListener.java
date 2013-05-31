@@ -31,6 +31,11 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
+/**
+ * listens on the components in the Create Certificate view from the user
+ * @author mmacala
+ *
+ */
 public class CreateCertListener implements SelectionListener {
 	KeyStoreManager mng = KeyStoreManager.getInstance();
 	Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town,
@@ -38,6 +43,17 @@ public class CreateCertListener implements SelectionListener {
 	Combo cmb_keys;
 	String path;
 
+	/**
+	 * Constructor with all the widgets it needs to have accessible
+	 * @param first_name
+	 * @param last_name
+	 * @param street
+	 * @param zip
+	 * @param town
+	 * @param country
+	 * @param mail
+	 * @param keys
+	 */
 	public CreateCertListener(Text first_name, Text last_name, Text street,
 			Text zip, Text town, Text country, Text mail, Combo keys) {
 		this.txt_first_name = first_name;
@@ -95,6 +111,9 @@ public class CreateCertListener implements SelectionListener {
 		}
 	}
 
+	/**
+	 * sends the csr to the RA 
+	 */
 	private void sendCSR() {
 		KeyStoreAlias pubAlias = null;
 		KeyStoreAlias privAlias = null;
@@ -112,6 +131,9 @@ public class CreateCertListener implements SelectionListener {
 				SWT.ICON_INFORMATION);
 	}
 
+	/**
+	 * generates a new Key Pair for the user with the information provided in the other fields
+	 */
 	private void generateNewRSAKeyPair() {
 		RSAKeyPairGenerator gen = new RSAKeyPairGenerator();
 		SecureRandom sr = new SecureRandom();
@@ -165,6 +187,10 @@ public class CreateCertListener implements SelectionListener {
 
 	}
 
+	/**
+	 * checks if all the fields neccessary for a CSR are set
+	 * @return true if all information is provided
+	 */
 	public boolean checkFields() {
 		String first = txt_first_name.getText();
 		String last = txt_last_name.getText();

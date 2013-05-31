@@ -12,6 +12,11 @@ import org.eclipse.swt.widgets.Tree;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.SecondUserListener;
 
+/**
+ * the view containing all widgets from the second user view
+ * @author mmacala
+ *
+ */
 public class ShowSigData implements Views {
 	Composite composite;
 	Composite left;

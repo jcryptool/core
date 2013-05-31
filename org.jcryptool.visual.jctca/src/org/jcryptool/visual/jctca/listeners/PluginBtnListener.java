@@ -11,7 +11,7 @@ import org.jcryptool.visual.jctca.Activator;
 import org.jcryptool.visual.jctca.JCTCA_Visual;
 import org.jcryptool.visual.jctca.ResizeHelper;
 
-/*
+/**
  * Listener Class for the buttons at the start of the plugin
  */
 public class PluginBtnListener implements SelectionListener {

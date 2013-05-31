@@ -287,6 +287,10 @@ public class CertificateCSRR {
 		this.sigList.add(sig);
 	}
 
+	/**
+	 * removes a signature from the list of signatures
+	 * @param sig - the signature to be deleted form the list
+	 */
 	public void removeSignature(Signature sig) {
 		this.sigList.remove(sig);
 	}

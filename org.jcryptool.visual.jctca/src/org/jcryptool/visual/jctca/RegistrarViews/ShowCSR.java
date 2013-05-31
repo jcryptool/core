@@ -12,6 +12,11 @@ import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 import org.jcryptool.visual.jctca.listeners.CSRListener;
 
+/**
+ * the view containing all components in the RA view
+ * @author mmacala
+ *
+ */
 public class ShowCSR implements Views {
 	Composite composite;
 	Composite left;
@@ -151,6 +156,8 @@ public class ShowCSR implements Views {
 				.getActiveShell(), lst_csr, btn_forward_csr, btn_reject_csr);
 		btn_verify_identity.addSelectionListener(verify);
 		RegistrarCSR csr = RegistrarCSR.getInstance();
+		
+		//the two standard CSRs that are there to teach the user
 		csr.addCSR(Messages.ShowCSR_firstname_bad_erika,
 				Messages.ShowCSR_lastname_bad_erika,
 				Messages.ShowCSR_street_bad_erika, Messages.ShowCSR_zip_bad_erika,

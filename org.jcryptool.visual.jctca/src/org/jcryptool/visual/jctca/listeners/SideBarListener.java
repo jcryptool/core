@@ -12,6 +12,11 @@ import org.jcryptool.visual.jctca.UserViews.CreateCert;
 import org.jcryptool.visual.jctca.UserViews.ShowCert;
 import org.jcryptool.visual.jctca.UserViews.SignCert;
 
+/**
+ * Listener for the buttons oon the left side of the user view
+ * @author mmacala
+ *
+ */
 public class SideBarListener implements SelectionListener {
 
 	CreateCert cCert;
@@ -37,6 +42,7 @@ public class SideBarListener implements SelectionListener {
 		Integer data = (Integer) btn.getData();
 		int pressed = data.intValue();
 
+		//dispose the current active view
 		if (cCert != null) {
 			cCert.dispose();
 		}
@@ -46,7 +52,8 @@ public class SideBarListener implements SelectionListener {
 		if (siCert != null) {
 			siCert.dispose();
 		}
-		switch (pressed) {
+		
+		switch (pressed) { //create the next one, set it visible
 		case 0:
 			cCert = new CreateCert(comp_right, grp_exp);
 			cCert.setVisible(true);
@@ -60,7 +67,7 @@ public class SideBarListener implements SelectionListener {
 			siCert.setVisible(true);
 			break;
 		}
-		
+		//layout the composite afterwards. also changes the explain group
 		comp_right.layout(true, true);
 		grp_exp.layout(true);
 	}

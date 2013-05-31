@@ -87,12 +87,17 @@ public class CAListener implements SelectionListener{
 			enableButtons(src);
 			loadData();
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof CSR)) {
+			//csr is selected and either accept or reject has been clicked
 			handleCSR(src);
 		} else if ((src.equals(accept) || src.equals(reject)) && (requests.getSelection()[0].getData() instanceof RR)) {
+			//RR is selected and either accept or reject has been clicked
 			handleRR(src);
 		}
 	}
-		
+	
+	/**
+	 * Sets all the fields on the right half. Gets them from the selected treeitem.
+	 */
 	private void loadData() {
 		setLabels("","","","","","","");
 		if(requests.getSelectionCount()==1){
@@ -141,7 +146,17 @@ public class CAListener implements SelectionListener{
 			}
 		}
 	}
-
+	
+	/**
+	 * sets the labels on the right half
+	 * @param town 
+	 * @param country
+	 * @param first
+	 * @param last
+	 * @param mail
+	 * @param street
+	 * @param zip
+	 */
 	private void setLabels(String town, String country, String first,
 			String last, String mail, String street, String zip) {
 		lbl_value_city.setText(town);
@@ -153,6 +168,11 @@ public class CAListener implements SelectionListener{
 		lbl_value_ZIP.setText(zip);
 	}
 
+	/**
+	 * checks if the buttons need to be enabled. this happens only, if a treeitem has been
+	 * selected that has a parent (so either a RR or CSR)
+	 * @param src - src of the event
+	 */
 	private void enableButtons(Object src) {
 		TreeItem[] sel = requests.getSelection();
 		if(sel!=null && sel.length > 0 && sel[0].getParentItem()!= null){
@@ -165,6 +185,11 @@ public class CAListener implements SelectionListener{
 		}
 	}
 	
+	/**
+	 * Handels RR. Gets called when a RR has been selected and one of the buttons 
+	 * is clicked.
+	 * @param src - the button that is firing this event
+	 */
 	private void handleRR(Object src) {
 		if(src.equals(accept)){
 			TreeItem sel = requests.getSelection()[0];
@@ -194,11 +219,14 @@ public class CAListener implements SelectionListener{
 			TreeItem sel = requests.getSelection()[0];
 			this.removeEntry(sel);
 			Util.showMessageBox(Messages.CAListener_msgbox_title_cert_not_revoked, Messages.CAListener_msgbox_text_cert_not_revoked, SWT.ICON_INFORMATION);
-
 		}
 	}
 	
 	@SuppressWarnings("deprecation")
+	/**
+	 * Handels CSRs. gets called when either the accept or reject button has been clicked.
+	 * @param src - the button, that has been firing the event
+	 */
 	private void handleCSR(Object src) {
 		if(src.equals(accept)){
 			TreeItem sel = requests.getSelection()[0];
@@ -234,6 +262,10 @@ public class CAListener implements SelectionListener{
 		
 	}
 	
+	/**
+	 * removes an entry from the tree and from the list it is contained in
+	 * @param sel - the selected tree item that should be removed
+	 */
 	public void removeEntry(TreeItem sel){
 		if(sel.getData() instanceof CSR){
 			CSR csr = (CSR)sel.getData();

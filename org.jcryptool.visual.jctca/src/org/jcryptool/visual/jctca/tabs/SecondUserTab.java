@@ -10,6 +10,11 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.SecondUserViews.ShowSigData;
 
+/**
+ * creates the tabitem and the view object for the second user
+ * @author mmacala
+ *
+ */
 public class SecondUserTab {
 	/**
 	 * Generating SecondUser Tab 

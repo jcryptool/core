@@ -19,6 +19,11 @@ import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 //import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 
+/**
+ * Listener on the sign part in the user view. also accesses the SigVis plugin for signing
+ * @author mmacala
+ *
+ */
 public class SigVisPluginOpenListener implements SelectionListener {
 	Button btn_check;
 	Label lbl_file;
@@ -45,11 +50,8 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
 		System.out.println("KEY HASH: " + key_hash);
 		KeyStoreAlias hello = Util.getAliasForHash(key_hash);
-		KeyStoreAlias pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys
-				.getText());
-		KeyStoreAlias privAlias = KeyStoreManager.getInstance()
-				.getPrivateForPublic(pubAlias);
-
+		KeyStoreAlias pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys.getText());
+		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
 		org.jcryptool.visual.sig.algorithm.Input.publicKey = pubAlias;
 		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
 		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file
@@ -79,7 +81,6 @@ public class SigVisPluginOpenListener implements SelectionListener {
 				// TODO Auto-generated catch block
 				LogUtil.logError(e1);
 			}
-
 			sig = org.jcryptool.visual.sig.algorithm.Input.signature;
 			Signature signature = new Signature(sig, lbl_file.getText(),
 					txt_sign.getText(), new Date(System.currentTimeMillis()),

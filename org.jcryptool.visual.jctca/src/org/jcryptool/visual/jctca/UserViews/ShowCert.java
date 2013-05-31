@@ -20,6 +20,12 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.RevokeButtonListener;
 import org.jcryptool.visual.jctca.listeners.UserShowCertsListener;
 
+/**
+ * Shows all valid certificates that have been created by the user. Indipendent of the
+ * revocation status.
+ * @author mmacala
+ *
+ */
 public class ShowCert implements Views {
 	Composite composite;
 	Composite left;

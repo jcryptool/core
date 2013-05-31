@@ -14,6 +14,12 @@ import org.jcryptool.visual.jctca.UserViews.ShowCert;
 import org.jcryptool.visual.jctca.UserViews.SignCert;
 import org.jcryptool.visual.jctca.listeners.SideBarListener;
 
+/**
+ * creates the tabitem and the basic view of the user view with the 
+ * sidebar that has the buttons
+ * @author mmacala
+ *
+ */
 public class UserTab {
 
 	CreateCert cCert;

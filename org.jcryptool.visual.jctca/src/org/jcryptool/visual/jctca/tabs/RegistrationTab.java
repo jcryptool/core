@@ -10,6 +10,11 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jcryptool.visual.jctca.RegistrarViews.ShowCSR;
 
+/**
+ * creates the tabitem and views for the RA
+ * @author mmacala
+ *
+ */
 public class RegistrationTab {
 	/**
 	 * Generating Registration Tab 

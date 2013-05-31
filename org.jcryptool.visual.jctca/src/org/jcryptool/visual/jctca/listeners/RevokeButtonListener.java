@@ -14,8 +14,10 @@ import org.jcryptool.visual.jctca.CertificateClasses.RR;
 import org.jcryptool.visual.jctca.UserViews.dialogs.RevokeCertDialog;
 
 /**
+ * The listener on the revoke button in the "Manage Certificates" view. Shows a dialog where
+ * the user is asked to state a reason for the revocation. afterwards it is forwarded
+ * to the RA.
  * @author sho
- *
  */
 public class RevokeButtonListener implements SelectionListener {
 
@@ -24,8 +26,6 @@ public class RevokeButtonListener implements SelectionListener {
 	 */
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
-		
 		Button btn_revoke = (Button) e.getSource();
 		KeyStoreAlias ksAlias = (KeyStoreAlias) btn_revoke.getData("selected"); //$NON-NLS-1$
 		//tell the button to do nothing if no cert was selected

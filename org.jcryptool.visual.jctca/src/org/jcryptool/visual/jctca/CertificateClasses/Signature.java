@@ -4,20 +4,52 @@ import java.util.Date;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
+/**
+ * This class represents a succsessfully created signature.
+ * @author mmacala
+ *
+ */
 public class Signature {
+	
+	/**
+	 * the signature from the sigvis plugin
+	 */
 	private byte[] signature;
 	
+	/**
+	 * path to the file that has been signed
+	 */
 	String path;
 	
+	/**
+	 * text that has been signed
+	 */
 	String text;
 	
+	/**
+	 * time when the signature was done
+	 */
 	Date time;
 	
+	/**
+	 * private key that has been used for the signature
+	 */
 	KeyStoreAlias privAlias;
 	
+	/**
+	 * public key
+	 */
 	KeyStoreAlias pubAlias;
 	
-	
+	/**
+	 * constructor for a signature
+	 * @param signature
+	 * @param path - path to the file that has been signed (text has to be null)
+	 * @param text - text that has been signed (path has to be null)
+	 * @param time - time when the signature was created
+	 * @param privAlias - alias for the private key that has been used for signing
+	 * @param pubAlias - alias for the corresponsing public key
+	 */
 	public Signature(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias, KeyStoreAlias pubAlias){
 		this.signature = signature;
 		this.path = path;
