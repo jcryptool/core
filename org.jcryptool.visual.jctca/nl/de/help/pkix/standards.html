@@ -9,7 +9,7 @@
         <h1>X.509 und PKIX</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        Hier bekommen Sie ausführliche Informationen zu den zwei wichtigsten Standards, welche für Digitale Zertifikate im Internet existieren. Die ITU-T Recommendadion X.509 (meist kurz als X.509-Standard oder nur X.509 bezeichnet) ist ein Standard für Public-Key- und Privilege-Management-Infrastrukturen. X.509 spezifiziert unter anderem festgelegte Formate von Zertifikaten und Certificate Revocation Lists. X.509 gibt dabei lediglich die Form vor, wie solche Zertifikate und CRLs auszusehen haben. Die wichtigste Implementierung von X.509 und somit der zweite wichtige Standard zu digitalen Zertifikaten ist der von einer Arbeitsgruppe der IETF verfasste RFC5280 mit dem Titel "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List Profile". Dieser Standard wird auch als PKIX-Standard bezeichnet (nach der gleichnamigen PKIX Arbeitsgruppe, die diesen Standard betreut). Meist wenn von einem X.509 Zertifikat die Rede ist, ist damit das X.509v3 Zertifikat aus RFC5280 gemeint.
+        Hier bekommen Sie ausf&uuml;hrliche Informationen zu den zwei wichtigsten Standards, welche f&uuml;r Digitale Zertifikate im Internet existieren. Die ITU-T Recommendadion X.509 (meist kurz als X.509-Standard oder nur X.509 bezeichnet) ist ein Standard f&uuml;r Public-Key- und Privilege-Management-Infrastrukturen. X.509 spezifiziert unter anderem festgelegte Formate von Zertifikaten und Certificate Revocation Lists. X.509 gibt dabei lediglich die Form vor, wie solche Zertifikate und CRLs auszusehen haben. Die wichtigste Implementierung von X.509 und somit der zweite wichtige Standard zu digitalen Zertifikaten ist der von einer Arbeitsgruppe der IETF verfasste RFC5280 mit dem Titel "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List Profile". Dieser Standard wird auch als PKIX-Standard bezeichnet (nach der gleichnamigen PKIX Arbeitsgruppe, die diesen Standard betreut). Meist wenn von einem X.509 Zertifikat die Rede ist, ist damit das X.509v3 Zertifikat aus RFC5280 gemeint.
         </p>
         <!-- all other headlines and paragraphs come after here -->
         <h2>X.509v3 Zertifikat</h2>
@@ -18,21 +18,21 @@
         <ul>
             <li>Version &ndash; Die verwendete X.509 Version (1, 2 oder 3)</li>
             <li>Serial number &ndash; Eine von der CA vergebene Seriennummer, die innerhalb der CA eindeudig sein muss</li>
-            <li>Signature Algorithm &ndash; Signatur- und Hashalgorithmus, die mit diesem Zertifikat verwendet werden können, beispielsweise MD5 mit RSA (md5WithRSAEncryption)</li>
+            <li>Signature Algorithm &ndash; Signatur- und Hashalgorithmus, die mit diesem Zertifikat verwendet werden k&ouml;nnen, beispielsweise MD5 mit RSA (md5WithRSAEncryption)</li>
             <li>Issuer &ndash; Die ausstellende CA, bestehend aus</li>
             <ul>
                 <li>Common Name &ndash; Der Common Name ist der Name im weitesten Sinne, auf den das Zertifikat ausgestellt wird. Dieser "Name" kann dabei allerdings auch eine E-Mailadresse oder ein Servername sein, wenn es sich um ein E-Mailzertifikat oder ein Serverzertifikat handelt.</li>
                 <li>Organisation &ndash; Name der Organisation, welche die PKI betreibt</li>
-                <li>Organisational Unit &ndash; zu deutsch auch oft "Organisationseinheit", bezeichnet die Abteilung einer Organisation. Bei einer CA ist dies oft "Certification Service" oder ähnliches</li>
+                <li>Organisational Unit &ndash; zu deutsch auch oft "Organisationseinheit", bezeichnet die Abteilung einer Organisation. Bei einer CA ist dies oft "Certification Service" oder &auml;hnliches</li>
                 <li>Location &ndash; Der Ort, an dem sich die CA befindet. Meist die Stadt, in dem der Betreiber seinen Firmensitz hat.</li>
                 <li>State &ndash; Das Bundesland, in dem sich die CA befindet</li>
                 <li>Country &ndash; Der Staat, in dem sich die CA befindet</li>
             </ul>
-            <li>Validity &ndash; Der Gültigkeitszeitraum des Zertifikats. In diesem Zeitraum garantiert die CA, den Gültigkeitsstatus des Zertifikates zu verwalten. Dieser besteht aus einem "not before" (wörtlich "nicht vor") und einem "not after" (wörtlich: nicht nach) Datum.</li>
-            <li>Subject &ndash; Angaben zum Zertifikatsinhaber. Diese bestehen aus den selben Elementen wie die Angaben zur CA, wobei aber manche Felder leer sein können. Zumindest aber der Common Name muss gesetzt sein.</li>
-            <li>Subject Public Key Info &ndash; Der öffentliche Schlüssel des Zertifikatsinhabers</li>
+            <li>Validity &ndash; Der G&uuml;ltigkeitszeitraum des Zertifikats. In diesem Zeitraum garantiert die CA, den G&uuml;ltigkeitsstatus des Zertifikates zu verwalten. Dieser besteht aus einem "not before" (w&ouml;rtlich "nicht vor") und einem "not after" (w&ouml;rtlich: nicht nach) Datum.</li>
+            <li>Subject &ndash; Angaben zum Zertifikatsinhaber. Diese bestehen aus den selben Elementen wie die Angaben zur CA, wobei aber manche Felder leer sein k&ouml;nnen. Zumindest aber der Common Name muss gesetzt sein.</li>
+            <li>Subject Public Key Info &ndash; Der &ouml;ffentliche Schl&uuml;ssel des Zertifikatsinhabers</li>
             <li>X509v3 extensions &ndash; Verschiedene, optionale Erweiterungen. Ist es beispielsweise ein Root-Zertifikat, so wird dies durch eine X509v3 Erweiterung gekennzeichnet.</li>
-            <li>Signature &ndash; Signaturalgorithmus und Signatur der ausstellenden CA über den Hash des Zertifikats</li>
+            <li>Signature &ndash; Signaturalgorithmus und Signatur der ausstellenden CA &uuml;ber den Hash des Zertifikats</li>
         </ul>
         </p>
 
