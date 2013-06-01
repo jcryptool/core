@@ -2,16 +2,14 @@
 <html lang = "de">
     <head>
         <meta charset="utf-8">
-        <title>Grundlegende Problemstellung und Prozesse einer PKI</title>
+        <title>Prozesse in einer PKI</title>
     </head>
     <body>
         <!--Headline 1 should be the main title of the displayed page -->
-        <h1>Grundlegende Problemstellung und Prozesse einer PKI</h1>
+        <h1>Prozesse in einer PKI</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        In diesem Abschnitt werden die Prozesse und Rollen in einer PKI genauer erkl&auml;rt.
-        <h2>Prozesse in einer PKI</h2>
-        <p>Das Plugin beginnt mit einer grafischen Darstellung der Prozesse, die mit der Ausstellung, dem Widerruf und der Verwendung digitaler Zertifikate verbunden sind. Diese werden im Folgenden n&auml;her beschrieben.</p>
+        Das Plugin beginnt mit einer grafischen Darstellung der Prozesse, die mit der Ausstellung, dem Widerruf und der Verwendung digitaler Zertifikate verbunden sind. Diese werden im Folgenden n&auml;her beschrieben.</p>
         <h3>Zertifikatserstellung</h3>
         <img alt="Architekturskizze Zertifikatserstellung" src="../media/minica_create.png" />
         <p>M&ouml;chte sich ein Benutzer ein Zertifikat ausstellen lassen, so muss er zun&auml;chst einen "Certificate Signing Request" (CSR) daf&uuml;r generieren. Auf das Format dieses CSR wird bei der Beschreibung der Pluginmaske zur Zertifikatsanforderung noch genauer eingegangen. Vorerst ist nur von Bedeutung, dass der CSR der &ouml;ffentlichen Schl&uuml;ssel des Benutzer enth&auml;lt. Diesen CSR signiert der Benutzer mit seinem privaten Schl&uuml;ssel und leitet ihn gemeinsam mit einem Identit&auml;tsnachweis &ndash; beispielsweise eine Ausweiskopie &ndash; an die "Registration Authority" (RA) oder im Deutschen den "Registrar" weiter.</p>
@@ -20,7 +18,7 @@
 
         <h3>Zertifikatswiderruf</h3>
         <img alt="Architekturskizze Zertifikatswiderruf" src="../media/minica_revoke.png" />
-        <p>Eine PKI bietet nicht nur die M&ouml;glichkeit, Zertifikate auszustellen. Eine CA unterh&auml;lt auch die notwendigen Dienste, um ein Zertifikat vor Ablauf der G&uuml;ltigkeit zu widerrufen. M&ouml;gliche Gr&uuml;nde f&uuml;r einen Widerruf sind vielf&auml;ltig. Der Benutzer hat m&ouml;glicherweise die Kontrolle &uuml;ber seinen privaten Schl&uuml;ssel verloren. Au&szlig;erdem kann eine CA von sich aus Zertifikate widerrufen, wenn beispielsweise in die Systeme der CA eingebrochen und ein Signaturschl&uuml;ssel gestohlen wurde. Weitere Gr&uuml;nde sind im [blah &uuml;ber standards] beschrieben. M&ouml;chte ein Benutzer sein Zertifikat widerrufen, so erstellt er f&uuml;r dieses Zertifikat einen "Revocation Request" (RR). Wenn er den privaten Schl&uuml;ssel dazu noch hat, reicht es &uuml;blicherweise aus, dieses RR damit &auml;hnlich wie einen CSR zu signieren. Hat er den privaten Schl&uuml;ssel nicht mehr oder kann nicht mehr darauf zugreifen, ist wiederum die T&auml;tigkeit der RA notwendig. In so einem Fall muss &uuml;berpr&uuml;ft werden, ob der RR tats&auml;chlich von dem Benutzer stammt, auf den das Zertifikat ausgestellt war. Ist dies sichergestellt, wird der RR an die CA weitergegeben.</p>
+        <p>Eine PKI bietet nicht nur die M&ouml;glichkeit, Zertifikate auszustellen. Eine CA unterh&auml;lt auch die notwendigen Dienste, um ein Zertifikat vor Ablauf der G&uuml;ltigkeit zu widerrufen. M&ouml;gliche Gr&uuml;nde f&uuml;r einen Widerruf sind vielf&auml;ltig. Der Benutzer hat m&ouml;glicherweise die Kontrolle &uuml;ber seinen privaten Schl&uuml;ssel verloren. Au&szlig;erdem kann eine CA von sich aus Zertifikate widerrufen, wenn beispielsweise in die Systeme der CA eingebrochen und ein Signaturschl&uuml;ssel gestohlen wurde. Weitere Gr&uuml;nde sind im <a href="../pkix/standards.html">Abschnitt &uuml;ber X.509 und PKIX</a> beschrieben. M&ouml;chte ein Benutzer sein Zertifikat widerrufen, so erstellt er f&uuml;r dieses Zertifikat einen "Revocation Request" (RR). Wenn er den privaten Schl&uuml;ssel dazu noch hat, reicht es &uuml;blicherweise aus, dieses RR damit &auml;hnlich wie einen CSR zu signieren. Hat er den privaten Schl&uuml;ssel nicht mehr oder kann nicht mehr darauf zugreifen, ist wiederum die T&auml;tigkeit der RA notwendig. In so einem Fall muss &uuml;berpr&uuml;ft werden, ob der RR tats&auml;chlich von dem Benutzer stammt, auf den das Zertifikat ausgestellt war. Ist dies sichergestellt, wird der RR an die CA weitergegeben.</p>
         <p>Die CA unterh&auml;lt eine sogenannte "Certificate Revocation List." Jedes Zertifikat, das von seinem Inhaber widerrufen wird, bekommt einen Eintrag auf dieser CRL. Au&szlig;erdem wird zu jedem Zertifikat ein Widerrufszeitpunkt festgehalten.</p>
 
         <h3>Signaturpr&uuml;fung</h3>
