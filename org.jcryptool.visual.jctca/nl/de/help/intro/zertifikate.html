@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang = "de">
+    <head>
+        <meta charset="utf-8">
+        <title>Digitale Signaturen und Zertifikate</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>Digitale Signaturen und Zertifikate</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+        In <a href="./schutzziele.html">Einf&uuml;hrung in die Problemstellung</a> haben Sie von den Schutzzielen Datenintegrit&auml;t, Authentizit&auml;t und Nicht-Abstreitbarkeit erfahren. Dieses Kapitel beschreibt, wie diese Schutzziele in der digitalen Welt erreicht werden k&ouml;nnen.
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>Digitale Signaturen</h2>
+        <p>
+        Um die Integrit&auml;t und Authentizit&auml;t digitaler Daten sicherzustellen, werden sogenannte "digitale Signaturen" eingesetzt. Digitale Signaturen deshalb, da sie den gleichen Zweck wie Unterschriften von Hand erf&uuml;llen und &auml;hnlichen Anforderungen gen&uuml;gen m&uuml;ssen. Eine digitale Signatur muss schwer zu f&auml;lschen und ihre Echtheit &uuml;berpr&uuml;fbar sein. Sie darf nicht unbemerkt auf andere Daten als die signierten &uuml;bertragen werden k&ouml;nnen und die signierten Daten d&uuml;rfen nicht unbemerkt ver&auml;ndert werden. Diese Eigenschaften werden mittels asymmetrischer Kryptografie erreicht.
+        </p>
+        <h3>Asymmetrische Kryptografie</h3>
+        <p>
+        In der Kryptografie kann grob zwischen zwei Arten von Verfahren unterschieden werden: Symmetrischen und asymmetrischen. Bei symmetrischen Verfahren wird der selbe Schl&uuml;ssel zur Verschl&uuml;sselung und zur Entschl&uuml;sselung verwendet. Bei asymmetrischer Kryptografie ist eben das nicht der Fall. 
+        </p>
+        <p>
+        Bei asymmetrischer Kryptografie spricht man von einem Schl&uuml;sselpaar. Der &ouml;ffentliche Schl&uuml;ssel wird zur Verschl&uuml;sselung verwendet. Wurde etwas mit einem &ouml;ffentlichen Schl&uuml;ssel verschl&uuml;sselt, kann es mit diesem Schl&uuml;ssel nicht wieder entschl&uuml;sselt werden. Eine Entschl&uuml;sselung ist nur mit dem jeweiligen privaten Schl&uuml;ssel m&ouml;glich. Mehr zu asymmetrischer Verschl&uuml;sselung erfahren Sie in den Plugins "RSA Cryptosystem" und "Erweitertes RSA Kryptosystem."
+        </p>
+        <p>
+        Bei digitalen Signaturen macht man sich genau den umgekehrten Effekt von asymmetrischer Verschl&uuml;sselung zu Nutze. M&ouml;chte Bob beweisen, dass eine bestimmte Datei von ihm stammt, so kann er diese Datei mit seinem privaten Schl&uuml;ssel verschl&uuml;sseln. Das Ergebnis dieser Verschl&uuml;sselung ist die Signatur f&uuml;r die Datei. Ein Empf&auml;nger dieser Datei kann die Signatur anschlie&szlig;end mit dem zugeh&ouml;rigen &ouml;ffentlichen Schl&uuml;ssel wieder entschl&uuml;sseln. Wenn sie mit der empfangenen Datei &uuml;bereinstimmt, handelt es sich offensichtlich um die Datei, die der Besitzer des privaten Schl&uuml;ssel versendet hat. 
+        </p>
+        <h4>Kryptologische Hashfunktionen</h4>
+        <p>
+        Da asymmetrische Verschl&uuml;sselung langsam und aufwendig ist, ist es unpraktikabel tats&auml;chlich ganze Dateien zu signieren. Deshalb werden f&uuml;r digitale Signaturen kryptografische Hashfunktionen verwendet. Eine Hashfunktion ist ganz allgemein eine Funktion, die eine Bitfolge beliebiger L&auml;nge auf eine Bitfolge mit fester L&auml;nge abbildet. Eine kryptologische Hashfunktion erf&uuml;llt dabei einige weitere Anforderungen, die Sie im <a href="https://de.wikipedia.org/wiki/Kryptologische_Hashfunktion">Wikipedia Artikel &uuml;ber kryptologische Hashfunktionen</a> nachlesen k&ouml;nnen. Au&szlig;erdem k&ouml;nnen Sie mit JCrypTool MD5, SHA und SHA3-Hashes f&uuml;r Textdateien erstellen. Wenn eine E-Mail oder eine Datei signiert werden soll, wird tats&auml;chlich zuerst ein kryptologischer Hashwert davon erstellt. Dieser Hashwert wird mit dem privaten Schl&uuml;ssel verschl&uuml;sselt. Zur Pr&uuml;fung der Signatur entschl&uuml;sselt der Empf&auml;nger die Signatur mit dem &ouml;ffentlichen Schl&uuml;ssel, erstellt selbst einen Hash der Datei oder E-Mail und vergleicht die beiden Hashwerte. Sind beide identisch, so ist die Signatur in Ordnung. Eine detailierte Darstellung eines Signiervorgangs erhalten Sie im Plugin "Signature Generation Visualization."
+        </p>
+        <h2>Schl&uuml;sselauthentizit&auml;t</h2>
+        <p>
+        Eines der Hauptprobleme, das f&uuml;r digitale Signaturen besteht, ist die Authentizit&auml;t des &ouml;ffentlichen Schl&uuml;ssels. &Ouml;ffentliche Schl&uuml;ssel werden gro&szlig;teils &uuml;ber Webseiten, E-Mail oder eigene Sch&uuml;sselserver verteilt. Wie Sie aber bereits aus der <a href="./schutzziele.html">Einf&uuml;hrung in die Problemstellung</a> wissen, k&ouml;nnen E-Mails und Webseiten recht einfach gef&auml;lscht werden. Es besteht also das Problem, die Zuordnung zwischen einer Person und einem &ouml;ffentlichen Schl&uuml;ssel sicherzustellen.
+        </p>
+        <p>
+        Public-Key-Infrastrukturen bieten einen Weg, dieses Problem zu l&ouml;sen. In einer Public-Key-Infrastruktur stellt eine sogenannte Certfication Authority ein digitales Zertifikat aus. Ein digitales Zertifikat ist eine Datenstruktur, die unter anderem den &ouml;ffentlichen Schl&uuml;ssel und den Namen des Zertifikatsinhabers enth&auml;lt. Die CA f&uuml;gt dieser Datenstruktur ihre eigene Signatur hinzu und best&auml;tigt damit die Zugeh&ouml;rigkeit vom Schl&uuml;ssel zum Zertifikatsinhaber. Wie dies genau abl&auml;uft lesen Sie im <a href="./pki.html">Abschnitt &uuml;ber Prozesse einer PKI</a>. Eine Public-Key-Infrastruktur umfasst dabei zus&auml;tzlich zur Certification Authority und den notwendigen Prozessen zur Zertifikatserstellung auch die n&ouml;tige Infrastruktur, um Zertifikate zu widerrufen.
+        </p>
+        <h2>Nicht-Abstreitbarkeit: Rechtliches &uuml;ber digitale Zertifikate</h2>
+        <p>
+        In der EG-Richtlinie 1999/93/EG ist der Begriff eines qualifizerten Zertifikats festgelegt. Nur qualifizierte Zertifikate erm&ouml;glichen die Erstellung einer qualifizierten Signatur, die mit einer eigenh&auml;ndigen Unterschrift gleichgestellt ist. Mehr dazu lesen Sie im <a href="https://de.wikipedia.org/wiki/Qualifiziertes Zertifikat">Wikipedia Artikel &uuml;ber qualifizierte Zertifikate</a>.
+        </p>
+
+        <!-- all footnotes go into the following sections. uncomment if needed -->
+        <!--
+        <hr>
+        <p>
+        <sup id="fn1">1. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
+        </p>
+        -->
+
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        </p>
+    </body>
+</html>
