@@ -197,7 +197,7 @@ public class Util {
 	}
 
 	/**
-	 * Find all RSA and DSA public keys in a given keystore ksm and return them
+	 * Find all RSA public keys in a given keystore ksm and return them
 	 * in an array of KeyStoreAlias. omits JCT-CA Root Certificates
 	 * 
 	 * @param ksm
@@ -205,7 +205,7 @@ public class Util {
 	 * @return ArrayList of all KeyStoreAlias containing either RSA or DSA, excluding JCT-CA Root Certificates
 	 *         public key pairs
 	 */
-	public static ArrayList<KeyStoreAlias> getAllRSAAndDSAPublicKeys(
+	public static ArrayList<KeyStoreAlias> getAllRSAPublicKeys(
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {

@@ -40,6 +40,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 	CSR c;
 	Group grp_exp;
 	Label lbl_exp;
+	Shell shell;
 
 	public VerifyIdentity(Shell parent, List csr, Button forward_csr,
 			Button reject_csr) {
@@ -52,7 +53,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 	}
 
 	public String open(CSR c) {
-		Shell shell = new Shell(getParent(), SWT.TITLE);
+		shell = new Shell(getParent(), SWT.TITLE);
 		this.c = c;
 		parent = shell;
 		shell.setText(getText());
@@ -149,7 +150,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		if (data != null && data.equals(0)) {
 			int selected = csr.getSelectionIndex();
 			CSR c = RegistrarCSR.getInstance().getCSR(selected);
-			if (c != null) {
+			if (c != null && (shell==null || !shell.isVisible())) {
 				this.open(c);
 			}
 		} else if (btn.equals(btn_true)) {
