@@ -61,7 +61,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		byte[] hash, sig;
 		if (btn_check.getSelection() == true) {
 			try {
-				org.jcryptool.visual.sig.algorithm.Input.signNotifier = new SignatureNotifier();
+				//org.jcryptool.visual.sig.algorithm.Input.signNotifier = new SignatureNotifier();
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage()
 						.showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
