@@ -21,6 +21,4 @@ public class Messages extends NLS {
 	public static String ShowReq_city;
 	public static String ShowReq_btn_grant_cert;
 	public static String ShowReq_btn_reject_request;
-	public static String ShowReq_grp_show_request_headline;
-	public static String ShowReq_root_ca_entry_text;
 }

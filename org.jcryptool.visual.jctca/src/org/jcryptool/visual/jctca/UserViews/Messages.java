@@ -13,9 +13,7 @@ public class Messages extends NLS {
 	private Messages() {
 	}
 
-	public static String CreateCert_btn_create_keypair;
 	public static String CreateCert_btn_select_file;
-	public static String CreateCert_btn_select_pubkey;
 	public static String CreateCert_btn_send_csr_to_ra;
 	public static String CreateCert_explain_text;
 	public static String CreateCert_headline;
@@ -25,7 +23,6 @@ public class Messages extends NLS {
 	public static String CreateCert_lbl_idproof;
 	public static String CreateCert_lbl_last_name;
 	public static String CreateCert_lbl_mail;
-	public static String CreateCert_lbl_pubkey;
 	public static String CreateCert_lbl_street;
 	public static String CreateCert_lbl_zip;
 	public static String CreateCert_public_key;
@@ -55,14 +52,12 @@ public class Messages extends NLS {
 	public static String ShowCert_lbl_subject_o;
 	public static String ShowCert_lbl_subject_ou;
 	public static String ShowCert_lbl_validity_perios;
-	public static String SignCert_btn_cancel_file_selection;
 	public static String SignCert_btn_chose_file;
 	public static String SignCert_btn_sign_with_key;
 	public static String SignCert_checkbox_show_sigvis;
 	public static String SignCert_chose_method;
 	public static String SignCert_explain_text;
 	public static String SignCert_file;
-	public static String SignCert_file_or_text_headline;
 	public static String SignCert_footnote_input_in_signvis;
 	public static String SignCert_headline;
 	public static String SignCert_sign_directly;
