@@ -18,6 +18,7 @@ import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 //import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
+import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 
 /**
  * Listener on the sign part in the user view. also accesses the SigVis plugin for signing
@@ -60,8 +61,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		byte[] hash, sig;
 		if (btn_check.getSelection() == true) {
 			try {
-				// org.jcryptool.visual.sig.algorithm.Input.signNotifier = new
-				// SignatureNotifier();
+				org.jcryptool.visual.sig.algorithm.Input.signNotifier = new SignatureNotifier();
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage()
 						.showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
