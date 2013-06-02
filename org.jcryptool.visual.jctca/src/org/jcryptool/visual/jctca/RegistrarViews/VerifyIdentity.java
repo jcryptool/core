@@ -83,7 +83,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 
 	private void createContents(final Shell shell) {
 		shell.setLayout(new GridLayout(1, true));
-		shell.setText("Identitätsprüfung"); // zeigt den Titel an
+		shell.setText(Messages.VerifyIdentity_title); // zeigt den Titel an
 
 		main = new Composite(shell, SWT.FILL);
 		main.setLayout(new GridLayout(4, false));
@@ -108,7 +108,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
 		btn_false.addSelectionListener(this);
 
 		btn_cancel = new Button(btns, SWT.PUSH);
-		btn_cancel.setText("Abbrechen");
+		btn_cancel.setText(Messages.VerifyIdentity_btn_cancel);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		btn_cancel.setLayoutData(data);
 		btn_cancel.addSelectionListener(this);

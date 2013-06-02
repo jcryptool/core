@@ -57,22 +57,22 @@ Label selected_file;
 	@Override
 	public void widgetSelected(SelectionEvent e) {
 		Button btn_selected= (Button) e.getSource();
-		if(btn_selected.getData().equals("generate")) {
+		if(btn_selected.getData().equals("generate")) { //$NON-NLS-1$
 			cmb_select.setEnabled(false);
-		}else if(btn_selected.getData().equals("select")){
+		}else if(btn_selected.getData().equals("select")){ //$NON-NLS-1$
 			cmb_select.setEnabled(true);
-		}else if(btn_selected.getData().equals("file")) {
+		}else if(btn_selected.getData().equals("file")) { //$NON-NLS-1$
 			lbl_selected_file.setEnabled(true);
 			txt_text.setEnabled(false);
 			txt_text.setForeground(dark_gray);
 			btn_select_file.setEnabled(true);
-		}else if(btn_selected.getData().equals("text")) {
+		}else if(btn_selected.getData().equals("text")) { //$NON-NLS-1$
 			lbl_selected_file.setEnabled(false);
 			txt_text.setEnabled(true);
 			//set fontcolor to black - looks like enabled
 			txt_text.setForeground(black);
 			btn_select_file.setEnabled(false);
-		}else if(btn_selected.getData().equals("detail")) {
+		}else if(btn_selected.getData().equals("detail")) { //$NON-NLS-1$
 			btn1.setEnabled(enabled);
 			btn2.setEnabled(enabled);
 			selected_file.setEnabled(enabled);

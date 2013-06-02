@@ -74,7 +74,7 @@ public class ShowSigData implements Views {
 		
 		btn_deleteEntry = new Button(showSelectedRequest, SWT.NONE);
 		btn_deleteEntry.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		btn_deleteEntry.setText("Eintrag löschen");
+		btn_deleteEntry.setText(Messages.ShowSigData_btn_delete_entry);
 		btn_deleteEntry.setEnabled(false);
 		SecondUserListener listener = new SecondUserListener(btn_check_signature, btn_get_CRL, tree,lbl_text, lbl_signature, btn_deleteEntry );
 		tree.addSelectionListener(listener);

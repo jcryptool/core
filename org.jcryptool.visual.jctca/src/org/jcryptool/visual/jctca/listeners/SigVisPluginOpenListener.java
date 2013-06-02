@@ -48,13 +48,13 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		String selected = cmb_keys.getText();
 		String key_hash = selected.split("Hash:")[1]; //$NON-NLS-1$
 		key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
-		System.out.println("KEY HASH: " + key_hash);
+		System.out.println("KEY HASH: " + key_hash); //$NON-NLS-1$
 		KeyStoreAlias hello = Util.getAliasForHash(key_hash);
 		KeyStoreAlias pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys.getText());
 		KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
 		org.jcryptool.visual.sig.algorithm.Input.publicKey = pubAlias;
 		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
-		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file
+		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file //$NON-NLS-1$
 				.getText() : txt_sign.getText()).getBytes();
 		org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
 		byte[] hash, sig;
@@ -74,9 +74,9 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			hash = org.jcryptool.visual.sig.algorithm.Input.data;
 			try {
 				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput(
-						"SHA-256", hash);
+						"SHA-256", hash); //$NON-NLS-1$
 				org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(
-						"SHA256withRSA", hash);
+						"SHA256withRSA", hash); //$NON-NLS-1$
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				LogUtil.logError(e1);
@@ -86,11 +86,11 @@ public class SigVisPluginOpenListener implements SelectionListener {
 					txt_sign.getText(), new Date(System.currentTimeMillis()),
 					privAlias, pubAlias);
 			CertificateCSRR.getInstance().addSignature(signature);
-			Util.showMessageBox("Erfolg",
-					"Die signierte Nachricht wurde versendet!",
+			Util.showMessageBox(Messages.SigVisPluginOpenListener_msgbox_title_success,
+					Messages.SigVisPluginOpenListener_msgbox_text_signed_msg_was_sent,
 					SWT.ICON_INFORMATION);
-			this.lbl_file.setText("");
-			this.txt_sign.setText("Text zum Signieren eingeben...");
+			this.lbl_file.setText(""); //$NON-NLS-1$
+			this.txt_sign.setText(Messages.SigVisPluginOpenListener_enter_text_to_sign);
 		}
 	}
 

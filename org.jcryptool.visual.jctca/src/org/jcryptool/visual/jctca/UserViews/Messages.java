@@ -28,6 +28,9 @@ public class Messages extends NLS {
 	public static String CreateCert_lbl_pubkey;
 	public static String CreateCert_lbl_street;
 	public static String CreateCert_lbl_zip;
+	public static String CreateCert_public_key;
+	public static String CreateCert_radio_btn_gen_pubkey;
+	public static String CreateCert_radio_btn_sel_pubkey;
 	public static String CreateCert_sample_city;
 	public static String CreateCert_sample_country;
 	public static String CreateCert_sample_first_name;
@@ -56,8 +59,14 @@ public class Messages extends NLS {
 	public static String SignCert_btn_chose_file;
 	public static String SignCert_btn_sign_with_key;
 	public static String SignCert_checkbox_show_sigvis;
+	public static String SignCert_chose_method;
 	public static String SignCert_explain_text;
+	public static String SignCert_file;
 	public static String SignCert_file_or_text_headline;
+	public static String SignCert_footnote_input_in_signvis;
 	public static String SignCert_headline;
+	public static String SignCert_sign_directly;
+	public static String SignCert_text;
 	public static String SignCert_textbox_sample_text;
+	public static String SignCert_what_to_sign;
 }

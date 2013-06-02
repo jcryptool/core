@@ -61,7 +61,7 @@ public class SecondUserListener implements SelectionListener{
 				TreeItem it = tree.getSelection()[0];
 				if(it.getData()!=null){
 					Signature sig = (Signature)it.getData();
-					byte[] data = (sig.getPath()!="" ? sig.getPath() : sig.getText()).getBytes();
+					byte[] data = (sig.getPath()!="" ? sig.getPath() : sig.getText()).getBytes(); //$NON-NLS-1$
 					byte[] hash, signature;
 					boolean certRevoked = false; //hilfsvariable um festzustellen ob Zertifikat widerrufen wurde, aber die signatur vor dem widerruf erstellt wurde
 					if (btn_get_CRL.getSelection()) {
@@ -72,7 +72,7 @@ public class SecondUserListener implements SelectionListener{
 							X509Certificate x509 = (X509Certificate)cert;
 							if(Util.isCertificateRevoked(x509.getSerialNumber())){	//certificate has been revoked
 								if(!Util.isDateBeforeRevocation(x509.getSerialNumber(), sig.getTime())){//signature is after revokation
-									Util.showMessageBox("Zertifikat widerrufen", "Die Signatur wurde nach dem widerruf des Zertifikats erstellt!", SWT.ICON_WARNING);
+									Util.showMessageBox(Messages.SecondUserListener_msgbox_title_was_revoked, Messages.SecondUserListener_msgbox_text_was_revoked, SWT.ICON_WARNING);
 									return;
 								}
 								else{
@@ -82,24 +82,24 @@ public class SecondUserListener implements SelectionListener{
 						}
 					}
 					try {
-						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA");
+						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA"); //$NON-NLS-1$
 						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias());
 						if(cert.getNotAfter().after(sig.getTime())){//signature after valid date of the certificate?
 							checkSig.initVerify(cert.getPublicKey());
 							if(checkSig.verify(sig.getSignature())){ //signature is valid
 								if(certRevoked){ //certificate is revoked, but signature is before the revocation
-									Util.showMessageBox("Erfolg", "Die Signatur ist korrekt. Das Zertifikat wurde zwar widerrufen, die signatur wurde aber vor dem Widerruf erstellt.", SWT.ICON_INFORMATION);
+									Util.showMessageBox(Messages.SecondUserListener_msgbox_title_success, Messages.SecondUserListener_msgbox_text_signed_before_revoke, SWT.ICON_INFORMATION);
 								}
 								else{ //certificate is not revoked
-									Util.showMessageBox("Erfolg","Die Signatur ist korrekt. Man kann sich sicher sein, dass die Nachricht nicht verändert wurde und tatsächlich vom Absender stammt!", SWT.ICON_INFORMATION);
+									Util.showMessageBox(Messages.SecondUserListener_msgbox_title_success,Messages.SecondUserListener_msgbox_text_was_not_revoked, SWT.ICON_INFORMATION);
 								}
 							}
 							else{ //signature is invalid
-								Util.showMessageBox("Signatur falsch", "Die Signatur ist nicht korrekt.", SWT.ICON_ERROR);
+								Util.showMessageBox(Messages.SecondUserListener_msgbox_title_badsig, Messages.SecondUserListener_msgbox_text_badsig, SWT.ICON_ERROR);
 							}
 						}
 						else{ //certificate is out of date and the signature has been created afterwards
-							Util.showMessageBox("Zertifikat abgelaufen","Signatur wurde nach dem Ablauf des Zertifikats erstellt" , SWT.ICON_ERROR);
+							Util.showMessageBox(Messages.SecondUserListener_msgbox_title_revoked,Messages.SecondUserListener_msgbox_text_revoked , SWT.ICON_ERROR);
 						}
 					} catch (SignatureException e) {
 						// TODO Auto-generated catch block
@@ -119,13 +119,13 @@ public class SecondUserListener implements SelectionListener{
 			if(sel != null && sel.getData() != null){ //get the content from the selected signature and set the fields according to it
 				Signature sig = (Signature)sel.getData();
 				lbl_signature.setText(Util.bytesToHex(sig.getSignature()));
-				lbl_text.setText(sig.getPath()=="" ? sig.getText() : sig.getPath());
+				lbl_text.setText(sig.getPath()=="" ? sig.getText() : sig.getPath()); //$NON-NLS-1$
 				btn_deleteEntry.setEnabled(true);
 				btn_check_signature.setEnabled(true);
 			}
 			else {
-				lbl_signature.setText("");
-				lbl_text.setText("");
+				lbl_signature.setText(""); //$NON-NLS-1$
+				lbl_text.setText(""); //$NON-NLS-1$
 				btn_check_signature.setEnabled(false);
 				btn_deleteEntry.setEnabled(false);
 			}
@@ -137,8 +137,8 @@ public class SecondUserListener implements SelectionListener{
 				CertificateCSRR.getInstance().removeSignature(sig);
 				sel.dispose();
 				tree.layout();
-				lbl_signature.setText("");
-				lbl_text.setText("");
+				lbl_signature.setText(""); //$NON-NLS-1$
+				lbl_text.setText(""); //$NON-NLS-1$
 			}
 		}
 	}

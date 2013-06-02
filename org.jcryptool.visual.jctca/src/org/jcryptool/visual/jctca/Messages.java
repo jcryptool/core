@@ -21,4 +21,6 @@ public class Messages extends NLS {
 	public static String JCTCA_Visual_Plugin_Headline;
 	public static String Util_CSR_Tree_Head;
 	public static String Util_RR_Tree_Head;
+	public static String Util_signed_files;
+	public static String Util_signed_texts;
 }

@@ -36,6 +36,18 @@ public class Messages extends NLS {
 	public static String PluginBtnListener_archpic_create_explain;
 	public static String PluginBtnListener_archpic_revoke_explain;
 	public static String PluginBtnListener_visual_intro_text;
+	public static String SecondUserListener_msgbox_text_badsig;
+	public static String SecondUserListener_msgbox_text_revoked;
+	public static String SecondUserListener_msgbox_text_signed_before_revoke;
+	public static String SecondUserListener_msgbox_text_was_not_revoked;
+	public static String SecondUserListener_msgbox_text_was_revoked;
+	public static String SecondUserListener_msgbox_title_badsig;
+	public static String SecondUserListener_msgbox_title_revoked;
+	public static String SecondUserListener_msgbox_title_success;
+	public static String SecondUserListener_msgbox_title_was_revoked;
+	public static String SigVisPluginOpenListener_enter_text_to_sign;
+	public static String SigVisPluginOpenListener_msgbox_text_signed_msg_was_sent;
+	public static String SigVisPluginOpenListener_msgbox_title_success;
 	public static String TabItemListener_tab_ca_explain;
 	public static String TabItemListener_tab_ra_explain;
 	public static String TabItemListener_tab_secuser_explain;

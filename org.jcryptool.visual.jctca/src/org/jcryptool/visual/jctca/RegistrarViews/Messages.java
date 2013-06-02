@@ -29,10 +29,12 @@ public class Messages extends NLS {
 	public static String ShowCSR_verify_csr_headline;
 	public static String ShowCSR_zip_bad_erika;
 	public static String ShowCSR_zip_blackhat;
+	public static String VerifyIdentity_btn_cancel;
 	public static String VerifyIdentity_btn_mark_identity_correct;
 	public static String VerifyIdentity_btn_mark_identity_fake;
 	public static String VerifyIdentity_explain_text;
 	public static String VerifyIdentity_grp_explain_headline;
+	public static String VerifyIdentity_title;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

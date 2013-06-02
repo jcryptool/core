@@ -41,12 +41,12 @@ public class SignCert implements Views {
 		Group cmp_mini = new Group(composite, SWT.NONE);
 		cmp_mini.setLayout(new GridLayout(2,false));
 		cmp_mini.setLayoutData(gd_comp);
-		cmp_mini.setText("Methode auswählen");
+		cmp_mini.setText(Messages.SignCert_chose_method);
 		
 		selectSthGroup = new Group (composite, SWT.None);
 		selectSthGroup.setLayout(new GridLayout(1, false));
 		selectSthGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		selectSthGroup.setText("Was soll signiert werden?");
+		selectSthGroup.setText(Messages.SignCert_what_to_sign);
 		
 		Group signCertGroup = new Group(composite, SWT.NONE);
 		signCertGroup.setLayout(new GridLayout(1, false));
@@ -64,20 +64,20 @@ public class SignCert implements Views {
 		
 		Button btn_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
-		btn_detail.setData("detail");
+		btn_detail.setData("detail"); //$NON-NLS-1$
 		
 		Button btn_non_detail = new Button(cmp_mini, SWT.RADIO);
-		btn_non_detail.setText("Signaturvorgang direkt durchführen");
-		btn_non_detail.setData("detail");
+		btn_non_detail.setText(Messages.SignCert_sign_directly);
+		btn_non_detail.setData("detail"); //$NON-NLS-1$
 		
 		Label lbl_detail = new Label(cmp_mini, SWT.WRAP);
-		lbl_detail.setText("*Die Eingaben, was und wie signiert werden soll, werden in einem anderen Fenster angegeben.");
+		lbl_detail.setText(Messages.SignCert_footnote_input_in_signvis);
 		lbl_detail.setForeground(dark_gray);
 		lbl_detail.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 2,1));
 		
 		Button btn_radio_signFile = new Button(selectSthComp, SWT.RADIO);
-		btn_radio_signFile.setText("Datei");
-		btn_radio_signFile.setData("file");
+		btn_radio_signFile.setText(Messages.SignCert_file);
+		btn_radio_signFile.setData("file"); //$NON-NLS-1$
 		btn_radio_signFile.setEnabled(false);
 		
 		Button btn_select_file = new Button(selectSthComp, SWT.PUSH);
@@ -91,8 +91,8 @@ public class SignCert implements Views {
 		
 		GridData gd_btn = new GridData();
 		Button btn_radio_signText = new Button(selectSthComp, SWT.RADIO);
-		btn_radio_signText.setText("Text");
-		btn_radio_signText.setData("text");
+		btn_radio_signText.setText(Messages.SignCert_text);
+		btn_radio_signText.setData("text"); //$NON-NLS-1$
 		btn_radio_signText.setLayoutData(gd_btn);
 		btn_radio_signText.setEnabled(false);
 		
@@ -134,11 +134,11 @@ public class SignCert implements Views {
 			if (Util.isSignedByJCTCA(ksAlias) == false) {
 				continue;
 			}
-			String listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit ";
-			if (ksAlias.getOperation().contains("RSA")) {
-				listEntry += "RSA";
+			String listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$
+			if (ksAlias.getOperation().contains("RSA")) { //$NON-NLS-1$
+				listEntry += "RSA"; //$NON-NLS-1$
 			}
-			listEntry+=" (Hash:" + ksAlias.getHashValue() + ")";
+			listEntry+=" (Hash:" + ksAlias.getHashValue() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 			cmb_priv_key.setData(listEntry, ksAlias);
 			cmb_priv_key.add(listEntry);
 		}

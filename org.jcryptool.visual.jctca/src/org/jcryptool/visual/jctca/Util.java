@@ -83,7 +83,7 @@ public class Util {
 			X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
 			X509Name subjectName = new X509Name("CN=" + principal + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"ST=" + street + ", " + //$NON-NLS-1$ //$NON-NLS-2$
-					"L=" +zip +" " + city + ", " + "C=" + country + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					"L=" +zip +" " + city + ", " + "C=" + country + ", " + //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 					"OU=" + unit + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"O=" + organisation + ", " + //$NON-NLS-1$ //$NON-NLS-2$
 					"E=" + mail); //$NON-NLS-1$
@@ -188,9 +188,9 @@ public class Util {
 	
 	public static void create2ndUserRootNodes(Tree tree) {
 		TreeItem tree_item_csr = new TreeItem(tree, SWT.NONE);
-		tree_item_csr.setText("Signierte Texte");
+		tree_item_csr.setText(Messages.Util_signed_texts);
 		TreeItem tree_item_crl = new TreeItem(tree, SWT.NONE);
-		tree_item_crl.setText("Signierte Dateien");
+		tree_item_crl.setText(Messages.Util_signed_files);
 
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);

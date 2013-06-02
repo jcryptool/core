@@ -99,7 +99,7 @@ public class CAListener implements SelectionListener{
 	 * Sets all the fields on the right half. Gets them from the selected treeitem.
 	 */
 	private void loadData() {
-		setLabels("","","","","","","");
+		setLabels("","","","","","",""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
 		if(requests.getSelectionCount()==1){
 			TreeItem sel = requests.getSelection()[0];
 			if(sel.getData() instanceof CSR){
@@ -109,8 +109,8 @@ public class CAListener implements SelectionListener{
 			else if(sel.getData() instanceof RR){
 				RR rr = (RR)sel.getData();
 				X509Certificate x509 =(X509Certificate)KeyStoreManager.getInstance().getCertificate(rr.getAlias());
-				System.out.println("X500 Principal: " + x509.getSubjectX500Principal().toString());
-				String[] fields = x509.getSubjectX500Principal().toString().split(", ");
+				System.out.println("X500 Principal: " + x509.getSubjectX500Principal().toString()); //$NON-NLS-1$
+				String[] fields = x509.getSubjectX500Principal().toString().split(", "); //$NON-NLS-1$
 				String town=null;
 				String country=null;
 				String first = null;
@@ -119,27 +119,27 @@ public class CAListener implements SelectionListener{
 				String street = null;
 				String zip = null;
 				for(String field : fields){
-					if(field.startsWith("EMAILADDRESS=")){
-						mail = field.split("=").length>1 ? field.split("=")[1] : "";
+					if(field.startsWith("EMAILADDRESS=")){ //$NON-NLS-1$
+						mail = field.split("=").length>1 ? field.split("=")[1] : ""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					}
-					else if(field.startsWith("C=")){
-						country = field.split("=").length>1 ? field.split("=")[1] : "";
+					else if(field.startsWith("C=")){ //$NON-NLS-1$
+						country = field.split("=").length>1 ? field.split("=")[1] : ""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					}
-					else if(field.startsWith("L=")){
-						String[] zip_town = field.split("=");
+					else if(field.startsWith("L=")){ //$NON-NLS-1$
+						String[] zip_town = field.split("="); //$NON-NLS-1$
 						if(zip_town.length>1){
-							zip_town = zip_town[1].split(" ");
+							zip_town = zip_town[1].split(" "); //$NON-NLS-1$
 							town = zip_town.length>1 ? zip_town[1] : zip_town[0];
-							zip = zip_town.length>1 ? zip_town[0] : "";
+							zip = zip_town.length>1 ? zip_town[0] : ""; //$NON-NLS-1$
 						}
 					}
-					else if(field.startsWith("ST=")){
-						street = field.split("=").length>1 ? field.split("=")[1] : "";
+					else if(field.startsWith("ST=")){ //$NON-NLS-1$
+						street = field.split("=").length>1 ? field.split("=")[1] : ""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 					}
-					else if(field.startsWith("CN=")){
-						first = field.split("=").length>1 ? field.split("=")[1] : "";
-						last = first.split(" ")[first.split(" ").length-1];
-						first = field.substring(3, field.lastIndexOf(" "));
+					else if(field.startsWith("CN=")){ //$NON-NLS-1$
+						first = field.split("=").length>1 ? field.split("=")[1] : ""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						last = first.split(" ")[first.split(" ").length-1]; //$NON-NLS-1$ //$NON-NLS-2$
+						first = field.substring(3, field.lastIndexOf(" ")); //$NON-NLS-1$
 					}
 				}
 				this.setLabels(town, country, first, last, mail, street, zip);

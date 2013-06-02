@@ -117,7 +117,7 @@ public class TabItemListener implements SelectionListener {
 			ArrayList<Signature> sigs = CertificateCSRR.getInstance().getSignatures();
 			TreeItem it = null;
 			for(Signature sig: sigs){
-				if(sig.getPath()==null || sig.getPath()==""){
+				if(sig.getPath()==null || sig.getPath()==""){ //$NON-NLS-1$
 					it = new TreeItem(textSig, SWT.NONE);
 					String text = sig.getText();
 					it.setText(sig.getTime().toString());

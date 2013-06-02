@@ -135,11 +135,11 @@ public class CreateCert implements Views {
 //		btn_genKey.setEnabled(false);
 
 		Label lbl_pubKey = new Label(createCertGroup, SWT.NONE);
-		lbl_pubKey.setText("Öffentlicher Schlüssel:");
+		lbl_pubKey.setText(Messages.CreateCert_public_key);
 		
 		Button btn_radio_selectPubKey = new Button(createCertGroup, SWT.RADIO);
-		btn_radio_selectPubKey.setText("Öffentlichen Schlüssel auswählen");
-		btn_radio_selectPubKey.setData("select");
+		btn_radio_selectPubKey.setText(Messages.CreateCert_radio_btn_sel_pubkey);
+		btn_radio_selectPubKey.setData("select"); //$NON-NLS-1$
 //		Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
 //		btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 //		btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
@@ -152,8 +152,8 @@ public class CreateCert implements Views {
 		
 		lbl_plain4 = new Label(createCertGroup, SWT.NONE);
 		Button btn_radio_generatePubKey = new Button(createCertGroup, SWT.RADIO);
-		btn_radio_generatePubKey.setText("Neues Schlüsselpaar beim Absenden generieren");
-		btn_radio_generatePubKey.setData("generate");
+		btn_radio_generatePubKey.setText(Messages.CreateCert_radio_btn_gen_pubkey);
+		btn_radio_generatePubKey.setData("generate"); //$NON-NLS-1$
 		btn_radio_generatePubKey.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1,1));
 		btn_radio_generatePubKey.setSelection(true);
 		
