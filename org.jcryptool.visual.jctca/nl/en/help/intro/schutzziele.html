@@ -1,74 +1,63 @@
 <!DOCTYPE html>
-<html lang = "de">
+<html lang = "en">
     <head>
         <meta charset="utf-8">
-        <title>Einf&uuml;hrung in die Problemstellung</title>
+        <title>Introduction to the problems</title>
     </head>
     <body>
-        <!--Headline 1 should be the main title of the displayed page -->
-        <h1>An Introduction to the Problem at Hand</h1>
-        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <h1>Introduction to the problems</h1>
+        <h2>Network security</h2>
         <p>
+        The technologies, that are widely used in computer networks, were designed at a time when security was not reagarded as an important issue. Only a few research institutions and universities had access to the Internet. Because of different technical characteristics of these technologies, there are varying requirements for many fields. One of the many topics of information security is the security of IT systems and computer networks. This field of expertise has established a special set of words for this requirements. The requirements itself are known as "protection goals". The follwing paragraphs describe the protection goals important for the understanding of public key infrastructures.
         </p>
-        <!-- all other headlines and paragraphs come after here -->
-        <h2>Security in Computer Networks</h2>
+        <h3>Data integrity</h3>
         <p>
-        Die Technologien, die unseren modernen Netzwerken zugrunde liegen, stammen aus einer Zeit, in der Sicherheit in Computernetzwerken noch kaum eine Rolle gespielt hat. Der Zugang zu Computernetzwerken und dem Internet war zu dieser Zeit auf wenige Forschungsinstitute und Universit&auml;ten beschr&auml;nkt. Aus den technischen Eigenschaften dieser Technologien ergeben sich daher verschiedene Schwierigkeiten f&uuml;r viele Anwendungsgebiete. Im Fachgebiet der Informationssicherheit, das sich unter anderem mit Sicherheit in IT-Systemen und Computernetzwerken besch&auml;ftigt, haben sich f&uuml;r diese Probleme konkrete Begriffe etabliert. Diese Begriffe werden unter der Bezeichnung "Schutzziele" zusammengefasst. Im Folgenden werden jene Schutzziele beschrieben, die im Zusammenhang mit einer Public-Key-Infrastruktur wichtig sind.
-        </p>
-        <h3>Datenintegrit&auml;t</h3>
-        <p>
-        Das Bundesamt f&uuml;r Sicherheit in der Informationstechnik (BSI) definiert den "Nachweis der Integrit&auml;t elektronischer Daten" als "Nachweis, dass diese vollst&auml;ndig und unver&auml;ndert sind<sup><a href="#fn1" id="ref1" title="Zu Fu&szlig;note 1 springen">1</a></sup>."
+        The Federal Agency for Security in Information Technology defines the "proof of the integrity of electronic data" as "proof that the data is complete and unedited."
         </p>
         <p>
-        Datenintegrit&auml;t wird am Beispiel eines Vertrages leicht verst&auml;ndlich: Wir nehmen an, Bob m&ouml;chte Alice ein Auto verkaufen. Wie in der Wirtschaft &uuml;blich, setzen Bob und Alice deshalb einen Kaufvertrag f&uuml;r dieses Auto auf. In diesem Kaufvertrag halten Sie fest, in welchem Zustand sich das Auto &auml;u&szlig;erlich befindet, wie viele Kilometer bereits damit gefahren wurden und &uuml;ber welche Sonderausstattungen (beispielsweise Ledersitze, Sportlenkrad und dergleichen) das Auto verf&uuml;gt. Da dieser Kaufvertrag sehr umfangreich ist, umfasst er zwei Seiten. Am Ende der zweiten Seite ist je ein Feld f&uuml;r Alice und Bob vorgesehen, wo beide den Vertrag unterschreiben k&ouml;nnen. Da sich aber viele wichtige Vereinbarungen, wie beispielsweise der vereinbarte Kilometerstand bei der &Uuml;bergabe des Autos - auf der ersten Seite des Vertrages befinden, hat Alice Bedenken mit dieser Methode. Wenn die Kilometerzahl bei der &Uuml;bergabe nicht der vereinbarten entspricht, k&ouml;nnte Bob die erste Seite des Vertrages durch eine modifizierte erste Seite ersetzen. Vor Gericht g&auml;be es keine M&ouml;glichkeit, nachzuweisen, welche Version des Vertrages die Version ist, auf die sich Bob und Alice geeignet haben. Um dieses Szenario zu verhindern, einigen sich Bob und Alice darauf, jede Seite des Vertrages mit ihren Initialen zu versehen (im Rechtswesen spricht man hierbei von "Paraphierung"). Durch die Paraphierung wird die Integrit&auml;t einer Vertragsversion sichergestellt. Nun kann Bob keine Seite des Vertrages ohne Alices Zustimmung ver&auml;ndern.
+        A contract is a very good example for data integrity. Lets assume, Bob wants to sell Alice a car. As normal, they want to write a sale contract for the exchange of this car. This contract contains information on the condition of the car, how many kilomiters have been driven and which extra equipment has been installed. Because of the many points contained in this contract, it is two pages long. At the end of the second page, there is a field for Alice and Bob where both of them can sign the contract. Many of the important agreements, for example the expected milage at the time of the handover, are on the first page. Because of this, Alice has some concerns with this method. For example, if the actual mileage does not match the contract, Bob could just swap the first page with a new one. In court it would not be possible to proof which version of the contract is the one Alice an Bob originally aggreed upon. To avoid this scenario, Bob and Alice agree that each of them signs each page (in the judiciary this is known as "Initialling"). With the signature on each side, the integrity of a version of the contract can be proven because Bob can not exchange a page without the signature of Alice.
         </p>
         <p>
-        Dieses Problem der Datenintegrit&auml;t gibt es auch in der digitalen Welt. Ohne zus&auml;tzliche Ma&szlig;nahmen gibt es keine M&ouml;glichkeit, festzustellen ob Daten auf dem Weg vom Sender zum Empf&auml;nger ver&auml;ndert wurden. Das trifft sowohl auf E-Mails als auch auf Webseiten zu. Ohne zus&auml;tzliche Ma&szlig;nahmen zur Sicherung der Datenintegrit&auml;t kann also nicht festgestellt werden, ob der Inhalt einer E-Mail tats&auml;chlich dem entspricht, was der Sender verfasst hat. Genauso gibt es keine M&ouml;glichkeit, festzustellen, ob der HTML-Code, der eine Webseite beschreibt, auf dem Weg vom Server zum Webbrowser ver&auml;ndert wurde. Das kann sehr ernste Folgen haben, beispielsweise wenn Gesch&auml;fte &uuml;ber das Internet abgewickelt werden. PKIs bieten eine M&ouml;glichkeit, die Integrit&auml;t elektronischer Daten sicherzustellen. Wie das erfolgt, k&ouml;nnen Sie im Teil <a href="./zertifikate.html">Digitale Signaturen und digitale Zertifikate</a> nachlesen.
+        The problem of data integrity also exists in the digital world. Without any additional measures, it is not possible to verify if data has been changed while it traveled from the sender to the receiver. This is true for emails and websites alike. So, without additional measures to ensure integrity, it is not possible to check if the content of an email is the same as the text the sender wrote. Also there is no way to prove, if the HTML-Code that describes a website, has been changed on the way from the server to the webbrowser. This can have serious consequences, for example, when somone conducts business over the internet. PKIs offer a means to ensure the integrity of data. To learn more about it, you can go to the section <a href="./zertifikate.html">Digital signatures and certificates</a>.
         </p>
-        <h3>Authentizit&auml;t</h3>
+        <h3>Authenticity</h3>
         <p>
-        Das BSI definiert den "Nachweis der Authentizit&auml;t von elektronischen Daten" als "Nachweis &uuml;ber die Echtheit (vgl. Integrit&auml;t) der Daten und die eindeutige Zuordnung zum Verfasser, Ersteller und/oder Absender<sup><a href="#fn1" id="ref2" title="Zu Fu&szlig;note 1 springen">1</a></sup>.
-        </p>
-        <p>
-        Der Bedarf nach Authentizit&auml;t besteht beispielsweise bei computergeschriebenen Briefen. Nehmen wir an, Bob erh&auml;lt ein Briefkuvert. Als Absender ist die Adresse eines Hotels darauf gedruckt. Im Inneren findet Bob einen Brief, in dem geschrieben steht: "Lieber Bob, mir wurde bei einem Konferenzbesuch meine Geldtasche gestohlen. Kannst du mir bitte an die Absenderadresse am Umschlag 300 Euro schicken? Du bekommst sie zur&uuml;ck, wenn wir uns das n&auml;chste Mal sehen. Du rettest mir damit das Leben, Alice." Da der gesamte Brief mit einem Computer verfasst und ausgedruckt wurde, kann Bob nicht ohne Weiteres davon ausgehen, dass dieser Brief tats&auml;chlich von Alice ist. Weil er aber wei&szlig;, dass Alice die ganze Woche an einer Konferenz im angegebenen Hotel teilnimmt, m&ouml;chte er ihn auch nicht einfach ignorieren. Um sicherzugehen, ruft er im Hotel an und fragt nach Alice. Diese ist ganz verwundert &uuml;ber den Brief und versichert Bob, dass ihre Geldtasche noch bei ihr sei. Ein anderer Konferenzbesucher, der offenbar wei&szlig;, dass Bob und Alice Freunde sind, muss den Brief verfasst haben. 
+        The Federal Agency for Security in Information Technology defines the "proof of the authenticity of electronic data" as "proof on the originality of the data and the unique mapping to the writer, creator and/or sender".
         </p>
         <p>
-        Die selben Probleme aus dem obigen Beispiel gelten f&uuml;r alle Daten, die &uuml;ber ein Computernetzwerk &uuml;bertragen werden. Dabei ist das oben beschriebene Szenario direkt aus dem Leben gegriffen: Immer wieder werden Menschen um Geld betrogen, weil sie E-Mails mit etwa dem oben genannten Inhalt glauben schenken und Geld an vermeintliche Freunde in Not &uuml;berweisen. Ohne besondere Mechanismen kann auch nicht ohne Weiteres angenommen werden, dass eine angezeigte Webseite tats&auml;chlich die Seite ist, die man gerade zu besuchen glaubt. Kriminelle Personen versuchen beispielsweise, Zug&auml;nge zu Onlinebanking zu ergattern, indem sie Webseiten von Banken nachbauen und uninformierte Benutzer dazu bringen, dort ihre Zugangsdaten einzugeben.
+        The need for authenticity comes up when handling letters that have been written on the computer and then printed out. Lets assume, Bob gets an envelope. The return address is the address of an hotel. On the inside, Bob finds a letter which says the following: "Dear Bob, someone stole my wallet at a conference. Can you please mail me 300 euros to the return address? I will give you the money back the next time we see each other. You'll safe my life with this, Alice." Because of the fact that the entire letter has been written and printed, Bob can not easily assume that this letter is actually from Alice. He does however know that Alice is in fact at a conference at the said address and does not want to ignore the letter. To be sure, he calls the hotel and asks for Alice. She ensures him that everything is still in her posession and that she is quite puzzled by the letter. Another visitor of the conference who knows that Alice and Bob know each other must have written said letter.
         </p>
         <p>
-        Datenintegrit&auml;t ist eine wichtige Voraussetzung f&uuml;r pr&uuml;fbare Authentizit&auml;t. Dies sollte leicht nachvollziehbar sein: Nehmen wir wiederum an, Bob bekommt einen Brief. Diesmal hat Alice den Brief selbst verfasst und auch unterschrieben. Bob kann sich also sicher sein, dass Alice wirklich 300 Euro von ihm braucht &ndash; von der M&ouml;glichkeit, dass Alices Unterschrift gef&auml;lscht wurde, sehen wir hier erst einmal ab. Nun besteht aber noch das Problem, dass Alice im Brief lediglich von der "Absenderadresse am Umschlag" schreibt. Jemand, der den Brief in die H&auml;nde bekommen hat, k&ouml;nnte aber beispielsweise den Originalumschlag entfernt, den Brief gelesen und in einen neuen Umschlag hineingegeben haben. Deshalb ruft Bob lieber wieder bei Alice an und l&auml;sst sich von ihr die Adresse ihres Hotels best&auml;tigen.
+        The same problem from the example exist for all data that has been sent on a computer network. Also, the said scenario has been taken from real life events: All the time people get scammed and loose money because the believe emails similar to the letter and send money to alleged friends in need. Without additional measures you can not simply assume that a website is indeed the one you think you are visiting. Criminals for example try to create fake online banking sites and get users to enter their credentials in order to get access to their bank accounts.
         </p>
         <p>
-        Noch deutlicher wird die Abh&auml;ngigkeit von Integrit&auml;t und Authentizit&auml;t am Beispiel eines Testaments. Ein Testament muss grunds&auml;tzlich vollst&auml;ndig eigenh&auml;ndig geschrieben und unterschrieben werden. Die blo&szlig;e Unterzeichnung eines maschinschriftlichen Dokuments reicht nicht aus. Wie wir gleich erfahren werden kann (vermeintliche) Authentizit&auml;t ohne Integrit&auml;t sogar gef&auml;hrliche Folgen haben. 
+        Data integrity is a crucial requirement for verifiable authenticity. This is quite easy to understand: Lets assume again that Bob gets a letter. This time, Alice wrote and signed the letter herself. So Bob can be sure that Alice really needs the 300 euros from him (we ignore the fact that the signature could have been a forgery). Now the problem is at hand that the letter says, he should send the money to the return address on the envelope. Somebody that had access to the letter could have removed the original envelope and put it in a new one. Because of this, Bob should call Alice again and verify the address of the hotel.
         </p>
         <p>
-        Eine PKI bietet die n&ouml;tigen Voraussetzungen, um die Authentizit&auml;t eines Absenders elektronischer Daten festzustellen. Im Plugin selbst wird dargestellt, wie die Authentizit&auml;t des Absenders eines Textes oder einer Datei im Allgemeinen festgestellt werden kann. <!--Die Onlinehilfe geht au&szlig;erdem in  darauf ein, wie im Internet konkret die Authentizit&auml;t eines E-Mailabsenders oder eines Webservers festgestellt werden kann.-->
-        </p>
-        <h3>Nicht-Abstreitbarkeit und Verbindlichkeit</h3>
-        <p>
-        Das BSI definiert Nicht-Abstreitbarkeit als "Gew&auml;hrleistung, dass die Urheberschaft, der Versand oder der Empfang von Daten und Informationen nicht in Abrede gestellt werden k&ouml;nnen<sup><a href="#fn1" id="ref3" title="Zu Fu&szlig;note 1 springen">1</a></sup>."
+        A testament makes the dependency between integrity and authenticity even more obvious. A testament usually has to be handwritten and signed by yourself. The signature of a typewritten document is not enough. Shortly we will learn that authenticity without integrity could also have dangerous consequences. 
         </p>
         <p>
-        Nicht-Abstreitbarkeit ist vor allem f&uuml;r die Rechtswirksamkeit von Gesch&auml;ften notwendig, weshalb diesbez&uuml;glich auch oft von "Verbindlichkeit" gesprochen wird. Nicht-Abstreitbarkeit und Verbindlichkeit sind dabei zwingende Folgen von Authentizit&auml;t und Integrit&auml;t. 
+        A PKI provides the means to ensure the authenticity of the sender of electronic data. In the plugin it is shown, how the authenticity of the sender of a text or a file can be verified. 
+        </p>
+        <h3>Non repudiation</h3>
+        <p>
+        The Federal Agency for Security in Information Technology defines non repudiation as the "warranty, that the authorship, the transmission and the reception of data and information can not be disputed".
         </p>
         <p>
-        Betrachten wir wieder das Beispiel des Autokaufes: Bob und Alice haben einen Kaufvertrag aufgesetzt, paraphiert und unterschrieben. Die Paraphierung des Vertrages durch beide Parteien dient zur Integrit&auml;tssicherung des Kaufvertrags. Die beiden Unterschriften beweisen die Authentizit&auml;t der beiden Parteien. Durch diese beiden T&auml;tigkeiten k&ouml;nnen weder Alice noch Bob abstreiten, den Vertrag gelesen und akzeptiert zu haben. Wenn nun Bob das Auto an Alice &uuml;bergibt, l&auml;sst er Alice eine &Uuml;bergabebest&auml;tigung unterschreiben. Dadurch kann Alice nun nicht mehr abstreiten, das Auto erhalten zu haben. Das ist f&uuml;r Bob f&uuml;r den Fall sehr wichtig, falls Alice ihrer Zahlungspflicht nicht nachk&auml;me. Wenn Alice das Auto schlie&szlig;lich bezahlt, l&auml;sst sie sich von Bob eine Quittung &uuml;ber den bezahlten Betrag ausstellen. Dadurch kann Bob seinerseits nun nicht mehr abstreiten, dass Alice ihrer Zahlungspflicht nachgekommen ist. 
+        Non repudiation is needed for the validity of trades. This is the reason, why it needs to be a result of authenticity and integrity.
         </p>
         <p>
-        Da PKIs sowohl die n&ouml;tigen Voraussetzungen f&uuml;r Integrit&auml;tssicherung und Authentizit&auml;tsfeststellung bieten, k&ouml;nnen sie grunds&auml;tzlich auch Nicht-Abstreitbarkeit und Verbindlichkeit gew&auml;hrleisten. Allerdings gelten unter Umst&auml;nden bestimmte rechtliche Bedingungen f&uuml;r unterschiedliche Einsatzszenarien von PKIs. Auf diese wird in <a href="./zertifikate.html">Digitale Signaturen und digitale Zertifikate"</a> genauer eingegangen.
+        Lets take the example of a car trade again: Bob and Alice wrote a sale contract, and signed each of the pages. Because of the signature on each side, its integrity is ensured. The signatures itself prove the authenticity of both parties. Because of this, neither Alice nor Bob can dispute that they have in fact read and accepted the contract. Bob now gives Alice the car and lets her sign a confirmation of delivery. So Alice cannot deny that Bob has given her the car. This is very important, if Alice would not fullfill her duty of payment. When Alice pays Bob the money for the car, she asks Bob for a receipt. So Bob can not deny, that Alice has already payed the money.
+        </p>
+        <p>
+        Since PKIs help to ensure integrity and authenticity they can also ensure non repudiation. However, there are special legal requirements for the different operational scenarios of PKIs. At <a href="./zertifikate.html">"Digital Sigantures and Certificates"</a> you can read more about them.
         </p>
 
         <hr>
         <p>
-        ↑<sup id="fn1"><a href="#ref1" title="Zu Absatz &uuml;ber Datenintegrit&auml;t springen">a</a> <a href="#ref2" title="Zu Absatz &uuml;ber Authentizit&auml;t springen">b</a> <a href="#ref3" title="Zu Absatz &uuml;ber Nicht-Abstreitbarkeit und Verbindlichkeit springen">c</a></sup> 1. Bundesamt f&uuml;r Sicherheit in der Informationstechnik: <a href="https://www.bsi.bund.de/DE/Themen/weitereThemen/ElektronischeSignatur/Glossar/esigglossar.html" title="Glossar des BSI zum Thema elektronische Signatur">Glossar zum Thema Elektronische Signatur</a>
-        </p>
-
-        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
-        <hr>
-        <p>
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
         <br />
-        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
         </p>
     </body>
 </html>

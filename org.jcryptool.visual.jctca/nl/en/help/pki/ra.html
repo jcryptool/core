@@ -1,50 +1,39 @@
 <!DOCTYPE html>
-<html lang = "de">
+<html lang = "en">
     <head>
         <meta charset="utf-8">
         <title>Registration Authority</title>
     </head>
     <body>
         <!--Headline 1 should be the main title of the displayed page -->
-        <h1>Registration Authority</h1>
+        <h1>Registration authority</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        Eine "Registration Authority" (RA) oder der Registrar im deutschen, ist für die Validierung von Certificate Signing Requests und gegebenenfalls Revocation Requests zuständig.
+        A registration authority (RA) is responsible for the validation of certificate signing request (CSR) and possibly for revocation requests (RR).
         </p>
         <!-- all other headlines and paragraphs come after here -->
-        <h2>Aufgaben der RA - Validierung von CSRs</h2>
+        <h2>Responsibilities of a RA - Validation of CSRs</h2>
         <p>
-        Die Registration Authority ist für die Validierung eines Certificate Signing Requests zuständig. Was das genau bedeutet, ist abhängig von der Art des CSR. Soll beispielsweise ein E-Mailzertifikat ausgestellt werden, so muss sichergestellt sein, dass der Antragsteller auch der Inhaber der E-Mailadresse ist, die im CSR angegeben wurde. Dies wird oft über das Zusenden eines Validierungscodes realisiert.</p>
-        <p>Soll ein persönliches Zertifikat ausgestellt werden, ist die Validierung schon etwas komplizierter. Die deutsche Post bietet hierfür beispielsweise das sogenannte Postident-Verfahren. Hierbei wird die Identität einer Person von einem Mitarbeiter in einer Postfiliale vorgenommen. Der Antragsteller erhält hierbei meist einen Postident-Coupon, den er gemeinsam mit einem Reisepass oder Personalausweis in einer Postfiliale vorlegt. Ein Mitarbeiter der Filiale übeträgt die Ausweisdaten in den Coupon und lässt dies vom Kunden unterschreiben. Anschließend bestätigt der Mitarbeiter die daten mit dem Stempel der Postfiliale und seiner eigenen Unterschrift und leitet den Coupon an das jeweilige Unternehmen weiter.</p>
-        <p>Für die österreichische Bürgerkarte, einer speziellen Mischung aus amtlichem Ausweis und digitalem Zertifikat für österreichische Staatsbürger, ist die Verifikation über einen sogenannten RSa-Brief üblich. Hierbei wird dem Empfänger ein Brief zugestellt, den dieser persönlich unter Ausweiskontrolle des Zustellers entgegennehmen muss.
-        </p>
-
-        <h2>StartSSL - Ein Beispiel aus der realen Welt</h2>
-        <p>StartSSL ist eine PKI der Firma StartCom, die kostenlose E-Mailzertifikate und kostengünstige persönliche Zertifikate anbieten.</p>
+	A registration authority is responsible for the validation of CSRs. What this means exactly, depends on the type of CSR. For example, if an e-mail certificate should be issued, it have to be ensured that the applicant is the holder of the e-mail address specified in the CSR. This is often implemented by sending a validation code.</p>
+        <p>The validation process for a personal certificate is more complex. For example the German Post offers, the so-called post-identification method. The identification of a person is made by an employee at a post office. The applicant receives a PostIdent coupon and submit it together with a passport or identity card at a post office. An employee of the post office copies the identification data to the coupon and has it signed by the customer. The employee confirms the data with the stamp of the post office and its own signature and forward the coupon to the respective company.</p>
+        <h2>StartSSL - A real world example </h2>
+        <p>StartSSL is a pki of the company StartCom, which offers free e-mail certificates and cheap personal certificates.</p>
         <p>
         <img alt="StartSSL E-Mail Validation Wizard" src="../media/startssl_email_val.png" />
         </p>
-        <p>Die Validierung der E-Mailadresse erfolgt über Zusendung eines Validierungscodes, der binnen 15 Minuten in den Validierungswizard kopiert werden muss. Wurde eine E-Mailadresse erst validiert, kann man sich innerhalb einer Stunde ein Zertifikat dafür ausstellen lassen.</p>
-        <p>Außerdem bietet StartSSL persönliche Zertifikate. Um sich ein Zertifikat auf seinen Namen ausstellen lassen zu können, ist ein Farbscan oder ein Digitalfoto vom Umschlag und der ersten Seite des Reisepasses, der Seite des Reisepasses mit den persönlichen Daten sowie die Vorder- und Rückseite eines weiteren Lichtbildausweises (beispielsweise eines Führerscheins oder Personalausweises) notwendig.</p>
+        <p>The validation of the e-mail address happens via sending a validation code which must be copied in 15 minutes to the validation wizard. After an e-mail address was validated, you can get a certificate for this address within an hour.</p>
+        <p>To get a personal certificate, a color copy or digital photo of the cover, the first page of the passport, the page of the passport with personal data as well as the front and back of another photo ID (such as a driver's license or identification card) is necessary.</p>
         <p>
         <img alt="StartSSL Personal Validation Wizard" src="../media/startssl_person_val.png" />
         </p>
-        <!-- all footnotes go into the following sections. uncomment if needed -->
-        <!--
-        <hr>
-        <p>
-        <sup id="fn1">1. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
-        </p>
-        -->
-
         <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
         <hr>
         <p>
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
         <br />
-        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
         <br />
-        Die Abbildungen sind Screenshots von der <a href="http://www.startssl.com">StartSSL PKI</a> und &copy; StartCom Ltd. &ndash; Alle Rechte vorbehalten.
+        The pictures are screenshots taken from <a href="http://www.startssl.com">StartSSL PKI</a> and &copy; StartCom Ltd. &ndash; All right reserved.
         </p>
     </body>
 </html>
