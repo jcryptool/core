@@ -1,38 +1,41 @@
 <!DOCTYPE html>
-<html lang = "de">
+<html lang = "en">
     <head>
         <meta charset="utf-8">
-        <title>X.509 und PKIX</title>
+        <title>X.509 and PKIX</title>
     </head>
     <body>
         <!--Headline 1 should be the main title of the displayed page -->
-        <h1>X.509 und PKIX</h1>
+        <h1>X.509 and PKIX</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        Hier bekommen Sie ausf&uuml;hrliche Informationen zu den zwei wichtigsten Standards, welche f&uuml;r Digitale Zertifikate im Internet existieren. Die ITU-T Recommendadion X.509 (meist kurz als X.509-Standard oder nur X.509 bezeichnet) ist ein Standard f&uuml;r Public-Key- und Privilege-Management-Infrastrukturen. X.509 spezifiziert unter anderem festgelegte Formate von Zertifikaten und Certificate Revocation Lists. X.509 gibt dabei lediglich die Form vor, wie solche Zertifikate und CRLs auszusehen haben. Die wichtigste Implementierung von X.509 und somit der zweite wichtige Standard zu digitalen Zertifikaten ist der von einer Arbeitsgruppe der IETF verfasste RFC5280 mit dem Titel "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List Profile". Dieser Standard wird auch als PKIX-Standard bezeichnet (nach der gleichnamigen PKIX Arbeitsgruppe, die diesen Standard betreut). Meist wenn von einem X.509 Zertifikat die Rede ist, ist damit das X.509v3 Zertifikat aus RFC5280 gemeint.
+	You geht here detailled information about the two most important standards for digital certificates on the internet. 
+        The ITU-T recommendadion X.509 (abbreviated as X.509 standard or X.509) is a standard for public key and privilege management infrastructures. X.509 specifies only the format for certificates and certificate revocation lists.  
+	The main implementation of X.509 and the thus the second most important standard for digital certificates RFC5280 is authored by a workgroup of the IETF and is entitled "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List Profile". This standard is referred to as PKIX standard. In most cases if an X.509 certificate is mentioned, it refers to the X.509v3 certificate from RFC5280.
+
         </p>
         <!-- all other headlines and paragraphs come after here -->
-        <h2>X.509v3 Zertifikat</h2>
+        <h2>X.509v3 certificate</h2>
         <p>
-        RFC5280 spezifiziert mittlerweile die dritte Version des X.509 Zertifikatsprofil der IETF. Ein Zertifikat nach X.509v3 beinhaltet dabei die folgenden Felder.
+        RFC5280 specifies by this time the third version of the X.509 certificate profile. A certificate in accord with X.509v3 contains the following 	fields.
         <ul>
-            <li>Version &ndash; Die verwendete X.509 Version (1, 2 oder 3)</li>
-            <li>Serial number &ndash; Eine von der CA vergebene Seriennummer, die innerhalb der CA eindeudig sein muss</li>
-            <li>Signature Algorithm &ndash; Signatur- und Hashalgorithmus, die mit diesem Zertifikat verwendet werden k&ouml;nnen, beispielsweise MD5 mit RSA (md5WithRSAEncryption)</li>
-            <li>Issuer &ndash; Die ausstellende CA, bestehend aus</li>
+            <li>Version &ndash; The used X.509 version (1, 2 or 3)</li>
+            <li>Serial number &ndash; An assigned serial number by the CA, which has to be unique within the CA.</li>
+            <li>Signature Algorithm &ndash; Signature and hash algorithms, which can be used with this certificate, for example MD5 with RSA (md5WithRSAEncryption)</li>
+            <li>Issuer &ndash; The assigning CA, consisting of</li>
             <ul>
-                <li>Common Name &ndash; Der Common Name ist der Name im weitesten Sinne, auf den das Zertifikat ausgestellt wird. Dieser "Name" kann dabei allerdings auch eine E-Mailadresse oder ein Servername sein, wenn es sich um ein E-Mailzertifikat oder ein Serverzertifikat handelt.</li>
-                <li>Organisation &ndash; Name der Organisation, welche die PKI betreibt</li>
-                <li>Organisational Unit &ndash; zu deutsch auch oft "Organisationseinheit", bezeichnet die Abteilung einer Organisation. Bei einer CA ist dies oft "Certification Service" oder &auml;hnliches</li>
-                <li>Location &ndash; Der Ort, an dem sich die CA befindet. Meist die Stadt, in dem der Betreiber seinen Firmensitz hat.</li>
-                <li>State &ndash; Das Bundesland, in dem sich die CA befindet</li>
-                <li>Country &ndash; Der Staat, in dem sich die CA befindet</li>
+                <li>Common Name &ndash; The Common Name is the name, to whom the certificate is issued. This name can also be an email address or a server name if it is an e-mail certificate or server certificate.</li>
+                <li>Organisation &ndash; Name of organisation, which run the PKI.</li>
+                <li>Organisational Unit &ndash; Department of organisation.</li>
+                <li>Location &ndash; The place where the CA is located. Mostly, the city where the operator has its headquarters.</li>
+                <li>State &ndash; The state where the CA is located.</li>
+                <li>Country &ndash; The country where the CA is located.</li>
             </ul>
-            <li>Validity &ndash; Der G&uuml;ltigkeitszeitraum des Zertifikats. In diesem Zeitraum garantiert die CA, den G&uuml;ltigkeitsstatus des Zertifikates zu verwalten. Dieser besteht aus einem "not before" (w&ouml;rtlich "nicht vor") und einem "not after" (w&ouml;rtlich: nicht nach) Datum.</li>
-            <li>Subject &ndash; Angaben zum Zertifikatsinhaber. Diese bestehen aus den selben Elementen wie die Angaben zur CA, wobei aber manche Felder leer sein k&ouml;nnen. Zumindest aber der Common Name muss gesetzt sein.</li>
-            <li>Subject Public Key Info &ndash; Der &ouml;ffentliche Schl&uuml;ssel des Zertifikatsinhabers</li>
-            <li>X509v3 extensions &ndash; Verschiedene, optionale Erweiterungen. Ist es beispielsweise ein Root-Zertifikat, so wird dies durch eine X509v3 Erweiterung gekennzeichnet.</li>
-            <li>Signature &ndash; Signaturalgorithmus und Signatur der ausstellenden CA &uuml;ber den Hash des Zertifikats</li>
+            <li>Validity &ndash; The validity period of the certificate. During this period, the CA guarantees to manage the validity status of the certificate. This consists of a "not before" and a "not after" the date.</li>
+            <li>Subject &ndash; Information about the certificate owner. These consist of the same elements as the information about the CA, but some fields can be empty. At least, the common name must be set.</li>
+            <li>Subject Public Key Info &ndash; The pubilc key of the certificate owner.</li>
+            <li>X.509v3 extensions &ndash; Optionale extensions. For example a root certificate is labled with a X.509v3 extensions.</li>
+            <li>Signature &ndash; Signature algorithm and signature of the assigning CA over the hash of the certificate.</li>
         </ul>
         </p>
 
@@ -47,9 +50,9 @@
         <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
         <hr>
         <p>
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons license" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
         <br />
-        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
         </p>
     </body>
 </html>

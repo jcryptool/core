@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang = "de">
+<html lang = "en">
     <head>
         <meta charset="utf-8">
-        <title>Digitale Signaturen und Zertifikate</title>
+        <title>Digital signatures and certificates</title>
     </head>
     <body>
         <!--Headline 1 should be the main title of the displayed page -->
         <h1>Digitale Signaturen und Zertifikate</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        In <a href="./schutzziele.html">Einf&uuml;hrung in die Problemstellung</a> haben Sie von den Schutzzielen Datenintegrit&auml;t, Authentizit&auml;t und Nicht-Abstreitbarkeit erfahren. Dieses Kapitel beschreibt, wie diese Schutzziele in der digitalen Welt erreicht werden k&ouml;nnen.
+        You read about the core principles like data integrity, authentication and non-repudiation in <a href="./schutzziele.html">Introduction to the problems</a>. This section deals about how these can be accomplished in the digital world.
         </p>
         <!-- all other headlines and paragraphs come after here -->
-        <h2>Digitale Signaturen</h2>
+        <h2>Digital signatures</h2>
         <p>
-        Um die Integrit&auml;t und Authentizit&auml;t digitaler Daten sicherzustellen, werden sogenannte "digitale Signaturen" eingesetzt. Digitale Signaturen deshalb, da sie den gleichen Zweck wie Unterschriften von Hand erf&uuml;llen und &auml;hnlichen Anforderungen gen&uuml;gen m&uuml;ssen. Eine digitale Signatur muss schwer zu f&auml;lschen und ihre Echtheit &uuml;berpr&uuml;fbar sein. Sie darf nicht unbemerkt auf andere Daten als die signierten &uuml;bertragen werden k&ouml;nnen und die signierten Daten d&uuml;rfen nicht unbemerkt ver&auml;ndert werden. Diese Eigenschaften werden mittels asymmetrischer Kryptografie erreicht.
+        So-called "digital signatures" are used in order to accomplish integrity and authenticity of digital data. They are called signatures because they basically serve the same need as a handwritten signature and have to meet similar requirements. A digital signature has to be hard to forge and its validity has to be provable. It must not be easily copied to other data as that signed by the sender and signed data must not be modifiable without the sender's knowledge. All these qualities are met by the use of asymmetric cryptography.
         </p>
-        <h3>Asymmetrische Kryptografie</h3>
+        <h3>Asymmetric cryptography</h3>
         <p>
-        In der Kryptografie kann grob zwischen zwei Arten von Verfahren unterschieden werden: Symmetrischen und asymmetrischen. Bei symmetrischen Verfahren wird der selbe Schl&uuml;ssel zur Verschl&uuml;sselung und zur Entschl&uuml;sselung verwendet. Bei asymmetrischer Kryptografie ist eben das nicht der Fall. 
-        </p>
-        <p>
-        Bei asymmetrischer Kryptografie spricht man von einem Schl&uuml;sselpaar. Der &ouml;ffentliche Schl&uuml;ssel wird zur Verschl&uuml;sselung verwendet. Wurde etwas mit einem &ouml;ffentlichen Schl&uuml;ssel verschl&uuml;sselt, kann es mit diesem Schl&uuml;ssel nicht wieder entschl&uuml;sselt werden. Eine Entschl&uuml;sselung ist nur mit dem jeweiligen privaten Schl&uuml;ssel m&ouml;glich. Mehr zu asymmetrischer Verschl&uuml;sselung erfahren Sie in den Plugins "RSA Cryptosystem" und "Erweitertes RSA Kryptosystem."
+        Cryptography can be roughly divided into two different kinds: symmetric and asymmetric cryptography. In symmetric cryptography, the same (secret) key is used for encryption and decryption of data. In asymmetric cryptography, the opposite is the case.
         </p>
         <p>
-        Bei digitalen Signaturen macht man sich genau den umgekehrten Effekt von asymmetrischer Verschl&uuml;sselung zu Nutze. M&ouml;chte Bob beweisen, dass eine bestimmte Datei von ihm stammt, so kann er diese Datei mit seinem privaten Schl&uuml;ssel verschl&uuml;sseln. Das Ergebnis dieser Verschl&uuml;sselung ist die Signatur f&uuml;r die Datei. Ein Empf&auml;nger dieser Datei kann die Signatur anschlie&szlig;end mit dem zugeh&ouml;rigen &ouml;ffentlichen Schl&uuml;ssel wieder entschl&uuml;sseln. Wenn sie mit der empfangenen Datei &uuml;bereinstimmt, handelt es sich offensichtlich um die Datei, die der Besitzer des privaten Schl&uuml;ssel versendet hat. 
-        </p>
-        <h4>Kryptologische Hashfunktionen</h4>
-        <p>
-        Da asymmetrische Verschl&uuml;sselung langsam und aufwendig ist, ist es unpraktikabel tats&auml;chlich ganze Dateien zu signieren. Deshalb werden f&uuml;r digitale Signaturen kryptografische Hashfunktionen verwendet. Eine Hashfunktion ist ganz allgemein eine Funktion, die eine Bitfolge beliebiger L&auml;nge auf eine Bitfolge mit fester L&auml;nge abbildet. Eine kryptologische Hashfunktion erf&uuml;llt dabei einige weitere Anforderungen, die Sie im <a href="https://de.wikipedia.org/wiki/Kryptologische_Hashfunktion">Wikipedia Artikel &uuml;ber kryptologische Hashfunktionen</a> nachlesen k&ouml;nnen. Au&szlig;erdem k&ouml;nnen Sie mit JCrypTool MD5, SHA und SHA3-Hashes f&uuml;r Textdateien erstellen. Wenn eine E-Mail oder eine Datei signiert werden soll, wird tats&auml;chlich zuerst ein kryptologischer Hashwert davon erstellt. Dieser Hashwert wird mit dem privaten Schl&uuml;ssel verschl&uuml;sselt. Zur Pr&uuml;fung der Signatur entschl&uuml;sselt der Empf&auml;nger die Signatur mit dem &ouml;ffentlichen Schl&uuml;ssel, erstellt selbst einen Hash der Datei oder E-Mail und vergleicht die beiden Hashwerte. Sind beide identisch, so ist die Signatur in Ordnung. Eine detailierte Darstellung eines Signiervorgangs erhalten Sie im Plugin "Signature Generation Visualization."
-        </p>
-        <h2>Schl&uuml;sselauthentizit&auml;t</h2>
-        <p>
-        Eines der Hauptprobleme, das f&uuml;r digitale Signaturen besteht, ist die Authentizit&auml;t des &ouml;ffentlichen Schl&uuml;ssels. &Ouml;ffentliche Schl&uuml;ssel werden gro&szlig;teils &uuml;ber Webseiten, E-Mail oder eigene Sch&uuml;sselserver verteilt. Wie Sie aber bereits aus der <a href="./schutzziele.html">Einf&uuml;hrung in die Problemstellung</a> wissen, k&ouml;nnen E-Mails und Webseiten recht einfach gef&auml;lscht werden. Es besteht also das Problem, die Zuordnung zwischen einer Person und einem &ouml;ffentlichen Schl&uuml;ssel sicherzustellen.
+        In asymmetric cryptography, one uses a so-called key pair. The public key is used for encryption only. Once something has been encrypted with a public key, it cannot be decrypted without knowledge of the corresponding private key. You can learn more about asymmetric encryption in the "RSA Cryptosystem" and "Extended RSA Cryptosystem" plugins.
         </p>
         <p>
-        Public-Key-Infrastrukturen bieten einen Weg, dieses Problem zu l&ouml;sen. In einer Public-Key-Infrastruktur stellt eine sogenannte Certfication Authority ein digitales Zertifikat aus. Ein digitales Zertifikat ist eine Datenstruktur, die unter anderem den &ouml;ffentlichen Schl&uuml;ssel und den Namen des Zertifikatsinhabers enth&auml;lt. Die CA f&uuml;gt dieser Datenstruktur ihre eigene Signatur hinzu und best&auml;tigt damit die Zugeh&ouml;rigkeit vom Schl&uuml;ssel zum Zertifikatsinhaber. Wie dies genau abl&auml;uft lesen Sie im <a href="./pki.html">Abschnitt &uuml;ber Prozesse einer PKI</a>. Eine Public-Key-Infrastruktur umfasst dabei zus&auml;tzlich zur Certification Authority und den notwendigen Prozessen zur Zertifikatserstellung auch die n&ouml;tige Infrastruktur, um Zertifikate zu widerrufen.
+        For digital signatures, the opposite effect of assymetric encryption is used. If Bob wants to prove, that a given file was sent by him, he can encrypt the file using his private key. The ciphertext created is the signature for the file. A receiver can decrypt the signature with the public key. If the decrypted signature and the received file are identical, it is obviously the file sent by Bob. Only he had the means, i.e. the private key, to create the signature.
         </p>
-        <h2>Nicht-Abstreitbarkeit: Rechtliches &uuml;ber digitale Zertifikate</h2>
+        <h4>Cryptographic hash function</h4>
         <p>
-        In der EG-Richtlinie 1999/93/EG ist der Begriff eines qualifizierten Zertifikats festgelegt. Nur qualifizierte Zertifikate erm&ouml;glichen die Erstellung einer qualifizierten Signatur, die mit einer eigenh&auml;ndigen Unterschrift gleichgestellt ist. Mehr dazu lesen Sie im <a href="https://de.wikipedia.org/wiki/Qualifiziertes Zertifikat">Wikipedia Artikel &uuml;ber qualifizierte Zertifikate</a>.
+        Asymmetric encryption involves slow and complex mathematical operations, thus it's not pratical to sign entire files. For that reason, cryptographic hash functions are used. In general, a hash function is a function that reduces a bit string of variable length to a bit string of fixed length. A cryptographic hash function has some additional qualities, which you can find in the <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">wikipedia article on cryptographic hash functions</a>. Also, you can use the JCrypTool to create MD5, SHA and SHA3 hashes for text files. If an email or file needs to be signed, a cryptographic hash is created first. This hash is then encrypted using the private key as described above. To check the signature, a receiver creates the hash using the same hash function, decrypts the signature and checks if the two hashes are equal. You can learn about the signature process in more detail in the "Signature Generation Visualization" plug-in.
+        </p>
+        <h2>Public key authentication</h2>
+        <p>
+        One of the main issues with digital signatures is the authenticity of the public key. Public keys are mainly distributed via email, websites or special key servers. As you learned in <a href="./schutzziele.html">Introduction to the problems</a>, emails and websites can be forged easily. Thus, proving the connection between a person and a public key becomes a problem.
+        </p>
+        <p>
+        Public key infrastructures provide a means to solve this problem. A so-called certificate authority (CA) issues digital certificates. Digital certificates are data structures which contain the public key of the certificate holder amongst other things. The CA adds its own signature to this data structure and vouches for the connection between the certificate holder and the public key contained in it. You can read about how this works in more detail in the <a href="./pki.html">section about PKI processes</a>. In addition to the CA and the process of creating and issuing certificates, a PKI provides among other things the means and infrastructure to revoke certificates. 
+        </p>
+        <h2>Non-repudiation: Legal basics about digital certificates</h2>
+        <p>
+        The EU directive 1999/93/EG defines the term "qualified certificate" as "a certificate which meets the requirements laid down in Annex I and is provided by a certification-service-provider who fulfils the requirements laid down in Annex II". Only signatures created by private keys of these kinds of certificates are legally equal to handwritten signatures. You can read more about this in the <a href="https://en.wikipedia.org/wiki/Public_key_certificate#Usage_in_the_European_Union">wikipedia article on public key certificates</a>.
         </p>
 
         <!-- all footnotes go into the following sections. uncomment if needed -->
@@ -55,7 +55,7 @@
         <p>
         <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
         <br />
-        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
         </p>
     </body>
 </html>
