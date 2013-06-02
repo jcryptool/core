@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="JCTCA" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
-    <topic href="nl/en/help/content/rsaHelp.html" label="JCTCA"/>
+<toc label="JCrypTool Certification Authority" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
+    <topic href="$nl$/help/index.html" label="JCrypTool Certification Authority">
+        <topic href="$nl$/help/intro/schutzziele.html" label="Einführung in die Problemstellung">
+        </topic>
+        <topic href="$nl$/help/intro/zertifikate.html" label="Digitale Signaturen und Zertifikate">
+        </topic>
+        <topic href="$nl$/help/intro/pki.html" label="Prozesse in einer PKI">
+        </topic>
+        <topic label="Rollen in einer PKI">
+            <topic href="$nl$/help/pki/ra.html" label="Registration Authority">
+            </topic>
+            <topic href="$nl$/help/pki/ca.html" label="Certification Authority">
+            </topic>
+        </topic>
+        <topic label="Weiterführende Information">
+            <topic href="$nl$/help/pkix/standards.html" label="X.509 und PKIX">
+            </topic>
+        </topic>
+
+    </topic>
 </toc>

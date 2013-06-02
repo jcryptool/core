@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang = "de">
+    <head>
+        <meta charset="utf-8">
+        <title>Certification Authority</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>Certificaiton Authority</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+        Eine Certification Authority (CA), Certificate Authority oder deutsch Zertifizierungsstelle ist der Teil einer PKI, der für die tatsächliche Verwaltung der Zertifikate zuständig ist.
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>Aufgaben einer CA</h2>
+        <p>
+        Die Aufgaben einer CA umfassen die Ausstellung und den Widerruf von Zertifikaten. Außerdem unterhält eine CA eine Certificate Revocation List (CRL), welche alle von ihr ausgestellten Zertifikate beinhaltet, die von ihren Inhabern widerrufen wurden.
+        </p>
+        <h3>Zertifikatsausstellung</h3>
+        <p>
+        Bekommt eine CA einen CSR von einer RA weitergeleitet, dann stellt sie für diesen CSR ein Zertifikat aus. Dieses Zertifikat beinhaltet angaben zur CA, Angaben zum Zertifikatsinhaber, einen Gültigkeitszeitraum und eine Signatur der CA. Den genauen Aufbau eines Zertifikats lesen Sie in PKI-Standards.</p>
+        <h3>Certificate Revocation List</h3>
+        <p>Eine CA unterhält außerdem eine Certificate Revocation List, in der alle von ihr ausgestellten Zertifikate eingetragen sind, die zwar ihren Gültigkeitszeitraum noch nicht überschritten haben, aber vom Benutzer oder der CA widerrufen wurden. Ein Zertifikat kann beispielsweise widerrufen werden, weil der private Schlüssel kompromittiert wurde. Wenn eine Firma und eine Abteilung in einem Zertifikat angegeben wurden, kann es auch sein, dass der Mitarbeiter diese Firma verlassen hat und das Zertifikat in dieser Form deshalb nicht mehr gültig ist. Außerdem kann eine CA Zertifikate von sich aus widerrufen, falls beispielsweise in Systeme der CA eingebrochen wurde und ein Signierschlüssel gestohlen wurde, mit dem bereits Zertifikate ausgestellt wurden.</p>
+
+        <!-- all footnotes go into the following sections. uncomment if needed -->
+        <!--
+        <hr>
+        <p>
+        <sup id="fn1">1. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
+        </p>
+        -->
+
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        Dieser Inhalt steht unter einer <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de">Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 3.0 Unported Lizenz</a>
+        </p>
+    </body>
+</html>
