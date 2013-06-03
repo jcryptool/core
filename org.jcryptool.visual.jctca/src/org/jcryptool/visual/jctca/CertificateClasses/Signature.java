@@ -42,6 +42,11 @@ public class Signature {
 	KeyStoreAlias pubAlias;
 	
 	/**
+	 * 
+	 */
+	String hashalgorithm;
+	
+	/**
 	 * constructor for a signature
 	 * @param signature
 	 * @param path - path to the file that has been signed (text has to be null)
@@ -50,13 +55,18 @@ public class Signature {
 	 * @param privAlias - alias for the private key that has been used for signing
 	 * @param pubAlias - alias for the corresponsing public key
 	 */
-	public Signature(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias, KeyStoreAlias pubAlias){
+	public Signature(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias, KeyStoreAlias pubAlias, String hashalgorithm){
 		this.signature = signature;
 		this.path = path;
 		this.text = text;
 		this.time = time;
 		this.privAlias = privAlias;
 		this.pubAlias = pubAlias;
+		this.hashalgorithm = hashalgorithm;
+	}
+	
+	public String getHashAlgorithm(){
+		return hashalgorithm;
 	}
 
 	/**

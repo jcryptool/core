@@ -26,8 +26,8 @@ public class SignatureNotifier {
 	 * @param privAlias - KeyStoreAlias of the private Key
 	 * @param pubAlias - KeyStoreAlias of the public Key
 	 */
-	public void signatureDone(byte[] sig, String file, String text, KeyStoreAlias privAlias, KeyStoreAlias pubAlias){
-		Signature signature = new Signature(sig, file,text, new Date(System.currentTimeMillis()), privAlias, pubAlias);
+	public void signatureDone(byte[] sig, String file, String text, KeyStoreAlias privAlias, KeyStoreAlias pubAlias, String hashAlgorithm){
+		Signature signature = new Signature(sig, file,text, new Date(System.currentTimeMillis()), privAlias, pubAlias, hashAlgorithm);
 		CertificateCSRR.getInstance().addSignature(signature);
 	}
 }

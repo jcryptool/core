@@ -1,5 +1,9 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
@@ -82,10 +86,35 @@ public class SecondUserListener implements SelectionListener{
 						}
 					}
 					try {
-						java.security.Signature checkSig = java.security.Signature.getInstance("SHA256withRSA"); //$NON-NLS-1$
+						
+						java.security.Signature checkSig = java.security.Signature.getInstance(sig.getHashAlgorithm()+"withRSA"); //$NON-NLS-1$
 						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias());
 						if(cert.getNotAfter().after(sig.getTime())){//signature after valid date of the certificate?
 							checkSig.initVerify(cert.getPublicKey());
+							if(sig.getPath()!=""){
+								FileInputStream file;
+								try {
+									file = new FileInputStream(sig.getPath());
+									BufferedInputStream bufin = new BufferedInputStream(file);
+									
+									byte[] buffer = new byte[1024];
+									int len;
+									while(file.available()!=0){
+										len = bufin.read(buffer);
+										checkSig.update(buffer, 0, len);
+									}
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}
+							else{
+								checkSig.update(sig.getText().getBytes());
+							}
 							if(checkSig.verify(sig.getSignature())){ //signature is valid
 								if(certRevoked){ //certificate is revoked, but signature is before the revocation
 									Util.showMessageBox(Messages.SecondUserListener_msgbox_title_success, Messages.SecondUserListener_msgbox_text_signed_before_revoke, SWT.ICON_INFORMATION);

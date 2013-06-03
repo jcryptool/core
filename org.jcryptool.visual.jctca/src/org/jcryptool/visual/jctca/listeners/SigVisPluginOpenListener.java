@@ -84,7 +84,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			sig = org.jcryptool.visual.sig.algorithm.Input.signature;
 			Signature signature = new Signature(sig, lbl_file.getText(),
 					txt_sign.getText(), new Date(System.currentTimeMillis()),
-					privAlias, pubAlias);
+					privAlias, pubAlias, "SHA256");
 			CertificateCSRR.getInstance().addSignature(signature);
 			Util.showMessageBox(Messages.SigVisPluginOpenListener_msgbox_title_success,
 					Messages.SigVisPluginOpenListener_msgbox_text_signed_msg_was_sent,
