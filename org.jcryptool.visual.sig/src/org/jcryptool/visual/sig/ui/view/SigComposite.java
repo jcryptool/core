@@ -74,6 +74,7 @@ public class SigComposite extends Composite implements PaintListener {
 	private MenuItem mntm2;
 	private MenuItem mntm3;
 	private MenuItem mntm4;
+	private MenuItem mntm0;
 	SigComposite sc = this;
 	private int hash = 0; //Values: 0-4. Hash and signature contain the selected method; default is 0
 	private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5, 
@@ -145,6 +146,12 @@ public class SigComposite extends Composite implements PaintListener {
 		txtGeneralDescription.setText(Messages.SigComposite_description);
 		txtGeneralDescription.setBackground(white);
 		
+		Menu menu = new Menu(txtGeneralDescription);
+		txtGeneralDescription.setMenu(menu);
+		
+		mntm0 = new MenuItem(menu, SWT.NONE);
+		mntm0.setText(Messages.SigComposite_menu);
+		
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration); 
 		grpSignatureGeneration.setBounds(10, 75, 699, 548);
@@ -174,7 +181,7 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0); 
 		
-		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.TRANSPARENT);
+		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		//txtDescriptionOfStep1.setBackground(white);
 		txtDescriptionOfStep1.setEditable(false);
 		txtDescriptionOfStep1.setText(Messages.SigComposite_txtDescriptionOfStep1);
@@ -521,6 +528,15 @@ public class SigComposite extends Composite implements PaintListener {
 		   }//end widgetSelected
 		});
 		
+		//To select all text
+		mntm0.addSelectionListener(new SelectionListener() {
+			public void widgetDefaultSelected(SelectionEvent e) {
+		    }
+		    public void widgetSelected(SelectionEvent e) {
+		    	txtGeneralDescription.selectAll();
+		    }//end widgetSelected
+		});
+
 		//To select all text
 		mntm1.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) {
