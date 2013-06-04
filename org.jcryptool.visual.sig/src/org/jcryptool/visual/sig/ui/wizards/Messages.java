@@ -69,6 +69,32 @@ public class Messages {
 	public static String InputEditorWizard_title;
 	public static String InputEditorWizard_header;
 	
+	
+	//Show generated signature
+	public static String ShowSig_title;
+	public static String ShowSig_ownerTitle;
+	public static String ShowSig_keyTitle;
+	public static String ShowSig_methodTitle;
+	public static String ShowSig_owner;
+	public static String ShowSig_key;
+	public static String ShowSig_method;
+	
+	public static String ShowSig_grpSignature;
+	public static String ShowSig_lengthSig;
+	
+	public static String ShowSig_grpOption;
+	public static String ShowSig_number;
+	public static String ShowSig_octal;
+	public static String ShowSig_decimal;
+	public static String ShowSig_hex;
+	public static String ShowSig_hexDump;
+	
+	public static String ShowSig_grpMessage;
+	public static String ShowSig_lengthMessage;
+	
+	public static String ShowSig_btnClose;
+	public static String ShowSig_btnSave;
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
