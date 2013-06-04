@@ -141,7 +141,7 @@ public class SigComposite extends Composite implements PaintListener {
 				
 		txtGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
 		txtGeneralDescription.setEditable(false);
-		txtGeneralDescription.setBounds(10, 15, 699, 59);
+		txtGeneralDescription.setBounds(10, 21, 699, 53);
 		txtGeneralDescription.setText(Messages.SigComposite_description);
 		txtGeneralDescription.setBackground(white);
 		
@@ -219,7 +219,7 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 		
-		txtDescriptionOfStep4 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
+		txtDescriptionOfStep4 = new Text(tabDescription, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
 		//txtDescriptionOfStep4.setBackground(white);
 		txtDescriptionOfStep4.setEditable(false);
 		txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
@@ -549,7 +549,7 @@ public class SigComposite extends Composite implements PaintListener {
 		});
 		
 		//To select all text
-		mntm3.addSelectionListener(new SelectionListener() {
+		mntm4.addSelectionListener(new SelectionListener() {
 			public void widgetDefaultSelected(SelectionEvent e) {
 		    }
 		    public void widgetSelected(SelectionEvent e) {
