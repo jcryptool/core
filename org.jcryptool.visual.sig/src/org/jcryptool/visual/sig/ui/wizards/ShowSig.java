@@ -11,6 +11,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 public class ShowSig extends Shell {
 	private Text txtT;
@@ -23,6 +25,14 @@ public class ShowSig extends Shell {
 	private Text txtLnge;
 	private Text txtSignedMes;
 	private Text txtLngeMes;
+	private Table table;
+	private TableColumn tblclmnAdresse;
+	private TableColumn tblclmnHex;
+	private TableColumn tblclmnAscii;
+	private Table table_1;
+	private TableColumn tableColumn;
+	private TableColumn tableColumn_1;
+	private TableColumn tableColumn_2;
 
 	/**
 	 * Create the shell.
@@ -32,7 +42,7 @@ public class ShowSig extends Shell {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 440, 526);
+		composite.setBounds(10, 10, 440, 536);
 		
 		txtT = new Text(composite, SWT.READ_ONLY | SWT.WRAP);
 		txtT.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
@@ -68,7 +78,7 @@ public class ShowSig extends Shell {
 				ShowSig.this.close();
 			}
 		});
-		btnNewButton.setBounds(355, 501, 75, 25);
+		btnNewButton.setBounds(340, 511, 100, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnNewButton_1 = new Button(composite, SWT.NONE);
@@ -78,7 +88,7 @@ public class ShowSig extends Shell {
 				// TODO
 			}
 		});
-		btnNewButton_1.setBounds(271, 501, 75, 25);
+		btnNewButton_1.setBounds(233, 511, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		
 		txtSig = new Text(composite, SWT.READ_ONLY);
@@ -91,6 +101,7 @@ public class ShowSig extends Shell {
 		txtLnge.setText(Messages.ShowSig_lengthSig);
 		txtLnge.setBounds(0, 213, 200, 21);
 		
+		// TODO 
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
 		grpOption.setBounds(0, 240, 440, 82);
@@ -124,7 +135,44 @@ public class ShowSig extends Shell {
 		
 		txtLngeMes = new Text(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage);
-		txtLngeMes.setBounds(0, 474, 200, 21);
+		txtLngeMes.setBounds(0, 465, 200, 21);
+		
+		// TODO
+		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setBounds(0, 103, 440, 104);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+		
+		tblclmnAdresse = new TableColumn(table, SWT.NONE);
+		tblclmnAdresse.setToolTipText("");
+		tblclmnAdresse.setWidth(100);
+		tblclmnAdresse.setText("adresse");
+		
+		tblclmnHex = new TableColumn(table, SWT.NONE);
+		tblclmnHex.setWidth(224);
+		tblclmnHex.setText("hex");
+		
+		tblclmnAscii = new TableColumn(table, SWT.NONE);
+		tblclmnAscii.setWidth(112);
+		tblclmnAscii.setText("ascii");
+		
+		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		table_1.setLinesVisible(true);
+		table_1.setHeaderVisible(true);
+		table_1.setBounds(0, 355, 440, 104);
+		
+		tableColumn = new TableColumn(table_1, SWT.NONE);
+		tableColumn.setWidth(100);
+		tableColumn.setToolTipText("");
+		tableColumn.setText("adresse");
+		
+		tableColumn_1 = new TableColumn(table_1, SWT.NONE);
+		tableColumn_1.setWidth(224);
+		tableColumn_1.setText("hex");
+		
+		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
+		tableColumn_2.setWidth(112);
+		tableColumn_2.setText("ascii");
 		createContents();
 	}
 
