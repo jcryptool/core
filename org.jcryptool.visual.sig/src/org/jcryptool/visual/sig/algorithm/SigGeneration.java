@@ -43,6 +43,7 @@ public class SigGeneration {
 			k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
 		} else { //Use Key from given alias
 			k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
+			//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
 		}
 		
 		byte[] signature = null; //Stores the signature
@@ -53,6 +54,18 @@ public class SigGeneration {
 		sig.initSign(k);
         sig.update(input);
         signature = sig.sign();
+        
+        //Test
+//        System.out.println( "\nStart signature verification" );
+//        sig.initVerify(ksm.getPublicKey(alias));
+//        sig.update(input);
+//        try {
+//            if (sig.verify(signature)) {
+//                System.out.println( "Signature verified" );
+//            } else System.out.println( "Signature failed" );
+//        } catch (SignatureException se) {
+//            System.out.println( "Signature failed" );
+//        }
         
         //Store the generated signature
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
