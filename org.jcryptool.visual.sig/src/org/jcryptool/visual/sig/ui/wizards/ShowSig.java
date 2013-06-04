@@ -7,8 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
+
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
@@ -30,20 +29,23 @@ public class ShowSig extends Shell {
 	 * @param display
 	 */
 	public ShowSig(Display display) {
-		super(display, SWT.SHELL_TRIM);
+		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 430, 526);
+		composite.setBounds(10, 10, 440, 526);
 		
 		txtT = new Text(composite, SWT.READ_ONLY | SWT.WRAP);
+		txtT.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		txtT.setText(Messages.ShowSig_ownerTitle);
 		txtT.setBounds(0, 0, 137, 21);
 		
 		txtT_2 = new Text(composite, SWT.READ_ONLY);
+		txtT_2.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		txtT_2.setText(Messages.ShowSig_keyTitle);
 		txtT_2.setBounds(0, 25, 137, 21);
 		
 		txtT_1 = new Text(composite, SWT.READ_ONLY);
+		txtT_1.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
 		txtT_1.setText(Messages.ShowSig_methodTitle);
 		txtT_1.setBounds(0, 49, 137, 21);
 		
@@ -70,6 +72,12 @@ public class ShowSig extends Shell {
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnNewButton_1 = new Button(composite, SWT.NONE);
+		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				// TODO
+			}
+		});
 		btnNewButton_1.setBounds(271, 501, 75, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		
@@ -85,27 +93,28 @@ public class ShowSig extends Shell {
 		
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
-		grpOption.setBounds(0, 240, 430, 82);
+		grpOption.setBounds(0, 240, 440, 82);
 		grpOption.setLayout(null);
 		
 		Button btnZahl = new Button(grpOption, SWT.RADIO);
-		btnZahl.setBounds(15, 34, 113, 16);
+		btnZahl.setBounds(10, 49, 113, 16);
 		btnZahl.setText(Messages.ShowSig_number);
 		
 		Button btnOkt = new Button(grpOption, SWT.RADIO);
-		btnOkt.setBounds(134, 34, 90, 16);
+		btnOkt.setBounds(129, 49, 90, 16);
 		btnOkt.setText(Messages.ShowSig_octal);
 		
 		Button btnDez = new Button(grpOption, SWT.RADIO);
-		btnDez.setBounds(230, 34, 90, 16);
+		btnDez.setBounds(237, 49, 90, 16);
 		btnDez.setText(Messages.ShowSig_decimal);
 		
 		Button btnHex = new Button(grpOption, SWT.RADIO);
-		btnHex.setBounds(330, 34, 90, 16);
+		btnHex.setBounds(340, 49, 90, 16);
 		btnHex.setText(Messages.ShowSig_hex);
 		
 		Button btnHexdump = new Button(grpOption, SWT.RADIO);
-		btnHexdump.setBounds(15, 56, 191, 16);
+		btnHexdump.setSelection(true);
+		btnHexdump.setBounds(10, 27, 191, 16);
 		btnHexdump.setText(Messages.ShowSig_hexDump);
 		
 		txtSignedMes = new Text(composite, SWT.READ_ONLY);
