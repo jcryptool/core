@@ -5,7 +5,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -45,17 +44,14 @@ public class ShowSig extends Shell {
 		composite.setBounds(10, 10, 440, 536);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
-		txtT.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT.setText(Messages.ShowSig_ownerTitle);
 		txtT.setBounds(0, 0, 137, 21);
 		
 		txtT_2 = new Label(composite, SWT.READ_ONLY);
-		txtT_2.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT_2.setText(Messages.ShowSig_keyTitle);
 		txtT_2.setBounds(0, 25, 137, 21);
 		
 		txtT_1 = new Label(composite, SWT.READ_ONLY);
-		txtT_1.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT_1.setText(Messages.ShowSig_methodTitle);
 		txtT_1.setBounds(0, 49, 137, 21);
 		
@@ -74,7 +70,6 @@ public class ShowSig extends Shell {
 		
 		text_2 = new Label(composite, SWT.READ_ONLY);
 		text_2.setText(sig);
-		//text_2.setText("--> chooseSignature");
 		text_2.setBounds(143, 49, 287, 21);
 		
 		Button btnNewButton = new Button(composite, SWT.NONE);
@@ -99,8 +94,6 @@ public class ShowSig extends Shell {
 		btnNewButton_1.setEnabled(false);
 		
 		txtSig = new Label(composite, SWT.READ_ONLY);
-		txtSig.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
-		txtSig.setForeground(SWTResourceManager.getColor(0, 0, 0));
 		txtSig.setText(Messages.ShowSig_grpSignature);
 		txtSig.setBounds(0, 76, 137, 21);
 		
@@ -136,7 +129,6 @@ public class ShowSig extends Shell {
 		btnHexdump.setText(Messages.ShowSig_hexDump);
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
-		txtSignedMes.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtSignedMes.setText(Messages.ShowSig_grpMessage);
 		txtSignedMes.setBounds(0, 344, 137, 21);
 		
