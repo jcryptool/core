@@ -78,6 +78,7 @@ public class SigComposite extends Composite implements PaintListener {
 	private MenuItem mntm3;
 	private MenuItem mntm4;
 	private MenuItem mntm0;
+	private boolean called = false;
 	SigComposite sc = this;
 	private int hash = 0; // Values: 0-4. Hash and signature contain the
 							// selected method; default is 0
@@ -306,6 +307,7 @@ public class SigComposite extends Composite implements PaintListener {
 		// Check if called by JCT-CA
 		if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
 			btnReturn.setVisible(true); // Set button to return visible
+			called = true;
 		}
 
 	}
@@ -664,6 +666,9 @@ public class SigComposite extends Composite implements PaintListener {
 									// lblSignature.setText("");
 		case 2:
 			btnOpenInEditor.setEnabled(false);
+			if (!called) { //If not called by jctca, reset key
+				org.jcryptool.visual.sig.algorithm.Input.privateKey = null;
+			}
 			break;
 		default:
 			break;
