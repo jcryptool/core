@@ -731,4 +731,9 @@ public class SigComposite extends Composite implements PaintListener {
 		return sigstring;
 
 	}
+
+	public String getSigstring() {
+		return sigstring;
+	}
+
 }

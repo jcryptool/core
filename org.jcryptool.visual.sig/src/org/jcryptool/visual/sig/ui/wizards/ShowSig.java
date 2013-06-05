@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.jcryptool.visual.sig.ui.view.SigComposite;
 
 public class ShowSig extends Shell {
 	private Text txtT;
@@ -59,16 +60,22 @@ public class ShowSig extends Shell {
 		txtT_1.setText(Messages.ShowSig_methodTitle);
 		txtT_1.setBounds(0, 49, 137, 21);
 		
+		/**** place holder ****/
+		
+		// get system user
+		String userName = System.getProperty("user.name");
 		text = new Text(composite, SWT.READ_ONLY | SWT.WRAP);
-		text.setText(Messages.ShowSig_owner);
+		text.setText(userName);
 		text.setBounds(143, 0, 287, 21);
 		
+		
 		text_1 = new Text(composite, SWT.READ_ONLY);
-		text_1.setText(Messages.ShowSig_key);
+		text_1.setText("TODO --> signatures[signature]");
 		text_1.setBounds(143, 25, 287, 21);
 		
 		text_2 = new Text(composite, SWT.READ_ONLY);
-		text_2.setText(Messages.ShowSig_method);
+		text_2.setText("TODO --> SigComposite.getSigstring()");
+		//text_2.setText("--> chooseSignature");
 		text_2.setBounds(143, 49, 287, 21);
 		
 		Button btnNewButton = new Button(composite, SWT.NONE);
@@ -90,6 +97,7 @@ public class ShowSig extends Shell {
 		});
 		btnNewButton_1.setBounds(233, 511, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
+		btnNewButton_1.setEnabled(false);
 		
 		txtSig = new Text(composite, SWT.READ_ONLY);
 		txtSig.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));

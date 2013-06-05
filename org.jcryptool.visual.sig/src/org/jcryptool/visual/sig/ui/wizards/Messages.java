@@ -75,9 +75,9 @@ public class Messages {
 	public static String ShowSig_ownerTitle;
 	public static String ShowSig_keyTitle;
 	public static String ShowSig_methodTitle;
-	public static String ShowSig_owner;
-	public static String ShowSig_key;
-	public static String ShowSig_method;
+//	public static String ShowSig_owner;
+//	public static String ShowSig_key;
+//	public static String ShowSig_method;
 	
 	public static String ShowSig_grpSignature;
 	public static String ShowSig_lengthSig;
