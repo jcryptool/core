@@ -13,7 +13,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.jcryptool.visual.sig.ui.view.SigComposite;
 
 public class ShowSig extends Shell {
 	private Text txtT;

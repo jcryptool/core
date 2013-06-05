@@ -188,8 +188,7 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep1 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep1.setText(Messages.SigComposite_tbtmNewItem_0);
 
-		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP
-				| SWT.READ_ONLY);
+		txtDescriptionOfStep1 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		txtDescriptionOfStep1.setBackground(white);
 		txtDescriptionOfStep1.setEditable(false);
 		txtDescriptionOfStep1

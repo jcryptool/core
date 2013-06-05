@@ -14,7 +14,7 @@ import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 
 public class SigGeneration {
 	public String signature;
-	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
+	//private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	private static PrivateKey k = null;
 	
 	/**
@@ -80,6 +80,7 @@ public class SigGeneration {
      * initializes the connection to the keystore.
      * @throws Exception 
      */
+	/*
     private static PrivateKey initKeystoreRSA() throws Exception {
         KeyStoreManager ksm = KeyStoreManager.getInstance();
         PrivateKey k = null;
@@ -131,5 +132,6 @@ public class SigGeneration {
         }
 		return k;
     }
+    */
     //Obsolete!***************************************************************************************************
 }
