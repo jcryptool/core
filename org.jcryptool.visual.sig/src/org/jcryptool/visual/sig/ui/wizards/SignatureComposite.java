@@ -109,7 +109,14 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    
 	    combo = new Combo(this, SWT.READ_ONLY);
 	    combo.setBounds(10, 35, 300, 22);
-	    combo.addSelectionListener(this);
+	    combo.addSelectionListener(new SelectionListener() {
+	    	public void widgetDefaultSelected(SelectionEvent e) {
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				alias = keystoreitems.get(combo.getText());
+			}
+	    });
 	    
 	    Label lblSelectAKey = new Label(this, SWT.NONE);
 	    lblSelectAKey.setBounds(10, 15, 176, 14);
@@ -204,7 +211,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		alias = keystoreitems.get(combo.getText());
+		//alias = keystoreitems.get(combo.getText());
 		if (rdo1.getSelection()) {
 			txtDescription.setText(Messages.SignatureWizard_DSA_description);
 			//Clean up

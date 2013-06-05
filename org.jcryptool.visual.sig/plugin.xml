@@ -4,6 +4,7 @@
 	 <extension
          point="org.eclipse.ui.views">
       <view
+            allowMultiple="true"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sig.ui.view.SigView"
             icon="icons/view.gif"

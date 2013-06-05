@@ -45,17 +45,17 @@ public class ShowSig extends Shell {
 		composite.setBounds(10, 10, 440, 536);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
-		txtT.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		txtT.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT.setText(Messages.ShowSig_ownerTitle);
 		txtT.setBounds(0, 0, 137, 21);
 		
 		txtT_2 = new Label(composite, SWT.READ_ONLY);
-		txtT_2.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		txtT_2.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT_2.setText(Messages.ShowSig_keyTitle);
 		txtT_2.setBounds(0, 25, 137, 21);
 		
 		txtT_1 = new Label(composite, SWT.READ_ONLY);
-		txtT_1.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		txtT_1.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtT_1.setText(Messages.ShowSig_methodTitle);
 		txtT_1.setBounds(0, 49, 137, 21);
 		
@@ -99,7 +99,7 @@ public class ShowSig extends Shell {
 		btnNewButton_1.setEnabled(false);
 		
 		txtSig = new Label(composite, SWT.READ_ONLY);
-		txtSig.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		txtSig.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtSig.setForeground(SWTResourceManager.getColor(0, 0, 0));
 		txtSig.setText(Messages.ShowSig_grpSignature);
 		txtSig.setBounds(0, 76, 137, 21);
@@ -111,7 +111,7 @@ public class ShowSig extends Shell {
 		// TODO 
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
-		grpOption.setBounds(0, 245, 440, 72);
+		grpOption.setBounds(0, 245, 440, 93);
 		grpOption.setLayout(null);
 		
 		Button btnZahl = new Button(grpOption, SWT.RADIO);
@@ -136,13 +136,13 @@ public class ShowSig extends Shell {
 		btnHexdump.setText(Messages.ShowSig_hexDump);
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
-		txtSignedMes.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+		txtSignedMes.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtSignedMes.setText(Messages.ShowSig_grpMessage);
-		txtSignedMes.setBounds(0, 328, 137, 21);
+		txtSignedMes.setBounds(0, 344, 137, 21);
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage);
-		txtLngeMes.setBounds(0, 465, 200, 21);
+		txtLngeMes.setBounds(0, 481, 200, 21);
 		
 		// TODO
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
@@ -166,7 +166,7 @@ public class ShowSig extends Shell {
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setBounds(0, 355, 440, 104);
+		table_1.setBounds(0, 371, 440, 104);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
 		tblclmnAddress.setWidth(100);
