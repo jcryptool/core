@@ -31,7 +31,7 @@ public class ShowSig extends Shell {
 	private TableColumn tblclmnHex;
 	private TableColumn tblclmnAscii;
 	private Table table_1;
-	private TableColumn tableColumn;
+	private TableColumn tblclmnAddress;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
 
@@ -39,7 +39,7 @@ public class ShowSig extends Shell {
 	 * Create the shell.
 	 * @param display
 	 */
-	public ShowSig(Display display) {
+	public ShowSig(Display display, String sig) {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		
 		Composite composite = new Composite(this, SWT.NONE);
@@ -62,19 +62,19 @@ public class ShowSig extends Shell {
 		
 		/**** place holder ****/
 		
-		// get system user
-		String userName = System.getProperty("user.name");
+		// get owner of the key
+		String userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
 		text = new Text(composite, SWT.READ_ONLY | SWT.WRAP);
 		text.setText(userName);
 		text.setBounds(143, 0, 287, 21);
 		
 		
 		text_1 = new Text(composite, SWT.READ_ONLY);
-		text_1.setText("TODO --> signatures[signature]");
+		text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
 		text_1.setBounds(143, 25, 287, 21);
 		
 		text_2 = new Text(composite, SWT.READ_ONLY);
-		text_2.setText("TODO --> SigComposite.getSigstring()");
+		text_2.setText(sig);
 		//text_2.setText("--> chooseSignature");
 		text_2.setBounds(143, 49, 287, 21);
 		
@@ -116,24 +116,24 @@ public class ShowSig extends Shell {
 		grpOption.setLayout(null);
 		
 		Button btnZahl = new Button(grpOption, SWT.RADIO);
-		btnZahl.setBounds(10, 49, 113, 16);
+		btnZahl.setBounds(10, 32, 113, 16);
 		btnZahl.setText(Messages.ShowSig_number);
 		
 		Button btnOkt = new Button(grpOption, SWT.RADIO);
-		btnOkt.setBounds(129, 49, 90, 16);
+		btnOkt.setBounds(129, 32, 90, 16);
 		btnOkt.setText(Messages.ShowSig_octal);
 		
 		Button btnDez = new Button(grpOption, SWT.RADIO);
-		btnDez.setBounds(237, 49, 90, 16);
+		btnDez.setBounds(237, 32, 90, 16);
 		btnDez.setText(Messages.ShowSig_decimal);
 		
 		Button btnHex = new Button(grpOption, SWT.RADIO);
-		btnHex.setBounds(340, 49, 90, 16);
+		btnHex.setBounds(336, 32, 90, 16);
 		btnHex.setText(Messages.ShowSig_hex);
 		
 		Button btnHexdump = new Button(grpOption, SWT.RADIO);
 		btnHexdump.setSelection(true);
-		btnHexdump.setBounds(10, 27, 191, 16);
+		btnHexdump.setBounds(10, 10, 191, 16);
 		btnHexdump.setText(Messages.ShowSig_hexDump);
 		
 		txtSignedMes = new Text(composite, SWT.READ_ONLY);
@@ -154,7 +154,7 @@ public class ShowSig extends Shell {
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
 		tblclmnAdresse.setToolTipText("");
 		tblclmnAdresse.setWidth(100);
-		tblclmnAdresse.setText("adresse");
+		tblclmnAdresse.setText("address");
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
 		tblclmnHex.setWidth(224);
@@ -169,10 +169,10 @@ public class ShowSig extends Shell {
 		table_1.setHeaderVisible(true);
 		table_1.setBounds(0, 355, 440, 104);
 		
-		tableColumn = new TableColumn(table_1, SWT.NONE);
-		tableColumn.setWidth(100);
-		tableColumn.setToolTipText("");
-		tableColumn.setText("adresse");
+		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
+		tblclmnAddress.setWidth(100);
+		tblclmnAddress.setToolTipText("");
+		tblclmnAddress.setText("address");
 		
 		tableColumn_1 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_1.setWidth(224);

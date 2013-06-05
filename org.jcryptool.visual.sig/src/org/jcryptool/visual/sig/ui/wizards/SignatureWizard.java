@@ -47,6 +47,8 @@ public class SignatureWizard extends Wizard{
 		
 		//Get the Alias
 		alias = page.getAlias();
+		//Store the key
+		org.jcryptool.visual.sig.algorithm.Input.privateKey = alias;
 		return true;
 	}
 
