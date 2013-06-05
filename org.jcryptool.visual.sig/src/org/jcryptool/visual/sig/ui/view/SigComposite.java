@@ -274,7 +274,7 @@ public class SigComposite extends Composite implements PaintListener {
 		btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 		
 		lblHash = new Label(canvas1, SWT.NONE | SWT.TRANSPARENT);
-		lblHash.setBounds(0, 230, 52, 14);
+		lblHash.setBounds(0, 235, 52, 14);
 		lblHash.setText(Messages.SigComposite_lblHash);
 
 		Group grpSignedDoc = new Group(grpSignatureGeneration, SWT.NONE);
