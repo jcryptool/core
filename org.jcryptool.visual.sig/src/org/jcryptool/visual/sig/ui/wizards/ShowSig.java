@@ -32,6 +32,7 @@ public class ShowSig extends Shell {
 	private TableColumn tblclmnAddress;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
+	private Label lblNewLabel;
 
 	/**
 	 * Create the shell.
@@ -107,26 +108,26 @@ public class ShowSig extends Shell {
 		grpOption.setBounds(0, 245, 440, 93);
 		grpOption.setLayout(null);
 		
-		Button btnZahl = new Button(grpOption, SWT.RADIO);
-		btnZahl.setBounds(10, 43, 113, 16);
-		btnZahl.setText(Messages.ShowSig_number);
-		
 		Button btnOkt = new Button(grpOption, SWT.RADIO);
-		btnOkt.setBounds(129, 43, 90, 16);
+		btnOkt.setBounds(178, 43, 80, 16);
 		btnOkt.setText(Messages.ShowSig_octal);
 		
 		Button btnDez = new Button(grpOption, SWT.RADIO);
-		btnDez.setBounds(237, 43, 90, 16);
+		btnDez.setBounds(264, 43, 80, 16);
 		btnDez.setText(Messages.ShowSig_decimal);
 		
 		Button btnHex = new Button(grpOption, SWT.RADIO);
-		btnHex.setBounds(336, 43, 90, 16);
+		btnHex.setBounds(350, 43, 80, 16);
 		btnHex.setText(Messages.ShowSig_hex);
 		
 		Button btnHexdump = new Button(grpOption, SWT.RADIO);
 		btnHexdump.setSelection(true);
 		btnHexdump.setBounds(10, 21, 191, 16);
 		btnHexdump.setText(Messages.ShowSig_hexDump);
+		
+		lblNewLabel = new Label(grpOption, SWT.NONE);
+		lblNewLabel.setBounds(10, 44, 162, 15);
+		lblNewLabel.setText(Messages.ShowSig_dispOpt);
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
 		txtSignedMes.setText(Messages.ShowSig_grpMessage);

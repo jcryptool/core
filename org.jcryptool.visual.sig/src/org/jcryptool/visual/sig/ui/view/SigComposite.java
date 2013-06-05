@@ -555,7 +555,6 @@ public class SigComposite extends Composite implements PaintListener {
 						if (!display.readAndDispatch()) {
 							display.sleep();
 						}
-						//btnOpenInEditor.setEnabled(true);
 					}
 
 				} catch (Exception ex) {
