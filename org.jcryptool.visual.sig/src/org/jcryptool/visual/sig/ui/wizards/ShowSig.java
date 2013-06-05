@@ -189,6 +189,7 @@ public class ShowSig extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				lblSigNum.setVisible(false);
+				table.setVisible(true);
 			}
 		});
 		btnHexdump.setSelection(true);
