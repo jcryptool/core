@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.visual.sig.algorithm.Input;
 
 public class ShowSig extends Shell {
 	private Label txtT;
@@ -150,7 +151,7 @@ public class ShowSig extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
 				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.hashHex);
+				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureOct);
 			}
 		});
 		btnOkt.setBounds(178, 43, 80, 16);
@@ -163,7 +164,7 @@ public class ShowSig extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
 				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.hashHex);
+				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureDec);
 			}
 		});
 		btnDez.setBounds(264, 43, 80, 16);
@@ -176,7 +177,7 @@ public class ShowSig extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
 				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.hashHex);
+				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 			}
 		});
 		btnHex.setBounds(350, 43, 80, 16);

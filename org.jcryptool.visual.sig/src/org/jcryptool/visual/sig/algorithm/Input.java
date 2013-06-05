@@ -1,5 +1,7 @@
 package org.jcryptool.visual.sig.algorithm;
 
+import java.math.BigInteger;
+
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 //import org.jcryptool.visual.jctca.listeners.SignatureNotifier;
 
@@ -15,11 +17,14 @@ public class Input {
 	
 	public static byte[] signature; //Contains the signature of the input data
 	public static String signatureHex;
+	public static String signatureDec;
+	public static String signatureOct;
 	
 	public static String chosenHash; 
 	
 	public static KeyStoreAlias privateKey; //Contains the private key used to sign the data
 	public static KeyStoreAlias publicKey; //Contains the public key used to verify the data in the JCTCA plugin
+	
 	
 	//public static SignatureNotifier signNotifier; //contains the notifier of the JCTCA plugin who should be called when something is signed from their plugin
 	
@@ -42,4 +47,50 @@ public class Input {
 	    return new String(hexChars);
 	}
 	
+	  /**
+	   * Returns the octal String representation of a byte array with optional
+	   * prefix. The String is formed by making value[0] the leftmost three digits
+	   * and value[value.length-1] the rightmost three digits.
+	   *
+	   * @param array the byte array
+	   */
+	  public final static String toOctalString(byte[] bytes, String prefix) {
+	    StringBuffer sb = new StringBuffer(bytes.length*(3+prefix.length()) + 8);
+//	    if (prefix == null) {
+//	      for (int i=0; i< bytes.length; i++) {
+//	        appendOctalDigits(sb, bytes[i]);
+//	      }
+//	    } else {
+	      for (int i=0; i< bytes.length; i++) {
+	        sb.append(prefix);
+	        appendOctalDigits(sb, bytes[i]);
+//	      }
+	    }
+	    return sb.toString();
+	  }
+	  /**
+	   * Returns the octal digit String buffer representation of a byte.
+	   * @param byte the byte
+	   */
+	  private final static StringBuffer appendOctalDigits(StringBuffer sb, byte b) {
+	    // b will be promote to integer first, mask with 0x07 is a must.
+	    return sb.append(Character.forDigit(b >>> 6 & 0x07, 8))
+	      .append(Character.forDigit(b >>> 3 & 0x07, 8))
+	      .append(Character.forDigit(b & 0x07, 8));
+	  }
+    
+//	  public final static String toHexString(byte[] array) {
+//		    StringBuffer sb = new StringBuffer(array.length*2 + 8);
+//		    char ch;
+//		    for (int i=0; i< array.length; i++) {
+//		      // byte will be promote to integer first, mask with 0x0f is a must.
+//		      ch = Character.forDigit(array[i] >>> 4 & 0x0f, 16);
+//		      sb.append(ch);
+//		      ch = Character.forDigit(array[i] & 0x0f, 16);
+//		      sb.append(ch);
+//		    }
+//
+//		    return sb.toString();
+//		  }
+ 
 }
