@@ -72,6 +72,7 @@ public class SigGeneration {
 	    org.jcryptool.visual.sig.algorithm.Input.signatureHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(signature); //Hex String
 	    org.jcryptool.visual.sig.algorithm.Input.signatureOct = org.jcryptool.visual.sig.algorithm.Input.toOctalString(signature, "");
 //	    org.jcryptool.visual.sig.algorithm.Input.signatureDec = org.jcryptool.visual.sig.algorithm.Input.toHexString(signature);
+	    org.jcryptool.visual.sig.algorithm.Input.signatureLen = signature.length;
 	    return signature;		
 	}
 	

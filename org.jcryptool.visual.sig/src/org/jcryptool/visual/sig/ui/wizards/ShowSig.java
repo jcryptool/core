@@ -5,6 +5,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.TableItem;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -36,7 +37,8 @@ public class ShowSig extends Shell {
 	private TableColumn tableColumn_2;
 	private Label lblNewLabel;
 	private Text txtSigNum;
-
+	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signatureLen;
+	private String sigStrLen = Integer.toString(sigLen);
 
 	/**
 	 * Create the shell.
@@ -82,8 +84,8 @@ public class ShowSig extends Shell {
 		txtSig.setBounds(0, 76, 137, 21);
 		
 		txtLnge = new Label(composite, SWT.READ_ONLY);
-		txtLnge.setText(Messages.ShowSig_lengthSig);
-		txtLnge.setBounds(0, 213, 200, 21);
+		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + "Bit");
+		txtLnge.setBounds(0, 213, 430, 21);
 		
 		// TODO 
 		Group grpOption = new Group(composite, SWT.NONE);
@@ -101,15 +103,16 @@ public class ShowSig extends Shell {
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage);
-		txtLngeMes.setBounds(0, 481, 200, 21);
+		txtLngeMes.setBounds(0, 481, 430, 21);
 		
-		
+		// TABLE SIGNATURE
 
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
 		table.setBounds(0, 103, 440, 104);
 		
+		// Spalte Adresse 
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
 		tblclmnAdresse.setWidth(100);
 		tblclmnAdresse.setToolTipText("");
@@ -122,7 +125,28 @@ public class ShowSig extends Shell {
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setWidth(112);
 		tblclmnAscii.setText("ascii");
+		
+//		TableItem item1 = new TableItem(table, SWT.NONE);
+//	    item1.setText(new String[] { "Tim", "Hatton", "Kentucky" });
+		
+		// Zeilen
+//		for (int i = 0; i < 7; i++) {
+//		      TableItem item = new TableItem(table, SWT.NONE);
+//		      //Spalten
+//		      for (int j = 0; j < 3; j++) {
+//		        item.setText(j, "0000");
+//		        
+//		      }
+//		    }
 
+	    for (int i1 = 0; i1 < sigLen; i1++) {
+	        TableItem item = new TableItem(table, SWT.NONE);
+	        item.setText(0, getAdress(i1, 14));
+	        item.setText(1, "HEX");
+	        item.setText(2, "ASCII");
+
+	      }
+		
 		txtSigNum = new Text(composite, SWT.BORDER | SWT.WRAP);
 		txtSigNum.setEditable(false);
 		txtSigNum.setBounds(0, 103, 440, 104);
@@ -130,7 +154,7 @@ public class ShowSig extends Shell {
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setBounds(0, 371, 440, 104);
+		table_1.setBounds(39, 371, 440, 104);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
 		tblclmnAddress.setWidth(100);
@@ -144,6 +168,14 @@ public class ShowSig extends Shell {
 		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_2.setWidth(112);
 		tableColumn_2.setText("ascii");
+		
+	    for (int i2 = 0; i2 < sigLen; i2++) {
+	        TableItem item = new TableItem(table, SWT.NONE);
+	        item.setText(0, getAdress(i2, 14));
+	        item.setText(1, "HEX");
+	        item.setText(2, "ASCII");
+
+	      }
 		
 		// Radiobuttons
 		
@@ -242,4 +274,12 @@ public class ShowSig extends Shell {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
+	
+	
+
+	
+	protected String getAdress(int i, int stepSize){
+		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
+		}
+	
 }

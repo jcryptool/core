@@ -19,6 +19,7 @@ public class Input {
 	public static String signatureHex;
 	public static String signatureDec;
 	public static String signatureOct;
+	public static int signatureLen;
 	
 	public static String chosenHash; 
 	
