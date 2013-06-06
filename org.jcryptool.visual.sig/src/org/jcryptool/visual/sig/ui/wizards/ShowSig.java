@@ -40,6 +40,9 @@ public class ShowSig extends Shell {
 	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signatureLen;
 	private String sigStrLen = Integer.toString(sigLen);
 
+	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
+	private String mesStrLen = Integer.toString(mesLen);
+	
 	/**
 	 * Create the shell.
 	 * @param display
@@ -62,8 +65,6 @@ public class ShowSig extends Shell {
 		txtT_1.setText(Messages.ShowSig_methodTitle);
 		txtT_1.setBounds(0, 49, 137, 21);
 		
-		/**** place holder ****/
-		
 		// get owner of the key
 		String userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
 		text = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
@@ -84,10 +85,9 @@ public class ShowSig extends Shell {
 		txtSig.setBounds(0, 76, 137, 21);
 		
 		txtLnge = new Label(composite, SWT.READ_ONLY);
-		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + "Bit");
+		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + " Bits");
 		txtLnge.setBounds(0, 213, 430, 21);
 		
-		// TODO 
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
 		grpOption.setBounds(0, 245, 440, 93);
@@ -102,9 +102,10 @@ public class ShowSig extends Shell {
 		txtSignedMes.setBounds(0, 344, 137, 21);
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
-		txtLngeMes.setText(Messages.ShowSig_lengthMessage);
+		txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
 		txtLngeMes.setBounds(0, 481, 430, 21);
 		
+/***************************Table Signature******************************************/		
 		// TABLE SIGNATURE
 
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
@@ -126,35 +127,24 @@ public class ShowSig extends Shell {
 		tblclmnAscii.setWidth(112);
 		tblclmnAscii.setText("ascii");
 		
-//		TableItem item1 = new TableItem(table, SWT.NONE);
-//	    item1.setText(new String[] { "Tim", "Hatton", "Kentucky" });
-		
-		// Zeilen
-//		for (int i = 0; i < 7; i++) {
-//		      TableItem item = new TableItem(table, SWT.NONE);
-//		      //Spalten
-//		      for (int j = 0; j < 3; j++) {
-//		        item.setText(j, "0000");
-//		        
-//		      }
-//		    }
-
+		// Spalten füllen
 	    for (int i1 = 0; i1 < sigLen; i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        item.setText(0, getAdress(i1, 14));
-	        item.setText(1, "HEX");
+	        item.setText(1, " ");
 	        item.setText(2, "ASCII");
 
 	      }
-		
+/*******************************Textbox Radiobutton**************************************/			
 		txtSigNum = new Text(composite, SWT.BORDER | SWT.WRAP);
 		txtSigNum.setEditable(false);
 		txtSigNum.setBounds(0, 103, 440, 104);
-		
+
+/******************************Table Message***************************************/	
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setBounds(39, 371, 440, 104);
+		table_1.setBounds(0, 371, 440, 104);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
 		tblclmnAddress.setWidth(100);
@@ -172,13 +162,12 @@ public class ShowSig extends Shell {
 	    for (int i2 = 0; i2 < sigLen; i2++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        item.setText(0, getAdress(i2, 14));
-	        item.setText(1, "HEX");
+	        item.setText(1, "");
 	        item.setText(2, "ASCII");
 
 	      }
-		
-		// Radiobuttons
-		
+	    
+/*******************************Buttons**************************************/			
 		// OKT
 		Button btnOkt = new Button(grpOption, SWT.RADIO);
 		btnOkt.addSelectionListener(new SelectionAdapter() {
@@ -253,12 +242,8 @@ public class ShowSig extends Shell {
 		btnNewButton_1.setBounds(233, 511, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		btnNewButton_1.setEnabled(false);
-		
 
-		
-		createContents();
-		
-		
+		createContents();	
 	}
 
 	/**
@@ -274,12 +259,10 @@ public class ShowSig extends Shell {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-	
-	
 
-	
 	protected String getAdress(int i, int stepSize){
 		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
 		}
+	
 	
 }
