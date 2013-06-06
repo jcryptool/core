@@ -124,19 +124,19 @@ public class ShowSig extends Shell {
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
 		tblclmnHex.setResizable(false);
-		tblclmnHex.setWidth(251);
+		tblclmnHex.setWidth(274);
 		tblclmnHex.setText("hex");
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(126);
+		tblclmnAscii.setWidth(99);
 		tblclmnAscii.setText("ascii");
 
 		// Spalten füllen
 		int stepSize = 14;
-		//int StringLen = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
-		
-	    for (int i1 = 0; i1 < (sigLen/stepSize); i1++) {
+		int len = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
+
+	    for (int i1 = 0; i1 < (len/(stepSize*2)) ; i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        
 	        //Spalte 1
@@ -146,7 +146,7 @@ public class ShowSig extends Shell {
 	        int start = i1 * stepSize;
 	        int end = i1 * stepSize + stepSize;
 	      
-	        end = end >= sigLen ? sigLen : end;
+	        end = end >= len ? len : end;
 	    
 	        StringBuffer buffer = new StringBuffer();
 	        for (int m = 0; m < stepSize ; m++){
