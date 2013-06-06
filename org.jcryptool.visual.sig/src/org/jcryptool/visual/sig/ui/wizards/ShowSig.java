@@ -120,17 +120,17 @@ public class ShowSig extends Shell {
 		tblclmnAdresse.setResizable(false);
 		tblclmnAdresse.setWidth(60);
 		tblclmnAdresse.setToolTipText("");
-		tblclmnAdresse.setText("address");
+		tblclmnAdresse.setText(Messages.ShowSig_tblAdr);
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
 		tblclmnHex.setResizable(false);
-		tblclmnHex.setWidth(265);
-		tblclmnHex.setText("hex");
+		tblclmnHex.setWidth(250);
+		tblclmnHex.setText(Messages.ShowSig_tblHex);
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(111);
-		tblclmnAscii.setText("ascii");
+		tblclmnAscii.setWidth(126);
+		tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
 		// Spalten füllen
 		int stepSize = 14;
@@ -154,8 +154,7 @@ public class ShowSig extends Shell {
 	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m+1)+start));
 	         buffer.append(" ");
 	        }
-	        String str = buffer.toString();
-	        item.setText(1, str);
+	        item.setText(1, buffer.toString());
 
 	        // Spalte 3
 	        item.setText(2, convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex));
@@ -176,23 +175,23 @@ public class ShowSig extends Shell {
 		tblclmnAddress.setResizable(false);
 		tblclmnAddress.setWidth(60);
 		tblclmnAddress.setToolTipText("");
-		tblclmnAddress.setText("address");
+		tblclmnAddress.setText(Messages.ShowSig_tblAdr);
 		
 		tableColumn_1 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_1.setResizable(false);
-		tableColumn_1.setWidth(235);
-		tableColumn_1.setText("hex");
+		tableColumn_1.setWidth(250);
+		tableColumn_1.setText(Messages.ShowSig_tblHex);
 		
 		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_2.setResizable(false);
-		tableColumn_2.setWidth(140);
-		tableColumn_2.setText("ascii");
+		tableColumn_2.setWidth(126);
+		tableColumn_2.setText(Messages.ShowSig_tblAscii);
 		
 	    for (int i2 = 0; i2 < sigLen; i2++) {
 	        TableItem item = new TableItem(table_1, SWT.NONE);
 	        item.setText(0, getAdress(i2, 14));
-	        item.setText(1, "");
-	        item.setText(2, "ASCII");
+	        item.setText(1, "unfinished");
+	        item.setText(2, "unfinished");
 
 	      }
 	    
