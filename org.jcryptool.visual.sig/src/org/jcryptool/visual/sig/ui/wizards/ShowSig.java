@@ -37,7 +37,7 @@ public class ShowSig extends Shell {
 	private TableColumn tableColumn_2;
 	private Label lblNewLabel;
 	private Text txtSigNum;
-	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signatureLen;
+	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
 	private String sigStrLen = Integer.toString(sigLen);
 
 	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
@@ -115,16 +115,19 @@ public class ShowSig extends Shell {
 		
 		// Spalte Adresse 
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
-		tblclmnAdresse.setWidth(100);
+		tblclmnAdresse.setResizable(false);
+		tblclmnAdresse.setWidth(60);
 		tblclmnAdresse.setToolTipText("");
 		tblclmnAdresse.setText("address");
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
-		tblclmnHex.setWidth(224);
+		tblclmnHex.setResizable(false);
+		tblclmnHex.setWidth(235);
 		tblclmnHex.setText("hex");
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
-		tblclmnAscii.setWidth(112);
+		tblclmnAscii.setResizable(false);
+		tblclmnAscii.setWidth(140);
 		tblclmnAscii.setText("ascii");
 		
 		// Spalten füllen
@@ -147,20 +150,23 @@ public class ShowSig extends Shell {
 		table_1.setBounds(0, 371, 440, 104);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
-		tblclmnAddress.setWidth(100);
+		tblclmnAddress.setResizable(false);
+		tblclmnAddress.setWidth(60);
 		tblclmnAddress.setToolTipText("");
 		tblclmnAddress.setText("address");
 		
 		tableColumn_1 = new TableColumn(table_1, SWT.NONE);
-		tableColumn_1.setWidth(224);
+		tableColumn_1.setResizable(false);
+		tableColumn_1.setWidth(235);
 		tableColumn_1.setText("hex");
 		
 		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
-		tableColumn_2.setWidth(112);
+		tableColumn_2.setResizable(false);
+		tableColumn_2.setWidth(140);
 		tableColumn_2.setText("ascii");
 		
 	    for (int i2 = 0; i2 < sigLen; i2++) {
-	        TableItem item = new TableItem(table, SWT.NONE);
+	        TableItem item = new TableItem(table_1, SWT.NONE);
 	        item.setText(0, getAdress(i2, 14));
 	        item.setText(1, "");
 	        item.setText(2, "ASCII");
