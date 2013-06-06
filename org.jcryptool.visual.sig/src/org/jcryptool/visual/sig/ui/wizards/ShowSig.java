@@ -270,5 +270,16 @@ public class ShowSig extends Shell {
 		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
 		}
 	
-	
+	// hex dump
+	/*
+		int stepSize = 14
+		for(int i = 0; i < signature.length / stepSize; i++){
+		int start = i * stepSize;
+		int end = i * stepSize + stepSize;
+		end = end >= signature.length ? singature.length : end;
+		 
+		for (int m = start; m < end ; m++){
+		}
+	}
+	 * */
 }
