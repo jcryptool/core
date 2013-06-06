@@ -70,10 +70,20 @@ public class SignCert implements Views {
 		btn_non_detail.setText(Messages.SignCert_sign_directly);
 		btn_non_detail.setData("detail"); //$NON-NLS-1$
 		
-		Label lbl_detail = new Label(cmp_mini, SWT.WRAP);
+		Composite cmp_minimi = new Composite(cmp_mini, SWT.NONE);
+		cmp_minimi.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 2,1));
+		cmp_minimi.setLayout(new GridLayout(2, false));
+		
+		Label filler = new Label(cmp_minimi, SWT.None);
+		filler.setText("");
+		GridData gd = new GridData();
+		gd.widthHint=7;
+		filler.setLayoutData(gd);
+		
+		Label lbl_detail = new Label(cmp_minimi, SWT.WRAP);
 		lbl_detail.setText(Messages.SignCert_footnote_input_in_signvis);
 		lbl_detail.setForeground(dark_gray);
-		lbl_detail.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 2,1));
+		lbl_detail.setLayoutData(new GridData(SWT.NONE, SWT.NONE, false, false, 1,1));
 		
 		Button btn_radio_signFile = new Button(selectSthComp, SWT.RADIO);
 		btn_radio_signFile.setText(Messages.SignCert_file);
@@ -84,6 +94,7 @@ public class SignCert implements Views {
 		btn_select_file.setText(Messages.SignCert_btn_chose_file);
 		btn_select_file.setData("select");//$NON-NLS-1$
 		btn_select_file.setEnabled(false);
+
 		
 		selected_file = new Label(selectSthComp, SWT.NONE); //selectSthGroup
 		selected_file.setText(""); //$NON-NLS-1$
@@ -138,7 +149,7 @@ public class SignCert implements Views {
 			if (ksAlias.getOperation().contains("RSA")) { //$NON-NLS-1$
 				listEntry += "RSA"; //$NON-NLS-1$
 			}
-			listEntry+=" (Hash:" + ksAlias.getHashValue() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+			listEntry+=", Hash: " + Util.formatHash(ksAlias.getHashValue()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 			cmb_priv_key.setData(listEntry, ksAlias);
 			cmb_priv_key.add(listEntry);
 		}

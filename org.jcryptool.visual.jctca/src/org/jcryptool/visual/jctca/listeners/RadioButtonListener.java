@@ -80,10 +80,6 @@ Label selected_file;
 				btn3.setEnabled(enabled);
 			}
 		}
-		
-
-		
-		
 	}
 
 	@Override

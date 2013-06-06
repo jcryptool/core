@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
@@ -130,7 +131,13 @@ public class JCTCA_Visual extends ViewPart {
 		comp_image.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true,
 				1, 1));
 		// set path_to_create_img and load image at that path into help
-		String path_to_create_img = "icons/minica_create.png"; //$NON-NLS-1$
+		String path_to_create_img = Platform.getNL().substring(0,2);
+		if(Platform.getNL().substring(0,2).equals("de")){
+			path_to_create_img = "icons/de/minica_create.png"; //$NON-NLS-1$
+		}
+		else{
+			path_to_create_img = "icons/en/minica_create.png"; //$NON-NLS-1$
+		}
 		Image help = Activator.getImageDescriptor(path_to_create_img)
 				.createImage();
 		lbl_img = new Label(comp_image, SWT.WRAP | SWT.RESIZE);

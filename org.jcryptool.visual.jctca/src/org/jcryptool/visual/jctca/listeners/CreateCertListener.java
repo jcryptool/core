@@ -42,6 +42,7 @@ public class CreateCertListener implements SelectionListener {
 			txt_country, txt_mail;
 	Combo cmb_keys;
 	String path;
+	Button btn_radio_gen_key;
 
 	/**
 	 * Constructor with all the widgets it needs to have accessible
@@ -55,7 +56,7 @@ public class CreateCertListener implements SelectionListener {
 	 * @param keys
 	 */
 	public CreateCertListener(Text first_name, Text last_name, Text street,
-			Text zip, Text town, Text country, Text mail, Combo keys) {
+			Text zip, Text town, Text country, Text mail, Combo keys, Button btn_radio_gen_key) {
 		this.txt_first_name = first_name;
 		this.txt_last_name = last_name;
 		this.txt_street = street;
@@ -64,6 +65,7 @@ public class CreateCertListener implements SelectionListener {
 		this.txt_country = country;
 		this.txt_mail = mail;
 		this.cmb_keys = keys;
+		this.btn_radio_gen_key = btn_radio_gen_key;
 	}
 
 	@Override
@@ -101,7 +103,9 @@ public class CreateCertListener implements SelectionListener {
 			break;
 		case 2:
 			if (checkFields()) {
-				generateNewRSAKeyPair();
+				if(btn_radio_gen_key.getSelection()){
+					generateNewRSAKeyPair();
+				}
 				sendCSR();
 			} else {
 				Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
@@ -174,7 +178,7 @@ public class CreateCertListener implements SelectionListener {
 					privAlias, pubAlias);
 			System.out.println(pubAlias.getContactName());
 			String entry = pubAlias.getContactName()
-					+ " (Hash: " + pubAlias.getHashValue() + ")";//$NON-NLS-1$ //$NON-NLS-2$
+					+ " (Hash: " + Util.formatHash(pubAlias.getHashValue()) + ")";//$NON-NLS-1$ //$NON-NLS-2$
 			cmb_keys.add(entry);
 			cmb_keys.getParent().layout();
 			cmb_keys.select(cmb_keys.getItemCount() - 1);

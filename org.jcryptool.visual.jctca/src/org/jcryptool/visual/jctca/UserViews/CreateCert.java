@@ -164,7 +164,7 @@ public class CreateCert implements Views {
 
 		CreateCertListener lst = new CreateCertListener(txt_firstname,
 				txt_lastname, txt_street, txt_ZIP, txt_city, txt_country,
-				txt_mail, cmb_genKey);
+				txt_mail, cmb_genKey, btn_radio_generatePubKey);
 //		btn_genKey.addSelectionListener(lst);
 		btn_proof.addSelectionListener(lst);
 		btn_send = new Button(composite, SWT.NONE);
@@ -197,7 +197,7 @@ public class CreateCert implements Views {
 	private void addRSAAndDSAKeysToDropdown() {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		for (KeyStoreAlias s : Util.getAllRSAPublicKeys(ksm)) {
-			String entry = s.getContactName() + " (" + s.getKeyLength() + "bit RSA, Hash: " + s.getHashValue() + ") ";//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			String entry = s.getContactName() + " (" + s.getKeyLength() + "bit RSA, Hash: " + Util.formatHash(s.getHashValue()) + ") ";//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			cmb_genKey.add(entry);
 			cmb_genKey.setData(entry,s);
 		}

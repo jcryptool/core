@@ -284,5 +284,24 @@ public class Util {
 	    }
 	    return new String(hexChars);
 	}
+	
+	public static String formatHash(String hash){
+		char[] help = hash.toCharArray();
+		String formatted = "";
+		int i=0;
+		for(char c : help){
+			if(c!=' '){
+				formatted +=c;
+				i++;
+				if(i%2==0){
+					formatted+="-";
+				}
+			}
+		}
+		if(formatted.charAt(formatted.length()-1)=='-'){
+			formatted = formatted.substring(0, formatted.length()-1);
+		}
+		return formatted;
+	}
 
 }
