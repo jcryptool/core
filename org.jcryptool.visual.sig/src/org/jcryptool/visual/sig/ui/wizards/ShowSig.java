@@ -39,6 +39,8 @@ public class ShowSig extends Shell {
 	private Text txtSigNum;
 	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
 	private String sigStrLen = Integer.toString(sigLen);
+	
+	
 
 	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
 	private String mesStrLen = Integer.toString(mesLen);
@@ -122,19 +124,39 @@ public class ShowSig extends Shell {
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
 		tblclmnHex.setResizable(false);
-		tblclmnHex.setWidth(235);
+		tblclmnHex.setWidth(251);
 		tblclmnHex.setText("hex");
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(140);
+		tblclmnAscii.setWidth(126);
 		tblclmnAscii.setText("ascii");
-		
+
 		// Spalten füllen
-	    for (int i1 = 0; i1 < sigLen; i1++) {
+		int stepSize = 14;
+		//int StringLen = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
+		
+	    for (int i1 = 0; i1 < (sigLen/stepSize); i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
-	        item.setText(0, getAdress(i1, 14));
-	        item.setText(1, " ");
+	        
+	        //Spalte 1
+	        item.setText(0, getAdress(i1, stepSize));
+	        
+	        // Spalte 2
+	        int start = i1 * stepSize;
+	        int end = i1 * stepSize + stepSize;
+	      
+	        end = end >= sigLen ? sigLen : end;
+	    
+	        StringBuffer buffer = new StringBuffer();
+	        for (int m = 0; m < stepSize ; m++){
+	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m)+start));
+	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m+1)+start));
+	         buffer.append(" ");
+	        }
+	        item.setText(1, buffer.toString());
+
+	        // Spalte 3
 	        item.setText(2, "ASCII");
 
 	      }
@@ -271,15 +293,17 @@ public class ShowSig extends Shell {
 		}
 	
 	// hex dump
-	/*
-		int stepSize = 14
-		for(int i = 0; i < signature.length / stepSize; i++){
-		int start = i * stepSize;
-		int end = i * stepSize + stepSize;
-		end = end >= signature.length ? singature.length : end;
-		 
-		for (int m = start; m < end ; m++){
-		}
-	}
-	 * */
+//	protected String getHex(){
+//		int stepSize = 14;
+//		
+//		for(int i = 0; i < sigLen / stepSize; i++){
+//			int start = i * stepSize;
+//			int end = i * stepSize + stepSize;
+//			end = end >= sigLen ? sigLen : end;
+//			 
+//			for (int m = start; m < end ; m++){
+//			}
+//		}
+//		return null;
+//	}
 }
