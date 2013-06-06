@@ -35,4 +35,11 @@
             contextHelpId="org.jcryptool.visual.sig.sigview">
       </Visual>
    </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
 </plugin>
