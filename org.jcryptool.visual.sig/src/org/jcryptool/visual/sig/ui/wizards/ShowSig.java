@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.sig.algorithm.Input;
+import org.eclipse.swt.widgets.Text;
 
 public class ShowSig extends Shell {
 	private Label txtT;
@@ -34,7 +35,8 @@ public class ShowSig extends Shell {
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
 	private Label lblNewLabel;
-	private Label lblSigNum;
+	private Text txtSigNum;
+
 
 	/**
 	 * Create the shell.
@@ -120,9 +122,10 @@ public class ShowSig extends Shell {
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setWidth(112);
 		tblclmnAscii.setText("ascii");
-		
-		lblSigNum = new Label(composite, SWT.NONE);
-		lblSigNum.setBounds(0, 103, 440, 104);
+
+		txtSigNum = new Text(composite, SWT.BORDER | SWT.WRAP);
+		txtSigNum.setEditable(false);
+		txtSigNum.setBounds(0, 103, 440, 104);
 		
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
@@ -150,8 +153,8 @@ public class ShowSig extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
-				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureOct);
+				txtSigNum.setVisible(true);
+				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureOct);
 			}
 		});
 		btnOkt.setBounds(178, 43, 80, 16);
@@ -163,8 +166,8 @@ public class ShowSig extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
-				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureDec);
+				txtSigNum.setVisible(true);
+				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureDec);
 			}
 		});
 		btnDez.setBounds(264, 43, 80, 16);
@@ -176,8 +179,8 @@ public class ShowSig extends Shell {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
-				lblSigNum.setVisible(true);
-				lblSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+				txtSigNum.setVisible(true);
+				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 			}
 		});
 		btnHex.setBounds(350, 43, 80, 16);
@@ -189,7 +192,7 @@ public class ShowSig extends Shell {
 		btnHexdump.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				lblSigNum.setVisible(false);
+				txtSigNum.setVisible(false);
 				table.setVisible(true);
 			}
 		});
@@ -218,6 +221,8 @@ public class ShowSig extends Shell {
 		btnNewButton_1.setBounds(233, 511, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		btnNewButton_1.setEnabled(false);
+		
+
 		
 		createContents();
 		
