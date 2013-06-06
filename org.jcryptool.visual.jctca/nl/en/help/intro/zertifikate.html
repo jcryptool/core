@@ -6,10 +6,10 @@
     </head>
     <body>
         <!--Headline 1 should be the main title of the displayed page -->
-        <h1>Digitale Signaturen und Zertifikate</h1>
+        <h1>Digital signatures and certificates</h1>
         <!--first, we give a general introduction about this section of the onlinehelp-->
         <p>
-        You read about the core principles like data integrity, authentication and non-repudiation in <a href="./schutzziele.html">Introduction to the problems</a>. This section deals about how these can be accomplished in the digital world.
+        You read about the core principles like data integrity, authentication and non-repudiation in <a href="./schutzziele.html">Introduction to the problems</a>. This section deals with how these principles can be accomplished in the digital world.
         </p>
         <!-- all other headlines and paragraphs come after here -->
         <h2>Digital signatures</h2>
@@ -24,11 +24,11 @@
         In asymmetric cryptography, one uses a so-called key pair. The public key is used for encryption only. Once something has been encrypted with a public key, it cannot be decrypted without knowledge of the corresponding private key. You can learn more about asymmetric encryption in the "RSA Cryptosystem" and "Extended RSA Cryptosystem" plugins.
         </p>
         <p>
-        For digital signatures, the opposite effect of assymetric encryption is used. If Bob wants to prove, that a given file was sent by him, he can encrypt the file using his private key. The ciphertext created is the signature for the file. A receiver can decrypt the signature with the public key. If the decrypted signature and the received file are identical, it is obviously the file sent by Bob. Only he had the means, i.e. the private key, to create the signature.
+        For digital signatures, the opposite effect of asymmetric encryption is used. If Bob wants to prove, that a given file was sent by him, he can encrypt the file using his private key. The ciphertext created is the signature for the file. A receiver can decrypt the signature with the public key. If the decrypted signature and the received file are identical, it is obviously the file sent by Bob. Only he had the means, i.e. the private key, to create the signature.
         </p>
         <h4>Cryptographic hash function</h4>
         <p>
-        Asymmetric encryption involves slow and complex mathematical operations, thus it's not pratical to sign entire files. For that reason, cryptographic hash functions are used. In general, a hash function is a function that reduces a bit string of variable length to a bit string of fixed length. A cryptographic hash function has some additional qualities, which you can find in the <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">wikipedia article on cryptographic hash functions</a>. Also, you can use the JCrypTool to create MD5, SHA and SHA3 hashes for text files. If an email or file needs to be signed, a cryptographic hash is created first. This hash is then encrypted using the private key as described above. To check the signature, a receiver creates the hash using the same hash function, decrypts the signature and checks if the two hashes are equal. You can learn about the signature process in more detail in the "Signature Generation Visualization" plug-in.
+        Asymmetric encryption involves slow and complex mathematical operations, thus it's not practical to sign entire files. For that reason, cryptographic hash functions are used. In general, a hash function is a function that reduces a bit string of variable length to a bit string of fixed length. A cryptographic hash function has some additional qualities, which you can find in the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic hash functions</a>. Also, you can use JCrypTool to create MD5, SHA and SHA3 hashes for text files. If an email or file needs to be signed, a cryptographic hash is created first. This hash is then encrypted using the private key as described above. To check the signature, a receiver creates the hash using the same hash function, decrypts the signature and checks if the two hashes are equal. You can learn about the signature process in more detail in the "Signature Generation Visualization" plug-in.
         </p>
         <h2>Public key authentication</h2>
         <p>
@@ -39,7 +39,7 @@
         </p>
         <h2>Non-repudiation: Legal basics about digital certificates</h2>
         <p>
-        The EU directive 1999/93/EG defines the term "qualified certificate" as "a certificate which meets the requirements laid down in Annex I and is provided by a certification-service-provider who fulfils the requirements laid down in Annex II". Only signatures created by private keys of these kinds of certificates are legally equal to handwritten signatures. You can read more about this in the <a href="https://en.wikipedia.org/wiki/Public_key_certificate#Usage_in_the_European_Union">wikipedia article on public key certificates</a>.
+        The EU directive 1999/93/EG defines the term "qualified certificate" as "a certificate which meets the requirements laid down in Annex I and is provided by a certification-service-provider who fulfils the requirements laid down in Annex II". Only signatures created by private keys of these kinds of certificates are legally equal to handwritten signatures. You can read more about this in the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Public_key_certificate#Usage_in_the_European_Union">public key certificates</a>.
         </p>
 
         <!-- all footnotes go into the following sections. uncomment if needed -->
