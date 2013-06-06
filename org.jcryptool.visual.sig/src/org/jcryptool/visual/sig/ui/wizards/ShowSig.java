@@ -217,7 +217,7 @@ public class ShowSig extends Shell {
 			public void widgetSelected(SelectionEvent e) {
 				table.setVisible(false);
 				txtSigNum.setVisible(true);
-				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureDec);
+				txtSigNum.setText(hexToDecimal(org.jcryptool.visual.sig.algorithm.Input.signatureHex));
 			}
 		});
 		btnDez.setBounds(264, 43, 80, 16);
@@ -294,11 +294,8 @@ public class ShowSig extends Shell {
 		}
 	
 	public String convertHexToString(String hex){
-		 
 		  StringBuilder sb = new StringBuilder();
-		 // StringBuilder temp = new StringBuilder();
 	 
-		  //49204c6f7665204a617661 split into two characters 49, 20, 4c...
 		  for( int i=0; i<hex.length()-1; i+=2 ){
 	 
 		      //grab the hex in pairs
@@ -307,11 +304,20 @@ public class ShowSig extends Shell {
 		      int decimal = Integer.parseInt(output, 16);
 		      //convert the decimal to character
 		      sb.append((char)decimal);
-	 
-		      //temp.append(decimal);
 		  }
-		  //temp.toString();
-	 
 		  return sb.toString();
 	  }
+	
+	public String hexToDecimal(String hex) {
+		 StringBuilder sb = new StringBuilder();
+		
+		 for( int i=0; i<hex.length()-1; i+=2 ){
+		      //grab the hex in pairs
+		      String output = hex.substring(i, (i + 2));
+		      //convert hex to decimal
+		      int decimal = Integer.parseInt(output, 16);
+		      sb.append(decimal);
+		  }
+		  return sb.toString();
+	}
 }
