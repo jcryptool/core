@@ -124,12 +124,12 @@ public class ShowSig extends Shell {
 		
 		tblclmnHex = new TableColumn(table, SWT.NONE);
 		tblclmnHex.setResizable(false);
-		tblclmnHex.setWidth(274);
+		tblclmnHex.setWidth(265);
 		tblclmnHex.setText("hex");
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(99);
+		tblclmnAscii.setWidth(111);
 		tblclmnAscii.setText("ascii");
 
 		// Spalten füllen
@@ -154,10 +154,11 @@ public class ShowSig extends Shell {
 	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m+1)+start));
 	         buffer.append(" ");
 	        }
-	        item.setText(1, buffer.toString());
+	        String str = buffer.toString();
+	        item.setText(1, str);
 
 	        // Spalte 3
-	        item.setText(2, "ASCII");
+	        item.setText(2, convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex));
 
 	      }
 /*******************************Textbox Radiobutton**************************************/			
@@ -292,18 +293,25 @@ public class ShowSig extends Shell {
 		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
 		}
 	
-	// hex dump
-//	protected String getHex(){
-//		int stepSize = 14;
-//		
-//		for(int i = 0; i < sigLen / stepSize; i++){
-//			int start = i * stepSize;
-//			int end = i * stepSize + stepSize;
-//			end = end >= sigLen ? sigLen : end;
-//			 
-//			for (int m = start; m < end ; m++){
-//			}
-//		}
-//		return null;
-//	}
+	public String convertHexToString(String hex){
+		 
+		  StringBuilder sb = new StringBuilder();
+		 // StringBuilder temp = new StringBuilder();
+	 
+		  //49204c6f7665204a617661 split into two characters 49, 20, 4c...
+		  for( int i=0; i<hex.length()-1; i+=2 ){
+	 
+		      //grab the hex in pairs
+		      String output = hex.substring(i, (i + 2));
+		      //convert hex to decimal
+		      int decimal = Integer.parseInt(output, 16);
+		      //convert the decimal to character
+		      sb.append((char)decimal);
+	 
+		      //temp.append(decimal);
+		  }
+		  //temp.toString();
+	 
+		  return sb.toString();
+	  }
 }
