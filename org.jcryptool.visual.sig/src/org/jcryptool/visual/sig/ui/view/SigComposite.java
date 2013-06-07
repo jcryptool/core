@@ -205,9 +205,8 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep2 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep2.setText(Messages.SigComposite_tbtmNewItem_1);
 
-		txtDescriptionOfStep2 = new Text(tabDescription, SWT.NONE | SWT.WRAP
-				| SWT.TRANSPARENT);
-		// txtDescriptionOfStep2.setBackground(white);
+		txtDescriptionOfStep2 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		txtDescriptionOfStep2.setBackground(white);
 		txtDescriptionOfStep2.setEditable(false);
 		txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2);
 		tbtmStep2.setControl(txtDescriptionOfStep2);
@@ -221,8 +220,8 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep3 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep3.setText(Messages.SigComposite_tbtmNewItem_2);
 
-		txtDescriptionOfStep3 = new Text(tabDescription, SWT.NONE | SWT.WRAP | SWT.TRANSPARENT);
-		// txtDescriptionOfStep3.setBackground(white);
+		txtDescriptionOfStep3 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		txtDescriptionOfStep3.setBackground(white);
 		txtDescriptionOfStep3.setEditable(false);
 		txtDescriptionOfStep3.setText(Messages.SigComposite_txtDescriptionOfStep3);
 		tbtmStep3.setControl(txtDescriptionOfStep3);
@@ -236,8 +235,8 @@ public class SigComposite extends Composite implements PaintListener {
 		TabItem tbtmStep4 = new TabItem(tabDescription, SWT.NONE);
 		tbtmStep4.setText(Messages.SigComposite_tbtmNewItem_3);
 
-		txtDescriptionOfStep4 = new Text(tabDescription, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
-		// txtDescriptionOfStep4.setBackground(white);
+		txtDescriptionOfStep4 = new Text(tabDescription, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+		txtDescriptionOfStep4.setBackground(white);
 		txtDescriptionOfStep4.setEditable(false);
 		txtDescriptionOfStep4
 				.setText(Messages.SigComposite_txtDescriptionOfStep4);
@@ -519,7 +518,7 @@ public class SigComposite extends Composite implements PaintListener {
 								Messages.SigComposite_lblProgress, 4));
 						// txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 						// WTF!!!!!!!!1!1!
-						txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4 + Messages.SigComposite_txtDescriptionOfStep4_Success);
+						txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4_Success + Messages.SigComposite_txtDescriptionOfStep4);
 					}
 				} catch (Exception ex) {
 					LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
@@ -665,6 +664,7 @@ public class SigComposite extends Composite implements PaintListener {
 									// lblSignature.setText("");
 		case 2:
 			btnOpenInEditor.setEnabled(false);
+			txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
 			if (!called) { //If not called by jctca, reset key
 				org.jcryptool.visual.sig.algorithm.Input.privateKey = null;
 			}
