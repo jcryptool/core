@@ -49,7 +49,7 @@ public class SignatureWizard extends Wizard{
 		alias = page.getAlias();
 		//Store the key
 		if (alias != null) {
-			org.jcryptool.visual.sig.algorithm.Input.privateKey = alias;
+			org.jcryptool.visual.sig.algorithm.Input.key = alias;
 		}
 		return true;
 	}

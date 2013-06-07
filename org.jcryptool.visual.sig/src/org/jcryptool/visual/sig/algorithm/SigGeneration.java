@@ -64,14 +64,20 @@ public class SigGeneration {
 				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
 				
 				//Get the public key (only with required with RSA and if called)
-//		        if (signaturemethod.contains("RSA")) {
-//		        	pubKey = ksm.getPublicKey(alias); 
-//		        	pubKey.getPublicKey();
-//		        } 
+//		        pubKey = ksm.getPublicKey(alias); 
+//		        pubKey.getPublicKey();
 				
-				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
-	        		lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+				String p = null;
+				String t = null;
+				if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
+					t = org.jcryptool.visual.sig.algorithm.Input.data.toString();
+				} else {
+					p = org.jcryptool.visual.sig.algorithm.Input.path;
 				}
+				
+//				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
+//	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+//				}
 			} else { //Use own Key from given alias
 				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
 				

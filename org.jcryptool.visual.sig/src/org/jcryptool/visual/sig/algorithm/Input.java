@@ -21,6 +21,8 @@ public class Input {
 	
 	public static KeyStoreAlias privateKey; //Contains the private key used to sign the data
 	public static KeyStoreAlias publicKey; //Contains the public key used to verify the data in the JCTCA plugin
+
+	public static KeyStoreAlias key;
 	
 	
 	//public static SignatureNotifier signNotifier; //contains the notifier of the JCTCA plugin who should be called when something is signed from their plugin

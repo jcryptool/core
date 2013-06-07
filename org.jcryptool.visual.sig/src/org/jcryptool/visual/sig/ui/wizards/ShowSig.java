@@ -69,10 +69,14 @@ public class ShowSig extends Shell {
 		
 		// get owner of the key
 		String userName;
-		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+		if ((org.jcryptool.visual.sig.algorithm.Input.privateKey == null) && (org.jcryptool.visual.sig.algorithm.Input.key == null)) {
 			userName = "-";
 		} else {
-			userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
+			if (org.jcryptool.visual.sig.algorithm.Input.key != null) {
+				userName = org.jcryptool.visual.sig.algorithm.Input.key.getContactName();
+			} else {
+				userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
+			}	
 		}
 		text = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		text.setText(userName);
@@ -80,14 +84,18 @@ public class ShowSig extends Shell {
 		
 		
 		text_1 = new Label(composite, SWT.READ_ONLY);
-		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+		if ((org.jcryptool.visual.sig.algorithm.Input.privateKey == null) && (org.jcryptool.visual.sig.algorithm.Input.key == null)) {
 			if (sig.contains("ECDSA")) {
 				text_1.setText("ANSI X9.62 prime256v1 (256 bits)");
 			} else {
 				text_1.setText("-");
 			}
 		} else {
-			text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
+			if (org.jcryptool.visual.sig.algorithm.Input.key != null) {
+				text_1.setText(org.jcryptool.visual.sig.algorithm.Input.key.getClassName());
+			} else {
+				text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
+			}
 		}
 		text_1.setBounds(143, 25, 287, 21);
 		
