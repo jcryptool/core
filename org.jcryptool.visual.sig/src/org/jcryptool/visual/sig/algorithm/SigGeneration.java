@@ -1,9 +1,12 @@
 package org.jcryptool.visual.sig.algorithm;
 
 import java.security.*;
+import java.security.cert.Certificate;
 
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 import de.flexiprovider.core.dsa.*;
+
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -11,11 +14,15 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
+import org.jcryptool.visual.sig.listener.SignatureEvent;
+import org.jcryptool.visual.sig.listener.SignatureListener;
+import org.jcryptool.visual.sig.listener.SignatureListenerAdder;
 
 public class SigGeneration {
 	public String signature;
 	//private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	private static PrivateKey k = null;
+	private static Certificate pubKey = null;
 	
 	/**
 	 * Old version of SignInput, calls new version of the method
@@ -55,6 +62,16 @@ public class SigGeneration {
         sig.update(input);
         signature = sig.sign();
         
+        //Get the public key (only with required with RSA and if called)
+//        if (signaturemethod.contains("RSA")) {
+//        	pubKey = ksm.getPublicKey(alias); 
+//        	pubKey.getPublicKey();
+//        }
+        
+//        for(SignatureListener lst : SignatureListenerAdder.getListeners()){
+//        	lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+//     	}
+        
         //Test
 //        System.out.println( "\nStart signature verification" );
 //        sig.initVerify(ksm.getPublicKey(alias));
@@ -76,64 +93,4 @@ public class SigGeneration {
 	    return signature;		
 	}
 	
-	
-	//Obsolete!***************************************************************************************************
-    /**
-     * initializes the connection to the keystore.
-     * @throws Exception 
-     */
-	/*
-    private static PrivateKey initKeystoreRSA() throws Exception {
-        KeyStoreManager ksm = KeyStoreManager.getInstance();
-        PrivateKey k = null;
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            Enumeration<String> aliases = ksm.getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                alias.getAliasString();
-                //k1 = ksm.getKey(alias); 
-                if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-                    keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                            + alias.getClassName(), alias);
-                    k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
-                } 
-            }
-            return k;
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
-        }
-		return k;
-    }
-    
-    private static PrivateKey initKeystoreDSA() throws Exception {
-        KeyStoreManager ksm = KeyStoreManager.getInstance();
-        PrivateKey k = null;
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            Enumeration<String> aliases = ksm.getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                alias.getAliasString();
-                //k1 = ksm.getKey(alias); 
-                if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
-                    keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                            + alias.getClassName(), alias);
-                    k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
-                } 
-            }
-            return k;
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
-        }
-		return k;
-    }
-    */
-    //Obsolete!***************************************************************************************************
 }

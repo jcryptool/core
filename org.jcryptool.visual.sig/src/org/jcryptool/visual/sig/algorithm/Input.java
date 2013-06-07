@@ -1,7 +1,5 @@
 package org.jcryptool.visual.sig.algorithm;
 
-import java.math.BigInteger;
-
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 //import org.jcryptool.visual.jctca.listeners.SignatureNotifier;
 
