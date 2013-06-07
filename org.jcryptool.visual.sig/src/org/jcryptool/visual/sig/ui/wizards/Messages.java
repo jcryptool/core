@@ -92,6 +92,9 @@ public class Messages {
 	public static String ShowSig_btnClose;
 	public static String ShowSig_btnSave;
 	
+	public static String ShowSig_tblAdr;
+	public static String ShowSig_tblHex;
+	public static String ShowSig_tblAscii;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
