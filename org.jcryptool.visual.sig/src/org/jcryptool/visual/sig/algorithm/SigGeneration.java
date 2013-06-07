@@ -75,9 +75,9 @@ public class SigGeneration {
 					p = org.jcryptool.visual.sig.algorithm.Input.path;
 				}
 				
-//				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
-//	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
-//				}
+				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
+	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+				}
 			} else { //Use own Key from given alias
 				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
 				
