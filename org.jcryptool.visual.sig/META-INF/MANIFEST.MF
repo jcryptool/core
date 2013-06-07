@@ -18,4 +18,5 @@ Import-Package: de.flexiprovider.core.dsa,
  org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.exceptions
-Export-Package: org.jcryptool.visual.sig.algorithm
+Export-Package: org.jcryptool.visual.sig.algorithm,
+ org.jcryptool.visual.sig.listener

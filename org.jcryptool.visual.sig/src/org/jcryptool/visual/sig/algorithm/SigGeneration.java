@@ -24,6 +24,7 @@ public class SigGeneration {
 	private static PrivateKey k = null;
 	private static Certificate pubKey = null;
 	
+	
 	/**
 	 * Old version of SignInput, calls new version of the method
 	 */
@@ -42,6 +43,8 @@ public class SigGeneration {
 	 * @throws Exception
 	 */
 	public static byte[] SignInput(String signaturemethod, byte[] input, KeyStoreAlias alias) throws Exception {
+		byte[] signature = null; //Stores the signature
+		
 		//Eigene sach fia ecdsa....
 		if (signaturemethod.contains("ECDSA")) { //Generate a key because there are no ECDSA Keys in the keystore
 	        //Generate a key pair
@@ -59,31 +62,30 @@ public class SigGeneration {
 			if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
 				org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
 				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
-			} else { //Use Key from given alias
+				
+				//Get the public key (only with required with RSA and if called)
+//		        if (signaturemethod.contains("RSA")) {
+//		        	pubKey = ksm.getPublicKey(alias); 
+//		        	pubKey.getPublicKey();
+//		        } 
+				
+				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
+	        		lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+				}
+			} else { //Use own Key from given alias
 				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
+				
 				//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
 			}
 		}//end else
 		
-		byte[] signature = null; //Stores the signature
+		
 		
 		// Get a signature object using the specified combo and sign the data with the private key
 		Signature sig = Signature.getInstance(signaturemethod);
 		sig.initSign(k);
         sig.update(input);
-        signature = sig.sign();
-        
-        //Get the public key (only with required with RSA and if called)
-//        if (signaturemethod.contains("RSA")) {
-//        	pubKey = ksm.getPublicKey(alias); 
-//        	pubKey.getPublicKey();
-//        }
-        
-//        for(SignatureListener lst : SignatureListenerAdder.getListeners()){
-//        	if (lst != null) {
-//        		lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
-//        	}
-//        }
+        signature = sig.sign();    
         
         //Store the generated signature
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
