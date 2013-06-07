@@ -17,9 +17,7 @@ public class Input {
 	
 	public static byte[] signature; //Contains the signature of the input data
 	public static String signatureHex;
-	public static String signatureDec;
 	public static String signatureOct;
-
 	
 	public static String chosenHash; 
 	
@@ -79,19 +77,5 @@ public class Input {
 	      .append(Character.forDigit(b >>> 3 & 0x07, 8))
 	      .append(Character.forDigit(b & 0x07, 8));
 	  }
-    
-//	  public final static String toHexString(byte[] array) {
-//		    StringBuffer sb = new StringBuffer(array.length*2 + 8);
-//		    char ch;
-//		    for (int i=0; i< array.length; i++) {
-//		      // byte will be promote to integer first, mask with 0x0f is a must.
-//		      ch = Character.forDigit(array[i] >>> 4 & 0x0f, 16);
-//		      sb.append(ch);
-//		      ch = Character.forDigit(array[i] & 0x0f, 16);
-//		      sb.append(ch);
-//		    }
-//
-//		    return sb.toString();
-//		  }
  
 }

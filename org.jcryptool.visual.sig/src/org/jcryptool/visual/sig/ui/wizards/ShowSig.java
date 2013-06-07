@@ -288,10 +288,22 @@ public class ShowSig extends Shell {
 		// Disable the check that prevents subclassing of SWT components
 	}
 
+	/**
+	 * Returns a string to get the adress in the hex-dump-table.
+	 * 
+	 * @param i Row of table
+	 * @param stepSize Differnce between digits in the row.
+	 * @return
+	 */
 	protected String getAdress(int i, int stepSize){
 		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
 		}
-	
+	/**
+	 * Retruns the ascii representation of an hexadecimal string.
+	 * 
+	 * @param hex
+	 * @return
+	 */
 	public String convertHexToString(String hex){
 		  StringBuilder sb = new StringBuilder();
 	 
@@ -307,6 +319,12 @@ public class ShowSig extends Shell {
 		  return sb.toString();
 	  }
 	
+	/**
+	 * Returns the decimal representation of an hexadecimal string.
+	 * 
+	 * @param hex
+	 * @return
+	 */
 	public String hexToDecimal(String hex) {
 		 StringBuilder sb = new StringBuilder();
 		
