@@ -1,6 +1,8 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
+import java.security.KeyPairGenerator;
 import java.security.KeyStoreException;
+import java.security.SecureRandom;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -120,7 +122,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    
 	    Label lblSelectAKey = new Label(this, SWT.NONE);
 	    lblSelectAKey.setBounds(10, 15, 176, 14);
-	    lblSelectAKey.setText("Select a key");
+	    lblSelectAKey.setText("Select a key/curve:");
 	    
 	    //Enable/disable methods
 	    switch (method) {
@@ -231,6 +233,8 @@ public class SignatureComposite extends Composite implements SelectionListener{
 					//Clean up
 					keystoreitems.clear();
 					combo.removeAll();
+					combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)");
+					combo.select(0);
 				} else {
 					if (rdo4.getSelection()) {
 						txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
@@ -278,11 +282,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
     	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
     	                } //end if
                 		
-                	} else {
-                		if (method == 2) { //ECDSA
-                			//Generate Curve
-                		}
-                	}
+                	} 
                 }
             }//end while
             combo.select(0);

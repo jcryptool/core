@@ -713,9 +713,14 @@ public class SigComposite extends Composite implements PaintListener {
 		if (signatures[signature].contains("RSA")) {
 			sigstring = sigstring + "RSA";
 		}
-		if (signatures[signature].contains("DSA")) {
-			sigstring = sigstring + "DSA";
+		if (signatures[signature].contains("ECDSA")) {
+			sigstring = sigstring + "ECDSA";
+		} else {
+			if (signatures[signature].contains("DSA")) {
+				sigstring = sigstring + "DSA";
+			}
 		}
+		
 
 		return sigstring;
 

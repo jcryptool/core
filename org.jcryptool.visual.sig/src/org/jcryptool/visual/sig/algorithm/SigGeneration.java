@@ -42,22 +42,33 @@ public class SigGeneration {
 	 * @throws Exception
 	 */
 	public static byte[] SignInput(String signaturemethod, byte[] input, KeyStoreAlias alias) throws Exception {
-		KeyStoreManager ksm = KeyStoreManager.getInstance();
-		ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-		//Check if called by JCT-CA
-		if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
-			org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
-			k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
-		} else { //Use Key from given alias
-			k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
-			//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
-		}
+		//Eigene sach fia ecdsa....
+		if (signaturemethod.contains("ECDSA")) { //Generate a key because there are no ECDSA Keys in the keystore
+	        //Generate a key pair
+	        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
+	        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+
+	        keyGen.initialize(256, random);
+
+	        KeyPair pair = keyGen.generateKeyPair();
+	        k = pair.getPrivate();
+		} else {
+			KeyStoreManager ksm = KeyStoreManager.getInstance();
+			ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+			//Check if called by JCT-CA
+			if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
+				org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
+				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
+			} else { //Use Key from given alias
+				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
+				//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
+			}
+		}//end else
 		
 		byte[] signature = null; //Stores the signature
 		
 		// Get a signature object using the specified combo and sign the data with the private key
 		Signature sig = Signature.getInstance(signaturemethod);
-        //sig.initSign(key.getPrivate());
 		sig.initSign(k);
         sig.update(input);
         signature = sig.sign();
@@ -71,18 +82,6 @@ public class SigGeneration {
 //        for(SignatureListener lst : SignatureListenerAdder.getListeners()){
 //        	lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
 //     	}
-        
-        //Test
-//        System.out.println( "\nStart signature verification" );
-//        sig.initVerify(ksm.getPublicKey(alias));
-//        sig.update(input);
-//        try {
-//            if (sig.verify(signature)) {
-//                System.out.println( "Signature verified" );
-//            } else System.out.println( "Signature failed" );
-//        } catch (SignatureException se) {
-//            System.out.println( "Signature failed" );
-//        }
         
         //Store the generated signature
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature

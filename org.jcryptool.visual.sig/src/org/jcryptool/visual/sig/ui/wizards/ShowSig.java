@@ -68,14 +68,27 @@ public class ShowSig extends Shell {
 		txtT_1.setBounds(0, 49, 137, 21);
 		
 		// get owner of the key
-		String userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
+		String userName;
+		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+			userName = "-";
+		} else {
+			userName = org.jcryptool.visual.sig.algorithm.Input.privateKey.getContactName();
+		}
 		text = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		text.setText(userName);
 		text.setBounds(143, 0, 287, 21);
 		
 		
 		text_1 = new Label(composite, SWT.READ_ONLY);
-		text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
+		if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+			if (sig.contains("ECDSA")) {
+				text_1.setText("ANSI X9.62 prime256v1 (256 bits)");
+			} else {
+				text_1.setText("-");
+			}
+		} else {
+			text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
+		}
 		text_1.setBounds(143, 25, 287, 21);
 		
 		text_2 = new Label(composite, SWT.READ_ONLY);
