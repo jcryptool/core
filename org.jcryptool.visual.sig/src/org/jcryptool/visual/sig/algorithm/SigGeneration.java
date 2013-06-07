@@ -80,8 +80,10 @@ public class SigGeneration {
 //        }
         
 //        for(SignatureListener lst : SignatureListenerAdder.getListeners()){
-//        	lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
-//     	}
+//        	if (lst != null) {
+//        		lst.signaturePerformed(new SignatureEvent(signature, null, "asdf", new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+//        	}
+//        }
         
         //Store the generated signature
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
