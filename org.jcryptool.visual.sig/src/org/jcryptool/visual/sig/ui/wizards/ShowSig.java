@@ -53,7 +53,7 @@ public class ShowSig extends Shell {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 440, 536);
+		composite.setBounds(10, 10, 454, 602);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		txtT.setText(Messages.ShowSig_ownerTitle);
@@ -84,15 +84,15 @@ public class ShowSig extends Shell {
 		
 		txtSig = new Label(composite, SWT.READ_ONLY);
 		txtSig.setText(Messages.ShowSig_grpSignature);
-		txtSig.setBounds(0, 76, 137, 21);
+		txtSig.setBounds(0, 82, 137, 21);
 		
 		txtLnge = new Label(composite, SWT.READ_ONLY);
 		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + " Bits");
-		txtLnge.setBounds(0, 213, 430, 21);
+		txtLnge.setBounds(0, 245, 430, 21);
 		
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
-		grpOption.setBounds(0, 245, 440, 93);
+		grpOption.setBounds(0, 277, 440, 93);
 		grpOption.setLayout(null);
 			
 		lblNewLabel = new Label(grpOption, SWT.NONE);
@@ -101,11 +101,11 @@ public class ShowSig extends Shell {
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
 		txtSignedMes.setText(Messages.ShowSig_grpMessage);
-		txtSignedMes.setBounds(0, 344, 137, 21);
+		txtSignedMes.setBounds(0, 386, 137, 21);
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
-		txtLngeMes.setBounds(0, 481, 430, 21);
+		txtLngeMes.setBounds(0, 550, 430, 21);
 		
 /***************************Table Signature******************************************/		
 		// TABLE SIGNATURE
@@ -113,7 +113,7 @@ public class ShowSig extends Shell {
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(0, 103, 440, 104);
+		table.setBounds(0, 103, 454, 136);
 		
 		// Spalte Adresse 
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
@@ -129,7 +129,7 @@ public class ShowSig extends Shell {
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(126);
+		tblclmnAscii.setWidth(138);
 		tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
 		// Spalten füllen
@@ -169,7 +169,7 @@ public class ShowSig extends Shell {
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setBounds(0, 371, 440, 104);
+		table_1.setBounds(0, 408, 454, 136);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
 		tblclmnAddress.setResizable(false);
@@ -184,7 +184,7 @@ public class ShowSig extends Shell {
 		
 		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_2.setResizable(false);
-		tableColumn_2.setWidth(126);
+		tableColumn_2.setWidth(138);
 		tableColumn_2.setText(Messages.ShowSig_tblAscii);
 		
 	    for (int i2 = 0; i2 < sigLen; i2++) {
@@ -257,7 +257,7 @@ public class ShowSig extends Shell {
 				ShowSig.this.close();
 			}
 		});
-		btnNewButton.setBounds(340, 511, 100, 25);
+		btnNewButton.setBounds(354, 577, 100, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnNewButton_1 = new Button(composite, SWT.NONE);
@@ -267,7 +267,7 @@ public class ShowSig extends Shell {
 				// TODO
 			}
 		});
-		btnNewButton_1.setBounds(233, 511, 100, 25);
+		btnNewButton_1.setBounds(247, 577, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		btnNewButton_1.setEnabled(false);
 
@@ -279,7 +279,7 @@ public class ShowSig extends Shell {
 	 */
 	protected void createContents() {
 		setText(Messages.ShowSig_title);
-		setSize(466, 584);
+		setSize(480, 650);
 
 	}
 
