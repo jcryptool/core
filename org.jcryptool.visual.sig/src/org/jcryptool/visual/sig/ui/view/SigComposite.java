@@ -518,14 +518,7 @@ public class SigComposite extends Composite implements PaintListener {
 								Messages.SigComposite_lblProgress, 4));
 						// txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 						// WTF!!!!!!!!1!1!
-<<<<<<< HEAD
-						txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4 + Messages.SigComposite_txtDescriptionOfStep4_Success);
-						if (called) {
-							txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4 + Messages.SigComposite_txtDescriptionOfStep4_Success + "Click on Return to JCT-CA to continue");
-						}
-=======
 						txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4_Success + Messages.SigComposite_txtDescriptionOfStep4);
->>>>>>> 604cb85bd05586a6df2d2e198697cb3fcc309ae2
 					}
 				} catch (Exception ex) {
 					LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
