@@ -211,7 +211,7 @@ public class Util {
 		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
 			if (ksAlias.getOperation().contains("RSA")//$NON-NLS-1$
 					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)
-					&& !(ksAlias.getContactName().contains("JCT-CA Root Certificates"))) {//$NON-NLS-1$
+					&& !(ksAlias.getContactName().contains("JCT-PKI Root Certificates"))) {//$NON-NLS-1$
 				RSAAndDSAPublicKeys.add(ksAlias);
 			} 
 		}
@@ -290,7 +290,7 @@ public class Util {
 		String formatted = "";
 		int i=0;
 		for(char c : help){
-			if(c!=' '){
+			if((c>='0'&&c<='9')||(c>='A'&&c<='Z')||(c>='a'&&c<='z')){
 				formatted +=c;
 				i++;
 				if(i%2==0){
@@ -300,6 +300,9 @@ public class Util {
 		}
 		if(formatted.charAt(formatted.length()-1)=='-'){
 			formatted = formatted.substring(0, formatted.length()-1);
+		}
+		if(formatted.charAt(0)=='-'){
+			formatted = formatted.substring(1);
 		}
 		return formatted;
 	}

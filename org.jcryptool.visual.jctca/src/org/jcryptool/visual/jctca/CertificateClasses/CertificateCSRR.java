@@ -96,7 +96,7 @@ public class CertificateCSRR {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		//iterate through all public key aliases
 		for(KeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
-			if(pubAlias.getContactName().contains("JCT-CA Root Certificates")){//$NON-NLS-1$
+			if(pubAlias.getContactName().contains("JCT-PKI Root Certificates")){//$NON-NLS-1$
 				//root certificates have been found, do not create new ones
 				certsExist = true;
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
@@ -104,7 +104,7 @@ public class CertificateCSRR {
 					certs.add((X509Certificate) c);
 				}
 			}
-			else if(pubAlias.getContactName().contains("JCT-CA Certificate Revocation List")){//$NON-NLS-1$
+			else if(pubAlias.getContactName().contains("JCT-PKI Certificate Revocation List")){//$NON-NLS-1$
 				//revoked certificates have been found. add them to the CRL-ArrayList
 				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
 				if (c instanceof X509Certificate) {
@@ -157,9 +157,9 @@ public class CertificateCSRR {
 				caKeys.add(keypair);
 				certs.add(cert);
 				KeyStoreAlias pubAlias = new KeyStoreAlias(
-						"JCT-CA Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPublic().hashCode() + "", kp.getPublic().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						"JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPublic().hashCode() + "", kp.getPublic().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				KeyStoreAlias privAlias = new KeyStoreAlias(
-						"JCT-CA Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						"JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				mng.addKeyPair(kp.getPrivate(), cert, "", privAlias, pubAlias); //$NON-NLS-1$
 			}
 		}

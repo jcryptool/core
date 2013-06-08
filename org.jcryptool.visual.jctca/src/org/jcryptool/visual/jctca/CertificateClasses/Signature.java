@@ -87,6 +87,9 @@ public class Signature {
 	 * @return the path
 	 */
 	public String getPath() {
+		if(path == null){
+			return "";
+		}
 		return path;
 	}
 

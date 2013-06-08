@@ -208,8 +208,8 @@ public class CAListener implements SelectionListener{
 				mng.addKeyPair(kp.getPrivate(), 
 								cert, 
 								KeyStoreManager.getDefaultKeyPassword().toString(), 
-								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-								new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								new KeyStoreAlias("JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								new KeyStoreAlias("JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				this.removeEntry(sel);
 				Util.showMessageBox(Messages.CAListener_msgbox_title_cert_revoked, Messages.CAListener_msgbox_text_cert_revoked, SWT.ICON_INFORMATION);
 

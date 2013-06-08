@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.eclipse.swt.SWT;
@@ -19,6 +20,8 @@ import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
 import org.jcryptool.visual.jctca.CertificateClasses.Signature;
 //import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
+import org.jcryptool.visual.sig.algorithm.Input;
+import org.jcryptool.visual.sig.listener.SignatureListener;
 
 /**
  * Listener on the sign part in the user view. also accesses the SigVis plugin for signing
@@ -57,11 +60,16 @@ public class SigVisPluginOpenListener implements SelectionListener {
 		org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
 		org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file //$NON-NLS-1$
 				.getText() : txt_sign.getText()).getBytes();
+		System.out.println(new String(Input.data));
 		org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
 		byte[] hash, sig;
+		ArrayList<SignatureListener> lsts = org.jcryptool.visual.sig.listener.SignatureListenerAdder.getListeners();
+		if(lsts == null || lsts.isEmpty()){
+			org.jcryptool.visual.sig.listener.SignatureListenerAdder.addSignatureListener(new SignatureNotifier());
+		}
 		if (btn_check.getSelection() == true) {
 			try {
-				//org.jcryptool.visual.sig.algorithm.Input.signNotifier = new SignatureNotifier();
+				
 				PlatformUI.getWorkbench().getActiveWorkbenchWindow()
 						.getActivePage()
 						.showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
@@ -71,21 +79,22 @@ public class SigVisPluginOpenListener implements SelectionListener {
 			}
 		} else {
 
-			hash = org.jcryptool.visual.sig.algorithm.Input.data;
+//			hash = org.jcryptool.visual.sig.algorithm.Input.data;
 			try {
-				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput(
-						"SHA-256", hash); //$NON-NLS-1$
+//				hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput(
+//						"SHA-256", hash); //$NON-NLS-1$
+				org.jcryptool.visual.sig.algorithm.Input.chosenHash = "SHA256";
 				org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(
-						"SHA256withRSA", hash); //$NON-NLS-1$
+						"SHA256withRSA", Input.data); //$NON-NLS-1$
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				LogUtil.logError(e1);
 			}
-			sig = org.jcryptool.visual.sig.algorithm.Input.signature;
-			Signature signature = new Signature(sig, lbl_file.getText(),
-					txt_sign.getText(), new Date(System.currentTimeMillis()),
-					privAlias, pubAlias, "SHA256");
-			CertificateCSRR.getInstance().addSignature(signature);
+			//sig = org.jcryptool.visual.sig.algorithm.Input.signature;
+			//Signature signature = new Signature(sig, lbl_file.getText(),
+			//		txt_sign.getText(), new Date(System.currentTimeMillis()),
+			//		privAlias, pubAlias, "SHA256");
+			//CertificateCSRR.getInstance().addSignature(signature);
 			Util.showMessageBox(Messages.SigVisPluginOpenListener_msgbox_title_success,
 					Messages.SigVisPluginOpenListener_msgbox_text_signed_msg_was_sent,
 					SWT.ICON_INFORMATION);

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.security.SignatureException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
@@ -88,10 +89,12 @@ public class SecondUserListener implements SelectionListener{
 					try {
 						
 						java.security.Signature checkSig = java.security.Signature.getInstance(sig.getHashAlgorithm()+"withRSA"); //$NON-NLS-1$
-						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getPublicKey(sig.getPubAlias());
+						X509Certificate cert = (X509Certificate)KeyStoreManager.getInstance().getCertificate(sig.getPubAlias());
+						
 						if(cert.getNotAfter().after(sig.getTime())){//signature after valid date of the certificate?
-							checkSig.initVerify(cert.getPublicKey());
-							if(sig.getPath()!=""){
+							PublicKey pk = cert.getPublicKey();
+							checkSig.initVerify(pk);
+							if(!sig.getPath().equals("")){
 								FileInputStream file;
 								try {
 									file = new FileInputStream(sig.getPath());
@@ -148,7 +151,7 @@ public class SecondUserListener implements SelectionListener{
 			if(sel != null && sel.getData() != null){ //get the content from the selected signature and set the fields according to it
 				Signature sig = (Signature)sel.getData();
 				lbl_signature.setText(Util.bytesToHex(sig.getSignature()));
-				lbl_text.setText(sig.getPath()=="" ? sig.getText() : sig.getPath()); //$NON-NLS-1$
+				lbl_text.setText(sig.getPath().equals("") ? sig.getText() : sig.getPath()); //$NON-NLS-1$
 				btn_deleteEntry.setEnabled(true);
 				btn_check_signature.setEnabled(true);
 			}
