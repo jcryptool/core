@@ -66,7 +66,7 @@ public class SigGeneration {
 				//Get the public key (only with required with RSA and if called)
 //		        pubKey = ksm.getPublicKey(alias); 
 //		        pubKey.getPublicKey();
-				
+				/*
 				String p = null;
 				String t = null;
 				if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
@@ -78,6 +78,7 @@ public class SigGeneration {
 				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
 	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
 				}
+				*/
 			} else { //Use own Key from given alias
 				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
 				
@@ -92,6 +93,20 @@ public class SigGeneration {
 		sig.initSign(k);
         sig.update(input);
         signature = sig.sign();    
+        
+        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //if called
+        	String p = null;
+				String t = null;
+				if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
+					t = org.jcryptool.visual.sig.algorithm.Input.data.toString();
+				} else {
+					p = org.jcryptool.visual.sig.algorithm.Input.path;
+				}
+				
+				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
+	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+				}
+        }
         
         //Store the generated signature
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
