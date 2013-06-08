@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.Perspective;
 import org.eclipse.ui.internal.Workbench;
@@ -570,6 +571,13 @@ public class SigComposite extends Composite implements PaintListener {
 				// messageBox.setText(Messages.SigComposite_MessageTitle);
 				// messageBox.setMessage(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 				// messageBox.open();
+				
+//				try {
+//					PlatformUI.getWorkbench().getActiveWorkbenchWindow().
+//					getActivePage().showView("org.jcryptool.visual.sig.view", "org.jcryptool.visual.sig.view", 2);
+//				} catch (PartInitException e1) {
+//					e1.printStackTrace();
+//				}
 			}// end widgetSelected
 		});
 
