@@ -1,22 +1,22 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import java.security.KeyPairGenerator;
 import java.security.KeyStoreException;
-import java.security.SecureRandom;
 import java.util.Enumeration;
 import java.util.HashMap;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -25,8 +25,6 @@ import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 
 public class SignatureComposite extends Composite implements SelectionListener{
 	private Group grpSignatures;

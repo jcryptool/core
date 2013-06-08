@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Label;
-import org.jcryptool.visual.sig.algorithm.Input;
 import org.eclipse.swt.widgets.Text;
 
 public class ShowSig extends Shell {

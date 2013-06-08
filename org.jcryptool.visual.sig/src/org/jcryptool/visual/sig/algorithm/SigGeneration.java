@@ -1,19 +1,16 @@
 package org.jcryptool.visual.sig.algorithm;
 
-import java.security.*;
-import java.security.cert.Certificate;
-
-import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
-import de.flexiprovider.core.dsa.*;
-
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.SecureRandom;
+import java.security.Signature;
+//import java.security.cert.Certificate;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import org.jcryptool.core.logging.utils.LogUtil;
+
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.visual.sig.listener.SignatureEvent;
 import org.jcryptool.visual.sig.listener.SignatureListener;
 import org.jcryptool.visual.sig.listener.SignatureListenerAdder;
@@ -22,7 +19,7 @@ public class SigGeneration {
 	public String signature;
 	//private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	private static PrivateKey k = null;
-	private static Certificate pubKey = null;
+	//private static Certificate pubKey = null;
 	
 	
 	/**
@@ -98,13 +95,19 @@ public class SigGeneration {
         	String p = null;
 				String t = null;
 				if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
-					t = org.jcryptool.visual.sig.algorithm.Input.data.toString();
+					t = new String(org.jcryptool.visual.sig.algorithm.Input.data);
 				} else {
 					p = org.jcryptool.visual.sig.algorithm.Input.path;
 				}
 				
 				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
-	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
+	        		lst.signaturePerformed(new SignatureEvent(signature, //byte array
+	        													p, //path
+	        													t, //direct input
+	        													new Date(System.currentTimeMillis()), //date time
+	        													alias, //private key
+	        													org.jcryptool.visual.sig.algorithm.Input.publicKey, //public key
+	        													org.jcryptool.visual.sig.algorithm.Input.chosenHash)); //hash method string
 				}
         }
         
