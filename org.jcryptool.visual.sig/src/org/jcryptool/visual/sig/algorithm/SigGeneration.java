@@ -42,6 +42,8 @@ public class SigGeneration {
 	public static byte[] SignInput(String signaturemethod, byte[] input, KeyStoreAlias alias) throws Exception {
 		byte[] signature = null; //Stores the signature
 		
+		org.jcryptool.visual.sig.algorithm.Input.chosenHash = signaturemethod.replace("withRSA", "");
+		
 		//Eigene sach fia ecdsa....
 		if (signaturemethod.contains("ECDSA")) { //Generate a key because there are no ECDSA Keys in the keystore
 	        //Generate a key pair

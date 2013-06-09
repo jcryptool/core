@@ -29,7 +29,6 @@ public class Hash {
 		    md = messageDigest.digest();
 		    //hash = new String (org.jcryptool.visual.sig.algorithm.Input.bytesToHex(md)); //Hex String
 		    
-		    org.jcryptool.visual.sig.algorithm.Input.chosenHash = hashmethod;
 		    org.jcryptool.visual.sig.algorithm.Input.hash = md; //Store the generated hash
 		    org.jcryptool.visual.sig.algorithm.Input.hashHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(md); //Hex String
 		    return md;
