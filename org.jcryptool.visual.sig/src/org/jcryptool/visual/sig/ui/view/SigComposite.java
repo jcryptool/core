@@ -3,6 +3,8 @@ package org.jcryptool.visual.sig.ui.view;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -34,6 +36,7 @@ import org.eclipse.ui.internal.Workbench;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 import org.jcryptool.visual.sig.Messages;
+import org.jcryptool.visual.sig.algorithm.Input;
 import org.jcryptool.visual.sig.ui.wizards.HashWizard;
 import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.ShowSig;
@@ -588,11 +591,16 @@ public class SigComposite extends Composite implements PaintListener {
 
 			public void widgetSelected(SelectionEvent e) {
 				try {
+					//Clean up Input.java
+					Input.privateKey = null;
+					Input.publicKey = null;
 					// Close view
 					IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
 					// Perspective perspective = page.getPerspective();
-					IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
+					IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view"); 
+					//IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view", "org.jcryptool.visual.sig.view");
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
+					//System.out.println(ref.getId());
 					page.closePerspective(null, false, true);
 					// Go to JCT-CA view (org.jcryptool.visual.jctca)
 					// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.jctca.view");
@@ -651,6 +659,16 @@ public class SigComposite extends Composite implements PaintListener {
 			public void widgetSelected(SelectionEvent e) {
 				txtDescriptionOfStep4.selectAll();
 			}// end widgetSelected
+		});
+		
+		//To clear the key is view is closed
+		this.addDisposeListener(new DisposeListener (){
+
+			public void widgetDisposed(DisposeEvent e) {
+				//Input.privateKey = null;
+				Input.reset();
+			}
+		
 		});
 
 	}// end createEvents

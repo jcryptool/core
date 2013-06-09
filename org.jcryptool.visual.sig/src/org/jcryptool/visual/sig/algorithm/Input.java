@@ -24,6 +24,19 @@ public class Input {
 
 	public static KeyStoreAlias key;
 	
+	public static void reset () {
+		data = null;
+		path = null;
+		hash = null;
+		hashHex = null;
+		signature = null;
+		signatureHex = null;
+		signatureOct = null;
+		chosenHash = null;
+		privateKey = null;
+		publicKey = null;
+	}
+	
 	
 	//public static SignatureNotifier signNotifier; //contains the notifier of the JCTCA plugin who should be called when something is signed from their plugin
 	
