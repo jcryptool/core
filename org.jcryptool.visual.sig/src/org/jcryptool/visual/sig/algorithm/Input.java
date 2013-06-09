@@ -32,7 +32,6 @@ public class Input {
 		signature = null;
 		signatureHex = null;
 		signatureOct = null;
-		chosenHash = null;
 		privateKey = null;
 		publicKey = null;
 	}

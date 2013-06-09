@@ -115,6 +115,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 
 			public void widgetSelected(SelectionEvent e) {
 				alias = keystoreitems.get(combo.getText());
+				;
 			}
 	    });
 	    
@@ -284,6 +285,8 @@ public class SignatureComposite extends Composite implements SelectionListener{
                 }
             }//end while
             combo.select(0);
+            String s = combo.getText();
+            alias = keystoreitems.get(combo.getText());
         } catch (NoKeyStoreFileException e) {
             LogUtil.logError(e);
         } catch (KeyStoreException e) {

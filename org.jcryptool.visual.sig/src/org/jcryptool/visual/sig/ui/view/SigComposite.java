@@ -699,6 +699,7 @@ public class SigComposite extends Composite implements PaintListener {
 			if (!called) { //If not called by jctca, reset key
 				org.jcryptool.visual.sig.algorithm.Input.privateKey = null;
 			}
+			org.jcryptool.visual.sig.algorithm.Input.key = null;
 			break;
 		default:
 			break;
