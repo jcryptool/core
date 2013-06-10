@@ -1,9 +1,10 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -54,24 +55,43 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import de.flexiprovider.api.keys.Key;
 
 /**
- * @author t-kern
+ * <p>
+ * This class represents the JCrypTool keystore. It is implemented as a singleton and can be used by any plug-in by
+ * calling the <code>getInstance</code> method. Most methods require a <code>KeyStoreAlias</code> as method parameter to
+ * access the keystores content.
+ * </p>
  * 
+ * <p>
+ * The default password for all protected entries is <b>1234</b>. In case your plug-in offers access to a protected
+ * entry, it is recommended to show this password somewhere in your GUI.
+ * </p>
+ * 
+ * <p>
+ * The default keystore password is <b>jcryptool</b>. Users do not require this password.
+ * </p>
+ * 
+ * @see org.jcryptool.crypto.keystore.backend.KeyStoreAlias
+ * 
+ * @author Tobias Kern, Dominik Schadow
  */
 public class KeyStoreManager {
-    /** Hard-coded standard password for the platform keystore */
+    /** Hard-coded standard password for the platform keystore. */
     private static final char[] KEYSTORE_PASSWORD = { 'j', 'c', 'r', 'y', 'p', 't', 'o', 'o', 'l' };
-
-    /** Hard-coded standard password for the keys */
+    /** Hard-coded standard password for the keys. */
     private static final char[] KEY_PASSWORD = { '1', '2', '3', '4' };
-
-    /** The current keystore (single keystore design!) */
+    /** The JCrypTool keystore of type JCEKS. */
     private KeyStore keyStore = null;
-
+    /** The IFileStore representing the JCrypTool keystore. */
     private IFileStore keyStoreFileStore = null;
-
-    /** Singleton instance */
+    /** The JCrypTool keystore instance, only one instance exists. */
     private static KeyStoreManager instance;
 
+    /**
+     * The JCrypTool keystore is implemented as a singleton, therefore the constructor is private. Use
+     * <code>getInstance()</code> to retrieve the active instance instead.
+     * 
+     * @see org.jcryptool.crypto.keystore.backend.KeyStoreManager#getInstance()
+     */
     private KeyStoreManager() {
         ProviderManager2.getInstance();
         try {
@@ -88,10 +108,23 @@ public class KeyStoreManager {
         }
     }
 
+    /**
+     * <p>
+     * Returns the fully initialized instance of the JCrypTool keystore. The returned instance is never null and always
+     * fully initialized.
+     * </p>
+     * 
+     * <p>
+     * Use <code>KeyStoreManager ksm = KeyStoreManager.getInstance()</code> to retrieve the instance.
+     * </p>
+     * 
+     * @return The JCrypTool keystore instance
+     */
     public synchronized static KeyStoreManager getInstance() {
         if (instance == null) {
             instance = new KeyStoreManager();
         }
+
         return instance;
     }
 
