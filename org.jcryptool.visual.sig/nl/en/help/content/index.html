@@ -11,7 +11,7 @@
 		Below you find an overview of the plug-in and a more detailed description of each step of the signature generation.
 		<br>
 		This visualization demonstrates the creation of a digital signature for a specific document. 
-		A digital signature can be used to authenticate the message sender’s identity or the identity of the document's signer. 
+		A digital signature can be used to authenticate the sender’s identity or the identity of the document's signer. 
 		It also ensures the document's integrity.
         </p>
         <h2>General information</h2>
@@ -25,11 +25,11 @@
         <p> </p>
               
         <h2>Step 1 – Choose input</h2>
-        <p>Use the “Choose input”-button to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want, but the maximum file size is 10 MB.</p>
+        <p>Use the button “Choose input” to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want, but the maximum file size is 10 MB.</p>
       	<p><i>Pictures</i></p>
         
         <h2>Step 2 – Hash function</h2>
-        <p>The second step of the signature process is to calculate the message digest of it. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the message (the file) improves the efficiency of the process because the message digest is usually much smaller in size than the message. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
+        <p>The second step of the signature process is to calculate the message digest or hash value of the document. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the documents (the message or the file) improves the efficiency of the process because the message digest is usually much smaller in size than the document. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
         <p><i>Pictures</i></p>
         <h3>Description of provided hash functions</h3>
         <h4>MD5</h4>
@@ -37,7 +37,7 @@
         <h4>SHA-1</h4>
         <p>The “Secure Hash Algorithm“ (published in 1995 by the United States NIST) computes a condensed representation of a message or a data file. When a message of any length < 264 bits is input, the SHA-1 produces a 160-bit output. The SHA-1 is called secure because it was computationally infeasible to find a message which corresponds to a given message digest, or to find two different messages which produce the same message digest. Any change to a message in transit will, with very high probability, result in a different message digest, and the signature will fail to verify.</p>
         <h4>SHA-256</h4>
-        <p>SHA-256 is one of the successor hash functions to SHA-1 (collectively referred to as SHA-2), and is one of the strongest hash functions available. While SHA-1 has not been compromised in real-world conditions (however in theory), SHA-256 is not much more complex to code, and has not yet been compromised in any way. It is recommended to use this method instead of SHA-1.</p>
+        <p>SHA-256 is one of the successor hash functions to SHA-1 (collectively referred to as SHA-2), and is one of the strongest hash functions available. While SHA-1 has not been compromised in real-world conditions (however in theory), SHA-256 is not much more complex to code. It is recommended to use this method instead of SHA-1.</p>
         <h4>SHA-384</h4>
         <p>SHA-384 is like SHA-512, but they differ in the size of the hash value (SHA-384 is truncated). The initial hash is calculated from the 64 decimal bits of the square roots of the consecutive primes (23, 29, etc.). In the end only the first six 64-bit words from the result are used. The attached number indicates the length of each hash value (in bits).</p>
         <h4>SHA-512</h4>
@@ -59,7 +59,7 @@
         <p>To learn more about RSA:  </p>
         <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Visit JCT-RSA</a> 
         <h4>ECDSA</h4>
-        <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analogue of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
+        <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analog of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
         <h4>RSA and MGF1</h4>
         <p>missing ;)</p>
         <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
