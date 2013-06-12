@@ -29,7 +29,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.visual.extendedrsa.ui.wizards.DeleteIdentityWizard;
@@ -166,10 +165,6 @@ public class ExtendedRSA_Visual extends ViewPart {
 
     private void initKeystore(TabFolder tabfolder) {
         try {
-            if (!KeyStorePlugin.isInitialized()) {
-                KeyStorePlugin.initialize();
-            }
-
             IdentityManager iMgr = IdentityManager.getInstance();
             Vector<String> contactNames = iMgr.getContacts();
             if (!contactNames.contains(ALICE)) {
