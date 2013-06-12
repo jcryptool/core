@@ -23,5 +23,5 @@ Import-Package: org.jcryptool.actions.core.registry,
  org.jcryptool.crypto.flexiprovider.descriptors.algorithms,
  org.jcryptool.crypto.flexiprovider.operations.engines,
  org.jcryptool.crypto.flexiprovider.types,
- org.jcryptool.crypto.keys,
+ org.jcryptool.crypto.keystore.keys,
  org.jcryptool.crypto.keystore.backend

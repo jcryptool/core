@@ -25,7 +25,7 @@ Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.crypto.flexiprovider.descriptors.algorithms,
  org.jcryptool.crypto.flexiprovider.types,
  org.jcryptool.crypto.flexiprovider.ui.nodes,
- org.jcryptool.crypto.keys,
+ org.jcryptool.crypto.keystore.keys,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.ui,
  org.jcryptool.crypto.keystore.ui.dialogs

@@ -13,14 +13,17 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.backend,
+ org.jcryptool.crypto.keystore.certificates,
  org.jcryptool.crypto.keystore.commands,
  org.jcryptool.crypto.keystore.descriptors,
  org.jcryptool.crypto.keystore.descriptors.interfaces,
  org.jcryptool.crypto.keystore.exceptions,
- org.jcryptool.crypto.keystore.ui.dialogs,
+ org.jcryptool.crypto.keystore.keys,
+ org.jcryptool.crypto.keystore.ui,
  org.jcryptool.crypto.keystore.ui.actions,
  org.jcryptool.crypto.keystore.ui.actions.del,
  org.jcryptool.crypto.keystore.ui.actions.ex,
+ org.jcryptool.crypto.keystore.ui.dialogs,
  org.jcryptool.crypto.keystore.ui.preferences,
  org.jcryptool.crypto.keystore.ui.views,
  org.jcryptool.crypto.keystore.ui.views.interfaces,
@@ -28,16 +31,13 @@ Export-Package: org.jcryptool.crypto.keystore,
  org.jcryptool.crypto.keystore.ui.views.nodes.containers,
  org.jcryptool.crypto.keystore.ui.views.nodes.keys,
  org.jcryptool.crypto.keystore.ui.views.providers,
- org.jcryptool.crypto.keystore.ui.wizards,
- org.jcryptool.crypto.keystore.ui
+ org.jcryptool.crypto.keystore.ui.wizards
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers,
  org.jcryptool.core.operations.util,
  org.jcryptool.core.util.directories,
- org.jcryptool.core.util.ui,
- org.jcryptool.crypto.certificates,
- org.jcryptool.crypto.keys
+ org.jcryptool.core.util.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  swt-grouplayout.jar
