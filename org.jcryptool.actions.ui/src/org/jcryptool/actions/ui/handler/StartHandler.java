@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool team and contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -46,12 +46,11 @@ import org.jcryptool.crypto.flexiprovider.integrator.IntegratorOperation;
 import org.jcryptool.crypto.flexiprovider.operations.engines.PerformOperationManager;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
  * <b>Start handler</b> for the Actions view. Runs the created or imported action cascade.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.3
  */
@@ -128,9 +127,6 @@ public class StartHandler extends AbstractHandler {
                         LogUtil.logInfo("Trying to execute FlexiProvider algorithm"); //$NON-NLS-1$
                         for (RegistryType rt : RegistryType.values()) {
                             if (rt.getName().equals(a.getPluginId())) {
-                                if (!KeyStorePlugin.isInitialized())
-                                    KeyStorePlugin.initialize();
-
                                 AlgorithmDescriptor descriptor = new AlgorithmDescriptor(a.getActionName(), rt, null);
 
                                 if (a.getParam("algorithm type").equals(RegistryType.BLOCK_CIPHER.getName())) { //$NON-NLS-1$
