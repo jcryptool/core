@@ -5,7 +5,6 @@ Bundle-SymbolicName: org.jcryptool.visual.dsa;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
- org.jcryptool.crypto;bundle-version="0.9.5",
  org.jcryptool.crypto.keystore;bundle-version="0.9.5",
  org.eclipse.ui;bundle-version="3.7.0",
  de.flexiprovider;bundle-version="1.7.0",

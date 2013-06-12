@@ -10,8 +10,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.ui;bundle-version="3.7.0",
  org.apache.xml.security;bundle-version="1.5.3",
  org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0",
- org.jcryptool.crypto;bundle-version="1.0.0"
+ org.jcryptool.crypto.keystore;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jcryptool.crypto.xml.core,
