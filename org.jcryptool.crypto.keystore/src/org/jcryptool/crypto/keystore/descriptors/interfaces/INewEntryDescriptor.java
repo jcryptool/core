@@ -10,7 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.descriptors.interfaces;
 
-import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public interface INewEntryDescriptor {
 

@@ -26,8 +26,8 @@ import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.EntryNode;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.keys.KeyNode;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.keys.KeyPairNode;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.keys.SecretKeyNode;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
-import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.KeystoreWidget.Style;
 import org.jcryptool.crypto.keystore.ui.dialogs.SelectKeyDialog;
 

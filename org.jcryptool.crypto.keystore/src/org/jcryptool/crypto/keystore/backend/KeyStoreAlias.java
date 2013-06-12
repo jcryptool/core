@@ -11,9 +11,9 @@
 package org.jcryptool.crypto.keystore.backend;
 
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 /**
  * <EncodedContactName>;<KeyStoreEntryType>;<Operation>;<KeyLength>;<Provider>;<

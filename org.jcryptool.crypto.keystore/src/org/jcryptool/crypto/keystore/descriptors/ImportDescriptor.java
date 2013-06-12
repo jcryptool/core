@@ -10,8 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.descriptors;
 
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IImportDescriptor;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public class ImportDescriptor implements IImportDescriptor {
 

@@ -22,12 +22,12 @@ import javax.crypto.SecretKey;
 import org.eclipse.jface.action.Action;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.ByteArrayUtils;
-import org.jcryptool.crypto.certificates.CertificateFactory;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 /**
  * Abstract (and empty) top-level action for plug-in.

@@ -19,8 +19,8 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
-import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public class SecretKeyNode extends KeyNode {
     private IKeyStoreAlias alias;

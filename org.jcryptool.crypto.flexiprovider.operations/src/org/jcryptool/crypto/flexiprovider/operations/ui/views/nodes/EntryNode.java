@@ -33,8 +33,8 @@ import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.ops.Operatio
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
-import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public class EntryNode extends TreeNode implements IFlexiProviderOperation {
 

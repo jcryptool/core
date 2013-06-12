@@ -14,7 +14,7 @@ import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 /**
  * operation object to contain the FlexiProvider parameters

@@ -10,8 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.operations.xml.keys;
 
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jdom.Element;
 
 @SuppressWarnings("serial")

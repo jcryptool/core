@@ -27,10 +27,10 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.keystore.ImportManager;
 import org.jcryptool.crypto.flexiprovider.keystore.wizards.ImportWizard;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.descriptors.ImportDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IImportDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IImportWizard;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractImportKeyStoreEntryAction;
 
 import codec.pkcs12.PFX;

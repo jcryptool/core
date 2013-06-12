@@ -23,7 +23,7 @@ import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEngine;
 import org.jcryptool.crypto.flexiprovider.engines.FlexiProviderEngineFactory;
 import org.jcryptool.crypto.flexiprovider.operations.engines.IPerfomOperationListener;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public class PerformOperationListener implements IPerfomOperationListener {
     @SuppressWarnings("incomplete-switch")

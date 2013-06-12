@@ -20,8 +20,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.KeystoreWidget;
 import org.jcryptool.crypto.keystore.ui.KeystoreWidget.Style;
 

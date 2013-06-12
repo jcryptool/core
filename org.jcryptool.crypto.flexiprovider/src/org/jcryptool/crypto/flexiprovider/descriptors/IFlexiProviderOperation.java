@@ -13,7 +13,7 @@ package org.jcryptool.crypto.flexiprovider.descriptors;
 import org.jcryptool.crypto.flexiprovider.descriptors.algorithms.AlgorithmDescriptor;
 import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public interface IFlexiProviderOperation {
 

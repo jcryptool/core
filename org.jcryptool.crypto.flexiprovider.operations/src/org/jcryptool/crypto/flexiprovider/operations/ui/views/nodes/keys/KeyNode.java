@@ -11,7 +11,7 @@
 package org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.keys;
 
 import org.jcryptool.crypto.flexiprovider.ui.nodes.TreeNode;
-import org.jcryptool.crypto.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public abstract class KeyNode extends TreeNode {
 
