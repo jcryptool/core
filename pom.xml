@@ -35,7 +35,6 @@
     <module>org.jcryptool.core.operations</module>
     <module>org.jcryptool.core.util</module>
     <module>org.jcryptool.core.views</module>
-    <module>org.jcryptool.crypto</module>
     <module>org.jcryptool.crypto.feature</module>
     <module>org.jcryptool.crypto.flexiprovider</module>
     <module>org.jcryptool.crypto.flexiprovider.algorithms</module>
