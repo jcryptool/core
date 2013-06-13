@@ -253,7 +253,6 @@ public class DecryptionGui extends Content {
                     text2LData.height = 99;
                     tchiffre.setLayoutData(text2LData);
                     tchiffre.setText(chtext);
-                    tchiffre.setEnabled(false);
                     tchiffre.setEditable(false);
                     tchiffre.setFont(coufont);
                     tchiffre.setBackground(new Color(getDisplay(), 250, 250, 250));
@@ -268,7 +267,6 @@ public class DecryptionGui extends Content {
                     tplain.setLayoutData(text1LData);
                     tplain.setText(pltext);
                     tplain.setEditable(false);
-                    tplain.setEnabled(false);
                     tplain.setFont(coufont);
                     tplain.setBackground(new Color(getDisplay(), 250, 250, 250));
                 }
@@ -289,11 +287,10 @@ public class DecryptionGui extends Content {
                         FormData tpassLData = new FormData();
                         tpassLData.left = new FormAttachment(0, 1000, 167);
                         tpassLData.top = new FormAttachment(0, 1000, 50);
-                        tpassLData.width = 128;
+                        tpassLData.width = 192;
                         tpassLData.height = 15;
                         tpass.setLayoutData(tpassLData);
                         tpass.setEditable(false);
-                        tpass.setEnabled(false);
                         tpass.setText(phrase);
                         tpass.setFont(FontService.getNormalFont());
                     }
@@ -314,11 +311,10 @@ public class DecryptionGui extends Content {
                         FormData tlenthLData = new FormData();
                         tlenthLData.left = new FormAttachment(0, 1000, 167);
                         tlenthLData.top = new FormAttachment(0, 1000, 15);
-                        tlenthLData.width = 128;
+                        tlenthLData.width = 192;
                         tlenthLData.height = 15;
                         tlenth.setLayoutData(tlenthLData);
                         tlenth.setEditable(false);
-                        tlenth.setEnabled(false);
                         tlenth.setFont(FontService.getNormalFont());
                         tlenth.setText(String.valueOf(length));
                     }
