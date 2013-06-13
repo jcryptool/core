@@ -163,9 +163,13 @@ public class ShowSig extends Shell {
 	        item.setText(0, getAdress(i1, stepSize));
 	        
 	        // Spalte 2
-	        int start = i1 * stepSize;
+	        /*int start = i1 * stepSize;
 	        int end = i1 * stepSize + stepSize;
 	      
+	        end = end >= len ? len : end;*/
+	        
+	        int start = i1 * (stepSize*2);
+	        int end = i1 * (stepSize*2) + (stepSize*2);
 	        end = end >= len ? len : end;
 	    
 	        StringBuffer buffer = new StringBuffer();
@@ -176,7 +180,7 @@ public class ShowSig extends Shell {
 	        }
 	        item.setText(1, buffer.toString());
 
-	        // Spalte 3
+	        // Spalte 3 org.jcryptool.visual.sig.algorithm.Input.signatureHex
 	        item.setText(2, convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex));
 
 	      }
