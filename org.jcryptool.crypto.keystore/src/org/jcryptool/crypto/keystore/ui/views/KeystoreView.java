@@ -1,16 +1,15 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Iterator;
 
 import org.eclipse.jface.action.Action;
@@ -28,14 +27,12 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreActionManager;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
-import org.jcryptool.crypto.keystore.ui.actions.ChooseKeyStoreAction;
 import org.jcryptool.crypto.keystore.ui.actions.IKeyStoreActionDescriptor;
 import org.jcryptool.crypto.keystore.ui.actions.ShadowKeyStoreAction;
 import org.jcryptool.crypto.keystore.ui.actions.contacts.DeleteContactAction;
@@ -46,7 +43,6 @@ import org.jcryptool.crypto.keystore.ui.actions.del.DeleteSecretKeyAction;
 import org.jcryptool.crypto.keystore.ui.actions.ex.ExportCertificateAction;
 import org.jcryptool.crypto.keystore.ui.actions.ex.ExportKeyPairAction;
 import org.jcryptool.crypto.keystore.ui.actions.ex.ExportSecretKeyAction;
-import org.jcryptool.crypto.keystore.ui.views.interfaces.IChangeKeyStoreListener;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactDescriptorNode;
@@ -56,16 +52,12 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.KeyPairNode;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.SecretKeyNode;
 
 /**
+ * The JCrypTool keystore view providing access to the contents of the platform keystore.
  *
- *
+ * @author Tobias Kern, Dominik Schadow
  */
-public class KeystoreView extends ViewPart implements ISelectedNodeListener, IViewKeyInformation,
-        IChangeKeyStoreListener {
-    public static final String ID = "org.jcryptool.crypto.keystore.KeystoreView"; //$NON-NLS-1$
-
+public class KeystoreView extends ViewPart implements ISelectedNodeListener, IViewKeyInformation {
     private boolean newSymmetricKeyActionContributed = false;
-
-    private Action chooseKeyStoreAction = new ChooseKeyStoreAction(this);
 
     private Action exportSecretKeyAction = new ExportSecretKeyAction(this);
     private Action exportKeyPairAction = new ExportKeyPairAction(this);
@@ -87,25 +79,14 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
 
     private KeystoreViewer viewer;
     private Label keyStoreNameLabel;
-
-    /**
-     * The constructor.
-     */
-    public KeystoreView() {
-        LogUtil.logInfo("Starting Keystore View"); //$NON-NLS-1$
-
-        if (!KeyStorePlugin.isInitialized())
-            KeyStorePlugin.initialize();
-    }
-
+    
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */
     @Override
     public void createPartControl(Composite parent) {
-
         keyStoreNameLabel = new Label(parent, SWT.NULL);
-        keyStoreNameLabel.setText(KeyStorePlugin.getCurrentKeyStore());
+        keyStoreNameLabel.setText(KeyStoreManager.KEYSTORE_NAME);
         viewer = new KeystoreViewer(parent);
         getSite().setSelectionProvider(viewer);
 
@@ -120,7 +101,6 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         MenuManager menuMgr = new MenuManager("#PopupMenu"); //$NON-NLS-1$
         menuMgr.setRemoveAllWhenShown(true);
         menuMgr.addMenuListener(new IMenuListener() {
-
             public void menuAboutToShow(IMenuManager manager) {
                 if (viewer.getTree().getSelection().length == 0) {
                     fillAddContactMenu(manager);
@@ -143,10 +123,6 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
                         LogUtil.logInfo(((KeyPairNode) selection).getPrivateKeyAlias().getAliasString());
                     selectedNodeType = NodeType.KEYPAIR_NODE;
                     selectedNodeAlias = ((KeyPairNode) selection).getPrivateKeyAlias();
-                    // if(selectedNodeAlias == null) {
-                    // System.err.println("key pair contained only one key");
-                    // selectedNodeAlias = ((KeyPairNode) selection).getPublicKeyAlias();
-                    // }
                     selectedKeyPairNode = ((KeyPairNode) selection);
                     fillKeyPairContextMenu(manager);
                 } else if (selection instanceof CertificateNode) {
@@ -208,8 +184,6 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     }
 
     private void fillLocalToolBar(IToolBarManager manager) {
-        manager.add(chooseKeyStoreAction);
-        manager.add(new Separator());
         addFlexibleActions(manager);
         manager.add(new Separator());
     }
@@ -252,8 +226,6 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
      */
     @Override
     public void dispose() {
-        KeyStoreManager.getInstance().storeKeyStore();
-
         super.dispose();
     }
 
@@ -315,43 +287,4 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     public CertificateNode getSelectedPublicKeyNode() {
         return selectedPublicKeyNode;
     }
-
-    public void changeKeyStoreTo(String newKeyStoreInformation) {
-        LogUtil.logInfo("changing keystore..."); //$NON-NLS-1$
-        String name = newKeyStoreInformation.substring(0, newKeyStoreInformation.indexOf(",")); //$NON-NLS-1$
-        LogUtil.logInfo("nks name: " + name); //$NON-NLS-1$
-        String uri = newKeyStoreInformation.substring(
-                newKeyStoreInformation.indexOf(",") + 1, newKeyStoreInformation.length()); //$NON-NLS-1$
-        LogUtil.logInfo("nks uri(s): " + uri); //$NON-NLS-1$
-        URI real = null;
-        try {
-            if (uri.endsWith(";")) {
-                uri = uri.substring(0, uri.length() - 1);
-            }
-
-            real = new URI(uri);
-
-            // close old keystore!
-            KeyStoreManager.getInstance().storeKeyStore();
-
-            // change name
-            keyStoreNameLabel.setText(name);
-
-            // open new keystore
-            KeyStoreManager.getInstance().loadKeyStore(real);
-
-            // reload the model
-            viewer.reload();
-
-            // make new keystore the current one and store the preferences
-            KeyStorePlugin.setCurrentKeyStore(name);
-            KeyStorePlugin.savePreferences();
-        } catch (URISyntaxException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "URISyntaxException: ", e, false); //$NON-NLS-1$
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
-                    "NoKeyStoreFileException while opening the keystore: " + real.toString(), e, false); //$NON-NLS-1$
-        }
-    }
-
 }
