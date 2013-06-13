@@ -2,82 +2,78 @@
 <html lang = "de">
     <head>
         <meta charset="utf-8">
-        <title>Signature Demonstration</title>
+        <title>Signatur Demo</title>
     </head>
     <body>
-        <h1>Signature Visualization – Online help (TEST)</h1>
+        <h1>Signaturvisualisierung – Online Hilfe</h1>
         <p>
-        Welcome to the online help of the Signature Visualization plug-in. 
-		Below you find an overview of the plug-in and a more detailed description of each step of the signature generation.
-		<br>
-		This visualization demonstrates the creation of a digital signature for a specific document. 
-		A digital signature can be used to authenticate the message sender’s identity or the identity of the document's signer. 
-		It also ensures the document's integrity.
-        </p>
-        <h2>General information</h2>
-        <h3>Reset function</h3>
-		<p>The selected hash and signature function are saved. Everything else is reset to the initial state of the plug-in.</p>
-		<h3>Relaunch</h3>
-		<p>Everything is reset to the initial state of the plug-in, including the selected hash and signature function.</p>
-         
-        <h3> </h3>
-        <h4> </h4>
-        <p> </p>
+		Willkommen in der Online Hilfe des Plug-Ins zur Signaturvisualisierung.
+		Nachfolgenden finden Sie einen Überblick des Plug-Ins sowie eine detaillierte Erklärung zu jeden Schritt des Signaturerstellungsprozesses.
+        <br>
+		Die Visualisierung soll die Erzeugung einer Signatur für ein bestimmtes Dokument zeigen.
+		Eine digitale Signatur kann zur Authentisierung der Identität des Senders oder des Unterzeichners des Dokuments genutzt werden. 
+		Sie sichert außerdem die Integrität des Dokumentes selbst.
+		</p>
+        <h2>Allgemeine Informationen</h2>
+        <h3>Reset-Funktion</h3>
+		<p>Die ausgewählten Hash- und Signaturfunktionen werden gespeichert, alle anderen vorgenommenen Änderungen oder Einstellungen werden auf den Ausgangszustand zurückgesetzt.</p>
+		<h3>Neustart</h3>
+		<p>Alle vorgenommenen Änderungen oder Einstellungen sowie die ausgewählten Hash- und Signaturfunktionen werden auf den Ausgangszustand zurückgesetzt.</p>
               
-        <h2>Step 1 – Choose input</h2>
-        <p>Use the “Choose input”-button to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want, but the maximum file size is 10 MB.</p>
-      	<p><i>Pictures</i></p>
+        <h2>Schritt 1 – Input auswählen</h2>
+        <p>Um den Signaturerstellungsprozess zu starten, klicken Sie den Button "Input auswählen". Wählen Sie eine bereits vorhandene Datei oder geben Sie selbst einen Text ein. Wollen Sie eine bereits vorhandene Datei signieren, können Sie einen beliebigen Dateitypen wählen, die maximale Dateigröße beträgt allerdings 10 MB.</p>
+      	<p><i>Bilder</i></p>
         
-        <h2>Step 2 – Hash function</h2>
-        <p>The second step of the signature process is to calculate the message digest of it. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the message (the file) improves the efficiency of the process because the message digest is usually much smaller in size than the message. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
-        <p><i>Pictures</i></p>
-        <h3>Description of provided hash functions</h3>
+        <h2>Schritt 2 – Hashfunktion</h2>
+        <p>Der zweite Schritt des Signaturerstellungsprozesses ist die Berechnung des Hashwertes des Dokumentes. Eine Hashfunktion ist ein Algorithmus oder eine Subroutine, die einen Datensatz variabler Länge auf einen Datensatz fixer Länge abbildet. Da die Größe des Hashwertes einer Datei normalerweise viel kleiner ist als die Datei selbst, wird direkt der Hashwert signiert. Dadurch wird die Effizient des Signaturerzeugungsprozesses gesteigert. Bei der Signaturerstellung sowie bei der Verifikation der Signatur muss der gleich Hashalgorithmus verwendet werden.</p>
+        <p><i>Bilder</i></p>
+        <h3>Beschreibung der unterstützten Hashfunktionen</h3>
         <h4>MD5</h4>
-        <p>The MD5 algorithm (published in 1992 and specified in RFC 1321) takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest". The MD5 algorithm is intended for digital signature applications, where a large file must be "compressed" in a secure manner before being encrypted with a private key under a public-key cryptosystem such as RSA.</p>
-        <h4>SHA-1</h4>
-        <p>The “Secure Hash Algorithm“ (published in 1995 by the United States NIST) computes a condensed representation of a message or a data file. When a message of any length < 264 bits is input, the SHA-1 produces a 160-bit output. The SHA-1 is called secure because it was computationally infeasible to find a message which corresponds to a given message digest, or to find two different messages which produce the same message digest. Any change to a message in transit will, with very high probability, result in a different message digest, and the signature will fail to verify.</p>
+        <p>Der MD5-Algoritmus (veröffentlicht im Jahr 1992 und spezifiziert in RFC 1321) generiert aus einer gegebenen Nachricht einen 128-Bit langen "Fingerabdruck" oder "Hashwert". Der MD5-Algoritmus ist für digitale Signaturapplikationen vorgesehen, in der sehr große Dateien sicher "komprimiert" werden müssen, bevor sie, wie beispielsweise in einem Public-Key-Kryptosystem wie RSA, mit einem privaten Schlüssel verschlüsselt werden. </p>
+        <h4>SHA-1</h4> 
+        <p>Der “Secure Hash Algoritm” (veröffentlicht im Jahr 1995 von der United States NIST) berechnet eine verkürzte Darstellung einer Nachricht oder einer Datei. SHA-1 generiert dabei aus einer Datei beliebige Länge (< 264 Bits), eine 160-Bit-Ausgabe. SHA-1 gilt als sicher, weil es praktisch unmöglich ist, eine Nachricht zu finden, die zu einem gegebenen Hashwert passt oder zwei verschiedene Nachrichten zu finden, die denselben Hashwert generieren. Jede Änderung der Nachricht hat, mit hoher Wahrscheinlichkeit, zu folge, dass der Hashwert sich ebenfalls ändert und die Verifikation der Signatur wäre nicht mehr möglich.</p>
         <h4>SHA-256</h4>
-        <p>SHA-256 is one of the successor hash functions to SHA-1 (collectively referred to as SHA-2), and is one of the strongest hash functions available. While SHA-1 has not been compromised in real-world conditions (however in theory), SHA-256 is not much more complex to code, and has not yet been compromised in any way. It is recommended to use this method instead of SHA-1.</p>
+        <p>SHA-256 ist eine Nachfolger der SHA-1-Hashfunktion (allgemein auch als SHA-2 bezeichnet) und einer der stärksten zurzeit verfügbaren Hashfunktionen. Während SHA-1 praktisch noch nicht gebrochen wurde (in der Theorie allerdings schon), ist der SHA-256-Algorithum im Vergleich wesentlich komplexer. Es wird allgemein empfohlen diesen Algorithmus zu wählen, als SHA-1.</p>
         <h4>SHA-384</h4>
-        <p>SHA-384 is like SHA-512, but they differ in the size of the hash value (SHA-384 is truncated). The initial hash is calculated from the 64 decimal bits of the square roots of the consecutive primes (23, 29, etc.). In the end only the first six 64-bit words from the result are used. The attached number indicates the length of each hash value (in bits).</p>
+        <p>SHA-384 ist gleich wie SHA-512, sie unterscheiden sich allerdings in der Länge des generierten Hashwertes (SHA-384 ist verkürzt). Der initiale Hash berechnet sich aus den 64 dezimalen Bits der Quadratwurzel der aufeinanderfolgenden Primzahlen (23, 29, etc.). Zum Schluss werden nur die ersten sechs 64-Bit-Wörter aus dem Ergebnis verwendet. Die angefügte Nummer gibt die Länge der einzelnen Hashwerte (in Bits) an.</p>
         <h4>SHA-512</h4>
-        <p>SHA-256 and SHA-512 differ in the word size. SHA-256 uses 32-bit words where SHA-512 uses 64-bit words. The attached number indicates the length of each hash value (in bits).</p>
+        <p>SHA-256 und SHA-512 unterscheiden sich in der Wortlänge. SHA-256 verwendet 32-Bit-Wörter, wobei SHA-512 64-Bit-Wörter verwendet. Die angefügte Nummer gibt die Länge der einzelnen Hashwerte (in Bits) an.</p>
         
-        <h2>Step 3 – Signature function</h2>
-        <p>You can choose between different signature functions to sign the input. Some signature procedures are based on asymmetric encryption like RSA, other methods have been developed only for this purpose, for example DSA.</p>
-        <p><i>Pictures</i></p>
-        <p>To sign a file and verify the signature, you need two different keys. The private key is for generating the signature. Only the owner of the key knows it and it has to be kept secret. The public key can be used by anybody else to verify the signature. <br> To create a signature, you have to select one of the given keys from the Standard-JCT-Keystore.</p>
-        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore">Visit Standard-JCT-Keystore</a> 
-        <p><i>Pictures</i></p>
-        <h3>Description of provided signature functions</h3>
+        <h2>Schritt  3 – Signaturfunktion</h2>
+        <p>Um den von Ihnen gewählten Input zu signieren, können Sie zwischen verschieden Signaturfunktionen auswählen. Einige Signaturverfahren basieren auf asymmetrischer Verschlüsselung, wie beispielsweise RSA, andere Verfahren wurden eigens für diesen Zweck entwickelt, wie DSA.</p>
+        <p><i>Bilder</i></p>
+        <p>Um eine Signatur zu erstellen und anschließend zu verifizieren, benötigt man zwei verschiedene Schlüssel. Der private Schlüssel wird für die Erstellung der Signatur genutzt. Nur der Besitzer des Schlüssels kennt ihn und muss ihn geheim halten. Der öffentliche Schlüssel kann von jedem verwendet werden, um die Signatur zu verifizieren. <br> Um die Signatur zu erzeugen, müssen Sie einen Schlüssel wählen, die vom Standard-JCT-Keystore zu Verfügung gestellt werden.</p>
+        <a href="https://github.com/jcryptool/core/tree/master/org.jcryptool.crypto.keystore">Besuchen Sie den Standard-JCT-Keystore</a> 
+        <p><i>Bilder</i></p>
+        <h3>Beschreibung der unterstützten Signaturfunktionen</h3>
         <h4>DSA</h4>
-        <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. With DSA, the entropy, secrecy, and uniqueness of the random signature value is critical. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
-        <p>To learn more about DSA:  </p>
-        <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Visit JCT-DSA</a> 
+        <p>Der “Digital Signature Algorithm“ (DSA) (veröffentlicht im Jahr 1991 von NIST) ist ein „United States Federal Government“-Standard für digitale Signaturen. Mit DSA ist die Entropie, Geheimhaltung, und die Einzigartigkeit des zufälligen Signatur-Wertes entscheidend. Jede Verletzung einer dieser drei Anforderungen kann dazu führen, dass der gesamte private Schlüssel dem Angreifer  offenbart wird. Wird der zufällige Signatur-Wert ein zweites Mal verwendet, ein vorhersehbarer Wert berechnet oder sind nur einige Bits des Wertes in jeder der Signaturwerte undicht, kann DAS gebrochen werden.</p>
+        <p>Lernen Sie mehr über DSA:  </p>
+        <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Besuchen Sie JCT-DSA</a> 
         <h4>RSA</h4>
-        <p>RSA (the algorithm was published in 1977) is an algorithm for public-key cryptography that is based on the presumed difficulty of factoring large integers, the factoring problem. Anyone can use the public key to encrypt a message, but with currently published methods, if the public key is large enough, only someone with knowledge of the prime factors can feasibly decode the message. Secure padding schemes such as RSA-PSS are as essential for the security of message signing as they are for message encryption. The PKCS #1 cryptography standard provides recommendations for the implementation of public-key cryptography based on the RSA algorithm.</p>
-        <p>To learn more about RSA:  </p>
-        <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Visit JCT-RSA</a> 
+        <p>RSA (veröffentlicht im Jahr 1977) ist ein Algorithmus für asymmetrische kryptographische Verfahren, die auf der mutmaßlichen Schwierigkeit der Faktorisierung von großen Zahlen, dem Faktorisierungsproblem, basiert. Jeder kann den öffentlichen Schlüssel zum Entschlüsseln einer Nachricht verwenden, aber mit den aktuelle veröffentlichten Methoden, kann nur jemand der die Primfaktoren kennt und vorausgesetzt der Schlüssel ist lang genug, die Nachricht tatsächlich dekodieren. Sichere Padding-Verfahren, wie beispielsweise RSA-PSS, sind für die Sicherheit der Signaturerstellung genauso notwendig wie für die der Verschlüsselung einer Nachricht. Der PKCS #1 Cryptography Standard definiert die Empfehlungen für die Implementierung asymmetrischer Kryptografie, die auf dem RSA-Algorithmus basieren.</p>
+        <p> Lernen Sie mehr über RSA:  </p>
+        <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Besuchen Sie JCT-RSA</a> 
         <h4>ECDSA</h4>
-        <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analogue of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
+        <p>Der “Elliptic Curve Digital Signature Algorithm” (ECDSA) (vorgeschlagen von Scott Vanstone im Jahr 1992) ist die elliptische Kurve analog dem “Digital Signature Algorithm“ (DSA). Im Gegensatz zum normalen diskreten Logarithmusproblem und dem Faktorisierungsproblem, sind für das Faktorisierungsproblem bei EC keine Algorithmen zur Lösung bekannt. Die Länge des privaten Schlüssels, der als sicher betrachtet wird, ist mit ECDSA wesentlich kürzer. Ein Sicherheitsniveau von 80 Bits, was bedeutet, ein Angreifer würde 2^80 Signaturerzeugungsprozesse benötigen um den privaten Schlüssel zu finden, ist die Größe eines öffentlichen DAS-Schlüssels mindestens 1024 Bit, während die Größe eines öffentlichen ECDA-Schlüssels 160 Bit wäre. </p>
         <h4>RSA and MGF1</h4>
-        <p>missing ;)</p>
-        <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
+        <p>fehlt leider noch ;)</p>
+        <h3>Mehr Informationen zur Kryptografie-Bibliothek BouncyCastle:</h3>
        	<ul>
-        	<li><a href="http://www.bouncycastle.org/">Visit BouncyCastle</a></li>
-        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle">Visit BouncyCastle on github</a></li>
-        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html">Examples using BouncyCastle</a></li>
+        	<li><a href="http://www.bouncycastle.org/">Besuchen Sie BouncyCastle</a></li>
+        	<li><a href="https://github.com/jcryptool/core/tree/04fbe0efa19be7fee686b9fd4dcf3ee33b8e12d2/org.bouncycastle">Besuchen Sie BouncyCastle auf github</a></li>
+        	<li><a href="http://www.mobilefish.com/developer/bouncycastle/bouncycastle.html">Beispiele mit BouncyCastle</a></li>
   		</ul>
-        <h2>Step 4 – Show generated signature</h2>
-        <p>To show the signature of the chosen input, click on the button “Show generated signature”. There you see all relevant information about the signature:</p>
+        <h2>Schritt 4 – Erzeugte Signatur anzeigen</h2>
+        <p>Um die erzeugte Signatur anzuzeigen, klicken Sie auf den Button „Erzeugte Signatur anzeigen“. Dort finden Sie alle relevanten Informationen zu der Signatur:</p>
         <ul>
-            <li>The user who signed the file,</li>
-            <li>basic information about the key, </li>
-            <li>information about the signature method,</li>
-            <li>the hexadecimal, octal or binary representation of the signed file and the generated signature.</li>
+            <li>Der Benutzer, der die Signatur erstellt hat,</li>
+            <li>allgemeine Informationen zum verwendeten Schlüssel, </li>
+            <li>Informationen zu der Signaturfunktion,</li>
+            <li>die hexadezimale, oktale oder die binäre Darstellung der signierten Datei sowie der erzeugten Signatur.</li>
         </ul>
-        <p>To save the signed file use the button “Save signed input”. You also need this, if you want to verify the signature.</p>
-		<p><i>Pictures</i></p>
+        <p>Klicken Sie auf den Button “Signierten Input speichern” um die signierte Datei im binären Format zu speichern. Die gespeicherte Datei benötigen Sie, fall Sie Ihre Signatur prüfen möchten.</p>
+		<p><i>Bilder</i></p>
 
     </body>
 </html>
