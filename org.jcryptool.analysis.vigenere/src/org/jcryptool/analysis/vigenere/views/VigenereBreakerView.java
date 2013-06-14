@@ -59,7 +59,7 @@ public class VigenereBreakerView extends ViewPart {
         gui.setView(this);
         gui.layout();
         scroll.setContent(gui);
-        scroll.setMinSize(780, 620);
+        scroll.setMinSize(780, 720);
         scroll.layout();
         
         PlatformUI.getWorkbench().getHelpSystem().setHelp(parent,

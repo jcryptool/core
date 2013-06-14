@@ -91,15 +91,17 @@ public abstract class AbstractAnalysisUI extends org.eclipse.swt.widgets.Composi
         return output;
     }
     
-    /**
-	 * rebuilds the frequency analysis graph
-	 */
-	protected void recalcGraph()
+    protected void recalcGraph()
 	{
-		if(checkEditor() && text != null)
-		{
-			if(text == null)
+		if(text == null) {
+			if(checkEditor()) {
 				text = getEditorText();
+			} else {
+				return;
+			}
+		}
+		if(text != null)
+		{
 			setFinalVigParameters();
 			analyze();
 			myGraph.redraw();

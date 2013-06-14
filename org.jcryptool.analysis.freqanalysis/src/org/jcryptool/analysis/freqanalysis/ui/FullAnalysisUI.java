@@ -260,6 +260,7 @@ public class FullAnalysisUI extends AbstractAnalysisUI {
                                         @Override
 										public void widgetSelected(SelectionEvent evt) {
                                             changedVigOptions();
+                                            recalcGraph();
                                         }
                                     });
                                     spinner1.setSelection(1);
