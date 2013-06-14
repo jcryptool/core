@@ -46,7 +46,7 @@ public class ShowSig extends Shell {
 	 * @param display
 	 */
 	public ShowSig(Display display, String sig) {
-		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
+		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setBounds(10, 10, 494, 612);
