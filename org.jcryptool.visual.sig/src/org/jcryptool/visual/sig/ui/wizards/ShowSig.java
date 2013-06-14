@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 public class ShowSig extends Shell {
 	private Label txtT;
@@ -34,8 +33,7 @@ public class ShowSig extends Shell {
 	private TableColumn tblclmnAddress;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
-	private Label lblNewLabel;
-	private Text txtSigNum;
+	private Label txtSigNum;
 	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
 	private String sigStrLen = Integer.toString(sigLen);
 	
@@ -52,19 +50,19 @@ public class ShowSig extends Shell {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 454, 602);
+		composite.setBounds(10, 10, 494, 612);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		txtT.setText(Messages.ShowSig_ownerTitle);
-		txtT.setBounds(0, 0, 137, 21);
+		txtT.setBounds(0, 0, 176, 21);
 		
 		txtT_2 = new Label(composite, SWT.READ_ONLY);
 		txtT_2.setText(Messages.ShowSig_keyTitle);
-		txtT_2.setBounds(0, 25, 137, 21);
+		txtT_2.setBounds(0, 25, 176, 21);
 		
 		txtT_1 = new Label(composite, SWT.READ_ONLY);
 		txtT_1.setText(Messages.ShowSig_methodTitle);
-		txtT_1.setBounds(0, 49, 137, 21);
+		txtT_1.setBounds(0, 49, 176, 21);
 		
 		// get owner of the key
 		String userName;
@@ -79,7 +77,7 @@ public class ShowSig extends Shell {
 		}
 		text = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		text.setText(userName);
-		text.setBounds(143, 0, 287, 21);
+		text.setBounds(182, 0, 302, 21);
 		
 		
 		text_1 = new Label(composite, SWT.READ_ONLY);
@@ -96,32 +94,28 @@ public class ShowSig extends Shell {
 				text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
 			}
 		}
-		text_1.setBounds(143, 25, 287, 21);
+		text_1.setBounds(182, 25, 302, 21);
 		
 		text_2 = new Label(composite, SWT.READ_ONLY);
 		text_2.setText(sig);
-		text_2.setBounds(143, 49, 287, 21);
+		text_2.setBounds(182, 49, 302, 21);
 		
 		txtSig = new Label(composite, SWT.READ_ONLY);
 		txtSig.setText(Messages.ShowSig_grpSignature);
-		txtSig.setBounds(0, 82, 137, 21);
+		txtSig.setBounds(0, 89, 137, 21);
 		
 		txtLnge = new Label(composite, SWT.READ_ONLY);
 		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + " Bits");
-		txtLnge.setBounds(0, 245, 430, 21);
+		txtLnge.setBounds(0, 267, 430, 21);
 		
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
-		grpOption.setBounds(0, 277, 440, 93);
+		grpOption.setBounds(0, 294, 484, 73);
 		grpOption.setLayout(null);
-			
-		lblNewLabel = new Label(grpOption, SWT.NONE);
-		lblNewLabel.setBounds(10, 44, 162, 15);
-		lblNewLabel.setText(Messages.ShowSig_dispOpt);
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
 		txtSignedMes.setText(Messages.ShowSig_grpMessage);
-		txtSignedMes.setBounds(0, 386, 137, 21);
+		txtSignedMes.setBounds(0, 373, 137, 21);
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
@@ -133,7 +127,7 @@ public class ShowSig extends Shell {
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(0, 103, 454, 136);
+		table.setBounds(0, 110, 484, 151);
 		
 		// Spalte Adresse 
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
@@ -149,7 +143,7 @@ public class ShowSig extends Shell {
 		
 		tblclmnAscii = new TableColumn(table, SWT.NONE);
 		tblclmnAscii.setResizable(false);
-		tblclmnAscii.setWidth(138);
+		tblclmnAscii.setWidth(150);
 		tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
 		// Spalten füllen
@@ -185,15 +179,14 @@ public class ShowSig extends Shell {
 
 	      }
 /*******************************Textbox Radiobutton**************************************/			
-		txtSigNum = new Text(composite, SWT.BORDER | SWT.WRAP);
-		txtSigNum.setEditable(false);
-		txtSigNum.setBounds(0, 103, 440, 104);
+		txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
+		txtSigNum.setBounds(0, 110, 484, 151);
 
 /******************************Table Message***************************************/	
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table_1.setLinesVisible(true);
 		table_1.setHeaderVisible(true);
-		table_1.setBounds(0, 408, 454, 136);
+		table_1.setBounds(0, 394, 484, 150);
 		
 		tblclmnAddress = new TableColumn(table_1, SWT.NONE);
 		tblclmnAddress.setResizable(false);
@@ -208,7 +201,7 @@ public class ShowSig extends Shell {
 		
 		tableColumn_2 = new TableColumn(table_1, SWT.NONE);
 		tableColumn_2.setResizable(false);
-		tableColumn_2.setWidth(138);
+		tableColumn_2.setWidth(150);
 		tableColumn_2.setText(Messages.ShowSig_tblAscii);
 		
 	    for (int i2 = 0; i2 < sigLen; i2++) {
@@ -230,7 +223,7 @@ public class ShowSig extends Shell {
 				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureOct);
 			}
 		});
-		btnOkt.setBounds(178, 43, 80, 16);
+		btnOkt.setBounds(186, 30, 70, 16);
 		btnOkt.setText(Messages.ShowSig_octal);
 		
 		//DEZ
@@ -243,7 +236,7 @@ public class ShowSig extends Shell {
 				txtSigNum.setText(hexToDecimal(org.jcryptool.visual.sig.algorithm.Input.signatureHex));
 			}
 		});
-		btnDez.setBounds(264, 43, 80, 16);
+		btnDez.setBounds(262, 30, 80, 16);
 		btnDez.setText(Messages.ShowSig_decimal);
 		
 		// HEX
@@ -256,7 +249,7 @@ public class ShowSig extends Shell {
 				txtSigNum.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 			}
 		});
-		btnHex.setBounds(350, 43, 80, 16);
+		btnHex.setBounds(348, 30, 70, 16);
 		btnHex.setText(Messages.ShowSig_hex);
 
 		
@@ -270,7 +263,7 @@ public class ShowSig extends Shell {
 			}
 		});
 		btnHexdump.setSelection(true);
-		btnHexdump.setBounds(10, 21, 191, 16);
+		btnHexdump.setBounds(10, 30, 170, 16);
 		btnHexdump.setText(Messages.ShowSig_hexDump);
 		
 		// Button Close and Save
@@ -281,7 +274,7 @@ public class ShowSig extends Shell {
 				ShowSig.this.close();
 			}
 		});
-		btnNewButton.setBounds(354, 577, 100, 25);
+		btnNewButton.setBounds(384, 587, 100, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnNewButton_1 = new Button(composite, SWT.NONE);
@@ -291,7 +284,7 @@ public class ShowSig extends Shell {
 				// TODO
 			}
 		});
-		btnNewButton_1.setBounds(247, 577, 100, 25);
+		btnNewButton_1.setBounds(278, 587, 100, 25);
 		btnNewButton_1.setText(Messages.ShowSig_btnSave);
 		btnNewButton_1.setEnabled(false);
 
@@ -303,7 +296,7 @@ public class ShowSig extends Shell {
 	 */
 	protected void createContents() {
 		setText(Messages.ShowSig_title);
-		setSize(480, 650);
+		setSize(520, 660);
 
 	}
 
