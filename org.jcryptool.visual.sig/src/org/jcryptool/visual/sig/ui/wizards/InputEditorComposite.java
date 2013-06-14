@@ -26,7 +26,7 @@ public class InputEditorComposite extends Composite {
 		text.setFocus();
 		
 		Label lblToSaveThe = new Label(this, SWT.NONE);
-		lblToSaveThe.setBounds(10, 231, 289, 15);
+		lblToSaveThe.setBounds(10, 231, 386, 15);
 		lblToSaveThe.setText(Messages.InputEditorWizard_Label);
 		
 		page = p;
