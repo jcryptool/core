@@ -154,7 +154,7 @@ public class SigComposite extends Composite implements PaintListener {
 		txtGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI
 				| SWT.WRAP);
 		txtGeneralDescription.setEditable(false);
-		txtGeneralDescription.setBounds(10, 21, 699, 53);
+		txtGeneralDescription.setBounds(10, 21, 699, 63);
 		txtGeneralDescription.setText(Messages.SigComposite_description);
 		txtGeneralDescription.setBackground(white);
 
@@ -167,7 +167,7 @@ public class SigComposite extends Composite implements PaintListener {
 		Group grpSignatureGeneration = new Group(this, SWT.NONE);
 		grpSignatureGeneration
 				.setText(Messages.SigComposite_grpSignatureGeneration);
-		grpSignatureGeneration.setBounds(10, 75, 699, 548);
+		grpSignatureGeneration.setBounds(10, 90, 699, 548);
 		// btnOpenDocumentTemp.setVisible(false);
 
 		btnHash = new Button(grpSignatureGeneration, SWT.NONE);

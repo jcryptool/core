@@ -34,10 +34,9 @@ public class ShowSig extends Shell {
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
 	private Label txtSigNum;
+
 	private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
 	private String sigStrLen = Integer.toString(sigLen);
-	
-	
 
 	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
 	private String mesStrLen = Integer.toString(mesLen);
@@ -79,7 +78,7 @@ public class ShowSig extends Shell {
 		text.setText(userName);
 		text.setBounds(182, 0, 302, 21);
 		
-		
+		// get information about the key
 		text_1 = new Label(composite, SWT.READ_ONLY);
 		if ((org.jcryptool.visual.sig.algorithm.Input.privateKey == null) && (org.jcryptool.visual.sig.algorithm.Input.key == null)) {
 			if (sig.contains("ECDSA")) {
