@@ -1,5 +1,6 @@
 package org.jcryptool.visual.jctca.listeners;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Image;
@@ -59,25 +60,33 @@ public class ResizeListener implements ControlListener {
 				height_scaled = comp_image.getBounds().height;
 				width_scaled = (int) (width - (height - height_scaled) * ratio);
 			}
+			String lang = Platform.getNL().substring(0,2);
+			if(Platform.getNL().substring(0,2).equals("de")){
+				lang = "de";
+			}
+			else{
+				lang="en";
+			}
 			//load matching image
 			if (image_name == "Architekturskizze Zertifikatserzeugung") {//$NON-NLS-1$
 				help = Activator.getImageDescriptor(
-						"icons/minica_create.png").createImage();//$NON-NLS-1$
+						"icons/"+lang+"/minica_create.png").createImage();//$NON-NLS-1$
 			} else if (image_name == "Architekturskizze Zertifikatswiderruf") {//$NON-NLS-1$
-				help = Activator.getImageDescriptor("icons/minica_revoke.png")//$NON-NLS-1$
+				help = Activator.getImageDescriptor("icons/"+lang+"/minica_revoke.png")//$NON-NLS-1$
 						.createImage();
 			} else if (image_name == "Architekturskizze Signaturpr\u00FCfung") {//$NON-NLS-1$
-				help = Activator.getImageDescriptor("icons/minica_check.png")//$NON-NLS-1$
+				help = Activator.getImageDescriptor("icons/"+lang+"/minica_check.png")//$NON-NLS-1$
 						.createImage();
 			} else {
 				help = Activator.getImageDescriptor("icons/ausweis.jpeg")//$NON-NLS-1$
 						.createImage();
 			}
-
+			System.out.println("Image Size:");
 			//create image in new size
 			img_scaled = new Image(img.getDisplay(), help.getImageData()
 					.scaledTo(width_scaled, height_scaled));
 			img.setImage(img_scaled);
+
 			comp_image.layout();
 		}
 	}

@@ -24,7 +24,7 @@ public class SignatureNotifier implements SignatureListener{
 
 	@Override
 	public void signaturePerformed(SignatureEvent e) {
-		Signature signature = new Signature(e.getSignature(), e.getPath(),e.getText(), new Date(System.currentTimeMillis()), e.getPrivAlias(),Input.publicKey, e.getHashAlgorithm());
+		Signature signature = new Signature(e.getSignature(), e.getPath(),e.getText(), new Date(System.currentTimeMillis()), e.getPrivAlias(),e.getPubAlias(), e.getHashAlgorithm());
 		CertificateCSRR.getInstance().addSignature(signature);
 		Input.privateKey = null;
 		Input.publicKey = null;
