@@ -1,5 +1,7 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.security.KeyStoreException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -57,7 +59,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private void initialize() {
 		grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
-		grpSignatures.setBounds(10, 65, 300, 151);
+		grpSignatures.setBounds(10, 65, 406, 151);
 		
 		rdo1 = new Button(grpSignatures, SWT.RADIO);
 		rdo1.setSelection(true);
@@ -78,11 +80,11 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
-		grpDescription.setBounds(10, 230, 300, 255);
+		grpDescription.setBounds(10, 230, 406, 255);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
 		txtDescription.setEditable(false);
-		txtDescription.setBounds(10, 15, 275, 213);
+		txtDescription.setBounds(10, 15, 382, 213);
 		//txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
 		txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		txtDescription.setText(Messages.SignatureWizard_DSA_description);
@@ -108,7 +110,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    rdo4.addSelectionListener(this);
 	    
 	    combo = new Combo(this, SWT.READ_ONLY);
-	    combo.setBounds(10, 35, 300, 22);
+	    combo.setBounds(10, 35, 406, 22);
 	    combo.addSelectionListener(new SelectionListener() {
 	    	public void widgetDefaultSelected(SelectionEvent e) {
 			}
@@ -285,8 +287,8 @@ public class SignatureComposite extends Composite implements SelectionListener{
                 }
             }//end while
             combo.select(0);
-            String s = combo.getText();
-            alias = keystoreitems.get(combo.getText());
+            String s = combo.getText(); 
+            //alias = keystoreitems.get(s);
         } catch (NoKeyStoreFileException e) {
             LogUtil.logError(e);
         } catch (KeyStoreException e) {

@@ -82,7 +82,7 @@ public class HashComposite extends Composite implements SelectionListener {
 	    
 	    rdo2 = new Button(grpHashes, SWT.RADIO);
 	    rdo2.setBounds(10, 43, 91, 18);
-	    rdo2.setText(Messages.HashWizard_rdosha1);
+	    rdo2.setText("SHA-1 (160)");
 	    
 	    rdo3 = new Button(grpHashes, SWT.RADIO);
 	    rdo3.setBounds(10, 67, 91, 18);
