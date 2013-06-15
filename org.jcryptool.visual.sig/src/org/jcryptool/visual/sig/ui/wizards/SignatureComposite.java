@@ -50,7 +50,6 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		super(parent, style);
 		method = m;
 		page = p; 
-		page.setPageComplete(false);
 	    //Draw the controls
 	    initialize();
 	}
