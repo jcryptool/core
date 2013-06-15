@@ -66,31 +66,13 @@ public class SigGeneration {
 				org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
 				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
 				
-				//Get the public key (only with required with RSA and if called)
-//		        pubKey = ksm.getPublicKey(alias); 
-//		        pubKey.getPublicKey();
-				/*
-				String p = null;
-				String t = null;
-				if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
-					t = org.jcryptool.visual.sig.algorithm.Input.data.toString();
-				} else {
-					p = org.jcryptool.visual.sig.algorithm.Input.path;
-				}
-				
-				for(SignatureListener lst : SignatureListenerAdder.getListeners()){      	
-	        		lst.signaturePerformed(new SignatureEvent(signature, p, t, new Date(System.currentTimeMillis()), alias, alias, org.jcryptool.visual.sig.algorithm.Input.chosenHash));
-				}
-				*/
 			} else { //Use own Key from given alias
 				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
 				
 				//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
 			}
 		}//end else
-		
-		
-		
+				
 		// Get a signature object using the specified combo and sign the data with the private key
 		Signature sig = Signature.getInstance(signaturemethod);
 		sig.initSign(k);
@@ -121,7 +103,6 @@ public class SigGeneration {
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
 	    org.jcryptool.visual.sig.algorithm.Input.signatureHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(signature); //Hex String
 	    org.jcryptool.visual.sig.algorithm.Input.signatureOct = org.jcryptool.visual.sig.algorithm.Input.toOctalString(signature, "");
-//	    org.jcryptool.visual.sig.algorithm.Input.signatureDec = org.jcryptool.visual.sig.algorithm.Input.toHexString(signature);
 
 	    return signature;		
 	}

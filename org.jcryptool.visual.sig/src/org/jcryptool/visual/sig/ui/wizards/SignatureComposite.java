@@ -244,7 +244,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 						//Clean up
 						keystoreitems.clear();
 						combo.removeAll();
-						
+						initializeKeySelection(2);
 					}
 				}
 			}
@@ -285,9 +285,16 @@ public class SignatureComposite extends Composite implements SelectionListener{
     	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
     	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
     	                } //end if
-                		
-                	} 
-                }
+                	} else {
+                    	if (method == 2) { //RSAandMGF1
+                    		if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
+        	                	//Fill in keys
+        	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
+        	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
+        	                } //end if
+                    	} //end if
+                	}//end else
+                }//end while
             }//end while
             //combo.select(0);
             //String s = combo.getText(); 
