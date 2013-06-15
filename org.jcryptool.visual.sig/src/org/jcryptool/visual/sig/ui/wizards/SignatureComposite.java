@@ -1,7 +1,5 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.security.KeyStoreException;
 import java.util.Enumeration;
 import java.util.HashMap;

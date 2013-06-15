@@ -5,10 +5,7 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.Signature;
-//import java.security.cert.Certificate;
 import java.util.Date;
-
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.sig.listener.SignatureEvent;
@@ -59,7 +56,7 @@ public class SigGeneration {
 		} else {
 			
 			KeyStoreManager ksm = KeyStoreManager.getInstance();
-			ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+			//ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
 			
 			//Check if called by JCT-CA
 			if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
