@@ -46,7 +46,8 @@ public class SigGeneration {
 		
 		//Eigene sach fia ecdsa....
 		if (signaturemethod.contains("ECDSA")) { //Generate a key because there are no ECDSA Keys in the keystore
-	        //Generate a key pair
+	        
+			//Generate a key pair
 	        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
 	        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
 
@@ -54,9 +55,12 @@ public class SigGeneration {
 
 	        KeyPair pair = keyGen.generateKeyPair();
 	        k = pair.getPrivate();
+	        
 		} else {
+			
 			KeyStoreManager ksm = KeyStoreManager.getInstance();
 			ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
+			
 			//Check if called by JCT-CA
 			if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
 				org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();

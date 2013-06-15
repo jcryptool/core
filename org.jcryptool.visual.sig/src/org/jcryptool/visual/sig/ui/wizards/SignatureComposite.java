@@ -38,6 +38,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private Combo combo;
 	private KeyStoreAlias alias = null;
 	private int keyType = 0;
+	private SignatureWizardPage page = null;
 	private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 	
 	private int method;
@@ -45,10 +46,11 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private MenuItem mntmSig;
 	
 	//Constructor
-	public SignatureComposite(Composite parent, int style, int m) {
+	public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p) {
 		super(parent, style);
 		method = m;
-		//parent.setSize(600, 400); 
+		page = p; 
+		page.setPageComplete(false);
 	    //Draw the controls
 	    initialize();
 	}
@@ -117,7 +119,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 
 			public void widgetSelected(SelectionEvent e) {
 				alias = keystoreitems.get(combo.getText());
-				;
+				page.setPageComplete(true);
 			}
 	    });
 	    
@@ -193,7 +195,6 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    
 	    //Temporary
 	    /*
-	    rdo3.setEnabled(false);
 	    rdo4.setEnabled(false);
 	    */
 	}
@@ -235,13 +236,15 @@ public class SignatureComposite extends Composite implements SelectionListener{
 					keystoreitems.clear();
 					combo.removeAll();
 					combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)");
-					combo.select(0);
+					//combo.select(0);
+					page.setPageComplete(false);
 				} else {
 					if (rdo4.getSelection()) {
 						txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
 						//Clean up
 						keystoreitems.clear();
 						combo.removeAll();
+						
 					}
 				}
 			}
@@ -286,9 +289,10 @@ public class SignatureComposite extends Composite implements SelectionListener{
                 	} 
                 }
             }//end while
-            combo.select(0);
-            String s = combo.getText(); 
+            //combo.select(0);
+            //String s = combo.getText(); 
             //alias = keystoreitems.get(s);
+            page.setPageComplete(false);
         } catch (NoKeyStoreFileException e) {
             LogUtil.logError(e);
         } catch (KeyStoreException e) {

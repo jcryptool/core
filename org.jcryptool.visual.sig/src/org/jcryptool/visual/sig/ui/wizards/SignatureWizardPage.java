@@ -20,7 +20,7 @@ public class SignatureWizardPage extends WizardPage {
 	}
 	
 	public void createControl(Composite parent) {
-		composite = new SignatureComposite(parent, NONE, method);
+		composite = new SignatureComposite(parent, NONE, method, this);
 		setControl(composite);
 		setPageComplete(true);
 	}
