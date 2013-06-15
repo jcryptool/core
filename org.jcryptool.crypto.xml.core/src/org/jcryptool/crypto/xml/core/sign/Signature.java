@@ -13,7 +13,7 @@ package org.jcryptool.crypto.xml.core.sign;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.w3c.dom.Document;
 
 /**
@@ -36,7 +36,7 @@ public class Signature {
     /** Basic Security Profile. */
     private boolean bsp;
     /** Key alias. */
-    private KeyStoreAlias keyAlias;
+    private IKeyStoreAlias keyAlias;
     /** Key password. */
     private char[] keyPassword;
     /** Message Digest Algorithm. */
@@ -123,7 +123,7 @@ public class Signature {
      *
      * @param keyName The name of the key
      */
-    public void setKeyAlias(final KeyStoreAlias keyAlias) {
+    public void setKeyAlias(final IKeyStoreAlias keyAlias) {
         this.keyAlias = keyAlias;
     }
 
@@ -262,7 +262,7 @@ public class Signature {
      *
      * @return The key name
      */
-    public KeyStoreAlias getKeyAlias() {
+    public IKeyStoreAlias getKeyAlias() {
         return keyAlias;
     }
 

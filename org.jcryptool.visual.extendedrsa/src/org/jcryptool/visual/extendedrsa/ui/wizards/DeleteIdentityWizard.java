@@ -53,7 +53,7 @@ public class DeleteIdentityWizard extends Wizard {
             }
         }
 
-        KeyStoreManager.getInstance().deleteContact(contactToDelete);
+        KeyStoreManager.getInstance().deleteAllEntriesForContact(contactToDelete);
 
         if (ContactManager.getInstance().getContactSize() > 2) {
             delID.setEnabled(true);

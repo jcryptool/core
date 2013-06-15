@@ -1,15 +1,14 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards.pages;
 
-import java.security.KeyStoreException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -23,11 +22,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.rsa.RSAData;
 
@@ -76,21 +72,14 @@ public class RSALoadPublicKeyPage extends WizardPage {
      */
     private void initKeystoreConnection() {
         KeyStoreManager ksm = KeyStoreManager.getInstance();
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            Enumeration<String> aliases = ksm.getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getClassName().equals(RSAPublicKey.class.getName())) {
-                    keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                            + alias.getClassName(), alias);
-                }
+        KeyStoreAlias alias;
+        Enumeration<String> aliases = ksm.getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
+            if (alias.getClassName().equals(RSAPublicKey.class.getName())) {
+                keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
+                        + alias.getClassName(), alias);
             }
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
         }
     }
 

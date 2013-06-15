@@ -1,15 +1,14 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.he.wizards.pages;
 
-import java.security.KeyStoreException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -26,11 +25,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.rsa.RSAData;
 
@@ -38,7 +34,7 @@ import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
 /**
  * Page for loading a Keypair.
- *
+ * 
  * @author Michael Gaber
  */
 public class RSALoadKeypairPage extends WizardPage {
@@ -72,7 +68,7 @@ public class RSALoadKeypairPage extends WizardPage {
 
     /**
      * Constructor for a new page. sets the data object, description and inits the keystore connection
-     *
+     * 
      * @param data the data object
      */
     public RSALoadKeypairPage(RSAData data) {
@@ -88,20 +84,13 @@ public class RSALoadKeypairPage extends WizardPage {
      */
     private void initKeystoreConnection() {
         ksm = KeyStoreManager.getInstance();
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            for (Enumeration<String> aliases = ksm.getAliases(); aliases.hasMoreElements();) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-                    keyStoreItems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                            + alias.getClassName(), alias);
-                }
+        KeyStoreAlias alias;
+        for (Enumeration<String> aliases = ksm.getAliases(); aliases.hasMoreElements();) {
+            alias = new KeyStoreAlias(aliases.nextElement());
+            if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
+                keyStoreItems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
+                        + alias.getClassName(), alias);
             }
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
         }
     }
 
@@ -122,7 +111,8 @@ public class RSALoadKeypairPage extends WizardPage {
             }
         });
 
-        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+                false));
 
         Text l = new Text(composite, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
         l.setText(Messages.RSALoadKeypairPage_enter_password);
@@ -139,17 +129,11 @@ public class RSALoadKeypairPage extends WizardPage {
 
     /**
      * gets the matching public entry for a private one.
-     *
+     * 
      * @return the {@link KeyStoreAlias} for the public key
      */
     private KeyStoreAlias getPublicForPrivate() {
-        Enumeration<String> aliases;
-        try {
-            aliases = ksm.getAliases();
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
-            return null;
-        }
+        Enumeration<String> aliases = ksm.getAliases();
         KeyStoreAlias alias;
         while (aliases != null && aliases.hasMoreElements()) {
             alias = new KeyStoreAlias(aliases.nextElement());
@@ -175,7 +159,7 @@ public class RSALoadKeypairPage extends WizardPage {
 
     /**
      * getter for the pagename.
-     *
+     * 
      * @return the pagename
      */
     public static String getPagename() {

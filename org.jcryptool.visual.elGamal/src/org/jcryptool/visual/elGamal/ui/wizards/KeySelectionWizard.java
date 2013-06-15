@@ -1,26 +1,23 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards;
 
-import java.security.KeyStoreException;
 import java.security.PrivateKey;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.certificates.CertificateFactory;
-import org.jcryptool.crypto.keys.KeyType;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
+import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
@@ -44,7 +41,7 @@ import de.flexiprovider.core.elgamal.ElGamalPublicKeySpec;
 
 /**
  * wizard for key selection and creation.
- *
+ * 
  * @author Michael Gaber
  */
 public class KeySelectionWizard extends Wizard {
@@ -63,7 +60,7 @@ public class KeySelectionWizard extends Wizard {
 
     /**
      * Constructor, setting title, action and data.
-     *
+     * 
      * @param action the cryptographic action
      * @param data the data object
      * @param standalone selects whether this wizard is stand-alone. If it is there is no setting of any variables.
@@ -90,22 +87,22 @@ public class KeySelectionWizard extends Wizard {
             addPage(new SavePublicKeyPage(data));
         } else {
             switch (action) {
-                case DecryptAction:
-                case SignAction:
-                    addPage(new DecryptSignPage());
-                    addPage(new LoadKeypairPage(data));
-                    addPage(new NewKeypairPage(data));
-                    addPage(new SaveKeypairPage(data));
-                    break;
-                case EncryptAction:
-                case VerifyAction:
-                    addPage(new EncryptVerifyPage());
-                    addPage(new LoadPublicKeyPage(data));
-                    addPage(new NewPublicKeyPage(data));
-                    addPage(new SavePublicKeyPage(data));
-                    break;
-                default:
-                    break;
+            case DecryptAction:
+            case SignAction:
+                addPage(new DecryptSignPage());
+                addPage(new LoadKeypairPage(data));
+                addPage(new NewKeypairPage(data));
+                addPage(new SaveKeypairPage(data));
+                break;
+            case EncryptAction:
+            case VerifyAction:
+                addPage(new EncryptVerifyPage());
+                addPage(new LoadPublicKeyPage(data));
+                addPage(new NewPublicKeyPage(data));
+                addPage(new SavePublicKeyPage(data));
+                break;
+            default:
+                break;
             }
         }
     }
@@ -121,36 +118,36 @@ public class KeySelectionWizard extends Wizard {
         } else {
             IWizardPage page;
             switch (action) {
-                case DecryptAction:
-                case SignAction:
-                    page = getPage(DecryptSignPage.getPagename());
+            case DecryptAction:
+            case SignAction:
+                page = getPage(DecryptSignPage.getPagename());
+                rv &= page.isPageComplete();
+                if (((DecryptSignPage) page).wantNewKey()) {
+                    page = getPage(NewKeypairPage.getPagename());
                     rv &= page.isPageComplete();
-                    if (((DecryptSignPage) page).wantNewKey()) {
-                        page = getPage(NewKeypairPage.getPagename());
-                        rv &= page.isPageComplete();
-                        if (((NewKeypairPage) page).wantSave()) {
-                            rv &= getPage(SaveKeypairPage.getPagename()).isPageComplete();
-                        }
-                    } else {
-                        rv &= getPage(LoadKeypairPage.getPagename()).isPageComplete();
+                    if (((NewKeypairPage) page).wantSave()) {
+                        rv &= getPage(SaveKeypairPage.getPagename()).isPageComplete();
                     }
-                    break;
-                case EncryptAction:
-                case VerifyAction:
-                    page = getPage(EncryptVerifyPage.getPagename());
+                } else {
+                    rv &= getPage(LoadKeypairPage.getPagename()).isPageComplete();
+                }
+                break;
+            case EncryptAction:
+            case VerifyAction:
+                page = getPage(EncryptVerifyPage.getPagename());
+                rv &= page.isPageComplete();
+                if (((EncryptVerifyPage) page).wantNewKey()) {
+                    page = getPage(NewPublicKeyPage.getPagename());
                     rv &= page.isPageComplete();
-                    if (((EncryptVerifyPage) page).wantNewKey()) {
-                        page = getPage(NewPublicKeyPage.getPagename());
-                        rv &= page.isPageComplete();
-                        if (((NewPublicKeyPage) page).wantSave()) {
-                            rv &= getPage(SavePublicKeyPage.getPagename()).isPageComplete();
-                        }
-                    } else {
-                        rv &= getPage(LoadPublicKeyPage.getPagename()).isPageComplete();
+                    if (((NewPublicKeyPage) page).wantSave()) {
+                        rv &= getPage(SavePublicKeyPage.getPagename()).isPageComplete();
                     }
-                    break;
-                default:
-                    rv = false;
+                } else {
+                    rv &= getPage(LoadPublicKeyPage.getPagename()).isPageComplete();
+                }
+                break;
+            default:
+                rv = false;
             }
         }
         return rv;
@@ -164,45 +161,43 @@ public class KeySelectionWizard extends Wizard {
         }
         try {
             switch (action) {
-                case DecryptAction:
-                case SignAction:
-                    if (((DecryptSignPage) getPage(DecryptSignPage.getPagename())).wantNewKey()) {
-                        if (((NewKeypairPage) getPage(NewKeypairPage.getPagename())).wantSave()) {
-                            save(true);
-                        }
-                    } else {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias privAlias = data.getPrivateAlias();
-                        final String password = data.getPassword();
-                        final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                        final ElGamalPrivateKey privkey = (ElGamalPrivateKey) key;
-                        data.setModulus(privkey.getModulus().bigInt);
-                        data.setGenerator(privkey.getGenerator().bigInt);
-                        data.setPublicA(privkey.getPublicA().bigInt);
-                        data.setA(privkey.getA().bigInt);
+            case DecryptAction:
+            case SignAction:
+                if (((DecryptSignPage) getPage(DecryptSignPage.getPagename())).wantNewKey()) {
+                    if (((NewKeypairPage) getPage(NewKeypairPage.getPagename())).wantSave()) {
+                        save(true);
                     }
-                    break;
-                case EncryptAction:
-                case VerifyAction:
-                    if (((EncryptVerifyPage) getPage(EncryptVerifyPage.getPagename())).wantNewKey()) {
-                        if (((NewPublicKeyPage) getPage(NewPublicKeyPage.getPagename())).wantSave()) {
-                            save(false);
-                        }
-                    } else {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias publicAlias = data.getPublicAlias();
-                        final ElGamalPublicKey pubkey = (ElGamalPublicKey) ksm.getPublicKey(publicAlias).getPublicKey();
-                        data.setModulus(pubkey.getModulus().bigInt);
-                        data.setGenerator(pubkey.getGenerator().bigInt);
-                        data.setPublicA(pubkey.getPublicA().bigInt);
+                } else {
+                    final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                    final KeyStoreAlias privAlias = data.getPrivateAlias();
+                    final String password = data.getPassword();
+                    final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                    final ElGamalPrivateKey privkey = (ElGamalPrivateKey) key;
+                    data.setModulus(privkey.getModulus().bigInt);
+                    data.setGenerator(privkey.getGenerator().bigInt);
+                    data.setPublicA(privkey.getPublicA().bigInt);
+                    data.setA(privkey.getA().bigInt);
+                }
+                break;
+            case EncryptAction:
+            case VerifyAction:
+                if (((EncryptVerifyPage) getPage(EncryptVerifyPage.getPagename())).wantNewKey()) {
+                    if (((NewPublicKeyPage) getPage(NewPublicKeyPage.getPagename())).wantSave()) {
+                        save(false);
                     }
-                    break;
-                default:
-                    save(((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair());
+                } else {
+                    final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                    final KeyStoreAlias publicAlias = data.getPublicAlias();
+                    final ElGamalPublicKey pubkey = (ElGamalPublicKey) ksm.getCertificate(publicAlias).getPublicKey();
+                    data.setModulus(pubkey.getModulus().bigInt);
+                    data.setGenerator(pubkey.getGenerator().bigInt);
+                    data.setPublicA(pubkey.getPublicA().bigInt);
+                }
+                break;
+            default:
+                save(((ChooseKeytypePage) getPage(ChooseKeytypePage.getPagename())).keypair());
             }
             return true;
-        } catch (final KeyStoreException e) {
-            LogUtil.logError(e);
         } catch (final Exception e) {
             LogUtil.logError(e);
         }
@@ -211,14 +206,13 @@ public class KeySelectionWizard extends Wizard {
 
     /**
      * Saves the key pair or private key this wizard constructs to the platform keystore.
-     *
+     * 
      * @param keypair <code>true</code> if the key to save is a key pair or <code>false</code> if it's only a public
-     *        key.
+     *            key.
      */
     private void save(final boolean keypair) {
         final KeyStoreManager ksm = KeyStoreManager.getInstance();
         try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
             final FlexiBigInt modulus = new FlexiBigInt(data.getModulus()), generator = new FlexiBigInt(
                     data.getGenerator()), publicA = new FlexiBigInt(data.getPublicA());
             final ElGamalKeyFactory factory = new ElGamalKeyFactory();
@@ -239,13 +233,11 @@ public class KeySelectionWizard extends Wizard {
                         KeyType.KEYPAIR_PRIVATE_KEY,
                         "", data.getModulus().bitLength(), (data //$NON-NLS-1$
                                 .getContactName().concat(data.getModulus().toString())).hashCode() + "", privkey.getClass().getName()); //$NON-NLS-1$
-                ksm.addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), data.getPassword(), privateAlias,
-                        publicAlias);
+                ksm.addKeyPair(privkey, CertificateFactory.createJCrypToolCertificate(pubkey), data.getPassword()
+                        .toCharArray(), privateAlias, publicAlias);
             } else {
                 ksm.addCertificate(CertificateFactory.createJCrypToolCertificate(pubkey), publicAlias);
             }
-        } catch (final NoKeyStoreFileException e) {
-            LogUtil.logError(e);
         } catch (final InvalidKeySpecException e) {
             LogUtil.logError(e);
         }

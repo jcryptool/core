@@ -12,7 +12,6 @@ package org.jcryptool.visual.extendedrsa.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import java.security.KeyStoreException;
 import java.util.Enumeration;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -59,18 +58,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    @SuppressWarnings("unused")
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                @SuppressWarnings("unused")
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -79,18 +75,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                    assertEquals("asdf", message.getEncryptedMessage());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
+                assertEquals("asdf", message.getEncryptedMessage());
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -99,18 +92,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                    assertEquals(1, message.getKeyID());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
+                assertEquals(1, message.getKeyID());
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -119,18 +109,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                    assertEquals("sender", message.getSender());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
+                assertEquals("sender", message.getSender());
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -139,18 +126,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                    assertEquals(ALICE, message.getRecipient().getContactName());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
+                assertEquals(ALICE, message.getRecipient().getContactName());
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -159,18 +143,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, "subject");
-                    assertEquals("subject", message.getSubject());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, "subject");
+                assertEquals("subject", message.getSubject());
             }
-        } catch (KeyStoreException e) {
         }
     }
 
@@ -179,18 +160,15 @@ public class SecureMessageTest {
         int count = 0;
         KeyStoreAlias alias = null;
         final Enumeration<String> aliases;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
+        aliases = KeyStoreManager.getInstance().getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
 
-                if (alias.getContactName().equals(ALICE) && count < 1) {
-                    count++;
-                    SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
-                    assertEquals(null, message.getSubject());
-                }
+            if (alias.getContactName().equals(ALICE) && count < 1) {
+                count++;
+                SecureMessage message = new SecureMessage("asdf", 1, "sender", alias, null);
+                assertEquals(null, message.getSubject());
             }
-        } catch (KeyStoreException e) {
         }
     }
 }

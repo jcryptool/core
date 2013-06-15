@@ -1,15 +1,14 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.elGamal.ui.wizards.wizardpages;
 
-import java.security.KeyStoreException;
 import java.util.Enumeration;
 import java.util.HashMap;
 
@@ -26,11 +25,8 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import org.jcryptool.visual.elGamal.ElGamalData;
 import org.jcryptool.visual.elGamal.Messages;
 
@@ -38,7 +34,7 @@ import de.flexiprovider.core.elgamal.ElGamalPrivateKey;
 
 /**
  * Page for loading a Keypair.
- *
+ * 
  * @author Michael Gaber
  */
 public class LoadKeypairPage extends WizardPage {
@@ -72,7 +68,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * Constructor setting pagename, description, data and completion status and initializes the keystore connection
-     *
+     * 
      * @param data {@link #data}
      */
     public LoadKeypairPage(final ElGamalData data) {
@@ -88,21 +84,14 @@ public class LoadKeypairPage extends WizardPage {
      */
     private void initKeystoreConnection() {
         ksm = KeyStoreManager.getInstance();
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            for (final Enumeration<String> aliases = ksm.getAliases(); aliases.hasMoreElements();) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                if (alias.getClassName().equals(ElGamalPrivateKey.class.getName())) {
-                    keyStoreItems.put(alias.getContactName() + " - " //$NON-NLS-1$
-                            + alias.getKeyLength() + "Bit - " //$NON-NLS-1$
-                            + alias.getClassName(), alias);
-                }
+        KeyStoreAlias alias;
+        for (final Enumeration<String> aliases = ksm.getAliases(); aliases.hasMoreElements();) {
+            alias = new KeyStoreAlias(aliases.nextElement());
+            if (alias.getClassName().equals(ElGamalPrivateKey.class.getName())) {
+                keyStoreItems.put(alias.getContactName() + " - " //$NON-NLS-1$
+                        + alias.getKeyLength() + "Bit - " //$NON-NLS-1$
+                        + alias.getClassName(), alias);
             }
-        } catch (final NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (final KeyStoreException e) {
-            LogUtil.logError(e);
         }
     }
 
@@ -146,17 +135,11 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * gets the matching public entry for a private one.
-     *
+     * 
      * @return the {@link KeyStoreAlias} for the public key
      */
     protected KeyStoreAlias getPublicForPrivate() {
-        Enumeration<String> aliases;
-        try {
-            aliases = ksm.getAliases();
-        } catch (final KeyStoreException e) {
-            LogUtil.logError(e);
-            return null;
-        }
+        Enumeration<String> aliases = ksm.getAliases();
         KeyStoreAlias alias;
         while (aliases != null && aliases.hasMoreElements()) {
             alias = new KeyStoreAlias(aliases.nextElement());
@@ -183,7 +166,7 @@ public class LoadKeypairPage extends WizardPage {
 
     /**
      * getter for the pagename.
-     *
+     * 
      * @return the pagename
      */
     public static String getPagename() {

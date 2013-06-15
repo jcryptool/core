@@ -28,8 +28,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.jcryptool.core.operations.algorithm.modern.AbstractModernAlgorithm;
 import org.jcryptool.core.operations.dataobject.IDataObject;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.xml.core.utils.SignatureNamespaceContext;
 import org.jcryptool.crypto.xml.core.utils.Utils;
 import org.jcryptool.crypto.xml.core.utils.XmlSecurityConstants;
@@ -63,7 +63,7 @@ public class CreateSignature extends AbstractModernAlgorithm {
     /** The certificate password. */
     private char[] keyPassword = null;
     /** The key alias. */
-    private KeyStoreAlias keyAlias = null;
+    private IKeyStoreAlias keyAlias = null;
     /** The optional signature ID. */
     private String signatureId = null;
     /** The message digest algorithm. */

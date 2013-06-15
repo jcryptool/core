@@ -28,8 +28,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.xml.core.sign.Signature;
 import org.jcryptool.crypto.xml.core.utils.IGlobals;
 import org.jcryptool.crypto.xml.ui.XSTUIPlugin;
@@ -59,7 +59,7 @@ public class PageKey extends WizardPage implements Listener {
     private static final String SETTING_KEY_ALIAS = "sign_key_alias";
     /** Model for the XML Signature Wizard. */
     private Signature signature = null;
-    private ArrayList<KeyStoreAlias> privateKeys = new ArrayList<KeyStoreAlias>();
+    private ArrayList<IKeyStoreAlias> privateKeys = new ArrayList<IKeyStoreAlias>();
 
     /**
      * Constructor for PageOpenKey.
@@ -98,7 +98,7 @@ public class PageKey extends WizardPage implements Listener {
         privateKeys = KeyStoreManager.getInstance().getAllPrivateKeys();
         ArrayList<String> items = new ArrayList<String>();
         
-        for (KeyStoreAlias item : privateKeys) {
+        for (IKeyStoreAlias item : privateKeys) {
             items.add("\"" + item.getContactName() + "\" - " + item.getOperation() + " - " + item.getKeyLength() + " bit");
         }
         
