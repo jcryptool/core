@@ -18,15 +18,6 @@
             >
       </view>
    </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.jcryptool.preferences.crypto"
-            class="org.jcryptool.crypto.keystore.ui.preferences.KeyStorePreferencePage"
-            id="org.jcryptool.crypto.keystore.ui.internal.preferences.KeyStorePreferencePage"
-            name="%page.name.0">
-      </page>
-   </extension>
    <extension point="org.eclipse.help.contexts">
       <contexts file="$nl$/contexts.xml"></contexts>
    </extension>
