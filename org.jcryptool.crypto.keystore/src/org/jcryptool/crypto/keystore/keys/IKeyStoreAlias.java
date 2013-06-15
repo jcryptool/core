@@ -26,4 +26,6 @@ public interface IKeyStoreAlias {
    String getHashValue();
 
    String getAliasString();
+   
+   String getClassName();
 }
