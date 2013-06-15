@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
 import java.io.BufferedInputStream;
@@ -244,19 +243,17 @@ public class KeyStoreManager {
     }
 
     /**
-     * Returns the trusted certificate for the given keystore alias.
+     * Returns the certificate for the given keystore alias.
      * 
      * @param alias The alias to look up
-     * @return The retrieved trusted certificate or null in case no matching entry was found
+     * @return The retrieved certificate or null in case no matching entry was found
      * @throws NoSuchAlgorithmException In case the requested algorithm is not supported
      * @throws UnrecoverableEntryException In case the entry cannot be recovered
      */
     public Certificate getCertificate(IKeyStoreAlias alias) throws UnrecoverableEntryException,
             NoSuchAlgorithmException {
         try {
-            KeyStore.TrustedCertificateEntry entry = (KeyStore.TrustedCertificateEntry) keyStore.getEntry(
-                    alias.getAliasString(), null);
-            return entry.getTrustedCertificate();
+            return keyStore.getCertificate(alias.getAliasString());
         } catch (KeyStoreException e) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
         }
