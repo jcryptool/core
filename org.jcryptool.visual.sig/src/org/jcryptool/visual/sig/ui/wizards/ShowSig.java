@@ -149,7 +149,7 @@ public class ShowSig extends Shell {
 		int stepSize = 14;
 		int len = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
 
-	    for (int i1 = 0; i1 < (len/(stepSize*2)) ; i1++) {
+	    for (int i1 = 0; i1 < (Math.ceil((double)len/(stepSize*2))) ; i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        
 	        //Spalte 1
@@ -166,7 +166,7 @@ public class ShowSig extends Shell {
 	        end = end >= len ? len : end;
 	    
 	        StringBuffer buffer = new StringBuffer();
-	        for (int m = 0; m < stepSize ; m++){
+	        for (int m = 0; m < (end-start)/2 ; m++){
 	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m)+start));
 	         buffer.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m+1)+start));
 	         buffer.append(" ");
