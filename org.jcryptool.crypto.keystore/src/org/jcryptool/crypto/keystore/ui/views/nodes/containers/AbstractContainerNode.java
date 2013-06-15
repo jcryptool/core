@@ -10,7 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.nodes.containers;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode;
 
 public abstract class AbstractContainerNode extends TreeNode {
@@ -19,8 +19,8 @@ public abstract class AbstractContainerNode extends TreeNode {
 		super(name);
 	}
 
-	public abstract void add(KeyStoreAlias alias);
+	public abstract void add(IKeyStoreAlias alias);
 	
-	public abstract void remove(KeyStoreAlias alias);
+	public abstract void remove(IKeyStoreAlias alias);
 	
 }

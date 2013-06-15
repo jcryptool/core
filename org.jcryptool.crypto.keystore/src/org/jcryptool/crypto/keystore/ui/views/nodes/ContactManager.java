@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.security.KeyStoreException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -35,6 +34,7 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 
@@ -123,12 +123,7 @@ public class ContactManager {
             return;
         }
 
-        Enumeration<String> aliases = null;
-        try {
-            aliases = KeyStoreManager.getInstance().getAliases();
-        } catch (KeyStoreException e) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "KeyStoreException while accessing the aliases", e, true); //$NON-NLS-1$
-        }
+        Enumeration<String> aliases = KeyStoreManager.getInstance().getAliases();
         Map<String, List<KeyStoreAlias>> aliasesHashed = new HashMap<String, List<KeyStoreAlias>>();
         while (aliases.hasMoreElements()) {
             KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
@@ -166,7 +161,7 @@ public class ContactManager {
         return contactStore;
     }
 
-    private void addEntryToContact(IContactDescriptor contact, KeyStoreAlias alias) {
+    private void addEntryToContact(IContactDescriptor contact, IKeyStoreAlias alias) {
         LogUtil.logInfo("Adding entry to contact " + alias.getAliasString()); //$NON-NLS-1$
 
         if (alias.getKeyStoreEntryType().equals(KeyType.SECRETKEY)) {
@@ -241,7 +236,7 @@ public class ContactManager {
         }
     }
 
-    public void removeEntry(KeyStoreAlias alias) {
+    public void removeEntry(IKeyStoreAlias alias) {
         LogUtil.logInfo("Removing entry " + alias.getAliasString()); //$NON-NLS-1$
 
         if (alias.getKeyStoreEntryType().equals(KeyType.SECRETKEY)) {
@@ -261,7 +256,7 @@ public class ContactManager {
         notifyListeners();
     }
 
-    public void addCertificate(KeyStoreAlias alias) {
+    public void addCertificate(IKeyStoreAlias alias) {
         LogUtil.logInfo("Adding certificate " + alias.getAliasString()); //$NON-NLS-1$
 
         if (contactExists(alias.getContactName())) {
@@ -274,7 +269,7 @@ public class ContactManager {
         notifyListeners();
     }
 
-    public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
+    public void addKeyPair(IKeyStoreAlias privateKey, IKeyStoreAlias publicKey) {
         LogUtil.logInfo("Adding key pair " + publicKey.getAliasString()); //$NON-NLS-1$
 
         if (contactExists(privateKey.getContactName())) {
@@ -287,7 +282,7 @@ public class ContactManager {
         notifyListeners();
     }
 
-    public void addSecretKey(KeyStoreAlias alias) {
+    public void addSecretKey(IKeyStoreAlias alias) {
         LogUtil.logInfo("Adding secret key " + alias.getAliasString()); //$NON-NLS-1$
 
         if (contactExists(alias.getContactName())) {

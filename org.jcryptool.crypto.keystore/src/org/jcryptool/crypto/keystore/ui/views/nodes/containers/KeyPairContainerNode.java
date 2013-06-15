@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.KeyPairNode;
@@ -36,10 +36,10 @@ public class KeyPairContainerNode extends AbstractContainerNode implements IKeyP
         return KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_key2.png"); //$NON-NLS-1$
     }
 
-    public void add(KeyStoreAlias alias) {
+    public void add(IKeyStoreAlias alias) {
     }
 
-    public void remove(KeyStoreAlias alias) {
+    public void remove(IKeyStoreAlias alias) {
         KeyPairNode child = nodes.get(alias.getHashValue());
         nodes.remove(alias.getHashValue());
         removeChild(child);
@@ -49,7 +49,7 @@ public class KeyPairContainerNode extends AbstractContainerNode implements IKeyP
         }
     }
 
-    public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
+    public void addKeyPair(IKeyStoreAlias privateKey, IKeyStoreAlias publicKey) {
         if (privateKey != null && publicKey != null) {
             KeyPairNode child = new KeyPairNode(privateKey, publicKey);
             setAppropriateNameForNode(child);

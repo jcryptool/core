@@ -12,18 +12,18 @@ package org.jcryptool.crypto.keystore.ui.views.nodes.keys;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public class CertificateNode extends AbstractKeyNode {
 	
-	private KeyStoreAlias alias;
+	private IKeyStoreAlias alias;
 
-	public CertificateNode(KeyStoreAlias publicAlias) {
+	public CertificateNode(IKeyStoreAlias publicAlias) {
 		super(Messages.getString("Label.PublicKey")); //$NON-NLS-1$
 		this.alias = publicAlias;
 	}
 
-	public KeyStoreAlias getAlias() {
+	public IKeyStoreAlias getAlias() {
 		return alias;
 	}
 

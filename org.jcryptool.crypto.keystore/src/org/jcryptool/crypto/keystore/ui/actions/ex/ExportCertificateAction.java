@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -9,11 +9,15 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions.ex;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.ImportExportManager;
@@ -22,7 +26,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 
 /**
  * @author t-kern
- *
+ * 
  */
 public class ExportCertificateAction extends Action {
     private IViewKeyInformation info;
@@ -40,15 +44,21 @@ public class ExportCertificateAction extends Action {
     public void run() {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] {Messages.getString("ExportCertificateAction.0")}); //$NON-NLS-1$
-        dialog.setFilterNames(new String[] {Messages.getString("ExportCertificateAction.1")}); //$NON-NLS-1$
+        dialog.setFilterExtensions(new String[] { Messages.getString("ExportCertificateAction.0") }); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] { Messages.getString("ExportCertificateAction.1") }); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
         String filename = dialog.open();
 
         if (filename != null && info != null) {
-            ImportExportManager.getInstance().exportCertificate(new Path(filename),
-                    KeyStoreManager.getInstance().getPublicKey(info.getSelectedKeyAlias()));
+            try {
+                ImportExportManager.getInstance().exportCertificate(new Path(filename),
+                        KeyStoreManager.getInstance().getCertificate(info.getSelectedKeyAlias()));
+            } catch (UnrecoverableEntryException e) {
+                LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+            } catch (NoSuchAlgorithmException e) {
+                LogUtil.logError(KeyStorePlugin.PLUGIN_ID, e);
+            }
         }
     }
 }

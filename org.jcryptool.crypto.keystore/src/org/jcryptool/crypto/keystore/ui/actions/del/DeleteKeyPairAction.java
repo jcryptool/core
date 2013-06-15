@@ -35,7 +35,7 @@ public class DeleteKeyPairAction extends Action {
 	public void run() {
 		boolean result = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.getString("Label.DeleteKeyPair"), Messages.getString("Label.AreYouSureKeyPair")); //$NON-NLS-1$ //$NON-NLS-2$
 		if (result) {				
-			KeyStoreManager.getInstance().delete(descriptor.getSelectedNodeAlias());	
+			KeyStoreManager.getInstance().deleteEntry(descriptor.getSelectedNodeAlias());	
 		}
 	}
 	

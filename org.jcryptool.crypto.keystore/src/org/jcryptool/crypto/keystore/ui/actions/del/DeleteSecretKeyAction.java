@@ -36,7 +36,7 @@ public class DeleteSecretKeyAction extends Action {
 		boolean result = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.getString("Label.DeleteSecretKey"), Messages.getString("Label.AreYouSureSecretKey")); //$NON-NLS-1$ //$NON-NLS-2$
 		if (result) {			
 			// remove from tree and from keystore		
-			KeyStoreManager.getInstance().delete(descriptor.getSelectedNodeAlias());	
+			KeyStoreManager.getInstance().deleteEntry(descriptor.getSelectedNodeAlias());	
 		}
 	}
 

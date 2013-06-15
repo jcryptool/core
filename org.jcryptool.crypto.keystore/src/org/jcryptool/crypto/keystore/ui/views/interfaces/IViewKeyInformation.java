@@ -10,10 +10,8 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.interfaces;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public interface IViewKeyInformation {
-
-	public KeyStoreAlias getSelectedKeyAlias();
-	
+	IKeyStoreAlias getSelectedKeyAlias();
 }

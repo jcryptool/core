@@ -42,7 +42,7 @@ public class DeleteContactAction extends Action {
         if (result) {
             LogUtil.logInfo("deleting " + descriptor.getSelectedNodeInfo()); //$NON-NLS-1$
             // delete the contact
-            KeyStoreManager.getInstance().deleteContact(descriptor.getSelectedNodeInfo());
+            KeyStoreManager.getInstance().deleteAllEntriesForContact(descriptor.getSelectedNodeInfo());
         }
     }
 

@@ -29,8 +29,8 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreActionManager;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
 import org.jcryptool.crypto.keystore.ui.actions.IKeyStoreActionDescriptor;
@@ -72,7 +72,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
 
     private NodeType selectedNodeType;
     private String selectedNodeInfo;
-    private KeyStoreAlias selectedNodeAlias;
+    private IKeyStoreAlias selectedNodeAlias;
     private SecretKeyNode selectedSecretKeyNode;
     private KeyPairNode selectedKeyPairNode;
     private CertificateNode selectedPublicKeyNode;
@@ -126,7 +126,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
                     selectedKeyPairNode = ((KeyPairNode) selection);
                     fillKeyPairContextMenu(manager);
                 } else if (selection instanceof CertificateNode) {
-                    KeyStoreAlias alias = ((CertificateNode) selection).getAlias();
+                    IKeyStoreAlias alias = ((CertificateNode) selection).getAlias();
                     if (alias.getKeyStoreEntryType().equals(KeyType.PUBLICKEY)) {
                         selectedNodeType = NodeType.PUBLICKEY_NODE;
                         selectedNodeAlias = ((CertificateNode) selection).getAlias();
@@ -260,7 +260,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         }
     }
 
-    public KeyStoreAlias getSelectedKeyAlias() {
+    public IKeyStoreAlias getSelectedKeyAlias() {
         return selectedNodeAlias;
     }
 
@@ -272,7 +272,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         return selectedNodeInfo;
     }
 
-    public KeyStoreAlias getSelectedNodeAlias() {
+    public IKeyStoreAlias getSelectedNodeAlias() {
         return selectedNodeAlias;
     }
 

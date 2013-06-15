@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
 import java.io.BufferedInputStream;
@@ -40,11 +41,9 @@ import codec.pkcs12.PFX;
 
 public class ImportExportManager {
     private static ImportExportManager instance;
-
     private Provider lastUsed;
 
     private ImportExportManager() {
-
     }
 
     public synchronized static ImportExportManager getInstance() {
@@ -82,8 +81,7 @@ public class ImportExportManager {
                 pfx = new PFX(key, x509Chain[0], null, password, null, null);
             }
             IFileStore fileStore = EFS.getStore(URIUtil.toURI(path));
-            OutputStream os = new BufferedOutputStream(fileStore.openOutputStream(
-                    EFS.APPEND, null));
+            OutputStream os = new BufferedOutputStream(fileStore.openOutputStream(EFS.APPEND, null));
             DEREncoder encoder = new DEREncoder(os);
             pfx.encode(encoder);
             encoder.close();

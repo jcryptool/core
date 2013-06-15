@@ -9,22 +9,22 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.descriptors.interfaces;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 
 public interface IContactDescriptor {
 	
     Contact getContact();
 
-    void addSecretKey(KeyStoreAlias alias);
+    void addSecretKey(IKeyStoreAlias alias);
 
-    void addCertificate(KeyStoreAlias alias);
+    void addCertificate(IKeyStoreAlias alias);
 
-    void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey);
+    void addKeyPair(IKeyStoreAlias privateKey, IKeyStoreAlias publicKey);
 
-    void removeSecretKey(KeyStoreAlias alias);
+    void removeSecretKey(IKeyStoreAlias alias);
 
-    void removeCertificate(KeyStoreAlias alias);
+    void removeCertificate(IKeyStoreAlias alias);
 
-    void removeKeyPair(KeyStoreAlias privateKey);
+    void removeKeyPair(IKeyStoreAlias privateKey);
 }

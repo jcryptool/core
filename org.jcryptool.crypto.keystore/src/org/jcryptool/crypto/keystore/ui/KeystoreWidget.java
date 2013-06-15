@@ -1,13 +1,16 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2011 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials are made available under the
-* terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2011 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
 
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -18,6 +21,8 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactDescriptorNode;
@@ -49,9 +54,8 @@ public class KeystoreWidget extends Composite implements ISelectionChangedListen
                 | SHOW_PUBLICKEYNODES | SHOW_CERTIFICATES;
 
         private int style = SHOW_ALL;
-        
-        public Style(int options)
-        {
+
+        public Style(int options) {
             init(options);
         }
 
@@ -91,11 +95,10 @@ public class KeystoreWidget extends Composite implements ISelectionChangedListen
         setLayout(new GridLayout(1, false));
 
         viewer = new KeystoreViewer(this);
-        if(!style.isSet(Style.SHOW_COLLAPSED))
-        {
+        if (!style.isSet(Style.SHOW_COLLAPSED)) {
             viewer.expandToLevel(3);
         }
-        
+
         viewer.addFilter(new ViewerFilter() {
 
             @Override
@@ -153,7 +156,7 @@ public class KeystoreWidget extends Composite implements ISelectionChangedListen
         });
 
         viewer.addSelectionChangedListener(this);
-        
+
     }
 
     @Override
@@ -168,8 +171,15 @@ public class KeystoreWidget extends Composite implements ISelectionChangedListen
         if (selection == null)
             return null;
 
-        if (selection instanceof AbstractKeyNode) {
-            return KeyStoreManager.getInstance().getKey(((AbstractKeyNode) selection).getAlias());
+        try {
+            if (selection instanceof AbstractKeyNode) {
+                return KeyStoreManager.getInstance().getKey(((AbstractKeyNode) selection).getAlias(),
+                        KeyStoreManager.KEY_PASSWORD);
+            }
+        } catch (UnrecoverableEntryException ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "The entered password was not correct.", ex, true);
+        } catch (NoSuchAlgorithmException ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "The requested algorithm is not supported.", ex, true);
         }
 
         return null;

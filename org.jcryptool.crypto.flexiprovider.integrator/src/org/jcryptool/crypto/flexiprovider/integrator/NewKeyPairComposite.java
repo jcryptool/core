@@ -74,7 +74,7 @@ public class NewKeyPairComposite extends NewKeyComposite {
 
 	@Override
 	protected void removeKeyFromKeystore() {
-		KeyStoreManager.getInstance().delete(KeyStoreManager.getInstance().getPrivateForPublic(this.getPublicKeyAlias()));
+		KeyStoreManager.getInstance().deleteEntry(KeyStoreManager.getInstance().getPrivateForPublic(this.getPublicKeyAlias()));
 		getRemoveObserver().notifyObservers(null);
 	}
 

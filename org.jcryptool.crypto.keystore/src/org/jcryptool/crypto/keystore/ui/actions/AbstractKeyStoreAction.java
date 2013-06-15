@@ -51,7 +51,7 @@ public abstract class AbstractKeyStoreAction extends Action {
                 descriptor.getDisplayedName(), (key.getEncoded().length * 8),
                 ByteArrayUtils.toHexString(getHashValue(descriptor)), key.getClass().getName());
 
-        KeyStoreManager.getInstance().addSecretKey(key, descriptor.getPassword(), alias);
+        KeyStoreManager.getInstance().addSecretKey(key, descriptor.getPassword().toCharArray(), alias);
 
         return alias;
     }
@@ -72,8 +72,8 @@ public abstract class AbstractKeyStoreAction extends Action {
 
         X509Certificate jctCertificate = CertificateFactory.createJCrypToolCertificate(publicKey);
 
-        KeyStoreManager.getInstance().addKeyPair(privateKey, jctCertificate, descriptor.getPassword(), privateAlias,
-                publicAlias);
+        KeyStoreManager.getInstance().addKeyPair(privateKey, jctCertificate, descriptor.getPassword().toCharArray(),
+                privateAlias, publicAlias);
 
         return publicAlias;
     }

@@ -54,7 +54,7 @@ public class AsymmetricHybridCipherEngine extends CipherEngine {
                 cipher.initEncrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec(),
                         FlexiProviderEnginesPlugin.getSecureRandom());
             } else {
-                Certificate certificate = KeyStoreManager.getInstance().getPublicKey(operation.getKeyStoreAlias());
+                Certificate certificate = KeyStoreManager.getInstance().getCertificate(operation.getKeyStoreAlias());
                 key = (Key) certificate.getPublicKey();
                 cipher.initDecrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec());
             }

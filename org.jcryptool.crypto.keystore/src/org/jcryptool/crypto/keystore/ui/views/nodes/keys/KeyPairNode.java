@@ -14,7 +14,7 @@ package org.jcryptool.crypto.keystore.ui.views.nodes.keys;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode;
 
 /**
@@ -27,9 +27,9 @@ public class KeyPairNode extends TreeNode {
 
     private AbstractKeyNode privateKeyNode;
     private AbstractKeyNode publicKeyNode;
-    private KeyStoreAlias privateAlias, publicAlias;
+    private IKeyStoreAlias privateAlias, publicAlias;
 
-    public KeyPairNode(KeyStoreAlias privateAlias, KeyStoreAlias publicAlias) {
+    public KeyPairNode(IKeyStoreAlias privateAlias, IKeyStoreAlias publicAlias) {
         super(
                 getOperation(privateAlias, publicAlias)
                         + Messages.getString("Label.KeyPair") + " (" + Messages.getString("Label.KeyStrength") + ": " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
@@ -64,7 +64,7 @@ public class KeyPairNode extends TreeNode {
                 + ((getKeyLength(privateAlias, publicAlias) > 0) ? getKeyLength(privateAlias, publicAlias) : "n/a") + ")" + (nameCounter == 0 ? "" : " (" + nameCounter + ")"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private static String getOperation(KeyStoreAlias privateAlias, KeyStoreAlias publicAlias) {
+    private static String getOperation(IKeyStoreAlias privateAlias, IKeyStoreAlias publicAlias) {
         if (privateAlias != null) {
             return privateAlias.getOperation();
         } else if (publicAlias != null) {
@@ -73,7 +73,7 @@ public class KeyPairNode extends TreeNode {
             return "<undefined>"; //$NON-NLS-1$
     }
 
-    private static int getKeyLength(KeyStoreAlias privateAlias, KeyStoreAlias publicAlias) {
+    private static int getKeyLength(IKeyStoreAlias privateAlias, IKeyStoreAlias publicAlias) {
         if (privateAlias != null) {
             return privateAlias.getKeyLength();
         } else if (publicAlias != null) {
@@ -82,7 +82,7 @@ public class KeyPairNode extends TreeNode {
             return -1;
     }
 
-    public void addPrivateKey(KeyStoreAlias privateAlias) {
+    public void addPrivateKey(IKeyStoreAlias privateAlias) {
         if (this.privateKeyNode != null) {
             return;
         } else {
@@ -92,7 +92,7 @@ public class KeyPairNode extends TreeNode {
         }
     }
 
-    public void addPublicKey(KeyStoreAlias publicAlias) {
+    public void addPublicKey(IKeyStoreAlias publicAlias) {
         if (this.publicKeyNode != null) {
             return;
         } else {
@@ -102,14 +102,14 @@ public class KeyPairNode extends TreeNode {
         }
     }
 
-    public KeyStoreAlias getPrivateKeyAlias() {
+    public IKeyStoreAlias getPrivateKeyAlias() {
         if (privateKeyNode != null) {
             return privateKeyNode.getAlias();
         } else
             return null;
     }
 
-    public KeyStoreAlias getPublicKeyAlias() {
+    public IKeyStoreAlias getPublicKeyAlias() {
         if (publicKeyNode != null) {
             return publicKeyNode.getAlias();
         } else

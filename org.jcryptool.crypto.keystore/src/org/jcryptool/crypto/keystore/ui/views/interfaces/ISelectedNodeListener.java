@@ -10,7 +10,7 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.interfaces;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.NodeType;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.CertificateNode;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.KeyPairNode;
@@ -21,17 +21,15 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.SecretKeyNode;
  *
  */
 public interface ISelectedNodeListener {
+    NodeType getSelectedNodeType();
 
-	public NodeType getSelectedNodeType();
-	
-	public String getSelectedNodeInfo();
-	
-	public KeyStoreAlias getSelectedNodeAlias();
+    String getSelectedNodeInfo();
 
-	public SecretKeyNode getSelectedSecretKeyNode(); 
-	
-	public KeyPairNode getSelectedKeyPairNode();
-	
-	public CertificateNode getSelectedPublicKeyNode();
-	
+    IKeyStoreAlias getSelectedNodeAlias();
+
+    SecretKeyNode getSelectedSecretKeyNode();
+
+    KeyPairNode getSelectedKeyPairNode();
+
+    CertificateNode getSelectedPublicKeyNode();
 }

@@ -1,13 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -16,20 +16,19 @@ import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 
 /**
- * <EncodedContactName>;<KeyStoreEntryType>;<Operation>;<KeyLength>;<Provider>;<
- * HashValue>
- *
+ * <EncodedContactName>;<KeyStoreEntryType>;<Operation>;<KeyLength>;<Provider>;< HashValue>
+ * 
  * @author tkern
- *
+ * 
  */
 public class KeyStoreAlias implements IKeyStoreAlias {
-    public static final String EVERYTHING_MATCHER = "everything";
-	private static final String SEPARATOR = ";"; //$NON-NLS-1$
+    public static final String EVERYTHING_MATCHER = "everything"; //$NON-NLS-1$
+    private static final String SEPARATOR = ";"; //$NON-NLS-1$
     private String encodedContactName = null;
     private KeyType keyType;
     private String opName;
     private int keyLength = -1;
-    private boolean isValid = false;
+    private boolean valid = false;
     private String hashValue;
     private String className;
 
@@ -41,7 +40,7 @@ public class KeyStoreAlias implements IKeyStoreAlias {
         this.keyLength = keyLength;
         this.hashValue = hashValue;
         this.className = encode(className);
-        isValid = true;
+        valid = true;
     }
 
     public KeyStoreAlias(String alias) {
@@ -53,9 +52,9 @@ public class KeyStoreAlias implements IKeyStoreAlias {
             keyLength = Integer.valueOf(elements[3]);
             hashValue = elements[4];
             className = elements[5];
-            isValid = true;
+            valid = true;
         } else {
-            isValid = false;
+            valid = false;
         }
     }
 
@@ -72,7 +71,7 @@ public class KeyStoreAlias implements IKeyStoreAlias {
     }
 
     public boolean isValid() {
-        return isValid;
+        return valid;
     }
 
     public KeyType getKeyStoreEntryType() {
@@ -82,36 +81,33 @@ public class KeyStoreAlias implements IKeyStoreAlias {
     public String getOperation() {
         return decode(opName);
     }
-    
+
     /**
-     * Returns whether a given key id/type (e. g. "RSA") 
-     * matches the operation id (e. g. "RSA (OID: 0.232.4)")
-     * <br /> For the keyId "everything", this method returns true;
-     * <br /> dont rely too heavily on this method as it will be removed as 
-     * soon as abetter alternative is found
+     * Returns whether a given key id/type (e. g. "RSA") matches the operation id (e. g. "RSA (OID: 0.232.4)") <br />
+     * For the keyId "everything", this method returns true; <br />
+     * dont rely too heavily on this method as it will be removed as soon as abetter alternative is found
      * 
      * @param keyId the key id
      * @return whether the key id/type and the operation id match
      */
     public boolean isOperationMatchingKeyId(String keyId) {
-    	return isOperationMatchingKeyId(getOperation(), keyId);
+        return isOperationMatchingKeyId(getOperation(), keyId);
     }
-    
+
     /**
-     * Returns whether a given key id/type (e. g. "RSA") 
-     * matches the operation id (e. g. "RSA (OID: 0.232.4)")
-     * <br /> For the keyId "everything", this method returns true;
-     * <br /> dont rely too heavily on this method as it will be removed as 
-     * soon as abetter alternative is found
+     * Returns whether a given key id/type (e. g. "RSA") matches the operation id (e. g. "RSA (OID: 0.232.4)") <br />
+     * For the keyId "everything", this method returns true; <br />
+     * dont rely too heavily on this method as it will be removed as soon as abetter alternative is found
      * 
      * @param opId the operation id
      * @param keyId the key id
      * @return whether the key id/type and the operation id match
      */
     public static boolean isOperationMatchingKeyId(String opId, String keyId) {
-    	if(keyId.equals(EVERYTHING_MATCHER)) return true; //$NON-NLS-1$
-    	return opId.matches(keyId + "(.*([^)]*))*");
-    } 
+        if (keyId.equals(EVERYTHING_MATCHER))
+            return true; //$NON-NLS-1$
+        return opId.matches(keyId + "(.*([^)]*))*"); //$NON-NLS-1$
+    }
 
     public int getKeyLength() {
         return keyLength;
@@ -147,7 +143,7 @@ public class KeyStoreAlias implements IKeyStoreAlias {
 
     /**
      * Encodes the given string to ASCII.
-     *
+     * 
      * @param string The string parameter that will be encoded into ASCII
      * @return The corresponding ASCII value
      */
@@ -170,7 +166,7 @@ public class KeyStoreAlias implements IKeyStoreAlias {
 
     /**
      * Decodes the given ASCII String and returns a 'human readable' version.
-     *
+     * 
      * @param string The ASCII string
      * @return The 'human readable' version
      */
@@ -179,7 +175,8 @@ public class KeyStoreAlias implements IKeyStoreAlias {
             return ""; //$NON-NLS-1$
         }
         if (string.length() % 2 != 0) {
-            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "Cannot decode the given ASCII string, since it is not divisible by two"); //$NON-NLS-1$
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID,
+                    "Cannot decode the given ASCII string, since it is not divisible by two"); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
         try {

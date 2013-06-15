@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.AbstractKeyNode;
@@ -37,7 +37,7 @@ public class CertificateContainerNode extends AbstractContainerNode {
 		return KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_identity.png"); //$NON-NLS-1$
 	}
 
-	public void add(KeyStoreAlias alias) {
+	public void add(IKeyStoreAlias alias) {
 		AbstractKeyNode child = new CertificateNode(alias);
 		nodes.add(child);
 		addChild(child);
@@ -47,7 +47,7 @@ public class CertificateContainerNode extends AbstractContainerNode {
 		}
 	}
 
-	public void remove(KeyStoreAlias alias) {
+	public void remove(IKeyStoreAlias alias) {
 		AbstractKeyNode child = new CertificateNode(alias);
 		nodes.remove(child);
 		removeChild(child);

@@ -12,8 +12,8 @@ package org.jcryptool.crypto.keystore.ui.views.nodes;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.IContactDescriptor;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.views.nodes.containers.AbstractContainerNode;
 import org.jcryptool.crypto.keystore.ui.views.nodes.containers.CertificateContainerNode;
 import org.jcryptool.crypto.keystore.ui.views.nodes.containers.IKeyPairContainerNode;
@@ -45,33 +45,33 @@ public class ContactDescriptorNode extends TreeNode implements IContactDescripto
         return KeyStorePlugin.getImageDescriptor("icons/16x16/personal.png"); //$NON-NLS-1$
     }
 
-    public void addCertificate(KeyStoreAlias alias) {
+    public void addCertificate(IKeyStoreAlias alias) {
         LogUtil.logInfo("adding a certificate to: " + contact.getName()); //$NON-NLS-1$
         certificateContainer.add(alias);
     }
 
-    public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey) {
+    public void addKeyPair(IKeyStoreAlias privateKey, IKeyStoreAlias publicKey) {
         LogUtil.logInfo("adding a key pair to: " + contact.getName()); //$NON-NLS-1$
         ((IKeyPairContainerNode) keyPairContainer).addKeyPair(privateKey, publicKey);
 
     }
 
-    public void addSecretKey(KeyStoreAlias alias) {
+    public void addSecretKey(IKeyStoreAlias alias) {
         LogUtil.logInfo("adding a secret key to: " + contact.getName()); //$NON-NLS-1$
         secretKeyContainer.add(alias);
     }
 
-    public void removeCertificate(KeyStoreAlias alias) {
+    public void removeCertificate(IKeyStoreAlias alias) {
         LogUtil.logInfo("removing a certificate from " + contact.getName()); //$NON-NLS-1$
         certificateContainer.remove(alias);
     }
 
-    public void removeKeyPair(KeyStoreAlias privateKey) {
+    public void removeKeyPair(IKeyStoreAlias privateKey) {
         LogUtil.logInfo("removing a key pair from " + contact.getName()); //$NON-NLS-1$
         keyPairContainer.remove(privateKey);
     }
 
-    public void removeSecretKey(KeyStoreAlias alias) {
+    public void removeSecretKey(IKeyStoreAlias alias) {
         LogUtil.logInfo("removing a secret key from " + contact.getName()); //$NON-NLS-1$
         secretKeyContainer.remove(alias);
     }

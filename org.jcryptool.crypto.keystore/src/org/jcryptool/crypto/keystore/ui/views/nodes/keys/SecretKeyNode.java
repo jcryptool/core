@@ -12,7 +12,7 @@ package org.jcryptool.crypto.keystore.ui.views.nodes.keys;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 /**
  * @author tkern
@@ -20,15 +20,15 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
  */
 public class SecretKeyNode extends AbstractKeyNode {
 
-	private KeyStoreAlias alias;	
+	private IKeyStoreAlias alias;	
 	
-	public SecretKeyNode(KeyStoreAlias alias) {
+	public SecretKeyNode(IKeyStoreAlias alias) {
 		super(alias.getOperation() + " ("+ Messages.getString("Label.KeyStrength") + ": "  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ ((alias.getKeyLength() > 0) ? alias.getKeyLength() : "n/a") + ")"); //$NON-NLS-1$ //$NON-NLS-2$
 		this.alias = alias;
 	}
 
-	public KeyStoreAlias getAlias() {
+	public IKeyStoreAlias getAlias() {
 		return alias;
 	}
 		

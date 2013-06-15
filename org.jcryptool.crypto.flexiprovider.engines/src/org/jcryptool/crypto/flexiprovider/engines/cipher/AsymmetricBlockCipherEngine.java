@@ -43,7 +43,7 @@ public class AsymmetricBlockCipherEngine extends CipherEngine {
         try {
             cipher = Registry.getAsymmetricBlockCipher(operation.getAlgorithmDescriptor().getAlgorithmName());
             if (operation.getOperation().equals(OperationType.ENCRYPT)) {
-                Certificate certificate = KeyStoreManager.getInstance().getPublicKey(operation.getKeyStoreAlias());
+                Certificate certificate = KeyStoreManager.getInstance().getCertificate(operation.getKeyStoreAlias());
                 key = (Key) certificate.getPublicKey();
                 cipher.initEncrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec(),
                         FlexiProviderEnginesPlugin.getSecureRandom());

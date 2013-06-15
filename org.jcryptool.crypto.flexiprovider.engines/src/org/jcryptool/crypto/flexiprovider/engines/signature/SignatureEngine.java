@@ -65,7 +65,7 @@ public class SignatureEngine extends FlexiProviderEngine {
                 if (password == null) {
                     return null;
                 }
-                
+
                 Key privateKey = (Key) KeyStoreManager.getInstance().getPrivateKey(operation.getKeyStoreAlias(),
                         password);
                 signature.initSign((PrivateKey) privateKey, FlexiProviderEnginesPlugin.getSecureRandom());
@@ -73,7 +73,7 @@ public class SignatureEngine extends FlexiProviderEngine {
                 usedKey = new KeyObject(privateKey, password);
                 operation.setPassword(password); // save in the operation if no exception occurred
             } else {
-                Certificate certificate = KeyStoreManager.getInstance().getPublicKey(operation.getKeyStoreAlias());
+                Certificate certificate = KeyStoreManager.getInstance().getCertificate(operation.getKeyStoreAlias());
                 Key publicKey = (Key) certificate.getPublicKey();
                 signature.initVerify((PublicKey) publicKey);
                 usedKey = new KeyObject(publicKey, password);
@@ -118,15 +118,15 @@ public class SignatureEngine extends FlexiProviderEngine {
                     outputStream.write(signatureBytes);
                     outputStream.close();
 
-                    /**********************************/
-                    /** Bug fix by Nils **/
-                    /** Fixing write back for CMSS **/
-                    /**********************************/
-                    // if(signature instanceof CMSSSignature) { //Maybe perform this only for CMSSSignatures
-                    KeyStoreManager.getInstance().updateKeyPair((PrivateKey) usedKey.getKey(), usedKey.getPassword(),
-                            (KeyStoreAlias) operation.getKeyStoreAlias());
+                    try {
+                        KeyStoreManager.getInstance().updateKeyPair((PrivateKey) usedKey.getKey(),
+                                usedKey.getPassword(), (KeyStoreAlias) operation.getKeyStoreAlias());
+                    } catch (UnrecoverableEntryException e) {
+                        LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, e);
+                    } catch (java.security.NoSuchAlgorithmException e) {
+                        LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, e);
+                    }
                     // }
-                    /*********** END ******************/
 
                 } else {
                     InputStream signatureInputStream = initInput(operation.getSignature());

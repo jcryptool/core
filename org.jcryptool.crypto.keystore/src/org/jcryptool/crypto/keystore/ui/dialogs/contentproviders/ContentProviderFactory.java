@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.dialogs.contentproviders.keypair.CMSSPrivateKeyContentProvider;
 import org.jcryptool.crypto.keystore.ui.dialogs.contentproviders.keypair.CMSSPublicKeyContentProvider;
@@ -101,7 +101,7 @@ public class ContentProviderFactory {
 
     public static IStructuredContentProvider create(TreeNode treeNode) {
 
-        KeyStoreAlias alias = null;
+        IKeyStoreAlias alias = null;
 
         if (treeNode instanceof CertificateNode)
             alias = ((CertificateNode) treeNode).getAlias();

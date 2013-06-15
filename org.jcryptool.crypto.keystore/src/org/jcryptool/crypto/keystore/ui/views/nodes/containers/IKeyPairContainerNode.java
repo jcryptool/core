@@ -10,10 +10,10 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.nodes.containers;
 
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public interface IKeyPairContainerNode {
 
-	public void addKeyPair(KeyStoreAlias privateKey, KeyStoreAlias publicKey);
+	public void addKeyPair(IKeyStoreAlias privateKey, IKeyStoreAlias publicKey);
 		
 }

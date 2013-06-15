@@ -9,13 +9,15 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs.contentproviders;
 
+import java.security.UnrecoverableEntryException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.ui.dialogs.TableEntry;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.AbstractKeyNode;
 
@@ -37,7 +39,7 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
  */
 public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
-    protected char[] password = KeyStoreManager.getDefaultKeyPassword();
+    protected char[] password = KeyStoreManager.KEY_PASSWORD;
 
     @Override
     public Object[] getElements(Object inputElement) {
@@ -133,7 +135,7 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
     private List<TableEntry> getAliasElements(Object inputElement) {
         AbstractKeyNode node = (AbstractKeyNode) inputElement;
-        KeyStoreAlias alias = node.getAlias();
+        IKeyStoreAlias alias = node.getAlias();
         List<TableEntry> elements = new ArrayList<TableEntry>();
         elements.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_Alias, alias.getAliasString()));
         elements.add(new TableEntry(Messages.AbstractKeyNodeContentProvider_ContactName, alias.getContactName()));
@@ -143,15 +145,22 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
         return elements;
     }
 
-    /*
+    /**
      * tries to retrieve the key from keystore using the default password if the operation succeeds, the default
      * password will be updated, if it fails, the user have to enter a password into a prompt window
      */
     protected Key getKey(Object inputElement) {
-
         AbstractKeyNode abstractKeyNode = (AbstractKeyNode) inputElement;
-        KeyStoreAlias alias = abstractKeyNode.getAlias();
+        IKeyStoreAlias alias = abstractKeyNode.getAlias();
 
-        return KeyStoreManager.getInstance().getKey(alias);
+        try {
+            return KeyStoreManager.getInstance().getKey(alias, KeyStoreManager.KEY_PASSWORD);
+        } catch (UnrecoverableEntryException ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "The entered password was not correct.", ex, true);
+        } catch (java.security.NoSuchAlgorithmException ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "The requested algorithm is not supported.", ex, true);
+        }
+        
+        return null;
     }
 }

@@ -41,7 +41,7 @@ public class DeleteCertificateAction extends Action {
 	public void run() {
 		boolean result = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.getString("Label.DeleteCertificate"), Messages.getString("Label.AreYouSureCertificate")); //$NON-NLS-1$ //$NON-NLS-2$
 		if (result) {					
-			KeyStoreManager.getInstance().delete(descriptor.getSelectedNodeAlias());	
+			KeyStoreManager.getInstance().deleteEntry(descriptor.getSelectedNodeAlias());	
 		}
 	}
 	

@@ -163,7 +163,7 @@ public class NewKeyComposite extends org.eclipse.swt.widgets.Composite {
 	}
 
 	protected void removeKeyFromKeystore() {
-		KeyStoreManager.getInstance().delete(publicKeyAlias);
+		KeyStoreManager.getInstance().deleteEntry(publicKeyAlias);
 		removeObserver.notifyObservers(null);
 	}
 

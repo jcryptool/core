@@ -9,10 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.integrator;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.security.KeyStore;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Observable;
@@ -58,10 +55,10 @@ import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaMode;
 import org.jcryptool.crypto.flexiprovider.descriptors.meta.interfaces.IMetaPaddingScheme;
 import org.jcryptool.crypto.flexiprovider.keystore.KeyStoreHelper;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 /**
  * The wizard page for the FlexiProvider ciphers.
@@ -776,10 +773,7 @@ public class IntegratorWizardPage extends WizardPage {
         privateKeyMap.clear();
         comboKeyMap.clear();
         try {
-            KeyStore keyStore = KeyStore.getInstance("JCEKS"); //$NON-NLS-1$
-            keyStore.load(new BufferedInputStream(
-                    new FileInputStream(new File(KeyStorePlugin.getPlatformKeyStoreURI()))), "jcryptool".toCharArray()); //$NON-NLS-1$
-            Enumeration<String> aliases = keyStore.aliases();
+            Enumeration<String> aliases = KeyStoreManager.getInstance().getAliases();
             KeyStoreAlias localKeyStoreAlias = null;
             while (aliases.hasMoreElements()) {
                 localKeyStoreAlias = new KeyStoreAlias(aliases.nextElement());
