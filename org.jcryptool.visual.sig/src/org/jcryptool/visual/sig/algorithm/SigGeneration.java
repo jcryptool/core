@@ -100,6 +100,7 @@ public class SigGeneration {
         org.jcryptool.visual.sig.algorithm.Input.signature = signature; //Store the generated original signature
 	    org.jcryptool.visual.sig.algorithm.Input.signatureHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(signature); //Hex String
 	    org.jcryptool.visual.sig.algorithm.Input.signatureOct = org.jcryptool.visual.sig.algorithm.Input.toOctalString(signature, "");
+	    org.jcryptool.visual.sig.algorithm.Input.dataHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(org.jcryptool.visual.sig.algorithm.Input.data);
 
 	    return signature;		
 	}

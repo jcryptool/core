@@ -7,6 +7,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 public class Input {
 	
 	public static byte[] data; //Contains the input data
+	public static String dataHex;
 	
 	public static String path = ""; //Contains the path to the input data
 	

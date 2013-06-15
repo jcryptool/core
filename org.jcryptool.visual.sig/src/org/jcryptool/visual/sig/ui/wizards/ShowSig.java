@@ -41,7 +41,6 @@ public class ShowSig extends Shell {
 	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
 	private String mesStrLen = Integer.toString(mesLen);
 	
-	private String asciistr = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 	/**
 	 * Create the shell.
 	 * @param display
@@ -148,33 +147,34 @@ public class ShowSig extends Shell {
 
 		// Spalten füllen
 		int stepSize = 14;
-		int len = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
+		int len1 = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
+		String asciistr = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
 		
-	    for (int i1 = 0; i1 < (Math.ceil((double)len/(stepSize*2))) ; i1++) {
+	    for (int i1 = 0; i1 < (Math.ceil((double)len1/(stepSize*2))) ; i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        
 	        //Spalte 1
 	        item.setText(0, getAdress(i1, stepSize));
 	        
 	        // Spalte 2        
-	        int start = i1 * (stepSize*2);
-	        int end = i1 * (stepSize*2) + (stepSize*2);
-	        end = end >= len ? len : end;
+	        int start1 = i1 * (stepSize*2);
+	        int end1 = i1 * (stepSize*2) + (stepSize*2);
+	        end1 = end1 >= len1 ? len1 : end1;
 	    
-	        StringBuffer buffer1 = new StringBuffer();
-	        for (int m1 = 0; m1 < (end-start)/2 ; m1++){
-	        	buffer1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m1)+start));
-	        	buffer1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m1+1)+start));
-	        	buffer1.append(" ");
+	        StringBuffer bufferS1 = new StringBuffer();
+	        for (int m1 = 0; m1 < (end1-start1)/2 ; m1++){
+	        	bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m1)+start1));
+	        	bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*m1+1)+start1));
+	        	bufferS1.append(" ");
 	        }
-	        item.setText(1, buffer1.toString());
+	        item.setText(1, bufferS1.toString());
 	               
 	        // Spalte 3 
-	        StringBuffer buffer2 = new StringBuffer();
-	        buffer2.append(asciistr, start/2, end/2);
-	        item.setText(2, buffer2.toString());
-
+	        StringBuffer bufferS2 = new StringBuffer();
+	        bufferS2.append(asciistr, start1/2, end1/2);
+	        item.setText(2, bufferS2.toString());
 	      }
+	    
 /*******************************Textbox Radiobutton**************************************/			
 		txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
 		txtSigNum.setBounds(0, 110, 484, 151);
@@ -202,31 +202,35 @@ public class ShowSig extends Shell {
 		tableColumn_2.setText(Messages.ShowSig_tblAscii);  
 	    
 		// Spalten füllen
-//	    for (int i2 = 0; i2 < (Math.ceil((double)len/(stepSize*2))) ; i2++) {
-//	        TableItem item = new TableItem(table, SWT.NONE);
-//	        
-//	        //Spalte 1
-//	        item.setText(0, getAdress(i2, stepSize));
-//	        
-//	        // Spalte 2        
-//	        int start = i2 * (stepSize*2);
-//	        int end = i2 * (stepSize*2) + (stepSize*2);
-//	        end = end >= len ? len : end;
-//	    
-//	        StringBuffer buffer1 = new StringBuffer();
-//	        for (int n1 = 0; n1 < (end-start)/2 ; n1++){
-//	        	buffer1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*n1)+start));
-//	        	buffer1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2*n1+1)+start));
-//	        	buffer1.append(" ");
-//	        }
-//	        item.setText(1, buffer1.toString());
-//
-//	        // Spalte 3 
-//	        StringBuffer buffer2 = new StringBuffer();
-//	        buffer2.append(asciistr, start/2, end/2);
-//	        item.setText(2, buffer2.toString());
-//
-//	      }
+		
+		int len2 = org.jcryptool.visual.sig.algorithm.Input.dataHex.length();
+		String asciistr2 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.dataHex);
+
+		for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) {
+	        TableItem item = new TableItem(table_1, SWT.NONE);
+	        
+	        //Spalte 1
+	        item.setText(0, getAdress(i2, stepSize));
+	        
+	        // Spalte 2        
+	        int start2 = i2 * (stepSize*2);
+	        int end2 = i2 * (stepSize*2) + (stepSize*2);
+	        end2 = end2 >= len2 ? len2 : end2;
+	    
+	        StringBuffer bufferD1 = new StringBuffer();
+	        for (int n1 = 0; n1 < (end2-start2)/2 ; n1++){
+	        	bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2*n1)+start2));
+	        	bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2*n1+1)+start2));
+	        	bufferD1.append(" ");
+	        }
+	        item.setText(1, bufferD1.toString());
+
+	        // Spalte 3 
+	        StringBuffer bufferD2 = new StringBuffer();
+	        bufferD2.append(asciistr2, start2/2, end2/2);
+	        item.setText(2, bufferD2.toString());
+
+	      }
 	    
 /*******************************Buttons**************************************/			
 		// OKT
