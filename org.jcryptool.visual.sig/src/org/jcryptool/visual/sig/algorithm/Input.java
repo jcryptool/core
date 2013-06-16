@@ -3,28 +3,72 @@ package org.jcryptool.visual.sig.algorithm;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 //import org.jcryptool.visual.jctca.listeners.SignatureNotifier;
 
-//This class is used to share data between classes
+/**
+ * This class is used to share data between classes.
+ * @author Grebe
+ *
+ */
 public class Input {
 	
-	public static byte[] data; //Contains the input data
+	/**
+	 * Contains the input data
+	 */
+	public static byte[] data; 
 	public static String dataHex;
 	
-	public static String path = ""; //Contains the path to the input data
+	/**
+	 * Contains the path to the input data
+	 */
+	public static String path = ""; 
 	
-	public static byte[] hash; //Contains the hash of the input data
+	/**
+	 * Contains the hash of the input data (byte array)
+	 */
+	public static byte[] hash; 
+	
+	/**
+	 * Contains the hash of the input data (hex representation)
+	 */
 	public static String hashHex;
 	
-	public static byte[] signature; //Contains the signature of the input data
+	/**
+	 * Contains the signature of the input data (byte array)
+	 */
+	public static byte[] signature; 
+
+	/**
+	 * Contains the signature of the input data (hex representation)
+	 */
 	public static String signatureHex;
+	
+	/**
+	 * Contains the signature of the input data (octal)
+	 */
 	public static String signatureOct;
 	
+	/**
+	 * The name of the chosen hash method ("SHA-256" etc.)
+	 */
 	public static String chosenHash; 
 	
-	public static KeyStoreAlias privateKey; //Contains the private key used to sign the data
-	public static KeyStoreAlias publicKey; //Contains the public key used to verify the data in the JCTCA plugin
-
+	/**
+	 * Contains the private key used to sign the data (given by JCTCA plugin)
+	 */
+	public static KeyStoreAlias privateKey; 
+	
+	/**
+	 * Contains the public key used to verify the data in the JCTCA plugin
+	 */
+	public static KeyStoreAlias publicKey; 
+		
+	/**
+	 * Contains the private key used to sign the data (chosen in our plugin)
+	 */
 	public static KeyStoreAlias key;
 	
+	/**
+	 * This method resets all variables in this class to their initial value
+	 */
 	public static void reset () {
 		data = null;
 		path = null;

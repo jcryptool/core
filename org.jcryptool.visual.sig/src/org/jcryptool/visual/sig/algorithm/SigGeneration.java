@@ -12,6 +12,11 @@ import org.jcryptool.visual.sig.listener.SignatureEvent;
 import org.jcryptool.visual.sig.listener.SignatureListener;
 import org.jcryptool.visual.sig.listener.SignatureListenerAdder;
 
+/**
+ * Creates a signature for the input with the selected signature methods.
+ * @author Grebe
+ *
+ */
 public class SigGeneration {
 	public String signature;
 	//private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();

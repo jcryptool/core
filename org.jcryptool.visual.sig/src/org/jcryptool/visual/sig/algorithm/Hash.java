@@ -7,7 +7,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 
 /**
- * Hashes the given input with one of the selected hash methods.
+ * Hashes the given input with the selected hash methods.
  * @author Grebe
  *
  */
@@ -18,6 +18,7 @@ public class Hash {
 	 * This method hashes an input stored in Input.java with a given hash method
 	 * @throws Exception
 	 * @param hashmethod The name of the method (a string)
+	 * @return the hash of the input as byte array
 	 */
 	public static byte[] hashInput (String hashmethod, byte[] input) throws Exception {
 		byte[] md = null;
