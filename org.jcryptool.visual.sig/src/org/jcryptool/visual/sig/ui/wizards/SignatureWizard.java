@@ -5,6 +5,12 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 
+/**
+ * 
+ * @author Grebe
+ * This class adds the pge for the signature wizard.
+ *
+ */
 public class SignatureWizard extends Wizard{
 	//The only page of the wizard (for selecting the Hash method)
 	SignatureWizardPage page;

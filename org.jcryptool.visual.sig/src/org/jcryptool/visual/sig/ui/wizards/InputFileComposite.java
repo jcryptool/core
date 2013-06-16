@@ -19,6 +19,13 @@ import org.eclipse.swt.widgets.Button;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the GUI elements for file input. It also contains a method to convert 
+ * the opened file into a byte array.
+ *
+ */
 public class InputFileComposite extends Composite implements PaintListener, SelectionListener {
 	
 	private Text txtPath;

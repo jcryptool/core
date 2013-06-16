@@ -4,6 +4,12 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the page containing the hash wizard composite. It is a part of the hash wizard.
+ *
+ */
 public class HashWizardPage extends WizardPage {
 
 	private HashComposite composite;

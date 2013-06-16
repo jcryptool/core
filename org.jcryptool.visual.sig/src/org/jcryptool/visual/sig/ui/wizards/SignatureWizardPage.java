@@ -5,6 +5,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains loads the composite for the signature wizard.
+ *
+ */
 public class SignatureWizardPage extends WizardPage {
 
 	private SignatureComposite composite;

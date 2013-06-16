@@ -8,6 +8,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * 
+ * @author Grebe
+ * Contains all the GUI elements for the editor input page.
+ *
+ */
 public class InputEditorComposite extends Composite {
 
 	// Limit for the length of the text that might be entered into the plaintext field

@@ -3,6 +3,12 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the page containing the file input composite. It is a part of the Input wizard.
+ *
+ */
 public class InputFileWizardPage extends WizardPage{
 	
 	private InputFileComposite compositeFile;

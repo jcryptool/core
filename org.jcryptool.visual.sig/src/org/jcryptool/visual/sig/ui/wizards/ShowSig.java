@@ -326,20 +326,21 @@ public class ShowSig extends Shell {
 	}
 
 	/**
-	 * Returns a string to get the adress in the hex-dump-table.
+	 * Returns a string to get the address in the hex-dump-table.
 	 * 
 	 * @param i Row of table
 	 * @param stepSize Differnce between digits in the row.
-	 * @return
+	 * @return a string containing the address in the table
 	 */
 	protected String getAdress(int i, int stepSize){
 		   return String.format("%05X", (i*stepSize) & 0xFFFFF);
 		}
+	
 	/**
 	 * Retruns the ascii representation of an hexadecimal string.
 	 * 
 	 * @param hex
-	 * @return
+	 * @return a string containing the ascii representation
 	 */
 	public String convertHexToString(String hex){
 		  StringBuilder sb = new StringBuilder();

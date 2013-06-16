@@ -26,6 +26,13 @@ import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the GUI elements for signature wizard. It also contains a method to load 
+ * all RSA/DSA keys from the keystore and displays them in a dropdown list.
+ *
+ */
 public class SignatureComposite extends Composite implements SelectionListener{
 	private Group grpSignatures;
 	private Text txtDescription;

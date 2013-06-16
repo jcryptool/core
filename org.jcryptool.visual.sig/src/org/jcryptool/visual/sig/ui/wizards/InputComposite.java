@@ -6,6 +6,12 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the GUI elements for first page of the file input wizard. 
+ *
+ */
 public class InputComposite extends Composite implements PaintListener {
 	
 	private Button rdoFromFile;

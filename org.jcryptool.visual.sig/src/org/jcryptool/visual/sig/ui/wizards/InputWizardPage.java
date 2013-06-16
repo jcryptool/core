@@ -4,6 +4,12 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains loads the composite for the first page of the input wizard.
+ *
+ */
 public class InputWizardPage extends WizardPage {
 
 	private InputComposite composite;

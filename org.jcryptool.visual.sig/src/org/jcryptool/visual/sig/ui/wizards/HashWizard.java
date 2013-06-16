@@ -4,6 +4,12 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 
+/**
+ * 
+ * @author Grebe
+ * Adds the page of the hash wizard.
+ *
+ */
 public class HashWizard extends Wizard{
 	//The only page of the wizard (for selecting the Hash method)
 	HashWizardPage page;

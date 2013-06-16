@@ -3,6 +3,12 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 
+/**
+ * 
+ * @author Grebe
+ * This class contains the three pages of the input wizard.
+ *
+ */
 public class InputWizard extends Wizard {
 	
 	// The pages of the wizard to select a document or to enter a text

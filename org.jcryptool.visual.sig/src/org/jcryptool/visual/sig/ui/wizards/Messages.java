@@ -3,7 +3,8 @@ package org.jcryptool.visual.sig.ui.wizards;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Holds the messages for the signature visualization (for the 2 wizards)
+ * @author Grebe
+ * Holds the messages for the signature visualization (for the 3 wizards and the ShowSig shell)
  *
  */
 public class Messages {

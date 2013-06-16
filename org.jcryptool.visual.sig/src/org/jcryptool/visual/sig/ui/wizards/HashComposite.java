@@ -14,7 +14,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-//Contains the elements (2 group boxes) of the HashWizard
+/**
+ * @author Grebe
+ * Contains the elements (2 group boxes) of the HashWizard
+ * 
+ */
 public class HashComposite extends Composite implements SelectionListener {
 	private Group grpHashes;
 	private Text txtDescription;
