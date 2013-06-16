@@ -128,7 +128,7 @@ public class ShowSig extends Shell {
 		table.setHeaderVisible(true);
 		table.setBounds(0, 110, 484, 151);
 		
-		// Spalte Adresse 
+		// create column
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
 		tblclmnAdresse.setResizable(false);
 		tblclmnAdresse.setWidth(60);
@@ -145,7 +145,7 @@ public class ShowSig extends Shell {
 		tblclmnAscii.setWidth(150);
 		tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
-		// Spalten füllen
+		// fill column
 		int stepSize = 14;
 		int len1 = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
 		String asciistr = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
@@ -153,10 +153,10 @@ public class ShowSig extends Shell {
 	    for (int i1 = 0; i1 < (Math.ceil((double)len1/(stepSize*2))) ; i1++) {
 	        TableItem item = new TableItem(table, SWT.NONE);
 	        
-	        //Spalte 1
+	        // column 1
 	        item.setText(0, getAdress(i1, stepSize));
 	        
-	        // Spalte 2        
+	        // column 2        
 	        int start1 = i1 * (stepSize*2);
 	        int end1 = i1 * (stepSize*2) + (stepSize*2);
 	        end1 = end1 >= len1 ? len1 : end1;
@@ -169,7 +169,7 @@ public class ShowSig extends Shell {
 	        }
 	        item.setText(1, bufferS1.toString());
 	               
-	        // Spalte 3 
+	        // column 3 
 	        StringBuffer bufferS2 = new StringBuffer();
 	        bufferS2.append(asciistr, start1/2, end1/2);
 	        item.setText(2, bufferS2.toString());
@@ -201,7 +201,7 @@ public class ShowSig extends Shell {
 		tableColumn_2.setWidth(150);
 		tableColumn_2.setText(Messages.ShowSig_tblAscii);  
 	    
-		// Spalten füllen
+		// fill column
 		
 		int len2 = org.jcryptool.visual.sig.algorithm.Input.dataHex.length();
 		String asciistr2 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.dataHex);
@@ -209,10 +209,10 @@ public class ShowSig extends Shell {
 		for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) {
 	        TableItem item = new TableItem(table_1, SWT.NONE);
 	        
-	        //Spalte 1
+	        // column 1
 	        item.setText(0, getAdress(i2, stepSize));
 	        
-	        // Spalte 2        
+	        // column 2        
 	        int start2 = i2 * (stepSize*2);
 	        int end2 = i2 * (stepSize*2) + (stepSize*2);
 	        end2 = end2 >= len2 ? len2 : end2;
@@ -225,7 +225,7 @@ public class ShowSig extends Shell {
 	        }
 	        item.setText(1, bufferD1.toString());
 
-	        // Spalte 3 
+	        // column 3 
 	        StringBuffer bufferD2 = new StringBuffer();
 	        bufferD2.append(asciistr2, start2/2, end2/2);
 	        item.setText(2, bufferD2.toString());
@@ -246,7 +246,7 @@ public class ShowSig extends Shell {
 		btnOkt.setBounds(186, 30, 70, 16);
 		btnOkt.setText(Messages.ShowSig_octal);
 		
-		//DEZ
+		//DEC
 		Button btnDez = new Button(grpOption, SWT.RADIO);
 		btnDez.addSelectionListener(new SelectionAdapter() {
 			@Override
