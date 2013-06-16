@@ -50,10 +50,9 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 /**
- * This class contains all the code required for the design and function of main
- * GUI
- * 
- * @author Grebe
+ * This class contains all the code required for the design and functionality of the main view.
+ * It creates the components, calls the wizards and constructs the string ("SHA256withECDSA" etc.) 
+ * used for signing.
  * 
  */
 public class SigComposite extends Composite implements PaintListener {
@@ -714,12 +713,7 @@ public class SigComposite extends Composite implements PaintListener {
 	/**
 	 * Helper method to get the correct signature method with the correct hash
 	 * method. (Not every signature method matches with every hash method).
-	 * 
-	 * @param ha
-	 *            chosen hash method
-	 * @param si
-	 *            chosen signature method
-	 * @return index of String[] sigmethods witch contains all possible methods
+	 * @return The string that can be used for signing
 	 */
 	private String chooseSignature() {
 		sigstring = "";
