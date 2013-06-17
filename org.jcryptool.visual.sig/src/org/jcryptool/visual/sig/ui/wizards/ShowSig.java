@@ -1,7 +1,14 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
@@ -297,16 +304,16 @@ public class ShowSig extends Shell {
 		btnNewButton.setBounds(384, 587, 100, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
-		Button btnNewButton_1 = new Button(composite, SWT.NONE);
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+		Button btnSave = new Button(composite, SWT.NONE);
+		btnSave.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				// TODO
+				//Call the helper function to format the output (this is madness?!)
+				saveToFile();
 			}
 		});
-		btnNewButton_1.setBounds(278, 587, 100, 25);
-		btnNewButton_1.setText(Messages.ShowSig_btnSave);
-		btnNewButton_1.setEnabled(false);
+		btnSave.setBounds(278, 587, 100, 25);
+		btnSave.setText(Messages.ShowSig_btnSave);
 
 		createContents();	
 	}
@@ -374,5 +381,39 @@ public class ShowSig extends Shell {
 		      sb.append(decimal);
 		  }
 		  return sb.toString();
+	}
+	
+	//Saves message + info to file...save as what? Save where?? Huh?
+	private void saveToFile () {
+		PrintStream out = null;
+		try {
+		    out = new PrintStream(new FileOutputStream("SignedMessage.txt"));
+		    out.print("Signature: " + 
+		    		org.jcryptool.visual.sig.algorithm.Input.signatureHex + 
+		    		" Signature length: " + 
+		    		sigStrLen + 
+		    		" Function: " + 
+		    		org.jcryptool.visual.sig.algorithm.Input.chosenHash + 
+		    		" Key: " + 
+		    		org.jcryptool.visual.sig.algorithm.Input.key.getClassName() +
+		    		" Owner: " +
+		    		org.jcryptool.visual.sig.algorithm.Input.key.getContactName() +
+		    		" Message: " +
+		    		new String(org.jcryptool.visual.sig.algorithm.Input.data));
+		    
+		    MessageBox messageBox = new MessageBox(new
+					Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+					messageBox.setText("Saved");
+					messageBox.setMessage("Saved to "  + System.getProperty("user.dir"));
+					messageBox.open();
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
+		finally {
+		    if (out != null) out.close();
+		}
+		
+		System.out.println("I am here: " + System.getProperty("user.dir"));
 	}
 }
