@@ -2,6 +2,6 @@
 <contexts>
  <context id="sigview" title="Visualisierung des Signaturverfahrens">
     <description>Diese Visualisierung demonstriert wie ein elektronisches Dokument signiert wird.</description>
-    <topic href="help/content/index.html" label="Signature Demo"/>
+    <topic href="help/content/index.html" label="Signatur Demo"/>
  </context>
 </contexts>
