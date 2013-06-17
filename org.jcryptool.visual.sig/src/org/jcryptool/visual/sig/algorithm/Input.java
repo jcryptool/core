@@ -21,6 +21,10 @@ public class Input {
 	 */
 	public static String path = ""; 
 	
+	public static int s = -1; //the chosen string (integer)
+	
+	public static int h = -1; //the chosen hash (integer)
+	
 	/**
 	 * Contains the hash of the input data (byte array)
 	 */
@@ -79,6 +83,8 @@ public class Input {
 		signatureOct = null;
 		privateKey = null;
 		publicKey = null;
+		h = -1;
+		s = -1;
 	}
 	
 	

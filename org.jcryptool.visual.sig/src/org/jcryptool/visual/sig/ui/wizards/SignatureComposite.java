@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
@@ -22,7 +23,6 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
-
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -68,7 +68,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		grpSignatures.setBounds(10, 65, 406, 151);
 		
 		rdo1 = new Button(grpSignatures, SWT.RADIO);
-		rdo1.setSelection(true);
+		//rdo1.setSelection(true);
 		rdo1.setBounds(10, 19, 118, 18);
 		rdo1.setText(Messages.SignatureWizard_DSA);
 		
@@ -173,7 +173,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    		rdo2.setSelection(true); 
 	    		rdo1.setSelection(false);
 	    		
-	    		txtDescription.setText(Messages.SignatureWizard_RSA_description);
+	    		txtDescription.setText(Messages.SignatureWizard_RSA_description);	
 	    		
 	    		keyType = 1;
 	    		//initializeKeySelection(1); 
@@ -195,6 +195,17 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		} else {
 			//Load the keys
 		    initializeKeySelection(keyType); 
+//		  //Load the previous selection
+//		    switch (org.jcryptool.visual.sig.algorithm.Input.s) {
+//			    case 0: rdo1.setSelection(true); break;
+//			    case 1: rdo2.setSelection(true); break;
+//			    case 2: rdo3.setSelection(true); break;
+//			    case 3: rdo4.setSelection(true); break;
+//			    default: rdo1.setSelection(true); break;
+//		    }
+//		    //Fire an event to show the correct text. It doesn't matter which radio button triggers the event
+//		    //because it is checked in the event handler
+//		    rdo1.notifyListeners(SWT.Selection, new Event());
 		}
 	    
 	    //Temporary
@@ -218,10 +229,13 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	}
 
 	@Override
+	//Checks if the radio buttons have changed and updates the text and keys from the keystore
 	public void widgetSelected(SelectionEvent e) {
 		//alias = keystoreitems.get(combo.getText());
 		if (rdo1.getSelection()) {
 			txtDescription.setText(Messages.SignatureWizard_DSA_description);
+			//Store the chosen signature to keep the selected radio button for the next time the wizard is opened
+			org.jcryptool.visual.sig.algorithm.Input.s = 0;
 			//Clean up
 			keystoreitems.clear();
 			combo.removeAll();
@@ -229,6 +243,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 		} else {
 			if (rdo2.getSelection()) {
 				txtDescription.setText(Messages.SignatureWizard_RSA_description);
+				org.jcryptool.visual.sig.algorithm.Input.s = 1;
 				//Clean up
 				keystoreitems.clear();
 				combo.removeAll();
@@ -236,6 +251,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 			} else {
 				if (rdo3.getSelection()) {
 					txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
+					org.jcryptool.visual.sig.algorithm.Input.s = 2;
 					//Clean up
 					keystoreitems.clear();
 					combo.removeAll();
@@ -245,6 +261,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 				} else {
 					if (rdo4.getSelection()) {
 						txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
+						org.jcryptool.visual.sig.algorithm.Input.s = 3;
 						//Clean up
 						keystoreitems.clear();
 						combo.removeAll();

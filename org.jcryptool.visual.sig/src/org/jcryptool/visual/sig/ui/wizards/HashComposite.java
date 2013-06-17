@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -80,7 +81,7 @@ public class HashComposite extends Composite implements SelectionListener {
 	    grpHashes.setBounds(10, 10, 300, 171);
 	    
 	    rdo1 = new Button(grpHashes, SWT.RADIO);
-	    rdo1.setSelection(true);
+	    //rdo1.setSelection(true);
 	    rdo1.setBounds(10, 19, 91, 18);
 	    rdo1.setText("MD5 (128)");
 	    
@@ -115,6 +116,25 @@ public class HashComposite extends Composite implements SelectionListener {
 //			rdo5.setEnabled(false);
 //			rdo3.setSelection(true);
 //		}    
+	    
+	    rdo1.setSelection(false);
+	    rdo2.setSelection(false);
+	    rdo3.setSelection(false);
+	    rdo4.setSelection(false);
+	    rdo5.setSelection(false);
+	    
+	    //Load the previous selection
+	    switch (org.jcryptool.visual.sig.algorithm.Input.h) {
+		    case 0: rdo1.setSelection(true); break;
+		    case 1: rdo2.setSelection(true); break;
+		    case 2: rdo3.setSelection(true); break;
+		    case 3: rdo4.setSelection(true); break;
+		    case 4: rdo5.setSelection(true); break;
+		    default: rdo1.setSelection(true); break;
+	    }
+	    //Fire an event to show the correct text. It doesn't matter which radio button triggers the event
+	    //because it is checked in the event handler
+	    rdo1.notifyListeners(SWT.Selection, new Event());
 	}
 
 	/**
@@ -126,20 +146,30 @@ public class HashComposite extends Composite implements SelectionListener {
 
 	@Override
 	public void widgetSelected(SelectionEvent e) {
-		if (rdo1.getSelection()) 
+		if (rdo1.getSelection()) {
 			txtDescription.setText(Messages.HashWizard_rdomd5_description);
+			org.jcryptool.visual.sig.algorithm.Input.h = 0;
+		}
 		
-		else if (rdo2.getSelection()) 
+		else if (rdo2.getSelection()) {
 			txtDescription.setText(Messages.HashWizard_rdosha1_description);
+			org.jcryptool.visual.sig.algorithm.Input.h = 1;
+		}
 		
-		else if (rdo3.getSelection()) 
+		else if (rdo3.getSelection()) {
 			txtDescription.setText(Messages.HashWizard_rdosha256_description);
+			org.jcryptool.visual.sig.algorithm.Input.h = 2;
+		}
 		
-		else if (rdo4.getSelection()) 
+		else if (rdo4.getSelection()) {
 			txtDescription.setText(Messages.HashWizard_rdosha384_description);
+			org.jcryptool.visual.sig.algorithm.Input.h = 3;
+		}
 		
-		else if (rdo5.getSelection()) 
+		else if (rdo5.getSelection()) {
 			txtDescription.setText(Messages.HashWizard_rdosha512_description);
+			org.jcryptool.visual.sig.algorithm.Input.h = 4;
+		}
 		
 	}//end widgetSelected
 
