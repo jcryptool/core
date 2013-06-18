@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="KeystoreView" title="Schlüsselspeicher">
-      <description>Im Schlüsselspeicher werden die verschiedenen, existierenden Schlüssel abgespeichert. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. 
+      <description>Im &lt;b&gt;Schlüsselspeicher&lt;/b&gt; werden die verschiedenen in JCrypTool vorhandenen Schlüssel, sowohl öffentliche und private Schlüsselpaare (asymmetrisch), geheime Schlüssel (symmetrisch) als auch Zertifikate, abgespeichert. Diese Schlüssel können von jedem JCrypTool-Crypto-Plug-in verwendet werden. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. Alle mitgelieferten Standard-JCrypTool-Schlüssel sind mit dem Passwort &lt;b&gt;1234&lt;/b&gt; gesichert.
+
+Über die Toolbar und das Menü der Sicht können neue Schlüssel angelegt, vorhandene gelöscht sowie im- und exportiert werden. 
       </description>
+      <topic href="nl/de/help/keystoremanager.html" label="Zugriff auf den Schlüsselspeicher"/>
    </context>
 </contexts>
