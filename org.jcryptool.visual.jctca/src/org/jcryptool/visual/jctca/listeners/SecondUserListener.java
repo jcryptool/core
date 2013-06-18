@@ -8,6 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.SignatureException;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
@@ -72,7 +73,16 @@ public class SecondUserListener implements SelectionListener{
 					if (btn_get_CRL.getSelection()) {
 						//should revocation status be checkeD?
 						KeyStoreAlias pubAlias = sig.getPubAlias();
-						Certificate cert = KeyStoreManager.getInstance().getCertificate(pubAlias);
+						Certificate cert= null;
+						try {
+							cert = KeyStoreManager.getInstance().getCertificate(pubAlias);
+						} catch (UnrecoverableEntryException e) {
+							// TODO Auto-generated catch block
+							LogUtil.logError(e);
+						} catch (NoSuchAlgorithmException e) {
+							// TODO Auto-generated catch block
+							LogUtil.logError(e);
+						}
 						if(cert instanceof X509Certificate){
 							X509Certificate x509 = (X509Certificate)cert;
 							if(Util.isCertificateRevoked(x509.getSerialNumber())){	//certificate has been revoked
@@ -142,6 +152,9 @@ public class SecondUserListener implements SelectionListener{
 					} catch (NoSuchAlgorithmException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					} catch (UnrecoverableEntryException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			}

@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
@@ -13,6 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
@@ -185,7 +188,16 @@ public class ShowCert implements Views {
 			if (Util.isSignedByJCTCA(ksAlias) == false) {
 				continue;
 			}
-			Certificate cert = ksm.getPublicKey(ksAlias);
+			Certificate cert = null;
+			try {
+				cert = ksm.getCertificate(ksAlias);
+			} catch (UnrecoverableEntryException e) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e);
+			}
 			String listEntry = ""; //$NON-NLS-1$
 			if(cert instanceof X509Certificate){
 				X509Certificate x509 = (X509Certificate)cert;

@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.RadioButtonListener;
 import org.jcryptool.visual.jctca.listeners.SelectFileListener;

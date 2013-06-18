@@ -2,8 +2,10 @@ package org.jcryptool.visual.jctca.CertificateClasses;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.Security;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,9 +15,11 @@ import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
 import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
 import org.bouncycastle.x509.X509V1CertificateGenerator;
-import org.jcryptool.crypto.keys.KeyType;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.visual.jctca.Util;
 
 
@@ -95,18 +99,36 @@ public class CertificateCSRR {
 		boolean certsExist = false;
 		KeyStoreManager mng = KeyStoreManager.getInstance();
 		//iterate through all public key aliases
-		for(KeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
+		for(IKeyStoreAlias pubAlias :  mng.getAllPublicKeys()){
 			if(pubAlias.getContactName().contains("JCT-PKI Root Certificates")){//$NON-NLS-1$
 				//root certificates have been found, do not create new ones
 				certsExist = true;
-				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
+				java.security.cert.Certificate c = null;
+				try {
+					c = mng.getCertificate(pubAlias);
+				} catch (UnrecoverableEntryException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				}
 				if (c instanceof X509Certificate) {
 					certs.add((X509Certificate) c);
 				}
 			}
 			else if(pubAlias.getContactName().contains("JCT-PKI Certificate Revocation List")){//$NON-NLS-1$
 				//revoked certificates have been found. add them to the CRL-ArrayList
-				java.security.cert.Certificate c = mng.getCertificate(pubAlias);
+				java.security.cert.Certificate c = null;
+				try {
+					c = mng.getCertificate(pubAlias);
+				} catch (UnrecoverableEntryException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				}
 				if (c instanceof X509Certificate) {
 					long time = Long.parseLong(pubAlias.getOperation());
 					X509Certificate cert = (X509Certificate) c;
@@ -160,7 +182,7 @@ public class CertificateCSRR {
 						"JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPublic().hashCode() + "", kp.getPublic().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				KeyStoreAlias privAlias = new KeyStoreAlias(
 						"JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				mng.addKeyPair(kp.getPrivate(), cert, "", privAlias, pubAlias); //$NON-NLS-1$
+				mng.addKeyPair(kp.getPrivate(), cert, "1234".toCharArray(), privAlias, pubAlias); //$NON-NLS-1$
 			}
 		}
 	}

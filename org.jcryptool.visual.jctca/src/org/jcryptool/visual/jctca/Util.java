@@ -9,6 +9,7 @@ import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.SignatureException;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateParsingException;
 import java.security.cert.X509Certificate;
@@ -40,9 +41,10 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.visual.jctca.CertificateClasses.CRLEntry;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
 import org.jcryptool.visual.jctca.CertificateClasses.CertificateCSRR;
@@ -54,11 +56,20 @@ public class Util {
 			BigInteger serialNumber, X509Certificate caCert, Date expiryDate,
 			Date startDate, PrivateKey caKey) {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
-		PublicKey pub = mng.getPublicKey(csr.getPubAlias()).getPublicKey();
+		PublicKey pub=null;
+		try {
+			pub = mng.getCertificate(csr.getPubAlias()).getPublicKey();
+		} catch (UnrecoverableEntryException e1) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e1);
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e1);
+		}
 		PrivateKey priv;
 		try {
 			priv = mng.getPrivateKey(csr.getPrivAlias(),
-					KeyStoreManager.getDefaultKeyPassword());
+					"1234".toCharArray());
 			return Util.certificateForKeyPair(
 					csr.getFirst() + " " + csr.getLast(), csr.getCountry(),//$NON-NLS-1$
 					csr.getStreet(),csr.getZip(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
@@ -208,11 +219,13 @@ public class Util {
 	public static ArrayList<KeyStoreAlias> getAllRSAPublicKeys(
 			KeyStoreManager ksm) {
 		ArrayList<KeyStoreAlias> RSAAndDSAPublicKeys = new ArrayList<KeyStoreAlias>();
-		for (KeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
+		for (IKeyStoreAlias ksAlias : ksm.getAllPublicKeys()) {
 			if (ksAlias.getOperation().contains("RSA")//$NON-NLS-1$
 					&& (ksAlias.getKeyStoreEntryType() == KeyType.KEYPAIR_PUBLIC_KEY)
 					&& !(ksAlias.getContactName().contains("JCT-PKI Root Certificates"))) {//$NON-NLS-1$
-				RSAAndDSAPublicKeys.add(ksAlias);
+				if(ksAlias instanceof KeyStoreAlias){
+					RSAAndDSAPublicKeys.add((KeyStoreAlias)ksAlias);
+				}
 			} 
 		}
 		return RSAAndDSAPublicKeys;
@@ -229,7 +242,16 @@ public class Util {
 	public static boolean isSignedByJCTCA(KeyStoreAlias ksAlias) {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
 		// TODO Auto-generated method stub
-		X509Certificate pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
+		X509Certificate pubKey=null;
+		try {
+			pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
+		} catch (UnrecoverableEntryException e) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e);
+		}
 		// create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getIssuerDN().toString());
 		RDN rdn = x500name.getRDNs(BCStyle.OU)[0];
@@ -265,9 +287,11 @@ public class Util {
 	
 	public static KeyStoreAlias getAliasForHash(String hash) {
 		KeyStoreManager mng = KeyStoreManager.getInstance();
-		for(KeyStoreAlias al : mng.getAllPublicKeys()){
+		for(IKeyStoreAlias al : mng.getAllPublicKeys()){
 			if(al.getHashValue().compareTo(hash)==0) {
-				return al;
+				if(al instanceof KeyStoreAlias){
+					return (KeyStoreAlias)al;
+				}
 			}
 		}
 		return null;

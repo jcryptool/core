@@ -24,8 +24,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.certificates.CertificateFactory;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
@@ -165,16 +163,16 @@ public class CreateCertListener implements SelectionListener {
 			String name = txt_first_name.getText() + " " //$NON-NLS-1$
 					+ txt_last_name.getText();
 			KeyStoreAlias privAlias = new KeyStoreAlias(name,
-					KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
+					org.jcryptool.crypto.keystore.keys.KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
 					(name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
 					privKey.getClass().getName());
 			KeyStoreAlias pubAlias = new KeyStoreAlias(name,
-					KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,//$NON-NLS-1$
+					org.jcryptool.crypto.keystore.keys.KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,//$NON-NLS-1$
 					(name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
 					pubKey.getClass().getName());
 			mng.addKeyPair(privKey,
-					CertificateFactory.createJCrypToolCertificate(pubKey),
-					new String(KeyStoreManager.getDefaultKeyPassword()),
+					org.jcryptool.crypto.keystore.certificates.CertificateFactory.createJCrypToolCertificate(pubKey),
+					new char[]{'1','2','3','4'},
 					privAlias, pubAlias);
 			System.out.println(pubAlias.getContactName());
 			String entry = pubAlias.getContactName()

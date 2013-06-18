@@ -2,7 +2,9 @@ package org.jcryptool.visual.jctca.listeners;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Date;
@@ -19,9 +21,9 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keys.KeyType;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.CRLEntry;
 import org.jcryptool.visual.jctca.CertificateClasses.CSR;
@@ -108,7 +110,16 @@ public class CAListener implements SelectionListener{
 			}
 			else if(sel.getData() instanceof RR){
 				RR rr = (RR)sel.getData();
-				X509Certificate x509 =(X509Certificate)KeyStoreManager.getInstance().getCertificate(rr.getAlias());
+				X509Certificate x509 = null;
+				try {
+					x509 = (X509Certificate)KeyStoreManager.getInstance().getCertificate(rr.getAlias());
+				} catch (UnrecoverableEntryException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					LogUtil.logError(e);
+				}
 				System.out.println("X500 Principal: " + x509.getSubjectX500Principal().toString()); //$NON-NLS-1$
 				String[] fields = x509.getSubjectX500Principal().toString().split(", "); //$NON-NLS-1$
 				String town=null;
@@ -196,7 +207,16 @@ public class CAListener implements SelectionListener{
 			RR rr = (RR)sel.getData();
 			KeyStoreAlias pubAlias = rr.getAlias();
 			KeyStoreManager mng = KeyStoreManager.getInstance();
-			Certificate c = mng.getPublicKey(pubAlias);
+			Certificate c = null;
+			try {
+				c = mng.getCertificate(pubAlias);
+			} catch (UnrecoverableEntryException e) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				LogUtil.logError(e);
+			}
 			if(c instanceof X509Certificate){
 				X509Certificate cert = (X509Certificate)c;
 				BigInteger sn = cert.getSerialNumber();
@@ -207,7 +227,7 @@ public class CAListener implements SelectionListener{
 				KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(CertificateCSRR.getInstance().getCAKey(0));
 				mng.addKeyPair(kp.getPrivate(), 
 								cert, 
-								KeyStoreManager.getDefaultKeyPassword().toString(), 
+								"1234".toCharArray(), 
 								new KeyStoreAlias("JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()),  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 								new KeyStoreAlias("JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime()+"", 1024, kp.getPrivate().hashCode()+"",kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				this.removeEntry(sel);
@@ -243,9 +263,9 @@ public class CAListener implements SelectionListener{
 			X509Certificate caCert = csrr.getCACert(0);
 			X509Certificate cert = Util.certificateForKeyPair(csr, serialNumber, caCert,expiryDate, startDate, kp.getPrivate());
 			try {
-				PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.getDefaultKeyPassword());
+				PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), "1234".toCharArray());
 				this.removeEntry(sel);
-				mng.addKeyPair(priv,cert, new String(KeyStoreManager.getDefaultKeyPassword()), csr.getPrivAlias(),csr.getPubAlias());
+				mng.addKeyPair(priv,cert, "1234".toCharArray(), csr.getPrivAlias(),csr.getPubAlias());
 				Util.showMessageBox(Messages.CAListener_msgbox_title_cert_created, Messages.CAListener_msgbox_text_cert_created, SWT.ICON_INFORMATION);
 
 			} catch (Exception e) {
@@ -272,7 +292,7 @@ public class CAListener implements SelectionListener{
 			CertificateCSRR.getInstance().removeCSR(csr);
 			KeyStoreManager mng = KeyStoreManager.getInstance();
 			if(csr.getPubAlias()!=null){
-				mng.delete(csr.getPubAlias());
+				mng.deleteEntry(csr.getPubAlias());
 			}
 		}
 		else if(sel.getData() instanceof RR){

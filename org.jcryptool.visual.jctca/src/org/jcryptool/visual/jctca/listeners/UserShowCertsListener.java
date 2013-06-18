@@ -3,6 +3,8 @@
  */
 package org.jcryptool.visual.jctca.listeners;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
 import java.security.cert.X509Certificate;
 
 import org.bouncycastle.asn1.x500.RDN;
@@ -13,6 +15,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
@@ -85,7 +88,16 @@ public class UserShowCertsListener implements SelectionListener {
 		int selected = lst.getSelectionIndex();
 		KeyStoreAlias ksAlias = (KeyStoreAlias) lst.getData(Integer.toString(selected));
 		//get public key for the ksAlias and cast it to a X509 Certificate
-		X509Certificate pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
+		X509Certificate pubKey = null;
+		try {
+			pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
+		} catch (UnrecoverableEntryException e1) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e1);
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			LogUtil.logError(e1);
+		}
 		//create X500Name from the X509 certificate Subjects distinguished name
 		X500Name x500name = new X500Name(pubKey.getSubjectDN().toString());
 		//I don't know what this next line does exactly, it just works
