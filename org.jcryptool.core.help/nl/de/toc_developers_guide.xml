@@ -4,7 +4,7 @@
 <toc label="Entwicklerhandbuch"
     topic="$nl$/help/developers/toc.html">
     <topic label="Allgemeine Informationen"
-        href="$nl$/help/developers/general/general.html">
+        href="$nl$/help/developers/general/general.html" sort="true">
 	    <topic label="Erste Schritte"
 	        href="$nl$/help/developers/general/firststart.html" />
         <topic href="$nl$/help/developers/general/conventions.html" label="Konventionen">
@@ -18,23 +18,23 @@
         <anchor id="general" />
     </topic>
     <topic label="Entwicklung"
-        href="$nl$/help/developers/develop/toc.html">
+        href="$nl$/help/developers/develop/toc.html" sort="true">
         <topic label="Plug-ins"
-            href="$nl$/help/developers/develop/plugins/toc.html">
+            href="$nl$/help/developers/develop/plugins/toc.html" sort="true">
             <anchor id="plugins" />
             <topic label="Plug-in"
-                href="$nl$/help/developers/develop/plugins/plugin.html">
+                href="$nl$/help/developers/develop/plugins/plugin.html" sort="true">
                 <anchor id="plugin" />
             </topic>
-            <topic href="$nl$/help/developers/develop/extensionpoints.html" label="Extension Points">
+            <topic href="$nl$/help/developers/develop/extensionpoints.html" label="Extension Points" sort="true">
                <anchor id="extensionpoint"/>
             </topic>
             <topic label="Benutzereinstellungen"
-                href="$nl$/help/developers/develop/plugins/preferences.html">
+                href="$nl$/help/developers/develop/plugins/preferences.html" sort="true">
                 <anchor id="preferences" />
             </topic>
             <topic label="Hilfe Inhalte"
-                href="$nl$/help/developers/develop/plugins/help.html">
+                href="$nl$/help/developers/develop/plugins/help.html" sort="true">
                 <anchor id="helpContents" />
             </topic>
             <topic label="Internationalisierung"
@@ -47,10 +47,10 @@
             </topic>
         </topic>
         <topic label="Features"
-            href="$nl$/help/developers/develop/features/toc.html">
+            href="$nl$/help/developers/develop/features/toc.html" sort="true">
             <anchor id="features" />
             <topic label="Feature"
-                href="$nl$/help/developers/develop/features/feature.html">
+                href="$nl$/help/developers/develop/features/feature.html" sort="true">
                 <anchor id="feature" />
             </topic>
         </topic>

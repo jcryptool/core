@@ -6,17 +6,17 @@
         href="$nl$/help/users/about/about.html" />
     <topic href="$nl$/help/users/about/tips.html" label="Tipps und Tricks">
     </topic>
-    <topic label="Allgemeine Informationen"
+    <topic label="Allgemeine Informationen" sort="true"
         href="$nl$/help/users/general/toc.html">
         <anchor id="general" />
-        <topic href="$nl$/help/users/general/perspectives.html" label="Perspektiven">
+        <topic href="$nl$/help/users/general/perspectives.html" label="Perspektiven" sort="true">
            <anchor id="perspectives"/>
            <topic href="$nl$/help/users/general/perspective_default.html" label="Standard">
            </topic>
            <topic href="$nl$/help/users/general/perspective_algorithm.html" label="Algorithmen">
            </topic>
         </topic>
-        <topic label="Sichten"
+        <topic label="Sichten" sort="true"
             href="$nl$/help/users/general/views.html">
             <anchor id="views" />
             <topic label="Krypto-Explorer"
@@ -24,7 +24,7 @@
             <topic href="$nl$/help/users/general/view_webbrowser.html" label="Web Browser">
             </topic>
         </topic>
-        <topic label="Editoren"
+        <topic label="Editoren" sort="true"
             href="$nl$/help/users/general/editors.html">
             <anchor id="editors" />
             <topic label="Hexeditor"
@@ -32,7 +32,7 @@
             <topic label="Texteditor"
                 href="$nl$/help/users/general/editor_text.html" />
         </topic>
-        <topic href="$nl$/help/users/general/preferences.html" label="Benutzervorgaben">
+        <topic href="$nl$/help/users/general/preferences.html" label="Benutzervorgaben" sort="true">
            <anchor id="preferences"/>
            <topic href="$nl$/help/users/general/preferences_provider.html" label="Krypto-Anbieter">
            </topic>

@@ -7,9 +7,9 @@
     <topic href="$nl$/help/users/about/tips.html" label="Tips and Tricks">
     </topic>
     <topic label="General Information"
-        href="$nl$/help/users/general/toc.html">
+        href="$nl$/help/users/general/toc.html" sort="true">
         <anchor id="general" />
-        <topic href="$nl$/help/users/general/perspectives.html" label="Perspectives">
+        <topic href="$nl$/help/users/general/perspectives.html" label="Perspectives" sort="true">
            <anchor id="perspectives"/>
            <topic href="$nl$/help/users/general/perspective_default.html" label="Default">
            </topic>
@@ -17,7 +17,7 @@
            </topic>
         </topic>
         <topic label="Views"
-            href="$nl$/help/users/general/views.html">
+            href="$nl$/help/users/general/views.html" sort="true">
             <anchor id="views" />
             <topic label="Crypto Explorer"
                 href="$nl$/help/users/general/view_algorithms.html" />
@@ -25,14 +25,14 @@
             </topic>
         </topic>
         <topic label="Editors"
-            href="$nl$/help/users/general/editors.html">
+            href="$nl$/help/users/general/editors.html" sort="true">
             <anchor id="editors" />
             <topic label="Hexeditor"
                 href="$nl$/help/users/general/editor_hex.html" />
             <topic label="Texteditor"
                 href="$nl$/help/users/general/editor_text.html" />
         </topic>
-        <topic href="$nl$/help/users/general/preferences.html" label="Preferences">
+        <topic href="$nl$/help/users/general/preferences.html" label="Preferences" sort="true">
            <anchor id="preferences"/>
            <topic href="$nl$/help/users/general/preferences_provider.html" label="Crypto Provider">
            </topic>
