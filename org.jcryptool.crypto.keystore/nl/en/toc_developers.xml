@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="Keystore" link_to="../org.jcryptool.core.help/$nl$/toc_developers_guide.xml#plugins">
+ <topic href="$nl$/help/keystoremanager.html" label="Accessing the keystore" />
+</toc>
