@@ -14,6 +14,7 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -39,12 +40,12 @@ public class SecondUserListener implements SelectionListener{
 	Button btn_check_signature;
 	Button btn_get_CRL;
 	Tree tree;
-	Label lbl_text;
-	Label lbl_signature;
+	StyledText lbl_text;
+	StyledText lbl_signature;
 	Button btn_deleteEntry;
 	
 	public SecondUserListener(Button btn_check_signature, Button btn_get_CRL,
-			Tree tree, Label lbl_text, Label lbl_signature, Button btn_deleteEntry) {
+			Tree tree, StyledText lbl_text, StyledText lbl_signature, Button btn_deleteEntry) {
 		this.btn_check_signature = btn_check_signature;
 		this.btn_get_CRL = btn_get_CRL;
 		this.tree = tree;

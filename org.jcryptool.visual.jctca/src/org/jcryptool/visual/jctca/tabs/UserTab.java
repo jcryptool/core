@@ -60,6 +60,9 @@ public class UserTab {
 		
 		Group g1 = new Group(left, SWT.NONE);
 		g1.setText("PKI-Prozesse");
+		g1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		g1.setLayout(new GridLayout(1,true));
+		
 		Button btn_create_cert = new Button(g1, SWT.PUSH);
 		btn_create_cert.setText(Messages.UserTab_btn_get_new_cert);
 		btn_create_cert.setData(0); //set data for listener - see SideBarListener.java
@@ -75,6 +78,9 @@ public class UserTab {
 
 		Group g2 = new Group(left, SWT.None);
 		g2.setText("Benutzerprozesse");
+		g2.setLayout(new GridLayout(1,true));
+		g2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
 		Button btn_sign_stuff = new Button(g2, SWT.PUSH);
 		btn_sign_stuff.setText(Messages.UserTab_btn_sign_text_or_file);
 		btn_sign_stuff.setData(2);

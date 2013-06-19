@@ -117,15 +117,15 @@ public class TabItemListener implements SelectionListener {
 			ArrayList<Signature> sigs = CertificateCSRR.getInstance().getSignatures();
 			TreeItem it = null;
 			for(Signature sig: sigs){
-				if(sig.getPath()==null || sig.getPath()==""){ //$NON-NLS-1$
+				if(sig.getPath()==null || sig.getPath().equals("")){ //$NON-NLS-1$
 					it = new TreeItem(textSig, SWT.NONE);
 					String text = sig.getText();
-					it.setText(sig.getTime().toString());
+					it.setText(sig.getPubAlias().getContactName() + " " + sig.getTime().toString());
 				}
 				else{
 					it = new TreeItem(fileSig, SWT.NONE);
 					String path = sig.getPath();
-					it.setText(sig.getTime().toString());
+					it.setText(sig.getPubAlias().getContactName() + " " + sig.getTime().toString());
 				}
 				it.setData(sig);
 			}

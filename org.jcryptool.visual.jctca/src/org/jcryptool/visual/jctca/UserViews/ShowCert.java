@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.UserViews;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
@@ -201,9 +202,9 @@ public class ShowCert implements Views {
 			String listEntry = ""; //$NON-NLS-1$
 			if(cert instanceof X509Certificate){
 				X509Certificate x509 = (X509Certificate)cert;
-				String[] subject = x509.getSubjectDN().toString().split("CN="); //$NON-NLS-1$
+				String[] subject = x509.getSubjectX500Principal().toString().split("CN="); //$NON-NLS-1$
 				if(subject.length>1){
-					listEntry = x509.getSubjectDN().toString().split("CN=")[1].split(",")[0] + " ("+ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					listEntry = x509.getSubjectX500Principal().toString().split("CN=")[1].split(",")[0] + " ("+ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 				}
 				else{
 					listEntry = ksAlias.getContactName() + " (" + ksAlias.getKeyLength() + "bit "; //$NON-NLS-1$ //$NON-NLS-2$

@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.RegistrarViews;
 
+import java.util.Calendar;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -162,10 +164,10 @@ public class ShowCSR implements Views {
 				Messages.ShowCSR_lastname_bad_erika,
 				Messages.ShowCSR_street_bad_erika, Messages.ShowCSR_zip_bad_erika,
 				Messages.ShowCSR_city_bad_erika, Messages.ShowCSR_country_bad_erika, Messages.ShowCSR_email_bad_erika,
-				"icons/ausweis.jpeg", null, null,null);//$NON-NLS-1$
+				"icons/ausweis.jpeg", null, null,Calendar.getInstance().getTime());//$NON-NLS-1$
 		csr.addCSR(Messages.ShowCSR_first_name_blackhat, Messages.ShowCSR_last_name_blackhat, Messages.ShowCSR_street_black_hat, Messages.ShowCSR_zip_blackhat,
 				Messages.ShowCSR_city_blackhat, Messages.ShowCSR_country_blackhat, Messages.ShowCSR_email_blackhat,
-				"icons/ausweis_blackhat.jpg", null, null,null);//$NON-NLS-1$
+				"icons/ausweis_blackhat.jpg", null, null,Calendar.getInstance().getTime());//$NON-NLS-1$
 
 	}
 

@@ -175,7 +175,6 @@ public class CreateCertListener implements SelectionListener {
 					org.jcryptool.crypto.keystore.certificates.CertificateFactory.createJCrypToolCertificate(pubKey),
 					new char[]{'1','2','3','4'},
 					privAlias, pubAlias);
-			System.out.println(pubAlias.getContactName());
 			String entry = pubAlias.getContactName()
 					+ " (Hash: " + Util.formatHash(pubAlias.getHashValue()) + ")";//$NON-NLS-1$ //$NON-NLS-2$
 			cmb_keys.add(entry);

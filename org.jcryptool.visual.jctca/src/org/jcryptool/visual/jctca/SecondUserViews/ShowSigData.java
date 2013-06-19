@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.SecondUserViews;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,8 +28,8 @@ public class ShowSigData implements Views {
 	Button btn_get_CRL;
 	Button btn_deleteEntry;
 	
-	Label lbl_text;
-	Label lbl_signature;
+	StyledText lbl_text;
+	StyledText lbl_signature;
 
 	public ShowSigData(Composite content, Composite exp) {
 		composite = new Composite(content, SWT.NONE);
@@ -48,18 +49,18 @@ public class ShowSigData implements Views {
 
 		Tree tree = new Tree(left, SWT.BORDER);
 
-		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		Util.create2ndUserRootNodes(tree);
 		tree.getItems()[0].setExpanded(true);
 		tree.getItems()[1].setExpanded(true);
 
 		GridData gd_txt = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 20);
-		lbl_text = new Label(showSelectedRequest, SWT.LEFT | SWT.BORDER
-				| SWT.WRAP);
+		lbl_text = new StyledText(showSelectedRequest, SWT.READ_ONLY
+				| SWT.MULTI | SWT.WRAP);
 		lbl_text.setLayoutData(gd_txt);
 
-		lbl_signature = new Label(showSelectedRequest, SWT.LEFT | SWT.BORDER
-				| SWT.WRAP);
+		lbl_signature = new StyledText(showSelectedRequest, SWT.READ_ONLY
+				| SWT.MULTI | SWT.WRAP);
 		lbl_signature.setLayoutData(gd_txt);
 
 		btn_get_CRL = new Button(showSelectedRequest, SWT.CHECK);

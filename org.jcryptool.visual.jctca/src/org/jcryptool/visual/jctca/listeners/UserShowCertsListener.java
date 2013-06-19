@@ -99,7 +99,7 @@ public class UserShowCertsListener implements SelectionListener {
 			LogUtil.logError(e1);
 		}
 		//create X500Name from the X509 certificate Subjects distinguished name
-		X500Name x500name = new X500Name(pubKey.getSubjectDN().toString());
+		X500Name x500name = new X500Name(pubKey.getSubjectX500Principal().toString());
 		//I don't know what this next line does exactly, it just works
 		RDN rdn = x500name.getRDNs(BCStyle.CN)[0];
 		lbl_value_common.setText(rdn.getFirst().getValue().toString());
