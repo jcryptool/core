@@ -57,20 +57,25 @@ public class UserTab {
 		right.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		SideBarListener list_side = new SideBarListener(grp_exp, right);
-
-		Button btn_create_cert = new Button(left, SWT.PUSH);
+		
+		Group g1 = new Group(left, SWT.NONE);
+		g1.setText("PKI-Prozesse");
+		Button btn_create_cert = new Button(g1, SWT.PUSH);
 		btn_create_cert.setText(Messages.UserTab_btn_get_new_cert);
 		btn_create_cert.setData(0); //set data for listener - see SideBarListener.java
 		btn_create_cert.addSelectionListener(list_side);
 		btn_create_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		Button btn_show_cert = new Button(left, SWT.PUSH);
+		
+		Button btn_show_cert = new Button(g1, SWT.PUSH);
 		btn_show_cert.setText(Messages.UserTab_btn_manage_certs);
 		btn_show_cert.setData(1);
 		btn_show_cert.addSelectionListener(list_side);
 		btn_show_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		Button btn_sign_stuff = new Button(left, SWT.PUSH);
+		Group g2 = new Group(left, SWT.None);
+		g2.setText("Benutzerprozesse");
+		Button btn_sign_stuff = new Button(g2, SWT.PUSH);
 		btn_sign_stuff.setText(Messages.UserTab_btn_sign_text_or_file);
 		btn_sign_stuff.setData(2);
 		btn_sign_stuff.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));

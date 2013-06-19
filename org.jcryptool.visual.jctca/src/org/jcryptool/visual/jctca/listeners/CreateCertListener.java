@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPrivateCrtKeySpec;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.Calendar;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
@@ -126,7 +127,7 @@ public class CreateCertListener implements SelectionListener {
 		RegistrarCSR.getInstance().addCSR(txt_first_name.getText(),
 				txt_last_name.getText(), txt_street.getText(),
 				txt_zip.getText(), txt_town.getText(), txt_country.getText(),
-				txt_mail.getText(), path, pubAlias, privAlias);
+				txt_mail.getText(), path, pubAlias, privAlias, Calendar.getInstance().getTime());
 		Util.showMessageBox(
 				Messages.CreateCertListener_msgbox_title_csr_to_ca,
 				Messages.CreateCertListener_msgbox_text_csr_to_ca,

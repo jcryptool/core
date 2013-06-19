@@ -66,6 +66,7 @@ public class SignCert implements Views {
 		Button btn_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_detail.setText(Messages.SignCert_checkbox_show_sigvis);
 		btn_detail.setData("detail"); //$NON-NLS-1$
+		btn_detail.setSelection(true);
 		
 		Button btn_non_detail = new Button(cmp_mini, SWT.RADIO);
 		btn_non_detail.setText(Messages.SignCert_sign_directly);

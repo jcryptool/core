@@ -1,5 +1,7 @@
 package org.jcryptool.visual.jctca.CertificateClasses;
 
+import java.util.Date;
+
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
@@ -69,6 +71,8 @@ public class CSR {
 	 */
 	private boolean rejectenabled;
 
+	private Date created;
+	
 	/**
 	 * the standard constructor for creating a valid CSR
 	 * @param first - first name
@@ -84,7 +88,7 @@ public class CSR {
 	 */
 	public CSR(String first, String last, String street, String zip,
 			String town, String country, String mail, String proof,
-			KeyStoreAlias pubAlias, KeyStoreAlias privAlias) {
+			KeyStoreAlias pubAlias, KeyStoreAlias privAlias, Date created) {
 		super();
 		this.first = first;
 		this.last = last;
@@ -98,8 +102,12 @@ public class CSR {
 		this.pubAlias = pubAlias;
 		this.forwardenabled = false;
 		this.rejectenabled = false;
+		this.created = created;
 	}
 
+	public Date getCreated(){
+		return created;
+	}
 	/**
 	 * gets the first name of the requestor
 	 * @return the first name

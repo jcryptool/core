@@ -72,7 +72,7 @@ public class TabItemListener implements SelectionListener {
 			ArrayList<CSR> csrs = RegistrarCSR.getInstance().getCSR();
 			for (int i = 0; csrs != null && i < csrs.size(); i++) {
 				//CSR csr = csrs.get(i);
-				lst_csr.add("CSR #" + (i + 1));//$NON-NLS-1$
+				lst_csr.add("CSR #" + (i + 1) + " " + csrs.get(i).getCreated().toString());//$NON-NLS-1$
 			}
 			c.layout();
 			lst_csr.select(0);

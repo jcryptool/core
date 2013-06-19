@@ -1,6 +1,7 @@
 package org.jcryptool.visual.jctca.CertificateClasses;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
@@ -92,8 +93,8 @@ public class RegistrarCSR {
 	public void addCSR(String txt_first_name, String txt_last_name,
 			String txt_street, String txt_zip, String txt_town,
 			String txt_country, String txt_mail, String path,
-			KeyStoreAlias pubAlias, KeyStoreAlias privAlias) {
+			KeyStoreAlias pubAlias, KeyStoreAlias privAlias, Date created) {
 		csr.add(new CSR(txt_first_name, txt_last_name, txt_street, txt_zip,
-				txt_town, txt_country, txt_mail, path, pubAlias, privAlias));
+				txt_town, txt_country, txt_mail, path, pubAlias, privAlias, created));
 	}
 }

@@ -83,7 +83,7 @@ public class CSRListener implements SelectionListener {
 					Util.showMessageBox(Messages.CSRListener_msgbox_title_fake_csr_sent_to_ca, Messages.CSRListener_msgbox_text_fake_csr_to_ca_sent, SWT.ICON_WARNING);
 					return;
 				}
-				this.setLabels(new CSR("","","","","","","", "", null, null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+				this.setLabels(new CSR("","","","","","","", "", null, null,null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 				CertificateCSRR.getInstance().addCSR(csr);
 				Util.showMessageBox(Messages.CSRListener_msgbox_title_csr_to_ca_sent, Messages.CSRListener_msgbox_text_csr_to_ca_sent, SWT.ICON_INFORMATION);
 			}
@@ -93,7 +93,7 @@ public class CSRListener implements SelectionListener {
 				if(csr.getPrivAlias()==null){
 					Util.showMessageBox(Messages.CSRListener_msgbox_title_fake_csr_rejected, Messages.CSRListener_msgbox_text_fake_csr_rejected, SWT.ICON_INFORMATION);
 				}
-				this.setLabels(new CSR("","","","","","","","", null, null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+				this.setLabels(new CSR("","","","","","","","", null, null,null)); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
 				if(csr.getPubAlias()!=null){
 					Util.showMessageBox(Messages.CSRListener_msgbox_title_csr_rejected, Messages.CSRListener_msgbox_text_csr_rejected, SWT.ICON_INFORMATION);
 				}			
