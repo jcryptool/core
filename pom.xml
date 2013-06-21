@@ -11,6 +11,12 @@
   <artifactId>org.jcryptool.crypto.parent</artifactId>
   <packaging>pom</packaging>
   <name>JCrypTool Crypto</name>
+
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/jcryptool/crypto/issues</url>
+  </issueManagement>
+
   <modules>  
     <module>com.lowagie.itext</module>
 	<module>com.thoughtworks.xstream</module>
