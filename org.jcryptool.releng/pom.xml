@@ -15,6 +15,13 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<name>CrypTool</name>
 		<url>http://www.cryptool.org</url>
 	</organization>
+	
+	<licenses>
+		<license>
+			<name>Eclipse Public License (EPL) 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+		</license>
+	</licenses>
 
 	<prerequisites>
 		<maven>3.0</maven>
