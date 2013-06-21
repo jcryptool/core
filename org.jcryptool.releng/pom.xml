@@ -48,6 +48,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	</modules>
 
 	<build>
+		<defaultGoal>clean package</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
