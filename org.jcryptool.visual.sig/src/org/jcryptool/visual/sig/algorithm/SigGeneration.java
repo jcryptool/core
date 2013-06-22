@@ -66,10 +66,10 @@ public class SigGeneration {
 			//Check if called by JCT-CA
 			if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { //Use their key
 				org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
-				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, KeyStoreManager.getDefaultKeyPassword());
+				k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, "1234".toCharArray());
 				
 			} else { //Use own Key from given alias
-				k = ksm.getPrivateKey(alias, KeyStoreManager.getDefaultKeyPassword());
+				k = ksm.getPrivateKey(alias, "1234".toCharArray());
 				
 				//org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
 			}

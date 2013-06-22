@@ -22,7 +22,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.exceptions.NoKeyStoreFileException;
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -285,46 +284,39 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	 */
 	private void initializeKeySelection (int method) {
 		KeyStoreManager ksm = KeyStoreManager.getInstance();
-        try {
-            ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
-            KeyStoreAlias alias;
-            Enumeration<String> aliases = ksm.getAliases();
-            while (aliases != null && aliases.hasMoreElements()) {
-                alias = new KeyStoreAlias(aliases.nextElement());
-                alias.getAliasString();
-                if (method == 0) { //DSA
-	                if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
+        KeyStoreAlias alias;
+        Enumeration<String> aliases = ksm.getAliases();
+        while (aliases != null && aliases.hasMoreElements()) {
+            alias = new KeyStoreAlias(aliases.nextElement());
+            alias.getAliasString();
+            if (method == 0) { //DSA
+                if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
+                	//Fill in keys
+                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
+                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
+                } //end if
+              
+            } else {
+            	if (method == 1) { //RSA
+            		if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
 	                	//Fill in keys
 	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
 	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
 	                } //end if
-	              
-                } else {
-                	if (method == 1) { //RSA
+            	} else {
+                	if (method == 2) { //RSAandMGF1
                 		if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
     	                	//Fill in keys
     	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
     	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
     	                } //end if
-                	} else {
-                    	if (method == 2) { //RSAandMGF1
-                    		if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-        	                	//Fill in keys
-        	                	combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
-        	                	keystoreitems.put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), alias);
-        	                } //end if
-                    	} //end if
-                	}//end else
-                }//end while
+                	} //end if
+            	}//end else
             }//end while
-            //combo.select(0);
-            //String s = combo.getText(); 
-            //alias = keystoreitems.get(s);
-            page.setPageComplete(false);
-        } catch (NoKeyStoreFileException e) {
-            LogUtil.logError(e);
-        } catch (KeyStoreException e) {
-            LogUtil.logError(e);
-        }
+        }//end while
+        //combo.select(0);
+        //String s = combo.getText(); 
+        //alias = keystoreitems.get(s);
+        page.setPageComplete(false);
 	}
 }
