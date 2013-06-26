@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.visual.zeroknowledge.views.ZKHeaderComposite;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.magischetuer.MBob;

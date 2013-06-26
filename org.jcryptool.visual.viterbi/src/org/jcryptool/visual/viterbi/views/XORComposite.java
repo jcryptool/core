@@ -6,15 +6,23 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.*;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.viterbi.algorithm.BitwiseXOR;
 import org.jcryptool.visual.viterbi.algorithm.Combination;
 import org.jcryptool.visual.viterbi.algorithm.IO;
-import org.jcryptool.visual.viterbi.algorithm.*;
-import org.jcryptool.core.util.constants.IConstants;
+import org.jcryptool.visual.viterbi.algorithm.ModularAddition;
 
 /**
  *
