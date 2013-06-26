@@ -251,7 +251,7 @@ public class SubstitutionKey {
 	
 	public String toString(AbstractAlphabet alphabet) {
 		StringBuilder formatStringBuilder = new StringBuilder();
-		String[] formatArgs = new String[alphabet.getCharacterSet().length*2];
+		Object[] formatArgs = new Object[alphabet.getCharacterSet().length*2];
 		char[] characterSet = alphabet.getCharacterSet();
 		formatStringBuilder.append("{");
 		for (int i = 0; i < characterSet.length; i++) {
