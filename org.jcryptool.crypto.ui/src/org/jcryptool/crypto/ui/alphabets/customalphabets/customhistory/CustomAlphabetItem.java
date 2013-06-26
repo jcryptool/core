@@ -9,7 +9,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 public class CustomAlphabetItem extends Composite {
 	private Label lblName;

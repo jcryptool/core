@@ -1,7 +1,6 @@
 package org.jcryptool.crypto.ui.alphabets.alphabetblocks;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 
 public class RevertBlock extends BlockAlphabet implements HasOriginalBlockAlpha {

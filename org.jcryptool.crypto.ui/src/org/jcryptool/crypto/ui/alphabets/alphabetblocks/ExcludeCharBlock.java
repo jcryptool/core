@@ -3,7 +3,6 @@ package org.jcryptool.crypto.ui.alphabets.alphabetblocks;
 import java.util.List;
 
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 import org.jcryptool.crypto.ui.alphabets.composite.ExcludeCharAlphabet;
 
 

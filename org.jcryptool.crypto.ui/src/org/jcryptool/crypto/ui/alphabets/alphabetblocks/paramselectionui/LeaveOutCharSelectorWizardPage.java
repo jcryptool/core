@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.BlockAlphabet;
-import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 public class LeaveOutCharSelectorWizardPage extends WizardPage {
 	private Label lblCharacterToExclude;
