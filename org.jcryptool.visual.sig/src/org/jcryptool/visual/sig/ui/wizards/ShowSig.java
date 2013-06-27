@@ -57,7 +57,7 @@ public class ShowSig extends Shell {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 485, 671);
+		composite.setBounds(10, 10, 485, 661);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		txtT.setText(Messages.ShowSig_ownerTitle);
@@ -303,7 +303,7 @@ public class ShowSig extends Shell {
 				ShowSig.this.close();
 			}
 		});
-		btnNewButton.setBounds(345, 646, 140, 25);
+		btnNewButton.setBounds(345, 636, 140, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnOpen = new Button(composite, SWT.NONE);
@@ -314,7 +314,7 @@ public class ShowSig extends Shell {
 				saveToFile();
 			}
 		});
-		btnOpen.setBounds(199, 646, 140, 25);
+		btnOpen.setBounds(199, 636, 140, 25);
 		btnOpen.setText(Messages.ShowSig_btnOpen);
 		
 		Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER);
@@ -335,7 +335,7 @@ public class ShowSig extends Shell {
 	 */
 	protected void createContents() {
 		setText(Messages.ShowSig_title);
-		setSize(512, 720);
+		setSize(512, 710);
 
 	}
 
