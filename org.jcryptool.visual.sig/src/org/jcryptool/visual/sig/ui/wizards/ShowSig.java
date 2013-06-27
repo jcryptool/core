@@ -215,7 +215,9 @@ public class ShowSig extends Shell {
 		int len2 = org.jcryptool.visual.sig.algorithm.Input.dataHex.length();
 		String asciistr2 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.dataHex);
 
-		for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) {
+//		for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) {
+		// shows only 10 rows
+		for (int i2 = 0; i2 < 10 ; i2++) {
 	        TableItem item = new TableItem(table_1, SWT.NONE);
 	        
 	        // column 1
