@@ -31,7 +31,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 	private Text txtPath;
 	private File file = null;
 	private InputFileWizardPage page;
-	private int maxSize = 1572864; //Maximal size of the file (1.5 MB)
+	private int maxSize = 10485760; //Maximal size of the file (10 MB)
 
 	public InputFileComposite(Composite parent, int style, InputFileWizardPage p) {
 		super(parent, style);
