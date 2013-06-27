@@ -13,9 +13,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TableItem;
-
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -47,6 +47,7 @@ public class ShowSig extends Shell {
 
 	private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
 	private String mesStrLen = Integer.toString(mesLen);
+	private Label lblNewLabel;
 	
 	/**
 	 * Create the shell.
@@ -56,7 +57,7 @@ public class ShowSig extends Shell {
 		super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
 		
 		Composite composite = new Composite(this, SWT.NONE);
-		composite.setBounds(10, 10, 494, 612);
+		composite.setBounds(10, 10, 485, 671);
 		
 		txtT = new Label(composite, SWT.READ_ONLY | SWT.WRAP);
 		txtT.setText(Messages.ShowSig_ownerTitle);
@@ -185,6 +186,7 @@ public class ShowSig extends Shell {
 /*******************************Textbox Radiobutton**************************************/			
 		txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
 		txtSigNum.setBounds(0, 110, 484, 151);
+		txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
 /******************************Table Message***************************************/	
 		table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
@@ -301,19 +303,29 @@ public class ShowSig extends Shell {
 				ShowSig.this.close();
 			}
 		});
-		btnNewButton.setBounds(384, 587, 100, 25);
+		btnNewButton.setBounds(345, 646, 140, 25);
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
-		Button btnSave = new Button(composite, SWT.NONE);
-		btnSave.addSelectionListener(new SelectionAdapter() {
+		Button btnOpen = new Button(composite, SWT.NONE);
+		btnOpen.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Call the helper function to format the output (this is madness?!)
 				saveToFile();
 			}
 		});
-		btnSave.setBounds(278, 587, 100, 25);
-		btnSave.setText(Messages.ShowSig_btnSave);
+		btnOpen.setBounds(199, 646, 140, 25);
+		btnOpen.setText(Messages.ShowSig_btnOpen);
+		
+		Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER);
+		lblTextopeneditor.setAlignment(SWT.LEFT);
+		lblTextopeneditor.setBounds(2, 577, 475, 32);
+		lblTextopeneditor.setText(Messages.ShowSig_editorDescripton);
+		lblTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+		
+		lblNewLabel = new Label(composite, SWT.NONE);
+		lblNewLabel.setBounds(0, 571, 484, 44);
+		lblNewLabel.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
 		createContents();	
 	}
@@ -323,7 +335,7 @@ public class ShowSig extends Shell {
 	 */
 	protected void createContents() {
 		setText(Messages.ShowSig_title);
-		setSize(520, 660);
+		setSize(512, 720);
 
 	}
 
