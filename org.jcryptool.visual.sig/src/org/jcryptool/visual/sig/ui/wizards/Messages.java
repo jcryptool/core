@@ -56,6 +56,8 @@ public class Messages {
 	public static String HashWizard_Title;
 	public static String SignatureWizard_Title;
 	public static String Wizard_menu;
+	public static String SignatureWizard_labelKey;
+	public static String SignatureWizard_labelCurve;
 	
 	//InputWizard
 	//Page 1

@@ -48,6 +48,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private int method;
 	private Menu menuSig;
 	private MenuItem mntmSig;
+	private Label lblSelectAKey;
 	
 	//Constructor
 	public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p) {
@@ -64,7 +65,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	private void initialize() {
 		grpSignatures = new Group(this, SWT.NONE);
 		grpSignatures.setText(Messages.SignatureWizard_grpSignatures);
-		grpSignatures.setBounds(10, 65, 406, 151);
+		grpSignatures.setBounds(10, 10, 406, 151);
 		
 		rdo1 = new Button(grpSignatures, SWT.RADIO);
 		//rdo1.setSelection(true);
@@ -115,7 +116,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    rdo4.addSelectionListener(this);
 	    
 	    combo = new Combo(this, SWT.READ_ONLY);
-	    combo.setBounds(10, 35, 406, 22);
+	    combo.setBounds(10, 193, 406, 22);
 	    combo.addSelectionListener(new SelectionListener() {
 	    	public void widgetDefaultSelected(SelectionEvent e) {
 			}
@@ -126,9 +127,9 @@ public class SignatureComposite extends Composite implements SelectionListener{
 			}
 	    });
 	    
-	    Label lblSelectAKey = new Label(this, SWT.NONE);
-	    lblSelectAKey.setBounds(10, 15, 176, 14);
-	    lblSelectAKey.setText("Select a key/curve:");
+	    lblSelectAKey = new Label(this, SWT.NONE);
+	    lblSelectAKey.setBounds(10, 167, 176, 14);
+	    lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
 	    
 	    //Enable/disable methods
 	    switch (method) {
@@ -182,15 +183,20 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    
 	    //If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
 	    if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+	    	//Enable RSA
+	    	rdo2.setSelection(true);
+	    	//Disable all other methods
 			rdo1.setEnabled(false);
 			rdo1.setSelection(false);
-			rdo2.setSelection(true);
 			rdo3.setEnabled(false);
 			rdo4.setEnabled(false);
+			//Disable the key selection
 			combo.setVisible(false);
 			lblSelectAKey.setVisible(false);
-			grpSignatures.setBounds(10, 10, 300, 151);
-			grpDescription.setBounds(10,175,300,255);
+			//Move the description box up
+			grpDescription.setBounds(10,181,300,255);
+			//Enable the finish button
+			page.setPageComplete(true);
 		} else {
 			//Load the keys
 		    initializeKeySelection(keyType); 
@@ -238,6 +244,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 			//Clean up
 			keystoreitems.clear();
 			combo.removeAll();
+			lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
 			initializeKeySelection(0);
 		} else {
 			if (rdo2.getSelection()) {
@@ -246,6 +253,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 				//Clean up
 				keystoreitems.clear();
 				combo.removeAll();
+				lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
 				initializeKeySelection(1);
 			} else {
 				if (rdo3.getSelection()) {
@@ -256,6 +264,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 					combo.removeAll();
 					combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)");
 					//combo.select(0);
+					lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
 					page.setPageComplete(false);
 				} else {
 					if (rdo4.getSelection()) {
@@ -264,6 +273,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 						//Clean up
 						keystoreitems.clear();
 						combo.removeAll();
+						lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
 						initializeKeySelection(2);
 					}
 				}
