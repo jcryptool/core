@@ -65,11 +65,11 @@ public class ShowSig extends Shell {
 		
 		txtT_2 = new Label(composite, SWT.READ_ONLY);
 		txtT_2.setText(Messages.ShowSig_keyTitle);
-		txtT_2.setBounds(0, 25, 176, 21);
+		txtT_2.setBounds(0, 24, 176, 21);
 		
 		txtT_1 = new Label(composite, SWT.READ_ONLY);
 		txtT_1.setText(Messages.ShowSig_methodTitle);
-		txtT_1.setBounds(0, 49, 176, 21);
+		txtT_1.setBounds(0, 48, 176, 21);
 		
 		// get owner of the key
 		String userName;
@@ -101,23 +101,23 @@ public class ShowSig extends Shell {
 				text_1.setText(org.jcryptool.visual.sig.algorithm.Input.privateKey.getClassName());
 			}
 		}
-		text_1.setBounds(182, 25, 302, 21);
+		text_1.setBounds(182, 24, 302, 21);
 		
 		text_2 = new Label(composite, SWT.READ_ONLY);
 		text_2.setText(sig);
-		text_2.setBounds(182, 49, 302, 21);
+		text_2.setBounds(182, 48, 302, 21);
 		
 		txtSig = new Label(composite, SWT.READ_ONLY);
 		txtSig.setText(Messages.ShowSig_grpSignature);
-		txtSig.setBounds(0, 89, 137, 21);
+		txtSig.setBounds(0, 77, 137, 21);
 		
 		txtLnge = new Label(composite, SWT.READ_ONLY);
 		txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + " Bits");
-		txtLnge.setBounds(0, 267, 430, 21);
+		txtLnge.setBounds(0, 253, 430, 21);
 		
 		Group grpOption = new Group(composite, SWT.NONE);
 		grpOption.setText(Messages.ShowSig_grpOption);
-		grpOption.setBounds(0, 294, 484, 73);
+		grpOption.setBounds(0, 280, 484, 73);
 		grpOption.setLayout(null);
 		
 		txtSignedMes = new Label(composite, SWT.READ_ONLY);
@@ -126,7 +126,7 @@ public class ShowSig extends Shell {
 		
 		txtLngeMes = new Label(composite, SWT.READ_ONLY);
 		txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
-		txtLngeMes.setBounds(0, 550, 430, 21);
+		txtLngeMes.setBounds(0, 548, 430, 21);
 		
 /***************************Table Signature******************************************/		
 		// TABLE SIGNATURE
@@ -134,7 +134,7 @@ public class ShowSig extends Shell {
 		table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
 		table.setLinesVisible(true);
 		table.setHeaderVisible(true);
-		table.setBounds(0, 110, 484, 151);
+		table.setBounds(0, 98, 484, 151);
 		
 		// create column
 		tblclmnAdresse = new TableColumn(table, SWT.NONE);
@@ -185,7 +185,7 @@ public class ShowSig extends Shell {
 	    
 /*******************************Textbox Radiobutton**************************************/			
 		txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
-		txtSigNum.setBounds(0, 110, 484, 151);
+		txtSigNum.setBounds(0, 98, 484, 151);
 		txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
 /******************************Table Message***************************************/	
@@ -309,6 +309,7 @@ public class ShowSig extends Shell {
 		btnNewButton.setText(Messages.ShowSig_btnClose);
 		
 		Button btnOpen = new Button(composite, SWT.NONE);
+		btnOpen.setEnabled(false);
 		btnOpen.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -321,12 +322,12 @@ public class ShowSig extends Shell {
 		
 		Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER);
 		lblTextopeneditor.setAlignment(SWT.LEFT);
-		lblTextopeneditor.setBounds(2, 577, 475, 32);
+		lblTextopeneditor.setBounds(2, 584, 475, 32);
 		lblTextopeneditor.setText(Messages.ShowSig_editorDescripton);
 		lblTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		
 		lblNewLabel = new Label(composite, SWT.NONE);
-		lblNewLabel.setBounds(0, 571, 484, 44);
+		lblNewLabel.setBounds(0, 578, 484, 44);
 		lblNewLabel.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
 		createContents();	
