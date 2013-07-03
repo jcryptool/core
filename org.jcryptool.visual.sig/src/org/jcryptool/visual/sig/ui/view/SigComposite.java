@@ -36,7 +36,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.Workbench;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sig.Messages;
@@ -540,24 +539,10 @@ public class SigComposite extends Composite implements PaintListener {
                             display.sleep();
                         }
                     }
-
                 } catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                 }
-
-                // MessageBox messageBox = new MessageBox(new
-                // Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
-                // messageBox.setText(Messages.SigComposite_MessageTitle);
-                // messageBox.setMessage(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
-                // messageBox.open();
-
-                // try {
-                // PlatformUI.getWorkbench().getActiveWorkbenchWindow().
-                // getActivePage().showView("org.jcryptool.visual.sig.view", "org.jcryptool.visual.sig.view", 2);
-                // } catch (PartInitException e1) {
-                // e1.printStackTrace();
-                // }
-            }// end widgetSelected
+            }
         });
 
         // Adds a Listener for Return Button
@@ -567,25 +552,17 @@ public class SigComposite extends Composite implements PaintListener {
 
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    // Clean up Input.java
                     Input.privateKey = null;
                     Input.publicKey = null;
-                    // Close view
-                    IWorkbenchPage page = Workbench.getInstance().getActiveWorkbenchWindow().getActivePage();
-                    // Perspective perspective = page.getPerspective();
+                    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
-                    // IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view",
-                    // "org.jcryptool.visual.sig.view");
                     PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
-                    // System.out.println(ref.getId());
                     page.closePerspective(null, false, true);
-                    // Go to JCT-CA view (org.jcryptool.visual.jctca)
-                    // PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.jctca.view");
-                } // end try
+                }
                 catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
-                }// end catch
-            }// end widgetSelected
+                }
+            }
         });
 
         // To select all text
