@@ -7,7 +7,7 @@
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.10.1/indigo"/>
 </location>
-<location path="${eclipse_home}/../../delta/eclipse" type="Directory"/>
+<location path="${eclipse_home}/../../../delta/eclipse" type="Directory"/>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.1.2.R37x_v20110815-1155-6-Bk8pYWZz0qUTX5I15GZWwbXkrl"/>
 <unit id="org.eclipse.rcp.feature.group" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
