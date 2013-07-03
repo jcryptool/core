@@ -81,7 +81,7 @@ public class Activator extends AbstractUIPlugin {
 					
 					@Override
 					public List<TextStatistic> getPredefinedStatistics() {
-						return Collections.EMPTY_LIST;
+						return Collections.emptyList();
 					}
 				};
 			}
