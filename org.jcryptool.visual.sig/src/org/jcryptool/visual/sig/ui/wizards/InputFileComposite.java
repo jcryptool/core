@@ -105,7 +105,7 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
 	 * @return The byte array
 	 */
 	public byte[] getBytesFromFile(File file) throws IOException {
-		int maxSize = 1572864; //1.5 MB
+		int maxSize = 10485760; //10 MB
 	    InputStream is = new FileInputStream(file);
 	 
 	    // Get the size (in bytes) of the file
