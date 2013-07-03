@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <title>Digital signatures and certificates</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>Digital signatures and certificates</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+        You read about the core principles like data integrity, authentication and non-repudiation in <a href="./schutzziele.html">Introduction to the problems</a>. This section deals with how these principles can be accomplished in the digital world.
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>Digital signatures</h2>
+        <p>
+        So-called "digital signatures" are used in order to accomplish integrity and authenticity of digital data. They are called signatures because they basically serve the same need as a handwritten signature and have to meet similar requirements. A digital signature has to be hard to forge and its validity has to be provable. It must not be easily copied to other data as that signed by the sender and signed data must not be modifiable without the sender's knowledge. All these qualities are met by the use of asymmetric cryptography.
+        </p>
+        <h3>Asymmetric cryptography</h3>
+        <p>
+        Cryptography can be roughly divided into two different kinds: symmetric and asymmetric cryptography. In symmetric cryptography, the same (secret) key is used for encryption and decryption of data. In asymmetric cryptography, the opposite is the case.
+        </p>
+        <p>
+        In asymmetric cryptography, one uses a so-called key pair. The public key is used for encryption only. Once something has been encrypted with a public key, it cannot be decrypted without knowledge of the corresponding private key. You can learn more about asymmetric encryption in the "RSA Cryptosystem" and "Extended RSA Cryptosystem" plugins.
+        </p>
+        <p>
+        For digital signatures, the opposite effect of asymmetric encryption is used. If Bob wants to prove, that a given file was sent by him, he can encrypt the file using his private key. The ciphertext created is the signature for the file. A receiver can decrypt the signature with the public key. If the decrypted signature and the received file are identical, it is obviously the file sent by Bob. Only he had the means, i.e. the private key, to create the signature.
+        </p>
+        <h4>Cryptographic hash function</h4>
+        <p>
+        Asymmetric encryption involves slow and complex mathematical operations, thus it's not practical to sign entire files. For that reason, cryptographic hash functions are used. In general, a hash function is a function that reduces a bit string of variable length to a bit string of fixed length. A cryptographic hash function has some additional qualities, which you can find in the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function">cryptographic hash functions</a>. Also, you can use JCrypTool to create MD5, SHA and SHA3 hashes for text files. If an email or file needs to be signed, a cryptographic hash is created first. This hash is then encrypted using the private key as described above. To check the signature, a receiver creates the hash using the same hash function, decrypts the signature and checks if the two hashes are equal. You can learn about the signature process in more detail in the "Signature Generation Visualization" plug-in.
+        </p>
+        <h2>Public key authentication</h2>
+        <p>
+        One of the main issues with digital signatures is the authenticity of the public key. Public keys are mainly distributed via email, websites or special key servers. As you learned in <a href="./schutzziele.html">Introduction to the problems</a>, emails and websites can be forged easily. Thus, proving the connection between a person and a public key becomes a problem.
+        </p>
+        <p>
+        Public key infrastructures provide a means to solve this problem. A so-called certificate authority (CA) issues digital certificates. Digital certificates are data structures which contain the public key of the certificate holder amongst other things. The CA adds its own signature to this data structure and vouches for the connection between the certificate holder and the public key contained in it. You can read about how this works in more detail in the <a href="./pki.html">section about PKI processes</a>. In addition to the CA and the process of creating and issuing certificates, a PKI provides among other things the means and infrastructure to revoke certificates. 
+        </p>
+        <h2>Non-repudiation: Legal basics about digital certificates</h2>
+        <p>
+        The EU directive 1999/93/EG defines the term "qualified certificate" as "a certificate which meets the requirements laid down in Annex I and is provided by a certification-service-provider who fulfils the requirements laid down in Annex II". Only signatures created by private keys of these kinds of certificates are legally equal to handwritten signatures. You can read more about this in the Wikipedia article on <a href="https://en.wikipedia.org/wiki/Public_key_certificate#Usage_in_the_European_Union">public key certificates</a>.
+        </p>
+
+        <!-- all footnotes go into the following sections. uncomment if needed -->
+        <!--
+        <hr>
+        <p>
+        <sup id="fn1">1. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
+        </p>
+        -->
+
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.de"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        </p>
+    </body>
+</html>

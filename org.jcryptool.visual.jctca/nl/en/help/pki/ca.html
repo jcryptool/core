@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <title>Certification Authority</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>Certification Authority</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+        A certification authority (CA) or certificate authority is the part of a PKI, which is responsible for the certificate management.
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>Responsibilities of a CA</h2>
+        <p>
+	The responsibilities of a CA include issuing and revocation of certificates. In addition, a CA maintains a certificate revocation list (CRL), which includes all certificates issued by the CA and revoked by their owners. 
+        </p>
+        <h3>Certificate issuing</h3>
+        <p>
+	If a CA receives a forwarded CSR from a RA, it issues a certificate for this CSR. This certificate includes information about the CA and the certificate holder, a validity period and a signature of the CA. Please read the exact structure of a certificate in PKI standards.
+	</p>
+        <h3>Certificate revocation list</h3>
+        <p>
+        A CA also maintains a certificate revocation list, in which all certificates issued by the CA are listed which have not yet passed its validity period, but were revoked by the user or the CA. A certificate may be revoked for example, because the private key has been compromised. If a company and a department were specified in a certificate, it may also be that the employee has left this company and therefore the certificate is no longer valid. Moreover, a CA can revoke certificates by herself, for example if a signing key of the CA was stolen, with which the CA already issued certificates.
+        </p>
+
+        <!-- all footnotes go into the following sections. uncomment if needed -->
+        <!--
+        <hr>
+        <p>
+        <sup id="fn1">1. <a href="#ref1" title="Jump back to footnote 1 in the text.">↩</a></sup>
+        </p>
+        -->
+
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+       <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons license" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        </p>
+    </body>
+</html>

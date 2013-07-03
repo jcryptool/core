@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <title>Introduction to the problems</title>
+    </head>
+    <body>
+        <h1>Introduction to the problems</h1>
+        <h2>Network security</h2>
+        <p>
+        The technologies that are widely used in computer networks, were designed at a time when security was not regarded as an important issue. Only a few research institutions and universities had access to the Internet. Because of different technical characteristics of these technologies, there are varying requirements for many fields. One of the many topics of information security is the security of IT systems and computer networks. This field of expertise has established a special wording to describe its requirements. The requirements itself are known as "protection goals". The following paragraphs describe the protection goals important for the understanding of public-key infrastructures.
+        </p>
+        <h3>Data integrity</h3>
+        <p>
+        The Federal Agency for Security in Information Technology defines the "proof of the integrity of electronic data" as "proof that the data is complete and unedited."
+        </p>
+        <p>
+        A contract is a very good example for data integrity. Let's assume, Bob wants to sell Alice a car. As normal, they want to write a sale contract for the exchange of this car. This contract contains information on the condition of the car, how many kilometers have been driven and which extra equipment has been installed. Because of the many points contained in this contract, it is two pages long. At the end of the second page, there is a field for Alice and Bob where both of them can sign the contract. Many of the important agreements, for example the expected mileage at the time of the handover, are on the first page. Because of this, Alice has some concerns with this method. For example, if the actual mileage does not match the contract, Bob could just swap the first page with a new one. In court it would not be possible to proof which version of the contract is the one Alice an Bob originally agreed upon. To avoid this scenario, Bob and Alice agree that each of them signs each page (in the judiciary this is known as "Initialling"). With the signature on each side, the integrity of a version of the contract can be proven because Bob can not exchange a page without the signature of Alice.
+        </p>
+        <p>
+        The problem of data integrity also exists in the digital world. Without any additional measures, it is not possible to verify if data has been changed while it traveled from the sender to the receiver. This is true for emails and websites alike. So, without additional measures to ensure integrity, it is not possible to check if the content of an email is the same as the text the sender wrote. Also there is no way to prove, if the HTML-Code that describes a website, has been changed on the way from the server to the web browser. This can have serious consequences, for example, when someone conducts business over the internet. PKIs offer a means to ensure the integrity of data. To learn more about it, you can go to the section <a href="./zertifikate.html">Digital signatures and certificates</a>.
+        </p>
+        <h3>Authenticity</h3>
+        <p>
+        The Federal Agency for Security in Information Technology defines the "proof of the authenticity of electronic data" as "proof on the originality of the data and the unique mapping to the writer, creator and/or sender".
+        </p>
+        <p>
+        The need for authenticity comes up when handling letters that have been written on the computer and then printed out. Let's assume, Bob gets an envelope. The return address is the address of an hotel. On the inside, Bob finds a letter which says the following: "Dear Bob, someone stole my wallet at a conference. Can you please mail me 300 Euros to the return address? I will give you the money back the next time we see each other. You'll safe my life with this, Alice." Because of the fact that the entire letter has been written and printed, Bob can not easily assume that this letter is actually from Alice. He does however know that Alice is in fact at a conference at the said address and does not want to ignore the letter. To be sure, he calls the hotel and asks for Alice. She ensures him that everything is still in her posession and that she is quite puzzled by the letter. Another visitor of the conference who knows that Alice and Bob know each other must have written said letter.
+        </p>
+        <p>
+        The same problem from the example exists for all data that has been sent on a computer network. Also, the said scenario has been taken from real life events: All the time people get scammed and lose money because they believe emails similar to the letter and send money to alleged friends in need. Without additional measures you can not simply assume that a website is indeed the one you think you are visiting. Criminals for example try to create fake online banking sites and get users to enter their credentials in order to get access to their bank accounts.
+        </p>
+        <p>
+        Data integrity is a crucial requirement for verifiable authenticity. This is quite easy to understand: Let's assume again that Bob gets a letter. This time, Alice wrote and signed the letter herself. So Bob can be sure that Alice really needs the 300 Euros from him (we ignore the fact that the signature could have been a forgery). Now the problem is at hand that the letter says, he should send the money to the return address on the envelope. Somebody that had access to the letter could have removed the original envelope and put it in a new one. Because of this, Bob should call Alice again and verify the address of the hotel.
+        </p>
+        <p>
+        A testament makes the dependency between integrity and authenticity even more obvious. A testament usually has to be handwritten and signed by yourself. The signature of a typewritten document is not enough. Shortly we will learn that authenticity without integrity could also have dangerous consequences. 
+        </p>
+        <p>
+        A PKI provides the means to ensure the authenticity of the sender of electronic data. In the plugin it is shown, how the authenticity of the sender of a text or a file can be verified. 
+        </p>
+        <h3>Non repudiation</h3>
+        <p>
+        The Federal Agency for Security in Information Technology defines non repudiation as the "warranty, that the authorship, the transmission and the reception of data and information can not be disputed".
+        </p>
+        <p>
+        Non repudiation is needed for the validity of trades. This is the reason, why it needs to be a result of authenticity and integrity.
+        </p>
+        <p>
+        Let's take the example of a car trade again: Bob and Alice wrote a sale contract, and signed each of the pages. Because of the signature on each side, its integrity is ensured. The signatures itself prove the authenticity of both parties. Because of this, neither Alice nor Bob can dispute that they have in fact read and accepted the contract. Bob now gives Alice the car and lets her sign a confirmation of delivery. So Alice cannot deny that Bob has given her the car. This is very important, if Alice would not fulfill her duty of payment. When Alice pays Bob the money for the car, she asks Bob for a receipt. So Bob can not deny, that Alice has already paid the money.
+        </p>
+        <p>
+        Since PKIs help to ensure integrity and authenticity they can also ensure non repudiation. However, there are special legal requirements for the different operational scenarios of PKIs. At <a href="./zertifikate.html">"Digital Sigantures and Certificates"</a> you can read more about them.
+        </p>
+
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        </p>
+    </body>
+</html>

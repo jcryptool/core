@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <title>Registration Authority</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>Registration authority</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+        A registration authority (RA) is responsible for the validation of certificate signing request (CSR) and possibly for revocation requests (RR).
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>Responsibilities of a RA &ndash; Validation of CSRs</h2>
+        <p>
+	A registration authority is responsible for the validation of CSRs. What this means exactly, depends on the type of CSR. For example, if an e-mail certificate should be issued, it has to be ensured that the applicant is the holder of the e-mail address specified in the CSR. This is often implemented by sending a validation code.</p>
+        <p>The validation process for a personal certificate is more complex. For example, the German Post offers the so-called post-identification method. The identification of a person is made by an employee at a post office. The applicant receives a PostIdent coupon and submits it together with a passport or identity card at a post office. An employee of the post office copies the identification data to the coupon and has it signed by the customer. The employee confirms the data with the stamp of the post office and its own signature and forwards the coupon to the respective company.</p>
+        <h2>StartSSL &ndash; A real world example </h2>
+        <p>StartSSL is a PKI of the company StartCom, which offers free e-mail certificates and cheap personal certificates.</p>
+        <p>
+        <img alt="StartSSL E-Mail Validation Wizard" src="../media/startssl_email_val.png" />
+        </p>
+        <p>The validation of the e-mail address happens via sending a validation code which must be copied in 15 minutes to the validation wizard. After an e-mail address was validated, you can get a certificate for this address within an hour.</p>
+        <p>To get a personal certificate, a color copy or digital photo of the cover, the first page of the passport, the page of the passport with personal data as well as the front and back of another photo ID (such as a driver's license or identification card) is necessary.</p>
+        <p>
+        <img alt="StartSSL Personal Validation Wizard" src="../media/startssl_person_val.png" />
+        </p>
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons Lizenzvertrag" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        <br />
+        The pictures are screenshots taken from <a href="http://www.startssl.com">StartSSL PKI</a> and &copy; StartCom Ltd. &ndash; All right reserved.
+        </p>
+    </body>
+</html>

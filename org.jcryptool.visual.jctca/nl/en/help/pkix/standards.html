@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <title>X.509 and PKIX</title>
+    </head>
+    <body>
+        <!--Headline 1 should be the main title of the displayed page -->
+        <h1>X.509 and PKIX</h1>
+        <!--first, we give a general introduction about this section of the onlinehelp-->
+        <p>
+	In this section, you get detailed information about the two most important standards for digital certificates on the internet. 
+        The ITU-T recommendation X.509 (abbreviated as X.509 standard or X.509) is a standard for public key and privilege management infrastructures. X.509 specifies only the format for certificates and certificate revocation lists.  
+	The main implementation of X.509 and the thus the second most important standard for digital certificates RFC5280 is authored by a workgroup of the IETF and is entitled "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List Profile". This standard is referred to as PKIX standard. In most cases if an X.509 certificate is mentioned, it refers to the X.509v3 certificate from RFC5280.
+
+        </p>
+        <!-- all other headlines and paragraphs come after here -->
+        <h2>X.509v3 certificate</h2>
+        <p>
+        RFC5280 specifies by this time the third version of the X.509 certificate profile. A certificate in accord with X.509v3 contains the following 	fields.
+        <ul>
+            <li>Version &ndash; The used X.509 version (1, 2 or 3)</li>
+            <li>Serial number &ndash; An assigned serial number by the CA, which has to be unique within the CA.</li>
+            <li>Signature Algorithm &ndash; Signature and hash algorithms, which can be used with this certificate, for example MD5 with RSA (md5WithRSAEncryption)</li>
+            <li>Issuer &ndash; The assigning CA, consisting of</li>
+            <ul>
+                <li>Common Name &ndash; The Common Name is the name, to whom the certificate is issued. This name can also be an email address or a server name if it is an e-mail certificate or server certificate.</li>
+                <li>Organization &ndash; Name of organization, which run the PKI.</li>
+                <li>Organizational Unit &ndash; Department of organization.</li>
+                <li>Location &ndash; The place where the CA is located. Mostly, the city where the operator has its headquarters.</li>
+                <li>State &ndash; The state where the CA is located.</li>
+                <li>Country &ndash; The country where the CA is located.</li>
+            </ul>
+            <li>Validity &ndash; The validity period of the certificate. During this period, the CA guarantees to manage the validity status of the certificate. This consists of a "not before" and a "not after" the date.</li>
+            <li>Subject &ndash; Information about the certificate owner. These consist of the same elements as the information about the CA, but some fields can be empty. At least, the common name must be set.</li>
+            <li>Subject Public Key Info &ndash; The pubilc key of the certificate owner.</li>
+            <li>X.509v3 extensions &ndash; Optional extensions. For example a root certificate is labeled with a X.509v3 extensions.</li>
+            <li>Signature &ndash; Signature algorithm and signature of the assigning CA over the hash of the certificate.</li>
+        </ul>
+        </p>
+
+        <!-- last but definitely not least, the creative commons attribution share-alike license notice-->
+        <hr>
+        <p>
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"><img alt="Creative Commons license" style="display: block; margin-left: auto; margin-right: auto; border-width:0" src="../media/cc-by-sa-80x15.png" /></a>
+        <br />
+        This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+        </p>
+    </body>
+</html>
