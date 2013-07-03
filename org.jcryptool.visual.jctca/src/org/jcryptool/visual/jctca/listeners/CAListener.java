@@ -115,13 +115,10 @@ public class CAListener implements SelectionListener {
                 try {
                     x509 = (X509Certificate) KeyStoreManager.getInstance().getCertificate(rr.getAlias());
                 } catch (UnrecoverableEntryException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 } catch (NoSuchAlgorithmException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 }
-                System.out.println("X500 Principal: " + x509.getSubjectX500Principal().toString()); //$NON-NLS-1$
                 String[] fields = x509.getSubjectX500Principal().toString().split(", "); //$NON-NLS-1$
                 String town = null;
                 String country = null;
@@ -209,10 +206,8 @@ public class CAListener implements SelectionListener {
             try {
                 c = mng.getCertificate(pubAlias);
             } catch (UnrecoverableEntryException e) {
-                // TODO Auto-generated catch block
                 LogUtil.logError(e);
             } catch (NoSuchAlgorithmException e) {
-                // TODO Auto-generated catch block
                 LogUtil.logError(e);
             }
             if (c instanceof X509Certificate) {
@@ -245,7 +240,6 @@ public class CAListener implements SelectionListener {
         }
     }
 
-    @SuppressWarnings("deprecation")
     /**
      * Handels CSRs. gets called when either the accept or reject button has been clicked.
      * @param src - the button, that has been firing the event
@@ -258,8 +252,6 @@ public class CAListener implements SelectionListener {
             CertificateCSRR csrr = CertificateCSRR.getInstance();
             Date startDate = new Date(System.currentTimeMillis());// time from which certificate is valid
             Date expiryDate = new Date(System.currentTimeMillis() + (10 * 5 * 60 * 60 * 1000));
-            System.out
-                    .println("EXPIRY: " + expiryDate.getYear() + "." + expiryDate.getMonth() + "." + expiryDate.getDay()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             BigInteger serialNumber = new BigInteger(System.currentTimeMillis() + "");// serial number for certificate //$NON-NLS-1$
 
             AsymmetricCipherKeyPair keypair = csrr.getCAKey(0);
@@ -275,7 +267,6 @@ public class CAListener implements SelectionListener {
                         Messages.CAListener_msgbox_text_cert_created, SWT.ICON_INFORMATION);
 
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 LogUtil.logError(e);
             }
         } else if (src.equals(reject)) {

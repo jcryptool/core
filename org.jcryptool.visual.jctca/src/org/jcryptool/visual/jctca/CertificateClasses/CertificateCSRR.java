@@ -109,10 +109,8 @@ public class CertificateCSRR {
                 try {
                     c = mng.getCertificate(pubAlias);
                 } catch (UnrecoverableEntryException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 } catch (NoSuchAlgorithmException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 }
                 if (c instanceof X509Certificate) {
@@ -124,10 +122,8 @@ public class CertificateCSRR {
                 try {
                     c = mng.getCertificate(pubAlias);
                 } catch (UnrecoverableEntryException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 } catch (NoSuchAlgorithmException e) {
-                    // TODO Auto-generated catch block
                     LogUtil.logError(e);
                 }
                 if (c instanceof X509Certificate) {
@@ -299,7 +295,6 @@ public class CertificateCSRR {
      * @return the revoked certificates
      */
     public ArrayList<CRLEntry> getRevoked() {
-        // TODO Auto-generated method stub
         return crl;
     }
 

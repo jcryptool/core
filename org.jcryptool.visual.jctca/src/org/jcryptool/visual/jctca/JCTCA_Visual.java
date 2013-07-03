@@ -33,10 +33,6 @@ import org.jcryptool.visual.jctca.tabs.UserTab;
  */
 
 public class JCTCA_Visual extends ViewPart {
-    /*
-     * TODO: loooogik
-     */
-
     JCTCA_Visual visual;
     // define used colors
     private static final Color WHITE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);

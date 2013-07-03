@@ -58,12 +58,10 @@ public class Util {
         PublicKey pub = null;
         try {
             pub = mng.getCertificate(csr.getPubAlias()).getPublicKey();
-        } catch (UnrecoverableEntryException e1) {
-            // TODO Auto-generated catch block
-            LogUtil.logError(e1);
-        } catch (NoSuchAlgorithmException e1) {
-            // TODO Auto-generated catch block
-            LogUtil.logError(e1);
+        } catch (UnrecoverableEntryException e) {
+            LogUtil.logError(e);
+        } catch (NoSuchAlgorithmException e) {
+            LogUtil.logError(e);
         }
         PrivateKey priv;
         try {
@@ -72,8 +70,7 @@ public class Util {
                     csr.getStreet(), csr.getZip(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
                     priv, serialNumber, caCert, expiryDate, startDate, caKey);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-
+            LogUtil.logError(e);
         }
         return null;
     }
@@ -119,24 +116,18 @@ public class Util {
             cert = certGen.generate(caKey, "BC");//$NON-NLS-1$
             return cert;
         } catch (CertificateEncodingException e) {
-            // TODO Auto-generated catch block
+            LogUtil.logError(e);
         } catch (InvalidKeyException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (NoSuchProviderException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (SignatureException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (CertificateParsingException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         }
 
@@ -163,10 +154,8 @@ public class Util {
 
             return new KeyPair(pubKey, privKey);
         } catch (InvalidKeySpecException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         }
         // and this one for the KeyStore
@@ -224,15 +213,12 @@ public class Util {
 
     public static boolean isSignedByJCTCA(KeyStoreAlias ksAlias) {
         KeyStoreManager ksm = KeyStoreManager.getInstance();
-        // TODO Auto-generated method stub
         X509Certificate pubKey = null;
         try {
             pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
         } catch (UnrecoverableEntryException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e);
         }
         // create X500Name from the X509 certificate Subjects distinguished name

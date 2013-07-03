@@ -32,8 +32,6 @@ public class ResizeListener implements ControlListener {
 
     @Override
     public void controlMoved(ControlEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
     /**
@@ -82,7 +80,6 @@ public class ResizeListener implements ControlListener {
                 help = Activator.getImageDescriptor("icons/ausweis.jpeg")//$NON-NLS-1$
                         .createImage();
             }
-            System.out.println("Image Size:");
             // create image in new size
             img_scaled = new Image(img.getDisplay(), help.getImageData().scaledTo(width_scaled, height_scaled));
             img.setImage(img_scaled);

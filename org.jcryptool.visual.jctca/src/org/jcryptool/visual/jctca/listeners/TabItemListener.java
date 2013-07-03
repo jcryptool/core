@@ -42,7 +42,6 @@ public class TabItemListener implements SelectionListener {
 
     @Override
     public void widgetSelected(SelectionEvent arg0) {
-        // System.out.println(parent.getSelectionIndex());
         StyledText stl_exp = (StyledText) grp_exp.getChildren()[0];
         if (parent.getSelectionIndex() == 0) {
             // User View

@@ -41,22 +41,15 @@ public class SigVisPluginOpenListener implements SelectionListener {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
-        if (lbl_file.getText() != "") { //$NON-NLS-1$
-            System.out.println(lbl_file.getText());
-        } else {
-            System.out.println(txt_sign.getText());
-        }
         String selected = cmb_keys.getText();
         String key_hash = selected.split("Hash:")[1]; //$NON-NLS-1$
         key_hash = key_hash.split(" ")[0]; //$NON-NLS-1$
-        System.out.println("KEY HASH: " + key_hash); //$NON-NLS-1$
         KeyStoreAlias pubAlias = (KeyStoreAlias) cmb_keys.getData(cmb_keys.getText());
         KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
         org.jcryptool.visual.sig.algorithm.Input.publicKey = pubAlias;
         org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
         org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file //$NON-NLS-1$
                 .getText() : txt_sign.getText()).getBytes();
-        System.out.println(new String(Input.data));
         org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
         ArrayList<SignatureListener> lsts = org.jcryptool.visual.sig.listener.SignatureListenerAdder.getListeners();
         if (lsts == null || lsts.isEmpty()) {

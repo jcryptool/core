@@ -191,10 +191,8 @@ public class ShowCert implements Views {
             try {
                 cert = ksm.getCertificate(ksAlias);
             } catch (UnrecoverableEntryException e) {
-                // TODO Auto-generated catch block
                 LogUtil.logError(e);
             } catch (NoSuchAlgorithmException e) {
-                // TODO Auto-generated catch block
                 LogUtil.logError(e);
             }
             String listEntry = ""; //$NON-NLS-1$

@@ -48,8 +48,6 @@ public class RevokeButtonListener implements SelectionListener {
      */
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
 }

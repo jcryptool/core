@@ -82,7 +82,6 @@ public class UserShowCertsListener implements SelectionListener {
 
     @Override
     public void widgetSelected(SelectionEvent e) {
-        // TODO Auto-generated method stub
         List lst = (List) e.getSource();
         int selected = lst.getSelectionIndex();
         KeyStoreAlias ksAlias = (KeyStoreAlias) lst.getData(Integer.toString(selected));
@@ -91,10 +90,8 @@ public class UserShowCertsListener implements SelectionListener {
         try {
             pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
         } catch (UnrecoverableEntryException e1) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e1);
         } catch (NoSuchAlgorithmException e1) {
-            // TODO Auto-generated catch block
             LogUtil.logError(e1);
         }
         // create X500Name from the X509 certificate Subjects distinguished name
@@ -138,8 +135,6 @@ public class UserShowCertsListener implements SelectionListener {
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-        // TODO Auto-generated method stub
-
     }
 
 }
