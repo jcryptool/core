@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name.0
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.sig; singleton:=true
 Bundle-Version: 1.0.0
 Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="1.0.0",
@@ -16,3 +16,4 @@ Import-Package: de.flexiprovider.core.dsa,
  de.flexiprovider.core.rsa
 Export-Package: org.jcryptool.visual.sig.algorithm,
  org.jcryptool.visual.sig.listener
+Bundle-Vendor: %Bundle-Vendor
