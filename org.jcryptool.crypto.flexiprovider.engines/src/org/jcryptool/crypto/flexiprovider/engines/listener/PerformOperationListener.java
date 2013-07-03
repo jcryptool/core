@@ -26,7 +26,6 @@ import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 
 public class PerformOperationListener implements IPerfomOperationListener {
-    @SuppressWarnings("incomplete-switch")
     public void performOperation(IFlexiProviderOperation operation) {
         LogUtil.logInfo("perform operation triggered: " + operation.getEntryName()); //$NON-NLS-1$
         FlexiProviderEngine engine = FlexiProviderEngineFactory.createEngine(operation.getRegistryType());
