@@ -8,58 +8,57 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * 
- * @author Grebe
- * This class contains the GUI elements for first page of the file input wizard. 
- *
+ * @author Grebe This class contains the GUI elements for first page of the file input wizard.
+ * 
  */
 public class InputComposite extends Composite implements PaintListener {
-	
-	private Button rdoFromFile;
-	private Button rdoFromEditor;
 
-	// Constructor
-	public InputComposite(Composite parent, int style) {
-		super(parent, style);
+    private Button rdoFromFile;
+    private Button rdoFromEditor;
 
-		rdoFromFile = new Button(this, SWT.RADIO);
-		rdoFromFile.setBounds(10, 10, 91, 18);
-		rdoFromFile.setText(Messages.InputWizard_rdoFromFile);
+    // Constructor
+    public InputComposite(Composite parent, int style) {
+        super(parent, style);
 
-		rdoFromEditor = new Button(this, SWT.RADIO);
-		rdoFromEditor.setBounds(10, 34, 157, 18);
-		rdoFromEditor.setText(Messages.InputWizard_rdoFromEditor);
-		parent.setSize(600, 400);
+        rdoFromFile = new Button(this, SWT.RADIO);
+        rdoFromFile.setBounds(10, 10, 91, 18);
+        rdoFromFile.setText(Messages.InputWizard_rdoFromFile);
 
-		rdoFromFile.setSelection(true);
-		
-		// Draw the controls
-		initialize();
-	}
+        rdoFromEditor = new Button(this, SWT.RADIO);
+        rdoFromEditor.setBounds(10, 34, 157, 18);
+        rdoFromEditor.setText(Messages.InputWizard_rdoFromEditor);
+        parent.setSize(600, 400);
 
-	/**
-	 * Draws all the controls of the composite
-	 */
-	private void initialize() {
+        rdoFromFile.setSelection(true);
 
-	}// end initialize
+        // Draw the controls
+        initialize();
+    }
 
-	@Override
-	public void paintControl(PaintEvent e) {
-		// TODO Auto-generated method stub
-	}
+    /**
+     * Draws all the controls of the composite
+     */
+    private void initialize() {
 
-	/**
-	 * @return the rdoFromFile
-	 */
-	public Button getRdoFromFile() {
-		return rdoFromFile;
-	}
+    }// end initialize
 
-	/**
-	 * @return the rdoFromEditor
-	 */
-	public Button getRdoFromEditor() {
-		return rdoFromEditor;
-	}
+    @Override
+    public void paintControl(PaintEvent e) {
+        // TODO Auto-generated method stub
+    }
+
+    /**
+     * @return the rdoFromFile
+     */
+    public Button getRdoFromFile() {
+        return rdoFromFile;
+    }
+
+    /**
+     * @return the rdoFromEditor
+     */
+    public Button getRdoFromEditor() {
+        return rdoFromEditor;
+    }
 
 }

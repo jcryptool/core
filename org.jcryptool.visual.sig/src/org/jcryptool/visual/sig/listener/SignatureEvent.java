@@ -6,146 +6,147 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 public class SignatureEvent {
 
-	
-	/**
-	 * the signature from the sigvis plugin
-	 */
-	private byte[] signature;
-	
-	/**
-	 * path to the file that has been signed
-	 */
-	String path;
-	
-	/**
-	 * text that has been signed
-	 */
-	String text;
-	
-	/**
-	 * time when the signature was done
-	 */
-	Date time;
-	
-	/**
-	 * private key that has been used for the signature
-	 */
-	KeyStoreAlias privAlias;
-	
-	/**
-	 * public key
-	 */
-	KeyStoreAlias pubAlias;
-	
-	/**
+    /**
+     * the signature from the sigvis plugin
+     */
+    private byte[] signature;
+
+    /**
+     * path to the file that has been signed
+     */
+    String path;
+
+    /**
+     * text that has been signed
+     */
+    String text;
+
+    /**
+     * time when the signature was done
+     */
+    Date time;
+
+    /**
+     * private key that has been used for the signature
+     */
+    KeyStoreAlias privAlias;
+
+    /**
+     * public key
+     */
+    KeyStoreAlias pubAlias;
+
+    /**
 	 * 
 	 */
-	String hashalgorithm;
-	
-	/**
-	 * constructor for a signature
-	 * @param signature
-	 * @param path - path to the file that has been signed (text has to be null)
-	 * @param text - text that has been signed (path has to be null)
-	 * @param time - time when the signature was created
-	 * @param privAlias - alias for the private key that has been used for signing
-	 * @param pubAlias - alias for the corresponsing public key
-	 */
-	public SignatureEvent(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias, KeyStoreAlias pubAlias, String hashalgorithm){
-		this.signature = signature;
-		this.path = path;
-		this.text = text;
-		this.time = time;
-		this.privAlias = privAlias;
-		this.pubAlias = pubAlias;
-		this.hashalgorithm = hashalgorithm;
-	}
-	
-	public String getHashAlgorithm(){
-		return hashalgorithm;
-	}
+    String hashalgorithm;
 
-	/**
-	 * @return the signature
-	 */
-	public byte[] getSignature() {
-		return signature;
-	}
+    /**
+     * constructor for a signature
+     * 
+     * @param signature
+     * @param path - path to the file that has been signed (text has to be null)
+     * @param text - text that has been signed (path has to be null)
+     * @param time - time when the signature was created
+     * @param privAlias - alias for the private key that has been used for signing
+     * @param pubAlias - alias for the corresponsing public key
+     */
+    public SignatureEvent(byte[] signature, String path, String text, Date time, KeyStoreAlias privAlias,
+            KeyStoreAlias pubAlias, String hashalgorithm) {
+        this.signature = signature;
+        this.path = path;
+        this.text = text;
+        this.time = time;
+        this.privAlias = privAlias;
+        this.pubAlias = pubAlias;
+        this.hashalgorithm = hashalgorithm;
+    }
 
-	/**
-	 * @param signature the signature to set
-	 */
-	public void setSignature(byte[] signature) {
-		this.signature = signature;
-	}
+    public String getHashAlgorithm() {
+        return hashalgorithm;
+    }
 
-	/**
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
-	}
+    /**
+     * @return the signature
+     */
+    public byte[] getSignature() {
+        return signature;
+    }
 
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(String path) {
-		this.path = path;
-	}
+    /**
+     * @param signature the signature to set
+     */
+    public void setSignature(byte[] signature) {
+        this.signature = signature;
+    }
 
-	/**
-	 * @return the text
-	 */
-	public String getText() {
-		return text;
-	}
+    /**
+     * @return the path
+     */
+    public String getPath() {
+        return path;
+    }
 
-	/**
-	 * @param text the text to set
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
+    /**
+     * @param path the path to set
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-	/**
-	 * @return the time
-	 */
-	public Date getTime() {
-		return time;
-	}
+    /**
+     * @return the text
+     */
+    public String getText() {
+        return text;
+    }
 
-	/**
-	 * @param time the time to set
-	 */
-	public void setTime(Date time) {
-		this.time = time;
-	}
+    /**
+     * @param text the text to set
+     */
+    public void setText(String text) {
+        this.text = text;
+    }
 
-	/**
-	 * @return the alias
-	 */
-	public KeyStoreAlias getPrivAlias() {
-		return privAlias;
-	}
+    /**
+     * @return the time
+     */
+    public Date getTime() {
+        return time;
+    }
 
-	/**
-	 * @param privAlias the Alias to set
-	 */
-	public void setPrivAlias(KeyStoreAlias privAlias) {
-		this.privAlias = privAlias;
-	}
-	
-	/**
-	 * @return the alias
-	 */
-	public KeyStoreAlias getPubAlias() {
-		return pubAlias;
-	}
+    /**
+     * @param time the time to set
+     */
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
-	/**
-	 * @param pubAlias the Alias to set
-	 */
-	public void setPubAlias(KeyStoreAlias pubAlias) {
-		this.pubAlias = pubAlias;
-	}
+    /**
+     * @return the alias
+     */
+    public KeyStoreAlias getPrivAlias() {
+        return privAlias;
+    }
+
+    /**
+     * @param privAlias the Alias to set
+     */
+    public void setPrivAlias(KeyStoreAlias privAlias) {
+        this.privAlias = privAlias;
+    }
+
+    /**
+     * @return the alias
+     */
+    public KeyStoreAlias getPubAlias() {
+        return pubAlias;
+    }
+
+    /**
+     * @param pubAlias the Alias to set
+     */
+    public void setPubAlias(KeyStoreAlias pubAlias) {
+        this.pubAlias = pubAlias;
+    }
 }

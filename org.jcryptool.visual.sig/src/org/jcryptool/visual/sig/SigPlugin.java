@@ -6,17 +6,16 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * 
  * @author Grebe
- *
+ * 
  */
 public class SigPlugin extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "org.jcryptool.visual.sig"; 
+    public static final String PLUGIN_ID = "org.jcryptool.visual.sig";
 
     /**
-     * Returns an image descriptor for the image file at the given plug-in
-     * relative path
-     *
+     * Returns an image descriptor for the image file at the given plug-in relative path
+     * 
      * @param path the path
      * @return the image descriptor
      */
@@ -24,4 +23,4 @@ public class SigPlugin extends AbstractUIPlugin {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
 
-} //End class
+} // End class
