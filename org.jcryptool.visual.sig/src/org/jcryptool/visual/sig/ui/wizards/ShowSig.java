@@ -394,40 +394,6 @@ public class ShowSig extends Shell {
         return sb.toString();
     }
 
-    // Saves message + info to file...save as what? Save where?? Huh?
-    // private void saveToFile () {
-    // PrintStream out = null;
-    // try {
-    // out = new PrintStream(new FileOutputStream("SignedMessage.txt"));
-    // out.print("Signature: " +
-    // org.jcryptool.visual.sig.algorithm.Input.signatureHex +
-    // " Signature length: " +
-    // sigStrLen +
-    // " Function: " +
-    // org.jcryptool.visual.sig.algorithm.Input.chosenHash +
-    // " Key: " +
-    // org.jcryptool.visual.sig.algorithm.Input.key.getClassName() +
-    // " Owner: " +
-    // org.jcryptool.visual.sig.algorithm.Input.key.getContactName() +
-    // " Message: " +
-    // new String(org.jcryptool.visual.sig.algorithm.Input.data));
-    //
-    // MessageBox messageBox = new MessageBox(new
-    // Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
-    // messageBox.setText("Saved");
-    // messageBox.setMessage("Saved to " + System.getProperty("user.dir"));
-    // messageBox.open();
-    // }
-    // catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // finally {
-    // if (out != null) out.close();
-    // }
-    //
-    // System.out.println("I am here: " + System.getProperty("user.dir"));
-    // }
-
     private void openHexEditor() {
         // org.jcryptool.visual.sig.algorithm.Input.signature;
         // DisplayOption displayOption = DisplayOption.OUTPUT_AND_KEYSTREAM;
