@@ -6,25 +6,27 @@ import org.eclipse.swt.widgets.Combo;
 
 /**
  * ???
+ * 
  * @author mmacala
- *
+ * 
  */
 public class PubKeyListener implements SelectionListener {
-Combo cmb_genKey;
-	
-	public PubKeyListener(Combo cmb_genKey) {
-		this.cmb_genKey = cmb_genKey;
-	}
-	@Override
-	public void widgetSelected(SelectionEvent e) {
-		cmb_genKey.setEnabled(true);
+    Combo cmb_genKey;
 
-	}
+    public PubKeyListener(Combo cmb_genKey) {
+        this.cmb_genKey = cmb_genKey;
+    }
 
-	@Override
-	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
+    @Override
+    public void widgetSelected(SelectionEvent e) {
+        cmb_genKey.setEnabled(true);
 
-	}
+    }
+
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
 
 }

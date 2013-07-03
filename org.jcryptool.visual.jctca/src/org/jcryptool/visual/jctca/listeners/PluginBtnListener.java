@@ -17,72 +17,71 @@ import org.jcryptool.visual.jctca.ResizeHelper;
  */
 public class PluginBtnListener implements SelectionListener {
 
-	JCTCA_Visual visual;
-	Label lbl_img;
-	Image image;
-	Image help;
-	StyledText exp;
-	String lang;
+    JCTCA_Visual visual;
+    Label lbl_img;
+    Image image;
+    Image help;
+    StyledText exp;
+    String lang;
 
-	public PluginBtnListener(JCTCA_Visual visual, Label lbl_img, StyledText exp) {
-		this.visual = visual;
-		this.lbl_img = lbl_img;
-		this.exp = exp;
-		lang = Platform.getNL().substring(0,2);
-		if(Platform.getNL().substring(0,2).equals("de")){
-			lang = "de";
-		}
-		else{
-			lang="en";
-		}
-	}
+    public PluginBtnListener(JCTCA_Visual visual, Label lbl_img, StyledText exp) {
+        this.visual = visual;
+        this.lbl_img = lbl_img;
+        this.exp = exp;
+        lang = Platform.getNL().substring(0, 2);
+        if (Platform.getNL().substring(0, 2).equals("de")) {
+            lang = "de";
+        } else {
+            lang = "en";
+        }
+    }
 
-	@Override
-	public void widgetDefaultSelected(SelectionEvent arg0) {
-		// TODO Auto-generated method stub
+    @Override
+    public void widgetDefaultSelected(SelectionEvent arg0) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	@Override
-	public void widgetSelected(SelectionEvent arg0) {
-		Composite comp_image = lbl_img.getParent();
-		//get the button that was pressed
-		Button btn = (Button) arg0.getSource();
-		//check which button it was: 0 = create, 1 = revoke, 2 = check, 3 = continue to plugin (see JCTCA_Visual.java)
-		Integer data = (Integer) btn.getData();
-		int pressed = data.intValue();
-		ResizeHelper util = new ResizeHelper();
-		
-		//take action according to button pressed
-		switch (pressed) {
-		case 0: //data is set to 0 if create needs to be shown - see JCTCA_Visual.java
-			help = Activator.getImageDescriptor("icons/"+lang+"/minica_create.png")//$NON-NLS-1$
-			.createImage();
-			exp.setText(Messages.PluginBtnListener_archpic_create_explain);
-			util.resize_image(lbl_img, comp_image, help);
-			util.set_image_name("Architekturskizze Zertifikatserzeugung");//$NON-NLS-1$
-			break;
-		case 1: //data is set to 1 if revoke needs to be shown - see JCTCA_Visual.java
-			help = Activator.getImageDescriptor("icons/"+lang+"/minica_revoke.png")//$NON-NLS-1$
-			.createImage();
-			exp.setText(Messages.PluginBtnListener_archpic_revoke_explain);
-			util.resize_image(lbl_img, comp_image, help);
-			util.set_image_name("Architekturskizze Zertifikatswiderruf");//$NON-NLS-1$
-			break;
-		case 2: //data is set to 2 if check needs to be shown - see JCTCA_Visual.java
-			help = Activator.getImageDescriptor("icons/"+lang+"/minica_check.png")//$NON-NLS-1$
-			.createImage();
-			exp.setText(Messages.PluginBtnListener_archpic_check_explain);
-			util.resize_image(lbl_img, comp_image, help);
-			util.set_image_name("Architekturskizze Signaturpr\u00FCfung");//$NON-NLS-1$
-			break;
-		case 3: // is set to 3 if user wants to continue to the plugin - see JCTCA_Visual.java
-			visual.disposeCompCenter();
-			visual.showCenter();
-			exp.setText(Messages.PluginBtnListener_visual_intro_text);
-			break;
-		}
+    @Override
+    public void widgetSelected(SelectionEvent arg0) {
+        Composite comp_image = lbl_img.getParent();
+        // get the button that was pressed
+        Button btn = (Button) arg0.getSource();
+        // check which button it was: 0 = create, 1 = revoke, 2 = check, 3 = continue to plugin (see JCTCA_Visual.java)
+        Integer data = (Integer) btn.getData();
+        int pressed = data.intValue();
+        ResizeHelper util = new ResizeHelper();
 
-	}
+        // take action according to button pressed
+        switch (pressed) {
+            case 0: // data is set to 0 if create needs to be shown - see JCTCA_Visual.java
+                help = Activator.getImageDescriptor("icons/" + lang + "/minica_create.png")//$NON-NLS-1$
+                        .createImage();
+                exp.setText(Messages.PluginBtnListener_archpic_create_explain);
+                util.resize_image(lbl_img, comp_image, help);
+                util.set_image_name("Architekturskizze Zertifikatserzeugung");//$NON-NLS-1$
+                break;
+            case 1: // data is set to 1 if revoke needs to be shown - see JCTCA_Visual.java
+                help = Activator.getImageDescriptor("icons/" + lang + "/minica_revoke.png")//$NON-NLS-1$
+                        .createImage();
+                exp.setText(Messages.PluginBtnListener_archpic_revoke_explain);
+                util.resize_image(lbl_img, comp_image, help);
+                util.set_image_name("Architekturskizze Zertifikatswiderruf");//$NON-NLS-1$
+                break;
+            case 2: // data is set to 2 if check needs to be shown - see JCTCA_Visual.java
+                help = Activator.getImageDescriptor("icons/" + lang + "/minica_check.png")//$NON-NLS-1$
+                        .createImage();
+                exp.setText(Messages.PluginBtnListener_archpic_check_explain);
+                util.resize_image(lbl_img, comp_image, help);
+                util.set_image_name("Architekturskizze Signaturpr\u00FCfung");//$NON-NLS-1$
+                break;
+            case 3: // is set to 3 if user wants to continue to the plugin - see JCTCA_Visual.java
+                visual.disposeCompCenter();
+                visual.showCenter();
+                exp.setText(Messages.PluginBtnListener_visual_intro_text);
+                break;
+        }
+
+    }
 
 }
