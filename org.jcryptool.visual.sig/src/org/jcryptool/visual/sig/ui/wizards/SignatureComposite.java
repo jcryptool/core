@@ -86,7 +86,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	
 		Group grpDescription = new Group(this, SWT.NONE);
 		grpDescription.setText(Messages.SignatureWizard_grpDescription);
-		grpDescription.setBounds(10, 230, 406, 255);
+		grpDescription.setBounds(10, 220, 406, 255);
 		
 		txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
 		txtDescription.setEditable(false);
@@ -116,7 +116,7 @@ public class SignatureComposite extends Composite implements SelectionListener{
 	    rdo4.addSelectionListener(this);
 	    
 	    combo = new Combo(this, SWT.READ_ONLY);
-	    combo.setBounds(10, 193, 406, 22);
+	    combo.setBounds(10, 185, 406, 22);
 	    combo.addSelectionListener(new SelectionListener() {
 	    	public void widgetDefaultSelected(SelectionEvent e) {
 			}
