@@ -59,7 +59,7 @@ public class UserTab {
         SideBarListener list_side = new SideBarListener(grp_exp, right);
 
         Group g1 = new Group(left, SWT.NONE);
-        g1.setText("PKI-Prozesse");
+        g1.setText(Messages.UserTab_PKI_processes);
         g1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         g1.setLayout(new GridLayout(1, true));
 
@@ -76,7 +76,7 @@ public class UserTab {
         btn_show_cert.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         Group g2 = new Group(left, SWT.None);
-        g2.setText("Benutzerprozesse");
+        g2.setText(Messages.UserTab_User_processes);
         g2.setLayout(new GridLayout(1, true));
         g2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
