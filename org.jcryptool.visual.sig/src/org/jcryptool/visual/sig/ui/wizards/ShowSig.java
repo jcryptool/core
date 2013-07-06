@@ -26,21 +26,21 @@ public class ShowSig extends Shell {
     private Label txtSignedMes;
     private Label txtLngeMes;
     private Table table;
-    private TableColumn tblclmnAdresse;
+    private TableColumn tblclmnAddress;
     private TableColumn tblclmnHex;
     private TableColumn tblclmnAscii;
     private Table table_1;
-    private TableColumn tblclmnAddress;
-    private TableColumn tableColumn_1;
-    private TableColumn tableColumn_2;
+    private TableColumn tblclmnAddress_1;
+    private TableColumn tblclmnHex_1;
+    private TableColumn tblclmnAscii_1;
     private Label txtSigNum;
 
     private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
     private String sigStrLen = Integer.toString(sigLen);
-
     private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
     private String mesStrLen = Integer.toString(mesLen);
     private Label lblNewLabel;
+    private String userName;
 
     /**
      * Create the shell.
@@ -66,7 +66,6 @@ public class ShowSig extends Shell {
         txtT_1.setBounds(0, 48, 176, 21);
 
         // get owner of the key
-        String userName;
         if ((org.jcryptool.visual.sig.algorithm.Input.privateKey == null)
                 && (org.jcryptool.visual.sig.algorithm.Input.key == null)) {
             userName = "-";
@@ -124,20 +123,17 @@ public class ShowSig extends Shell {
         txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
         txtLngeMes.setBounds(0, 548, 430, 21);
 
-        /*************************** Table Signature ******************************************/
-        // TABLE SIGNATURE
-
+        // create table to show the generated signature
         table = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
         table.setLinesVisible(true);
         table.setHeaderVisible(true);
         table.setBounds(0, 98, 484, 151);
 
-        // create column
-        tblclmnAdresse = new TableColumn(table, SWT.NONE);
-        tblclmnAdresse.setResizable(false);
-        tblclmnAdresse.setWidth(60);
-        tblclmnAdresse.setToolTipText("");
-        tblclmnAdresse.setText(Messages.ShowSig_tblAdr);
+        tblclmnAddress = new TableColumn(table, SWT.NONE);
+        tblclmnAddress.setResizable(false);
+        tblclmnAddress.setWidth(60);
+        tblclmnAddress.setToolTipText("");
+        tblclmnAddress.setText(Messages.ShowSig_tblAdr);
 
         tblclmnHex = new TableColumn(table, SWT.NONE);
         tblclmnHex.setResizable(false);
@@ -149,7 +145,6 @@ public class ShowSig extends Shell {
         tblclmnAscii.setWidth(150);
         tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
-        // fill column
         int stepSize = 14;
         int len1 = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
         String asciistr = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
@@ -157,10 +152,10 @@ public class ShowSig extends Shell {
         for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
             TableItem item = new TableItem(table, SWT.NONE);
 
-            // column 1
-            item.setText(0, getAdress(i1, stepSize));
+            // column 1 - address
+            item.setText(0, getAddress(i1, stepSize));
 
-            // column 2
+            // column 2 - hex
             int start1 = i1 * (stepSize * 2);
             int end1 = i1 * (stepSize * 2) + (stepSize * 2);
             end1 = end1 >= len1 ? len1 : end1;
@@ -173,51 +168,44 @@ public class ShowSig extends Shell {
             }
             item.setText(1, bufferS1.toString());
 
-            // column 3
+            // column 3 - ascii
             StringBuffer bufferS2 = new StringBuffer();
             bufferS2.append(asciistr, start1 / 2, end1 / 2);
             item.setText(2, bufferS2.toString());
         }
 
-        /******************************* Textbox Radiobutton **************************************/
-        txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
-        txtSigNum.setBounds(0, 98, 484, 151);
-        txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
-
-        /****************************** Table Message ***************************************/
+        // create table to show signed message
         table_1 = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
         table_1.setLinesVisible(true);
         table_1.setHeaderVisible(true);
         table_1.setBounds(0, 394, 484, 150);
 
-        tblclmnAddress = new TableColumn(table_1, SWT.NONE);
-        tblclmnAddress.setResizable(false);
-        tblclmnAddress.setWidth(60);
-        tblclmnAddress.setToolTipText("");
-        tblclmnAddress.setText(Messages.ShowSig_tblAdr);
+        tblclmnAddress_1 = new TableColumn(table_1, SWT.NONE);
+        tblclmnAddress_1.setResizable(false);
+        tblclmnAddress_1.setWidth(60);
+        tblclmnAddress_1.setToolTipText("");
+        tblclmnAddress_1.setText(Messages.ShowSig_tblAdr);
 
-        tableColumn_1 = new TableColumn(table_1, SWT.NONE);
-        tableColumn_1.setResizable(false);
-        tableColumn_1.setWidth(250);
-        tableColumn_1.setText(Messages.ShowSig_tblHex);
+        tblclmnHex_1 = new TableColumn(table_1, SWT.NONE);
+        tblclmnHex_1.setResizable(false);
+        tblclmnHex_1.setWidth(250);
+        tblclmnHex_1.setText(Messages.ShowSig_tblHex);
 
-        tableColumn_2 = new TableColumn(table_1, SWT.NONE);
-        tableColumn_2.setResizable(false);
-        tableColumn_2.setWidth(150);
-        tableColumn_2.setText(Messages.ShowSig_tblAscii);
-
-        // fill column
+        tblclmnAscii_1 = new TableColumn(table_1, SWT.NONE);
+        tblclmnAscii_1.setResizable(false);
+        tblclmnAscii_1.setWidth(150);
+        tblclmnAscii_1.setText(Messages.ShowSig_tblAscii);
 
         int len2 = org.jcryptool.visual.sig.algorithm.Input.dataHex.length();
         String asciistr2 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.dataHex);
 
-        // for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) {
-        // shows only 10 rows
-        for (int i2 = 0; i2 < 10; i2++) {
+        // for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) { // to show the hole message
+        // shows only 6 rows - optimize performance
+        for (int i2 = 0; i2 < 6; i2++) {
             TableItem item = new TableItem(table_1, SWT.NONE);
 
-            // column 1
-            item.setText(0, getAdress(i2, stepSize));
+            // column 1 - address
+            item.setText(0, getAddress(i2, stepSize));
 
             // column 2
             int start2 = i2 * (stepSize * 2);
@@ -239,8 +227,12 @@ public class ShowSig extends Shell {
 
         }
 
-        /******************************* Buttons **************************************/
-        // OKT
+        // text field to show signature as hex, octal or decimal
+        txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
+        txtSigNum.setBounds(0, 98, 484, 151);
+        txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+
+        // display options
         Button btnOkt = new Button(grpOption, SWT.RADIO);
         btnOkt.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -253,7 +245,6 @@ public class ShowSig extends Shell {
         btnOkt.setBounds(186, 30, 70, 16);
         btnOkt.setText(Messages.ShowSig_octal);
 
-        // DEC
         Button btnDez = new Button(grpOption, SWT.RADIO);
         btnDez.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -266,7 +257,6 @@ public class ShowSig extends Shell {
         btnDez.setBounds(262, 30, 80, 16);
         btnDez.setText(Messages.ShowSig_decimal);
 
-        // HEX
         Button btnHex = new Button(grpOption, SWT.RADIO);
         btnHex.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -279,7 +269,6 @@ public class ShowSig extends Shell {
         btnHex.setBounds(348, 30, 70, 16);
         btnHex.setText(Messages.ShowSig_hex);
 
-        // DUMP
         Button btnHexdump = new Button(grpOption, SWT.RADIO);
         btnHexdump.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -292,7 +281,7 @@ public class ShowSig extends Shell {
         btnHexdump.setBounds(10, 30, 170, 16);
         btnHexdump.setText(Messages.ShowSig_hexDump);
 
-        // Button Close and Save
+        // close window
         Button btnNewButton = new Button(composite, SWT.NONE);
         btnNewButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -303,11 +292,13 @@ public class ShowSig extends Shell {
         btnNewButton.setBounds(345, 636, 140, 25);
         btnNewButton.setText(Messages.ShowSig_btnClose);
 
+        // open hex editor
         Button btnOpen = new Button(composite, SWT.NONE);
         btnOpen.setEnabled(false);
         btnOpen.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+                // TODO
                 // Call the helper function to format the output (this is madness?!)
                 // saveToFile();
                 openHexEditor();
@@ -347,15 +338,15 @@ public class ShowSig extends Shell {
      * Returns a string to get the address in the hex-dump-table.
      * 
      * @param i Row of table
-     * @param stepSize Differnce between digits in the row.
+     * @param stepSize Difference between digits in the row.
      * @return a string containing the address in the table
      */
-    protected String getAdress(int i, int stepSize) {
+    protected String getAddress(int i, int stepSize) {
         return String.format("%05X", (i * stepSize) & 0xFFFFF);
     }
 
     /**
-     * Retruns the ascii representation of an hexadecimal string.
+     * Returns the ascii representation of an hexadecimal string.
      * 
      * @param hex
      * @return a string containing the ascii representation
@@ -394,8 +385,41 @@ public class ShowSig extends Shell {
         return sb.toString();
     }
 
+    // Saves message + info to file...save as what? Save where?? Huh?
+    // private void saveToFile () {
+    // PrintStream out = null;
+    // try {
+    // out = new PrintStream(new FileOutputStream("SignedMessage.txt"));
+    // out.print("Signature: " +
+    // org.jcryptool.visual.sig.algorithm.Input.signatureHex +
+    // " Signature length: " +
+    // sigStrLen +
+    // " Function: " +
+    // org.jcryptool.visual.sig.algorithm.Input.chosenHash +
+    // " Key: " +
+    // org.jcryptool.visual.sig.algorithm.Input.key.getClassName() +
+    // " Owner: " +
+    // org.jcryptool.visual.sig.algorithm.Input.key.getContactName() +
+    // " Message: " +
+    // new String(org.jcryptool.visual.sig.algorithm.Input.data));
+    //
+    // MessageBox messageBox = new MessageBox(new
+    // Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+    // messageBox.setText("Saved");
+    // messageBox.setMessage("Saved to " + System.getProperty("user.dir"));
+    // messageBox.open();
+    // }
+    // catch (Exception e){
+    // e.printStackTrace();
+    // }
+    // finally {
+    // if (out != null) out.close();
+    // }
+    //
+    // System.out.println("I am here: " + System.getProperty("user.dir"));
+    // }
+
     private void openHexEditor() {
-        // org.jcryptool.visual.sig.algorithm.Input.signature;
-        // DisplayOption displayOption = DisplayOption.OUTPUT_AND_KEYSTREAM;
+
     }
 }
