@@ -9,13 +9,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.jctca.Util;
-// import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 import org.jcryptool.visual.jctca.notifiers.SignatureNotifier;
 import org.jcryptool.visual.sig.algorithm.Input;
 import org.jcryptool.visual.sig.listener.SignatureListener;
@@ -56,30 +56,27 @@ public class SigVisPluginOpenListener implements SelectionListener {
             org.jcryptool.visual.sig.listener.SignatureListenerAdder.addSignatureListener(new SignatureNotifier());
         }
         if (btn_check.getSelection() == true) {
-            try {
-
-                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
-                        .showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
-
-            } catch (PartInitException ex) {
-                LogUtil.logError(ex);
+            IViewReference ref = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                    .findViewReference("org.jcryptool.visual.sig.view");
+            if (ref != null) {
+                Util.showMessageBox("Signaturerzeugung schließen",
+                        "Sie müssen zuerst die Signaturerzeugung schließen bevor sie fortfahren können.",
+                        SWT.ICON_INFORMATION);
+            } else {
+                try {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                            .showView("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
+                } catch (PartInitException e1) {
+                    LogUtil.logError(e1);
+                }
             }
         } else {
-
-            // hash = org.jcryptool.visual.sig.algorithm.Input.data;
             try {
-                // hash = org.jcryptool.visual.sig.algorithm.Hash.hashInput(
-                //						"SHA-256", hash); //$NON-NLS-1$
-                org.jcryptool.visual.sig.algorithm.Input.chosenHash = "SHA256";
+                org.jcryptool.visual.sig.algorithm.Input.chosenHash = "SHA256"; //$NON-NLS-1$
                 org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput("SHA256withRSA", Input.data); //$NON-NLS-1$
-            } catch (Exception ex) {
-                LogUtil.logError(ex);
+            } catch (Exception e1) {
+                LogUtil.logError(e1);
             }
-            // sig = org.jcryptool.visual.sig.algorithm.Input.signature;
-            // Signature signature = new Signature(sig, lbl_file.getText(),
-            // txt_sign.getText(), new Date(System.currentTimeMillis()),
-            // privAlias, pubAlias, "SHA256");
-            // CertificateCSRR.getInstance().addSignature(signature);
             Util.showMessageBox(Messages.SigVisPluginOpenListener_msgbox_title_success,
                     Messages.SigVisPluginOpenListener_msgbox_text_signed_msg_was_sent, SWT.ICON_INFORMATION);
             this.lbl_file.setText(""); //$NON-NLS-1$
