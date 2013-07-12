@@ -23,10 +23,10 @@ import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
 /**
+ * This class contains the GUI elements for signature wizard. It also contains a method to load all RSA/DSA keys from
+ * the keystore and displays them in a dropdown list.
  * 
- * @author Grebe This class contains the GUI elements for signature wizard. It also contains a method to load all
- *         RSA/DSA keys from the keystore and displays them in a dropdown list.
- * 
+ * @author Grebe
  */
 public class SignatureComposite extends Composite implements SelectionListener {
     private Group grpSignatures;
@@ -191,7 +191,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             combo.setVisible(false);
             lblSelectAKey.setVisible(false);
             // Move the description box up
-            grpDescription.setBounds(10, 181, 300, 255);
+            grpDescription.setBounds(10, 181, 406, 255);
             // Enable the finish button
             page.setPageComplete(true);
         } else {
@@ -252,7 +252,9 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 keystoreitems.clear();
                 combo.removeAll();
                 lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
-                initializeKeySelection(1);
+                if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
+                    initializeKeySelection(1);
+                }
             } else {
                 if (rdo3.getSelection()) {
                     txtDescription.setText(Messages.SignatureWizard_ECDSA_description);

@@ -27,7 +27,11 @@ public class SignatureWizardPage extends WizardPage {
     public void createControl(Composite parent) {
         composite = new SignatureComposite(parent, NONE, method, this);
         setControl(composite);
-        setPageComplete(false);
+        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+            setPageComplete(true);
+        } else {
+            setPageComplete(false);
+        }
     }
 
     /**

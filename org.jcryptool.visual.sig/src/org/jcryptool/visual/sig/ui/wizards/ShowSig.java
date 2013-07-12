@@ -1,5 +1,12 @@
 package org.jcryptool.visual.sig.ui.wizards;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -7,8 +14,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -36,11 +45,14 @@ public class ShowSig extends Shell {
     private Label txtSigNum;
 
     private int sigLen = org.jcryptool.visual.sig.algorithm.Input.signature.length;
-    private String sigStrLen = Integer.toString(sigLen);
+    // private String sigStrLen = Integer.toString(sigLen); //Bytes!!!!
     private int mesLen = org.jcryptool.visual.sig.algorithm.Input.data.length;
-    private String mesStrLen = Integer.toString(mesLen);
+    // private String mesStrLen = Integer.toString(mesLen); //Bytes!!!!
     private Label lblNewLabel;
     private String userName;
+
+    private int sLen = sigLen * 8;
+    private int mLen = mesLen * 8;
 
     /**
      * Create the shell.
@@ -107,7 +119,7 @@ public class ShowSig extends Shell {
         txtSig.setBounds(0, 77, 137, 21);
 
         txtLnge = new Label(composite, SWT.READ_ONLY);
-        txtLnge.setText(Messages.ShowSig_lengthSig + sigStrLen + " Bits");
+        txtLnge.setText(Messages.ShowSig_lengthSig + sLen + " Bits");
         txtLnge.setBounds(0, 253, 430, 21);
 
         Group grpOption = new Group(composite, SWT.NONE);
@@ -120,7 +132,7 @@ public class ShowSig extends Shell {
         txtSignedMes.setBounds(0, 373, 137, 21);
 
         txtLngeMes = new Label(composite, SWT.READ_ONLY);
-        txtLngeMes.setText(Messages.ShowSig_lengthMessage + mesStrLen + " Bits");
+        txtLngeMes.setText(Messages.ShowSig_lengthMessage + mLen + " Bits");
         txtLngeMes.setBounds(0, 548, 430, 21);
 
         // create table to show the generated signature
@@ -146,32 +158,41 @@ public class ShowSig extends Shell {
         tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
         int stepSize = 14;
+
         int len1 = org.jcryptool.visual.sig.algorithm.Input.signatureHex.length();
-        String asciistr = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+        String asciistr1 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
+        int lenAscii1 = asciistr1.length();
 
         for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
             TableItem item = new TableItem(table, SWT.NONE);
-
-            // column 1 - address
-            item.setText(0, getAddress(i1, stepSize));
 
             // column 2 - hex
             int start1 = i1 * (stepSize * 2);
             int end1 = i1 * (stepSize * 2) + (stepSize * 2);
             end1 = end1 >= len1 ? len1 : end1;
 
-            StringBuffer bufferS1 = new StringBuffer();
-            for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
-                bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2 * m1) + start1));
-                bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2 * m1 + 1) + start1));
-                bufferS1.append(" ");
-            }
-            item.setText(1, bufferS1.toString());
+            int startascii1 = start1 / 2;
+            int endascii1 = (end1 / 2) >= lenAscii1 ? lenAscii1 : (end1 / 2);
 
-            // column 3 - ascii
-            StringBuffer bufferS2 = new StringBuffer();
-            bufferS2.append(asciistr, start1 / 2, end1 / 2);
-            item.setText(2, bufferS2.toString());
+            if ((start1 < end1) && (startascii1 < endascii1)) {
+                // column 1 - address
+                item.setText(0, getAddress(i1, stepSize));
+
+                StringBuffer bufferS1 = new StringBuffer();
+                for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
+                    bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2 * m1) + start1));
+                    bufferS1.append(org.jcryptool.visual.sig.algorithm.Input.signatureHex.charAt((2 * m1 + 1) + start1));
+                    bufferS1.append(" ");
+                }
+                item.setText(1, bufferS1.toString());
+
+                // column 3 - ascii
+                StringBuffer bufferS2 = new StringBuffer();
+                bufferS2.append(asciistr1, startascii1, endascii1);
+                item.setText(2, bufferS2.toString());
+            } else {
+                i1 = (len1 / (stepSize * 2)) + 5;
+            }
         }
 
         // create table to show signed message
@@ -198,33 +219,41 @@ public class ShowSig extends Shell {
 
         int len2 = org.jcryptool.visual.sig.algorithm.Input.dataHex.length();
         String asciistr2 = convertHexToString(org.jcryptool.visual.sig.algorithm.Input.dataHex);
+        int lenAscii2 = asciistr2.length();
 
-        // for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) { // to show the hole message
+        // for (int i2 = 0; i2 < (Math.ceil((double)len2/(stepSize*2))) ; i2++) { // to show the whole message
         // shows only 6 rows - optimize performance
         for (int i2 = 0; i2 < 6; i2++) {
+            // Create one item for each row
             TableItem item = new TableItem(table_1, SWT.NONE);
 
-            // column 1 - address
-            item.setText(0, getAddress(i2, stepSize));
-
-            // column 2
             int start2 = i2 * (stepSize * 2);
             int end2 = i2 * (stepSize * 2) + (stepSize * 2);
             end2 = end2 >= len2 ? len2 : end2;
 
-            StringBuffer bufferD1 = new StringBuffer();
-            for (int n1 = 0; n1 < (end2 - start2) / 2; n1++) {
-                bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2 * n1) + start2));
-                bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2 * n1 + 1) + start2));
-                bufferD1.append(" ");
+            int startascii2 = start2 / 2;
+            int endascii2 = (end2 / 2) >= lenAscii2 ? lenAscii2 : (end2 / 2);
+
+            if ((start2 < end2) && (startascii2 < endascii2)) {
+                // column 1 - address
+                item.setText(0, getAddress(i2, stepSize));// Column, string
+
+                // column 2 - hex
+                StringBuffer bufferD1 = new StringBuffer();
+                for (int n1 = 0; n1 < (end2 - start2) / 2; n1++) {
+                    bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2 * n1) + start2));
+                    bufferD1.append(org.jcryptool.visual.sig.algorithm.Input.dataHex.charAt((2 * n1 + 1) + start2));
+                    bufferD1.append(" ");
+                }
+                item.setText(1, bufferD1.toString());
+
+                // column 3 - ascii
+                StringBuffer bufferD2 = new StringBuffer();
+                bufferD2.append(asciistr2, startascii2, endascii2);
+                item.setText(2, bufferD2.toString());
+            } else {
+                i2 = 10;
             }
-            item.setText(1, bufferD1.toString());
-
-            // column 3
-            StringBuffer bufferD2 = new StringBuffer();
-            bufferD2.append(asciistr2, start2 / 2, end2 / 2);
-            item.setText(2, bufferD2.toString());
-
         }
 
         // text field to show signature as hex, octal or decimal
@@ -289,23 +318,8 @@ public class ShowSig extends Shell {
                 ShowSig.this.close();
             }
         });
-        btnNewButton.setBounds(345, 636, 140, 25);
+        btnNewButton.setBounds(389, 633, 95, 28);
         btnNewButton.setText(Messages.ShowSig_btnClose);
-
-        // open hex editor
-        Button btnOpen = new Button(composite, SWT.NONE);
-        btnOpen.setEnabled(false);
-        btnOpen.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                // TODO
-                // Call the helper function to format the output (this is madness?!)
-                // saveToFile();
-                openHexEditor();
-            }
-        });
-        btnOpen.setBounds(199, 636, 140, 25);
-        btnOpen.setText(Messages.ShowSig_btnOpen);
 
         Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER);
         lblTextopeneditor.setAlignment(SWT.LEFT);
@@ -316,6 +330,47 @@ public class ShowSig extends Shell {
         lblNewLabel = new Label(composite, SWT.NONE);
         lblNewLabel.setBounds(0, 578, 484, 44);
         lblNewLabel.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+
+        Button btnSave = new Button(composite, SWT.NONE);
+        btnSave.setBounds(289, 633, 95, 28);
+        btnSave.setText(Messages.ShowSig_btnSave);
+        btnSave.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Open File save dialog
+                FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
+                dialog.setFileName("signature_and_message");
+                String savePath = dialog.open();
+                // Write the file
+                if (savePath != null) {
+                    try {
+                        OutputStream output = null;
+                        try {
+                            ByteBuffer b = ByteBuffer.allocate(4);
+                            b.putInt(sLen);
+                            output = new BufferedOutputStream(new FileOutputStream(savePath));
+                            output.write(b.array());
+                            output.write(org.jcryptool.visual.sig.algorithm.Input.signature);
+                            output.write(org.jcryptool.visual.sig.algorithm.Input.data);
+                        }// end try
+                        finally {
+                            output.close();
+                        }// end finally
+                    }// end try
+                    catch (FileNotFoundException ex) {
+                        // LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+                    }// end catch
+                    catch (IOException ex) {
+                        // LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
+                    }// end catch
+                    MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
+                            | SWT.OK);
+                    messageBox.setText(Messages.ShowSig_MessageBoxTitle);
+                    messageBox.setMessage(Messages.ShowSig_MessageBoxText);
+                    messageBox.open();
+                }// end if
+            }// end widgetSelected
+        });
 
         createContents();
     }
@@ -385,41 +440,4 @@ public class ShowSig extends Shell {
         return sb.toString();
     }
 
-    // Saves message + info to file...save as what? Save where?? Huh?
-    // private void saveToFile () {
-    // PrintStream out = null;
-    // try {
-    // out = new PrintStream(new FileOutputStream("SignedMessage.txt"));
-    // out.print("Signature: " +
-    // org.jcryptool.visual.sig.algorithm.Input.signatureHex +
-    // " Signature length: " +
-    // sigStrLen +
-    // " Function: " +
-    // org.jcryptool.visual.sig.algorithm.Input.chosenHash +
-    // " Key: " +
-    // org.jcryptool.visual.sig.algorithm.Input.key.getClassName() +
-    // " Owner: " +
-    // org.jcryptool.visual.sig.algorithm.Input.key.getContactName() +
-    // " Message: " +
-    // new String(org.jcryptool.visual.sig.algorithm.Input.data));
-    //
-    // MessageBox messageBox = new MessageBox(new
-    // Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
-    // messageBox.setText("Saved");
-    // messageBox.setMessage("Saved to " + System.getProperty("user.dir"));
-    // messageBox.open();
-    // }
-    // catch (Exception e){
-    // e.printStackTrace();
-    // }
-    // finally {
-    // if (out != null) out.close();
-    // }
-    //
-    // System.out.println("I am here: " + System.getProperty("user.dir"));
-    // }
-
-    private void openHexEditor() {
-
-    }
 }
