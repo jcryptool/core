@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.substitution.ui.wizard.loadtext;
+package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
 
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;

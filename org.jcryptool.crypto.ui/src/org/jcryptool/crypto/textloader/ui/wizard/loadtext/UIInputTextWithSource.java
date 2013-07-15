@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.substitution.ui.wizard.loadtext;
+package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
 
 import java.io.File;
 import java.io.FileInputStream;

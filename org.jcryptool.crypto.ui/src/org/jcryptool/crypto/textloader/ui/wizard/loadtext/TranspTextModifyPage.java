@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.analysis.substitution.ui.wizard.loadtext;
+package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

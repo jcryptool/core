@@ -1,9 +1,9 @@
-package org.jcryptool.analysis.substitution.ui.wizard.loadtext;
+package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.analysis.substitution.ui.wizard.loadtext.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jcryptool.crypto.textloader.ui.wizard.loadtext.messages"; //$NON-NLS-1$
 	public static String TranspTextModifyPage_textmodifydescription;
 	public static String TranspTextWizardPage_text;
 	public static String TranspTextWizardPage_windowsfiledialogtitle;

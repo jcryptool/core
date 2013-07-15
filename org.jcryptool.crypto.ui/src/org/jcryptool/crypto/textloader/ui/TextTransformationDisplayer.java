@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.substitution.ui.modules.utils;
+package org.jcryptool.crypto.textloader.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;

@@ -1,4 +1,4 @@
-package org.jcryptool.analysis.substitution.ui.modules.utils;
+package org.jcryptool.crypto.textloader.ui.wizard;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,9 +16,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.jcryptool.analysis.substitution.ui.modules.Messages;
-import org.jcryptool.analysis.substitution.ui.wizard.loadtext.LoadTextWizard;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
+import org.jcryptool.crypto.textloader.ui.ControlHatcher;
+import org.jcryptool.crypto.textloader.ui.TextTransformationDisplayer;
+import org.jcryptool.crypto.textloader.ui.wizard.loadtext.LoadTextWizard;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSourceDisplayer;
 
