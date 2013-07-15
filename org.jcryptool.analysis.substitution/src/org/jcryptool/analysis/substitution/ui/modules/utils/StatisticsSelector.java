@@ -25,8 +25,8 @@ import org.jcryptool.analysis.substitution.ui.modules.SubstitutionAnalysisConfig
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
-import org.jcryptool.crypto.textloader.ui.ControlHatcher;
-import org.jcryptool.crypto.textloader.ui.wizard.TextLoadController;
+import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
+import org.jcryptool.crypto.ui.textloader.ui.wizard.TextLoadController;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.util.NestedEnableDisableSwitcher;
 

@@ -1,4 +1,4 @@
-package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
+package org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext;
 
 import java.io.File;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.eclipse.ui.IEditorReference;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.editors.EditorsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
-import org.jcryptool.crypto.textloader.ui.ControlHatcher;
+import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
@@ -46,7 +46,7 @@ public class LoadTextWizardPage extends WizardPage {
 	private Composite textfieldComp;
 	private Text txtInputText;
 	private List<IEditorReference> editorRefs;
-	private org.jcryptool.crypto.textloader.ui.wizard.loadtext.TextonlyInput textOnlyInput;
+	private org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext.TextonlyInput textOnlyInput;
 	/**
 	 * The file that was last using the file selection wizard on press of the
 	 * "select text from file" radiobutton

@@ -1,8 +1,8 @@
-package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
+package org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
-import org.jcryptool.crypto.textloader.ui.ControlHatcher;
+import org.jcryptool.crypto.ui.textloader.ui.ControlHatcher;
 import org.jcryptool.crypto.ui.textsource.TextInputWithSource;
 
 public class LoadTextWizard extends Wizard {

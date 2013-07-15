@@ -1,4 +1,4 @@
-package org.jcryptool.crypto.textloader.ui.wizard.loadtext;
+package org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,9 +1,9 @@
-package org.jcryptool.crypto.textloader.ui.wizard;
+package org.jcryptool.crypto.ui.textloader.ui.wizard;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.crypto.textloader.ui.wizard.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jcryptool.crypto.ui.textloader.ui.wizard.messages"; //$NON-NLS-1$
 	public static String TextLoadController_0;
 	public static String TextLoadController_1;
 	public static String TextLoadController_3;

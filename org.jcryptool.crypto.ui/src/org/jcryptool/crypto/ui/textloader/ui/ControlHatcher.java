@@ -1,4 +1,4 @@
-package org.jcryptool.crypto.textloader.ui;
+package org.jcryptool.crypto.ui.textloader.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
