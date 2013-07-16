@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.SWT;
@@ -7,14 +17,14 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.visual.sig.algorithm.Input;
 
 /**
+ * Contains all the GUI elements for the editor input page.
  * 
- * @author Grebe Contains all the GUI elements for the editor input page.
- * 
+ * @author Grebe
  */
 public class InputEditorComposite extends Composite {
-
     // Limit for the length of the text that might be entered into the plaintext field
     private static final int TEXTLIMIT = 1000;
     private Text text = null;
@@ -30,7 +40,7 @@ public class InputEditorComposite extends Composite {
         text.setFocus();
 
         Label lblToSaveThe = new Label(this, SWT.NONE);
-        lblToSaveThe.setBounds(10, 231, 386, 15);
+        lblToSaveThe.setBounds(10, 231, 400, 15);
         lblToSaveThe.setText(Messages.InputEditorWizard_Label);
 
         page = p;
@@ -41,20 +51,18 @@ public class InputEditorComposite extends Composite {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
                     page.canFlipToNextPage();
-                    org.jcryptool.visual.sig.algorithm.Input.data = text.getText().getBytes();
+                    Input.data = text.getText().getBytes();
                     page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
                     page.getWizard().getContainer().updateButtons();
-                    page.setErrorMessage("Please enter a text");
+                    page.setErrorMessage(Messages.EnterText);
                 }
             }
         });
-    }// end Constructor
+    }
 
     public String getText() {
         return text.getText();
-
     }
-
 }

@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
@@ -6,18 +16,15 @@ import org.eclipse.swt.widgets.Group;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
+ * This class contains loads the composite for the signature wizard.
  * 
- * @author Grebe This class contains loads the composite for the signature wizard.
- * 
+ * @author Grebe
  */
 public class SignatureWizardPage extends WizardPage {
-
     private SignatureComposite composite;
     private int method = 0;
 
-    // Construcor
-    protected SignatureWizardPage(String pageName, int m) {
-        // Header is the fat text above the description
+    public SignatureWizardPage(String pageName, int m) {
         super(Messages.SignatureWizard_header);
         setDescription(Messages.SignatureWizard_header);
         setTitle(Messages.SignatureWizard_WindowTitle);
@@ -27,11 +34,7 @@ public class SignatureWizardPage extends WizardPage {
     public void createControl(Composite parent) {
         composite = new SignatureComposite(parent, NONE, method, this);
         setControl(composite);
-        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
-            setPageComplete(true);
-        } else {
-            setPageComplete(false);
-        }
+        setPageComplete(false);
     }
 
     /**
@@ -47,5 +50,4 @@ public class SignatureWizardPage extends WizardPage {
     public KeyStoreAlias getAlias() {
         return composite.getAlias();
     }
-
 }

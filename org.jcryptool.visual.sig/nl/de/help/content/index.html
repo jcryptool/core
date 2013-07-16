@@ -2,10 +2,10 @@
 <html lang = "de">
     <head>
         <meta charset="utf-8">
-        <title>Signatur Demo</title>
+        <title>Signatur-Demo</title>
     </head>
     <body>
-        <h1>Signaturvisualisierung – Online Hilfe</h1>
+        <h1>Signatur-Demo</h1>
         <p>
 		Willkommen in der Online Hilfe des Plug-Ins zur Signaturvisualisierung.
 		Nachfolgenden finden Sie einen Überblick des Plug-Ins sowie eine detaillierte Erklärung zu jeden Schritt des Signaturerstellungsprozesses.
@@ -52,13 +52,12 @@
         <p>Der “Digital Signature Algorithm“ (DSA) (veröffentlicht im Jahr 1991 von NIST) ist ein „United States Federal Government“-Standard für digitale Signaturen. Mit DSA ist die Entropie, Geheimhaltung, und die Einzigartigkeit des zufälligen Signatur-Wertes entscheidend. Jede Verletzung einer dieser drei Anforderungen kann dazu führen, dass der gesamte private Schlüssel dem Angreifer  offenbart wird. Wird der zufällige Signatur-Wert ein zweites Mal verwendet, ein vorhersehbarer Wert berechnet oder sind nur einige Bits des Wertes in jeder der Signaturwerte undicht, kann DAS gebrochen werden.</p>
         <p>Lernen Sie mehr über DSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Besuchen Sie JCT-DSA</a></p> 
         <h4>RSA</h4>
-        <p>RSA (veröffentlicht im Jahr 1977) ist ein Algorithmus für asymmetrische kryptographische Verfahren, die auf der mutmaßlichen Schwierigkeit der Faktorisierung von großen Zahlen, dem Faktorisierungsproblem, basiert. Jeder kann den öffentlichen Schlüssel zum Verifizieren einer Nachricht verwenden, aber nur der Besitzer des privaten Schlüssels kann die Nachricht signieren. Ein Angreifer, der den privaten Schlüssel nicht kennt, müsste den Modulus im öffentlichen Schlüssel faktorisieren. Sichere Padding-Verfahren, wie beispielsweise RSA-PSS, sind für die Sicherheit der Signaturerstellung genauso notwendig wie für die Sicherheit bei der Verschlüsselung einer Nachricht. Der Cryptography Standard PKCS #1 definiert die Empfehlungen für die Implementierung asymmetrischer Kryptografie, die auf dem RSA-Algorithmus basieren.</p>
+        <p>RSA (veröffentlicht im Jahr 1977) ist ein Algorithmus für asymmetrische kryptographische Verfahren, die auf der mutmaßlichen Schwierigkeit der Faktorisierung von großen Zahlen, dem Faktorisierungsproblem, basiert. Jeder kann den öffentlichen Schlüssel zum Entschlüsseln einer Nachricht verwenden, aber mit den aktuelle veröffentlichten Methoden, kann nur jemand der die Primfaktoren kennt und vorausgesetzt der Schlüssel ist lang genug, die Nachricht tatsächlich dekodieren. Sichere Padding-Verfahren, wie beispielsweise RSA-PSS, sind für die Sicherheit der Signaturerstellung genauso notwendig wie für die der Verschlüsselung einer Nachricht. Der PKCS #1 Cryptography Standard definiert die Empfehlungen für die Implementierung asymmetrischer Kryptografie, die auf dem RSA-Algorithmus basieren.</p>
         <p> Lernen Sie mehr über RSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Besuchen Sie JCT-RSA</a></p> 
         <h4>ECDSA</h4>
         <p>Der “Elliptic Curve Digital Signature Algorithm” (ECDSA) (vorgeschlagen von Scott Vanstone im Jahr 1992) ist die elliptische Kurve analog dem “Digital Signature Algorithm“ (DSA). Im Gegensatz zum normalen diskreten Logarithmusproblem und dem Faktorisierungsproblem, sind für Elliptischen Kurven keine Probleme bekannt. Die Länge des privaten Schlüssels, der als sicher betrachtet wird, ist mit ECDSA wesentlich kürzer. Bei einem Sicherheitsniveau von 80 Bits, was bedeutet, ein Angreifer würde 2^80 Signaturerzeugungsprozesse benötigen um den privaten Schlüssel zu finden, ist die Größe eines öffentlichen DAS-Schlüssels mindestens 1024 Bit, während die Größe eines öffentlichen ECDA-Schlüssels 160 Bit wäre. </p>
-        <h4>RSA und MGF1</h4>
-        <p>MGFs (mask generation functions) verwenden eine Oktal-Zeichenkette einer variablen Länge und generieren eine Zeichenkette (ebenfalls oktal) gewünschter Länge. MGFs sind deterministisch, das heißt dass die Input-Zeichenkette die Output-Zeichenkette bestimmt. Das Ergebnis einer MGF soll pseudozufällig (das heißt unmöglich vorhersagbar) sein. Deshalb werden oft Hashfunktionen verwendet um MGFs zu implementieren. MGF1 ist im PKCS #1 v2.1 (Public-Key Cryptography Standards, publiziert von RSA Laboratories) spezifiziert.</p>
-        <p> Lernen Sie mehr über RSA und MGF1: <a href="http://software.intel.com/sites/products/documentation/doclib/ipp_sa/71/ippcp/ippcp_ch3/ch3_mask_generation_functions.htm">Mask Generation Functions</a></p>
+        <h4>RSA and MGF1</h4>
+        <p>fehlt leider noch ;)</p>
         <h3>Mehr Informationen zur Kryptografie-Bibliothek BouncyCastle:</h3>
        	<ul>
         	<li><a href="http://www.bouncycastle.org/">Besuchen Sie BouncyCastle</a></li>
@@ -75,7 +74,7 @@
             <li>Informationen zu der Signaturfunktion,</li>
             <li>die hexadezimale, oktale oder die binäre Darstellung der signierten Datei sowie der erzeugten Signatur.</li>
         </ul>
-        <p>Um die signierte Datei mit der Signatur anzuzeigen, klicken Sie auf "Speichern" und öffnen Sie die gespeicherte Datei mit dem JCT-HexEditor. Die gespeicherte Datei benötigen Sie, falls Sie Ihre Signatur prüfen möchten.</p>
+        <p>Klicken Sie auf den Button “Hex Editor öffnen” um die signierte Datei und die erzeugte Signatur im Hex Editor des JCrypTools anzuziegen, wo Sie diese auch speichern können. Die gespeicherte Datei benötigen Sie, falls Sie Ihre Signatur prüfen möchten.</p>
 		<img src="ShowSigWizard.png">
 
     </body>

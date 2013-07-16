@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.algorithm;
 
 import java.security.MessageDigest;
@@ -10,11 +20,8 @@ import org.jcryptool.visual.sig.SigPlugin;
  * Hashes the given input with the selected hash methods.
  * 
  * @author Grebe
- * 
  */
 public class Hash {
-    public static String hash;
-
     /**
      * This method hashes an input stored in Input.java with a given hash method
      * 
@@ -24,21 +31,20 @@ public class Hash {
      */
     public static byte[] hashInput(String hashmethod, byte[] input) throws Exception {
         byte[] md = null;
+        
         try {
             // Get an MD5 message digest object and compute the plaintext digest
             MessageDigest messageDigest = MessageDigest.getInstance(hashmethod); // Argument is a string!
             messageDigest.update(input);
             // Output:
             md = messageDigest.digest();
-            // hash = new String (org.jcryptool.visual.sig.algorithm.Input.bytesToHex(md)); //Hex String
 
-            org.jcryptool.visual.sig.algorithm.Input.hash = md; // Store the generated hash
-            org.jcryptool.visual.sig.algorithm.Input.hashHex = org.jcryptool.visual.sig.algorithm.Input.bytesToHex(md); // Hex
-                                                                                                                        // String
-            return md;
+            Input.hash = md; // Store the generated hash
+            Input.hashHex = Input.bytesToHex(md); // Hex
         } catch (Exception ex) {
             LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
         }
+        
         return md;
     }
 

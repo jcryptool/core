@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.view;
 
 import org.eclipse.jface.action.Action;
@@ -11,8 +21,8 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -40,7 +50,9 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sig.Messages;
 import org.jcryptool.visual.sig.SigPlugin;
+import org.jcryptool.visual.sig.algorithm.Hash;
 import org.jcryptool.visual.sig.algorithm.Input;
+import org.jcryptool.visual.sig.algorithm.SigGeneration;
 import org.jcryptool.visual.sig.ui.wizards.HashWizard;
 import org.jcryptool.visual.sig.ui.wizards.InputWizard;
 import org.jcryptool.visual.sig.ui.wizards.ShowSig;
@@ -75,7 +87,6 @@ public class SigComposite extends Composite implements PaintListener {
     private MenuItem mntm4;
     private MenuItem mntm0;
     private boolean called = false;
-    SigComposite sc = this;
     private int hash = 0; // Values: 0-4. Hash and signature contain the
                           // selected method; default is 0
     private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5,
@@ -84,18 +95,11 @@ public class SigComposite extends Composite implements PaintListener {
             org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
             org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
     private int signature = 0; // 0-3
-    private String sigstring = "";
+    private String sigstring = ""; //$NON-NLS-1$
     private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_DSA,
             org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
             org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
             org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
-
-    // Contains all possible signature methods
-    // private String[] sigmethods = { "MD5withRSA", "SHA1withDSA", "SHA1withRSA",
-    // "SHA1withECDSA", "SHA1withRSAandMGF1", "SHA256withRSA",
-    // "SHA256withECDSA", "SHA256withRSAandMGF1", "SHA384withRSA",
-    // "SHA384withECDSA", "SHA384withRSAandMGF1", "SHA512withRSA",
-    // "SHA512withECDSA", "SHA512withRSAandMGF1" };
 
     /**
      * @return the hash
@@ -128,7 +132,6 @@ public class SigComposite extends Composite implements PaintListener {
     // Generates all Elements of the GUI
     public SigComposite(Composite parent, int style, SigView view) {
         super(parent, style);
-        sc = this;
         // The color of the textboxes
         Color white = new Color(Display.getCurrent(), 255, 255, 255);
 
@@ -155,7 +158,6 @@ public class SigComposite extends Composite implements PaintListener {
         Group grpSignatureGeneration = new Group(this, SWT.NONE);
         grpSignatureGeneration.setText(Messages.SigComposite_grpSignatureGeneration);
         grpSignatureGeneration.setBounds(10, 90, 699, 548);
-        // btnOpenDocumentTemp.setVisible(false);
 
         btnHash = new Button(grpSignatureGeneration, SWT.NONE);
         btnHash.setEnabled(false);
@@ -254,7 +256,7 @@ public class SigComposite extends Composite implements PaintListener {
         btnChooseInput.setText(Messages.SigComposite_btnChooseInput);
 
         btnOpenInEditor = new Button(canvas1, SWT.NONE);
-        btnOpenInEditor.setBounds(451, 352, 167, 40);
+        btnOpenInEditor.setBounds(451, 352, 175, 40);
         btnOpenInEditor.setEnabled(false);
         btnOpenInEditor.setText(Messages.SigComposite_btnOpenInEditor);
 
@@ -268,7 +270,7 @@ public class SigComposite extends Composite implements PaintListener {
 
         Label lblHashhex = new Label(grpSignatureGeneration, SWT.NONE);
         lblHashhex.setBounds(34, 431, 59, 14);
-        lblHashhex.setText("Hash (hex)");
+        lblHashhex.setText(org.jcryptool.visual.sig.ui.view.Messages.SigComposite_1);
 
         btnReturn = new Button(grpSignatureGeneration, SWT.NONE);
         btnReturn.setBounds(550, 493, 125, 28);
@@ -279,20 +281,18 @@ public class SigComposite extends Composite implements PaintListener {
 
         // Adding the PantListener to all the canvas so the arrows can be drawn
         canvas1.addPaintListener(this);
-        // canvas2.addPaintListener(this);
 
         // Adds reset button to the toolbar
         IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
-        Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {Reset(0);}}; //$NON-NLS-1$
+        Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
         action.setImageDescriptor(SigPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
         toolBarMenu.add(action);
 
         // Check if called by JCT-CA
-        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
+        if (Input.privateKey != null) {
             btnReturn.setVisible(true); // Set button to return visible
             called = true;
         }
-
     }
 
     /**
@@ -320,16 +320,15 @@ public class SigComposite extends Composite implements PaintListener {
         height = clientArea.height;
 
         // Insert the image of the key
-        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/key.png");
+        ImageDescriptor id = SigPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
         ImageData imD = id.getImageData();
         Image img = new Image(Display.getCurrent(), imD);
         gc.drawImage(img, 230, 200);
 
         // Insert the image of the document
-        id = SigPlugin.getImageDescriptor("icons/doc.png");
+        id = SigPlugin.getImageDescriptor("icons/doc.png"); //$NON-NLS-1$
         imD = id.getImageData();
         img = new Image(Display.getCurrent(), imD);
-        // gc.drawImage(img, 10, 0); Bring to front!
         // Draw second document icon
         gc.drawImage(img, width - 130, height - 130);
 
@@ -339,7 +338,6 @@ public class SigComposite extends Composite implements PaintListener {
         gc.fillRectangle(55, 60, 20, height);
         gc.fillRectangle(0, height - 30, width - 220, 20);
         gc.fillRectangle(270, 300, 20, 80);
-        // Draw head (x1, y1, x2, y2, x3, y3)
         gc.fillPolygon(new int[] {width - 220, height - 40, width - 220, height, width - 200, height - 20});
         gc.setBackground(darkgrey);
         gc.drawImage(img, picx, picy);
@@ -365,22 +363,19 @@ public class SigComposite extends Composite implements PaintListener {
 
         gc.dispose();
 
-    }// end paintControl
+    }
 
     /**
      * Adds SelectionListeners to the Controls that need them
      */
     public void createEvents() {
         // Adds a Listener for the document
-        btnChooseInput.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnChooseInput.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
-                    Reset(0);
+                    reset(0);
 
                     // Create the HashWirard
                     InputWizard wiz = new InputWizard();
@@ -394,33 +389,25 @@ public class SigComposite extends Composite implements PaintListener {
                         }
                     };
                     if (dialog.open() == Window.OK) {
-                        btnHash.setEnabled(true); // Enable to select the hash
-                                                  // method
+                        btnHash.setEnabled(true); // Enable to select the hash method
                         tabDescription.setSelection(1); // Activate the second
                                                         // tab of the
                                                         // description
-                        // txtDescriptionOfStep2.setText(Messages.SigComposite_txtDescriptionOfStep2
-                        // + " " +
-                        // org.jcryptool.visual.sig.algorithm.Input.data[0]);
                         canvas1.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 2));
-                    }// end if
+                    }
 
-                } // end try
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
-                }// end catch
-            }// end widgetSelected
+                }
+            }
         });
 
         // Adds a Listener for the hash select button
-        btnHash.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnHash.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    Reset(1);
+                    reset(1);
                     // Create the HashWirard
                     HashWizard wiz = new HashWizard();
                     // Display it
@@ -437,10 +424,7 @@ public class SigComposite extends Composite implements PaintListener {
                         lblHash.setText(hashes[hash]);
 
                         // Arguments: Hash method, data to hash
-                        org.jcryptool.visual.sig.algorithm.Hash.hashInput(hashes[hash],
-                                org.jcryptool.visual.sig.algorithm.Input.data); // Hash
-                                                                                // the
-                                                                                // input
+                        Hash.hashInput(hashes[hash], Input.data); // Hash the input
 
                         // Update the GUI:
                         btnSignature.setEnabled(true); // Enable to select the
@@ -450,8 +434,8 @@ public class SigComposite extends Composite implements PaintListener {
                                                         // description
                         canvas1.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 3));
-                        txtHash.setText(org.jcryptool.visual.sig.algorithm.Input.hashHex);
-                    }// end if
+                        txtHash.setText(Input.hashHex);
+                    }
                 } catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                 }
@@ -459,13 +443,10 @@ public class SigComposite extends Composite implements PaintListener {
         });
 
         // Adds a Listener for the Signature select button
-        btnSignature.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnSignature.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    Reset(2);
+                    reset(2);
                     SignatureWizard wiz = new SignatureWizard(hash);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
@@ -483,16 +464,13 @@ public class SigComposite extends Composite implements PaintListener {
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        org.jcryptool.visual.sig.algorithm.SigGeneration.SignInput(chooseSignature(),
-                                org.jcryptool.visual.sig.algorithm.Input.data, alias);
+                        SigGeneration.signInput(chooseSignature(), Input.data, alias);
 
                         btnOpenInEditor.setEnabled(true);
                         // Activate the second tab of the description
                         tabDescription.setSelection(3);
                         canvas1.redraw();
                         lblProgress.setText(String.format(Messages.SigComposite_lblProgress, 4));
-                        // txtSignature.setText(org.jcryptool.visual.sig.algorithm.Input.signatureHex);
-                        // WTF!!!!!!!!1!1!
                         txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4_Success
                                 + Messages.SigComposite_txtDescriptionOfStep4);
 
@@ -511,22 +489,15 @@ public class SigComposite extends Composite implements PaintListener {
         });
 
         // Adds a Listener for the reset button
-        btnReset.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnReset.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                Reset(0);
+                reset(0);
             }
         });
 
         // Adds a Listener for OpenInEditor
-        btnOpenInEditor.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnOpenInEditor.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-
                 try {
 
                     // Create the Show signature shell
@@ -546,86 +517,63 @@ public class SigComposite extends Composite implements PaintListener {
         });
 
         // Adds a Listener for Return Button
-        btnReturn.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnReturn.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
                     Input.privateKey = null;
                     Input.publicKey = null;
                     IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view");
+                    IViewReference ref = page.findViewReference("org.jcryptool.visual.sig.view"); //$NON-NLS-1$
                     PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
                     page.closePerspective(null, false, true);
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
                 }
             }
         });
 
         // To select all text
-        mntm0.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntm0.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtGeneralDescription.selectAll();
-            }// end widgetSelected
+            }
         });
 
         // To select all text
-        mntm1.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntm1.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescriptionOfStep1.selectAll();
-            }// end widgetSelected
+            }
         });
 
         // To select all text
-        mntm2.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntm2.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescriptionOfStep2.selectAll();
-            }// end widgetSelected
+            }
         });
 
         // To select all text
-        mntm3.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntm3.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescriptionOfStep3.selectAll();
-            }// end widgetSelected
+            }
         });
 
         // To select all text
-        mntm4.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntm4.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescriptionOfStep4.selectAll();
-            }// end widgetSelected
+            }
         });
 
         // To clear the key is view is closed
         this.addDisposeListener(new DisposeListener() {
-
             public void widgetDisposed(DisposeEvent e) {
-                // Input.privateKey = null;
                 Input.reset();
             }
-
         });
-
-    }// end createEvents
+    }
 
     /**
      * Resets the arrow and disables the buttons of future steps if the user clicks the button of a previous step. Also
@@ -633,24 +581,23 @@ public class SigComposite extends Composite implements PaintListener {
      * 
      * @param step the step to which the progress will be reset (valid numbers: 0-2)
      */
-    private void Reset(int step) {
+    private void reset(int step) {
         String s = String.format(Messages.SigComposite_lblProgress, step + 1);
         // If the user already finished other steps, reset everything to this
         // step (keep the chosen algorithms)
         switch (step) {
             case 0:
-                btnHash.setEnabled(false); // lblHash.setText("");
+                btnHash.setEnabled(false);
             case 1:
                 btnSignature.setEnabled(false);
-                txtHash.setText(""); // txtSignature.setText("");
-                                     // lblSignature.setText("");
+                txtHash.setText(""); //$NON-NLS-1$
             case 2:
                 btnOpenInEditor.setEnabled(false);
                 txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
                 if (!called) { // If not called by jctca, reset key
-                    org.jcryptool.visual.sig.algorithm.Input.privateKey = null;
+                    Input.privateKey = null;
                 }
-                org.jcryptool.visual.sig.algorithm.Input.key = null;
+                Input.key = null;
                 break;
             default:
                 break;
@@ -669,44 +616,42 @@ public class SigComposite extends Composite implements PaintListener {
      * @return The string that can be used for signing
      */
     private String chooseSignature() {
-        sigstring = "";
+        sigstring = ""; //$NON-NLS-1$
 
         // Temporary solution
 
-        if (hashes[hash].contains("MD5")) {
-            sigstring = "MD5with";
+        if (hashes[hash].contains("MD5")) { //$NON-NLS-1$
+            sigstring = "MD5with"; //$NON-NLS-1$
         }
-        if (hashes[hash].contains("SHA-1")) {
-            sigstring = "SHA1with";
+        if (hashes[hash].contains("SHA-1")) { //$NON-NLS-1$
+            sigstring = "SHA1with"; //$NON-NLS-1$
         }
-        if (hashes[hash].contains("SHA-256")) {
-            sigstring = "SHA256with";
+        if (hashes[hash].contains("SHA-256")) { //$NON-NLS-1$
+            sigstring = "SHA256with"; //$NON-NLS-1$
         }
-        if (hashes[hash].contains("SHA-384")) {
-            sigstring = "SHA384with";
+        if (hashes[hash].contains("SHA-384")) { //$NON-NLS-1$
+            sigstring = "SHA384with"; //$NON-NLS-1$
         }
-        if (hashes[hash].contains("SHA-512")) {
-            sigstring = "SHA512with";
+        if (hashes[hash].contains("SHA-512")) { //$NON-NLS-1$
+            sigstring = "SHA512with"; //$NON-NLS-1$
         }
 
-        if (signatures[signature].contains("MGF1")) {
-            sigstring = sigstring + "RSAandMGF1";
+        if (signatures[signature].contains("MGF1")) { //$NON-NLS-1$
+            sigstring = sigstring + "RSAandMGF1"; //$NON-NLS-1$
         } else {
-            if (signatures[signature].contains("RSA")) {
-                sigstring = sigstring + "RSA";
+            if (signatures[signature].contains("RSA")) { //$NON-NLS-1$
+                sigstring = sigstring + "RSA"; //$NON-NLS-1$
             }
         }
 
-        if (signatures[signature].contains("ECDSA")) {
-            sigstring = sigstring + "ECDSA";
+        if (signatures[signature].contains("ECDSA")) { //$NON-NLS-1$
+            sigstring = sigstring + "ECDSA"; //$NON-NLS-1$
         } else {
-            if (signatures[signature].contains("DSA")) {
-                sigstring = sigstring + "DSA";
+            if (signatures[signature].contains("DSA")) { //$NON-NLS-1$
+                sigstring = sigstring + "DSA"; //$NON-NLS-1$
             }
         }
 
         return sigstring;
-
     }
-
 }

@@ -8,21 +8,18 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.sig.listener;
+package org.jcryptool.visual.sig.ui.view;
 
-import java.util.ArrayList;
+import org.eclipse.osgi.util.NLS;
 
-public class SignatureListenerAdder {
-    private static ArrayList<SignatureListener> listeners;
-
-    public static void addSignatureListener(SignatureListener l) {
-        if (listeners == null) {
-            listeners = new ArrayList<SignatureListener>();
-        }
-        listeners.add(l);
+public class Messages extends NLS {
+    private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.ui.view.messages"; //$NON-NLS-1$
+    public static String SigComposite_1;
+    static {
+        // initialize resource bundle
+        NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }
 
-    public static ArrayList<SignatureListener> getListeners() {
-        return listeners;
+    private Messages() {
     }
 }

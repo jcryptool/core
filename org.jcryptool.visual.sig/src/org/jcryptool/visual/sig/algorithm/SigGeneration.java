@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.algorithm;
 
 import java.security.KeyPair;
@@ -17,21 +27,15 @@ import org.jcryptool.visual.sig.listener.SignatureListenerAdder;
  * Creates a signature for the input with the selected signature methods.
  * 
  * @author Grebe
- * 
  */
 public class SigGeneration {
-    public String signature;
-    // private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
     private static PrivateKey k = null;
-
-    // private static Certificate pubKey = null;
 
     /**
      * Old version of SignInput, calls new version of the method
      */
-    public static byte[] SignInput(String signaturemethod, byte[] input) throws Exception {
-
-        return SignInput(signaturemethod, input, null);
+    public static byte[] signInput(String signaturemethod, byte[] input) throws Exception {
+        return signInput(signaturemethod, input, null);
     }
 
     /**
@@ -43,39 +47,29 @@ public class SigGeneration {
      * @return The signature (byte array)
      * @throws Exception
      */
-    public static byte[] SignInput(String signaturemethod, byte[] input, KeyStoreAlias alias) throws Exception {
+    public static byte[] signInput(String signaturemethod, byte[] input, KeyStoreAlias alias) throws Exception {
         byte[] signature = null; // Stores the signature
 
-        org.jcryptool.visual.sig.algorithm.Input.chosenHash = signaturemethod.replace("withRSA", "");
+        Input.chosenHash = signaturemethod.replace("withRSA", ""); //$NON-NLS-1$ //$NON-NLS-2$
 
-        // Eigene sach fia ecdsa....
-        if (signaturemethod.contains("ECDSA")) { // Generate a key because there are no ECDSA Keys in the keystore
-
+        if (signaturemethod.contains("ECDSA")) { // Generate a key because there are no ECDSA Keys in the keystore //$NON-NLS-1$
             // Generate a key pair
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-
-            keyGen.initialize(256, random);
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
+            keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
 
             KeyPair pair = keyGen.generateKeyPair();
             k = pair.getPrivate();
-
         } else {
-
             KeyStoreManager ksm = KeyStoreManager.getInstance();
-            // ksm.loadKeyStore(KeyStorePlugin.getPlatformKeyStoreURI());
 
             // Check if called by JCT-CA
-            if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { // Use their key
-                org.jcryptool.visual.sig.algorithm.Input.privateKey.getAliasString();
-                k = ksm.getPrivateKey(org.jcryptool.visual.sig.algorithm.Input.privateKey, "1234".toCharArray());
-
+            if (Input.privateKey != null) { // Use their key
+                Input.privateKey.getAliasString();
+                k = ksm.getPrivateKey(Input.privateKey, KeyStoreManager.KEY_PASSWORD);
             } else { // Use own Key from given alias
-                k = ksm.getPrivateKey(alias, "1234".toCharArray());
-
-                // org.jcryptool.visual.sig.algorithm.Input.privateKey = (KeyStoreAlias) k;
+                k = ksm.getPrivateKey(alias, KeyStoreManager.KEY_PASSWORD);
             }
-        }// end else
+        }
 
         // Get a signature object using the specified combo and sign the data with the private key
         Signature sig = Signature.getInstance(signaturemethod);
@@ -83,13 +77,13 @@ public class SigGeneration {
         sig.update(input);
         signature = sig.sign();
 
-        if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) { // if called
+        if (Input.privateKey != null) {
             String p = null;
             String t = null;
-            if (org.jcryptool.visual.sig.algorithm.Input.data != null) {
-                t = new String(org.jcryptool.visual.sig.algorithm.Input.data);
+            if (Input.data != null) {
+                t = new String(Input.data);
             } else {
-                p = org.jcryptool.visual.sig.algorithm.Input.path;
+                p = Input.path;
             }
 
             for (SignatureListener lst : SignatureListenerAdder.getListeners()) {
@@ -98,21 +92,17 @@ public class SigGeneration {
                         t, // direct input
                         new Date(System.currentTimeMillis()), // date time
                         alias, // private key
-                        org.jcryptool.visual.sig.algorithm.Input.publicKey, // public key
-                        org.jcryptool.visual.sig.algorithm.Input.chosenHash)); // hash method string
+                        Input.publicKey, // public key
+                        Input.chosenHash)); // hash method string
             }
         }
 
         // Store the generated signature
-        org.jcryptool.visual.sig.algorithm.Input.signature = signature; // Store the generated original signature
-        org.jcryptool.visual.sig.algorithm.Input.signatureHex = org.jcryptool.visual.sig.algorithm.Input
-                .bytesToHex(signature); // Hex String
-        org.jcryptool.visual.sig.algorithm.Input.signatureOct = org.jcryptool.visual.sig.algorithm.Input.toOctalString(
-                signature, "");
-        org.jcryptool.visual.sig.algorithm.Input.dataHex = org.jcryptool.visual.sig.algorithm.Input
-                .bytesToHex(org.jcryptool.visual.sig.algorithm.Input.data);
+        Input.signature = signature; // Store the generated original signature
+        Input.signatureHex = Input.bytesToHex(signature); // Hex String
+        Input.signatureOct = Input.toOctalString(signature, ""); //$NON-NLS-1$
+        Input.dataHex = Input.bytesToHex(Input.data);
 
         return signature;
     }
-
 }

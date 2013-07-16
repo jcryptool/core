@@ -1,22 +1,28 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
+ * This class contains the GUI elements for first page of the file input wizard.
  * 
- * @author Grebe This class contains the GUI elements for first page of the file input wizard.
- * 
+ * @author Grebe
  */
-public class InputComposite extends Composite implements PaintListener {
-
+public class InputComposite extends Composite {
     private Button rdoFromFile;
     private Button rdoFromEditor;
 
-    // Constructor
     public InputComposite(Composite parent, int style) {
         super(parent, style);
 
@@ -30,21 +36,6 @@ public class InputComposite extends Composite implements PaintListener {
         parent.setSize(600, 400);
 
         rdoFromFile.setSelection(true);
-
-        // Draw the controls
-        initialize();
-    }
-
-    /**
-     * Draws all the controls of the composite
-     */
-    private void initialize() {
-
-    }// end initialize
-
-    @Override
-    public void paintControl(PaintEvent e) {
-        // TODO Auto-generated method stub
     }
 
     /**
@@ -60,5 +51,4 @@ public class InputComposite extends Composite implements PaintListener {
     public Button getRdoFromEditor() {
         return rdoFromEditor;
     }
-
 }

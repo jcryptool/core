@@ -1,6 +1,17 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -16,8 +27,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @author Grebe Contains the elements (2 group boxes) of the HashWizard
+ * Contains the elements (2 group boxes) of the HashWizard
  * 
+ * @author Grebe
  */
 public class HashComposite extends Composite implements SelectionListener {
     private Group grpHashes;
@@ -30,10 +42,8 @@ public class HashComposite extends Composite implements SelectionListener {
     private Menu menuHash;
     private MenuItem mntmHash;
 
-    // Constructor
     public HashComposite(Composite parent, int style) {
         super(parent, style);
-        // Draw the controls
         initialize();
     }
 
@@ -53,7 +63,6 @@ public class HashComposite extends Composite implements SelectionListener {
 
         txtDescription = new Text(grpDescription, SWT.WRAP | SWT.TRANSPARENT);
         txtDescription.setEditable(false);
-        // txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
         txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         txtDescription.setBounds(10, 18, 275, 201);
         txtDescription.setText(Messages.HashWizard_rdomd5_description);
@@ -64,13 +73,10 @@ public class HashComposite extends Composite implements SelectionListener {
         mntmHash = new MenuItem(menuHash, SWT.NONE);
         mntmHash.setText(Messages.Wizard_menu);
         // To select all text
-        mntmHash.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntmHash.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescription.selectAll();
-            }// end widgetSelected
+            }
         });
 
         setSize(new Point(321, 443));
@@ -81,13 +87,12 @@ public class HashComposite extends Composite implements SelectionListener {
         grpHashes.setBounds(10, 10, 300, 171);
 
         rdo1 = new Button(grpHashes, SWT.RADIO);
-        // rdo1.setSelection(true);
         rdo1.setBounds(10, 19, 91, 18);
-        rdo1.setText("MD5 (128)");
+        rdo1.setText("MD5 (128)"); //$NON-NLS-1$
 
         rdo2 = new Button(grpHashes, SWT.RADIO);
         rdo2.setBounds(10, 43, 91, 18);
-        rdo2.setText("SHA-1 (160)");
+        rdo2.setText("SHA-1 (160)"); //$NON-NLS-1$
 
         rdo3 = new Button(grpHashes, SWT.RADIO);
         rdo3.setBounds(10, 67, 91, 18);
@@ -107,15 +112,6 @@ public class HashComposite extends Composite implements SelectionListener {
         rdo3.addSelectionListener(this);
         rdo4.addSelectionListener(this);
         rdo5.addSelectionListener(this);
-
-        // If called by JCT-CA only SHA-256 can be used!
-        // if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
-        // rdo1.setEnabled(false);
-        // rdo2.setEnabled(false);
-        // rdo4.setEnabled(false);
-        // rdo5.setEnabled(false);
-        // rdo3.setSelection(true);
-        // }
 
         rdo1.setSelection(false);
         rdo2.setSelection(false);
@@ -161,33 +157,22 @@ public class HashComposite extends Composite implements SelectionListener {
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdomd5_description);
             org.jcryptool.visual.sig.algorithm.Input.h = 0;
-        }
-
-        else if (rdo2.getSelection()) {
+        } else if (rdo2.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha1_description);
             org.jcryptool.visual.sig.algorithm.Input.h = 1;
-        }
-
-        else if (rdo3.getSelection()) {
+        } else if (rdo3.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha256_description);
             org.jcryptool.visual.sig.algorithm.Input.h = 2;
-        }
-
-        else if (rdo4.getSelection()) {
+        } else if (rdo4.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha384_description);
             org.jcryptool.visual.sig.algorithm.Input.h = 3;
-        }
-
-        else if (rdo5.getSelection()) {
+        } else if (rdo5.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha512_description);
             org.jcryptool.visual.sig.algorithm.Input.h = 4;
         }
-
-    }// end widgetSelected
+    }
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-        // TODO Auto-generated method stub
-
     }
 }

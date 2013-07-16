@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
@@ -5,36 +15,31 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 
 /**
+ * Adds the page of the hash wizard.
  * 
- * @author Grebe Adds the page of the hash wizard.
- * 
+ * @author Grebe
  */
 public class HashWizard extends Wizard {
     // The only page of the wizard (for selecting the Hash method)
-    HashWizardPage page;
+    private HashWizardPage page;
     private String name;
     // Integer representing the chosen hash (0-4)
     private int hash;
 
-    // Constructor
     public HashWizard() {
         super();
-        name = "HashWizard";
+        name = "HashWizard"; //$NON-NLS-1$
         setWindowTitle(Messages.HashWizard_Title);
     }
 
     @Override
     public void addPages() {
-        // Create page
         page = new HashWizardPage(name);
-        // Add the page to the wizard
         addPage(page);
     }
 
     @Override
-    // Controls what happens after clicking "Finish"
-            public
-            boolean performFinish() {
+    public boolean performFinish() {
         int i = 0; // 0-4
         // get all the radiobuttons from the WizardPage
         Control[] radiobutton = (Control[]) page.getGrpHashes().getChildren();

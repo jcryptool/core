@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.listener;
 
 import java.util.Date;
@@ -14,32 +24,32 @@ public class SignatureEvent {
     /**
      * path to the file that has been signed
      */
-    String path;
+    private String path;
 
     /**
      * text that has been signed
      */
-    String text;
+    private String text;
 
     /**
      * time when the signature was done
      */
-    Date time;
+    private Date time;
 
     /**
      * private key that has been used for the signature
      */
-    KeyStoreAlias privAlias;
+    private KeyStoreAlias privAlias;
 
     /**
      * public key
      */
-    KeyStoreAlias pubAlias;
+    private KeyStoreAlias pubAlias;
 
     /**
 	 * 
 	 */
-    String hashalgorithm;
+    private String hashalgorithm;
 
     /**
      * constructor for a signature

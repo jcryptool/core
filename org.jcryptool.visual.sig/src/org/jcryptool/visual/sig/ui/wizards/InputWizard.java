@@ -1,21 +1,28 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 
 /**
+ * This class contains the three pages of the input wizard.
  * 
- * @author Grebe This class contains the three pages of the input wizard.
- * 
+ * @author Grebe
  */
 public class InputWizard extends Wizard {
-
-    // The pages of the wizard to select a document or to enter a text
     private InputWizardPage page;
     private InputEditorWizardPage pageEditor;
     private InputFileWizardPage pageFile;
 
-    // Constructor
     public InputWizard() {
         super();
         setWindowTitle(Messages.InputWizard_Title);
@@ -23,16 +30,14 @@ public class InputWizard extends Wizard {
 
     @Override
     public void addPages() {
-        // Create and add pages
-        page = new InputWizardPage("Input Wizard");
+        page = new InputWizardPage("Input Wizard"); //$NON-NLS-1$
         addPage(page);
 
-        pageEditor = new InputEditorWizardPage("InputEditor Wizard");
+        pageEditor = new InputEditorWizardPage("InputEditor Wizard"); //$NON-NLS-1$
         addPage(pageEditor);
 
-        pageFile = new InputFileWizardPage("InputFile Wizard");
+        pageFile = new InputFileWizardPage("InputFile Wizard"); //$NON-NLS-1$
         addPage(pageFile);
-
     }
 
     @Override
@@ -60,5 +65,4 @@ public class InputWizard extends Wizard {
 
         return null;
     }
-
 }

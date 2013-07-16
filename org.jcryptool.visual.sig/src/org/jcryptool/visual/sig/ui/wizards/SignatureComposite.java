@@ -1,9 +1,20 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import java.util.Enumeration;
 import java.util.HashMap;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
@@ -18,6 +29,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.visual.sig.algorithm.Input;
 
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
@@ -39,19 +51,17 @@ public class SignatureComposite extends Composite implements SelectionListener {
     private KeyStoreAlias alias = null;
     private int keyType = 0;
     private SignatureWizardPage page = null;
-    private final static HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
+    private static final HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
 
     private int method;
     private Menu menuSig;
     private MenuItem mntmSig;
     private Label lblSelectAKey;
 
-    // Constructor
     public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p) {
         super(parent, style);
         method = m;
         page = p;
-        // Draw the controls
         initialize();
     }
 
@@ -64,7 +74,6 @@ public class SignatureComposite extends Composite implements SelectionListener {
         grpSignatures.setBounds(10, 10, 406, 151);
 
         rdo1 = new Button(grpSignatures, SWT.RADIO);
-        // rdo1.setSelection(true);
         rdo1.setBounds(10, 19, 118, 18);
         rdo1.setText(Messages.SignatureWizard_DSA);
 
@@ -87,7 +96,6 @@ public class SignatureComposite extends Composite implements SelectionListener {
         txtDescription = new Text(grpDescription, SWT.WRAP | SWT.NO_BACKGROUND);
         txtDescription.setEditable(false);
         txtDescription.setBounds(10, 15, 382, 213);
-        // txtDescription.setBackground(new Color(Display.getCurrent(), 220, 220, 220));
         txtDescription.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
         txtDescription.setText(Messages.SignatureWizard_DSA_description);
 
@@ -97,16 +105,12 @@ public class SignatureComposite extends Composite implements SelectionListener {
         mntmSig = new MenuItem(menuSig, SWT.NONE);
         mntmSig.setText(Messages.Wizard_menu);
         // To select all text
-        mntmSig.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        mntmSig.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 txtDescription.selectAll();
-            }// end widgetSelected
+            }
         });
 
-        // Add event listeners
         rdo1.addSelectionListener(this);
         rdo2.addSelectionListener(this);
         rdo3.addSelectionListener(this);
@@ -114,10 +118,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
         combo = new Combo(this, SWT.READ_ONLY);
         combo.setBounds(10, 185, 406, 22);
-        combo.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        combo.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 alias = keystoreitems.get(combo.getText());
                 page.setPageComplete(true);
@@ -176,7 +177,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 // initializeKeySelection(1);
 
                 break;
-        }// end switch
+        }
 
         // If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
         if (org.jcryptool.visual.sig.algorithm.Input.privateKey != null) {
@@ -191,29 +192,13 @@ public class SignatureComposite extends Composite implements SelectionListener {
             combo.setVisible(false);
             lblSelectAKey.setVisible(false);
             // Move the description box up
-            grpDescription.setBounds(10, 181, 406, 255);
+            grpDescription.setBounds(10, 181, 300, 255);
             // Enable the finish button
             page.setPageComplete(true);
         } else {
             // Load the keys
             initializeKeySelection(keyType);
-            // //Load the previous selection
-            // switch (org.jcryptool.visual.sig.algorithm.Input.s) {
-            // case 0: rdo1.setSelection(true); break;
-            // case 1: rdo2.setSelection(true); break;
-            // case 2: rdo3.setSelection(true); break;
-            // case 3: rdo4.setSelection(true); break;
-            // default: rdo1.setSelection(true); break;
-            // }
-            // //Fire an event to show the correct text. It doesn't matter which radio button triggers the event
-            // //because it is checked in the event handler
-            // rdo1.notifyListeners(SWT.Selection, new Event());
         }
-
-        // Temporary
-        /*
-         * rdo4.setEnabled(false);
-         */
     }
 
     /**
@@ -234,11 +219,10 @@ public class SignatureComposite extends Composite implements SelectionListener {
     // Checks if the radio buttons have changed and updates the text and keys from the keystore
             public
             void widgetSelected(SelectionEvent e) {
-        // alias = keystoreitems.get(combo.getText());
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.SignatureWizard_DSA_description);
             // Store the chosen signature to keep the selected radio button for the next time the wizard is opened
-            org.jcryptool.visual.sig.algorithm.Input.s = 0;
+            Input.s = 0;
             // Clean up
             keystoreitems.clear();
             combo.removeAll();
@@ -247,29 +231,27 @@ public class SignatureComposite extends Composite implements SelectionListener {
         } else {
             if (rdo2.getSelection()) {
                 txtDescription.setText(Messages.SignatureWizard_RSA_description);
-                org.jcryptool.visual.sig.algorithm.Input.s = 1;
+                Input.s = 1;
                 // Clean up
                 keystoreitems.clear();
                 combo.removeAll();
                 lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
-                if (org.jcryptool.visual.sig.algorithm.Input.privateKey == null) {
-                    initializeKeySelection(1);
-                }
+                initializeKeySelection(1);
             } else {
                 if (rdo3.getSelection()) {
                     txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
-                    org.jcryptool.visual.sig.algorithm.Input.s = 2;
+                    Input.s = 2;
                     // Clean up
                     keystoreitems.clear();
                     combo.removeAll();
-                    combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)");
+                    combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)"); //$NON-NLS-1$
                     // combo.select(0);
                     lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
                     page.setPageComplete(false);
                 } else {
                     if (rdo4.getSelection()) {
                         txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
-                        org.jcryptool.visual.sig.algorithm.Input.s = 3;
+                        Input.s = 3;
                         // Clean up
                         keystoreitems.clear();
                         combo.removeAll();
@@ -279,11 +261,10 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 }
             }
         }
-    }// end widgetSelected
+    }
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-
     }
 
     /**
@@ -302,9 +283,9 @@ public class SignatureComposite extends Composite implements SelectionListener {
             if (method == 0) { // DSA
                 if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
                     // Fill in keys
-                    combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName());
+                    combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName()); //$NON-NLS-1$ //$NON-NLS-2$
                     keystoreitems.put(
-                            alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(),
+                            alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), //$NON-NLS-1$ //$NON-NLS-2$
                             alias);
                 } // end if
 
@@ -312,29 +293,27 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 if (method == 1) { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                         // Fill in keys
-                        combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "
+                        combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
                                 + alias.getClassName());
                         keystoreitems
-                                .put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "
+                                .put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
                                         + alias.getClassName(), alias);
                     } // end if
                 } else {
                     if (method == 2) { // RSAandMGF1
                         if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                             // Fill in keys
-                            combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "
+                            combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
                                     + alias.getClassName());
                             keystoreitems.put(
-                                    alias.getContactName() + " - " + alias.getKeyLength() + "Bit - "
+                                    alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
                                             + alias.getClassName(), alias);
-                        } // end if
-                    } // end if
-                }// end else
-            }// end while
-        }// end while
-         // combo.select(0);
-         // String s = combo.getText();
-         // alias = keystoreitems.get(s);
+                        }
+                    }
+                }
+            }
+        }
+
         page.setPageComplete(false);
     }
 }

@@ -1,37 +1,43 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.visual.sig.algorithm.Input;
 
 /**
+ * This class adds the pge for the signature wizard.
  * 
- * @author Grebe This class adds the pge for the signature wizard.
- * 
+ * @author Grebe
  */
 public class SignatureWizard extends Wizard {
     // The only page of the wizard (for selecting the Hash method)
-    SignatureWizardPage page;
-    private String name;
+    private SignatureWizardPage page;
     // Integer representing the chosen signature (0-4)
     private int signature;
     private int method = 0;
     private KeyStoreAlias alias = null;
 
-    // Constructor
     public SignatureWizard(int m) {
         super();
-        name = "SignatureWizard";
         method = m;
         setWindowTitle(Messages.SignatureWizard_Title);
     }
 
     @Override
     public void addPages() {
-        // Create page
-        page = new SignatureWizardPage(name, method);
-        // Add the page to the wizard
+        page = new SignatureWizardPage("SignatureWizard", method); //$NON-NLS-1$
         addPage(page);
     }
 
@@ -54,7 +60,7 @@ public class SignatureWizard extends Wizard {
         alias = page.getAlias();
         // Store the key
         if (alias != null) {
-            org.jcryptool.visual.sig.algorithm.Input.key = alias;
+            Input.key = alias;
         }
         return true;
     }

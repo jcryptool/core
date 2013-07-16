@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig;
 
 import org.eclipse.osgi.util.NLS;
@@ -9,7 +19,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages {
     // Name of the files that contain the string values
-    private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.messages";
+    private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.messages"; //$NON-NLS-1$
     // Create strings for all the values
     public static String SigComposite_grpSignatureGeneration;
     public static String SigComposite_grpSignedDoc;
@@ -24,17 +34,14 @@ public class Messages {
     public static String SigComposite_txtDescriptionOfStep2;
     public static String SigComposite_txtDescriptionOfStep3;
     public static String SigComposite_txtDescriptionOfStep4;
-    public static String SigComposite_txtSignature;
     public static String SigComposite_btnSignature;
     public static String SigComposite_btnHash;
     public static String SigComposite_btnOpenInEditor;
     public static String SigComposite_btnReset;
     public static String SigComposite_btnReturn;
     public static String SigComposite_description;
-    public static String SigComposite_group_box_name;
     public static String SigComposite_btnChooseInput;
     public static String SigComposite_lblHeader;
-    public static String SigComposite_MessageTitle;
     public static String SigComposite_MessageTitleReturn;
     public static String SigComposite_MessageTextReturn;
     public static String SigComposite_txtDescriptionOfStep4_Success;

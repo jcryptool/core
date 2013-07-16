@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.wizards;
 
 import java.io.File;
@@ -6,8 +16,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -19,15 +27,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sig.SigPlugin;
+import org.jcryptool.visual.sig.algorithm.Input;
 
 /**
+ * This class contains the GUI elements for file input. It also contains a method to convert the opened file into a byte
+ * array.
  * 
- * @author Grebe This class contains the GUI elements for file input. It also contains a method to convert the opened
- *         file into a byte array.
- * 
+ * @author Grebe
  */
-public class InputFileComposite extends Composite implements PaintListener, SelectionListener {
-
+public class InputFileComposite extends Composite implements SelectionListener {
     private Text txtPath;
     private File file = null;
     private InputFileWizardPage page;
@@ -39,7 +47,6 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
         txtPath.setBounds(10, 10, 323, 19);
-        // txtPath.setText(org.jcryptool.visual.sig.algorithm.Input.path);
 
         Button btnBrowse = new Button(this, SWT.NONE);
         btnBrowse.setBounds(339, 6, 94, 28);
@@ -51,51 +58,45 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
     }
 
     @Override
-    public void paintControl(PaintEvent e) {
-    }
-
-    @Override
     public void widgetSelected(SelectionEvent e) {
         try {
-            String strFile = null;
             FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-            // fd.setFilterExtensions(new String[] { "*.txt", "*.*" });
             fd.setText(Messages.InputWizard_FileOpenDialog);
-            strFile = fd.open();
-
+            String strFile = fd.open();
+            
+            if (strFile == null || strFile.isEmpty()) {
+                return;
+            }
+            
             file = new File(strFile);
-            // long l = file.length();
             if (file.length() > maxSize) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputWizard_WarningMessageTooLarge);
                 messageBox.open();
-                throw new Exception("The file " + file.getName() + " is too large.");
+                throw new Exception("The file " + file.getName() + " is too large."); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
-            org.jcryptool.visual.sig.algorithm.Input.data = getBytesFromFile(file);
+            Input.data = getBytesFromFile(file);
 
-            if (org.jcryptool.visual.sig.algorithm.Input.data == null) {
+            if (Input.data == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputWizard_WarningMessageEmpty);
                 messageBox.open();
-                throw new Exception("The file " + file.getName() + " appears to be empty.");
+                throw new Exception("The file " + file.getName() + " appears to be empty."); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
             txtPath.setText(file.getAbsolutePath());
-            // org.jcryptool.visual.sig.algorithm.Input.path = file.getAbsolutePath();
             page.setPageComplete(true);
         } catch (Exception ex) {
-
             LogUtil.logError(SigPlugin.PLUGIN_ID, ex);
         }
     }
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-
     }
 
     /**
@@ -127,12 +128,8 @@ public class InputFileComposite extends Composite implements PaintListener, Sele
         while ((offset < bytes.length) && ((numRead = is.read(bytes, offset, bytes.length - offset)) >= 0)) {
             offset += numRead;
         }
-        /*
-         * // Ensure all the bytes have been read in if (offset < bytes.length) { throw new
-         * IOException("Could not completely read file " + file.getName()); }
-         */
+
         is.close();
         return bytes;
     }
-
 }

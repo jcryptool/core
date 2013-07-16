@@ -1,14 +1,21 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.visual.sig.algorithm;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-
-// import org.jcryptool.visual.jctca.listeners.SignatureNotifier;
 
 /**
  * This class is used to share data between classes.
  * 
  * @author Grebe
- * 
  */
 public class Input {
 
@@ -21,7 +28,7 @@ public class Input {
     /**
      * Contains the path to the input data
      */
-    public static String path = "";
+    public static String path = ""; //$NON-NLS-1$
 
     public static int s = -1; // the chosen string (integer)
 
@@ -89,9 +96,6 @@ public class Input {
         s = -1;
     }
 
-    // public static SignatureNotifier signNotifier; //contains the notifier of the JCTCA plugin who should be called
-    // when something is signed from their plugin
-
     /**
      * 
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
@@ -119,16 +123,12 @@ public class Input {
      */
     public final static String toOctalString(byte[] bytes, String prefix) {
         StringBuffer sb = new StringBuffer(bytes.length * (3 + prefix.length()) + 8);
-        // if (prefix == null) {
-        // for (int i=0; i< bytes.length; i++) {
-        // appendOctalDigits(sb, bytes[i]);
-        // }
-        // } else {
+
         for (int i = 0; i < bytes.length; i++) {
             sb.append(prefix);
             appendOctalDigits(sb, bytes[i]);
-            // }
         }
+
         return sb.toString();
     }
 
@@ -142,5 +142,4 @@ public class Input {
         return sb.append(Character.forDigit(b >>> 6 & 0x07, 8)).append(Character.forDigit(b >>> 3 & 0x07, 8))
                 .append(Character.forDigit(b & 0x07, 8));
     }
-
 }
