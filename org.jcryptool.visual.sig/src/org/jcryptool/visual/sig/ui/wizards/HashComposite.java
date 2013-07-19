@@ -137,7 +137,7 @@ public class HashComposite extends Composite implements SelectionListener {
                 rdo5.setSelection(true);
                 break;
             default:
-                rdo1.setSelection(true);
+                rdo2.setSelection(true);
                 break;
         }
         // Fire an event to show the correct text. It doesn't matter which radio button triggers the event
