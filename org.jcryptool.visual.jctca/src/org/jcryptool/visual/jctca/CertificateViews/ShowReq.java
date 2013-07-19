@@ -16,7 +16,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Tree;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.listeners.CAListener;
@@ -28,12 +27,10 @@ import org.jcryptool.visual.jctca.listeners.CAListener;
  * 
  */
 public class ShowReq implements Views {
-    Composite composite;
-    Composite left;
-    Composite center;
-    List lst_private_keys_ca;
-    Button btn_accept_request;
-    Button btn_reject_request;
+    private Composite composite;
+    private Composite left;
+    private Button btn_accept_request;
+    private Button btn_reject_request;
     private Label lbl_firstname;
     private Label lbl_value_firstname;
     private Label lbl_lastname;

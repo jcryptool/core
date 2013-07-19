@@ -27,17 +27,17 @@ import org.eclipse.swt.widgets.Text;
  * 
  */
 public class RadioButtonListener implements SelectionListener {
-    Combo cmb_select;
-    Label lbl_selected_file;
-    Text txt_text;
-    Color black = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-    Color dark_gray = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
-    Button btn_select_file;
-    Boolean enabled;
-    Button btn1;
-    Button btn2;
-    Button btn3;
-    Label selected_file;
+    private Combo cmb_select;
+    private Label lbl_selected_file;
+    private Text txt_text;
+    private Color black = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
+    private Color dark_gray = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
+    private Button btn_select_file;
+    private Boolean enabled;
+    private Button btn1;
+    private Button btn2;
+    private Button btn3;
+    private Label selected_file;
 
     public RadioButtonListener(Combo cmb_select) {
         this.cmb_select = cmb_select;
@@ -50,12 +50,16 @@ public class RadioButtonListener implements SelectionListener {
 
     }
 
-    public RadioButtonListener(boolean enabled, Button btn1, Button btn2, Button btn3, Label selected_file) {
+    public RadioButtonListener(boolean enabled, Button btn1, Button btn2, Button btn3, Label selected_file,
+            Text txt_text, Button btn_selected_file) {
         this.enabled = enabled;
         this.btn1 = btn1;
         this.btn2 = btn2;
         this.btn3 = btn3;
         this.selected_file = selected_file;
+        this.txt_text = txt_text;
+        this.btn_select_file = btn_selected_file;
+
     }
 
     @Override
@@ -80,8 +84,25 @@ public class RadioButtonListener implements SelectionListener {
             btn1.setEnabled(enabled);
             btn2.setEnabled(enabled);
             selected_file.setEnabled(enabled);
+            // none of the two radio buttons are selected
+            if (!(btn1.getSelection() || btn2.getSelection())) {
+                btn2.setSelection(enabled);
+                txt_text.setEnabled(enabled);
+                txt_text.setForeground(black);
+            }
             if (enabled == false) {
                 btn3.setEnabled(enabled);
+                txt_text.setForeground(dark_gray);
+                txt_text.setEnabled(enabled);
+            } else {
+                if (btn2.getSelection()) {
+                    txt_text.setForeground(black);
+                    txt_text.setEnabled(enabled);
+                } else if (btn1.getSelection()) {
+                    selected_file.setEnabled(true);
+                    btn_select_file.setEnabled(true);
+                }
+
             }
         }
     }
@@ -89,5 +110,4 @@ public class RadioButtonListener implements SelectionListener {
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
     }
-
 }

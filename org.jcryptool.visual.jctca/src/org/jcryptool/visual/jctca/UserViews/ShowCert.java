@@ -33,55 +33,15 @@ import org.jcryptool.visual.jctca.listeners.RevokeButtonListener;
 import org.jcryptool.visual.jctca.listeners.UserShowCertsListener;
 
 /**
- * Shows all valid certificates that have been created by the user. Indipendent of the revocation status.
+ * Shows all valid certificates that have been created by the user. Independent of the revocation status.
  * 
  * @author mmacala
  * 
  */
 public class ShowCert implements Views {
-    Composite composite;
-    Composite left;
-    Composite right;
-    List lst_certs;
-    Label lbl_plain, lbl_plain1, lbl_plain2, lbl_plain3, lbl_plain4, lbl_plain5, lbl_plain6, lbl_plain7, lbl_plain8;
-
-    Label lbl_issued_to;
-    Label lbl_issued_by;
-
-    Label lbl_common;
-    Label lbl_value_common;
-    Label lbl_common_by;
-    Label lbl_value_common_by;
-
-    Label lbl_org;
-    Label lbl_value_org;
-    Label lbl_org_by;
-    Label lbl_value_org_by;
-
-    Label lbl_orgUnit;
-    Label lbl_value_orgUnit;
-    Label lbl_orgUnit_by;
-    Label lbl_value_orgUnit_by;
-
-    Label lbl_city;
-    Label lbl_value_city;
-
-    Label lbl_state;
-    Label lbl_value_state;
-
-    Label lbl_country;
-    Label lbl_value_country;
-
-    Label lbl_mail;
-    Label lbl_value_mail;
-
-    Label lbl_issue_date;
-    Label lbl_issued_on;
-    Label lbl_value_issued_on;
-    Label lbl_expired_on;
-    Label lbl_value_expired_on;
-
-    Button btn_revoke;
+    private Composite composite;
+    private List lst_certs;
+    private Button btn_revoke;
 
     public ShowCert(Composite content, Composite exp) {
         composite = new Composite(content, SWT.NONE);
@@ -95,10 +55,10 @@ public class ShowCert implements Views {
         showCertGroup.setLayoutData(gd_grp);
         showCertGroup.setText(Messages.ShowCert_headline);
 
-        left = new Composite(showCertGroup, SWT.NONE);
+        Composite left = new Composite(showCertGroup, SWT.NONE);
         left.setLayout(new GridLayout(1, true));
         left.setLayoutData(new GridData(SWT.NONE, SWT.FILL, false, true));
-        right = new Composite(showCertGroup, SWT.NONE);
+        Composite right = new Composite(showCertGroup, SWT.NONE);
         right.setLayout(new GridLayout(2, false));
         right.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
@@ -107,67 +67,67 @@ public class ShowCert implements Views {
 
         addRSAAndDSAKeysToDropdown();
 
-        lbl_issued_to = new Label(right, SWT.NONE);
+        Label lbl_issued_to = new Label(right, SWT.NONE);
         lbl_issued_to.setFont(FontService.getNormalBoldFont());
         lbl_issued_to.setText(Messages.ShowCert_lbl_issued_to);
-        lbl_plain = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
 
-        lbl_common = new Label(right, SWT.NONE);
+        Label lbl_common = new Label(right, SWT.NONE);
         lbl_common.setText(Messages.ShowCert_lbl_subject_cn);
-        lbl_value_common = new Label(right, SWT.None);
+        Label lbl_value_common = new Label(right, SWT.None);
 
-        lbl_org = new Label(right, SWT.None);
+        Label lbl_org = new Label(right, SWT.None);
         lbl_org.setText(Messages.ShowCert_lbl_subject_o);
-        lbl_value_org = new Label(right, SWT.None);
+        Label lbl_value_org = new Label(right, SWT.None);
 
-        lbl_orgUnit = new Label(right, SWT.None);
+        Label lbl_orgUnit = new Label(right, SWT.None);
         lbl_orgUnit.setText(Messages.ShowCert_lbl_subject_ou);
-        lbl_value_orgUnit = new Label(right, SWT.None);
+        Label lbl_value_orgUnit = new Label(right, SWT.None);
 
-        lbl_city = new Label(right, SWT.None);
+        Label lbl_city = new Label(right, SWT.None);
         lbl_city.setText(Messages.ShowCert_lbl_subject_l);
-        lbl_value_city = new Label(right, SWT.None);
+        Label lbl_value_city = new Label(right, SWT.None);
 
-        lbl_country = new Label(right, SWT.None);
+        Label lbl_country = new Label(right, SWT.None);
         lbl_country.setText(Messages.ShowCert_lbl_subject_c);
-        lbl_value_country = new Label(right, SWT.None);
+        Label lbl_value_country = new Label(right, SWT.None);
 
-        lbl_mail = new Label(right, SWT.None);
+        Label lbl_mail = new Label(right, SWT.None);
         lbl_mail.setText(Messages.ShowCert_lbl_subject_e);
-        lbl_value_mail = new Label(right, SWT.None);
+        Label lbl_value_mail = new Label(right, SWT.None);
 
-        lbl_plain1 = new Label(right, SWT.NONE);
-        lbl_plain2 = new Label(right, SWT.NONE);
-        lbl_issued_by = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
+        Label lbl_issued_by = new Label(right, SWT.NONE);
         lbl_issued_by.setFont(FontService.getNormalBoldFont());
         lbl_issued_by.setText(Messages.ShowCert_lbl_issued_by);
-        lbl_plain3 = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
 
-        lbl_common_by = new Label(right, SWT.NONE);
+        Label lbl_common_by = new Label(right, SWT.NONE);
         lbl_common_by.setText(Messages.ShowCert_lbl_issuer_cn);
-        lbl_value_common_by = new Label(right, SWT.None);
+        Label lbl_value_common_by = new Label(right, SWT.None);
 
-        lbl_org_by = new Label(right, SWT.None);
+        Label lbl_org_by = new Label(right, SWT.None);
         lbl_org_by.setText(Messages.ShowCert_lbl_issuer_o);
-        lbl_value_org_by = new Label(right, SWT.None);
+        Label lbl_value_org_by = new Label(right, SWT.None);
 
-        lbl_orgUnit_by = new Label(right, SWT.None);
+        Label lbl_orgUnit_by = new Label(right, SWT.None);
         lbl_orgUnit_by.setText(Messages.ShowCert_lbl_issuer_ou);
-        lbl_value_orgUnit_by = new Label(right, SWT.None);
+        Label lbl_value_orgUnit_by = new Label(right, SWT.None);
 
-        lbl_plain4 = new Label(right, SWT.NONE);
-        lbl_plain5 = new Label(right, SWT.NONE);
-        lbl_issue_date = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
+        Label lbl_issue_date = new Label(right, SWT.NONE);
         lbl_issue_date.setFont(FontService.getNormalBoldFont());
         lbl_issue_date.setText(Messages.ShowCert_lbl_validity_perios);
-        lbl_plain6 = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
 
-        lbl_issued_on = new Label(right, SWT.None);
+        Label lbl_issued_on = new Label(right, SWT.None);
         lbl_issued_on.setText(Messages.ShowCert_lbl_issued_on);
-        lbl_value_issued_on = new Label(right, SWT.None);
-        lbl_expired_on = new Label(right, SWT.None);
+        Label lbl_value_issued_on = new Label(right, SWT.None);
+        Label lbl_expired_on = new Label(right, SWT.None);
         lbl_expired_on.setText(Messages.ShowCert_lbl_expires_on);
-        lbl_value_expired_on = new Label(right, SWT.None);
+        Label lbl_value_expired_on = new Label(right, SWT.None);
 
         btn_revoke = new Button(right, SWT.PUSH);
         btn_revoke.setText(Messages.ShowCert_btn_revoke_cert);
@@ -182,8 +142,8 @@ public class ShowCert implements Views {
 
         btn_revoke.addSelectionListener(new RevokeButtonListener());
 
-        lbl_plain7 = new Label(right, SWT.NONE);
-        lbl_plain8 = new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
+        new Label(right, SWT.NONE);
 
         StyledText stl_exp = (StyledText) exp.getChildren()[0];
         stl_exp.setText(Messages.ShowCert_explain_text);

@@ -18,9 +18,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.jcryptool.visual.jctca.UserViews.CreateCert;
-import org.jcryptool.visual.jctca.UserViews.ShowCert;
-import org.jcryptool.visual.jctca.UserViews.SignCert;
 import org.jcryptool.visual.jctca.listeners.SideBarListener;
 
 /**
@@ -30,12 +27,7 @@ import org.jcryptool.visual.jctca.listeners.SideBarListener;
  * 
  */
 public class UserTab {
-
-    CreateCert cCert;
-    ShowCert sCert;
-    SignCert siCert;
-    Composite grp_exp;
-    TabFolder parent;
+    private Composite grp_exp;
 
     /**
      * Generating User Tab
@@ -52,7 +44,6 @@ public class UserTab {
         grp_userTab.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
         tab.setControl(grp_userTab);
         this.grp_exp = exp;
-        this.parent = parent;
 
         // 2 columns (actions and the actionswindow)
         grp_userTab.setLayout(new GridLayout(2, false));
@@ -95,7 +86,5 @@ public class UserTab {
         btn_sign_stuff.setData(2);
         btn_sign_stuff.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         btn_sign_stuff.addSelectionListener(list_side);
-
     }
-
 }

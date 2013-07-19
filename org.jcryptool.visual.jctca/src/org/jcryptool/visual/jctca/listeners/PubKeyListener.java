@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Combo;
  * 
  */
 public class PubKeyListener implements SelectionListener {
-    Combo cmb_genKey;
+    private Combo cmb_genKey;
 
     public PubKeyListener(Combo cmb_genKey) {
         this.cmb_genKey = cmb_genKey;

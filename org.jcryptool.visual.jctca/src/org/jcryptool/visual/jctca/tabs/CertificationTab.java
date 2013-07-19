@@ -34,7 +34,6 @@ public class CertificationTab {
      * @param style well, yeah, don't know
      **/
     public CertificationTab(TabFolder parent, Composite exp, int style) {
-
         TabItem t = new TabItem(parent, SWT.NONE);
         t.setText(Messages.CertificationTab_tabitem_name);
         Group generalGroup = new Group(parent, SWT.NONE);
@@ -43,6 +42,5 @@ public class CertificationTab {
         @SuppressWarnings("unused")
         ShowReq sReq = new ShowReq(generalGroup, exp);
         generalGroup.setLayout(new GridLayout(1, false));
-
     }
 }

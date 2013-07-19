@@ -35,23 +35,20 @@ import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
  * 
  */
 public class VerifyIdentity extends Dialog implements SelectionListener {
-    Shell parent;
+    private Shell parent;
 
-    Composite main;
+    private Label img;
 
-    Label img;
+    private Button btn_true;
+    private Button btn_false;
+    private Button btn_cancel;
+    private List csr;
+    private Button forward_csr;
+    private Button reject_csr;
 
-    Button btn_true;
-    Button btn_false;
-    Button btn_cancel;
-    List csr;
-    Button forward_csr;
-    Button reject_csr;
-
-    CSR c;
-    Group grp_exp;
-    Label lbl_exp;
-    Shell shell;
+    private CSR c;
+    private Group grp_exp;
+    private Shell shell;
 
     public VerifyIdentity(Shell parent, List csr, Button forward_csr, Button reject_csr) {
         super(parent, SWT.APPLICATION_MODAL);
@@ -95,7 +92,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
         shell.setLayout(new GridLayout(1, true));
         shell.setText(Messages.VerifyIdentity_title); // zeigt den Titel an
 
-        main = new Composite(shell, SWT.FILL);
+        Composite main = new Composite(shell, SWT.FILL);
         main.setLayout(new GridLayout(4, false));
         Composite btns = new Composite(main, SWT.None);
         btns.setLayout(new GridLayout(3, true));
@@ -136,7 +133,7 @@ public class VerifyIdentity extends Dialog implements SelectionListener {
         grp_exp.setLayoutData(data);
         grp_exp.setLayout(new GridLayout(1, false));
 
-        lbl_exp = new Label(grp_exp, SWT.WRAP);
+        Label lbl_exp = new Label(grp_exp, SWT.WRAP);
         lbl_exp.setText(Messages.VerifyIdentity_explain_text);
         data = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
         lbl_exp.setLayoutData(data);

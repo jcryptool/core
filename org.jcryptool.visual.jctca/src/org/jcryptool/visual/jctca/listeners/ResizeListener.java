@@ -26,14 +26,11 @@ import org.jcryptool.visual.jctca.ResizeHelper;
  * @param comp_image composite, which contains the label img
  **/
 public class ResizeListener implements ControlListener {
-
-    Image image;
-    Image img_scaled;
-    Label img;
-    Composite comp_image;
-    Composite composite;
-    ResizeHelper util;
-    Image help;
+    private Image image;
+    private Image img_scaled;
+    private Label img;
+    private Composite comp_image;
+    private Image help;
 
     public ResizeListener(Label img, Composite comp_image) {
         this.img = img;

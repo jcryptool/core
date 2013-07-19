@@ -11,8 +11,7 @@
 package org.jcryptool.visual.jctca.RegistrarViews;
 
 public interface Views {
+    void dispose();
 
-    public void dispose();
-
-    public void setVisible(boolean visible);
+    void setVisible(boolean visible);
 }

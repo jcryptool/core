@@ -37,10 +37,10 @@ import org.jcryptool.visual.sig.listener.SignatureListener;
  * 
  */
 public class SigVisPluginOpenListener implements SelectionListener {
-    Button btn_check;
-    Label lbl_file;
-    Text txt_sign;
-    Combo cmb_keys;
+    private Button btn_check;
+    private Label lbl_file;
+    private Text txt_sign;
+    private Combo cmb_keys;
 
     public SigVisPluginOpenListener(Button btn_check, Label lbl_file, Text txt_sign, Combo cmb_keys) {
         this.btn_check = btn_check;
@@ -58,7 +58,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
         KeyStoreAlias privAlias = KeyStoreManager.getInstance().getPrivateForPublic(pubAlias);
         org.jcryptool.visual.sig.algorithm.Input.publicKey = pubAlias;
         org.jcryptool.visual.sig.algorithm.Input.privateKey = privAlias;
-        org.jcryptool.visual.sig.algorithm.Input.data = (lbl_file.getText() != "" ? lbl_file //$NON-NLS-1$
+        org.jcryptool.visual.sig.algorithm.Input.data = (!lbl_file.getText().isEmpty() ? lbl_file //$NON-NLS-1$
                 .getText() : txt_sign.getText()).getBytes();
         org.jcryptool.visual.sig.algorithm.Input.path = lbl_file.getText();
         ArrayList<SignatureListener> lsts = org.jcryptool.visual.sig.listener.SignatureListenerAdder.getListeners();

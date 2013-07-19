@@ -13,8 +13,6 @@ package org.jcryptool.visual.jctca.listeners;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -28,16 +26,10 @@ import org.eclipse.swt.widgets.Text;
  * @param deselect button for deselect selected file
  **/
 public class SelectFileListener implements SelectionListener {
-
-    Label lbl_selected_file;
-    Text txt_text;
-    Color black = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-    Color dark_gray = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
-    Button deselect;
+    private Label lbl_selected_file;
 
     public SelectFileListener(Label lbl_selected_file, Text txt_text) {
         this.lbl_selected_file = lbl_selected_file;
-        this.txt_text = txt_text;
     }
 
     /**

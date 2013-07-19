@@ -28,17 +28,16 @@ import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
  * 
  */
 public class CSRListener implements SelectionListener {
-
-    Label first;
-    Label last;
-    Label street;
-    Label zip;
-    Label town;
-    Label country;
-    Label mail;
-    Button btn_forward;
-    Button btn_reject;
-    List csrs;
+    private Label first;
+    private Label last;
+    private Label street;
+    private Label zip;
+    private Label town;
+    private Label country;
+    private Label mail;
+    private Button btn_forward;
+    private Button btn_reject;
+    private List csrs;
 
     /**
      * constructor with all the needed widgets

@@ -38,8 +38,8 @@ import org.jcryptool.visual.jctca.CertificateClasses.Signature;
  * 
  */
 public class TabItemListener implements SelectionListener {
-    TabFolder parent;
-    Composite grp_exp;
+    private TabFolder parent;
+    private Composite grp_exp;
 
     public TabItemListener(TabFolder parent, Composite grp_exp) {
         this.parent = parent;

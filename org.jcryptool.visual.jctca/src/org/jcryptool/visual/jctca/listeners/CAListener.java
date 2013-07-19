@@ -44,10 +44,9 @@ import org.jcryptool.visual.jctca.CertificateClasses.RR;
  * 
  */
 public class CAListener implements SelectionListener {
-
-    Tree requests;
-    Button accept;
-    Button reject;
+    private Tree requests;
+    private Button accept;
+    private Button reject;
     private Label lbl_value_city;
     private Label lbl_value_country;
     private Label lbl_value_firstname;

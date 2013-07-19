@@ -23,12 +23,12 @@ public class CRLEntry {
     /**
      * serial number of the revoked certificate
      */
-    BigInteger sn;
+    private BigInteger sn;
 
     /**
      * time when the certificate has been revoked
      */
-    Date revokeTime;
+    private Date revokeTime;
 
     /**
      * generate new CRL Entry for the given serial number (hash)

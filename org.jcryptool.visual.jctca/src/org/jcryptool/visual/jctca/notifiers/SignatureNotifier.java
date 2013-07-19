@@ -25,11 +25,6 @@ import org.jcryptool.visual.sig.listener.SignatureListener;
  * 
  */
 public class SignatureNotifier implements SignatureListener {
-
-    public SignatureNotifier() {
-
-    }
-
     @Override
     public void signaturePerformed(SignatureEvent e) {
         Signature signature = new Signature(e.getSignature(), e.getPath(), e.getText(), new Date(

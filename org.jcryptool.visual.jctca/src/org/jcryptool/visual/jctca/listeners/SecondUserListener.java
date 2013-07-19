@@ -43,12 +43,12 @@ import org.jcryptool.visual.jctca.CertificateClasses.Signature;
  * 
  */
 public class SecondUserListener implements SelectionListener {
-    Button btn_check_signature;
-    Button btn_get_CRL;
-    Tree tree;
-    StyledText lbl_text;
-    StyledText lbl_signature;
-    Button btn_deleteEntry;
+    private Button btn_check_signature;
+    private Button btn_get_CRL;
+    private Tree tree;
+    private StyledText lbl_text;
+    private StyledText lbl_signature;
+    private Button btn_deleteEntry;
 
     public SecondUserListener(Button btn_check_signature, Button btn_get_CRL, Tree tree, StyledText lbl_text,
             StyledText lbl_signature, Button btn_deleteEntry) {

@@ -15,12 +15,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 public class ResizeHelper {
-    Image image;
-    Image img_scaled;
+    private Image image;
+    private Image img_scaled;
     // internal name of image - this is important because we're chosing images
     // based on string compares
     // if this isn't set properly, stuff will break!
-    static String image_name;
+    private static String image_name;
 
     public void resize_image(Label img, Composite comp_image, Image help) {
         image = img.getImage();

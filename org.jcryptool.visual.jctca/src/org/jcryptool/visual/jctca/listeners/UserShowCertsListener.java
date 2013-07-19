@@ -33,21 +33,18 @@ import org.jcryptool.visual.jctca.Util;
  * @author sho
  */
 public class UserShowCertsListener implements SelectionListener {
-
-    KeyStoreManager ksm = KeyStoreManager.getInstance();
-
-    Label lbl_value_common;
-    Label lbl_value_org;
-    Label lbl_value_orgUnit;
-    Label lbl_value_city;
-    Label lbl_value_country;
-    Label lbl_value_mail;
-
-    Label lbl_value_common_by;
-    Label lbl_value_org_by;
-    Label lbl_value_orgUnit_by;
-
-    Button btn_revoke;
+    private Label lbl_value_common;
+    private Label lbl_value_org;
+    private Label lbl_value_orgUnit;
+    private Label lbl_value_city;
+    private Label lbl_value_country;
+    private Label lbl_value_mail;
+     
+    private Label lbl_value_common_by;
+    private Label lbl_value_org_by;
+    private Label lbl_value_orgUnit_by;
+     
+    private Button btn_revoke;
 
     /**
      * Create new selection listener for the certificate list in manage certificates of the user tab of the jct-ca
@@ -95,7 +92,7 @@ public class UserShowCertsListener implements SelectionListener {
         // get public key for the ksAlias and cast it to a X509 Certificate
         X509Certificate pubKey = null;
         try {
-            pubKey = (X509Certificate) ksm.getCertificate(ksAlias);
+            pubKey = (X509Certificate) KeyStoreManager.getInstance().getCertificate(ksAlias);
         } catch (UnrecoverableEntryException e1) {
             LogUtil.logError(e1);
         } catch (NoSuchAlgorithmException e1) {
@@ -143,5 +140,4 @@ public class UserShowCertsListener implements SelectionListener {
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
     }
-
 }

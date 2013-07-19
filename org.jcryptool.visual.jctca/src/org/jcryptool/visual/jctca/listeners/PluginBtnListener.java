@@ -26,13 +26,11 @@ import org.jcryptool.visual.jctca.ResizeHelper;
  * Listener Class for the buttons at the start of the plugin
  */
 public class PluginBtnListener implements SelectionListener {
-
-    JCTCA_Visual visual;
-    Label lbl_img;
-    Image image;
-    Image help;
-    StyledText exp;
-    String lang;
+    private JCTCA_Visual visual;
+    private Label lbl_img;
+    private Image help;
+    private StyledText exp;
+    private String lang;
 
     public PluginBtnListener(JCTCA_Visual visual, Label lbl_img, StyledText exp) {
         this.visual = visual;

@@ -34,7 +34,6 @@ public class RegistrationTab {
      * @param style well, yeah, don't know
      **/
     public RegistrationTab(TabFolder parent, Composite exp, int style) {
-
         TabItem t = new TabItem(parent, SWT.NONE);
         t.setText(Messages.RegistrationTab_tabitem_name);
         Group generalGroup = new Group(parent, SWT.NONE);
@@ -43,6 +42,5 @@ public class RegistrationTab {
         @SuppressWarnings("unused")
         ShowCSR sCSR = new ShowCSR(generalGroup, exp);
         generalGroup.setLayout(new GridLayout(1, false));
-
     }
 }

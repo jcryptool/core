@@ -25,12 +25,11 @@ import org.jcryptool.visual.jctca.UserViews.SignCert;
  * 
  */
 public class SideBarListener implements SelectionListener {
-
-    CreateCert cCert;
-    ShowCert sCert;
-    SignCert siCert;
-    Composite comp_right;
-    Composite grp_exp;
+    private CreateCert cCert;
+    private ShowCert sCert;
+    private SignCert siCert;
+    private Composite comp_right;
+    private Composite grp_exp;
 
     public SideBarListener(Composite grp_exp, Composite comp_right) {
         this.comp_right = comp_right;

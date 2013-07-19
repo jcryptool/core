@@ -34,7 +34,6 @@ public class SecondUserTab {
      * @param style well, yeah, don't know
      **/
     public SecondUserTab(TabFolder parent, Composite exp, int style) {
-
         TabItem t = new TabItem(parent, SWT.NONE);
         t.setText(Messages.SecondUserTab_tabitem_name);
         Group generalGroup = new Group(parent, SWT.NONE);
@@ -43,6 +42,5 @@ public class SecondUserTab {
         @SuppressWarnings("unused")
         ShowSigData sSig = new ShowSigData(generalGroup, exp);
         generalGroup.setLayout(new GridLayout(1, false));
-
     }
 }

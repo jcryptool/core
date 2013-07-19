@@ -33,44 +33,8 @@ import org.jcryptool.visual.jctca.listeners.RadioButtonListener;
  * 
  */
 public class CreateCert implements Views {
-
-    Composite composite;
-
-    Label lbl_firstname;
-    Text txt_firstname;
-
-    Label lbl_lastname;
-    Text txt_lastname;
-
-    Label lbl_street;
-    Text txt_street;
-
-    Label lbl_ZIP;
-    Text txt_ZIP;
-
-    Label lbl_city;
-    Text txt_city;
-
-    Label lbl_country;
-    Text txt_country;
-
-    Label lbl_mail;
-    Text txt_mail;
-
-    Label lbl_proof;
-    Button btn_proof;
-
-    Label lbl_key;
-    Button btn_genKey;
-
-    Label lbl_plain;
-    Button btn_send;
-
-    Label lbl_plain1;
-    Label lbl_plain2;
-    Label lbl_plain3;
-    Label lbl_plain4;
-    Combo cmb_genKey;
+    private Composite composite;
+    private Combo cmb_genKey;
 
     public CreateCert(Composite content, Composite exp) {
         composite = new Composite(content, SWT.NONE);
@@ -83,59 +47,53 @@ public class CreateCert implements Views {
         createCertGroup.setLayoutData(gd_grp);
         createCertGroup.setText(Messages.CreateCert_headline);
 
-        lbl_firstname = new Label(createCertGroup, SWT.NONE);
+        Label lbl_firstname = new Label(createCertGroup, SWT.NONE);
         lbl_firstname.setText(Messages.CreateCert_lbl_first_name);
-        txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_firstname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_firstname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_firstname.setText(Messages.CreateCert_sample_first_name);
 
-        lbl_lastname = new Label(createCertGroup, SWT.None);
+        Label lbl_lastname = new Label(createCertGroup, SWT.None);
         lbl_lastname.setText(Messages.CreateCert_lbl_last_name);
-        txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_lastname = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_lastname.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_lastname.setText(Messages.CreateCert_sample_last_name);
 
-        lbl_street = new Label(createCertGroup, SWT.None);
+        Label lbl_street = new Label(createCertGroup, SWT.None);
         lbl_street.setText(Messages.CreateCert_lbl_street);
-        txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_street = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_street.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_street.setText(Messages.CreateCert_sample_street);
 
-        lbl_ZIP = new Label(createCertGroup, SWT.None);
+        Label lbl_ZIP = new Label(createCertGroup, SWT.None);
         lbl_ZIP.setText(Messages.CreateCert_lbl_zip);
-        txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_ZIP = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_ZIP.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_ZIP.setText(Messages.CreateCert_sample_zip);
 
-        lbl_city = new Label(createCertGroup, SWT.None);
+        Label lbl_city = new Label(createCertGroup, SWT.None);
         lbl_city.setText(Messages.CreateCert_lbl_city);
-        txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_city = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_city.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_city.setText(Messages.CreateCert_sample_city);
 
-        lbl_country = new Label(createCertGroup, SWT.None);
+        Label lbl_country = new Label(createCertGroup, SWT.None);
         lbl_country.setText(Messages.CreateCert_lbl_country);
-        txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
+        Text txt_country = new Text(createCertGroup, SWT.SINGLE | SWT.BORDER);
         txt_country.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_country.setText(Messages.CreateCert_sample_country);
 
-        lbl_mail = new Label(createCertGroup, SWT.None);
+        Label lbl_mail = new Label(createCertGroup, SWT.None);
         lbl_mail.setText(Messages.CreateCert_lbl_mail);
-        txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
+        Text txt_mail = new Text(createCertGroup, SWT.BORDER | SWT.SINGLE);
         txt_mail.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         txt_mail.setText(Messages.CreateCert_sample_mail);
-        lbl_proof = new Label(createCertGroup, SWT.None);
+        Label lbl_proof = new Label(createCertGroup, SWT.None);
         lbl_proof.setText(Messages.CreateCert_lbl_idproof);
-        btn_proof = new Button(createCertGroup, SWT.None);
+        Button btn_proof = new Button(createCertGroup, SWT.None);
         btn_proof.setText(Messages.CreateCert_btn_select_file);
         btn_proof.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         btn_proof.setData(new Integer(0));
-
-        // btn_genKey = new Button(createCertGroup, SWT.NONE);
-        // btn_genKey.setText(Messages.CreateCert_btn_create_keypair);
-        // btn_genKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        // btn_genKey.setData(new Integer(1));
-        // btn_genKey.setEnabled(false);
 
         Label lbl_pubKey = new Label(createCertGroup, SWT.NONE);
         lbl_pubKey.setText(Messages.CreateCert_public_key);
@@ -143,17 +101,14 @@ public class CreateCert implements Views {
         Button btn_radio_selectPubKey = new Button(createCertGroup, SWT.RADIO);
         btn_radio_selectPubKey.setText(Messages.CreateCert_radio_btn_sel_pubkey);
         btn_radio_selectPubKey.setData("select"); //$NON-NLS-1$
-        // Button btn_selectPubKey = new Button(createCertGroup, SWT.CENTER);
-        // btn_selectPubKey.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        // btn_selectPubKey.setText(Messages.CreateCert_btn_select_pubkey);
-        lbl_plain3 = new Label(createCertGroup, SWT.NONE);
+        new Label(createCertGroup, SWT.NONE);
         GridData gd_cmb = new GridData(GridData.FILL_HORIZONTAL);
         gd_cmb.horizontalIndent = 26;
         cmb_genKey = new Combo(createCertGroup, SWT.NONE);
         cmb_genKey.setEnabled(false);
         cmb_genKey.setLayoutData(gd_cmb);
 
-        lbl_plain4 = new Label(createCertGroup, SWT.NONE);
+        new Label(createCertGroup, SWT.NONE);
         Button btn_radio_generatePubKey = new Button(createCertGroup, SWT.RADIO);
         btn_radio_generatePubKey.setText(Messages.CreateCert_radio_btn_gen_pubkey);
         btn_radio_generatePubKey.setData("generate"); //$NON-NLS-1$
@@ -167,15 +122,12 @@ public class CreateCert implements Views {
 
         CreateCertListener lst = new CreateCertListener(txt_firstname, txt_lastname, txt_street, txt_ZIP, txt_city,
                 txt_country, txt_mail, cmb_genKey, btn_radio_generatePubKey);
-        // btn_genKey.addSelectionListener(lst);
         btn_proof.addSelectionListener(lst);
-        btn_send = new Button(composite, SWT.NONE);
+        Button btn_send = new Button(composite, SWT.NONE);
         btn_send.setText(Messages.CreateCert_btn_send_csr_to_ra);
         btn_send.addSelectionListener(lst);
         btn_send.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_END));
         btn_send.setData(2);
-
-        // btn_selectPubKey.addSelectionListener(new PubKeyListener(cmb_genKey));
 
         StyledText stl_exp = (StyledText) exp.getChildren()[0];
         stl_exp.setText(Messages.CreateCert_explain_text);

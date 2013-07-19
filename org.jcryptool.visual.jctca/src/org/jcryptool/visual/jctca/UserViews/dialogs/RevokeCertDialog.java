@@ -27,8 +27,8 @@ import org.jcryptool.visual.jctca.Util;
  * 
  */
 public class RevokeCertDialog extends Dialog {
-    String txt_reason;
-    Combo reason;
+    private String txt_reason;
+    private Combo reason;
 
     /**
      * @param parentShell
@@ -88,5 +88,4 @@ public class RevokeCertDialog extends Dialog {
         super.configureShell(shell);
         shell.setText(Messages.RevokeCertDialog_headline);
     }
-
 }

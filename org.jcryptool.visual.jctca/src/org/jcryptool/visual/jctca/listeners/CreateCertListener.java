@@ -47,11 +47,11 @@ import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
  * 
  */
 public class CreateCertListener implements SelectionListener {
-    KeyStoreManager mng = KeyStoreManager.getInstance();
-    Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town, txt_country, txt_mail;
-    Combo cmb_keys;
-    String path;
-    Button btn_radio_gen_key;
+    private KeyStoreManager mng = KeyStoreManager.getInstance();
+    private Text txt_first_name, txt_last_name, txt_street, txt_zip, txt_town, txt_country, txt_mail;
+    private Combo cmb_keys;
+    private String path;
+    private Button btn_radio_gen_key;
 
     /**
      * Constructor with all the widgets it needs to have accessible

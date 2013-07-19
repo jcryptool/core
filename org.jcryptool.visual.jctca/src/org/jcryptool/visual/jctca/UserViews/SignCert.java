@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.jctca.UserViews;
 
 import org.eclipse.swt.SWT;
@@ -30,12 +29,9 @@ import org.jcryptool.visual.jctca.listeners.SelectFileListener;
 import org.jcryptool.visual.jctca.listeners.SigVisPluginOpenListener;
 
 public class SignCert implements Views {
-
-    Color dark_gray = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
-    Composite composite;
-    Combo cmb_priv_key;
-    Group selectSthGroup;
-    Label selected_file;
+    private Color dark_gray = Display.getDefault().getSystemColor(SWT.COLOR_DARK_GRAY);
+    private Composite composite;
+    private Combo cmb_priv_key;
 
     public SignCert(Composite content, Composite exp) {
         this.composite = new Composite(content, SWT.NONE);
@@ -48,7 +44,7 @@ public class SignCert implements Views {
         cmp_mini.setLayoutData(gd_comp);
         cmp_mini.setText(Messages.SignCert_chose_method);
 
-        selectSthGroup = new Group(composite, SWT.None);
+        Group selectSthGroup = new Group(composite, SWT.None);
         selectSthGroup.setLayout(new GridLayout(1, false));
         selectSthGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         selectSthGroup.setText(Messages.SignCert_what_to_sign);
@@ -80,7 +76,7 @@ public class SignCert implements Views {
         cmp_minimi.setLayout(new GridLayout(2, false));
 
         Label filler = new Label(cmp_minimi, SWT.None);
-        filler.setText("");
+        filler.setText(""); //$NON-NLS-1$
         GridData gd = new GridData();
         gd.widthHint = 7;
         filler.setLayoutData(gd);
@@ -100,7 +96,7 @@ public class SignCert implements Views {
         btn_select_file.setData("select");//$NON-NLS-1$
         btn_select_file.setEnabled(false);
 
-        selected_file = new Label(selectSthComp, SWT.NONE); // selectSthGroup
+        Label selected_file = new Label(selectSthComp, SWT.NONE); // selectSthGroup
         selected_file.setText(""); //$NON-NLS-1$
         selected_file.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 
@@ -124,9 +120,9 @@ public class SignCert implements Views {
         btn_select_file.addSelectionListener(new SelectFileListener(selected_file, txt_sign));
 
         btn_non_detail.addSelectionListener(new RadioButtonListener(true, btn_radio_signFile, btn_radio_signText,
-                btn_select_file, selected_file));
+                btn_select_file, selected_file, txt_sign, btn_select_file));
         btn_detail.addSelectionListener(new RadioButtonListener(false, btn_radio_signFile, btn_radio_signText,
-                btn_select_file, selected_file));
+                btn_select_file, selected_file, txt_sign, btn_select_file));
 
         cmb_priv_key = new Combo(signCertGroup, SWT.DROP_DOWN);
         cmb_priv_key.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false, 1, 1));
