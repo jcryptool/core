@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Shanks Babystep Giantstep View"
+            icon="icons/sample.gif"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView"
+            id="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
