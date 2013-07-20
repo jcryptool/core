@@ -14,7 +14,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
  * 
  * @author amro
  * @version 0.1
@@ -22,17 +22,17 @@ import org.osgi.framework.BundleContext;
 public class ActionPlugin extends AbstractUIPlugin {
 
 	/**
-	 * The plug-in ID
+	 * The plug-in ID.
 	 */
 	public static final String PLUGIN_ID = "org.jcryptool.core.action"; //$NON-NLS-1$
 
 	/**
-	 * The shared instance
+	 * The shared instance.
 	 */
 	private static ActionPlugin plugin;
 	
 	/**
-	 * The constructor
+	 * The constructor.
 	 */
 	public ActionPlugin() {
 		plugin = this;
@@ -56,12 +56,11 @@ public class ActionPlugin extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 *
 	 * @return the shared instance
 	 */
 	public static ActionPlugin getDefault() {
 		return plugin;
 	}
-
 }

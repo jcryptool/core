@@ -37,8 +37,8 @@ public class OpenFileAction implements IWorkbenchWindowActionDelegate {
     public void dispose() {
     }
 
-    private String getEditorId(final String OSString) {
-        final IEditorDescriptor descriptor = this.window.getWorkbench().getEditorRegistry().getDefaultEditor(OSString);
+    private String getEditorId(final String osString) {
+        final IEditorDescriptor descriptor = this.window.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
 
         if (descriptor != null) {
             return descriptor.getId();
