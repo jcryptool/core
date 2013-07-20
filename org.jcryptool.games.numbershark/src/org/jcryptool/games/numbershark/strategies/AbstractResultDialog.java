@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.strategies;
 
 import java.io.FileWriter;
@@ -50,7 +51,7 @@ import org.jcryptool.games.numbershark.util.CSVConverter;
 
 /**
  * Result dialog for the calculation of the optimal strategies
- *
+ * 
  * @author Johannes Spaeth
  * @version 0.9.5
  */
@@ -93,7 +94,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
         area.setLayout(new GridLayout(1, false));
         createTable(area);
         setTableContent(tableContent);
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratResultDialog"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem()
+                .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".optStratResultDialog"); //$NON-NLS-1$
 
         return area;
     }
@@ -110,7 +112,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
     /**
      * Create contents of the button bar.
-     *
+     * 
      * @param parent
      */
     @Override
@@ -128,8 +130,8 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
                 FileDialog saveDialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
                 saveDialog.setFilterPath(DirectoryService.getUserHomeDir());
-                saveDialog.setFilterNames(new String[] {"CSV-File", "All Files (*.*)"});
-                saveDialog.setFilterExtensions(new String[] {"*.csv", "*.*"});
+                saveDialog.setFilterNames(new String[] { "CSV-File", "All Files (*.*)" });
+                saveDialog.setFilterExtensions(new String[] { "*.csv", "*.*" });
                 saveDialog.setFileName("log_numberShark_" + min + "-" + max + ".csv");
                 saveDialog.setOverwrite(true);
 
@@ -171,16 +173,14 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
 
                     Point zeroPointShell = table.getShell().getLocation();
                     Point zeroPointTable = table.getLocation();
-                    Point point =
-                            new Point(zeroPointTable.x + zeroPointShell.x + event.x + 5, 104 + zeroPointShell.y
-                                    + event.y);
+                    Point point = new Point(zeroPointTable.x + zeroPointShell.x + event.x + 5, 104 + zeroPointShell.y
+                            + event.y);
                     popupmenu.setLocation(point);
                     popupmenu.setVisible(true);
                     MenuItem play = new MenuItem(popupmenu, SWT.PUSH);
                     play.setText(Messages.OptStratDialog_9);
                     play.addSelectionListener(playSelection);
-                    LocalResourceManager resources =
-                            new LocalResourceManager(JFaceResources.getResources(), getShell());
+                    LocalResourceManager resources = new LocalResourceManager(JFaceResources.getResources(), getShell());
                     Image image = resources.createImage(NumberSharkPlugin.getImageDescriptor("icons/play_icon.png")); //$NON-NLS-1$
                     play.setImage(image);
                     MenuItem copy = new MenuItem(popupmenu, SWT.PUSH);
@@ -197,7 +197,7 @@ public abstract class AbstractResultDialog extends TitleAreaDialog {
                             for (int i = 1; i < 5; i++) {
                                 sb.append("|" + sequences.getSelection()[0].getText(i));
                             }
-                            cb.setContents(new Object[] {sb.toString()}, new Transfer[] {textTransfer});
+                            cb.setContents(new Object[] { sb.toString() }, new Transfer[] { textTransfer });
                         }
                     });
                     while (!popupmenu.isDisposed() && popupmenu.isVisible()) {

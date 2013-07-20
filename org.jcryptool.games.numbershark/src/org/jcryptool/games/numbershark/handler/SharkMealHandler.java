@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool team and contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
 import java.util.ArrayList;
@@ -27,42 +28,39 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
  * @version 0.9.5
  */
 public class SharkMealHandler extends AbstractHandler {
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
-			NumberSharkView view = ((NumberSharkView) HandlerUtil
-					.getActivePart(event));
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        if (HandlerUtil.getActivePart(event) instanceof NumberSharkView) {
+            NumberSharkView view = ((NumberSharkView) HandlerUtil.getActivePart(event));
 
-			ArrayList<Integer> sharkMealList = view.getSharkMealList();
-			int[] lostNumbers;
-			Number[] numberField = view.getNumberField();
+            ArrayList<Integer> sharkMealList = view.getSharkMealList();
+            int[] lostNumbers;
+            Number[] numberField = view.getNumberField();
 
-			// calculate numbers to be eaten by the shark
-			for (int k = 0; k < sharkMealList.size(); k++) {
-				int i = sharkMealList.get(k);
-				numberField[i - 1].setEnabled(false);
+            // calculate numbers to be eaten by the shark
+            for (int k = 0; k < sharkMealList.size(); k++) {
+                int i = sharkMealList.get(k);
+                numberField[i - 1].setEnabled(false);
 
-				int tabFolderIndex = view.getSelectedTabFolderIndex();
+                int tabFolderIndex = view.getSelectedTabFolderIndex();
 
-				if (tabFolderIndex * 40 < i
-						&& i < (tabFolderIndex + 1) * 40 + 1) {
-					view.setStatus(i - 1, false);
-				}
-			}
+                if (tabFolderIndex * 40 < i && i < (tabFolderIndex + 1) * 40 + 1) {
+                    view.setStatus(i - 1, false);
+                }
+            }
 
-			lostNumbers = new int[sharkMealList.size()];
-			for (int i = 0; i < lostNumbers.length; i++) {
-				lostNumbers[i] = sharkMealList.get(i);
-			}
+            lostNumbers = new int[sharkMealList.size()];
+            for (int i = 0; i < lostNumbers.length; i++) {
+                lostNumbers[i] = sharkMealList.get(i);
+            }
 
-			view.addMoveToTable(0, lostNumbers);
+            view.addMoveToTable(0, lostNumbers);
 
-		}
+        }
 
-		CommandStateChanger commandStateChanger = new CommandStateChanger();
-		commandStateChanger.chageCommandState(
-				CommandState.Variable.SHARKMEAL_STATE,
-				CommandState.State.SHARKMEAL_DISABLED);
+        CommandStateChanger commandStateChanger = new CommandStateChanger();
+        commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+                CommandState.State.SHARKMEAL_DISABLED);
 
-		return null;
-	}
+        return null;
+    }
 }

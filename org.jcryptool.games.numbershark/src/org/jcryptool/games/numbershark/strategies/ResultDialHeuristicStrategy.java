@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -20,7 +20,7 @@ import org.jcryptool.games.numbershark.NumberSharkPlugin;
 
 /**
  * Result dialog for the calculation of the optimal strategies
- *
+ * 
  * @author Johannes Spaeth
  * @version 0.9.5
  */
@@ -34,20 +34,20 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         String algo = "";
         switch (this.getSelectedStrategy()) {
 
-            case 2:
-                algo = Messages.ShowHeuStrategy_5;
-                break;
+        case 2:
+            algo = Messages.ShowHeuStrategy_5;
+            break;
 
-            case 3:
-                algo = Messages.ShowHeuStrategy_6;
-                break;
+        case 3:
+            algo = Messages.ShowHeuStrategy_6;
+            break;
 
-            case 4:
-                algo = Messages.ShowHeuStrategy_7;
-                break;
+        case 4:
+            algo = Messages.ShowHeuStrategy_7;
+            break;
         }
 
-        String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[] {algo});
+        String msg = NLS.bind(Messages.ShowHeuStrategy_2, new Object[] { algo });
         setMessage(msg, IMessageProvider.INFORMATION);
         Composite area = (Composite) super.createDialogArea(parent);
 
@@ -57,7 +57,8 @@ public class ResultDialHeuristicStrategy extends AbstractResultDialog {
         columns[3].setText(Messages.ShowHeuStrategy_3);
         columns[4].setText(Messages.ShowOptStrategy_7);
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem()
+                .setHelp(parent, NumberSharkPlugin.PLUGIN_ID + ".heuStratResultDialog"); //$NON-NLS-1$
 
         return area;
     }

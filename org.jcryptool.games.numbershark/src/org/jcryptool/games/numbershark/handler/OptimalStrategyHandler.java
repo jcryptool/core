@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool team and contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler starts the wizard for calculating optimal strategies.
- *
+ * 
  * @author Johannes Späth
  * @version 0.9.5
  */
@@ -43,8 +44,8 @@ public class OptimalStrategyHandler extends AbstractHandler {
             if (optStrat.getReturnCode() == IDialogConstants.OK_ID) {
 
                 ResultDialOptimalStrategy calculate;
-                calculate =
-                        new ResultDialOptimalStrategy(HandlerUtil.getActiveShell(event), optStrat.getSelectedStrategy());
+                calculate = new ResultDialOptimalStrategy(HandlerUtil.getActiveShell(event),
+                        optStrat.getSelectedStrategy());
                 calculate.setBounds(optStrat.getMin(), optStrat.getMax());
 
                 calculate.open();

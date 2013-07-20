@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool team and contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -21,7 +22,7 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler starts a new game.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.5
  */
@@ -37,10 +38,12 @@ public class NewGameHandler extends AbstractHandler {
 
                 view.cleanPlayingField();
                 view.createPlayingField(newGame.getNumberOfFields());
-                
+
                 CommandStateChanger commandStateChanger = new CommandStateChanger();
-                commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE, CommandState.State.UNDO_DISABLED);                
-                commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_DISABLED);  
+                commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE,
+                        CommandState.State.UNDO_DISABLED);
+                commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE,
+                        CommandState.State.REDO_DISABLED);
             }
         }
 

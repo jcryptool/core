@@ -1,12 +1,13 @@
-// -----BEGIN DISCLAIMER-----
+//-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool team and contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.games.numbershark.handler;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import org.jcryptool.games.numbershark.views.NumberSharkView;
 
 /**
  * This handler undos the last step and enables the taken numbers.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.5
  */
@@ -41,15 +42,15 @@ public class UndoHandler extends AbstractHandler {
                 return null;
             }
 
-            ScoreTableRow scoreTableRow =  view.getScoreTableRowByActualPlayerPosition();
-            
-            String undoLostNumbers =  scoreTableRow.getLostNumbers(); // row.getText(3);
+            ScoreTableRow scoreTableRow = view.getScoreTableRowByActualPlayerPosition();
+
+            String undoLostNumbers = scoreTableRow.getLostNumbers(); // row.getText(3);
             undoLostNumbers = undoLostNumbers.replaceAll(Messages.UndoHandler_0, "");
             undoLostNumbers = undoLostNumbers.replaceAll(" \\(", "");
             undoLostNumbers = undoLostNumbers.replaceAll("\\)", "");
 
             int iterator = undoLostNumbers.lastIndexOf(", "); //$NON-NLS-1$
-           
+
             // reactivate numbers and buttons
             while (iterator != -1) {
                 int toEnable = Integer.parseInt(undoLostNumbers.substring(iterator + 2, undoLostNumbers.length()));
@@ -83,44 +84,44 @@ public class UndoHandler extends AbstractHandler {
                 view.setSharkScore(NumberSharkView.ZERO_SCORE);
                 view.setPlayerScore(NumberSharkView.ZERO_SCORE);
             }
-        
-            
+
             view.decreasePlayerMove();
-            
-            if (view.getActualPlayerMove() < 1){                
+
+            if (view.getActualPlayerMove() < 1) {
                 CommandStateChanger commandStateChanger = new CommandStateChanger();
-                commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE, CommandState.State.UNDO_DISABLED);
+                commandStateChanger.chageCommandState(CommandState.Variable.UNDO_STATE,
+                        CommandState.State.UNDO_DISABLED);
             }
-            
-            if (view.hasScoreTableRowListNextEntry()){                
+
+            if (view.hasScoreTableRowListNextEntry()) {
                 CommandStateChanger commandStateChanger = new CommandStateChanger();
-                commandStateChanger.chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_ENABLED);
-            }      
-            
-    		ArrayList<Integer> sharkMealList = view.getSharkMealList();
-    		if(sharkMealList.isEmpty()){
-    			CommandStateChanger commandStateChanger = new CommandStateChanger();
-    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
-    					CommandState.State.SHARKMEAL_DISABLED);
-    		} else {
-    			CommandStateChanger commandStateChanger = new CommandStateChanger();
-    			commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
-    					CommandState.State.SHARKMEAL_ENABLED);
-    		}
-            
-    		int hint = view.getHint();
-    		if(hint != 0 ){
-    			CommandStateChanger commandStateChanger = new CommandStateChanger();
-    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
-    						CommandState.State.HINT_ENABLED);
-    		} else {
-    			CommandStateChanger commandStateChanger = new CommandStateChanger();
-    			commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
-    					CommandState.State.HINT_DISABLED);
-    		}
-        } 
-        
-        
+                commandStateChanger
+                        .chageCommandState(CommandState.Variable.REDO_STATE, CommandState.State.REDO_ENABLED);
+            }
+
+            ArrayList<Integer> sharkMealList = view.getSharkMealList();
+            if (sharkMealList.isEmpty()) {
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+                        CommandState.State.SHARKMEAL_DISABLED);
+            } else {
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger.chageCommandState(CommandState.Variable.SHARKMEAL_STATE,
+                        CommandState.State.SHARKMEAL_ENABLED);
+            }
+
+            int hint = view.getHint();
+            if (hint != 0) {
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger
+                        .chageCommandState(CommandState.Variable.HINT_STATE, CommandState.State.HINT_ENABLED);
+            } else {
+                CommandStateChanger commandStateChanger = new CommandStateChanger();
+                commandStateChanger.chageCommandState(CommandState.Variable.HINT_STATE,
+                        CommandState.State.HINT_DISABLED);
+            }
+        }
+
         return null;
     }
 }
