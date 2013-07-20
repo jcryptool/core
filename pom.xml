@@ -65,6 +65,7 @@
 	<module>org.jcryptool.visual</module>
 	<module>org.jcryptool.visual.aco</module>
 	<module>org.jcryptool.visual.aup</module>
+	<module>org.jcryptool.visual.babystepgiantstep</module>
 	<module>org.jcryptool.visual.crt</module>
 	<module>org.jcryptool.visual.des</module>
 	<module>org.jcryptool.visual.ecc</module>
