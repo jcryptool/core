@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.core.cryptosystem.core;
 
 import java.util.ArrayList;
@@ -16,7 +26,7 @@ import java.util.List;
  */
 public class Alphabet<C> {
 
-    List<C> alphabetElements;
+    private List<C> alphabetElements;
 
     /**
      * Creates an alphabet by specifying its elements. The order in which the iterator of the collection returns the
@@ -52,15 +62,16 @@ public class Alphabet<C> {
     }
 
     /**
-     * Filters non-alphabet content from a list (alters the given list!)
+     * Filters non-alphabet content from a list (alters the given list!).
      * 
      * @param toFilter the list to filter
      */
     public void filterByAlphabet(List<C> toFilter) {
         for (Iterator<C> iterator = toFilter.iterator(); iterator.hasNext();) {
             C element = iterator.next();
-            if (!getContent().contains(element))
+            if (!getContent().contains(element)) {
                 iterator.remove();
+            }
         }
     }
 
@@ -119,8 +130,9 @@ public class Alphabet<C> {
         List<EType> result = removeDoubles(keyword);
         // fill subsequently with alphabet elements
         for (EType alphaElem : plainTextAlphabet.getContent()) {
-            if (!result.contains(alphaElem))
+            if (!result.contains(alphaElem)) {
                 result.add(alphaElem);
+            }
         }
 
         return result;

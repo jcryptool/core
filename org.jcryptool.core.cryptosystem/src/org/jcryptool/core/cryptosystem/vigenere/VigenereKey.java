@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 JCrypTool Team and Contributors
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package org.jcryptool.core.cryptosystem.vigenere;
 
 import java.util.LinkedList;
@@ -7,8 +17,8 @@ import org.jcryptool.core.cryptosystem.core.Alphabet;
 import org.jcryptool.core.cryptosystem.core.Key;
 
 /**
- * Models Vigenère keys
- *
+ * Models Vigenère keys.
+ * 
  * @param <A> the minimum alphabet class
  * @author Simon L
  */
@@ -20,11 +30,11 @@ public class VigenereKey<A> extends Key {
 
     /**
      * Creates a new Vigenère key by specifying a list of elements of the alphabet.
-     *
+     * 
      * @param alphabet the alphabet as reference point
      * @param key the list of elements from the alphabet
      * @throws IllegalArgumentException if the key is empty or if one element of the key list is not member of the
-     *         alphabet
+     *             alphabet
      */
     public VigenereKey(List<? extends A> key, Alphabet<A> alphabet) {
         String checkResult = checkKey(key, alphabet);
@@ -37,7 +47,7 @@ public class VigenereKey<A> extends Key {
 
     /**
      * Creates a new Vigenère key by specifying a list of indices of the alphabet.
-     *
+     * 
      * @param alphabet the alphabet as reference point
      * @param key the index list (you could also say "shift amount list")
      * @throws IllegalArgumentException if the key is empty or if one element of the index list is out of bounds
