@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -45,17 +45,17 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * menus - <b>Algorithms</b>, <b>Analysis</b>, <b>Games</b> and <b>Visuals</b> are hidden in the <b>FlexiProvider</b>
  * perspective.
  * </p>
- *
+ * 
  * <p>
  * The <b>Preferences</b> menu entry is hidden on Mac OS X systems since Carbon automatically adds this action to the
  * menu.
  * </p>
- *
+ * 
  * <p>
  * Non standard actions that are used in the toolbar/coolbar must have a <code>setToolTipText()</code> property set as
  * well.
  * </p>
- *
+ * 
  * @author amro
  * @author Dominik Schadow
  * @version 0.9.5
@@ -101,7 +101,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     /**
      * Creates a new action bar advisor to configure a workbench window's action bars via the given action bar
      * configurer.
-     *
+     * 
      * @param configurer the action bar configurer
      */
     public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
@@ -137,7 +137,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     /**
      * Fills the menu bar with the main menus for the window.
-     *
+     * 
      * @param menuBar the menu manager for the menu bar
      */
     protected void fillMenuBar(IMenuManager menuBar) {
@@ -178,8 +178,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         SortedMap<String, IConfigurationElement> sortedElements = new TreeMap<String, IConfigurationElement>(
                 menuStringsComparator);
-        for (IConfigurationElement element : elements)
+        for (IConfigurationElement element : elements) {
             sortedElements.put(element.getAttribute("name"), element); //$NON-NLS-1$
+        }
 
         IConfigurationElement element;
         while (!sortedElements.isEmpty()) {
@@ -187,8 +188,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
             sortedElements.remove(sortedElements.firstKey());
             IAction action = new ShowPluginViewAction(element.getAttribute("viewId"), element.getAttribute("name")); //$NON-NLS-1$ //$NON-NLS-2$
             String contextHelpId = element.getAttribute("contextHelpId"); //$NON-NLS-1$
-            if(contextHelpId != null)
-            	PlatformUI.getWorkbench().getHelpSystem().setHelp(action, contextHelpId);
+            if (contextHelpId != null) {
+                PlatformUI.getWorkbench().getHelpSystem().setHelp(action, contextHelpId);
+            }
             menu.add(action); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
@@ -222,8 +224,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         OperationsPlugin.getDefault().initAlgorithmsManager();
 
         // algorithm actions will only be registered if they have been created
-        if (OperationsPlugin.getDefault().getAlgorithmsManager() != null)
+        if (OperationsPlugin.getDefault().getAlgorithmsManager() != null) {
             registerAlgorithmActions();
+        }
     }
 
     /**
@@ -309,7 +312,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
     /**
      * Creates the algorithm menu.
-     *
+     * 
      * @return the menu manager
      */
     public static IMenuManager createAlgorithmMenu() {
@@ -476,7 +479,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     /**
      * Creates/registers the algorithm actions. The plug-in activator is used to retrieve the algorithms manager.
      * Further via the algorithms manager the AbstractAlgorithmsAction objects are retrieved.
-     *
+     * 
      */
     private void registerAlgorithmActions() {
         algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
@@ -489,7 +492,7 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     /**
      * Translates the type into the local language used to provide unique translations for other plug-ins (e.g.
      * FileExplorer).
-     *
+     * 
      * @param type the type provided from a plug-in
      * @return the translated type
      */

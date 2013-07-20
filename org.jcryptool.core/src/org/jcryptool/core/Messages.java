@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -13,7 +13,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Externalized strings for the <code>org.jcryptool.core</code> package.
- *
+ * 
  * @author Dominik Schadow *
  * @version 0.5.0
  */
@@ -22,13 +22,13 @@ public class Messages extends NLS {
 
     public static String ApplicationActionBarAdvisor_0;
 
-	public static String ApplicationActionBarAdvisor_1;
+    public static String ApplicationActionBarAdvisor_1;
 
-	public static String ApplicationActionBarAdvisor_2;
+    public static String ApplicationActionBarAdvisor_2;
 
-	public static String ApplicationActionBarAdvisor_5;
+    public static String ApplicationActionBarAdvisor_5;
 
-	public static String ApplicationWorkbenchAdvisor_4;
+    public static String ApplicationWorkbenchAdvisor_4;
 
     public static String applicationActionBarAdvisor_Menu_Algorithms;
     public static String applicationActionBarAdvisor_Menu_Algorithms_Asymmetric;
@@ -45,8 +45,8 @@ public class Messages extends NLS {
     public static String applicationActionBarAdvisor_Menu_Show_View;
     public static String applicationActionBarAdvisor_Menu_Window;
     public static String applicationActionBarAdvisor_Menu_Algorithms_Signature;
-	public static String applicationActionBarAdvisor_Menu_Algorithms_PRNG;
-	public static String applicationActionBarAdvisor_Menu_Algorithms_XML_Security;
+    public static String applicationActionBarAdvisor_Menu_Algorithms_PRNG;
+    public static String applicationActionBarAdvisor_Menu_Algorithms_XML_Security;
 
     static {
         // initialize resource bundle

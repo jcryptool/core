@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -43,11 +43,11 @@ import org.jcryptool.core.logging.utils.LogUtil;
  * General preference page. On this page the language can be changed between English and German. If the language is
  * changed the application needs to be restarted.
  * </p>
- *
+ * 
  * <p>
  * <b>This feature has no effect, if you start the application directly from an Eclipse IDE.</b>
  * </p>
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.0
  */
@@ -57,7 +57,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     private String[] nl;
     private String[] nlText;
 
-    private String currentLanguage = Platform.getNL().substring(0,2);
+    private String currentLanguage = Platform.getNL().substring(0, 2);
 
     public GeneralPage() {
         super(GRID);
@@ -69,7 +69,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
         nlText = new String[ext.length];
         for (int i = 0; i < ext.length; i++) {
             IConfigurationElement element = (IConfigurationElement) ext[i].getConfigurationElements()[0];
-            nl[i] = element.getAttribute("languageCode").substring(0,2); //$NON-NLS-1$
+            nl[i] = element.getAttribute("languageCode").substring(0, 2); //$NON-NLS-1$
             nlText[i] = element.getAttribute("languageDescription"); //$NON-NLS-1$
         }
     }
@@ -100,8 +100,9 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 listLanguage.select(i);
             }
         }
-        if(!Arrays.asList(nl).contains(currentLanguage))
-        	listLanguage.select(0);
+        if (!Arrays.asList(nl).contains(currentLanguage)) {
+            listLanguage.select(0);
+        }
 
         return super.createContents(parent);
     }
@@ -127,8 +128,9 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 listLanguage.select(i);
             }
         }
-        if(!Arrays.asList(nl).contains(currentLanguage))
-        	listLanguage.select(0);
+        if (!Arrays.asList(nl).contains(currentLanguage)) {
+            listLanguage.select(0);
+        }
 
         setErrorMessage(null);
         super.performDefaults();
@@ -139,7 +141,7 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
 
     /**
      * Sets the language in the <b>JCrypTool.ini</b>. This file is located in a different folder on Mac OS X.
-     *
+     * 
      * @param language
      * @throws Exception
      */
@@ -174,10 +176,11 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 out.write(language);
                 out.newLine();
                 for (int i = 0; i < nl.length; i++) {
-                    if (line.equals(nl[i]))
+                    if (line.equals(nl[i])) {
                         line = in.readLine();
+                    }
                 }
-                
+
             } else {
                 out.write("-nl"); //$NON-NLS-1$
                 out.newLine();
@@ -188,8 +191,9 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
                 if (line.equals("-nl")) { //$NON-NLS-1$
                     line = in.readLine();
                     for (int i = 0; i < nl.length; i++) {
-                        if (line.equals(nl[i]))
+                        if (line.equals(nl[i])) {
                             line = in.readLine();
+                        }
                     }
                 } else {
                     out.write(line);
@@ -224,5 +228,4 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
     @Override
     protected void createFieldEditors() {
     }
-
 }

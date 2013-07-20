@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -39,8 +39,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.framework.Bundle;
 
 /**
- * a class to show all registered editors in a drop down list at the coolbar the action should open a new editors page
- *
+ * a class to show all registered editors in a drop down list at the coolbar the action should open a new editors page.
+ * 
  * @author mwalthart
  * @version 0.5.0
  */
@@ -49,7 +49,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
     private Menu showEditorsPulldownMenu;
 
     /**
-     * creates a new menu as a singleton object
+     * Creates a new menu as a singleton object.
      */
     public Menu getMenu(Control parent) {
         if (showEditorsPulldownMenu == null) {
@@ -64,8 +64,8 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
     }
 
     /**
-     * creates the menu
-     *
+     * Creates the menu.
+     * 
      * @param parent
      * @param menu
      * @return
@@ -86,19 +86,21 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
 
                     int cat = c1.compareTo(c2);
                     int label = l1.compareTo(l2);
-                    if (cat != 0)
+                    if (cat != 0) {
                         return cat;
-                    else {
+                    } else {
                         if (o1.getAttribute("id").contains("org.jcryptool.editor.text") //$NON-NLS-1$ //$NON-NLS-2$
-                                && !o2.getAttribute("id").contains("org.jcryptool.editor.text")) //$NON-NLS-1$ //$NON-NLS-2$
+                                && !o2.getAttribute("id").contains("org.jcryptool.editor.text")) {
                             return -1;
+                        }
                         if (!o1.getAttribute("id").contains("org.jcryptool.editor.text") //$NON-NLS-1$ //$NON-NLS-2$
-                                && o2.getAttribute("id").contains("org.jcryptool.editor.text")) //$NON-NLS-1$ //$NON-NLS-2$
+                                && o2.getAttribute("id").contains("org.jcryptool.editor.text")) {
                             return 1;
+                        }
 
-                        if (label != 0)
+                        if (label != 0) {
                             return label;
-                        else {
+                        } else {
                             return o2.hashCode() - o1.hashCode();
                         }
                     }
@@ -167,7 +169,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
     }
 
     /**
-     * removes the menu
+     * Removes the menu.
      */
     public void dispose() {
         if (showEditorsPulldownMenu != null) {
@@ -176,13 +178,13 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
     }
 
     /**
-     * unused
+     * Unused.
      */
     public void init(IWorkbenchWindow window) {
     }
 
     /**
-     * the implementation of the on click action
+     * Rhe implementation of the on click action.
      */
     public void run(IAction action) {
         // connects to the extension point
@@ -199,7 +201,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
     }
 
     /**
-     * unused
+     * Unused.
      */
     public void selectionChanged(IAction action, ISelection selection) {
     }

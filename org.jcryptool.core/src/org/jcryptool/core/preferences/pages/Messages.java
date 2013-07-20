@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -13,7 +13,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Externalized strings for the <code>org.jcryptool.core.preferences.pages</code> package.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.5.0
  */
@@ -25,13 +25,13 @@ public class Messages extends NLS {
     public static String Editors_0;
     public static String Games_0;
     public static String General_0;
-	public static String MessageError;
-	public static String MessageLogRestart;
-	public static String MessageRestart;
-	public static String MessageTitleRestart;
-	public static String SelectLanguage;
+    public static String MessageError;
+    public static String MessageLogRestart;
+    public static String MessageRestart;
+    public static String MessageTitleRestart;
+    public static String SelectLanguage;
     public static String VisualsPage_0;
-	static {
+    static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);
     }

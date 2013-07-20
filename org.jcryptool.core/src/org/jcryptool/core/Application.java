@@ -18,7 +18,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * This class controls all aspects of the application's execution
+ * This class controls all aspects of the application's execution.
  * 
  * @author Dominik Schadow
  * @version 1.0.0
@@ -42,10 +42,11 @@ public class Application implements IApplication {
         Display display = PlatformUI.createDisplay();
         try {
             int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
-            if (returnCode == PlatformUI.RETURN_RESTART)
+            if (returnCode == PlatformUI.RETURN_RESTART) {
                 return IApplication.EXIT_RESTART;
-            else
+            } else {
                 return IApplication.EXIT_OK;
+            }
         } finally {
             display.dispose();
         }
@@ -58,13 +59,15 @@ public class Application implements IApplication {
      */
     public void stop() {
         final IWorkbench workbench = PlatformUI.getWorkbench();
-        if (workbench == null)
+        if (workbench == null) {
             return;
+        }
         final Display display = workbench.getDisplay();
         display.syncExec(new Runnable() {
             public void run() {
-                if (!display.isDisposed())
+                if (!display.isDisposed()) {
                     workbench.close();
+                }
             }
         });
     }
