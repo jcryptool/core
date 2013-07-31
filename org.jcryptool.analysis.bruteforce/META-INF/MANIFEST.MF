@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: bruteforce
+Bundle-SymbolicName: org.jcryptool.analysis.bruteforce;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.jcryptool.bruteforce.Activator
+Bundle-Vendor: JCRYPTOOL
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: org.apache.commons.codec.binary

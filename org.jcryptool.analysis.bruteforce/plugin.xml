@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Bruteforce"
+            id="com.JCrypTool.Bruteforce.commands.category">
+      </category>
+      <command
+            name="AES Bruteforce"
+            categoryId="com.JCrypTool.Bruteforce.commands.category"
+            id="com.JCrypTool.Bruteforce.commands.sampleCommand">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
+            class="com.jcryptool.bruteforce.handlers.SampleHandler">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="Bruteforce"
+               mnemonic="M"
+               id="com.JCrypTool.Bruteforce.menus.sampleMenu">
+            <command
+                  commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
+                  mnemonic="S"
+                  id="com.JCrypTool.Bruteforce.menus.sampleCommand">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="com.JCrypTool.Bruteforce.toolbars.sampleToolbar">
+            <command
+                  commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  tooltip="Say hello world"
+                  id="com.JCrypTool.Bruteforce.toolbars.sampleCommand">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>
