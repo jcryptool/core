@@ -18,7 +18,7 @@
          point="org.eclipse.ui.handlers">
       <handler
             commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
-            class="com.jcryptool.bruteforce.handlers.SampleHandler">
+            class="org.jcryptool.analysis.bruteforce.handlers.SampleHandler">
       </handler>
    </extension>
    <extension

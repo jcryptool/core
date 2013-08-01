@@ -1,4 +1,4 @@
-package com.jcryptool.bruteforce.windows;
+package org.jcryptool.analysis.bruteforce.windows;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,10 +14,11 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.*;
 
-import com.jcryptool.bruteforce.Functions;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+
+import org.jcryptool.analysis.bruteforce.Functions;
 
 public class GUI extends JFrame {
 	

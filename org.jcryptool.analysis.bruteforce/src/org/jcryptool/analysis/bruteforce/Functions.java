@@ -1,7 +1,6 @@
-package com.jcryptool.bruteforce;
+package org.jcryptool.analysis.bruteforce;
 
 import java.security.NoSuchAlgorithmException;
-import com.jcryptool.bruteforce.windows.GUI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,15 +11,14 @@ import javax.crypto.spec.*;
 
 import org.apache.commons.codec.binary.Hex;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.jcryptool.analysis.bruteforce.windows.GUI;
 import org.osgi.service.prefs.Preferences;
 
 public class Functions {
 
-	private static final String PLUGIN_ID = "com.JCrypTool.Bruteforce";
-
 	public static class General {
 		public static void save(String key, String value) {
-			Preferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
+			Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
 			prefs.put(key, value);
 			try {
 				prefs.flush();
@@ -34,7 +32,7 @@ public class Functions {
 		}
 	
 		public static String load(String key, String def) {
-			Preferences prefs = InstanceScope.INSTANCE.getNode(PLUGIN_ID);
+			Preferences prefs = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
 			return prefs.get(key, def);
 		}
 		
