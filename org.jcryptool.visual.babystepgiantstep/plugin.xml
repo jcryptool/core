@@ -5,17 +5,31 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Shanks Babystep Giantstep View"
-            icon="icons/sample.gif"
+            name="Shanks Babystep-Giantstep"
+            icon="icons/view.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView"
             id="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
       </view>
    </extension>
    <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/help/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="Shanks Babystep-Giantstep"
+            viewId="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
+      </Visual>
+   </extension>
+   <extension
          point="org.eclipse.help.contexts">
       <contexts
-            file="contexts.xml">
+            file="$nl$/help/contexts.xml">
       </contexts>
    </extension>
 

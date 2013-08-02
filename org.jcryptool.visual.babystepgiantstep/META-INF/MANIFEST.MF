@@ -3,9 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: BabyStepGiantStep
 Bundle-SymbolicName: org.jcryptool.visual.babystepgiantstep; singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jcryptool.visual.babystepgiantstep.Activator
+Bundle-Activator: org.jcryptool.visual.babystepgiantstep.BabystepGiantstepPlugin
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.eclipse.help
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.jcryptool.visual.library
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.visual.library

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Chinese Remainder Theorem">
+      <description>On the left side the description and the computational procedure of the current step is presented, on the right side the input and results of the calculation.</description>
+      <topic href="nl/en/help/content/index.html" label="Shanks Babystep-Giantstep"/>
+   </context>
+</contexts>
