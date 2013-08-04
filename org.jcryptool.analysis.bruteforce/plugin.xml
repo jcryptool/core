@@ -51,8 +51,7 @@
                id="com.JCrypTool.Bruteforce.toolbars.sampleToolbar">
             <command
                   commandId="com.JCrypTool.Bruteforce.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
+                  icon="icons/view.gif"
                   id="com.JCrypTool.Bruteforce.toolbars.sampleCommand">
             </command>
          </toolbar>
