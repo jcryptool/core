@@ -24,6 +24,7 @@
 	<module>org.apache.xerces</module>
 	<module>org.apache.xml.security</module>
 	<module>org.jcryptool.analysis</module>
+	<moduel>org.jcryptool.analysis.bruteforce</module>
 	<module>org.jcryptool.analysis.entropy</module>
 	<module>org.jcryptool.analysis.feature</module>
 	<module>org.jcryptool.analysis.freqanalysis</module>
