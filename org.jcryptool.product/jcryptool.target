@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.6"?>
-
-<target name="JCrypTool RCP" sequenceNumber="4">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="9">
 <locations>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.11.0/indigo"/>
 </location>
 <location path="${eclipse_home}/../../../delta/eclipse" type="Directory"/>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.1.2.R37x_v20110815-1155-6-Bk8pYWZz0qUTX5I15GZWwbXkrl"/>
 <unit id="org.eclipse.rcp.feature.group" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
 <unit id="org.eclipse.rcp.source.feature.group" version="3.7.2.v20120120-1424-9DB5FmnFq5JCf1UA38R-kz0S0272"/>
@@ -16,6 +14,10 @@
 <unit id="org.eclipse.sdk.ide" version="3.7.2.M20120208-0800"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.7.2.v20110927-2020-7G7W77A5WNgIRPdWXDIbNTSQPdQL"/>
 <repository location="http://download.eclipse.org/releases/indigo"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.3.0.v20110425-2050-67C18COMPIAKSVKGQaRTQTiSN8WP"/>
+<repository location="http://download.eclipse.org/tools/gef/updates-pre-3_8/releases/"/>
 </location>
 </locations>
 </target>
