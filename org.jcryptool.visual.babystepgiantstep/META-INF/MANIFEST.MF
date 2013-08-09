@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: BabyStepGiantStep
+Bundle-Name: Shanks Babystep Giantstep
 Bundle-SymbolicName: org.jcryptool.visual.babystepgiantstep; singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.babystepgiantstep.BabystepGiantstepPlugin
@@ -12,3 +12,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.visual.library
+Bundle-Vendor: Miray Inel
