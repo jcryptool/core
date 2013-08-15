@@ -14,7 +14,8 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog -data @user.home/Documents/.jcryptool</programArgs>
+      <programArgs>-data @user.home/Documents/.jcryptool</programArgs>
+      <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
