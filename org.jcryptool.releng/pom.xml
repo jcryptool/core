@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jcryptool</groupId>
 	<artifactId>org.jcryptool.releng</artifactId>
-	<version>1.0.0</version>
+	<version>0.9.8</version>
 	<packaging>pom</packaging>
 	<name>JCrypTool</name>
 	<url>https://github.com/jcryptool</url>
@@ -28,10 +28,10 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	</prerequisites>
 
 	<properties>
-		<tycho.version>0.18.0</tycho.version>
+		<tycho.version>0.18.1</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<product.id>jcryptool</product.id>
-		<product.version>1.0.0</product.version>
+		<product.version>0.9.8</product.version>
 		<timestamp>R${maven.build.timestamp} (weekly)</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 	</properties>
@@ -45,7 +45,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<repository>
 			<id>eclipse-babel-indigo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.10.1/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.0/indigo</url>
 		</repository>
 	</repositories>
 
