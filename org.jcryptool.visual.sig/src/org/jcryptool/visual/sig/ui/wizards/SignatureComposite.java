@@ -140,7 +140,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo2.setSelection(true);
                 rdo1.setSelection(false);
 
-                txtDescription.setText(Messages.SignatureWizard_RSA_description);
+                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
 
                 keyType = 1;
                 // initializeKeySelection(1);
@@ -155,7 +155,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo1.setSelection(true);
                 rdo2.setSelection(false);
 
-                txtDescription.setText(Messages.SignatureWizard_DSA_description);
+                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
 
                 keyType = 0;
                 // initializeKeySelection(0);
@@ -171,7 +171,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo2.setSelection(true);
                 rdo1.setSelection(false);
 
-                txtDescription.setText(Messages.SignatureWizard_RSA_description);
+                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
 
                 keyType = 1;
                 // initializeKeySelection(1);
@@ -192,7 +192,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             combo.setVisible(false);
             lblSelectAKey.setVisible(false);
             // Move the description box up
-            grpDescription.setBounds(10, 181, 300, 255);
+            grpDescription.setBounds(10, 220, 406, 255);
             // Enable the finish button
             page.setPageComplete(true);
         } else {
@@ -220,7 +220,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             public
             void widgetSelected(SelectionEvent e) {
         if (rdo1.getSelection()) {
-            txtDescription.setText(Messages.SignatureWizard_DSA_description);
+            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
             // Store the chosen signature to keep the selected radio button for the next time the wizard is opened
             Input.s = 0;
             // Clean up
@@ -230,7 +230,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             initializeKeySelection(0);
         } else {
             if (rdo2.getSelection()) {
-                txtDescription.setText(Messages.SignatureWizard_RSA_description);
+                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
                 Input.s = 1;
                 // Clean up
                 keystoreitems.clear();
@@ -239,7 +239,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 initializeKeySelection(1);
             } else {
                 if (rdo3.getSelection()) {
-                    txtDescription.setText(Messages.SignatureWizard_ECDSA_description);
+                    txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_ECDSA_description);
                     Input.s = 2;
                     // Clean up
                     keystoreitems.clear();
@@ -250,7 +250,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                     page.setPageComplete(false);
                 } else {
                     if (rdo4.getSelection()) {
-                        txtDescription.setText(Messages.SignatureWizard_RSAandMGF1_description);
+                        txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSAandMGF1_description);
                         Input.s = 3;
                         // Clean up
                         keystoreitems.clear();

@@ -32,13 +32,12 @@ public class InputEditorComposite extends Composite {
 
     public InputEditorComposite(Composite parent, int style, InputEditorWizardPage p) {
         super(parent, style);
-
         text = new Text(this, SWT.BORDER | SWT.WRAP);
         text.setBounds(10, 10, 430, 215);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         text.setFocus();
-
+        
         Label lblToSaveThe = new Label(this, SWT.NONE);
         lblToSaveThe.setBounds(10, 231, 400, 15);
         lblToSaveThe.setText(Messages.InputEditorWizard_Label);

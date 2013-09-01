@@ -31,6 +31,7 @@ public class InputEditorWizardPage extends WizardPage {
     @Override
     public void createControl(Composite parent) {
         compositeEditor = new InputEditorComposite(parent, NONE, this);
+        compositeEditor.setFocus();
         setControl(compositeEditor);
         setPageComplete(false);
     }
