@@ -10,6 +10,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.keystore.wizards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -216,21 +217,21 @@ public class NewKeyPairWizardPage extends WizardPage implements Listener {
     }
 
     private List<IMetaKeyGenerator> keyPairGenerators;
-
+    
     private void initContactCombo() {
         int size = ContactManager.getInstance().getContactSize();
         if (size > 0) {
-            String[] contactNames = new String[size];
+            List<String> contactNames = new ArrayList<String>();
             Iterator<Contact> it = ContactManager.getInstance().getContacts();
             Contact contact;
-            int counter = 0;
             while (it.hasNext()) {
-            	contact = it.next();
-                contactNames[counter] = contact.getName();
-                counter++;
+                contact = it.next();
+                contactNames.add(contact.getName());
             }
-            Arrays.sort(contactNames);
-            contactNameCombo.setItems(contactNames);
+
+            String[] contactNamesArray = (String[]) contactNames.toArray(new String[] {});
+            Arrays.sort(contactNamesArray);
+            contactNameCombo.setItems(contactNamesArray);
             contactNameCombo.select(0);
         } else {
             LogUtil.logInfo("No Contact"); //$NON-NLS-1$

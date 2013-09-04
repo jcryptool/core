@@ -1,15 +1,15 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.flexiprovider.keystore.wizards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -42,7 +42,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 /**
  * @author t-kern
- *
+ * 
  */
 public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     private Group contactGroup = null;
@@ -62,20 +62,20 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     private Text confirmPasswordText = null;
     private Label keyStrengthLabel = null;
     private CCombo keyStrengthCCombo = null;
-	private String keyType;
+    private String keyType;
 
     protected NewSymmetricKeyWizardPage() {
-    	this(KeyStoreAlias.EVERYTHING_MATCHER);
+        this(KeyStoreAlias.EVERYTHING_MATCHER);
     }
 
     public NewSymmetricKeyWizardPage(String keyType) {
-    	super("1", Messages.NewSymmetricKeyWizardPage_0, KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key1.png")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        super("1", Messages.NewSymmetricKeyWizardPage_0, KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_key1.png")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         setDescription(Messages.NewSymmetricKeyWizardPage_1);
         setPageComplete(false);
         this.keyType = keyType;
-	}
+    }
 
-	/**
+    /**
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
     public void createControl(Composite parent) {
@@ -127,17 +127,17 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     private void initContactCombo() {
         int size = ContactManager.getInstance().getContactSize();
         if (size > 0) {
-            String[] contactNames = new String[size];
+            List<String> contactNames = new ArrayList<String>();
             Iterator<Contact> it = ContactManager.getInstance().getContacts();
             Contact contact;
-            int counter = 0;
             while (it.hasNext()) {
-            	contact = it.next();
-                contactNames[counter] = contact.getName();
-                counter++;
+                contact = it.next();
+                contactNames.add(contact.getName());
             }
-            Arrays.sort(contactNames);
-            contactNameCombo.setItems(contactNames);
+
+            String[] contactNamesArray = (String[]) contactNames.toArray(new String[] {});
+            Arrays.sort(contactNamesArray);
+            contactNameCombo.setItems(contactNamesArray);
             contactNameCombo.select(0);
         } else {
             LogUtil.logInfo("No Contact"); //$NON-NLS-1$
@@ -147,7 +147,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
     private List<IMetaKeyGenerator> secretKeyGenerators;
 
     private void initAlgorithmsCombo() {
-    	secretKeyGenerators = AlgorithmsXMLManager.getInstance().getSecretKeyGenerators();
+        secretKeyGenerators = AlgorithmsXMLManager.getInstance().getSecretKeyGenerators();
         Iterator<IMetaKeyGenerator> it = secretKeyGenerators.iterator();
         List<String> generators = new LinkedList<String>();
         while (it.hasNext()) {
@@ -161,11 +161,11 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
             String generatorId = allNames;
             if (current.getOID() != null) {
-            	generatorId += " (OID: " + current.getOID().getStringOID() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+                generatorId += " (OID: " + current.getOID().getStringOID() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
             }
 
-            if(KeyStoreAlias.isOperationMatchingKeyId(generatorId, keyType)) {
-            	generators.add(generatorId);
+            if (KeyStoreAlias.isOperationMatchingKeyId(generatorId, keyType)) {
+                generators.add(generatorId);
             }
         }
         Collections.sort(generators);
@@ -250,7 +250,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
     /**
      * Contains the "page finished" logic.
-     *
+     * 
      * @return <code>true</code>, if the page is filled out completely
      */
     private boolean isComplete() {
@@ -287,7 +287,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
     /**
      * This method initializes contactGroup
-     *
+     * 
      */
     private void createContactGroup(Composite parent) {
         GridData gridData5 = new GridData();
@@ -325,7 +325,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
     /**
      * This method initializes algorithmGroup
-     *
+     * 
      */
     private void createAlgorithmGroup(Composite parent) {
         GridData gridData14 = new GridData();
@@ -380,7 +380,7 @@ public class NewSymmetricKeyWizardPage extends WizardPage implements Listener {
 
     /**
      * This method initializes passwordGroup
-     *
+     * 
      */
     private void createPasswordGroup(Composite parent) {
         GridData gridData16 = new GridData();
