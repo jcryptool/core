@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.xml.ui;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.8
 Bundle-Vendor: %bundleProvider
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -13,8 +13,8 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.ui.cheatsheets;bundle-version="3.4.100",
  org.eclipse.ui.workbench.texteditor;bundle-version="3.7.0",
  org.apache.xml.security;bundle-version="1.5.3",
- org.jcryptool.core.operations;bundle-version="1.0.0",
- org.jcryptool.crypto.keystore;bundle-version="1.0.0"
+ org.jcryptool.core.operations;bundle-version="0.9.8",
+ org.jcryptool.crypto.keystore;bundle-version="0.9.8"
 Bundle-Activator: org.jcryptool.crypto.xml.ui.XSTUIPlugin
 Export-Package: org.jcryptool.crypto.xml.ui,
  org.jcryptool.crypto.xml.ui.decrypt,

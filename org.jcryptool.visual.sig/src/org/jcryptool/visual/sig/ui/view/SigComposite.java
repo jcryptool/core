@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sig.ui.view;
 
 import org.eclipse.jface.action.Action;
@@ -89,17 +88,17 @@ public class SigComposite extends Composite implements PaintListener {
     private boolean called = false;
     private int hash = 0; // Values: 0-4. Hash and signature contain the
                           // selected method; default is 0
-    private String[] hashes = {org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5,
+    private String[] hashes = { org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdomd5,
             org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha1,
             org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha256,
             org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha384,
-            org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512};
+            org.jcryptool.visual.sig.ui.wizards.Messages.HashWizard_rdosha512 };
     private int signature = 0; // 0-3
     private String sigstring = ""; //$NON-NLS-1$
-    private String[] signatures = {org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_DSA,
+    private String[] signatures = { org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_DSA,
             org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSA,
             org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_ECDSA,
-            org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1};
+            org.jcryptool.visual.sig.ui.wizards.Messages.SignatureWizard_RSAandMGF1 };
 
     /**
      * @return the hash
@@ -338,7 +337,7 @@ public class SigComposite extends Composite implements PaintListener {
         gc.fillRectangle(55, 60, 20, height);
         gc.fillRectangle(0, height - 30, width - 220, 20);
         gc.fillRectangle(270, 300, 20, 80);
-        gc.fillPolygon(new int[] {width - 220, height - 40, width - 220, height, width - 200, height - 20});
+        gc.fillPolygon(new int[] { width - 220, height - 40, width - 220, height, width - 200, height - 20 });
         gc.setBackground(darkgrey);
         gc.drawImage(img, picx, picy);
         // Color the specified areas in darkgrey
@@ -357,7 +356,7 @@ public class SigComposite extends Composite implements PaintListener {
             gc.fillRectangle(55, 60, 20, height);
             gc.fillRectangle(0, height - 30, width - 220, 20);
             gc.fillRectangle(270, 300, 20, 80);
-            gc.fillPolygon(new int[] {width - 220, height - 40, width - 220, height, width - 200, height - 20});
+            gc.fillPolygon(new int[] { width - 220, height - 40, width - 220, height, width - 200, height - 20 });
             gc.drawImage(img, picx, picy);
         }
 
@@ -586,21 +585,21 @@ public class SigComposite extends Composite implements PaintListener {
         // If the user already finished other steps, reset everything to this
         // step (keep the chosen algorithms)
         switch (step) {
-            case 0:
-                btnHash.setEnabled(false);
-            case 1:
-                btnSignature.setEnabled(false);
-                txtHash.setText(""); //$NON-NLS-1$
-            case 2:
-                btnOpenInEditor.setEnabled(false);
-                txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
-                if (!called) { // If not called by jctca, reset key
-                    Input.privateKey = null;
-                }
-                Input.key = null;
-                break;
-            default:
-                break;
+        case 0:
+            btnHash.setEnabled(false);
+        case 1:
+            btnSignature.setEnabled(false);
+            txtHash.setText(""); //$NON-NLS-1$
+        case 2:
+            btnOpenInEditor.setEnabled(false);
+            txtDescriptionOfStep4.setText(Messages.SigComposite_txtDescriptionOfStep4);
+            if (!called) { // If not called by jctca, reset key
+                Input.privateKey = null;
+            }
+            Input.key = null;
+            break;
+        default:
+            break;
         }
 
         lblProgress.setText(s);

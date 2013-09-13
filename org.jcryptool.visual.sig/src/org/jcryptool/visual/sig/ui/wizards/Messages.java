@@ -20,6 +20,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.ui.wizards.messages"; //$NON-NLS-1$
+    public static String SignatureWizard_Usage;
     // Create strings for all the values
     // Group box 1 text
     public static String HashWizard_grpHashes;
