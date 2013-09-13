@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.babystepgiantstep.algorithm.BabystepGiantstep;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
@@ -68,18 +68,33 @@ public class BabystepGiantstepView extends ViewPart {
 
 		@Override
 		public void verifyText(VerifyEvent e) {
+			Combo comboField = null;
 			e.doit = true;
+
+			if (e.getSource() instanceof Combo) {
+				comboField = (Combo) e.getSource();
+			}
+
+			if (comboField == null
+					|| ((comboField.getText().length() == 0 && e.text.compareTo("0") == 0) || (comboField.getSelection().x == 0 && e.keyCode == 48))) {
+				e.doit = false;
+				return;
+			}
 
 			String text = e.text;
 			char[] chars = text.toCharArray();
 
 			for (int i = 0; i < chars.length; i++) {
+				if (chars.length > 1 && i == 0 && chars[i] == '0') {
+					e.doit = false;
+					break;
+				}
+
 				if (!Character.isDigit(chars[i])) {
 					e.doit = false;
 					break;
 				}
 			}
-
 		}
 	};
 
@@ -106,19 +121,19 @@ public class BabystepGiantstepView extends ViewPart {
 		scrolledComposite.setExpandVertical(true);
 
 		Group grpBabyStepGiant = new Group(scrolledComposite, SWT.NONE);
-		grpBabyStepGiant.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD)); //$NON-NLS-1$
+		grpBabyStepGiant.setFont(FontService.getNormalBoldFont());
 		grpBabyStepGiant.setText(Messages.BabystepGiantstepView_0);
 		grpBabyStepGiant.setLayout(new GridLayout(1, false));
 
 		compositeDescription = new Composite(grpBabyStepGiant, SWT.NONE);
-		compositeDescription.setBackground(SWTResourceManager.getColor(240, 240, 240));
+		compositeDescription.setBackground(Constants.LIGHTGREY);
 		compositeDescription.setLayout(new GridLayout(1, false));
 		compositeDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 
 		styledText = new StyledText(compositeDescription, SWT.NONE);
-		styledText.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.NORMAL)); //$NON-NLS-1$
+		styledText.setFont(FontService.getNormalFont());
 		styledText.setText(Messages.BabystepGiantstepView_2);
-		styledText.setBackground(SWTResourceManager.getColor(240, 240, 240));
+		styledText.setBackground(Constants.LIGHTGREY);
 		styledText.setEditable(false);
 		GridData gd_styledText = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
 		gd_styledText.heightHint = 51;
@@ -177,10 +192,14 @@ public class BabystepGiantstepView extends ViewPart {
 					 * element is not a multiple of the cyclic group then
 					 * compute the discrete logarithm
 					 */
-					if (textGroupValue.compareTo(Constants.MAX_INTEGER_BI) <= 0 && textGeneratorValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
-							&& textGroupElementValue.compareTo(Constants.MAX_INTEGER_BI) <= 0 && textGroupValue.compareTo(BigInteger.ONE) != 0 && textGeneratorValue.compareTo(BigInteger.ONE) != 0
-							&& textGroupElementValue.compareTo(BigInteger.ONE) != 0 && textGroupElementValue.mod(textGroupValue).compareTo(BigInteger.ZERO) != 0
-							&& textGroupValue.mod(textGroupElementValue).compareTo(BigInteger.ZERO) != 0 && textGroupValue.isProbablePrime(10000)) {
+					if (textGroupValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
+							&& textGeneratorValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
+							&& textGroupElementValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
+							&& textGroupValue.compareTo(BigInteger.ONE) != 0 && textGeneratorValue.compareTo(BigInteger.ONE) != 0
+							&& textGroupElementValue.compareTo(BigInteger.ONE) != 0
+							&& textGroupElementValue.mod(textGroupValue).compareTo(BigInteger.ZERO) != 0
+							&& textGroupValue.mod(textGroupElementValue).compareTo(BigInteger.ZERO) != 0
+							&& textGroupValue.isProbablePrime(10000)) {
 
 						compute();
 
@@ -189,7 +208,8 @@ public class BabystepGiantstepView extends ViewPart {
 						 * the entered values are bigger than an integer or the
 						 * group element is a multiple of the cyclic group
 						 */
-						Parameter parameter = new Parameter(e.display.getActiveShell(), textGroupValue.toString(), textGeneratorValue.toString(), textGroupElementValue.toString());
+						Parameter parameter = new Parameter(e.display.getActiveShell(), textGroupValue.toString(), textGeneratorValue
+								.toString(), textGroupElementValue.toString());
 
 						int rc = parameter.open();
 
@@ -269,7 +289,6 @@ public class BabystepGiantstepView extends ViewPart {
 
 		textOrder = new Text(grpCalculateTheGroupoder, SWT.BORDER | SWT.READ_ONLY);
 		textOrder.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		textOrder.addVerifyListener(vl_numbers);
 
 		textM = new Text(grpCalculateTheGroupoder, SWT.BORDER | SWT.READ_ONLY);
 		textM.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -307,7 +326,8 @@ public class BabystepGiantstepView extends ViewPart {
 							} else {
 								StringBuilder sb = new StringBuilder("r = " + i + " => "); //$NON-NLS-1$ //$NON-NLS-2$
 								sb.append(babyStepGiantStep.getMultInv() + " * " + tableBS.getItem(i.intValue() - 1).getText(1) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
-								BigInteger tmp = babyStepGiantStep.getMultInv().multiply(new BigInteger(tableBS.getItem(i.intValue() - 1).getText(1)));
+								BigInteger tmp = babyStepGiantStep.getMultInv().multiply(
+										new BigInteger(tableBS.getItem(i.intValue() - 1).getText(1)));
 								sb.append(tmp + " "); //$NON-NLS-1$
 								sb.append(Constants.uCongruence + " " + entry.getKey().toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -455,11 +475,14 @@ public class BabystepGiantstepView extends ViewPart {
 						tableGS.getItem(babyStepGiantStep.getQ().intValue() - 1).setForeground(0, Constants.BLUE);
 						tableGS.getItem(babyStepGiantStep.getQ().intValue() - 1).setForeground(1, Constants.BLUE);
 						tableGS.getItem(babyStepGiantStep.getQ().intValue() - 1).setForeground(2, Constants.BLUE);
-						StringBuilder result = new StringBuilder("x = q * m + r = " + babyStepGiantStep.getQ() + " * " + textM.getText() + " + " + babyStepGiantStep.getR() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-								+ " = " + babyStepGiantStep.getX().toString() + " mod " + comboGroup.getText() + ". "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						StringBuilder result = new StringBuilder(
+								"x = q * m + r = " + babyStepGiantStep.getQ() + " * " + textM.getText() + " + " + babyStepGiantStep.getR() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+										+ " = " + babyStepGiantStep.getX().toString() + " mod " + comboGroup.getText() + ". "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 						textResult.setText(Messages.BabystepGiantstepView_75
 								+ result.toString()
-								+ Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX().intValue() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+								+ Messages.BabystepGiantstepView_76
+								+ comboGroupElement.getText()
+								+ " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX().intValue() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 						StyleRange parameterA = new StyleRange();
 						parameterA.start = Messages.BabystepGiantstepView_75.length() + 16;
 						parameterA.length = babyStepGiantStep.getQ().toString().length();
@@ -467,14 +490,15 @@ public class BabystepGiantstepView extends ViewPart {
 						parameterA.fontStyle = SWT.BOLD;
 						textResult.setStyleRange(parameterA);
 						StyleRange parameterB = new StyleRange();
-						parameterB.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length() + 3 + textM.getText().length() + 3;
+						parameterB.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length()
+								+ 3 + textM.getText().length() + 3;
 						parameterB.length = babyStepGiantStep.getR().toString().length();
 						parameterB.foreground = Constants.MAGENTA;
 						parameterB.fontStyle = SWT.BOLD;
 						textResult.setStyleRange(parameterB);
 						StyleRange parameterC = new StyleRange();
-						parameterC.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length() + 3 + textM.getText().length() + 3
-								+ babyStepGiantStep.getR().toString().length() + 3;
+						parameterC.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length()
+								+ 3 + textM.getText().length() + 3 + babyStepGiantStep.getR().toString().length() + 3;
 						parameterC.length = babyStepGiantStep.getX().toString().length();
 						parameterC.foreground = Constants.GREEN;
 						parameterC.fontStyle = SWT.BOLD;
@@ -514,9 +538,7 @@ public class BabystepGiantstepView extends ViewPart {
 					parameterA.fontStyle = SWT.BOLD;
 					textResult.setStyleRange(parameterA);
 				}
-
 				btnResult.setEnabled(false);
-
 			}
 		});
 		GridData gd_btnResult = new GridData(SWT.FILL, SWT.CENTER, true, true, 1, 1);
@@ -556,6 +578,8 @@ public class BabystepGiantstepView extends ViewPart {
 
 				styledText.setText(Messages.BabystepGiantstepView_2);
 
+				comboGroup.setFocus();
+
 			}
 		});
 		GridData gd_btnReset = new GridData(SWT.FILL, SWT.BOTTOM, false, false, 1, 1);
@@ -581,6 +605,5 @@ public class BabystepGiantstepView extends ViewPart {
 	@Override
 	public void setFocus() {
 		comboGroup.setFocus();
-
 	}
 }

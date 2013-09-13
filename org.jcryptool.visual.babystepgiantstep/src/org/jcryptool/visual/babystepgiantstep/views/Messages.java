@@ -37,11 +37,8 @@ public class Messages extends NLS {
 	public static String BabystepGiantstepView_97;
 	public static String Parameter_0;
 	public static String Parameter_1;
-//	public static String Parameter_2;
-//	public static String Parameter_3;
-//	public static String Parameter_4;
-	public static String Parameter_5;
-	public static String Parameter_btnNextPrime_text;
+	public static String Parameter_2;
+	public static String Parameter_3;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

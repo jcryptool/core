@@ -12,6 +12,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -40,12 +41,29 @@ public class Parameter extends TitleAreaDialog {
 
 		@Override
 		public void verifyText(VerifyEvent e) {
+			Text textField = null;
 			e.doit = true;
+			
+			if (e.getSource() instanceof Text) {
+				textField = (Text) e.getSource();
+			}
+			
+			if ( textField == null || ((textField.getText().length() == 0 && e.text.compareTo("0") == 0 ) ||
+					(textField.getSelection().x == 0 && e.keyCode == 48)) ) {
+				e.doit = false;
+				return;
+			}
 
 			String text = e.text;
 			char[] chars = text.toCharArray();
 
 			for (int i = 0; i < chars.length; i++) {
+				if (chars.length > 1 && i == 0 && chars[i] == '0') {
+					e.doit = false;
+					break;
+				}
+				
+				
 				if (!Character.isDigit(chars[i])) {
 					e.doit = false;
 					break;
@@ -191,7 +209,7 @@ public class Parameter extends TitleAreaDialog {
 				}
 			}
 		});
-		btnNextPrime.setText(Messages.Parameter_btnNextPrime_text);
+		btnNextPrime.setText(Messages.Parameter_3);
 
 		Label lblNewLabel_1 = new Label(container, SWT.NONE);
 		lblNewLabel_1.setText(Messages.BabystepGiantstepView_5);
@@ -238,7 +256,7 @@ public class Parameter extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, Messages.Parameter_5, false);
+		createButton(parent, IDialogConstants.CANCEL_ID, Messages.Parameter_2, false);
 
 		if (group.getBackground().toString().compareTo(Constants.RED.toString()) == 0 || generator.getBackground().toString().compareTo(Constants.RED.toString()) == 0
 				|| groupElement.getBackground().toString().compareTo(Constants.RED.toString()) == 0 || group.getText().compareTo("1") == 0 || generator.getText().compareTo("1") == 0 //$NON-NLS-1$ //$NON-NLS-2$
