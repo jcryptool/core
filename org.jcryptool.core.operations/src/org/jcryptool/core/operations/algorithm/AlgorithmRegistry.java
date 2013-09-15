@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -28,11 +28,11 @@ import org.jcryptool.core.operations.OperationsPlugin;
 /**
  * The AlgorithmsRegistry class is a specific implementation of the base class
  * <i>org.jcryptool.core.operations.AbstractOperationsManager</i>
- *
+ * 
  * @author amro
  * @author t-kern
  * @version 0.6.0
- *
+ * 
  */
 public class AlgorithmRegistry extends AbstractOperationsManager implements IExtensionChangeHandler {
     /** Contains all registered algorithms */
@@ -48,12 +48,12 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
         IExtensionPoint extensionPoint = registry.getExtensionPoint(OperationsPlugin.PLUGIN_ID,
                 IOperationsConstants.PL_ALGORITHMS);
 
-        IExtension extensions[] = extensionPoint.getExtensions();
+        IExtension[] extensions = extensionPoint.getExtensions();
 
         for (int i = 0; i < extensions.length; i++) {
             IExtension extension = extensions[i];
 
-            IConfigurationElement configElements[] = extension.getConfigurationElements();
+            IConfigurationElement[] configElements = extension.getConfigurationElements();
 
             for (int j = 0; j < configElements.length; j++) {
                 IConfigurationElement element = configElements[j];
@@ -62,21 +62,18 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
 
                     boolean isFlexiProviderAlgorithm = false;
                     if (element.getAttribute(IOperationsConstants.ATT_FLEXIPROVIDER) != null) {
-                        isFlexiProviderAlgorithm = element.getAttribute(
-                                IOperationsConstants.ATT_FLEXIPROVIDER).equals("true") ? true : false; //$NON-NLS-1$
+                        isFlexiProviderAlgorithm = element.getAttribute(IOperationsConstants.ATT_FLEXIPROVIDER).equals(
+                                "true") ? true : false; //$NON-NLS-1$
                     }
 
                     IAlgorithmDescriptor desc = new AlgorithmDescriptor(
                             element.getAttribute(IOperationsConstants.ATT_NAME),
-                            element.getAttribute(IOperationsConstants.ATT_TYPE).equals(
-                                    "USER_DEFINED") ? element.getAttribute(IOperationsConstants.ATT_USER_TYPE) //$NON-NLS-1$
-                                            : element.getAttribute(IOperationsConstants.ATT_TYPE),
-                            element.getAttribute(IOperationsConstants.ATT_ID), extension
-                                    .getUniqueIdentifier(), element
-                                    .getAttribute(IOperationsConstants.ATT_KEYLENGTHS), element
-                                    .getAttribute(IOperationsConstants.ATT_BLOCKLENGTHS), element
-                                    .getAttribute(IOperationsConstants.ATT_TOOLTIP),
-                            isFlexiProviderAlgorithm);
+                            element.getAttribute(IOperationsConstants.ATT_TYPE).equals("USER_DEFINED") ? element.getAttribute(IOperationsConstants.ATT_USER_TYPE) //$NON-NLS-1$
+                                    : element.getAttribute(IOperationsConstants.ATT_TYPE),
+                            element.getAttribute(IOperationsConstants.ATT_ID), extension.getUniqueIdentifier(),
+                            element.getAttribute(IOperationsConstants.ATT_KEYLENGTHS),
+                            element.getAttribute(IOperationsConstants.ATT_BLOCKLENGTHS),
+                            element.getAttribute(IOperationsConstants.ATT_TOOLTIP), isFlexiProviderAlgorithm);
 
                     addAlgorithm(desc);
                 }
@@ -102,8 +99,9 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
     public String getAlgorithmType(IAction action) {
         if (action instanceof ShadowAlgorithmAction) {
             return ((ShadowAlgorithmAction) action).getType();
-        } else
+        } else {
             return ""; //$NON-NLS-1$
+        }
     }
 
     /**
@@ -118,7 +116,7 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
 
     /**
      * Adds a descriptor.
-     *
+     * 
      * @param desc The descriptor that will be added
      */
     private void addAlgorithm(IAlgorithmDescriptor desc) {
@@ -129,7 +127,7 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
 
     /**
      * Remoes a descriptor.
-     *
+     * 
      * @param desc The descriptor that will be removed
      */
     @SuppressWarnings("unused")

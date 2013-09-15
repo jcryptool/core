@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * Utility class for all font services used in JCrypTool. Plug-ins should use this class for all font purposes rather
  * than determining a font themselves.
- *
+ * 
  * @author Dominik Schadow
  * @version 0.9.5
  */
@@ -36,7 +36,7 @@ public class FontService {
 
     /**
      * Returns the default system font name.
-     *
+     * 
      * @return The default system font name
      */
     public static String getSystemFontName() {
@@ -46,9 +46,9 @@ public class FontService {
     /**
      * Returns the default header font, used e.g. for the headline of a view like analysis or visualization. Font name
      * is the system default, font size is 12, font weight is bold.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The header font
      */
     public static Font getHeaderFont() {
@@ -62,9 +62,9 @@ public class FontService {
     /**
      * Returns the default huge font, used e.g. for normal text in a view like analysis or visualization. Font name is
      * the system default, font size is 20, font weight is normal.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The large default font
      */
     public static Font getHugeFont() {
@@ -78,9 +78,9 @@ public class FontService {
     /**
      * Returns the default large font, used e.g. for normal text in a view like analysis or visualization. Font name is
      * the system default, font size is 12, font weight is normal.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The large default font
      */
     public static Font getLargeFont() {
@@ -94,9 +94,9 @@ public class FontService {
     /**
      * Returns the default normal font, used e.g. for normal text in a view like analysis or visualization. Font name is
      * the system default, font size is 10, font weight is normal.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The normal default font
      */
     public static Font getNormalFont() {
@@ -110,9 +110,9 @@ public class FontService {
     /**
      * Returns the default small font, used e.g. for small text in a view like analysis or visualization. Font name is
      * the system default, font size is 8, font weight is normal.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The small default font
      */
     public static Font getSmallFont() {
@@ -126,9 +126,9 @@ public class FontService {
     /**
      * Returns the default tiny font, used e.g. for small text in a view like analysis or visualization. Font name is
      * the system default, font size is 6, font weight is normal.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The small default font
      */
     public static Font getTinyFont() {
@@ -140,11 +140,11 @@ public class FontService {
     }
 
     /**
-     * Returns the default bold huge font, used e.g. for normal text in a view like analysis or visualization. Font
-     * name is the system default, font size is 20, font weight is bold.
-     *
+     * Returns the default bold huge font, used e.g. for normal text in a view like analysis or visualization. Font name
+     * is the system default, font size is 20, font weight is bold.
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The large default font
      */
     public static Font getHugeBoldFont() {
@@ -158,9 +158,9 @@ public class FontService {
     /**
      * Returns the default bold large font, used e.g. for normal text in a view like analysis or visualization. Font
      * name is the system default, font size is 12, font weight is bold.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The large default font
      */
     public static Font getLargeBoldFont() {
@@ -174,9 +174,9 @@ public class FontService {
     /**
      * Returns the default bold normal font, used e.g. for normal text in a view like analysis or visualization. Font
      * name is the system default, font size is 10, font weight is bold.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The normal default font
      */
     public static Font getNormalBoldFont() {
@@ -190,9 +190,9 @@ public class FontService {
     /**
      * Returns the default bold small font, used e.g. for small text in a view like analysis or visualization. Font name
      * is the system default, font size is 8, font weight is bold.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The small default font
      */
     public static Font getSmallBoldFont() {
@@ -206,9 +206,9 @@ public class FontService {
     /**
      * Returns the default bold tiny font, used e.g. for small text in a view like analysis or visualization. Font name
      * is the system default, font size is 6, font weight is bold.
-     *
+     * 
      * <b>Do not dispose this font after usage!</b>
-     *
+     * 
      * @return The small default font
      */
     public static Font getTinyBoldFont() {

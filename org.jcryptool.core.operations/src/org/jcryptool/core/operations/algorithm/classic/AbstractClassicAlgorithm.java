@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -34,7 +34,7 @@ import org.jcryptool.core.util.constants.IConstants;
 
 /**
  * The base class for a classic algorithm.
- *
+ * 
  * @author Amro
  * @author Dominik Schadow
  * @version 0.9.2
@@ -59,16 +59,15 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
-    public void init(int opmode, String input, AbstractAlphabet alphabet, char[] key,
-            TransformData transformData) {
+    public void init(int opmode, String input, AbstractAlphabet alphabet, char[] key, TransformData transformData) {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
         this.dataObject.setPlain(filterTextByTransformData(input, transformData));
@@ -79,14 +78,14 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
      * @param key2 the second key
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
     public void init(int opmode, String input, AbstractAlphabet alphabet, char[] key, char[] key2,
             TransformData transformData) {
@@ -101,18 +100,18 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
-     * @param nullchar the char (in some algorithms) that is the one to replace a missing character
-     *        in the 26-char-alphabet
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param nullchar the char (in some algorithms) that is the one to replace a missing character in the
+     *            26-char-alphabet
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
-    public void init(int opmode, String input, AbstractAlphabet alphabet, char[] key,
-            char nullchar, TransformData transformData) {
+    public void init(int opmode, String input, AbstractAlphabet alphabet, char[] key, char nullchar,
+            TransformData transformData) {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
         this.dataObject.setPlain(filterTextByTransformData(input, transformData));
@@ -124,16 +123,15 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
-    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key,
-            TransformData transformData) {
+    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key, TransformData transformData) {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
 
@@ -150,17 +148,17 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
      * @param key2 the second key
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
-    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key,
-            char[] key2, TransformData transformData) {
+    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key, char[] key2,
+            TransformData transformData) {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
         try {
@@ -177,18 +175,18 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Initializes the Algorithm with its key parameters
-     *
+     * 
      * @param opmode encrypt or decrypt (mode)
      * @param input input text
      * @param alphabet filter alphabet
      * @param key the operation's key
-     * @param nullchar the char (in some algorithms) that is the one to replace a missing character
-     *        in the 26-char-alphabet
-     * @param transformData the transformation data used to transform the text before the real
-     *        operation, may be <code>null</code> in case no transformation should be applied
+     * @param nullchar the char (in some algorithms) that is the one to replace a missing character in the
+     *            26-char-alphabet
+     * @param transformData the transformation data used to transform the text before the real operation, may be
+     *            <code>null</code> in case no transformation should be applied
      */
-    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key,
-            char nullchar, TransformData transformData) {
+    public void init(int opmode, InputStream input, AbstractAlphabet alphabet, char[] key, char nullchar,
+            TransformData transformData) {
         this.dataObject = new ClassicDataObject();
         this.dataObject.setTransformData(transformData);
         try {
@@ -217,7 +215,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * filters a string by given criteria
-     *
+     * 
      * @param in the input text
      * @param filter the filter Data
      * @return the filtered Text
@@ -233,7 +231,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * reads the current value from an input stream
-     *
+     * 
      * @param in the input stream
      */
     protected String InputStreamToString(InputStream in) {
@@ -270,26 +268,24 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Filters a InputStream by given criteria.
-     *
+     * 
      * @param in the input stream
-     * @param filter the filter data, may be null, in this case the original input stream is
-     *        returned
+     * @param filter the filter data, may be null, in this case the original input stream is returned
      * @return the filtered Text
      * @throws Exception
      */
-    private InputStream filterStreamByTransformData(InputStream in, TransformData filter)
-            throws Exception {
+    private InputStream filterStreamByTransformData(InputStream in, TransformData filter) throws Exception {
         if (filter == null) {
             return in;
         }
 
         String filterString = InputStreamToString(in);
         String filteredString = Transform.transformText(filterString, filter);
-        
+
         return StringToInputStream(filteredString);
     }
 
-    public IDataObject execute()  {
+    public IDataObject execute() {
         // 1st prepare alphabet table, every char is associated has an int value
         this.alphaConv = new AlphaConverter(this.dataObject.getAlphabet().getCharacterSet());
         // 2nd key
@@ -309,12 +305,12 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         OutputStream bout = null;
         bout = new ByteArrayOutputStream();
         PrintStream p = null;
-		try {
-			p = new PrintStream(bout, false, "UTF-8"); //$NON-NLS-1$
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-//        this.dataObject.setOutputStream(bout);
+        try {
+            p = new PrintStream(bout, false, "UTF-8"); //$NON-NLS-1$
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        // this.dataObject.setOutputStream(bout);
         inputString = InputStreamToString(is);
 
         charInput = inputString.toCharArray();
@@ -323,8 +319,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         try {
             cipherInput = this.alphaConv.filterNonAlphaChars(charInput);
         } catch (Exception e) {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID,
-                    "Exception while setting up the cipher input", e, true); //$NON-NLS-1$
+            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while setting up the cipher input", e, true); //$NON-NLS-1$
         }
 
         // encrypt
@@ -347,13 +342,13 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             p.print(String.valueOf(finalOutput));
             this.dataObject.setOutput(finalOutput);
         }
-        
+
         return dataObject;
     }
 
     /**
      * Subclasses must provide a method which generates the algorithms key
-     *
+     * 
      * @param keyData the data the key will be generated from
      * @return the generated key as an int array
      */
@@ -361,7 +356,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Encryption method
-     *
+     * 
      * @param cipherInput the to be processed input
      * @return the cipher output as a char array
      */
@@ -393,9 +388,8 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         }
         this.keyChars = alphaConv.intArrayToCharArray(key);
         // process encryption
-        int[] cipher =
-                engine.doEncryption(input, key, alphaLength, alphabet, nullchar, alphaChars,
-                        keyChars, inputNoNonAlphaChar, this.alphaConv, key2, cipherCount);
+        int[] cipher = engine.doEncryption(input, key, alphaLength, alphabet, nullchar, alphaChars, keyChars,
+                inputNoNonAlphaChar, this.alphaConv, key2, cipherCount);
 
         // convert cipher int to to char and return
         return alphaConv.intArrayToCharArray(cipher);
@@ -403,7 +397,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Decryption method
-     *
+     * 
      * @param cipherInput the to be processed input
      * @return the cipher output as a char array
      */
@@ -435,9 +429,8 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
             LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while filtering an alphabet", e, true); //$NON-NLS-1$
         }
         // process encryption
-        int[] cipher =
-                engine.doDecryption(input, key, alphaLength, alphabet, nullchar, alphaChars,
-                        keyChars, inputNoNonAlphaChar, this.alphaConv, key2, cipherCount);
+        int[] cipher = engine.doDecryption(input, key, alphaLength, alphabet, nullchar, alphaChars, keyChars,
+                inputNoNonAlphaChar, this.alphaConv, key2, cipherCount);
 
         // convert cipher int to to char and return
         return alphaConv.intArrayToCharArray(cipher);
@@ -445,7 +438,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * This method is used to merge the cipherOutput and the non-alpha chars in the plain text.
-     *
+     * 
      * @param plain the plain text
      * @param cipherOutput the cipher output
      * @return the merged final output
@@ -473,7 +466,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Setter for the non alpha
-     *
+     * 
      * @param filterNonAlphaFlag if <i>true</i> and if <i>false</i>
      */
     public void setFilter(boolean filterNonAlphaFlag) {
@@ -482,7 +475,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Getter for the filter flag.
-     *
+     * 
      * @return filter
      */
     public boolean isFilter() {
@@ -491,7 +484,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Getter for the data object
-     *
+     * 
      * @return IDataObject the data object
      */
     public IDataObject getDataObject() {
@@ -500,7 +493,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Rewrite a byte array as a char array method taken from class ByteArrayUtils
-     *
+     * 
      * @param input - the byte array
      * @return char array
      */
@@ -516,7 +509,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Rewrite a int array
-     *
+     * 
      * @param input - the byte array
      * @return char array
      */
@@ -532,7 +525,7 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
 
     /**
      * Rewrite a char array as a byte array
-     *
+     * 
      * @param input - the char array
      * @return byte array
      */
@@ -546,15 +539,15 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         return result;
     }
 
-//	/**
-//	 * @return standard available Alphabets for algorithms
-//	 */
-//	public static List<AbstractAlphabet> getAvailableAlphabets() {
-//		ArrayList<AbstractAlphabet> result = new ArrayList<AbstractAlphabet>();
-//		for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
-//			result.add(a);
-//		}
-//
-//		return result;
-//	}
+    // /**
+    // * @return standard available Alphabets for algorithms
+    // */
+    // public static List<AbstractAlphabet> getAvailableAlphabets() {
+    // ArrayList<AbstractAlphabet> result = new ArrayList<AbstractAlphabet>();
+    // for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
+    // result.add(a);
+    // }
+    //
+    // return result;
+    // }
 }

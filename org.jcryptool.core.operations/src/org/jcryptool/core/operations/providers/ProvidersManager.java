@@ -471,7 +471,7 @@ public class ProvidersManager {
 
         IExtension extension = extensionPoint.getExtension(extensionID);
 
-        IConfigurationElement configElements[] = extension.getConfigurationElements();
+        IConfigurationElement[] configElements = extension.getConfigurationElements();
 
         Provider provider = null;
 
@@ -514,7 +514,7 @@ public class ProvidersManager {
                     OperationsPlugin.PLUGIN_ID, IOperationsConstants.PL_PROVIDERS);
 
             IExtension extension = extensionPoint.getExtension(availableProviders.get(provider.getName()).getID());
-            IConfigurationElement configElements[] = extension.getConfigurationElements();
+            IConfigurationElement[] configElements = extension.getConfigurationElements();
 
             for (int i = 0; i < configElements.length; i++) {
                 LogUtil.logInfo("ATT_PROVIDER_NAME: " //$NON-NLS-1$

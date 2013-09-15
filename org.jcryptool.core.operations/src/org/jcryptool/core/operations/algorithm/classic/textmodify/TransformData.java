@@ -133,24 +133,29 @@ public class TransformData {
     }
 
     private static AbstractAlphabet getDefaultFilterAlphabet() {
-        if(OperationsPlugin.getDefault() != null) {
-        	AlphabetsManager instance = AlphabetsManager.getInstance();
-        	return instance.getDefaultAlphabet();
+        if (OperationsPlugin.getDefault() != null) {
+            AlphabetsManager instance = AlphabetsManager.getInstance();
+            return instance.getDefaultAlphabet();
         }
         return null;
     }
 
     public boolean isUnmodified() {
-        if (doUppercase != true)
+        if (!doUppercase) {
             return false;
-        if (uppercaseTransformationOn != false)
+        }
+        if (uppercaseTransformationOn) {
             return false;
-        if (alphabetTransformationON != false)
+        }
+        if (alphabetTransformationON) {
             return false;
-        if (umlautTransformationON != false)
+        }
+        if (umlautTransformationON) {
             return false;
-        if (leerTransformationON != false)
+        }
+        if (leerTransformationON) {
             return false;
+        }
         return true;
     }
 

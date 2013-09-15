@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -26,10 +26,10 @@ import org.jcryptool.core.operations.OperationsPlugin;
 /**
  * Central point of access to the alphabets. <br>
  * Suports adding, editing and removing custom alphabets and provides access to the basic platform alphabets.
- *
- *
+ * 
+ * 
  * @author t-kern, sleischnig
- *
+ * 
  */
 public class AlphabetsManager2 {
     /** Singleton instance */
@@ -54,7 +54,7 @@ public class AlphabetsManager2 {
 
     /**
      * Returns the singleton instance.
-     *
+     * 
      * @return The singleton instance
      */
     public static AlphabetsManager2 getInstance() {
@@ -65,7 +65,7 @@ public class AlphabetsManager2 {
 
     /**
      * Loads the alphabets Plug-in
-     *
+     * 
      * @return An instance of the loaded <i>AbstractAlphabetStore</i>
      */
     private void loadAlphabetPlugin() {
@@ -105,7 +105,7 @@ public class AlphabetsManager2 {
 
     /**
      * Adds an Alphabet to the store.
-     *
+     * 
      * @param alphabet The Alphabet that will be added
      */
     public void addAlphabet(Alphabet<Character> alphabet, String name, String shortName, boolean isDefault,
@@ -115,7 +115,7 @@ public class AlphabetsManager2 {
 
     /**
      * Updates an Alphabet with a new charset.
-     *
+     * 
      * @param alphabetTitle The name of the Alphabet that will be updated
      * @param newCharacterSet The new charset
      */
@@ -125,7 +125,7 @@ public class AlphabetsManager2 {
 
     /**
      * Removes an Alphabet from the store.
-     *
+     * 
      * @param alphabet The Alphabet that will be removed
      */
     public void removeAlphabet(AlphabetReference alphabet) {
@@ -134,7 +134,7 @@ public class AlphabetsManager2 {
 
     /**
      * Returns the available Alphabets.
-     *
+     * 
      * @return The available Alphabets
      */
     public List<Alphabet<Character>> getAlphabets() {
@@ -143,7 +143,7 @@ public class AlphabetsManager2 {
 
     /**
      * Sets the available Alphabets.
-     *
+     * 
      * @param alphabets The new available Alphabets
      */
     public void setAlphabets(List<Alphabet<Character>> alphabets, boolean save) throws IOException {
@@ -155,7 +155,7 @@ public class AlphabetsManager2 {
 
     /**
      * Returns the first Alphabet of the given name.
-     *
+     * 
      * @param name The name of the Alphabet
      * @return The Alphabet TODO: deprecation deprecated since alphabets will soon be internationalized, unique
      *         identifiers will be used.
@@ -166,7 +166,7 @@ public class AlphabetsManager2 {
 
     /**
      * Returns the Alphabet of the given name.
-     *
+     * 
      * @param name The name of the Alphabet
      * @return The Alphabet
      */

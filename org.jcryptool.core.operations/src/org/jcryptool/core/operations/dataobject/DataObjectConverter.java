@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,7 +26,7 @@ import org.jcryptool.core.operations.algorithm.classic.textmodify.TransformData;
 
 /**
  * Converter Class for casting dataObject properties to/from Hashtable
- *
+ * 
  * @author Thomas Wiese
  * @version 0.1
  */
@@ -38,7 +38,7 @@ public class DataObjectConverter {
 
     /**
      * Converting dataObject to Hashtable
-     *
+     * 
      * @param dataObject
      * @return Hashtable
      */
@@ -58,8 +58,7 @@ public class DataObjectConverter {
                     && !key.equals("cypherAlphabet")) { //$NON-NLS-1$
                 for (Method method : methods) {
                     if (method.getName().toUpperCase().equals("GET" + field.getName().toUpperCase()) //$NON-NLS-1$
-                            || method.getName().toUpperCase().equals(
-                                    "IS" + field.getName().toUpperCase())) { //$NON-NLS-1$
+                            || method.getName().toUpperCase().equals("IS" + field.getName().toUpperCase())) { //$NON-NLS-1$
                         try {
                             Object o = method.invoke(dataobject);
                             if (o != null) {
@@ -119,12 +118,11 @@ public class DataObjectConverter {
 
     /**
      * Converting Hashtable to dataObject
-     *
+     * 
      * @param Hashtable
      * @return dataObject
      */
-    public static IDataObject hashtableToProperties(Hashtable<String, String> props,
-            String dataObjectType) {
+    public static IDataObject hashtableToProperties(Hashtable<String, String> props, String dataObjectType) {
         IDataObject dataobject = null;
         if (dataObjectType == null || "".equals(dataObjectType)) { //$NON-NLS-1$
             return null;
@@ -188,8 +186,7 @@ public class DataObjectConverter {
                             Class<?>[] interfaces = field.getType().getInterfaces();
                             for (Class<?> i : interfaces) {
                                 if ("Serializable".equals(i.getName())) { //$NON-NLS-1$
-                                    ByteArrayInputStream s =
-                                            new ByteArrayInputStream(value.getBytes());
+                                    ByteArrayInputStream s = new ByteArrayInputStream(value.getBytes());
                                     ObjectInputStream os = new ObjectInputStream(s);
                                     Object _x = os.readObject();
                                     setter.invoke(dataobject, _x);

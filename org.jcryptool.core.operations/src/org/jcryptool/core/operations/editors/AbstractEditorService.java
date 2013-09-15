@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -35,7 +35,7 @@ import org.jcryptool.core.util.directories.DirectoryService;
 /**
  * This is the base class for an editor service. All contributors of the <i>editorServices</i> extension point must
  * provide a class which extends this one.
- *
+ * 
  * @author amro
  * @author t-kern
  * @author Dominik Schadow
@@ -48,7 +48,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Constructor which needs an editor ID as a parameter.
-     *
+     * 
      * @param editorID the id of an editor
      */
     protected AbstractEditorService(String editorID) {
@@ -59,7 +59,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Subclasses must provide a mechanism to retrieve the content of the parameterized editor.
-     *
+     * 
      * @deprecated Do not use with regard to modern cryptography. Use streams instead.
      * @param editorPart the editor which content is to be retrieved
      * @return the content of the editor
@@ -75,7 +75,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Subclasses must provide a mechanism to set a new content for the parameterized editor.
-     *
+     * 
      * @param editorPart the editor which content is to be setted
      * @param content the new content of the editor
      */
@@ -83,7 +83,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Getter for the editor ID.
-     *
+     * 
      * @return the ID of the editor
      */
     public String getEditorID() {
@@ -92,7 +92,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Same as createOutputFile(String content) but with custom name.
-     *
+     * 
      * @param name the name of the file
      * @param content the content of the file
      * @return An IEditorInput of an output file
@@ -116,7 +116,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Creates a new IEditorInput for an output file containing the given (String) content.
-     *
+     * 
      * @param content The content that is being stored in the IEditorInput's underlying File
      * @return An IEditorInput of an output file containing the given (String) content
      */
@@ -126,7 +126,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Same as createOutputFile(InputStream is) but with custom name and file extension.
-     *
+     * 
      * @param name the name of the file
      * @param extension the extension of the file
      * @param content the content of the file
@@ -160,7 +160,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Same as createOutputFile(byte[] name) but with custom name.
-     *
+     * 
      * @param name the name of the file
      * @param content the content of the file
      * @return An IEditorInput of an output file
@@ -184,7 +184,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Creates a new IEditorInput for an output file containing the given (byte[]) content.
-     *
+     * 
      * @param content The content that is being stored in the IEditorInput's underlying File
      * @return An IEditorInput of an output file containing the given (byte[]) content
      */
@@ -194,7 +194,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Creates a new IEditorInput for an output file containing the given (byte[]) content.
-     *
+     * 
      * @param content The content that is being stored in the IEditorInput's underlying File
      * @return An IEditorInput of an output file containing the given (byte[]) content
      */
@@ -204,7 +204,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Returns an IEditorInput containing a temporary file in the temp-file directory.
-     *
+     * 
      * @return An IEditorInput containing a temporary file in the temp-file directory
      */
     public static final IEditorInput createTemporaryFile() {
@@ -213,7 +213,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Returns an IEditorInput containing a temporary file in the temp-file directory.
-     *
+     * 
      * @return An IEditorInput containing a temporary file in the temp-file directory
      */
     public static final IEditorInput createTemporaryEmptyFile() {
@@ -222,7 +222,7 @@ public abstract class AbstractEditorService {
 
     /**
      * Creates appropriate editor input.
-     *
+     * 
      * @param file the file the method creates an editor input of
      * @return the created editor input
      */
@@ -235,7 +235,7 @@ public abstract class AbstractEditorService {
     /**
      * Creates an empty file in the memory and fills it with the default message.<br>
      * The temporary files is consistent with the filename scheme <b>unsaved00x.txt</b>.
-     *
+     * 
      * @return The new temporary file
      */
     private static final File createTempFile() {
@@ -283,7 +283,7 @@ public abstract class AbstractEditorService {
     /**
      * Creates an empty file in the memory.<br>
      * The temporary files is consistent with the filename scheme <b>unsaved00x.txt</b>.
-     *
+     * 
      * @return The new temporary file
      */
     private static final File createEmptyTempFile() {
@@ -331,10 +331,10 @@ public abstract class AbstractEditorService {
     /**
      * Resolves the given number to a String with leading 0s, if they are required (e.g. 1 -> '001', 10 -> '010', 128 ->
      * '128').
-     *
+     * 
      * @param number A number
      * @return The number (with leading 0s) as a String
-     *
+     * 
      * @author T. Kern
      */
     private static final String getFormatedFilenumber(int number) {

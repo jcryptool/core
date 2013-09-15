@@ -1,10 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -49,10 +48,11 @@ public class ProviderManager2 {
     private void loadProviders() {
         IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(OperationsPlugin.PLUGIN_ID,
                 IOperationsConstants.PL_PROVIDERS2);
-        
-        if(extensionPoint == null)
-        {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "extension point " + IOperationsConstants.PL_PROVIDERS2 + " not available", new NullPointerException(), true); //$NON-NLS-1$ //$NON-NLS-2$
+
+        if (extensionPoint == null) {
+            LogUtil.logError(
+                    OperationsPlugin.PLUGIN_ID,
+                    "extension point " + IOperationsConstants.PL_PROVIDERS2 + " not available", new NullPointerException(), true); //$NON-NLS-1$ //$NON-NLS-2$
             return;
         }
 

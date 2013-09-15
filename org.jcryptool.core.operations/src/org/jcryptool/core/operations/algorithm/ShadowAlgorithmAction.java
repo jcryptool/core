@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,16 +25,15 @@ import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.core.operations.dataobject.modern.ModernDataObject;
 
 /**
- * To support lazy loading of the 'algorithms' extensions kind of a helper pattern is used. The
- * helper is represented by the ShadowAlgorithmAction class.
- *
- * The class encapsulates the appropriate algorithm action. In its run-method it just calls the
- * run-method of the algorithm action. To guarantee lazy loading, the appropriate algorithm is
- * loaded, the first time a run is invoked.
- *
+ * To support lazy loading of the 'algorithms' extensions kind of a helper pattern is used. The helper is represented by
+ * the ShadowAlgorithmAction class.
+ * 
+ * The class encapsulates the appropriate algorithm action. In its run-method it just calls the run-method of the
+ * algorithm action. To guarantee lazy loading, the appropriate algorithm is loaded, the first time a run is invoked.
+ * 
  * @author amro
  * @author t-kern
- *
+ * 
  */
 public class ShadowAlgorithmAction extends Action {
     /** algorithm type */
@@ -60,7 +59,7 @@ public class ShadowAlgorithmAction extends Action {
 
     /**
      * Creates a new instance of ShadowAlgorithmAction with the given descriptor.
-     *
+     * 
      * @param descriptor The descriptor with the details for this algorithm
      */
     public ShadowAlgorithmAction(IAlgorithmDescriptor descriptor) {
@@ -87,11 +86,9 @@ public class ShadowAlgorithmAction extends Action {
             try {
                 algorithmAction = createAlgorithmAction();
             } catch (CoreException e) {
-                LogUtil
-                        .logError(
-                                OperationsPlugin.PLUGIN_ID,
-                                "CoreException while creating an executable extension of an AlgorithmAction", //$NON-NLS-1$
-                                e, false);
+                LogUtil.logError(OperationsPlugin.PLUGIN_ID,
+                        "CoreException while creating an executable extension of an AlgorithmAction", //$NON-NLS-1$
+                        e, false);
             }
             // set Action id
             algorithmAction.setId(algorithmActionID);
@@ -106,11 +103,9 @@ public class ShadowAlgorithmAction extends Action {
             try {
                 algorithmAction = createAlgorithmAction();
             } catch (CoreException e) {
-                LogUtil
-                        .logError(
-                                OperationsPlugin.PLUGIN_ID,
-                                "CoreException while creating an executable extension of an AlgorithmAction", //$NON-NLS-1$
-                                e, false);
+                LogUtil.logError(OperationsPlugin.PLUGIN_ID,
+                        "CoreException while creating an executable extension of an AlgorithmAction", //$NON-NLS-1$
+                        e, false);
             }
             // set Action id
             algorithmAction.setId(algorithmActionID);
@@ -119,9 +114,11 @@ public class ShadowAlgorithmAction extends Action {
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 if (dataobject instanceof ClassicDataObject)
-        	        if(((ClassicDataObject)dataobject).getInputStream() == null) ((ClassicDataObject)dataobject).setInputStream(algorithmAction.getActiveEditorInputStream());
-                else if (dataobject instanceof ModernDataObject)
-                	if(((ModernDataObject)dataobject).getInputStream() == null) ((ModernDataObject)dataobject).setInputStream(algorithmAction.getActiveEditorInputStream());
+                    if (((ClassicDataObject) dataobject).getInputStream() == null)
+                        ((ClassicDataObject) dataobject).setInputStream(algorithmAction.getActiveEditorInputStream());
+                    else if (dataobject instanceof ModernDataObject)
+                        if (((ModernDataObject) dataobject).getInputStream() == null)
+                            ((ModernDataObject) dataobject).setInputStream(algorithmAction.getActiveEditorInputStream());
             }
         });
         algorithmAction.run(dataobject);
@@ -129,7 +126,7 @@ public class ShadowAlgorithmAction extends Action {
 
     /**
      * "Lazy-loads" the algorithm plug-in
-     *
+     * 
      * @return The plug-in's implementation of AbstractAlgorithmAction
      * @throws CoreException
      */
@@ -159,7 +156,7 @@ public class ShadowAlgorithmAction extends Action {
 
     /**
      * Getter for the algorithm action
-     *
+     * 
      * @return an instance of AbstractAlgorithmAction
      */
     public AbstractAlgorithmAction getAlgorithmAction() {
@@ -168,7 +165,7 @@ public class ShadowAlgorithmAction extends Action {
 
     /**
      * Getter for the algorithm's type
-     *
+     * 
      * @return type as a string object
      */
     public String getType() {
@@ -177,7 +174,7 @@ public class ShadowAlgorithmAction extends Action {
 
     /**
      * Returns true for FlexiProvider algorithms
-     *
+     * 
      * @return true for FlexiProvider algorithms
      */
     public boolean isFlexiProviderAlgorithm() {

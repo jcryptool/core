@@ -6,58 +6,57 @@ package org.jcryptool.core.operations.alphabets;
  * @author Simon L
  */
 public class AlphabetReference {
-	
-	public String getAlphabetName() {
-		return alphabetName;
-	}
 
-	public void setAlphabetName(String alphabetName) {
-		this.alphabetName = alphabetName;
-	}
+    public String getAlphabetName() {
+        return alphabetName;
+    }
 
-	public String getShortAlphabetName() {
-		return shortAlphabetName;
-	}
+    public void setAlphabetName(String alphabetName) {
+        this.alphabetName = alphabetName;
+    }
 
-	public void setShortAlphabetName(String shortAlphabetName) {
-		this.shortAlphabetName = shortAlphabetName;
-	}
+    public String getShortAlphabetName() {
+        return shortAlphabetName;
+    }
 
-	public boolean isDefaultAlphabet() {
-		return defaultAlphabet;
-	}
+    public void setShortAlphabetName(String shortAlphabetName) {
+        this.shortAlphabetName = shortAlphabetName;
+    }
 
-	public void setDefaultAlphabet(boolean defaultAlphabet) {
-		this.defaultAlphabet = defaultAlphabet;
-	}
+    public boolean isDefaultAlphabet() {
+        return defaultAlphabet;
+    }
 
-	public boolean isIntegral() {
-		return integral;
-	}
+    public void setDefaultAlphabet(boolean defaultAlphabet) {
+        this.defaultAlphabet = defaultAlphabet;
+    }
 
-	public void setIntegral(boolean integral) {
-		this.integral = integral;
-	}
+    public boolean isIntegral() {
+        return integral;
+    }
 
-	public AbstractAlphabetStore2 getOriginStore() {
-		return originStore;
-	}
+    public void setIntegral(boolean integral) {
+        this.integral = integral;
+    }
 
-	String alphabetName;
-	String shortAlphabetName;
-	boolean defaultAlphabet;
-	boolean integral;
-	AbstractAlphabetStore2 originStore;
-	
-	public AlphabetReference(String alphabetName, String shortAlphabetName,
-			boolean defaultAlphabet, boolean integral,
-			AbstractAlphabetStore2 originStore) {
-		super();
-		this.alphabetName = alphabetName;
-		this.shortAlphabetName = shortAlphabetName;
-		this.defaultAlphabet = defaultAlphabet;
-		this.integral = integral;
-		this.originStore = originStore;
-	}
-	
+    public AbstractAlphabetStore2 getOriginStore() {
+        return originStore;
+    }
+
+    String alphabetName;
+    String shortAlphabetName;
+    boolean defaultAlphabet;
+    boolean integral;
+    AbstractAlphabetStore2 originStore;
+
+    public AlphabetReference(String alphabetName, String shortAlphabetName, boolean defaultAlphabet, boolean integral,
+            AbstractAlphabetStore2 originStore) {
+        super();
+        this.alphabetName = alphabetName;
+        this.shortAlphabetName = shortAlphabetName;
+        this.defaultAlphabet = defaultAlphabet;
+        this.integral = integral;
+        this.originStore = originStore;
+    }
+
 }

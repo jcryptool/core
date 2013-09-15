@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
-* 
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2008 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 /**
  * 
  */
@@ -16,135 +15,133 @@ package org.jcryptool.core.operations.dataobject.modern;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
-
 /**
  * The implementation of the IDataObject interface for modern algorithms.
- *  
+ * 
  * @author amro
  * @author t-kern
  * @version 0.1
- *
+ * 
  */
 public class ModernDataObject implements IModernDataObject {
 
-	/**
-	 * the initial input of the algorithm's operation in byte representation
-	 */
-	private byte[] plain;
+    /**
+     * the initial input of the algorithm's operation in byte representation
+     */
+    private byte[] plain;
 
-	/** The output produced by a modern algorithm is always binary */
-	private byte[] output;
+    /** The output produced by a modern algorithm is always binary */
+    private byte[] output;
 
-	/** The name of the algorithm */
-	private String algorithmName;
+    /** The name of the algorithm */
+    private String algorithmName;
 
-	/** The padding scheme of the algorithm */
-	private String paddingName;
+    /** The padding scheme of the algorithm */
+    private String paddingName;
 
-	/** The opmode */
-	private int opmode  = -1;
+    /** The opmode */
+    private int opmode = -1;
 
-	private InputStream inputStream;
+    private InputStream inputStream;
 
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
-	private OutputStream outputStream;
+    private OutputStream outputStream;
 
-	public void setOutputStream(OutputStream outputStream) {
-		this.outputStream = outputStream;
-	}
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
 
-	public OutputStream getOutputStream() {
-		return outputStream;
-	}
+    public OutputStream getOutputStream() {
+        return outputStream;
+    }
 
-	private InputStream outputIS;
-	
-	public void setOutputIS(InputStream inputStream) {
-		outputIS = inputStream;
-	}
-	
-	public InputStream getOutputIS() {
-		return outputIS;
-	}
-	
-	/**
-	 * Sets the algorithm's name
-	 * 
-	 * @param algorithmName	The algorithm name
-	 */
-	public void setAlgorithmName(String algorithmName) {
-		this.algorithmName = algorithmName;
-	}
+    private InputStream outputIS;
 
-	/**
-	 * Returns the algorithm's name
-	 * 
-	 * @return	The algorithm's name
-	 */
-	public String getAlgorithmName() {
-		return algorithmName;
-	}
+    public void setOutputIS(InputStream inputStream) {
+        outputIS = inputStream;
+    }
 
-	/**
-	 * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#setPaddingName(java.lang.String)
-	 */
-	public void setPaddingName(String paddingName) {
-		this.paddingName = paddingName;
-	}
+    public InputStream getOutputIS() {
+        return outputIS;
+    }
 
-	/**
-	 * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#getPaddingName()
-	 */
-	public String getPaddingName() {
-		return paddingName;
-	}
+    /**
+     * Sets the algorithm's name
+     * 
+     * @param algorithmName The algorithm name
+     */
+    public void setAlgorithmName(String algorithmName) {
+        this.algorithmName = algorithmName;
+    }
 
-	/**
-	 * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#setOpmode(int)
-	 */
-	public void setOpmode(int opmode) {
-		this.opmode = opmode;
-	}
+    /**
+     * Returns the algorithm's name
+     * 
+     * @return The algorithm's name
+     */
+    public String getAlgorithmName() {
+        return algorithmName;
+    }
 
-	/**
-	 * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#getOpmode()
-	 */
-	public int getOpmode() {
-		return opmode;
-	}
+    /**
+     * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#setPaddingName(java.lang.String)
+     */
+    public void setPaddingName(String paddingName) {
+        this.paddingName = paddingName;
+    }
 
-	/**
-	 * Sets the ouptut.
-	 * 
-	 * @param output	The output as a byte []
-	 */
-	public void setOutput(byte[] output) {
-		this.output = output;
-	}
+    /**
+     * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#getPaddingName()
+     */
+    public String getPaddingName() {
+        return paddingName;
+    }
 
-	/**
-	 * Returns the plaintext as a byte array
-	 * 
-	 * @return	The plaintext as a byte array
-	 */
-	public byte[] getInput() {
-		return plain;
-	}
+    /**
+     * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#setOpmode(int)
+     */
+    public void setOpmode(int opmode) {
+        this.opmode = opmode;
+    }
 
-	public void setInput(byte[] input) {
-		plain = input;
-	}
+    /**
+     * @see org.jcryptool.core.operations.dataobject.modern.IModernDataObject#getOpmode()
+     */
+    public int getOpmode() {
+        return opmode;
+    }
 
-	public byte[] getOutput() {
-		return output;
-	}
+    /**
+     * Sets the ouptut.
+     * 
+     * @param output The output as a byte []
+     */
+    public void setOutput(byte[] output) {
+        this.output = output;
+    }
+
+    /**
+     * Returns the plaintext as a byte array
+     * 
+     * @return The plaintext as a byte array
+     */
+    public byte[] getInput() {
+        return plain;
+    }
+
+    public void setInput(byte[] input) {
+        plain = input;
+    }
+
+    public byte[] getOutput() {
+        return output;
+    }
 
 }

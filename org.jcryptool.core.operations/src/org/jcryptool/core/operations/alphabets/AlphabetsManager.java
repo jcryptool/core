@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -24,10 +24,10 @@ import org.jcryptool.core.operations.OperationsPlugin;
 /**
  * Central point of access to the alphabets. <br>
  * Suports adding, editing and removing custom alphabets and provides access to the basic platform alphabets.
- *
- *
+ * 
+ * 
  * @author t-kern
- *
+ * 
  */
 public class AlphabetsManager {
     /** Singleton instance */
@@ -52,7 +52,7 @@ public class AlphabetsManager {
 
     /**
      * Returns the singleton instance.
-     *
+     * 
      * @return The singleton instance
      */
     public synchronized static AlphabetsManager getInstance() {
@@ -63,7 +63,7 @@ public class AlphabetsManager {
 
     /**
      * Loads the alphabets Plug-in
-     *
+     * 
      * @return An instance of the loaded <i>AbstractAlphabetStore</i>
      */
     private void loadAlphabetPlugin() {
@@ -94,7 +94,7 @@ public class AlphabetsManager {
 
     /**
      * Returns the names of the custom alphabets.
-     *
+     * 
      * @return The names of the custom alphabets
      */
     public String[] getSelfCreatedAlphaList() {
@@ -103,7 +103,7 @@ public class AlphabetsManager {
 
     /**
      * Adds an Alphabet to the store.
-     *
+     * 
      * @param alphabet The Alphabet that will be added
      */
     public void addAlphabet(AbstractAlphabet alphabet) {
@@ -112,7 +112,7 @@ public class AlphabetsManager {
 
     /**
      * Updates an Alphabet with a new charset.
-     *
+     * 
      * @param alphabetTitle The name of the Alphabet that will be updated
      * @param newCharacterSet The new charset
      */
@@ -122,7 +122,7 @@ public class AlphabetsManager {
 
     /**
      * Removes an Alphabet from the store.
-     *
+     * 
      * @param alphabet The Alphabet that will be removed
      */
     public void removeAlphabet(AbstractAlphabet alphabet) {
@@ -131,7 +131,7 @@ public class AlphabetsManager {
 
     /**
      * Returns the available Alphabets.
-     *
+     * 
      * @return The available Alphabets
      */
     public AbstractAlphabet[] getAlphabets() {
@@ -140,7 +140,7 @@ public class AlphabetsManager {
 
     /**
      * Sets the available Alphabets.
-     *
+     * 
      * @param alphabets The new available Alphabets
      */
     public void setAlphabets(AbstractAlphabet[] alphabets, boolean save) {
@@ -156,7 +156,7 @@ public class AlphabetsManager {
 
     /**
      * Returns the Alphabet of the given name.
-     *
+     * 
      * @param name The name of the Alphabet
      * @return The Alphabet TODO: deprecation deprecated since alphabets will soon be internationalized, unique
      *         identifiers will be used.
@@ -167,7 +167,7 @@ public class AlphabetsManager {
 
     /**
      * Returns the Alphabet of the given name.
-     *
+     * 
      * @param name The name of the Alphabet
      * @return The Alphabet
      */
@@ -186,7 +186,7 @@ public class AlphabetsManager {
     }
 
     /**
-     *
+     * 
      * @return the size of various alphabets stored
      */
     public int getSize() {
