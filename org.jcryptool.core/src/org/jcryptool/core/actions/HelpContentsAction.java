@@ -27,14 +27,7 @@ import org.eclipse.ui.PlatformUI;
  * @see IWorkbenchWindowActionDelegate
  */
 public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
-    @SuppressWarnings("unused")
     private IWorkbenchWindow window;
-
-    /**
-     * The constructor.
-     */
-    public HelpContentsAction() {
-    }
 
     /**
      * The action has been activated. The argument of the method represents the 'real' action sitting in the workbench
@@ -56,19 +49,20 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
                         PlatformUI.getWorkbench().getHelpSystem().displayHelpResource(topic.getHref());
                     }
                 }
-                if (!foundTopic)
+                if (!foundTopic) {
                     PlatformUI.getWorkbench().getHelpSystem().displayHelp();
+                }
             }
 
             private String findContextId() {
-                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 if (window != null) {
                     IWorkbenchPage page = window.getActivePage();
                     IWorkbenchPartReference ref;
                     if (page != null) {
                         ref = page.getActivePartReference();
-                        if (ref != null)
+                        if (ref != null) {
                             return ref.getId();
+                        }
                     }
                 }
                 return null;
@@ -77,19 +71,22 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
             private ITopic findTopic(String id, IToc[] tocs) {
                 for (IToc toc : tocs) {
                     ITopic topic = findTopic(id, toc.getTopics());
-                    if (topic != null)
+                    if (topic != null) {
                         return topic;
+                    }
                 }
                 return null;
             }
 
             private ITopic findTopic(String id, ITopic[] topics) {
                 for (ITopic topic : topics) {
-                    if (isTopic(id, topic))
+                    if (isTopic(id, topic)) {
                         return topic;
+                    }
                     ITopic sub = findTopic(id, topic.getSubtopics());
-                    if (sub != null)
+                    if (sub != null) {
                         return sub;
+                    }
                 }
                 return null;
             }
