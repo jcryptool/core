@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,7 +26,7 @@ import de.flexiprovider.pqc.hbc.gmss.GMSSPublicKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class GMSSPublicKeyContentProvider extends CertificateContentProvider {
 
@@ -56,7 +56,8 @@ public class GMSSPublicKeyContentProvider extends CertificateContentProvider {
             GMSSPublicKeySpec keySpec = (GMSSPublicKeySpec) keyFactory.getKeySpec(key, GMSSPublicKeySpec.class);
             if (keySpec == null)
                 return null;
-            paramElements.add(new TableEntry(Messages.ContentProvider_publickey, "" + Arrays.toString(keySpec.getPublicKey()))); //$NON-NLS-2$
+            paramElements.add(new TableEntry(Messages.ContentProvider_publickey,
+                    "" + Arrays.toString(keySpec.getPublicKey()))); //$NON-NLS-2$
             paramElements.addAll(getParameters(keySpec));
         } catch (ClassCastException e) {
             return null;
@@ -65,16 +66,18 @@ public class GMSSPublicKeyContentProvider extends CertificateContentProvider {
         }
         return paramElements;
     }
-    
+
     private List<TableEntry> getParameters(GMSSPublicKeySpec keySpec) {
-        
+
         GMSSParameterset params = (GMSSParameterset) keySpec.getGMSSParameterset();
         List<TableEntry> paramElements = new ArrayList<TableEntry>();
         paramElements.add(new TableEntry(Messages.ContentProvider_numoflayers, "" + params.getNumOfLayers())); //$NON-NLS-2$
         paramElements.add(new TableEntry(Messages.ContentProvider_k, "" + Arrays.toString(params.getK()))); //$NON-NLS-2$
-        paramElements.add(new TableEntry(Messages.ContentProvider_heightoftrees, "" + Arrays.toString(params.getHeightOfTrees()))); //$NON-NLS-2$
-        paramElements.add(new TableEntry(Messages.ContentProvider_winternitzparameter, "" + Arrays.toString(params.getWinternitzParameter()))); //$NON-NLS-2$
-        
+        paramElements.add(new TableEntry(Messages.ContentProvider_heightoftrees,
+                "" + Arrays.toString(params.getHeightOfTrees()))); //$NON-NLS-2$
+        paramElements.add(new TableEntry(Messages.ContentProvider_winternitzparameter,
+                "" + Arrays.toString(params.getWinternitzParameter()))); //$NON-NLS-2$
+
         return paramElements;
     }
 }

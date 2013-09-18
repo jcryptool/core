@@ -8,55 +8,65 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Contact {
-	@XmlAttribute
-	private String name;
-	@XmlAttribute
+    @XmlAttribute
+    private String name;
+    @XmlAttribute
     private String firstname;
-	@XmlAttribute
+    @XmlAttribute
     private String lastname;
-	@XmlAttribute
+    @XmlAttribute
     private String organization;
-	@XmlAttribute
+    @XmlAttribute
     private String region;
-    
-	public Contact() {
-	}
-	public Contact(String name, String firstname, String lastname,
-			String organization, String region) {
-		this.name = name;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.organization = organization;
-		this.region = region;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	public String getOrganization() {
-		return organization;
-	}
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-	public String getRegion() {
-		return region;
-	}
-	public void setRegion(String region) {
-		this.region = region;
-	}
+
+    public Contact() {
+    }
+
+    public Contact(String name, String firstname, String lastname, String organization, String region) {
+        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.organization = organization;
+        this.region = region;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
 }

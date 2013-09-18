@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -24,7 +24,7 @@ import de.flexiprovider.pqc.ecc.niederreiter.NiederreiterPrivateKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class NiederreiterPrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -37,7 +37,7 @@ public class NiederreiterPrivateKeyContentProvider extends AbstractKeyNodeConten
             NiederreiterPrivateKey key = (NiederreiterPrivateKey) inputElement;
             if (key == null)
                 return null;
-            
+
             paramElements.add(new TableEntry(Messages.ContentProvider_k, "" + key.getK())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_m, "" + key.getM())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_n, "" + key.getN())); //$NON-NLS-2$
@@ -47,7 +47,7 @@ public class NiederreiterPrivateKeyContentProvider extends AbstractKeyNodeConten
             paramElements.add(new TableEntry(Messages.ContentProvider_goppapoly, "" + key.getGoppaPoly())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_qinv, "" + key.getQInv())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_sinv, "" + key.getSInv())); //$NON-NLS-2$
-            
+
         } catch (ClassCastException e) {
             return null;
         }

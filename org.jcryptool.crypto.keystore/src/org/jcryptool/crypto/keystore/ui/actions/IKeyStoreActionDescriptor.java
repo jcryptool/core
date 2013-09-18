@@ -1,31 +1,28 @@
-//-----BEGIN DISCLAIMER-----
-/*******************************************************************************
-* Copyright (c) 2008 JCrypTool Team and Contributors
-* 
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *************************************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions;
 
 /**
  * @author t-kern
- *
+ * 
  */
 public interface IKeyStoreActionDescriptor {
+    String getText();
 
-	public String getText();
-	
-	public String getType();
-	
-	public String getToolTipText();
-	
-	public String getExtensionUID();
-	
-	public String getIcon();
-	
-	public String getID();
-	
+    String getType();
+
+    String getToolTipText();
+
+    String getExtensionUID();
+
+    String getIcon();
+
+    String getID();
 }

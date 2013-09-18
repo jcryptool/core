@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
  * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs;
 
@@ -39,13 +39,11 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class CommonPropertyDialog extends TitleAreaDialog {
-
-    IStructuredContentProvider contentProvider;
-
-    TreeNode treeNode;
+    private IStructuredContentProvider contentProvider;
+    protected TreeNode treeNode;
     private Table table;
 
     public CommonPropertyDialog(Shell parentShell, TreeNode treeNode) {
@@ -55,8 +53,9 @@ public class CommonPropertyDialog extends TitleAreaDialog {
     }
 
     public IStructuredContentProvider getContentProvider() {
-        if (contentProvider == null)
+        if (contentProvider == null) {
             contentProvider = ContentProviderFactory.create(treeNode);
+        }
         return contentProvider;
     }
 
@@ -71,8 +70,8 @@ public class CommonPropertyDialog extends TitleAreaDialog {
         Composite area = (Composite) super.createDialogArea(parent);
 
         Composite composite = new Composite(area, SWT.NONE);
-        TableColumnLayout tcl_composite = new TableColumnLayout();
-        composite.setLayout(tcl_composite);
+        TableColumnLayout tclComposite = new TableColumnLayout();
+        composite.setLayout(tclComposite);
 
         TableViewer tableViewer = new TableViewer(composite, SWT.BORDER | SWT.FULL_SELECTION | SWT.H_SCROLL);
         tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -80,7 +79,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
                 StructuredSelection selection = (StructuredSelection) event.getSelectionProvider().getSelection();
                 TableEntry tableEntry = (TableEntry) selection.getFirstElement();
                 final Clipboard cb = new Clipboard(Display.getCurrent());
-                cb.setContents(new Object[] {tableEntry.getValue()}, new Transfer[] {TextTransfer.getInstance()});
+                cb.setContents(new Object[] { tableEntry.getValue() }, new Transfer[] { TextTransfer.getInstance() });
             }
         });
         table = tableViewer.getTable();
@@ -101,7 +100,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
             }
         });
         TableColumn tblclmnNameColumn = tableViewerNameColumn.getColumn();
-        tcl_composite.setColumnData(tblclmnNameColumn, new ColumnWeightData(1, 2));
+        tclComposite.setColumnData(tblclmnNameColumn, new ColumnWeightData(1, 2));
         tblclmnNameColumn.setText(Messages.getString("AbstractKeyDialog.tblclmnNameColumn.text")); //$NON-NLS-1$
 
         TableViewerColumn tableViewerValueColumn = new TableViewerColumn(tableViewer, SWT.NONE);
@@ -118,7 +117,7 @@ public class CommonPropertyDialog extends TitleAreaDialog {
             }
         });
         TableColumn tblclmnValueColumn = tableViewerValueColumn.getColumn();
-        tcl_composite.setColumnData(tblclmnValueColumn, new ColumnWeightData(2, 2));
+        tclComposite.setColumnData(tblclmnValueColumn, new ColumnWeightData(2, 2));
         tblclmnValueColumn.setText(Messages.getString("AbstractKeyDialog.tblclmnValueColumn.text")); //$NON-NLS-1$
         tableViewer.setContentProvider(getContentProvider());
 
@@ -126,17 +125,17 @@ public class CommonPropertyDialog extends TitleAreaDialog {
 
         Label lblTableLabel = new Label(area, SWT.NONE);
         lblTableLabel.setText(Messages.getString("AbstractKeyDialog.lblTableLabel.text")); //$NON-NLS-1$
-        GroupLayout gl_area = new GroupLayout(area);
-        gl_area.setHorizontalGroup(gl_area.createParallelGroup(GroupLayout.LEADING).add(
-                gl_area.createSequentialGroup()
+        GroupLayout glArea = new GroupLayout(area);
+        glArea.setHorizontalGroup(glArea.createParallelGroup(GroupLayout.LEADING).add(
+                glArea.createSequentialGroup()
                         .addContainerGap()
-                        .add(gl_area.createParallelGroup(GroupLayout.LEADING).add(lblTableLabel)
+                        .add(glArea.createParallelGroup(GroupLayout.LEADING).add(lblTableLabel)
                                 .add(composite, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)).addContainerGap()));
-        gl_area.setVerticalGroup(gl_area.createParallelGroup(GroupLayout.LEADING).add(
-                gl_area.createSequentialGroup().addContainerGap().add(lblTableLabel)
+        glArea.setVerticalGroup(glArea.createParallelGroup(GroupLayout.LEADING).add(
+                glArea.createSequentialGroup().addContainerGap().add(lblTableLabel)
                         .addPreferredGap(LayoutStyle.RELATED)
                         .add(composite, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE).addContainerGap()));
-        area.setLayout(gl_area);
+        area.setLayout(glArea);
 
         return area;
     }

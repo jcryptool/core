@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,7 +25,7 @@ import de.flexiprovider.nf.iq.iqgq.IQGQPublicKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class IQGQPublicKeyContentProvider extends CertificateContentProvider {
 
@@ -38,16 +38,16 @@ public class IQGQPublicKeyContentProvider extends CertificateContentProvider {
             IQGQPublicKey key = (IQGQPublicKey) inputElement;
             if (key == null)
                 return null;
-            
+
         } catch (ClassCastException e) {
             return null;
         }
         return paramElements;
     }
-    
+
     @Override
     protected List<TableEntry> getKeySpecElements(Key key) {
-        
+
         List<TableEntry> paramElements = new ArrayList<TableEntry>();
 
         try {
@@ -55,10 +55,10 @@ public class IQGQPublicKeyContentProvider extends CertificateContentProvider {
             IQGQPublicKeySpec keySpec = (IQGQPublicKeySpec) keyFactory.getKeySpec(key, IQGQPublicKeySpec.class);
             if (keySpec == null)
                 return null;
-            
+
             paramElements.add(new TableEntry(Messages.ContentProvider_exponent, "" + keySpec.getExponent())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_alpha, "" + keySpec.getAlpha())); //$NON-NLS-2$
-            
+
             paramElements.addAll(getParameters(keySpec));
         } catch (ClassCastException e) {
             return null;
@@ -67,7 +67,7 @@ public class IQGQPublicKeyContentProvider extends CertificateContentProvider {
         }
         return paramElements;
     }
-    
+
     private List<TableEntry> getParameters(IQGQPublicKeySpec keySpec) {
         IQGQParameterSpec params = (IQGQParameterSpec) keySpec.getParams();
         List<TableEntry> paramElements = new ArrayList<TableEntry>();

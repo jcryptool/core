@@ -96,17 +96,6 @@ public class TreeNode implements ITreeNode {
         synchronized (children) {
             child.setParent(this);
             String childName = child.getName();
-            // if(children.containsKey(child.getName())) {
-            // for(int i=1; childName.equals(child.getName()); i++) {
-            // while(getChildren().hasNext()) {
-            // ITreeNode childT = getChildren().next();
-            // if(! childT.getName().equals(String.format("%s (%s)", child.getName(), i))) {
-            // childName = childName+" ("+i+")";
-            // break;
-            // }
-            // }
-            // }
-            // }
             children.put(childName, child);
         }
     }
@@ -157,11 +146,7 @@ public class TreeNode implements ITreeNode {
      */
     public boolean hasChildren() {
         synchronized (children) {
-            if (!children.isEmpty()) {
-                return true;
-            } else {
-                return false;
-            }
+            return !children.isEmpty();
         }
     }
 

@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
-/*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *************************************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
 import java.util.ArrayList;
@@ -40,9 +39,10 @@ public class KeyStoreActionManager {
         loadKeyStoreActions();
     }
 
-    public synchronized static KeyStoreActionManager getInstance() {
-        if (instance == null)
+    public static synchronized KeyStoreActionManager getInstance() {
+        if (instance == null) {
             instance = new KeyStoreActionManager();
+        }
         return instance;
     }
 
@@ -58,27 +58,27 @@ public class KeyStoreActionManager {
                 if (configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE).equals(
                         IKeyStoreConstants.ID_NEW_SYMMETRIC_KEY)) {
                     addNewSymmetricKeyAction(new KeyStoreActionDescriptor(extensions[i].getUniqueIdentifier(),
-                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ID), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ID),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
                 } else if (configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE).equals(
                         IKeyStoreConstants.ID_NEW_KEYPAIR)) {
                     addNewKeyPairAction(new KeyStoreActionDescriptor(extensions[i].getUniqueIdentifier(),
-                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ID), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP), configElements[j]
-                                    .getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ID),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
                 } else if (configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE).equals(
                         IKeyStoreConstants.ID_IMPORT)) {
-                    addImportAction(new KeyStoreActionDescriptor(extensions[i].getUniqueIdentifier(), configElements[j]
-                            .getAttribute(IKeyStoreConstants.ATT_ACTION_ID), configElements[j]
-                            .getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE), configElements[j]
-                            .getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT), configElements[j]
-                            .getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP), configElements[j]
-                            .getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
+                    addImportAction(new KeyStoreActionDescriptor(extensions[i].getUniqueIdentifier(),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ID),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TYPE),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TEXT),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_TOOLTIP),
+                            configElements[j].getAttribute(IKeyStoreConstants.ATT_ACTION_ICON)));
                 }
             }
         }
@@ -107,5 +107,4 @@ public class KeyStoreActionManager {
     public Iterator<IKeyStoreActionDescriptor> getImportActions() {
         return importActions.iterator();
     }
-
 }

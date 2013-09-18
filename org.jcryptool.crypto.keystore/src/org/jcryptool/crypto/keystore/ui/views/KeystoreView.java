@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-* 
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views;
 
 import java.util.Iterator;
@@ -53,7 +52,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.SecretKeyNode;
 
 /**
  * The JCrypTool keystore view providing access to the contents of the platform keystore.
- *
+ * 
  * @author Tobias Kern, Dominik Schadow
  */
 public class KeystoreView extends ViewPart implements ISelectedNodeListener, IViewKeyInformation {
@@ -79,7 +78,7 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
 
     private KeystoreViewer viewer;
     private Label keyStoreNameLabel;
-    
+
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
      */

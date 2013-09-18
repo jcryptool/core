@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -24,7 +24,7 @@ import de.flexiprovider.pqc.rainbow.RainbowPrivateKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class RainbowPrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -51,8 +51,8 @@ public class RainbowPrivateKeyContentProvider extends AbstractKeyNodeContentProv
 
         try {
             RainbowKeyFactory keyFactory = new RainbowKeyFactory();
-            RainbowPrivateKeySpec keySpec = (RainbowPrivateKeySpec) keyFactory
-                    .getKeySpec(key, RainbowPrivateKeySpec.class);
+            RainbowPrivateKeySpec keySpec = (RainbowPrivateKeySpec) keyFactory.getKeySpec(key,
+                    RainbowPrivateKeySpec.class);
             if (keySpec == null)
                 return null;
             paramElements.add(new TableEntry(Messages.ContentProvider_oidstring, "" + keySpec.getOIDString())); //$NON-NLS-2$

@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,7 +25,7 @@ import de.flexiprovider.nf.iq.iqrdsa.IQRDSAPrivateKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class IQRDSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -38,28 +38,29 @@ public class IQRDSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvi
             IQRDSAPrivateKey key = (IQRDSAPrivateKey) inputElement;
             if (key == null)
                 return null;
-            
+
         } catch (ClassCastException e) {
             return null;
         }
         return paramElements;
     }
-    
+
     @Override
     protected List<TableEntry> getKeySpecElements(Key key) {
-        
+
         List<TableEntry> paramElements = new ArrayList<TableEntry>();
 
         try {
             IQRDSAKeyFactory keyFactory = new IQRDSAKeyFactory();
-            IQRDSAPrivateKeySpec keySpec = (IQRDSAPrivateKeySpec) keyFactory.getKeySpec(key, IQRDSAPrivateKeySpec.class);
+            IQRDSAPrivateKeySpec keySpec = (IQRDSAPrivateKeySpec) keyFactory
+                    .getKeySpec(key, IQRDSAPrivateKeySpec.class);
             if (keySpec == null)
                 return null;
-            
+
             paramElements.add(new TableEntry(Messages.ContentProvider_a, "" + keySpec.getA())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_alpha, "" + keySpec.getAlpha())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_gamma, "" + keySpec.getGamma())); //$NON-NLS-2$
-            
+
             paramElements.addAll(getParameters(keySpec));
         } catch (ClassCastException e) {
             return null;
@@ -68,7 +69,7 @@ public class IQRDSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvi
         }
         return paramElements;
     }
-    
+
     private List<TableEntry> getParameters(IQRDSAPrivateKeySpec keySpec) {
         IQRDSAParameterSpec params = (IQRDSAParameterSpec) keySpec.getParams();
         List<TableEntry> paramElements = new ArrayList<TableEntry>();

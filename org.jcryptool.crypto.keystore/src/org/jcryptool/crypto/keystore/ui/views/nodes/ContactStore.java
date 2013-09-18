@@ -17,31 +17,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ContactStore {
-	
-	@XmlElement(name = "contact")
-	private ArrayList<Contact> contacts;
 
-	public ArrayList<Contact> getContacts() {
-		return contacts;
-	}
+    @XmlElement(name = "contact")
+    private ArrayList<Contact> contacts;
 
-	public void setContacts(ArrayList<Contact> contacts) {
-		this.contacts = contacts;
-	}
-	
-	public static ContactStore read(String path) throws JAXBException, FileNotFoundException
-	{
-		JAXBContext context = JAXBContext.newInstance(ContactStore.class);
-		Unmarshaller um = context.createUnmarshaller();
-		ContactStore contactStore = (ContactStore) um.unmarshal(new FileReader(path));
-	    return contactStore;
-	}
-	
-	public void write(String path) throws JAXBException
-	{
-		JAXBContext context = JAXBContext.newInstance(ContactStore.class);
-	    Marshaller m = context.createMarshaller();
-	    m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-	    m.marshal(this, new File(path));
-	}
+    public ArrayList<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(ArrayList<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public static ContactStore read(String path) throws JAXBException, FileNotFoundException {
+        JAXBContext context = JAXBContext.newInstance(ContactStore.class);
+        Unmarshaller um = context.createUnmarshaller();
+        ContactStore contactStore = (ContactStore) um.unmarshal(new FileReader(path));
+        return contactStore;
+    }
+
+    public void write(String path) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(ContactStore.class);
+        Marshaller m = context.createMarshaller();
+        m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        m.marshal(this, new File(path));
+    }
 }

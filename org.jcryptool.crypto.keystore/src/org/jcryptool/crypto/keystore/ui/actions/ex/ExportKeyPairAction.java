@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions.ex;
 
@@ -28,7 +28,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 
 /**
  * @author t-kern
- *
+ * 
  */
 public class ExportKeyPairAction extends Action {
     private IViewKeyInformation info;
@@ -46,8 +46,8 @@ public class ExportKeyPairAction extends Action {
     public void run() {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] {Messages.getString("ExportKeyPairAction.2")}); //$NON-NLS-1$
-        dialog.setFilterNames(new String[] {Messages.getString("ExportKeyPairAction.4")}); //$NON-NLS-1$
+        dialog.setFilterExtensions(new String[] { Messages.getString("ExportKeyPairAction.2") }); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] { Messages.getString("ExportKeyPairAction.4") }); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
         String filename = dialog.open();
@@ -69,17 +69,15 @@ public class ExportKeyPairAction extends Action {
     }
 
     private char[] promptPassword() {
-        InputDialog dialog =
-                new InputDialog(
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                        Messages.getString("ExportKeyPairAction.0"), Messages.getString("ExportKeyPairAction.1"), "", null) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                Messages.getString("ExportKeyPairAction.0"), Messages.getString("ExportKeyPairAction.1"), "", null) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-                    protected Control createDialogArea(Composite parent) {
-                        Control control = super.createDialogArea(parent);
-                        getText().setEchoChar('*');
-                        return control;
-                    }
-                };
+            protected Control createDialogArea(Composite parent) {
+                Control control = super.createDialogArea(parent);
+                getText().setEchoChar('*');
+                return control;
+            }
+        };
 
         if (dialog.open() == Window.OK) {
             return dialog.getValue().toCharArray();

@@ -76,8 +76,8 @@ public class ContactDescriptorNode extends TreeNode implements IContactDescripto
         secretKeyContainer.remove(alias);
     }
 
-	@Override
-	public Contact getContact() {
-		return contact;
-	}
+    @Override
+    public Contact getContact() {
+        return contact;
+    }
 }

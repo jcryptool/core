@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
-/*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *************************************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
 import java.io.BufferedInputStream;
@@ -46,9 +45,10 @@ public class ImportExportManager {
     private ImportExportManager() {
     }
 
-    public synchronized static ImportExportManager getInstance() {
-        if (instance == null)
+    public static synchronized ImportExportManager getInstance() {
+        if (instance == null) {
             instance = new ImportExportManager();
+        }
         return instance;
     }
 
@@ -58,8 +58,9 @@ public class ImportExportManager {
             for (int i = 0; i < x509.length; i++) {
                 if (chain[i] instanceof X509Certificate) {
                     x509[i] = (X509Certificate) chain[i];
-                } else
+                } else {
                     return null;
+                }
             }
             return x509;
         } else {

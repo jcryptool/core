@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -24,7 +24,7 @@ import de.flexiprovider.core.elgamal.semanticallysecure.SSVElGamalPublicKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class SSVElGamalPublicKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -32,7 +32,7 @@ public class SSVElGamalPublicKeyContentProvider extends AbstractKeyNodeContentPr
     protected List<TableEntry> getAlgorithmElements(Object inputElement) {
 
         List<TableEntry> paramElements = new ArrayList<TableEntry>();
-        
+
         try {
             SSVElGamalPublicKey key = (SSVElGamalPublicKey) inputElement;
             if (key == null)
@@ -47,7 +47,7 @@ public class SSVElGamalPublicKeyContentProvider extends AbstractKeyNodeContentPr
         }
         return paramElements;
     }
-    
+
     @Override
     protected List<TableEntry> getKeySpecElements(Key key) {
 
@@ -55,8 +55,8 @@ public class SSVElGamalPublicKeyContentProvider extends AbstractKeyNodeContentPr
 
         try {
             SSVElGamalKeyFactory keyFactory = new SSVElGamalKeyFactory();
-            SSVElGamalPublicKeySpec keySpec = (SSVElGamalPublicKeySpec) keyFactory
-                    .getKeySpec(key, SSVElGamalPublicKeySpec.class);
+            SSVElGamalPublicKeySpec keySpec = (SSVElGamalPublicKeySpec) keyFactory.getKeySpec(key,
+                    SSVElGamalPublicKeySpec.class);
             if (keySpec == null)
                 return null;
 

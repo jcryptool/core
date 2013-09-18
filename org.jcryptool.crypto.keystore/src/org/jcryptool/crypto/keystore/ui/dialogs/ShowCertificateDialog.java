@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs;
 
@@ -17,10 +17,10 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.CertificateNode;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class ShowCertificateDialog extends CommonPropertyDialog {
-    
+
     private CertificateNode certificateNode;
 
     public ShowCertificateDialog(Shell parentShell, CertificateNode certificateNode) {
@@ -38,7 +38,7 @@ public class ShowCertificateDialog extends CommonPropertyDialog {
         setTitle(Messages.getString("certificate.dialog.title") + "\n" + certificateNode.getAlias()); //$NON-NLS-1$
         setTitleImage(KeyStorePlugin.getImageDescriptor("icons/48x48/kgpg_identity.png").createImage());
         Composite container = (Composite) super.createDialogArea(parent);
-        
+
         return container;
     }
 

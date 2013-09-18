@@ -39,45 +39,45 @@ import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 
 public class ContactManager {
-    /** Singleton instance */
+    /** Singleton instance. */
     private static ContactManager instance;
 
     private static ContactStore contactStore;
 
-    /** All contacts and their respective meta information */
+    /** All contacts and their respective meta information. */
     private Map<String, IContactDescriptor> contactsDesc = Collections
             .synchronizedMap(new HashMap<String, IContactDescriptor>());
 
     private static List<IKeyStoreListener> listeners = new ArrayList<IKeyStoreListener>();
 
     private ITreeNode invisibleRoot;
-    private static String USER_CONTACTS_XML;
+    private static String userContactsXml;
 
     private ContactManager() {
-  	
-    	try {
-	    	USER_CONTACTS_XML = Platform.getInstanceLocation().getURL().getPath() + "contacts.xml";
-	    	IFileStore userContacts = EFS.getLocalFileSystem().fromLocalFile(new File(USER_CONTACTS_XML));
-	    	
-	    	if(!userContacts.fetchInfo().exists())
-	    	{
-	    		URL url = FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID), new Path("contactstore/contacts.xml"), null);
-	        	try {
-	    			url = FileLocator.toFileURL(url);
-	    		} catch (IOException e) {
-	    			LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_0, e, true);
-	    		}
-	        	
-	        	IFileStore defaultContacts = EFS.getLocalFileSystem().fromLocalFile(new File(url.getPath()));
-	        	
-	        	defaultContacts.copy(userContacts, 0, null);
-	    	}
-    	} catch (Exception e) {
-    		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_5, e, true);
-		}
+
+        try {
+            userContactsXml = Platform.getInstanceLocation().getURL().getPath() + "contacts.xml";
+            IFileStore userContacts = EFS.getLocalFileSystem().fromLocalFile(new File(userContactsXml));
+
+            if (!userContacts.fetchInfo().exists()) {
+                URL url = FileLocator.find(Platform.getBundle(KeyStorePlugin.PLUGIN_ID), new Path(
+                        "contactstore/contacts.xml"), null);
+                try {
+                    url = FileLocator.toFileURL(url);
+                } catch (IOException e) {
+                    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_0, e, true);
+                }
+
+                IFileStore defaultContacts = EFS.getLocalFileSystem().fromLocalFile(new File(url.getPath()));
+
+                defaultContacts.copy(userContacts, 0, null);
+            }
+        } catch (Exception e) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.ContactManager_5, e, true);
+        }
     }
 
-    public synchronized static ContactManager getInstance() {
+    public static synchronized ContactManager getInstance() {
         if (instance == null) {
             instance = new ContactManager();
             instance.initTreeModel();
@@ -127,15 +127,17 @@ public class ContactManager {
         Map<String, List<KeyStoreAlias>> aliasesHashed = new HashMap<String, List<KeyStoreAlias>>();
         while (aliases.hasMoreElements()) {
             KeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
-            if (!aliasesHashed.containsKey(alias.getContactName()))
+            if (!aliasesHashed.containsKey(alias.getContactName())) {
                 aliasesHashed.put(alias.getContactName(), new ArrayList<KeyStoreAlias>());
+            }
             aliasesHashed.get(alias.getContactName()).add(alias);
         }
 
         for (Entry<String, IContactDescriptor> entry : contactsDesc.entrySet()) {
             if (aliasesHashed.containsKey(entry.getKey())) {
-                for (KeyStoreAlias alias : aliasesHashed.get(entry.getKey()))
+                for (KeyStoreAlias alias : aliasesHashed.get(entry.getKey())) {
                     addEntryToContact(entry.getValue(), alias);
+                }
             }
         }
 
@@ -146,18 +148,20 @@ public class ContactManager {
             JAXBException {
         Map<String, IContactDescriptor> contacts = Collections
                 .synchronizedMap(new HashMap<String, IContactDescriptor>());
-        for (Contact contact : getContactStore().getContacts())
+        for (Contact contact : getContactStore().getContacts()) {
             contacts.put(contact.getName(), new ContactDescriptorNode(contact));
+        }
         return contacts;
     }
 
     private void storeContacts(ContactStore cStore) throws JAXBException {
-        cStore.write(USER_CONTACTS_XML);
+        cStore.write(userContactsXml);
     }
 
     private ContactStore getContactStore() throws FileNotFoundException, JAXBException {
-        if (contactStore == null)
-            contactStore = ContactStore.read(USER_CONTACTS_XML);
+        if (contactStore == null) {
+            contactStore = ContactStore.read(userContactsXml);
+        }
         return contactStore;
     }
 

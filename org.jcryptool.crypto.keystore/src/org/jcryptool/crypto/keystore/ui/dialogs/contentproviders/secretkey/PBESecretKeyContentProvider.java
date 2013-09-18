@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,7 +26,7 @@ import de.flexiprovider.ec.keys.ECSecretKey;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class PBESecretKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -47,7 +47,7 @@ public class PBESecretKeyContentProvider extends AbstractKeyNodeContentProvider 
         }
         return paramElements;
     }
-    
+
     @Override
     protected List<TableEntry> getKeySpecElements(Key key) {
 
@@ -58,11 +58,13 @@ public class PBESecretKeyContentProvider extends AbstractKeyNodeContentProvider 
             PBEKeySpec keySpec = (PBEKeySpec) keyFactory.getKeySpec((SecretKey) key, PBEKeySpec.class);
             if (keySpec == null)
                 return null;
-            paramElements.add(new TableEntry(Messages.ContentProvider_iterationcount, "" + keySpec.getIterationCount())); //$NON-NLS-2$
+            paramElements
+                    .add(new TableEntry(Messages.ContentProvider_iterationcount, "" + keySpec.getIterationCount())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_keylength, "" + keySpec.getKeyLength())); //$NON-NLS-2$
-            paramElements.add(new TableEntry(Messages.ContentProvider_password, "" + Arrays.toString(keySpec.getPassword()))); //$NON-NLS-2$
+            paramElements.add(new TableEntry(Messages.ContentProvider_password,
+                    "" + Arrays.toString(keySpec.getPassword()))); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_salt, "" + Arrays.toString(keySpec.getSalt()))); //$NON-NLS-2$
-            
+
         } catch (ClassCastException e) {
             return null;
         } catch (InvalidKeySpecException e) {

@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -21,7 +21,7 @@ import de.flexiprovider.core.mprsa.MpRSAPrivateKey;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class MpRSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -51,7 +51,8 @@ public class MpRSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvid
             paramElements.add(new TableEntry(Messages.ContentProvider_primeq, "" + key.getPrimeQ())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_privateexponent, "" + key.getPrivateExponent())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_publicexponent, "" + key.getPublicExponent())); //$NON-NLS-2$
-            paramElements.add(new TableEntry(Messages.ContentProvider_otherprimeinfos, "" + Arrays.toString(key.getOtherPrimeInfo()))); //$NON-NLS-2$
+            paramElements.add(new TableEntry(Messages.ContentProvider_otherprimeinfos,
+                    "" + Arrays.toString(key.getOtherPrimeInfo()))); //$NON-NLS-2$
 
         } catch (ClassCastException e) {
             return null;

@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs.contentproviders;
 
@@ -95,7 +95,7 @@ import de.flexiprovider.pqc.rainbow.RainbowPublicKey;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class ContentProviderFactory {
 
@@ -103,9 +103,9 @@ public class ContentProviderFactory {
 
         IKeyStoreAlias alias = null;
 
-        if (treeNode instanceof CertificateNode)
+        if (treeNode instanceof CertificateNode) {
             alias = ((CertificateNode) treeNode).getAlias();
-        else if (treeNode instanceof AbstractKeyNode) {
+        } else if (treeNode instanceof AbstractKeyNode) {
             alias = ((AbstractKeyNode) treeNode).getAlias();
         }
 
@@ -117,97 +117,98 @@ public class ContentProviderFactory {
         String className = alias.getClassName();
 
         switch (keyType) {
-            case SECRETKEY:
-                if (className.equals(ECSecretKey.class.getName()))
-                    return new ECSecretKeyContentProvider();
-                else if (className.equals(PBEKey.class.getName()))
-                    return new PBESecretKeyContentProvider();
-                else
-                    return new AbstractKeyNodeContentProvider();
-            case PUBLICKEY:
+        case SECRETKEY:
+            if (className.equals(ECSecretKey.class.getName())) {
+                return new ECSecretKeyContentProvider();
+            } else if (className.equals(PBEKey.class.getName())) {
+                return new PBESecretKeyContentProvider();
+            } else {
+                return new AbstractKeyNodeContentProvider();
+            }
+        case PUBLICKEY:
+            return new CertificateContentProvider();
+        case KEYPAIR_PRIVATE_KEY:
+            if (className.equals(DSAPrivateKey.class.getName())) {
+                return new DSAPrivateKeyContentProvider();
+            } else if (className.equals(ElGamalPrivateKey.class.getName())) {
+                return new ElGamalPrivateKeyContentProvider();
+            } else if (className.equals(SSVElGamalPrivateKey.class.getName())) {
+                return new SSVElGamalPrivateKeyContentProvider();
+            } else if (className.equals(MeRSAPrivateKey.class.getName())) {
+                return new MeRSAPrivateKeyContentProvider();
+            } else if (className.equals(MpRSAPrivateKey.class.getName())) {
+                return new MpRSAPrivateKeyContentProvider();
+            } else if (className.equals(CMSSPrivateKey.class.getName())) {
+                return new CMSSPrivateKeyContentProvider();
+            } else if (className.equals(ECPrivateKey.class.getName())) {
+                return new ECPrivateKeyContentProvider();
+            } else if (className.equals(GMSSPrivateKey.class.getName())) {
+                return new GMSSPrivateKeyContentProvider();
+            } else if (className.equals(IQDSAPrivateKey.class.getName())) {
+                return new IQDSAPrivateKeyContentProvider();
+            } else if (className.equals(IQGQPrivateKey.class.getName())) {
+                return new IQGQPrivateKeyContentProvider();
+            } else if (className.equals(IQRDSAPrivateKey.class.getName())) {
+                return new IQRDSAPrivateKeyContentProvider();
+            } else if (className.equals(LMOTSPrivateKey.class.getName())) {
+                return new LMOTSPrivateKeyContentProvider();
+            } else if (className.equals(McElieceCCA2PrivateKey.class.getName())) {
+                return new McElieceCCA2PrivateKeyContentProvider();
+            } else if (className.equals(MerkleOTSPrivateKey.class.getName())) {
+                return new MerkleOTSPrivateKeyContentProvider();
+            } else if (className.equals(NiederreiterPrivateKey.class.getName())) {
+                return new NiederreiterPrivateKeyContentProvider();
+            } else if (className.equals(PFlashPrivateKey.class.getName())) {
+                return new PFlashPrivateKeyContentProvider();
+            } else if (className.equals(RainbowPrivateKey.class.getName())) {
+                return new RainbowPrivateKeyContentProvider();
+            } else {
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
+                        Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
+                return new AbstractKeyNodeContentProvider();
+            }
+        case KEYPAIR_PUBLIC_KEY:
+            if (className.equals(DSAPublicKey.class.getName())) {
+                return new DSAPublicKeyContentProvider();
+            } else if (className.equals(ElGamalPublicKey.class.getName())) {
+                return new ElGamalPublicKeyContentProvider();
+            } else if (className.equals(SSVElGamalPublicKey.class.getName())) {
+                return new SSVElGamalPublicKeyContentProvider();
+            } else if (className.equals(RSAPublicKey.class.getName())) {
+                return new RSAPublicKeyContentProvider();
+            } else if (className.equals(CMSSPublicKey.class.getName())) {
+                return new CMSSPublicKeyContentProvider();
+            } else if (className.equals(ECPublicKey.class.getName())) {
+                return new ECPublicKeyContentProvider();
+            } else if (className.equals(GMSSPublicKey.class.getName())) {
+                return new GMSSPublicKeyContentProvider();
+            } else if (className.equals(IQDSAPublicKey.class.getName())) {
+                return new IQDSAPublicKeyContentProvider();
+            } else if (className.equals(IQGQPublicKey.class.getName())) {
+                return new IQGQPublicKeyContentProvider();
+            } else if (className.equals(IQRDSAPublicKey.class.getName())) {
+                return new IQRDSAPublicKeyContentProvider();
+            } else if (className.equals(LMOTSPublicKey.class.getName())) {
+                return new LMOTSPublicKeyContentProvider();
+            } else if (className.equals(McElieceCCA2PublicKey.class.getName())) {
+                return new McElieceCCA2PublicKeyContentProvider();
+            } else if (className.equals(McEliecePublicKey.class.getName())) {
+                return new McEliecePublicKeyContentProvider();
+            } else if (className.equals(MerkleOTSPublicKey.class.getName())) {
+                return new MerkleOTSPublicKeyContentProvider();
+            } else if (className.equals(NiederreiterPublicKey.class.getName())) {
+                return new NiederreiterPublicKeyContentProvider();
+            } else if (className.equals(PFlashPublicKey.class.getName())) {
+                return new PFlashPublicKeyContentProvider();
+            } else if (className.equals(RainbowPublicKey.class.getName())) {
+                return new RainbowPublicKeyContentProvider();
+            } else {
+                JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
+                        Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
                 return new CertificateContentProvider();
-            case KEYPAIR_PRIVATE_KEY:
-                if (className.equals(DSAPrivateKey.class.getName()))
-                    return new DSAPrivateKeyContentProvider();
-                else if (className.equals(ElGamalPrivateKey.class.getName()))
-                    return new ElGamalPrivateKeyContentProvider();
-                else if (className.equals(SSVElGamalPrivateKey.class.getName()))
-                    return new SSVElGamalPrivateKeyContentProvider();
-                else if (className.equals(MeRSAPrivateKey.class.getName()))
-                    return new MeRSAPrivateKeyContentProvider();
-                else if (className.equals(MpRSAPrivateKey.class.getName()))
-                    return new MpRSAPrivateKeyContentProvider();
-                else if (className.equals(CMSSPrivateKey.class.getName()))
-                    return new CMSSPrivateKeyContentProvider();
-                else if (className.equals(ECPrivateKey.class.getName()))
-                    return new ECPrivateKeyContentProvider();
-                else if (className.equals(GMSSPrivateKey.class.getName()))
-                    return new GMSSPrivateKeyContentProvider();
-                else if (className.equals(IQDSAPrivateKey.class.getName()))
-                    return new IQDSAPrivateKeyContentProvider();
-                else if (className.equals(IQGQPrivateKey.class.getName()))
-                    return new IQGQPrivateKeyContentProvider();
-                else if (className.equals(IQRDSAPrivateKey.class.getName()))
-                    return new IQRDSAPrivateKeyContentProvider();
-                else if (className.equals(LMOTSPrivateKey.class.getName()))
-                    return new LMOTSPrivateKeyContentProvider();
-                else if (className.equals(McElieceCCA2PrivateKey.class.getName()))
-                    return new McElieceCCA2PrivateKeyContentProvider();
-                else if (className.equals(MerkleOTSPrivateKey.class.getName()))
-                    return new MerkleOTSPrivateKeyContentProvider();
-                else if (className.equals(NiederreiterPrivateKey.class.getName()))
-                    return new NiederreiterPrivateKeyContentProvider();
-                else if (className.equals(PFlashPrivateKey.class.getName()))
-                    return new PFlashPrivateKeyContentProvider();
-                else if (className.equals(RainbowPrivateKey.class.getName()))
-                    return new RainbowPrivateKeyContentProvider();
-                else {
-                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
-                            Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
-                    return new AbstractKeyNodeContentProvider();
-                }
-            case KEYPAIR_PUBLIC_KEY:
-                if (className.equals(DSAPublicKey.class.getName()))
-                    return new DSAPublicKeyContentProvider();
-                else if (className.equals(ElGamalPublicKey.class.getName()))
-                    return new ElGamalPublicKeyContentProvider();
-                else if (className.equals(SSVElGamalPublicKey.class.getName()))
-                    return new SSVElGamalPublicKeyContentProvider();
-                else if (className.equals(RSAPublicKey.class.getName()))
-                    return new RSAPublicKeyContentProvider();
-                else if (className.equals(CMSSPublicKey.class.getName()))
-                    return new CMSSPublicKeyContentProvider();
-                else if (className.equals(ECPublicKey.class.getName()))
-                    return new ECPublicKeyContentProvider();
-                else if (className.equals(GMSSPublicKey.class.getName()))
-                    return new GMSSPublicKeyContentProvider();
-                else if (className.equals(IQDSAPublicKey.class.getName()))
-                    return new IQDSAPublicKeyContentProvider();
-                else if (className.equals(IQGQPublicKey.class.getName()))
-                    return new IQGQPublicKeyContentProvider();
-                else if (className.equals(IQRDSAPublicKey.class.getName()))
-                    return new IQRDSAPublicKeyContentProvider();
-                else if (className.equals(LMOTSPublicKey.class.getName()))
-                    return new LMOTSPublicKeyContentProvider();
-                else if (className.equals(McElieceCCA2PublicKey.class.getName()))
-                    return new McElieceCCA2PublicKeyContentProvider();
-                else if (className.equals(McEliecePublicKey.class.getName()))
-                    return new McEliecePublicKeyContentProvider();
-                else if (className.equals(MerkleOTSPublicKey.class.getName()))
-                    return new MerkleOTSPublicKeyContentProvider();
-                else if (className.equals(NiederreiterPublicKey.class.getName()))
-                    return new NiederreiterPublicKeyContentProvider();
-                else if (className.equals(PFlashPublicKey.class.getName()))
-                    return new PFlashPublicKeyContentProvider();
-                else if (className.equals(RainbowPublicKey.class.getName()))
-                    return new RainbowPublicKeyContentProvider();
-                else {
-                    JCTMessageDialog.showInfoDialog(new Status(IStatus.INFO, KeyStorePlugin.PLUGIN_ID,
-                            Messages.ContentProviderFactory_0 + "\n" + Messages.ContentProviderFactory_2));
-                    return new CertificateContentProvider();
-                }
-            default:
-                break;
+            }
+        default:
+            break;
         }
         return new CommonContentProvider();
     }

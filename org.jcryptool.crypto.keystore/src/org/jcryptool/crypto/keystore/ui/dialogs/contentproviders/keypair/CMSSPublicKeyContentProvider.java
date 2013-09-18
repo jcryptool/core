@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -25,7 +25,7 @@ import de.flexiprovider.pqc.hbc.cmss.CMSSPublicKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class CMSSPublicKeyContentProvider extends CertificateContentProvider {
 
@@ -53,7 +53,8 @@ public class CMSSPublicKeyContentProvider extends CertificateContentProvider {
             CMSSPublicKeySpec keySpec = (CMSSPublicKeySpec) keyFactory.getKeySpec(key, CMSSPublicKeySpec.class);
             if (keySpec == null)
                 return null;
-            paramElements.add(new TableEntry(Messages.ContentProvider_pubkeybytes, "" + Arrays.toString(keySpec.getPubKeyBytes()))); //$NON-NLS-2$
+            paramElements.add(new TableEntry(Messages.ContentProvider_pubkeybytes,
+                    "" + Arrays.toString(keySpec.getPubKeyBytes()))); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_oidstring, "" + keySpec.getOIDString())); //$NON-NLS-2$
             paramElements.add(new TableEntry(Messages.ContentProvider_masks, "" + keySpec.getMasks())); //$NON-NLS-2$
 

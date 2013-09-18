@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
+/**************************************************************************************************
  * Copyright (c) 2013 JCrypTool Team and Contributors
  * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.backend;
 
@@ -117,7 +117,7 @@ public class KeyStoreManager {
      * 
      * @return The JCrypTool keystore instance
      */
-    public synchronized static KeyStoreManager getInstance() {
+    public static synchronized KeyStoreManager getInstance() {
         if (instance == null) {
             instance = new KeyStoreManager();
         }
@@ -227,13 +227,15 @@ public class KeyStoreManager {
             return (Key) getPrivateKey(alias, password);
         case KEYPAIR_PUBLIC_KEY:
             Certificate cert = getCertificate(alias);
-            if (cert == null)
+            if (cert == null) {
                 return null;
+            }
             return (Key) cert.getPublicKey();
         case PUBLICKEY:
             cert = getCertificate(alias);
-            if (cert == null)
+            if (cert == null) {
                 return null;
+            }
             return (Key) cert.getPublicKey();
         default:
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID,

@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.actions.contacts;
 
@@ -22,7 +22,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class NewContactAction extends Action {
     private ISelectedNodeListener descriptor;
@@ -37,14 +37,15 @@ public class NewContactAction extends Action {
     public void run() {
         LogUtil.logInfo("creating " + descriptor.getSelectedNodeInfo()); //$NON-NLS-1$
         InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-        		Messages.getString("Label.NewContact"), Messages.getString("Label.NewContactName"), "Alice", null);
-        if(dialog.open() != Window.CANCEL)
-        {
-        	if(ContactManager.getInstance().contactExists(dialog.getValue()))
-        		MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.getString("Label.NewContactFailed"), Messages.getString("Label.ContactExists"));
-        	else
-		    	// create new contact
-		        ContactManager.getInstance().newContact(dialog.getValue());
+                Messages.getString("Label.NewContact"), Messages.getString("Label.NewContactName"), "Alice", null);
+        if (dialog.open() != Window.CANCEL) {
+            if (ContactManager.getInstance().contactExists(dialog.getValue())) {
+                MessageDialog.openInformation(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                        Messages.getString("Label.NewContactFailed"), Messages.getString("Label.ContactExists"));
+            } else {
+                // create new contact
+                ContactManager.getInstance().newContact(dialog.getValue());
+            }
         }
     }
 

@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -24,7 +24,7 @@ import de.flexiprovider.pqc.ecc.mceliece.McElieceCCA2PrivateKeySpec;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class McElieceCCA2PrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -51,7 +51,8 @@ public class McElieceCCA2PrivateKeyContentProvider extends AbstractKeyNodeConten
 
         try {
             McElieceCCA2KeyFactory keyFactory = new McElieceCCA2KeyFactory();
-            McElieceCCA2PrivateKeySpec keySpec = (McElieceCCA2PrivateKeySpec) keyFactory.getKeySpec(key, McElieceCCA2PrivateKeySpec.class);
+            McElieceCCA2PrivateKeySpec keySpec = (McElieceCCA2PrivateKeySpec) keyFactory.getKeySpec(key,
+                    McElieceCCA2PrivateKeySpec.class);
             if (keySpec == null)
                 return null;
 

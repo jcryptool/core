@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui;
 
@@ -28,47 +28,47 @@ import org.jcryptool.crypto.keystore.ui.views.providers.KeyStoreViewLabelProvide
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class KeystoreViewer extends TreeViewer {
 
-    private static final int dragOps = DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_LINK | DND.DROP_MOVE;
-    private final Transfer[] transfers = new Transfer[] {TextTransfer.getInstance()};
+    private static final int DRAG_OPS = DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_LINK | DND.DROP_MOVE;
+    private final Transfer[] transfers = new Transfer[] { TextTransfer.getInstance() };
     private KeyDragListener dragListener;
-    
+
     private Action doubleClickAction;
-    
+
     /**
      * Create the composite.
+     * 
      * @param parent
      * @wbp.parser.entryPoint
      */
     public KeystoreViewer(Composite parent) {
         super(parent, SWT.SINGLE | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-        
+
         GridData gridData = new GridData();
         gridData.horizontalAlignment = GridData.FILL;
         gridData.verticalAlignment = GridData.FILL;
         gridData.grabExcessHorizontalSpace = true;
         gridData.grabExcessVerticalSpace = true;
         this.getTree().setLayoutData(gridData);
-        
+
         dragListener = new KeyDragListener(this);
-        this.addDragSupport(dragOps, transfers, dragListener);
-        
+        this.addDragSupport(DRAG_OPS, transfers, dragListener);
+
         setLabelProvider(new KeyStoreViewLabelProvider());
         setContentProvider(new KeyStoreViewContentProvider(this));
-        
+
         hookActions();
-        
+
         this.setInput("input does not matter but triggers initialization");
     }
-    
-    public void reload()
-    {
+
+    public void reload() {
         setContentProvider(new KeyStoreViewContentProvider(this));
     }
-    
+
     /**
      * Adds a listener, which will fold or unfold the nodes.
      */
@@ -100,6 +100,6 @@ public class KeystoreViewer extends TreeViewer {
             }
 
         });
-        
+
     }
 }

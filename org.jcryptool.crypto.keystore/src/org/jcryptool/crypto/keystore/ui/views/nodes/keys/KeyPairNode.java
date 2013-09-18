@@ -69,8 +69,10 @@ public class KeyPairNode extends TreeNode {
             return privateAlias.getOperation();
         } else if (publicAlias != null) {
             return publicAlias.getOperation();
-        } else
+        }
+        else {
             return "<undefined>"; //$NON-NLS-1$
+        }
     }
 
     private static int getKeyLength(IKeyStoreAlias privateAlias, IKeyStoreAlias publicAlias) {
@@ -78,8 +80,9 @@ public class KeyPairNode extends TreeNode {
             return privateAlias.getKeyLength();
         } else if (publicAlias != null) {
             return publicAlias.getKeyLength();
-        } else
+        } else {
             return -1;
+        }
     }
 
     public void addPrivateKey(IKeyStoreAlias privateAlias) {
@@ -105,15 +108,17 @@ public class KeyPairNode extends TreeNode {
     public IKeyStoreAlias getPrivateKeyAlias() {
         if (privateKeyNode != null) {
             return privateKeyNode.getAlias();
-        } else
+        } else {
             return null;
+        }
     }
 
     public IKeyStoreAlias getPublicKeyAlias() {
         if (publicKeyNode != null) {
             return publicKeyNode.getAlias();
-        } else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -122,5 +127,4 @@ public class KeyPairNode extends TreeNode {
     public ImageDescriptor getImageDescriptor() {
         return KeyStorePlugin.getImageDescriptor("icons/16x16/kgpg_key2.png"); //$NON-NLS-1$
     }
-
 }

@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs;
 
@@ -32,7 +32,7 @@ import de.flexiprovider.api.keys.Key;
  * 
  */
 public class SelectKeyDialog extends TitleAreaDialog implements IDoubleClickListener {
-    
+
     private String algorithm = null; // null = no filtering by algorithm name
     private Style style;
     private KeystoreWidget keystoreWidget;
@@ -52,8 +52,8 @@ public class SelectKeyDialog extends TitleAreaDialog implements IDoubleClickList
         this.style = style;
     }
 
-    /**<s
-     * Create contents of the dialog.
+    /**
+     * Creates contents of the dialog.
      * 
      * @param parent
      */
@@ -65,10 +65,10 @@ public class SelectKeyDialog extends TitleAreaDialog implements IDoubleClickList
         Composite container = new Composite(area, SWT.NONE);
         container.setLayout(new FillLayout(SWT.HORIZONTAL));
         container.setLayoutData(new GridData(GridData.FILL_BOTH));
-        
+
         keystoreWidget = new KeystoreWidget(container, this.style, this.algorithm);
         keystoreWidget.getViewer().addDoubleClickListener(this);
-        
+
         return area;
     }
 
@@ -91,17 +91,16 @@ public class SelectKeyDialog extends TitleAreaDialog implements IDoubleClickList
         return new Point(482, 345);
     }
 
-    public Key getSelectedKey()
-    {
+    public Key getSelectedKey() {
         return keystoreWidget.getSelectedKey();
     }
-    
-    public IKeyStoreAlias getSelectedAlias()
-    {
+
+    public IKeyStoreAlias getSelectedAlias() {
         return keystoreWidget.getSelectedAlias();
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
      */
     public void doubleClick(DoubleClickEvent event) {

@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -26,7 +26,7 @@ import de.flexiprovider.core.dsa.interfaces.DSAPrivateKey;
 
 /**
  * @author Anatoli Barski
- *
+ * 
  */
 public class DSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvider {
 
@@ -47,10 +47,10 @@ public class DSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvider
         }
         return paramElements;
     }
-    
+
     @Override
     protected List<TableEntry> getKeySpecElements(Key key) {
-        
+
         List<TableEntry> paramElements = new ArrayList<TableEntry>();
 
         try {
@@ -65,7 +65,7 @@ public class DSAPrivateKeyContentProvider extends AbstractKeyNodeContentProvider
         }
         return paramElements;
     }
-    
+
     private List<TableEntry> getParameters(DSAKey key) {
         DSAParams params = (DSAParams) key.getParams();
         List<TableEntry> paramElements = new ArrayList<TableEntry>();

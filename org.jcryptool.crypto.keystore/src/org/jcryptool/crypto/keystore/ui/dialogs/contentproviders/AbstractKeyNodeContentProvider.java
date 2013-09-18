@@ -1,11 +1,11 @@
 // -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+/**************************************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ *************************************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.dialogs.contentproviders;
 
@@ -33,9 +33,9 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 
 /**
  * an abstract class for classes which make use of AbstractKeyNode (e.g. CertificateNode, SecretKeyNode)
- *
+ * 
  * @author Anatoli Barski
- *
+ * 
  */
 public class AbstractKeyNodeContentProvider extends CommonContentProvider {
 
@@ -146,8 +146,8 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
     }
 
     /**
-     * tries to retrieve the key from keystore using the default password if the operation succeeds, the default
-     * password will be updated, if it fails, the user have to enter a password into a prompt window
+     * Tries to retrieve the key from keystore using the default password. If the operation succeeds, the default
+     * password will be updated, if it fails, the user have to enter a password into a prompt window.
      */
     protected Key getKey(Object inputElement) {
         AbstractKeyNode abstractKeyNode = (AbstractKeyNode) inputElement;
@@ -160,7 +160,7 @@ public class AbstractKeyNodeContentProvider extends CommonContentProvider {
         } catch (java.security.NoSuchAlgorithmException ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, "The requested algorithm is not supported.", ex, true);
         }
-        
+
         return null;
     }
 }

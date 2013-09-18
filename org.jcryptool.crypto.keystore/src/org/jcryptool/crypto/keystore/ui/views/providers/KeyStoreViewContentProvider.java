@@ -1,12 +1,11 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
+ * Copyright (c) 2010 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui.views.providers;
 
@@ -15,7 +14,6 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
@@ -24,48 +22,37 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.TreeNode;
 
 /**
  * View content provider for the keystore view.
- *
+ * 
  * @author tkern
- *
+ * 
  */
-public class KeyStoreViewContentProvider implements IStructuredContentProvider,
-        ITreeContentProvider, IKeyStoreListener {
-
+public class KeyStoreViewContentProvider implements IStructuredContentProvider, ITreeContentProvider, IKeyStoreListener {
     private TreeViewer viewer;
 
-    /** Tree root element that serves as an 'invisible' anchor */
+    /** Tree root element that serves as an 'invisible' anchor. */
     private ITreeNode invisibleRoot;
 
-    /**
-     * Creates a new instance of KeyStoreViewContentProvider.
-     *
-     * @param viewPart The view part this provider is associated with
-     */
-    public KeyStoreViewContentProvider(ViewPart viewPart, TreeViewer viewer) {
-        this.viewer = viewer;
-        ContactManager.getInstance().addKeyStoreListener(this);
-    }
-    
     public KeyStoreViewContentProvider(TreeViewer viewer) {
         this.viewer = viewer;
         ContactManager.getInstance().addKeyStoreListener(this);
     }
 
-    /* (non-Javadoc)
-     * @see org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener#fireKeyStoreModified(org.jcryptool.crypto.keystore.ui.views.nodes.ITreeNode)
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.jcryptool.crypto.keystore.ui.views.interfaces.IKeyStoreListener#fireKeyStoreModified(org.jcryptool.crypto
+     * .keystore.ui.views.nodes.ITreeNode)
      */
     public void fireKeyStoreModified(ITreeNode node) {
         if (!viewer.isBusy()) {
-            PlatformUI.getWorkbench().getDisplay().syncExec(
-                new Runnable() {
-                    public void run(){
-                        viewer.refresh();
-                    }
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    viewer.refresh();
                 }
-            );
+            });
         }
     }
-    
+
     private void initialize() {
         LogUtil.logInfo("initializing"); //$NON-NLS-1$
         invisibleRoot = ContactManager.getInstance().getTreeModel();
@@ -82,8 +69,11 @@ public class KeyStoreViewContentProvider implements IStructuredContentProvider,
         if (invisibleRoot == null) {
             initialize();
         }
-        if(invisibleRoot != null) return getChildren(invisibleRoot);
-        else return getChildren(object);
+        if (invisibleRoot != null) {
+            return getChildren(invisibleRoot);
+        } else {
+            return getChildren(object);
+        }
     }
 
     /**
@@ -117,8 +107,8 @@ public class KeyStoreViewContentProvider implements IStructuredContentProvider,
     }
 
     /**
-     * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
-     *      java.lang.Object, java.lang.Object)
+     * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer, java.lang.Object,
+     *      java.lang.Object)
      */
     public void inputChanged(Viewer v, Object oldInput, Object newInput) {
         v.refresh();
