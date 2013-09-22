@@ -3,6 +3,8 @@
    <context id="KeystoreView" title="Schlüsselspeicher">
       <description>Im &lt;b&gt;Schlüsselspeicher&lt;/b&gt; werden die verschiedenen in JCrypTool vorhandenen Schlüssel, sowohl öffentliche und private Schlüsselpaare (asymmetrisch), geheime Schlüssel (symmetrisch) als auch Zertifikate, abgespeichert. Diese Schlüssel können von jedem JCrypTool-Crypto-Plug-in verwendet werden. Um unbefugten Zugriff zu verhindern, werden die sensitiven Daten in einem geschützten Format abgespeichert. Alle mitgelieferten Standard-JCrypTool-Schlüssel sind mit dem Passwort &lt;b&gt;1234&lt;/b&gt; gesichert.
 
+JCrypTool interne Schlüssel beginnen normalerweise mit &lt;b&gt;JCT&lt;/b&gt;. Diese Schlüssel werden automatisch von Krypto-Plug-ins angelegt und sollten nur bei Bedarf von Ihnen gelöscht werden, z.B. wenn Sie Probleme bei der Verwendung haben. Das jeweilige Krypto-Plug-in legt diesen Schlüssel bei der nächsten Verwendung automatisch wieder an.
+
 Über die Toolbar und das Menü der Sicht können neue Schlüssel angelegt, vorhandene gelöscht sowie im- und exportiert werden. 
       </description>
       <topic href="nl/de/help/keystoremanager.html" label="Zugriff auf den Schlüsselspeicher"/>
