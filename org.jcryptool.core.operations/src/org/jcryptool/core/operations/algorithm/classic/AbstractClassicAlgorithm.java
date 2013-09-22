@@ -307,8 +307,8 @@ public abstract class AbstractClassicAlgorithm extends AbstractAlgorithm {
         PrintStream p = null;
         try {
             p = new PrintStream(bout, false, "UTF-8"); //$NON-NLS-1$
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
+        } catch (UnsupportedEncodingException ex) {
+            LogUtil.logError(OperationsPlugin.PLUGIN_ID, ex);
         }
         // this.dataObject.setOutputStream(bout);
         inputString = InputStreamToString(is);
