@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.jctca.CertificateClasses;
 
 import java.math.BigInteger;
@@ -181,10 +180,10 @@ public class CertificateCSRR {
                 caKeys.add(keypair);
                 certs.add(cert);
                 KeyStoreAlias pubAlias = new KeyStoreAlias(
-                        "JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPublic().hashCode() + "", kp.getPublic().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        "JCT-PKI Root Certificates", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPublic().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 KeyStoreAlias privAlias = new KeyStoreAlias(
-                        "JCT-PKI Root Certificates - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                mng.addKeyPair(kp.getPrivate(), cert, "1234".toCharArray(), privAlias, pubAlias); //$NON-NLS-1$
+                        "JCT-PKI Root Certificates", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString());//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                mng.addKeyPair(kp.getPrivate(), cert, KeyStoreManager.KEY_PASSWORD, privAlias, pubAlias);
             }
         }
     }
