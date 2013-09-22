@@ -57,10 +57,10 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
         File file = null;
         try {
             file = new File(FileLocator.resolve(fileURL).toURI());
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        } catch (URISyntaxException ex) {
+            LogUtil.logError(ex);
+        } catch (IOException ex) {
+            LogUtil.logError(ex);
         }
         return file;
     }
@@ -121,8 +121,8 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
                     TextStatistic statistic = new TextStatistic(transformedText, i.getName(), i.getLanguage());
                     result.add(statistic);
                 }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } catch (FileNotFoundException ex) {
+                LogUtil.logError(ex);
             }
         }
         return result;

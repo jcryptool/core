@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 
 public class SubstitutionChooser extends Shell {
@@ -52,8 +53,8 @@ public class SubstitutionChooser extends Shell {
 			if(shell.getSelectedMapping() != null) {
 				return shell.getSelectedMapping();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+		    LogUtil.logError(ex);
 		}
 		return null;
 	}

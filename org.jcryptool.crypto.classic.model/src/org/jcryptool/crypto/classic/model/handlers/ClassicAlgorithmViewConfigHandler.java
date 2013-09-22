@@ -65,8 +65,8 @@ public class ClassicAlgorithmViewConfigHandler extends AbstractHandler {
 					display.sleep();
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+		    LogUtil.logError(ex);
 		}
 	}
 
