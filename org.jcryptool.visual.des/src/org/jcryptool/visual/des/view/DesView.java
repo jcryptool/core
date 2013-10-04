@@ -47,7 +47,7 @@ public class DesView extends ViewPart {
     TabFolder tfolder = null;
     TabItem tabAlg = null;;
     Label lblAlgTitle = null;
-    Label lblAlgInformationText = null;
+    Text lblAlgInformationText = null;
     Composite comAlg = null;
     Composite comAlgHeader = null;
     Label lblAlgorithm = null;
@@ -284,7 +284,7 @@ public class DesView extends ViewPart {
         lblAlgTitle.setText(Messages.DesView_title);
 
         // create title - text
-        lblAlgInformationText = new Label(comAlgMain, SWT.NONE);
+        lblAlgInformationText = new Text(comAlgMain, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
         FormData fd_lblAlgInformationText = new FormData();
         fd_lblAlgInformationText.top = new FormAttachment(lblAlgTitle, 10);
         fd_lblAlgInformationText.left = new FormAttachment(0, 10);

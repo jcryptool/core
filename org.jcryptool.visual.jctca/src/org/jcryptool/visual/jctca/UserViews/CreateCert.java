@@ -156,8 +156,8 @@ public class CreateCert implements Views {
             cmb_genKey.add(entry);
             cmb_genKey.setData(entry, s);
         }
-        // chose a default value so that we don't get a array out of bound
-        // exception if user doesn't chose an entry
+        // choose a default value so that we don't get a array out of bound
+        // exception if user doesn't choose an entry
         cmb_genKey.select(0);
     }
 }
