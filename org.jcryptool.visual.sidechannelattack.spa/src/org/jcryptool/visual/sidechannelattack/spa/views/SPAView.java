@@ -44,6 +44,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.algorithm.SquareandMultiply;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
+import org.eclipse.swt.layout.RowData;
 
 public class SPAView extends ViewPart implements Constants {
 	public SPAView() {
@@ -98,6 +99,7 @@ public class SPAView extends ViewPart implements Constants {
 		mainContent.setLayout(new GridLayout(2, false));
 
 		parameterOfRSAGroup = new Composite(mainContent, SWT.NONE);
+		parameterOfRSAGroup.setLayout(new GridLayout(2, false));
 		parameterOfRSAGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL,
 				false, false, 1, 2));
 
@@ -136,7 +138,7 @@ public class SPAView extends ViewPart implements Constants {
 //		resultLabel.setFont(FontService.getSmallBoldFont());
 		
 		rsaProcessText = new StyledText(informationGroup, SWT.MULTI | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL);
-		rsaProcessText.setSize(600, 200);
+		rsaProcessText.setSize(600, 150);
 
 		rsaProcessText.setEditable(false);
 		rsaProcessText.setText(INFORMATION_SAM_TEXT);
@@ -144,32 +146,22 @@ public class SPAView extends ViewPart implements Constants {
 
 	private void AddParameterOfRsaGroupContent() {
 
-		FormLayout layout = new FormLayout();
-		layout.spacing = 25;
-		layout.marginRight = 50;
-		parameterOfRSAGroup.setLayout(layout);
-
 		CLabel lblParameterOfRSAGroup = new CLabel(parameterOfRSAGroup,
 				SWT.NONE);
 		lblParameterOfRSAGroup.setText(Constants.INPUT);
 		lblParameterOfRSAGroup.setFont(FontService.getSmallBoldFont());
-
-		final Label enterTheBasisLabel = new Label(parameterOfRSAGroup,
-				SWT.NONE);
-		FormData formData = new FormData();
-		formData.top = new FormAttachment(lblParameterOfRSAGroup);
-		enterTheBasisLabel.setLayoutData(formData);
-		enterTheBasisLabel.setText(BASIS_LABEL);
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		
+				final Label enterTheBasisLabel = new Label(parameterOfRSAGroup,
+						SWT.NONE);
+				enterTheBasisLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				enterTheBasisLabel.setText(BASIS_LABEL);
 
 		// basis is used to save the ciphertext c in RSA: R = c^d mod n
 		basis = new Text(parameterOfRSAGroup, SWT.BORDER);
-		formData = new FormData();
-		formData.top = new FormAttachment(enterTheBasisLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(enterTheBasisLabel, 0, SWT.RIGHT);
 		basis.setSize(50, 25);
 		basis.setTextLimit(9);
 		basis.setToolTipText(TOOL_TIP_TEXT_BASIS);
-		basis.setLayoutData(formData);
 
 		// the verifylistener on basis is used to verify the correctness of
 		// input
@@ -187,152 +179,119 @@ public class SPAView extends ViewPart implements Constants {
 					e.doit = true;
 			}
 		});
-
-		// it's a cue label.
-		final Label exponentLabel = new Label(parameterOfRSAGroup,
-				SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(enterTheBasisLabel);
-		exponentLabel.setLayoutData(formData);
-		exponentLabel.setText(EXPONENT_LABEL);
+		
+				// it's a cue label.
+				final Label exponentLabel = new Label(parameterOfRSAGroup,
+						SWT.NONE);
+				exponentLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				exponentLabel.setText(EXPONENT_LABEL);
 
 		// basis is used to save the exponent d in RSA: R = c^d mod n
 		exponent = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
-		formData = new FormData();
-		formData.top = new FormAttachment(exponentLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(basis, 0, SWT.LEFT);
-		formData.right = new FormAttachment(basis, 0, SWT.RIGHT);
-		exponent.setLayoutData(formData);
 		exponent.setToolTipText(TOOL_TIP_TEXT_EXPONENT);
 		
 		Label exponentBinaryLabel = new Label(parameterOfRSAGroup,
 				SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(exponentLabel);
-		formData.right = new FormAttachment(exponentLabel, 0, SWT.RIGHT);
-		exponentBinaryLabel.setLayoutData(formData);
+		exponentBinaryLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		exponentBinaryLabel.setText("=");
 		
 		exponentBinary = new Text(parameterOfRSAGroup, SWT.BORDER);
-		formData = new FormData();
-		formData.top = new FormAttachment(exponentBinaryLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(exponent, 0, SWT.LEFT);
-		formData.right = new FormAttachment(exponent, 0, SWT.RIGHT);
-		exponentBinary.setLayoutData(formData);
 
 		exponentBinary.setToolTipText(Constants.TOOL_TIP_TEXT_EXPONENT_BINARY);
 		exponentBinary.setEditable(false);
-
-		CLabel parameterLabel = new CLabel(parameterOfRSAGroup,
-				SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(exponentBinaryLabel);
-		parameterLabel.setLayoutData(formData);
-		parameterLabel.setText(Constants.PARAMETER);
-		parameterLabel.setFont(FontService.getSmallBoldFont());
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		
+				CLabel parameterLabel = new CLabel(parameterOfRSAGroup,
+						SWT.NONE);
+				parameterLabel.setText(Constants.PARAMETER);
+				parameterLabel.setFont(FontService.getSmallBoldFont());
+		new Label(parameterOfRSAGroup, SWT.NONE);
 		
 		// two cue labels
 		final Label chooseQLabel = new Label(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(parameterLabel);
-		chooseQLabel.setLayoutData(formData);
+		chooseQLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		chooseQLabel.setText(CHOOSE_Q_LABEL);
+				
+						qSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
+						qSelectCombo.setToolTipText(TOOL_TIP_TEXT_Q_SELECTION);
+						// the selectionlistener is used to determine which prime number has
+						// been chosen
+						qSelectCombo.addSelectionListener(new SelectionAdapter() {
+							public void widgetSelected(final SelectionEvent e) {
 
-		qSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
-		formData = new FormData();
-		formData.top = new FormAttachment(chooseQLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(chooseQLabel, 30, SWT.RIGHT);
-		qSelectCombo.setLayoutData(formData);
-		qSelectCombo.setToolTipText(TOOL_TIP_TEXT_Q_SELECTION);
-		// the selectionlistener is used to determine which prime number has
-		// been chosen
-		qSelectCombo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(final SelectionEvent e) {
+								q_selected = Integer.parseInt(qSelectCombo.getItem(qSelectCombo
+										.getSelectionIndex()));
 
-				q_selected = Integer.parseInt(qSelectCombo.getItem(qSelectCombo
-						.getSelectionIndex()));
+								for (int i = 0; i < pSelectCombo.getItemCount(); i++) {
 
-				for (int i = 0; i < pSelectCombo.getItemCount(); i++) {
+									if (pSelectCombo.getItem(i).equals(
+											String.valueOf(q_selected))) {
 
-					if (pSelectCombo.getItem(i).equals(
-							String.valueOf(q_selected))) {
+										pSelectCombo.remove(i);
+										break;
+									}
+								}
 
-						pSelectCombo.remove(i);
-						break;
-					}
-				}
+								if (p_selected != 0 && q_selected != 0) {
+									mod.setText(String.valueOf((p_selected) * (q_selected)));
+								}
 
-				if (p_selected != 0 && q_selected != 0) {
-					mod.setText(String.valueOf((p_selected) * (q_selected)));
-				}
-
-			}
-		});
-
-		final Label choosePLabel = new Label(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(chooseQLabel);
-		choosePLabel.setLayoutData(formData);
-		choosePLabel.setText(CHOOSE_P_LABEL);
-
-		// Q and P can be selected in qselectcombo and pselectcombo
-		pSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
-		formData = new FormData();
-		formData.top = new FormAttachment(choosePLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(qSelectCombo, 0, SWT.LEFT);
-		formData.right = new FormAttachment(qSelectCombo, 0, SWT.RIGHT);
-		pSelectCombo.setLayoutData(formData);
-		pSelectCombo.setToolTipText(TOOL_TIP_TEXT_P_SELECTION);
-
-		// the selectionlistener is used to determine which prime number has
-		// been chosen
-		pSelectCombo.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(final SelectionEvent e) {
-
-				p_selected = Integer.parseInt(pSelectCombo.getItem(pSelectCombo
-						.getSelectionIndex()));
-
-				for (int i = 0; i < qSelectCombo.getItemCount(); i++) {
-
-					if (qSelectCombo.getItem(i).equals(
-							String.valueOf(p_selected))) {
-
-						qSelectCombo.remove(i);
-						break;
-					}
-				}
-
-				if (p_selected != 0 && q_selected != 0) {
-					mod.setText(String.valueOf((p_selected) * (q_selected)));
-				}
-
-			}
-		});
-
-		final Label moduleLabel = new Label(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(choosePLabel);
-		moduleLabel.setLayoutData(formData);
-		moduleLabel.setText(MODULE_LABEL_TEXT);
-
-		// mod is used here to save the module n in R = c^d mod n
-		mod = new Text(parameterOfRSAGroup, SWT.BORDER);
-		formData = new FormData();
-		formData.top = new FormAttachment(moduleLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(qSelectCombo, 0, SWT.LEFT);
-		formData.right = new FormAttachment(qSelectCombo, 0, SWT.RIGHT);
-		mod.setLayoutData(formData);
-
-		mod.setToolTipText(TOOL_TIP_TEXT_MODULE_N);
-		mod.setEditable(false);
+							}
+						});
+		
+				final Label choosePLabel = new Label(parameterOfRSAGroup, SWT.NONE);
+				choosePLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				choosePLabel.setText(CHOOSE_P_LABEL);
+				
+						// Q and P can be selected in qselectcombo and pselectcombo
+						pSelectCombo = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
+						pSelectCombo.setToolTipText(TOOL_TIP_TEXT_P_SELECTION);
+						
+								// the selectionlistener is used to determine which prime number has
+								// been chosen
+								pSelectCombo.addSelectionListener(new SelectionAdapter() {
+									public void widgetSelected(final SelectionEvent e) {
+						
+										p_selected = Integer.parseInt(pSelectCombo.getItem(pSelectCombo
+												.getSelectionIndex()));
+						
+										for (int i = 0; i < qSelectCombo.getItemCount(); i++) {
+						
+											if (qSelectCombo.getItem(i).equals(
+													String.valueOf(p_selected))) {
+						
+												qSelectCombo.remove(i);
+												break;
+											}
+										}
+						
+										if (p_selected != 0 && q_selected != 0) {
+											mod.setText(String.valueOf((p_selected) * (q_selected)));
+										}
+						
+									}
+								});
+		
+				final Label moduleLabel = new Label(parameterOfRSAGroup, SWT.NONE);
+				moduleLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+				moduleLabel.setText(MODULE_LABEL_TEXT);
+		
+				// mod is used here to save the module n in R = c^d mod n
+				mod = new Text(parameterOfRSAGroup, SWT.BORDER);
+				
+						mod.setToolTipText(TOOL_TIP_TEXT_MODULE_N);
+						mod.setEditable(false);
+						
+								
+				new Label(parameterOfRSAGroup, SWT.NONE);
+				new Label(parameterOfRSAGroup, SWT.NONE);
 		
 		CLabel selectModeLabel = new CLabel(parameterOfRSAGroup,
 				SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(mod);
-		selectModeLabel.setLayoutData(formData);
 		selectModeLabel.setText(Constants.MODE);
 		selectModeLabel.setFont(FontService.getSmallBoldFont());
+		new Label(parameterOfRSAGroup, SWT.NONE);
 		
 		modeSelection = new Combo(parameterOfRSAGroup, SWT.READ_ONLY);
 		modeSelection.add(SAM_MODE);
@@ -345,126 +304,111 @@ public class SPAView extends ViewPart implements Constants {
 			}
 		});
 		modeSelection.select(0);
-		formData = new FormData();
-		formData.top = new FormAttachment(selectModeLabel);
-		formData.right = new FormAttachment(basis, 0, SWT.RIGHT);
-		formData.left = new FormAttachment(selectModeLabel, 0, SWT.LEFT);
-		modeSelection.setLayoutData(formData);
-
-		// the executeButton is used here to start the process of
-		// "Square and Multiply" Algorithm
-		final Button executeButton = new Button(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(modeSelection, 20, SWT.BOTTOM);
-		formData.left = new FormAttachment(modeSelection, 0, SWT.LEFT);
-		formData.right = new FormAttachment(modeSelection, 0, SWT.RIGHT);
-		executeButton.setLayoutData(formData);
-		executeButton.setEnabled(false);
-		executeButton.setText(EXECUTION_BUTTON_TEXT);
-
-		// executeButton is used to start the process of "square and multiply"
-		// algorithm
-		executeButton.addSelectionListener(new SelectionAdapter() {
-
-			public void widgetSelected(final SelectionEvent e) {
-				Execute();
-			}
-		});
-
-		basis.addModifyListener(new ModifyListener() {
-			public void modifyText(final ModifyEvent e) {
-
-				if (!basis.getText().equals("") && (exp_selected != 0)
-						&& (!mod.getText().equals(""))) {
-					executeButton.setEnabled(true);
-				}
-			}
-		});
-
-		// the selectionlistener here is used to determine which prime number
-		// has been chosen as exponent
-		exponent.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(final SelectionEvent e) {
-
-				exp_selected = primeDataExponent[exponent.getSelectionIndex()];
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		
+				// the executeButton is used here to start the process of
+				// "Square and Multiply" Algorithm
+				final Button executeButton = new Button(parameterOfRSAGroup, SWT.NONE);
+				executeButton.setEnabled(false);
+				executeButton.setText(EXECUTION_BUTTON_TEXT);
 				
-			    exponentBinary.setText(Integer.toBinaryString(Integer.parseInt(exponent.getText())));
+						// executeButton is used to start the process of "square and multiply"
+						// algorithm
+						executeButton.addSelectionListener(new SelectionAdapter() {
+				
+							public void widgetSelected(final SelectionEvent e) {
+								Execute();
+							}
+						});
+						
+						mod.addModifyListener(new ModifyListener() {
+                            public void modifyText(final ModifyEvent e) {
+                
+                                if (!basis.getText().equals("") && (exp_selected != 0)
+                                        && (!mod.getText().equals(""))) {
+                
+                                    executeButton.setEnabled(true);
+                                }
+                
+                            }
+                        });
 
-				if (!basis.getText().equals("") && (exp_selected != 0)
-						&& (!mod.getText().equals(""))) {
-					executeButton.setEnabled(true);
-				}
+basis.addModifyListener(new ModifyListener() {
+    public void modifyText(final ModifyEvent e) {
 
-			}
-		});
+        if (!basis.getText().equals("") && (exp_selected != 0)
+                && (!mod.getText().equals(""))) {
+            executeButton.setEnabled(true);
+        }
+    }
+});
+
+// the selectionlistener here is used to determine which prime number
+// has been chosen as exponent
+exponent.addSelectionListener(new SelectionAdapter() {
+    public void widgetSelected(final SelectionEvent e) {
+
+        exp_selected = primeDataExponent[exponent.getSelectionIndex()];
+        
+        exponentBinary.setText(Integer.toBinaryString(Integer.parseInt(exponent.getText())));
+
+        if (!basis.getText().equals("") && (exp_selected != 0)
+                && (!mod.getText().equals(""))) {
+            executeButton.setEnabled(true);
+        }
+
+    }
+});
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		new Label(parameterOfRSAGroup, SWT.NONE);
+		new Label(parameterOfRSAGroup, SWT.NONE);
 		
 		CLabel resultLabel = new CLabel(parameterOfRSAGroup,
 				SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(executeButton);
-		resultLabel.setLayoutData(formData);
 		resultLabel.setText(Constants.RESULT);
 		resultLabel.setFont(FontService.getSmallBoldFont());
+		new Label(parameterOfRSAGroup, SWT.NONE);
 		
 		// it's a cue label
 		final Label resultDescLabel = new Label(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(resultLabel);
-		resultDescLabel.setLayoutData(formData);
+		resultDescLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		resultDescLabel.setText(TOOL_TIP_TEXT_RESULT_LABEL);
+		
+				// result is used to save the result R in R = c^d mod n
+				result = new Text(parameterOfRSAGroup, SWT.BORDER);
+				result.setToolTipText(TOOL_TIP_TEXT_RESULT);
+				result.setEditable(false);
+				new Label(parameterOfRSAGroup, SWT.NONE);
+				new Label(parameterOfRSAGroup, SWT.NONE);
+		
+				// clearButton is used to clear the table
+				final Button clearButton = new Button(parameterOfRSAGroup, SWT.NONE);
+				clearButton.addSelectionListener(new SelectionAdapter() {
+					public void widgetSelected(final SelectionEvent e) {
 
-		// result is used to save the result R in R = c^d mod n
-		result = new Text(parameterOfRSAGroup, SWT.BORDER);
-		formData = new FormData();
-		formData.top = new FormAttachment(resultDescLabel, 0, SWT.CENTER);
-		formData.left = new FormAttachment(resultDescLabel, 0, SWT.RIGHT);
-		result.setLayoutData(formData);
-		result.setToolTipText(TOOL_TIP_TEXT_RESULT);
-		result.setEditable(false);
-
-		// clearButton is used to clear the table
-		final Button clearButton = new Button(parameterOfRSAGroup, SWT.NONE);
-		formData = new FormData();
-		formData.top = new FormAttachment(resultDescLabel, 20, SWT.BOTTOM);
-		formData.left = new FormAttachment(executeButton, 0, SWT.LEFT);
-		formData.right = new FormAttachment(executeButton, 0, SWT.RIGHT);
-		clearButton.setLayoutData(formData);
-		clearButton.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(final SelectionEvent e) {
-
-				recordTable.removeAll();
-				basis.setText("");
-				exponent.setText("");
-				mod.setText("");
-				exp_selected = 0;
-				result.setText("");
-				exponent.deselectAll();
-				pSelectCombo.deselectAll();
-				qSelectCombo.deselectAll();
-				p_selected = 0;
-				q_selected = 0;
-				modeSelection.select(0);
-				executeButton.setEnabled(false);
-				basis.setFocus();
-				for(Control ctrl : powerTraceVisualizationGroup.getChildren())
-					ctrl.dispose();
-				rsaProcessText.setText(INFORMATION_SAM_TEXT);
-			}
-		});
-		clearButton.setToolTipText(TOOL_TIP_TEXT_CLEARBUTTON);
-		clearButton.setText(CLEAR_BUTTON_TEXT);
-
-		mod.addModifyListener(new ModifyListener() {
-			public void modifyText(final ModifyEvent e) {
-
-				if (!basis.getText().equals("") && (exp_selected != 0)
-						&& (!mod.getText().equals(""))) {
-
-					executeButton.setEnabled(true);
-				}
-
-			}
-		});
+						recordTable.removeAll();
+						exponentBinary.setText("");
+						basis.setText("");
+						exponent.setText("");
+						mod.setText("");
+						exp_selected = 0;
+						result.setText("");
+						exponent.deselectAll();
+						pSelectCombo.deselectAll();
+						qSelectCombo.deselectAll();
+						p_selected = 0;
+						q_selected = 0;
+						modeSelection.select(0);
+						executeButton.setEnabled(false);
+						basis.setFocus();
+						for(Control ctrl : powerTraceVisualizationGroup.getChildren())
+							ctrl.dispose();
+						rsaProcessText.setText(INFORMATION_SAM_TEXT);
+					}
+				});
+				clearButton.setToolTipText(TOOL_TIP_TEXT_CLEARBUTTON);
+				clearButton.setText(CLEAR_BUTTON_TEXT);
+		new Label(parameterOfRSAGroup, SWT.NONE);
 
 		int dataLengthExponent = primeDataExponent.length;
 		int dataElementIndexExponent = 0;
@@ -656,9 +600,10 @@ public class SPAView extends ViewPart implements Constants {
 		
 		powerTraceVisualizationGroup = new Composite(visualizedGroup,
 				SWT.NONE);
+		powerTraceVisualizationGroup.setLayoutData(new RowData(SWT.DEFAULT, 115));
 		
 		recordTable = new Table(calculateTableGroup, SWT.BORDER);
-		recordTable.setBounds(0, 0, 650, 320);
+		recordTable.setBounds(0, 0, 760, 320);
 		recordTable.setLinesVisible(true);
 		recordTable.setHeaderVisible(true);
 
