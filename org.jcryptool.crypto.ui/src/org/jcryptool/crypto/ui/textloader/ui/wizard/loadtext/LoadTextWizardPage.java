@@ -2,6 +2,8 @@ package org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext;
 
 import java.io.File;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -31,7 +33,7 @@ import org.jcryptool.crypto.ui.textsource.TextSourceType;
 
 public class LoadTextWizardPage extends WizardPage {
 
-	private Composite container;
+	protected Composite container;
 	private Group grpText;
 	private Composite compTextInputMode;
 	private Composite composite;
@@ -66,11 +68,11 @@ public class LoadTextWizardPage extends WizardPage {
 	}
 
 	public LoadTextWizardPage(ControlHatcher beforeWizardTextParasiteLabel, ControlHatcher afterWizardTextParasiteLabel) {
-		super("Load text");
+		super(Messages.LoadTextWizardPage_0);
 		this.beforeWizardTextParasiteLabel = beforeWizardTextParasiteLabel;
 		this.afterWizardTextParasiteLabel = afterWizardTextParasiteLabel;
-		setTitle("Load text");
-		setDescription("Load a text for the substitution analysis");
+		setTitle(Messages.LoadTextWizardPage_1);
+		setDescription(Messages.LoadTextWizardPage_2);
 	}
 
 	/**
@@ -226,9 +228,21 @@ public class LoadTextWizardPage extends WizardPage {
 			lData.verticalSpan = 1;
 			lData.verticalIndent = 10;
 		}
+		
+		initializeTextInput();
+		getTextInput().addObserver(new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				if(getTextInput().getContent().getSourceType() == TextSourceType.USERINPUT) {
+					grpTextinputCtrls.setText(Messages.LoadTextWizardPage_3);
+				} else {
+					grpTextinputCtrls.setText(Messages.TranspTextWizardPage_text);
+				}
+			}
+		});
 
 		setControl(container);
-		initializeTextInput();
 		setPageComplete(true);
 		isPageBuilt = true;
 	}
@@ -506,6 +520,10 @@ public class LoadTextWizardPage extends WizardPage {
 	
 	public TextInputWithSource getPageConfiguration() {
 		return textInput.getContent();
+	}
+	
+	public UIInputTextWithSource getTextInput() {
+		return textInput;
 	}
 
 }

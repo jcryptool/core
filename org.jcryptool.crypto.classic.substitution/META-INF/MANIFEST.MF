@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.apache.commons.cli;bundle-version="1.2.0",
  org.jcryptool.core.cryptosystem,
  org.jcryptool.core.util,
- org.jcryptool.crypto.classic.alphabets
+ org.jcryptool.crypto.classic.alphabets,
+ org.jcryptool.crypto.ui;bundle-version="0.9.8"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.crypto.classic.substitution,

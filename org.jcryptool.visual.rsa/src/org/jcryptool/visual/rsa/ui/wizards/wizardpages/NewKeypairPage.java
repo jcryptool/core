@@ -203,7 +203,7 @@ public class NewKeypairPage extends WizardPage {
             }
             setErrorMessage(error + Messages.NewKeypairPage_error_n_lt_256);
         }
-        return p.compareTo(ZERO) > 0 && q.compareTo(ZERO) > 0 && n.compareTo(Constants.TWOFIVESIX) >= 0;
+        return p.compareTo(ZERO) > 0 && q.compareTo(ZERO) > 0/* && n.compareTo(Constants.TWOFIVESIX) >= 0*/;
     }
 
     /**

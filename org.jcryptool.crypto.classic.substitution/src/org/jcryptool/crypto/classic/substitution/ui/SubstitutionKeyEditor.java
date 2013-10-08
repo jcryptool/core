@@ -31,13 +31,13 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
-import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithm;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithmSpecification;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey.PasswordToKeyMethod;
 import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLetterInputField;
 import org.jcryptool.crypto.classic.substitution.ui.substControls.SubstitutionLetterInputField.Mode;
+import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 public class SubstitutionKeyEditor extends Composite {
 	private static final PasswordToKeyMethod keyMethodAntilexical = new PasswordToKeyMethod(true, true, false);

@@ -15,6 +15,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.wb.swt,
  org.jcryptool.crypto.ui.alphabets,
  org.jcryptool.crypto.ui.alphabets.customalphabets,
+ org.jcryptool.crypto.ui.textblockloader,
  org.jcryptool.crypto.ui.textloader.ui,
  org.jcryptool.crypto.ui.textloader.ui.wizard,
  org.jcryptool.crypto.ui.textmodify.wizard,

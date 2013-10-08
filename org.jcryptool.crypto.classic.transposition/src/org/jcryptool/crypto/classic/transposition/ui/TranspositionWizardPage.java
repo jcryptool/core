@@ -24,8 +24,8 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.AbstractClassicCryptoPage;
-import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
+import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 
 /**
