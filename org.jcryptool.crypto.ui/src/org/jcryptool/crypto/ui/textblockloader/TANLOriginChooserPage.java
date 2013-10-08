@@ -14,16 +14,18 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 public class TANLOriginChooserPage extends WizardPage {
 
-	public static final String METHOD_TEXT_BASED = "METHOD_TEXT_BASED";
-	public static final String METHOD_NUMERIC = "METHOD_NUMERIC";
+	public static final String METHOD_TEXT_BASED = TextAsNumbersLoaderWizard.METHOD_TEXT_BASED;
+	public static final String METHOD_NUMERIC = TextAsNumbersLoaderWizard.METHOD_NUMERIC;
 	protected String method;
+	private Button btnTextbasedInput;
+	private Button btnNumericInput;
 
 	/**
 	 * Create the wizard.
 	 */
 	public TANLOriginChooserPage() {
 		super("wizardPage");
-		this.method = METHOD_TEXT_BASED;
+		this.method = TextAsNumbersLoaderWizard.METHOD_TEXT_BASED;
 		setTitle("Load data blocks");
 		setDescription("Choose an input method for your data");
 	}
@@ -38,11 +40,12 @@ public class TANLOriginChooserPage extends WizardPage {
 		setControl(container);
 		container.setLayout(new GridLayout(1, false));
 		
-		Button btnTextbasedInput = new Button(container, SWT.RADIO);
+		btnTextbasedInput = new Button(container, SWT.RADIO);
 		btnTextbasedInput.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TANLOriginChooserPage.this.method = METHOD_TEXT_BASED;
+				TANLOriginChooserPage.this.method = TextAsNumbersLoaderWizard.METHOD_TEXT_BASED;
+				getWizard().getContainer().updateButtons();
 			}
 		});
 		btnTextbasedInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -61,26 +64,25 @@ public class TANLOriginChooserPage extends WizardPage {
 		lblTextFromAn.setLayoutData(lblDescriptionLData);
 		
 		
-		Button btnRadioButton = new Button(container, SWT.RADIO);
+		btnNumericInput = new Button(container, SWT.RADIO);
 		GridData gd_btnRadioButton = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnRadioButton.verticalIndent = 10;
-		btnRadioButton.setLayoutData(gd_btnRadioButton);
-		btnRadioButton.addSelectionListener(new SelectionAdapter() {
+		btnNumericInput.setLayoutData(gd_btnRadioButton);
+		btnNumericInput.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				TANLOriginChooserPage.this.method = METHOD_NUMERIC;
+				TANLOriginChooserPage.this.method = TextAsNumbersLoaderWizard.METHOD_NUMERIC;
+				getWizard().getContainer().updateButtons();
 			}
 		});
-		btnRadioButton.setText("Numeric input");
+		btnNumericInput.setText("Numeric input");
 
 		Label lblSetTheData = new Label(container, SWT.WRAP);
 		lblSetTheData.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
 		lblSetTheData.setText("Set the data blocks manually by entering the decimal or hex representation.");
 		lblSetTheData.setLayoutData(lblDescriptionLData2);
 		
-		btnRadioButton.setSelection(this.method.equals(METHOD_NUMERIC));
-		btnRadioButton.setSelection(this.method.equals(METHOD_TEXT_BASED));
-			
+		setMethod(TextAsNumbersLoaderWizard.METHOD_TEXT_BASED);
 	}
 
 	public String getMethod() {
@@ -89,6 +91,8 @@ public class TANLOriginChooserPage extends WizardPage {
 
 	public void setMethod(String method) {
 		this.method = method;
+		this.btnNumericInput.setSelection(method.equals(TextAsNumbersLoaderWizard.METHOD_NUMERIC));
+		this.btnTextbasedInput.setSelection(!method.equals(TextAsNumbersLoaderWizard.METHOD_NUMERIC));
 	}
 	
 }

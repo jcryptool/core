@@ -74,7 +74,7 @@ public class TextEntryWizard extends Wizard {
 			break;
 		}
 	}
-
+	
 	@Override
 	public final boolean performFinish() {
 		switch (action) {

@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Spinner;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
-import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer.Repr;
 import org.jcryptool.crypto.ui.textblockloader.conversion.AlphabetCharsToNumbers;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;
@@ -91,11 +90,11 @@ public class TANLBlockConversionPage extends WizardPage {
 		grpNumericalRepresentationOf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		grpNumericalRepresentationOf.setText("Numerical representation of characters from previous page:");
 		
-		Repr[] viewOptions = new NumberblocksAndTextViewer.Repr[]{
-				NumberblocksAndTextViewer.Repr.DECIMAL, 
-				NumberblocksAndTextViewer.Repr.HEX, 
-				NumberblocksAndTextViewer.Repr.BINARY, 
-				NumberblocksAndTextViewer.Repr.STRING 
+		Repr[] viewOptions = new Repr[]{
+				Repr.DECIMAL, 
+				Repr.HEX, 
+				Repr.BINARY, 
+				Repr.STRING 
 			};
 		previewNumbers = new NumberblocksAndTextViewer(grpNumericalRepresentationOf, SWT.NONE, viewOptions);
 		previewNumbers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -159,7 +158,7 @@ public class TANLBlockConversionPage extends WizardPage {
 		this.ctnForPreview = getDefaultWiz().getCTN();
 		String stringData = getDefaultWiz().getText().getText();
 		this.numbersForPreview = this.ctnForPreview.convert(stringData);
-		this.blocksForPreview = getDefaultWiz().getDataBlocks();
+		this.blocksForPreview = getDefaultWiz().getDataBlocksByText();
 		
 		
 		if(resetB) {

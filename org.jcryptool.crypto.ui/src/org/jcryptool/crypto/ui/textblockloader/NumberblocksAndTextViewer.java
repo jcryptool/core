@@ -31,36 +31,6 @@ public class NumberblocksAndTextViewer extends Composite {
 	private String numberSeparator;
 	private int maxNumbersToDisplay = 100;
 
-	public static enum Repr {
-		DECIMAL(true), BINARY(true), HEX(true), STRING(false);
-		
-		private boolean numeric;
-
-		private Repr(boolean numeric) {
-			this.numeric = numeric;
-		}
-		
-		public boolean isNumeric() {
-			return numeric;
-		}
-		
-		public String numberToString(Integer number) {
-			if(this.isNumeric()) {
-				if(this == DECIMAL) {
-					return number.toString(); 
-				} else if(this == BINARY) {
-					return Integer.toBinaryString(number);
-				} else if(this == HEX) {
-					return Integer.toHexString(number);
-				} else {
-					throw new RuntimeException("unknown numeric representation");
-				}
-			} else {
-				throw new RuntimeException("String conversion not supported here");
-			}
-		}
-	}
-	
 	private boolean aContains(Repr[] a, Repr o) {
 		for(Repr r: a) if(r.equals(o)) return true;
 		return false;
@@ -84,7 +54,7 @@ public class NumberblocksAndTextViewer extends Composite {
 		this.setTextBlockSeparator(DEFAULT_TEXT_SEPARATOR);
 		this.setNumberBlocksSeparator(DEFAULT_NUMBER_SEPARATOR);
 		
-		this.buttonMap = new HashMap<NumberblocksAndTextViewer.Repr, Button>(); 
+		this.buttonMap = new HashMap<Repr, Button>(); 
 		
 		Composite composite = new Composite(this, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));

@@ -117,7 +117,7 @@ public class RSAView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				Shell shell = testMainComp.getShell();
 				
-				TextAsNumbersLoaderWizard wiz = new TextAsNumbersLoaderWizard(120);
+				TextAsNumbersLoaderWizard wiz = new TextAsNumbersLoaderWizard(120, false);
 				WizardDialog dialog = new WizardDialog(shell, wiz);
 				
 				dialog.open();

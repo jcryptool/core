@@ -9,9 +9,11 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.util.input.AbstractUIInput;
-import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer.Repr;
 import org.jcryptool.crypto.ui.textblockloader.conversion.AlphabetCharsToNumbers;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;
@@ -38,8 +40,6 @@ public class TANLTextPage extends LoadTextWizardPage {
 		super.getTextInput().writeContent(new TextInputWithSource(""));
 		super.getTextInput().synchronizeWithUserSide();
 		
-		boolean canUseASCII = maxNumber >= 255;
-		
 		Group compConversionParams1 = new Group(container, SWT.NONE);
 		compConversionParams1.setLayout(new GridLayout());
 		compConversionParams1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -53,18 +53,24 @@ public class TANLTextPage extends LoadTextWizardPage {
 		compNumberPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		compNumberPreview.setText("Characters as numbers preview");
 		
-		Repr[] viewOptions = new NumberblocksAndTextViewer.Repr[]{
-					NumberblocksAndTextViewer.Repr.DECIMAL, 
-					NumberblocksAndTextViewer.Repr.HEX, 
-					NumberblocksAndTextViewer.Repr.BINARY, 
-					NumberblocksAndTextViewer.Repr.STRING 
+		Repr[] viewOptions = new Repr[]{
+					Repr.DECIMAL, 
+					Repr.HEX, 
+					Repr.BINARY, 
+					Repr.STRING 
 				};
 		txtNumberPreview = new NumberblocksAndTextViewer(compNumberPreview, SWT.NONE, 
 				viewOptions);
 		GridData txtNumberPreviewLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
-		txtNumberPreviewLayoutData.heightHint = 150;
+		txtNumberPreviewLayoutData.heightHint = 110;
 		txtNumberPreview.setLayoutData(txtNumberPreviewLayoutData);
 		
+		Composite compNextPageInfo = new Composite(container, SWT.NONE);
+		compNextPageInfo.setLayout(new GridLayout(2, false));
+		Label lblNextPageIcon = new Label(compNextPageInfo, SWT.NONE);
+		lblNextPageIcon.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_INFO_TSK));
+		Label lblNextPageInfo = new Label(compNextPageInfo, SWT.NONE);
+		lblNextPageInfo.setText("On the next page, you can generate blocks from multiple character numbers.");
 		
 		Observer previewRefreshObserver = new Observer() {
 			@Override
@@ -75,12 +81,14 @@ public class TANLTextPage extends LoadTextWizardPage {
 				TextInputWithSource stringContent = TANLTextPage.super.getPageConfiguration();
 				
 				txtNumberPreview.setContent(stringContent.getText(), conversion);
+				
+				getWizard().getContainer().updateButtons();
 			}
 		};
 		
 		super.getTextInput().addObserver(previewRefreshObserver);
 		this.charsToNumbersComposite.getConversionInput().addObserver(previewRefreshObserver);
-		previewRefreshObserver.update(null, null);
+//		previewRefreshObserver.update(null, null);
 	}
 	
 	protected void refreshMaxPotNumberNextPage() {
@@ -94,5 +102,10 @@ public class TANLTextPage extends LoadTextWizardPage {
 	private TextAsNumbersLoaderWizard getDefaultWiz() {
 		return (TextAsNumbersLoaderWizard) getWizard();
 	}
-
+	
+	@Override
+	public boolean canFlipToNextPage() {
+		return this.getTextInput().getContent().getText().length() > 0;
+	}
+	
 }
