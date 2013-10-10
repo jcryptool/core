@@ -97,48 +97,48 @@ public class RSAView extends ViewPart {
 				.setHelp(parent.getShell(), "org.jcryptool.visual.rsa.rsaview");
 		
 		// Test tab
-		TabItem testtab = new TabItem(tf, SWT.NONE);
-		testtab.setText("Test");
-		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
-		sc.setExpandHorizontal(true);
-		sc.setExpandVertical(true);
-		
-		final Composite testMainComp = new Composite(sc, SWT.NONE);
-		GridData gd = new GridData();
-		GridLayout gl = new GridLayout();
-		testMainComp.setLayout(gl);
-		testMainComp.setLayoutData(gd);
-		
-		Button testBtn = new Button(testMainComp, SWT.PUSH);
-		testBtn.setText("Test");
-		
-		testBtn.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				Shell shell = testMainComp.getShell();
-				
-				TextAsNumbersLoaderWizard wiz = new TextAsNumbersLoaderWizard(120, false);
-				WizardDialog dialog = new WizardDialog(shell, wiz);
-				
-				dialog.open();
-			}
-
-			private void showMsgBox(Shell shell, String msgText) {
-				MessageBox dialog = 
-				  new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
-				dialog.setText("Message");
-				dialog.setMessage(msgText);
-
-				dialog.open();
-			}
-		});
-		
-		
-		sc.setContent(testMainComp);
-		sc.setMinSize(testMainComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		testtab.setControl(sc);
-		
-		tf.setSelection(testtab);
+//		TabItem testtab = new TabItem(tf, SWT.NONE);
+//		testtab.setText("Test");
+//		sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
+//		sc.setExpandHorizontal(true);
+//		sc.setExpandVertical(true);
+//		
+//		final Composite testMainComp = new Composite(sc, SWT.NONE);
+//		GridData gd = new GridData();
+//		GridLayout gl = new GridLayout();
+//		testMainComp.setLayout(gl);
+//		testMainComp.setLayoutData(gd);
+//		
+//		Button testBtn = new Button(testMainComp, SWT.PUSH);
+//		testBtn.setText("Test");
+//		
+//		testBtn.addSelectionListener(new SelectionAdapter() {
+//			@Override
+//			public void widgetSelected(SelectionEvent e) {
+//				Shell shell = testMainComp.getShell();
+//				
+//				TextAsNumbersLoaderWizard wiz = new TextAsNumbersLoaderWizard(120, false);
+//				WizardDialog dialog = new WizardDialog(shell, wiz);
+//				
+//				dialog.open();
+//			}
+//
+//			private void showMsgBox(Shell shell, String msgText) {
+//				MessageBox dialog = 
+//				  new MessageBox(shell, SWT.ICON_QUESTION | SWT.OK| SWT.CANCEL);
+//				dialog.setText("Message");
+//				dialog.setMessage(msgText);
+//
+//				dialog.open();
+//			}
+//		});
+//		
+//		
+//		sc.setContent(testMainComp);
+//		sc.setMinSize(testMainComp.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+//		testtab.setControl(sc);
+//		
+//		tf.setSelection(testtab);
 
 	}
 

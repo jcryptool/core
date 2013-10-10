@@ -194,15 +194,15 @@ public class NewKeypairPage extends WizardPage {
             }
             setErrorMessage(error + Messages.NewKeypairPage_error_q_not_prime);
         }
-        if (!n.equals(Constants.MINUS_ONE) && n.compareTo(Constants.TWOFIVESIX) < 0) {
-            String error = getErrorMessage();
-            if (error == null) {
-                error = ""; //$NON-NLS-1$
-            } else {
-                error += "\n"; //$NON-NLS-1$
-            }
-            setErrorMessage(error + Messages.NewKeypairPage_error_n_lt_256);
-        }
+//        if (!n.equals(Constants.MINUS_ONE) && n.compareTo(Constants.TWOFIVESIX) < 0) {
+//            String error = getErrorMessage();
+//            if (error == null) {
+//                error = ""; //$NON-NLS-1$
+//            } else {
+//                error += "\n"; //$NON-NLS-1$
+//            }
+//            setErrorMessage(error + Messages.NewKeypairPage_error_n_lt_256);
+//        }
         return p.compareTo(ZERO) > 0 && q.compareTo(ZERO) > 0/* && n.compareTo(Constants.TWOFIVESIX) >= 0*/;
     }
 
@@ -429,7 +429,7 @@ public class NewKeypairPage extends WizardPage {
      * fills in the already entered data from the last wizard run.
      */
     private void fillIn() {
-        if (data.getN() != null) {
+        if (data.getN() != null && data.getP() != null && data.getQ() != null && data.getE() != null) {
             plist.setText(data.getP().toString());
             qlist.setText(data.getQ().toString());
             elist.setText(data.getE().toString());

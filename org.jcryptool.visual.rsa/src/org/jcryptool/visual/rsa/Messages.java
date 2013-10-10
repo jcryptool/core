@@ -93,6 +93,7 @@ public class Messages extends NLS {
 	public static String NewPublicKeyPage_suggestion;
 	public static String NewPublicKeyPage_use;
 	public static String NewPublicKeyPage_use_popup;
+	public static String RSAComposite_1;
 	public static String RSAComposite_algo_header;
 	public static String RSAComposite_Calculate_enc;
 	public static String RSAComposite_Calculate_dec;

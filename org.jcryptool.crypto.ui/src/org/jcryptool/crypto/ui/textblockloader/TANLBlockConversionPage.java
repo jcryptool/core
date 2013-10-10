@@ -1,6 +1,7 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
 import java.awt.font.NumericShaper;
+import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -30,8 +31,8 @@ import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 public class TANLBlockConversionPage extends WizardPage {
 
-	private static final String RESULT_TYPE_TOO_BIG_FOR_INT = "ResultType_TooBigForInt";
-	private static final String RESULT_TYPE_BASE_TOO_SMALL = "ResultType_baseTooSmall";
+	private static final String RESULT_TYPE_TOO_BIG_FOR_INT = "ResultType_TooBigForInt"; //$NON-NLS-1$
+	private static final String RESULT_TYPE_BASE_TOO_SMALL = "ResultType_baseTooSmall"; //$NON-NLS-1$
 	private Spinner spinner_nrBlocks;
 	private Spinner spinner_base;
 	private AbstractUIInput<NumbersToBlocksConversion> blockMethodInput;
@@ -48,10 +49,10 @@ public class TANLBlockConversionPage extends WizardPage {
 	 * @param maxNumber 
 	 */
 	public TANLBlockConversionPage(int maxNumber) {
-		super("wizardPage");
+		super(Messages.TANLBlockConversionPage_wtitle);
 		this.maxNumber = maxNumber;
-		setTitle("Wizard Page title");
-		setDescription("Wizard Page description");
+		setTitle(Messages.TANLBlockConversionPage_wtitle);
+		setDescription(Messages.TANLBlockConversionPage_wdescr);
 	}
 
 	/**
@@ -67,28 +68,28 @@ public class TANLBlockConversionPage extends WizardPage {
 		Group grpBlockDivision = new Group(container, SWT.NONE);
 		grpBlockDivision.setLayout(new GridLayout(2, false));
 		grpBlockDivision.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpBlockDivision.setText("Block division");
+		grpBlockDivision.setText(Messages.TANLBlockConversionPage_5);
 		
 		Label lblNumberOfCharacters = new Label(grpBlockDivision, SWT.NONE);
-		lblNumberOfCharacters.setText("Number of characters per block: ");
+		lblNumberOfCharacters.setText(Messages.TANLBlockConversionPage_6);
 		
 		spinner_nrBlocks = new Spinner(grpBlockDivision, SWT.BORDER);
 		spinner_nrBlocks.setMinimum(1);
 		
 		Label lblBaseBFor = new Label(grpBlockDivision, SWT.NONE);
-		lblBaseBFor.setText("Base b for b-adic block creation: ");
+		lblBaseBFor.setText(Messages.TANLBlockConversionPage_7);
 		
 		spinner_base = new Spinner(grpBlockDivision, SWT.BORDER);
 		
 		Group grpPreview = new Group(container, SWT.NONE);
 		grpPreview.setLayout(new GridLayout(1, false));
 		grpPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpPreview.setText("Preview:");
+		grpPreview.setText(Messages.TANLBlockConversionPage_8);
 		
 		Group grpNumericalRepresentationOf = new Group(grpPreview, SWT.NONE);
 		grpNumericalRepresentationOf.setLayout(new GridLayout(1, false));
 		grpNumericalRepresentationOf.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpNumericalRepresentationOf.setText("Numerical representation of characters from previous page:");
+		grpNumericalRepresentationOf.setText(Messages.TANLBlockConversionPage_9);
 		
 		Repr[] viewOptions = new Repr[]{
 				Repr.DECIMAL, 
@@ -102,7 +103,7 @@ public class TANLBlockConversionPage extends WizardPage {
 		Group grpBlocks = new Group(grpPreview, SWT.NONE);
 		grpBlocks.setLayout(new GridLayout(1, false));
 		grpBlocks.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		grpBlocks.setText("Blocks:");
+		grpBlocks.setText(Messages.TANLBlockConversionPage_10);
 
 		previewBlocks = new NumberblocksAndTextViewer(grpBlocks, SWT.NONE, viewOptions);
 		previewBlocks.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -151,7 +152,9 @@ public class TANLBlockConversionPage extends WizardPage {
 	}
 
 	protected void refreshData() {
-		boolean resetB = this.ctnForPreview == null || (getDefaultWiz().getCTN().getMaxNumberValue() != this.ctnForPreview.getMaxNumberValue());
+		Integer maxNumberValueWizCTN = getDefaultWiz().getCTN().getMaxNumberValue();
+		Integer maxNumberValueLocalCTN = this.ctnForPreview == null?0:this.ctnForPreview.getMaxNumberValue();
+		boolean resetB = this.ctnForPreview == null || (!maxNumberValueWizCTN.equals(maxNumberValueLocalCTN));
 		
 		this.refreshMaxPotNumber();
 		
@@ -246,7 +249,7 @@ public class TANLBlockConversionPage extends WizardPage {
 						}
 						@Override
 						public boolean isStandaloneMessage() {
-							return true;
+							return false;
 						}
 						@Override
 						public MessageType getMessageType() {
@@ -254,7 +257,9 @@ public class TANLBlockConversionPage extends WizardPage {
 						}
 						@Override
 						public String getMessage() {
-							return "With this base and numbers per block settings, the RSA modulus N=" + (maxNumber+1) + " could be exceeded (biggest possible block: " + highestPotentialBlock + "). For more numbers per block, choose a higher RSA modulus.";
+							return MessageFormat
+									.format(Messages.TANLBlockConversionPage_11,
+											(maxNumber+1), highestPotentialBlock);
 						}
 					};
 				}
@@ -280,7 +285,9 @@ public class TANLBlockConversionPage extends WizardPage {
 						}
 						@Override
 						public String getMessage() {
-							return "The base must be bigger than or equal to the alphabet size of the character conversion (" + (maxPotentialNumber+1) + ").";
+							return MessageFormat
+									.format(Messages.TANLBlockConversionPage_12,
+											(maxPotentialNumber+1));
 						}
 					};
 				}
@@ -306,7 +313,7 @@ public class TANLBlockConversionPage extends WizardPage {
 						}
 						@Override
 						public String getMessage() {
-							return "with this combination of base and characters per block, the potential blocks could be too big a number.";
+							return Messages.TANLBlockConversionPage_13;
 						}
 					};
 				}
@@ -335,7 +342,7 @@ public class TANLBlockConversionPage extends WizardPage {
 
 			@Override
 			public String getName() {
-				return "block conversion";
+				return Messages.TANLBlockConversionPage_14;
 			}
 			
 		};

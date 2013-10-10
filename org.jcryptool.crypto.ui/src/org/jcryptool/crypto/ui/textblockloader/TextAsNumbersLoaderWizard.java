@@ -15,13 +15,13 @@ public class TextAsNumbersLoaderWizard extends Wizard {
 	protected TANLNumberLoaderPage pageNumbersOnly;
 	protected int maxNumber;
 	private boolean numbersOnlyInput;
-	public static final String METHOD_TEXT_BASED = "METHOD_TEXT_BASED";
-	public static final String METHOD_NUMERIC = "METHOD_NUMERIC";
+	public static final String METHOD_TEXT_BASED = "METHOD_TEXT_BASED"; //$NON-NLS-1$
+	public static final String METHOD_NUMERIC = "METHOD_NUMERIC"; //$NON-NLS-1$
 
 	public TextAsNumbersLoaderWizard(int maxNumber, boolean numbersOnlyInput) {
 		this.maxNumber = maxNumber;
 		this.numbersOnlyInput = numbersOnlyInput;
-		setWindowTitle("Numeric data");
+		setWindowTitle(Messages.TextAsNumbersLoaderWizard_wtitle_overall);
 		
 		pageInputMethod = new TANLOriginChooserPage();
 		pageTextToNumbersPage = new TANLTextPage(this.maxNumber);
@@ -150,6 +150,12 @@ public class TextAsNumbersLoaderWizard extends Wizard {
 	public List<Integer> getDataBlocksByNumericInput() {
 		return getPageNumbersOnly().getNumbers();
 	}
-	
+	public List<Integer> getDataBlocks() {
+		if(getDataInputMethod().equals(METHOD_NUMERIC)) {
+			return getDataBlocksByNumericInput();
+		} else {
+			return getDataBlocksByText();
+		}
+	}
 	
 }

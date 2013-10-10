@@ -24,10 +24,10 @@ public class TANLOriginChooserPage extends WizardPage {
 	 * Create the wizard.
 	 */
 	public TANLOriginChooserPage() {
-		super("wizardPage");
+		super("wizardPage"); //$NON-NLS-1$
 		this.method = TextAsNumbersLoaderWizard.METHOD_TEXT_BASED;
-		setTitle("Load data blocks");
-		setDescription("Choose an input method for your data");
+		setTitle(Messages.TANLOriginChooserPage_wtitleorigin);
+		setDescription(Messages.TANLOriginChooserPage_wdescrorigin);
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class TANLOriginChooserPage extends WizardPage {
 			}
 		});
 		btnTextbasedInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		btnTextbasedInput.setText("Text-based input");
+		btnTextbasedInput.setText(Messages.TANLOriginChooserPage_3);
 		
 		GridData lblDescriptionLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		lblDescriptionLData.horizontalIndent = 25;
@@ -59,8 +59,8 @@ public class TANLOriginChooserPage extends WizardPage {
 		lblDescriptionLData2.widthHint = 300;
 		
 		Label lblTextFromAn = new Label(container, SWT.WRAP);
-		lblTextFromAn.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-		lblTextFromAn.setText("Text from an editor, a file or a manually typed text will be converted into data blocks. You can choose the text and the conversion preferences in the next pages.");
+		lblTextFromAn.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC)); //$NON-NLS-1$
+		lblTextFromAn.setText(Messages.TANLOriginChooserPage_5);
 		lblTextFromAn.setLayoutData(lblDescriptionLData);
 		
 		
@@ -75,11 +75,11 @@ public class TANLOriginChooserPage extends WizardPage {
 				getWizard().getContainer().updateButtons();
 			}
 		});
-		btnNumericInput.setText("Numeric input");
+		btnNumericInput.setText(Messages.TANLOriginChooserPage_6);
 
 		Label lblSetTheData = new Label(container, SWT.WRAP);
-		lblSetTheData.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.ITALIC));
-		lblSetTheData.setText("Set the data blocks manually by entering the decimal or hex representation.");
+		lblSetTheData.setFont(SWTResourceManager.getFont(Messages.TANLOriginChooserPage_7, 9, SWT.ITALIC));
+		lblSetTheData.setText(Messages.TANLOriginChooserPage_8);
 		lblSetTheData.setLayoutData(lblDescriptionLData2);
 		
 		setMethod(TextAsNumbersLoaderWizard.METHOD_TEXT_BASED);

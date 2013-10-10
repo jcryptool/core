@@ -1,5 +1,6 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +24,8 @@ import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
 import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 public class CompositeNumberInput extends Composite {
-	private static final String MESSAGE_TYPE_EXCEEDS_N = "MESSAGE_TYPE_EXCEEDS_N";
-	private static final String MESSAGE_TYPE_FOUND_NOT_ALLOWED_CHARS = "MessageType_found_not_allowed_chars";
+	private static final String MESSAGE_TYPE_EXCEEDS_N = "MESSAGE_TYPE_EXCEEDS_N"; //$NON-NLS-1$
+	private static final String MESSAGE_TYPE_FOUND_NOT_ALLOWED_CHARS = "MessageType_found_not_allowed_chars"; //$NON-NLS-1$
 	private Text text;
 	private int maxNumber;
 	private TextfieldInput<List<Integer>> numberInput;
@@ -89,16 +90,16 @@ public class CompositeNumberInput extends Composite {
 		composite.setLayout(new GridLayout(4, false));
 		
 		Label lblNumberFormat = new Label(composite, SWT.NONE);
-		lblNumberFormat.setText("Number format: ");
+		lblNumberFormat.setText(Messages.CompositeNumberInput_2);
 		
 		Button btnDecimal = new Button(composite, SWT.RADIO);
-		btnDecimal.setText("Decimal");
+		btnDecimal.setText(Messages.CompositeNumberInput_3);
 		
 		Button btnHex = new Button(composite, SWT.RADIO);
-		btnHex.setText("Hex");
+		btnHex.setText(Messages.CompositeNumberInput_4);
 		
 		Button btnBinary = new Button(composite, SWT.RADIO);
-		btnBinary.setText("Binary");
+		btnBinary.setText(Messages.CompositeNumberInput_5);
 		
 		text = new Text(this, SWT.BORDER);
 		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
@@ -198,7 +199,7 @@ public class CompositeNumberInput extends Composite {
 
 			@Override
 			public String getName() {
-				return "number format";
+				return Messages.CompositeNumberInput_6;
 			}
 		};
 		return result;
@@ -222,10 +223,10 @@ public class CompositeNumberInput extends Composite {
 			@Override
 			protected InputVerificationResult verifyUserChange() {
 				String stringContent = getTextfield().getText().toUpperCase().trim();
-				String woAllowedChars = stringContent.replaceAll(Pattern.quote(" "), "");
+				String woAllowedChars = stringContent.replaceAll(Pattern.quote(" "), ""); //$NON-NLS-1$ //$NON-NLS-2$
 				List<Character> allowedChars = getAllowedCharsFor(reprInput.getContent());
 				for(Character c: allowedChars) {
-					woAllowedChars = woAllowedChars.replace(String.valueOf(c), "");
+					woAllowedChars = woAllowedChars.replace(String.valueOf(c), ""); //$NON-NLS-1$
 				}
 				
 				final String foundNotAllowedChars = woAllowedChars;
@@ -250,13 +251,13 @@ public class CompositeNumberInput extends Composite {
 						
 						@Override
 						public String getMessage() {
-							return "characters were found which do not describe numbers: " + foundNotAllowedChars;
+							return Messages.CompositeNumberInput_10 + foundNotAllowedChars;
 						}
 					};
 				}
 				
 				String stringInput = stringContent;
-				String[] rawNumberStrings = stringInput.split(Pattern.quote(" "));
+				String[] rawNumberStrings = stringInput.split(Pattern.quote(" ")); //$NON-NLS-1$
 				
 				for(String split: rawNumberStrings) {
 					final String newSplit = split.trim();
@@ -282,7 +283,9 @@ public class CompositeNumberInput extends Composite {
 								
 								@Override
 								public String getMessage() {
-									return "a number (" + newSplit + ") is bigger than or equal to the RSA Modulus N=" + (maxNumber+1) + ".";
+									return MessageFormat
+											.format(Messages.CompositeNumberInput_12,
+													newSplit, (maxNumber+1));
 								}
 							};
 						}
@@ -297,7 +300,7 @@ public class CompositeNumberInput extends Composite {
 				List<Integer> result = new LinkedList<Integer>();
 				
 				String stringInput = getTextfield().getText();
-				String[] rawNumberStrings = stringInput.split(Pattern.quote(" "));
+				String[] rawNumberStrings = stringInput.split(Pattern.quote(" ")); //$NON-NLS-1$
 				
 				for(String split: rawNumberStrings) {
 					String newSplit = split.trim();
@@ -317,7 +320,7 @@ public class CompositeNumberInput extends Composite {
 
 			@Override
 			public String getName() {
-				return "numeric input";
+				return Messages.CompositeNumberInput_14;
 			}
 			
 			@Override
@@ -326,7 +329,7 @@ public class CompositeNumberInput extends Composite {
 				boolean startN = true;
 				for(Integer number: content) {
 					if(!startN) {
-						sb.append(" ");
+						sb.append(" "); //$NON-NLS-1$
 					}
 					sb.append(reprInput.getContent().numberToString(number));
 					

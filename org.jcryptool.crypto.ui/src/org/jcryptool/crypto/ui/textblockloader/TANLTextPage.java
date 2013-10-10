@@ -29,29 +29,42 @@ public class TANLTextPage extends LoadTextWizardPage {
 	public TANLTextPage(int maxNumber) {
 		super();
 		this.maxNumber = maxNumber;
-		this.setTitle("Text selection");
-		this.setMessage("Set the text to be converted into data blocks.");
+		this.setTitle(Messages.TANLTextPage_wtitle);
+		this.setMessage(Messages.TANLTextPage_wmessage);
 	}
 	
 	@Override
 	public void createControl(Composite parent) {
 		// TODO Auto-generated method stub
 		super.createControl(parent);
-		super.getTextInput().writeContent(new TextInputWithSource(""));
+		super.getTextInput().writeContent(new TextInputWithSource("")); //$NON-NLS-1$
 		super.getTextInput().synchronizeWithUserSide();
 		
 		Group compConversionParams1 = new Group(container, SWT.NONE);
 		compConversionParams1.setLayout(new GridLayout());
 		compConversionParams1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		compConversionParams1.setText("Transformation of text into numbers");
+		compConversionParams1.setText(Messages.TANLTextPage_3);
 		
 		this.charsToNumbersComposite = new CharsToNumbersComposite(compConversionParams1, SWT.NONE, maxNumber);
 		this.charsToNumbersComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
+		Composite compFilterInfo = new Composite(compConversionParams1, SWT.NONE);
+		GridLayout layoutFilterInfo = new GridLayout(2, false);
+		layoutFilterInfo.marginWidth = 0;
+		layoutFilterInfo.marginHeight = 0;
+		compFilterInfo.setLayout(layoutFilterInfo);
+		GridData layoutData = new GridData();
+		layoutData.horizontalIndent = 5;
+		compFilterInfo.setLayoutData(layoutData);
+		Label lblFilterIcon = new Label(compFilterInfo, SWT.NONE);
+		lblFilterIcon.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_INFO_TSK));
+		Label lblFilterInfo = new Label(compFilterInfo, SWT.NONE);
+		lblFilterInfo.setText(Messages.TANLTextPage_4);
+		
 		Group compNumberPreview = new Group(container, SWT.NONE);
 		compNumberPreview.setLayout(new GridLayout());
 		compNumberPreview.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		compNumberPreview.setText("Characters as numbers preview");
+		compNumberPreview.setText(Messages.TANLTextPage_5);
 		
 		Repr[] viewOptions = new Repr[]{
 					Repr.DECIMAL, 
@@ -70,8 +83,8 @@ public class TANLTextPage extends LoadTextWizardPage {
 		Label lblNextPageIcon = new Label(compNextPageInfo, SWT.NONE);
 		lblNextPageIcon.setImage(PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_INFO_TSK));
 		Label lblNextPageInfo = new Label(compNextPageInfo, SWT.NONE);
-		lblNextPageInfo.setText("On the next page, you can generate blocks from multiple character numbers.");
-		
+		lblNextPageInfo.setText(Messages.TANLTextPage_6);
+
 		Observer previewRefreshObserver = new Observer() {
 			@Override
 			public void update(Observable arg0, Object arg1) {

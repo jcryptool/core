@@ -1,5 +1,6 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
+import java.text.MessageFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -56,12 +57,12 @@ public class CharsToNumbersComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 			}
 		});
-		btnConvertIntoASCII.setText("Convert characters into numbers according to ASCII");
+		btnConvertIntoASCII.setText(Messages.CharsToNumbersComposite_0);
 		btnConvertIntoASCII.setEnabled(canUseASCII);
 		
 		
 		btnConvertIntoIndices = new Button(this, SWT.RADIO);
-		btnConvertIntoIndices.setText("Convert characters into the their indices in a selected alphabet: ");
+		btnConvertIntoIndices.setText(Messages.CharsToNumbersComposite_1);
 		GridData btnConvertIntoIndicesLayoutData = new GridData();
 		btnConvertIntoIndicesLayoutData.verticalIndent = 5;
 		btnConvertIntoIndices.setLayoutData(btnConvertIntoIndicesLayoutData);
@@ -80,6 +81,8 @@ public class CharsToNumbersComposite extends Composite {
 			GridData warningCompositeLayoutData = new GridData();
 			warningCompositeLayoutData.verticalIndent = 0;
 			GridLayout warningCompositeLayout = new GridLayout(2, false);
+			warningCompositeLayout.marginWidth = 0;
+			warningCompositeLayout.marginHeight = 0;
 			warningComposite.setLayoutData(warningCompositeLayoutData);
 			warningComposite.setLayout(warningCompositeLayout);
 			warningCompositeLayout.marginWidth = 0;
@@ -93,7 +96,9 @@ public class CharsToNumbersComposite extends Composite {
 			Label lblNotAllAlphas = new Label(warningComposite, SWT.NONE);
 			GridData lblNotAllAlphasLayoutData = new GridData();
 			lblNotAllAlphas.setLayoutData(lblNotAllAlphasLayoutData);
-			lblNotAllAlphas.setText("Some alphabets are not available because the RSA modulus N (" + (maxNumber+1) + ") is too small.");
+			lblNotAllAlphas.setText(MessageFormat
+					.format(Messages.CharsToNumbersComposite_2,
+							(maxNumber+1)));
 		}
 		
 		this.uiInput = makeUIInput();
@@ -124,7 +129,7 @@ public class CharsToNumbersComposite extends Composite {
 				}
 			}
 			if(biggestUnderLimit == null) {
-				AtomAlphabet alpha = new AtomAlphabet("ABCDE");
+				AtomAlphabet alpha = new AtomAlphabet("ABCDE"); //$NON-NLS-1$
 				AlphabetCharsToNumbers conv = new AlphabetCharsToNumbers(alpha);
 				this.getConversionInput().writeContent(conv);
 				this.getConversionInput().synchronizeWithUserSide();
@@ -169,7 +174,7 @@ public class CharsToNumbersComposite extends Composite {
 			asciiCharacters[i] = (char) i;
 		}
 		alpha = new AtomAlphabet(asciiCharacters);
-		alpha.setName("ASCII 256 characters");
+		alpha.setName("ASCII 256 characters"); //$NON-NLS-1$
 		return alpha;
 	}
 
@@ -213,7 +218,7 @@ public class CharsToNumbersComposite extends Composite {
 
 			@Override
 			public String getName() {
-				return "character conversion alphabet";
+				return Messages.CharsToNumbersComposite_5;
 			}
 		};
 		

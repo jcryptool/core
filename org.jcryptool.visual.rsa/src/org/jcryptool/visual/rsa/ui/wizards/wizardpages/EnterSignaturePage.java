@@ -133,8 +133,8 @@ public class EnterSignaturePage extends TextWizardPage {
 		});
 
 		// fill in old data
-		text.setText(data.getSignature());
-		plaintext.setText(data.getPlainText());
+		text.setText(data.getSignature_Old());
+		plaintext.setText(data.getPlainText_Old());
 		SHA1Checkbox.setSelection(!data.getSimpleHash());
 
 		// finish

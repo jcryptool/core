@@ -20,10 +20,10 @@ public class TANLNumberLoaderPage extends WizardPage {
 	 * Create the wizard.
 	 */
 	public TANLNumberLoaderPage(int maxNumber) {
-		super("Load numbers");
+		super(Messages.TANLNumberLoaderPage_wtitle);
 		this.maxNumber = maxNumber;
-		setTitle("Enter data blocks");
-		setDescription("Enter data blocks directly");
+		setTitle(Messages.TANLNumberLoaderPage_wtitle);
+		setDescription(Messages.TANLNumberLoaderPage_wdescr);
 	}
 
 	/**

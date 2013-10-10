@@ -283,11 +283,11 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         BigInteger e;
         try {
             n = new BigInteger(nField.getText());
-            if (n.compareTo(Constants.TWOFIVESIX) < 0) {
+            /*if (n.compareTo(Constants.TWOFIVESIX) < 0) {
                 setPageComplete(false);
             	setErrorMessage(null);
                 setErrorMessage(Messages.NewPublicKeyPage_error_n_lt_256);
-            } else if (!isTwoComposite(n)) {
+            } else*/ if (!isTwoComposite(n)) {
                 setPageComplete(false);
             	setErrorMessage(null);
                 setErrorMessage(Messages.NewPublicKeyPage_error_n_not_p_by_q);

@@ -98,7 +98,7 @@ public class EnterCiphertextPage extends TextWizardPage {
 		});
 
 		// fill in old data
-		text.setText(data.getCipherText());
+		text.setText(data.getCipherText_Old());
 
 		// finish
 		setControl(composite);

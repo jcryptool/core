@@ -18,6 +18,8 @@ import static org.jcryptool.visual.library.Constants.WHITE;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.window.Window;
@@ -60,15 +62,20 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer;
+import org.jcryptool.crypto.ui.textblockloader.Repr;
+import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 import org.jcryptool.visual.library.Constants;
 import org.jcryptool.visual.library.Lib;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
 import org.jcryptool.visual.rsa.ui.wizards.KeySelectionWizard;
+import org.jcryptool.visual.rsa.ui.wizards.NewTextEntryWizard;
 import org.jcryptool.visual.rsa.ui.wizards.TextEntryWizard;
 // import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
 // import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
+import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterSignaturePage;
 
 /**
  * composite, display of everything this visual shows, that is not contained within wizards.
@@ -77,7 +84,9 @@ import org.jcryptool.visual.rsa.ui.wizards.TextEntryWizard;
  */
 public class RSAComposite extends Composite {
 
-    /** whether dialogs are wanted TODO: default to true. */
+    private static ConversionStringToBlocks lastEnteredEncryptConversion;
+
+	/** whether dialogs are wanted TODO: default to true. */
     public boolean dialog = false;
 
     /** buttons for running the wizards and finishing up. */
@@ -96,10 +105,10 @@ public class RSAComposite extends Composite {
     private Text nText;
 
     /** field for the text entered in the wizard. */
-    private Text textText;
+//    private Text textText;
 
     /** field for the signature or the text translated to numbers. */
-    private Text numberText;
+//    private Text numberText;
 
     /** the table to show the fast exponentiation. */
     private Table fastExpTable;
@@ -110,11 +119,13 @@ public class RSAComposite extends Composite {
     /** buttons for starting and stepping through the fast exponentiation. */
     private Button stepButton, stepbackButton;
 
+//    /** Array for the StepBack Button */
+//    private String[] stepBArray;
     /** Array for the StepBack Button */
-    private String[] stepBArray;
+    private List<Integer> stepBArray;
 
     /** field for displaying the result. */
-    private Text resultText;
+    private NumberblocksAndTextViewer resultDisplay;
 
     /** button to copy the result to the clipboard. */
     private Button copyButton;
@@ -132,7 +143,7 @@ public class RSAComposite extends Composite {
     };
 
     /** array containing the split up numbertext. */
-    private String[] numbers;
+    private List<Integer> numbers;
 
     /** current index for the stepping through the fast exponentiation. */
     private int numberIndex = 0;
@@ -180,6 +191,9 @@ public class RSAComposite extends Composite {
     private Label stepLabel;
 
     private boolean started = false;
+    
+    Repr[] reprWOString = new Repr[]{Repr.HEX, Repr.DECIMAL, Repr.BINARY};
+	Repr[] reprWithString = new Repr[]{Repr.STRING, Repr.HEX, Repr.DECIMAL, Repr.BINARY};
 
     /** Selectionlistener for the start/step button when in step-state */
     private SelectionAdapter stepSelectionListener = new SelectionAdapter() {
@@ -190,7 +204,7 @@ public class RSAComposite extends Composite {
             stepbackButton.setEnabled(true);
             updateTable();
             updateLabel();
-            if (numberIndex == numbers.length - 1) {
+            if (numberIndex == numbers.size() - 1) {
                 stepButton.setEnabled(false);
                 runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
@@ -208,17 +222,17 @@ public class RSAComposite extends Composite {
 
         @Override
         public void widgetSelected(final SelectionEvent e) {
-            data.setTemp("");
+            data.setTemp(""); //$NON-NLS-1$
             viewHex();
             textEnter.setEnabled(false);
-            numbers = numberText.getText().split(" "); //$NON-NLS-1$
+            numbers = textText.getContent(); //$NON-NLS-1$
             numberIndex = 0;
-            stepButton.setEnabled(numberIndex != numbers.length - 1);
+            stepButton.setEnabled(numberIndex != numbers.size() - 1);
             initTable();
             updateTable();
             updateLabel();
             started = true;
-            if (numberIndex == numbers.length - 1) {
+            if (numberIndex == numbers.size() - 1) {
                 runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
                 finish();
@@ -231,6 +245,12 @@ public class RSAComposite extends Composite {
             finish();
         }
     };
+
+	private NumberblocksAndTextViewer textText;
+
+	private NumberblocksAndTextViewer text2;
+
+	private Button textEnter2;
 
     /**
      * constructor calls super and saves a reference to the view.
@@ -371,12 +391,16 @@ public class RSAComposite extends Composite {
         fDtextEnter.left = new FormAttachment(4);
         fDtextEnter.top = new FormAttachment(keysel, BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
 
+        Composite compLoadTextBtns = new Composite(canvas, SWT.NONE);
+        compLoadTextBtns.setLayout(new GridLayout());
+        compLoadTextBtns.setLayoutData(fDtextEnter);
+        
         // Text enter Button
-        textEnter = new Button(canvas, SWT.PUSH);
+        textEnter = new Button(compLoadTextBtns, SWT.PUSH);
         textEnter.setBackground(RED);
         textEnter.setEnabled(false);
         textEnter.setText(Messages.RSAComposite_enter_text);
-        textEnter.setLayoutData(fDtextEnter);
+        textEnter.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         textEnter.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -388,16 +412,40 @@ public class RSAComposite extends Composite {
                     messageBox.setMessage(Messages.RSAComposite_textentry_messagebox_text);
                     messageBox.open();
                 }
-                if (new WizardDialog(getShell(), new TextEntryWizard(data.getAction(), data)).open() == Window.OK) {
-                    textEntered();
-                }
+                buttonLoadTextClicked();
             }
+
         });
+        
+        if(data.getAction() == Action.VerifyAction) {
+        	// Text enter Button #2
+        	textEnter2 = new Button(compLoadTextBtns, SWT.PUSH);
+//        	textEnter2.setBackground(RED);
+        	textEnter2.setEnabled(false);
+        	textEnter2.setText(Messages.RSAComposite_1);
+        	textEnter2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        	textEnter2.addSelectionListener(new SelectionAdapter() {
+        		
+        		@Override
+        		public void widgetSelected(final SelectionEvent e) {
+//        			if (dialog) {
+//        				final MessageBox messageBox =
+//        						new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION | SWT.OK);
+//        				messageBox.setText(Messages.EnterCiphertextPage_textentry);
+//        				messageBox.setMessage(Messages.RSAComposite_textentry_messagebox_text);
+//        				messageBox.open();
+//        			}
+        			buttonLoadText2Clicked();
+        		}
+        		
+        	});
+        	
+        }
 
         // Form Data to place Calculate Button
         final FormData fDcalc = new FormData(BIGBUTTONWIDTH, BIGBUTTONHEIGHT);
         fDcalc.left = new FormAttachment(4);
-        fDcalc.top = new FormAttachment(textEnter, 2 * BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
+        fDcalc.top = new FormAttachment(compLoadTextBtns, 2 * BIGBUTTONVERTICALSPACE, SWT.BOTTOM);
 
         // Run Calculations Button
         runCalc = new Button(canvas, SWT.PUSH);
@@ -430,6 +478,7 @@ public class RSAComposite extends Composite {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 textEnter.setEnabled(false);
+                if(data.getAction() == Action.VerifyAction) textEnter2.setEnabled(false);
                 // runCalc.setEnabled(false);
                 runCalc.setBackground(GREEN);
                 // startButton.setEnabled(false);
@@ -465,7 +514,7 @@ public class RSAComposite extends Composite {
                         break;
                     }
                 }
-                data.setTemp(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
+                data.setTempAsNumbers(data.getAction().run(textText.getContent(), getExponent(), //$NON-NLS-1$
                         data.getN()));
                 // resultText.setText(data.getAction().run(numberText.getText().split(" "), getExponent(), //$NON-NLS-1$
                 // data.getN()));
@@ -492,6 +541,77 @@ public class RSAComposite extends Composite {
         });
     }
 
+    private void buttonLoadTextClicked() {
+    	RSAData dataForWizard = data;
+    	
+    	NewTextEntryWizard wizard = makeWizardLoadInput(dataForWizard, 1);
+		
+		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
+		int open = wizardDialog.open();
+		
+		List<Integer> loadedData;
+		switch (data.getAction()) {
+		case EncryptAction:
+		case SignAction:
+			loadedData = wizard.getDataBlocks();
+			ConversionStringToBlocks blockConversion = wizard.getSTBConversionUsed();
+			data.setPlainTextAsNumbers(loadedData);
+			data.setPlainTextConversion(blockConversion);
+			break;
+		case DecryptAction:
+			loadedData = wizard.getDataBlocks();
+			data.setCipherTextAsNumbers(loadedData);
+			break;
+		case VerifyAction:
+			loadedData = wizard.getDataBlocks();
+			data.setSignatureAsNumbers(loadedData);
+		default:
+			break;
+		}
+		
+		if (open == Window.OK) {
+            textEntered();
+        }
+	}
+    private void buttonLoadText2Clicked() {
+    	RSAData dataForWizard = data;
+    	
+    	NewTextEntryWizard wizard = makeWizardLoadInput(dataForWizard, 2);
+		
+		WizardDialog wizardDialog = new WizardDialog(getShell(), wizard);
+		int open = wizardDialog.open();
+		
+		List<Integer> loadedData;
+
+		loadedData = wizard.getDataBlocks();
+		ConversionStringToBlocks conversion = wizard.getSTBConversionUsed();
+		
+		data.setPlainTextAsNumbers(loadedData);
+		data.setPlainTextConversion(conversion);
+		
+		if (open == Window.OK) {
+			keysel.setEnabled(false);
+	        textEnter.setBackground(GREEN);
+	        runCalc.setEnabled(true);
+	        stepButton.setEnabled(true);
+	        setTextfield2BlockContent(data.getPlainTextAsNumbers());
+        }
+	}
+
+    
+	/**
+	 * verification step 1: signature
+	 * verification step 2: plaintext (optional)
+	 * 
+	 * @param dataForWizard
+	 * @param verificationStep
+	 * @return
+	 */
+	private NewTextEntryWizard makeWizardLoadInput(RSAData dataForWizard, int verificationStep) {
+		NewTextEntryWizard wizard = new NewTextEntryWizard(dataForWizard, verificationStep);
+		return wizard;
+	}
+	
     /**
      * create the main algorithm view.
      * 
@@ -574,56 +694,83 @@ public class RSAComposite extends Composite {
                 break;
             }
             case VerifyAction: {
-                new Label(g, SWT.NONE).setText(Messages.RSAComposite_text_ver);
+            	new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_ver);
                 break;
             }
         }
 
-        textText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        textText.setText("\n\n\n"); //$NON-NLS-1$
-        textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
-        textText.addModifyListener(new ModifyListener() {
-            public void modifyText(final ModifyEvent e) {
-                if (textText.getText().equals("")) { //$NON-NLS-1$
-                    return;
-                }
-                if (data.getAction() == Action.SignAction) {
-                    numberText.setText(Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()));
-                } else {
-                    final StringBuffer sb = new StringBuffer();
-                    final String s = ((Text) e.widget).getText();
-                    for (int i = 0; i < s.length(); ++i) {
-                        sb.append(Integer.toHexString(s.charAt(i)));
-                        if (i != s.length() - 1) {
-                            sb.append(' ');
-                        }
-                    }
-                    numberText.setText(sb.toString());
-                }
-            }
-        });
+        //signAction -> numberText.setText(Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()));
+        
+        makeTextfield1(g);
+        
+        
+//        textText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+//        textText.setText("\n\n\n"); //$NON-NLS-1$
+//        textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+//        textText.addModifyListener(new ModifyListener() {
+//            public void modifyText(final ModifyEvent e) {
+//                if (textText.getText().equals("")) { //$NON-NLS-1$
+//                    return;
+//                }
+//                if (data.getAction() == Action.SignAction) {
+//                    numberText.setText(Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()));
+//                } else {
+//                    final StringBuffer sb = new StringBuffer();
+//                    final String s = ((Text) e.widget).getText();
+//                    for (int i = 0; i < s.length(); ++i) {
+//                        sb.append(Integer.toHexString(s.charAt(i)));
+//                        if (i != s.length() - 1) {
+//                            sb.append(' ');
+//                        }
+//                    }
+//                    numberText.setText(sb.toString());
+//                }
+//            }
+//        });
         switch (data.getAction()) {
             case EncryptAction: {
-                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_enc);
+//                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_enc);
                 break;
             }
             case DecryptAction: {
-                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_dec);
+//                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_dec);
                 break;
             }
             case SignAction: {
-                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_sig);
+//                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_sig);
                 break;
             }
             case VerifyAction: {
-                new Label(g, SWT.NONE).setText(Messages.RSAComposite_numbertext_header_ver);
+            	new Label(g, SWT.NONE).setText(Messages.RSAComposite_text_ver);
                 break;
             }
         }
-        numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
-        numberText.setText("\n\n\n"); //$NON-NLS-1$
-        numberText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+        
+        if(data.getAction() == Action.VerifyAction) {
+        	makeTextfield2(g);
+        }
+//        numberText = new Text(g, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+//        numberText.setText("\n\n\n"); //$NON-NLS-1$
+//        numberText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
     }
+
+	private void makeTextfield2(Group g) {
+		text2 = new NumberblocksAndTextViewer(g, SWT.NONE, new Repr[]{Repr.STRING, Repr.HEX, Repr.DECIMAL, Repr.BINARY});
+        text2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+	}
+
+	private void makeTextfield1(final Group g) {
+		Repr[] reprOptions;
+		if(data.getAction().usesTextualInput()) {
+			reprOptions = reprWithString;
+		} else {
+			reprOptions = reprWOString;
+		}
+		
+		textText = new NumberblocksAndTextViewer(g, SWT.NONE, reprOptions);
+        textText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+	}
+
 
     /**
      * create the calculations group where the fast exponentiation table and the step result are displayed.
@@ -660,7 +807,7 @@ public class RSAComposite extends Composite {
                 }
                 updateTable();
                 updateLabel();
-                if (numberIndex == numbers.length - 2) {
+                if (numberIndex == numbers.size() - 2) {
                     stepButton.setEnabled(true);
                     runCalc.setEnabled(true);
                     runCalc.setBackground(GREEN);
@@ -668,22 +815,25 @@ public class RSAComposite extends Composite {
                     viewHex();
                 }
 
-                switch (data.getAction()) {
-                    case EncryptAction:
-                        stepBArray = data.getTemp().split(" ");
-                        data.setTemp(data.getTemp().substring(
-                                0,
-                                data.getTemp().length()
-                                        - (stepBArray[stepBArray.length - 2].length()
-                                                + stepBArray[stepBArray.length - 1].length() + 2)));
-                        viewHex();
-                        break;
-
-                    case DecryptAction:
-                        data.setTemp(data.getTemp().substring(0, data.getTemp().length() - 2));
-                        viewHex();
-                        break;
-                }
+                stepBArray = data.getTempAsNumbers();
+                data.setTempAsNumbers(data.getTempAsNumbers().subList(
+                		0,
+                		data.getTempAsNumbers().size()-2));
+                viewHex();
+//                switch (data.getAction()) {
+//                    case EncryptAction:
+//                        stepBArray = data.getTempAsNumbers();
+//                        data.setTempAsNumbers(data.getTempAsNumbers().subList(
+//                                0,
+//                                data.getTempAsNumbers().size()-2));
+//                        viewHex();
+//                        break;
+//
+//                    case DecryptAction:
+//                        data.setTempAsNumbers(data.getTempAsNumbers().subList(0, data.getTempAsNumbers().size() - 1));
+//                        viewHex();
+//                        break;
+//                }
             }
         });
 
@@ -737,7 +887,7 @@ public class RSAComposite extends Composite {
      * updates the label that shows the current calculated step
      */
     private void updateLabel() {
-        stepLabel.setText(NLS.bind(Messages.RSAComposite_step1, new Object[] {numberIndex + 1, numbers.length}));
+        stepLabel.setText(NLS.bind(Messages.RSAComposite_step1, new Object[] {numberIndex + 1, numbers.size()}));
     }
 
     /**
@@ -859,6 +1009,9 @@ public class RSAComposite extends Composite {
         }
     }
 
+    private static double logb(double a, double b) {
+		return Math.log(a) / Math.log(b);
+	}
     /**
      * updates the fast exponentiation table i.e. displays the next step
      */
@@ -869,11 +1022,12 @@ public class RSAComposite extends Composite {
         final TableItem item = fastExpTable.getItem(0);
         final BigInteger exponent = getExponent();
         // add 2k to the text
-        final String base = numbers[numberIndex];
+        final Integer base2 = numbers.get(numberIndex);
+//        final String base = numbers[numberIndex];
         // final String basis = new BigInteger(base, HEXBASE).toString();
-        fastExpText.setText(base + "2k"); //$NON-NLS-1$
-        int count = base.length();
-        final int stellenzahl = base.length();
+        fastExpText.setText(Integer.toHexString(base2) + "2k"); //$NON-NLS-1$
+        int count = (int)Math.ceil(logb(base2, 16));
+        final int stellenzahl = (int)Math.ceil(logb(base2, 16));
         // set single superscript style for the "2"
         fastExpText.setStyle(superScript, count, count++);
         // set double superscript style for the k
@@ -881,10 +1035,10 @@ public class RSAComposite extends Composite {
         BigInteger value;
         BigInteger result = BigInteger.ONE;
         final BigInteger modul = data.getN();
-        String res = base + Messages.RSAComposite_caret + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-2$ //$NON-NLS-1$
-        String text = base + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
+        String res = Integer.toHexString(base2) + Messages.RSAComposite_caret + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$
+        String text = Integer.toHexString(base2) + exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
         for (int i = 0; i < fastExpTable.getColumnCount() - 1; i++) {
-            value = new BigInteger(base, Constants.HEXBASE).modPow(Constants.TWO.pow(i), modul);
+            value = new BigInteger(Integer.toHexString(base2), Constants.HEXBASE).modPow(Constants.TWO.pow(i), modul);
             item.setText(i + 1, value.toString(Constants.HEXBASE));
             if (exponent.testBit(i)) {
                 // calculate the result
@@ -897,7 +1051,7 @@ public class RSAComposite extends Composite {
                 if (!text.endsWith(" = ")) { //$NON-NLS-1$
                     text += Messages.RSAComposite_mult;
                 }
-                text += base + "2" + i; //$NON-NLS-1$
+                text += Integer.toHexString(base2) + "2" + i; //$NON-NLS-1$
             }
         }
         final StringBuilder stringBuilder = new StringBuilder();
@@ -922,20 +1076,23 @@ public class RSAComposite extends Composite {
         }
 
         stepResult.setText(res);
-        if (data.getTemp().contains("\n")) { //$NON-NLS-1$
-            data.setTemp(""); //$NON-NLS-1$
+        if (data.getTempAsNumbers().size() == 0) { //$NON-NLS-1$
             viewHex();
         }
         if (data.getAction() == Action.DecryptAction) {
-            data.setTemp(data.getTemp() + (char) result.intValue());
+        	LinkedList<Integer> newList = new LinkedList<Integer>(data.getTempAsNumbers());
+        	newList.add(result.intValue());
+            data.setTempAsNumbers(newList);
             viewHex();
         } else {
-            String text1 = data.getTemp();
-            if (!data.getTemp().equals("")) { //$NON-NLS-1$
-                text1 += " "; //$NON-NLS-1$
-            }
-            text1 += result.toString(Constants.HEXBASE);
-            data.setTemp(text1);
+        	LinkedList<Integer> newList = new LinkedList<Integer>(data.getTempAsNumbers());
+        	newList.add(result.intValue());
+//            String text1 = data.getTemp();
+//            if (!data.getTemp().equals("")) { //$NON-NLS-1$
+//                text1 += " "; //$NON-NLS-1$
+//            }
+//            text1 += result.toString(Constants.HEXBASE);
+            data.setTempAsNumbers(newList);
             viewHex();
         }
         // last thing: pack
@@ -957,27 +1114,32 @@ public class RSAComposite extends Composite {
         group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         group.setLayout(new GridLayout(3, false));
         group.setText(Messages.RSAComposite_result);
-        resultText = new Text(group, SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI | SWT.WRAP);
-        data.setTemp("\n\n");
-        resultText.setText("\n\n"); //$NON-NLS-1$
-        resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        resultText.addModifyListener(new ModifyListener() {
-
-            public void modifyText(final ModifyEvent e) {
-                copyButton.setEnabled(true);
-                if (data.getAction() == Action.VerifyAction && !textText.getText().equals("")) { //$NON-NLS-1$
-                    String text;
-                    if (Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()).equals(data.getTemp().trim())) {
-                        text = Messages.RSAComposite_valid;
-                        verifiedText.setForeground(GREEN);
-                    } else {
-                        text = Messages.RSAComposite_invalid;
-                        verifiedText.setForeground(RED);
-                    }
-                    verifiedText.setText(text);
-                }
-            }
-        });
+        //TODO: dynamic change of repr options
+        resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE, Repr.values());
+        resultDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//        resultText = new Text(group, SWT.V_SCROLL | SWT.READ_ONLY | SWT.BORDER | SWT.MULTI | SWT.WRAP);
+//        data.setTemp("\n\n");
+        data.setTempAsNumbers(new LinkedList<Integer>());
+//        resultText.setText("\n\n"); //$NON-NLS-1$
+//        resultText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+//        resultText.addModifyListener(new ModifyListener() {
+//
+//            public void modifyText(final ModifyEvent e) {
+//                copyButton.setEnabled(true);
+                //TODO: reenable verification result display
+//                if (data.getAction() == Action.VerifyAction && !textText.getText().equals("")) { //$NON-NLS-1$
+//                    String text;
+//                    if (Lib.hash(textText.getText(), data.getSimpleHash(), data.getN()).equals(data.getTemp().trim())) {
+//                        text = Messages.RSAComposite_valid;
+//                        verifiedText.setForeground(GREEN);
+//                    } else {
+//                        text = Messages.RSAComposite_invalid;
+//                        verifiedText.setForeground(RED);
+//                    }
+//                    verifiedText.setText(text);
+//                }
+//            }
+//        });
 
         verifiedText = new StyledText(group, SWT.READ_ONLY);
         verifiedText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
@@ -992,8 +1154,9 @@ public class RSAComposite extends Composite {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                final Clipboard cb = new Clipboard(Display.getCurrent());
-                cb.setContents(new Object[] {data.getTemp()}, new Transfer[] {TextTransfer.getInstance()});
+            	//TODO: reenable clipboard
+//                final Clipboard cb = new Clipboard(Display.getCurrent());
+//                cb.setContents(new Object[] {data.getTemp()}, new Transfer[] {TextTransfer.getInstance()});
             }
         });
     }
@@ -1117,7 +1280,7 @@ public class RSAComposite extends Composite {
                             keySelected();
                             // if we got plaintext/ciphertext/signature, set
                             // them up as well
-                            if (data.getPlainText().length() != 0 || data.getCipherText().length() != 0) {
+                            if ((data.getPlainTextAsNumbers()!=null && data.getPlainTextAsNumbers().size() != 0) || (data.getCipherTextAsNumbers() !=null && data.getCipherTextAsNumbers().size() != 0)) {
                                 textEntered();
                             }
                         }
@@ -1141,6 +1304,7 @@ public class RSAComposite extends Composite {
         keysel.setEnabled(false);
         keysel.setBackground(GREEN);
         textEnter.setEnabled(false);
+        if(data.getAction() == Action.VerifyAction) textEnter2.setEnabled(false);
         textEnter.setBackground(GREEN);
         runCalc.setEnabled(true);
         runCalc.setBackground(RED);
@@ -1161,6 +1325,7 @@ public class RSAComposite extends Composite {
         keysel.setEnabled(false);
         keysel.setBackground(GREEN);
         textEnter.setEnabled(false);
+        if(data.getAction() == Action.VerifyAction) textEnter2.setEnabled(false);
         textEnter.setBackground(GREEN);
         runCalc.setEnabled(true);
         runCalc.setBackground(RED);
@@ -1176,6 +1341,7 @@ public class RSAComposite extends Composite {
         keysel.setEnabled(true);
         keysel.setBackground(RED);
         textEnter.setEnabled(false);
+        if(data.getAction() == Action.VerifyAction) textEnter2.setEnabled(false);
         textEnter.setBackground(RED);
         switch (data.getAction()) {
             case EncryptAction:
@@ -1196,8 +1362,9 @@ public class RSAComposite extends Composite {
         eText.setText(""); //$NON-NLS-1$
         dText.setText(""); //$NON-NLS-1$
         nText.setText(""); //$NON-NLS-1$
-        textText.setText(""); //$NON-NLS-1$
-        numberText.setText(""); //$NON-NLS-1$
+        setTextfield1BlockContent(new LinkedList<Integer>());
+        //TODO: reset also verification plain text field
+//        numberText.setText(""); //$NON-NLS-1$
         fastExpTable.removeAll();
         for (final TableColumn column : fastExpTable.getColumns()) {
             column.dispose();
@@ -1208,8 +1375,8 @@ public class RSAComposite extends Composite {
         stepbackButton.setEnabled(false);
         numberIndex = 0;
         started = false;
-        data.setTemp("");
-        resultText.setText(""); //$NON-NLS-1$
+        data.setTemp(""); //$NON-NLS-1$
+        setTextfieldResultBlockContent(new LinkedList<Integer>());
         copyButton.setEnabled(false);
         verifiedText.setText(""); //$NON-NLS-1$
         styl0r.setText(""); //$NON-NLS-1$
@@ -1217,7 +1384,7 @@ public class RSAComposite extends Composite {
         styledFastExtText.redraw();
         styledFastExpMulText.redraw();
         inheritCombo.select(0);
-        stepLabel.setText("");
+        stepLabel.setText(""); //$NON-NLS-1$
         stepButton.removeSelectionListener(stepSelectionListener);
         stepButton.removeSelectionListener(startSelectionListener);
         stepButton.addSelectionListener(startSelectionListener);
@@ -1225,12 +1392,58 @@ public class RSAComposite extends Composite {
         // stepButton.pack();
     }
 
-    /**
+    private void setTextfield1BlockContent(List<Integer> content) {
+    	ConversionStringToBlocks stb = calcSTBForTextfield1Data(this.data);
+    	textText.setContent(content, stb);
+    }
+    
+    private void setTextfield2BlockContent(List<Integer> content) {
+    	ConversionStringToBlocks stb = data.getPlainTextConversion();
+    	text2.setContent(content, stb);
+    }
+    
+    private ConversionStringToBlocks calcSTBForTextfield1Data(RSAData data2) {
+		if(data2.getAction() == Action.EncryptAction) {
+			return data.getPlainTextConversion();
+		} else if(data2.getAction() == Action.DecryptAction) {
+			return null;
+		} else if(data2.getAction() == Action.SignAction) {
+			return data2.getPlainTextConversion();
+		} else if(data2.getAction() == Action.VerifyAction) {
+			return null;
+		}
+		return null;
+	}
+    
+    private void setTextfieldResultBlockContent(List<Integer> content) {
+    	ConversionStringToBlocks stb = calcSTBForTextfieldResultData(this.data);
+    	resultDisplay.setContent(content, stb);
+    }
+    
+    private ConversionStringToBlocks calcSTBForTextfieldResultData(RSAData data2) {
+		if(data2.getAction() == Action.EncryptAction) {
+			return null;
+		} else if(data2.getAction() == Action.DecryptAction) {
+			return getConversionFromFirstTab();
+		} else if(data2.getAction() == Action.SignAction) {
+			return null;
+		} else if(data2.getAction() == Action.VerifyAction) {
+			return null;
+		}
+		return null;
+	}
+
+	private ConversionStringToBlocks getConversionFromFirstTab() {
+		return RSAComposite.lastEnteredEncryptConversion;
+	}
+
+	/**
      * called to set the values of the key selection to their fields.
      */
     private void keySelected() {
         keysel.setBackground(GREEN);
         textEnter.setEnabled(true);
+        if(data.getAction() == Action.VerifyAction) textEnter2.setEnabled(true);
         if (data.getE() != null) {
             eText.setText(data.getE().toString(Constants.HEXBASE));
         }
@@ -1247,6 +1460,9 @@ public class RSAComposite extends Composite {
      * called to set the plaintext / ciphertext / signature to their fields
      */
     private void textEntered() {
+    	if(data.getAction() == Action.EncryptAction) {
+    		RSAComposite.lastEnteredEncryptConversion = data.getPlainTextConversion();
+    	}
         keysel.setEnabled(false);
         textEnter.setBackground(GREEN);
         runCalc.setEnabled(true);
@@ -1254,14 +1470,15 @@ public class RSAComposite extends Composite {
         switch (data.getAction()) {
             case EncryptAction:
             case SignAction:
-                textText.setText(data.getPlainText());
+                setTextfield1BlockContent(data.getPlainTextAsNumbers());
                 break;
             case DecryptAction:
-                numberText.setText(data.getCipherText());
+            	setTextfield1BlockContent(data.getCipherTextAsNumbers());
                 break;
             case VerifyAction:
-                textText.setText(data.getPlainText());
-                numberText.setText(data.getSignature());
+            	//according action for verification plain text field
+//                textText.setText(data.getPlainText());
+            	setTextfield1BlockContent(data.getSignatureAsNumbers());
                 break;
             default:
                 break;
@@ -1276,13 +1493,13 @@ public class RSAComposite extends Composite {
     private void finish() {
         switch (data.getAction()) {
             case EncryptAction:
-                data.setCipherText(data.getTemp());
+                data.setCipherTextAsNumbers(data.getTempAsNumbers());
                 break;
             case DecryptAction:
-                data.setPlainText(data.getTemp());
+                data.setPlainTextAsNumbers(data.getTempAsNumbers());
                 break;
             case SignAction:
-                data.setSignature(data.getTemp());
+                data.setSignatureAsNumbers(data.getTempAsNumbers());
                 break;
         }
     }
@@ -1299,21 +1516,25 @@ public class RSAComposite extends Composite {
             if (data.getN() != null) {
                 nText.setText(data.getN().toString());
             }
-            if (data.getTemp() != null && data.getTemp() != "" && data.getTemp() != "\n\n") {
+            if (data.getTempAsNumbers() != null && data.getTempAsNumbers().size()!=0) {
                 switch (data.getAction()) {
                     case DecryptAction:
-                        resultText.setText(data.getTemp());
+//                        resultText.setText(data.getTemp());
+                    	//TODO: disable string repr
+                    	setTextfieldResultBlockContent(data.getTempAsNumbers());
                         break;
                     default:
-                        StringBuilder sb = new StringBuilder();
-                        String[] words = data.getTemp().split(" ");
-                        for (String word : words) {
-                            sb.append(Integer.valueOf(word, Constants.HEXBASE));
-                            sb.append(" ");
-                        }
-                        resultText.setText(sb.toString());
+//                        StringBuilder sb = new StringBuilder();
+//                        String[] words = data.getTemp().split(" ");
+//                        for (String word : words) {
+//                            sb.append(Integer.valueOf(word, Constants.HEXBASE));
+//                            sb.append(" ");
+//                        }
+//                        resultText.setText(sb.toString());
+                    	setTextfieldResultBlockContent(data.getTempAsNumbers());
                         break;
                 }
+            	
             }
             return false;
         } else if (hex.getSelection()) {
@@ -1326,14 +1547,15 @@ public class RSAComposite extends Composite {
             if (data.getN() != null) {
                 nText.setText(data.getN().toString(Constants.HEXBASE));
             }
-            if (data.getTemp() != null) {
+            if (data.getTempAsNumbers() != null) {
 
                 switch (data.getAction()) {
                     case DecryptAction:
-                        resultText.setText(data.getTemp());
+                    	//TODO: disable string repr;
+                    	setTextfieldResultBlockContent(data.getTempAsNumbers());
                         break;
                     default:
-                        resultText.setText(data.getTemp());
+                    	setTextfieldResultBlockContent(data.getTempAsNumbers());
                         break;
                 }
             }

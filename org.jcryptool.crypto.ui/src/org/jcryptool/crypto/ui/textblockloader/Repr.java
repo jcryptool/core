@@ -22,10 +22,10 @@ public enum Repr {
 			} else if(this == HEX) {
 				return Integer.toHexString(number);
 			} else {
-				throw new RuntimeException("unknown numeric representation");
+				throw new RuntimeException("unknown numeric representation"); //$NON-NLS-1$
 			}
 		} else {
-			throw new RuntimeException("String conversion not supported here");
+			throw new RuntimeException("String conversion not supported here"); //$NON-NLS-1$
 		}
 	}
 	
@@ -38,10 +38,10 @@ public enum Repr {
 			} else if(this == HEX) {
 				return 16;
 			} else {
-				throw new RuntimeException("unknown numeric representation");
+				throw new RuntimeException("unknown numeric representation"); //$NON-NLS-1$
 			}
 		} else {
-			throw new RuntimeException("radix not supported here");
+			throw new RuntimeException("radix not supported here"); //$NON-NLS-1$
 		}
 	}
 }

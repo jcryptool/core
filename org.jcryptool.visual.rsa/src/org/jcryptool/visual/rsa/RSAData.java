@@ -12,6 +12,7 @@ package org.jcryptool.visual.rsa;
 import java.math.BigInteger;
 import java.security.PrivateKey;
 import java.security.UnrecoverableKeyException;
+import java.util.List;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -22,6 +23,7 @@ import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -69,7 +71,7 @@ public class RSAData {
     private String temp;
     
     /** current ciphertext for decrypting. */
-    private String cipherText;
+    private List<Integer> cipherText;
 
     /** private exponent. */
     private BigInteger d;
@@ -87,13 +89,13 @@ public class RSAData {
     private String password;
 
     /** plaintext for encryption or signing. */
-    private String plainText;
+    private List<Integer> plainText;
 
     /** second factor. */
     private BigInteger q;
 
     /** signature of a text. */
-    private String signature;
+    private List<Integer> signature;
 
     /** the private key alias. */
     private KeyStoreAlias privateAlias;
@@ -109,6 +111,16 @@ public class RSAData {
     
     private boolean randomPlaintext;
     private boolean randomKey;
+
+	private List<Integer> plainTextAsNumbers;
+
+	private List<Integer> cipherTextAsNumbers;
+
+	private List<Integer> signatureAsNumbers;
+
+	private ConversionStringToBlocks plainTextConversion;
+
+	private List<Integer> tempAsNumbers;
 
     /**
      * setter for the standalone property
@@ -137,29 +149,34 @@ public class RSAData {
         return this.randomKey;
     }
     
-    /**
-     * getter for temp.
-     *
-     * @return the temp
-     */
-    public final String getTemp() {
-        if (this.temp == null) {
-            return ""; //$NON-NLS-1$
-        } else {
-            return this.temp;
-        }
-    }
+//    /**
+//     * getter for temp.
+//     *
+//     * @return the temp
+//     */
+//    public final String getTemp() {
+//        if (this.temp == null) {
+//            return ""; //$NON-NLS-1$
+//        } else {
+//            return this.temp;
+//        }
+//    }
+    
+    public List<Integer> getTempAsNumbers() {
+		return tempAsNumbers;
+	}
     
     /**
      * getter for the ciphertext.
      *
      * @return the cipherText
      */
-    public final String getCipherText() {
+    public final String getCipherText_Old() {
         if (this.cipherText == null) {
             return ""; //$NON-NLS-1$
         } else {
-            return this.cipherText;
+//            return this.cipherText;
+        	return null;
         }
     }
 
@@ -213,11 +230,12 @@ public class RSAData {
      *
      * @return the plainText
      */
-    public final String getPlainText() {
+    public final String getPlainText_Old() {
         if (this.plainText == null) {
             return ""; //$NON-NLS-1$
         } else {
-            return this.plainText;
+//            return this.plainText;
+        	return null;
         }
     }
 
@@ -235,11 +253,12 @@ public class RSAData {
      *
      * @return the signature
      */
-    public final String getSignature() {
+    public final String getSignature_Old() {
         if (this.signature == null) {
             return ""; //$NON-NLS-1$
         } else {
-            return this.signature;
+//            return this.signature;
+        	return null;
         }
     }
 
@@ -270,13 +289,18 @@ public class RSAData {
         this.temp = temp;
     }
     
+    public void setTempAsNumbers(List<Integer> temp) {
+		this.tempAsNumbers = temp;
+	}
+    
     /**
      * setter for the ciphertext.
      *
      * @param cipherText the cipherText to set
      */
-    public final void setCipherText(final String cipherText) {
-        this.cipherText = cipherText;
+    public final void setCipherText_Old(final String cipherText) {
+//        this.cipherText = cipherText;
+        this.cipherText = null;
     }
 
     /**
@@ -329,8 +353,9 @@ public class RSAData {
      *
      * @param plainText the plainText to set
      */
-    public final void setPlainText(final String plainText) {
-        this.plainText = plainText;
+    public final void setPlainText_Old(final String plainText) {
+//        this.plainText = plainText;
+        this.plainText = null;
     }
 
     /**
@@ -347,8 +372,9 @@ public class RSAData {
      *
      * @param signature the signature to set
      */
-    public final void setSignature(final String signature) {
-        this.signature = signature;
+    public final void setSignature_Old(final String signature) {
+//        this.signature = signature;
+        this.signature = null;
     }
 
     /**
@@ -484,9 +510,9 @@ public class RSAData {
             }
         }
 
-        this.cipherText = oldData.cipherText;
-        this.plainText = oldData.plainText;
-        this.signature = oldData.signature;
+        this.cipherTextAsNumbers = oldData.cipherTextAsNumbers;
+        this.plainTextAsNumbers = oldData.plainTextAsNumbers;
+        this.signatureAsNumbers = oldData.signatureAsNumbers;
 
     }
 
@@ -521,7 +547,7 @@ public class RSAData {
     
     public boolean plainNeeded() {
 
-    	if (this.plainText == null) {
+    	if (this.plainTextAsNumbers == null) {
     		return true;
     	}
     	else{
@@ -546,7 +572,7 @@ public class RSAData {
     public void randomPlain() {
     	this.randomPlaintext = true;
         this.simpleHash = true;
-        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
+//        this.plainText = "abcdefghijklmnopqrstuvwxyz 0123456789";
     }
     
     
@@ -566,4 +592,33 @@ public class RSAData {
         this.q = privkey.getQ().bigInt;
         this.e = privkey.getPublicExponent();
     }
+
+	public void setPlainTextAsNumbers(List<Integer> loadedData) {
+		this.plainTextAsNumbers = loadedData;
+	}
+	public List<Integer> getPlainTextAsNumbers() {
+		return plainTextAsNumbers;
+	}
+
+	public void setCipherTextAsNumbers(List<Integer> loadedData) {
+		this.cipherTextAsNumbers = loadedData;
+	}
+	public List<Integer> getCipherTextAsNumbers() {
+		return cipherTextAsNumbers;
+	}
+
+	public void setSignatureAsNumbers(List<Integer> loadedData) {
+		this.signatureAsNumbers = loadedData;
+	}
+	public List<Integer> getSignatureAsNumbers() {
+		return signatureAsNumbers;
+	}
+
+	public void setPlainTextConversion(ConversionStringToBlocks blockConversion) {
+		this.plainTextConversion = blockConversion;
+	}
+	public ConversionStringToBlocks getPlainTextConversion() {
+		return plainTextConversion;
+	}
+	
 }
