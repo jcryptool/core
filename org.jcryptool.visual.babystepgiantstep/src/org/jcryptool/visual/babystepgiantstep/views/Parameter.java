@@ -124,6 +124,8 @@ public class Parameter extends TitleAreaDialog {
 				tmpText.setBackground(Constants.RED);
 			}
 			tmpText.setSelection(tmpText.getText().length());
+			
+			checkBackgroundValues();
 		}
 	};
 
