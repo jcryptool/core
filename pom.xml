@@ -75,6 +75,7 @@
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>
 	<module>org.jcryptool.visual.he</module>
+	<module>org.jcryptool.visual.huffmanCoding</module>
 	<module>org.jcryptool.visual.jctca</module>
 	<module>org.jcryptool.visual.kleptography</module>
 	<module>org.jcryptool.visual.library</module>
