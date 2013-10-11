@@ -10,8 +10,6 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.core.operations,
  org.eclipse.zest.layouts;bundle-version="1.1.0",
  org.eclipse.gef;bundle-version="3.7.2",
- org.eclipse.draw2d.doc.isv;bundle-version="3.5.0",
- org.eclipse.gef.doc.isv;bundle-version="3.5.0",
  org.eclipse.zest.core;bundle-version="1.3.0",
  org.eclipse.help
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
