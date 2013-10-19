@@ -15,7 +15,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -23,7 +22,6 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -35,18 +33,18 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.services.ISourceProviderService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.divide.DividePlugin;
 import org.jcryptool.games.divide.dialogs.ChoosePlayerDialog;
 import org.jcryptool.games.divide.logic.GameMachine;
 import org.jcryptool.games.divide.logic.GameMachineEvent;
+import org.jcryptool.games.divide.logic.GameState;
 import org.jcryptool.games.divide.logic.HumanPlayer;
 import org.jcryptool.games.divide.logic.IMathEngine;
 import org.jcryptool.games.divide.logic.IPlayer;
 import org.jcryptool.games.divide.logic.RandomPlayer;
 import org.jcryptool.games.divide.logic.TrivialMathEngine;
-import org.jcryptool.games.divide.sourceProviders.NewGameStateSourceProvider;
+import org.jcryptool.games.divide.sourceProviders.MenuBarActivation;
 
 
 public class DivideView extends ViewPart implements Observer {
@@ -174,14 +172,14 @@ public class DivideView extends ViewPart implements Observer {
 					int playerIndex = choosePlayer.open();
 					if (playerIndex != SWT.DEFAULT) {
 						IMathEngine mathEngine = new TrivialMathEngine();
-						gameMachine = new GameMachine(players, mathEngine, Integer.parseInt(textStartValue.getText()));
+						gameMachine = new GameMachine(mathEngine, players, Integer.parseInt(textStartValue.getText()));
 						gameMachine.addObserver(DivideView.this);
 						gameMachine.start(players.get(playerIndex));
 					}
 				}
 			}
 		});
-		
+
 		// playing field
 		playingField = new Composite(upperContent, SWT.NONE);
 		playingField.setLayout(new GridLayout(10, true));
@@ -232,105 +230,130 @@ public class DivideView extends ViewPart implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		GameMachineEvent event = (GameMachineEvent) arg1;
 		if (event != null) {
-			List<Integer> listOfNumbers = event.getListOfNumbers();
+			GameState state = event.getState();
+			if (state != null) {
+				List<Integer> listOfNumbers = state.getListOfNumbers();
 
-			switch (event.getEventType()) {
-			
-			case START_EVENT: {
-				// disable new game command button
-				enableNewGameState(false);
+				// set undo / redo button
+				setUndoRedo(state);
 				
-				// disable options
-				enableOptionsGroup(false);
-				// cleanup playing area in the case that there was already a game
-				cleanupPlayingArea();
-				// create playing field
-				int numOfLabels = listOfNumbers.size();
-				labels = new CLabel[numOfLabels];
-				for (int i = 0; i < labels.length; i++) {
-					labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
-					labels[i].setText(listOfNumbers.get(i).toString());
-					labels[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-					labels[i].setFont(FontService.getLargeBoldFont());
-					labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-					labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-					labels[i].addMouseListener(new MouseListener() {
-						
-						@Override
-						public void mouseUp(MouseEvent e) {
-
-						}						
-						
-						@Override
-						public void mouseDown(MouseEvent e) {
-							// human interaction
-							CLabel label = (CLabel) e.widget;
-							int number = Integer.valueOf(label.getText());
-							gameMachine.nextTurn(number);
-						}
-						
-						@Override
-						public void mouseDoubleClick(MouseEvent e) {
+				switch (event.getEventType()) {
+				
+				case START_EVENT: {
+					// disable new game command button
+					MenuBarActivation.enableNewGameState(false);
+					// disable options
+					enableOptionsGroup(false);
+					// cleanup playing area in the case that there was already a game
+					cleanupPlayingArea();
+					// create playing field
+					int numOfLabels = listOfNumbers.size();
+					labels = new CLabel[numOfLabels];
+					for (int i = 0; i < labels.length; i++) {
+						labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
+						labels[i].setText(listOfNumbers.get(i).toString());
+						labels[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+						labels[i].setFont(FontService.getLargeBoldFont());
+						labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+						labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+						labels[i].addMouseListener(new MouseListener() {
 							
-						}
-					});
+							@Override
+							public void mouseUp(MouseEvent e) {
+								
+							}						
+							
+							@Override
+							public void mouseDown(MouseEvent e) {
+								// human interaction
+								CLabel label = (CLabel) e.widget;
+								int number = Integer.valueOf(label.getText());
+								gameMachine.nextTurn(number);
+							}
+							
+							@Override
+							public void mouseDoubleClick(MouseEvent e) {
+								
+							}
+						});
+					}
+					updatePlayingField(listOfNumbers);
+					labelPlayerActive = new CLabel[gameMachine.getPlayers().size()];
+					for (int i = 0; i < labelPlayerActive.length; i++) {
+						labelPlayerActive[i] = new CLabel(gameInformationGroup, SWT.CENTER | SWT.SHADOW_OUT);
+						labelPlayerActive[i].setText(gameMachine.getPlayers().get(i).getName());
+						labelPlayerActive[i].setFont(FontService.getNormalFont());
+					}
+					setActivePlayer(state.getPlayerCurrentRound());
+					lowerContent.layout();
+					
+					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					break;
+				}	
+				
+				case REDO_EVENT:
+				case NEXT_ROUND_EVENT: {
+					// update playing field
+					updatePlayingField(listOfNumbers);
+					// update table
+					addTableRow(state);
+					// next turn
+					setActivePlayer(state.getPlayerCurrentRound());
+					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					break;
 				}
-				updatePlayingField(listOfNumbers);
-				labelPlayerActive = new CLabel[gameMachine.getPlayers().size()];
-				for (int i = 0; i < labelPlayerActive.length; i++) {
-					labelPlayerActive[i] = new CLabel(gameInformationGroup, SWT.CENTER | SWT.SHADOW_OUT);
-					labelPlayerActive[i].setText(gameMachine.getPlayers().get(i).getName());
-					labelPlayerActive[i].setFont(FontService.getNormalFont());
+				
+				case UNDO_EVENT: {
+					// update playing field
+					updatePlayingField(listOfNumbers);
+					// update table
+					if (gameMachine.hasComputerPlayer()) {
+						scoreTable.remove(scoreTable.getItemCount() - 2, scoreTable.getItemCount() - 1);
+					} else {
+						scoreTable.remove(scoreTable.getItemCount() - 1);
+					}
+					setActivePlayer(state.getPlayerCurrentRound());
+					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					break;
 				}
-				setActivePlayer(event.getNextPlayer());
-				lowerContent.layout();
-				nextTurn(event.getNextPlayer(), listOfNumbers);
-				break;
-			}	
-			
-			case NEXT_ROUND_EVENT: {
-				// update playing field
-				updatePlayingField(listOfNumbers);
-				// update table
-				addTableRow(event);
-				// next turn
-				setActivePlayer(event.getNextPlayer());
-				nextTurn(event.getNextPlayer(), listOfNumbers);
-				break;
-			}	
-			
-			case END_EVENT: {
-				updatePlayingField(listOfNumbers);
-				setActivePlayer(null);
 				
-				RowData fieldData = new RowData(5,20);
-				Label gap = new Label(gameInformationGroup, SWT.CENTER);
-				gap.setLayoutData(fieldData);
-				gap.setFont(FontService.getLargeBoldFont());
-				CLabel winner = new CLabel(gameInformationGroup, SWT.CENTER);
-				winner.setText(Messages.DivideView_17 + event.getNextPlayer().getName());
-				winner.setFont(FontService.getLargeBoldFont());
-				gameInformationGroup.layout();
+				case END_EVENT: {
+					// update playing field
+					updatePlayingField(listOfNumbers);
+					setActivePlayer(null);
+					
+					RowData fieldData = new RowData(5,20);
+					Label gap = new Label(gameInformationGroup, SWT.CENTER);
+					gap.setLayoutData(fieldData);
+					gap.setFont(FontService.getLargeBoldFont());
+					CLabel winner = new CLabel(gameInformationGroup, SWT.CENTER);
+					winner.setText(Messages.DivideView_17 + state.getPlayerCurrentRound().getName());
+					winner.setFont(FontService.getLargeBoldFont());
+					gameInformationGroup.layout();
+					
+					// update table
+					addTableRow(state);
+					
+					MenuBarActivation.enableNewGameState(true);
+					MenuBarActivation.enableUndo(false);
+					MenuBarActivation.enableRedo(false);
+					break;
+				}	
 				
-				// update table
-				addTableRow(event);
+				default:
+					break;
+				}
 				
-				enableNewGameState(true);
-				break;
-			}	
-			
-			default:
-				break;
 			}
 		}
 	}
 	
-	private void addTableRow(GameMachineEvent event) {
-		String turn = String.valueOf(event.getTurn());
-		String player = event.getCurrentPlayer().getName();
-		String chosenNumber = String.valueOf(event.getChosenNumber());
-		String eliminatedNumbers = createStringFromIntArray(event.getEliminatedNumbers());
-		String remainingNumbers = createStringFromIntArray(event.getListOfNumbers());
+	private void addTableRow(GameState state) {
+		String turn = String.valueOf(state.getTurn());
+		String player = state.getPlayerLastRound().getName();
+		String chosenNumber = String.valueOf(state.getChosenNumber());
+		String eliminatedNumbers = createStringFromIntArray(state.getEliminatedNumbers());
+		String remainingNumbers = createStringFromIntArray(state.getListOfNumbers());
 		
 		TableItem tableEntry = new TableItem(scoreTable, SWT.NONE);
 		tableEntry.setText(0, turn);
@@ -426,17 +449,36 @@ public class DivideView extends ViewPart implements Observer {
 		}
 	}
 	
-	private void enableNewGameState(boolean isEnabled) {
-		ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(ISourceProviderService.class);
-		if (service != null) {
-			NewGameStateSourceProvider provider = (NewGameStateSourceProvider) service.getSourceProvider(NewGameStateSourceProvider.NEW_GAME_COMMAND_STATE);
-			if (provider != null) {
-				provider.setState(isEnabled);
-			}
+	private void setUndoRedo(GameState state) {
+		/*
+		 * it could be that the computer has started the game.
+		 * in that case there is no undo if the turn == 1 because
+		 * that would mean we could undo the decision of the computer
+		 */
+		
+		// set undo
+		IPlayer startingPlayer = gameMachine.getStartingPlayer();
+		if (!startingPlayer.isHuman() && state.getTurn() == 1) {
+			MenuBarActivation.enableUndo(false);
+		} else if (state.getTurn() > 0) {
+			MenuBarActivation.enableUndo(true);
+		} else {
+			MenuBarActivation.enableUndo(false);
+		}
+		
+		// set redo
+		if (state.getTurn() < gameMachine.getStateHistorySize() - 1) {
+			MenuBarActivation.enableRedo(true);
+		} else {
+			MenuBarActivation.enableRedo(false);
 		}
 	}
 	
 	public Group getOptionsGroup() {
 		return optionsGroup;
+	}
+	
+	public GameMachine getGameMachine() {
+		return gameMachine;
 	}
 }

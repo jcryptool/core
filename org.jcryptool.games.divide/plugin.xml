@@ -32,6 +32,20 @@
                visible="true">
          </separator>
          <command
+               commandId="org.jcryptool.games.divide.undoCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/undo_edit.gif"
+               style="push">
+         </command>
+         <command
+               commandId="org.jcryptool.games.divide.redoCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/redo_edit.gif"
+               style="push">
+         </command>
+         <separator
+               name="org.jcryptool.games.divide.separator2"
+               visible="true">
+         </separator>
+         <command
                commandId="org.jcryptool.games.divide.helpCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
                style="push">
@@ -41,20 +55,24 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.jcryptool.games.divide.helpCommand"
-            name="%Toolbar.Help">
-      </command>
-      <command
             id="org.jcryptool.games.divide.newGameCommand"
             name="%Toolbar.NewGame">
+      </command>
+      <command
+            id="org.jcryptool.games.divide.undoCommand"
+            name="%Toolbar.Undo">
+      </command>
+      <command
+            id="org.jcryptool.games.divide.redoCommand"
+            name="%Toolbar.Redo">
+      </command>
+      <command
+            id="org.jcryptool.games.divide.helpCommand"
+            name="%Toolbar.Help">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
-      <handler
-            class="org.jcryptool.games.divide.handler.HelpHandler"
-            commandId="org.jcryptool.games.divide.helpCommand">
-      </handler>
       <handler
             class="org.jcryptool.games.divide.handler.NewGameHandler"
             commandId="org.jcryptool.games.divide.newGameCommand">
@@ -66,6 +84,34 @@
                </equals>
             </with>
          </activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.games.divide.handler.UndoHandler"
+            commandId="org.jcryptool.games.divide.undoCommand">
+         <activeWhen>
+            <with
+                  variable="org.jcryptool.games.divide.undo">
+               <equals
+                     value="enabled">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.games.divide.handler.RedoHandler"
+            commandId="org.jcryptool.games.divide.redoCommand">
+         <activeWhen>
+            <with
+                  variable="org.jcryptool.games.divide.redo">
+               <equals
+                     value="enabled">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.games.divide.handler.HelpHandler"
+            commandId="org.jcryptool.games.divide.helpCommand">
       </handler>
    </extension>
    <extension
@@ -87,6 +133,20 @@
             provider="org.jcryptool.games.divide.sourceProviders.NewGameStateSourceProvider">
          <variable
                name="org.jcryptool.games.divide.newGameCommandState"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+      <sourceProvider
+            provider="org.jcryptool.games.divide.sourceProviders.UndoSourceProvider">
+         <variable
+               name="org.jcryptool.games.divide.undo"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+      <sourceProvider
+            provider="org.jcryptool.games.divide.sourceProviders.RedoSourceProvider">
+         <variable
+               name="org.jcryptool.games.divide.redo"
                priorityLevel="workbench">
          </variable>
       </sourceProvider>
