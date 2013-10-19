@@ -29,18 +29,18 @@ and <b>Code table</b>.
 On the first Tab <b>Parameter</b> there are two scenarios to choose:
 
 <p>
-<b>Scenario 1 - Compress:</b><br>
-This scenario describes compression of text. You can load a textfile or enter a text into 
-the field <b>Inputtext</b>. 
+<b>Scenario 1 -- Compress:</b><br>
+This scenario describes compression of text. You can load a text file or enter a text into 
+the field <b>Input text</b>. 
 
-To load a textfile click on the button <b>Open uncompressed file...</b>. A file chooser dialog 
+To load a text file click on the button <b>Open uncompressed file...</b>. A file chooser dialog 
 of the operating system is opened and filtered by text files (<b>ISO-8859-1</b>).
 <p>
 
 <img src="huffman_unkompdatei_laden.jpg">
 
 <p>
-After choosing the file the content of the file is loaded into the field <b>Inputtext</b> and the button 
+After choosing the file the content of the file is loaded into the field <b>Input text</b> and the button 
 <b>Compress</b> is enabled. The file size is determined and is displayed near to the text <b>File size (in bytes)</b>.
 You can use it to compare the file sizes after compression.
 <p>
@@ -48,9 +48,9 @@ You can use it to compare the file sizes after compression.
 <img src="huffman_unkompdatei_geladen.jpg">
 
 <p>
-You can also compress a manually entered text. For that you just have to enter the text into the field <b>Inputtext</b>. 
+You can also compress a manually entered text. For that you just have to enter the text into the field <b>Input text</b>. 
 Once the text is entered the button <b>Open uncompressed file...</b> is disabled.
-So you can choose between the manually entered text and loading a textfile.  To return to the initial 
+So you can choose between the manually entered text and loading a text file.  To return to the initial 
 state you just clear the text that you previously entered. This enables the button 
 <b>Open uncompressed file...</b> again.
 <p>
@@ -58,19 +58,16 @@ state you just clear the text that you previously entered. This enables the butt
  <img src="huffman_manu_input.jpg">
 
 <p>
-Click on the <b>Compress</b> button to compress the text shown in the field <b>Inputtext</b>. An output file with the file extension 
+Click on the <b>Compress</b> button <img src="huffman_unkompdatei_komprimiert.jpg"> to compress the text shown in the field <b>Input text</b>. An output file with the file extension 
 <b>.huffman</b> is generated in the user's home directory. The file path and the size of the output file
 are displayed. The button <b>Compress</b> is disabled and the button <b>Uncompress</b> enabled.
 <p>
 
-<img src="huffman_unkompdatei_komprimiert.jpg">
-
-<p>
 Now you can click on the <b>Uncompress</b> button to uncompress the previously compressed text.
-The uncompressed file displayed in the field <b>Outputtext</b>.
+The uncompressed file displayed in the field <b>Output text</b>.
 <p>
 
-<b>Scenario 2 - Uncompress</b><br>
+<b>Scenario 2 -- Uncompress</b><br>
 In this scenario you can uncompress a compressed file. To perform that you have to click the button 
 <b>Open compressed file...</b> to open a file chooser dialog of the operating system. In this dialog files with the extension <b>.huffman</b> are filtered.
 <p>
@@ -87,7 +84,7 @@ After you choose a <b>.huffman</b> file the file size is determined and displaye
 
 <p>
 Click on the button <b>Uncompress</b> will uncompress the file and displays its content in the field
-<b>Outputtext</b>.
+<b>Output text</b>.
 <p>
 
 <img src="huffman_kompdatei_dekomprimiert.jpg">
@@ -95,7 +92,7 @@ Click on the button <b>Uncompress</b> will uncompress the file and displays its 
 <img src="huffman_output.jpg">
 
 <p>
-It is possible at any time to return on the Initial state and to start the algroithm for new user inputs by clicking the <b>Reset inputs</b> button.
+It is possible at any time to return on the Initial state and to start the algorithm for new user inputs by clicking the <b>Reset inputs</b> button.
 <p>
 
 <img src="huffman_zuruecksetzen.jpg">
@@ -103,10 +100,10 @@ It is possible at any time to return on the Initial state and to start the algro
 <p>
 
 Depending on whether a compression or uncompression is performed, the <b>Huffman tree</b> structure will be displayed on the second tab.
-The Huffman tree is a binary tree, which
+For the graphical structure of the Huffman tree, the ZEST framework was used. The Huffman tree is a binary tree, which
 transmits the information to its leafs. The leafs are <b>Green</b> marked and presents 
 the <b>ASCII characters</b> of the input text. On the edges of the graph the information <b>1</b> or <b>0</b> are displayed.
-This informations is needed to generate the code words which used for each character. 
+This information is needed to generate the code words which used for each character. 
 On the root and the inner nodes of a tree, which was produced by compression, the 
 probabilities of the characters are displayed. On a tree which was generated by uncompressing the root and the inner nodes display an empty node 
 because in this case no probabilities are calculated.
@@ -122,8 +119,7 @@ When you move with the mouse over a leaf, a tooltip shows the code word of the i
 
 <p>
 
-When you click on one of the leafs the corresponding branch will be selected. The branch from the root to
-to the clicked leaf will be highlighted and you can move the branch as needed. The code word of 
+When you click on one of the leafs the corresponding branch will be selected. The branch from the root to the clicked leaf will be highlighted and you can move the branch as needed. The code word of 
 the selected leaf is displayed above.
 <p>
 
@@ -139,19 +135,28 @@ input text, his associated code word is displayed. By clicking on the button
 <img src="huffman_zweig_anzeigen.jpg">
 
 <p>
-In the menu bar you can click on the <img src="huffman_zuruecksetzen_icon.jpg"> icon which works analogous
-to the button <b>Reset inputs</b> to return to the Initial state and start the algorithm for the new user inputs.
 
+The meaning of the icons in the menu bar
 <p>
-You can change the layout of the tree by clicking on the <img src="huffman_strukturwechseln.jpg"> icon in the menu bar. The layout
+<ol type="a">
+	<li>In the menu bar you can click on the <img src="huffman_zuruecksetzen_icon.jpg"> icon which works analogous
+to the button <b>Reset inputs</b> to return to the Initial state and start the algorithm for the new user inputs.
+	</li>
+	<li>You can change the layout of the tree by clicking on the <img src="huffman_strukturwechseln.jpg"> icon in the menu bar. The layout
 of Huffman tree changes dynamically.
 Per default the Huffman tree is shown in <b>tree layout</b>. There are also the layouts <b>Horizontal tree layout</b> 
-and <b>Radial layout</b> available. This displaying options of Huffman tree to simplify the readability
-of the tree.
+and <b>Radial layout</b> available. These displaying options of Huffman tree are offered to simplify the readability
+of the tree.</li>
+	<li>The size of the Huffman tree is directly adapted to the size of the view by creation, so that the tree is completely
+shown. The view can also be zoomed by clicking on the <img src="huffman_baumzoom.jpg"> icon.</li>
+</ol>
+
 
 <p>
-The size of the Huffman tree is directly adapted to the size of the view by creation, so that the tree is completely
-shown. The view can also be zoomed by clicking on the <img src="huffman_baumzoom.jpg"> icon.
+
+
+<p>
+
 
 </body>
 </html>

@@ -8,7 +8,7 @@
 <h1>Huffman Kodierung</h1>
 
 <p>
-Diese Demonstration soll die Funktionsweise des <b>Huffman Kodierung</b> Plug-ins zeigen.
+Diese Demonstration zeigt die Funktionsweise des Plugins <b>Huffman-Kodierung</b>.
 <p>
 
 <p>
@@ -20,18 +20,18 @@ maximieren.
 <img src="huffmankodierung_plugin.jpg">
 
 <p>
-Die Sicht des Plug-ins besteht aus drei Registerkarten: <b>Parameter</b>, <b>Huffmanbaum</b> 
-und <b>Codetabelle</b>.
+Das Plug-ins besteht aus drei Registerkarten: <b>Codierung/Decodierung</b>, <b>Huffman-Baum</b> 
+und <b>Code-Tabelle</b>.
 <p>
 
 <img src="huffmankodierung_registerkarten.jpg">
 
 <p>
-Auf der ersten Registerkarte <b>Parameter</b> hat man zwei Szenarien, aus denen man wählen kann:
+Auf der ersten Registerkarte <b>Codierung/Decodierung</b> hat man zwei Szenarien, aus denen man wählen kann:
 
 <p>
-<b>Szenario 1 - Komprimieren:</b><br>
-In diesem Szenario geht es um die Komprimierung von Text. Dabei hat man die Möglichkeit den Text 
+<b>Szenario 1 -- Komprimieren:</b><br>
+In diesem Szenario geht es um die Komprimierung von Text. Dabei hat man die Möglichkeit den Text entweder
 aus einer Datei zu laden oder ihn manuell in das Feld <b>Eingabetext</b> einzugeben. 
 
 Für das Laden einer Datei kann man folgendermaßen vorgehen:
@@ -44,37 +44,33 @@ Betriebssystems geöffnet und nach Textdateien (<b>ISO-8859-1</b>) gefiltert.
 <p>
 Nachdem man die Datei ausgewählt hat, wird der Inhalt der Datei in das Feld 
 <b>Eingabetext</b> geladen und der Button <b>Komprimieren</b> wird aktiviert. Die Dateigröße wird ermittelt und 
-neben dem Text <b>Dateigröße (in Bytes)</b> angezeigt. Dadurch kann man nach der Komprimierung die Dateigrößen vergleichen.
+neben dem Text <b>Dateigröße (in Bytes)</b> angezeigt. Dadurch kann man die Dateigrößen nach der Komprimierung vergleichen.
 <p>
 
 <img src="huffman_unkompdatei_geladen.jpg">
 
 <p>
 
-Für das manuelle Eingeben eines Freitextes kann man direkt im Feld <b>Eingabetext</b> einen gewünschten Freitext eingeben.
+Für das manuelle Eingeben eines Textes kann man direkt im Feld <b>Eingabetext</b> einen gewünschten Freitext eingeben.
 Sobald der Freitext eingegeben wurde, wird der Button <b>Unkomprimierte Datei öffnen...</b> deaktiviert. Somit kann man zwischen 
-manueller Texteingabe und Laden einer Datei wählen bzw. zum Initialen-Zustand zurückkehren, in dem man den zuvor manuell eingegeben 
-Text wieder löscht. Dadurch wird der <b>Unkomprimierte Datei öffnen...</b> Button wieder aktiviert.
+manueller Texteingabe und Laden einer Datei wählen bzw. zum Initial-Zustand zurückkehren, indem man den zuvor manuell eingegeben 
+Text wieder löscht. Dadurch wird der Button <b>Unkomprimierte Datei öffnen...</b> wieder aktiviert.
 <p>
 
  <img src="huffman_manu_input.jpg">
 
 <p>
 
-Durch Klick auf den <b>Komprimieren</b> Button wird der Text im Feld <b>Eingabetext</b> komprimiert und eine Ausgabedatei mit der 
+Durch Klick auf den Button <b>Komprimieren</b> <img src="huffman_unkompdatei_komprimiert.jpg"> wird der Text im Feld <b>Eingabetext</b> komprimiert und eine Ausgabedatei mit der 
 Dateierweiterung <b>.huffman</b> wird im Home-Verzeichnis des Benutzers erzeugt. Der Dateipfad und die Größe der Ausgabedatei 
 werden angezeigt. Der Button <b>Komprimieren</b> wird deaktiviert und der Button <b>Dekomprimieren</b> aktiviert.
 <p>
 
-<img src="huffman_unkompdatei_komprimiert.jpg">
-
-<p>
-
-Nun kann man durch Klick auf den Button <b>Dekomprimieren</b> der zuvor komprimierte Text dekomprimieren. Dabei wird der dekomprimierte Text im 
+Nun kann man durch Klick auf den Button <b>Dekomprimieren</b> der zuvor komprimierten Text dekomprimieren. Dabei wird der dekomprimierte Text im 
 Feld <b>Ausgabetext</b> angezeigt.
 <p>
 
-<b>Szenario 2 - Dekomprimieren</b><br>
+<b>Szenario 2 -- Dekomprimieren</b><br>
 In diesem Szenario kann man eine komprimierte Datei dekomprimieren. Dafür klickt man auf den Button <b>Komprimierte Datei öffnen...</b>, um den Dateiauswahl-Dialog des Betriebssystems 
 zu öffnen. Dabei wird nach <b>.huffman</b>-Dateien gefiltert.
 <p>
@@ -82,7 +78,7 @@ zu öffnen. Dabei wird nach <b>.huffman</b>-Dateien gefiltert.
 <img src="huffman_kompdatei_laden.jpg">
 
 <p>
-Nach dem eine <b>.huffman</b>-Datei ausgewählt wurde, wird die Dateigröße ermittelt und neben dem Text <b>Dateigröße (in Bytes)</b>  
+Nachdem eine <b>.huffman</b>-Datei ausgewählt wurde, wird die Dateigröße ermittelt und neben dem Text <b>Dateigröße (in Bytes)</b>  
 angezeigt und der Button <b>Dekomprimieren</b> ist aktiviert.
 <p>
 
@@ -97,19 +93,20 @@ Durch Klick auf den Button <b>Dekomprimieren</b> wird die Datei dekomprimiert un
 <img src="huffman_output.jpg">
 
 <p>
-Es ist jederzeit möglich durch Klicken auf dem Button <b>Eingaben zurücksetzen</b> auf den Initialen-Zustand zurückzukehren und den Algorithmus von vorne zu beginnen.
+Es ist jederzeit möglich, durch Klicken auf dem Button <b>Eingaben zurücksetzen</b> auf den Initial-Zustand zurückzukehren und den Algorithmus von vorne zu beginnen.
 <p>
 
 <img src="huffman_zuruecksetzen.jpg">
 
 <p>
 
-Je nachdem ob eine Komprimierung bzw. Dekomprimierung durchgeführt wird, wird auf der zweite Registerkarte, <b>Huffmanbaum</b> die Baumstruktur dargestellt.
-Das Huffmanbaum ist ein Binärbaum, der an seinen Blättern die Informationen trägt. Die Blätter sind <b>Grün</b> markiert und stellen die <b>ASCII-Zeichen</b> des Eingabetextes dar.
-Auf den Kanten des Graph werden die Informationen <b>1</b> oder <b>0</b> dargestellt, die für die 
+Je nachdem, ob eine Komprimierung bzw. Dekomprimierung durchgeführt wird, wird auf der zweite Registerkarte (<b>Huffman-Baum</b>) die Baumstruktur dargestellt.
+Für den graphischen Aufbau des Huffman-Baums wurde das ZEST Framework verwendet.
+Das Huffman-Baum ist ein Binärbaum, der seine Informationen an seinen Blättern trägt. Die Blätter sind <b>Grün</b> markiert und stellen die <b>ASCII-Zeichen</b> des Eingabetextes dar.
+Auf den Kanten des Graphen werden die Informationen <b>1</b> oder <b>0</b> dargestellt, die für die 
 Zusammenstellung der Codewörter für das jeweilige Zeichens verwendet wird. Beim Wurzelknoten und bei den inneren Knoten eines Baums, der durch Komprimierung erstellt wurden, 
 werden die Wahrscheinlichkeiten der Zeichen dargestellt. Bei einem Baum, der durch 
-Dekomprimieren erzeugt wurde, wird der Wurzelknoten bzw. die inneren Knoten als leere Knoten dargestellt, da in diesem Fall keine Wahrscheinlichkeiten berechnet werden.
+Dekomprimieren erzeugt wurde, werden der Wurzelknoten bzw. die inneren Knoten als leere Knoten dargestellt, da in diesem Fall keine Wahrscheinlichkeiten berechnet werden.
 <p>
 
 <img src="huffman_huffmanbaum.jpg">
@@ -121,32 +118,31 @@ Wenn man mit der Maus über ein Blatt geht, wird als Tooltip das Codewort des Ze
 <img src="huffman_blatt_tooltip.jpg">
 
 <p>
-Beim Klick auf einer der Blätter wird der dazugehörigen Zweig selektiert. Der gesamte Zweig von der Wurzel bis zum angeklickten 
+Beim Klick auf eines der Blätter wird der dazu gehörigen Zweig selektiert. Der gesamte Zweig von der Wurzel bis zum angeklickten 
 Blatt wird farblich hervorgehoben und man kann den Zweig bei Bedarf verschieben. Das Codewort des augewählten Blattes wird oben angezeigt.
 <p>
 
 <img src="huffman_blatt_selektieren.jpg">
 
 <p>
-Auf der dritten Registerkarte wird die Codetabelle angezeigt. Dabei wird für jedes <b>ASCII-Zeichen</b>, die in dem Eingabetext vorkommt, das dazu 
+Auf der dritten Registerkarte wird die Code-Tabelle angezeigt. Dabei wird für jedes <b>ASCII-Zeichen</b>, das in dem Eingabetext vorkommt, das dazu 
 gehörige Codewort angezeigt. Beim Klick auf den Button 
-<b>Zweig anzeigen</b>, wechselt die Ansicht auf die <b>Huffmanbaum</b> Registerkarte und selektiert den dazupassenden Zweig.
+<b>Zweig anzeigen</b>, wechselt die Ansicht auf die Registerkarte <b>Huffman-Baum</b> und selektiert den dazupassenden Zweig.
 <p>
 
 <img src="huffman_zweig_anzeigen.jpg">
 
 <p>
-In der Menüleiste kann man durch Klicken auf das <img src="huffman_zuruecksetzen_icon.jpg">-Icon analog zum <b>Eingaben zurücksetzen</b> 
-Button auf den Initialen-Zustand zurückkehren und den Algorithmus von vorne zu beginnen.
 
+Bedeutung der Icons in der Menüleiste
 <p>
-Man kann durch Klicken auf das <img src="huffman_strukturwechseln.jpg">-Icon in der Menüleiste das Layout des Huffmanbaums dynamisch ändern. 
-Standardmäßig wird der Huffmanbaum in <b>Baum Layout</b> angezeigt. Zusätzlich sind die <b>Horizontal Baum Layout</b> und <b>Radial Layout</b> verfügbar. 
-Unterschiedliche Darstellungsmöglichkeiten des Huffmanbaums sollen die Lesbarkeit des Baums vereinfachen.
+<ol type="a">
+	<li>Durch Klicken auf das <img src="huffman_zuruecksetzen_icon.jpg">-Icon (<b>Neustart</b>) kehrt man -- analog zum Button <b>Eingaben zurücksetzen</b> -- auf den Initial-Zustand zurück und kann den Algorithmus von vorne beginnen.</li>
+	<li>Man kann durch Klicken auf das <img src="huffman_strukturwechseln.jpg">-Icon das Layout des Huffman-Baums dynamisch ändern. Standardmäßig wird der Huffman-Baum in "<b>Baum Layout</b>" angezeigt. Zusätzlich sind das "<b>Horizontal Baum Layout</b>" und "<b>Radial Layout</b>" verfügbar. Unterschiedliche Darstellungsmöglichkeiten des Huffman-Baums sollen die Lesbarkeit des Baums vereinfachen.</li>
+	<li>Die Größe des Huffmanbaums wird beim Erstellen direkt an die Größe der View angepasst, so dass er vollständig angezeigt wird. Die Ansicht kann aber auch per <b>Zoom</b>-Funktion über das <img src="huffman_baumzoom.jpg">-Icon skaliert werden.</li>
+</ol>
 
-<p>
-Die Größe des Huffmanbaums wird beim Erstellen direkt an die Größe der View angepasst, so dass er vollständig angezeigt wird. 
-Die Ansicht kann aber auch per <b>Zoom</b>-Funktion über das <img src="huffman_baumzoom.jpg">-Icon skaliert werden.
+
 
 </body>
 </html>

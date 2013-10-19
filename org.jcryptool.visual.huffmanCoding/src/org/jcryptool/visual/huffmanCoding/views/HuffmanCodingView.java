@@ -11,6 +11,7 @@ import java.util.Scanner;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -50,6 +51,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
+import org.jcryptool.visual.huffmanCoding.algorithm.InvalidCharacterException;
 import org.jcryptool.visual.huffmanCoding.algorithm.Node;
 
 /**
@@ -123,10 +125,15 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		composite.setLayout(new GridLayout(4, false));
 
 		styledTextDescription = new StyledText(composite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextDescription.setText(Messages.HuffmanCodingView_1);
+		styledTextDescription.setText(Messages.HuffmanCodingView_16 + "\n" + Messages.HuffmanCodingView_1); //$NON-NLS-1$
+		StyleRange title = new StyleRange();
+		title.start = 0;
+		title.length = Messages.HuffmanCodingView_16.length();
+		title.fontStyle = SWT.BOLD;
+		styledTextDescription.setStyleRange(title);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
 		gd_styledTextDescription.widthHint = 960;
-		gd_styledTextDescription.heightHint = 70;
+		gd_styledTextDescription.heightHint = 80;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
 		btnOpenUncompFile = new Button(composite, SWT.NONE);
@@ -160,9 +167,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					} catch (FileNotFoundException ex) {
 						LogUtil.logError(ex);
 					}
-
 				}
-
 			}
 		});
 		GridData gd_btnOpenUncompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -238,9 +243,20 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						if (!fileComp.exists()) {
 							fileComp.createNewFile();
 						}
+
 						huffmanCode.compress(inputString, new FileOutputStream(fileComp));
+
 					} catch (IOException ex) {
 						LogUtil.logError(ex);
+					} catch (InvalidCharacterException e2) {
+						LogUtil.logError(e2);
+						fileComp.delete();
+						btnCompress.setEnabled(false);
+
+						// TODO meldung "ungültige Datei" in statusleiste
+						// ausgeben
+
+						return;
 					}
 					txtFileCompName.setText(fileComp.getAbsolutePath());
 					txtFileCompName.setSelection(fileComp.getAbsolutePath().length());
@@ -261,7 +277,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 					isCompressed = true;
 				}
-
 			}
 		});
 		GridData gd_btnCompress = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
@@ -330,7 +345,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					txtFileUncompName.setEnabled(false);
 					btnUncompress.setFocus();
 				}
-
 			}
 		});
 		GridData gd_btnOpenCompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -419,7 +433,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					}
 				}
 			}
-
 		});
 
 		tbtmHuffmanTree.setControl(compositeTree);

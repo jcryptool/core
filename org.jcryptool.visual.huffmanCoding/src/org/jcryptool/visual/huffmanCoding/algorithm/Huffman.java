@@ -28,6 +28,7 @@ public class Huffman {
 	private Node root;
 	private StringBuilder sb = null;
 	private ArrayList<Node> resultNodeList = null;
+	private OutputStream out;
 
 	public Huffman() {
 		super();
@@ -45,6 +46,7 @@ public class Huffman {
 	 * @throws IOException
 	 */
 	public void compress(String inFilename, OutputStream out) throws IOException {
+		this.out = out;
 
 		InputStream is = new ByteArrayInputStream(inFilename.getBytes());
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -215,8 +217,10 @@ public class Huffman {
 		} else
 			file.add(tmp);
 		while (tmp != -1) {
-			if (tmp == (char) 0)
+			if (tmp == (char) 0 || tmp >= 256) {
+				out.close();
 				throw new InvalidCharacterException();
+			}
 			charStats[tmp]++;
 			tmp = br.read();
 
