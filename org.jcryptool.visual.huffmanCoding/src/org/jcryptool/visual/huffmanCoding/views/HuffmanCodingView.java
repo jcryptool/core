@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
@@ -28,6 +29,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
@@ -53,6 +55,8 @@ import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
 import org.jcryptool.visual.huffmanCoding.algorithm.InvalidCharacterException;
 import org.jcryptool.visual.huffmanCoding.algorithm.Node;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 
 /**
  * 
@@ -253,8 +257,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						fileComp.delete();
 						btnCompress.setEnabled(false);
 
-						// TODO meldung "ungültige Datei" in statusleiste
-						// ausgeben
+						MessageDialog.openError(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_17,
+								Messages.HuffmanCodingView_18);
+						reset();
 
 						return;
 					}
@@ -276,6 +281,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textInput.setEditable(false);
 
 					isCompressed = true;
+
+					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_19,
+							Messages.HuffmanCodingView_20);
 				}
 			}
 		});
@@ -308,6 +316,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					btnUncompress.setEnabled(false);
 					textOutput.setEditable(false);
 					textOutput.setEnabled(true);
+
+					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_21,
+							Messages.HuffmanCodingView_22);
 				} catch (IOException ex) {
 					LogUtil.logError(ex);
 				}
@@ -404,6 +415,12 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 
 		Control control = viewer.getControl();
+		control.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				viewer.applyLayout();
+			}
+		});
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Graph graph = viewer.getGraphControl();
@@ -643,10 +660,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 * Initialize the zoom bar
 	 */
 	private void fillToolBar() {
-		 ZoomContributionViewItem toolbarZoomContributionViewItem = new
-		 ZoomContributionViewItem(this);
-		 IActionBars bars = getViewSite().getActionBars();
-		 bars.getMenuManager().add(toolbarZoomContributionViewItem);
+		// ZoomContributionViewItem toolbarZoomContributionViewItem = new
+		// ZoomContributionViewItem(this);
+		// IActionBars bars = getViewSite().getActionBars();
+		// bars.getMenuManager().add(toolbarZoomContributionViewItem);
 	}
 
 	@Override
