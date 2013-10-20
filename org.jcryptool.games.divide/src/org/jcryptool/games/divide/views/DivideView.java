@@ -1,7 +1,5 @@
 package org.jcryptool.games.divide.views;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -45,6 +43,8 @@ import org.jcryptool.games.divide.logic.IPlayer;
 import org.jcryptool.games.divide.logic.RandomPlayer;
 import org.jcryptool.games.divide.logic.TrivialMathEngine;
 import org.jcryptool.games.divide.sourceProviders.MenuBarActivation;
+import org.jcryptool.games.divide.sourceProviders.NewGameStateSourceProvider;
+import org.jcryptool.games.divide.util.DividerGameUtil;
 
 
 public class DivideView extends ViewPart implements Observer {
@@ -92,15 +92,13 @@ public class DivideView extends ViewPart implements Observer {
 		descriptionGroup.setLayout(new RowLayout());
 		descriptionGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 		StyledText description = new StyledText(descriptionGroup, SWT.READ_ONLY);
-		//Label description = new Label(descriptionGroup, SWT.LEFT);
-		//description.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		description.setText(Messages.DivideView_20);
 		
 		// options pane
 		
 		// gaps
 		RowData smallGapLayout = new RowData(1, SWT.DEFAULT);
-		RowData largeGapLayout = new RowData(15, SWT.DEFAULT);
+		//RowData largeGapLayout = new RowData(15, SWT.DEFAULT);
 		RowData hugeGapLayout = new RowData(50, SWT.DEFAULT);
 		
 		optionsGroup = new Group(upperContent, SWT.NONE);
@@ -158,6 +156,7 @@ public class DivideView extends ViewPart implements Observer {
 
 			@Override
 			public void handleEvent(Event event) {
+				// start game pushed
 				// create game machine, pass over params and start
 				if (!textStartValue.getText().isEmpty()) {
 					ArrayList<IPlayer> players = new ArrayList<IPlayer>();
@@ -180,11 +179,14 @@ public class DivideView extends ViewPart implements Observer {
 			}
 		});
 
-		// playing field
+		// create initial playing field according to default number input from config
 		playingField = new Composite(upperContent, SWT.NONE);
 		playingField.setLayout(new GridLayout(10, true));
 		playingField.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
-		
+		int startingNumber = Integer.parseInt(textStartValue.getText());
+		IMathEngine tmpMathEngine = new TrivialMathEngine();
+		createPlayingField(tmpMathEngine.getDivider(startingNumber));
+
 		lowerContent = new Composite(sashForm, SWT.NONE);
 		lowerContent.setLayout(new GridLayout(1, false));
 		lowerContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
@@ -218,7 +220,7 @@ public class DivideView extends ViewPart implements Observer {
 			columns[i].pack();
 		}
 		
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, DividePlugin.PLUGIN_ID + ".helpView"); //$NON-NLS-1$
+		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, DividePlugin.PLUGIN_ID + ".helpView");
 	}
 	
 	@Override
@@ -233,51 +235,27 @@ public class DivideView extends ViewPart implements Observer {
 			GameState state = event.getState();
 			if (state != null) {
 				List<Integer> listOfNumbers = state.getListOfNumbers();
-
 				// set undo / redo button
 				setUndoRedo(state);
 				
 				switch (event.getEventType()) {
-				
+
 				case START_EVENT: {
 					// disable new game command button
 					MenuBarActivation.enableNewGameState(false);
 					// disable options
 					enableOptionsGroup(false);
-					// cleanup playing area in the case that there was already a game
-					cleanupPlayingArea();
-					// create playing field
-					int numOfLabels = listOfNumbers.size();
-					labels = new CLabel[numOfLabels];
-					for (int i = 0; i < labels.length; i++) {
-						labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
-						labels[i].setText(listOfNumbers.get(i).toString());
-						labels[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-						labels[i].setFont(FontService.getLargeBoldFont());
-						labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-						labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-						labels[i].addMouseListener(new MouseListener() {
-							
-							@Override
-							public void mouseUp(MouseEvent e) {
-								
-							}						
-							
-							@Override
-							public void mouseDown(MouseEvent e) {
-								// human interaction
-								CLabel label = (CLabel) e.widget;
-								int number = Integer.valueOf(label.getText());
-								gameMachine.nextTurn(number);
-							}
-							
-							@Override
-							public void mouseDoubleClick(MouseEvent e) {
-								
-							}
-						});
+					
+					if (NewGameStateSourceProvider.hasBeenEnabledEver() || startingValueChanged()) {
+						/*
+						 * there has been already a game before or the starting value has been changed
+						 * so that the initial playing field has to be recreated
+						 */
+						cleanupPlayingArea();
+						createPlayingField(listOfNumbers);
 					}
 					updatePlayingField(listOfNumbers);
+					
 					labelPlayerActive = new CLabel[gameMachine.getPlayers().size()];
 					for (int i = 0; i < labelPlayerActive.length; i++) {
 						labelPlayerActive[i] = new CLabel(gameInformationGroup, SWT.CENTER | SWT.SHADOW_OUT);
@@ -337,13 +315,13 @@ public class DivideView extends ViewPart implements Observer {
 					MenuBarActivation.enableNewGameState(true);
 					MenuBarActivation.enableUndo(false);
 					MenuBarActivation.enableRedo(false);
+					gameMachine.deleteObserver(DivideView.this);
 					break;
 				}	
 				
 				default:
 					break;
 				}
-				
 			}
 		}
 	}
@@ -352,8 +330,8 @@ public class DivideView extends ViewPart implements Observer {
 		String turn = String.valueOf(state.getTurn());
 		String player = state.getPlayerLastRound().getName();
 		String chosenNumber = String.valueOf(state.getChosenNumber());
-		String eliminatedNumbers = createStringFromIntArray(state.getEliminatedNumbers());
-		String remainingNumbers = createStringFromIntArray(state.getListOfNumbers());
+		String eliminatedNumbers = DividerGameUtil.createStringFromIntArray(state.getEliminatedNumbers());
+		String remainingNumbers = DividerGameUtil.createStringFromIntArray(state.getListOfNumbers());
 		
 		TableItem tableEntry = new TableItem(scoreTable, SWT.NONE);
 		tableEntry.setText(0, turn);
@@ -367,33 +345,58 @@ public class DivideView extends ViewPart implements Observer {
 		}
 	}
 	
-	private String createStringFromIntArray(List<Integer> listOfNumbers) {
-		String ret = ("["); //$NON-NLS-1$
-		for (int i = 0; i < listOfNumbers.size(); i++) {
-			if (i != listOfNumbers.size() - 1) {
-				ret += (listOfNumbers.get(i));
-				ret += ", "; //$NON-NLS-1$
-			} else {
-				ret += listOfNumbers.get(i);
-			}
+	private void createPlayingField(List<Integer> listOfNumbers) {
+		/*
+		 * creates a playing field including listeners but all labels are
+		 * disabled by default and grayed out
+		 */
+		int numOfLabels = listOfNumbers.size();
+		labels = new CLabel[numOfLabels];
+		for (int i = 0; i < labels.length; i++) {
+			labels[i] = new CLabel(playingField, SWT.PUSH | SWT.CENTER);
+			labels[i].setText(listOfNumbers.get(i).toString());
+			labels[i].setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			labels[i].setFont(FontService.getLargeBoldFont());
+			labels[i].setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+			labels[i].setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+			labels[i].addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseUp(MouseEvent e) {
+					
+				}						
+				
+				@Override
+				public void mouseDown(MouseEvent e) {
+					// human interaction
+					CLabel label = (CLabel) e.widget;
+					int number = Integer.valueOf(label.getText());
+					gameMachine.nextTurn(number);
+				}
+				
+				@Override
+				public void mouseDoubleClick(MouseEvent e) {
+					
+				}
+			});
+			labels[i].setEnabled(false);
+			playingField.layout();
 		}
-		ret += "]"; //$NON-NLS-1$
-		
-		return ret;
 	}
 	
-	private void updatePlayingField(List<Integer> playingFieldList) {
-		for (CLabel b : labels) {
-			Integer value = Integer.parseInt(b.getText());
+	private void updatePlayingField(List<Integer> listOfNumbers) {
+		// enable / disable labels according to listOfNumbers and set color
+		for (CLabel label : labels) {
+			Integer value = Integer.parseInt(label.getText());
 			
-			if (!playingFieldList.contains(value)) {
-				b.setEnabled(false);
-				b.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+			if (!listOfNumbers.contains(value)) {
+				label.setEnabled(false);
+				label.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 			}
 			else {
-				b.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-				b.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
-				b.setEnabled(true);
+				label.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+				label.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+				label.setEnabled(true);
 			}
 		}
 		playingField.layout();
@@ -472,6 +475,10 @@ public class DivideView extends ViewPart implements Observer {
 		} else {
 			MenuBarActivation.enableRedo(false);
 		}
+	}
+	
+	private boolean startingValueChanged() {
+		return !Messages.DivideView_18.equals(textStartValue.getText());
 	}
 	
 	public Group getOptionsGroup() {

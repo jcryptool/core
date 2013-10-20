@@ -15,8 +15,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * @author Sebastian Roland
- * @author sebastian.roland@db.com
- * @version 0.0.1, 22.03.2013
+ * @author seroland86@gmail.com
  */
 
 /**

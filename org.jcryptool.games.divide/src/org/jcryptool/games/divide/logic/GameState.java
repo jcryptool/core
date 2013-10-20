@@ -39,7 +39,7 @@ public class GameState {
 		return playerCurrentRound;
 	}
 
-	public void setPlayerCurrentRound(IPlayer playerCurrentRound) {
+	protected void setPlayerCurrentRound(IPlayer playerCurrentRound) {
 		this.playerCurrentRound = playerCurrentRound;
 	}
 
@@ -47,7 +47,7 @@ public class GameState {
 		return playerLastRound;
 	}
 
-	public void setPlayerLastRound(IPlayer playerLastRound) {
+	protected void setPlayerLastRound(IPlayer playerLastRound) {
 		this.playerLastRound = playerLastRound;
 	}
 	

@@ -9,6 +9,7 @@ import org.eclipse.ui.ISources;
 public class NewGameStateSourceProvider extends AbstractSourceProvider {
 
 	public static final String NEW_GAME_COMMAND_STATE = "org.jcryptool.games.divide.newGameCommandState";
+	private static boolean hasBeenEnabledEver = false;
 	
 	// instance vars
 	private final String ENABLED = "enabled";
@@ -42,8 +43,15 @@ public class NewGameStateSourceProvider extends AbstractSourceProvider {
 	}
 	
 	public void setState(boolean isEnabled) {
+		if (isEnabled && !hasBeenEnabledEver) {
+			hasBeenEnabledEver = true;
+		}
 		this.isEnabled = isEnabled;
 		String currentState = isEnabled ? ENABLED : DISABLED;
 		fireSourceChanged(ISources.WORKBENCH, NEW_GAME_COMMAND_STATE, currentState);
+	}
+	
+	public static boolean hasBeenEnabledEver() {
+		return hasBeenEnabledEver;
 	}
 }

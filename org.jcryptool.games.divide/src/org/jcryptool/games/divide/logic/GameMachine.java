@@ -33,6 +33,7 @@ public class GameMachine extends Observable {
 		}
 	}
 
+	// methods
 	public void start(IPlayer starter) {
 		startingPlayer = starter;
 		// set pregame state
@@ -88,13 +89,12 @@ public class GameMachine extends Observable {
 		addNewState(state);
 		
 		if (chosenNumber == 1) {
-			sendEndEvent();
-			return;
+			GameMachineEvent gameOver = new GameMachineEvent(GameMachineNotifyEvent.END_EVENT, getCurrentState());
+			notifyObservers(gameOver);
+		} else {
+			GameMachineEvent nextRound = new GameMachineEvent(GameMachineNotifyEvent.NEXT_ROUND_EVENT, getCurrentState());
+			notifyObservers(nextRound);
 		}
-		
-		// notify observers
-		GameMachineEvent nextRound = new GameMachineEvent(GameMachineNotifyEvent.NEXT_ROUND_EVENT, getCurrentState());
-		notifyObservers(nextRound);
 	}
 	
 	public void undo() {
@@ -108,11 +108,9 @@ public class GameMachine extends Observable {
 	}
 	
 	public void redo() {
-		//if (getCurrentState().getTurn() < stateHistory.size() - 1) {
-			currentState++;
-			GameMachineEvent redo = new GameMachineEvent(GameMachineNotifyEvent.REDO_EVENT, getCurrentState());
-			notifyObservers(redo);
-		//}
+		currentState++;
+		GameMachineEvent redo = new GameMachineEvent(GameMachineNotifyEvent.REDO_EVENT, getCurrentState());
+		notifyObservers(redo);
 	}
 	
 	private void addNewState(GameState state) {
@@ -132,12 +130,6 @@ public class GameMachine extends Observable {
 		return stateHistory.get(currentState);
 	}
 	
-	private void sendEndEvent() {
-		// notify observers
-		GameMachineEvent gameOver = new GameMachineEvent(GameMachineNotifyEvent.END_EVENT, getCurrentState());
-		notifyObservers(gameOver);
-	}
-	
 	private boolean isSelectionValid(int chosenNumber) {
 		if (!getCurrentState().getListOfNumbers().contains(chosenNumber)) {
 			return false;
@@ -147,6 +139,7 @@ public class GameMachine extends Observable {
 	
 	private void notifyObservers(GameMachineEvent event) {
 		setChanged();
+		//DividerGameUtil.dumpNotifications(event);
 		super.notifyObservers(event);
 	}
 	
