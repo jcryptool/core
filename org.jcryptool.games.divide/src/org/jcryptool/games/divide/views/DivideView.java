@@ -1,6 +1,7 @@
 package org.jcryptool.games.divide.views;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -232,10 +233,9 @@ public class DivideView extends ViewPart implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		GameMachineEvent event = (GameMachineEvent) arg1;
 		if (event != null) {
-			GameState state = event.getState();
-			if (state != null) {
-				List<Integer> listOfNumbers = state.getListOfNumbers();
-				// set undo / redo button
+			List<GameState> stateList = event.getStateList();
+			if (stateList != null) {
+				GameState state = stateList.get(0);
 				setUndoRedo(state);
 				
 				switch (event.getEventType()) {
@@ -252,9 +252,9 @@ public class DivideView extends ViewPart implements Observer {
 						 * so that the initial playing field has to be recreated
 						 */
 						cleanupPlayingArea();
-						createPlayingField(listOfNumbers);
+						createPlayingField(state.getListOfNumbers());
 					}
-					updatePlayingField(listOfNumbers);
+					updatePlayingField(state.getListOfNumbers());
 					
 					labelPlayerActive = new CLabel[gameMachine.getPlayers().size()];
 					for (int i = 0; i < labelPlayerActive.length; i++) {
@@ -265,25 +265,30 @@ public class DivideView extends ViewPart implements Observer {
 					setActivePlayer(state.getPlayerCurrentRound());
 					lowerContent.layout();
 					
-					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
 					break;
 				}	
 				
 				case REDO_EVENT:
 				case NEXT_ROUND_EVENT: {
 					// update playing field
-					updatePlayingField(listOfNumbers);
-					// update table
-					addTableRow(state);
-					// next turn
-					setActivePlayer(state.getPlayerCurrentRound());
-					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					Iterator<GameState> stateIterator = stateList.iterator();
+					while (stateIterator.hasNext()) {
+						state = stateIterator.next();
+						updatePlayingField(state.getListOfNumbers());
+						// update table
+						addTableRow(state);
+						// next turn
+						setActivePlayer(state.getPlayerCurrentRound());
+						setUndoRedo(state);
+					}
+					nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
 					break;
 				}
 				
 				case UNDO_EVENT: {
 					// update playing field
-					updatePlayingField(listOfNumbers);
+					updatePlayingField(state.getListOfNumbers());
 					// update table
 					if (gameMachine.hasComputerPlayer()) {
 						scoreTable.remove(scoreTable.getItemCount() - 2, scoreTable.getItemCount() - 1);
@@ -291,13 +296,13 @@ public class DivideView extends ViewPart implements Observer {
 						scoreTable.remove(scoreTable.getItemCount() - 1);
 					}
 					setActivePlayer(state.getPlayerCurrentRound());
-					nextTurn(state.getPlayerCurrentRound(), listOfNumbers);
+					nextTurn(state.getPlayerCurrentRound(), state.getListOfNumbers());
 					break;
 				}
 				
 				case END_EVENT: {
 					// update playing field
-					updatePlayingField(listOfNumbers);
+					updatePlayingField(state.getListOfNumbers());
 					setActivePlayer(null);
 					
 					RowData fieldData = new RowData(5,20);

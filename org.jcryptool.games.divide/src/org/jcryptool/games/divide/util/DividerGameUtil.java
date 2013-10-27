@@ -24,7 +24,7 @@ public class DividerGameUtil {
 	}
 	
 	public static void dumpNotifications(GameMachineEvent event) {
-		GameState state = event.getState();
+		GameState state = event.getStateList().get(0);
 		String listOfNumbers = DividerGameUtil.createStringFromIntArray(state.getListOfNumbers());
 		String eliminatedNumbers = DividerGameUtil.createStringFromIntArray(state.getEliminatedNumbers());
 		

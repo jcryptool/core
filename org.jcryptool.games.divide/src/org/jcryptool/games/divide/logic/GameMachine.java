@@ -36,7 +36,7 @@ public class GameMachine extends Observable {
 	// methods
 	public void start(IPlayer starter) {
 		startingPlayer = starter;
-		// set pregame state
+		// initialize
 		GameState state = new GameState();
 		state.setTurn(0);
 		state.setListOfNumbers(mathEngine.getDivider(startingNumber));
@@ -46,8 +46,10 @@ public class GameMachine extends Observable {
 		state.setEliminatedNumbers(null);
 		addNewState(state);
 		
-		// notify observer
-		GameMachineEvent startEvent = new GameMachineEvent(GameMachineNotifyEvent.START_EVENT, getCurrentState());
+		// notify observers
+		List<GameState> notificationState = new LinkedList<GameState>();
+		notificationState.add(getCurrentState());
+		GameMachineEvent startEvent = new GameMachineEvent(GameMachineNotifyEvent.START_EVENT, notificationState);
 		notifyObservers(startEvent);
 	}
 	
@@ -88,11 +90,14 @@ public class GameMachine extends Observable {
 		state.setPlayerCurrentRound(players.get(nextPlayerIndex));
 		addNewState(state);
 		
+		// notify observers
+		List<GameState> notificationState = new LinkedList<GameState>();
+		notificationState.add(getCurrentState());
 		if (chosenNumber == 1) {
-			GameMachineEvent gameOver = new GameMachineEvent(GameMachineNotifyEvent.END_EVENT, getCurrentState());
+			GameMachineEvent gameOver = new GameMachineEvent(GameMachineNotifyEvent.END_EVENT, notificationState);
 			notifyObservers(gameOver);
 		} else {
-			GameMachineEvent nextRound = new GameMachineEvent(GameMachineNotifyEvent.NEXT_ROUND_EVENT, getCurrentState());
+			GameMachineEvent nextRound = new GameMachineEvent(GameMachineNotifyEvent.NEXT_ROUND_EVENT, notificationState);
 			notifyObservers(nextRound);
 		}
 	}
@@ -103,13 +108,24 @@ public class GameMachine extends Observable {
 		} else {
 			currentState--;
 		}
-		GameMachineEvent undo = new GameMachineEvent(GameMachineNotifyEvent.UNDO_EVENT, getCurrentState());
+		// notify observers
+		List<GameState> notificationState = new LinkedList<GameState>();
+		notificationState.add(getCurrentState());
+		GameMachineEvent undo = new GameMachineEvent(GameMachineNotifyEvent.UNDO_EVENT, notificationState);
 		notifyObservers(undo);
 	}
 	
 	public void redo() {
-		currentState++;
-		GameMachineEvent redo = new GameMachineEvent(GameMachineNotifyEvent.REDO_EVENT, getCurrentState());
+		List<GameState> notificationState = new LinkedList<GameState>();
+		if (hasComputerPlayer) {
+			for (int i = 0; i < 2; i++) {
+				notificationState.add(stateHistory.get(++currentState));
+			}
+		} else {
+			notificationState.add(stateHistory.get(++currentState));
+		}
+		
+		GameMachineEvent redo = new GameMachineEvent(GameMachineNotifyEvent.REDO_EVENT, notificationState);
 		notifyObservers(redo);
 	}
 	
