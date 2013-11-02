@@ -28,7 +28,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	</prerequisites>
 
 	<properties>
-		<tycho.version>0.18.1</tycho.version>
+		<tycho.version>0.19.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<product.id>jcryptool</product.id>
 		<product.version>0.9.8</product.version>
