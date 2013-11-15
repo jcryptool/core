@@ -21,6 +21,8 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_9;
 	public static String ZestLabelProvider_0;
 	public static String ZestLabelProvider_1;
+	public static String ZestLabelProvider_2;
+	public static String ZestLabelProvider_3;
 	public static String HuffmanCodingView_16;
 	public static String HuffmanCodingView_17;
 	public static String HuffmanCodingView_18;
@@ -28,6 +30,13 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_20;
 	public static String HuffmanCodingView_21;
 	public static String HuffmanCodingView_22;
+	public static String HuffmanCodingView_23;
+	public static String HuffmanCodingView_24;
+	public static String HuffmanCodingView_25;
+	public static String HuffmanCodingView_26;
+	public static String HuffmanCodingView_27;
+	public static String HuffmanCodingView_grpSzenario_text;
+	public static String HuffmanCodingView_btnPfadbernehmen_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

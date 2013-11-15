@@ -119,8 +119,14 @@ public class ZestLabelProvider extends LabelProvider implements IEntityStyleProv
 				IFigure tooltip1 = new Label(n.getCode(), null);
 				return tooltip1;
 			} else if (n.getValue() == 0.0 && n.getParent() != null) {
-				IFigure tooltip1 = new Label(Messages.ZestLabelProvider_1, null);
+				IFigure tooltip1 = new Label(Messages.ZestLabelProvider_2, null);
 				return tooltip1;
+			} else if (n.getParent() == null) {
+				IFigure tooltip1 = new Label(Messages.ZestLabelProvider_3, null);
+				return tooltip1;
+			} else {
+				IFigure tooltip1 = new Label(Messages.ZestLabelProvider_1, null);
+				return tooltip1;				
 			}
 		}
 		return null;

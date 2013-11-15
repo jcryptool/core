@@ -9,11 +9,14 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.eclipse.draw2d.ColorConstants;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -29,7 +32,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
@@ -55,8 +57,6 @@ import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
 import org.jcryptool.visual.huffmanCoding.algorithm.InvalidCharacterException;
 import org.jcryptool.visual.huffmanCoding.algorithm.Node;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 
 /**
  * 
@@ -74,13 +74,13 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private Button btnUncompress;
 
 	private Huffman huffmanCode;
-	private Text txtFileUncompName;
-	private Text txtFileUncompSize;
-	private Text txtFileCompName;
-	private Text txtFileCompSize;
+
+	private Text textFileUncompName;
+	private Text textFileUncompSize;
+	private Text textFileCompName;
+	private Text textFileCompSize;
 	private Button btnOpenUncompFile;
 	private Button btnOpenCompFile;
-	private Button btnReset;
 	private File fileUncomp;
 	private File fileComp;
 	private Composite compositeTree;
@@ -98,6 +98,15 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private ArrayList<GraphConnection> markedConnectionList;
 	private ArrayList<Control> codeTableControls;
 	private StyledText styledTextDescription;
+	private Button btnRadioCompress;
+	private Button btnRadioUncompress;
+	private Group grpSzenario;
+	private Button btnApplyFile;
+	private Group grpCompress;
+	private Label lblDummy;
+	private Composite composite;
+
+	private MenuManager zoom;
 
 	public HuffmanCodingView() {
 		markedConnectionList = new ArrayList<GraphConnection>();
@@ -124,9 +133,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		TabItem tbtmParameter = new TabItem(tabFolder, SWT.NONE);
 		tbtmParameter.setText(Messages.HuffmanCodingView_0);
 
-		Composite composite = new Composite(tabFolder, SWT.NONE);
+		composite = new Composite(tabFolder, SWT.NONE);
 		tbtmParameter.setControl(composite);
-		composite.setLayout(new GridLayout(4, false));
+		composite.setLayout(new GridLayout(3, false));
 
 		styledTextDescription = new StyledText(composite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextDescription.setText(Messages.HuffmanCodingView_16 + "\n" + Messages.HuffmanCodingView_1); //$NON-NLS-1$
@@ -135,94 +144,101 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		title.length = Messages.HuffmanCodingView_16.length();
 		title.fontStyle = SWT.BOLD;
 		styledTextDescription.setStyleRange(title);
-		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 4, 1);
+		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
 		gd_styledTextDescription.widthHint = 960;
 		gd_styledTextDescription.heightHint = 80;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
-		btnOpenUncompFile = new Button(composite, SWT.NONE);
-		btnOpenUncompFile.addSelectionListener(new SelectionAdapter() {
+		grpSzenario = new Group(composite, SWT.NONE);
+		grpSzenario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
+		grpSzenario.setText(Messages.HuffmanCodingView_grpSzenario_text);
+		grpSzenario.setLayout(new GridLayout(6, false));
+
+		btnRadioCompress = new Button(grpSzenario, SWT.RADIO);
+		btnRadioCompress.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-				fd.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
-				fd.setFilterNames(new String[] { Messages.HuffmanCodingView_2 });
-				String filePath = fd.open();
+				Button tmp = null;
 
-				if (filePath != null) {
-					fileUncomp = new File(filePath);
-					txtFileUncompName.setText(filePath);
-					txtFileUncompName.setSelection(filePath.length());
-					int filesize = (int) fileUncomp.length();
-					txtFileUncompSize.setText(String.valueOf(filesize));
-
-					try {
-						Scanner scanner = new Scanner(fileUncomp);
-						String fileString = scanner.useDelimiter("\\Z").next(); //$NON-NLS-1$
-						scanner.close();
-
-						textInput.setText(fileString);
-						textInput.setEditable(false);
-
-						btnOpenUncompFile.setEnabled(false);
-						btnOpenCompFile.setEnabled(false);
-
-						btnCompress.setFocus();
-					} catch (FileNotFoundException ex) {
-						LogUtil.logError(ex);
-					}
+				if (e.getSource() instanceof Button) {
+					tmp = (Button) e.getSource();
 				}
+
+				if (tmp.getSelection()) {
+					grpCompress.dispose();
+					grpCompress = createCompressGroup();
+					composite.layout();
+					setFocus();
+
+					btnApplyFile.setEnabled(false);
+
+					/*
+					 * reset tabs
+					 */
+					resetCodeTable();
+
+					viewer.setInput(null);
+					isCompressed = false;
+
+					styledTextTree.setText(""); //$NON-NLS-1$
+					markedConnectionList = new ArrayList<GraphConnection>();
+					layoutCounter = 1;
+					codeTableControls.clear();
+				}
+
 			}
 		});
-		GridData gd_btnOpenUncompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnOpenUncompFile.widthHint = 180;
-		btnOpenUncompFile.setLayoutData(gd_btnOpenUncompFile);
-		btnOpenUncompFile.setText(Messages.HuffmanCodingView_3);
+		GridData gd_btnRadioCompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnRadioCompress.widthHint = 180;
+		btnRadioCompress.setLayoutData(gd_btnRadioCompress);
+		btnRadioCompress.setSelection(true);
+		btnRadioCompress.setText(Messages.HuffmanCodingView_6);
 
-		txtFileUncompName = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-		txtFileUncompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Label lblFileUncompSize = new Label(composite, SWT.RIGHT);
-		GridData gd_lblFileUncompSize = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_lblFileUncompSize.widthHint = 100;
-		lblFileUncompSize.setLayoutData(gd_lblFileUncompSize);
-		lblFileUncompSize.setText(Messages.HuffmanCodingView_4);
-
-		txtFileUncompSize = new Text(composite, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
-		txtFileUncompSize.setEnabled(false);
-		txtFileUncompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Group grpText = new Group(composite, SWT.NONE);
-		grpText.setLayout(new GridLayout(1, false));
-		GridData gd_grpText = new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1);
-		gd_grpText.heightHint = 120;
-		grpText.setLayoutData(gd_grpText);
-		grpText.setText(Messages.HuffmanCodingView_5);
-
-		textInput = new Text(grpText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		textInput.addModifyListener(new ModifyListener() {
+		btnRadioUncompress = new Button(grpSzenario, SWT.RADIO);
+		btnRadioUncompress.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void modifyText(ModifyEvent e) {
-				Text textField = null;
+			public void widgetSelected(SelectionEvent e) {
+				Button tmp = null;
 
-				if (e.getSource() instanceof Text) {
-					textField = (Text) e.getSource();
+				if (e.getSource() instanceof Button) {
+					tmp = (Button) e.getSource();
+				}
 
-					if (textField.getText().isEmpty()) {
-						btnOpenUncompFile.setEnabled(true);
-						btnOpenCompFile.setEnabled(true);
-						btnCompress.setEnabled(false);
-					} else {
-						btnOpenUncompFile.setEnabled(false);
-						btnOpenCompFile.setEnabled(false);
-						btnCompress.setEnabled(true);
-					}
+				if (tmp.getSelection()) {
+					grpCompress.dispose();
+					grpCompress = createUncompressGroup();
+					composite.layout();
+
+					btnApplyFile.setEnabled(false);
+
+					/*
+					 * reset tabs
+					 */
+					resetCodeTable();
+
+					viewer.setInput(null);
+					isCompressed = false;
+
+					styledTextTree.setText(""); //$NON-NLS-1$
+					markedConnectionList = new ArrayList<GraphConnection>();
+					layoutCounter = 1;
+					codeTableControls.clear();
 				}
 			}
 		});
-		textInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		GridData gd_btnRadioUncompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnRadioUncompress.widthHint = 180;
+		btnRadioUncompress.setLayoutData(gd_btnRadioUncompress);
+		btnRadioUncompress.setText(Messages.HuffmanCodingView_7);
 
-		btnCompress = new Button(composite, SWT.NONE);
+		lblDummy = new Label(grpSzenario, SWT.NONE);
+		lblDummy.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		lblDummy.setText(""); //$NON-NLS-1$
+
+		btnCompress = new Button(grpSzenario, SWT.NONE);
+		GridData gd_btnCompress = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnCompress.widthHint = 180;
+		btnCompress.setLayoutData(gd_btnCompress);
 		btnCompress.setEnabled(false);
 		btnCompress.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -263,10 +279,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 						return;
 					}
-					txtFileCompName.setText(fileComp.getAbsolutePath());
-					txtFileCompName.setSelection(fileComp.getAbsolutePath().length());
-					int filesize = (int) fileComp.length();
-					txtFileCompSize.setText(String.valueOf(filesize));
 
 					viewer.setInput(huffmanCode.getResultNodeList());
 					LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
@@ -276,23 +288,37 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					createCodeTable(huffmanCode.getCodeTable());
 
 					btnCompress.setEnabled(false);
-					btnUncompress.setEnabled(true);
 					btnOpenUncompFile.setEnabled(false);
 					textInput.setEditable(false);
 
 					isCompressed = true;
 
-					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_19,
-							Messages.HuffmanCodingView_20);
+					String message = Messages.HuffmanCodingView_20;
+					if (fileUncomp != null) {
+						double compressRate = (1 - (double) fileComp.length() / (double) fileUncomp.length());
+						String tmp = String.format("%2.2f", compressRate * 100); //$NON-NLS-1$
+						message += "\n\n" + Messages.HuffmanCodingView_23 + fileUncomp.length() + " " + Messages.HuffmanCodingView_24 + "\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								+ Messages.HuffmanCodingView_25 + fileComp.length() + " " + Messages.HuffmanCodingView_24; //$NON-NLS-1$
+
+						if (compressRate < 0) {
+							String smallFile = Messages.HuffmanCodingView_27;
+							message += smallFile;
+						} else {
+							message += "\n" + Messages.HuffmanCodingView_26 + tmp + " %"; //$NON-NLS-1$ //$NON-NLS-2$
+						}
+					}
+					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_19, message);
+
+					btnApplyFile.setEnabled(true);
 				}
 			}
 		});
-		GridData gd_btnCompress = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
-		gd_btnCompress.widthHint = 180;
-		btnCompress.setLayoutData(gd_btnCompress);
 		btnCompress.setText(Messages.HuffmanCodingView_6);
 
-		btnUncompress = new Button(composite, SWT.NONE);
+		btnUncompress = new Button(grpSzenario, SWT.NONE);
+		GridData gd_btnUncompress = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnUncompress.widthHint = 180;
+		btnUncompress.setLayoutData(gd_btnUncompress);
 		btnUncompress.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -317,6 +343,8 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textOutput.setEditable(false);
 					textOutput.setEnabled(true);
 
+					btnOpenCompFile.setEnabled(false);
+
 					MessageDialog.openInformation(HuffmanCodingView.this.parent.getShell(), Messages.HuffmanCodingView_21,
 							Messages.HuffmanCodingView_22);
 				} catch (IOException ex) {
@@ -325,82 +353,53 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 			}
 		});
 		btnUncompress.setEnabled(false);
-		GridData gd_btnUncompress = new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1);
-		gd_btnUncompress.widthHint = 180;
-		btnUncompress.setLayoutData(gd_btnUncompress);
 		btnUncompress.setText(Messages.HuffmanCodingView_7);
 
-		btnOpenCompFile = new Button(composite, SWT.NONE);
-		btnOpenCompFile.addSelectionListener(new SelectionAdapter() {
+		btnApplyFile = new Button(grpSzenario, SWT.NONE);
+		btnApplyFile.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-				fd.setFilterExtensions(new String[] { "*.huffman" }); //$NON-NLS-1$
-				fd.setFilterNames(new String[] { Messages.HuffmanCodingView_8 });
-				String filePath = fd.open();
+				btnRadioUncompress.setSelection(true);
+				btnRadioCompress.setSelection(false);
 
-				if (filePath != null) {
-					fileComp = new File(filePath);
-					txtFileCompName.setText(filePath);
-					txtFileCompName.setSelection(filePath.length());
-					int filesize = (int) fileComp.length();
-					txtFileCompSize.setText(String.valueOf(filesize));
+				File tmpFileComp = fileComp;
 
-					btnCompress.setEnabled(false);
-					btnUncompress.setEnabled(true);
+				grpCompress.dispose();
+				grpCompress = createUncompressGroup();
+				composite.layout();
 
-					btnOpenCompFile.setEnabled(false);
-					btnOpenUncompFile.setEnabled(false);
+				textFileCompName.setText(tmpFileComp.getAbsolutePath());
+				textFileCompSize.setText(String.valueOf(tmpFileComp.length()));
 
-					textInput.setEnabled(false);
-					txtFileUncompName.setEnabled(false);
-					btnUncompress.setFocus();
-				}
+				btnOpenCompFile.setEnabled(false);
+				btnUncompress.setEnabled(true);
+				btnApplyFile.setEnabled(false);
+
 			}
 		});
-		GridData gd_btnOpenCompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnOpenCompFile.widthHint = 180;
-		btnOpenCompFile.setLayoutData(gd_btnOpenCompFile);
-		btnOpenCompFile.setText(Messages.HuffmanCodingView_9);
+		btnApplyFile.setEnabled(false);
+		GridData gd_btnApplyFile = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnApplyFile.widthHint = 180;
+		btnApplyFile.setLayoutData(gd_btnApplyFile);
+		btnApplyFile.setText(Messages.HuffmanCodingView_btnPfadbernehmen_text);
 
-		txtFileCompName = new Text(composite, SWT.BORDER | SWT.READ_ONLY);
-		txtFileCompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		/*
+		 * create the compress / uncompress group
+		 */
 
-		Label lblFileCompSize = new Label(composite, SWT.RIGHT);
-		lblFileCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		lblFileCompSize.setText(Messages.HuffmanCodingView_4);
-
-		txtFileCompSize = new Text(composite, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
-		txtFileCompSize.setEnabled(false);
-		txtFileCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
-		Group grpBeispiel = new Group(composite, SWT.NONE);
-		grpBeispiel.setLayout(new GridLayout(1, false));
-		GridData gd_grpBeispiel = new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1);
-		gd_grpBeispiel.heightHint = 120;
-		grpBeispiel.setLayoutData(gd_grpBeispiel);
-		grpBeispiel.setText(Messages.HuffmanCodingView_11);
-
-		textOutput = new Text(grpBeispiel, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		textOutput.setEnabled(false);
-		textOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		btnReset = new Button(composite, SWT.NONE);
-		btnReset.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				reset();
-			}
-		});
-		GridData gd_btnReset = new GridData(SWT.CENTER, SWT.CENTER, false, false, 4, 1);
-		gd_btnReset.widthHint = 180;
-		btnReset.setLayoutData(gd_btnReset);
-		btnReset.setText(Messages.HuffmanCodingView_12);
+		grpCompress = createCompressGroup();
+		// grpCompress = createUncompressGroup();
 
 		TabItem tbtmHuffmanTree = new TabItem(tabFolder, SWT.NONE);
 		tbtmHuffmanTree.setText(Messages.HuffmanCodingView_13);
 
 		compositeTree = new Composite(tabFolder, SWT.NONE);
+		compositeTree.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				viewer.applyLayout();
+			}
+		});
 		compositeTree.setLayout(new GridLayout(1, false));
 
 		styledTextTree = new StyledText(compositeTree, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
@@ -415,12 +414,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 
 		Control control = viewer.getControl();
-		control.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(ControlEvent e) {
-				viewer.applyLayout();
-			}
-		});
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Graph graph = viewer.getGraphControl();
@@ -505,6 +498,158 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
 		fillToolBar();
+	}
+
+	private Group createUncompressGroup() {
+		fileUncomp = null;
+
+		btnCompress.setEnabled(false);
+		btnUncompress.setEnabled(false);
+
+		Group grpCompress = new Group(composite, SWT.NONE);
+		grpCompress.setText(Messages.HuffmanCodingView_7);
+		grpCompress.setLayout(new GridLayout(4, false));
+		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 3, 1));
+
+		btnOpenCompFile = new Button(grpCompress, SWT.NONE);
+		GridData gd_btnOpenCompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnOpenCompFile.widthHint = 180;
+		btnOpenCompFile.setLayoutData(gd_btnOpenCompFile);
+		btnOpenCompFile.setSize(180, 25);
+		btnOpenCompFile.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+				fd.setFilterExtensions(new String[] { "*.huffman" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.HuffmanCodingView_8 });
+				String filePath = fd.open();
+
+				if (filePath != null) {
+					fileComp = new File(filePath);
+					textFileCompName.setText(filePath);
+					textFileCompName.setSelection(filePath.length());
+					int filesize = (int) fileComp.length();
+					textFileCompSize.setText(String.valueOf(filesize));
+
+					btnCompress.setEnabled(false);
+					btnUncompress.setEnabled(true);
+					btnUncompress.setFocus();
+				}
+			}
+		});
+		btnOpenCompFile.setText(Messages.HuffmanCodingView_9);
+
+		textFileCompName = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY);
+		textFileCompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label lblFileCompSize = new Label(grpCompress, SWT.RIGHT);
+		lblFileCompSize.setText(Messages.HuffmanCodingView_4);
+
+		textFileCompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
+		textFileCompSize.setEnabled(false);
+		textFileCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Group grpOutputText = new Group(grpCompress, SWT.NONE);
+		grpOutputText.setLayout(new GridLayout(1, false));
+		GridData gd_grpOutputText = new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1);
+		gd_grpOutputText.heightHint = 120;
+		grpOutputText.setLayoutData(gd_grpOutputText);
+		grpOutputText.setText(Messages.HuffmanCodingView_11);
+
+		textOutput = new Text(grpOutputText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		textOutput.setEnabled(false);
+		textOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		return grpCompress;
+	}
+
+	private Group createCompressGroup() {
+		fileComp = null;
+		fileUncomp = null;
+
+		btnCompress.setEnabled(false);
+		btnUncompress.setEnabled(false);
+
+		Group grpCompress = new Group(composite, SWT.NONE);
+		grpCompress.setText(Messages.HuffmanCodingView_6);
+		grpCompress.setLayout(new GridLayout(4, false));
+		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
+
+		btnOpenUncompFile = new Button(grpCompress, SWT.NONE);
+		GridData gd_btnOpenUncompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_btnOpenUncompFile.widthHint = 180;
+		btnOpenUncompFile.setLayoutData(gd_btnOpenUncompFile);
+		btnOpenUncompFile.setSize(180, 25);
+		btnOpenUncompFile.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+				fd.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+				fd.setFilterNames(new String[] { Messages.HuffmanCodingView_2 });
+				String filePath = fd.open();
+
+				if (filePath != null) {
+					fileUncomp = new File(filePath);
+					textFileUncompName.setText(filePath);
+					textFileUncompName.setSelection(filePath.length());
+					int filesize = (int) fileUncomp.length();
+					textFileUncompSize.setText(String.valueOf(filesize));
+
+					try {
+						Scanner scanner = new Scanner(fileUncomp);
+						String fileString = scanner.useDelimiter("\\Z").next(); //$NON-NLS-1$
+						scanner.close();
+
+						textInput.setText(fileString);
+						textInput.setEditable(false);
+
+						btnCompress.setFocus();
+					} catch (FileNotFoundException ex) {
+						LogUtil.logError(ex);
+					}
+				}
+			}
+		});
+		btnOpenUncompFile.setText(Messages.HuffmanCodingView_3);
+
+		textFileUncompName = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY);
+		textFileUncompName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		Label lblFileUncompSize = new Label(grpCompress, SWT.RIGHT);
+		lblFileUncompSize.setSize(100, 15);
+		lblFileUncompSize.setText(Messages.HuffmanCodingView_4);
+
+		textFileUncompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
+		textFileUncompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textFileUncompSize.setEnabled(false);
+
+		Group grpInputText = new Group(grpCompress, SWT.NONE);
+		grpInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
+		grpInputText.setLayout(new GridLayout(1, false));
+		grpInputText.setText(Messages.HuffmanCodingView_5);
+
+		textInput = new Text(grpInputText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		textInput.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Text textField = null;
+
+				if (e.getSource() instanceof Text) {
+					textField = (Text) e.getSource();
+
+					if (textField.getText().isEmpty()) {
+						btnOpenUncompFile.setEnabled(true);
+						btnCompress.setEnabled(false);
+					} else {
+						btnOpenUncompFile.setEnabled(false);
+						btnCompress.setEnabled(true);
+					}
+				}
+			}
+		});
+		textInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		return grpCompress;
 	}
 
 	/**
@@ -660,10 +805,33 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 * Initialize the zoom bar
 	 */
 	private void fillToolBar() {
-		// ZoomContributionViewItem toolbarZoomContributionViewItem = new
-		// ZoomContributionViewItem(this);
-		// IActionBars bars = getViewSite().getActionBars();
-		// bars.getMenuManager().add(toolbarZoomContributionViewItem);
+		IActionBars bars = getViewSite().getActionBars();
+		bars.getMenuManager().removeAll();
+
+		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
+		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
+		zoom.add(toolbarZoomContributionViewItem);
+		bars.getMenuManager().add(zoom);
+
+		/*
+		 * adding popup menu
+		 * 
+		 * final ZoomContributionViewItem zoomContributionItem = new
+		 * ZoomContributionViewItem(this);
+		 * 
+		 * MenuManager menuMgr = new MenuManager("#PopupMenu");
+		 * menuMgr.setRemoveAllWhenShown(true); menuMgr.addMenuListener(new
+		 * IMenuListener() { public void menuAboutToShow(IMenuManager manager) {
+		 * fillContextMenu(manager); }
+		 * 
+		 * private void fillContextMenu(IMenuManager manager) { manager.add(new
+		 * Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		 * manager.add(zoomContributionItem); } });
+		 * 
+		 * Menu menu = menuMgr.createContextMenu(viewer.getControl());
+		 * viewer.getControl().setMenu(menu);
+		 * getSite().registerContextMenu(menuMgr, viewer);
+		 */
 	}
 
 	@Override
@@ -734,30 +902,14 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 * reset all used elements
 	 */
 	private void reset() {
-		textInput.setText(""); //$NON-NLS-1$
-		textOutput.setText(""); //$NON-NLS-1$
-		txtFileUncompName.setText(""); //$NON-NLS-1$
-		txtFileUncompSize.setText(""); //$NON-NLS-1$
-		txtFileCompName.setText(""); //$NON-NLS-1$
-		txtFileCompSize.setText(""); //$NON-NLS-1$
-
-		textInput.setEditable(true);
-		textInput.setEnabled(true);
-
-		textOutput.setEditable(false);
-		textOutput.setEnabled(false);
-
-		fileUncomp = null;
-		fileComp = null;
+		grpCompress.dispose();
+		grpCompress = createCompressGroup();
+		composite.layout();
 
 		huffmanCode = null;
-
-		btnOpenCompFile.setEnabled(true);
-		btnOpenUncompFile.setEnabled(true);
-
 		btnCompress.setEnabled(false);
 		btnUncompress.setEnabled(false);
-		txtFileUncompName.setEnabled(true);
+		btnApplyFile.setEnabled(false);
 
 		resetCodeTable();
 
