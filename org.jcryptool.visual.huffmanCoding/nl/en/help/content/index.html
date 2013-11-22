@@ -19,14 +19,17 @@ or via Crypto-Explorer tab <b>Visualization</b> and maximizes his view.
 <img src="huffmankodierung_plugin.jpg">
 
 <p>
-The view of plug-in contains three tabs: <b>Parameter</b>, <b>Huffman tree</b> 
+The view of plug-in contains three tabs: <b>Coding/Decoding</b>, <b>Huffman tree</b> 
 and <b>Code table</b>.
 <p>
 
 <img src="huffmankodierung_registerkarten.jpg">
 
 <p>
-On the first Tab <b>Parameter</b> there are two scenarios to choose:
+On the first Tab <b>Coding/Decoding</b> there are two scenarios to choose:
+<p>
+
+<img src="huffman_szenario.jpg">
 
 <p>
 <b>Scenario 1 -- Compress:</b><br>
@@ -58,13 +61,21 @@ state you just clear the text that you previously entered. This enables the butt
  <img src="huffman_manu_input.jpg">
 
 <p>
-Click on the <b>Compress</b> button <img src="huffman_unkompdatei_komprimiert.jpg"> to compress the text shown in the field <b>Input text</b>. An output file with the file extension 
+Click on the <b>Compress</b> button <img src="huffman_unkompdatei_komprimiert.jpg"> to compress the text shown in the field <b>Input text</b>.
+After the compression is completed, a message is displayed about the compression. 
+<p>
+
+ <img src="huffman_status.jpg">
+
+<p>
+An output file with the file extension 
 <b>.huffman</b> is generated in the user's home directory. The file path and the size of the output file
 are displayed. The button <b>Compress</b> is disabled and the button <b>Uncompress</b> enabled.
 <p>
 
-Now you can click on the <b>Uncompress</b> button to uncompress the previously compressed text.
-The uncompressed file displayed in the field <b>Output text</b>.
+Now you can click on the button <b>Apply file for uncompression</b> <img src="huffman_datei_uebernehmen.jpg"> to change the view to the 
+scenario 2 <b>Uncompress</b> and to uncompress the previously compressed text.
+
 <p>
 
 <b>Scenario 2 -- Uncompress</b><br>
@@ -92,15 +103,12 @@ Click on the button <b>Uncompress</b> will uncompress the file and displays its 
 <img src="huffman_output.jpg">
 
 <p>
-It is possible at any time to return on the Initial state and to start the algorithm for new user inputs by clicking the <b>Reset inputs</b> button.
-<p>
-
-<img src="huffman_zuruecksetzen.jpg">
-
-<p>
 
 Depending on whether a compression or uncompression is performed, the <b>Huffman tree</b> structure will be displayed on the second tab.
-For the graphical structure of the Huffman tree, the ZEST framework was used. The Huffman tree is a binary tree, which
+For the graphical structure of the Huffman tree, the <a href="http://www.eclipse.org/gef/zest/">ZEST</a> framework was used. ZEST is a visualization toolkit with a set of visualization components built for Eclipse.
+With ZEST it is possible to visualize trees in a easy way.
+<p>
+The Huffman tree is a binary tree, which
 transmits the information to its leafs. The leafs are <b>Green</b> marked and presents 
 the <b>ASCII characters</b> of the input text. On the edges of the graph the information <b>1</b> or <b>0</b> are displayed.
 This information is needed to generate the code words which used for each character. 
@@ -139,8 +147,7 @@ input text, his associated code word is displayed. By clicking on the button
 The meaning of the icons in the menu bar
 <p>
 <ol type="a">
-	<li>In the menu bar you can click on the <img src="huffman_zuruecksetzen_icon.jpg"> icon which works analogous
-to the button <b>Reset inputs</b> to return to the Initial state and start the algorithm for the new user inputs.
+	<li>In the menu bar you can click on the <img src="huffman_zuruecksetzen_icon.jpg"> icon to return to the Initial state and start the algorithm for the new user inputs.
 	</li>
 	<li>You can change the layout of the tree by clicking on the <img src="huffman_strukturwechseln.jpg"> icon in the menu bar. The layout
 of Huffman tree changes dynamically.
