@@ -688,6 +688,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					case 32:
 						labelElement.setText("\u2423"); // Space //$NON-NLS-1$
 						break;
+					case 38:
+						labelElement.setText("&&"); // Space //$NON-NLS-1$
+						break;
 					default:
 						labelElement.setText(String.valueOf((char) i));
 					}
