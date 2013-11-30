@@ -9,8 +9,11 @@ Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.8",
  org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.core.logging;bundle-version="0.9.8",
  org.bouncycastle;bundle-version="1.49.0",
- org.eclipse.help;bundle-version="3.5.100"
+ org.eclipse.help;bundle-version="3.5.100",
+ org.jcryptool.crypto.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: de.flexiprovider.core.dsa,
  de.flexiprovider.core.rsa
+Export-Package: org.jcryptool.visual.sigVerification,
+ org.jcryptool.visual.sigVerification.ui.view
