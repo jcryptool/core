@@ -97,6 +97,35 @@ public class SigVerComposite extends Composite  {
     
     
     /**
+     * @return the hash
+     */
+    public int getHash() {
+        return hash;
+    }
+
+    /**
+     * @param hash the hash to set
+     */
+    public void setHash(int hash) {
+        this.hash = hash;
+    }
+
+    /**
+     * @return the signature
+     */
+    public int getSignature() {
+        return signature;
+    }
+
+    /**
+     * @param signature the signature to set
+     */
+    public void setSignature(int signature) {
+        this.signature = signature;
+    }
+    
+    
+    /**
      * Create the application window.
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
@@ -481,33 +510,6 @@ public class SigVerComposite extends Composite  {
         return new Point(1680, 1050);
     }
 */    
-    /**
-     * @return the hash
-     */
-    public int getHash() {
-        return hash;
-    }
-
-    /**
-     * @param hash the hash to set
-     */
-    public void setHash(int hash) {
-        this.hash = hash;
-    }
-
-    /**
-     * @return the signature
-     */
-    public int getSignature() {
-        return signature;
-    }
-
-    /**
-     * @param signature the signature to set
-     */
-    public void setSignature(int signature) {
-        this.signature = signature;
-    }
     
     private void reset(int step) {
         // If the user already finished other steps, reset everything to this
