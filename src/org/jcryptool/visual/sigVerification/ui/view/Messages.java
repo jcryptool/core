@@ -13,7 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.view;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.visual.sig.ui.view.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.ui.view.messages"; //$NON-NLS-1$
     public static String SigComposite_1;
     static {
         // initialize resource bundle

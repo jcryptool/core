@@ -156,21 +156,20 @@ public class SigVerComposite extends Composite  {
                             lblGeneralDescription.setLocation(25, 36);
                             lblGeneralDescription.setSize(1614, 89);
                             lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                            lblGeneralDescription.setText("Die Visualisierung soll die Verifikation einer Digitalen Signatur für ein bestimmtes Dokument zeigen. Eine digitale Signatur kann zur Authentisierung der Identität des Senders oder des Unterzeichners des Dokumentes genutzt werden.\r\n Außerdem stellt sie die Integrität des Dokumentes sicher.");
+                            lblGeneralDescription.setText(Messages.SigVerComposite_description);
                            
                         }
                         lblHeader = new Label(container, SWT.NONE);
                         lblHeader.setLocation(25, 0);
                         lblHeader.setSize(1614, 41);
                         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
-                        lblHeader.setText("Signaturverifikationsvisualisierung\r\n");
-                        
-                                lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                        lblHeader.setText(Messages.SigVerComposite_lblHeader);
+                        lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
                         
                         lblTitle = new Label(container, SWT.NONE);
                         lblTitle.setLocation(37, 145);
                         lblTitle.setSize(137, 20);
-                        lblTitle.setText("Signaturverifizierung");
+                        lblTitle.setText(Messages.SigVerComposite_lblTitle);
                         {
                             Composite border = new Composite(container, SWT.BORDER);
                             border.setBounds(25, 154, 1614, 776);
@@ -182,12 +181,12 @@ public class SigVerComposite extends Composite  {
                                 }
                             });
                             btnHash.setBounds(698, 106, 200, 118);
-                            btnHash.setText("Hashfunktion auswählen");
+                            btnHash.setText(Messages.SigVerComposite_btnHash);
                             {
                                 lblCheckSig = new Label(border, SWT.NONE);
                                 lblCheckSig.setLocation(1285, 106);
                                 lblCheckSig.setSize(107, 20);
-                                lblCheckSig.setText("Signatur Prüfen");
+                                lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
                             }
                             
                             btnAddInput = new Button(border, SWT.NONE);
@@ -198,7 +197,7 @@ public class SigVerComposite extends Composite  {
                             });
                             btnAddInput.setLocation(97, 106);
                             btnAddInput.setSize(200, 63);
-                            btnAddInput.setText("Input auswählen");
+                            btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
                             
                             btnReset = new Button(border, SWT.NONE);
                             btnReset.setLocation(1496, 605);
@@ -208,7 +207,7 @@ public class SigVerComposite extends Composite  {
                                 public void widgetSelected(SelectionEvent e) {
                                 }
                             });
-                            btnReset.setText("Reset");
+                            btnReset.setText(Messages.SigVerComposite_btnReset);
                             
                             btnDecrypt = new Button(border, SWT.NONE);
                             btnDecrypt.setLocation(698, 306);
@@ -218,12 +217,12 @@ public class SigVerComposite extends Composite  {
                                 public void widgetSelected(SelectionEvent e) {
                                 }
                             });
-                            btnDecrypt.setText("Signatur entschlüsseln");
+                            btnDecrypt.setText(Messages.SigVerComposite_btnDecrypt);
                             {
                                 lblPubKey = new Label(border, SWT.NONE);
                                 lblPubKey.setLocation(765, 592);
                                 lblPubKey.setSize(70, 20);
-                                lblPubKey.setText("Public Key");
+                                lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
                             }
                             
                             {
@@ -278,7 +277,7 @@ public class SigVerComposite extends Composite  {
                                                         
                                                         btnResult = new Button(littleBorder, SWT.NONE);
                                                         btnResult.setBounds(61, 214, 200, 63);
-                                                        btnResult.setText("Ergebnis anzeigen");
+                                                        btnResult.setText(Messages.SigVerComposite_btnResult);
                                                         {
                                                             lblDocPic = new Label(littleBorder, SWT.ICON);
                                                             lblDocPic.setBounds(82, 28, 161, 152);
@@ -290,38 +289,38 @@ public class SigVerComposite extends Composite  {
                                                     tabFolder.setBounds(34, 631, 1552, 131);
                                                     {
                                                         tabStep1 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep1.setText("Schritt 1");
+                                                        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
                                                         {
                                                             lblDescriptionStep1 = new Label(tabFolder, SWT.NONE);
                                                             tabStep1.setControl(lblDescriptionStep1);
-                                                            lblDescriptionStep1.setText("Input auswählen\r\n\r\nSie können auswählen, welches Dokument Sie verifizieren möchten. Um den Signaturverifikationsprozess zu starten klicken Sie bitte auf den Button \"Input auswählen\". Folgen Sie danach den Anweisungen.");
+                                                            lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
                                                         }
                                                     }
                                                     {
                                                         tabStep2 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep2.setText("Schritt 2");
+                                                        tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
                                                         {
                                                             lblDescriptionStep2 = new Label(tabFolder, SWT.NONE);
                                                             tabStep2.setControl(lblDescriptionStep2);
-                                                            lblDescriptionStep2.setText("Hashfunktion auswählen\r\n\r\nEine Hashfunktion ist ein Algorithmus oder eine Subroutine, die einen Datensatz variabler Länge auf einen Datensatz fixer Länge abbildet. Da die Größe des Hashwertes einer Datei normalerweise viel kleiner ist als die Datei selbst, \r\nwird direkt der Hashwert signiert. Für die Überprüfung der Signatur wird erneut ein Hashwert berechnet, welcher dann mit der Signatur des Dokumentes verglichen wird.\r\n\r\nBitte wählen Sie den gleichen Algorithmus wie bei der Signaturerstellung.");
+                                                            lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
                                                         }
                                                     }
                                                     {
                                                         tabStep3 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep3.setText("Schritt 3");
+                                                        tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
                                                         {
                                                             lblDescriptionStep3 = new Label(tabFolder, SWT.NONE);
                                                             tabStep3.setControl(lblDescriptionStep3);
-                                                            lblDescriptionStep3.setText("Signatur entschlüsseln\r\n\r\nEntschschlüsseln Sie Ihr segniertes Dokument. Der Entschlüsselungsprozess ist von dem verwendeten Signieralgorithmus abhängig. Die Signatur wurde mit dem Private Key erstellt. Zum entschlüsseln wird nun der Public Key\r\ndes Signaturerstellers verwendet. ");
+                                                            lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
                                                         }
                                                     }
                                                     {
                                                         tabStep4 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep4.setText("Schritt 4");
+                                                        tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
                                                         {
                                                             lblDescriptionStep4 = new Label(tabFolder, SWT.NONE);
                                                             tabStep4.setControl(lblDescriptionStep4);
-                                                            lblDescriptionStep4.setText("Signatur prüfen\r\n\r\nMit Hilfe der Signatur können Sie nun die Authentizität des Senders überprüfen und sichergehen, dass die Nachricht von diesem stammt und nicht verändert wurde\n. Wenn die Überprüfung erfolgreich war, sehen Sie ein grünes Häckchen. Wenn nicht ein rotes X. Für alle weiteren relevaten Informationen klicken Sie bitte auf \"Ergebnis anzeigen\". \r\n");
+                                                            lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
                                                         }
                                                     }
                         }

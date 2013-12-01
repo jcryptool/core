@@ -5,37 +5,40 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Holds the messages for the signature visualization (for the main view)
  * 
- * @author Grebe/Wilfing
+ * @author Grebe/Wilfing/Huber
  */
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.messages"; //$NON-NLS-1$
     // Create strings for all the values
-    public static String SigComposite_grpSignatureGeneration;
-    public static String SigComposite_grpSignedDoc;
-    public static String SigComposite_lblHash;
-    public static String SigComposite_lblSignature;
-    public static String SigComposite_lblProgress;
-    public static String SigComposite_tbtmNewItem_0;
-    public static String SigComposite_tbtmNewItem_1;
-    public static String SigComposite_tbtmNewItem_2;
-    public static String SigComposite_tbtmNewItem_3;
-    public static String SigComposite_txtDescriptionOfStep1;
-    public static String SigComposite_txtDescriptionOfStep2;
-    public static String SigComposite_txtDescriptionOfStep3;
-    public static String SigComposite_txtDescriptionOfStep4;
-    public static String SigComposite_btnSignature;
-    public static String SigComposite_btnHash;
-    public static String SigComposite_btnOpenInEditor;
-    public static String SigComposite_btnReset;
-    public static String SigComposite_btnReturn;
-    public static String SigComposite_description;
-    public static String SigComposite_btnChooseInput;
-    public static String SigComposite_lblHeader;
-    public static String SigComposite_MessageTitleReturn;
-    public static String SigComposite_MessageTextReturn;
-    public static String SigComposite_txtDescriptionOfStep4_Success;
-    public static String SigComposite_menu;
+    public static String SigVerComposite_grpSignatureGeneration;
+    public static String SigVerComposite_grpSignedDoc;
+    public static String SigVerComposite_lblHash;
+    public static String SigVerComposite_lblSignature;
+    public static String SigVerComposite_lblProgress;
+    public static String SigVerComposite_tbtmNewItem_0;
+    public static String SigVerComposite_tbtmNewItem_1;
+    public static String SigVerComposite_tbtmNewItem_2;
+    public static String SigVerComposite_tbtmNewItem_3;
+    public static String SigVerComposite_txtDescriptionOfStep1;
+    public static String SigVerComposite_txtDescriptionOfStep2;
+    public static String SigVerComposite_txtDescriptionOfStep3;
+    public static String SigVerComposite_txtDescriptionOfStep4;
+    public static String SigVerComposite_btnSignature;
+    public static String SigVerComposite_btnHash;
+    public static String SigVerComposite_btnResult;
+    public static String SigVerComposite_btnReset;
+    public static String SigVerComposite_btnReturn;
+    public static String SigVerComposite_description;
+    public static String SigVerComposite_btnAddInput;
+    public static String SigVerComposite_lblHeader;
+    public static String SigVerComposite_MessageTitleReturn;
+    public static String SigVerComposite_MessageTextReturn;
+    public static String SigVerComposite_txtDescriptionOfStep4_Success;
+    public static String SigVerComposite_menu;
+    public static String SigVerComposite_btnDecrypt;
+    public static String SigVerComposite_lblPubKey;
+    public static String SigVerComposite_lblTitle;
 
     static {
         // initialize resource bundle
