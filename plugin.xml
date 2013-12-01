@@ -8,8 +8,8 @@
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
             icon="icons/view.gif"
-            id="org.jcryptool.visual.sigVerification.view"
-            name="%view.name"
+            id="org.jcryptool.visual.sigVerification.SigVerComposite"
+            name="Signatur-Verification"
             restorable="true">
       </view>
    </extension>
@@ -22,6 +22,12 @@
             viewId="org.jcryptool.visual.sigVerification.view"
             contextHelpId="org.jcryptool.visual.sigVerification.SigVerView">
       </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
    </extension>
 
 </plugin>

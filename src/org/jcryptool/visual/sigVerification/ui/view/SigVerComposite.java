@@ -3,45 +3,58 @@ package org.jcryptool.visual.sigVerification.ui.view;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
-//import org.eclipse.jface.action.MenuManager;
-//import org.eclipse.jface.action.StatusLineManager;
-//import org.eclipse.jface.action.ToolBarManager;
-//import org.eclipse.jface.window.ApplicationWindow;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-//import org.eclipse.swt.graphics.Font;
-//import org.eclipse.swt.graphics.FontData;
-//import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-//import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-//import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.visual.sigVerification.ui.view.SWTResourceManager;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-//import org.eclipse.swt.widgets.Menu;
-//import org.eclipse.ui.IViewReference;
-//import org.eclipse.ui.IWorkbenchPage;
-//import org.eclipse.ui.PlatformUI;
-//import org.jcryptool.visual.sigVerification.Messages;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigGeneration;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
+//import org.jcryptool.visual.sigVerification.ui.wizards.ShowSig;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
-
-public class SigVerComposite extends Composite{      //vs extends ApplicationWindow
+/**
+ * This class contains all the code required for the design and functionality of the main view. It creates the
+ * components, calls the wizards and constructs the string ("SHA256withECDSA" etc.) used for signing.
+ * 
+ */
+public class SigVerComposite extends Composite  {
     private Label lblGeneralDescription;
     private Label lblHeader;
     private Label lblTitle;
@@ -91,7 +104,7 @@ public class SigVerComposite extends Composite{      //vs extends ApplicationWin
         createContents(parent);
         createActions();
         
-        // Adds reset button to the toolbar
+        // Adds reset button to the Toolbar
         IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
         action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
@@ -557,4 +570,5 @@ public class SigVerComposite extends Composite{      //vs extends ApplicationWin
 
         return sigstring;
     }
+
 }
