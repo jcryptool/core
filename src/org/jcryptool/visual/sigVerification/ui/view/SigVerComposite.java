@@ -151,26 +151,26 @@ public class SigVerComposite extends Composite  {
         parent.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
         parent.setLayout(null);
                         {
-                            lblGeneralDescription = new Label(parent, SWT.NONE);
+                            lblGeneralDescription = new Label(this, SWT.NONE);
                             lblGeneralDescription.setLocation(25, 36);
                             lblGeneralDescription.setSize(1614, 89);
                             lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
                             lblGeneralDescription.setText(Messages.SigVerComposite_description);
                            
                         }
-                        lblHeader = new Label(parent, SWT.NONE);
+                        lblHeader = new Label(this, SWT.NONE);
                         lblHeader.setLocation(25, 0);
                         lblHeader.setSize(1614, 41);
                         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
                         lblHeader.setText(Messages.SigVerComposite_lblHeader);
                         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
                         
-                        lblTitle = new Label(parent, SWT.NONE);
+                        lblTitle = new Label(this, SWT.NONE);
                         lblTitle.setLocation(37, 145);
                         lblTitle.setSize(137, 20);
                         lblTitle.setText(Messages.SigVerComposite_lblTitle);
                         {
-                            Composite border = new Composite(parent, SWT.BORDER);
+                            Composite border = new Composite(this, SWT.BORDER);
                             border.setBounds(25, 154, 1614, 776);
                             
                             btnHash = new Button(border, SWT.NONE);
