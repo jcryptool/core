@@ -8,7 +8,7 @@
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
             icon="icons/view.gif"
-            id="org.jcryptool.visual.sigVerification.SigVerComposite"
+            id="org.jcryptool.visual.sigVerification.view"
             name="%view.name"
             restorable="true">
       </view>
@@ -18,7 +18,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="Signatur-Verification"
+            name="%Visual.name"
             viewId="org.jcryptool.visual.sigVerification.view"
             contextHelpId="org.jcryptool.visual.sigVerification.SigVerView">
       </Visual>

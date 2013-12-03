@@ -184,7 +184,7 @@ public class SigVerComposite extends Composite  {
                             {
                                 lblCheckSig = new Label(border, SWT.NONE);
                                 lblCheckSig.setLocation(1285, 106);
-                                lblCheckSig.setSize(107, 20);
+                                lblCheckSig.setSize(142, 35);
                                 lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
                             }
                             
