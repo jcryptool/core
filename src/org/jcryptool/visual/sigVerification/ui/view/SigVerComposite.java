@@ -378,10 +378,7 @@ public class SigVerComposite extends Composite  {
                     };
                     if (dialog.open() == Window.OK) {
                         hash = wiz.getHash(); // get hash method (an integer)
-
-                        // Arguments: Hash method, data to hash
-                        Hash.hashInput(hashes[hash], Input.data); // Hash the input
-
+                       
                         // Update the GUI:
                         btnDecrypt.setEnabled(true); // Enable to select the
                                                        // signature method
@@ -414,11 +411,28 @@ public class SigVerComposite extends Composite  {
                         // get signature method (integer)
                         signature = wiz.getSignature();
                         KeyStoreAlias alias = wiz.getAlias();
+                        
+                        // Divides signature and plaintext from imported file.
+                        Input.divideSignatuerPlaintext();
+                        
+                        // Arguments: Hash method, data to hash
+                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
                         SigGeneration.signInput(chooseSignature(), Input.data, alias);
 
+                        // Compares the two hashes.
+                        Input.compareHashes();
+                        
+                        // Shows green check mark or red fail sign if compairism is correct or false
+                        if(Input.result){
+                            //show green check mark
+                        }else{
+                            //show red fail sign
+                        }                     
+                        
+                        
                         btnResult.setEnabled(true);
                         // Activate the second tab of the description
 

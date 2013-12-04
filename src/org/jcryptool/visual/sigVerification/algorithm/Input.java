@@ -26,28 +26,33 @@ public class Input {
     /**
      * Contains the hash of the plain text in input data (byte array)
      */
-    public static byte[] hash;
+    public static byte[] hashNew;
 
     /**
      * Contains the hash of the plain text input data (hex representation)
      */
-    public static String hashHex;
+    public static String hashHexNew;
 
     /**
      * Contains the hash stored in the input data (byte array)
      */
-    public static byte[] hashOld;
+    public static byte[] hash;
 
     /**
      * Contains the hash stored in the input data (hex representation)
      */
-    public static String hashHexOld;
+    public static String hashHex;
     
     /**
      * Contains the signature of the input data (byte array)
      */
     public static byte[] signature;
 
+    /**
+     * Contains the plain text of the input data (byte array)
+     */
+    public static byte[] plain;
+    
     /**
      * Contains the signature of the input data (hex representation)
      */
@@ -77,6 +82,11 @@ public class Input {
      * Contains the private key used to sign the data (chosen in our plugin)
      */
     public static KeyStoreAlias key;
+    
+    /**
+     * Contains the result of the comparison between the hashes.
+     */
+    public static boolean result;
 
     /**
      * This method resets all variables in this class to their initial value
@@ -86,8 +96,8 @@ public class Input {
         path = null;
         hash = null;
         hashHex = null;
-        hashOld = null;
-        hashHexOld = null;
+        hashNew = null;
+        hashHexNew = null;
         signature = null;
         signatureHex = null;
         signatureOct = null;
@@ -95,6 +105,35 @@ public class Input {
         publicKey = null;
         h = -1;
     }
+    
+    public static void divideSignatuerPlaintext(){      
+        int i;
+        switch(Input.s){
+            case 1:             // DSA 368 Bit -> 46 Byte
+                i = 46;
+                break;
+            case 2:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
+            case 4:
+                i = 128;
+                break;
+            case 3:             // ECDSA 560 Bit -> 70 Byte
+                i = 70;
+                break;
+            default:
+                i = 0;
+                break;
+        }
+       
+       // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
+       Input.signature = java.util.Arrays.copyOfRange(Input.data, 0, i);
+       Input.plain = java.util.Arrays.copyOfRange(data, i, Input.data.length);
+    }
+    
+    public static boolean compareHashes(){
+        // Vergleicht die Hashes.
+        return java.util.Arrays.equals(Input.hash, Input.hashNew);       
+    }
+    
     
     /**
      * 
