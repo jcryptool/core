@@ -325,8 +325,7 @@ public class SigVerComposite extends Composite  {
                                                             lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
                                                         }
                                                     }
-                        }
-               //return container;         
+                        }         
 
     }
     
