@@ -180,6 +180,7 @@ public class SigVerComposite extends Composite  {
                                 }
                             });
                             btnHash.setBounds(698, 106, 200, 118);
+                            btnHash.setEnabled(false);
                             btnHash.setText(Messages.SigVerComposite_btnHash);
                             {
                                 lblCheckSig = new Label(border, SWT.NONE);
@@ -209,6 +210,7 @@ public class SigVerComposite extends Composite  {
                             btnReset.setText(Messages.SigVerComposite_btnReset);
                             
                             btnDecrypt = new Button(border, SWT.NONE);
+                            btnDecrypt.setEnabled(false);
                             btnDecrypt.setLocation(698, 306);
                             btnDecrypt.setSize(200, 118);
                             btnDecrypt.addSelectionListener(new SelectionAdapter() {
@@ -275,6 +277,7 @@ public class SigVerComposite extends Composite  {
                                                         littleBorder.setSize(317, 330);
                                                         
                                                         btnResult = new Button(littleBorder, SWT.NONE);
+                                                        btnResult.setEnabled(false);
                                                         btnResult.setBounds(61, 214, 200, 63);
                                                         btnResult.setText(Messages.SigVerComposite_btnResult);
                                                         {
