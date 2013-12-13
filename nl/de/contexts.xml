@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+ <context id="SigVerView" title="Visualisierung der Signaturverifikation">
+    <description>Diese Visualisierung demonstriert wie ein elektronisches, signiertes Dokument verifiziert wird.</description>
+    <topic href="help/content/index.html" label="Signatur-Verifikations-Demo"/>
+ </context>
+</contexts>
