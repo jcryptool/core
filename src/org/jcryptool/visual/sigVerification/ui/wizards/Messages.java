@@ -3,7 +3,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Holds the messages for the signature visualization (for the 3 wizards and the ShowSig shell)
+ * Holds the messages for the signature visualization (for the 3 wizards and the SignaturResult shell)
  * 
  * @author Grebe/Wilfing
  */
@@ -67,36 +67,33 @@ public class Messages {
     public static String InputFileWizard_header;
 
     // Show generated signature
-    public static String ShowSig_title;
-    public static String ShowSig_ownerTitle;
-    public static String ShowSig_keyTitle;
-    public static String ShowSig_methodTitle;
+    public static String SignaturResult_title;
+    public static String SignaturResult_keyTitle;
+    public static String SignaturResult_methodTitle;
 
-    public static String ShowSig_grpSignature;
-    public static String ShowSig_lengthSig;
+    public static String SignaturResult_grpSignature;
+    public static String SignaturResult_lengthSig;
 
-    public static String ShowSig_grpOption;
-    public static String ShowSig_octal;
-    public static String ShowSig_decimal;
-    public static String ShowSig_hex;
-    public static String ShowSig_hexDump;
+    public static String SignaturResult_grpOption;
+    public static String SignaturResult_octal;
+    public static String SignaturResult_decimal;
+    public static String SignaturResult_hex;
+    public static String SignaturResult_hexDump;
 
-    public static String ShowSig_grpMessage;
-    public static String ShowSig_lengthMessage;
+    public static String SignaturResult_grpMessage;
+    public static String SignaturResult_lengthMessage;
 
-    public static String ShowSig_btnClose;
-    public static String ShowSig_btnOpen;
+    public static String SignaturResult_btnClose;
+    public static String SignaturResult_btnOpen;
 
-    public static String ShowSig_tblAdr;
-    public static String ShowSig_tblHex;
-    public static String ShowSig_tblAscii;
+    public static String SignaturResult_tblAdr;
+    public static String SignaturResult_tblHex;
+    public static String SignaturResult_tblAscii;
 
-    public static String ShowSig_editorDescripton;
+    public static String SignaturResult_editorDescripton;
     
-    public static String EnterText;
-    public static String ShowSig_btnSave;
-    public static String ShowSig_MessageBoxTitle;
-    public static String ShowSig_MessageBoxText;
+    public static String SignaturResult_btnVerificationModels;
+
     
     static {
         // initialize resource bundle
