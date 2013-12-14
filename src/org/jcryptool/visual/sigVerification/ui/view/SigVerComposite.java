@@ -46,6 +46,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigGeneration;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
+import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 //import org.jcryptool.visual.sigVerification.ui.wizards.ShowSig;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
@@ -398,6 +399,31 @@ public class SigVerComposite extends Composite  {
      // Adds a Listener for the Signature select button
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
+                try {
+                    // If the user already finished other steps, reset
+                    // everything to this step (keep the chosen algorithms)
+                    reset(2);
+
+                    // Create the HashWirard
+                    InputKeyWizard wiz = new InputKeyWizard();
+                    // Display it
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
+                        
+                    }
+
+                } catch (Exception ex) {
+                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                }
+                
+                
                 try {
                     reset(2);
                     SignatureWizard wiz = new SignatureWizard(hash);
