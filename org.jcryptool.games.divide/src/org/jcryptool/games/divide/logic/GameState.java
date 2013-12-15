@@ -1,69 +1,78 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2013 JCrypTool team and contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.games.divide.logic;
 
 import java.util.List;
 
 public class GameState {
 
-	// instance vars
-	private List<Integer> listOfNumbers;
-	private List<Integer> eliminatedNumbers;
+    // instance vars
+    private List<Integer> listOfNumbers;
+    private List<Integer> eliminatedNumbers;
 
-	private IPlayer playerLastRound;
-	private IPlayer playerCurrentRound;
-	private int turn;
-	private int chosenNumber;
-	
-	// constructor
-	public GameState() {
-		super();
-	}
-	
-	// methods
-	public List<Integer> getListOfNumbers() {
-		return listOfNumbers;
-	}
+    private IPlayer playerLastRound;
+    private IPlayer playerCurrentRound;
+    private int turn;
+    private int chosenNumber;
 
-	protected void setListOfNumbers(List<Integer> listOfNumbers) {
-		this.listOfNumbers = listOfNumbers;
-	}
+    // constructor
+    public GameState() {
+        super();
+    }
 
-	public List<Integer> getEliminatedNumbers() {
-		return eliminatedNumbers;
-	}
+    // methods
+    public List<Integer> getListOfNumbers() {
+        return listOfNumbers;
+    }
 
-	protected void setEliminatedNumbers(List<Integer> eliminatedNumbers) {
-		this.eliminatedNumbers = eliminatedNumbers;
-	}
+    protected void setListOfNumbers(List<Integer> listOfNumbers) {
+        this.listOfNumbers = listOfNumbers;
+    }
 
-	public IPlayer getPlayerCurrentRound() {
-		return playerCurrentRound;
-	}
+    public List<Integer> getEliminatedNumbers() {
+        return eliminatedNumbers;
+    }
 
-	protected void setPlayerCurrentRound(IPlayer playerCurrentRound) {
-		this.playerCurrentRound = playerCurrentRound;
-	}
+    protected void setEliminatedNumbers(List<Integer> eliminatedNumbers) {
+        this.eliminatedNumbers = eliminatedNumbers;
+    }
 
-	public IPlayer getPlayerLastRound() {
-		return playerLastRound;
-	}
+    public IPlayer getPlayerCurrentRound() {
+        return playerCurrentRound;
+    }
 
-	protected void setPlayerLastRound(IPlayer playerLastRound) {
-		this.playerLastRound = playerLastRound;
-	}
-	
-	public int getTurn() {
-		return turn;
-	}
+    protected void setPlayerCurrentRound(IPlayer playerCurrentRound) {
+        this.playerCurrentRound = playerCurrentRound;
+    }
 
-	protected void setTurn(int turn) {
-		this.turn = turn;
-	}
+    public IPlayer getPlayerLastRound() {
+        return playerLastRound;
+    }
 
-	public int getChosenNumber() {
-		return chosenNumber;
-	}
+    protected void setPlayerLastRound(IPlayer playerLastRound) {
+        this.playerLastRound = playerLastRound;
+    }
 
-	protected void setChosenNumber(int chosenNumber) {
-		this.chosenNumber = chosenNumber;
-	}
+    public int getTurn() {
+        return turn;
+    }
+
+    protected void setTurn(int turn) {
+        this.turn = turn;
+    }
+
+    public int getChosenNumber() {
+        return chosenNumber;
+    }
+
+    protected void setChosenNumber(int chosenNumber) {
+        this.chosenNumber = chosenNumber;
+    }
 }

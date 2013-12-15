@@ -16,4 +16,6 @@ Export-Package: org.jcryptool.games.divide,
  org.jcryptool.games.divide.dialogs,
  org.jcryptool.games.divide.handler,
  org.jcryptool.games.divide.logic,
+ org.jcryptool.games.divide.sourceProviders,
+ org.jcryptool.games.divide.util,
  org.jcryptool.games.divide.views
