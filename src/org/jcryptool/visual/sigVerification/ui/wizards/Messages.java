@@ -58,10 +58,10 @@ public class Messages {
 
     // InputWizard
     // Page 1
-    public static String InputWizard_title;
+    /*public static String InputWizard_title;
     public static String InputWizard_header;
     public static String InputWizard_rdoFromFile;
-    public static String InputWizard_rdoFromEditor;
+    public static String InputWizard_rdoFromEditor;*/
     // Page 2
     public static String InputFileWizard_title;
     public static String InputFileWizard_header;

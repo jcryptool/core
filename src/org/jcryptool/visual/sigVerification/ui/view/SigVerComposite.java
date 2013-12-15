@@ -114,7 +114,7 @@ public class SigVerComposite extends Composite  {
         // Adds reset button to the Toolbar
         IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
-        action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
+        action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("/icons/reset.gif")); //$NON-NLS-1$
         toolBarMenu.add(action);
         
     }
@@ -153,7 +153,7 @@ public class SigVerComposite extends Composite  {
                                         lblDocPic = new Label(border, SWT.ICON);
                                         lblDocPic.setLocation(69, 136);
                                         lblDocPic.setSize(150, 165);
-                                        lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/image3013.png"));
+                                        lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
                                     }
                             
                             btnHash = new Button(border, SWT.NONE);
@@ -213,7 +213,7 @@ public class SigVerComposite extends Composite  {
                                 lblKeyPic = new Label(border, SWT.ICON);
                                 lblKeyPic.setLocation(435, 333);
                                 lblKeyPic.setSize(100, 118);
-                                lblKeyPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/key.png"));
+                                lblKeyPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/key.png"));
                             }
                             
                             tempVert = new Label(border, SWT.NONE);
@@ -224,26 +224,26 @@ public class SigVerComposite extends Composite  {
                                                 label = new Label(border, SWT.NONE);
                                                 label.setLocation(168, 78);
                                                 label.setSize(229, 130);
-                                                label.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/rect2985.png"));
+                                                label.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect2985.png"));
                                             }
                                             {
                                                 lblNewLabel_1 = new Label(border, SWT.NONE);
                                                 lblNewLabel_1.setLocation(168, 229);
                                                 lblNewLabel_1.setSize(229, 130);
-                                                lblNewLabel_1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/rect.png"));
+                                                lblNewLabel_1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect.png"));
  
                                             }
                                             {
                                                 lblNewLabel_2 = new Label(border, SWT.NONE);
                                                 lblNewLabel_2.setLocation(396, 98);
                                                 lblNewLabel_2.setSize(383, 110);
-                                                lblNewLabel_2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/path.png"));
+                                                lblNewLabel_2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path.png"));
                                             }
                                                     {
                                                         lblNewLabel_3 = new Label(border, SWT.NONE);
                                                         lblNewLabel_3.setLocation(390, 219);
                                                         lblNewLabel_3.setSize(389, 100);
-                                                        lblNewLabel_3.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/path3019.png"));
+                                                        lblNewLabel_3.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path3019.png"));
                                                         
                                                     }
                                             
@@ -259,7 +259,7 @@ public class SigVerComposite extends Composite  {
                                                         {
                                                             lblDocPic = new Label(littleBorder, SWT.ICON);
                                                             lblDocPic.setBounds(35, 10, 163, 159);
-                                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/image3013.png"));
+                                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
                                                         }
                                                     }
                                                     
