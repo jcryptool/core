@@ -23,8 +23,8 @@ import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
-import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
+import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
 /**
@@ -116,6 +116,7 @@ public class SigVerComposite extends Composite  {
         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
         action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
         toolBarMenu.add(action);
+        
     }
 
     /**
@@ -127,26 +128,33 @@ public class SigVerComposite extends Composite  {
         parent.setLayout(null);
                         {
                             lblGeneralDescription = new Label(this, SWT.NONE);
-                            lblGeneralDescription.setLocation(25, 36);
-                            lblGeneralDescription.setSize(1614, 89);
+                            lblGeneralDescription.setLocation(10, 36);
+                            lblGeneralDescription.setSize(1035, 77);
                             lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
                             lblGeneralDescription.setText(Messages.SigVerComposite_description);
                            
                         }
                         lblHeader = new Label(this, SWT.NONE);
-                        lblHeader.setLocation(25, 0);
-                        lblHeader.setSize(1614, 41);
+                        lblHeader.setLocation(10, 10);
+                        lblHeader.setSize(1035, 35);
                         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
                         lblHeader.setText(Messages.SigVerComposite_lblHeader);
                         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
                         
                         lblTitle = new Label(this, SWT.NONE);
-                        lblTitle.setLocation(37, 145);
+                        lblTitle.setLocation(20, 119);
                         lblTitle.setSize(137, 20);
                         lblTitle.setText(Messages.SigVerComposite_lblTitle);
                         {
                             Composite border = new Composite(this, SWT.BORDER);
-                            border.setBounds(25, 154, 1614, 776);
+                            border.setBounds(10, 130, 1035, 575);
+                            
+                                    {
+                                        lblDocPic = new Label(border, SWT.ICON);
+                                        lblDocPic.setLocation(69, 136);
+                                        lblDocPic.setSize(150, 165);
+                                        lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/image3013.png"));
+                                    }
                             
                             btnHash = new Button(border, SWT.NONE);
                             btnHash.addSelectionListener(new SelectionAdapter() {
@@ -154,13 +162,13 @@ public class SigVerComposite extends Composite  {
                                 public void widgetSelected(SelectionEvent e) {
                                 }
                             });
-                            btnHash.setBounds(698, 106, 200, 118);
+                            btnHash.setBounds(386, 98, 190, 90);
                             btnHash.setEnabled(false);
                             btnHash.setText(Messages.SigVerComposite_btnHash);
                             {
                                 lblCheckSig = new Label(border, SWT.NONE);
-                                lblCheckSig.setLocation(1285, 106);
-                                lblCheckSig.setSize(142, 35);
+                                lblCheckSig.setLocation(812, 55);
+                                lblCheckSig.setSize(109, 20);
                                 lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
                             }
                             
@@ -170,12 +178,12 @@ public class SigVerComposite extends Composite  {
                                 public void widgetSelected(SelectionEvent e) {
                                 }
                             });
-                            btnAddInput.setLocation(97, 106);
-                            btnAddInput.setSize(200, 63);
+                            btnAddInput.setLocation(38, 54);
+                            btnAddInput.setSize(200, 60);
                             btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
                             
                             btnReset = new Button(border, SWT.NONE);
-                            btnReset.setLocation(1496, 605);
+                            btnReset.setLocation(931, 412);
                             btnReset.setSize(90, 30);
                             btnReset.addSelectionListener(new SelectionAdapter() {
                                 @Override
@@ -186,8 +194,8 @@ public class SigVerComposite extends Composite  {
                             
                             btnDecrypt = new Button(border, SWT.NONE);
                             btnDecrypt.setEnabled(false);
-                            btnDecrypt.setLocation(698, 306);
-                            btnDecrypt.setSize(200, 118);
+                            btnDecrypt.setLocation(386, 240);
+                            btnDecrypt.setSize(190, 90);
                             btnDecrypt.addSelectionListener(new SelectionAdapter() {
                                 @Override
                                 public void widgetSelected(SelectionEvent e) {
@@ -203,67 +211,60 @@ public class SigVerComposite extends Composite  {
                             
                             {
                                 lblKeyPic = new Label(border, SWT.ICON);
-                                lblKeyPic.setLocation(755, 468);
+                                lblKeyPic.setLocation(435, 333);
                                 lblKeyPic.setSize(100, 118);
-                                lblKeyPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/key.png"));
+                                lblKeyPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/key.png"));
                             }
                             
                             tempVert = new Label(border, SWT.NONE);
-                            tempVert.setLocation(774, 417);
+                            tempVert.setLocation(455, 307);
                             tempVert.setSize(55, 52);
                             tempVert.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
-                                    
-                                            {
-                                                lblDocPic = new Label(border, SWT.ICON);
-                                                lblDocPic.setLocation(117, 188);
-                                                lblDocPic.setSize(150, 165);
-                                                lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
-                                            }
                                             {
                                                 label = new Label(border, SWT.NONE);
-                                                label.setLocation(234, 136);
-                                                label.setSize(630, 130);
-                                                label.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect2985.png"));
+                                                label.setLocation(168, 78);
+                                                label.setSize(229, 130);
+                                                label.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/rect2985.png"));
                                             }
                                             {
                                                 lblNewLabel_1 = new Label(border, SWT.NONE);
-                                                lblNewLabel_1.setLocation(209, 281);
-                                                lblNewLabel_1.setSize(630, 130);
-                                                lblNewLabel_1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect.png"));
+                                                lblNewLabel_1.setLocation(168, 229);
+                                                lblNewLabel_1.setSize(229, 130);
+                                                lblNewLabel_1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/rect.png"));
  
                                             }
                                             {
                                                 lblNewLabel_2 = new Label(border, SWT.NONE);
-                                                lblNewLabel_2.setLocation(836, 106);
-                                                lblNewLabel_2.setSize(422, 155);
-                                                lblNewLabel_2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path.png"));
+                                                lblNewLabel_2.setLocation(396, 98);
+                                                lblNewLabel_2.setSize(383, 110);
+                                                lblNewLabel_2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/path.png"));
                                             }
                                                     {
                                                         lblNewLabel_3 = new Label(border, SWT.NONE);
-                                                        lblNewLabel_3.setLocation(836, 281);
-                                                        lblNewLabel_3.setSize(404, 130);
-                                                        lblNewLabel_3.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path3019.png"));
+                                                        lblNewLabel_3.setLocation(390, 219);
+                                                        lblNewLabel_3.setSize(389, 100);
+                                                        lblNewLabel_3.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/path3019.png"));
                                                         
                                                     }
                                             
                                                     {
                                                         Composite littleBorder = new Composite(border, SWT.BORDER);
-                                                        littleBorder.setLocation(1269, 121);
-                                                        littleBorder.setSize(317, 330);
+                                                        littleBorder.setLocation(803, 66);
+                                                        littleBorder.setSize(218, 253);
                                                         
                                                         btnResult = new Button(littleBorder, SWT.NONE);
                                                         btnResult.setEnabled(false);
-                                                        btnResult.setBounds(61, 214, 200, 63);
+                                                        btnResult.setBounds(13, 189, 190, 50);
                                                         btnResult.setText(Messages.SigVerComposite_btnResult);
                                                         {
                                                             lblDocPic = new Label(littleBorder, SWT.ICON);
-                                                            lblDocPic.setBounds(82, 28, 161, 152);
-                                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
+                                                            lblDocPic.setBounds(35, 10, 163, 159);
+                                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "icons/image3013.png"));
                                                         }
                                                     }
                                                     
                                                     TabFolder tabFolder = new TabFolder(border, SWT.NONE);
-                                                    tabFolder.setBounds(34, 631, 1552, 131);
+                                                    tabFolder.setBounds(10, 430, 1011, 131);
                                                     {
                                                         tabStep1 = new TabItem(tabFolder, SWT.NONE);
                                                         tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
@@ -373,7 +374,7 @@ public class SigVerComposite extends Composite  {
      // Adds a Listener for the Signature select button
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                try {
+            	try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
                     reset(2);
@@ -396,9 +397,7 @@ public class SigVerComposite extends Composite  {
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                 }
-                
-                
-                try {
+            	try {
                     reset(2);
                     SignatureWizard wiz = new SignatureWizard(hash);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
