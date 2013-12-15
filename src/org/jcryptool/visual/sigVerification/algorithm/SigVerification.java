@@ -1,21 +1,10 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
 import java.security.KeyFactory;
-//import java.security.KeyPair;
-//import java.security.KeyPairGenerator;
-//import java.security.PrivateKey;
 import java.security.PublicKey;
-//import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-//import java.util.Date;
-
-/*import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.visual.sigVerification.listener.SignatureEvent;
-import org.jcryptool.visual.sigVerification.listener.SignatureListener;
-import org.jcryptool.visual.sigVerification.listener.SignatureListenerAdder;*/
 
 /**
  * Verifies a signature for the input with the selected signature methods.

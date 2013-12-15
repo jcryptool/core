@@ -12,7 +12,6 @@ public class Messages {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.messages"; //$NON-NLS-1$
     // Create strings for all the values
     public static String SigVerComposite_grpSignatureGeneration;
-    public static String SigVerComposite_grpSignedDoc;
     public static String SigVerComposite_lblHash;
     public static String SigVerComposite_lblSignature;
     public static String SigVerComposite_lblProgress;
@@ -39,6 +38,9 @@ public class Messages {
     public static String SigVerComposite_btnDecrypt;
     public static String SigVerComposite_lblPubKey;
     public static String SigVerComposite_lblTitle;
+    public static String ModelComposite_description;
+    public static String ModelComposite_lblHeader;
+    public static String ModelComposite_lblTitle;
 
     static {
         // initialize resource bundle
