@@ -13,7 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+//import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
  * This class contains loads the composite for the signature wizard.
@@ -47,7 +47,7 @@ public class SignatureWizardPage extends WizardPage {
     /**
      * @return the KeyStoreAlias
      */
-    public KeyStoreAlias getAlias() {
+/*    public KeyStoreAlias getAlias() {
         return composite.getAlias();
-    }
+    }*/
 }

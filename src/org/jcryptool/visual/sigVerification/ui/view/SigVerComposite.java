@@ -3,51 +3,28 @@ package org.jcryptool.visual.sigVerification.ui.view;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
-//import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-//import org.eclipse.swt.events.DisposeEvent;
-//import org.eclipse.swt.events.DisposeListener;
-//import org.eclipse.swt.events.PaintEvent;
-//import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-//import org.eclipse.swt.graphics.Color;
-//import org.eclipse.swt.graphics.Font;
-//import org.eclipse.swt.graphics.FontData;
-//import org.eclipse.swt.graphics.GC;
-//import org.eclipse.swt.graphics.Image;
-//import org.eclipse.swt.graphics.ImageData;
-//import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
-//import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-//import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-//import org.eclipse.swt.widgets.Menu;
-//import org.eclipse.swt.widgets.MenuItem;
-//import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-//import org.eclipse.swt.widgets.Text;
-//import org.eclipse.ui.IViewReference;
-//import org.eclipse.ui.IWorkbenchPage;
-//import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.Messages;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
-import org.jcryptool.visual.sigVerification.algorithm.SigGeneration;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
-//import org.jcryptool.visual.sigVerification.ui.wizards.ShowSig;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
 /**
@@ -139,9 +116,6 @@ public class SigVerComposite extends Composite  {
         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
         action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
         toolBarMenu.add(action);
-        
-        //addMenuBar();
-        //addStatusLine();
     }
 
     /**
@@ -438,7 +412,7 @@ public class SigVerComposite extends Composite  {
                     if (dialog.open() == Window.OK) {
                         // get signature method (integer)
                         signature = wiz.getSignature();
-                        KeyStoreAlias alias = wiz.getAlias();
+                        //KeyStoreAlias alias = wiz.getAlias();
                         
                         // Divides signature and plaintext from imported file.
                         Input.divideSignatuerPlaintext();
@@ -448,10 +422,10 @@ public class SigVerComposite extends Composite  {
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        SigGeneration.signInput(chooseSignature(), Input.data, alias);
+                        Input.result=SigVerification.verifyInput(chooseSignature(), Input.signature, Input.pubKey, Input.data);
 
                         // Compares the two hashes.
-                        Input.compareHashes();
+                        //Input.compareHashes();
                         
                         // Shows green check mark or red fail sign if compairism is correct or false
                         if(Input.result){
