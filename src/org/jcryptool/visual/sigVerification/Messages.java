@@ -41,6 +41,14 @@ public class Messages {
     public static String ModelComposite_description;
     public static String ModelComposite_lblHeader;
     public static String ModelComposite_lblTitle;
+    public static String ModelComposite_btnShellM;
+    public static String ModelComposite_btnChainM;
+    public static String ModelComposite_lblroot;
+    public static String ModelComposite_lbllevel2;
+    public static String ModelComposite_lbllevel3;
+    public static String ModelComposite_btnNewResult;
+    public static String ModelComposite_Choose;
+
 
     static {
         // initialize resource bundle
