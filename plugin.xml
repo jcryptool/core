@@ -9,7 +9,7 @@
             class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
             icon="icons/view.gif"
             id="org.jcryptool.visual.sigVerification.view"
-            name="%view.name"
+            name="Signature-Verification"
             restorable="true">
       </view>
    </extension>
