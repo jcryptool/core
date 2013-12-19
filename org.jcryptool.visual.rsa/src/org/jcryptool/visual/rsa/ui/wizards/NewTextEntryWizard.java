@@ -33,7 +33,7 @@ public class NewTextEntryWizard extends TextAsNumbersLoaderWizard {
 	}
 	
 	private static boolean onlyNumbersLoadingData(RSAData data2, int verificationStep) {
-		return (data2.getAction() == Action.DecryptAction) || (verificationStep == 2 && data2.getAction() == Action.VerifyAction);
+		return (data2.getAction() == Action.DecryptAction) || (verificationStep == 1 && data2.getAction() == Action.VerifyAction);
 	}
 	
 	@Override
