@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Shanks Babystep-Giantstep"
+            name="%view.name.0"
             icon="icons/view.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView"
@@ -22,7 +22,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="Shanks Babystep-Giantstep"
+            name="%Visual.name.0"
             viewId="org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
       </Visual>
    </extension>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="JCrypTool Certification Authority" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
+<toc label="JCrypTool Public-Key Infrastructure (JCT-PKI)" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#visualizationPlugins">
     <topic href="$nl$/help/index.html" label="JCrypTool Certification Authority">
         <topic href="$nl$/help/intro/schutzziele.html" label="Einführung in die Problemstellung">
         </topic>

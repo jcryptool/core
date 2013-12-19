@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 public class NestedEnable {
 	
@@ -65,10 +66,10 @@ public class NestedEnable {
 			definingClass = c.getClass().getMethod("setEnabled", boolean.class).getDeclaringClass();
 			String implementingClassName = definingClass.getName();
 			return !implementingClassName.contains(swtPackagePath);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
+		} catch (SecurityException ex) {
+		    LogUtil.logError(ex);
+		} catch (NoSuchMethodException ex) {
+		    LogUtil.logError(ex);
 		}
 		return false;
 	}

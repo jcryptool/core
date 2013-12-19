@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.jctca.listeners;
 
 import java.math.BigInteger;
@@ -37,6 +36,8 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.certificates.CertificateFactory;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.visual.jctca.Util;
 import org.jcryptool.visual.jctca.CertificateClasses.RegistrarCSR;
 
@@ -90,32 +91,32 @@ public class CreateCertListener implements SelectionListener {
                                       // btn_send_csr
 
         switch (pressed) {
-            case 0:
-                FileDialog f = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
-                f.setFilterExtensions(new String[] {"*.jpg", "*.gif", "*.bmp", "*.gif"});//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-                path = f.open();
-                if (path != null) {
-                    src.setText(path);
-                }
-                break;
-            case 1:
-                if (checkFields()) {
+        case 0:
+            FileDialog f = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
+            f.setFilterExtensions(new String[] { "*.jpg", "*.gif", "*.bmp", "*.gif" });//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+            path = f.open();
+            if (path != null) {
+                src.setText(path);
+            }
+            break;
+        case 1:
+            if (checkFields()) {
+                generateNewRSAKeyPair();
+            } else {
+                Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
+                        Messages.CreateCertListener_msgbox_text_not_all_fields_set, SWT.ICON_INFORMATION);
+            }
+            break;
+        case 2:
+            if (checkFields()) {
+                if (btn_radio_gen_key.getSelection()) {
                     generateNewRSAKeyPair();
-                } else {
-                    Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
-                            Messages.CreateCertListener_msgbox_text_not_all_fields_set, SWT.ICON_INFORMATION);
                 }
-                break;
-            case 2:
-                if (checkFields()) {
-                    if (btn_radio_gen_key.getSelection()) {
-                        generateNewRSAKeyPair();
-                    }
-                    sendCSR();
-                } else {
-                    Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
-                            Messages.CreateCertListener_msgbox_text_not_all_fields_set, SWT.ICON_INFORMATION);
-                }
+                sendCSR();
+            } else {
+                Util.showMessageBox(Messages.CreateCertListener_msgbox_title_not_all_fields_set,
+                        Messages.CreateCertListener_msgbox_text_not_all_fields_set, SWT.ICON_INFORMATION);
+            }
         }
     }
 
@@ -158,17 +159,14 @@ public class CreateCertListener implements SelectionListener {
                                     privateKey.getDQ(), privateKey.getQInv()));
             String name = txt_first_name.getText() + " " //$NON-NLS-1$
                     + txt_last_name.getText();
-            KeyStoreAlias privAlias = new KeyStoreAlias(name,
-                    org.jcryptool.crypto.keystore.keys.KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
+            KeyStoreAlias privAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, //$NON-NLS-1$
                     (name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
                     privKey.getClass().getName());
-            KeyStoreAlias pubAlias = new KeyStoreAlias(name,
-                    org.jcryptool.crypto.keystore.keys.KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,//$NON-NLS-1$
+            KeyStoreAlias pubAlias = new KeyStoreAlias(name, KeyType.KEYPAIR_PUBLIC_KEY, "RSA", 1024,//$NON-NLS-1$
                     (name.concat(privKey.toString())).hashCode() + " ",//$NON-NLS-1$
                     pubKey.getClass().getName());
-            mng.addKeyPair(privKey,
-                    org.jcryptool.crypto.keystore.certificates.CertificateFactory.createJCrypToolCertificate(pubKey),
-                    new char[] {'1', '2', '3', '4'}, privAlias, pubAlias);
+            mng.addKeyPair(privKey, CertificateFactory.createJCrypToolCertificate(pubKey),
+                    KeyStoreManager.KEY_PASSWORD, privAlias, pubAlias);
             String entry = pubAlias.getContactName() + " (Hash: " + Util.formatHash(pubAlias.getHashValue()) + ")";//$NON-NLS-1$ //$NON-NLS-2$
             cmb_keys.add(entry);
             cmb_keys.getParent().layout();
@@ -179,7 +177,6 @@ public class CreateCertListener implements SelectionListener {
         } catch (NoSuchAlgorithmException e) {
             LogUtil.logError(e);
         }
-
     }
 
     /**

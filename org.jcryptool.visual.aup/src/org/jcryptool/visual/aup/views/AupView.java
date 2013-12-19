@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.PlatformUI;
@@ -306,7 +307,7 @@ public class AupView extends ViewPart {
 		heading.setLayoutData(fd_heading);
 		heading.setText(Messages.AndroidUnlockPattern_Heading);
 		
-		Label lblHeaderInfoText = new Label(headingBox, SWT.NONE);
+		Text lblHeaderInfoText = new Text(headingBox, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
 		lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
 		FormData fd_lblHeaderInfoText = new FormData();
 		fd_lblHeaderInfoText.right = new FormAttachment(heading, 120, SWT.RIGHT);

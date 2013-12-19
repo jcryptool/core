@@ -70,7 +70,7 @@ public class SigVisPluginOpenListener implements SelectionListener {
                     .findViewReference("org.jcryptool.visual.sig.view");
             if (ref != null) {
                 Util.showMessageBox("Signaturerzeugung schließen",
-                        "Sie müssen zuerst die Signaturerzeugung schließen bevor sie fortfahren können.",
+                        "Sie m\u00fcssen zuerst die Signatur-Demo schlie\u00dfen, bevor Sie im Public-Key-Infrastruktur-Plugin mit der Methode 'Signaturvorgang visualisieren' fortfahren k\u00f6nnen",
                         SWT.ICON_INFORMATION);
             } else {
                 try {

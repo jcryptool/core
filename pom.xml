@@ -59,6 +59,7 @@
 	<module>org.jcryptool.crypto.xml.help</module>
 	<module>org.jcryptool.crypto.xml.ui</module>
 	<module>org.jcryptool.games</module>
+	<module>org.jcryptool.games.divide</module>
 	<module>org.jcryptool.games.feature</module>
 	<module>org.jcryptool.games.numbershark</module>
 	<module>org.jcryptool.games.sudoku</module>
@@ -75,6 +76,7 @@
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>
 	<module>org.jcryptool.visual.he</module>
+	<module>org.jcryptool.visual.huffmanCoding</module>
 	<module>org.jcryptool.visual.jctca</module>
 	<module>org.jcryptool.visual.kleptography</module>
 	<module>org.jcryptool.visual.library</module>

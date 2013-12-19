@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.ui.modules.Messages;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKey;
 import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKeyValidityException;
@@ -56,8 +57,8 @@ public class SubstKeyViewer extends Shell {
 							display.sleep();
 						}
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				} catch (Exception ex) {
+				    LogUtil.logError(ex);
 				}
 			}
 		});
@@ -81,8 +82,8 @@ public class SubstKeyViewer extends Shell {
 			try {
 				SubstitutionKey key = new SubstitutionKey(SubstitutionKey.invertSubstitution(key1Data));
 				key2String = key.toStringSubstitutionCharList(alphabet);
-			} catch (SubstitutionKeyValidityException e) {
-				e.printStackTrace();
+			} catch (SubstitutionKeyValidityException ex) {
+			    LogUtil.logError(ex);
 			}
 		}
 		k1PreviewText.setText(key1String);

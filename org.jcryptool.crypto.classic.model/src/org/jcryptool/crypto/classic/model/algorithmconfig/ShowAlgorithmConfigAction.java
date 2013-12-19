@@ -129,8 +129,8 @@ public class ShowAlgorithmConfigAction implements IWorkbenchWindowActionDelegate
 					display.sleep();
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (Exception ex) {
+		    LogUtil.logError(ex);
 		}
 	}
 

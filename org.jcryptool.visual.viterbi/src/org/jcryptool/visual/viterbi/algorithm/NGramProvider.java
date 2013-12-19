@@ -44,22 +44,6 @@ public class NGramProvider {
 		for (int i = 0; i < inputArray.length - 1; i += 2) {
 			ngrams.put(inputArray[i], Integer.parseInt(inputArray[i + 1]));
 		}
-
-		// just for printing values:
-		// you can use this code to print the content of the ngrams file on
-		// stdout
-
-		// final String firstSeparator = "|";
-		// final String secondSeparator = "|\r\n";
-		// StringBuilder output = new StringBuilder("");
-		// ArrayList<String> list = new ArrayList<String>(ngrams.keySet());
-		// Collections.sort(list);
-		//
-		// for (String sequence : list) {
-		// output.append(sequence + firstSeparator + ngrams.get(sequence)
-		// + secondSeparator);
-		// }
-		// System.out.println(output.toString());
 	}
 
 	/**

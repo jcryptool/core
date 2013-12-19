@@ -28,9 +28,9 @@ import org.eclipse.swt.events.SelectionEvent;
  */
 public class Parameter extends TitleAreaDialog {
 
-	private Text group;
-	private Text generator;
-	private Text groupElement;
+	private Text textGroup;
+	private Text textGenerator;
+	private Text textGroupElement;
 
 	private String groupValue;
 	private String generatorValue;
@@ -40,12 +40,28 @@ public class Parameter extends TitleAreaDialog {
 
 		@Override
 		public void verifyText(VerifyEvent e) {
+			Text textField = null;
 			e.doit = true;
+
+			if (e.getSource() instanceof Text) {
+				textField = (Text) e.getSource();
+			}
+
+			if (textField == null
+					|| ((textField.getText().length() == 0 && e.text.compareTo("0") == 0) || (textField.getSelection().x == 0 && e.keyCode == 48))) {
+				e.doit = false;
+				return;
+			}
 
 			String text = e.text;
 			char[] chars = text.toCharArray();
 
 			for (int i = 0; i < chars.length; i++) {
+				if (chars.length > 1 && i == 0 && chars[i] == '0') {
+					e.doit = false;
+					break;
+				}
+
 				if (!Character.isDigit(chars[i])) {
 					e.doit = false;
 					break;
@@ -54,34 +70,92 @@ public class Parameter extends TitleAreaDialog {
 		}
 	};
 
+	private ModifyListener primeModifyListener = new ModifyListener() {
+
+		@Override
+		public void modifyText(ModifyEvent e) {
+			Text tmpText = null;
+
+			if (e.getSource() instanceof Text) {
+				tmpText = (Text) e.getSource();
+			}
+
+			if (!tmpText.getText().isEmpty()) {
+				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
+				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || !tmpTextValue.isProbablePrime(10000)) {
+					tmpText.setBackground(Constants.RED);
+					if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0) {
+						btnNextPrime.setEnabled(false);
+					} else {
+						btnNextPrime.setEnabled(true);
+					}
+				} else {
+					tmpText.setBackground(Constants.WHITE);
+					btnNextPrime.setEnabled(false);
+				}
+			} else {
+				tmpText.setBackground(Constants.RED);
+			}
+			tmpText.setSelection(tmpText.getText().length());
+
+			checkValues();
+			checkBackgroundValues();
+		}
+	};
+
 	private ModifyListener integerModifyListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			btnNextPrime.setEnabled(true);
-
-			Text textField = null;
+			Text tmpText = null;
 
 			if (e.getSource() instanceof Text) {
-				textField = (Text) e.getSource();
+				tmpText = (Text) e.getSource();
 			}
 
-			if (!textField.getText().isEmpty()) {
-				BigInteger textFieldValue = new BigInteger(textField.getText());
-				if (textFieldValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || textField.getText().compareTo("1") == 0) { //$NON-NLS-1$
-					textField.setBackground(Constants.RED);
+			if (!tmpText.getText().isEmpty()) {
+				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
+				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
+					tmpText.setBackground(Constants.RED);
 				} else {
-					textField.setBackground(Constants.WHITE);
-					multipleCheck();
+					tmpText.setBackground(Constants.WHITE);
 				}
 			} else {
-				textField.setBackground(Constants.RED);
+				tmpText.setBackground(Constants.RED);
 			}
-
+			tmpText.setSelection(tmpText.getText().length());
+			
 			checkBackgroundValues();
 		}
-
 	};
+
+	private ModifyListener groupElementModifyListener = new ModifyListener() {
+
+		@Override
+		public void modifyText(ModifyEvent e) {
+			Text tmpText = null;
+
+			if (e.getSource() instanceof Text) {
+				tmpText = (Text) e.getSource();
+			}
+
+			if (!tmpText.getText().isEmpty()) {
+				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
+				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
+					tmpText.setBackground(Constants.RED);
+				} else {
+					tmpText.setBackground(Constants.WHITE);
+				}
+			} else {
+				tmpText.setBackground(Constants.RED);
+			}
+			tmpText.setSelection(tmpText.getText().length());
+
+			checkValues();
+			checkBackgroundValues();
+		}
+	};
+
 	private Button btnNextPrime;
 
 	/**
@@ -97,55 +171,81 @@ public class Parameter extends TitleAreaDialog {
 		this.groupElementValue = groupElement;
 	}
 
-	protected void multipleCheck() {
-		BigInteger textGroupElementValue = null;
-		BigInteger textGroupValue = null;
-
-		if (group.getText().isEmpty()) {
-			textGroupValue = new BigInteger(groupValue);
-		} else {
-			textGroupValue = new BigInteger(group.getText());
+	protected void checkValues() {
+		if (textGroup.getText().isEmpty() && textGroupElement.getText().isEmpty()) {
+			textGroup.setBackground(Constants.RED);
+			textGroupElement.setBackground(Constants.RED);
+			btnNextPrime.setEnabled(false);
+			return;
 		}
 
-		if (groupElement.getText().isEmpty()) {
-			textGroupElementValue = new BigInteger(groupElementValue);
-		} else {
-			textGroupElementValue = new BigInteger(groupElement.getText());
-		}
-
-		if (textGroupValue.isProbablePrime(10000) && textGroupElementValue.compareTo(textGroupValue) < 0) {
-			group.setBackground(Constants.WHITE);
-			groupElement.setBackground(Constants.WHITE);
-		} else if (textGroupValue.isProbablePrime(10000) && textGroupElementValue.compareTo(textGroupValue) >= 0) {
-			if (textGroupElementValue.mod(textGroupValue).compareTo(BigInteger.ZERO) == 0) {
-				group.setBackground(Constants.RED);
-				groupElement.setBackground(Constants.RED);
+		if (textGroup.getText().isEmpty() && !textGroupElement.getText().isEmpty()) {
+			textGroup.setBackground(Constants.RED);
+			if (new BigInteger(textGroupElement.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+					|| new BigInteger(textGroupElement.getText()).compareTo(BigInteger.ONE) == 0) {
+				textGroupElement.setBackground(Constants.RED);
 			} else {
-				group.setBackground(Constants.WHITE);
-				groupElement.setBackground(Constants.WHITE);
+				textGroupElement.setBackground(Constants.WHITE);
 			}
-		} else if (!textGroupValue.isProbablePrime(10000)
-				&& (textGroupElementValue.mod(textGroupValue).compareTo(BigInteger.ZERO) == 0 || textGroupValue.mod(textGroupElementValue).compareTo(BigInteger.ZERO) == 0)) {
-			group.setBackground(Constants.RED);
-			groupElement.setBackground(Constants.RED);
-		} else {
-			group.setBackground(Constants.RED);
-			groupElement.setBackground(Constants.WHITE);
-
+			btnNextPrime.setEnabled(false);
+			return;
 		}
+
+		if (!textGroup.getText().isEmpty() && textGroupElement.getText().isEmpty()) {
+			textGroupElement.setBackground(Constants.RED);
+			if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+					|| !(new BigInteger(textGroup.getText()).isProbablePrime(10000))) {
+				textGroup.setBackground(Constants.RED);
+				btnNextPrime.setEnabled(true);
+			} else {
+				textGroup.setBackground(Constants.WHITE);
+				btnNextPrime.setEnabled(false);
+			}
+			return;
+		}
+
+		if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+				|| !(new BigInteger(textGroup.getText()).isProbablePrime(10000))
+				|| new BigInteger(textGroup.getText()).compareTo(BigInteger.ONE) == 0) {
+			textGroup.setBackground(Constants.RED);
+			if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0) {
+				btnNextPrime.setEnabled(false);
+			} else {
+				btnNextPrime.setEnabled(true);
+			}
+		} else {
+			textGroup.setBackground(Constants.WHITE);
+		}
+
+		if (new BigInteger(textGroupElement.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+				|| new BigInteger(textGroupElement.getText()).compareTo(BigInteger.ONE) == 0) {
+			textGroupElement.setBackground(Constants.RED);
+		} else {
+			textGroupElement.setBackground(Constants.WHITE);
+		}
+
+		if (new BigInteger(textGroupElement.getText()).mod(new BigInteger(textGroup.getText())).compareTo(BigInteger.ZERO) == 0) {
+			textGroup.setBackground(Constants.RED);
+			textGroupElement.setBackground(Constants.RED);
+			btnNextPrime.setEnabled(true);
+		}
+
 	}
 
 	protected void checkBackgroundValues() {
 		if (this.getButton(IDialogConstants.OK_ID) != null) {
-			if (group.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0 && generator.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0
-					&& groupElement.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0 && !group.getText().isEmpty() && !groupElement.getText().isEmpty()
-					&& !generator.getText().isEmpty() && group.getText().compareTo("1") != 0 && generator.getText().compareTo("1") != 0 && groupElement.getText().compareTo("1") != 0) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			if (textGroup.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0
+					&& textGenerator.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0
+					&& textGroupElement.getBackground().toString().compareTo(Constants.WHITE.toString()) == 0
+					&& !textGroup.getText().isEmpty()
+					&& !textGroupElement.getText().isEmpty()
+					&& !textGenerator.getText().isEmpty()
+					&& textGroup.getText().compareTo("1") != 0 && textGenerator.getText().compareTo("1") != 0 && textGroupElement.getText().compareTo("1") != 0) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				this.getButton(IDialogConstants.OK_ID).setEnabled(true);
 			} else {
 				this.getButton(IDialogConstants.OK_ID).setEnabled(false);
 			}
 		}
-
 	}
 
 	/**
@@ -162,69 +262,67 @@ public class Parameter extends TitleAreaDialog {
 		container.setLayout(new GridLayout(3, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		Label lblNewLabel = new Label(container, SWT.NONE);
-		lblNewLabel.setText(Messages.BabystepGiantstepView_4);
+		Label lblGroup = new Label(container, SWT.NONE);
+		lblGroup.setText(Messages.BabystepGiantstepView_4);
 
-		group = new Text(container, SWT.BORDER);
-		group.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		group.addVerifyListener(vl_numbers);
-		group.addModifyListener(integerModifyListener);
+		textGroup = new Text(container, SWT.BORDER);
+		textGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textGroup.addVerifyListener(vl_numbers);
+		textGroup.addModifyListener(primeModifyListener);
 
 		btnNextPrime = new Button(container, SWT.NONE);
 		btnNextPrime.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (!group.getText().isEmpty()) {
-					BigInteger tmp = new BigInteger(group.getText());
+				if (!textGroup.getText().isEmpty()) {
+					BigInteger tmp = new BigInteger(textGroup.getText());
 					if (!tmp.isProbablePrime(10000)) {
 						tmp = tmp.nextProbablePrime();
 					} else {
-						tmp = new BigInteger(group.getText());
-						tmp.add(BigInteger.ONE);
-						tmp = tmp.nextProbablePrime();
+						tmp = tmp.add(BigInteger.ONE).nextProbablePrime();
 					}
-					group.setText(tmp.toString());
-					group.setBackground(Constants.WHITE);
+
+					textGroup.setText(tmp.toString());
 					btnNextPrime.setEnabled(false);
 
-					multipleCheck();
+					checkValues();
 				}
 			}
 		});
-		btnNextPrime.setText(Messages.Parameter_btnNextPrime_text);
+		btnNextPrime.setText(Messages.Parameter_3);
 
-		Label lblNewLabel_1 = new Label(container, SWT.NONE);
-		lblNewLabel_1.setText(Messages.BabystepGiantstepView_5);
+		Label lblGenerator = new Label(container, SWT.NONE);
+		lblGenerator.setText(Messages.BabystepGiantstepView_5);
 
-		generator = new Text(container, SWT.BORDER);
-		generator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		generator.addVerifyListener(vl_numbers);
-		generator.addModifyListener(integerModifyListener);
+		textGenerator = new Text(container, SWT.BORDER);
+		textGenerator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		textGenerator.addVerifyListener(vl_numbers);
+		textGenerator.addModifyListener(integerModifyListener);
 
-		Label lblNewLabel_2 = new Label(container, SWT.NONE);
-		lblNewLabel_2.setText(Messages.BabystepGiantstepView_6);
+		Label lblGroupElement = new Label(container, SWT.NONE);
+		lblGroupElement.setText(Messages.BabystepGiantstepView_6);
 
-		groupElement = new Text(container, SWT.BORDER);
-		groupElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-		groupElement.addVerifyListener(vl_numbers);
-		groupElement.addModifyListener(integerModifyListener);
+		textGroupElement = new Text(container, SWT.BORDER);
+		textGroupElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
+		textGroupElement.addVerifyListener(vl_numbers);
+		textGroupElement.addModifyListener(groupElementModifyListener);
 
-		group.setText(groupValue);
+		textGroup.setText(groupValue);
 		BigInteger a = new BigInteger(groupValue);
 		if (a.compareTo(Constants.MAX_INTEGER_BI) > 0) {
-			group.setBackground(Constants.RED);
+			textGroup.setBackground(Constants.RED);
 		}
 
-		generator.setText(generatorValue);
+		textGenerator.setText(generatorValue);
 		BigInteger b = new BigInteger(generatorValue);
 		if (b.compareTo(Constants.MAX_INTEGER_BI) > 0) {
-			generator.setBackground(Constants.RED);
+			textGenerator.setBackground(Constants.RED);
 		}
 
-		groupElement.setText(groupElementValue);
+		textGroupElement.setText(groupElementValue);
 		BigInteger c = new BigInteger(groupElementValue);
 		if (c.compareTo(Constants.MAX_INTEGER_BI) > 0) {
-			groupElement.setBackground(Constants.RED);
+			textGroupElement.setBackground(Constants.RED);
 		}
 
 		return area;
@@ -238,11 +336,13 @@ public class Parameter extends TitleAreaDialog {
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
 		createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
-		createButton(parent, IDialogConstants.CANCEL_ID, Messages.Parameter_5, false);
+		createButton(parent, IDialogConstants.CANCEL_ID, Messages.Parameter_2, false);
 
-		if (group.getBackground().toString().compareTo(Constants.RED.toString()) == 0 || generator.getBackground().toString().compareTo(Constants.RED.toString()) == 0
-				|| groupElement.getBackground().toString().compareTo(Constants.RED.toString()) == 0 || group.getText().compareTo("1") == 0 || generator.getText().compareTo("1") == 0 //$NON-NLS-1$ //$NON-NLS-2$
-				|| groupElement.getText().compareTo("1") == 0) { //$NON-NLS-1$
+		if (textGroup.getBackground().toString().compareTo(Constants.RED.toString()) == 0
+				|| textGenerator.getBackground().toString().compareTo(Constants.RED.toString()) == 0
+				|| textGroupElement.getBackground().toString().compareTo(Constants.RED.toString()) == 0
+				|| textGroup.getText().compareTo("1") == 0 || textGenerator.getText().compareTo("1") == 0 //$NON-NLS-1$ //$NON-NLS-2$
+				|| textGroupElement.getText().compareTo("1") == 0) { //$NON-NLS-1$
 			this.getButton(IDialogConstants.OK_ID).setEnabled(false);
 		}
 	}
@@ -255,9 +355,9 @@ public class Parameter extends TitleAreaDialog {
 	}
 
 	private void saveInput() {
-		groupValue = group.getText();
-		generatorValue = generator.getText();
-		groupElementValue = groupElement.getText();
+		groupValue = textGroup.getText();
+		generatorValue = textGenerator.getText();
+		groupElementValue = textGroupElement.getText();
 
 	}
 
@@ -280,5 +380,4 @@ public class Parameter extends TitleAreaDialog {
 	protected Point getInitialSize() {
 		return new Point(480, 250);
 	}
-
 }

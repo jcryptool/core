@@ -7,15 +7,11 @@ import java.util.Date;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -51,7 +47,7 @@ public class DesView extends ViewPart {
     TabFolder tfolder = null;
     TabItem tabAlg = null;;
     Label lblAlgTitle = null;
-    Label lblAlgInformationText = null;
+    Text lblAlgInformationText = null;
     Composite comAlg = null;
     Composite comAlgHeader = null;
     Label lblAlgorithm = null;
@@ -288,12 +284,12 @@ public class DesView extends ViewPart {
         lblAlgTitle.setText(Messages.DesView_title);
 
         // create title - text
-        lblAlgInformationText = new Label(comAlgMain, SWT.NONE);
+        lblAlgInformationText = new Text(comAlgMain, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
         FormData fd_lblAlgInformationText = new FormData();
         fd_lblAlgInformationText.top = new FormAttachment(lblAlgTitle, 10);
         fd_lblAlgInformationText.left = new FormAttachment(0, 10);
         lblAlgInformationText.setLayoutData(fd_lblAlgInformationText);
-        lblAlgInformationText.setBounds(0, 3, 650, 30);
+        lblAlgInformationText.setBounds(0, 3, 650, 15);
         lblAlgInformationText.setText(Messages.DesView_text);
 
         comAlgMainLeft = new Composite(comAlgMain, SWT.NONE);
@@ -395,18 +391,9 @@ public class DesView extends ViewPart {
         });
 
         lblAlgMode = new Label(comAlgInputMode, SWT.NONE);
-        lblAlgMode.setBounds(0, 3, 51, 15);
+        lblAlgMode.setBounds(0, 3, 60, 15);
         lblAlgMode.setText(Messages.DesView_11);
-        FontData[] fd_algmode = lblAlgMode.getFont().getFontData();
-        fd_algmode[0].setStyle(SWT.BOLD);
-        lblAlgMode.setFont(new Font(Display.getCurrent(), fd_algmode[0]));
-
-        lblAlgMode.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblAlgMode.getFont().dispose();
-            }
-
-        });
+        lblAlgMode.setFont(FontService.getLargeBoldFont());
 
         comAlgInputKey = new Composite(grpAlgInput, SWT.NONE);
         fd_comAlgInputMode.right = new FormAttachment(comAlgInputKey, -6);
@@ -422,18 +409,9 @@ public class DesView extends ViewPart {
         btnAlgK0.setSelection(true);
 
         lblAlgInputKey = new Label(comAlgInputKey, SWT.NONE);
-        lblAlgInputKey.setBounds(0, 3, 51, 15);
+        lblAlgInputKey.setBounds(0, 3, 60, 15);
         lblAlgInputKey.setText(Messages.DesView_13);
-        FontData[] fd_inputkey = lblAlgInputKey.getFont().getFontData();
-        fd_inputkey[0].setStyle(SWT.BOLD);
-        lblAlgInputKey.setFont(new Font(Display.getCurrent(), fd_inputkey[0]));
-
-        lblAlgInputKey.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblAlgInputKey.getFont().dispose();
-            }
-
-        });
+        lblAlgInputKey.setFont(FontService.getLargeBoldFont());
 
         btnAlgK3 = new Button(comAlgInputKey, SWT.RADIO);
         btnAlgK3.setText(Messages.DesView_14);
@@ -504,16 +482,7 @@ public class DesView extends ViewPart {
         lblAlgInputData = new Label(comAlgInputData, SWT.NONE);
         lblAlgInputData.setText(Messages.DesView_25);
         lblAlgInputData.setBounds(0, 3, 51, 15);
-        FontData[] fd_inputdata = lblAlgInputData.getFont().getFontData();
-        fd_inputdata[0].setStyle(SWT.BOLD);
-        lblAlgInputData.setFont(new Font(Display.getCurrent(), fd_inputdata[0]));
-
-        lblAlgInputData.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblAlgInputData.getFont().dispose();
-            }
-
-        });
+        lblAlgInputData.setFont(FontService.getLargeBoldFont());
 
         txtAlgInputData = new Text(comAlgInputData, SWT.BORDER);
         txtAlgInputData.setBounds(0, 41, 119, 20);
@@ -801,53 +770,7 @@ public class DesView extends ViewPart {
                 + Messages.DesView_80 + Messages.DesView_81 + Messages.DesView_82 + Messages.DesView_83
                 + Messages.DesView_84 + Messages.DesView_85 + Messages.DesView_86);
 
-        FontData[] td = txtAlgInformation.getFont().getFontData();
-        td[0].setHeight(8);
-        txtAlgInformation.setFont(new Font(Display.getCurrent(), td[0]));
-
-        txtAlgInformation.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                txtAlgInformation.getFont().dispose();
-            }
-        });
-
-        // The following Methods are not applicable for more than one language
-
-        // StyleRange srAlg1 = new StyleRange();
-        // srAlg1.start = 82;
-        // srAlg1.length = 4;
-        // srAlg1.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg1);
-        //
-        // StyleRange srAlg2 = new StyleRange();
-        // srAlg2.start = 136;
-        // srAlg2.length = 30;
-        // srAlg2.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg2);
-        //
-        // StyleRange srAlg3 = new StyleRange();
-        // srAlg3.start = 335;
-        // srAlg3.length = 29;
-        // srAlg3.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg3);
-        //
-        // StyleRange srAlg4 = new StyleRange();
-        // srAlg4.start = 543;
-        // srAlg4.length = 33;
-        // srAlg4.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg4);
-        //
-        // StyleRange srAlg5 = new StyleRange();
-        // srAlg5.start = 661;
-        // srAlg5.length = 26;
-        // srAlg5.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg5);
-        //
-        // StyleRange srAlg6 = new StyleRange();
-        // srAlg6.start = 721;
-        // srAlg6.length = 28;
-        // srAlg6.fontStyle = SWT.BOLD;
-        // txtAlgInformation.setStyleRange(srAlg6);
+        txtAlgInformation.setFont(FontService.getNormalFont());
 
         // Action Buttons
         btnAlgReset = new Button(comAlgMain, SWT.NONE);
@@ -1033,7 +956,7 @@ public class DesView extends ViewPart {
         fd_lblFPointsInformationText.top = new FormAttachment(lblFPointsTitle, 10);
         fd_lblFPointsInformationText.left = new FormAttachment(0, 10);
         lblFPointsInformationText.setLayoutData(fd_lblFPointsInformationText);
-        lblFPointsInformationText.setBounds(0, 3, 650, 30);
+        lblFPointsInformationText.setBounds(0, 3, 650, 15);
         lblFPointsInformationText.setText(Messages.DesView_text);
 
         comFPointsMainLeft = new Composite(comFPointsMain, SWT.NONE);
@@ -1110,18 +1033,9 @@ public class DesView extends ViewPart {
         comFPointsInputTarget.setLayoutData(fd_comFPointsInputTarget);
 
         lblFPointsInputTarget = new Label(comFPointsInputTarget, SWT.NONE);
-        lblFPointsInputTarget.setBounds(0, 0, 51, 15);
+        lblFPointsInputTarget.setBounds(0, 0, 60, 15);
         lblFPointsInputTarget.setText(Messages.DesView_137);
-        FontData[] fd_target = lblFPointsInputTarget.getFont().getFontData();
-        fd_target[0].setStyle(SWT.BOLD);
-        lblFPointsInputTarget.setFont(new Font(Display.getCurrent(), fd_target[0]));
-
-        lblFPointsInputTarget.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblFPointsInputTarget.getFont().dispose();
-            }
-
-        });
+        lblFPointsInputTarget.setFont(FontService.getLargeBoldFont());
 
         btnFPointsFixedpoint = new Button(comFPointsInputTarget, SWT.RADIO);
         btnFPointsFixedpoint.setBounds(0, 20, 87, 22);
@@ -1162,18 +1076,9 @@ public class DesView extends ViewPart {
         comFPointsInputKey.setLayoutData(fd_comFPointsInputKey);
 
         lblFPointsInputKey = new Label(comFPointsInputKey, SWT.NONE);
-        lblFPointsInputKey.setBounds(0, 0, 51, 15);
+        lblFPointsInputKey.setBounds(0, 0, 60, 15);
         lblFPointsInputKey.setText(Messages.DesView_150);
-        FontData[] fd_key = lblFPointsInputKey.getFont().getFontData();
-        fd_key[0].setStyle(SWT.BOLD);
-        lblFPointsInputKey.setFont(new Font(Display.getCurrent(), fd_key[0]));
-
-        lblFPointsInputKey.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblFPointsInputKey.getFont().dispose();
-            }
-
-        });
+        lblFPointsInputKey.setFont(FontService.getLargeBoldFont());
 
         btnFPointsK0 = new Button(comFPointsInputKey, SWT.RADIO);
         btnFPointsK0.setBounds(0, 20, 51, 22);
@@ -1202,16 +1107,7 @@ public class DesView extends ViewPart {
         lblFPointsInputData = new Label(comFPointsInputM8, SWT.NONE);
         lblFPointsInputData.setText(Messages.DesView_155);
         lblFPointsInputData.setBounds(0, 0, 42, 13);
-        FontData[] fd_data = lblFPointsInputData.getFont().getFontData();
-        fd_data[0].setStyle(SWT.BOLD);
-        lblFPointsInputData.setFont(new Font(Display.getCurrent(), fd_data[0]));
-
-        lblFPointsInputData.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblFPointsInputData.getFont().dispose();
-            }
-
-        });
+        lblFPointsInputData.setFont(FontService.getLargeBoldFont());
 
         txtFPointsInputM8 = new Text(comFPointsInputM8, SWT.BORDER);
         txtFPointsInputM8.setBounds(0, 40, 120, 20);
@@ -1299,34 +1195,7 @@ public class DesView extends ViewPart {
                 + Messages.DesView_189 + Messages.DesView_190 + Messages.DesView_191 + Messages.DesView_192
                 + Messages.DesView_193 + Messages.DesView_194 + Messages.DesView_195);
 
-        FontData[] fd = txtFPointsInformation.getFont().getFontData();
-        fd[0].setHeight(8);
-        txtFPointsInformation.setFont(new Font(Display.getCurrent(), fd[0]));
-
-        txtFPointsInformation.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                txtFPointsInformation.getFont().dispose();
-            }
-
-        });
-
-        // StyleRange srFPoints1 = new StyleRange();
-        // srFPoints1.start = 182;
-        // srFPoints1.length = 5;
-        // srFPoints1.fontStyle = SWT.BOLD;
-        // txtFPointsInformation.setStyleRange(srFPoints1);
-        //
-        // StyleRange srFPoints2 = new StyleRange();
-        // srFPoints2.start = 346;
-        // srFPoints2.length = 5;
-        // srFPoints2.fontStyle = SWT.BOLD;
-        // txtFPointsInformation.setStyleRange(srFPoints2);
-        //
-        // StyleRange srFPoints3 = new StyleRange();
-        // srFPoints3.start = 522;
-        // srFPoints3.length = 15;
-        // srFPoints3.fontStyle = SWT.BOLD;
-        // txtFPointsInformation.setStyleRange(srFPoints3);
+        txtFPointsInformation.setFont(FontService.getNormalFont());
 
         // Action Buttons
         btnFPointsReset = new Button(comFPointsMain, SWT.NONE);
@@ -1450,7 +1319,7 @@ public class DesView extends ViewPart {
         fd_lblInformationText.top = new FormAttachment(lblSBoxTitle, 10);
         fd_lblInformationText.left = new FormAttachment(0, 10);
         lblSBoxInformationText.setLayoutData(fd_lblInformationText);
-        lblSBoxInformationText.setBounds(0, 3, 650, 30);
+        lblSBoxInformationText.setBounds(0, 3, 650, 15);
         lblSBoxInformationText.setText(Messages.DesView_text);
 
         comSBoxMainLeft = new Composite(comSBoxMain, SWT.NONE);
@@ -1530,16 +1399,7 @@ public class DesView extends ViewPart {
         lblSBoxInputData = new Label(comSBoxInput, SWT.NONE);
         lblSBoxInputData.setBounds(0, 0, 51, 13);
         lblSBoxInputData.setText(Messages.DesView_229);
-        FontData[] fd_data = lblSBoxInputData.getFont().getFontData();
-        fd_data[0].setStyle(SWT.BOLD);
-        lblSBoxInputData.setFont(new Font(Display.getCurrent(), fd_data[0]));
-
-        lblSBoxInputData.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblSBoxInputData.getFont().dispose();
-            }
-
-        });
+        lblSBoxInputData.setFont(FontService.getLargeBoldFont());
 
         lblSBoxInputDeltap = new Label(comSBoxInput, SWT.NONE);
         lblSBoxInputDeltap.setBounds(0, 19, 181, 15);
@@ -1573,16 +1433,7 @@ public class DesView extends ViewPart {
         lblSBoxInputSeries = new Label(comSBoxInputDataSeries, SWT.NONE);
         lblSBoxInputSeries.setBounds(0, 0, 150, 13);
         lblSBoxInputSeries.setText(Messages.DesView_235);
-        FontData[] fd_series = lblSBoxInputSeries.getFont().getFontData();
-        fd_series[0].setStyle(SWT.BOLD);
-        lblSBoxInputSeries.setFont(new Font(Display.getCurrent(), fd_series[0]));
-
-        lblSBoxInputSeries.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                lblSBoxInputSeries.getFont().dispose();
-            }
-
-        });
+        lblSBoxInputSeries.setFont(FontService.getLargeBoldFont());
 
         slSBoxInputSeriesTime = new Slider(comSBoxInputDataSeries, SWT.NONE);
         slSBoxInputSeriesTime.setBounds(0, 43, 120, 15);
@@ -1669,51 +1520,7 @@ public class DesView extends ViewPart {
                 + Messages.DesView_259 + Messages.DesView_260 + Messages.DesView_261 + Messages.DesView_262
                 + Messages.DesView_263 + Messages.DesView_264);
 
-        FontData[] fd_info = txtSBoxInformation.getFont().getFontData();
-        fd_info[0].setHeight(8);
-        txtSBoxInformation.setFont(new Font(Display.getCurrent(), fd_info[0]));
-
-        txtSBoxInformation.addDisposeListener(new DisposeListener() {
-            public void widgetDisposed(DisposeEvent e) {
-                txtSBoxInformation.getFont().dispose();
-            }
-        });
-
-        // StyleRange srSBox1 = new StyleRange();
-        // srSBox1.start = 500;
-        // srSBox1.length = 9;
-        // srSBox1.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox1);
-        //
-        // StyleRange srSBox2 = new StyleRange();
-        // srSBox2.start = 552;
-        // srSBox2.length = 12;
-        // srSBox2.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox2);
-        //
-        // StyleRange srSBox3 = new StyleRange();
-        // srSBox3.start = 592;
-        // srSBox3.length = 11;
-        // srSBox3.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox3);
-        //
-        // StyleRange srSBox4 = new StyleRange();
-        // srSBox4.start = 626;
-        // srSBox4.length = 15;
-        // srSBox4.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox4);
-        //
-        // StyleRange srSBox5 = new StyleRange();
-        // srSBox5.start = 670;
-        // srSBox5.length = 11;
-        // srSBox5.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox5);
-        //
-        // StyleRange srSBox6 = new StyleRange();
-        // srSBox6.start = 710;
-        // srSBox6.length = 14;
-        // srSBox6.fontStyle = SWT.BOLD;
-        // txtSBoxInformation.setStyleRange(srSBox6);
+        txtSBoxInformation.setFont(FontService.getNormalFont());
 
         // Action Buttons
         btnSBoxReset = new Button(comSBoxMain, SWT.NONE);
