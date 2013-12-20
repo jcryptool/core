@@ -48,10 +48,15 @@ public class TextLoadController extends Composite {
 		return transformData;
 	}
 	
+	
 	/**
-	 * Create the composite.
-	 * @param parent
-	 * @param style
+	 * Creates the text loading controller (a button with maybe additional displays/controls; see below)
+	 * 
+	 * @param parent the parent composite
+	 * @param layoutRoot often: the outermost reachable composite for your plugin (or the parent composite if not available)
+	 * @param style default: use SWT.NONE
+	 * @param showFrontLabel display a "Load text: " label in front of the button - or not
+	 * @param oneRow default: use true
 	 */
 	public TextLoadController(Composite parent, Composite layoutRoot, int style, boolean showFrontLabel, boolean oneRow) {
 		super(parent, style);
