@@ -69,7 +69,6 @@ public class ServerHelloComposite extends Composite implements ProtocolStep
 				 messageBox.open();*/
 				infoText=true;
 				refreshInformations();
-				//testest
 			}
 		});
 		btnInfo.setBounds(65, 140, 100, 25);
