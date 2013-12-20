@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -107,6 +109,8 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private Composite composite;
 
 	private MenuManager zoom;
+	
+	private DecimalFormat df = new DecimalFormat();
 
 	public HuffmanCodingView() {
 		markedConnectionList = new ArrayList<GraphConnection>();
@@ -297,8 +301,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					if (fileUncomp != null) {
 						double compressRate = (1 - (double) fileComp.length() / (double) fileUncomp.length());
 						String tmp = String.format("%2.2f", compressRate * 100); //$NON-NLS-1$
-						message += "\n\n" + Messages.HuffmanCodingView_23 + fileUncomp.length() + " " + Messages.HuffmanCodingView_24 + "\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-								+ Messages.HuffmanCodingView_25 + fileComp.length() + " " + Messages.HuffmanCodingView_24; //$NON-NLS-1$
+						
+						
+						message += "\n\n" + Messages.HuffmanCodingView_23 + df.format(fileUncomp.length()) + " " + Messages.HuffmanCodingView_24 + "\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+								+ Messages.HuffmanCodingView_25 + df.format(fileComp.length()) + " " + Messages.HuffmanCodingView_24; //$NON-NLS-1$
 
 						if (compressRate < 0) {
 							String smallFile = Messages.HuffmanCodingView_27;
@@ -529,7 +535,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textFileCompName.setText(filePath);
 					textFileCompName.setSelection(filePath.length());
 					int filesize = (int) fileComp.length();
-					textFileCompSize.setText(String.valueOf(filesize));
+					textFileCompSize.setText(df.format(filesize));
 
 					btnCompress.setEnabled(false);
 					btnUncompress.setEnabled(true);
@@ -593,7 +599,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textFileUncompName.setText(filePath);
 					textFileUncompName.setSelection(filePath.length());
 					int filesize = (int) fileUncomp.length();
-					textFileUncompSize.setText(String.valueOf(filesize));
+					textFileUncompSize.setText(df.format(filesize));
 
 					try {
 						Scanner scanner = new Scanner(fileUncomp);
