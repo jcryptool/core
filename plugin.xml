@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Sample Category"
+            id="org.jcryptool.visual.ssl">
+      </category>
+      <view
+            name="SSL/TLS"
+            icon="icons/sample.gif"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.ssl.views.SslView"
+            id="org.jcryptool.visual.ssl.views.SslView">
+      </view>
+      <view
+            class="org.jcryptool.visual.ssl.views.SslView"
+            id="org.jcryptool.visual.ssl.views.SslView"
+            name="SSL/TLS">
+      </view>
+   </extension>
+   
+    <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            contextHelpId="org.jcryptool.visual.ssl.view"
+            name="SSL/TLS"
+            viewId="org.jcryptool.visual.ssl.views.SslView">
+      </Visual>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.ssl.handler.RestartHandler"
+            commandId="org.jcryptool.visual.ssl.restartCommand">
+      </handler>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.ssl.restartCommand"
+            name="Neustart">
+      </command>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.jcryptool.visual.ssl.views.SslView">
+         <command
+               commandId="org.jcryptool.visual.ssl.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.visual.ssl.views.SslView">
+         <command
+               commandId="org.jcryptool.visual.ssl.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
