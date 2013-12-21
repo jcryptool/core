@@ -45,7 +45,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<repository>
 			<id>eclipse-babel-indigo</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.0/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.1/indigo</url>
 		</repository>
 	</repositories>
 
