@@ -90,6 +90,17 @@ public class Messages extends NLS
 	public static String Tls1;
 	public static String Tls2;
 	
+	public static String AttacksCaution;
+	public static String AttacksProceed;
+	public static String AttacksSHA1;
+	public static String AttacksMD5;
+	public static String AttacksBEAST;
+	public static String AttacksRC4;
+	public static String AttacksDES;
+	public static String AttacksNoCipher;
+	public static String AttacksLucky13;
+	public static String AttacksRSA;
+	
 	public static String TLS0_RSA_WITH_NULL_MD5;
 	public static String TLS0_RSA_WITH_NULL_SHA;
 	public static String TLS0_RSA_WITH_RC4_128_MD5;
