@@ -3,7 +3,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.11.0/indigo"/>
+<repository location="http://download.eclipse.org/technology/babel/update-site/R0.11.1/indigo"/>
 </location>
 <location path="${eclipse_home}/../../delta/eclipse" type="Directory"/>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
