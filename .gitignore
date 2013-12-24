@@ -6,3 +6,7 @@
 workspace
 build.xml
 javaCompiler...args
+Thumbs.db
+*.exe
+*.zip
+*.tar.gz
