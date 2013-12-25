@@ -17,19 +17,19 @@ public class SigVerification {
     /**
      * 
      */
-    public SigVerification(String signaturemethod, byte[] signature, byte[] pubKey, byte[] data) throws Exception {
+    public SigVerification(String signaturemethod, byte[] signature, byte[] pubKey, byte[] hashNew) throws Exception {
         
-        verifyInput(signaturemethod, signature, pubKey, data);
+        verifyInput(signaturemethod, signature, pubKey, hashNew);
         
     }
-    public static boolean verifyInput(String signaturemethod, byte[] signature, byte[] pubKey, byte[] data){
+    public static boolean verifyInput(String signaturemethod, byte[] signature, byte[] pubKey, byte[] hashNew){
         try {
             KeyFactory generator = KeyFactory.getInstance(signaturemethod);
             EncodedKeySpec pK = new X509EncodedKeySpec(pubKey);
             PublicKey publicKey = generator.generatePublic(pK);
             Signature s = Signature.getInstance(signaturemethod);
             s.initVerify(publicKey);
-            s.update(data);
+            s.update(hashNew);
             return s.verify(signature);
             
         } catch (Exception e) {

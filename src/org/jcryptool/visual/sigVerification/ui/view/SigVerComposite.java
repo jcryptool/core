@@ -25,6 +25,7 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
+import org.jcryptool.visual.sigVerification.ui.wizards.SignaturResult;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
 /**
@@ -253,7 +254,7 @@ public class SigVerComposite extends Composite  {
                                                         littleBorder.setSize(218, 253);
                                                         
                                                         btnResult = new Button(littleBorder, SWT.NONE);
-                                                        btnResult.setEnabled(false);
+                                                        btnResult.setEnabled(true);					// wieder auf false setzten
                                                         btnResult.setBounds(13, 189, 190, 50);
                                                         btnResult.setText(Messages.SigVerComposite_btnResult);
                                                         {
@@ -327,7 +328,7 @@ public class SigVerComposite extends Composite  {
                     };
                     if (dialog.open() == Window.OK) {
                         btnHash.setEnabled(true); // Enable to select the hash method
-                                                        // Activate the second
+                        btnResult.setEnabled(true);     // Activate the second
                                                         // tab of the
                                                         // description                      
                     }
@@ -421,7 +422,7 @@ public class SigVerComposite extends Composite  {
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        Input.result=SigVerification.verifyInput(chooseSignature(), Input.signature, Input.pubKey, Input.data);
+                        Input.result=SigVerification.verifyInput(chooseSignature(), Input.signature, Input.pubKey, Input.hashNew);
 
                         // Compares the two hashes.
                         //Input.compareHashes();
@@ -441,6 +442,37 @@ public class SigVerComposite extends Composite  {
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                 }
+            }
+        });
+        
+        btnResult.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                /*try {
+                    // If the user already finished other steps, reset
+                    // everything to this step (keep the chosen algorithms)
+                    reset(3);
+
+                    // Create the HashWirard
+                    SignaturResult wiz = new SignaturResult();
+                    // Display it
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
+                        btnHash.setEnabled(true); // Enable to select the hash method
+                        btnResult.setEnabled(true);     // Activate the second
+                                                        // tab of the
+                                                        // description                      
+                    }
+
+                } catch (Exception ex) {
+                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                }*/
             }
         });
         
@@ -550,37 +582,12 @@ public class SigVerComposite extends Composite  {
         sigstring = ""; //$NON-NLS-1$
 
         // Temporary solution
-
-        if (hashes[hash].contains("MD5")) { //$NON-NLS-1$
-            sigstring = "MD5with"; //$NON-NLS-1$
-        }
-        if (hashes[hash].contains("SHA-1")) { //$NON-NLS-1$
-            sigstring = "SHA1with"; //$NON-NLS-1$
-        }
-        if (hashes[hash].contains("SHA-256")) { //$NON-NLS-1$
-            sigstring = "SHA256with"; //$NON-NLS-1$
-        }
-        if (hashes[hash].contains("SHA-384")) { //$NON-NLS-1$
-            sigstring = "SHA384with"; //$NON-NLS-1$
-        }
-        if (hashes[hash].contains("SHA-512")) { //$NON-NLS-1$
-            sigstring = "SHA512with"; //$NON-NLS-1$
-        }
-
-        if (signatures[signature].contains("MGF1")) { //$NON-NLS-1$
-            sigstring = sigstring + "RSAandMGF1"; //$NON-NLS-1$
-        } else {
-            if (signatures[signature].contains("RSA")) { //$NON-NLS-1$
-                sigstring = sigstring + "RSA"; //$NON-NLS-1$
-            }
-        }
-
-        if (signatures[signature].contains("ECDSA")) { //$NON-NLS-1$
-            sigstring = sigstring + "ECDSA"; //$NON-NLS-1$
-        } else {
-            if (signatures[signature].contains("DSA")) { //$NON-NLS-1$
-                sigstring = sigstring + "DSA"; //$NON-NLS-1$
-            }
+        if (signatures[signature].contains("RSA")) { //$NON-NLS-1$         
+        	sigstring = "RSA"; //$NON-NLS-1$
+        } else if (signatures[signature].contains("ECDSA")) { //$NON-NLS-1$
+            sigstring =  "ECDSA"; //$NON-NLS-1$
+        } else if (signatures[signature].contains("DSA")) { //$NON-NLS-1$
+                sigstring = "DSA"; //$NON-NLS-1$
         }
 
         return sigstring;
