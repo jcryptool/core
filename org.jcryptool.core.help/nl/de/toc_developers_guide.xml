@@ -5,16 +5,12 @@
     topic="$nl$/help/developers/toc.html">
     <topic label="Allgemeine Informationen"
         href="$nl$/help/developers/general/general.html" sort="true">
-	    <topic label="Erste Schritte"
-	        href="$nl$/help/developers/general/firststart.html" />
         <topic href="$nl$/help/developers/general/conventions.html" label="Konventionen">
         </topic>
         <topic href="$nl$/help/developers/general/licenses.html" label="Lizenzen">
         </topic>
 	    <topic label="Eclipse Plug-ins"
 	        href="$nl$/help/developers/general/plugins.html" />
-     <topic href="$nl$/help/developers/general/targetplatform.html" label="Target Platform">
-     </topic>
         <anchor id="general" />
     </topic>
     <topic label="Entwicklung"
@@ -55,7 +51,5 @@
             </topic>
         </topic>
         <anchor id="development" />
-    </topic>
-    <topic href="$nl$/help/developers/resources.html" label="Ressourcen">
     </topic>
 </toc>
