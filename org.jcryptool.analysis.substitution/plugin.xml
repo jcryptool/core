@@ -7,7 +7,7 @@
       <view
             category="org.jcryptool.analysis"
             class="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
-            icon="icons/sample.gif"
+            icon="icons/view.gif"
             id="org.jcryptool.analysis.substitution.views.SubstitutionAnalysisView"
             name="%view.name">
       </view>
