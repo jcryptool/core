@@ -1,10 +1,10 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.security.KeyFactory;
+import java.security.KeyPairGenerator;
 import java.security.PublicKey;
-import java.security.Signature;
-import java.security.spec.EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
+import javax.crypto.Cipher;
+import java.security.KeyPair;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
  * Verifies a signature for the input with the selected signature methods.
@@ -17,24 +17,24 @@ public class SigVerification {
     /**
      * 
      */
-    public SigVerification(String signaturemethod, byte[] signature, byte[] pubKey, byte[] hashNew) throws Exception {
+    public SigVerification(String signaturemethod, byte[] signature, byte[] pubKey) throws Exception {
+    	// KeyPair erzeugen
+    	KeyPairGenerator generator = KeyPairGenerator.getInstance(signaturemethod); //sigmethod so ändernd, dass RSA, DES,.. drinnen steht.
+        generator.initialize(1024);
+        KeyPair kp = generator.generateKeyPair();
+        PublicKey publicKey = kp.getPublic();
+        Input.publicKey = (KeyStoreAlias) publicKey;
         
-        verifyInput(signaturemethod, signature, pubKey, hashNew);
-        
-    }
-    public static boolean verifyInput(String signaturemethod, byte[] signature, byte[] pubKey, byte[] hashNew){
-        try {
-            KeyFactory generator = KeyFactory.getInstance(signaturemethod);
-            EncodedKeySpec pK = new X509EncodedKeySpec(pubKey);
-            PublicKey publicKey = generator.generatePublic(pK);
-            Signature s = Signature.getInstance(signaturemethod);
-            s.initVerify(publicKey);
-            s.update(hashNew);
-            return s.verify(signature);
-            
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to create Public Key from provided encoded keys", e);
-        }                
+        verifyInput(signaturemethod, signature, publicKey);        
     }
     
+    public static void verifyInput(String signaturemethod, byte[] signature, PublicKey pubKey) throws Exception{
+        Input.hashNew  = decrypt(signature, pubKey, signaturemethod);              
+    }
+    
+    private static byte[] decrypt(byte[] inpBytes, PublicKey key, String algorithm) throws Exception{ 
+    	Cipher cipher = Cipher.getInstance(algorithm); 
+    	cipher.init(Cipher.DECRYPT_MODE, key); 
+    	return cipher.doFinal(inpBytes); 
+    }
 }

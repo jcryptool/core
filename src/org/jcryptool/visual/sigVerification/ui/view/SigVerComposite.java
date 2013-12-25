@@ -25,7 +25,6 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
-import org.jcryptool.visual.sigVerification.ui.wizards.SignaturResult;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
 /**
@@ -422,7 +421,7 @@ public class SigVerComposite extends Composite  {
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        Input.result=SigVerification.verifyInput(chooseSignature(), Input.signature, Input.pubKey, Input.hashNew);
+                        SigVerification.verifyInput(Input.signaturmethod, Input.signature, Input.pubKey);
 
                         // Compares the two hashes.
                         //Input.compareHashes();

@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.KeyFactory;
+import java.security.spec.X509EncodedKeySpec;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -79,7 +81,9 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             }
 
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
-            Input.pubKey = getBytesFromFile(file);
+            byte[] pubKey = getBytesFromFile(file);
+            // Byte Array in Typ PublicKey umwandeln.
+            Input.pubKey = KeyFactory.getInstance(Input.signaturmethod).generatePublic(new X509EncodedKeySpec(pubKey));
 
             if (Input.pubKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);

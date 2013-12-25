@@ -1,5 +1,6 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
+import java.security.PublicKey;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
@@ -53,7 +54,7 @@ public class Input {
      */
     public static byte[] plain;
     
-    public static byte[] pubKey;
+    public static PublicKey pubKey;
     
     /**
      * Contains the signature of the input data (hex representation)
@@ -70,6 +71,11 @@ public class Input {
      */
     public static String chosenHash;
 
+    /**
+     * The name of the chosen signatur method ("RSA" etc.)
+     */
+    public static String signaturmethod="";
+    
     /**
      * Contains the private key used to sign the data (given by JCTCA plugin)
      */
@@ -106,6 +112,26 @@ public class Input {
         privateKey = null;
         publicKey = null;
         h = -1;
+    }
+    
+    public static void setSignaturmethod(){
+    	switch(Input.s){
+        case 0:             
+            Input.signaturmethod = "DSA";
+            break;
+        case 1:
+        	Input.signaturmethod = "RSA";
+            break;
+        case 2:
+        	Input.signaturmethod = "ECDSA";
+            break;
+        case 3:             
+        	Input.signaturmethod = "RSA and MGF1"; //????
+            break;
+        default:
+        	Input.signaturmethod = "";
+            break;
+    	}
     }
     
     public static void divideSignatuerPlaintext(){      

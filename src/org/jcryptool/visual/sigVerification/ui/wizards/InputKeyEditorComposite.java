@@ -10,6 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
+import java.security.KeyFactory;
+import java.security.spec.X509EncodedKeySpec;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -17,6 +20,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
@@ -50,7 +55,12 @@ public class InputKeyEditorComposite extends Composite {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
                     page.canFlipToNextPage();
-                    Input.pubKey = text.getText().getBytes();
+                    byte[] pubKey = text.getText().getBytes();
+                    try{
+                    	Input.pubKey = KeyFactory.getInstance(Input.signaturmethod).generatePublic(new X509EncodedKeySpec(pubKey));
+                    }catch(Exception ex){
+                    	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                    }
                     page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
