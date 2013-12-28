@@ -57,7 +57,7 @@ public class InputKeyEditorComposite extends Composite {
                     page.canFlipToNextPage();
                     byte[] pubKey = text.getText().getBytes();
                     try{
-                    	Input.pubKey = KeyFactory.getInstance(Input.signaturmethod).generatePublic(new X509EncodedKeySpec(pubKey));
+                    	Input.pubKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
                     }catch(Exception ex){
                     	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }

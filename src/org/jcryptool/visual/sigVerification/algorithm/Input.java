@@ -72,9 +72,14 @@ public class Input {
     public static String chosenHash;
 
     /**
-     * The name of the chosen signatur method ("RSA" etc.)
+     * The name of the chosen signature method ("RSA" etc.)
      */
-    public static String signaturmethod="";
+    public static String signaturemethod="";
+    
+    /**
+     * The size in bit of the chosen signature method ("RSA" = 1024 etc.)
+     */
+    public static int signatureSize;
     
     /**
      * Contains the private key used to sign the data (given by JCTCA plugin)
@@ -114,49 +119,74 @@ public class Input {
         h = -1;
     }
     
+    /**
+     * Sets the signaturemethod with the used method.
+     * 
+     * @return void
+     */
     public static void setSignaturmethod(){
     	switch(Input.s){
         case 0:             
-            Input.signaturmethod = "DSA";
+            Input.signaturemethod = "DSA";
             break;
         case 1:
-        	Input.signaturmethod = "RSA";
+        	Input.signaturemethod = "RSA";
             break;
         case 2:
-        	Input.signaturmethod = "ECDSA";
+        	Input.signaturemethod = "ECDSA";
             break;
         case 3:             
-        	Input.signaturmethod = "RSA and MGF1"; //????
+        	Input.signaturemethod = "RSA and MGF1"; //????
             break;
         default:
-        	Input.signaturmethod = "";
+        	Input.signaturemethod = "";
             break;
     	}
     }
     
-    public static void divideSignatuerPlaintext(){      
-        int i;
-        switch(Input.s){
-            case 1:             // DSA 368 Bit -> 46 Byte
-                i = 46;
-                break;
-            case 2:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
-            case 4:
-                i = 128;
-                break;
-            case 3:             // ECDSA 560 Bit -> 70 Byte
-                i = 70;
-                break;
-            default:
-                i = 0;
-                break;
-        }
-       
-       // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-       Input.signature = java.util.Arrays.copyOfRange(Input.data, 0, i);
-       Input.plain = java.util.Arrays.copyOfRange(data, i, Input.data.length);
+    /**
+     * Sets signatureSize to the size of the signature in bit.
+     * 
+     * @return void
+     */
+    public static void setSignatureSize(){
+    	switch (Input.s){
+        case 1:             // DSA 368 Bit -> 46 Byte
+            Input.signatureSize = 368;
+            break;
+        case 2:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
+        case 4:
+        	Input.signatureSize = 1024;
+            break;
+        case 3:             // ECDSA 560 Bit -> 70 Byte
+        	Input.signatureSize = 560;
+            break;
+        default:
+        	Input.signatureSize = 0;
+            break;
+    	}
     }
     
+    
+    /**
+     * Takes the input data and devides it into the signature and the plaintext.
+     * 
+     * @return void
+     */
+    public static void divideSignaturePlaintext(){      
+        int sigSize = Input.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
+       
+       // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
+       Input.signature = java.util.Arrays.copyOfRange(Input.data, 0, sigSize);
+       Input.plain = java.util.Arrays.copyOfRange(data, sigSize, Input.data.length);
+    }
+    
+    
+    /**
+     * Compares the hashed plaintext with the decrypted signature
+     * 
+     * @return true or false if the two hashes are equal or not
+     */
     public static boolean compareHashes(){
         // Vergleicht die Hashes.
         return java.util.Arrays.equals(Input.hash, Input.hashNew);       
@@ -164,7 +194,6 @@ public class Input {
     
     
     /**
-     * 
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
      * 
      * @param bytes A byte array

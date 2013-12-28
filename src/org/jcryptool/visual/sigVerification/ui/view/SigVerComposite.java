@@ -414,14 +414,14 @@ public class SigVerComposite extends Composite  {
                         //KeyStoreAlias alias = wiz.getAlias();
                         
                         // Divides signature and plaintext from imported file.
-                        Input.divideSignatuerPlaintext();
+                        Input.divideSignaturePlaintext();
                         
                         // Arguments: Hash method, data to hash
                         Hash.hashInput(hashes[hash], Input.plain); // Hash the input
 
                         // Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        SigVerification.verifyInput(Input.signaturmethod, Input.signature, Input.pubKey);
+                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.pubKey);
 
                         // Compares the two hashes.
                         //Input.compareHashes();
