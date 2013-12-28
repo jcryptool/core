@@ -166,9 +166,6 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     protected void createKeyInputObjects() {
         substitutionKeyInput = new KeyInput<List<Character>>() {
             private List<Character> getDefaultResult() {
-                System.out.println("A " + adfgvxAlphabet);
-                System.out.println("b " + adfgvxAlphabet.getCharacterSet());
-                factory.getCipherAlphabet(adfgvxAlphabet, adfgvxAlphabet.getCharacterSet());
                 return toCharacters(factory.getCipherAlphabet(adfgvxAlphabet, adfgvxAlphabet.getCharacterSet()));
             }
 
