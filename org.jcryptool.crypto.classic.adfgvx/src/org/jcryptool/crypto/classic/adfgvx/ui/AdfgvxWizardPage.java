@@ -105,7 +105,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     private Label rc66;
 
     /** Instance of the ADFGVX currentAlphabet */
-    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetByName("ADFGVX Alphabet"); //$NON-NLS-1$
+    private final AbstractAlphabet adfgvxAlphabet = AlphabetsManager.getInstance().getAlphabetByName("ADFGVX-Alphabet"); //$NON-NLS-1$
 
     /** Instance of the AdfgvxFactory */
     private AdfgvxFactory factory = new AdfgvxFactory();
@@ -139,8 +139,9 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     private List<Character> toCharacters(char[] chars) {
         List<Character> substitute = new LinkedList<Character>();
-        for (int i = 0; i < chars.length; i++)
-            substitute.add(chars[i]);
+        for (char ch : chars) {
+            substitute.add(ch);
+        }
         return substitute;
     }
 
@@ -165,6 +166,9 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     protected void createKeyInputObjects() {
         substitutionKeyInput = new KeyInput<List<Character>>() {
             private List<Character> getDefaultResult() {
+                System.out.println("A " + adfgvxAlphabet);
+                System.out.println("b " + adfgvxAlphabet.getCharacterSet());
+                factory.getCipherAlphabet(adfgvxAlphabet, adfgvxAlphabet.getCharacterSet());
                 return toCharacters(factory.getCipherAlphabet(adfgvxAlphabet, adfgvxAlphabet.getCharacterSet()));
             }
 
