@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
@@ -22,6 +23,7 @@ import java.util.Date;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.DHParameterSpec;
+import javax.crypto.spec.DHPublicKeySpec;
 import javax.security.auth.x500.X500Principal;
 
 import org.bouncycastle.x509.X509V3CertificateGenerator;
@@ -32,8 +34,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.ui.PlatformUI;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 
@@ -68,11 +68,12 @@ public class ServerCertificateComposite extends Composite implements
 	private String strCipherSuit;
 	private String strSignature;
 
-	private static int RSA_KEY_LENGTH = 1024;
-	private static int DSA_KEY_LENGTH = 56;
-	private static int TRIPLEDES_KEY_LENGTH = 168;
+	private final static int RSA_KEY_LENGTH = 1024;
+	private final static int DSA_KEY_LENGTH = 56;
+	private final static int TRIPLEDES_KEY_LENGTH = 168;
+	private final static int DH_KEY_LENGTH = 512;
 
-	private static String BOUNCY_CASTLE_PROVIDER = "BC";
+	private final static String BOUNCY_CASTLE_PROVIDER = "BC";
 
 	private int cipLength = 512;
 	private int exchangeLength = 1024;
@@ -80,8 +81,6 @@ public class ServerCertificateComposite extends Composite implements
 	private boolean blnCertificateRequest = false;
 	private X509Certificate certServer;
 
-	private static BigInteger g512 = new BigInteger("123456789", 16);
-	private static BigInteger p512 = new BigInteger("123456789", 16);
 	private static SecureRandom secure = new SecureRandom();
 
 	/**
@@ -191,8 +190,8 @@ public class ServerCertificateComposite extends Composite implements
 			getKeyParams(strCipher);
 			keyPair = generateKeyExchange(strExchange, exchangeLength);
 			
-			//REMOVE WHEN DH WORKS!
-			if(!strExchange.contentEquals("DH"))
+			//REMOVE IF DH Signature Works (or fixed any other way)
+			if(!strSignature.contentEquals("DH"))
 				certServer = generateX509(keyPair);
 
 			// Server Key Exchange Message
@@ -225,6 +224,9 @@ public class ServerCertificateComposite extends Composite implements
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (SignatureException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
@@ -313,8 +315,8 @@ public class ServerCertificateComposite extends Composite implements
 			exchangeLength = RSA_KEY_LENGTH;
 			strSignature = "RSAEncryption";
 		} else if (strEx[0].contentEquals("DH")) {
-			strExchange = "DH";
-			exchangeLength = 256;
+			strExchange = "DiffieHellman";
+			exchangeLength = DH_KEY_LENGTH;
 			strSignature = "DH";
 		}
 	}
@@ -363,6 +365,7 @@ public class ServerCertificateComposite extends Composite implements
 		notAfter.setHours(23);
 		notAfter.setMinutes(59);
 		notAfter.setSeconds(59);
+		
 		X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
 		X500Principal certName = new X500Principal("CN=Test Server Certificate");
 		certGen.setSerialNumber(BigInteger.ONE);
@@ -373,8 +376,7 @@ public class ServerCertificateComposite extends Composite implements
 		certGen.setPublicKey(key.getPublic());
 		certGen.setSignatureAlgorithm(strHash + "With" + strSignature);
 
-		X509Certificate cert = certGen.generate(key.getPrivate(),
-				BOUNCY_CASTLE_PROVIDER);
+		X509Certificate cert = certGen.generate(key.getPrivate());
 
 		return cert;
 	}
@@ -425,14 +427,10 @@ public class ServerCertificateComposite extends Composite implements
 	 * @param strKeyTyp
 	 * @param KeySize
 	 * @return
-	 * @throws NoSuchAlgorithmException
-	 * @throws NoSuchProviderException
-	 * @throws InvalidAlgorithmParameterException
-	 * @throws InvalidParameterSpecException
+	 * @throws Exception 
 	 */
 	private KeyPair generateKeyExchange(String strKeyTyp, int KeySize)
-			throws NoSuchAlgorithmException, NoSuchProviderException,
-			InvalidAlgorithmParameterException, InvalidParameterSpecException {
+			throws Exception {
 
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
 				strKeyTyp, BOUNCY_CASTLE_PROVIDER);
@@ -440,9 +438,12 @@ public class ServerCertificateComposite extends Composite implements
 		if (strKeyTyp.contentEquals("RSA")) {
 			keyPairGenerator.initialize(KeySize, secure);
 
-		} else if (strKeyTyp.contentEquals("DH")) {
-			keyPairGenerator.initialize(KeySize, secure);	
-			btnShow.setEnabled(false);
+		} else if (strKeyTyp.contentEquals("DiffieHellman")) {
+			keyPairGenerator = KeyPairGenerator.getInstance(strKeyTyp);
+		    keyPairGenerator.initialize(KeySize);
+		    
+		    //REMOVE WHEN DH Signature works
+		    btnShow.setEnabled(false);
 		}
 		KeyPair key = keyPairGenerator.generateKeyPair();
 		return key;

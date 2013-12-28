@@ -178,6 +178,7 @@ public class Messages extends NLS
 	public static String stxInformationTLS2;
 	public static String stxInformationCipherSuiteRefused1;
 	public static String stxInformationCipherSuiteRefused2;
+	public static String ClientHelloComposite_btnCheckButton_text;
 	
 	static 
 	{

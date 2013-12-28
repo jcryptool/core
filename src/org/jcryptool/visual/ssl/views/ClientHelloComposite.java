@@ -1,15 +1,20 @@
 package org.jcryptool.visual.ssl.views;
 
+import java.awt.Color;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComboBox;
 
 import org.bouncycastle.crypto.prng.ThreadedSeedGenerator;
+import org.eclipse.draw2d.CheckBox;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -22,6 +27,7 @@ import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.jface.viewers.ComboViewer;
 
 public class ClientHelloComposite extends Composite implements ProtocolStep
 {
@@ -37,6 +43,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep
 	private List<String> tls0= new ArrayList<String>();
 	private List<String> tls1= new ArrayList<String>();
 	private List<String> tls2= new ArrayList<String>();
+	private List<CheckBox> cb0 = new ArrayList<CheckBox>();
 	private List<String> tls0CipherSuites= new ArrayList<String>();
 	private List<String> tls1CipherSuites= new ArrayList<String>();
 	private List<String> tls2CipherSuites= new ArrayList<String>();
@@ -46,6 +53,8 @@ public class ClientHelloComposite extends Composite implements ProtocolStep
 		super(parent, style);
 		this.sslView = sslView;
 		defineTlsLists();
+		
+		cb0.add(new CheckBox("Hey"));
 		
 		Group grpClientHello = new Group(this, SWT.NONE);
 		grpClientHello.setText(Messages.ClientHelloComposite_group_text);
@@ -90,7 +99,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep
 					}
 					else if(tls0.contains(cmdCipher.getItem(cmdCipher.getSelectionIndex())))
 					{
-						tls0CipherSuites.add(cmdCipher.getItem(cmdCipher.getSelectionIndex()));
+						tls0CipherSuites.add(cmdCipher.getItem(cmdCipher.getSelectionIndex()));	
 					}
 				}
 				if(cmdVersion.getSelectionIndex()==1)
