@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -41,9 +41,9 @@ import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHand
 
 /**
  * Wizard page for the ADFGVX cipher.
- *
+ * 
  * @author t-kern
- *
+ * 
  */
 public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
@@ -120,7 +120,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     private TextfieldInput<List<Character>> substitutionKeyInput;
     private TextfieldInput<String> transpositionKeyInput;
 
-	protected String rawSubstKeyInput;
+    protected String rawSubstKeyInput;
 
     /**
      * Creates a new instance of AdfgvxWizardPage.
@@ -145,19 +145,20 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     }
 
     private AdfgvxAlgorithmSpecification getMySpecification() {
-		return (AdfgvxAlgorithmSpecification) specification;
-	}
-    
+        return (AdfgvxAlgorithmSpecification) specification;
+    }
+
     /**
-     * TranspositionKey -- transpositionKeyText -> isKeyValid(direct text) -> final transpositionKey just alpha
-     * verification..
-     *
-     * SubstitutionKey -- keyWordText -> isSubstKeyValid() ->getSubstKeyfrom[etc] -> final substKey * verification: key
-     * in currentAlphabet, no double occurence (Messages.AdfgvxWizardPage_onlyoccuronce) * RESET: einfach aus "" den
-     * standardkey umwandeln.. resetFlag = true; keyWordText.setText(""); //$NON-NLS-1$ resetFlag = false;
+     * TranspositionKey -- transpositionKeyText -> isKeyValid(direct text) -> final transpositionKey
+     * just alpha verification..
+     * 
+     * SubstitutionKey -- keyWordText -> isSubstKeyValid() ->getSubstKeyfrom[etc] -> final substKey
+     * * verification: key in currentAlphabet, no double occurence
+     * (Messages.AdfgvxWizardPage_onlyoccuronce) * RESET: einfach aus "" den standardkey umwandeln..
+     * resetFlag = true; keyWordText.setText(""); //$NON-NLS-1$ resetFlag = false;
      * labelsSetText(adfgvxAlphabet.getCharacterSet());
-     *
-     *
+     * 
+     * 
      */
 
     @Override
@@ -178,16 +179,15 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             protected InputVerificationResult verifyUserChange() {
-                List<KeyVerificator> verificators =
-                        getMySpecification().getKeyVerificatorsSubstitutionKey();
+                List<KeyVerificator> verificators = getMySpecification().getKeyVerificatorsSubstitutionKey();
                 return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), verificators);
             }
 
             @Override
             public List<Character> readContent() {
-                if (getTextfield().getText().equals("")) return getDefaultResult(); //$NON-NLS-1$
-                return toCharacters(factory.getCipherAlphabet(adfgvxAlphabet,
-                        getTextfield().getText().toUpperCase().toCharArray()));
+                if (getTextfield().getText().equals(""))return getDefaultResult(); //$NON-NLS-1$
+                return toCharacters(factory.getCipherAlphabet(adfgvxAlphabet, getTextfield().getText().toUpperCase()
+                        .toCharArray()));
             }
 
             @Override
@@ -220,11 +220,11 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
         substitutionKeyInput.addObserver(new Observer() {
             @Override
-			public void update(Observable o, Object arg) {
+            public void update(Observable o, Object arg) {
                 if (arg == null) {
                     labelsSetText(fromCharacters(substitutionKeyInput.getContent()));
-                    
-                    //save text field input for other uses
+
+                    // save text field input for other uses
                     AdfgvxWizardPage.this.rawSubstKeyInput = substitutionKeyInput.getTextfield().getText();
                 }
             }
@@ -233,8 +233,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
         transpositionKeyInput = new KeyInput<String>() {
             @Override
             protected InputVerificationResult verifyUserChange() {
-                List<KeyVerificator> verificators =
-                        getMySpecification().getKeyVerificatorsTranspositionKey();
+                List<KeyVerificator> verificators = getMySpecification().getKeyVerificatorsTranspositionKey();
                 return KeyVerificator.verify(getTextfield().getText(), getAlphabetInput().getContent(), verificators);
             }
 
@@ -272,7 +271,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
             @Override
             protected void changeTooltipDurationAtCleaninputButNotHidden(AbstractUIInput input) {
                 // vanish instantly when it is the "not changing the encryption" tooltip
-                if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) { 
+                if (getLastDisplayedResultType(input) == ClassicAlgorithmSpecification.RESULT_TYPE_NOKEY) {
                     tooltipMap.get(input).setTimeToVanish(-1);
                 } else {
                     super.changeTooltipDurationAtCleaninputButNotHidden(input);
@@ -328,23 +327,24 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * Returns the substitution key.
-     *
+     * 
      * @return The substitution key
      */
     public String getSubstitutionKey() {
         return substKeyFromMatrixAlph(substitutionKeyInput.getContent());
     }
-    
+
     /**
-     * @return "" if there was no subst key input yet, or the substitution key as entered in the textfield.
+     * @return "" if there was no subst key input yet, or the substitution key as entered in the
+     *         textfield.
      */
     public String getSubstitutionKeyAsEntered() {
-    	return rawSubstKeyInput == null?"":rawSubstKeyInput;
+        return rawSubstKeyInput == null ? "" : rawSubstKeyInput;
     }
 
     /**
      * Returns the transposition key.
-     *
+     * 
      * @return The transposition key
      */
     public String getTranspositionKey() {
@@ -368,7 +368,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * Sets the values for the ADFGVX matrix.
-     *
+     * 
      * @param cAlph The character array containing the new matrix values
      */
     public void labelsSetText(char[] cAlph) {
@@ -567,7 +567,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * This method initializes substitutionGroup.
-     *
+     * 
      */
     private void createSubstitutionGroup(Composite parent) {
         GridLayout substitutionGroupGridLayout = new GridLayout();
@@ -588,7 +588,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * This method initializes transpositionGroup
-     *
+     * 
      */
     private void createTranspositionGroup(Composite parent) {
         GridData transpositionKeyTextGridData = new GridData();
@@ -621,7 +621,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * This method initializes keyWordGroup.
-     *
+     * 
      */
     private void createKeyWordGroup() {
         GridData keyWordTextGridData = new GridData();
@@ -654,7 +654,7 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
 
     /**
      * This method initializes matrixGroup
-     *
+     * 
      */
     private void createMatrixGroup() {
         GridData gridData61 = new GridData();
@@ -1073,25 +1073,25 @@ public class AdfgvxWizardPage extends AbstractClassicCryptoPage {
     protected void setHelpAvailable() {
         PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), AdfgvxPlugin.PLUGIN_ID + ".wizard"); //$NON-NLS-1$
     }
-    
+
     // adfgvx -D -ed -kS SUBST -kT TRANSP
     @Override
     protected String generateCommandLineString() {
-    	String encDec = operationInput.getContent()?"-E":"-D";
-    	
-//    	String substKeyString = "";
-//    	for(Character c: substitutionKeyInput.getContent()) substKeyString += c;
-    	String keySubst = "-kS " + quoteCmdlineArgIfNecessary(keyWordText.getText());
-//    	String keySubst = "-kS " + quoteCmdlineArgIfNecessary(getSubstitutionKey());
-    	String keyTransp = "-kT " + quoteCmdlineArgIfNecessary(getTranspositionKey());
-    	
-    	String result = "adfgvx " + encDec + " -ed " + keySubst + " " + keyTransp;
+        String encDec = operationInput.getContent() ? "-E" : "-D";
 
-//    	result += " " + generateAlphabetPartForCommandLine();
-    	
-    	if(!isNonAlphaFilter()) result += " --noFilter";
-    	return result;
+        // String substKeyString = "";
+        // for(Character c: substitutionKeyInput.getContent()) substKeyString += c;
+        String keySubst = "-kS " + quoteCmdlineArgIfNecessary(keyWordText.getText());
+        // String keySubst = "-kS " + quoteCmdlineArgIfNecessary(getSubstitutionKey());
+        String keyTransp = "-kT " + quoteCmdlineArgIfNecessary(getTranspositionKey());
+
+        String result = "adfgvx " + encDec + " -ed " + keySubst + " " + keyTransp;
+
+        // result += " " + generateAlphabetPartForCommandLine();
+
+        if (!isNonAlphaFilter())
+            result += " --noFilter";
+        return result;
     }
-    
-    
+
 }
