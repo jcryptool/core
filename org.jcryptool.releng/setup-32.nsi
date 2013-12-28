@@ -63,7 +63,7 @@ InstallDir "$PROGRAMFILES\JCrypTool"
 CRCCheck on
 XPStyle on
 ShowInstDetails show
-VIProductVersion 0.9.8
+VIProductVersion 0.9.8.0
 VIAddVersionKey /LANG=${LANG_GERMAN} ProductName JCrypTool
 VIAddVersionKey /LANG=${LANG_GERMAN} ProductVersion "${VERSION}"
 VIAddVersionKey /LANG=${LANG_GERMAN} CompanyName "${COMPANY}"
