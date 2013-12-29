@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
  * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -95,8 +95,8 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     private Action decryptAction;
 
     private final int dropOps = DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_LINK | DND.DROP_MOVE;
-    private final Transfer[] keyTransfers = new Transfer[] {TextTransfer.getInstance()};
-    private final Transfer[] editorTransfers = new Transfer[] {EditorInputTransfer.getInstance()};
+    private final Transfer[] keyTransfers = new Transfer[] { TextTransfer.getInstance() };
+    private final Transfer[] editorTransfers = new Transfer[] { EditorInputTransfer.getInstance() };
 
     private Label currentEntryLabel;
 
@@ -170,7 +170,7 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
         doubleClickAction = new Action() {
             private ToolTip keyTipViewer;
 
-			@Override
+            @Override
             public void run() {
                 ISelection selection = viewer.getSelection();
                 Object obj = ((IStructuredSelection) selection).getFirstElement();
@@ -182,47 +182,52 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
                         viewer.expandToLevel(obj, 1);
                     }
                 } else if (obj instanceof OperationsNode) {
-                    // OperationsManager.getInstance().algorithmCalled(((AlgorithmNode) obj).getAlgorithm());
+                    // OperationsManager.getInstance().algorithmCalled(((AlgorithmNode)
+                    // obj).getAlgorithm());
                 }
-                
-                if(obj instanceof KeyNode) {
-                	if(keyTipViewer != null && ! keyTipViewer.isDisposed()) keyTipViewer.dispose();
-                	keyTipViewer = new ToolTip(viewer.getControl().getShell(), SWT.BALLOON);
-                	keyTipViewer.setMessage(Messages.FlexiProviderOperationsView_keystore_hint);
-                	keyTipViewer.setAutoHide(true);
-                	keyTipViewer.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
-                	keyTipViewer.setVisible(true);
+
+                if (obj instanceof KeyNode) {
+                    if (keyTipViewer != null && !keyTipViewer.isDisposed())
+                        keyTipViewer.dispose();
+                    keyTipViewer = new ToolTip(viewer.getControl().getShell(), SWT.BALLOON);
+                    keyTipViewer.setMessage(Messages.FlexiProviderOperationsView_keystore_hint);
+                    keyTipViewer.setAutoHide(true);
+                    keyTipViewer.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo()
+                            .getLocation().y);
+                    keyTipViewer.setVisible(true);
                 }
-                
-                if(obj instanceof IONode ||
-                		obj instanceof InputNode ||
-                		obj instanceof SignatureNode) {
-//                	Event e = new Event();
-//                	e.widget = viewer.getTree();
-//                	e.x = viewer.getTree().toControl(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y).x;
-//                	e.y = viewer.getTree().toControl(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y).y;
-//                	e.button = 3;
-//                	e.stateMask = 0;
-//                	e.count = 1;
-//                	MouseEvent mE = new MouseEvent(e);
-//                	viewer.getTree().notifyListeners(SWT.MouseDown, e);
-                	viewer.getControl().getMenu().setVisible(true);
-                	viewer.getControl().getMenu().setEnabled(true);
+
+                if (obj instanceof IONode || obj instanceof InputNode || obj instanceof SignatureNode) {
+                    // Event e = new Event();
+                    // e.widget = viewer.getTree();
+                    // e.x = viewer.getTree().toControl(MouseInfo.getPointerInfo().getLocation().x,
+                    // MouseInfo.getPointerInfo().getLocation().y).x;
+                    // e.y = viewer.getTree().toControl(MouseInfo.getPointerInfo().getLocation().x,
+                    // MouseInfo.getPointerInfo().getLocation().y).y;
+                    // e.button = 3;
+                    // e.stateMask = 0;
+                    // e.count = 1;
+                    // MouseEvent mE = new MouseEvent(e);
+                    // viewer.getTree().notifyListeners(SWT.MouseDown, e);
+                    viewer.getControl().getMenu().setVisible(true);
+                    viewer.getControl().getMenu().setEnabled(true);
                 }
-                
-                if(obj instanceof OperationsNode) {
-                	if (obj instanceof TreeNode) {
+
+                if (obj instanceof OperationsNode) {
+                    if (obj instanceof TreeNode) {
                         currentEntryNode = getCurrentEntryNode((TreeNode) obj);
-                        if(displayOperationContextMenu(currentEntryNode)) {
-                        	viewer.getControl().getMenu().setVisible(true);
-                        	viewer.getControl().getMenu().setEnabled(true);
+                        if (displayOperationContextMenu(currentEntryNode)) {
+                            viewer.getControl().getMenu().setVisible(true);
+                            viewer.getControl().getMenu().setEnabled(true);
                         } else {
-                        	if(keyTipViewer != null && ! keyTipViewer.isDisposed()) keyTipViewer.dispose();
-                        	keyTipViewer = new ToolTip(viewer.getControl().getShell(), SWT.BALLOON);
-                        	keyTipViewer.setMessage(Messages.FlexiProviderOperationsView_keystore_hint_operations);
-                        	keyTipViewer.setAutoHide(true);
-                        	keyTipViewer.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
-                        	keyTipViewer.setVisible(true);
+                            if (keyTipViewer != null && !keyTipViewer.isDisposed())
+                                keyTipViewer.dispose();
+                            keyTipViewer = new ToolTip(viewer.getControl().getShell(), SWT.BALLOON);
+                            keyTipViewer.setMessage(Messages.FlexiProviderOperationsView_keystore_hint_operations);
+                            keyTipViewer.setAutoHide(true);
+                            keyTipViewer.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo
+                                    .getPointerInfo().getLocation().y);
+                            keyTipViewer.setVisible(true);
                         }
                     }
                 }
@@ -238,7 +243,7 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
             }
         });
     }
-    
+
     // private IExtendedOperationDescriptor currentOperation;
 
     private void hookContextMenu() {
@@ -278,11 +283,13 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     }
 
     protected boolean displayOperationContextMenu(EntryNode currentEntryNode) {
-		return currentEntryNode.getRegistryType().equals(RegistryType.BLOCK_CIPHER)
-        || currentEntryNode.getRegistryType().equals(RegistryType.CIPHER);
-	}
+        return currentEntryNode.getRegistryType().equals(RegistryType.BLOCK_CIPHER)
+                || currentEntryNode.getRegistryType().equals(RegistryType.CIPHER)
+                || currentEntryNode.getRegistryType().equals(RegistryType.ASYMMETRIC_HYBRID_CIPHER)
+                || currentEntryNode.getRegistryType().equals(RegistryType.ASYMMETRIC_BLOCK_CIPHER);
+    }
 
-	private void fillEntryNodeContextMenu(IMenuManager manager) {
+    private void fillEntryNodeContextMenu(IMenuManager manager) {
         manager.add(renameAction);
         manager.add(removeAction);
     }
