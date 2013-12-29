@@ -51,12 +51,12 @@ public class AsymmetricHybridCipherEngine extends CipherEngine {
                 }
 
                 key = (Key) KeyStoreManager.getInstance().getPrivateKey(operation.getKeyStoreAlias(), password);
-                cipher.initEncrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec(),
-                        FlexiProviderEnginesPlugin.getSecureRandom());
+                cipher.initDecrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec());
             } else {
                 Certificate certificate = KeyStoreManager.getInstance().getCertificate(operation.getKeyStoreAlias());
                 key = (Key) certificate.getPublicKey();
-                cipher.initDecrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec());
+                cipher.initEncrypt(key, operation.getAlgorithmDescriptor().getAlgorithmParameterSpec(),
+                        FlexiProviderEnginesPlugin.getSecureRandom());
             }
             operation.setPassword(password); // save in the operation if no exception occurred
             initialized = true;
