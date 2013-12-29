@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
@@ -57,7 +58,7 @@ public class InputKeyEditorComposite extends Composite {
                     page.canFlipToNextPage();
                     byte[] pubKey = text.getText().getBytes();
                     try{
-                    	Input.pubKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+                    	Input.publicKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
                     }catch(Exception ex){
                     	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }

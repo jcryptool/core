@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 public class InputKeyComposite extends Composite {
     private Button rdoFromFile;
     private Button rdoFromEditor;
+    private Button rdoFromKeyStore;
 
     public InputKeyComposite(Composite parent, int style) {
         super(parent, style);
@@ -33,6 +34,11 @@ public class InputKeyComposite extends Composite {
         rdoFromEditor = new Button(this, SWT.RADIO);
         rdoFromEditor.setBounds(10, 34, 157, 18);
         rdoFromEditor.setText(Messages.InputKeyWizard_rdoFromEditor);
+        parent.setSize(600, 400);
+        
+        rdoFromKeyStore = new Button(this, SWT.RADIO);
+        rdoFromKeyStore.setBounds(10, 58, 255, 18);
+        rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
 
         rdoFromFile.setSelection(true);
@@ -51,4 +57,13 @@ public class InputKeyComposite extends Composite {
     public Button getRdoFromEditor() {
         return rdoFromEditor;
     }
+    
+    /**
+     * @return the rdoFromKeyStore
+     */
+    public Button getRdoFromKeyStore() {
+        return rdoFromKeyStore;
+    }
+    
+    
 }

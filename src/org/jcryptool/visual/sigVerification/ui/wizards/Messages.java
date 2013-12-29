@@ -103,6 +103,7 @@ public class Messages {
     public static String InputKeyWizard_WarningMessageEmpty;
     public static String InputKeyWizard_rdoFromFile;
     public static String InputKeyWizard_rdoFromEditor;
+    public static String InputKeyWizard_rdoFromKeyStore;
     
     //Input Key File Wizard
     public static String InputKeyFileWizard_btnBrowse;

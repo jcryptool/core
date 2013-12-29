@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
@@ -83,9 +84,9 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
             byte[] pubKey = getBytesFromFile(file);
             // Byte Array in Typ PublicKey umwandeln.
-            Input.pubKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+            Input.publicKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
 
-            if (Input.pubKey == null) {
+            if (Input.publicKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputKeyWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputKeyWizard_WarningMessageEmpty);

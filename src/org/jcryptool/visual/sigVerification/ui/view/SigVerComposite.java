@@ -26,6 +26,7 @@ import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 
 /**
  * This class contains all the code required for the design and functionality of the main view. It creates the
@@ -375,29 +376,6 @@ public class SigVerComposite extends Composite  {
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
             	try {
-                    // If the user already finished other steps, reset
-                    // everything to this step (keep the chosen algorithms)
-                    reset(2);
-
-                    // Create the HashWirard
-                    InputKeyWizard wiz = new InputKeyWizard();
-                    // Display it
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
-                        @Override
-                        protected void configureShell(Shell newShell) {
-                            super.configureShell(newShell);
-                            // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 500);
-                        }
-                    };
-                    if (dialog.open() == Window.OK) {
-                        
-                    }
-
-                } catch (Exception ex) {
-                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-                }
-            	try {
                     reset(2);
                     SignatureWizard wiz = new SignatureWizard(hash);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
@@ -413,34 +391,61 @@ public class SigVerComposite extends Composite  {
                         signature = wiz.getSignature();
                         //KeyStoreAlias alias = wiz.getAlias();
                         
+                        //Set method and size of signature (ex. RSA, 1024)
+                        Input.setSignaturemethod();
+                        Input.setSignatureSize();
+                        
                         // Divides signature and plaintext from imported file.
                         Input.divideSignaturePlaintext();
                         
                         // Arguments: Hash method, data to hash
-                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input
-
-                        // Creates the signature for the calculated hash.
-                        // Arguments: Signature methods, data to sign, Key
-                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.pubKey);
-
-                        // Compares the two hashes.
-                        //Input.compareHashes();
-                        
-                        // Shows green check mark or red fail sign if compairism is correct or false
-                        if(Input.result){
-                            //show green check mark
-                        }else{
-                            //show red fail sign
-                        }                     
-                        
-                        
-                        btnResult.setEnabled(true);
-                        // Activate the second tab of the description
-
+                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input                   
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                 }
+            	
+            	
+            	// Input Key Wizard
+            	try {
+                    // If the user already finished other steps, reset
+                    // everything to this step (keep the chosen algorithms)
+                    reset(2);
+
+                    // Create the InputKeyWizard
+                    InputKeyWizard wiz = new InputKeyWizard();
+                    // Display it
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
+                    	
+                    	// Creates the signature for the calculated hash.
+                        // Arguments: Signature methods, data to sign, Key
+                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);
+
+                        btnResult.setEnabled(true);
+                        // Compares the two hashes.
+                        Input.result = Input.compareHashes();
+                        
+                        // Shows green check mark or red fail sign if compairism is correct or false
+                        //if(Input.result){
+                            //show green check mark
+                        //}else{
+                            //show red fail sign
+                        //}                     
+                        
+                    }
+
+                } catch (Exception ex) {
+                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                }
+            	
             }
         });
         
@@ -577,7 +582,7 @@ public class SigVerComposite extends Composite  {
      * 
      * @return The string that can be used for signing
      */
-    private String chooseSignature() {
+    /*private String chooseSignature() {
         sigstring = ""; //$NON-NLS-1$
 
         // Temporary solution
@@ -590,6 +595,6 @@ public class SigVerComposite extends Composite  {
         }
 
         return sigstring;
-    }
+    }*/
 
 }

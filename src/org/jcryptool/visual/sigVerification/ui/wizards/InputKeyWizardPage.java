@@ -12,7 +12,13 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 /**
  * This class contains loads the composite for the first page of the input wizard.
@@ -31,15 +37,20 @@ public class InputKeyWizardPage extends WizardPage {
 
     public void createControl(Composite parent) {
         composite = new InputKeyComposite(parent, NONE);
+        composite.getRdoFromFile().setBounds(10, 10, 207, 18);
+        composite.getRdoFromEditor().setBounds(10, 34, 207, 18);
+        composite.getRdoFromKeyStore().setBounds(10, 58, 255, 18);
         setControl(composite);
-        setPageComplete(true);
+                
     }
 
     public int getRdoSelection() {
         if (composite.getRdoFromEditor().getSelection())
             return 0;
-        else
+        else if(composite.getRdoFromFile().getSelection())
             return 1;
+        else
+        	return 2;
     }
 
     public boolean canFlipToNextPage() {

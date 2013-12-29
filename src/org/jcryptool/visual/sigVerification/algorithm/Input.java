@@ -54,7 +54,7 @@ public class Input {
      */
     public static byte[] plain;
     
-    public static PublicKey pubKey;
+    public static PublicKey publicKey;
     
     /**
      * Contains the signature of the input data (hex representation)
@@ -89,7 +89,7 @@ public class Input {
     /**
      * Contains the public key used to verify the data in the JCTCA plugin
      */
-    public static KeyStoreAlias publicKey;
+    //public static KeyStoreAlias publicKey;
     
     /**
      * Contains the private key used to sign the data (chosen in our plugin)
@@ -124,7 +124,7 @@ public class Input {
      * 
      * @return void
      */
-    public static void setSignaturmethod(){
+    public static void setSignaturemethod(){
     	switch(Input.s){
         case 0:             
             Input.signaturemethod = "DSA";

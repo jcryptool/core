@@ -115,7 +115,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         rdo2.addSelectionListener(this);
         rdo3.addSelectionListener(this);
         rdo4.addSelectionListener(this);
-
+        
         /*combo = new Combo(this, SWT.READ_ONLY);
         combo.setBounds(10, 185, 406, 22);
         combo.addSelectionListener(new SelectionAdapter() {
@@ -136,7 +136,6 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo1.setEnabled(false);
                 rdo3.setEnabled(false);
                 rdo4.setEnabled(false);
-
                 rdo2.setSelection(true);
                 rdo1.setSelection(false);
 
@@ -144,7 +143,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
                 //keyType = 1;
                 // initializeKeySelection(1);
-
+                page.setPageComplete(true);
                 break;
             case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
                 rdo1.setEnabled(true);
@@ -156,7 +155,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo2.setSelection(false);
 
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
-
+                page.setPageComplete(true);
                 //keyType = 0;
                 // initializeKeySelection(0);
                 break;
@@ -175,7 +174,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
                 //keyType = 1;
                 // initializeKeySelection(1);
-
+                page.setPageComplete(true);
                 break;
         }
 
