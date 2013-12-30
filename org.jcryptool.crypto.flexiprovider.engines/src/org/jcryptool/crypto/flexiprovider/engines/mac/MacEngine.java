@@ -37,6 +37,7 @@ import de.flexiprovider.api.exceptions.NoSuchAlgorithmException;
 import de.flexiprovider.api.keys.Key;
 import de.flexiprovider.api.keys.SecretKey;
 import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
+import de.flexiprovider.core.mac.HMacKey;
 
 public class MacEngine extends FlexiProviderEngine {
     private Mac mac;
@@ -52,12 +53,11 @@ public class MacEngine extends FlexiProviderEngine {
         // password may be contained in the ActionItem, otherwise prompt
         if (operation.getPassword() != null) {
             password = operation.getPassword();
-        } else {
+        } else if (!operation.useCustomKey()) { // farndt - prompt only if custom key is not to be used
             password = promptPassword();
         }
-
-
-        if (password != null) {
+        
+        if (password != null && !operation.useCustomKey()) { 
             try {
                 key = (Key) KeyStoreManager.getInstance().getSecretKey(operation.getKeyStoreAlias(),
                         password);
@@ -71,6 +71,8 @@ public class MacEngine extends FlexiProviderEngine {
                         "Exception while accessing a secret key", e, true); //$NON-NLS-1$
                 return null;
             }
+        } else { // farndt - use custom key
+        	key = new CustomKey(operation.getKeyBytes());
         }
 
         if (key != null) {
@@ -128,4 +130,14 @@ public class MacEngine extends FlexiProviderEngine {
         }
     }
 
+    /**
+     * Introduced to somehow turn the custom key bytes into a proper <code>Key</code>
+     * @author farndt
+     */
+    private class CustomKey extends HMacKey {
+		protected CustomKey(byte[] keyBytes) {
+			super(keyBytes);
+		}    	
+    }
+    
 }
