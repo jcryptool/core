@@ -32,7 +32,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<product.id>jcryptool</product.id>
 		<product.version>0.9.8</product.version>
-		<timestamp>R${maven.build.timestamp} (weekly)</timestamp>
+		<timestamp>R${maven.build.timestamp} (Release Candidate 7)</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 	</properties>
 
