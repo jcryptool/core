@@ -151,18 +151,18 @@ public class Input {
      */
     public static void setSignatureSize(){
     	switch (Input.s){
-        case 1:             // DSA 368 Bit -> 46 Byte
+        case 0:             // DSA 368 Bit -> 46 Byte
             Input.signatureSize = 368;
             break;
-        case 2:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
-        case 4:
+        case 1:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
+        case 3:
         	Input.signatureSize = 1024;
             break;
-        case 3:             // ECDSA 560 Bit -> 70 Byte
+        case 2:             // ECDSA 560 Bit -> 70 Byte
         	Input.signatureSize = 560;
             break;
         default:
-        	Input.signatureSize = 0;
+        	Input.signatureSize = -1;
             break;
     	}
     }
@@ -177,8 +177,8 @@ public class Input {
         int sigSize = Input.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
        
        // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-       Input.signature = java.util.Arrays.copyOfRange(Input.data, 0, sigSize);
-       Input.plain = java.util.Arrays.copyOfRange(data, sigSize, Input.data.length);
+       Input.signature = java.util.Arrays.copyOfRange(Input.data, 0, sigSize+3);
+       Input.plain = java.util.Arrays.copyOfRange(Input.data, sigSize+3, Input.data.length);
     }
     
     

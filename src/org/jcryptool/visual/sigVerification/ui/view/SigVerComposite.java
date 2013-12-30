@@ -1,5 +1,6 @@
 package org.jcryptool.visual.sigVerification.ui.view;
 
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -26,7 +27,6 @@ import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
-import org.eclipse.jface.fieldassist.ControlDecoration;
 
 /**
  * This class contains all the code required for the design and functionality of the main view. It creates the
@@ -374,7 +374,8 @@ public class SigVerComposite extends Composite  {
         
      // Adds a Listener for the Signature select button
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            @SuppressWarnings("deprecation")
+			public void widgetSelected(SelectionEvent e) {
             	try {
                     reset(2);
                     SignatureWizard wiz = new SignatureWizard(hash);
@@ -399,7 +400,13 @@ public class SigVerComposite extends Composite  {
                         Input.divideSignaturePlaintext();
                         
                         // Arguments: Hash method, data to hash
-                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input                   
+                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input  
+//                        System.out.println(new String(Input.data,0));
+//                        System.out.println(new String(Input.plain,0));
+                        System.out.println(new String(Input.hash,0));
+                        System.out.println(new String(Input.signature,0));
+//                        System.out.println(Input.signaturemethod);
+//                        System.out.println(Input.signatureSize);
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
@@ -427,8 +434,8 @@ public class SigVerComposite extends Composite  {
                     	
                     	// Creates the signature for the calculated hash.
                         // Arguments: Signature methods, data to sign, Key
-                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);
-
+                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);                        
+                        
                         btnResult.setEnabled(true);
                         // Compares the two hashes.
                         Input.result = Input.compareHashes();
@@ -504,61 +511,7 @@ public class SigVerComposite extends Composite  {
         });
 */        
     }
-
-    /**
-     * Create the menu manager.
-     * @return the menu manager
-     */
-/*    @Override
-    protected MenuManager createMenuManager() {
-        MenuManager menuManager = new MenuManager("menu");
-        return menuManager;
-    }
-*/
    
-    /**
-     * Create the status line manager.
-     * @return the status line manager
-     */
-/*    @Override
-    protected StatusLineManager createStatusLineManager() {
-        StatusLineManager statusLineManager = new StatusLineManager();
-        return statusLineManager;
-    }
-*/
-    /**
-     * Launch the application.
-     * @param args
-     */
-/*    public static void main(String args[]) {
-        try {
-            SigGUI window = new SigGUI();
-            window.setBlockOnOpen(true);
-            window.open();
-            Display.getCurrent().dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
-    /**
-     * Configure the shell.
-     * @param newShell
-     */
-/*    @Override
-    protected void configureShell(Shell newShell) {
-        super.configureShell(newShell);
-        newShell.setText("New Application");
-    }
-*/
-    /**
-     * Return the initial size of the window.
-     */
-/*    @Override
-    protected Point getInitialSize() {
-        return new Point(1680, 1050);
-    }
-*/    
     
     private void reset(int step) {
         // If the user already finished other steps, reset everything to this

@@ -29,8 +29,8 @@ public class Hash {
             // Output:
             md = messageDigest.digest();
 
-            Input.hashNew = md; // Store the generated hash
-            Input.hashHexNew = Input.bytesToHex(md); // Hex
+            Input.hash = md; // Store the generated hash
+            Input.hashHex = Input.bytesToHex(md); // Hex
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
