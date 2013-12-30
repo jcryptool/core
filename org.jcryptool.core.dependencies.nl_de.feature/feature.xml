@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.core.dependencies.nl_de.feature"
       label="JCrypTool Core Dependencies Feature (German)"
-      version="0.9.8"
+      version="1.0.0"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 
@@ -227,7 +227,7 @@ litigation.
    <requires>
       <import feature="org.eclipse.help" version="1.3.0.v20110327-7i7uFFiFFt6ZqnbOrMXLd1"/>
       <import feature="org.eclipse.rcp" version="3.7.0.v20110216-9DB5Fm1FpBGy_AaVz-mFamgY"/>
-      <import feature="org.jcryptool.core.dependencies.feature" version="0.9.8"/>
+      <import feature="org.jcryptool.core.dependencies.feature" version="1.0.0"/>
    </requires>
 
    <plugin
