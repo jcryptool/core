@@ -33,11 +33,9 @@
    <feature url="features/org.jcryptool.crypto.modern.feature_0.9.8.jar" id="org.jcryptool.crypto.modern.feature" version="0.9.8">
       <category name="org.jcryptool.crypto"/>
    </feature>
-<!--
    <feature url="features/org.jcryptool.crypto.xml.feature_0.9.8.jar" id="org.jcryptool.crypto.xml.feature" version="0.9.8">
       <category name="org.jcryptool.crypto"/>
    </feature>
--->
    <feature url="features/org.jcryptool.games.feature_0.9.8.jar" id="org.jcryptool.games.feature" version="0.9.8">
       <category name="org.jcryptool.crypto"/>
    </feature>
