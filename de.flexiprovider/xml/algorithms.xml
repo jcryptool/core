@@ -792,8 +792,8 @@ of "DESede_CBC", "AES128_CBC", "AES192_CBC", or
   <KeyPairGenerators>
     <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" oid="1.2.840.10045.2.1">
       <Names>EC,ECDH,ECDSA,ECIES,ECNR</Names>
+      <KeyPairGenerator class="de.flexiprovider.ec.keys.ECKeyPairGenerator" />
       <ParameterSpec class="de.flexiprovider.common.ies.IESParameterSpec" />
-      <KeyStrengths default="192" />
     </KeyPairGenerator>
     <KeyPairGenerator class="de.flexiprovider.core.rsa.RSAKeyPairGenerator" oid="1.2.840.113549.1.1.1">
       <Names>RSA</Names>
