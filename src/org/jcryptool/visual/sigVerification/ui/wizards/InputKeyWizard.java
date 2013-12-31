@@ -12,6 +12,8 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
@@ -67,6 +69,7 @@ public class InputKeyWizard extends Wizard {
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(true);
                 p.setPageComplete(true);
+                SigVerification.setPublicKey(Input.signaturemethod, Input.signature);
                 return p;
             }
         }

@@ -13,7 +13,8 @@ Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.8",
  org.jcryptool.crypto.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Import-Package: de.flexiprovider.core.dsa,
+Import-Package: de.flexiprovider.api.keys,
+ de.flexiprovider.core.dsa,
  de.flexiprovider.core.rsa
 Export-Package: org.jcryptool.visual.sigVerification,
  org.jcryptool.visual.sigVerification.ui.view

@@ -401,12 +401,12 @@ public class SigVerComposite extends Composite  {
                         
                         // Arguments: Hash method, data to hash
                         Hash.hashInput(hashes[hash], Input.plain); // Hash the input  
-//                        System.out.println(new String(Input.data,0));
-//                        System.out.println(new String(Input.plain,0));
+                        System.out.println(new String(Input.data,0));
+                        System.out.println(new String(Input.plain,0));
                         System.out.println(new String(Input.hash,0));
                         System.out.println(new String(Input.signature,0));
-//                        System.out.println(Input.signaturemethod);
-//                        System.out.println(Input.signatureSize);
+                        System.out.println(Input.signaturemethod);
+                        System.out.println(Input.signatureSize);
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
@@ -432,22 +432,24 @@ public class SigVerComposite extends Composite  {
                     };
                     if (dialog.open() == Window.OK) {
                     	
-                    	// Creates the signature for the calculated hash.
-                        // Arguments: Signature methods, data to sign, Key
-                        SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);                        
-                        
-                        btnResult.setEnabled(true);
-                        // Compares the two hashes.
-                        Input.result = Input.compareHashes();
-                        
-                        // Shows green check mark or red fail sign if compairism is correct or false
-                        //if(Input.result){
-                            //show green check mark
-                        //}else{
-                            //show red fail sign
-                        //}                     
+                                         
                         
                     }
+                    System.out.println(new String(Input.hashNew));
+                	// Creates the signature for the calculated hash.
+                    // Arguments: Signature methods, data to sign, Key
+                    //SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);                        
+                    
+                    btnResult.setEnabled(true);
+                    // Compares the two hashes.
+                    Input.result = Input.compareHashes();
+                    
+                    // Shows green check mark or red fail sign if compairism is correct or false
+                    //if(Input.result){
+                        //show green check mark
+                    //}else{
+                        //show red fail sign
+                    //}
 
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
