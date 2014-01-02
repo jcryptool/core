@@ -1,7 +1,11 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
+import java.io.UnsupportedEncodingException;
 import java.security.PublicKey;
+
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
 /**
  * This class is used to share data between classes.
@@ -53,6 +57,10 @@ public class Input {
      * Contains the plain text of the input data (byte array)
      */
     public static byte[] plain;
+    
+    //public static String plainHex;
+    
+    public static String dataString;
     
     public static PublicKey publicKey;
     
@@ -237,5 +245,38 @@ public class Input {
         // b will be promote to integer first, mask with 0x07 is a must.
         return sb.append(Character.forDigit(b >>> 6 & 0x07, 8)).append(Character.forDigit(b >>> 3 & 0x07, 8))
                 .append(Character.forDigit(b & 0x07, 8));
+    }
+    
+    /*public static byte[] removeLineBreaks(byte[] data) throws Exception{
+    	try{
+    		@SuppressWarnings("deprecation")
+    		String text = new String(data, 0);
+        	text = text.replace("/n", "").replace("/r", "");
+        	data = text.getBytes("ASCII");
+    	}catch(Exception ex){
+    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+    	}
+		return data;
+    }*/
+    
+    public static byte[] removeLineBreaks(byte[] data) {
+        byte groomedData[] = new byte[data.length];
+        int bytesCopied = 0;
+
+        for (int i = 0; i < data.length; i++) {
+            switch (data[i]) {
+                case (byte) '\n' :
+                case (byte) '\r' :
+                    break;
+                default:
+                    groomedData[bytesCopied++] = data[i];
+            }
+        }
+
+        byte packedData[] = new byte[bytesCopied];
+
+        System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
+
+        return packedData;
     }
 }

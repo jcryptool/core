@@ -391,8 +391,11 @@ public class SigVerComposite extends Composite  {
                         // get signature method (integer)
                         signature = wiz.getSignature();
                         //KeyStoreAlias alias = wiz.getAlias();
+                        Input.dataString = new String(Input.data);
+                        Input.data = Input.removeLineBreaks(Input.data);
                         
-                        //Set method and size of signature (ex. RSA, 1024)
+                        
+                        //Set method and size of signature (ex. RSA, 1024)                        
                         Input.setSignaturemethod();
                         Input.setSignatureSize();
                         
@@ -401,10 +404,10 @@ public class SigVerComposite extends Composite  {
                         
                         // Arguments: Hash method, data to hash
                         Hash.hashInput(hashes[hash], Input.plain); // Hash the input  
-                        System.out.println(new String(Input.data,0));
-                        System.out.println(new String(Input.plain,0));
-                        System.out.println(new String(Input.hash,0));
-                        System.out.println(new String(Input.signature,0));
+                        System.out.println(new String(Input.data, 0));
+                        System.out.println(new String(Input.plain, 0));
+                        System.out.println(new String(Input.hash, 0));
+                        System.out.println(new String(Input.signature, 0));
                         System.out.println(Input.signaturemethod);
                         System.out.println(Input.signatureSize);
                     }
@@ -435,7 +438,7 @@ public class SigVerComposite extends Composite  {
                                          
                         
                     }
-                    System.out.println(new String(Input.hashNew));
+                    System.out.println(Input.hashNew);
                 	// Creates the signature for the calculated hash.
                     // Arguments: Signature methods, data to sign, Key
                     //SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);                        
