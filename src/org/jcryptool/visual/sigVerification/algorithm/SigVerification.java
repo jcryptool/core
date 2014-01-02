@@ -27,8 +27,8 @@ public class SigVerification {
     public static void setPublicKey(String signaturemethod, byte[] signature){
     	try{
     		// KeyPair erzeugen
-    		KeyPairGenerator kpg = KeyPairGenerator.getInstance(signaturemethod, "FlexiCore"); //signaturemethod -> RSA, DES,.. 
-    		Cipher cipher = Cipher.getInstance(signaturemethod, "FlexiCore");
+    		KeyPairGenerator kpg = KeyPairGenerator.getInstance(signaturemethod); //signaturemethod -> RSA, DES,.. 
+    		Cipher cipher = Cipher.getInstance(signaturemethod);
     		
     		kpg.initialize(Input.signatureSize);			// signatureSize -> 1024 (bit)
     		KeyPair keyPair = kpg.generateKeyPair();

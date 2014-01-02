@@ -392,7 +392,7 @@ public class SigVerComposite extends Composite  {
                         signature = wiz.getSignature();
                         //KeyStoreAlias alias = wiz.getAlias();
                         Input.dataString = new String(Input.data);
-                        Input.data = Input.removeLineBreaks(Input.data);
+//                        Input.data = Input.removeLineBreaks(Input.data);
                         
                         
                         //Set method and size of signature (ex. RSA, 1024)                        
@@ -407,6 +407,8 @@ public class SigVerComposite extends Composite  {
                         System.out.println(new String(Input.data, 0));
                         System.out.println(new String(Input.plain, 0));
                         System.out.println(new String(Input.hash, 0));
+                        Input.hashHex = Input.bytesToHex(Input.hash);
+                        System.out.println(Input.hashHex);
                         System.out.println(new String(Input.signature, 0));
                         System.out.println(Input.signaturemethod);
                         System.out.println(Input.signatureSize);
