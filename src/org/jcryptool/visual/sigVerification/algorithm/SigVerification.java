@@ -1,17 +1,16 @@
 
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.KeyPair;
+import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.interfaces.DSAPublicKey;
+
 
 import javax.crypto.Cipher;
-import javax.crypto.CipherInputStream;
-
-import java.security.KeyPair;
-import java.util.Arrays;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -24,7 +23,19 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
  */
 public class SigVerification {
     
-    public static void setPublicKey(String signaturemethod, byte[] signature){
+	public static void verifySignature(String signaturemethod){
+    	if (signaturemethod == "RSA"){
+    		verifyRSA(signaturemethod, Input.signature);
+    	}else if (signaturemethod == "DSA"){
+    		verifyDSA(signaturemethod, Input.signature);
+    	}else if (signaturemethod == "ECDSA"){
+    		verifyECDSA(signaturemethod, Input.signature);
+    	}else{
+    		;
+    	}
+    }
+	
+    public static void verifyRSA(String signaturemethod, byte[] signature){
     	try{
     		// KeyPair erzeugen
     		KeyPairGenerator kpg = KeyPairGenerator.getInstance(signaturemethod); //signaturemethod -> RSA, DES,.. 
@@ -42,16 +53,50 @@ public class SigVerification {
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
+    	verifyInput(Input.hash, Input.hashNew);
     }
     
-    public static void verifyInput(String signaturemethod, byte[] signature, PublicKey pubKey) throws Exception{
-        //Input.hashNew  = decrypt(signature, pubKey, signaturemethod);
-        System.out.println(Input.hashNew);		// ToDo Löschen -> ist nur zu Testzwecken
+    
+    public static void verifyECDSA(String signaturemethod, byte[] signature){
+    	try{
+    		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
+    		keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
+    		KeyPair pair = keyGen.generateKeyPair();
+        
+    		Signature sig = Signature.getInstance(signaturemethod);
+    		sig.initVerify(pair.getPublic());
+    		sig.update(Input.hash);
+    		Input.result = sig.verify(signature);
+    	}catch(Exception ex){
+    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+    	}
     }
     
-    private static byte[] decrypt(byte[] inpBytes, PublicKey key, String algorithm) throws Exception{ 
-    	Cipher cipher = Cipher.getInstance(algorithm); 
-    	cipher.init(Cipher.DECRYPT_MODE, key);
-    	return cipher.doFinal(inpBytes); 
+    
+    public static void verifyDSA(String signaturemethod, byte[] signature){
+    	try{
+    		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");
+    		keyGen.initialize(1024);
+    		KeyPair keypair = keyGen.genKeyPair();
+    		DSAPublicKey publicKey = (DSAPublicKey) keypair.getPublic();
+    	
+    		Signature sig = Signature.getInstance(signaturemethod);
+    		sig.initVerify(publicKey);
+    		sig.update(Input.hash);
+    		Input.result = sig.verify(signature);
+    	}catch(Exception ex){
+    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+    	}
     }
+    
+    /**
+     * Compares the hashed plaintext with the decrypted signature
+     * 
+     * @return true or false if the two hashes are equal or not
+     */
+    public static void verifyInput(byte[] hash, byte[] hashNew){
+        // Vergleicht die Hashes.
+    	Input.result = java.util.Arrays.equals(hash, hashNew);               
+    }
+
 }

@@ -69,7 +69,7 @@ public class InputKeyWizard extends Wizard {
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(true);
                 p.setPageComplete(true);
-                SigVerification.setPublicKey(Input.signaturemethod, Input.signature);
+                SigVerification.verifySignature(Input.signaturemethod);
                 return p;
             }
         }

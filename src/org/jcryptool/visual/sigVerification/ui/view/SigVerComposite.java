@@ -5,6 +5,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,6 +17,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.Messages;
@@ -26,6 +30,7 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.HashWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputKeyWizard;
 import org.jcryptool.visual.sigVerification.ui.wizards.InputWizard;
+import org.jcryptool.visual.sigVerification.ui.wizards.SignaturResult;
 import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
 
 /**
@@ -435,9 +440,7 @@ public class SigVerComposite extends Composite  {
                             newShell.setSize(550, 500);
                         }
                     };
-                    if (dialog.open() == Window.OK) {
-                    	
-                                         
+                    if (dialog.open() == Window.OK) {                   
                         
                     }
                     System.out.println(Input.hashNew);
@@ -447,7 +450,12 @@ public class SigVerComposite extends Composite  {
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.
-                    Input.result = Input.compareHashes();
+                    System.out.println(Input.result);
+                    
+                    Input.hashHex = Input.bytesToHex(Input.hash);
+                    if (Input.hashNew != null){
+                    	Input.hashNewHex = Input.bytesToHex(Input.hashNew);
+                    }
                     
                     // Shows green check mark or red fail sign if compairism is correct or false
                     //if(Input.result){
@@ -465,45 +473,36 @@ public class SigVerComposite extends Composite  {
         
         btnResult.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                /*try {
+                try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
                     reset(3);
 
-                    // Create the HashWirard
-                    SignaturResult wiz = new SignaturResult();
+                    // Show the result
+                    Display display = Display.getCurrent();
+                    Shell shell = new SignaturResult(display, Input.signaturemethod);
+                    shell.open();
                     // Display it
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
-                        @Override
-                        protected void configureShell(Shell newShell) {
-                            super.configureShell(newShell);
-                            // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 500);
-                        }
-                    };
-                    if (dialog.open() == Window.OK) {
-                        btnHash.setEnabled(true); // Enable to select the hash method
-                        btnResult.setEnabled(true);     // Activate the second
-                                                        // tab of the
-                                                        // description                      
+                 // run the event loop as long as the window is open
+                    while (!shell.isDisposed()) {
+                        // read the next OS event queue and transfer it to a SWT event 
+                      if (!display.readAndDispatch())
+                       {
+                      // if there are currently no other OS event to process
+                      // sleep until the next OS event is available 
+                        display.sleep();
+                       }
                     }
 
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-                }*/
+                }
             }
         });
         
      // Adds a Listener for the reset button
-        btnReset.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                reset(0);
-            }
-        });
-        
-        // Adds a Listener for Return Button
-/*        btnReturn.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+        /*btnReset.addSelectionListener(new SelectionAdapter() {
+        	public void widgetSelected(SelectionEvent e) {
                 try {
                     Input.privateKey = null;
                     Input.publicKey = null;
@@ -515,8 +514,7 @@ public class SigVerComposite extends Composite  {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                 }
             }
-        });
-*/        
+        });*/       
     }
    
     

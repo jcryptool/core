@@ -36,7 +36,7 @@ public class Input {
     /**
      * Contains the hash of the plain text input data (hex representation)
      */
-    public static String hashHexNew;
+    public static String hashNewHex;
 
     /**
      * Contains the hash stored in the input data (byte array)
@@ -118,7 +118,7 @@ public class Input {
         hash = null;
         hashHex = null;
         hashNew = null;
-        hashHexNew = null;
+        hashNewHex = null;
         signature = null;
         signatureHex = null;
         signatureOct = null;
@@ -188,18 +188,7 @@ public class Input {
        Input.signature = java.util.Arrays.copyOfRange(Input.data, 4, sigSize+4);
        Input.plain = java.util.Arrays.copyOfRange(Input.data, sigSize+4, Input.data.length);
        
-    }
-    
-    
-    /**
-     * Compares the hashed plaintext with the decrypted signature
-     * 
-     * @return true or false if the two hashes are equal or not
-     */
-    public static boolean compareHashes(){
-        // Vergleicht die Hashes.
-        return java.util.Arrays.equals(Input.hash, Input.hashNew);       
-    }
+    }        
     
     
     /**
@@ -220,6 +209,7 @@ public class Input {
         return new String(hexChars);
     }
 
+    
     /**
      * Returns the octal String representation of a byte array with optional prefix. The String is formed by making
      * value[0] the leftmost three digits and value[value.length-1] the rightmost three digits.

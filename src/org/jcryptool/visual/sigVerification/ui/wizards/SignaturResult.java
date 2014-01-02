@@ -1,5 +1,7 @@
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
+import org.eclipse.jface.wizard.IWizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -13,6 +15,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.ui.view.ModelComposite;
 
 public class SignaturResult extends Shell {
   private Table tableSig;
@@ -81,49 +84,50 @@ public class SignaturResult extends Shell {
       tableSig.setBounds(0, 175, 484, 151);
 
       int stepSize = 14;
+      
+      if (Input.hashNewHex != null){
+    	int len1 = Input.hashNewHex.length();
+      	String asciistr1 = convertHexToString(Input.hashNewHex);
+      	int lenAscii1 = asciistr1.length();
+      
+      	for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
+          	TableItem item = new TableItem(tableSig, SWT.NONE);
 
-      int len1 = Input.signatureHex.length();
-      String asciistr1 = convertHexToString(Input.signatureHex);
-      int lenAscii1 = asciistr1.length();
+          	// column 2 - hex
+          	int start1 = i1 * (stepSize * 2);
+          	int end1 = i1 * (stepSize * 2) + (stepSize * 2);
+          	end1 = end1 >= len1 ? len1 : end1;
 
-      for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
-          TableItem item = new TableItem(tableSig, SWT.NONE);
+          	int startascii1 = start1 / 2;
+          	int endascii1 = (end1 / 2) >= lenAscii1 ? lenAscii1 : (end1 / 2);
 
-          // column 2 - hex
-          int start1 = i1 * (stepSize * 2);
-          int end1 = i1 * (stepSize * 2) + (stepSize * 2);
-          end1 = end1 >= len1 ? len1 : end1;
+          	if ((start1 < end1) && (startascii1 < endascii1)) {
+              	// column 1 - address
+              	item.setText(0, getAddress(i1, stepSize));
 
-          int startascii1 = start1 / 2;
-          int endascii1 = (end1 / 2) >= lenAscii1 ? lenAscii1 : (end1 / 2);
-
-          if ((start1 < end1) && (startascii1 < endascii1)) {
-              // column 1 - address
-              item.setText(0, getAddress(i1, stepSize));
-
-              StringBuffer bufferS1 = new StringBuffer();
-              for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
-                  bufferS1.append(Input.signatureHex.charAt((2 * m1) + start1));
-                  bufferS1.append(Input.signatureHex.charAt((2 * m1 + 1) + start1));
+              	StringBuffer bufferS1 = new StringBuffer();
+              	for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
+                  bufferS1.append(Input.hashNewHex.charAt((2 * m1) + start1));
+                  bufferS1.append(Input.hashNewHex.charAt((2 * m1 + 1) + start1));
                   bufferS1.append(" ");
-              }
-              item.setText(1, bufferS1.toString());
+              	}
+              	item.setText(1, bufferS1.toString());
 
-              // column 3 - ascii
-              StringBuffer bufferS2 = new StringBuffer();
-              bufferS2.append(asciistr1, startascii1, endascii1);
-              item.setText(2, bufferS2.toString());
-          } else {
-              i1 = (len1 / (stepSize * 2)) + 5;
-          }
+              	// column 3 - ascii
+              	StringBuffer bufferS2 = new StringBuffer();
+              	bufferS2.append(asciistr1, startascii1, endascii1);
+              	item.setText(2, bufferS2.toString());
+          	} else {
+        	  	i1 = (len1 / (stepSize * 2)) + 5;
+          	}
+      	}
       }
-
       // create table to show hash
       tableHash = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
       tableHash.setBounds(0, 394, 484, 150);
 
-      int len2 = Input.dataHex.length();
-      String asciistr2 = convertHexToString(Input.dataHex);
+      int len2 = Input.hashHex.length();
+      String asciistr2 = convertHexToString(Input.hashHex);
       int lenAscii2 = asciistr2.length();
 
       // shows only 6 rows - optimize performance
@@ -145,8 +149,8 @@ public class SignaturResult extends Shell {
               // column 2 - hex
               StringBuffer bufferD1 = new StringBuffer();
               for (int n1 = 0; n1 < (end2 - start2) / 2; n1++) {
-                  bufferD1.append(Input.dataHex.charAt((2 * n1) + start2));
-                  bufferD1.append(Input.dataHex.charAt((2 * n1 + 1) + start2));
+                  bufferD1.append(Input.hashHex.charAt((2 * n1) + start2));
+                  bufferD1.append(Input.hashHex.charAt((2 * n1 + 1) + start2));
                   bufferD1.append(" ");
               }
               item.setText(1, bufferD1.toString());
@@ -202,7 +206,12 @@ public class SignaturResult extends Shell {
       Button btnVerificationModels = new Button(composite, SWT.NONE);
       btnVerificationModels.setBounds(0, 636, 137, 25);
       btnVerificationModels.setText(Messages.SignaturResult_btnVerificationModels);
-
+      btnVerificationModels.addSelectionListener(new SelectionAdapter() {
+          @Override
+          public void widgetSelected(SelectionEvent e) {
+              
+          }
+      });
       createContents();
   }
 
