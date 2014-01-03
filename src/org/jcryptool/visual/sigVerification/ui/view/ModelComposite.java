@@ -11,6 +11,7 @@ import org.jcryptool.visual.sigVerification.Messages;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 /**
  * This class contains all the code required for the design and functionality of the verification model view.
  * 
@@ -30,19 +31,19 @@ public class ModelComposite extends Composite  {
     }
 
     private Label lblGeneralDescription;
-    private Label lblHeader;
-    private Label lblTitle;
+    private Text lblHeader;
+    private Text lblTitle;
     private Button btnShellM;
     private Button btnChainM;
     private Label lblRoot;
     private Label lbllevel2;
     private Label lbllevel3;
-    private Label lblrootChoose;
-    private Label lbllevel2Choose;
-    private Label lbllevel3Choose;
+    private Text lblrootChoose;
+    private Text lbllevel2Choose;
+    private Text lbllevel3Choose;
     private Label lblValidDate;
     private Button btnNewResult;
-    private Label lblChoose;
+    private Text lblChoose;
     
 
     /**
@@ -60,14 +61,16 @@ public class ModelComposite extends Composite  {
                             lblGeneralDescription.setText(Messages.ModelComposite_description);
                            
                         }
-                        lblHeader = new Label(this, SWT.NONE);
+                        lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+                        lblHeader.setEditable(false);
                         lblHeader.setBounds(10, 10, 964, 31);
                         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
                         lblHeader.setText(Messages.ModelComposite_lblHeader);
                         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
                         
-                        lblTitle = new Label(this, SWT.NONE);
-                        lblTitle.setBounds(10, 121, 241, 27);
+                        lblTitle = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+                        lblTitle.setEditable(false);
+                        lblTitle.setBounds(20, 121, 216, 27);
                         lblTitle.setText(Messages.ModelComposite_lblTitle);
                         {
                             Composite border = new Composite(this, SWT.BORDER);
@@ -82,6 +85,7 @@ public class ModelComposite extends Composite  {
                                 btnChainM.setEnabled(false);
                                 btnChainM.setBounds(470, 10, 171, 36);
                                 btnChainM.setText(Messages.ModelComposite_btnChainM);
+                                
                             }
                             {
                                 lblRoot = new Label(border, SWT.NONE);
@@ -102,20 +106,17 @@ public class ModelComposite extends Composite  {
                                 lbllevel3.setBounds(145, 304, 299, 67);
                             }
                             {
-                                lblrootChoose = new Label(border, SWT.NONE);
-                                lblrootChoose.setText(" ");
+                                lblrootChoose = new Text(border, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
                                 lblrootChoose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
                                 lblrootChoose.setBounds(773, 133, 146, 67);
                             }
                             {
-                                lbllevel2Choose = new Label(border, SWT.NONE);
-                                lbllevel2Choose.setText(" ");
+                                lbllevel2Choose = new Text(border, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
                                 lbllevel2Choose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
                                 lbllevel2Choose.setBounds(773, 219, 146, 67);
                             }
                             {
-                                lbllevel3Choose = new Label(border, SWT.NONE);
-                                lbllevel3Choose.setText(" ");
+                                lbllevel3Choose = new Text(border, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
                                 lbllevel3Choose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
                                 lbllevel3Choose.setBounds(773, 304, 146, 67);
                             }
@@ -141,7 +142,8 @@ public class ModelComposite extends Composite  {
                             });
                             btnReset.setText(Messages.SigVerComposite_btnReset);
                             {
-                                lblChoose = new Label(border, SWT.NONE);
+                                lblChoose = new Text(border, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+                                lblChoose.setEditable(false);
                                 lblChoose.setText(Messages.ModelComposite_Choose);
                                 lblChoose.setBounds(719, 70, 200, 50);
                             }
