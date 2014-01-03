@@ -1,6 +1,7 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
 import java.io.UnsupportedEncodingException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -92,7 +93,7 @@ public class Input {
     /**
      * Contains the private key used to sign the data (given by JCTCA plugin)
      */
-    public static KeyStoreAlias privateKey;
+    public static PrivateKey privateKey;
 
     /**
      * Contains the public key used to verify the data in the JCTCA plugin

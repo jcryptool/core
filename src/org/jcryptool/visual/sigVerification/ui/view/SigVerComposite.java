@@ -446,7 +446,7 @@ public class SigVerComposite extends Composite  {
                     System.out.println(Input.hashNew);
                 	// Creates the signature for the calculated hash.
                     // Arguments: Signature methods, data to sign, Key
-                    //SigVerification.verifyInput(Input.signaturemethod, Input.signature, Input.publicKey);                        
+                    SigVerification.verifySignature(Input.signaturemethod);                        
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.

@@ -45,7 +45,7 @@ public class InputKeyWizard extends Wizard {
 
     @Override
     public boolean performFinish() {
-        if (pageEditor.isPageComplete() || pageFile.isPageComplete() || page.isPageComplete())
+        if (pageEditor.isPageComplete() || pageFile.isPageComplete())
             return true;
         return false;
     }
@@ -58,12 +58,10 @@ public class InputKeyWizard extends Wizard {
             if (p.getRdoSelection() == 0) {
                 pageFile.setPageComplete(true);
                 pageEditor.setPageComplete(false);
-                p.setPageComplete(false);
                 return pageEditor;
             } else if (p.getRdoSelection() == 1){
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(false);
-                p.setPageComplete(false);
                 return pageFile;
             } else {            	
                 pageEditor.setPageComplete(true);
