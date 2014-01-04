@@ -12,25 +12,27 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
  * This class contains the page containing the editor input composite. It is a part of the Input wizard.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class InputKeyEditorWizardPage extends WizardPage {
     private InputKeyEditorComposite compositeEditor;
-
-    public InputKeyEditorWizardPage(String pageName) {
+    Input input;
+    
+    public InputKeyEditorWizardPage(String pageName, Input input) {
         super(pageName);
-
+        this.input = input;
         setTitle(Messages.InputKeyEditorWizard_title);
         setDescription(Messages.InputKeyEditorWizard_header);
     }
 
     @Override
     public void createControl(Composite parent) {
-        compositeEditor = new InputKeyEditorComposite(parent, NONE, this);
+        compositeEditor = new InputKeyEditorComposite(parent, NONE, this, input);
         compositeEditor.setFocus();
         setControl(compositeEditor);
         setPageComplete(false);

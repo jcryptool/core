@@ -12,6 +12,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
@@ -25,9 +26,15 @@ public class InputKeyWizard extends Wizard {
     private InputKeyWizardPage page;
     private InputKeyEditorWizardPage pageEditor;
     private InputKeyFileWizardPage pageFile;
-
-    public InputKeyWizard() {
+    Input input;
+    SigVerification sigVerification;
+    Hash hash;
+    
+    public InputKeyWizard(Input input, SigVerification sigVerification, Hash hash) {
         super();
+        this.input = input;
+        this.sigVerification = sigVerification;
+        this.hash = hash;
         setWindowTitle(Messages.InputKeyWizard_title);
     }
 
@@ -36,10 +43,10 @@ public class InputKeyWizard extends Wizard {
         page = new InputKeyWizardPage("InputKey Wizard"); //$NON-NLS-1$
         addPage(page);
 
-        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard"); //$NON-NLS-1$
+        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard", input); //$NON-NLS-1$
         addPage(pageEditor);
 
-        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard"); //$NON-NLS-1$
+        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard", input); //$NON-NLS-1$
         addPage(pageFile);
     }
 
@@ -67,7 +74,7 @@ public class InputKeyWizard extends Wizard {
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(true);
                 p.setPageComplete(true);
-                SigVerification.verifySignature(Input.signaturemethod);
+                sigVerification.verifySignature(input, hash);
                 return p;
             }
         }

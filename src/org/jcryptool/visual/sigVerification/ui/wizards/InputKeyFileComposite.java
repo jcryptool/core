@@ -37,17 +37,18 @@ import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
  * This class contains the GUI elements for file input. It also contains a method to convert the opened file into a byte
  * array.
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class InputKeyFileComposite extends Composite implements SelectionListener {
     private Text txtPath;
     private File file = null;
     private InputKeyFileWizardPage page;
     private int maxSize = 10485760; // Maximal size of the file (10 MB)
+    Input input;
 
-    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p) {
+    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p, Input input) {
         super(parent, style);
-
+        this.input = input;
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
         txtPath.setBounds(10, 10, 323, 19);
@@ -84,9 +85,9 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
             byte[] pubKey = getBytesFromFile(file);
             // Byte Array in Typ PublicKey umwandeln.
-            Input.publicKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+            input.publicKey = KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
 
-            if (Input.publicKey == null) {
+            if (input.publicKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputKeyWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputKeyWizard_WarningMessageEmpty);

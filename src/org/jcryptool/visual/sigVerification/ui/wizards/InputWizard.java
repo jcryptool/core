@@ -11,23 +11,26 @@
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
  * This class contains the three pages of the input wizard.
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class InputWizard extends Wizard {
     private InputFileWizardPage page;
-
-    public InputWizard() {
+    Input input;
+    
+    public InputWizard(Input input) {
         super();
+        this.input = input;
         setWindowTitle(Messages.InputWizard_Title);
     }
 
     @Override
     public void addPages() {
-        page = new InputFileWizardPage("InputFile Wizard"); //$NON-NLS-1$
+        page = new InputFileWizardPage("InputFile Wizard", input); //$NON-NLS-1$
         addPage(page);
     }
 

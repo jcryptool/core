@@ -13,6 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
  * This class contains the page containing the hash wizard composite. It is a part of the hash wizard.
@@ -21,15 +22,17 @@ import org.eclipse.swt.widgets.Group;
  */
 public class HashWizardPage extends WizardPage {
     private HashComposite composite;
+    Input input;
 
-    protected HashWizardPage(String pageName) {
+    protected HashWizardPage(String pageName, Input input) {
         super(Messages.HashWizard_header);
+        this.input = input;
         setDescription(Messages.HashWizard_header);
         setTitle(Messages.HashWizard_WindowTitle);
     }
 
     public void createControl(Composite parent) {
-        composite = new HashComposite(parent, NONE);
+        composite = new HashComposite(parent, NONE, input);
         setControl(composite);
         setPageComplete(true);
     }

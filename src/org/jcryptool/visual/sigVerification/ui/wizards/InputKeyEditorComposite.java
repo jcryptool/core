@@ -35,9 +35,11 @@ public class InputKeyEditorComposite extends Composite {
     private static final int TEXTLIMIT = 1000;
     private Text text = null;
     private InputKeyEditorWizardPage page;
+    Input input;
 
-    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p) {
+    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p, final Input input) {
         super(parent, style);
+        this.input = input;
         text = new Text(this, SWT.BORDER | SWT.WRAP);
         text.setBounds(10, 10, 430, 215);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -58,7 +60,7 @@ public class InputKeyEditorComposite extends Composite {
                     page.canFlipToNextPage();
                     byte[] pubKey = text.getText().getBytes();
                     try{
-                    	Input.publicKey = KeyFactory.getInstance(Input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+                    	input.publicKey = KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
                     }catch(Exception ex){
                     	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }

@@ -13,6 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
@@ -23,16 +24,18 @@ import org.eclipse.swt.widgets.Group;
 public class SignatureWizardPage extends WizardPage {
     private SignatureComposite composite;
     private int method = 0;
-
-    public SignatureWizardPage(String pageName, int m) {
+    Input input;
+    
+    public SignatureWizardPage(String pageName, int m, Input input) {
         super(Messages.SignatureWizard_header);
+        this.input = input;
         setDescription(Messages.SignatureWizard_header);
         setTitle(Messages.SignatureWizard_WindowTitle);
         method = m;
     }
 
     public void createControl(Composite parent) {
-        composite = new SignatureComposite(parent, NONE, method, this);
+        composite = new SignatureComposite(parent, NONE, method, this, input);
         setControl(composite);
         setPageComplete(false);
     }

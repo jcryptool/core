@@ -13,6 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
  * Adds the page of the hash wizard.
@@ -25,16 +26,18 @@ public class HashWizard extends Wizard {
     private String name;
     // Integer representing the chosen hash (0-4)
     private int hash;
+    Input input;
 
-    public HashWizard() {
+    public HashWizard(Input input) {
         super();
+        this.input = input;
         name = "HashWizard"; //$NON-NLS-1$
         setWindowTitle(Messages.HashWizard_Title);
     }
 
     @Override
     public void addPages() {
-        page = new HashWizardPage(name);
+        page = new HashWizardPage(name, input);
         addPage(page);
     }
 

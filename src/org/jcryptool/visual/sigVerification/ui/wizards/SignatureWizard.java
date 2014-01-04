@@ -13,6 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 //import org.jcryptool.visual.sigVerification.algorithm.Input;
 
@@ -28,16 +29,18 @@ public class SignatureWizard extends Wizard {
     private int signature;
     private int method = 0;
     //private KeyStoreAlias alias = null;
+    Input input;
 
-    public SignatureWizard(int m) {
+    public SignatureWizard(int m, Input input) {
         super();
+        this.input = input;
         method = m;
         setWindowTitle(Messages.SignatureWizard_Title);
     }
 
     @Override
     public void addPages() {
-        page = new SignatureWizardPage("SignatureWizard", method); //$NON-NLS-1$
+        page = new SignatureWizardPage("SignatureWizard", method, input); //$NON-NLS-1$
         addPage(page);
     }
 

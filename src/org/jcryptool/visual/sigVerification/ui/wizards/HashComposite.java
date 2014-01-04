@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
  * Contains the elements (2 group boxes) of the HashWizard
@@ -41,9 +42,11 @@ public class HashComposite extends Composite implements SelectionListener {
     private Button rdo5;
     private Menu menuHash;
     private MenuItem mntmHash;
+    Input input;
 
-    public HashComposite(Composite parent, int style) {
+    public HashComposite(Composite parent, int style, Input input) {
         super(parent, style);
+        this.input = input;
         initialize();
     }
 
@@ -120,7 +123,7 @@ public class HashComposite extends Composite implements SelectionListener {
         rdo5.setSelection(false);
 
         // Load the previous selection
-        switch (org.jcryptool.visual.sigVerification.algorithm.Input.h) {
+        switch (input.h) {
             case 0:
                 rdo1.setSelection(true);
                 break;
@@ -156,19 +159,19 @@ public class HashComposite extends Composite implements SelectionListener {
     public void widgetSelected(SelectionEvent e) {
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdomd5_description);
-            org.jcryptool.visual.sigVerification.algorithm.Input.h = 0;
+            input.h = 0;
         } else if (rdo2.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha1_description);
-            org.jcryptool.visual.sigVerification.algorithm.Input.h = 1;
+            input.h = 1;
         } else if (rdo3.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha256_description);
-            org.jcryptool.visual.sigVerification.algorithm.Input.h = 2;
+            input.h = 2;
         } else if (rdo4.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha384_description);
-            org.jcryptool.visual.sigVerification.algorithm.Input.h = 3;
+            input.h = 3;
         } else if (rdo5.getSelection()) {
             txtDescription.setText(Messages.HashWizard_rdosha512_description);
-            org.jcryptool.visual.sigVerification.algorithm.Input.h = 4;
+            input.h = 4;
         }
     }
 

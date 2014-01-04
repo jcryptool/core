@@ -22,119 +22,126 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
  * @author Wilfing
  */
 public class SigVerification {
-    
-	public static void verifySignature(String signaturemethod){
-    	if (signaturemethod == "RSA"){
-    		if (Input.privateKey != null){
-    			verifyRSA(signaturemethod, Input.signature, Input.privateKey);
+	/**
+     * Contains the result of the comparison between the hashes.
+     */
+	boolean result;
+    public Hash hashNew = new Hash();
+	
+	public void verifySignature(Input input, Hash hash){
+    	if (input.signaturemethod == "RSA"){
+    		if (input.privateKey != null){
+    			verifyRSA(input, hash);
     		}else{
-    			setKeyRSA();
-    			verifyRSA(signaturemethod, Input.signature, Input.privateKey);
+    			setKeyRSA(input);
+    			verifyRSA(input, hash);
     		}
-    	}else if (signaturemethod == "DSA"){
-    		if (Input.publicKey != null){
-    			verifyDSA(signaturemethod, Input.signature, (DSAPublicKey) Input.publicKey);
+    	}else if (input.signaturemethod == "DSA"){
+    		if (input.publicKey != null){
+    			verifyDSA(input, hash);
     		}else{
-    			setKeyDSA();
-    			verifyDSA(signaturemethod, Input.signature, (DSAPublicKey) Input.publicKey);
+    			setKeyDSA(input);
+    			verifyDSA(input, hash);
     		}
-    	}else if (signaturemethod == "ECDSA"){
-    		if(Input.publicKey != null){
-    			verifyECDSA(signaturemethod, Input.signature, Input.publicKey);
+    	}else if (input.signaturemethod == "ECDSA"){
+    		if (input.publicKey != null){
+    			verifyECDSA(input, hash);
     		}else{
-    			setKeyECDSA();
-    			verifyECDSA(signaturemethod, Input.signature, Input.publicKey);
+    			setKeyECDSA(input);
+    			verifyECDSA(input, hash);
     		}
     	}else{
     		;
     	}
     }
 	
-	public static void setKeyRSA(){
+	public static void setKeyRSA(Input input){
 		try{
 			// KeyPair erzeugen
     		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA"); //signaturemethod -> RSA, DES,.. 
     		
     		
-    		kpg.initialize(Input.signatureSize);			// signatureSize -> 1024 (bit)
+    		kpg.initialize(input.signatureSize);			// signatureSize -> 1024 (bit)
     		KeyPair keyPair = kpg.generateKeyPair();
     		PrivateKey privKey = keyPair.getPrivate();
     		PublicKey pubKey = keyPair.getPublic();
-    		Input.privateKey = privKey;
-    		Input.publicKey = pubKey;   		
+    		input.privateKey = privKey;
+    		input.publicKey = pubKey;   		
 		}catch (Exception ex){
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 		}
 	}
 	
-    public static void verifyRSA(String signaturemethod, byte[] signature, PrivateKey privKey){
+    public void verifyRSA(Input input, Hash hash){
     	try{
     		Cipher cipher = Cipher.getInstance("RSA");
-       		cipher.init(Cipher.DECRYPT_MODE, privKey);
-    		Input.hashNew = cipher.doFinal(signature);    		
-    		
+       		cipher.init(Cipher.DECRYPT_MODE, input.privateKey);
+    		hashNew.setHash(cipher.doFinal(input.signature));    		
+    		hashNew.setHashHex();
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
-    	verifyInput(Input.hash, Input.hashNew);
+    	verifyInput(hash.hash, hashNew.hash);
     }
     
-    public static void setKeyECDSA(){
+    public static void setKeyECDSA(Input input){
     	try{
     	KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
 		keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
 		KeyPair pair = keyGen.generateKeyPair();
-		Input.publicKey = pair.getPublic();
+		input.publicKey = pair.getPublic();
     	}catch (Exception ex){
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     }
     
-    public static void verifyECDSA(String signaturemethod, byte[] signature, PublicKey publicKey){
+    public void verifyECDSA(Input input, Hash hash){
     	try{   		
-    		Signature sig = Signature.getInstance(signaturemethod);
-    		sig.initVerify(publicKey);
-    		sig.update(Input.hash);
-    		Input.result = sig.verify(signature);
+    		Signature sig = Signature.getInstance(input.signaturemethod);
+    		sig.initVerify(input.publicKey);
+    		sig.update(hash.hash);
+    		this.result = sig.verify(input.signature);
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     }
     
-    public static void setKeyDSA(){
+    public static void setKeyDSA(Input input){
     	try {
     		KeyPairGenerator keyGen;		
 			keyGen = KeyPairGenerator.getInstance("DSA");		
 			keyGen.initialize(1024);
 			KeyPair keypair = keyGen.genKeyPair();
 			DSAPublicKey publicKey = (DSAPublicKey) keypair.getPublic();
-			Input.publicKey = publicKey;
+			input.publicKey = publicKey;
 		} catch (Exception ex) {
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 		}
     }
     
-    public static void verifyDSA(String signaturemethod, byte[] signature, DSAPublicKey publicKey){
+    public void verifyDSA(Input input, Hash hash){
     	try{    		    	
-    		Signature sig = Signature.getInstance(signaturemethod);
-    		sig.initVerify(publicKey);
-    		sig.update(Input.hash);
-    		Input.result = sig.verify(signature);
+    		Signature sig = Signature.getInstance(input.signaturemethod);
+    		sig.initVerify(input.publicKey);
+    		sig.update(hash.hash);
+    		this.result = sig.verify(input.signature);
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     }
     
-    
+    public boolean getResult(){
+    	return this.result;
+    }
     
     /**
      * Compares the hashed plaintext with the decrypted signature
      * 
      * @return true or false if the two hashes are equal or not
      */
-    public static void verifyInput(byte[] hash, byte[] hashNew){
+    public void verifyInput(byte[] hash, byte[] hashNew){
         // Vergleicht die Hashes.
-    	Input.result = java.util.Arrays.equals(hash, hashNew);               
+    	this.result = java.util.Arrays.equals(hash, hashNew);               
     }
 
 }

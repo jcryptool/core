@@ -14,24 +14,32 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.view.ModelComposite;
 
 public class SignaturResult extends Shell {
   private Table tableSig;
   private Table tableHash;
+  Input input;
+  Hash hashInst;
+  SigVerification sigVerification;
 
-  private int signatureLengh = Input.signature.length * 8;
-  private int dataLength = Input.data.length * 8;
+  private int signatureLengh = input.signature.length * 8;
+  private int dataLength = input.data.length * 8;
 
   /**
    * Create the shell.
    * 
    * @param display
    */
-  public SignaturResult(Display display, String signatureInformation) {
+  public SignaturResult(Display display, String signatureInformation, Input input, Hash hashInst, SigVerification sigVerification) {
       super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
-
+      this.input = input;
+      this.hashInst = hashInst;
+      this.sigVerification = sigVerification;
+      
       Composite composite = new Composite(this, SWT.NONE);
       composite.setBounds(10, 10, 485, 661);
 
@@ -44,19 +52,19 @@ public class SignaturResult extends Shell {
       signatureMethod.setBounds(0, 27, 176, 21);
 
       Label keyType = new Label(composite, SWT.READ_ONLY);
-      if (Input.privateKey == null && Input.key == null) {
+      /*if (input.privateKey == null && input.key == null) {
           if (signatureInformation.contains("ECDSA")) {
               keyType.setText("ANSI X9.62 prime256v1 (256 bits)");
           } else {
               keyType.setText("-");
           }
       } else {
-          if (Input.key != null) {
-              keyType.setText(Input.key.getClassName());
+          if (input.key != null) {
+              keyType.setText(input.key.getClassName());
           } else {
-              keyType.setText(Input.privateKey.getClassName());
+              keyType.setText(input.privateKey.getClassName());
           }
-      }
+      }*/
       keyType.setBounds(182, 24, 302, 21);
 
       Label signatureInfo = new Label(composite, SWT.READ_ONLY);
@@ -85,9 +93,9 @@ public class SignaturResult extends Shell {
 
       int stepSize = 14;
       
-      if (Input.hashNewHex != null){
-    	int len1 = Input.hashNewHex.length();
-      	String asciistr1 = convertHexToString(Input.hashNewHex);
+      if (sigVerification.hashNew.getHashHex() != null){
+    	int len1 = sigVerification.hashNew.getHashHex().length();
+      	String asciistr1 = convertHexToString(sigVerification.hashNew.getHashHex());
       	int lenAscii1 = asciistr1.length();
       
       	for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
@@ -107,8 +115,8 @@ public class SignaturResult extends Shell {
 
               	StringBuffer bufferS1 = new StringBuffer();
               	for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
-                  bufferS1.append(Input.hashNewHex.charAt((2 * m1) + start1));
-                  bufferS1.append(Input.hashNewHex.charAt((2 * m1 + 1) + start1));
+                  bufferS1.append(sigVerification.hashNew.getHashHex().charAt((2 * m1) + start1));
+                  bufferS1.append(sigVerification.hashNew.getHashHex().charAt((2 * m1 + 1) + start1));
                   bufferS1.append(" ");
               	}
               	item.setText(1, bufferS1.toString());
@@ -126,8 +134,8 @@ public class SignaturResult extends Shell {
       tableHash = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
       tableHash.setBounds(0, 394, 484, 150);
 
-      int len2 = Input.hashHex.length();
-      String asciistr2 = convertHexToString(Input.hashHex);
+      int len2 = hashInst.getHashHex().length();
+      String asciistr2 = convertHexToString(hashInst.getHashHex());
       int lenAscii2 = asciistr2.length();
 
       // shows only 6 rows - optimize performance
@@ -149,8 +157,8 @@ public class SignaturResult extends Shell {
               // column 2 - hex
               StringBuffer bufferD1 = new StringBuffer();
               for (int n1 = 0; n1 < (end2 - start2) / 2; n1++) {
-                  bufferD1.append(Input.hashHex.charAt((2 * n1) + start2));
-                  bufferD1.append(Input.hashHex.charAt((2 * n1 + 1) + start2));
+                  bufferD1.append(hashInst.getHashHex().charAt((2 * n1) + start2));
+                  bufferD1.append(hashInst.getHashHex().charAt((2 * n1 + 1) + start2));
                   bufferD1.append(" ");
               }
               item.setText(1, bufferD1.toString());

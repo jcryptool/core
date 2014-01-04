@@ -3,15 +3,19 @@ package org.jcryptool.visual.sigVerification.algorithm;
 import java.security.MessageDigest;
 // import javax.crypto.*;
 
+
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
 /**
  * Hashes the given input with the selected hash methods.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class Hash {
+	public byte[] hash;
+	public String hashHex;
+	
     /**
      * This method hashes an input stored in Input.java with a given hash method
      * 
@@ -19,7 +23,7 @@ public class Hash {
      * @param hashmethod The name of the method (a string)
      * @return the hash of the input as byte array
      */
-    public static byte[] hashInput(String hashmethod, byte[] input) throws Exception {
+    public byte[] hashInput(String hashmethod, byte[] input) throws Exception {
         byte[] md = null;
         
         try {
@@ -29,13 +33,51 @@ public class Hash {
             // Output:
             md = messageDigest.digest();
 
-            Input.hash = md; // Store the generated hash
-            Input.hashHex = Input.bytesToHex(md); // Hex
+            this.hash = md; // Store the generated hash
+            this.hashHex = bytesToHex(md); // Hex
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
         
         return md;
+    }
+    
+    public void setHash(byte[] hash){
+    	this.hash = hash;
+    }
+    
+    public void setHashHex(){
+    	this.hashHex = bytesToHex(this.hash);
+    }
+    
+    public void setHashHex(byte[] hash){
+    	this.hashHex = bytesToHex(hash);
+    }
+    
+    public byte[] getHash(){
+    	return hash;
+    }
+    
+    public String getHashHex(){
+    	return hashHex;
+    }
+    
+    /**
+     * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
+     * 
+     * @param bytes A byte array
+     * @return The hex representation of the byte array
+     */
+    public static String bytesToHex(byte[] bytes) {
+        final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
 }

@@ -17,83 +17,60 @@ public class Input {
     /**
      * Contains the input data
      */
-    public static byte[] data;
-    public static String dataHex;
+    public byte[] data;
+
 
     /**
      * Contains the path to the input data
      */
-    public static String path = ""; //$NON-NLS-1$
+    public String path = ""; //$NON-NLS-1$
 
-    public static int h = -1; // the chosen hash (integer)
+    public int h = -1; // the chosen hash (integer)
 
-    public static int s = -1; // the chosen string (integer)
+    public int s = -1; // the chosen string (integer)
     
-    /**
-     * Contains the hash of the plain text in input data (byte array)
-     */
-    public static byte[] hashNew;
-
-    /**
-     * Contains the hash of the plain text input data (hex representation)
-     */
-    public static String hashNewHex;
-
-    /**
-     * Contains the hash stored in the input data (byte array)
-     */
-    public static byte[] hash;
-
-    /**
-     * Contains the hash stored in the input data (hex representation)
-     */
-    public static String hashHex;
-    
-    /**
-     * Contains the signature of the input data (byte array)
-     */
-    public static byte[] signature;
 
     /**
      * Contains the plain text of the input data (byte array)
      */
-    public static byte[] plain;
+    public byte[] plain;
     
-    //public static String plainHex;
-    
-    public static String dataString;
-    
-    public static PublicKey publicKey;
+    /**
+     * Contains the signature of the input data (byte array)
+     */
+    public byte[] signature;      
     
     /**
      * Contains the signature of the input data (hex representation)
      */
-    public static String signatureHex;
+    public String signatureHex;
 
     /**
      * Contains the signature of the input data (octal)
      */
-    public static String signatureOct;
+    public String signatureOct;
 
     /**
      * The name of the chosen hash method ("SHA-256" etc.)
      */
-    public static String chosenHash;
+    public String chosenHash;
 
     /**
      * The name of the chosen signature method ("RSA" etc.)
      */
-    public static String signaturemethod="";
+    public String signaturemethod="";
     
     /**
      * The size in bit of the chosen signature method ("RSA" = 1024 etc.)
      */
-    public static int signatureSize;
+    public int signatureSize;
     
     /**
      * Contains the private key used to sign the data (given by JCTCA plugin)
      */
-    public static PrivateKey privateKey;
+    public PrivateKey privateKey;
+    
+    public PublicKey publicKey;
 
     /**
      * Contains the public key used to verify the data in the JCTCA plugin
@@ -103,23 +80,18 @@ public class Input {
     /**
      * Contains the private key used to sign the data (chosen in our plugin)
      */
-    public static KeyStoreAlias key;
-    
-    /**
-     * Contains the result of the comparison between the hashes.
-     */
-    public static boolean result;
+    //public static KeyStoreAlias key;    
 
     /**
      * This method resets all variables in this class to their initial value
      */
-    public static void reset() {
+    public void reset(Hash hash, Hash hashNew) {
         data = null;
         path = null;
-        hash = null;
-        hashHex = null;
-        hashNew = null;
-        hashNewHex = null;
+        hash.hash = null;
+        hash.hashHex = null;
+        hashNew.hash = null;
+        hashNew.hashHex = null;
         signature = null;
         signatureHex = null;
         signatureOct = null;
@@ -133,22 +105,22 @@ public class Input {
      * 
      * @return void
      */
-    public static void setSignaturemethod(){
-    	switch(Input.s){
+    public void setSignaturemethod(){
+    	switch(this.s){
         case 0:             
-            Input.signaturemethod = "DSA";
+            this.signaturemethod = "DSA";
             break;
         case 1:
-        	Input.signaturemethod = "RSA";
+        	this.signaturemethod = "RSA";
             break;
         case 2:
-        	Input.signaturemethod = "ECDSA";
+        	this.signaturemethod = "ECDSA";
             break;
         case 3:             
-        	Input.signaturemethod = "RSA and MGF1"; //????
+        	this.signaturemethod = "RSA and MGF1"; //????
             break;
         default:
-        	Input.signaturemethod = "";
+        	this.signaturemethod = "";
             break;
     	}
     }
@@ -158,20 +130,20 @@ public class Input {
      * 
      * @return void
      */
-    public static void setSignatureSize(){
-    	switch (Input.s){
+    public void setSignatureSize(){
+    	switch (this.s){
         case 0:             // DSA 368 Bit -> 46 Byte
-            Input.signatureSize = 368;
+            this.signatureSize = 368;
             break;
         case 1:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
         case 3:
-        	Input.signatureSize = 1024;
+        	this.signatureSize = 1024;
             break;
         case 2:             // ECDSA 560 Bit -> 70 Byte
-        	Input.signatureSize = 560;
+        	this.signatureSize = 560;
             break;
         default:
-        	Input.signatureSize = -1;
+        	this.signatureSize = -1;
             break;
     	}
     }
@@ -182,22 +154,22 @@ public class Input {
      * 
      * @return void
      */
-    public static void divideSignaturePlaintext(){      
-        int sigSize = Input.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
+    public void divideSignaturePlaintext(){      
+        int sigSize = this.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
        
        // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-       Input.signature = java.util.Arrays.copyOfRange(Input.data, 4, sigSize+4);
-       Input.plain = java.util.Arrays.copyOfRange(Input.data, sigSize+4, Input.data.length);
+       this.signature = java.util.Arrays.copyOfRange(this.data, 0, sigSize+4);
+       this.plain = java.util.Arrays.copyOfRange(this.data, sigSize+4, this.data.length);
        
     }        
     
-    
-    /**
+/*    
+    *//**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
      * 
      * @param bytes A byte array
      * @return The hex representation of the byte array
-     */
+     *//*
     public static String bytesToHex(byte[] bytes) {
         final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         char[] hexChars = new char[bytes.length * 2];
@@ -211,12 +183,12 @@ public class Input {
     }
 
     
-    /**
+    *//**
      * Returns the octal String representation of a byte array with optional prefix. The String is formed by making
      * value[0] the leftmost three digits and value[value.length-1] the rightmost three digits.
      * 
      * @param array the byte array
-     */
+     *//*
     public final static String toOctalString(byte[] bytes, String prefix) {
         StringBuffer sb = new StringBuffer(bytes.length * (3 + prefix.length()) + 8);
 
@@ -228,47 +200,15 @@ public class Input {
         return sb.toString();
     }
 
-    /**
+    *//**
      * Returns the octal digit String buffer representation of a byte.
      * 
      * @param byte the byte
-     */
+     *//*
     private final static StringBuffer appendOctalDigits(StringBuffer sb, byte b) {
         // b will be promote to integer first, mask with 0x07 is a must.
         return sb.append(Character.forDigit(b >>> 6 & 0x07, 8)).append(Character.forDigit(b >>> 3 & 0x07, 8))
                 .append(Character.forDigit(b & 0x07, 8));
-    }
-    
-    /*public static byte[] removeLineBreaks(byte[] data) throws Exception{
-    	try{
-    		@SuppressWarnings("deprecation")
-    		String text = new String(data, 0);
-        	text = text.replace("/n", "").replace("/r", "");
-        	data = text.getBytes("ASCII");
-    	}catch(Exception ex){
-    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-    	}
-		return data;
     }*/
     
-    /*public static byte[] removeLineBreaks(byte[] data) {
-        byte groomedData[] = new byte[data.length];
-        int bytesCopied = 0;
-
-        for (int i = 0; i < data.length; i++) {
-            switch (data[i]) {
-                case (byte) '\n' :
-                case (byte) '\r' :
-                    break;
-                default:
-                    groomedData[bytesCopied++] = data[i];
-            }
-        }
-
-        byte packedData[] = new byte[bytesCopied];
-
-        System.arraycopy(groomedData, 0, packedData, 0, bytesCopied);
-
-        return packedData;
-    }*/
 }

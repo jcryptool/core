@@ -57,9 +57,11 @@ public class SignatureComposite extends Composite implements SelectionListener {
     private Menu menuSig;
     private MenuItem mntmSig;
     //private Label lblSelectAKey;
+    Input input;
 
-    public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p) {
+    public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p, Input input) {
         super(parent, style);
+        this.input = input;
         method = m;
         page = p;
         initialize();
@@ -179,7 +181,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         }
 
         // If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
-        if (org.jcryptool.visual.sigVerification.algorithm.Input.privateKey != null) {
+        if (input.privateKey != null) {
             // Enable RSA
             rdo2.setSelection(true);
             // Disable all other methods
@@ -220,7 +222,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
             // Store the chosen signature to keep the selected radio button for the next time the wizard is opened
-            Input.s = 0;
+            input.s = 0;
             // Clean up
             //keystoreitems.clear();
             //combo.removeAll();
@@ -230,7 +232,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         } else {
             if (rdo2.getSelection()) {
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
-                Input.s = 1;
+                input.s = 1;
                 // Clean up
                 //keystoreitems.clear();
                 //combo.removeAll();
@@ -240,7 +242,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
             } else {
                 if (rdo3.getSelection()) {
                     txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_ECDSA_description);
-                    Input.s = 2;
+                    input.s = 2;
                     // Clean up
                     //keystoreitems.clear();
                     //combo.removeAll();
@@ -251,7 +253,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 } else {
                     if (rdo4.getSelection()) {
                         txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSAandMGF1_description);
-                        Input.s = 3;
+                        input.s = 3;
                         // Clean up
                         //keystoreitems.clear();
                         //combo.removeAll();

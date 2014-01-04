@@ -29,9 +29,11 @@ public class InputFileComposite extends Composite implements SelectionListener {
     private File file = null;
     private InputFileWizardPage page;
     private int maxSize = 10485760; // Maximal size of the file (10 MB)
+    Input input;
 
-    public InputFileComposite(Composite parent, int style, InputFileWizardPage p) {
+    public InputFileComposite(Composite parent, int style, InputFileWizardPage p, Input input) {
         super(parent, style);
+        this.input = input;
 
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
@@ -67,9 +69,9 @@ public class InputFileComposite extends Composite implements SelectionListener {
             }
 
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
-            Input.data = getBytesFromFile(file);
+            input.data = getBytesFromFile(file);
 
-            if (Input.data == null) {
+            if (input.data == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputWizard_WarningMessageEmpty);
