@@ -1,6 +1,7 @@
 
 package org.jcryptool.visual.sigVerification.algorithm;
 
+import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -9,6 +10,7 @@ import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.interfaces.DSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 
@@ -108,11 +110,10 @@ public class SigVerification {
     
     public static void setKeyDSA(Input input){
     	try {
-    		KeyPairGenerator keyGen;		
-			keyGen = KeyPairGenerator.getInstance("DSA");		
+    		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");		
 			keyGen.initialize(1024);
 			KeyPair keypair = keyGen.genKeyPair();
-			DSAPublicKey publicKey = (DSAPublicKey) keypair.getPublic();
+			PublicKey publicKey = keypair.getPublic();			
 			input.publicKey = publicKey;
 		} catch (Exception ex) {
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
@@ -143,5 +144,16 @@ public class SigVerification {
         // Vergleicht die Hashes.
     	this.result = java.util.Arrays.equals(hash, hashNew);               
     }
+    
+    public void DSAPublicKeyFile(byte[] pubKeyBytes){
+        try{
+        	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
+        	KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        	PublicKey publicKey = keyFactory.generatePublic(pubKeySpec);
+        }catch(Exception ex){
+        	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+        }
+    }
+    
 
 }

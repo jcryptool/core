@@ -158,7 +158,7 @@ public class Input {
         int sigSize = this.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
        
        // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-       this.signature = java.util.Arrays.copyOfRange(this.data, 0, sigSize+4);
+       this.signature = java.util.Arrays.copyOfRange(this.data, 4, sigSize+4);
        this.plain = java.util.Arrays.copyOfRange(this.data, sigSize+4, this.data.length);
        
     }        
