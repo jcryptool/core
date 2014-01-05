@@ -1,12 +1,9 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.io.UnsupportedEncodingException;
+
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
 /**
  * This class is used to share data between classes.
@@ -65,12 +62,12 @@ public class Input {
      */
     public int signatureSize;
     
-    /**
+/*    *//**
      * Contains the private key used to sign the data (given by JCTCA plugin)
-     */
+     *//*
     public PrivateKey privateKey;
     
-    public PublicKey publicKey;
+    public PublicKey publicKey;*/
 
     /**
      * Contains the public key used to verify the data in the JCTCA plugin
@@ -85,7 +82,7 @@ public class Input {
     /**
      * This method resets all variables in this class to their initial value
      */
-    public void reset(Hash hash, Hash hashNew) {
+    public void reset(Hash hash, Hash hashNew, SigVerification sigVerification) {
         data = null;
         path = null;
         hash.hash = null;
@@ -95,8 +92,8 @@ public class Input {
         signature = null;
         signatureHex = null;
         signatureOct = null;
-        privateKey = null;
-        publicKey = null;
+        sigVerification.setPrivateKey(null);
+        sigVerification.setPublicKey(null);
         h = -1;
     }
     

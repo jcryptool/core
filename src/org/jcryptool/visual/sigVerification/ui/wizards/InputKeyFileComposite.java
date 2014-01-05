@@ -31,6 +31,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
@@ -45,10 +46,12 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
     private InputKeyFileWizardPage page;
     private int maxSize = 10485760; // Maximal size of the file (10 MB)
     Input input;
+    SigVerification sigVerification;
 
-    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p, Input input) {
+    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p, Input input, SigVerification sigVerification) {
         super(parent, style);
         this.input = input;
+        this.sigVerification = sigVerification;
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
         txtPath.setBounds(10, 10, 323, 19);
@@ -85,9 +88,9 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
             byte[] pubKey = getBytesFromFile(file);
             // Byte Array in Typ PublicKey umwandeln.
-            input.publicKey = KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+            sigVerification.setPublicKey (KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey)));
 
-            if (input.publicKey == null) {
+            if (pubKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputKeyWizard_WarningTitle);
                 messageBox.setMessage(Messages.InputKeyWizard_WarningMessageEmpty);

@@ -180,7 +180,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 break;
         }
 
-        // If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
+        /*// If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
         if (input.privateKey != null) {
             // Enable RSA
             rdo2.setSelection(true);
@@ -199,7 +199,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         } else {
             // Load the keys
             //initializeKeySelection(keyType);
-        }
+        }*/
     }
 
     /**

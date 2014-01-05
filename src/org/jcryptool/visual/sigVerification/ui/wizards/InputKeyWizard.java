@@ -43,10 +43,10 @@ public class InputKeyWizard extends Wizard {
         page = new InputKeyWizardPage("InputKey Wizard"); //$NON-NLS-1$
         addPage(page);
 
-        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard", input); //$NON-NLS-1$
+        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard", input, sigVerification); //$NON-NLS-1$
         addPage(pageEditor);
 
-        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard", input); //$NON-NLS-1$
+        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard", input, sigVerification); //$NON-NLS-1$
         addPage(pageFile);
     }
 

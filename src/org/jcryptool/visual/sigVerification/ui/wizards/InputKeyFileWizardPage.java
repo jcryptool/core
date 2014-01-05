@@ -13,6 +13,7 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 
 /**
  * This class contains the page containing the file input composite. It is a part of the Input wizard.
@@ -22,10 +23,12 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 public class InputKeyFileWizardPage extends WizardPage {
     private InputKeyFileComposite compositeFile;
     Input input;
+    SigVerification sigVerification;
 
-    public InputKeyFileWizardPage(String pageName, Input input) {
+    public InputKeyFileWizardPage(String pageName, Input input, SigVerification sigVerification) {
         super(pageName);
         this.input = input;
+        this.sigVerification = sigVerification;
 
         setTitle(Messages.InputKeyFileWizard_title);
         setDescription(Messages.InputKeyFileWizard_header);
@@ -33,7 +36,7 @@ public class InputKeyFileWizardPage extends WizardPage {
 
     public void createControl(Composite parent) {
         setPageComplete(false);
-        compositeFile = new InputKeyFileComposite(parent, NONE, this, input);
+        compositeFile = new InputKeyFileComposite(parent, NONE, this, input, sigVerification);
         setControl(compositeFile);
     }
 

@@ -76,6 +76,8 @@ public class SigVerComposite extends Composite  {
     private TabItem tabStep4;
     private Canvas canvas1;
     private TabFolder tabFolder;
+    private Text textGeneralDescription;
+    private Label lblProgress;
     
     private int hash = 0; // Values: 0-4. Hash and signature contain the
     // selected method; default is 0
@@ -85,14 +87,8 @@ public class SigVerComposite extends Composite  {
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384,
             org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512 };
     private int signature = 0; // 0-3
-    private String sigstring = ""; //$NON-NLS-1$
-    private String[] signatures = { org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_DSA,
-            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_RSA,
-            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_ECDSA,
-            org.jcryptool.visual.sigVerification.ui.wizards.Messages.SignatureWizard_RSAandMGF1 };
-    private Text textGeneralDescription;
-    private Label lblProgress;
-    
+
+    //Erzeugen der benötigten Objekte
     Input input = new Input();
     SigVerification sigVerification = new SigVerification();
     Hash hashInst = new Hash();
@@ -557,7 +553,7 @@ public class SigVerComposite extends Composite  {
                     System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
                     // Arguments: Signature methods, data to sign, Key
-                    sigVerification.verifySignature(input, hashInst);                        
+                    //sigVerification.verifySignature(input, hashInst);                        
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.

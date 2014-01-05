@@ -24,6 +24,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 
 /**
  * Contains all the GUI elements for the editor input page.
@@ -36,10 +37,12 @@ public class InputKeyEditorComposite extends Composite {
     private Text text = null;
     private InputKeyEditorWizardPage page;
     Input input;
-
-    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p, final Input input) {
+    SigVerification sigVerification;
+    
+    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p, final Input input, final SigVerification sigVerification) {
         super(parent, style);
         this.input = input;
+        this.sigVerification = sigVerification;
         text = new Text(this, SWT.BORDER | SWT.WRAP);
         text.setBounds(10, 10, 430, 215);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -60,7 +63,7 @@ public class InputKeyEditorComposite extends Composite {
                     page.canFlipToNextPage();
                     byte[] pubKey = text.getText().getBytes();
                     try{
-                    	input.publicKey = KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey));
+                    	sigVerification.setPublicKey(KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey)));
                     }catch(Exception ex){
                     	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }

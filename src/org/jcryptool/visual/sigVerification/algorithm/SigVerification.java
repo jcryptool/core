@@ -36,21 +36,21 @@ public class SigVerification {
 	
 	public void verifySignature(Input input, Hash hash){
     	if (input.signaturemethod == "RSA"){
-    		if (input.privateKey != null){
+    		if (this.privateKey != null){
     			verifyRSA(input, hash);
     		}else{
     			setKeyRSA(input);
     			verifyRSA(input, hash);
     		}
     	}else if (input.signaturemethod == "DSA"){
-    		if (input.publicKey != null){
+    		if (this.publicKey != null){
     			verifyDSA(input, hash);
     		}else{
     			setKeyDSA(input);
     			verifyDSA(input);
     		}
     	}else if (input.signaturemethod == "ECDSA"){
-    		if (input.publicKey != null){
+    		if (this.publicKey != null){
     			verifyECDSA(input, hash);
     		}else{
     			setKeyECDSA(input);
@@ -77,7 +77,7 @@ public class SigVerification {
 		}
 	}
 	
-    public void verifyRSA(Input input, Hash hash){
+    /*public void verifyRSA(Input input, Hash hash){
     	try{
     		Cipher cipher = Cipher.getInstance("RSA");
        		cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
@@ -87,6 +87,21 @@ public class SigVerification {
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     	verifyInput(hash.hash, hashNew.hash);
+    }*/
+    
+    public void verifyRSA(Input input, Hash hash){
+    	try{
+    		Signature signature = Signature.getInstance("RSA");
+            signature.initVerify(this.publicKey);
+
+            //Signatur updaten
+            signature.update(hash.hash);
+
+            //Signatur ausgeben
+            this.result = signature.verify(input.signature);
+    	}catch(Exception ex){
+    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+    	}
     }
     
     public void setKeyECDSA(Input input){
@@ -126,7 +141,7 @@ public class SigVerification {
     public void verifyDSA(Input input, Hash hash){
     	try{    		    	
     		Signature sig = Signature.getInstance(input.signaturemethod);
-    		sig.initVerify(input.publicKey);
+    		sig.initVerify(this.publicKey);
     		sig.update(hash.hash);
     		this.result = sig.verify(input.signature);
     	}catch(Exception ex){
@@ -137,7 +152,7 @@ public class SigVerification {
     public void verifyDSA(Input input){
         //Signature-Objekt erstellen
         try {
-        	Signature signature = Signature.getInstance("SHA/DSA");
+        	Signature signature = Signature.getInstance("SHA1withDSA");
             signature.initVerify(this.publicKey);
             //Eingabedatei lesen
 //            FileInputStream in = new FileInputStream(new String(input.plain));
@@ -183,5 +198,12 @@ public class SigVerification {
     public boolean getResult(){
     	return this.result;
     }
+    
+    public void setPrivateKey(PrivateKey privKey){
+    	this.privateKey = privKey;
+    }
 
+    public void setPublicKey(PublicKey pubKey){
+    	this.publicKey = pubKey;
+    }
 }
