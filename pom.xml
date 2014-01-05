@@ -63,6 +63,7 @@
 	<module>org.jcryptool.games.feature</module>
 	<module>org.jcryptool.games.numbershark</module>
 	<module>org.jcryptool.games.sudoku</module>
+	<module>org.jcryptool.games.zudoku</module>
 	<module>org.jcryptool.visual</module>
 	<module>org.jcryptool.visual.aco</module>
 	<module>org.jcryptool.visual.aup</module>

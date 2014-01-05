@@ -245,6 +245,13 @@ litigation.
          unpack="false"/>
 
    <plugin
+         id="org.jcryptool.games.zudoku"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.jcryptool.games.divide"
          download-size="0"
          install-size="0"
