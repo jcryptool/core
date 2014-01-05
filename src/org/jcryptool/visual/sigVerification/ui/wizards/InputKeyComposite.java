@@ -28,16 +28,16 @@ public class InputKeyComposite extends Composite {
         super(parent, style);
 
         rdoFromFile = new Button(this, SWT.RADIO);
-        rdoFromFile.setBounds(10, 10, 91, 18);
+        rdoFromFile.setBounds(10, 10, 295, 18);
         rdoFromFile.setText(Messages.InputKeyWizard_rdoFromFile);
 
         rdoFromEditor = new Button(this, SWT.RADIO);
-        rdoFromEditor.setBounds(10, 34, 157, 18);
+        rdoFromEditor.setBounds(10, 34, 295, 18);
         rdoFromEditor.setText(Messages.InputKeyWizard_rdoFromEditor);
         parent.setSize(600, 400);
         
         rdoFromKeyStore = new Button(this, SWT.RADIO);
-        rdoFromKeyStore.setBounds(10, 58, 255, 18);
+        rdoFromKeyStore.setBounds(10, 58, 295, 18);
         rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
 

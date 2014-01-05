@@ -1,6 +1,7 @@
 
 package org.jcryptool.visual.sigVerification.algorithm;
 
+import java.io.FileInputStream;
 import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -13,6 +14,7 @@ import java.security.interfaces.DSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
+import javax.security.cert.Certificate;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -29,6 +31,8 @@ public class SigVerification {
      */
 	boolean result;
     public Hash hashNew = new Hash();
+    private PublicKey publicKey;
+    private PrivateKey privateKey;
 	
 	public void verifySignature(Input input, Hash hash){
     	if (input.signaturemethod == "RSA"){
@@ -43,7 +47,7 @@ public class SigVerification {
     			verifyDSA(input, hash);
     		}else{
     			setKeyDSA(input);
-    			verifyDSA(input, hash);
+    			verifyDSA(input);
     		}
     	}else if (input.signaturemethod == "ECDSA"){
     		if (input.publicKey != null){
@@ -57,7 +61,7 @@ public class SigVerification {
     	}
     }
 	
-	public static void setKeyRSA(Input input){
+	public void setKeyRSA(Input input){
 		try{
 			// KeyPair erzeugen
     		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA"); //signaturemethod -> RSA, DES,..    		
@@ -66,8 +70,8 @@ public class SigVerification {
     		KeyPair keyPair = kpg.generateKeyPair();
     		PrivateKey privKey = keyPair.getPrivate();
     		PublicKey pubKey = keyPair.getPublic();
-    		input.privateKey = privKey;
-    		input.publicKey = pubKey;   		
+    		this.privateKey = privKey;
+    		this.publicKey = pubKey;   		
 		}catch (Exception ex){
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 		}
@@ -76,7 +80,7 @@ public class SigVerification {
     public void verifyRSA(Input input, Hash hash){
     	try{
     		Cipher cipher = Cipher.getInstance("RSA");
-       		cipher.init(Cipher.DECRYPT_MODE, input.privateKey);
+       		cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
     		hashNew.setHash(cipher.doFinal(input.signature));    		
     		hashNew.setHashHex();
     	}catch(Exception ex){
@@ -85,12 +89,12 @@ public class SigVerification {
     	verifyInput(hash.hash, hashNew.hash);
     }
     
-    public static void setKeyECDSA(Input input){
+    public void setKeyECDSA(Input input){
     	try{
     	KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
 		keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
 		KeyPair pair = keyGen.generateKeyPair();
-		input.publicKey = pair.getPublic();
+		this.publicKey = pair.getPublic();
     	}catch (Exception ex){
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
@@ -99,7 +103,7 @@ public class SigVerification {
     public void verifyECDSA(Input input, Hash hash){
     	try{   		
     		Signature sig = Signature.getInstance(input.signaturemethod);
-    		sig.initVerify(input.publicKey);
+    		sig.initVerify(this.publicKey);
     		sig.update(hash.hash);
     		this.result = sig.verify(input.signature);
     	}catch(Exception ex){
@@ -107,13 +111,13 @@ public class SigVerification {
     	}
     }
     
-    public static void setKeyDSA(Input input){
+    public void setKeyDSA(Input input){
     	try {
     		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");		
 			keyGen.initialize(1024);
 			KeyPair keypair = keyGen.genKeyPair();
 			PublicKey publicKey = keypair.getPublic();			
-			input.publicKey = publicKey;
+			this.publicKey = publicKey;
 		} catch (Exception ex) {
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 		}
@@ -130,8 +134,30 @@ public class SigVerification {
     	}
     }
     
-    public boolean getResult(){
-    	return this.result;
+    public void verifyDSA(Input input){
+        //Signature-Objekt erstellen
+        try {
+        	Signature signature = Signature.getInstance("SHA/DSA");
+            signature.initVerify(this.publicKey);
+            //Eingabedatei lesen
+//            FileInputStream in = new FileInputStream(new String(input.plain));
+//            int len;
+//            byte[] data = new byte[1024];
+//            while ((len = in.read(data)) > 0) {
+              //Signatur updaten
+            signature.update(input.plain);
+//            }
+//            in.close();
+            //Signaturdatei einlesen
+//            in = new FileInputStream(new String(input.signature));
+//            len = in.read(data);
+//            in.close();
+            //Signatur ausgeben
+            this.result = signature.verify(input.signature);
+        }catch(Exception ex){
+        	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+        }
+    	
     }
     
     /**
@@ -148,11 +174,14 @@ public class SigVerification {
         try{
         	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
         	KeyFactory keyFactory = KeyFactory.getInstance("DSA");
-        	PublicKey publicKey = keyFactory.generatePublic(pubKeySpec);
+        	this.publicKey = keyFactory.generatePublic(pubKeySpec);
         }catch(Exception ex){
         	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
     }
-    
+
+    public boolean getResult(){
+    	return this.result;
+    }
 
 }
