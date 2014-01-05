@@ -60,8 +60,7 @@ public class SigVerification {
 	public static void setKeyRSA(Input input){
 		try{
 			// KeyPair erzeugen
-    		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA"); //signaturemethod -> RSA, DES,.. 
-    		
+    		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA"); //signaturemethod -> RSA, DES,..    		
     		
     		kpg.initialize(input.signatureSize);			// signatureSize -> 1024 (bit)
     		KeyPair keyPair = kpg.generateKeyPair();

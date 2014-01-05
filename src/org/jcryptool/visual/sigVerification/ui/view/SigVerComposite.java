@@ -93,6 +93,10 @@ public class SigVerComposite extends Composite  {
     private Text textGeneralDescription;
     private Label lblProgress;
     
+    Input input = new Input();
+    SigVerification sigVerification = new SigVerification();
+    Hash hashInst = new Hash();
+    
     
     /**
      * @return the hash
@@ -423,7 +427,7 @@ public class SigVerComposite extends Composite  {
                     reset(0);
 
                     // Create the HashWirard
-                    InputWizard wiz = new InputWizard();
+                    InputWizard wiz = new InputWizard(input);
                     // Display it
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
@@ -454,7 +458,7 @@ public class SigVerComposite extends Composite  {
                 try {
                     reset(1);
                     // Create the HashWirard
-                    HashWizard wiz = new HashWizard();
+                    HashWizard wiz = new HashWizard(input);
                     // Display it
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
@@ -488,7 +492,7 @@ public class SigVerComposite extends Composite  {
 			public void widgetSelected(SelectionEvent e) {
             	try {
                     reset(2);
-                    SignatureWizard wiz = new SignatureWizard(hash);
+                    SignatureWizard wiz = new SignatureWizard(hash, input);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
                         protected void configureShell(Shell newShell) {
@@ -501,27 +505,24 @@ public class SigVerComposite extends Composite  {
                         // get signature method (integer)
                         signature = wiz.getSignature();
                         //KeyStoreAlias alias = wiz.getAlias();
-                        Input.dataString = new String(Input.data);
-//                        Input.data = Input.removeLineBreaks(Input.data);
-                        
                         
                         //Set method and size of signature (ex. RSA, 1024)                        
-                        Input.setSignaturemethod();
-                        Input.setSignatureSize();
+                        input.setSignaturemethod();
+                        input.setSignatureSize();
                         
                         // Divides signature and plaintext from imported file.
-                        Input.divideSignaturePlaintext();
+                        input.divideSignaturePlaintext();
                         
                         // Arguments: Hash method, data to hash
-                        Hash.hashInput(hashes[hash], Input.plain); // Hash the input  
-                        System.out.println(new String(Input.data, 0));
-                        System.out.println(new String(Input.plain, 0));
-                        System.out.println(new String(Input.hash, 0));
-                        Input.hashHex = Input.bytesToHex(Input.hash);
-                        System.out.println(Input.hashHex);
-                        System.out.println(new String(Input.signature, 0));
-                        System.out.println(Input.signaturemethod);
-                        System.out.println(Input.signatureSize);
+                        hashInst.hashInput(hashes[hash], input.plain); // Hash the input  
+                        System.out.println(new String(input.data, 0));
+                        System.out.println(new String(input.plain, 0));
+                        System.out.println(new String(hashInst.getHash(), 0));
+                        hashInst.setHashHex();
+                        System.out.println(hashInst.hashHex);
+                        System.out.println(new String(input.signature, 0));
+                        System.out.println(input.signaturemethod);
+                        System.out.println(input.signatureSize);
                         
                         btnResult.setEnabled(true);
                         tabFolder.setSelection(3);
@@ -540,7 +541,7 @@ public class SigVerComposite extends Composite  {
                     reset(2);
 
                     // Create the InputKeyWizard
-                    InputKeyWizard wiz = new InputKeyWizard();
+                    InputKeyWizard wiz = new InputKeyWizard(input, sigVerification, hashInst);
                     // Display it
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
@@ -553,18 +554,18 @@ public class SigVerComposite extends Composite  {
                     if (dialog.open() == Window.OK) {                   
                         
                     }
-                    System.out.println(Input.hashNew);
+                    System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
                     // Arguments: Signature methods, data to sign, Key
-                    SigVerification.verifySignature(Input.signaturemethod);                        
+                    sigVerification.verifySignature(input, hashInst);                        
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.
-                    System.out.println(Input.result);
+                    System.out.println(sigVerification.getResult());
                     
-                    Input.hashHex = Input.bytesToHex(Input.hash);
-                    if (Input.hashNew != null){
-                    	Input.hashNewHex = Input.bytesToHex(Input.hashNew);
+                    hashInst.setHashHex();
+                    if (sigVerification.hashNew.hash != null){
+                    	sigVerification.hashNew.setHashHex();
                     }
                     
                     // Shows green check mark or red fail sign if compairism is correct or false
@@ -590,7 +591,7 @@ public class SigVerComposite extends Composite  {
 
                     // Show the result
                     Display display = Display.getCurrent();
-                    Shell shell = new SignaturResult(display, Input.signaturemethod);
+                    Shell shell = new SignaturResult(display, input.signaturemethod, input, hashInst, sigVerification);
                     shell.open();
                     // Display it
                  // run the event loop as long as the window is open
