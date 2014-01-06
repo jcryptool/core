@@ -92,6 +92,7 @@ public class SigVerComposite extends Composite  {
     Input input = new Input();
     SigVerification sigVerification = new SigVerification();
     Hash hashInst = new Hash();
+    private int step = 0;		// Fortschritt für Reset
     
     
     /**
@@ -440,6 +441,7 @@ public class SigVerComposite extends Composite  {
                                                         // description       
                         tabFolder.setSelection(1);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
+                        step = 1;
                     }
 
                 } catch (Exception ex) {
@@ -475,6 +477,7 @@ public class SigVerComposite extends Composite  {
                                                         // tab of the
                                                         // description 
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
+                        step = 2;
                     }
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
@@ -548,7 +551,7 @@ public class SigVerComposite extends Composite  {
                         }
                     };
                     if (dialog.open() == Window.OK) {                   
-                        
+                        step = 3;
                     }
                     System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
@@ -584,7 +587,6 @@ public class SigVerComposite extends Composite  {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
                     reset(3);
-
                     // Show the result
                     Display display = Display.getCurrent();
                     Shell shell = new SignaturResult(display, input.signaturemethod, input, hashInst, sigVerification);
@@ -608,20 +610,14 @@ public class SigVerComposite extends Composite  {
         });
         
      // Adds a Listener for the reset button
-        /*btnReset.addSelectionListener(new SelectionAdapter() {
+        btnReset.addSelectionListener(new SelectionAdapter() {
         	public void widgetSelected(SelectionEvent e) {
-                try {
-                    Input.privateKey = null;
-                    Input.publicKey = null;
-                    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-                    IViewReference ref = page.findViewReference("org.jcryptool.visual.sigVerification.view"); //$NON-NLS-1$
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(ref);
-                    page.closePerspective(null, false, true);
-                } catch (Exception ex) {
-                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                if (step > 0 ){
+                	step= step-1;
                 }
+                reset(step);
             }
-        });*/       
+        });       
     }
    
     
@@ -630,11 +626,13 @@ public class SigVerComposite extends Composite  {
         // step (keep the chosen algorithms)
         switch (step) {
         case 0:
-            btnHash.setEnabled(false);
+            btnHash.setEnabled(false);           
         case 1:
             btnDecrypt.setEnabled(false);
+            hashInst = null;
         case 2:
             btnResult.setEnabled(false);
+            sigVerification = null; 
             break;
         default:
             break;
