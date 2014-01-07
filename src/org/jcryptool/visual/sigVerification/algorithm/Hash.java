@@ -41,23 +41,47 @@ public class Hash {
         
         return md;
     }
-    
+        
+    /**
+     * Sets the hash (byte array)
+     * 
+     * @param hash (byte array)
+     */
     public void setHash(byte[] hash){
     	this.hash = hash;
     }
     
+    /**
+     * Sets the hashHex (String) by calling the function bytesToHex(bytes[] bytes).
+     * 
+     */
     public void setHashHex(){
     	this.hashHex = bytesToHex(this.hash);
     }
     
+    /**
+     * Sets the hashHex (String) by calling the function bytesToHex(bytes[] bytes).
+     * 
+     * @param hash A byte array
+     */
     public void setHashHex(byte[] hash){
     	this.hashHex = bytesToHex(hash);
     }
-    
+        
+    /**
+     * Returns the byte array hash.
+     * 
+     * @return hash A byte array.
+     */
     public byte[] getHash(){
     	return hash;
     }
     
+    /**
+     * Returns the string hashHex.
+     * 
+     * @return hashHex A string.
+     */
     public String getHashHex(){
     	return hashHex;
     }

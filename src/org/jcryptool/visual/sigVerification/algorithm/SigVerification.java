@@ -21,19 +21,22 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
 /**
- * Verifies a signature for the input with the selected signature methods.
+ * Verifies the signature of the input with the selected signature method.
  * 
  * @author Wilfing
  */
 public class SigVerification {
-	/**
-     * Contains the result of the comparison between the hashes.
-     */
-	boolean result;
+	boolean result;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
     private PublicKey publicKey;
     private PrivateKey privateKey;
 	
+	/**
+	 * Chooses the correct function to verify the signature for the input with the selected signature method.
+	 * 
+	 * @param input A instance of Input
+	 * @param hash A intance of Hash
+	 */
 	public void verifySignature(Input input, Hash hash){
     	if (input.signaturemethod == "RSA"){
     		if (this.privateKey != null){
@@ -61,6 +64,11 @@ public class SigVerification {
     	}
     }
 	
+	/**
+	 * Sets the RSA keys.
+	 * 
+	 * @param input A instance of Input (contains the signature size)
+	 */
 	public void setKeyRSA(Input input){
 		try{
 			// KeyPair erzeugen
@@ -89,6 +97,12 @@ public class SigVerification {
     	verifyInput(hash.hash, hashNew.hash);
     }*/
     
+    /**
+     * Verifies a RSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * 
+     * @param input A instance of Input (contains the signature)
+     * @param hash A instance of Hash (contains the hash)
+     */
     public void verifyRSA(Input input, Hash hash){
     	try{
     		Signature signature = Signature.getInstance("RSA");
@@ -104,6 +118,11 @@ public class SigVerification {
     	}
     }
     
+	/**
+	 * Sets the ECDSA keys.
+	 * 
+	 * @param input A instance of Input.
+	 */
     public void setKeyECDSA(Input input){
     	try{
     	KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
@@ -115,6 +134,12 @@ public class SigVerification {
     	}
     }
     
+    /**
+     * Verifies a ECDSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * 
+     * @param input A instance of Input (contains the signature)
+     * @param hash A instance of Hash (contains the hash)
+     */
     public void verifyECDSA(Input input, Hash hash){
     	try{   		
     		Signature sig = Signature.getInstance(input.signaturemethod);
@@ -126,6 +151,11 @@ public class SigVerification {
     	}
     }
     
+	/**
+	 * Sets the DSA keys.
+	 * 
+	 * @param input A instance of Input.
+	 */
     public void setKeyDSA(Input input){
     	try {
     		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");		
@@ -138,6 +168,12 @@ public class SigVerification {
 		}
     }
     
+    /**
+     * Verifies a DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * 
+     * input A instance of Input (contains the signature)
+     * @param hash A instance of Hash (contains the hash)
+     */
     public void verifyDSA(Input input, Hash hash){
     	try{    		    	
     		Signature sig = Signature.getInstance(input.signaturemethod);
@@ -149,10 +185,15 @@ public class SigVerification {
     	}
     }
     
+    /**
+     * Verifies a DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * 
+     * @param input A instance of Input (contains the plaintext and the signature)
+     */
     public void verifyDSA(Input input){
         //Signature-Objekt erstellen
         try {
-        	Signature signature = Signature.getInstance("SHA1withDSA");
+        	Signature signature = Signature.getInstance("SHA1withDSA"); // zum Testen ob es mit SHA1 funktioniert
             signature.initVerify(this.publicKey);
             //Eingabedatei lesen
 //            FileInputStream in = new FileInputStream(new String(input.plain));
@@ -185,6 +226,11 @@ public class SigVerification {
     	this.result = java.util.Arrays.equals(hash, hashNew);               
     }
     
+    /**
+     * Converts the imported key (byte array) in a DSA public key.
+     * 
+     * @param pubKeyBytes A byte array
+     */
     public void DSAPublicKeyFile(byte[] pubKeyBytes){
         try{
         	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
@@ -195,14 +241,29 @@ public class SigVerification {
         }
     }
 
+    /**
+     * Returns the result (boolean).
+     * 
+     * @return result A boolean
+     */
     public boolean getResult(){
     	return this.result;
     }
     
+    /**
+     * Sets the private key.
+     * 
+     * @param privKey A PrivateKey
+     */
     public void setPrivateKey(PrivateKey privKey){
     	this.privateKey = privKey;
     }
 
+    /**
+     * Sets the public Key.
+     * 
+     * @param pubKey PublicKey
+     */
     public void setPublicKey(PublicKey pubKey){
     	this.publicKey = pubKey;
     }

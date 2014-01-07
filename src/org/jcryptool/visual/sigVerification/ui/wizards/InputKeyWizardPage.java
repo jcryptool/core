@@ -37,9 +37,9 @@ public class InputKeyWizardPage extends WizardPage {
 
     public void createControl(Composite parent) {
         composite = new InputKeyComposite(parent, NONE);
-        composite.getRdoFromFile().setBounds(10, 10, 207, 18);
-        composite.getRdoFromEditor().setBounds(10, 34, 207, 18);
-        composite.getRdoFromKeyStore().setBounds(10, 58, 255, 18);
+        composite.getRdoFromFile().setBounds(10, 10, 430, 18);
+        composite.getRdoFromEditor().setBounds(10, 34, 430, 18);
+        composite.getRdoFromKeyStore().setBounds(10, 58, 430, 18);
         setControl(composite);
                 
     }

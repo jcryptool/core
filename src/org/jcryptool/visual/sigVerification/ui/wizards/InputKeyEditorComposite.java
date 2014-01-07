@@ -27,9 +27,9 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 
 /**
- * Contains all the GUI elements for the editor input page.
+ * Contains all the GUI elements for the key editor input page.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class InputKeyEditorComposite extends Composite {
     // Limit for the length of the text that might be entered into the plaintext field

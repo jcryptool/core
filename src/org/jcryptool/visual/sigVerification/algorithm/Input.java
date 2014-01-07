@@ -8,11 +8,11 @@ import java.security.PublicKey;
 /**
  * This class is used to share data between classes.
  * 
- * @author Wilfing/Grebe
+ * @author Wilfing
  */
 public class Input {
     /**
-     * Contains the input data
+     * Contains the input data (signature + plaintext) (byte array)
      */
     public byte[] data;
 
@@ -147,7 +147,7 @@ public class Input {
     
     
     /**
-     * Takes the input data and devides it into the signature and the plaintext.
+     * Takes the input data and divides it into the signature and the plaintext.
      * 
      * @return void
      */

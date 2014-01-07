@@ -15,9 +15,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * This class contains the GUI elements for first page of the file input wizard.
+ * This class contains the GUI elements for first page of the key from file input wizard.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class InputKeyComposite extends Composite {
     private Button rdoFromFile;
@@ -28,16 +28,16 @@ public class InputKeyComposite extends Composite {
         super(parent, style);
 
         rdoFromFile = new Button(this, SWT.RADIO);
-        rdoFromFile.setBounds(10, 10, 295, 18);
+        rdoFromFile.setBounds(10, 10, 430, 18);
         rdoFromFile.setText(Messages.InputKeyWizard_rdoFromFile);
 
         rdoFromEditor = new Button(this, SWT.RADIO);
-        rdoFromEditor.setBounds(10, 34, 295, 18);
+        rdoFromEditor.setBounds(10, 34, 333, 18);
         rdoFromEditor.setText(Messages.InputKeyWizard_rdoFromEditor);
         parent.setSize(600, 400);
         
         rdoFromKeyStore = new Button(this, SWT.RADIO);
-        rdoFromKeyStore.setBounds(10, 58, 295, 18);
+        rdoFromKeyStore.setBounds(10, 58, 430, 18);
         rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
 
