@@ -189,12 +189,12 @@ public class SigVerComposite extends Composite  {
                                 public void widgetSelected(SelectionEvent e) {
                                 }
                             });
-                            btnHash.setBounds(386, 98, 190, 90);
+                            btnHash.setBounds(386, 106, 190, 90);
                             btnHash.setEnabled(false);
                             btnHash.setText(Messages.SigVerComposite_btnHash);
                             {
                                 lblCheckSig = new Label(canvas1, SWT.NONE);
-                                lblCheckSig.setLocation(802, 46);
+                                lblCheckSig.setLocation(805, 65);
                                 lblCheckSig.setSize(102, 20);
                                 lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
                             }
@@ -221,7 +221,7 @@ public class SigVerComposite extends Composite  {
                             
                             btnDecrypt = new Button(canvas1, SWT.NONE);
                             btnDecrypt.setEnabled(false);
-                            btnDecrypt.setLocation(386, 240);
+                            btnDecrypt.setLocation(386, 214);
                             btnDecrypt.setSize(190, 90);
                             btnDecrypt.addSelectionListener(new SelectionAdapter() {
                                 @Override
@@ -234,6 +234,21 @@ public class SigVerComposite extends Composite  {
                                 lblProgress.setBounds(825, 412, 90, 30);
                                 lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
                             }
+                            
+                                    {
+                                        Composite littleBorder = new Composite(canvas1, SWT.BORDER);
+                                        littleBorder.setBounds(793, 72, 218, 253);
+                                        
+                                        btnResult = new Button(littleBorder, SWT.NONE);
+                                        btnResult.setEnabled(true);					// wieder auf false setzten
+                                        btnResult.setBounds(13, 189, 190, 50);
+                                        btnResult.setText(Messages.SigVerComposite_btnResult);
+                                        {
+                                            lblDocPic = new Label(littleBorder, SWT.ICON);
+                                            lblDocPic.setBounds(29, 10, 163, 159);
+                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
+                                        }
+                                    }
                             {
                                 lblPubKey = new Label(border, SWT.NONE);
                                 lblPubKey.setLocation(765, 592);
@@ -241,59 +256,10 @@ public class SigVerComposite extends Composite  {
                                 lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
                             }
                             
-//                            {
-//                                lblKeyPic = new Label(border, SWT.ICON);
-//                                lblKeyPic.setLocation(435, 333);
-//                                lblKeyPic.setSize(100, 118);
-//                                lblKeyPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/key.png"));
-//                            }
-                            
                             tempVert = new Label(border, SWT.NONE);
-                            tempVert.setLocation(455, 307);
+                            tempVert.setLocation(465, 307);
                             tempVert.setSize(55, 52);
                             tempVert.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
-                                            {
-                                                label = new Label(border, SWT.NONE);
-                                                label.setLocation(168, 78);
-                                                label.setSize(229, 130);
-                                                label.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect2985.png"));
-                                            }
-                                            {
-                                                lblNewLabel_1 = new Label(border, SWT.NONE);
-                                                lblNewLabel_1.setLocation(168, 229);
-                                                lblNewLabel_1.setSize(229, 130);
-                                                lblNewLabel_1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rect.png"));
- 
-                                            }
-                                            {
-                                                lblNewLabel_2 = new Label(border, SWT.NONE);
-                                                lblNewLabel_2.setLocation(396, 98);
-                                                lblNewLabel_2.setSize(383, 110);
-                                                lblNewLabel_2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path.png"));
-                                            }
-                                                    {
-                                                        lblNewLabel_3 = new Label(border, SWT.NONE);
-                                                        lblNewLabel_3.setLocation(390, 219);
-                                                        lblNewLabel_3.setSize(389, 100);
-                                                        lblNewLabel_3.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/path3019.png"));
-                                                        
-                                                    }
-                                            
-                                                    {
-                                                        Composite littleBorder = new Composite(border, SWT.BORDER);
-                                                        littleBorder.setLocation(803, 66);
-                                                        littleBorder.setSize(218, 253);
-                                                        
-                                                        btnResult = new Button(littleBorder, SWT.NONE);
-                                                        btnResult.setEnabled(true);					// wieder auf false setzten
-                                                        btnResult.setBounds(13, 189, 190, 50);
-                                                        btnResult.setText(Messages.SigVerComposite_btnResult);
-                                                        {
-                                                            lblDocPic = new Label(littleBorder, SWT.ICON);
-                                                            lblDocPic.setBounds(35, 10, 163, 159);
-                                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
-                                                        }
-                                                    }
                                                     
                                                     tabFolder = new TabFolder(border, SWT.NONE);
                                                     tabFolder.setBounds(10, 430, 1011, 131);
@@ -352,9 +318,6 @@ public class SigVerComposite extends Composite  {
                                 Rectangle clientArea;
                                 int width;
                                 int height;
-                                // Coordinates of the document icon
-                                int picx = 30;
-                                int picy = 55;
                                 GC gc;
 
                                 gc = e.gc;
@@ -373,38 +336,17 @@ public class SigVerComposite extends Composite  {
                                 id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
                                 imD = id.getImageData();
                                 img = new Image(Display.getCurrent(), imD);
-                                // Draw second document icon
                                 gc.drawImage(img, 69, 136);
-                                gc.drawImage(img, 163, 159);
+                      
 
-//                                gc.setBackground(lightgrey);
-//                                // Color the all the areas in lightgrey
-//                                // Draw shaft
-//                                gc.fillRectangle(55, 60, 20, height);
-//                                gc.fillRectangle(0, height - 30, width - 220, 20);
-//                                gc.fillRectangle(270, 300, 20, 80);
-//                                gc.fillPolygon(new int[] { width - 220, height - 40, width - 220, height, width - 200, height - 20 });
-//                                gc.setBackground(darkgrey);
-//                                gc.drawImage(img, picx, picy);
-//                                // Color the specified areas in darkgrey
-//                                if (btnHash.getEnabled() == false) {
-//                                    // color nothing
-//                                } else if (btnDecrypt.getEnabled() == false) { // Step 2
-//                                    // draw the first part of the arrow (from Document to btnHash)
-//                                    gc.fillRectangle(55, 60, 20, height / 2 - 30);
-//                                    gc.drawImage(img, picx, picy);
-//                                } else if (btnResult.getEnabled() == false) { // Step 3
-//                                    // draw another part of the arrow (from btnHash to btnSignature)
-//                                    gc.fillRectangle(55, 60, 20, height);
-//                                    gc.fillRectangle(0, height - 30, width / 2, 20);
-//                                    gc.drawImage(img, picx, picy);
-//                                } else { // Step 4
-//                                    gc.fillRectangle(55, 60, 20, height);
-//                                    gc.fillRectangle(0, height - 30, width - 220, 20);
-//                                    gc.fillRectangle(270, 300, 20, 80);
-//                                    gc.fillPolygon(new int[] { width - 220, height - 40, width - 220, height, width - 200, height - 20 });
-//                                    gc.drawImage(img, picx, picy);
-//                                }
+                                gc.setBackground(lightgrey);
+                                // Color the all the areas in lightgrey
+                                // Draw shaft
+                                gc.fillRectangle(220, height - 315, width - 480, 30);
+                                gc.fillPolygon(new int[] { width - 265, height - 270, width - 265, height-330, width - 240, height - 300 });
+                                gc.fillRectangle(220, height - 405, width - 480, 30);
+                                gc.fillPolygon(new int[] { width - 265, height - 360, width - 265, height-420, width - 240, height - 390 });
+                                gc.setBackground(darkgrey);
 
                                 gc.dispose();
 
