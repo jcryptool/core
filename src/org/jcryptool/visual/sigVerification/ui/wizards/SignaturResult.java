@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
@@ -183,11 +184,11 @@ public class SignaturResult extends Shell {
       btnNewButton.setBounds(389, 633, 95, 28);
       btnNewButton.setText(Messages.SignaturResult_btnClose);
 
-      Label lblTextopeneditor = new Label(composite, SWT.WRAP | SWT.CENTER);
-      lblTextopeneditor.setAlignment(SWT.LEFT);
-      lblTextopeneditor.setBounds(2, 575, 475, 41);
-      lblTextopeneditor.setText(Messages.SignaturResult_editorDescripton);
-      lblTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
+      Text txtTextopeneditor = new Text(composite, SWT.WRAP);
+      txtTextopeneditor.setEditable(false);
+      txtTextopeneditor.setBounds(2, 575, 475, 41);
+      txtTextopeneditor.setText(Messages.SignaturResult_editorDescripton);
+      txtTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
       
       Group group = new Group(composite, SWT.NONE);
       group.setLayout(null);

@@ -53,7 +53,6 @@ public class SigVerComposite extends Composite  {
     private Label lblTitle;
     private Label lblCheckSig;
     private Label lblPubKey;
-    private Label tempVert;
     private Label lblDocPic;
     private Text lblDescriptionStep1;
     private Text lblDescriptionStep2;
@@ -234,7 +233,7 @@ public class SigVerComposite extends Composite  {
                                         littleBorder.setBounds(793, 72, 218, 253);
                                         
                                         btnResult = new Button(littleBorder, SWT.NONE);
-                                        btnResult.setEnabled(true);					// wieder auf false setzten
+                                        btnResult.setEnabled(false);					
                                         btnResult.setBounds(13, 189, 190, 50);
                                         btnResult.setText(Messages.SigVerComposite_btnResult);
                                         {
@@ -249,11 +248,6 @@ public class SigVerComposite extends Composite  {
                                 lblPubKey.setSize(70, 20);
                                 lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
                             }
-                            
-                            tempVert = new Label(border, SWT.NONE);
-                            tempVert.setLocation(465, 307);
-                            tempVert.setSize(55, 52);
-                            tempVert.setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
                                                     
                                                     tabFolder = new TabFolder(border, SWT.NONE);
                                                     tabFolder.setBounds(10, 430, 1011, 131);
@@ -504,7 +498,7 @@ public class SigVerComposite extends Composite  {
                     	sigVerification.hashNew.setHashHex();
                     }
                     
-                    // Shows green check mark or red fail sign if compairism is correct or false
+                    // Shows green check mark or red fail sign if comparison is correct or false
                     //if(Input.result){
                         //show green check mark
                     //}else{
