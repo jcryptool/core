@@ -485,10 +485,10 @@ public class SigVerComposite extends Composite  {
                     }
                     
                     // Shows green check mark or red fail sign if comparison is correct or false
-//                    if(Input.result){
+//                    if(input.result){
 //                        GC gc;
 //                        
-//                         ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/grünerHacken.png"); //$NON-NLS-1$
+//                         ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
 //                         ImageData imD1 = id1.getImageData();
 //                         Image img1 = new Image(Display.getCurrent(), imD1);
 //                         gc.drawImage(img1, 820, 225);
