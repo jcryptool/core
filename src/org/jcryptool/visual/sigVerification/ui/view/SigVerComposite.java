@@ -49,22 +49,16 @@ import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
  * 
  */
 public class SigVerComposite extends Composite  {
-    private Text lblGeneralDescription;
     private Text lblHeader;
     private Label lblTitle;
     private Label lblCheckSig;
     private Label lblPubKey;
-    private Label lblKeyPic;
     private Label tempVert;
     private Label lblDocPic;
     private Text lblDescriptionStep1;
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
     private Text lblDescriptionStep4;
-    private Label label;                // toDo Umbenennen
-    private Label lblNewLabel_1;        // toDo Umbennenen
-    private Label lblNewLabel_2;        // toDo Umbennenen
-    private Label lblNewLabel_3;        // toDo Umbennenen
     private Button btnHash;
     private Button btnAddInput;
     private Button btnReset;
@@ -346,6 +340,7 @@ public class SigVerComposite extends Composite  {
                                 gc.fillPolygon(new int[] { width - 265, height - 270, width - 265, height-330, width - 240, height - 300 });
                                 gc.fillRectangle(220, height - 405, width - 480, 30);
                                 gc.fillPolygon(new int[] { width - 265, height - 360, width - 265, height-420, width - 240, height - 390 });
+                                gc.fillRectangle(465, 300, 35, 30);
                                 gc.setBackground(darkgrey);
 
                                 gc.dispose();
@@ -493,7 +488,7 @@ public class SigVerComposite extends Composite  {
                         }
                     };
                     if (dialog.open() == Window.OK) {                   
-                        step = 3;
+                        // step = 3;
                     }
                     System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
@@ -568,13 +563,21 @@ public class SigVerComposite extends Composite  {
         // step (keep the chosen algorithms)
         switch (step) {
         case 0:
-            btnHash.setEnabled(false);           
+            btnHash.setEnabled(false);
+            tabFolder.setSelection(0);
+            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
+            break;
         case 1:
             btnDecrypt.setEnabled(false);
             hashInst = null;
+            tabFolder.setSelection(1);
+            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
+            break;
         case 2:
             btnResult.setEnabled(false);
-            sigVerification = null; 
+            sigVerification = null;
+            tabFolder.setSelection(2);
+            lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
             break;
         default:
             break;
