@@ -53,7 +53,6 @@ public class SigVerComposite extends Composite  {
     private Label lblTitle;
     private Label lblCheckSig;
     private Label lblPubKey;
-    private Label lblDocPic;
     private Text lblDescriptionStep1;
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
@@ -166,13 +165,6 @@ public class SigVerComposite extends Composite  {
                             Composite border = new Composite(this, SWT.BORDER);
                             border.setBounds(10, 130, 1035, 575);
                             
-//                                    {
-//                                        lblDocPic = new Label(border, SWT.ICON);
-//                                        lblDocPic.setLocation(69, 136);
-//                                        lblDocPic.setSize(150, 165);
-//                                        lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
-//                                    }
-                                    
                             canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
                             canvas1.setBounds(10, 10, 1021, 551);
                             
@@ -187,7 +179,7 @@ public class SigVerComposite extends Composite  {
                             btnHash.setText(Messages.SigVerComposite_btnHash);
                             {
                                 lblCheckSig = new Label(canvas1, SWT.NONE);
-                                lblCheckSig.setLocation(805, 65);
+                                lblCheckSig.setLocation(794, 70);
                                 lblCheckSig.setSize(102, 20);
                                 lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
                             }
@@ -229,18 +221,13 @@ public class SigVerComposite extends Composite  {
                             }
                             
                                     {
-                                        Composite littleBorder = new Composite(canvas1, SWT.BORDER);
-                                        littleBorder.setBounds(793, 72, 218, 253);
+                                        Composite littleBorder = new Composite(border, SWT.BORDER);
+                                        littleBorder.setBounds(793, 90, 218, 253);
                                         
                                         btnResult = new Button(littleBorder, SWT.NONE);
                                         btnResult.setEnabled(false);					
                                         btnResult.setBounds(13, 189, 190, 50);
                                         btnResult.setText(Messages.SigVerComposite_btnResult);
-                                        {
-                                            lblDocPic = new Label(littleBorder, SWT.ICON);
-                                            lblDocPic.setBounds(29, 10, 163, 159);
-                                            lblDocPic.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/image3013.png"));
-                                        }
                                     }
                             {
                                 lblPubKey = new Label(border, SWT.NONE);
@@ -325,6 +312,7 @@ public class SigVerComposite extends Composite  {
                                 imD = id.getImageData();
                                 img = new Image(Display.getCurrent(), imD);
                                 gc.drawImage(img, 69, 136);
+                                gc.drawImage(img, 820, 100);
                       
 
                                 gc.setBackground(lightgrey);
@@ -335,9 +323,10 @@ public class SigVerComposite extends Composite  {
                                 gc.fillRectangle(220, height - 405, width - 480, 30);
                                 gc.fillPolygon(new int[] { width - 265, height - 360, width - 265, height-420, width - 240, height - 390 });
                                 gc.fillRectangle(465, 300, 35, 30);
-                                gc.setBackground(darkgrey);
+                                gc.setBackground(darkgrey);    
 
                                 gc.dispose();
+                                
 
                             }                                 
                         });
@@ -499,11 +488,23 @@ public class SigVerComposite extends Composite  {
                     }
                     
                     // Shows green check mark or red fail sign if comparison is correct or false
-                    //if(Input.result){
-                        //show green check mark
-                    //}else{
-                        //show red fail sign
-                    //}
+//                    if(Input.result){
+//                        GC gc;
+//                        
+//                         ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/grünerHacken.png"); //$NON-NLS-1$
+//                         ImageData imD1 = id1.getImageData();
+//                         Image img1 = new Image(Display.getCurrent(), imD1);
+//                         gc.drawImage(img1, 820, 225);
+//                         gc.dispose();
+//                    }else{
+//                          GC gc;
+//                  
+//                          ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
+//                          ImageData imD1 = id1.getImageData();
+//                          Image img1 = new Image(Display.getCurrent(), imD1);
+//                          gc.drawImage(img1, 820, 225);
+//                          gc.dispose();
+//                    }
 
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
