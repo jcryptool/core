@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -62,10 +63,6 @@ public class SigVerComposite extends Composite  {
     private Button btnReset;
     private Button btnDecrypt;
     private Button btnResult;
-    private TabItem tabStep1;
-    private TabItem tabStep2;
-    private TabItem tabStep3;
-    private TabItem tabStep4;
     private Canvas canvas1;
     private TabFolder tabFolder;
     private Text textGeneralDescription;
@@ -239,7 +236,7 @@ public class SigVerComposite extends Composite  {
                                                     tabFolder = new TabFolder(border, SWT.NONE);
                                                     tabFolder.setBounds(10, 430, 1011, 131);
                                                     {
-                                                        tabStep1 = new TabItem(tabFolder, SWT.NONE);
+                                                        TabItem tabStep1 = new TabItem(tabFolder, SWT.NONE);
                                                         tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
                                                         {
                                                             lblDescriptionStep1 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
@@ -251,36 +248,36 @@ public class SigVerComposite extends Composite  {
                                                     }
                                                     
                                                     {
-                                                        tabStep2 = new TabItem(tabFolder, SWT.NONE);
+                                                        TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
                                                         tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
                                                         {
                                                             lblDescriptionStep2 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
                                                             lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
                                                             lblDescriptionStep2.setEditable(false);
                                                             lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
-                                                            tabStep1.setControl(lblDescriptionStep2);
+                                                            tabStep2.setControl(lblDescriptionStep2);
                                                         }
                                                     }
                                                     {
-                                                        tabStep3 = new TabItem(tabFolder, SWT.NONE);
+                                                        TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
                                                         tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
                                                         {
                                                             lblDescriptionStep3 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
                                                             lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
                                                             lblDescriptionStep3.setEditable(false);
                                                             lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
-                                                            tabStep1.setControl(lblDescriptionStep3);
+                                                            tabStep3.setControl(lblDescriptionStep3);
                                                         }
                                                     }
                                                     {
-                                                        tabStep4 = new TabItem(tabFolder, SWT.NONE);
+                                                        TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
                                                         tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
                                                         {
                                                             lblDescriptionStep4 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
                                                             lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
                                                             lblDescriptionStep4.setEditable(false);
                                                             lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
-                                                            tabStep1.setControl(lblDescriptionStep4);
+                                                            tabStep4.setControl(lblDescriptionStep4);
                                                         }
                                                     }
                                                     
