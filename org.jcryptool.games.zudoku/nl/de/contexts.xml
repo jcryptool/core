@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="view" title="Sudoku Solver">
+		<topic href="$nl$/help/content/index.html" label="Sudoku Solver"/>
+	</context>
+</contexts>

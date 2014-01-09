@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.he;singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.he.HEPlugin
 Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.5",
  org.eclipse.ui;bundle-version="3.7.0",

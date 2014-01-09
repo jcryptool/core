@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Zudo-Ku
+Bundle-SymbolicName: org.jcryptool.games.zudoku;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jcryptool.games.zudoku.ZudokuPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help.ui;bundle-version="3.5.100"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
