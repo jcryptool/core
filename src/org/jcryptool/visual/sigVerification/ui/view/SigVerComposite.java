@@ -149,197 +149,214 @@ public class SigVerComposite extends Composite  {
         
 
         
-        {
-            textGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-            textGeneralDescription.setBounds(10, 36, 1035, 77);
-            textGeneralDescription.setText(Messages.SigVerComposite_description);
-            textGeneralDescription.setEditable(false);
-            textGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
-        }
-        
-                        lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-                        lblHeader.setBounds(10, 10, 1035, 35);
-                        lblHeader.setEditable(false);
-                        lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
-                        lblHeader.setText(Messages.SigVerComposite_lblHeader);
-                        lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                        
-                        lblTitle = new Label(this, SWT.NONE);
-                        lblTitle.setLocation(20, 119);
-                        lblTitle.setSize(120, 20);
-                        lblTitle.setText(Messages.SigVerComposite_lblTitle);
-                        {
-                            Composite border = new Composite(this, SWT.BORDER);
-                            border.setBounds(10, 130, 1035, 575);
-                            
-                            canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
-                            canvas1.setBounds(10, 10, 1021, 551);
-                            
-                            btnHash = new Button(canvas1, SWT.NONE);
-                            btnHash.addSelectionListener(new SelectionAdapter() {
-                                @Override
-                                public void widgetSelected(SelectionEvent e) {
-                                }
-                            });
-                            btnHash.setBounds(386, 106, 190, 90);
-                            btnHash.setEnabled(false);
-                            btnHash.setText(Messages.SigVerComposite_btnHash);
-                            {
-                                lblCheckSig = new Label(canvas1, SWT.NONE);
-                                lblCheckSig.setLocation(794, 70);
-                                lblCheckSig.setSize(102, 20);
-                                lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
-                            }
-                            
-                            btnAddInput = new Button(canvas1, SWT.NONE);
-                            btnAddInput.addSelectionListener(new SelectionAdapter() {
-                                @Override
-                                public void widgetSelected(SelectionEvent e) {
-                                }
-                            });
-                            btnAddInput.setLocation(38, 54);
-                            btnAddInput.setSize(200, 60);
-                            btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
-                            
-                            btnReset = new Button(canvas1, SWT.NONE);
-                            btnReset.setLocation(921, 404);
-                            btnReset.setSize(90, 30);
-                            btnReset.addSelectionListener(new SelectionAdapter() {
-                                @Override
-                                public void widgetSelected(SelectionEvent e) {
-                                }
-                            });
-                            btnReset.setText(Messages.SigVerComposite_btnReset);
-                            
-                            btnDecrypt = new Button(canvas1, SWT.NONE);
-                            btnDecrypt.setEnabled(false);
-                            btnDecrypt.setLocation(386, 214);
-                            btnDecrypt.setSize(190, 90);
-                            btnDecrypt.addSelectionListener(new SelectionAdapter() {
-                                @Override
-                                public void widgetSelected(SelectionEvent e) {
-                                }
-                            });
-                            btnDecrypt.setText(Messages.SigVerComposite_btnDecrypt);
-                            {
-                                lblProgress = new Label(canvas1, SWT.NONE);
-                                lblProgress.setBounds(825, 412, 90, 30);
-                                lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
-                            }
-                            
-                                    {
-                                        Composite littleBorder = new Composite(border, SWT.BORDER);
-                                        littleBorder.setBounds(793, 90, 218, 253);
-                                        
-                                        btnResult = new Button(littleBorder, SWT.NONE);
-                                        btnResult.setEnabled(false);					
-                                        btnResult.setBounds(13, 189, 190, 50);
-                                        btnResult.setText(Messages.SigVerComposite_btnResult);
-                                    }
-                            {
-                                lblPubKey = new Label(border, SWT.NONE);
-                                lblPubKey.setLocation(765, 592);
-                                lblPubKey.setSize(70, 20);
-                                lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
-                            }
-                                                    
-                                                    tabFolder = new TabFolder(border, SWT.NONE);
-                                                    tabFolder.setBounds(10, 430, 1011, 131);
-                                                    {
-                                                        TabItem tabStep1 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
-                                                        {
-                                                            lblDescriptionStep1 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                                                            lblDescriptionStep1.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                                                            lblDescriptionStep1.setEditable(false);
-                                                            lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
-                                                            tabStep1.setControl(lblDescriptionStep1);
-                                                        }
-                                                    }
-                                                    
-                                                    {
-                                                        TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
-                                                        {
-                                                            lblDescriptionStep2 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                                                            lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                                                            lblDescriptionStep2.setEditable(false);
-                                                            lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
-                                                            tabStep2.setControl(lblDescriptionStep2);
-                                                        }
-                                                    }
-                                                    {
-                                                        TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
-                                                        {
-                                                            lblDescriptionStep3 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                                                            lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                                                            lblDescriptionStep3.setEditable(false);
-                                                            lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
-                                                            tabStep3.setControl(lblDescriptionStep3);
-                                                        }
-                                                    }
-                                                    {
-                                                        TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
-                                                        tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
-                                                        {
-                                                            lblDescriptionStep4 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                                                            lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                                                            lblDescriptionStep4.setEditable(false);
-                                                            lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
-                                                            tabStep4.setControl(lblDescriptionStep4);
-                                                        }
-                                                    }
-                                                    
-                        }         
-                        canvas1.addPaintListener(new PaintListener() {
-                            public void paintControl (PaintEvent e) {
-                                // Set the used colors
-                                Color lightgrey = new Color(Display.getCurrent(), 192, 192, 192);
-                                Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
-                                Rectangle clientArea;
-                                int width;
-                                int height;
-                                GC gc;
+		{
+			textGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI
+					| SWT.WRAP);
+			textGeneralDescription.setBounds(10, 36, 1035, 77);
+			textGeneralDescription
+					.setText(Messages.SigVerComposite_description);
+			textGeneralDescription.setEditable(false);
+			textGeneralDescription.setBackground(SWTResourceManager.getColor(
+					255, 255, 255));
+		}
 
-                                gc = e.gc;
-                                // Get the size of the canvas area
-                                clientArea = canvas1.getClientArea();
-                                width = clientArea.width;
-                                height = clientArea.height;
+		lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		lblHeader.setBounds(10, 10, 1035, 35);
+		lblHeader.setEditable(false);
+		lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+		lblHeader.setText(Messages.SigVerComposite_lblHeader);
+		lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
 
-                                // Insert the image of the key
-                                ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
-                                ImageData imD = id.getImageData();
-                                Image img = new Image(Display.getCurrent(), imD);
-                                gc.drawImage(img, 435, 333);
+		lblTitle = new Label(this, SWT.NONE);
+		lblTitle.setLocation(20, 119);
+		lblTitle.setSize(120, 20);
+		lblTitle.setText(Messages.SigVerComposite_lblTitle);
+		{
+			Composite border = new Composite(this, SWT.BORDER);
+			border.setBounds(10, 130, 1035, 575);
 
-                                // Insert the image of the document
-                                id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
-                                imD = id.getImageData();
-                                img = new Image(Display.getCurrent(), imD);
-                                gc.drawImage(img, 69, 136);
-                                gc.drawImage(img, 820, 100);
-                      
+			canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
+			canvas1.setBounds(10, 10, 1021, 551);
 
-                                gc.setBackground(lightgrey);
-                                // Color the all the areas in lightgrey
-                                // Draw shaft
-                                gc.fillRectangle(220, height - 315, width - 480, 30);
-                                gc.fillPolygon(new int[] { width - 265, height - 270, width - 265, height-330, width - 240, height - 300 });
-                                gc.fillRectangle(220, height - 405, width - 480, 30);
-                                gc.fillPolygon(new int[] { width - 265, height - 360, width - 265, height-420, width - 240, height - 390 });
-                                gc.fillRectangle(465, 300, 35, 30);
-                                gc.setBackground(darkgrey);    
+			btnHash = new Button(canvas1, SWT.NONE);
+			btnHash.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+				}
+			});
+			btnHash.setBounds(386, 106, 190, 90);
+			btnHash.setEnabled(false);
+			btnHash.setText(Messages.SigVerComposite_btnHash);
+			{
+				lblCheckSig = new Label(canvas1, SWT.NONE);
+				lblCheckSig.setLocation(794, 70);
+				lblCheckSig.setSize(102, 20);
+				lblCheckSig.setText(Messages.SigVerComposite_btnSignature);
+			}
 
-                                gc.dispose();
-                                
+			btnAddInput = new Button(canvas1, SWT.NONE);
+			btnAddInput.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+				}
+			});
+			btnAddInput.setLocation(38, 54);
+			btnAddInput.setSize(200, 60);
+			btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
 
-                            }                                 
-                        });
-                      
+			btnReset = new Button(canvas1, SWT.NONE);
+			btnReset.setLocation(921, 404);
+			btnReset.setSize(90, 30);
+			btnReset.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+				}
+			});
+			btnReset.setText(Messages.SigVerComposite_btnReset);
 
-    }
+			btnDecrypt = new Button(canvas1, SWT.NONE);
+			btnDecrypt.setEnabled(false);
+			btnDecrypt.setLocation(386, 214);
+			btnDecrypt.setSize(190, 90);
+			btnDecrypt.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+				}
+			});
+			btnDecrypt.setText(Messages.SigVerComposite_btnDecrypt);
+			{
+				lblProgress = new Label(canvas1, SWT.NONE);
+				lblProgress.setBounds(825, 412, 90, 30);
+				lblProgress.setText(String.format(
+						Messages.SigVerComposite_lblProgress, 1));
+			}
+
+			{
+				Composite littleBorder = new Composite(border, SWT.BORDER);
+				littleBorder.setBounds(793, 90, 218, 253);
+
+				btnResult = new Button(littleBorder, SWT.NONE);
+				btnResult.setEnabled(false);
+				btnResult.setBounds(13, 189, 190, 50);
+				btnResult.setText(Messages.SigVerComposite_btnResult);
+			}
+			{
+				lblPubKey = new Label(border, SWT.NONE);
+				lblPubKey.setLocation(765, 592);
+				lblPubKey.setSize(70, 20);
+				lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
+			}
+
+			tabFolder = new TabFolder(border, SWT.NONE);
+			tabFolder.setBounds(10, 430, 1011, 131);
+			{
+				TabItem tabStep1 = new TabItem(tabFolder, SWT.NONE);
+				tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+				{
+					lblDescriptionStep1 = new Text(tabFolder, SWT.MULTI
+							| SWT.WRAP | SWT.READ_ONLY);
+					lblDescriptionStep1.setBackground(SWTResourceManager
+							.getColor(255, 255, 255));
+					lblDescriptionStep1.setEditable(false);
+					lblDescriptionStep1
+							.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
+					tabStep1.setControl(lblDescriptionStep1);
+				}
+			}
+
+			{
+				TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
+				tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+				{
+					lblDescriptionStep2 = new Text(tabFolder, SWT.MULTI
+							| SWT.WRAP | SWT.READ_ONLY);
+					lblDescriptionStep2.setBackground(SWTResourceManager
+							.getColor(255, 255, 255));
+					lblDescriptionStep2.setEditable(false);
+					lblDescriptionStep2
+							.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
+					tabStep2.setControl(lblDescriptionStep2);
+				}
+			}
+			{
+				TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
+				tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+				{
+					lblDescriptionStep3 = new Text(tabFolder, SWT.MULTI
+							| SWT.WRAP | SWT.READ_ONLY);
+					lblDescriptionStep3.setBackground(SWTResourceManager
+							.getColor(255, 255, 255));
+					lblDescriptionStep3.setEditable(false);
+					lblDescriptionStep3
+							.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
+					tabStep3.setControl(lblDescriptionStep3);
+				}
+			}
+			{
+				TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
+				tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+				{
+					lblDescriptionStep4 = new Text(tabFolder, SWT.MULTI
+							| SWT.WRAP | SWT.READ_ONLY);
+					lblDescriptionStep4.setBackground(SWTResourceManager
+							.getColor(255, 255, 255));
+					lblDescriptionStep4.setEditable(false);
+					lblDescriptionStep4
+							.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
+					tabStep4.setControl(lblDescriptionStep4);
+				}
+			}
+
+		}         
+		canvas1.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				// Set the used colors
+				Color lightgrey = new Color(Display.getCurrent(), 192, 192, 192);
+				Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
+				Rectangle clientArea;
+				int width;
+				int height;
+				GC gc;
+
+				gc = e.gc;
+				// Get the size of the canvas area
+				clientArea = canvas1.getClientArea();
+				width = clientArea.width;
+				height = clientArea.height;
+
+				// Insert the image of the key
+				ImageDescriptor id = SigVerificationPlugin
+						.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
+				ImageData imD = id.getImageData();
+				Image img = new Image(Display.getCurrent(), imD);
+				gc.drawImage(img, 435, 333);
+
+				// Insert the image of the document
+				id = SigVerificationPlugin
+						.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
+				imD = id.getImageData();
+				img = new Image(Display.getCurrent(), imD);
+				gc.drawImage(img, 69, 136);
+				gc.drawImage(img, 820, 100);
+
+				gc.setBackground(lightgrey);
+				// Color the all the areas in lightgrey
+				// Draw shaft
+				gc.fillRectangle(220, height - 315, width - 480, 30);
+				gc.fillPolygon(new int[] { width - 265, height - 270,
+						width - 265, height - 330, width - 240, height - 300 });
+				gc.fillRectangle(220, height - 405, width - 480, 30);
+				gc.fillPolygon(new int[] { width - 265, height - 360,
+						width - 265, height - 420, width - 240, height - 390 });
+				gc.fillRectangle(465, 300, 35, 30);
+				gc.setBackground(darkgrey);
+
+				gc.dispose();
+
+			}
+		});
+
+	}
     
     private void createActions() {
         // Create the actions

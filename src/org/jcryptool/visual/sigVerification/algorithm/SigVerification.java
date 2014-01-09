@@ -1,20 +1,14 @@
 
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.io.FileInputStream;
 import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
-import java.security.interfaces.DSAPublicKey;
 import java.security.spec.X509EncodedKeySpec;
-
-import javax.crypto.Cipher;
-import javax.security.cert.Certificate;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -227,20 +221,36 @@ public class SigVerification {
     }
     
     /**
-     * Converts the imported key (byte array) in a DSA public key.
+     * Selects the right function to convert the input key (RSA, DSA, ECDSA).
+     * 
+     * @param pubKeyBytes
+     * @param input A instance of Input (contains signaturemethod)
+     */
+    public void publicKeyFile(byte[] pubKeyBytes, Input input){
+    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
+    		DSARSAPublicKeyFile(pubKeyBytes, input);
+    	}else{
+    		;//ECDSA noch keine Methode zum Einlesen von ECDSA keys gefunden
+    	}
+    }
+    
+    /**
+     * Converts the imported key (byte array) in a DSA/RSA public key.
      * 
      * @param pubKeyBytes A byte array
+     * @param input A instance of Input
      */
-    public void DSAPublicKeyFile(byte[] pubKeyBytes){
+    public void DSARSAPublicKeyFile(byte[] pubKeyBytes, Input input){
         try{
         	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
-        	KeyFactory keyFactory = KeyFactory.getInstance("DSA");
+        	KeyFactory keyFactory = KeyFactory.getInstance(input.signaturemethod);
         	this.publicKey = keyFactory.generatePublic(pubKeySpec);
         }catch(Exception ex){
         	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
     }
 
+    
     /**
      * Returns the result (boolean).
      * 

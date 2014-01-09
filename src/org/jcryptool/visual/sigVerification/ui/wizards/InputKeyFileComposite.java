@@ -86,10 +86,8 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             }
 
             // Call a method that converts the input file to a byte array and save the returned array in Input.java
-            byte[] pubKey = getBytesFromFile(file);
-            // Byte Array in Typ PublicKey umwandeln.
-            sigVerification.setPublicKey (KeyFactory.getInstance(input.signaturemethod).generatePublic(new X509EncodedKeySpec(pubKey)));
-
+            byte[] pubKey = getBytesFromFile(file);            
+            
             if (pubKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputKeyWizard_WarningTitle);
@@ -99,6 +97,10 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             }
 
             txtPath.setText(file.getAbsolutePath());
+            
+            // Byte Array in Typ PublicKey umwandeln.
+            sigVerification.publicKeyFile(pubKey, input);
+            
             page.setPageComplete(true);
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);

@@ -23,7 +23,7 @@ import org.eclipse.swt.events.SelectionEvent;
 /**
  * This class contains loads the composite for the first page of the input wizard.
  * 
- * @author Wilf
+ * @author Wilfing
  */
 public class InputKeyWizardPage extends WizardPage {
     private InputKeyComposite composite;
