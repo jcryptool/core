@@ -480,19 +480,19 @@ public class SigVerComposite extends Composite  {
                     if (dialog.open() == Window.OK) {                   
                         // step = 3;
                     }
-                    System.out.println(sigVerification.hashNew.getHash());
+                    //System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
                     // Arguments: Signature methods, data to sign, Key
                     //sigVerification.verifySignature(input, hashInst);                        
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.
-                    System.out.println(sigVerification.getResult());
+                    //System.out.println(sigVerification.getResult());
                     
-                    hashInst.setHashHex();
-                    if (sigVerification.hashNew.hash != null){
-                    	sigVerification.hashNew.setHashHex();
-                    }
+//                    hashInst.setHashHex();
+//                    if (sigVerification.hashNew.hash != null){
+//                    	sigVerification.hashNew.setHashHex();
+//                    }
                     
                     // Shows green check mark or red fail sign if comparison is correct or false
 //                    if(input.result){
@@ -527,11 +527,12 @@ public class SigVerComposite extends Composite  {
                     // everything to this step (keep the chosen algorithms)
                     reset(3);
                     // Show the result
+                    
                     Display display = Display.getCurrent();
                     Shell shell = new SignaturResult(display, input.signaturemethod, input, hashInst, sigVerification);
                     shell.open();
-                    // Display it
-                 // run the event loop as long as the window is open
+                    // Display it                   
+                    // run the event loop as long as the window is open
                     while (!shell.isDisposed()) {
                         // read the next OS event queue and transfer it to a SWT event 
                       if (!display.readAndDispatch())
