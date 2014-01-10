@@ -458,12 +458,12 @@ public class SigVerComposite extends Composite  {
                         
                         // Arguments: Hash method, data to hash
                         hashInst.hashInput(hashes[hash], input.plain); // Hash the input  
-                        System.out.println(new String(input.data, 0));
-                        System.out.println(new String(input.plain, 0));
-                        System.out.println(new String(hashInst.getHash(), 0));
+                        System.out.println(new String(input.data));
+                        System.out.println(new String(input.plain));
+                        System.out.println(new String(hashInst.getHash()));
                         hashInst.setHashHex();
                         System.out.println(hashInst.hashHex);
-                        System.out.println(new String(input.signature, 0));
+                        System.out.println(new String(input.signature));
                         System.out.println(input.signaturemethod);
                         System.out.println(input.signatureSize);
                         
