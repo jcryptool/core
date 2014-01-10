@@ -20,7 +20,7 @@ import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 /**
  * This class contains the three pages of the input wizard.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class InputKeyWizard extends Wizard {
     private InputKeyWizardPage page;

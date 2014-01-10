@@ -8,11 +8,19 @@ import java.security.PublicKey;
 import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
+import java.security.cert.Certificate;
 import java.security.spec.X509EncodedKeySpec;
 
+import java.util.Enumeration;
+
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 //import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
+
+import de.flexiprovider.core.dsa.DSAPrivateKey;
+import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
 /**
  * Verifies the signature of the input with the selected signature method.
@@ -20,32 +28,28 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
  * @author Wilfing
  */
 public class SigVerification {
+//	private static final String KEYSTORE = "$JAVA_HOME/lib/security/cacerts";
+//	private static final char[] KSPASS = {'1','2','3','4'};
+	
 	boolean result;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
-    private PublicKey publicKey;
-    private PrivateKey privateKey;
+    private PublicKey publicKey = null;
+    private KeyStoreAlias privateKey = null;
 	
 	/**
 	 * Chooses the correct function to verify the signature for the input with the selected signature method.
 	 * 
 	 * @param input A instance of Input
-	 * @param hash A intance of Hash
+	 * @param hash A instance of Hash
 	 */
 	public void verifySignature(Input input, Hash hash){
-    	if (input.signaturemethod == "RSA"){
+    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
     		if (this.privateKey != null){
-    			verifyRSA(input, hash);
+    			verifySig(input, hash);
     		}else{
-    			setKeyRSA(input);
-    			verifyRSA(input, hash);
-    		}
-    	}else if (input.signaturemethod == "DSA"){
-    		if (this.publicKey != null){
-    			verifyDSA(input, hash);
-    		}else{
-    			setKeyDSA(input);
-    			verifyDSA(input);
-    		}
+    			setPublicKey(input);
+    			verifySig(input, hash);
+    		}    	
     	}else if (input.signaturemethod == "ECDSA"){
     		if (this.publicKey != null){
     			verifyECDSA(input, hash);
@@ -59,21 +63,39 @@ public class SigVerification {
     }
 	
 	/**
-	 * Sets the RSA keys.
+	 * Sets the public keys.
 	 * 
 	 * @param input A instance of Input (contains the signature size)
 	 */
-	public void setKeyRSA(Input input){
+	public void setPublicKey(Input input){
 		try{
-			// KeyPair erzeugen
-    		KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA"); //signaturemethod -> RSA, DES,..    		
-    		
-    		kpg.initialize(input.signatureSize);			// signatureSize -> 1024 (bit)
-    		KeyPair keyPair = kpg.generateKeyPair();
-    		PrivateKey privKey = keyPair.getPrivate();
-    		PublicKey pubKey = keyPair.getPublic();
-    		this.privateKey = privKey;
-    		this.publicKey = pubKey;   		
+			KeyStoreManager ksm = KeyStoreManager.getInstance();
+            //System.out.println(ksm.getAllPublicKeys());
+            KeyStoreAlias alias;
+            Enumeration<String> aliases = ksm.getAliases();
+            while (aliases != null && aliases.hasMoreElements()) {
+                alias = new KeyStoreAlias(aliases.nextElement());
+                alias.getAliasString();
+                if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA with MGF1") { // RSA
+                    if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
+                    	System.out.println("RSA PrivateCrtKey gefunden");
+                        // Fill in keys
+                        /*keystoreitems.put(
+                                alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), //$NON-NLS-1$ //$NON-NLS-2$
+                                alias);*/
+                        //PrivateKey k = ksm.getPrivateKey(alias, KeyStoreManager.KEY_PASSWORD);
+                        Certificate cert = ksm.getCertificate(alias);
+                        this.publicKey = cert.getPublicKey();                      
+                    }                   
+                }else if(input.signaturemethod == "DSA"){ // DSA
+                	if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
+                        // Fill in keys
+                		System.out.println("DSA PrivateKey gefunden");
+                		Certificate cert = ksm.getCertificate(alias);
+                        this.publicKey = cert.getPublicKey();
+                    } // end if
+                }
+            }
 		}catch (Exception ex){
 			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 		}
@@ -97,13 +119,13 @@ public class SigVerification {
      * @param input A instance of Input (contains the signature)
      * @param hash A instance of Hash (contains the hash)
      */
-    public void verifyRSA(Input input, Hash hash){
+    public void verifySig(Input input, Hash hash){
     	try{
-    		Signature signature = Signature.getInstance("RSA");
+    		Signature signature = Signature.getInstance("SHA1withRSA", "FlexiCore");
             signature.initVerify(this.publicKey);
 
             //Signatur updaten
-            signature.update(hash.hash);
+            signature.update(input.plain);
 
             //Signatur ausgeben
             this.result = signature.verify(input.signature);
@@ -143,24 +165,7 @@ public class SigVerification {
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
-    }
-    
-	/**
-	 * Sets the DSA keys.
-	 * 
-	 * @param input A instance of Input.
-	 */
-    public void setKeyDSA(Input input){
-    	try {
-    		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("DSA");		
-			keyGen.initialize(1024);
-			KeyPair keypair = keyGen.genKeyPair();
-			PublicKey publicKey = keypair.getPublic();			
-			this.publicKey = publicKey;
-		} catch (Exception ex) {
-			LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-		}
-    }
+    }    
     
     /**
      * Verifies a DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
@@ -228,7 +233,7 @@ public class SigVerification {
      */
     public void publicKeyFile(byte[] pubKeyBytes, Input input){
     	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
-    		DSARSAPublicKeyFile(pubKeyBytes, input);
+    		setDSARSAPublicKeyFile(pubKeyBytes, input);
     	}else{
     		;//ECDSA noch keine Methode zum Einlesen von ECDSA keys gefunden
     	}
@@ -240,7 +245,7 @@ public class SigVerification {
      * @param pubKeyBytes A byte array
      * @param input A instance of Input
      */
-    public void DSARSAPublicKeyFile(byte[] pubKeyBytes, Input input){
+    public void setDSARSAPublicKeyFile(byte[] pubKeyBytes, Input input){
         try{
         	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
         	KeyFactory keyFactory = KeyFactory.getInstance(input.signaturemethod);
@@ -265,7 +270,7 @@ public class SigVerification {
      * 
      * @param privKey A PrivateKey
      */
-    public void setPrivateKey(PrivateKey privKey){
+    public void setPrivateKey(KeyStoreAlias privKey){
     	this.privateKey = privKey;
     }
 
@@ -276,5 +281,15 @@ public class SigVerification {
      */
     public void setPublicKey(PublicKey pubKey){
     	this.publicKey = pubKey;
+    }
+    
+    /**
+     * Resets this Object.
+     */
+    public void reset(){
+    	this.result = false;
+    	this.hashNew = null;
+    	this.privateKey = null;
+    	this.publicKey = null;    	
     }
 }

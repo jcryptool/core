@@ -92,8 +92,7 @@ public class Input {
         signature = null;
         signatureHex = null;
         signatureOct = null;
-        sigVerification.setPrivateKey(null);
-        sigVerification.setPublicKey(null);
+        sigVerification.reset();
         h = -1;
     }
     

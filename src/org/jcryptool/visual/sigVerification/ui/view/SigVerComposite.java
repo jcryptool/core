@@ -16,7 +16,6 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -33,14 +32,10 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.Messages;
@@ -89,9 +84,9 @@ public class SigVerComposite extends Composite  {
 
     //Erzeugen der benötigten Objekte
     Input input = new Input();
-    SigVerification sigVerification = new SigVerification();
     Hash hashInst = new Hash();
-    private int step = 0;		// Fortschritt für Reset
+    SigVerification sigVerification = new SigVerification();
+    private int step = 0;		// Fortschritt für Schritt zurück
     
     
     /**
@@ -365,7 +360,8 @@ public class SigVerComposite extends Composite  {
                 try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
-                    reset(0);
+                	if (step>0)
+                    	reset(0);
 
                     // Create the HashWirard
                     InputWizard wiz = new InputWizard(input);
@@ -398,7 +394,10 @@ public class SigVerComposite extends Composite  {
         btnHash.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    reset(1);
+                	// If the user already finished other steps, reset
+                    // everything to this step (keep the chosen algorithms)
+                	if (step>1)
+                    	reset(1);
                     // Create the HashWirard
                     HashWizard wiz = new HashWizard(input);
                     // Display it
@@ -431,10 +430,14 @@ public class SigVerComposite extends Composite  {
         
      // Adds a Listener for the Signature select button
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
-            @SuppressWarnings("deprecation")
+			@SuppressWarnings("deprecation")
 			public void widgetSelected(SelectionEvent e) {
             	try {
-                    reset(2);
+            		// If the user already finished other steps, reset
+                    // everything to this step (keep the chosen algorithms)
+            		if (step>2)
+                    	reset(2);
+                    
                     SignatureWizard wiz = new SignatureWizard(hash, input);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
                         @Override
@@ -457,17 +460,17 @@ public class SigVerComposite extends Composite  {
                         input.divideSignaturePlaintext();
                         
                         // Arguments: Hash method, data to hash
-                        hashInst.hashInput(hashes[hash], input.plain); // Hash the input  
-                        System.out.println(new String(input.data));
-                        System.out.println(new String(input.plain));
-                        System.out.println(new String(hashInst.getHash()));
+                        
+                        hashInst.hashInput(hashes[hash], input.plain); // Hash the input
+                        System.out.println(new String(input.data,0));
+                        System.out.println(new String(input.plain,0));
+                        System.out.println(new String(hashInst.getHash(),0));
                         hashInst.setHashHex();
                         System.out.println(hashInst.hashHex);
-                        System.out.println(new String(input.signature));
+                        System.out.println(new String(input.signature,0));
                         System.out.println(input.signaturemethod);
                         System.out.println(input.signatureSize);
                         
-                        btnResult.setEnabled(true);
                         tabFolder.setSelection(3);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 4));
                         
@@ -481,7 +484,9 @@ public class SigVerComposite extends Composite  {
             	try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
-                    reset(2);
+            		if (step>2)
+                    	reset(2);
+                    
 
                     // Create the InputKeyWizard
                     InputKeyWizard wiz = new InputKeyWizard(input, sigVerification, hashInst);
@@ -495,7 +500,7 @@ public class SigVerComposite extends Composite  {
                         }
                     };
                     if (dialog.open() == Window.OK) {                   
-                        // step = 3;
+                        step = 3;
                     }
                     //System.out.println(sigVerification.hashNew.getHash());
                 	// Creates the signature for the calculated hash.
@@ -504,7 +509,7 @@ public class SigVerComposite extends Composite  {
                     
                     btnResult.setEnabled(true);
                     // Compares the two hashes.
-                    //System.out.println(sigVerification.getResult());
+                    System.out.println(sigVerification.getResult());
                     
 //                    hashInst.setHashHex();
 //                    if (sigVerification.hashNew.hash != null){
@@ -542,7 +547,9 @@ public class SigVerComposite extends Composite  {
                 try {
                     // If the user already finished other steps, reset
                     // everything to this step (keep the chosen algorithms)
-                    reset(3);
+                    if (step>3){
+                    	reset(3);
+                    }
                     // Show the result
                     
                     Display display = Display.getCurrent();
@@ -589,13 +596,13 @@ public class SigVerComposite extends Composite  {
             break;
         case 1:
             btnDecrypt.setEnabled(false);
-            hashInst = null;
+            hashInst.reset();
             tabFolder.setSelection(1);
             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
             break;
         case 2:
             btnResult.setEnabled(false);
-            sigVerification = null;
+            sigVerification.reset();
             tabFolder.setSelection(2);
             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));
             break;

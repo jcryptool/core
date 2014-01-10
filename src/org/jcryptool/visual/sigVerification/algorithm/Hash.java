@@ -13,8 +13,8 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
  * @author Wilfing
  */
 public class Hash {
-	public byte[] hash;
-	public String hashHex;
+	public byte[] hash = null;
+	public String hashHex = null;
 	
     /**
      * This method hashes an input stored in Input.java with a given hash method
@@ -41,6 +41,7 @@ public class Hash {
         
         return md;
     }
+    
         
     /**
      * Sets the hash (byte array)
@@ -85,6 +86,15 @@ public class Hash {
     public String getHashHex(){
     	return hashHex;
     }
+    
+    /**
+     * Resets this Object.
+     */
+    public void reset(){
+    	this.hash = null;
+    	this.hashHex = null;
+    }
+    
     
     /**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
