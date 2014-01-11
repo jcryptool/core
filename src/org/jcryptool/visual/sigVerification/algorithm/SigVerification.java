@@ -27,10 +27,7 @@ import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
  * 
  * @author Wilfing
  */
-public class SigVerification {
-//	private static final String KEYSTORE = "$JAVA_HOME/lib/security/cacerts";
-//	private static final char[] KSPASS = {'1','2','3','4'};
-	
+public class SigVerification {	
 	boolean result;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
     private PublicKey publicKey = null;
@@ -43,7 +40,7 @@ public class SigVerification {
 	 * @param hash A instance of Hash
 	 */
 	public void verifySignature(Input input, Hash hash){
-    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
+    	if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1" || input.signaturemethod == "DSA"){
     		if (this.privateKey != null){
     			verifySig(input, hash);
     		}else{
@@ -57,8 +54,6 @@ public class SigVerification {
     			setKeyECDSA(input);
     			verifyECDSA(input, hash);
     		}
-    	}else{
-    		;
     	}
     }
 	
@@ -76,15 +71,11 @@ public class SigVerification {
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 alias.getAliasString();
-                if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA with MGF1") { // RSA
+                if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1") { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                     	System.out.println("RSA PrivateCrtKey gefunden");
-                        // Fill in keys
-                        /*keystoreitems.put(
-                                alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), //$NON-NLS-1$ //$NON-NLS-2$
-                                alias);*/
-                        //PrivateKey k = ksm.getPrivateKey(alias, KeyStoreManager.KEY_PASSWORD);
                         Certificate cert = ksm.getCertificate(alias);
+                        // input.signatureSize = alias.getKeyLength();
                         this.publicKey = cert.getPublicKey();                      
                     }                   
                 }else if(input.signaturemethod == "DSA"){ // DSA
@@ -121,7 +112,7 @@ public class SigVerification {
      */
     public void verifySig(Input input, Hash hash){
     	try{
-    		Signature signature = Signature.getInstance("SHA1withRSA", "FlexiCore");
+    		Signature signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiCore");
             signature.initVerify(this.publicKey);
 
             //Signatur updaten
@@ -173,7 +164,7 @@ public class SigVerification {
      * input A instance of Input (contains the signature)
      * @param hash A instance of Hash (contains the hash)
      */
-    public void verifyDSA(Input input, Hash hash){
+    public void verifyDsa(Input input, Hash hash){
     	try{    		    	
     		Signature sig = Signature.getInstance(input.signaturemethod);
     		sig.initVerify(this.publicKey);

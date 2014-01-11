@@ -15,6 +15,7 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 public class Hash {
 	public byte[] hash = null;
 	public String hashHex = null;
+	public String hashmethod = null;
 	
     /**
      * This method hashes an input stored in Input.java with a given hash method
@@ -25,6 +26,8 @@ public class Hash {
      */
     public byte[] hashInput(String hashmethod, byte[] input) throws Exception {
         byte[] md = null;
+        // Den namen der Hashfunktion festlegen.
+        setHashmethod(hashmethod);
         
         try {
             // Get an MD5 message digest object and compute the plaintext digest
@@ -42,7 +45,26 @@ public class Hash {
         return md;
     }
     
-        
+    
+    /**
+     * Changing the name of the hashmethod to be compatible with the Flexiprovider. 
+     * 
+     * @param hashmethod A String with the name of the hashmethod 
+     */
+    public void setHashmethod(String hashmethod){
+    	if(hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha1){
+    		this.hashmethod = "SHA1";
+        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha256){
+        	this.hashmethod = "SHA256";
+        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384){
+        	this.hashmethod = "SHA384";
+        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512){
+        	this.hashmethod = "SHA512";
+        }else{
+        	this.hashmethod = hashmethod;
+        }
+    }
+    
     /**
      * Sets the hash (byte array)
      * 
@@ -93,6 +115,7 @@ public class Hash {
     public void reset(){
     	this.hash = null;
     	this.hashHex = null;
+    	this.hashmethod = null;
     }
     
     

@@ -591,11 +591,14 @@ public class SigVerComposite extends Composite  {
         switch (step) {
         case 0:
             btnHash.setEnabled(false);
+            btnDecrypt.setEnabled(false);
+            btnResult.setEnabled(false);
             tabFolder.setSelection(0);
             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
             break;
         case 1:
             btnDecrypt.setEnabled(false);
+            btnResult.setEnabled(false);
             hashInst.reset();
             tabFolder.setSelection(1);
             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 2));
