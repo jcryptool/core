@@ -37,8 +37,8 @@ public class SigVerification {
 	 * @param hash A instance of Hash
 	 */
 	public void verifySignature(Input input, Hash hash){
-    	if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1" || input.signaturemethod == "DSA"){
-    		if (this.privateKey != null){
+    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
+    		if (this.publicKey != null){
     			verifySig(input, hash);
     		}else{
     			setPublicKey(input);
@@ -50,6 +50,13 @@ public class SigVerification {
     		}else{
     			setKeyECDSA(input);
     			verifyECDSA(input, hash);
+    		}
+    	}else if (input.signaturemethod == "RSA and MGF1"){
+    		if (this.publicKey != null){
+    			verifyRsaAndMgf1Sig(input, hash);
+    		}else{
+    			setPublicKey(input);
+    			verifyRsaAndMgf1Sig(input, hash);
     		}
     	}
     }
@@ -99,6 +106,27 @@ public class SigVerification {
     public void verifySig(Input input, Hash hash){
     	try{
     		Signature signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiCore");
+            signature.initVerify(this.publicKey);
+
+            //Signatur updaten
+            signature.update(input.plain);
+
+            //Signatur ausgeben
+            this.result = signature.verify(input.signature);
+    	}catch(Exception ex){
+    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+    	}
+    }
+    
+    /**
+     * Verifies a RSA and MGF1 signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * 
+     * @param input A instance of Input (contains the signature, the plaintext, and the signaturemethod)
+     * @param hash A instance of Hash (contains the hashmethod)
+     */
+    public void verifyRsaAndMgf1Sig(Input input, Hash hash){
+    	try{
+    		Signature signature = Signature.getInstance(hash.hashmethod + "withRSA", "FlexiCore");
             signature.initVerify(this.publicKey);
 
             //Signatur updaten
