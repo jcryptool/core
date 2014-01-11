@@ -126,7 +126,7 @@ public class SigVerification {
      */
     public void verifyRsaAndMgf1Sig(Input input, Hash hash){
     	try{
-    		Signature signature = Signature.getInstance(hash.hashmethod + "withRSA", "FlexiCore");
+    		Signature signature = Signature.getInstance("RSA/OAEPWITHSHA-1ANDMGF1PADDING");
             signature.initVerify(this.publicKey);
 
             //Signatur updaten
