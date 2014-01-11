@@ -58,9 +58,9 @@ public class SigVerification {
     }
 	
 	/**
-	 * Sets the public keys.
+	 * Sets the RSA and DSA public key.
 	 * 
-	 * @param input A instance of Input (contains the signature size)
+	 * @param input A instance of Input (contains the signaturemethod)
 	 */
 	public void setPublicKey(Input input){
 		try{
@@ -92,23 +92,12 @@ public class SigVerification {
 		}
 	}
 	
-    /*public void verifyRSA(Input input, Hash hash){
-    	try{
-    		Cipher cipher = Cipher.getInstance("RSA");
-       		cipher.init(Cipher.DECRYPT_MODE, this.privateKey);
-    		hashNew.setHash(cipher.doFinal(input.signature));    		
-    		hashNew.setHashHex();
-    	}catch(Exception ex){
-    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-    	}
-    	verifyInput(hash.hash, hashNew.hash);
-    }*/
     
     /**
-     * Verifies a RSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * Verifies a RSA or DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
      * 
-     * @param input A instance of Input (contains the signature)
-     * @param hash A instance of Hash (contains the hash)
+     * @param input A instance of Input (contains the signature, the plaintext, and the signaturemethod)
+     * @param hash A instance of Hash (contains the hashmethod)
      */
     public void verifySig(Input input, Hash hash){
     	try{
@@ -157,64 +146,6 @@ public class SigVerification {
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     }    
-    
-    /**
-     * Verifies a DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
-     * 
-     * input A instance of Input (contains the signature)
-     * @param hash A instance of Hash (contains the hash)
-     */
-    public void verifyDsa(Input input, Hash hash){
-    	try{    		    	
-    		Signature sig = Signature.getInstance(input.signaturemethod);
-    		sig.initVerify(this.publicKey);
-    		sig.update(hash.hash);
-    		this.result = sig.verify(input.signature);
-    	}catch(Exception ex){
-    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-    	}
-    }
-    
-    /**
-     * Verifies a DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
-     * 
-     * @param input A instance of Input (contains the plaintext and the signature)
-     */
-    public void verifyDSA(Input input){
-        //Signature-Objekt erstellen
-        try {
-        	Signature signature = Signature.getInstance("SHA1withDSA"); // zum Testen ob es mit SHA1 funktioniert
-            signature.initVerify(this.publicKey);
-            //Eingabedatei lesen
-//            FileInputStream in = new FileInputStream(new String(input.plain));
-//            int len;
-//            byte[] data = new byte[1024];
-//            while ((len = in.read(data)) > 0) {
-              //Signatur updaten
-            signature.update(input.plain);
-//            }
-//            in.close();
-            //Signaturdatei einlesen
-//            in = new FileInputStream(new String(input.signature));
-//            len = in.read(data);
-//            in.close();
-            //Signatur ausgeben
-            this.result = signature.verify(input.signature);
-        }catch(Exception ex){
-        	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-        }
-    	
-    }
-    
-    /**
-     * Compares the hashed plaintext with the decrypted signature
-     * 
-     * @return true or false if the two hashes are equal or not
-     */
-    public void verifyInput(byte[] hash, byte[] hashNew){
-        // Vergleicht die Hashes.
-    	this.result = java.util.Arrays.equals(hash, hashNew);               
-    }
     
     /**
      * Selects the right function to convert the input key (RSA, DSA, ECDSA).
