@@ -3,16 +3,13 @@ package org.jcryptool.visual.sigVerification.algorithm;
 
 import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.cert.Certificate;
 import java.security.spec.X509EncodedKeySpec;
-
 import java.util.Enumeration;
-
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -155,7 +152,7 @@ public class SigVerification {
      */
     public void publicKeyFile(byte[] pubKeyBytes, Input input){
     	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
-    		setDSARSAPublicKeyFile(pubKeyBytes, input);
+    		setDsaRsaPublicKeyFile(pubKeyBytes, input);
     	}else{
     		;//ECDSA noch keine Methode zum Einlesen von ECDSA keys gefunden
     	}
@@ -167,7 +164,7 @@ public class SigVerification {
      * @param pubKeyBytes A byte array
      * @param input A instance of Input
      */
-    public void setDSARSAPublicKeyFile(byte[] pubKeyBytes, Input input){
+    public void setDsaRsaPublicKeyFile(byte[] pubKeyBytes, Input input){
         try{
         	X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
         	KeyFactory keyFactory = KeyFactory.getInstance(input.signaturemethod);

@@ -1,10 +1,5 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
-
-import java.security.PrivateKey;
-import java.security.PublicKey;
-
-
 /**
  * This class is used to share data between classes.
  * 
@@ -60,24 +55,7 @@ public class Input {
     /**
      * The size in bit of the chosen signature method ("RSA" = 1024 etc.)
      */
-    public int signatureSize;
-    
-/*    *//**
-     * Contains the private key used to sign the data (given by JCTCA plugin)
-     *//*
-    public PrivateKey privateKey;
-    
-    public PublicKey publicKey;*/
-
-    /**
-     * Contains the public key used to verify the data in the JCTCA plugin
-     */
-    //public static KeyStoreAlias publicKey;
-    
-    /**
-     * Contains the private key used to sign the data (chosen in our plugin)
-     */
-    //public static KeyStoreAlias key;    
+    public int signatureSize;       
 
     /**
      * This method resets all variables in this class to their initial value

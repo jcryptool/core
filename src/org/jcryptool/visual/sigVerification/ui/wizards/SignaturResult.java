@@ -1,7 +1,5 @@
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -18,7 +16,6 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
-import org.jcryptool.visual.sigVerification.ui.view.ModelComposite;
 
 public class SignaturResult extends Shell {
   private Table tableSig;

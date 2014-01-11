@@ -22,7 +22,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
  * This class contains the GUI elements for file input. It also contains a method to convert the opened file into a byte
  * array.
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class InputFileComposite extends Composite implements SelectionListener {
     private Text txtPath;
