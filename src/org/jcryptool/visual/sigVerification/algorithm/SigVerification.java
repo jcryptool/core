@@ -28,7 +28,6 @@ public class SigVerification {
 	boolean result;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
     private PublicKey publicKey = null;
-    private KeyStoreAlias privateKey = null;
 	
 	/**
 	 * Chooses the correct function to verify the signature for the input with the selected signature method.
@@ -37,7 +36,7 @@ public class SigVerification {
 	 * @param hash A instance of Hash
 	 */
 	public void verifySignature(Input input, Hash hash){
-    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA"){
+    	if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA" || input.signaturemethod == "RSA and MGF1"){
     		if (this.publicKey != null){
     			verifySig(input, hash);
     		}else{
@@ -50,13 +49,6 @@ public class SigVerification {
     		}else{
     			setKeyECDSA(input);
     			verifyECDSA(input, hash);
-    		}
-    	}else if (input.signaturemethod == "RSA and MGF1"){
-    		if (this.publicKey != null){
-    			verifyRsaAndMgf1Sig(input, hash);
-    		}else{
-    			setPublicKey(input);
-    			verifyRsaAndMgf1Sig(input, hash);
     		}
     	}
     }
@@ -77,17 +69,18 @@ public class SigVerification {
                 alias.getAliasString();
                 if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1") { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-                    	System.out.println("RSA PrivateCrtKey gefunden");
                         Certificate cert = ksm.getCertificate(alias);
-                        // input.signatureSize = alias.getKeyLength();
-                        this.publicKey = cert.getPublicKey();                      
+                        // input.signatureSize = alias.getKeyLength();                        
+                        this.publicKey = cert.getPublicKey();
+                    	System.out.println("RSA PrivateCrtKey found");
                     }                   
                 }else if(input.signaturemethod == "DSA"){ // DSA
                 	if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
                         // Fill in keys
-                		System.out.println("DSA PrivateKey gefunden");
                 		Certificate cert = ksm.getCertificate(alias);
                         this.publicKey = cert.getPublicKey();
+                        
+                		System.out.println("DSA PrivateKey found");
                     } // end if
                 }
             }
@@ -98,14 +91,19 @@ public class SigVerification {
 	
     
     /**
-     * Verifies a RSA or DSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
+     * Verifies RSA, DSA and RSA with MGF1 signatures. Sets the variable result (boolean) TRUE if the signature is correct.
      * 
      * @param input A instance of Input (contains the signature, the plaintext, and the signaturemethod)
      * @param hash A instance of Hash (contains the hashmethod)
      */
     public void verifySig(Input input, Hash hash){
     	try{
-    		Signature signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiCore");
+    		Signature signature;
+    		if (input.signaturemethod == "RSA and MGF1"){
+    			signature = Signature.getInstance(hash.hashmethod + "WithRSA/PSS", "BC");
+    		}else{
+    			signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiCore");
+    		}
             signature.initVerify(this.publicKey);
 
             //Signatur updaten
@@ -113,31 +111,13 @@ public class SigVerification {
 
             //Signatur ausgeben
             this.result = signature.verify(input.signature);
+            
+            System.out.println("Signature Verification was correct: " + this.result);
     	}catch(Exception ex){
     		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
     	}
     }
     
-    /**
-     * Verifies a RSA and MGF1 signature. Sets the variable result (boolean) TRUE if the signature is correct.
-     * 
-     * @param input A instance of Input (contains the signature, the plaintext, and the signaturemethod)
-     * @param hash A instance of Hash (contains the hashmethod)
-     */
-    public void verifyRsaAndMgf1Sig(Input input, Hash hash){
-    	try{
-    		Signature signature = Signature.getInstance("RSA/OAEPWITHSHA-1ANDMGF1PADDING");
-            signature.initVerify(this.publicKey);
-
-            //Signatur updaten
-            signature.update(input.plain);
-
-            //Signatur ausgeben
-            this.result = signature.verify(input.signature);
-    	}catch(Exception ex){
-    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-    	}
-    }
     
 	/**
 	 * Sets the ECDSA keys.
@@ -185,6 +165,7 @@ public class SigVerification {
     		;//ECDSA noch keine Methode zum Einlesen von ECDSA keys gefunden
     	}
     }
+ 
     
     /**
      * Converts the imported key (byte array) in a DSA/RSA public key.
@@ -212,14 +193,6 @@ public class SigVerification {
     	return this.result;
     }
     
-    /**
-     * Sets the private key.
-     * 
-     * @param privKey A PrivateKey
-     */
-    public void setPrivateKey(KeyStoreAlias privKey){
-    	this.privateKey = privKey;
-    }
 
     /**
      * Sets the public Key.
@@ -229,14 +202,14 @@ public class SigVerification {
     public void setPublicKey(PublicKey pubKey){
     	this.publicKey = pubKey;
     }
+
     
     /**
-     * Resets this Object.
+     * Resets this instance.
      */
     public void reset(){
     	this.result = false;
     	this.hashNew = null;
-    	this.privateKey = null;
     	this.publicKey = null;    	
     }
 }

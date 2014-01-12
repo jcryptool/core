@@ -462,14 +462,13 @@ public class SigVerComposite extends Composite  {
                         // Arguments: Hash method, data to hash
                         
                         hashInst.hashInput(hashes[hash], input.plain); // Hash the input
-                        System.out.println(new String(input.data));
-                        System.out.println(new String(input.plain));
-                        System.out.println(new String(hashInst.getHash()));
-                        hashInst.setHashHex();
-                        System.out.println(hashInst.hashHex);
-                        System.out.println(new String(input.signature));
-                        System.out.println(input.signaturemethod);
-                        System.out.println(input.signatureSize);
+                        System.out.println("Inported data: " + new String(input.data));
+                        System.out.println("Plaintext: " + new String(input.plain));
+                        System.out.println("Hash: " + new String(hashInst.getHash()));
+                        System.out.println("Hash in hex format: " + hashInst.getHashHex());
+                        System.out.println( "Inported signature: " + new String(input.signature));
+                        System.out.println("Used signature method: " + input.signaturemethod);
+                        System.out.println("Key length: " + input.signatureSize);
                         
                         tabFolder.setSelection(3);
                         lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 4));
@@ -500,40 +499,28 @@ public class SigVerComposite extends Composite  {
                         }
                     };
                     if (dialog.open() == Window.OK) {                   
-                        step = 3;
                     }
-                    //System.out.println(sigVerification.hashNew.getHash());
-                	// Creates the signature for the calculated hash.
-                    // Arguments: Signature methods, data to sign, Key
-                    //sigVerification.verifySignature(input, hashInst);                        
                     
                     btnResult.setEnabled(true);
-                    // Compares the two hashes.
-                    System.out.println(sigVerification.getResult());
-                    
-//                    hashInst.setHashHex();
-//                    if (sigVerification.hashNew.hash != null){
-//                    	sigVerification.hashNew.setHashHex();
-//                    }
                     
                     // Shows green check mark or red fail sign if comparison is correct or false
-//                    if(input.result){
-//                        GC gc;
-//                        
-//                         ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
-//                         ImageData imD1 = id1.getImageData();
-//                         Image img1 = new Image(Display.getCurrent(), imD1);
-//                         gc.drawImage(img1, 820, 225);
-//                         gc.dispose();
-//                    }else{
-//                          GC gc;
-//                  
-//                          ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
-//                          ImageData imD1 = id1.getImageData();
-//                          Image img1 = new Image(Display.getCurrent(), imD1);
-//                          gc.drawImage(img1, 820, 225);
-//                          gc.dispose();
-//                    }
+					if (sigVerification.getResult()) {						
+						ImageDescriptor id1 = SigVerificationPlugin
+								.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
+						ImageData imD1 = id1.getImageData();
+						Image img1 = new Image(Display.getCurrent(), imD1);
+						GC gc = new GC(img1);
+						gc.drawImage(img1, 820, 225);
+						gc.dispose();
+					} else {
+						ImageDescriptor id1 = SigVerificationPlugin
+								.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
+						ImageData imD1 = id1.getImageData();
+						Image img1 = new Image(Display.getCurrent(), imD1);
+						GC gc = new GC(img1);
+						gc.drawImage(img1, 820, 225);
+						gc.dispose();
+					}
 
                 } catch (Exception ex) {
                     LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
