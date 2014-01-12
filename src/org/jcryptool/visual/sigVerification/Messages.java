@@ -5,12 +5,15 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Holds the messages for the signature visualization (for the main view)
  * 
- * @author Grebe/Wilfing/Huber
+ * @author Wilfing/Huber
  */
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.messages"; //$NON-NLS-1$
+	
     // Create strings for all the values
+	public static String SigVerComposite_resutFalseDescription;
+    public static String SigVerComposite_resutTrueDescription;
     public static String SigVerComposite_grpSignatureGeneration;
     public static String SigVerComposite_lblHash;
     public static String SigVerComposite_lblSignature;
