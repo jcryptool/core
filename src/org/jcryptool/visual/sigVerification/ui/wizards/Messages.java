@@ -116,6 +116,12 @@ public class Messages {
     public static String InputKeyEditorWizard_Label;
     public static String EnterText;
     
+    //Signatur Result
+	public static String ShowSig_tblHex;
+	public static String ShowSig_tblAscii;
+	public static String ShowSig_tblAdr;
+
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

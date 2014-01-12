@@ -137,13 +137,13 @@ public class Input {
        
     }        
     
-/*    
-    *//**
+    
+    /**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
      * 
      * @param bytes A byte array
      * @return The hex representation of the byte array
-     *//*
+     */
     public static String bytesToHex(byte[] bytes) {
         final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         char[] hexChars = new char[bytes.length * 2];
@@ -157,13 +157,13 @@ public class Input {
     }
 
     
-    *//**
+    /**
      * Returns the octal String representation of a byte array with optional prefix. The String is formed by making
      * value[0] the leftmost three digits and value[value.length-1] the rightmost three digits.
      * 
      * @param array the byte array
-     *//*
-    public final static String toOctalString(byte[] bytes, String prefix) {
+     */
+    public final static String bytesToOct(byte[] bytes, String prefix) {
         StringBuffer sb = new StringBuffer(bytes.length * (3 + prefix.length()) + 8);
 
         for (int i = 0; i < bytes.length; i++) {
@@ -174,15 +174,48 @@ public class Input {
         return sb.toString();
     }
 
-    *//**
+    /**
      * Returns the octal digit String buffer representation of a byte.
      * 
      * @param byte the byte
-     *//*
+     */
     private final static StringBuffer appendOctalDigits(StringBuffer sb, byte b) {
         // b will be promote to integer first, mask with 0x07 is a must.
         return sb.append(Character.forDigit(b >>> 6 & 0x07, 8)).append(Character.forDigit(b >>> 3 & 0x07, 8))
                 .append(Character.forDigit(b & 0x07, 8));
-    }*/
+    }
     
+    /**
+    * Sets the variable signatureHex (a String).
+    * Uses the funktion bytesToHex(byte[]) to convert the signature.
+    */
+    public void setSignatureHex(){
+    	this.signatureHex = bytesToHex(this.signature);
+    }
+    
+    /**
+     * Sets the variable signatureOct (a String).
+     * Uses the funktion bytesToOct(byte[]) to convert the signature.
+     */
+    public void setSignatureOct(){
+    	this.signatureOct = bytesToOct(this.signature, "");
+    }
+    
+    /**
+     * Returns the signature in hexadecimal form.
+     * 
+     * @return signaturHex (a String)
+     */
+    public String getSignatureHex(){
+    	return this.signatureHex;
+    }
+    
+    /**
+     * Returns the signature in octal form.
+     * 
+     * @return signaturOct (a String)
+     */
+    public String getSignatureOct(){
+    	return this.signatureOct;
+    }
 }

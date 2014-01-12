@@ -152,7 +152,7 @@ public class SigVerComposite extends Composite {
 		{
 			textGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI
 					| SWT.WRAP);
-			textGeneralDescription.setBounds(10, 36, 1035, 77);
+			textGeneralDescription.setBounds(10, 36, 1035, 48);
 			textGeneralDescription
 					.setText(Messages.SigVerComposite_description);
 			textGeneralDescription.setEditable(false);
@@ -169,23 +169,27 @@ public class SigVerComposite extends Composite {
 		
 		{
 			Group border = new Group(this, SWT.BORDER);
-			border.setBounds(10, 130, 1035, 575);
+			border.setBounds(10, 99, 1035, 575);
 			border.setText(Messages.SigVerComposite_lblTitle);
 
 			{
 				Group littleBorder = new Group(border, SWT.BORDER);
-				littleBorder.setBounds(793, 90, 218, 253);
+				littleBorder.setBounds(793, 90, 218, 268);
 				littleBorder.setText(Messages.SigVerComposite_btnSignature);
-
+				
 				btnResult = new Button(littleBorder, SWT.NONE);
 				btnResult.setEnabled(false);
 				btnResult.setBounds(13, 189, 190, 50);
 				btnResult.setText(Messages.SigVerComposite_btnResult);								
+				
+				// Zum Anzeigen des Composite im Windowbuilder: folgenden Inhalt der "{ ... }" kommentieren.
+				// Kommentar Anfang
 				{
 					ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
 					ImageData imD1 = id1.getImageData();
 					Image img1 = new Image(Display.getCurrent(), imD1);
-					resultTrue = new ControlDecoration(btnResult, SWT.LEFT | SWT.BOTTOM);
+					resultTrue = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
+					resultTrue.setMarginWidth(-15);			
 					resultTrue.setDescriptionText(Messages.SigVerComposite_resutTrueDescription);
 					resultTrue.setImage(img1);
 					resultTrue.hide();
@@ -193,11 +197,13 @@ public class SigVerComposite extends Composite {
 					ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreutz.png"); //$NON-NLS-1$
 					ImageData imD2 = id2.getImageData();
 					Image img2 = new Image(Display.getCurrent(), imD2);
-					resultFalse = new ControlDecoration(btnResult, SWT.LEFT | SWT.BOTTOM);
+					resultFalse = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
+					resultFalse.setMarginWidth(-17);
 					resultFalse.setDescriptionText(Messages.SigVerComposite_resutFalseDescription);
 					resultFalse.setImage(img2);
 					resultFalse.hide();
 				}
+				//Kommentar Ende
 			}
 
 			tabFolder = new TabFolder(border, SWT.NONE);
@@ -284,7 +290,7 @@ public class SigVerComposite extends Composite {
 			btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
 
 			btnReset = new Button(canvas1, SWT.NONE);
-			btnReset.setLocation(921, 404);
+			btnReset.setLocation(921, 401);
 			btnReset.setSize(90, 30);
 			btnReset.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -305,7 +311,7 @@ public class SigVerComposite extends Composite {
 			btnDecrypt.setText(Messages.SigVerComposite_btnDecrypt);
 			{
 				lblProgress = new Label(canvas1, SWT.NONE);
-				lblProgress.setBounds(825, 412, 90, 30);
+				lblProgress.setBounds(825, 408, 90, 30);
 				lblProgress.setText(String.format(
 						Messages.SigVerComposite_lblProgress, 1));
 			}
@@ -390,11 +396,8 @@ public class SigVerComposite extends Composite {
 						}
 					};
 					if (dialog.open() == Window.OK) {
-						btnHash.setEnabled(true); // Enable to select the hash
-													// method
-						btnResult.setEnabled(true); // Activate the second
-													// tab of the
-													// description
+						// Enable to select the hash method Activate the second tab of the description
+						btnHash.setEnabled(true); 
 						tabFolder.setSelection(1);
 						lblProgress.setText(String.format(
 								Messages.SigVerComposite_lblProgress, 2));
@@ -430,13 +433,9 @@ public class SigVerComposite extends Composite {
 					if (dialog.open() == Window.OK) {
 						hash = wiz.getHash(); // get hash method (an integer)
 
-						// Update the GUI:
-						btnDecrypt.setEnabled(true); // Enable to select the
-														// signature method
-
-						tabFolder.setSelection(2); // Activate the third
-													// tab of the
-													// description
+						// Enable to select the signature method Activate the third tab of the description
+						btnDecrypt.setEnabled(true); 
+						tabFolder.setSelection(2);
 						lblProgress.setText(String.format(
 								Messages.SigVerComposite_lblProgress, 3));
 						step = 2;
@@ -561,9 +560,7 @@ public class SigVerComposite extends Composite {
 					// Show the result
 					// Create the Show signature shell
 					Display display = Display.getCurrent();
-					SignaturResult shell = new SignaturResult(display,
-							input.signaturemethod, input, hashInst,
-							sigVerification);
+					SignaturResult shell = new SignaturResult(display,input.signaturemethod, input, hashInst, sigVerification);
 					shell.open();
 					shell.layout();
 					while (!shell.isDisposed()) {
@@ -600,6 +597,8 @@ public class SigVerComposite extends Composite {
 			tabFolder.setSelection(0);
 			lblProgress.setText(String.format(
 					Messages.SigVerComposite_lblProgress, 1));
+			resultFalse.hide();
+			resultTrue.hide();
 			break;
 		case 1:
 			btnDecrypt.setEnabled(false);
@@ -608,6 +607,8 @@ public class SigVerComposite extends Composite {
 			tabFolder.setSelection(1);
 			lblProgress.setText(String.format(
 					Messages.SigVerComposite_lblProgress, 2));
+			resultFalse.hide();
+			resultTrue.hide();
 			break;
 		case 2:
 			btnResult.setEnabled(false);
@@ -615,28 +616,12 @@ public class SigVerComposite extends Composite {
 			tabFolder.setSelection(2);
 			lblProgress.setText(String.format(
 					Messages.SigVerComposite_lblProgress, 3));
+			resultFalse.hide();
+			resultTrue.hide();
 			break;
 		default:
 			break;
 		}
 	}
-
-	/**
-	 * Helper method to get the correct signature method with the correct hash
-	 * method. (Not every signature method matches with every hash method).
-	 * 
-	 * @return The string that can be used for signing
-	 */
-	/*
-	 * private String chooseSignature() { sigstring = ""; //$NON-NLS-1$
-	 * 
-	 * // Temporary solution if (signatures[signature].contains("RSA")) {
-	 * //$NON-NLS-1$ sigstring = "RSA"; //$NON-NLS-1$ } else if
-	 * (signatures[signature].contains("ECDSA")) { //$NON-NLS-1$ sigstring =
-	 * "ECDSA"; //$NON-NLS-1$ } else if (signatures[signature].contains("DSA"))
-	 * { //$NON-NLS-1$ sigstring = "DSA"; //$NON-NLS-1$ }
-	 * 
-	 * return sigstring; }
-	 */
 
 }

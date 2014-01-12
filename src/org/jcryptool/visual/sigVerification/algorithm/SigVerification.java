@@ -28,6 +28,7 @@ public class SigVerification {
 	boolean result;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
     private PublicKey publicKey = null;
+    public KeyStoreAlias alias = null;
 	
 	/**
 	 * Chooses the correct function to verify the signature for the input with the selected signature method.
@@ -61,8 +62,7 @@ public class SigVerification {
 	public void setPublicKey(Input input){
 		try{
 			KeyStoreManager ksm = KeyStoreManager.getInstance();
-            //System.out.println(ksm.getAllPublicKeys());
-            KeyStoreAlias alias;
+            //System.out.println(ksm.getAllPublicKeys());            
             Enumeration<String> aliases = ksm.getAliases();
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());

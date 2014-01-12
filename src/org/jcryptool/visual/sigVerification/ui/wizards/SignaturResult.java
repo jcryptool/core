@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
@@ -24,76 +25,94 @@ public class SignaturResult extends Shell {
   Hash hashInst;
   SigVerification sigVerification;
 
-  private int signatureLengh = input.signature.length * 8;
-  private int dataLength = input.data.length * 8;
+  private int signatureLengh; 
+  private int hashBitSize;
 
   /**
    * Create the shell.
    * 
    * @param display
    */
-  public SignaturResult(Display display, String signatureInformation, Input input, Hash hashInst, SigVerification sigVerification) {
+  public SignaturResult(Display display, String signatureInformation, final Input input, Hash hashInst, SigVerification sigVerification) {
       super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
       this.input = input;
       this.hashInst = hashInst;
       this.sigVerification = sigVerification;
+      this.signatureLengh = input.signatureSize;
+      this.hashBitSize = hashInst.hashHex.length() * 8;
+      input.setSignatureHex();
+      input.setSignatureOct();
       
       Composite composite = new Composite(this, SWT.NONE);
-      composite.setBounds(10, 10, 485, 661);
+      composite.setBounds(10, 10, 485, 623);
 
       Label key = new Label(composite, SWT.READ_ONLY);
       key.setText(Messages.SignaturResult_keyTitle);
-      key.setBounds(0, 0, 176, 21);
+      key.setBounds(0, 0, 237, 21);
 
       Label signatureMethod = new Label(composite, SWT.READ_ONLY);
       signatureMethod.setText(Messages.SignaturResult_methodTitle);
       signatureMethod.setBounds(0, 27, 176, 21);
 
       Label keyType = new Label(composite, SWT.READ_ONLY);
-      /*if (input.privateKey == null && input.key == null) {
+      if (sigVerification.alias == null) {
           if (signatureInformation.contains("ECDSA")) {
               keyType.setText("ANSI X9.62 prime256v1 (256 bits)");
           } else {
               keyType.setText("-");
           }
-      } else {
-          if (input.key != null) {
-              keyType.setText(input.key.getClassName());
-          } else {
-              keyType.setText(input.privateKey.getClassName());
-          }
-      }*/
-      keyType.setBounds(182, 24, 302, 21);
+      } else {         
+          keyType.setText(sigVerification.alias.getClassName());          
+      }
+      keyType.setBounds(244, 0, 302, 21);
 
       Label signatureInfo = new Label(composite, SWT.READ_ONLY);
       signatureInfo.setText(signatureInformation);
-      signatureInfo.setBounds(182, 48, 302, 21);
+      signatureInfo.setBounds(244, 27, 302, 21);
 
       Label signature = new Label(composite, SWT.READ_ONLY);
       signature.setText(Messages.SignaturResult_grpSignature);
-      signature.setBounds(0, 154, 137, 21);
+      signature.setBounds(0, 108, 137, 21);
 
       Label signatureLength = new Label(composite, SWT.READ_ONLY);
       signatureLength.setText(Messages.SignaturResult_lengthSig + signatureLengh + " Bits");
-      signatureLength.setBounds(0, 330, 430, 21);
+      signatureLength.setBounds(0, 284, 430, 21);
 
       Label hash = new Label(composite, SWT.READ_ONLY);
       hash.setText(Messages.SignaturResult_grpMessage);
-      hash.setBounds(0, 373, 137, 21);
+      hash.setBounds(0, 311, 137, 21);
 
       Label hashLength = new Label(composite, SWT.READ_ONLY);
-      hashLength.setText(Messages.SignaturResult_lengthMessage + dataLength + " Bits");
-      hashLength.setBounds(0, 548, 430, 21);
+      hashLength.setText(Messages.SignaturResult_lengthMessage + hashBitSize + " Bits");
+      hashLength.setBounds(0, 486, 430, 21);
 
       // create table to show the generated signature
       tableSig = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-      tableSig.setBounds(0, 175, 484, 151);
+      tableSig.setLinesVisible(true);
+      tableSig.setHeaderVisible(true);
+      tableSig.setBounds(0, 127, 484, 151);
+      
+      TableColumn tblclmnAddress = new TableColumn(tableSig, SWT.NONE);
+      tblclmnAddress.setResizable(false);
+      tblclmnAddress.setWidth(60);
+      tblclmnAddress.setToolTipText("");
+      tblclmnAddress.setText(Messages.ShowSig_tblAdr);
+
+      TableColumn tblclmnHex = new TableColumn(tableSig, SWT.NONE);
+      tblclmnHex.setResizable(false);
+      tblclmnHex.setWidth(250);
+      tblclmnHex.setText(Messages.ShowSig_tblHex);
+
+      TableColumn tblclmnAscii = new TableColumn(tableSig, SWT.NONE);
+      tblclmnAscii.setResizable(false);
+      tblclmnAscii.setWidth(150);
+      tblclmnAscii.setText(Messages.ShowSig_tblAscii);
 
       int stepSize = 14;
       
-      if (sigVerification.hashNew.getHashHex() != null){
-    	int len1 = sigVerification.hashNew.getHashHex().length();
-      	String asciistr1 = convertHexToString(sigVerification.hashNew.getHashHex());
+      if (input.signatureHex != null){
+    	int len1 = input.signatureHex.length();
+      	String asciistr1 = convertHexToString(input.signatureHex);
       	int lenAscii1 = asciistr1.length();
       
       	for (int i1 = 0; i1 < (Math.ceil((double) len1 / (stepSize * 2))); i1++) {
@@ -113,8 +132,8 @@ public class SignaturResult extends Shell {
 
               	StringBuffer bufferS1 = new StringBuffer();
               	for (int m1 = 0; m1 < (end1 - start1) / 2; m1++) {
-                  bufferS1.append(sigVerification.hashNew.getHashHex().charAt((2 * m1) + start1));
-                  bufferS1.append(sigVerification.hashNew.getHashHex().charAt((2 * m1 + 1) + start1));
+                  bufferS1.append(input.signatureHex.charAt((2 * m1) + start1));
+                  bufferS1.append(input.signatureHex.charAt((2 * m1 + 1) + start1));
                   bufferS1.append(" ");
               	}
               	item.setText(1, bufferS1.toString());
@@ -130,8 +149,26 @@ public class SignaturResult extends Shell {
       }
       // create table to show hash
       tableHash = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
-      tableHash.setBounds(0, 394, 484, 150);
+      tableHash.setLinesVisible(true);
+      tableHash.setHeaderVisible(true);
+      tableHash.setBounds(0, 332, 484, 150);
 
+      TableColumn tblclmnAddress_1 = new TableColumn(tableHash, SWT.NONE);
+      tblclmnAddress_1.setResizable(false);
+      tblclmnAddress_1.setWidth(60);
+      tblclmnAddress_1.setToolTipText("");
+      tblclmnAddress_1.setText(Messages.ShowSig_tblAdr);
+
+      TableColumn tblclmnHex_1 = new TableColumn(tableHash, SWT.NONE);
+      tblclmnHex_1.setResizable(false);
+      tblclmnHex_1.setWidth(250);
+      tblclmnHex_1.setText(Messages.ShowSig_tblHex);
+
+      TableColumn tblclmnAscii_1 = new TableColumn(tableHash, SWT.NONE);
+      tblclmnAscii_1.setResizable(false);
+      tblclmnAscii_1.setWidth(150);
+      tblclmnAscii_1.setText(Messages.ShowSig_tblAscii);
+      
       int len2 = hashInst.getHashHex().length();
       String asciistr2 = convertHexToString(hashInst.getHashHex());
       int lenAscii2 = asciistr2.length();
@@ -178,39 +215,75 @@ public class SignaturResult extends Shell {
               SignaturResult.this.close();
           }
       });
-      btnNewButton.setBounds(389, 633, 95, 28);
+      btnNewButton.setBounds(389, 590, 95, 28);
       btnNewButton.setText(Messages.SignaturResult_btnClose);
 
       Text txtTextopeneditor = new Text(composite, SWT.WRAP);
       txtTextopeneditor.setEditable(false);
-      txtTextopeneditor.setBounds(2, 575, 475, 41);
+      txtTextopeneditor.setBounds(2, 532, 475, 41);
       txtTextopeneditor.setText(Messages.SignaturResult_editorDescripton);
       txtTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
       
       Group group = new Group(composite, SWT.NONE);
       group.setLayout(null);
       group.setText("Optionen für Signaturen anzeigen");
-      group.setBounds(0, 54, 484, 73);
+      group.setBounds(0, 54, 484, 48);
       
-      Button button = new Button(group, SWT.RADIO);
-      button.setText("Octal");
-      button.setBounds(186, 30, 70, 16);
+      // text field to show signature as hex, octal or decimal
+      final Label txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
+      txtSigNum.setBounds(0, 127, 484, 151);
+      txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
       
-      Button button_1 = new Button(group, SWT.RADIO);
-      button_1.setText("Decimal");
-      button_1.setBounds(262, 30, 80, 16);
+      Button btnOkt = new Button(group, SWT.RADIO);
+      btnOkt.addSelectionListener(new SelectionAdapter() {
+          @Override
+          public void widgetSelected(SelectionEvent e) {
+              tableSig.setVisible(false);
+              txtSigNum.setVisible(true);
+              txtSigNum.setText(input.getSignatureOct());
+          }
+      });      
+      btnOkt.setText("Octal");
+      btnOkt.setBounds(186, 10, 70, 16);
       
-      Button button_2 = new Button(group, SWT.RADIO);
-      button_2.setText("Hex");
-      button_2.setBounds(348, 30, 70, 16);
+      Button btnDec = new Button(group, SWT.RADIO);
+      btnDec.addSelectionListener(new SelectionAdapter() {
+          @Override
+          public void widgetSelected(SelectionEvent e) {
+              tableSig.setVisible(false);
+              txtSigNum.setVisible(true);
+              txtSigNum.setText(hexToDecimal(input.getSignatureHex()));
+          }
+      });
+      btnDec.setText("Decimal");
+      btnDec.setBounds(262, 10, 80, 16);
       
-      Button button_3 = new Button(group, SWT.RADIO);
-      button_3.setText("Hex dump (hex and ascii)");
-      button_3.setSelection(true);
-      button_3.setBounds(10, 30, 170, 16);
+      Button btnHex = new Button(group, SWT.RADIO);
+      btnHex.addSelectionListener(new SelectionAdapter() {
+          @Override
+          public void widgetSelected(SelectionEvent e) {
+              tableSig.setVisible(false);
+              txtSigNum.setVisible(true);
+              txtSigNum.setText(input.getSignatureHex());
+          }
+      });
+      btnHex.setText("Hex");
+      btnHex.setBounds(348, 10, 70, 16);
+      
+      Button btnHexdump = new Button(group, SWT.RADIO);
+      btnHexdump.setText("Hex dump (hex and ascii)");
+      btnHexdump.addSelectionListener(new SelectionAdapter() {
+          @Override
+          public void widgetSelected(SelectionEvent e) {
+              txtSigNum.setVisible(false);
+              tableSig.setVisible(true);
+          }
+      });
+      btnHexdump.setSelection(true);
+      btnHexdump.setBounds(10, 10, 170, 16);
       
       Button btnVerificationModels = new Button(composite, SWT.NONE);
-      btnVerificationModels.setBounds(0, 636, 137, 25);
+      btnVerificationModels.setBounds(0, 593, 137, 25);
       btnVerificationModels.setText(Messages.SignaturResult_btnVerificationModels);
       btnVerificationModels.addSelectionListener(new SelectionAdapter() {
           @Override
@@ -226,7 +299,7 @@ public class SignaturResult extends Shell {
    */
   protected void createContents() {
       setText(Messages.SignaturResult_title);
-      setSize(512, 710);
+      setSize(512, 666);
 
   }
 
