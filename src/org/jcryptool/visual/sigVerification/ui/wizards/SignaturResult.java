@@ -14,9 +14,12 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
+import org.jcryptool.visual.sigVerification.ui.view.SigVerView;
 
 public class SignaturResult extends Shell {
     private Table tableSig;
@@ -25,6 +28,7 @@ public class SignaturResult extends Shell {
     Hash hashInst;
     SigVerification sigVerification;
     Composite parent;
+    SigVerView sigVerView;
 
     private int signatureLengh;
     private int hashBitSize;
@@ -37,13 +41,14 @@ public class SignaturResult extends Shell {
      * @param parent 
      */
     public SignaturResult(Display display, final Input input, Hash hashInst,
-            SigVerification sigVerification) {
+            SigVerification sigVerification, final SigVerView sigVerView) {
         super(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.TITLE | SWT.APPLICATION_MODAL);
         this.input = input;
         this.hashInst = hashInst;
         this.sigVerification = sigVerification;
         this.signatureLengh = input.signatureSize;
         this.hashBitSize = hashInst.hashHex.length() * 8;
+        this.sigVerView = sigVerView;
         input.setSignatureHex();
         input.setSignatureOct();
 
@@ -292,7 +297,14 @@ public class SignaturResult extends Shell {
         btnVerificationModels.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                // ToDo      
+                // ToDo
+                try {
+                    sigVerView.createTabItem();
+                    sigVerView.changeTab();
+                } catch (Exception ex) {
+                    LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                }
+
             }
         });
         createContents();

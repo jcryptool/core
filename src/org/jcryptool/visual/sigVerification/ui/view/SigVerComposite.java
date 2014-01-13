@@ -88,6 +88,7 @@ public class SigVerComposite extends Composite {
     Input input = new Input();
     Hash hashInst = new Hash();
     SigVerification sigVerification = new SigVerification();
+    SigVerView sigVerView;
     private int step = 0; // Fortschritt für Schritt zurück
 
     /**
@@ -125,6 +126,7 @@ public class SigVerComposite extends Composite {
         super(parent, style);
         createContents(parent);
         createActions();
+        this.sigVerView = view;
 
         // Adds reset button to the Toolbar
         IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
@@ -536,7 +538,7 @@ public class SigVerComposite extends Composite {
                     // Create the Show signature shell
                     Display display = Display.getCurrent();
                     SignaturResult shell = new SignaturResult(display, input, hashInst,
-                            sigVerification);
+                            sigVerification, sigVerView);
                     shell.open();
                     shell.layout();
                     while (!shell.isDisposed()) {

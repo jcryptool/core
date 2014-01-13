@@ -35,16 +35,16 @@ public class ModelComposite extends Composite {
     private Button btnNewResult;
     private Text lblChoose;
     
-    public ModelComposite(Composite parent, int style/*, SigVerView view*/) {
+    public ModelComposite(Composite parent, int style, SigVerView sigVerView) {
         super(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         createContents(parent);
         createActions();
 
         // Adds reset button to the Toolbar
-         /*IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
+         IToolBarManager toolBarMenu = sigVerView.getViewSite().getActionBars().getToolBarManager();
          Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
          action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
-         toolBarMenu.add(action);*/
+         toolBarMenu.add(action);
     }
 
 
