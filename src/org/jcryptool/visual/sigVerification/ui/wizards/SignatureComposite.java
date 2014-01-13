@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.swt.SWT;
@@ -25,7 +24,7 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
- * This class contains the GUI elements for signature wizard. 
+ * This class contains the GUI elements for signature wizard.
  * 
  * @author Wilfing
  */
@@ -101,41 +100,41 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
         // Enable/disable methods
         switch (method) {
-            case 0: // MD5: RSA
-                rdo2.setEnabled(true);
-                rdo1.setEnabled(false);
-                rdo3.setEnabled(false);
-                rdo4.setEnabled(false);
-                rdo2.setSelection(true);
-                rdo1.setSelection(false);
+        case 0: // MD5: RSA
+            rdo2.setEnabled(true);
+            rdo1.setEnabled(false);
+            rdo3.setEnabled(false);
+            rdo4.setEnabled(false);
+            rdo2.setSelection(true);
+            rdo1.setSelection(false);
 
-                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
-                input.s = 1;
-                break;
-            case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
-                rdo1.setEnabled(true);
-                rdo2.setEnabled(true);
-                rdo3.setEnabled(true);
-                rdo4.setEnabled(true);
+            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
+            input.s = 1;
+            break;
+        case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
+            rdo1.setEnabled(true);
+            rdo2.setEnabled(true);
+            rdo3.setEnabled(true);
+            rdo4.setEnabled(true);
 
-                rdo1.setSelection(true);
-                rdo2.setSelection(false);
-                input.s = 0;
-                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
-                break;
-            case 2:
-            case 3:
-            case 4: // SHA256+: RSA, ECDSA, RSA + MGF1
-                rdo2.setEnabled(true);
-                rdo3.setEnabled(true);
-                rdo4.setEnabled(true);
-                rdo1.setEnabled(false);
+            rdo1.setSelection(true);
+            rdo2.setSelection(false);
+            input.s = 0;
+            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
+            break;
+        case 2:
+        case 3:
+        case 4: // SHA256+: RSA, ECDSA, RSA + MGF1
+            rdo2.setEnabled(true);
+            rdo3.setEnabled(true);
+            rdo4.setEnabled(true);
+            rdo1.setEnabled(false);
 
-                rdo2.setSelection(true);
-                rdo1.setSelection(false);
-                input.s = 1;
-                txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
-                break;
+            rdo2.setSelection(true);
+            rdo1.setSelection(false);
+            input.s = 1;
+            txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
+            break;
         }
     }
 
@@ -150,7 +149,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
     public void widgetSelected(SelectionEvent e) {
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
-            // Store the chosen signature to keep the selected radio button for the next time the wizard is opened
+            // Store the chosen signature to keep the selected radio button for the next time the
+            // wizard is opened
             input.s = 0;
         } else {
             if (rdo2.getSelection()) {
@@ -162,7 +162,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
                     input.s = 2;
                 } else {
                     if (rdo4.getSelection()) {
-                        txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSAandMGF1_description);
+                        txtDescription.setText(Messages.SignatureWizard_Usage
+                                + Messages.SignatureWizard_RSAandMGF1_description);
                         input.s = 3;
                     }
                 }
@@ -172,9 +173,9 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
-    	switch (method) {
+        switch (method) {
         case 0: // MD5: RSA
-            input.s = 1;            
+            input.s = 1;
             break;
         case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
             input.s = 0;
@@ -184,6 +185,6 @@ public class SignatureComposite extends Composite implements SelectionListener {
         case 4: // SHA256+: RSA, ECDSA, RSA + MGF1
             input.s = 1;
             break;
-    	}
+        }
     }
 }

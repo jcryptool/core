@@ -19,8 +19,8 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
 /**
- * This class contains the GUI elements for file input. It also contains a method to convert the opened file into a byte
- * array.
+ * This class contains the GUI elements for file input. It also contains a method to convert the
+ * opened file into a byte array.
  * 
  * @author Wilfing
  */
@@ -54,11 +54,11 @@ public class InputFileComposite extends Composite implements SelectionListener {
             FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
             fd.setText(Messages.InputWizard_FileOpenDialog);
             String strFile = fd.open();
-            
+
             if (strFile == null || strFile.isEmpty()) {
                 return;
             }
-            
+
             file = new File(strFile);
             if (file.length() > maxSize) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
@@ -68,7 +68,8 @@ public class InputFileComposite extends Composite implements SelectionListener {
                 throw new Exception("The file " + file.getName() + " is too large."); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
-            // Call a method that converts the input file to a byte array and save the returned array in Input.java
+            // Call a method that converts the input file to a byte array and save the returned
+            // array in Input.java
             input.data = getBytesFromFile(file);
 
             if (input.data == null) {

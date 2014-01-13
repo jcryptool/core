@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.swt.SWT;
@@ -124,26 +123,27 @@ public class HashComposite extends Composite implements SelectionListener {
 
         // Load the previous selection
         switch (input.h) {
-            case 0:
-                rdo1.setSelection(true);
-                break;
-            case 1:
-                rdo2.setSelection(true);
-                break;
-            case 2:
-                rdo3.setSelection(true);
-                break;
-            case 3:
-                rdo4.setSelection(true);
-                break;
-            case 4:
-                rdo5.setSelection(true);
-                break;
-            default:
-                rdo2.setSelection(true);
-                break;
+        case 0:
+            rdo1.setSelection(true);
+            break;
+        case 1:
+            rdo2.setSelection(true);
+            break;
+        case 2:
+            rdo3.setSelection(true);
+            break;
+        case 3:
+            rdo4.setSelection(true);
+            break;
+        case 4:
+            rdo5.setSelection(true);
+            break;
+        default:
+            rdo2.setSelection(true);
+            break;
         }
-        // Fire an event to show the correct text. It doesn't matter which radio button triggers the event
+        // Fire an event to show the correct text. It doesn't matter which radio button triggers the
+        // event
         // because it is checked in the event handler
         rdo1.notifyListeners(SWT.Selection, new Event());
     }

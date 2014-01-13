@@ -13,15 +13,16 @@ public class SigVerView extends ViewPart {
      * This is a callback that will allow us to create the viewer and initialize it.
      */
     public void createPartControl(Composite parent) {
-        this.parent=parent;
-        final ScrolledComposite sc= new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+        this.parent = parent;
+        final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
         SigVerComposite c = new SigVerComposite(sc, SWT.NONE, this);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.sigVerification.SigVerView"); //$NON-NLS-1$
+
+        PlatformUI.getWorkbench().getHelpSystem()
+                .setHelp(parent.getShell(), "org.jcryptool.visual.sigVerification.SigVerView"); //$NON-NLS-1$
 
     }
 

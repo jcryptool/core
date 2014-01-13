@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.swt.SWT;
@@ -34,17 +33,17 @@ public class InputKeyEditorComposite extends Composite {
     private InputKeyEditorWizardPage page;
     Input input;
     SigVerification sigVerification;
-    
+
     public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p) {
         super(parent, style);
         this.input = p.input;
-        this.sigVerification = p.sigVerification;        
+        this.sigVerification = p.sigVerification;
         text = new Text(this, SWT.BORDER | SWT.WRAP);
         text.setBounds(10, 10, 430, 215);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         text.setTextLimit(TEXTLIMIT);
         text.setFocus();
-        
+
         Label lblToSaveThe = new Label(this, SWT.NONE);
         lblToSaveThe.setBounds(10, 231, 430, 59);
         lblToSaveThe.setText(Messages.InputKeyEditorWizard_Label);
@@ -60,10 +59,10 @@ public class InputKeyEditorComposite extends Composite {
                     page.inputKeyWizard.enableFinish = true;
                     page.getWizard().getContainer().updateButtons();
                     byte[] pubKey = text.getText().getBytes();
-                    try{
-                    	sigVerification.publicKeyFile(pubKey, input);
-                    }catch(Exception ex){
-                    	LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
+                    try {
+                        sigVerification.publicKeyFile(pubKey, input);
+                    } catch (Exception ex) {
+                        LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }
                     page.getWizard().getContainer().updateButtons();
                 } else {

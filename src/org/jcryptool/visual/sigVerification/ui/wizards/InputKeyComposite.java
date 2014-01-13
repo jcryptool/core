@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.swt.SWT;
@@ -28,20 +27,20 @@ public class InputKeyComposite extends Composite implements SelectionListener {
     private Button rdoFromFile;
     private Button rdoFromEditor;
     private Button rdoFromKeyStore;
-    SigVerification sigVerification; 
-    Hash hash; 
+    SigVerification sigVerification;
+    Hash hash;
     Input input;
     InputKeyWizardPage page;
-    InputKeyWizard inputKeyWizard;   
+    InputKeyWizard inputKeyWizard;
 
     public InputKeyComposite(Composite parent, int style, InputKeyWizardPage page) {
         super(parent, style);
         this.sigVerification = page.sigVerifiaction;
         this.hash = page.hash;
         this.input = page.input;
-        this.page = page;        
+        this.page = page;
         this.inputKeyWizard = page.inputKeyWizard;
-        
+
         rdoFromFile = new Button(this, SWT.RADIO);
         rdoFromFile.setBounds(10, 10, 430, 18);
         rdoFromFile.setText(Messages.InputKeyWizard_rdoFromFile);
@@ -50,37 +49,36 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         rdoFromEditor.setBounds(10, 34, 333, 18);
         rdoFromEditor.setText(Messages.InputKeyWizard_rdoFromEditor);
         parent.setSize(600, 400);
-        
+
         rdoFromKeyStore = new Button(this, SWT.RADIO);
         rdoFromKeyStore.setBounds(10, 58, 430, 18);
         rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
-        
+
         rdoFromFile.setSelection(true);
-    
+
         rdoFromKeyStore.addSelectionListener(this);
     }
-    
+
     public void widgetSelected(SelectionEvent e) {
-		if (rdoFromKeyStore.getSelection()){		
-			inputKeyWizard.enableFinish = true;
-			page.enableNext = false;
-			page.setPageComplete(true);
-			page.canFlipToNextPage();
-			page.getWizard().getContainer().updateButtons();
-		}else if (rdoFromEditor.getSelection()){
-			page.enableNext = true;
-			inputKeyWizard.enableFinish = false;
-			page.canFlipToNextPage();
-			page.getWizard().getContainer().updateButtons();
-		}else if (rdoFromFile.getSelection()){
-			page.enableNext = true;
-			inputKeyWizard.enableFinish = false;
-			page.canFlipToNextPage();
-			page.getWizard().getContainer().updateButtons();
-		}
-	}    
-    
+        if (rdoFromKeyStore.getSelection()) {
+            inputKeyWizard.enableFinish = true;
+            page.enableNext = false;
+            page.setPageComplete(true);
+            page.canFlipToNextPage();
+            page.getWizard().getContainer().updateButtons();
+        } else if (rdoFromEditor.getSelection()) {
+            page.enableNext = true;
+            inputKeyWizard.enableFinish = false;
+            page.canFlipToNextPage();
+            page.getWizard().getContainer().updateButtons();
+        } else if (rdoFromFile.getSelection()) {
+            page.enableNext = true;
+            inputKeyWizard.enableFinish = false;
+            page.canFlipToNextPage();
+            page.getWizard().getContainer().updateButtons();
+        }
+    }
 
     /**
      * @return the rdoFromFile
@@ -95,7 +93,7 @@ public class InputKeyComposite extends Composite implements SelectionListener {
     public Button getRdoFromEditor() {
         return rdoFromEditor;
     }
-    
+
     /**
      * @return the rdoFromKeyStore
      */
@@ -103,9 +101,9 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         return rdoFromKeyStore;
     }
 
-	@Override
-	public void widgetDefaultSelected(SelectionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}    
+    @Override
+    public void widgetDefaultSelected(SelectionEvent e) {
+        // TODO Auto-generated method stub
+
+    }
 }

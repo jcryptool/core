@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.IWizardPage;
@@ -30,13 +29,12 @@ public class InputKeyWizard extends Wizard {
     Input input;
     SigVerification sigVerification;
     Hash hash;
-    
-    
+
     public InputKeyWizard(Input input, SigVerification sigVerification, Hash hash) {
         super();
         this.input = input;
         this.sigVerification = sigVerification;
-        this.hash = hash;        
+        this.hash = hash;
         setWindowTitle(Messages.InputKeyWizard_title);
     }
 
@@ -52,21 +50,21 @@ public class InputKeyWizard extends Wizard {
         addPage(pageFile);
     }
 
-    @Override 
-    public boolean canFinish(){
-    	return enableFinish;
+    @Override
+    public boolean canFinish() {
+        return enableFinish;
     }
-    
+
     @Override
     public boolean performFinish() {
-    	InputKeyWizardPage p = page;
+        InputKeyWizardPage p = page;
         if (pageEditor.isPageComplete() || pageFile.isPageComplete())
             return true;
-        else if (p.getRdoSelection() == 2){
-			sigVerification.verifySignature(input, hash);
-			return true;
+        else if (p.getRdoSelection() == 2) {
+            sigVerification.verifySignature(input, hash);
+            return true;
         }
-        	
+
         return false;
     }
 
@@ -79,11 +77,11 @@ public class InputKeyWizard extends Wizard {
                 pageFile.setPageComplete(true);
                 pageEditor.setPageComplete(false);
                 return pageEditor;
-            } else if (p.getRdoSelection() == 1){
+            } else if (p.getRdoSelection() == 1) {
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(false);
                 return pageFile;
-            } 
+            }
         }
 
         return null;

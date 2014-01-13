@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import java.io.File;
@@ -31,8 +30,8 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
- * This class contains the GUI elements for key file input. It also contains a method to convert the opened file into a byte
- * array.
+ * This class contains the GUI elements for key file input. It also contains a method to convert the
+ * opened file into a byte array.
  * 
  * @author Wilfing
  */
@@ -67,11 +66,11 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             FileDialog fd = new FileDialog(Display.getCurrent().getActiveShell(), SWT.OPEN);
             fd.setText(Messages.InputKeyWizard_FileOpenDialog);
             String strFile = fd.open();
-            
+
             if (strFile == null || strFile.isEmpty()) {
                 return;
             }
-            
+
             file = new File(strFile);
             if (file.length() > maxSize) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
@@ -81,9 +80,10 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
                 throw new Exception("The file " + file.getName() + " is too large."); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
-            // Call a method that converts the input file to a byte array and save the returned array in Input.java
-            byte[] pubKey = getBytesFromFile(file);            
-            
+            // Call a method that converts the input file to a byte array and save the returned
+            // array in Input.java
+            byte[] pubKey = getBytesFromFile(file);
+
             if (pubKey == null) {
                 MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_WARNING | SWT.OK);
                 messageBox.setText(Messages.InputKeyWizard_WarningTitle);
@@ -93,13 +93,13 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             }
 
             txtPath.setText(file.getAbsolutePath());
-            
+
             // Byte Array in Typ PublicKey umwandeln.
             sigVerification.publicKeyFile(pubKey, input);
-            
+
             page.setPageComplete(true);
             page.inputKeyWizard.enableFinish = true;
-			page.getWizard().getContainer().updateButtons();
+            page.getWizard().getContainer().updateButtons();
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }

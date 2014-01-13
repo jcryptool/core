@@ -3,7 +3,8 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Holds the messages for the signature visualization (for the 3 wizards and the SignaturResult shell)
+ * Holds the messages for the signature visualization (for the 3 wizards and the SignaturResult
+ * shell)
  * 
  * @author Wilfing
  */
@@ -85,10 +86,10 @@ public class Messages {
     public static String SignaturResult_tblAscii;
 
     public static String SignaturResult_editorDescripton;
-    
+
     public static String SignaturResult_btnVerificationModels;
 
-    //Input Key Wizard    
+    // Input Key Wizard
     public static String InputKeyWizard_title;
     public static String InputKeyWizard_header;
     public static String InputKeyWizard_FileOpenDialog;
@@ -98,20 +99,18 @@ public class Messages {
     public static String InputKeyWizard_rdoFromFile;
     public static String InputKeyWizard_rdoFromEditor;
     public static String InputKeyWizard_rdoFromKeyStore;
-    
-    //Input Key File Wizard
+
+    // Input Key File Wizard
     public static String InputKeyFileWizard_btnBrowse;
     public static String InputKeyFileWizard_title;
     public static String InputKeyFileWizard_header;
-    
-    //Input Key Editor Wizard
+
+    // Input Key Editor Wizard
     public static String InputKeyEditorWizard_title;
     public static String InputKeyEditorWizard_header;
     public static String InputKeyEditorWizard_Label;
     public static String EnterText;
-    
 
-    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

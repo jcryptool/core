@@ -10,9 +10,9 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
     // Name of the files that contain the string values
     private static final String BUNDLE_NAME = "org.jcryptool.visual.sigVerification.messages"; //$NON-NLS-1$
-	
+
     // Create strings for all the values
-	public static String SigVerComposite_resutFalseDescription;
+    public static String SigVerComposite_resutFalseDescription;
     public static String SigVerComposite_resutTrueDescription;
     public static String SigVerComposite_lblProgress;
     public static String SigVerComposite_tbtmNewItem_0;
@@ -48,7 +48,6 @@ public class Messages {
     public static String ModelComposite_lbllevel3;
     public static String ModelComposite_btnNewResult;
     public static String ModelComposite_Choose;
-
 
     static {
         // initialize resource bundle

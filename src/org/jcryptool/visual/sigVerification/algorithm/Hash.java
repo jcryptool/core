@@ -10,10 +10,10 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
  * @author Wilfing
  */
 public class Hash {
-	public byte[] hash = null;
-	public String hashHex = null;
-	public String hashmethod = null;
-	
+    public byte[] hash = null;
+    public String hashHex = null;
+    public String hashmethod = null;
+
     /**
      * This method hashes an input stored in Input.java with a given hash method
      * 
@@ -25,10 +25,11 @@ public class Hash {
         byte[] md = null;
         // Den namen der Hashfunktion festlegen.
         setHashmethod(hashmethod);
-        
+
         try {
             // Get an MD5 message digest object and compute the plaintext digest
-            MessageDigest messageDigest = MessageDigest.getInstance(hashmethod); // Argument is a string!
+            MessageDigest messageDigest = MessageDigest.getInstance(hashmethod); // Argument is a
+                                                                                 // string!
             messageDigest.update(input);
             // Output:
             md = messageDigest.digest();
@@ -38,84 +39,82 @@ public class Hash {
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
-        
+
         return md;
     }
-    
-    
+
     /**
-     * Changing the name of the hashmethod to be compatible with the Flexiprovider. 
+     * Changing the name of the hashmethod to be compatible with the Flexiprovider.
      * 
-     * @param hashmethod A String with the name of the hashmethod 
+     * @param hashmethod A String with the name of the hashmethod
      */
-    public void setHashmethod(String hashmethod){
-    	if(hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha1){
-    		this.hashmethod = "SHA1";
-        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha256){
-        	this.hashmethod = "SHA256";
-        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384){
-        	this.hashmethod = "SHA384";
-        }else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512){
-        	this.hashmethod = "SHA512";
-        }else{
-        	this.hashmethod = hashmethod;
+    public void setHashmethod(String hashmethod) {
+        if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha1) {
+            this.hashmethod = "SHA1";
+        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha256) {
+            this.hashmethod = "SHA256";
+        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384) {
+            this.hashmethod = "SHA384";
+        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512) {
+            this.hashmethod = "SHA512";
+        } else {
+            this.hashmethod = hashmethod;
         }
     }
-    
+
     /**
      * Sets the hash (byte array)
      * 
      * @param hash (byte array)
      */
-    public void setHash(byte[] hash){
-    	this.hash = hash;
+    public void setHash(byte[] hash) {
+        this.hash = hash;
     }
-    
+
     /**
      * Sets the hashHex (String) by calling the function bytesToHex(bytes[] bytes).
      * 
      */
-    public void setHashHex(){
-    	this.hashHex = bytesToHex(this.hash);
+    public void setHashHex() {
+        this.hashHex = bytesToHex(this.hash);
     }
-    
+
     /**
      * Sets the hashHex (String) by calling the function bytesToHex(bytes[] bytes).
      * 
      * @param hash A byte array
      */
-    public void setHashHex(byte[] hash){
-    	this.hashHex = bytesToHex(hash);
+    public void setHashHex(byte[] hash) {
+        this.hashHex = bytesToHex(hash);
     }
-        
+
     /**
      * Returns the byte array hash.
      * 
      * @return hash A byte array.
      */
-    public byte[] getHash(){
-    	return hash;
+    public byte[] getHash() {
+        return hash;
     }
-    
+
     /**
      * Returns the string hashHex.
      * 
      * @return hashHex A string.
      */
-    public String getHashHex(){
-    	return hashHex;
+    public String getHashHex() {
+        return hashHex;
     }
-    
+
     /**
      * Resets this Object.
      */
-    public void reset(){
-    	this.hash = null;
-    	this.hashHex = null;
-    	this.hashmethod = null;
+    public void reset() {
+        this.hash = null;
+        this.hashHex = null;
+        this.hashmethod = null;
     }
-    
-    
+
     /**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
      * 
@@ -123,7 +122,7 @@ public class Hash {
      * @return The hex representation of the byte array
      */
     public static String bytesToHex(byte[] bytes) {
-        final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         char[] hexChars = new char[bytes.length * 2];
         int v;
         for (int j = 0; j < bytes.length; j++) {

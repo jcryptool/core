@@ -11,7 +11,6 @@ public class Input {
      */
     public byte[] data;
 
-
     /**
      * Contains the path to the input data
      */
@@ -20,18 +19,17 @@ public class Input {
     public int h = -1; // the chosen hash (integer)
 
     public int s = -1; // the chosen string (integer)
-    
 
     /**
      * Contains the plain text of the input data (byte array)
      */
     public byte[] plain;
-    
+
     /**
      * Contains the signature of the input data (byte array)
      */
-    public byte[] signature;      
-    
+    public byte[] signature;
+
     /**
      * Contains the signature of the input data (hex representation)
      */
@@ -50,12 +48,12 @@ public class Input {
     /**
      * The name of the chosen signature method ("RSA" etc.)
      */
-    public String signaturemethod="";
-    
+    public String signaturemethod = null;
+
     /**
      * The size in bit of the chosen signature method ("RSA" = 1024 etc.)
      */
-    public int signatureSize;       
+    public int signatureSize;
 
     /**
      * This method resets all variables in this class to their initial value
@@ -73,71 +71,69 @@ public class Input {
         sigVerification.reset();
         h = -1;
     }
-    
+
     /**
      * Sets the signaturemethod with the used method.
      * 
      * @return void
      */
-    public void setSignaturemethod(){
-    	switch(this.s){
-        case 0:             
+    public void setSignaturemethod() {
+        switch (this.s) {
+        case 0:
             this.signaturemethod = "DSA";
             break;
         case 1:
-        	this.signaturemethod = "RSA";
+            this.signaturemethod = "RSA";
             break;
         case 2:
-        	this.signaturemethod = "ECDSA";
+            this.signaturemethod = "ECDSA";
             break;
-        case 3:             
-        	this.signaturemethod = "RSA and MGF1"; //????
+        case 3:
+            this.signaturemethod = "RSA and MGF1"; // ????
             break;
         default:
-        	this.signaturemethod = "";
+            this.signaturemethod = "";
             break;
-    	}
+        }
     }
-    
+
     /**
      * Sets signatureSize to the size of the signature in bit.
      * 
      * @return void
      */
-    public void setSignatureSize(){
-    	switch (this.s){
-        case 0:             // DSA 368 Bit -> 46 Byte
+    public void setSignatureSize() {
+        switch (this.s) {
+        case 0: // DSA 368 Bit -> 46 Byte
             this.signatureSize = 368;
             break;
-        case 1:             // RSA, RSA und MGF1 1024 Bit -> 128 Byte
+        case 1: // RSA, RSA und MGF1 1024 Bit -> 128 Byte
         case 3:
-        	this.signatureSize = 1024;
+            this.signatureSize = 1024;
             break;
-        case 2:             // ECDSA 560 Bit -> 70 Byte
-        	this.signatureSize = 560;
+        case 2: // ECDSA 560 Bit -> 70 Byte
+            this.signatureSize = 560;
             break;
         default:
-        	this.signatureSize = -1;
+            this.signatureSize = -1;
             break;
-    	}
+        }
     }
-    
-    
+
     /**
      * Takes the input data and divides it into the signature and the plaintext.
      * 
      * @return void
      */
-    public void divideSignaturePlaintext(){      
-        int sigSize = this.signatureSize/8;	// Länge der Signatur von Bit in Byte umwandeln.        
-       
-       // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
-       this.signature = java.util.Arrays.copyOfRange(this.data, 4, sigSize+4);
-       this.plain = java.util.Arrays.copyOfRange(this.data, sigSize+4, this.data.length);
-       
-    }        
-    
-    
+    public void divideSignaturePlaintext() {
+        int sigSize = this.signatureSize / 8; // Länge der Signatur von Bit in Byte umwandeln.
+
+        // Trennt in die Inputdaten auf in Signatur und Plaintext. Der vordere Teil ist Signatur.
+        this.signature = java.util.Arrays.copyOfRange(this.data, 4, sigSize + 4);
+        this.plain = java.util.Arrays.copyOfRange(this.data, sigSize + 4, this.data.length);
+
+    }
+
     /**
      * Converts a given byte array (signature, hash, ...) to it's hexadecimal representation
      * 
@@ -145,7 +141,7 @@ public class Input {
      * @return The hex representation of the byte array
      */
     public static String bytesToHex(byte[] bytes) {
-        final char[] hexArray = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         char[] hexChars = new char[bytes.length * 2];
         int v;
         for (int j = 0; j < bytes.length; j++) {
@@ -156,10 +152,10 @@ public class Input {
         return new String(hexChars);
     }
 
-    
     /**
-     * Returns the octal String representation of a byte array with optional prefix. The String is formed by making
-     * value[0] the leftmost three digits and value[value.length-1] the rightmost three digits.
+     * Returns the octal String representation of a byte array with optional prefix. The String is
+     * formed by making value[0] the leftmost three digits and value[value.length-1] the rightmost
+     * three digits.
      * 
      * @param array the byte array
      */
@@ -184,38 +180,38 @@ public class Input {
         return sb.append(Character.forDigit(b >>> 6 & 0x07, 8)).append(Character.forDigit(b >>> 3 & 0x07, 8))
                 .append(Character.forDigit(b & 0x07, 8));
     }
-    
+
     /**
-    * Sets the variable signatureHex (a String).
-    * Uses the funktion bytesToHex(byte[]) to convert the signature.
-    */
-    public void setSignatureHex(){
-    	this.signatureHex = bytesToHex(this.signature);
-    }
-    
-    /**
-     * Sets the variable signatureOct (a String).
-     * Uses the funktion bytesToOct(byte[]) to convert the signature.
+     * Sets the variable signatureHex (a String). Uses the funktion bytesToHex(byte[]) to convert
+     * the signature.
      */
-    public void setSignatureOct(){
-    	this.signatureOct = bytesToOct(this.signature, "");
+    public void setSignatureHex() {
+        this.signatureHex = bytesToHex(this.signature);
     }
-    
+
+    /**
+     * Sets the variable signatureOct (a String). Uses the funktion bytesToOct(byte[]) to convert
+     * the signature.
+     */
+    public void setSignatureOct() {
+        this.signatureOct = bytesToOct(this.signature, "");
+    }
+
     /**
      * Returns the signature in hexadecimal form.
      * 
      * @return signaturHex (a String)
      */
-    public String getSignatureHex(){
-    	return this.signatureHex;
+    public String getSignatureHex() {
+        return this.signatureHex;
     }
-    
+
     /**
      * Returns the signature in octal form.
      * 
      * @return signaturOct (a String)
      */
-    public String getSignatureOct(){
-    	return this.signatureOct;
+    public String getSignatureOct() {
+        return this.signatureOct;
     }
 }
