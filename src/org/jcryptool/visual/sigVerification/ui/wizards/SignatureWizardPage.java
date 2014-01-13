@@ -14,12 +14,11 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
-//import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 
 /**
  * This class contains loads the composite for the signature wizard.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class SignatureWizardPage extends WizardPage {
     private SignatureComposite composite;
@@ -37,7 +36,7 @@ public class SignatureWizardPage extends WizardPage {
     public void createControl(Composite parent) {
         composite = new SignatureComposite(parent, NONE, method, this, input);
         setControl(composite);
-        setPageComplete(false);
+        setPageComplete(true);
     }
 
     /**
@@ -46,11 +45,4 @@ public class SignatureWizardPage extends WizardPage {
     public Group getGrpSignatures() {
         return composite.getgrpSignatures();
     }
-
-    /**
-     * @return the KeyStoreAlias
-     */
-/*    public KeyStoreAlias getAlias() {
-        return composite.getAlias();
-    }*/
 }

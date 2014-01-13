@@ -44,10 +44,10 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
     Input input;
     SigVerification sigVerification;
 
-    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p, Input input, SigVerification sigVerification) {
+    public InputKeyFileComposite(Composite parent, int style, InputKeyFileWizardPage p) {
         super(parent, style);
-        this.input = input;
-        this.sigVerification = sigVerification;
+        this.input = p.input;
+        this.sigVerification = p.sigVerification;
         txtPath = new Text(this, SWT.BORDER);
         txtPath.setEditable(false);
         txtPath.setBounds(10, 10, 323, 19);
@@ -98,6 +98,8 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             sigVerification.publicKeyFile(pubKey, input);
             
             page.setPageComplete(true);
+            page.inputKeyWizard.enableFinish = true;
+			page.getWizard().getContainer().updateButtons();
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }

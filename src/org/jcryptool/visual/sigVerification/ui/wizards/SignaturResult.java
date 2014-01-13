@@ -96,17 +96,17 @@ public class SignaturResult extends Shell {
       tblclmnAddress.setResizable(false);
       tblclmnAddress.setWidth(60);
       tblclmnAddress.setToolTipText("");
-      tblclmnAddress.setText(Messages.ShowSig_tblAdr);
+      tblclmnAddress.setText(Messages.SignaturResult_tblAdr);
 
       TableColumn tblclmnHex = new TableColumn(tableSig, SWT.NONE);
       tblclmnHex.setResizable(false);
       tblclmnHex.setWidth(250);
-      tblclmnHex.setText(Messages.ShowSig_tblHex);
+      tblclmnHex.setText(Messages.SignaturResult_tblHex);
 
       TableColumn tblclmnAscii = new TableColumn(tableSig, SWT.NONE);
       tblclmnAscii.setResizable(false);
       tblclmnAscii.setWidth(150);
-      tblclmnAscii.setText(Messages.ShowSig_tblAscii);
+      tblclmnAscii.setText(Messages.SignaturResult_tblAscii);
 
       int stepSize = 14;
       
@@ -157,17 +157,17 @@ public class SignaturResult extends Shell {
       tblclmnAddress_1.setResizable(false);
       tblclmnAddress_1.setWidth(60);
       tblclmnAddress_1.setToolTipText("");
-      tblclmnAddress_1.setText(Messages.ShowSig_tblAdr);
+      tblclmnAddress_1.setText(Messages.SignaturResult_tblAdr);
 
       TableColumn tblclmnHex_1 = new TableColumn(tableHash, SWT.NONE);
       tblclmnHex_1.setResizable(false);
       tblclmnHex_1.setWidth(250);
-      tblclmnHex_1.setText(Messages.ShowSig_tblHex);
+      tblclmnHex_1.setText(Messages.SignaturResult_tblHex);
 
       TableColumn tblclmnAscii_1 = new TableColumn(tableHash, SWT.NONE);
       tblclmnAscii_1.setResizable(false);
       tblclmnAscii_1.setWidth(150);
-      tblclmnAscii_1.setText(Messages.ShowSig_tblAscii);
+      tblclmnAscii_1.setText(Messages.SignaturResult_tblAscii);
       
       int len2 = hashInst.getHashHex().length();
       String asciistr2 = convertHexToString(hashInst.getHashHex());

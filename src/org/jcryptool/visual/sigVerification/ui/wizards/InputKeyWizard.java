@@ -26,34 +26,47 @@ public class InputKeyWizard extends Wizard {
     private InputKeyWizardPage page;
     private InputKeyEditorWizardPage pageEditor;
     private InputKeyFileWizardPage pageFile;
+    public boolean enableFinish = false;
     Input input;
     SigVerification sigVerification;
     Hash hash;
+    
     
     public InputKeyWizard(Input input, SigVerification sigVerification, Hash hash) {
         super();
         this.input = input;
         this.sigVerification = sigVerification;
-        this.hash = hash;
+        this.hash = hash;        
         setWindowTitle(Messages.InputKeyWizard_title);
     }
 
     @Override
     public void addPages() {
-        page = new InputKeyWizardPage("InputKey Wizard"); //$NON-NLS-1$
+        page = new InputKeyWizardPage("InputKey Wizard", this); //$NON-NLS-1$
         addPage(page);
 
-        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard", input, sigVerification); //$NON-NLS-1$
+        pageEditor = new InputKeyEditorWizardPage("InputKeyEditor Wizard", this); //$NON-NLS-1$
         addPage(pageEditor);
 
-        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard", input, sigVerification); //$NON-NLS-1$
+        pageFile = new InputKeyFileWizardPage("InputKeyFile Wizard", this); //$NON-NLS-1$
         addPage(pageFile);
     }
 
+    @Override 
+    public boolean canFinish(){
+    	return enableFinish;
+    }
+    
     @Override
     public boolean performFinish() {
+    	InputKeyWizardPage p = page;
         if (pageEditor.isPageComplete() || pageFile.isPageComplete())
             return true;
+        else if (p.getRdoSelection() == 2){
+			sigVerification.verifySignature(input, hash);
+			return true;
+        }
+        	
         return false;
     }
 
@@ -70,13 +83,7 @@ public class InputKeyWizard extends Wizard {
                 pageEditor.setPageComplete(true);
                 pageFile.setPageComplete(false);
                 return pageFile;
-            } else {            	
-                pageEditor.setPageComplete(true);
-                pageFile.setPageComplete(true);
-                p.setPageComplete(true);
-                sigVerification.verifySignature(input, hash);
-                return p;
-            }
+            } 
         }
 
         return null;

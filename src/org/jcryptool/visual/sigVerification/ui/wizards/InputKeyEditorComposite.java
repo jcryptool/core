@@ -35,10 +35,10 @@ public class InputKeyEditorComposite extends Composite {
     Input input;
     SigVerification sigVerification;
     
-    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p, final Input input, final SigVerification sigVerification) {
+    public InputKeyEditorComposite(Composite parent, int style, InputKeyEditorWizardPage p) {
         super(parent, style);
-        this.input = input;
-        this.sigVerification = sigVerification;
+        this.input = p.input;
+        this.sigVerification = p.sigVerification;        
         text = new Text(this, SWT.BORDER | SWT.WRAP);
         text.setBounds(10, 10, 430, 215);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -57,6 +57,8 @@ public class InputKeyEditorComposite extends Composite {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
                     page.canFlipToNextPage();
+                    page.inputKeyWizard.enableFinish = true;
+                    page.getWizard().getContainer().updateButtons();
                     byte[] pubKey = text.getText().getBytes();
                     try{
                     	sigVerification.publicKeyFile(pubKey, input);
@@ -66,7 +68,6 @@ public class InputKeyEditorComposite extends Composite {
                     page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
-                    page.getWizard().getContainer().updateButtons();
                     page.setErrorMessage(Messages.EnterText);
                 }
             }

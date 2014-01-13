@@ -47,23 +47,15 @@ public class SignatureComposite extends Composite implements SelectionListener {
     private Button rdo2;
     private Button rdo3;
     private Button rdo4;
-    //private Combo combo;
-    //private KeyStoreAlias alias = null;
-    //private int keyType = 0;
-    private SignatureWizardPage page = null;
-    //private static final HashMap<String, KeyStoreAlias> keystoreitems = new HashMap<String, KeyStoreAlias>();
-
     private int method;
     private Menu menuSig;
     private MenuItem mntmSig;
-    //private Label lblSelectAKey;
     Input input;
 
     public SignatureComposite(Composite parent, int style, int m, SignatureWizardPage p, Input input) {
         super(parent, style);
         this.input = input;
         method = m;
-        page = p;
         initialize();
     }
 
@@ -117,19 +109,6 @@ public class SignatureComposite extends Composite implements SelectionListener {
         rdo2.addSelectionListener(this);
         rdo3.addSelectionListener(this);
         rdo4.addSelectionListener(this);
-        
-        /*combo = new Combo(this, SWT.READ_ONLY);
-        combo.setBounds(10, 185, 406, 22);
-        combo.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                //alias = keystoreitems.get(combo.getText());
-                page.setPageComplete(true);
-            }
-        });*/
-
-        //lblSelectAKey = new Label(this, SWT.NONE);
-        //lblSelectAKey.setBounds(10, 167, 176, 14);
-        //lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
 
         // Enable/disable methods
         switch (method) {
@@ -142,10 +121,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
                 rdo1.setSelection(false);
 
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
-
-                //keyType = 1;
-                // initializeKeySelection(1);
-                page.setPageComplete(true);
+                input.s = 1;
                 break;
             case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
                 rdo1.setEnabled(true);
@@ -155,11 +131,8 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
                 rdo1.setSelection(true);
                 rdo2.setSelection(false);
-
+                input.s = 0;
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
-                page.setPageComplete(true);
-                //keyType = 0;
-                // initializeKeySelection(0);
                 break;
             case 2:
             case 3:
@@ -171,35 +144,10 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
                 rdo2.setSelection(true);
                 rdo1.setSelection(false);
-
+                input.s = 1;
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
-
-                //keyType = 1;
-                // initializeKeySelection(1);
-                page.setPageComplete(true);
                 break;
         }
-
-        /*// If called by JCT-CA only SHA-256 can be used! Therefore only ECDSA, RSA and RSA with MGF1 will work
-        if (input.privateKey != null) {
-            // Enable RSA
-            rdo2.setSelection(true);
-            // Disable all other methods
-            rdo1.setEnabled(false);
-            rdo1.setSelection(false);
-            rdo3.setEnabled(false);
-            rdo4.setEnabled(false);
-            // Disable the key selection
-            //combo.setVisible(false);
-            //lblSelectAKey.setVisible(false);
-            // Move the description box up
-            grpDescription.setBounds(10, 220, 406, 255);
-            // Enable the finish button
-            page.setPageComplete(true);
-        } else {
-            // Load the keys
-            //initializeKeySelection(keyType);
-        }*/
     }
 
     /**
@@ -209,57 +157,24 @@ public class SignatureComposite extends Composite implements SelectionListener {
         return grpSignatures;
     }
 
-    /**
-     * @return the KeyStoreAlias
-     */
-    /*public KeyStoreAlias getAlias() {
-        return alias;
-    }*/
-
-    //@Override
     // Checks if the radio buttons have changed and updates the text and keys from the keystore
     public void widgetSelected(SelectionEvent e) {
         if (rdo1.getSelection()) {
             txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_DSA_description);
             // Store the chosen signature to keep the selected radio button for the next time the wizard is opened
             input.s = 0;
-            // Clean up
-            //keystoreitems.clear();
-            //combo.removeAll();
-            //lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
-            //initializeKeySelection(0);
-            page.setPageComplete(true);
         } else {
             if (rdo2.getSelection()) {
                 txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSA_description);
                 input.s = 1;
-                // Clean up
-                //keystoreitems.clear();
-                //combo.removeAll();
-                //lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
-                //initializeKeySelection(1);
-                page.setPageComplete(true);
             } else {
                 if (rdo3.getSelection()) {
                     txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_ECDSA_description);
                     input.s = 2;
-                    // Clean up
-                    //keystoreitems.clear();
-                    //combo.removeAll();
-                    //combo.add("Elliptic curve: ANSI X9.62 prime256v1 (256 bits)"); //$NON-NLS-1$
-                    // combo.select(0);
-                    //lblSelectAKey.setText(Messages.SignatureWizard_labelCurve);
-                    page.setPageComplete(true);
                 } else {
                     if (rdo4.getSelection()) {
                         txtDescription.setText(Messages.SignatureWizard_Usage + Messages.SignatureWizard_RSAandMGF1_description);
                         input.s = 3;
-                        // Clean up
-                        //keystoreitems.clear();
-                        //combo.removeAll();
-                        //lblSelectAKey.setText(Messages.SignatureWizard_labelKey);
-                        //initializeKeySelection(2);
-                        page.setPageComplete(true);
                     }
                 }
             }
@@ -268,55 +183,18 @@ public class SignatureComposite extends Composite implements SelectionListener {
 
     @Override
     public void widgetDefaultSelected(SelectionEvent e) {
+    	switch (method) {
+        case 0: // MD5: RSA
+            input.s = 1;            
+            break;
+        case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
+            input.s = 0;
+            break;
+        case 2:
+        case 3:
+        case 4: // SHA256+: RSA, ECDSA, RSA + MGF1
+            input.s = 1;
+            break;
+    	}
     }
-
-    /**
-     * Either loads available keys for the given method and fills them into the combo field or shows the given key from
-     * JCTCA an disables the combo field
-     * 
-     * @param method The signature method (integer, 1=DSA, 2=RSA, 3=ECDSA)
-     */
-   /* private void initializeKeySelection(int method) {
-        KeyStoreManager ksm = KeyStoreManager.getInstance();
-        KeyStoreAlias alias;
-        Enumeration<String> aliases = ksm.getAliases();
-        while (aliases != null && aliases.hasMoreElements()) {
-            alias = new KeyStoreAlias(aliases.nextElement());
-            alias.getAliasString();
-            if (method == 0) { // DSA
-                if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
-                    // Fill in keys
-                    combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName()); //$NON-NLS-1$ //$NON-NLS-2$
-                    keystoreitems.put(
-                            alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " + alias.getClassName(), //$NON-NLS-1$ //$NON-NLS-2$
-                            alias);
-                } // end if
-
-            } else {
-                if (method == 1) { // RSA
-                    if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-                        // Fill in keys
-                        combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                                + alias.getClassName());
-                        keystoreitems
-                                .put(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                                        + alias.getClassName(), alias);
-                    } // end if
-                } else {
-                    if (method == 2) { // RSAandMGF1
-                        if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
-                            // Fill in keys
-                            combo.add(alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                                    + alias.getClassName());
-                            keystoreitems.put(
-                                    alias.getContactName() + " - " + alias.getKeyLength() + "Bit - " //$NON-NLS-1$ //$NON-NLS-2$
-                                            + alias.getClassName(), alias);
-                        }
-                    }
-                }
-            }
-        }
-
-        page.setPageComplete(false);
-    }*/
 }

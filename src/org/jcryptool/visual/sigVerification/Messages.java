@@ -14,9 +14,6 @@ public class Messages {
     // Create strings for all the values
 	public static String SigVerComposite_resutFalseDescription;
     public static String SigVerComposite_resutTrueDescription;
-    public static String SigVerComposite_grpSignatureGeneration;
-    public static String SigVerComposite_lblHash;
-    public static String SigVerComposite_lblSignature;
     public static String SigVerComposite_lblProgress;
     public static String SigVerComposite_tbtmNewItem_0;
     public static String SigVerComposite_tbtmNewItem_1;

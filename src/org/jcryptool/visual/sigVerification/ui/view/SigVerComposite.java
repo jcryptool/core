@@ -290,8 +290,8 @@ public class SigVerComposite extends Composite {
 			btnAddInput.setText(Messages.SigVerComposite_btnAddInput);
 
 			btnReset = new Button(canvas1, SWT.NONE);
-			btnReset.setLocation(921, 401);
-			btnReset.setSize(90, 30);
+			btnReset.setLocation(906, 401);
+			btnReset.setSize(105, 30);
 			btnReset.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {

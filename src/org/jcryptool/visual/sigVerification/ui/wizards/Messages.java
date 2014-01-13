@@ -5,7 +5,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Holds the messages for the signature visualization (for the 3 wizards and the SignaturResult shell)
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class Messages {
     // Name of the files that contain the string values
@@ -116,10 +116,6 @@ public class Messages {
     public static String InputKeyEditorWizard_Label;
     public static String EnterText;
     
-    //Signatur Result
-	public static String ShowSig_tblHex;
-	public static String ShowSig_tblAscii;
-	public static String ShowSig_tblAdr;
 
     
     static {

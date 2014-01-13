@@ -24,22 +24,25 @@ public class InputKeyFileWizardPage extends WizardPage {
     private InputKeyFileComposite compositeFile;
     Input input;
     SigVerification sigVerification;
+    InputKeyWizard inputKeyWizard;
 
-    public InputKeyFileWizardPage(String pageName, Input input, SigVerification sigVerification) {
+    public InputKeyFileWizardPage(String pageName, InputKeyWizard inputKeyWizard) {
         super(pageName);
-        this.input = input;
-        this.sigVerification = sigVerification;
-
+        this.input = inputKeyWizard.input;
+        this.sigVerification = inputKeyWizard.sigVerification;
+        this.inputKeyWizard = inputKeyWizard;
+        
         setTitle(Messages.InputKeyFileWizard_title);
         setDescription(Messages.InputKeyFileWizard_header);
     }
 
     public void createControl(Composite parent) {
         setPageComplete(false);
-        compositeFile = new InputKeyFileComposite(parent, NONE, this, input, sigVerification);
+        compositeFile = new InputKeyFileComposite(parent, NONE, this);
         setControl(compositeFile);
     }
 
+    
     /**
      * @return the compositeFile
      */

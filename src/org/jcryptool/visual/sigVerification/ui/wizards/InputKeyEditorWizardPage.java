@@ -24,18 +24,20 @@ public class InputKeyEditorWizardPage extends WizardPage {
     private InputKeyEditorComposite compositeEditor;
     Input input;
     SigVerification sigVerification;
+    InputKeyWizard inputKeyWizard;
     
-    public InputKeyEditorWizardPage(String pageName, Input input, SigVerification sigVerification) {
+    public InputKeyEditorWizardPage(String pageName, InputKeyWizard inputKeyWizard) {
         super(pageName);
-        this.input = input;
-        this.sigVerification = sigVerification;
+        this.input = inputKeyWizard.input;
+        this.sigVerification = inputKeyWizard.sigVerification;
+        this.inputKeyWizard = inputKeyWizard;
         setTitle(Messages.InputKeyEditorWizard_title);
         setDescription(Messages.InputKeyEditorWizard_header);
     }
 
     @Override
     public void createControl(Composite parent) {
-        compositeEditor = new InputKeyEditorComposite(parent, NONE, this, input, sigVerification);
+        compositeEditor = new InputKeyEditorComposite(parent, NONE, this);
         compositeEditor.setFocus();
         setControl(compositeEditor);
         setPageComplete(false);

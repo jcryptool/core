@@ -12,6 +12,9 @@ package org.jcryptool.visual.sigVerification.ui.wizards;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.visual.sigVerification.algorithm.Hash;
+import org.jcryptool.visual.sigVerification.algorithm.Input;
+import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 
@@ -22,33 +25,51 @@ import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
  */
 public class InputKeyWizardPage extends WizardPage {
     private InputKeyComposite composite;
-    private boolean enableNext = true;
-
-    public InputKeyWizardPage(String pageName) {
+    public boolean enableNext = false;
+    SigVerification sigVerifiaction;
+    Hash hash;
+    Input input;
+    InputKeyWizard inputKeyWizard;
+    
+    public InputKeyWizardPage(String pageName, InputKeyWizard inputKeyWizard) {
         super(pageName);
+        this.sigVerifiaction = inputKeyWizard.sigVerification;
+        this.hash = inputKeyWizard.hash;
+        this.input = inputKeyWizard.input;
+        this.inputKeyWizard = inputKeyWizard;
         setTitle(Messages.InputKeyWizard_title);
         setDescription(Messages.InputKeyWizard_header);
     }
 
     public void createControl(Composite parent) {
-        composite = new InputKeyComposite(parent, NONE);
+        composite = new InputKeyComposite(parent, NONE, this);
         composite.getRdoFromFile().setBounds(10, 10, 430, 18);
         composite.getRdoFromEditor().setBounds(10, 34, 430, 18);
         composite.getRdoFromKeyStore().setBounds(10, 58, 430, 18);
+        
         setControl(composite);
-                
+              
     }
 
     public int getRdoSelection() {
-        if (composite.getRdoFromEditor().getSelection())
+        if (composite.getRdoFromEditor().getSelection()){
             return 0;
-        else if(composite.getRdoFromFile().getSelection())
+        } else if(composite.getRdoFromFile().getSelection()){        	
             return 1;
-        else
+        } else {
         	return 2;
+        }
     }
 
+    
     public boolean canFlipToNextPage() {
-        return enableNext;
+    	if (composite.getRdoFromEditor().getSelection()){
+        	enableNext = true;
+        } else if(composite.getRdoFromFile().getSelection()){        	
+        	enableNext = true;
+        } else {
+        	enableNext = false;
+        }
+    	return enableNext;
     }
 }
