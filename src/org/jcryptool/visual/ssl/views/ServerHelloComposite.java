@@ -21,7 +21,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 
-//Githubtest
+//Githubtest NR2
 
 /**
  * Class that represents the ServerHello Step of SSL/TLS
