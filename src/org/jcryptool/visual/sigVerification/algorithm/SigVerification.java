@@ -25,7 +25,7 @@ import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
  * @author Wilfing
  */
 public class SigVerification {	
-	boolean result;		    //Contains the result of the comparison between the hashes.
+	boolean result = false;		    //Contains the result of the comparison between the hashes.
     public Hash hashNew = new Hash();
     private PublicKey publicKey = null;
     public KeyStoreAlias alias = null;
