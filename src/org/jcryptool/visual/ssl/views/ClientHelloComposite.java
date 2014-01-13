@@ -3,8 +3,6 @@ package org.jcryptool.visual.ssl.views;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-
-//import org.bouncycastle.crypto.prng.ThreadedSeedGenerator;
 import org.eclipse.draw2d.CheckBox;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;

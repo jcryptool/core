@@ -3,8 +3,6 @@ package org.jcryptool.visual.ssl.views;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-
-//import org.bouncycastle.crypto.prng.ThreadedSeedGenerator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -21,7 +19,6 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 
-//Githubtest NR3
 
 /**
  * Class that represents the ServerHello Step of SSL/TLS
