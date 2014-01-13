@@ -13,9 +13,7 @@ import java.util.Enumeration;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.core.logging.utils.LogUtil;
-//import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
-
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -25,8 +23,7 @@ import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
  * @author Wilfing
  */
 public class SigVerification {	
-	boolean result = false;		    //Contains the result of the comparison between the hashes.
-    public Hash hashNew = new Hash();
+	boolean result = false;		    //Contains the result of the verification.
     private PublicKey publicKey = null;
     public KeyStoreAlias alias = null;
 	
@@ -46,23 +43,24 @@ public class SigVerification {
     		}    	
     	}else if (input.signaturemethod == "ECDSA"){
     		if (this.publicKey != null){
-    			verifyECDSA(input, hash);
+    			verifySig(input, hash);
     		}else{
     			setKeyECDSA(input);
-    			verifyECDSA(input, hash);
+    			verifySig(input, hash);
     		}
     	}
     }
 	
 	/**
 	 * Sets the RSA and DSA public key.
+	 * Loads public key from JCT keystore.
 	 * 
 	 * @param input A instance of Input (contains the signaturemethod)
 	 */
 	public void setPublicKey(Input input){
 		try{
 			KeyStoreManager ksm = KeyStoreManager.getInstance();
-            //System.out.println(ksm.getAllPublicKeys());            
+            //System.out.println(ksm.getAllPublicKeys());   // Gibt alle Public Key aliases aus.         
             Enumeration<String> aliases = ksm.getAliases();
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
@@ -91,7 +89,7 @@ public class SigVerification {
 	
     
     /**
-     * Verifies RSA, DSA and RSA with MGF1 signatures. Sets the variable result (boolean) TRUE if the signature is correct.
+     * Verifies RSA, DSA (ECDSA) and RSA with MGF1 signatures. Sets the variable result (boolean) TRUE if the signature is correct.
      * 
      * @param input A instance of Input (contains the signature, the plaintext, and the signaturemethod)
      * @param hash A instance of Hash (contains the hashmethod)
@@ -135,23 +133,7 @@ public class SigVerification {
     	}
     }
     
-    /**
-     * Verifies a ECDSA signature. Sets the variable result (boolean) TRUE if the signature is correct.
-     * 
-     * @param input A instance of Input (contains the signature)
-     * @param hash A instance of Hash (contains the hash)
-     */
-    public void verifyECDSA(Input input, Hash hash){
-    	try{   		
-    		Signature sig = Signature.getInstance(input.signaturemethod);
-    		sig.initVerify(this.publicKey);
-    		sig.update(hash.hash);
-    		this.result = sig.verify(input.signature);
-    	}catch(Exception ex){
-    		LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-    	}
-    }    
-    
+
     /**
      * Selects the right function to convert the input key (RSA, DSA, ECDSA).
      * 
@@ -209,7 +191,6 @@ public class SigVerification {
      */
     public void reset(){
     	this.result = false;
-    	this.hashNew = null;
     	this.publicKey = null;    	
     }
 }

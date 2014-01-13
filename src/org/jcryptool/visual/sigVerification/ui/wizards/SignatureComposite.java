@@ -10,33 +10,22 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.wizards;
 
-//import java.util.Enumeration;
-//import java.util.HashMap;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Button;
-//import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-//import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
-//import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
-//import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 
-//import de.flexiprovider.core.dsa.DSAPrivateKey;
-//import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
-
 /**
- * This class contains the GUI elements for signature wizard. It also contains a method to load all RSA/DSA keys from
- * the keystore and displays them in a dropdown list.
+ * This class contains the GUI elements for signature wizard. 
  * 
  * @author Wilfing
  */

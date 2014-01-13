@@ -18,7 +18,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 /**
  * This class contains the page containing the hash wizard composite. It is a part of the hash wizard.
  * 
- * @author Grebe
+ * @author Wilfing
  */
 public class HashWizardPage extends WizardPage {
     private HashComposite composite;

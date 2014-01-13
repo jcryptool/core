@@ -19,7 +19,7 @@ import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 
 /**
- * This class contains loads the composite for the first page of the input wizard.
+ * This class contains loads the composite for the first page of the input key wizard.
  * 
  * @author Wilfing
  */

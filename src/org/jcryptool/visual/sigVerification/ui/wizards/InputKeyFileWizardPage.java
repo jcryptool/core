@@ -16,7 +16,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 
 /**
- * This class contains the page containing the file input composite. It is a part of the Input wizard.
+ * This class contains the page containing the key file input composite. It is a part of the Input key wizard.
  * 
  * @author Wilfing
  */

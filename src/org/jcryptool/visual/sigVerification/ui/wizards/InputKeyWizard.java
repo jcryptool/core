@@ -18,7 +18,7 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
- * This class contains the three pages of the input wizard.
+ * This class contains the two pages of the input key wizard.
  * 
  * @author Wilfing
  */

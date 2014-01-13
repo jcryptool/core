@@ -30,7 +30,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 /**
  * Contains the elements (2 group boxes) of the HashWizard
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class HashComposite extends Composite implements SelectionListener {
     private Group grpHashes;

@@ -18,7 +18,7 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
 /**
  * Adds the page of the hash wizard.
  * 
- * @author Grebe/Wilfing
+ * @author Wilfing
  */
 public class HashWizard extends Wizard {
     // The only page of the wizard (for selecting the Hash method)

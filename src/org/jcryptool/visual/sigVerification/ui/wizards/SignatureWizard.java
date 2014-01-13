@@ -21,12 +21,9 @@ import org.jcryptool.visual.sigVerification.algorithm.Input;
  * @author Wilfing
  */
 public class SignatureWizard extends Wizard {
-    // The only page of the wizard (for selecting the Hash method)
     private SignatureWizardPage page;
-    // Integer representing the chosen signature (0-4)
     private int signature;
     private int method = 0;
-    //private KeyStoreAlias alias = null;
     Input input;
 
     public SignatureWizard(int m, Input input) {

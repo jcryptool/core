@@ -31,7 +31,7 @@ import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
 import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
- * This class contains the GUI elements for file input. It also contains a method to convert the opened file into a byte
+ * This class contains the GUI elements for key file input. It also contains a method to convert the opened file into a byte
  * array.
  * 
  * @author Wilfing

@@ -467,6 +467,9 @@ public class SigVerComposite extends Composite {
 						}
 					};
 					if (dialog.open() == Window.OK) {
+						resultFalse.hide();
+						resultTrue.hide();						
+						
 						// get signature method (integer)
 						signature = wiz.getSignature();
 						// KeyStoreAlias alias = wiz.getAlias();
@@ -513,7 +516,7 @@ public class SigVerComposite extends Composite {
 					// everything to this step (keep the chosen algorithms)
 					if (step > 2)
 						reset(2);
-
+					
 					// Create the InputKeyWizard
 					InputKeyWizard wiz = new InputKeyWizard(input,
 							sigVerification, hashInst);
@@ -541,7 +544,7 @@ public class SigVerComposite extends Composite {
 						resultTrue.hide();
 						resultFalse.show();
 					}
-
+					step = 3;
 				} catch (Exception ex) {
 					LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
 				}
