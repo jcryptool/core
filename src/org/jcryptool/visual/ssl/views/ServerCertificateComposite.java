@@ -1,32 +1,12 @@
 package org.jcryptool.visual.ssl.views;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
-import java.security.SignatureException;
-import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
-import java.security.spec.InvalidParameterSpecException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.DHParameterSpec;
-import javax.crypto.spec.DHPublicKeySpec;
-import javax.security.auth.x500.X500Principal;
+import javax.crypto.KeyAgreement;
 
-import org.bouncycastle.x509.X509V3CertificateGenerator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -34,17 +14,28 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
 
-import codec.Hex;
-
 /**
- * This class represents the Server Certificate Step in the SSL/TLS Handshake.
+ * This class represents the <b>Server Certificate Step</b> in the SSL/TLS
+ * Handshake. It can send a:
+ * <ul>
+ * <li>Server Certificate
+ * <li>Server Key Exchange
+ * <li>Server Certificate Request
+ * <li>Server Hello Done
+ * </ul>
+ * <p>
+ * When created it calculates a Exchange Key, and a default Certificate for the
+ * server.
+ * </p>
  * It provides the ability to activate and deactivate all buttons from the step.
- * Furthermore it checks if all the given Parameters are a valid input. When the
- * step is finished the returns the chosen Parameters in a Message() Object to
- * the using object.
+ * Furthermore it checks if all the given Parameters are a valid input.
+ * <p>
+ * When the step is finished the returns the chosen Parameters in a Message()
+ * Object to the using object.
  * 
  * @author Denk Gandalf
  * 
@@ -52,103 +43,126 @@ import codec.Hex;
 public class ServerCertificateComposite extends Composite implements
 		ProtocolStep {
 	private SslView sslView;
-	private boolean infoText=false;
+	private boolean infoText = false;
 	private Button rdbYes;
 	private Button rdbNo;
 	private Button btnShow;
 	private Button btnInfo;
 	private Button btnNextStep;
 
-	private KeyPair keyPair;
-	private Key key;
-	private String strExchange;
-
-	private String strCipher;
-	private String strHash;
-	private String strCipherSuit;
-	private String strSignature;
-
-	private final static int RSA_KEY_LENGTH = 1024;
-	private final static int DSA_KEY_LENGTH = 56;
-	private final static int TRIPLEDES_KEY_LENGTH = 168;
-	private final static int DH_KEY_LENGTH = 512;
-
-	private final static String BOUNCY_CASTLE_PROVIDER = "BC";
-
-	private int cipLength = 512;
-	private int exchangeLength = 1024;
-
-	private boolean blnCertificateRequest = false;
-	private X509Certificate certServer;
-
-	private static SecureRandom secure = new SecureRandom();
+	/**
+	 * Holds the calculated exchange key
+	 */
+	private KeyPair exchKey;
 
 	/**
-	 * Create the composite.
+	 * The signature algorithm for the certificate
+	 */
+	private String strSignature;
+
+	/**
+	 * Length of the calculated RSA key.
+	 */
+	private final static int RSA_KEY_LENGTH = 1024;
+
+	/**
+	 * Length of the calculated DSA key
+	 */
+	private final static int DSA_KEY_LENGTH = 640;
+
+	/**
+	 * Length of the Diffie Hellman key.
+	 */
+	private final static int DH_KEY_LENGTH = 512;
+
+	/**
+	 * Creates a object of {@link Crypto}
+	 */
+	private Crypto c;
+
+	/**
+	 * If a certificate request is sent or not
+	 */
+	private boolean blnCertificateRequest = false;
+
+	/**
+	 * Generated default certificate of the Server.
+	 */
+	private X509Certificate certServer;
+
+	/**
+	 * Text of the Information Box.
+	 */
+	private String strText = "";
+
+	private Group grpServerCertificate;
+	private Label lblServerKeyExchange;
+	private Label lblCertificateRequest;
+	private Label lblServerHelloDone;
+	private Label lblCertificate;
+
+	/**
+	 * Creates all GUI objects and positions them. Also gives functions to all
+	 * the buttons.
 	 * 
 	 * @param parent
+	 *            parent of the frame
 	 * @param style
 	 */
 	public ServerCertificateComposite(final Composite parent, int style,
 			final SslView sslView) {
 		super(parent, style);
 		this.sslView = sslView;
-		strExchange = Message.getServerHelloKeyExchange();
-		strHash = Message.getServerHelloHash();
-		strCipher = Message.getServerHelloCipher();
-		strCipherSuit = Message.getServerHelloCipherSuite();
 
-		Group grpServerCertificate = new Group(this, SWT.NONE);
+		grpServerCertificate = new Group(this, SWT.NONE);
+		grpServerCertificate.setBounds(10, 0, 326, 175);
 		grpServerCertificate
 				.setText(Messages.ServerCertificateCompositeServerCertificate);
-		grpServerCertificate.setBounds(10, 0, 326, 175);
 
-		Label lblServerKeyExchange = new Label(grpServerCertificate, SWT.NONE);
+		lblServerKeyExchange = new Label(grpServerCertificate, SWT.NONE);
 		lblServerKeyExchange.setBounds(10, 55, 140, 15);
 		lblServerKeyExchange
 				.setText(Messages.ServerCertificateCompositeLblServerKeyExchange);
-		
-		Label lblCertificateRequest = new Label(grpServerCertificate, SWT.NONE);
+
+		lblCertificateRequest = new Label(grpServerCertificate, SWT.NONE);
 		lblCertificateRequest.setBounds(10, 85, 173, 15);
 		lblCertificateRequest
 				.setText(Messages.ServerCertificateCompositeLblCertificateRequest);
 
-		Label lblServerHelloDone = new Label(grpServerCertificate, SWT.NONE);
+		lblServerHelloDone = new Label(grpServerCertificate, SWT.NONE);
 		lblServerHelloDone.setBounds(10, 115, 100, 15);
 		lblServerHelloDone
 				.setText(Messages.ServerCertificateCompositeLblServerHelloDone);
 
 		rdbYes = new Button(grpServerCertificate, SWT.RADIO);
-		rdbYes.setBounds(196,85, 50, 15);
-		rdbYes.setText(Messages.ServerCertificateCompositeRdbYes);
+		rdbYes.setBounds(196, 85, 50, 15);
 		rdbYes.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = true;
 			}
 		});
+		rdbYes.setText(Messages.ServerCertificateCompositeRdbYes);
 
 		rdbNo = new Button(grpServerCertificate, SWT.RADIO);
 		rdbNo.setBounds(256, 85, 60, 15);
-		rdbNo.setText(Messages.ServerCertificateCompositeRdbNo);
 		rdbNo.setSelection(true);
 		rdbNo.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				blnCertificateRequest = false;
 			}
 		});
+		rdbNo.setText(Messages.ServerCertificateCompositeRdbNo);
 
 		btnInfo = new Button(grpServerCertificate, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				/*MessageBox messageBox = new MessageBox(PlatformUI
-						.getWorkbench().getActiveWorkbenchWindow().getShell(),
-						SWT.ICON_INFORMATION | SWT.OK);
-				messageBox
-						.setMessage(Messages.ServerCertificateInformationText);
-				messageBox.setText(Messages.ServerHelloCompositeBtnInfo);
-				messageBox.open();*/
-				infoText=true;
+				infoText = !infoText;
+				if(btnInfo.getText().equals(Messages.btnInformationToggleParams)){
+					btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
+				}else{
+					btnInfo.setText(Messages.btnInformationToggleParams);
+				}
 				refreshInformations();
 			}
 		});
@@ -162,95 +176,74 @@ public class ServerCertificateComposite extends Composite implements
 				sslView.nextStep();
 			}
 		});
-		btnNextStep.setText(Messages.ServerCertificateCompositeBtnNextStep);
 		btnNextStep.setBounds(176, 140, 140, 25);
+		btnNextStep.setText(Messages.ServerCertificateCompositeBtnNextStep);
 
-		Label lblCertificate = new Label(grpServerCertificate, SWT.NONE);
+		lblCertificate = new Label(grpServerCertificate, SWT.NONE);
 		lblCertificate.setBounds(10, 25, 160, 15);
 		lblCertificate
 				.setText(Messages.ServerCertificateCompositeLblCertificate);
 
 		btnShow = new Button(grpServerCertificate, SWT.NONE);
 		btnShow.setBounds(241, 20, 75, 25);
-		btnShow.setText(Messages.ServerCertificateCompositeBtnShow);
 		btnShow.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certServer);
+					CertificateShow cShow = new CertificateShow(certServer, exchKey.getPublic());
 				} catch (IllegalStateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
+		btnShow.setText(Messages.ServerCertificateCompositeBtnShow);
+	}
 
+	/**
+	 * Starts the ServerCertificate step by calculating the exchange Key and the
+	 * needed certificate
+	 */
+	public void startStep() {
+		c = new Crypto();
+
+		strText = Messages.ServerCertificateCompositeInitationText
+				+ Message.getServerHelloCipherSuite()
+				+ Messages.ServerCertificateCompositeCertificateText;
+
+		// Server Key Exchange
+		if (Message.getServerHelloKeyExchange().contentEquals("RSA")
+				|| Message.getServerHelloKeyExchange().contentEquals("DH_RSA")
+				|| Message.getServerHelloKeyExchange().contentEquals("DH_DSS")) {
+			// No ServerKeyExchange is sent
+			lblServerKeyExchange.setEnabled(false);
+		}
+		exchKey = calculateKeyExchange();
+
+		// Server Certificate
 		try {
-			// Server Certificate
-			getExchangeParams(strExchange);
-			getKeyParams(strCipher);
-			keyPair = generateKeyExchange(strExchange, exchangeLength);
-			
-			//REMOVE IF DH Signature Works (or fixed any other way)
-			if(!strSignature.contentEquals("DH"))
-				certServer = generateX509(keyPair);
-
-			// Server Key Exchange Message
-			if (strExchange.contentEquals("RSA") || strExchange.contentEquals("DH_RSA") || strExchange.contentEquals("DH_DSS")) {
-				//No ServerKeyExchange is sent
-				lblServerKeyExchange.setEnabled(false);
-			}else{
-				//ServerKeyExchange is sent
-			}
-
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchProviderException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidParameterSpecException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (CertificateEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidKeyException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalStateException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SignatureException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			calculateCertificate(exchKey, Message.getServerHelloHash());
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
-		/*
-		 * if (!(strCipher == "NULL")) { getKeyParams(strCipher); key =
-		 * generateKey(strCipher, cipLength); }
-		 * 
-		 * if (!(strHash == "NULL")) { System.out.println(generateHash(strHash,
-		 * strCipherSuit)); }
-		 */
+		// Server Certificate Request
+		strText = strText + Messages.ServerCertificateCompositeRequestText;
 		refreshInformations();
 	}
-	public void refreshInformations()
-	{
-		if(infoText)
-		{
+
+	/**
+	 * Refresh the Information TextArea with the needed text
+	 */
+	public void refreshInformations() {
+		if (infoText) {
+			strText = sslView.getStxInformationText();
 			sslView.setStxInformationText(Messages.ServerCertificateInformationText);
-		}
-		else
-		{
-			sslView.setStxInformationText("");
+		} else {
+			sslView.setStxInformationText(strText);
 		}
 	}
+
 	/**
 	 * Enables to use the controls of the Server Certificate step
 	 */
@@ -272,189 +265,116 @@ public class ServerCertificateComposite extends Composite implements
 		btnInfo.setEnabled(false);
 		btnShow.setEnabled(false);
 		btnNextStep.setEnabled(false);
+		btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 
 	/**
-	 * Checks if the given Parameters are valid.
+	 * Checks if the given parameters are valid. Sets all the needed parameters
+	 * for the next step.
 	 * 
 	 * @return
 	 */
 	public boolean checkParameters() {
 		Message.setServerCertificateServerCertificateRequest(blnCertificateRequest);
 		Message.setServerCertificateServerCertificate(certServer);
-		Message.setServerCertificateHash(strHash);
+		Message.setServerCertificateHash(Message.getServerHelloHash());
 		Message.setServerCertificateSignature(strSignature);
-		Message.setServerCertificateServerKeyExchange(keyPair);
-		Message.setServerCertificateServerHelloDone(strExchange);
-
+		Message.setServerCertificateServerKeyExchange(exchKey);
+		Message.setServerCertificateServerHelloDone(Message
+				.getServerHelloKeyExchange());
+		infoText = false;
 		return true;
 	}
 
 	/**
+	 * Calculates the need exchange Key depending on the given parameters. When
+	 * DH is used the server also starts calculating its premaster secret with
+	 * its own private key.
+	 * 
+	 * @return the calculated exchange key
+	 */
+	private KeyPair calculateKeyExchange() {
+		KeyPair exchKey = null;
+		try {
+			if (Message.getServerHelloKeyExchange().equals("RSA")) {
+				Message.setKeyPairGenerator(c.generateGenerator("RSA",
+						RSA_KEY_LENGTH));
+				exchKey = c.generateExchangeKey(Message.getKeyPairGenerator());
+			} else {
+				Message.setKeyPairGenerator(c.generateGenerator(
+						"DiffieHellman", DH_KEY_LENGTH));
+				exchKey = c.generateExchangeKey(Message.getKeyPairGenerator());
+
+				KeyAgreement serverKeyAgree = KeyAgreement.getInstance("DH",
+						"BC");
+				serverKeyAgree.init(exchKey.getPrivate());
+				Message.setServerKeyAgreement(serverKeyAgree);
+				Message.setServerCertificateServerKeyExchange(exchKey);
+				strText = strText
+						+ Messages.ServerCertificateCompositeKeyExchangeText;
+			}
+			strText = strText + exchKey.getPublic();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return exchKey;
+	}
+
+	/**
 	 * Calculates which KeyExchange Parameters are used and which size the keys
-	 * should have
+	 * must have. Also calls the functions for calculating a key pair and
+	 * generating the default certificate for the given parameters with the
+	 * needed Keys and Hash
 	 * 
 	 * @param exchange
-	 */
-	private void getExchangeParams(String exchange) {
-		String[] strEx = exchange.split("_");
-		strExchange = strEx[0];
-		System.out.println(exchange);
-
-		if (strEx[0].contentEquals("RSA")) {
-			strSignature = "RSA";
-			exchangeLength = RSA_KEY_LENGTH;
-		} else if (strEx[0].contentEquals("DHE")
-				&& strEx[1].contentEquals("DSS")) {
-			strExchange = "DSA";
-			exchangeLength = DSA_KEY_LENGTH;
-			strSignature = "DSA";
-		} else if (strEx[0].contentEquals("DHE")
-				&& strEx[1].contentEquals("RSA")) {
-			strExchange = "RSA";
-			exchangeLength = RSA_KEY_LENGTH;
-			strSignature = "RSAEncryption";
-		} else if (strEx[0].contentEquals("DH")) {
-			strExchange = "DiffieHellman";
-			exchangeLength = DH_KEY_LENGTH;
-			strSignature = "DH";
-		}
-	}
-
-	/**
-	 * Checks which cipher algorithm is given and how long the key length is.
+	 *            the key exchange algorithm which is used
+	 * @param hash
+	 *            the has which is used for the certificate
 	 * 
-	 * @param cipher
-	 *            A cipher
+	 * @throws Exception
+	 *             if the exchange/hash algorithm does not exist
 	 */
-	private void getKeyParams(String cipher) {
-		String[] strCi = cipher.split("_");
-		strCipher = strCi[0];
-
-		if (strCi[0].contentEquals("RC4")) {
-			cipLength = Integer.parseInt(strCi[1]);
-		} else if (strCi[0].contentEquals("AES")) {
-			cipLength = Integer.parseInt(strCi[1]);
-		} else if (strCi[0].contentEquals("DES")) {
-			cipLength = DSA_KEY_LENGTH;
-		} else if (strCi[0].contentEquals("3DES")) {
-			strCipher = "TRIPLEDES";
-			cipLength = TRIPLEDES_KEY_LENGTH;
-		}
-	}
-
-	/**
-	 * Generates a default certificate with the given key pair {@link key}
-	 * 
-	 * @param key
-	 * @throws CertificateEncodingException
-	 * @throws InvalidKeyException
-	 * @throws IllegalStateException
-	 * @throws NoSuchProviderException
-	 * @throws NoSuchAlgorithmException
-	 * @throws SignatureException
-	 */
-	private X509Certificate generateX509(KeyPair key)
-			throws CertificateEncodingException, InvalidKeyException,
-			IllegalStateException, NoSuchProviderException,
-			NoSuchAlgorithmException, SignatureException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date notBefor = new Date();
-		Date notAfter = new Date();
-		notAfter.setYear(notBefor.getYear() + 1);
-		notAfter.setHours(23);
-		notAfter.setMinutes(59);
-		notAfter.setSeconds(59);
-		
-		X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
-		X500Principal certName = new X500Principal("CN=Test Server Certificate");
-		certGen.setSerialNumber(BigInteger.ONE);
-		certGen.setIssuerDN(certName);
-		certGen.setNotAfter(notAfter);
-		certGen.setNotBefore(notBefor);
-		certGen.setSubjectDN(certName);
-		certGen.setPublicKey(key.getPublic());
-		certGen.setSignatureAlgorithm(strHash + "With" + strSignature);
-
-		X509Certificate cert = certGen.generate(key.getPrivate());
-
-		return cert;
-	}
-
-	/**
-	 * Generates the hash of a given strMessage with the given strHash
-	 * 
-	 * @param strHash
-	 *            The hash used
-	 * @param strMessage
-	 *            The message which is hashed
-	 * @return returns the hashed message
-	 * @throws NoSuchAlgorithmException
-	 * @throws UnsupportedEncodingException
-	 */
-	private String generateHash(String strHash, String strMessage)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		String hash = "";
-		MessageDigest md = MessageDigest.getInstance(strHash);
-		md.update(strMessage.getBytes("UTF-8"));
-		byte[] digest = md.digest();
-		hash = Hex.encode(digest);
-		return hash;
-	}
-
-	/**
-	 * Generates the Key for a cipher with the given algorithm {@link strKeyTyp}
-	 * and the size {@link KeySize}.
-	 * 
-	 * @param strKeyTyp
-	 * @param KeySize
-	 * @return
-	 * @throws NoSuchAlgorithmException
-	 * @throws NoSuchPaddingException
-	 */
-	private Key generateKey(String strKeyTyp, int KeySize)
-			throws NoSuchAlgorithmException, NoSuchPaddingException {
-		KeyGenerator keyGen = KeyGenerator.getInstance(strKeyTyp);
-		keyGen.init(KeySize, new SecureRandom());
-		Key genKey = keyGen.generateKey();
-		return genKey;
-	}
-
-	/**
-	 * Generates a pair of Public and Private key of the given algorithm
-	 * {@link strKeyTyp} and with the size of {@link KeySize}.
-	 * 
-	 * @param strKeyTyp
-	 * @param KeySize
-	 * @return
-	 * @throws Exception 
-	 */
-	private KeyPair generateKeyExchange(String strKeyTyp, int KeySize)
+	private void calculateCertificate(KeyPair exchange, String hash)
 			throws Exception {
+		KeyPair sigKey = exchange;
 
-		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
-				strKeyTyp, BOUNCY_CASTLE_PROVIDER);
+		if (exchange.getPublic().getAlgorithm().contentEquals("RSA")) {
+			strSignature = "RSAEncryption";
 
-		if (strKeyTyp.contentEquals("RSA")) {
-			keyPairGenerator.initialize(KeySize, secure);
-
-		} else if (strKeyTyp.contentEquals("DiffieHellman")) {
-			keyPairGenerator = KeyPairGenerator.getInstance(strKeyTyp);
-		    keyPairGenerator.initialize(KeySize);
-		    
-		    //REMOVE WHEN DH Signature works
-		    btnShow.setEnabled(false);
+		} else {
+			if (Message.getServerHelloKeyExchange().contains("RSA")) {
+				sigKey = c.generateExchangeKey(c.generateGenerator("RSA",
+						RSA_KEY_LENGTH));
+				strSignature = "RSAEncryption";
+			} else {
+				sigKey = c.generateExchangeKey(c.generateGenerator("DSA",
+						DSA_KEY_LENGTH));
+				strSignature = "DSA";
+			}
 		}
-		KeyPair key = keyPairGenerator.generateKeyPair();
-		return key;
+
+		certServer = c.generateX509(exchange, sigKey, hash, strSignature);
 	}
 
 	public boolean isBlnCertificateRequest() {
 		return blnCertificateRequest;
 	}
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+	/**
+	 * Sets everything from this step to zero.
+	 */
+	public void resetStep() {
+		exchKey = null;
+		strSignature = null;
+		certServer = null;
+		blnCertificateRequest = false;
+		rdbNo.setSelection(true);
+		rdbYes.setSelection(false);
+		lblServerKeyExchange.setEnabled(true);
+		c = null;
+		infoText=false;
+		btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
+		refreshInformations();
 	}
 }

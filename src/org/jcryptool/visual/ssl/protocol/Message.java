@@ -1,8 +1,11 @@
 package org.jcryptool.visual.ssl.protocol;
 
 import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.cert.X509Certificate;
 import java.util.List;
+
+import javax.crypto.KeyAgreement;
 
 /**
  * Class that enables communication between the views.
@@ -24,6 +27,7 @@ public class Message
 	private static String clientCertificateClientCertificateRequest="";
 	private static String clientCertificateClientKeyExchange="";
 	private static String clientCertificateCertificateVerfify="";
+	private static String clientCertificatePremasterEncrypted="";
 	
 	private static String clientChangeCipherSpecChangeCipherSpec="";
 	
@@ -37,6 +41,15 @@ public class Message
 	private static String serverHelloCipherMode="";
 	private static String serverHelloKeyExchange="";
 	private static int serverHelloSessionID;
+	
+	private static String messageClientHello="";
+	private static String messageServerHello="";
+	private static String messageClientCertfificate="";
+	private static String messageServerCertificate="";
+	private static String messageClientChangeCipherSpec="";
+	private static String messageClientFinished="";
+	private static String messageServerChangeCipherSpec="";
+	private static String messageServerFinished="";
 	
 	/**
 	 * Holds if the ServerCertificate requests a certificate from the client
@@ -58,11 +71,18 @@ public class Message
 	 */
 	private static String serverCertificateSignature;
 	
+	private static KeyAgreement ServerKeyAgreement;
+	
+	private static KeyAgreement ClientKeyAgreement;
+	
 	/**
 	 * Holds the Exchange KeyPair
 	 */
 	private static KeyPair serverCertificateServerKeyExchange;
+	private static KeyPair clientCertificateServerKeyExchange;
 	private static String serverCertificateServerHelloDone="";
+	
+	private static KeyPairGenerator keyPairGenerator;
 	
 	private static String serverChangeCipherSpecChangeCipherSpec="";
 	
@@ -447,5 +467,163 @@ public class Message
 	 */
 	public static void setServerHelloCipherMode(String serverHelloCipherMode) {
 		Message.serverHelloCipherMode = serverHelloCipherMode;
+	}
+
+	public static KeyPairGenerator getKeyPairGenerator() {
+		return keyPairGenerator;
+	}
+
+	public static void setKeyPairGenerator(KeyPairGenerator keyPairGenerator) {
+		Message.keyPairGenerator = keyPairGenerator;
+	}
+
+	public static KeyAgreement getClientKeyAgreement() {
+		return ClientKeyAgreement;
+	}
+
+	public static void setClientKeyAgreement(KeyAgreement clientKeyAgreement) {
+		ClientKeyAgreement = clientKeyAgreement;
+	}
+
+	public static KeyAgreement getServerKeyAgreement() {
+		return ServerKeyAgreement;
+	}
+
+	public static void setServerKeyAgreement(KeyAgreement serverKeyAgreement) {
+		ServerKeyAgreement = serverKeyAgreement;
+	}
+
+	public static KeyPair getClientCertificateServerKeyExchange() {
+		return clientCertificateServerKeyExchange;
+	}
+
+	public static void setClientCertificateServerKeyExchange(
+			KeyPair clientCertificateServerKeyExchange) {
+		Message.clientCertificateServerKeyExchange = clientCertificateServerKeyExchange;
+	}
+
+	/**
+	 * @return the messageClientHello
+	 */
+	public static String getMessageClientHello() {
+		return messageClientHello;
+	}
+
+	/**
+	 * @param messageClientHello the messageClientHello to set
+	 */
+	public static void setMessageClientHello(String messageClientHello) {
+		Message.messageClientHello = messageClientHello;
+	}
+
+	/**
+	 * @return the messageServerHello
+	 */
+	public static String getMessageServerHello() {
+		return messageServerHello;
+	}
+
+	/**
+	 * @param messageServerHello the messageServerHello to set
+	 */
+	public static void setMessageServerHello(String messageServerHello) {
+		Message.messageServerHello = messageServerHello;
+	}
+
+	/**
+	 * @return the messageClientCertfificate
+	 */
+	public static String getMessageClientCertfificate() {
+		return messageClientCertfificate;
+	}
+
+	/**
+	 * @param messageClientCertfificate the messageClientCertfificate to set
+	 */
+	public static void setMessageClientCertfificate(
+			String messageClientCertfificate) {
+		Message.messageClientCertfificate = messageClientCertfificate;
+	}
+
+	/**
+	 * @return the messageServerCertificate
+	 */
+	public static String getMessageServerCertificate() {
+		return messageServerCertificate;
+	}
+
+	/**
+	 * @param messageServerCertificate the messageServerCertificate to set
+	 */
+	public static void setMessageServerCertificate(
+			String messageServerCertificate) {
+		Message.messageServerCertificate = messageServerCertificate;
+	}
+
+	/**
+	 * @return the messageClientChangeCipherSpec
+	 */
+	public static String getMessageClientChangeCipherSpec() {
+		return messageClientChangeCipherSpec;
+	}
+
+	/**
+	 * @param messageClientChangeCipherSpec the messageClientChangeCipherSpec to set
+	 */
+	public static void setMessageClientChangeCipherSpec(
+			String messageClientChangeCipherSpec) {
+		Message.messageClientChangeCipherSpec = messageClientChangeCipherSpec;
+	}
+
+	/**
+	 * @return the messageClientFinished
+	 */
+	public static String getMessageClientFinished() {
+		return messageClientFinished;
+	}
+
+	/**
+	 * @param messageClientFinished the messageClientFinished to set
+	 */
+	public static void setMessageClientFinished(String messageClientFinished) {
+		Message.messageClientFinished = messageClientFinished;
+	}
+
+	/**
+	 * @return the messageServerChangeCipherSpec
+	 */
+	public static String getMessageServerChangeCipherSpec() {
+		return messageServerChangeCipherSpec;
+	}
+
+	/**
+	 * @param messageServerChangeCipherSpec the messageServerChangeCipherSpec to set
+	 */
+	public static void setMessageServerChangeCipherSpec(
+			String messageServerChangeCipherSpec) {
+		Message.messageServerChangeCipherSpec = messageServerChangeCipherSpec;
+	}
+
+	/**
+	 * @return the messageServerFinished
+	 */
+	public static String getMessageServerFinished() {
+		return messageServerFinished;
+	}
+
+	/**
+	 * @param messageServerFinished the messageServerFinished to set
+	 */
+	public static void setMessageServerFinished(String messageServerFinished) {
+		Message.messageServerFinished = messageServerFinished;
+	}
+
+	public static String getClientCertificatePremasterEncrypted() {
+		return clientCertificatePremasterEncrypted;
+	}
+
+	public static void setClientCertificatePremasterEncrypted(
+			String clientCertificatePremasterEncrypted) {
+		Message.clientCertificatePremasterEncrypted = clientCertificatePremasterEncrypted;
 	}
 }

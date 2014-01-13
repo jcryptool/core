@@ -6,166 +6,157 @@ import java.awt.List;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.PublicKey;
 import java.security.cert.X509Certificate;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.PlatformUI;
+
 /**
- * Provides a Dialog with the generated certificate depending
- * on the chosen signature algorithm and public key.
+ * Provides a Dialog with the generated certificate depending on the chosen
+ * signature algorithm and public key.
+ * 
  * @author Denk Gandalf
  * 
  */
-//TO DO
+// TO DO
 // - Variablen für Text anlegen
 // - V3 Extensions anlegen
-public class CertificateShow extends JDialog implements ActionListener{
+public class CertificateShow extends JDialog implements ActionListener {
 	/**
 	 * TextAre which holds the Text of the certificate
 	 */
 	TextArea txtCert = new TextArea();
-	
+
 	/**
 	 * Button for closing the dialog
 	 */
-	JButton btnClose = new JButton("Schließen");
-	
+	JButton btnClose = new JButton("Schlieï¿½en");
+
 	/**
 	 * Layout of the Dialog
 	 */
 	BorderLayout layBorder = new BorderLayout();
-	
+
 	/**
 	 * Panel for Buttons
 	 */
 	JPanel panBtn = new JPanel(new FlowLayout());
-	
+
 	/**
 	 * Value of no Certificate is generated
 	 */
-	String strCertificate="No Certificate";
-	
+	String strCertificate = "No Certificate";
+
 	/**
-	 * Defines the creating point of the dialog and
-	 * the size of the created dialog.
+	 * Defines the creating point of the dialog and the size of the created
+	 * dialog.
 	 */
-	private static int DIALOG_X = 200;
-	private static int DIALOG_Y = 50;
-	private static int DIALOG_WIDTH = 500;
-	private static int DIALOG_HEIGHT = 650;
-	
+
+	PublicKey pubKey;
+
 	/**
-	 * Constructor of the class, generates the dialog and
-	 * adds a formated certificate to the {@link txtCert} 
-	 * for displaying purpose.
-	 * Also adds a close button at the bottom of the dialog
+	 * Constructor of the class, generates the dialog and adds a formated
+	 * certificate to the {@link txtCert} for displaying purpose. Also adds a
+	 * close button at the bottom of the dialog
 	 * 
 	 * @param cert
-	 * 			the displayed certificate
+	 *            the displayed certificate
 	 */
-	public CertificateShow(X509Certificate cert) 
-	{
-		panBtn.add(btnClose);
-		
-		this.setLayout(layBorder);
-		
-		this.add(txtCert,BorderLayout.CENTER);
-		this.add(panBtn,BorderLayout.SOUTH);
-		
-		txtCert.setEditable(false);
-		
-		txtCert.setText(setFormatCertificat(cert));
-		
-		this.setBounds(DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-		this.setVisible(true);
-		
-		btnClose.addActionListener(this);
+	public CertificateShow(X509Certificate cert, PublicKey pubKey) {
+		this.pubKey = pubKey;
+
+		MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
+				.getActiveWorkbenchWindow().getShell(), SWT.OK);
+		messageBox.setMessage(setFormatCertificat(cert));
+		messageBox.setText(Messages.certShowWindowName);
+		messageBox.open();
 	}
-	
+
 	/**
-	 * Formats a given certificate into a String after the example 
-	 * given at de.wikipedia.org/wiki/X.509
+	 * Formats a given certificate into a String after the example given at
+	 * de.wikipedia.org/wiki/X.509
+	 * 
 	 * @param cert
 	 * @return
 	 */
-	public String setFormatCertificat(X509Certificate cert){
-		String[] strPublic =cert.getPublicKey().toString().split("\n");
-		String[] strSig =cert.toString().split(":");
-		
-		//Format General
-		strCertificate="Certificate:\n"
-				+ "\tData:\n"
-				+ "\t\tVersion: "+cert.getVersion()+"\n"
-				+ "\t\tSerial Number: "+cert.getSerialNumber()+"\n"
-				+ "\t\tSignature Algorithm: "+cert.getSigAlgName()+"\n"
-				+ "\t\tIssuer: "+cert.getIssuerDN()+"\n"
-				+ "\t\tValidity\n"
-				+ "\t\t\tNot Befor: "+cert.getNotBefore()+"\n"
-				+ "\t\t\tNot After: "+cert.getNotAfter()+ "\n"
-				+ "\t\tSubject: "+cert.getSubjectDN()+"\n"
-				+ "\t\tSubject Public Key Info:\n"
-				+ "\t\t\tPublic Key Algorithm: "+cert.getPublicKey().getAlgorithm()+"\n";
-		
-		//Output Key
-		strCertificate=strCertificate+"\t\t\t"+strPublic[0];
-		
-		strCertificate=strCertificate
-				+ "\t\t\t"+formatKey(strSig[12].split(" ")[1]);
-		
-		if(cert.getVersion()==3){
-			//Format Extensions
-			strCertificate=strCertificate
-					+ "\n\t\tX509v3 extensions:\n";
+	public String setFormatCertificat(X509Certificate cert) {
+		String[] strSig = cert.toString().split(":");
+		String[] strKey = pubKey.toString().split("\n");
+
+		// Format General
+		strCertificate = "Certificate:\n" + "Data:\n" + "\tVersion: "
+				+ cert.getVersion() + "\n" + "\tSerial Number: "
+				+ cert.getSerialNumber() + "\n" + "\tSignature Algorithm: "
+				+ cert.getSigAlgName() + "\n" + "\tIssuer: "
+				+ cert.getIssuerDN() + "\n" + "\tValidity\n"
+				+ "\t\tNot Befor: " + cert.getNotBefore() + "\n"
+				+ "\t\tNot After: " + cert.getNotAfter() + "\n" + "\tSubject: "
+				+ cert.getSubjectDN() + "\n" + "\tSubject Public Key Info:\n"
+				+ "\t\tPublic Key Algorithm: " + pubKey.getAlgorithm();
+
+		// Output Key
+		if (pubKey.getAlgorithm().equals("RSA")) {
+			strCertificate = strCertificate + "\t\t"
+					+ formatKey(pubKey.toString().split("\n")[1].split(":")[1]);
+		} else {
+			strCertificate = strCertificate + "\t\t"
+					+ formatKey(strKey[2]+strKey[3])
+					+ formatKey(strKey[5]+strKey[6])
+					+ formatKey(strKey[8]+strKey[9]);
 		}
-				
-		//Format Signature
-		strCertificate=strCertificate
-				+ "\tSignature Algorithmen: "+cert.getSigAlgName()
-				+formatKey(strSig[strSig.length-1]);
-		
-		
+
+		// Format Signature
+		strCertificate = strCertificate + "\n\tSignature Algorithmen: "
+				+ cert.getSigAlgName() + formatKey(strSig[strSig.length - 1]);
+
 		return strCertificate;
 	}
-	
+
 	/**
-	 * Formats a hard to read hexadecimal string into a easy to 
-	 * read string.
-	 * New format is:
-	 * 11:22:33:44:55:..:
-	 * @param key	the hard to read key
-	 * @return
-	 * 		the easy to read key
+	 * Formats a hard to read hexadecimal string into a easy to read string. New
+	 * format is: 11:22:33:44:55:..:
+	 * 
+	 * @param key
+	 *            the hard to read key
+	 * @return the easy to read key
 	 */
-	public String formatKey(String key){
-		key = key.replace(" ", "").replace("\n", "").replace("\r","");
-		String format="";
+	public String formatKey(String key) {
+		key = key.replace(" ", "").replace("\n", "").replace("\r", "");
+		String format = "";
 		int i = 0;
-		for(i=0;i<key.length();i++){
-			if(i%30==0){
-				format=format+":\n\t\t\t\t";
+		for (i = 0; i < key.length(); i++) {
+			if (i % 2 == 0 && i != 0) {
+				format += ":";
 			}
-			if(i%2==0&&i!=0&&!(i%30==0)){
-				format+=":";
+			if (i % 30 == 0) {
+				format = format + "\n\t\t";
 			}
-			format=format+key.charAt(i);
-				
+			format = format + key.charAt(i);
+
 		}
 		return format;
 	}
 
 	/**
 	 * Action Listener which provides Button events
-	 * @param event		the event
+	 * 
+	 * @param event
+	 *            the event
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		
+
 		/**
 		 * Closes the dialog
 		 */
-		if(event.getSource()=="Close");
-		this.dispose();	
+		if (event.getSource() == "Close")
+			;
+		this.dispose();
 	}
 }

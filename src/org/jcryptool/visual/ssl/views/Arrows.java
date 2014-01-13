@@ -62,7 +62,6 @@ public class Arrows extends JPanel {
 		g.drawLine(0, 0, len, 0);
 		g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
 				new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
-
 	}
 
 	/**
@@ -135,5 +134,4 @@ public class Arrows extends JPanel {
 		}
 		repaint();
 	}
-
 }

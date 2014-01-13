@@ -12,25 +12,31 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.ui.PlatformUI;
 
-public class ClientFinishedComposite extends Composite implements ProtocolStep
-{
+public class ClientFinishedComposite extends Composite implements ProtocolStep {
 	private Button btnInformationen;
-	private boolean infoText=false;
+	private boolean infoText = false;
+	private String strText;
 	private SslView sslView;
+	private Group grpClientFinished;
+	private Label lblFinished;
+
 	/**
 	 * Create the composite.
+	 * 
 	 * @param parent
 	 * @param style
 	 */
-	public ClientFinishedComposite(Composite parent, int style, final SslView sslView) 
-	{
+	public ClientFinishedComposite(Composite parent, int style,
+			final SslView sslView) {
 		super(parent, style);
 		this.sslView = sslView;
-		Group grpClientFinished = new Group(this, SWT.NONE);
-		grpClientFinished.setText(Messages.ClientFinishedCompositeGrpServerFinished);
-		grpClientFinished.setBounds(10, 0, 326, 175);
+
+		grpClientFinished = new Group(this, SWT.NONE);
+		grpClientFinished.setBounds(0, 0, 326, 175);
+		grpClientFinished
+		.setText(Messages.ClientFinishedCompositeGrpServerFinished);
 		
-		Label lblFinished = new Label(grpClientFinished, SWT.NONE);
+		lblFinished = new Label(grpClientFinished, SWT.NONE);
 		lblFinished.setBounds(10, 25, 50, 20);
 		lblFinished.setText(Messages.ClientFinishedCompositeLblFinished);
 		
@@ -38,51 +44,52 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep
 		btnInformationen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
-				/*MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),SWT.ICON_INFORMATION|SWT.OK);
-				 messageBox.setMessage(Messages.ClientFinishedInformationText);
-				 messageBox.setText(Messages.ClientFinishedCompositeBtnInformation);
-				 messageBox.open();*/
-				//sslView.addTextToStxInformationText(Messages.ClientFinishedInformationText);
-				infoText=true;
+				infoText = !infoText;
+				if(btnInformationen.getText().equals(Messages.btnInformationToggleParams)){
+					btnInformationen.setText(Messages.ClientCertificateCompositeBtnInfo);
+				}else{
+					btnInformationen.setText(Messages.btnInformationToggleParams);
+				}
 				refreshInformations();
+				
 			}
 		});
 		btnInformationen.setLocation(216, 140);
 		btnInformationen.setSize(100, 25);
-		btnInformationen.setText(Messages.ClientFinishedCompositeBtnInformation);
+		btnInformationen
+		.setText(Messages.ClientFinishedCompositeBtnInformation);
+	}
+
+	public void startStep() {
+		strText = Messages.ClientFinishedInitationText;
 		refreshInformations();
 	}
 
-	public void refreshInformations()
-	{
-		if(infoText)
-		{
-			sslView.setStxInformationText(Messages.ClientFinishedInformationText);
-		}
-		else
-		{
-			sslView.setStxInformationText("");
-		}
+	public void refreshInformations() {
 	}
-	public void enableControls()
-	{
+
+	public void enableControls() {
 		btnInformationen.setEnabled(true);
 		refreshInformations();
 	}
-	
-	public void disableControls() 
-	{
+
+	public void disableControls() {
 		btnInformationen.setEnabled(false);
+		btnInformationen.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 
-	public boolean checkParameters()
-	{
+	public boolean checkParameters() {
 		return true;
 	}
-	
+
 	@Override
-	protected void checkSubclass() 
-	{
+	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
+	}
+
+	@Override
+	public void resetStep() {
+		infoText = false;
+		btnInformationen.setText(Messages.ClientCertificateCompositeBtnInfo);
 	}
 }

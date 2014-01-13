@@ -24,4 +24,15 @@ public interface ProtocolStep
 	 * 		true if parameters are correct
 	 */
 	public boolean checkParameters();
+	
+	/**
+	 * Refreshes the information shown in stxInformation
+	 */
+	public void refreshInformations();
+	
+	/**
+	 * Resets the step
+	 */
+	public void resetStep();
+	
 }

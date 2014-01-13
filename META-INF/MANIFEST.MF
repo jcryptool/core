@@ -12,9 +12,12 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: codec,
+ de.flexiprovider.api.keys,
  de.flexiprovider.core.random,
+ org.bouncycastle.asn1.x500,
  org.bouncycastle.crypto.generators,
  org.bouncycastle.crypto.prng,
+ org.bouncycastle.jce,
  org.bouncycastle.x509,
  org.eclipse.draw2d,
  org.jcryptool.core.util.fonts,

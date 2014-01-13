@@ -10,9 +10,12 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.util.fonts.FontService;
+import org.jcryptool.visual.ssl.protocol.Message;
 
 /**
  * Represents the visual TLS-Plugin.
@@ -26,7 +29,6 @@ public class SslView extends ViewPart
 	private Arrows arrow;
 	private Composite content;
 	private Composite mainContent;
-	private Composite infoContent;
 	private ClientHelloComposite clientHelloComposite;
 	private ServerHelloComposite serverHelloComposite;
 	private ServerCertificateComposite serverCertificateComposite;
@@ -36,6 +38,10 @@ public class SslView extends ViewPart
 	private ClientFinishedComposite clientFinishedComposite;
 	private ServerFinishedComposite serverFinishedComposite;
 	private StyledText stxInformation;
+	private Group grp_serverComposites;
+	private Group grp_clientComposites;
+	private Button btnNextStep;
+	private Button btnPreviousStep;
 	
 	public static final String ID = "org.jcryptool.visual.ssl.views.SslView"; //$NON-NLS-1$
 	
@@ -55,21 +61,23 @@ public class SslView extends ViewPart
 		scrolledComposite.setContent(mainContent);
 		scrolledComposite.setExpandHorizontal(true);
 		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setMinSize(mainContent.computeSize(1300, 900));
-		
-		//mainContent.setLayout(new GridLayout(2,false));
-		//mainContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		content = new Composite(mainContent, SWT.NONE);
+		scrolledComposite.setMinSize(mainContent.computeSize(1100, 900));
 		
 		GridLayout gl = new GridLayout(1, false);
-        gl.verticalSpacing = 20;
+        gl.verticalSpacing = 0;
         mainContent.setLayout(gl);
-
-		infoContent = new Composite(mainContent, SWT.NONE);
-		infoContent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+        
+        Label headline = new Label(mainContent, SWT.NONE);
+      	headline.setText(Messages.SslViewHeadline);
+      	headline.setFont(FontService.getHeaderFont());
+      	headline.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+      	
+        content = new Composite(mainContent, SWT.NONE);
+        content.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+        content.setLayout(new GridLayout(4, false));
+        
+        createButtons();
 		createGui();
-		
-		scrolledComposite.pack();
 		
 		//Fuer die Hilfe:
 		//PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), SslPlugin.PLUGIN_ID + ".sslview");
@@ -80,34 +88,97 @@ public class SslView extends ViewPart
 	 */
 	private void createGui()
 	{
+		//Client Composites
+		grp_clientComposites = new Group(content, SWT.NONE);
+		GridData gd_clientComposite = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_clientComposite.widthHint = 350;
+		grp_clientComposites.setLayoutData(gd_clientComposite);
+		grp_clientComposites.setLayout(new GridLayout());
+		grp_clientComposites.setText(Messages.SslViewLblClient);
+		
+		clientHelloComposite = new ClientHelloComposite(grp_clientComposites, SWT.NONE, this);
+		clientHelloComposite.setLayout(new GridLayout(3, true));
+		clientHelloComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		
+		clientCertificateComposite = new ClientCertificateComposite(grp_clientComposites, SWT.NONE, this);
+		clientCertificateComposite.setLayout(new GridLayout(3, true));
+		clientCertificateComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		clientCertificateComposite.setVisible(false);
+		
+		clientChangeCipherSpecComposite = new ClientChangeCipherSpecComposite(grp_clientComposites, SWT.NONE, this);
+		clientChangeCipherSpecComposite.setLayout(new GridLayout(3, true));
+		clientChangeCipherSpecComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+		clientChangeCipherSpecComposite.setVisible(false);
+		
+		clientFinishedComposite = new ClientFinishedComposite(grp_clientComposites, SWT.NONE, this);
+		clientFinishedComposite.setLayout(new GridLayout(3, true));
+		clientFinishedComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4));
+		clientFinishedComposite.setVisible(false);
+		
+		
+		//Draw Panel
 		Composite swtAwtComponent = new Composite(content, SWT.EMBEDDED);
-		swtAwtComponent.setBounds(350, 50, 200, 760);
-		swtAwtComponent.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+		GridData gd_drawPanel = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+		gd_drawPanel.widthHint = 100;
+		swtAwtComponent.setLayoutData(gd_drawPanel);
 		swtAwtComponent.setLayout(new GridLayout());
 		java.awt.Frame frame = SWT_AWT.new_Frame(swtAwtComponent);
 		arrow = new Arrows();
 		frame.add(arrow);
 		
-		stxInformation = new StyledText(content, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		
+		//Server Composites
+		grp_serverComposites = new Group(content, SWT.NONE);
+		GridData gd_serverComposite = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 3);
+		gd_serverComposite.widthHint = 350;
+		grp_serverComposites.setLayoutData(gd_serverComposite);
+		grp_serverComposites.setLayout(new GridLayout());
+		grp_serverComposites.setText(Messages.SslViewLblServer);
+		
+		serverHelloComposite = new ServerHelloComposite(grp_serverComposites, SWT.NONE, this);
+		serverHelloComposite.setLayout(new GridLayout(3, true));
+		serverHelloComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		serverHelloComposite.setVisible(false);
+		
+		serverCertificateComposite = new ServerCertificateComposite(grp_serverComposites, SWT.NONE, this);
+		serverCertificateComposite.setLayout(new GridLayout(3, true));
+		serverCertificateComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		serverCertificateComposite.setVisible(false);
+		
+		serverChangeCipherSpecComposite = new ServerChangeCipherSpecComposite(grp_serverComposites, SWT.NONE, this);
+		serverChangeCipherSpecComposite.setLayout(new GridLayout(3, true));
+		serverChangeCipherSpecComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 3));
+		serverChangeCipherSpecComposite.setVisible(false);
+		
+		serverFinishedComposite = new ServerFinishedComposite(grp_serverComposites, SWT.NONE, this);
+		serverFinishedComposite.setLayout(new GridLayout(3, true));
+		serverFinishedComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 4));
+		serverFinishedComposite.setVisible(false);
+		
+		
+		//Information Panel
+		Group grp_stxInfo = new Group(content, SWT.NONE);
+		grp_stxInfo.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 4));
+		grp_stxInfo.setLayout(new GridLayout());
+		grp_stxInfo.setText(Messages.SslViewLblInfo);
+		
+		stxInformation = new StyledText(grp_stxInfo, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+		GridData gd_stxInfo = new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1);
+		stxInformation.setLayoutData(gd_stxInfo);
 		stxInformation.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		stxInformation.setVisible(true);
-		stxInformation.setBounds(900, 50, 400, 785);
-		stxInformation.setLayoutData(new GridData(SWT.FILL, SWT.END, true, false));
 		stxInformation.setText(Messages.SslViewStxInformation);
+		stxInformation.setVisible(true);
+	}
+	
+	/**
+	 * Creates the Buttons of the GUI
+	 */
+	private void createButtons() {
+		Group grp_buttons = new Group(mainContent, SWT.NONE);
+		grp_buttons.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, false, false, 3, 1));
+		grp_buttons.setLayout(new GridLayout(3, true));
 		
-		//stxInformation.setLocation(0, 73);
-		//GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		//gridData.horizontalAlignment = GridData.FILL;
-		//gridData.grabExcessHorizontalSpace = true;
-		//gridData.widthHint = 400;
-		//gridData.heightHint = 750;
-		//stxInformation.setLayoutData(gridData);
-		
-		clientHelloComposite = new ClientHelloComposite(content, SWT.NONE, this);
-		clientHelloComposite.setBounds(10, 50, 349, 177);
-		clientHelloComposite.setLayout(new GridLayout(3, true));
-		
-		Button btnPreviousStep = new Button(content, SWT.NONE);
+		btnPreviousStep = new Button(grp_buttons, SWT.PUSH);
 		btnPreviousStep.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
@@ -115,10 +186,10 @@ public class SslView extends ViewPart
 			}
 		});
 		btnPreviousStep.setText(Messages.SslViewBtnPreviousStep);
-		btnPreviousStep.setBounds(300, 865, 140, 25);
 		btnPreviousStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
+		btnPreviousStep.setEnabled(false);
 		
-		Button btnNextStep = new Button(content, SWT.NONE);
+		btnNextStep = new Button(grp_buttons, SWT.PUSH);
 		btnNextStep.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) 
@@ -127,10 +198,9 @@ public class SslView extends ViewPart
 			}
 		});
 		btnNextStep.setText(Messages.SslViewBtnNextStep);
-		btnNextStep.setBounds(460, 865, 140, 25);
 		btnNextStep.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
 		
-		Button btnReset = new Button(content, SWT.NONE);
+		Button btnReset = new Button(grp_buttons, SWT.PUSH);
 		btnReset.addMouseListener(new MouseAdapter() 
 		{
 			@Override
@@ -140,20 +210,7 @@ public class SslView extends ViewPart
 			}
 		});
 		btnReset.setText(Messages.SslViewBtnReset);
-		btnReset.setBounds(620,865, 140, 25);
 		btnReset.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1));
-		
-		Label lblClient = new Label(content, SWT.NONE);
-		lblClient.setBounds(159, 20, 32, 15);
-		lblClient.setText(Messages.SslViewLblClient);
-		
-		Label lblServer = new Label(content, SWT.NONE);
-		lblServer.setBounds(700, 20, 32, 15);
-		lblServer.setText(Messages.SslViewLblServer);
-		
-		Label test = new Label(content, SWT.NONE);
-		test.setBounds(1030, 20, 100, 15);
-		test.setText(Messages.SslViewLblInfo);
 	}
 
 	/**
@@ -163,7 +220,9 @@ public class SslView extends ViewPart
 	 */
 	public void setStxInformationText(String text)
 	{
-		stxInformation.setText(text);
+		if(stxInformation != null) {
+			stxInformation.setText(text);
+		}
 	}
 	
 	/**
@@ -193,8 +252,8 @@ public class SslView extends ViewPart
 	public void backToClientHello()
 	{
 		arrow.moveArrowsby(18);
-		arrow.nextArrow(200,75,10,75,0,0,0);
-		arrow.nextArrow(10,75,200,75,0,0,0);
+		arrow.nextArrow(100,75,0,75,0,0,0);
+		arrow.nextArrow(0,95,100,95,0,0,0);
 		previousStep();
 	}
 	
@@ -203,69 +262,76 @@ public class SslView extends ViewPart
 	 */
 	public void nextStep()
 	{
-		if(serverHelloComposite == null)
+		if(serverHelloComposite.getVisible() == false || serverHelloComposite == null)
 		{
 			if(clientHelloComposite.checkParameters())
 			{
 				arrow.moveArrowsby(18);
-				serverHelloComposite = new ServerHelloComposite(content, SWT.NONE, this);
-				serverHelloComposite.setBounds(550, 50, 349, 177);
-				serverHelloComposite.setLayout(new GridLayout(3, true));
+				serverHelloComposite.startStep();
+				serverHelloComposite.setVisible(true);
+				serverHelloComposite.enableControls();
 				clientHelloComposite.disableControls();
-				arrow.nextArrow(10,75,200,75,0,0,0);
+				arrow.nextArrow(0,75,100,75,0,0,0);
+				btnPreviousStep.setEnabled(true);
 			}
 		}
-		else if(serverCertificateComposite == null)
+		else if(serverCertificateComposite.getVisible() == false || serverCertificateComposite == null)
 		{
 			if(serverHelloComposite.checkParameters())
 			{
-				serverCertificateComposite = new ServerCertificateComposite(content, SWT.NONE, this);
-				serverCertificateComposite.setBounds(550, 233, 349, 177);
-				serverCertificateComposite.setLayout(new GridLayout(3, true));
+				serverCertificateComposite.startStep();
+				serverCertificateComposite.setVisible(true);
+				serverCertificateComposite.enableControls();
 				serverHelloComposite.disableControls();
 			}
 		}
-		else if(clientCertificateComposite == null)
+		else if(clientCertificateComposite.getVisible() == false || clientCertificateComposite == null)
 		{
 			if(serverCertificateComposite.checkParameters())
 			{
-				clientCertificateComposite = new ClientCertificateComposite(content, SWT.NONE, this);
-				clientCertificateComposite.setBounds(10, 295, 349, 177);
-				clientCertificateComposite.setLayout(new GridLayout(3, true));
+				clientCertificateComposite.startStep();
+				clientCertificateComposite.setVisible(true);
+				clientCertificateComposite.enableControls();
 				serverCertificateComposite.disableControls();
-				arrow.nextArrow(345,250,10,330,0,0,0);
+				//Do not remove -Gandalf
+				clientCertificateComposite.refreshInformations();
+				arrow.nextArrow(100,275,0,275,0,0,0);
+				if (!Message.getServerCertificateServerCertificateRequest()) 
+					clientCertificateComposite.btnShow.setEnabled(false);
+				//---
 			}
 		}
-		else if(serverChangeCipherSpecComposite == null)
+		else if(serverChangeCipherSpecComposite.getVisible() == false || serverChangeCipherSpecComposite == null)
 		{
 			if(clientCertificateComposite.checkParameters())
 			{
-				serverChangeCipherSpecComposite = new ServerChangeCipherSpecComposite(content, SWT.NONE, this);
-				serverChangeCipherSpecComposite.setBounds(550, 483, 349, 177);
-				serverChangeCipherSpecComposite.setLayout(new GridLayout(3, true));
-				serverFinishedComposite = new ServerFinishedComposite(content, SWT.NONE, this);
-				serverFinishedComposite.setBounds(550, 680, 349,177);
-				serverFinishedComposite.setLayout(new GridLayout(3, true));
+				serverChangeCipherSpecComposite.startStep();
+				serverChangeCipherSpecComposite.setVisible(true);
+				serverChangeCipherSpecComposite.enableControls();
+				serverFinishedComposite.startStep();
+				serverFinishedComposite.setVisible(true);
+				serverFinishedComposite.enableControls();
 				clientCertificateComposite.disableControls();
-				arrow.nextArrow(10,350,200,520,0,0,0);
+				arrow.nextArrow(0,325,100,450,0,0,0);
 			}
 		}
-		else if(clientChangeCipherSpecComposite == null)
+		else if(clientChangeCipherSpecComposite.getVisible() == false || clientChangeCipherSpecComposite == null)
 		{
 			if(serverChangeCipherSpecComposite.checkParameters())
 			{
-				clientChangeCipherSpecComposite = new ClientChangeCipherSpecComposite(content, SWT.NONE, this);
-				clientChangeCipherSpecComposite.setBounds(10, 483, 349, 177);
-				clientChangeCipherSpecComposite.setLayout(new GridLayout(3, true));
-				clientFinishedComposite = new ClientFinishedComposite(content, SWT.NONE, this);
-				clientFinishedComposite.setBounds(10, 680, 349, 177);
-				clientFinishedComposite.setLayout(new GridLayout(3, true));
+				clientChangeCipherSpecComposite.startStep();
+				clientChangeCipherSpecComposite.setVisible(true);
+				clientChangeCipherSpecComposite.enableControls();
+				clientFinishedComposite.startStep();
+				clientFinishedComposite.setVisible(true);
+				clientFinishedComposite.enableControls();
 				serverChangeCipherSpecComposite.disableControls();
 				serverFinishedComposite.disableControls();
-				arrow.nextArrow(345, 540, 10, 540, 0,0,0);
-				arrow.nextArrow(10, 575, 200, 575, 0, 0, 0);
-				arrow.nextArrow(345, 700, 10, 700, 0,180,0);
-				arrow.nextArrow(10, 750, 200, 750, 0, 180, 0);
+				btnNextStep.setEnabled(false);
+				arrow.nextArrow(100, 475, 0, 475, 0,0,0);
+				arrow.nextArrow(0, 500, 100, 500, 0, 0, 0);
+				arrow.nextArrow(100, 650, 0, 650, 0,180,0);
+				arrow.nextArrow(0, 675, 100, 675, 0, 180, 0);
 			}
 		}
 	}
@@ -275,41 +341,26 @@ public class SslView extends ViewPart
 	 */
 	public void resetStep()
 	{
-		if(clientChangeCipherSpecComposite != null)
-		{
-			clientFinishedComposite.setVisible(false);
-			clientFinishedComposite = null;
-			clientChangeCipherSpecComposite.setVisible(false);
-			clientChangeCipherSpecComposite = null;
-		}
-		if(serverChangeCipherSpecComposite != null)
-		{
-			serverFinishedComposite.setVisible(false);
-			serverFinishedComposite = null;
-			serverChangeCipherSpecComposite.setVisible(false);
-			serverChangeCipherSpecComposite = null;
-		}
-		if(clientCertificateComposite != null)
-		{
-			clientCertificateComposite.setVisible(false);
-			clientCertificateComposite = null;
-		}
-		if(serverCertificateComposite != null)
-		{
-			serverCertificateComposite.setVisible(false);
-			serverCertificateComposite = null;
-		}	
-		if(serverHelloComposite != null)
-		{
-			serverHelloComposite.setVisible(false);
-			serverHelloComposite = null;
-		}		
-		clientHelloComposite.setVisible(false);
-		clientHelloComposite = null;
-		clientHelloComposite = new ClientHelloComposite(content, SWT.NONE, this);
-		clientHelloComposite.setBounds(10, 50, 349, 177);
+		clientFinishedComposite.setVisible(false);
+		clientFinishedComposite.resetStep();
+		clientChangeCipherSpecComposite.setVisible(false);
+		clientChangeCipherSpecComposite.resetStep();
+		serverFinishedComposite.setVisible(false);
+		serverFinishedComposite.resetStep();
+		serverChangeCipherSpecComposite.setVisible(false);
+		serverChangeCipherSpecComposite.resetStep();
+		clientCertificateComposite.setVisible(false);
+		clientCertificateComposite.resetStep();
+		serverCertificateComposite.setVisible(false);
+		serverCertificateComposite.resetStep();
+		serverHelloComposite.setVisible(false);
+		serverHelloComposite.resetStep();	
+		clientHelloComposite.resetStep();
 		clientHelloComposite.enableControls();
 		arrow.resetArrows();
+		stxInformation.setText(Messages.SslViewStxInformation);
+		btnNextStep.setEnabled(true);
+		btnPreviousStep.setEnabled(false);
 	}
 	
 	/**
@@ -318,49 +369,51 @@ public class SslView extends ViewPart
 	 */
 	public void previousStep()
 	{
-		if(clientChangeCipherSpecComposite != null)
+		if(clientChangeCipherSpecComposite.getVisible() == true)
 		{
 			clientFinishedComposite.setVisible(false);
-			clientFinishedComposite = null;
+			clientFinishedComposite.resetStep();
 			clientChangeCipherSpecComposite.setVisible(false);
-			clientChangeCipherSpecComposite = null;
+			clientChangeCipherSpecComposite.resetStep();
 			serverChangeCipherSpecComposite.enableControls();
 			serverFinishedComposite.enableControls();
 			arrow.removeLastArrow();
 			arrow.removeLastArrow();
 			arrow.removeLastArrow();
 			arrow.removeLastArrow();
+			btnNextStep.setEnabled(true);
 		}
-		else if(serverChangeCipherSpecComposite != null)
+		else if(serverChangeCipherSpecComposite.getVisible() == true)
 		{
 			serverFinishedComposite.setVisible(false);
-			serverFinishedComposite = null;
+			serverFinishedComposite.resetStep();
 			serverChangeCipherSpecComposite.setVisible(false);
-			serverChangeCipherSpecComposite = null;
+			serverChangeCipherSpecComposite.resetStep();
 			clientCertificateComposite.enableControls();
 			arrow.removeLastArrow();
 		}
-		else if(clientCertificateComposite != null)
+		else if(clientCertificateComposite.getVisible() == true)
 		{
 			clientCertificateComposite.setVisible(false);
-			clientCertificateComposite = null;
+			clientCertificateComposite.resetStep();
 			serverCertificateComposite.enableControls();
 			arrow.removeLastArrow();
 		}
-		else if(serverCertificateComposite != null)
+		else if(serverCertificateComposite.getVisible() == true)
 		{
 			serverCertificateComposite.setVisible(false);
-			serverCertificateComposite = null;
+			serverCertificateComposite.resetStep();
 			serverHelloComposite.enableControls();
 			serverHelloComposite.refreshInformations();
 		}
-		else if(serverHelloComposite != null)
+		else if(serverHelloComposite.getVisible() == true)
 		{
 			serverHelloComposite.setVisible(false);
-			serverHelloComposite = null;
+			serverHelloComposite.resetStep();
 			clientHelloComposite.enableControls();
 			clientHelloComposite.refreshInformations();
 			arrow.removeLastArrow();
+			btnPreviousStep.setEnabled(false);
 		}
 	}
 

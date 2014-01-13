@@ -9,7 +9,7 @@
             id="org.jcryptool.visual.ssl">
       </category>
       <view
-            name="SSL/TLS"
+            name="%view.name.0"
             icon="icons/sample.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.ssl.views.SslView"
@@ -18,7 +18,7 @@
       <view
             class="org.jcryptool.visual.ssl.views.SslView"
             id="org.jcryptool.visual.ssl.views.SslView"
-            name="SSL/TLS">
+            name="%view.name.0">
       </view>
    </extension>
    
@@ -26,7 +26,7 @@
          point="org.jcryptool.core.operations.visuals">
       <Visual
             contextHelpId="org.jcryptool.visual.ssl.view"
-            name="SSL/TLS"
+            name="%Visual.name.0"
             viewId="org.jcryptool.visual.ssl.views.SslView">
       </Visual>
    </extension>
@@ -43,7 +43,7 @@
          point="org.eclipse.ui.commands">
       <command
             id="org.jcryptool.visual.ssl.restartCommand"
-            name="Neustart">
+            name="%restart.command.name">
       </command>
    </extension>
    
