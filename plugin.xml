@@ -4,10 +4,6 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="Sample Category"
-            id="org.jcryptool.visual.ssl">
-      </category>
       <view
             name="%view.name.0"
             icon="icons/sample.gif"
