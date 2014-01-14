@@ -18,7 +18,7 @@ public class Attacks{
 		{
 			createDialog(Messages.AttacksMD5);
 		}
-		if(Message.getServerHelloVersion()==0&&Message.getServerHelloCipherMode()=="CBC")
+		if(Message.getServerHelloVersion()=="0301"&&Message.getServerHelloCipherMode()=="CBC")
 		{
 			createDialog(Messages.AttacksBEAST);
 		}
@@ -34,7 +34,7 @@ public class Attacks{
 		{
 			createDialog(Messages.AttacksNoCipher);
 		}
-		if((Message.getServerHelloVersion()==0||Message.getServerHelloVersion()==1)&&Message.getServerHelloCipherMode()=="CBC")
+		if((Message.getServerHelloVersion()=="0301"||Message.getServerHelloVersion()=="0302")&&Message.getServerHelloCipherMode()=="CBC")
 		{
 			createDialog(Messages.AttacksLucky13);
 		}

@@ -33,14 +33,14 @@ public class Message
 	
 	private static String clientFinishedFinished="";
 	
-	private static int serverHelloVersion;
+	private static String serverHelloVersion;
 	private static String serverHelloRandom;
 	private static String serverHelloCipherSuite="";
 	private static String serverHelloCipher="";
 	private static String serverHelloHash="";
 	private static String serverHelloCipherMode="";
 	private static String serverHelloKeyExchange="";
-	private static int serverHelloSessionID;
+	private static String serverHelloSessionID;
 	
 	private static String messageClientHello="";
 	private static String messageServerHello="";
@@ -48,8 +48,16 @@ public class Message
 	private static String messageServerCertificate="";
 	private static String messageClientChangeCipherSpec="";
 	private static String messageClientFinished="";
+	private static String messageServerKeyExchange="";
+	private static String messageClientKeyExchange="";
+	private static String messageServerHelloDone="";
 	private static String messageServerChangeCipherSpec="";
 	private static String messageServerFinished="";
+	private static String messageServerRequest="";
+	private static String messageClientVerify="";
+	private static String ServerKey="";
+	private static String ClientKey="";
+	private static String MasterSecret="";
 	
 	/**
 	 * Holds if the ServerCertificate requests a certificate from the client
@@ -212,14 +220,14 @@ public class Message
 	/**
 	 * @return the serverHelloVersion
 	 */
-	public static int getServerHelloVersion() {
+	public static String getServerHelloVersion() {
 		return serverHelloVersion;
 	}
 	
 	/**
 	 * @param serverHelloVersion the serverHelloVersion to set
 	 */
-	public static void setServerHelloVersion(int serverHelloVersion) {
+	public static void setServerHelloVersion(String serverHelloVersion) {
 		Message.serverHelloVersion = serverHelloVersion;
 	}
 	
@@ -254,14 +262,14 @@ public class Message
 	/**
 	 * @return the serverHelloSessionID
 	 */
-	public static int getServerHelloSessionID() {
+	public static String getServerHelloSessionID() {
 		return serverHelloSessionID;
 	}
 	
 	/**
 	 * @param serverHelloSessionID the serverHelloSessionID to set
 	 */
-	public static void setServerHelloSessionID(int serverHelloSessionID) {
+	public static void setServerHelloSessionID(String serverHelloSessionID) {
 		Message.serverHelloSessionID = serverHelloSessionID;
 	}
 	
@@ -625,5 +633,71 @@ public class Message
 	public static void setClientCertificatePremasterEncrypted(
 			String clientCertificatePremasterEncrypted) {
 		Message.clientCertificatePremasterEncrypted = clientCertificatePremasterEncrypted;
+	}
+
+	public static String getMessageServerKeyExchange() {
+		return messageServerKeyExchange;
+	}
+
+	public static void setMessageServerKeyExchange(
+			String messageServerKeyExchange) {
+		Message.messageServerKeyExchange = messageServerKeyExchange;
+	}
+
+	public static String getMessageClientKeyExchange() {
+		return messageClientKeyExchange;
+	}
+
+	public static void setMessageClientKeyExchange(
+			String messageClientKeyExchange) {
+		Message.messageClientKeyExchange = messageClientKeyExchange;
+	}
+
+	public static String getMessageServerHelloDone() {
+		return messageServerHelloDone;
+	}
+
+	public static void setMessageServerHelloDone(String messageServerHelloDone) {
+		Message.messageServerHelloDone = messageServerHelloDone;
+	}
+
+	public static String getMessageServerRequest() {
+		return messageServerRequest;
+	}
+
+	public static void setMessageServerRequest(String messageServerRequest) {
+		Message.messageServerRequest = messageServerRequest;
+	}
+
+	public static String getMessageClientVerify() {
+		return messageClientVerify;
+	}
+
+	public static void setMessageClientVerify(String messageClientVerify) {
+		Message.messageClientVerify = messageClientVerify;
+	}
+
+	public static String getServerKey() {
+		return ServerKey;
+	}
+
+	public static void setServerKey(String ServerKey) {
+		Message.ServerKey = ServerKey;
+	}
+
+	public static String getClientKey() {
+		return ClientKey;
+	}
+
+	public static void setClientKey(String ClientKey) {
+		Message.ClientKey = ClientKey;
+	}
+
+	public static String getMasterSecret() {
+		return MasterSecret;
+	}
+
+	public static void setMasterSecret(String MasterSecret) {
+		Message.MasterSecret = MasterSecret;
 	}
 }

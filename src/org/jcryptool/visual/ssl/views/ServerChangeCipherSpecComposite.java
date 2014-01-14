@@ -36,6 +36,11 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	private int count = 0;
 
 	/**
+	 * Content Typ of the ChangeCipherSpec Message
+	 */
+	private static String CHANGE_CIPHER_MESSAGE = "14";
+	
+	/**
 	 * The premaster secret of the server
 	 */
 	private String secret;
@@ -43,12 +48,12 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	/**
 	 * The random number generated for the message clientHello
 	 */
-	private String clientRandom;
+	private String clientRandom = Message.getClientHelloRandom();
 	
 	/**
 	 * The random number generated for the message serverHello
 	 */
-	private String serverRandom;
+	private String serverRandom = Message.getServerHelloRandom();
 	
 	/**
 	 * The master secret needed for the encryption.
@@ -58,27 +63,12 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	/**
 	 * 
 	 */
-	private String clientMACsecret;
-	
-	/**
-	 * 
-	 */
 	private String serverMACsecret;
 	
 	/**
 	 * 
 	 */
-	private String clientKey;
-	
-	/**
-	 * 
-	 */
 	private String serverKey;
-	
-	/**
-	 * 
-	 */
-	private String clientIV;
 	
 	/**
 	 * 
@@ -155,103 +145,133 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	 */
 	public void startStep() {
 		c = new Crypto();
+		SecureRandom random = new SecureRandom();
 		String seed;
 		int newIndex;
 		
 		secret = getPremasterSecret();
-		clientRandom = Message.getClientHelloRandom();
-		serverRandom = Message.getServerHelloRandom();
 		seed = serverRandom + clientRandom;
 		
-		if(Message.getServerHelloVersion() != 2){ //TLS1.0 or TLS1.1
+		if(Message.getServerHelloVersion() != "0303"){ //TLS1.0 or TLS1.1
 			masterSecret = PRF(secret, "master secret", seed);
 			while(masterSecret.length() < 272) {
 				masterSecret = PRF(masterSecret, "key expansion", seed);
 			}
-			Messages.setMasterSecret(masterSecret);
+			Message.setMasterSecret(masterSecret);
 			
 			//create encryption parameters
 			if(Message.getServerHelloHash() == "MD5") {
 				//16 Byte MAC key
-				clientMACsecret = masterSecret.substring(0, 32);
 				serverMACsecret = masterSecret.substring(33, 64);
 				newIndex = 64;
 			}else { //SHA1
 				//20 Byte MAC key
-				clientMACsecret = masterSecret.substring(0, 40);
 				serverMACsecret = masterSecret.substring(40, 80);
 				newIndex = 80;
 			}
 			
 			if(Message.getServerHelloCipher() == "RC4_128") {
 				//16 Byte key
-				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				serverKey = masterSecret.substring(newIndex + 32, newIndex + 64);
 				newIndex = newIndex + 64;
 			}else if(Message.getServerHelloCipher() == "AES_128") {
 				//16 Byte key
-				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				serverKey = masterSecret.substring(newIndex + 32, newIndex + 64);
 				newIndex = newIndex + 64;
 			}else if(Message.getServerHelloCipher() == "AES_256") {
 				//32 Byte key
-				clientKey = masterSecret.substring(newIndex, newIndex + 64);
 				serverKey = masterSecret.substring(newIndex + 64, newIndex + 128);
 				newIndex = newIndex + 128;
 			}else if(Message.getServerHelloCipher() == "DES") {
 				//7 Byte key
-				clientKey = masterSecret.substring(newIndex, newIndex + 14);
 				serverKey = masterSecret.substring(newIndex + 14, newIndex + 28);
 				newIndex = newIndex + 28;
 			}else if(Message.getServerHelloCipher() == "3DES") {
 				//21 Byte key
-				clientKey = masterSecret.substring(newIndex, newIndex + 42);
 				serverKey = masterSecret.substring(newIndex + 42, newIndex + 84);
 				newIndex = newIndex + 84;
-			}else {
-				//no Encryption
-				clientKey = null;
+			}else { //no Encryption
 				serverKey = null;
 			}
 			
-			if(Message.getServerHelloVersion() != 1) { //TLS1.0
+			if(Message.getServerHelloVersion() != "0302") { //TLS1.0
 				if(Message.getServerHelloCipherMode() == "CBC") {
 					//16 Byte IV
-					clientIV = masterSecret.substring(newIndex, newIndex + 32);
 					serverIV = masterSecret.substring(newIndex + 32, newIndex + 64);
 				}else {
 					//no IVs necessary
-					clientIV = Messages.ServerChangeCipherSpecNoIV;
 					serverIV = Messages.ServerChangeCipherSpecNoIV;
 				}
 			}else { //TLS1.1
 				if(Message.getServerHelloCipherMode() == "CBC") {
 					//16 Byte IV
-					SecureRandom random = new SecureRandom();
-					byte[] IV = random.generateSeed(16);
-					clientIV = bytArrayToHex(IV);
-					serverIV = bytArrayToHex(IV);
-				}else {
-					//no IVs necessary
-					clientIV = Messages.ServerChangeCipherSpecNoIV;
+					serverIV = bytArrayToHex(random.generateSeed(16));
+				}else { //no IVs necessary
 					serverIV = Messages.ServerChangeCipherSpecNoIV;
 				}
 			}
 		}else {
 			//TLS1.2
-			SecureRandom random = new SecureRandom();
-			byte[] rand = random.generateSeed(272);
-			masterSecret = bytArrayToHex(rand);
-			Messages.setMasterSecret(masterSecret);
+			masterSecret = PRF(secret, "master secret", seed);
+			while(masterSecret.length() < 320) {
+				masterSecret = PRF(masterSecret, "key expansion", seed);
+			}
+			Message.setMasterSecret(masterSecret);
 			
-			clientMACsecret = masterSecret.substring(0, 40);
-			serverMACsecret = masterSecret.substring(40, 80);
-			clientKey = masterSecret.substring(80, 144);
-			serverKey = masterSecret.substring(144, 208);
-			clientIV = masterSecret.substring(208, 240);
-			serverIV = masterSecret.substring(240, 272);
+			//create encryption parameters
+			if(Message.getServerHelloHash() == "MD5") {
+				//16 Byte MAC key
+				serverMACsecret = masterSecret.substring(33, 64);
+				newIndex = 64;
+			}else if(Message.getServerHelloHash() == "SHA1"){
+				//20 Byte MAC key
+				serverMACsecret = masterSecret.substring(40, 80);
+				newIndex = 80;
+			}else if(Message.getServerHelloHash() == "SHA256") {
+				//32 Byte MAC key
+				serverMACsecret = masterSecret.substring(65, 128);
+				newIndex = 128;
+			}else { //SHA384
+				//48 Byte MAC key
+				serverMACsecret = masterSecret.substring(97, 192);				
+				newIndex = 192;
+			}
 			
-			//masterSecret = PRF(secret, "master secret", clientRandom + serverRandom);
+			if(Message.getServerHelloCipher() == "RC4_128") {
+				//16 Byte key
+				serverKey = masterSecret.substring(newIndex + 32, newIndex + 64);
+				newIndex = newIndex + 64;
+			}else if(Message.getServerHelloCipher() == "AES_128") {
+				//16 Byte key
+				serverKey = masterSecret.substring(newIndex + 32, newIndex + 64);
+				newIndex = newIndex + 64;
+			}else if(Message.getServerHelloCipher() == "AES_256") {
+				//32 Byte key
+				serverKey = masterSecret.substring(newIndex + 64, newIndex + 128);
+				newIndex = newIndex + 128;
+			}else if(Message.getServerHelloCipher() == "DES") {
+				//7 Byte key
+				serverKey = masterSecret.substring(newIndex + 14, newIndex + 28);
+				newIndex = newIndex + 28;
+			}else if(Message.getServerHelloCipher() == "3DES") {
+				//21 Byte key
+				serverKey = masterSecret.substring(newIndex + 42, newIndex + 84);
+				newIndex = newIndex + 84;
+			}else { //no Encryption
+				serverKey = null;
+			}
+			
+			if(Message.getServerHelloCipherMode() == "GCM") {
+				if(Message.getServerHelloCipher() == "AES_128") {
+					//16 Byte IV
+					serverIV = bytArrayToHex(random.generateSeed(16));
+				}else { //AES-256
+					//32 Byte IV
+					serverIV = bytArrayToHex(random.generateSeed(32));
+				}
+			}else { //no IVs necessary
+				serverIV = Messages.ServerChangeCipherSpecNoIV;
+			}
 		}
 
 		strText = Messages.ServerChangeCipherSpecInitationText
@@ -260,16 +280,16 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 				+ Messages.ServerChangeCipherSpecMasterSecret
 				+ masterSecret
 				+ Messages.ServerChangeCipherSpecServerMACsecret
-				+serverMACsecret
+				+ serverMACsecret
 				+ Messages.ServerChangeCipherSpecServerKey
-				+serverKey
+				+ serverKey
 				+ Messages.ServerChangeCipherSpecServerIV
-				+serverIV;
+				+ serverIV;
 		refreshInformations();
 	}
 
 	/**
-	 * The pseudorandom-function used in TLS1.0 and TLS1.1 to generate the master secret
+	 * The pseudorandom-function to generate the master secret
 	 * @param secret
 	 * @param string
 	 * @param seed
@@ -288,14 +308,14 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 		
 		if(Message.getServerHelloHash() == "MD5") {
 			hash = P_hash(secret, seed, count, "MD5");
-		}else //if(Message.getServerHelloHash() == "SHA1")
+		}else if(Message.getServerHelloHash() == "SHA1")
 		{
 			hash = P_hash(secret, seed, count, "SHA1");
-		}/*else if(Message.getServerHelloHash() == "SHA256") {
+		}else if(Message.getServerHelloHash() == "SHA256") {
 			hash = P_hash(secret, seed, count, "SHA256");
 		}else { //SHA384
 			hash = P_hash(secret, seed, count, "SHA384");
-		}*/
+		}
 		
 		hash_length = hash.length();
 		S1 = hash.substring(0, (hash_length/2)-1);
@@ -314,18 +334,7 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	}
 
 	/**
-	 * @param a
-	 * @return
-	 */
-	private String bytArrayToHex(byte[] a) {
-		StringBuilder sb = new StringBuilder();
-		for (byte b : a)
-			sb.append(String.format("%02x", b & 0xff));
-		return sb.toString();
-	}
-
-	/**
-	 * The hashfunction which is used in TLS1.0 and TLS1.1 for the PRF of the master secret
+	 * The hashfunction for the PRF of the master secret
 	 * @param secret
 	 * @param seed
 	 * @param count
@@ -347,7 +356,7 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	}
 	
 	/**
-	 * A hashfunction used in TLS1.0 and TLS1.1 to generate more bytes for the master secret
+	 * A hashfunction to generate more bytes for the master secret
 	 * @param i
 	 * @param Hash
 	 * @return
@@ -365,6 +374,17 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 			}
 			return clientRandom + serverRandom;
 		}
+	}
+	
+	/**
+	 * @param a
+	 * @return
+	 */
+	private String bytArrayToHex(byte[] a) {
+		StringBuilder sb = new StringBuilder();
+		for (byte b : a)
+			sb.append(String.format("%02x", b & 0xff));
+		return sb.toString();
 	}
 
 	/**
@@ -395,7 +415,6 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 
 	public void refreshInformations() {
 		if (infoText) {
-			strText = sslView.getStxInformationText();
 			sslView.setStxInformationText(Messages.ServerChangeCipherSpecInformationText);
 		} else {
 			sslView.setStxInformationText(strText);
@@ -415,12 +434,27 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	}
 
 	public boolean checkParameters() {
+		doServerChangeCipherSpec();
 		return true;
 	}
 
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
+	/**
+	 * Calculates the hex message for the ServerChangeCipherSpec message. The message looks like:
+	 * <ul>
+	 * <li>Content Typ:
+	 * <li>Version:
+	 * <li>Length:
+	 * <li>ChangeCipherSpecMessage
+	 * </ul>
+	 */
+	private void doServerChangeCipherSpec(){
+		String ServerChangeCipherSpec = "01";
+		ServerChangeCipherSpec = CHANGE_CIPHER_MESSAGE
+				+ Message.getServerHelloVersion()
+				+ "01"
+				+ ServerChangeCipherSpec;
+		Message.setMessageServerChangeCipherSpec(ServerChangeCipherSpec);
+		System.out.println(ServerChangeCipherSpec);
 	}
 
 	@Override

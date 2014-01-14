@@ -1,8 +1,11 @@
 package org.jcryptool.visual.ssl.views;
 
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import javax.crypto.KeyAgreement;
@@ -17,6 +20,8 @@ import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
+
+import codec.Hex;
 
 /**
  * This class represents the <b>Server Certificate Step</b> in the SSL/TLS
@@ -49,16 +54,11 @@ public class ServerCertificateComposite extends Composite implements
 	private Button btnShow;
 	private Button btnInfo;
 	private Button btnNextStep;
-
-	/**
-	 * Holds the calculated exchange key
-	 */
-	private KeyPair exchKey;
-
-	/**
-	 * The signature algorithm for the certificate
-	 */
-	private String strSignature;
+	private Group grpServerCertificate;
+	private Label lblServerKeyExchange;
+	private Label lblCertificateRequest;
+	private Label lblServerHelloDone;
+	private Label lblCertificate;
 
 	/**
 	 * Length of the calculated RSA key.
@@ -76,9 +76,44 @@ public class ServerCertificateComposite extends Composite implements
 	private final static int DH_KEY_LENGTH = 512;
 
 	/**
+	 * A server hello done message
+	 */
+	private final static String SERVER_HELLO_DONE = "0e000000";
+
+	/**
+	 * Hex value for Handshake
+	 */
+	private static final String HANDSHAKE_PROTOCOL = "16";
+
+	/**
+	 * Handshake type for the server certificate message
+	 */
+	private static final String SERVER_CERTFICATE_MESSAGE = "0b";
+
+	/**
+	 * Handshake type for the server key exchange message
+	 */
+	private static final String SERVER_KEY_EXCHANGE_MESSAGE = "0c";
+
+	/**
+	 * Handshake type for the server request message
+	 */
+	private static final String SERVER_REQUEST_MESSAGE = "0d";
+
+	/**
 	 * Creates a object of {@link Crypto}
 	 */
 	private Crypto c;
+
+	/**
+	 * Holds the calculated exchange key
+	 */
+	private KeyPair exchKey;
+
+	/**
+	 * The signature algorithm for the certificate
+	 */
+	private String strSignature;
 
 	/**
 	 * If a certificate request is sent or not
@@ -94,12 +129,6 @@ public class ServerCertificateComposite extends Composite implements
 	 * Text of the Information Box.
 	 */
 	private String strText = "";
-
-	private Group grpServerCertificate;
-	private Label lblServerKeyExchange;
-	private Label lblCertificateRequest;
-	private Label lblServerHelloDone;
-	private Label lblCertificate;
 
 	/**
 	 * Creates all GUI objects and positions them. Also gives functions to all
@@ -134,6 +163,7 @@ public class ServerCertificateComposite extends Composite implements
 		lblServerHelloDone
 				.setText(Messages.ServerCertificateCompositeLblServerHelloDone);
 
+		// Adds the Radio Buttons and toggles them. No is default setting.
 		rdbYes = new Button(grpServerCertificate, SWT.RADIO);
 		rdbYes.setBounds(196, 85, 50, 15);
 		rdbYes.addMouseListener(new MouseAdapter() {
@@ -153,14 +183,16 @@ public class ServerCertificateComposite extends Composite implements
 		});
 		rdbNo.setText(Messages.ServerCertificateCompositeRdbNo);
 
+		// Toggles the Text in the Information Box. Text is switch to
+		// "Parameter" if used once.
 		btnInfo = new Button(grpServerCertificate, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
-				if(btnInfo.getText().equals(Messages.btnInformationToggleParams)){
+				if (btnInfo.getText().equals(
+						Messages.btnInformationToggleParams)) {
 					btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
-				}else{
+				} else {
 					btnInfo.setText(Messages.btnInformationToggleParams);
 				}
 				refreshInformations();
@@ -169,6 +201,7 @@ public class ServerCertificateComposite extends Composite implements
 		btnInfo.setBounds(70, 140, 100, 25);
 		btnInfo.setText(Messages.ServerCertificateCompositeBtnInfo);
 
+		// Ends this step and moves on to the next
 		btnNextStep = new Button(grpServerCertificate, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
 			@Override
@@ -184,12 +217,15 @@ public class ServerCertificateComposite extends Composite implements
 		lblCertificate
 				.setText(Messages.ServerCertificateCompositeLblCertificate);
 
+		// Creates a new Object from CertificateShow and displays the
+		// ServerCertificate
 		btnShow = new Button(grpServerCertificate, SWT.NONE);
 		btnShow.setBounds(241, 20, 75, 25);
 		btnShow.addMouseListener(new MouseAdapter() {
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certServer, exchKey.getPublic());
+					CertificateShow cShow = new CertificateShow(certServer,
+							exchKey.getPublic());
 				} catch (IllegalStateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -206,18 +242,22 @@ public class ServerCertificateComposite extends Composite implements
 	public void startStep() {
 		c = new Crypto();
 
+		// Inital Text for Information Area
 		strText = Messages.ServerCertificateCompositeInitationText
 				+ Message.getServerHelloCipherSuite()
 				+ Messages.ServerCertificateCompositeCertificateText;
 
 		// Server Key Exchange
+		exchKey = calculateKeyExchange();
 		if (Message.getServerHelloKeyExchange().contentEquals("RSA")
 				|| Message.getServerHelloKeyExchange().contentEquals("DH_RSA")
 				|| Message.getServerHelloKeyExchange().contentEquals("DH_DSS")) {
 			// No ServerKeyExchange is sent
 			lblServerKeyExchange.setEnabled(false);
+		} else {
+			// Calculates a hex message for KeyExchange
+			doKeyExchangeMessage();
 		}
-		exchKey = calculateKeyExchange();
 
 		// Server Certificate
 		try {
@@ -237,7 +277,6 @@ public class ServerCertificateComposite extends Composite implements
 	 */
 	public void refreshInformations() {
 		if (infoText) {
-			strText = sslView.getStxInformationText();
 			sslView.setStxInformationText(Messages.ServerCertificateInformationText);
 		} else {
 			sslView.setStxInformationText(strText);
@@ -275,6 +314,32 @@ public class ServerCertificateComposite extends Composite implements
 	 * @return
 	 */
 	public boolean checkParameters() {
+
+		// Server Certificate hex message
+		String ServerCertificate;
+		try {
+			ServerCertificate = Hex.encode(certServer.getEncoded());
+			ServerCertificate = SERVER_CERTFICATE_MESSAGE
+					+ getNumber(ServerCertificate.length() / 2)
+					+ ServerCertificate;
+			ServerCertificate = HANDSHAKE_PROTOCOL
+					+ Message.getServerHelloVersion()
+					+ getNumber(ServerCertificate.length()) + ServerCertificate;
+			Message.setMessageServerCertificate(ServerCertificate);
+		} catch (CertificateEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		// Sets a certificate request hex message
+		if (blnCertificateRequest) {
+			doCertificateRequest();
+		}
+
+		// Server Hello Done hex message
+		Message.setMessageServerHelloDone(HANDSHAKE_PROTOCOL
+				+ Message.getServerHelloVersion()
+				+ getNumber(SERVER_HELLO_DONE.length() / 2) + SERVER_HELLO_DONE);
 		Message.setServerCertificateServerCertificateRequest(blnCertificateRequest);
 		Message.setServerCertificateServerCertificate(certServer);
 		Message.setServerCertificateHash(Message.getServerHelloHash());
@@ -284,6 +349,50 @@ public class ServerCertificateComposite extends Composite implements
 				.getServerHelloKeyExchange());
 		infoText = false;
 		return true;
+	}
+
+	/**
+	 * Calculates the correct hex message for the key exchange
+	 */
+	private void doKeyExchangeMessage() {
+		// Server Key Exchange
+		try {
+			String ServerKeyExchange = Hex.encode(exchKey.getPublic()
+					.getEncoded());
+			ServerKeyExchange = getNumber(ServerKeyExchange.length() / 2)
+					+ ServerKeyExchange;
+			String keyHash = c.generateHash(Message.getServerHelloHash(),
+					ServerKeyExchange);
+			ServerKeyExchange = ServerKeyExchange
+					+ getNumber(keyHash.length() / 2) + keyHash;
+			ServerKeyExchange = SERVER_KEY_EXCHANGE_MESSAGE
+					+ getNumber(ServerKeyExchange.length() / 2)
+					+ ServerKeyExchange;
+			ServerKeyExchange = HANDSHAKE_PROTOCOL
+					+ Message.getServerHelloVersion()
+					+ getNumber(ServerKeyExchange.length() / 2)
+					+ ServerKeyExchange;
+			Message.setMessageServerKeyExchange(ServerKeyExchange);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Generates the hex message for the certificate request
+	 */
+	private void doCertificateRequest() {
+		// Certificate Request
+		String CertificateRequest = "01";
+		CertificateRequest = HANDSHAKE_PROTOCOL
+				+ Message.getServerHelloVersion() + SERVER_REQUEST_MESSAGE
+				+ getNumber(CertificateRequest.length() / 2)
+				+ CertificateRequest;
+		Message.setMessageServerRequest(CertificateRequest);
 	}
 
 	/**
@@ -353,12 +462,37 @@ public class ServerCertificateComposite extends Composite implements
 				strSignature = "DSA";
 			}
 		}
-
 		certServer = c.generateX509(exchange, sigKey, hash, strSignature);
 	}
 
 	public boolean isBlnCertificateRequest() {
 		return blnCertificateRequest;
+	}
+
+	/**
+	 * Formats a number to use leading zeros to complete a byte for the hex
+	 * messages
+	 * 
+	 * @param number
+	 *            the original number
+	 * @return the number with leading zeros
+	 */
+	private String getNumber(int number) {
+		String strNumber = "";
+		int backNumber = number;
+		int s = 3, n = 0, i = 0;
+		while (number > 9) {
+			number = number % 10;
+			n++;
+		}
+
+		for (; i < (s - n); i++) {
+			strNumber = strNumber + "0";
+		}
+
+		strNumber = strNumber + Integer.toString(backNumber);
+
+		return strNumber;
 	}
 
 	/**
@@ -373,7 +507,7 @@ public class ServerCertificateComposite extends Composite implements
 		rdbYes.setSelection(false);
 		lblServerKeyExchange.setEnabled(true);
 		c = null;
-		infoText=false;
+		infoText = false;
 		btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
 		refreshInformations();
 	}

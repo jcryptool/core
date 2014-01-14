@@ -106,9 +106,7 @@ public class CertificateShow extends JDialog implements ActionListener {
 					+ formatKey(pubKey.toString().split("\n")[1].split(":")[1]);
 		} else {
 			strCertificate = strCertificate + "\t\t"
-					+ formatKey(strKey[2]+strKey[3])
-					+ formatKey(strKey[5]+strKey[6])
-					+ formatKey(strKey[8]+strKey[9]);
+					+ formatKey(strKey[2]+strKey[3]);
 		}
 
 		// Format Signature

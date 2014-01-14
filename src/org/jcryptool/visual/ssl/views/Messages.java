@@ -52,6 +52,7 @@ public class Messages extends NLS
 	public static String ServerHelloCompositeLblSessionID;
 	public static String ServerHelloCompositeBtnNextStep;
 	public static String ServerHelloInformationText;
+	public static String ServerHelloCompositeErrorSessionIDLength;
 	
 	public static String ServerCertificateCompositeServerCertificate;
 	public static String ServerCertificateCompositeLblCertificateRequest;
@@ -221,16 +222,6 @@ public class Messages extends NLS
 	public static String TLS2_DHE_DSS_WITH_AES_256_GCM_SHA384;
 	public static String TLS2_DH_DSS_WITH_AES_128_GCM_SHA256;
 	public static String TLS2_DH_DSS_WITH_AES_256_GCM_SHA384;
-	
-	public static String masterSecret;
-	
-	public static void setMasterSecret(String secret) {
-		masterSecret = secret;
-	}
-	
-	public static String getMasterSecret() {
-		return masterSecret;
-	}
 	
 	static 
 	{

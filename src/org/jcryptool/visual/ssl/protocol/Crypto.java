@@ -35,7 +35,6 @@ import org.bouncycastle.jce.PKCS10CertificationRequest;
 import org.bouncycastle.jce.PKCS12Util;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 
-
 import codec.Base64;
 import codec.CorruptedCodeException;
 import codec.Hex;
@@ -65,7 +64,9 @@ public class Crypto {
 	private static SecureRandom secure = new SecureRandom();
 
 	/**
-	 * Generates a default certificate with the given key pair {@link key}
+	 * Generates a default certificate with the given key pair {@link pubKey}
+	 * The certificate will be singed with the {@link sigKey} and uses the
+	 * {@link strHash} with and the {@link strSignature} algorithm.
 	 * 
 	 * @param key
 	 * @throws CertificateEncodingException
@@ -80,7 +81,7 @@ public class Crypto {
 			throws CertificateEncodingException, InvalidKeyException,
 			IllegalStateException, NoSuchProviderException,
 			NoSuchAlgorithmException, SignatureException {
-	
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date notBefor = new Date();
 		Date notAfter = new Date();
@@ -99,8 +100,8 @@ public class Crypto {
 		certGen.setPublicKey(pubKey.getPublic());
 		certGen.setSignatureAlgorithm(strHash + "With" + strSignature);
 
-		X509Certificate cert = certGen.generate(sigKey.getPrivate(),"BC");
-		
+		X509Certificate cert = certGen.generate(sigKey.getPrivate(), "BC");
+
 		return cert;
 	}
 
@@ -222,7 +223,8 @@ public class Crypto {
 		Cipher dCipher = Cipher.getInstance(Key.getAlgorithm(), "BC");
 		IvParameterSpec ivParameterSpec = new IvParameterSpec(Key.getEncoded());
 
-		if (Key.getAlgorithm().equals("RC4") || Key.getAlgorithm().equals("RSA")) {
+		if (Key.getAlgorithm().equals("RC4")
+				|| Key.getAlgorithm().equals("RSA")) {
 			dCipher.init(Cipher.DECRYPT_MODE, Key);
 		} else {
 			dCipher.init(Cipher.DECRYPT_MODE, Key, ivParameterSpec);
@@ -267,7 +269,9 @@ public class Crypto {
 	 * and the size {@link KeySize}.
 	 * 
 	 * @param strKeyTyp
+	 *            Kind of key which is generated
 	 * @param KeySize
+	 *            size of the key
 	 * @return a key for the given algorithm
 	 * @throws NoSuchAlgorithmException
 	 * @throws NoSuchPaddingException
@@ -284,12 +288,14 @@ public class Crypto {
 	}
 
 	/**
-	 * Generates a pair of Public and Private key of the given algorithm
-	 * {@link strKeyTyp} and with the size of {@link KeySize}.
+	 * Generates a key pair generator for the given algorithm {@link strKeyTyp}
+	 * and with the size of {@link KeySize}.
 	 * 
 	 * @param strKeyTyp
+	 *            The kind of algorithmn which is used
 	 * @param KeySize
-	 * @return the key pair form Public and Private
+	 *            The size of the Key
+	 * @return A key generator for keys
 	 * @throws Exception
 	 */
 	public KeyPairGenerator generateGenerator(String strKeyTyp, int KeySize)
@@ -302,15 +308,22 @@ public class Crypto {
 			keyPairGenerator.initialize(KeySize, secure);
 		} else {
 			keyPairGenerator.initialize(KeySize, secure);
-		
+
 		}
 
 		return keyPairGenerator;
 	}
-	
-	public KeyPair generateExchangeKey(KeyPairGenerator kpG){
+
+	/**
+	 * Generates a public and private key from a given KeyPairGenerator
+	 * 
+	 * @param kpG
+	 *            the KeyPair Generator
+	 * @return the KeyPair
+	 */
+	public KeyPair generateExchangeKey(KeyPairGenerator kpG) {
 		KeyPair key = kpG.generateKeyPair();
-		
+
 		return key;
 	}
 

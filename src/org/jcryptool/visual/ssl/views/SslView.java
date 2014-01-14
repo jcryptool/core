@@ -293,12 +293,10 @@ public class SslView extends ViewPart
 				clientCertificateComposite.setVisible(true);
 				clientCertificateComposite.enableControls();
 				serverCertificateComposite.disableControls();
-				//Do not remove -Gandalf
 				clientCertificateComposite.refreshInformations();
 				arrow.nextArrow(100,275,0,275,0,0,0);
 				if (!Message.getServerCertificateServerCertificateRequest()) 
 					clientCertificateComposite.btnShow.setEnabled(false);
-				//---
 			}
 		}
 		else if(serverChangeCipherSpecComposite.getVisible() == false || serverChangeCipherSpecComposite == null)
@@ -311,6 +309,7 @@ public class SslView extends ViewPart
 				serverFinishedComposite.startStep();
 				serverFinishedComposite.setVisible(true);
 				serverFinishedComposite.enableControls();
+				serverChangeCipherSpecComposite.refreshInformations();
 				clientCertificateComposite.disableControls();
 				arrow.nextArrow(0,325,100,450,0,0,0);
 			}
@@ -325,6 +324,7 @@ public class SslView extends ViewPart
 				clientFinishedComposite.startStep();
 				clientFinishedComposite.setVisible(true);
 				clientFinishedComposite.enableControls();
+				clientChangeCipherSpecComposite.refreshInformations();
 				serverChangeCipherSpecComposite.disableControls();
 				serverFinishedComposite.disableControls();
 				btnNextStep.setEnabled(false);

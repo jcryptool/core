@@ -292,7 +292,6 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	 * @see protocol.ProtocolStep#checkParameters()
 	 */
 	public boolean checkParameters() {
-		String version="";
 		String length = "00004c";
 		String type ="02";
 		String sessionIDLength="";
@@ -330,13 +329,43 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			messageBox.open();
 			return false;
 		}
-		try {
-			Integer.parseInt(txtSessionID.getText());
-		} catch (NumberFormatException exc) {
+		
+		try 
+		{
+			if(txtSessionID.getText().length()>64)
+			{
+				throw new IllegalArgumentException();
+			}
+			for (int i = 0; i <= txtSessionID.getText().length()/8; i++) {
+				if(i*8==txtSessionID.getText().length())
+				{
+					;
+				}
+				else if(i == txtSessionID.getText().length()/8)
+				{
+					Long.parseLong(txtSessionID.getText(i * 8, txtSessionID.getText().length()), 16);
+				}
+				else
+				{
+					Long.parseLong(txtSessionID.getText(i * 8, (i + 1) * 8), 16);
+				}
+			}	
+		} 
+		catch (NumberFormatException exc) 
+		{
 			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
 					| SWT.OK);
 			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionID);
+			messageBox.setText(Messages.ServerHelloCompositeError);
+			messageBox.open();
+			return false;
+		}
+		catch (IllegalArgumentException exc) {
+			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
+					| SWT.OK);
+			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionIDLength);
 			messageBox.setText(Messages.ServerHelloCompositeError);
 			messageBox.open();
 			return false;
@@ -364,23 +393,6 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 		refreshInformations();
 		setMessageProperties();
 		
-		version ="";
-		if(cmbVersion.getSelectionIndex()==0)
-		{
-			version = "0301";
-			cipherSuite = tls0Hex.get(cmbCipherSuite.getSelectionIndex());
-		}
-		else if(cmbVersion.getSelectionIndex()==1)
-		{
-			version = "0302";
-			cipherSuite = tls1Hex.get(cmbCipherSuite.getSelectionIndex());
-		}
-		else
-		{
-			version = "0303";
-			cipherSuite = tls2Hex.get(cmbCipherSuite.getSelectionIndex());
-		}
-		
 		if(txtSessionID.getText().length()%2==0)
 		{
 			sessionID=txtSessionID.getText();
@@ -392,7 +404,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			sessionIDLength=Integer.toString((txtSessionID.getText().length()+1)/2);
 		}
 		
-		Message.setMessageServerHello(type+length+version+txtRandom.getText()+sessionIDLength+sessionID+cipherSuite);
+		Message.setMessageServerHello(type+length+Message.getServerHelloVersion()+txtRandom.getText()+sessionIDLength+sessionID+cipherSuite);
 		
 		Attacks attack = new Attacks();
 		return attack.getDecision();
@@ -414,9 +426,15 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	private void setMessageProperties() {
 		int selectedItem = cmbCipherSuite.getSelectionIndex();
 		Message.setServerHelloCipherSuite(cmbCipherSuite.getItem(selectedItem));
-		Message.setServerHelloVersion(cmbVersion.getSelectionIndex());
-		Message.setServerHelloSessionID(Integer.parseInt(txtSessionID.getText()
-				.toString()));
+		if(cmbVersion.getSelectionIndex()==0){
+			Message.setServerHelloVersion("0301");
+		}else if(cmbVersion.getSelectionIndex()==1){
+			Message.setServerHelloVersion("0302");
+		}else{
+			Message.setServerHelloVersion("0303");
+		}
+		
+		Message.setServerHelloSessionID(txtSessionID.getText());
 		Message.setServerHelloRandom(txtRandom.getText());
 		if (cmbCipherSuite.getItem(selectedItem).contains("SHA256")) {
 			Message.setServerHelloHash("SHA256");

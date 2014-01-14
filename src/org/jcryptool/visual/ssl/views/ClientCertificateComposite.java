@@ -1,11 +1,13 @@
 package org.jcryptool.visual.ssl.views;
 
+import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import javax.crypto.KeyAgreement;
@@ -21,6 +23,8 @@ import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
+
+import codec.Hex;
 
 /**
  * This class represents the Client Certificate Step in the SSL/TLS Handshake.
@@ -63,9 +67,24 @@ public class ClientCertificateComposite extends Composite implements
 	private final static int DSA_KEY_LENGTH = 640;
 
 	/**
-	 * Length of the Diffie Hellman key.
+	 * Handshake type for the client certificate message
 	 */
-	private final static int DH_KEY_LENGTH = 512;
+	private final static String CLIENT_CERTIFICATE_MESSAGE = "0f";
+
+	/**
+	 * Handshake type for the client key exchange message
+	 */
+	private final static String CLIENT_KEY_EXCHANGE_MESSAGE = "10";
+
+	/**
+	 * Handshake type for the client verify message
+	 */
+	private final static String CLIENT_VERIFY_MESSAGE = "11";
+
+	/**
+	 * Hex value for Handshake
+	 */
+	private static final String HANDSHAKE_PROTOCOL = "16";
 
 	/**
 	 * Text of the Information Box.
@@ -131,12 +150,15 @@ public class ClientCertificateComposite extends Composite implements
 		lblCertificateVerify
 				.setText(Messages.ClientCertificateCompositeLblCertificateVerify);
 
+		// Creates a new object from CertificateShow to display the client
+		// certificate
 		btnShow = new Button(grpClientCertificate, SWT.NONE);
 		btnShow.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				try {
-					CertificateShow cShow = new CertificateShow(certClient,exchangeKey.getPublic());
+					CertificateShow cShow = new CertificateShow(certClient,
+							exchangeKey.getPublic());
 				} catch (IllegalStateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -146,14 +168,16 @@ public class ClientCertificateComposite extends Composite implements
 		btnShow.setBounds(241, 20, 75, 25);
 		btnShow.setText(Messages.ClientCertificateCompositeBtnShow);
 
+		// The information button which toggles to the word "Parameter" if
+		// pressed once
 		btnInfo = new Button(grpClientCertificate, SWT.NONE);
 		btnInfo.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseUp(MouseEvent e) {
 				infoText = !infoText;
-				if(btnInfo.getText().equals(Messages.btnInformationToggleParams)){
+				if (btnInfo.getText().equals(
+						Messages.btnInformationToggleParams)) {
 					btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
-				}else{
+				} else {
 					btnInfo.setText(Messages.btnInformationToggleParams);
 				}
 				refreshInformations();
@@ -162,9 +186,9 @@ public class ClientCertificateComposite extends Composite implements
 		btnInfo.setBounds(70, 140, 100, 25);
 		btnInfo.setText(Messages.ClientCertificateCompositeBtnInfo);
 
+		// Ends this step and moves on to the next step
 		btnNextStep = new Button(grpClientCertificate, SWT.NONE);
 		btnNextStep.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseUp(MouseEvent e) {
 				sslView.nextStep();
 			}
@@ -174,9 +198,9 @@ public class ClientCertificateComposite extends Composite implements
 	}
 
 	/**
-	 * Starts the ClientCertificate step, calculates a certificate if need and a 
-	 * exchange key or uses the public key from the server to encrypt the premaster 
-	 * secret.
+	 * Starts the ClientCertificate step, calculates a certificate if need and a
+	 * exchange key or uses the public key from the server to encrypt the
+	 * premaster secret.
 	 */
 	public void startStep() {
 		c = new Crypto();
@@ -191,6 +215,7 @@ public class ClientCertificateComposite extends Composite implements
 			lblCertificate.setEnabled(false);
 		} else {
 			createCertificate();
+			doClientCertificate();
 		}
 
 		// Client Certificate verify
@@ -200,6 +225,7 @@ public class ClientCertificateComposite extends Composite implements
 			lblCertificateVerify.setEnabled(false);
 		} else {
 			strText = strText + Messages.ClientCertificateCompositeVerifyText;
+			doClientVerify();
 		}
 
 		refreshInformations();
@@ -210,7 +236,6 @@ public class ClientCertificateComposite extends Composite implements
 	 */
 	public void refreshInformations() {
 		if (infoText) {
-			strText = sslView.getStxInformationText();
 			sslView.setStxInformationText(Messages.ClientCertificateInformationText);
 		} else {
 			sslView.setStxInformationText(strText);
@@ -238,20 +263,24 @@ public class ClientCertificateComposite extends Composite implements
 	}
 
 	/**
-	 * Calculates the exchange Key for the Client by the given parameters of 
-	 * the server certificate. Also generates the premaster secret for a RSA key
-	 * or calculates one for DH.
-	 * @param servCert the server certificate
+	 * Calculates the exchange Key for the Client by the given parameters of the
+	 * server certificate. Also generates the premaster secret for a RSA key or
+	 * calculates one for DH.
+	 * 
+	 * @param servCert
+	 *            the server certificate
 	 */
 	public void calculateKeyExchange(X509Certificate servCert) {
 		if (Message.getServerHelloKeyExchange().equals("RSA")) {
+			// Calculates a RSA key
 			try {
 				PublicKey pubKey = Message
 						.getServerCertificateServerCertificate().getPublicKey();
 
-				secret = bytArrayToHex(new SecureRandom().generateSeed(48));
-				
-				Message.setClientCertificatePremasterEncrypted(c.encryptCBC(pubKey, secret));
+				secret = Hex.encode((new SecureRandom().generateSeed(48)));
+
+				Message.setClientCertificatePremasterEncrypted(c.encryptCBC(
+						pubKey, secret));
 				strText = strText
 						+ Messages.ClientCertificateCompositeKeyExchangeRSAText
 						+ pubKey + Messages.ClientCertificateCompositeRSASecret
@@ -259,10 +288,10 @@ public class ClientCertificateComposite extends Composite implements
 						+ Messages.ClientCertificateCompositeRSAEncrypt
 						+ Message.getClientCertificatePremasterEncrypted();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
+			// Calculates a DH Key
 			try {
 				exchangeKey = c.generateExchangeKey(Message
 						.getKeyPairGenerator());
@@ -275,10 +304,9 @@ public class ClientCertificateComposite extends Composite implements
 				Message.setClientKeyAgreement(clientKeyAgree);
 				Message.setClientCertificateServerKeyExchange(exchangeKey);
 
-				secret = bytArrayToHex(Message.getClientKeyAgreement()
+				secret = Hex.encode(Message.getClientKeyAgreement()
 						.generateSecret());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			strText = strText + exchangeKey.getPublic()
@@ -310,7 +338,6 @@ public class ClientCertificateComposite extends Composite implements
 					Message.getServerCertificateHash(),
 					Message.getServerCertificateSignature());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -321,18 +348,89 @@ public class ClientCertificateComposite extends Composite implements
 	 * @return
 	 */
 	public boolean checkParameters() {
+		// Client Key Exchange
+		try {
+			String ClientKeyExchange = Hex.encode(exchangeKey.getPublic()
+					.getEncoded());
+			ClientKeyExchange = getNumber(ClientKeyExchange.length() / 2)
+					+ ClientKeyExchange;
+			String keyHash = c.generateHash(Message.getServerHelloHash(),
+					ClientKeyExchange);
+			ClientKeyExchange = ClientKeyExchange
+					+ getNumber(keyHash.length() / 2) + keyHash;
+			ClientKeyExchange = CLIENT_KEY_EXCHANGE_MESSAGE
+					+ getNumber(ClientKeyExchange.length() / 2)
+					+ ClientKeyExchange;
+			ClientKeyExchange = HANDSHAKE_PROTOCOL
+					+ Message.getServerHelloVersion()
+					+ getNumber(ClientKeyExchange.length() / 2)
+					+ ClientKeyExchange;
+			Message.setMessageClientKeyExchange(ClientKeyExchange);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);
 		return true;
 	}
-	
-	private String bytArrayToHex(byte[] a) {
-		StringBuilder sb = new StringBuilder();
-		for (byte b : a)
-			sb.append(String.format("%02x", b & 0xff));
-		return sb.toString();
+
+	/**
+	 * Calculates the hex message for the client verify.
+	 */
+	private void doClientVerify() {
+		String ClientVerify = "01";
+		ClientVerify = HANDSHAKE_PROTOCOL + Message.getServerHelloVersion()
+				+ CLIENT_VERIFY_MESSAGE + getNumber(ClientVerify.length() / 2)
+				+ ClientVerify;
+		Message.setMessageClientVerify(ClientVerify);
 	}
 
-	@Override
+	/**
+	 * Calculates the hex message for the client certificate.
+	 */
+	private void doClientCertificate() {
+		String ClientCertificate;
+		try {
+			ClientCertificate = Hex.encode(certClient.getEncoded());
+			ClientCertificate = CLIENT_CERTIFICATE_MESSAGE
+					+ getNumber(ClientCertificate.length() / 2)
+					+ ClientCertificate;
+			ClientCertificate = HANDSHAKE_PROTOCOL
+					+ Message.getServerHelloVersion()
+					+ getNumber(ClientCertificate.length()) + ClientCertificate;
+			Message.setMessageClientCertfificate(ClientCertificate);
+		} catch (CertificateEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * Formats a number to a byte looking number with leading zeros
+	 * 
+	 * @param number
+	 *            the number to format
+	 * @return the formated number
+	 */
+	private String getNumber(int number) {
+		String strNumber = "";
+		int backNumber = number;
+		int s = 3, n = 0, i = 0;
+		while (number > 9) {
+			number = number % 10;
+			n++;
+		}
+		for (; i < (s - n); i++) {
+			strNumber = strNumber + "0";
+		}
+		strNumber = strNumber + Integer.toString(backNumber);
+		return strNumber;
+	}
+
+	/**
+	 * Resets the step
+	 */
 	public void resetStep() {
 		lblCertificate.setEnabled(true);
 		lblCertificateVerify.setEnabled(true);
