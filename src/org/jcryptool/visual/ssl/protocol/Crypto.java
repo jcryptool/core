@@ -1,8 +1,6 @@
 package org.jcryptool.visual.ssl.protocol;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
@@ -14,7 +12,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
-import java.security.Signature;
 import java.security.SignatureException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
@@ -30,9 +27,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.security.auth.x500.X500Principal;
 
-import org.bouncycastle.asn1.x500.X500Name;
-import org.bouncycastle.jce.PKCS10CertificationRequest;
-import org.bouncycastle.jce.PKCS12Util;
 import org.bouncycastle.x509.X509V3CertificateGenerator;
 
 import codec.Base64;

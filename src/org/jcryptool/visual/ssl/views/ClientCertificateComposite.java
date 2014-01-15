@@ -2,16 +2,13 @@ package org.jcryptool.visual.ssl.views;
 
 import java.io.UnsupportedEncodingException;
 import java.security.KeyPair;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
 
 import javax.crypto.KeyAgreement;
-import javax.crypto.NoSuchPaddingException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;

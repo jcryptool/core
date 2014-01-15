@@ -1,30 +1,17 @@
 package org.jcryptool.visual.ssl.views;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyAgreement;
-import javax.crypto.NoSuchPaddingException;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.ui.PlatformUI;
 
 public class ClientChangeCipherSpecComposite extends Composite implements
 		ProtocolStep {

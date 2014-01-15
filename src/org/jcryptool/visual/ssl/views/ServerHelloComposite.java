@@ -3,6 +3,7 @@ package org.jcryptool.visual.ssl.views;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;

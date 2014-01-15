@@ -2,7 +2,6 @@ package org.jcryptool.visual.ssl.views;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.List;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +24,7 @@ import org.eclipse.ui.PlatformUI;
  * 
  */
 // TO DO
-// - Variablen für Text anlegen
+// - Variablen fï¿½r Text anlegen
 // - V3 Extensions anlegen
 public class CertificateShow extends JDialog implements ActionListener {
 	/**

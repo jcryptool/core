@@ -11,18 +11,16 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.ui.PlatformUI;
 
 public class ClientFinishedComposite extends Composite implements ProtocolStep {
 	private Button btnInformationen;
