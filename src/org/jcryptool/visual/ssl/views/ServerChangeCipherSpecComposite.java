@@ -266,6 +266,8 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 				serverIV = Messages.ServerChangeCipherSpecNoIV;
 			}
 		}
+		
+		Message.setServerKey(serverKey);
 
 		strText = Messages.ServerChangeCipherSpecInitationText
 				+ Messages.ServerChangeCipherSpecPreMaster
@@ -447,7 +449,6 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 				+ "01"
 				+ ServerChangeCipherSpec;
 		Message.setMessageServerChangeCipherSpec(ServerChangeCipherSpec);
-		System.out.println(ServerChangeCipherSpec);
 	}
 
 	@Override

@@ -347,6 +347,7 @@ public class ClientCertificateComposite extends Composite implements
 	public boolean checkParameters() {
 		// Client Key Exchange
 		try {
+			System.out.println(exchangeKey.getPublic());
 			String ClientKeyExchange = Hex.encode(exchangeKey.getPublic()
 					.getEncoded());
 			ClientKeyExchange = getNumber(ClientKeyExchange.length() / 2)
@@ -366,6 +367,8 @@ public class ClientCertificateComposite extends Composite implements
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);

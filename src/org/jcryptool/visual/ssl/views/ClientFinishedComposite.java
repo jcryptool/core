@@ -10,6 +10,7 @@ import java.security.NoSuchProviderException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -97,6 +98,7 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 		c = new Crypto();
 		String finished = null;
 		String cFinished = null;
+		SecretKeySpec key = null;
 		String hashMessages = Message.getMessageClientHello()
 				+ Message.getMessageServerHello()
 				+ Message.getMessageServerRequest()
@@ -111,10 +113,27 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 			finished = PRF(masterSecret, "server finished",
 					c.generateHash(Message.getServerHelloHash(), hashMessages));
 			if(Message.getServerHelloCipherMode() == "CBC") {
-				cFinished = c.encryptCBC(c.generateKey(Message.getServerHelloCipher(), Message.getClientKey().length()), finished);
+				if(Message.getServerHelloCipher().startsWith("AES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "AES");
+				}else if(Message.getServerHelloCipher().equals("3DES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "3DES");
+				}else if(Message.getServerHelloCipher().equals("RC4_128")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "RC4");
+				}else if(Message.getServerHelloCipher().equals("DES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "DES");
+				}
 			}else { //GCM
-				cFinished = c.encryptGCM(c.generateKey(Message.getServerHelloCipher(), Message.getClientKey().length()), finished);
+				if(Message.getServerHelloCipher().startsWith("AES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "AES");
+				}else if(Message.getServerHelloCipher().equals("3DES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "3DES");
+				}else if(Message.getServerHelloCipher().equals("RC4_128")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "RC4");
+				}else if(Message.getServerHelloCipher().equals("DES")) {
+					key = new SecretKeySpec(Message.getServerKey().getBytes(), "DES");
+				}
 			}
+			cFinished = c.encryptCBC(key, finished);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -134,9 +153,6 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -214,6 +214,8 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			}
 		}
 
+		Message.setClientKey(clientKey);
+		
 		strText = Messages.ClientChangeCipherSpecInitationText
 				+ Messages.ServerChangeCipherSpecMasterSecret
 				+ masterSecret

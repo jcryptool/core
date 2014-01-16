@@ -10,35 +10,35 @@ public class Attacks{
 
 	public Attacks() 
 	{
-		if(Message.getServerHelloHash()=="SHA1")
+		if(Message.getServerHelloHash().equals("SHA1"))
 		{
 			createDialog(Messages.AttacksSHA1);
 		}
-		else if(Message.getServerHelloHash()=="MD5")
+		else if(Message.getServerHelloHash().equals("MD5"))
 		{
 			createDialog(Messages.AttacksMD5);
 		}
-		if(Message.getServerHelloVersion()=="0301"&&Message.getServerHelloCipherMode()=="CBC")
+		if(Message.getServerHelloVersion().equals("0301")&&Message.getServerHelloCipherMode().equals("CBC"))
 		{
 			createDialog(Messages.AttacksBEAST);
 		}
-		if(Message.getServerHelloCipher()=="RC4")
+		if(Message.getServerHelloCipher().equals("RC4_128"))
 		{
 			createDialog(Messages.AttacksRC4);
 		}
-		else if(Message.getServerHelloCipher()=="DES")
+		else if(Message.getServerHelloCipher().equals("DES"))
 		{
 			createDialog(Messages.AttacksDES);
 		}
-		else if(Message.getServerHelloCipher()=="NULL")
+		else if(Message.getServerHelloCipher().equals("NULL"))
 		{
 			createDialog(Messages.AttacksNoCipher);
 		}
-		if((Message.getServerHelloVersion()=="0301"||Message.getServerHelloVersion()=="0302")&&Message.getServerHelloCipherMode()=="CBC")
+		if((Message.getServerHelloVersion().equals("0301")||Message.getServerHelloVersion().equals("0302"))&&Message.getServerHelloCipherMode().equals("CBC"))
 		{
 			createDialog(Messages.AttacksLucky13);
 		}
-		if(Message.getServerHelloKeyExchange()=="RSA")
+		if(Message.getServerHelloKeyExchange().equals("RSA"))
 		{
 			createDialog(Messages.AttacksRSA);
 		}

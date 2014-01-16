@@ -225,7 +225,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 
 		tls2CipherSuites.add(cmdCipher.getItem(cmdCipher.getSelectionIndex()));
 		tls2CipherSuitesHex.add(tls2Hex.get(cmdCipher.getSelectionIndex()));
-		if(txtRandom.getText() == "") {
+		if(txtRandom.getText().equals("")) {
 			sslView.setStxInformationText(Messages.stxInformationSelectedCiphers
 					+ Messages.stxInformationTLS1 + Messages.stxInformationTLS2
 					+ tls2CipherSuites.get(0) + "\n\n");
@@ -386,7 +386,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 			version = "0303";
 			
 		}
-		else if(tls1CipherSuitesHex.size()!=1)
+		else if(tls1CipherSuitesHex.size()!=0)
 		{
 			version = "0302";
 		}

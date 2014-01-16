@@ -211,7 +211,7 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 		}
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ServerHelloInformationText);
-		}else if(txtRandom.getText() == ""){
+		}else if(txtRandom.getText().equals("")){
 			sslView.setStxInformationText(Messages.stxInformationSelectedCiphers
 					+ text0
 					+ Messages.stxInformationTLS1
