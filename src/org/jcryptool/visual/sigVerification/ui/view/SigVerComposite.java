@@ -188,7 +188,7 @@ public class SigVerComposite extends Composite {
                     resultTrue.setImage(img1);
                     resultTrue.hide();
 
-                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreutz.png"); //$NON-NLS-1$
+                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
                     ImageData imD2 = id2.getImageData();
                     Image img2 = new Image(Display.getCurrent(), imD2);
                     resultFalse = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
