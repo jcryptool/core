@@ -60,7 +60,6 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
  */
 public class SigVerComposite extends Composite {
     private Text lblHeader;
-    private Label lblPubKey;
     private Text lblDescriptionStep1;
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
@@ -131,6 +130,7 @@ public class SigVerComposite extends Composite {
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
         super(parent, style);
+        setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         createContents(parent);
         createActions();
         this.sigVerView = view;
@@ -174,12 +174,13 @@ public class SigVerComposite extends Composite {
         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
 
         {
-            Group border = new Group(this, SWT.BORDER);
-            border.setBounds(10, 99, 1035, 575);
+            Group border = new Group(this, SWT.NONE);
+            border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            border.setBounds(10, 99, 1035, 584);
             border.setText(Messages.SigVerComposite_lblTitle);
 
             {
-                Group littleBorder = new Group(border, SWT.BORDER);
+                Group littleBorder = new Group(border, SWT.NONE);
                 littleBorder.setBounds(793, 90, 218, 268);
                 littleBorder.setText(Messages.SigVerComposite_btnSignature);
 
@@ -213,75 +214,9 @@ public class SigVerComposite extends Composite {
                 // Kommentar Ende
             }
 
-            tabFolder = new TabFolder(border, SWT.NONE);
-            tabFolder.setBounds(10, 430, 1011, 131);
-            {
-                TabItem tabStep1 = new TabItem(tabFolder, SWT.NONE);
-                tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
-                {
-                    lblDescriptionStep1 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                    lblDescriptionStep1.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                    lblDescriptionStep1.setEditable(false);
-                    lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
-                    tabStep1.setControl(lblDescriptionStep1);
-                }
-            }
-            Menu menu1 = new Menu(lblDescriptionStep1);
-            lblDescriptionStep1.setMenu(menu1);
-
-            mntm1 = new MenuItem(menu1, SWT.NONE);
-            mntm1.setText(Messages.SigVerComposite_menu);
-            {
-                TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
-                tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
-                {
-                    lblDescriptionStep2 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                    lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                    lblDescriptionStep2.setEditable(false);
-                    lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
-                    tabStep2.setControl(lblDescriptionStep2);
-                }
-            }
-            Menu menu2 = new Menu(lblDescriptionStep2);
-            lblDescriptionStep2.setMenu(menu2);
-
-            mntm2 = new MenuItem(menu2, SWT.NONE);
-            mntm2.setText(Messages.SigVerComposite_menu);
-            {
-                TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
-                tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
-                {
-                    lblDescriptionStep3 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                    lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                    lblDescriptionStep3.setEditable(false);
-                    lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
-                    tabStep3.setControl(lblDescriptionStep3);
-                }
-            }
-            Menu menu3 = new Menu(lblDescriptionStep3);
-            lblDescriptionStep3.setMenu(menu3);
-
-            mntm3 = new MenuItem(menu3, SWT.NONE);
-            mntm3.setText(Messages.SigVerComposite_menu);
-            {
-                TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
-                tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
-                {
-                    lblDescriptionStep4 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
-                    lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
-                    lblDescriptionStep4.setEditable(false);
-                    lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
-                    tabStep4.setControl(lblDescriptionStep4);
-                }
-            }
-            Menu menu4 = new Menu(lblDescriptionStep4);
-            lblDescriptionStep4.setMenu(menu4);
-
-            mntm4 = new MenuItem(menu4, SWT.NONE);
-            mntm4.setText(Messages.SigVerComposite_menu);
-
-            canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
-            canvas1.setBounds(10, 10, 1021, 551);
+            canvas1 = new Canvas(border, SWT.NONE);
+            canvas1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            canvas1.setBounds(10, 10, 1021, 562);
 
             btnHash = new Button(canvas1, SWT.NONE);
             btnHash.addSelectionListener(new SelectionAdapter() {
@@ -328,13 +263,73 @@ public class SigVerComposite extends Composite {
                 lblProgress.setBounds(825, 408, 90, 30);
                 lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
             }
-            {
-                lblPubKey = new Label(border, SWT.NONE);
-                lblPubKey.setLocation(765, 592);
-                lblPubKey.setSize(70, 20);
-                lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
-            }
-
+            
+                        tabFolder = new TabFolder(canvas1, SWT.NONE);
+                        tabFolder.setBounds(0, 431, 1011, 121);
+                        {
+                            TabItem tabStep1 = new TabItem(tabFolder, SWT.NONE);
+                            tabStep1.setText(Messages.SigVerComposite_tbtmNewItem_0);
+                            {
+                                lblDescriptionStep1 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+                                lblDescriptionStep1.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                                lblDescriptionStep1.setEditable(false);
+                                lblDescriptionStep1.setText(Messages.SigVerComposite_txtDescriptionOfStep1);
+                                tabStep1.setControl(lblDescriptionStep1);
+                            }
+                        }
+                        Menu menu1 = new Menu(lblDescriptionStep1);
+                        lblDescriptionStep1.setMenu(menu1);
+                        
+                                    mntm1 = new MenuItem(menu1, SWT.NONE);
+                                    mntm1.setText(Messages.SigVerComposite_menu);
+                                    {
+                                        TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
+                                        tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
+                                        {
+                                            lblDescriptionStep2 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+                                            lblDescriptionStep2.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                                            lblDescriptionStep2.setEditable(false);
+                                            lblDescriptionStep2.setText(Messages.SigVerComposite_txtDescriptionOfStep2);
+                                            tabStep2.setControl(lblDescriptionStep2);
+                                        }
+                                    }
+                                    Menu menu2 = new Menu(lblDescriptionStep2);
+                                    lblDescriptionStep2.setMenu(menu2);
+                                    
+                                                mntm2 = new MenuItem(menu2, SWT.NONE);
+                                                mntm2.setText(Messages.SigVerComposite_menu);
+                                                {
+                                                    TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
+                                                    tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
+                                                    {
+                                                        lblDescriptionStep3 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+                                                        lblDescriptionStep3.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                                                        lblDescriptionStep3.setEditable(false);
+                                                        lblDescriptionStep3.setText(Messages.SigVerComposite_txtDescriptionOfStep3);
+                                                        tabStep3.setControl(lblDescriptionStep3);
+                                                    }
+                                                }
+                                                Menu menu3 = new Menu(lblDescriptionStep3);
+                                                lblDescriptionStep3.setMenu(menu3);
+                                                
+                                                            mntm3 = new MenuItem(menu3, SWT.NONE);
+                                                            mntm3.setText(Messages.SigVerComposite_menu);
+                                                            {
+                                                                TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
+                                                                tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
+                                                                {
+                                                                    lblDescriptionStep4 = new Text(tabFolder, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+                                                                    lblDescriptionStep4.setBackground(SWTResourceManager.getColor(255, 255, 255));
+                                                                    lblDescriptionStep4.setEditable(false);
+                                                                    lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
+                                                                    tabStep4.setControl(lblDescriptionStep4);
+                                                                }
+                                                            }
+                                                            Menu menu4 = new Menu(lblDescriptionStep4);
+                                                            lblDescriptionStep4.setMenu(menu4);
+                                                            
+                                                            mntm4 = new MenuItem(menu4, SWT.NONE);
+                                                            mntm4.setText(Messages.SigVerComposite_menu);
         }
         canvas1.addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) {
@@ -362,8 +357,9 @@ public class SigVerComposite extends Composite {
                 id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
                 imD = id.getImageData();
                 img = new Image(Display.getCurrent(), imD);
+                //draw second doc pic
                 gc.drawImage(img, 820, 100);
-                gc.drawImage(img, 69, 136);
+                
 
                 gc.setBackground(lightgrey);
                 // Color the all the areas in lightgrey
@@ -376,7 +372,8 @@ public class SigVerComposite extends Composite {
                         height - 390 });
                 gc.fillRectangle(465, 300, 35, 30);
                 gc.setBackground(darkgrey);
-
+                gc.drawImage(img, 69, 136);//first doch pic
+                
                 gc.dispose();
 
             }
@@ -630,5 +627,4 @@ public class SigVerComposite extends Composite {
             break;
         }
     }
-
 }
