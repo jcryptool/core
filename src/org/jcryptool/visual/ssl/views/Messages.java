@@ -53,6 +53,7 @@ public class Messages extends NLS
 	public static String ServerHelloCompositeBtnNextStep;
 	public static String ServerHelloInformationText;
 	public static String ServerHelloCompositeErrorSessionIDLength;
+	public static String ServerHelloCompositeErrorSessionIDNull;
 	
 	public static String ServerCertificateCompositeServerCertificate;
 	public static String ServerCertificateCompositeLblCertificateRequest;

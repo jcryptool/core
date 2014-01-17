@@ -337,21 +337,44 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 			{
 				throw new IllegalArgumentException();
 			}
+			int j = 0;
+			int k = 0;
 			for (int i = 0; i <= txtSessionID.getText().length()/8; i++) {
 				if(i*8==txtSessionID.getText().length())
 				{
-					;
+					k++;
 				}
 				else if(i == txtSessionID.getText().length()/8)
 				{
-					Long.parseLong(txtSessionID.getText(i * 8, txtSessionID.getText().length()), 16);
+					if(Long.parseLong(txtSessionID.getText(i * 8, txtSessionID.getText().length()), 16)==0)
+					{
+						k++;
+					}
 				}
 				else
 				{
-					Long.parseLong(txtSessionID.getText(i * 8, (i + 1) * 8), 16);
+					if(Long.parseLong(txtSessionID.getText(i * 8, (i + 1) * 8), 16)==0)
+					{
+						k++;
+					}
 				}
+				j++;
 			}	
+			if(j==k)
+			{
+				throw new IllegalStateException();
+			}
 		} 
+		catch (IllegalStateException exc)
+		{
+			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
+					.getActiveWorkbenchWindow().getShell(), SWT.ICON_WARNING
+					| SWT.OK);
+			messageBox.setMessage(Messages.ServerHelloCompositeErrorSessionIDNull);
+			messageBox.setText(Messages.ServerHelloCompositeError);
+			messageBox.open();
+			return false;
+		}
 		catch (NumberFormatException exc) 
 		{
 			MessageBox messageBox = new MessageBox(PlatformUI.getWorkbench()
