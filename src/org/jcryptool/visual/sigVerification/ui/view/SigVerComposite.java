@@ -130,7 +130,7 @@ public class SigVerComposite extends Composite {
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
         super(parent, style);
-        setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+        //setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         createContents(parent);
         createActions();
         this.sigVerView = view;
@@ -215,7 +215,7 @@ public class SigVerComposite extends Composite {
             }
 
             canvas1 = new Canvas(border, SWT.NONE);
-            canvas1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            //canvas1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             canvas1.setBounds(10, 10, 1021, 562);
 
             btnHash = new Button(canvas1, SWT.NONE);
