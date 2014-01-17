@@ -31,6 +31,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
@@ -63,6 +65,11 @@ public class SigVerComposite extends Composite {
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
     private Text lblDescriptionStep4;
+    private MenuItem mntm1;
+    private MenuItem mntm2;
+    private MenuItem mntm3;
+    private MenuItem mntm4;
+    private MenuItem mntm0;
     private Button btnHash;
     private Button btnAddInput;
     private Button btnReset;
@@ -152,6 +159,12 @@ public class SigVerComposite extends Composite {
             textGeneralDescription.setEditable(false);
             textGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
         }
+        
+        Menu menu = new Menu(textGeneralDescription);
+        textGeneralDescription.setMenu(menu);
+
+        mntm0 = new MenuItem(menu, SWT.NONE);
+        mntm0.setText(Messages.SigVerComposite_menu);
 
         lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
         lblHeader.setBounds(10, 10, 1035, 35);
@@ -162,7 +175,7 @@ public class SigVerComposite extends Composite {
 
         {
             Group border = new Group(this, SWT.BORDER);
-            border.setBounds(10, 99, 1035, 575);
+            border.setBounds(10, 90, 1035, 575);
             border.setText(Messages.SigVerComposite_lblTitle);
 
             {
@@ -188,7 +201,7 @@ public class SigVerComposite extends Composite {
                     resultTrue.setImage(img1);
                     resultTrue.hide();
 
-                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
+                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreutz.png"); //$NON-NLS-1$
                     ImageData imD2 = id2.getImageData();
                     Image img2 = new Image(Display.getCurrent(), imD2);
                     resultFalse = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
@@ -213,6 +226,11 @@ public class SigVerComposite extends Composite {
                     tabStep1.setControl(lblDescriptionStep1);
                 }
             }
+            Menu menu1 = new Menu(lblDescriptionStep1);
+            lblDescriptionStep1.setMenu(menu1);
+
+            mntm1 = new MenuItem(menu1, SWT.NONE);
+            mntm1.setText(Messages.SigVerComposite_menu);
 
             {
                 TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
@@ -225,6 +243,11 @@ public class SigVerComposite extends Composite {
                     tabStep2.setControl(lblDescriptionStep2);
                 }
             }
+            Menu menu2 = new Menu(lblDescriptionStep2);
+            lblDescriptionStep2.setMenu(menu2);
+
+            mntm2 = new MenuItem(menu2, SWT.NONE);
+            mntm2.setText(Messages.SigVerComposite_menu);
             {
                 TabItem tabStep3 = new TabItem(tabFolder, SWT.NONE);
                 tabStep3.setText(Messages.SigVerComposite_tbtmNewItem_2);
@@ -236,6 +259,11 @@ public class SigVerComposite extends Composite {
                     tabStep3.setControl(lblDescriptionStep3);
                 }
             }
+            Menu menu3 = new Menu(lblDescriptionStep3);
+            lblDescriptionStep3.setMenu(menu3);
+
+            mntm3 = new MenuItem(menu3, SWT.NONE);
+            mntm3.setText(Messages.SigVerComposite_menu);
             {
                 TabItem tabStep4 = new TabItem(tabFolder, SWT.NONE);
                 tabStep4.setText(Messages.SigVerComposite_tbtmNewItem_3);
@@ -247,9 +275,14 @@ public class SigVerComposite extends Composite {
                     tabStep4.setControl(lblDescriptionStep4);
                 }
             }
+            Menu menu4 = new Menu(lblDescriptionStep4);
+            lblDescriptionStep4.setMenu(menu1);
+
+            mntm4 = new MenuItem(menu4, SWT.NONE);
+            mntm4.setText(Messages.SigVerComposite_menu);
 
             canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
-            canvas1.setBounds(10, 10, 1021, 551);
+            canvas1.setBounds(0, 0, 1031, 572);
 
             btnHash = new Button(canvas1, SWT.NONE);
             btnHash.addSelectionListener(new SelectionAdapter() {
@@ -297,9 +330,8 @@ public class SigVerComposite extends Composite {
                 lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
             }
             {
-                lblPubKey = new Label(border, SWT.NONE);
-                lblPubKey.setLocation(765, 592);
-                lblPubKey.setSize(70, 20);
+                lblPubKey = new Label(canvas1, SWT.NONE);
+                lblPubKey.setBounds(425, 401, 119, 20);
                 lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
             }
 
