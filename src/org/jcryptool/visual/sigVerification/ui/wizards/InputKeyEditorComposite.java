@@ -63,7 +63,6 @@ public class InputKeyEditorComposite extends Composite {
                     } catch (Exception ex) {
                         LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }
-                    page.getWizard().getContainer().updateButtons();
                 } else {
                     page.setPageComplete(false);
                     page.setErrorMessage(Messages.EnterText);
