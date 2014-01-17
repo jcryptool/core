@@ -65,11 +65,6 @@ public class SigVerComposite extends Composite {
     private Text lblDescriptionStep2;
     private Text lblDescriptionStep3;
     private Text lblDescriptionStep4;
-    private MenuItem mntm1;
-    private MenuItem mntm2;
-    private MenuItem mntm3;
-    private MenuItem mntm4;
-    private MenuItem mntm0;
     private Button btnHash;
     private Button btnAddInput;
     private Button btnReset;
@@ -81,6 +76,11 @@ public class SigVerComposite extends Composite {
     private Label lblProgress;
     private ControlDecoration resultTrue;
     private ControlDecoration resultFalse;
+    private MenuItem mntm1;
+    private MenuItem mntm2;
+    private MenuItem mntm3;
+    private MenuItem mntm4;
+    private MenuItem mntm0;
 
     private int hash = 0; // Values: 0-4. Hash and signature contain the
     // selected method; default is 0
@@ -175,7 +175,7 @@ public class SigVerComposite extends Composite {
 
         {
             Group border = new Group(this, SWT.BORDER);
-            border.setBounds(10, 90, 1035, 575);
+            border.setBounds(10, 99, 1035, 575);
             border.setText(Messages.SigVerComposite_lblTitle);
 
             {
@@ -201,7 +201,7 @@ public class SigVerComposite extends Composite {
                     resultTrue.setImage(img1);
                     resultTrue.hide();
 
-                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreutz.png"); //$NON-NLS-1$
+                    ImageDescriptor id2 = SigVerificationPlugin.getImageDescriptor("icons/rotesKreuz.png"); //$NON-NLS-1$
                     ImageData imD2 = id2.getImageData();
                     Image img2 = new Image(Display.getCurrent(), imD2);
                     resultFalse = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
@@ -231,7 +231,6 @@ public class SigVerComposite extends Composite {
 
             mntm1 = new MenuItem(menu1, SWT.NONE);
             mntm1.setText(Messages.SigVerComposite_menu);
-
             {
                 TabItem tabStep2 = new TabItem(tabFolder, SWT.NONE);
                 tabStep2.setText(Messages.SigVerComposite_tbtmNewItem_1);
@@ -276,13 +275,13 @@ public class SigVerComposite extends Composite {
                 }
             }
             Menu menu4 = new Menu(lblDescriptionStep4);
-            lblDescriptionStep4.setMenu(menu1);
+            lblDescriptionStep4.setMenu(menu4);
 
             mntm4 = new MenuItem(menu4, SWT.NONE);
             mntm4.setText(Messages.SigVerComposite_menu);
 
             canvas1 = new Canvas(border, SWT.NONE | SWT.TRANSPARENT);
-            canvas1.setBounds(0, 0, 1031, 572);
+            canvas1.setBounds(10, 10, 1021, 551);
 
             btnHash = new Button(canvas1, SWT.NONE);
             btnHash.addSelectionListener(new SelectionAdapter() {
@@ -330,8 +329,9 @@ public class SigVerComposite extends Composite {
                 lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 1));
             }
             {
-                lblPubKey = new Label(canvas1, SWT.NONE);
-                lblPubKey.setBounds(425, 401, 119, 20);
+                lblPubKey = new Label(border, SWT.NONE);
+                lblPubKey.setLocation(765, 592);
+                lblPubKey.setSize(70, 20);
                 lblPubKey.setText(Messages.SigVerComposite_lblPubKey);
             }
 
