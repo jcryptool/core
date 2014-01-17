@@ -37,9 +37,19 @@ public class InputKeyEditorWizardPage extends WizardPage {
 
     @Override
     public void createControl(Composite parent) {
+        setPageComplete(false);
         compositeEditor = new InputKeyEditorComposite(parent, NONE, this);
         compositeEditor.setFocus();
         setControl(compositeEditor);
-        setPageComplete(false);
+    }
+    
+
+    /* (non-Javadoc)
+     * @see org.eclipse.jface.wizard.WizardPage#getPreviousPage()
+     */
+    public WizardPage getPreviousPage(){
+        inputKeyWizard.enableFinish = false;
+        sigVerification.reset();
+        return inputKeyWizard.page;        
     }
 }

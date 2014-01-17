@@ -55,7 +55,6 @@ public class InputKeyEditorComposite extends Composite {
             public void modifyText(ModifyEvent e) {
                 if (text.getText().length() > 0) {
                     page.setPageComplete(true);
-                    page.canFlipToNextPage();
                     page.inputKeyWizard.enableFinish = true;
                     page.getWizard().getContainer().updateButtons();
                     byte[] pubKey = text.getText().getBytes();

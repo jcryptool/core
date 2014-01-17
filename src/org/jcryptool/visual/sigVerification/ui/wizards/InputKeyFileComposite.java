@@ -92,14 +92,13 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
                 throw new Exception("The file " + file.getName() + " appears to be empty."); //$NON-NLS-1$ //$NON-NLS-2$
             }
 
-            txtPath.setText(file.getAbsolutePath());
-
-            // Byte Array in Typ PublicKey umwandeln.
-            sigVerification.publicKeyFile(pubKey, input);
+            txtPath.setText(file.getAbsolutePath());           
 
             page.setPageComplete(true);
             page.inputKeyWizard.enableFinish = true;
             page.getWizard().getContainer().updateButtons();
+            // Byte Array in Typ PublicKey umwandeln.
+            sigVerification.publicKeyFile(pubKey, input);
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }

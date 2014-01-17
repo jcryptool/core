@@ -22,7 +22,7 @@ import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
  * @author Wilfing
  */
 public class InputKeyWizard extends Wizard {
-    private InputKeyWizardPage page;
+    InputKeyWizardPage page;
     private InputKeyEditorWizardPage pageEditor;
     private InputKeyFileWizardPage pageFile;
     public boolean enableFinish = false;
@@ -58,13 +58,12 @@ public class InputKeyWizard extends Wizard {
     @Override
     public boolean performFinish() {
         InputKeyWizardPage p = page;
-        if (pageEditor.isPageComplete() || pageFile.isPageComplete())
-            return true;
-        else if (p.getRdoSelection() == 2) {
+        if (p.getRdoSelection() == 2) {
             sigVerification.verifySignature(input, hash);
             return true;
+        } else if (pageEditor.isPageComplete() && enableFinish == true || pageFile.isPageComplete() && enableFinish == true){
+            return true;
         }
-
         return false;
     }
 

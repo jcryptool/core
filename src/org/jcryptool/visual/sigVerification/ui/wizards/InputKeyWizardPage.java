@@ -35,6 +35,7 @@ public class InputKeyWizardPage extends WizardPage {
         this.hash = inputKeyWizard.hash;
         this.input = inputKeyWizard.input;
         this.inputKeyWizard = inputKeyWizard;
+        this.sigVerifiaction.reset();
         setTitle(Messages.InputKeyWizard_title);
         setDescription(Messages.InputKeyWizard_header);
     }

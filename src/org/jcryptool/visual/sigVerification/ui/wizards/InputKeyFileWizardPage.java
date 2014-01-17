@@ -48,4 +48,13 @@ public class InputKeyFileWizardPage extends WizardPage {
     public InputKeyFileComposite getCompositeFile() {
         return compositeFile;
     }
+    
+    /* (non-Javadoc)
+     * @see org.eclipse.jface.wizard.WizardPage#getPreviousPage()
+     */
+    public WizardPage getPreviousPage(){
+        inputKeyWizard.enableFinish = false;
+        sigVerification.reset();
+        return inputKeyWizard.page;        
+    }
 }
