@@ -61,7 +61,7 @@ public class InputKeyWizard extends Wizard {
         if (p.getRdoSelection() == 2) {
             sigVerification.verifySignature(input, hash);
             return true;
-        } else if (pageEditor.isPageComplete() && enableFinish == true || pageFile.isPageComplete() && enableFinish == true){
+        } else if ( pageEditor.isPageComplete() && pageFile.isPageComplete() ){
             return true;
         }
         return false;

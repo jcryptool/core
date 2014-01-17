@@ -7,12 +7,14 @@ import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.cert.Certificate;
-import java.security.spec.X509EncodedKeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Enumeration;
+
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
+
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -152,14 +154,32 @@ public class SigVerification {
      * @param pubKeyBytes A byte array
      * @param input A instance of Input
      */
+    @SuppressWarnings("deprecation")
     public void setDsaRsaPublicKeyFile(byte[] pubKeyBytes, Input input) {
-        try {
-            X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(pubKeyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance(input.signaturemethod);
-            this.publicKey = keyFactory.generatePublic(pubKeySpec);
-        } catch (Exception ex) {
+        try{
+ /*           String pem = new String(pubKeyBytes);
+            
+            // Remove the first and last lines
+            String privKeyPEM = pem.replace("-----BEGIN ENCRYPTED PRIVATE KEY-----\n", "");
+            privKeyPEM = privKeyPEM.replace("-----END ENCRYPTED PRIVATE KEY-----", "");
+            
+
+            // Base64 decode the data
+            byte [] encoded = Base64.decode(privKeyPEM);*/
+
+            System.out.println(new String(pubKeyBytes,0));
+            // PKCS8 decode the encoded RSA private key
+            //X509EncodedKeySpec keySpec = new X509EncodedKeySpec(pubKeyBytes);
+            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pubKeyBytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey pubKey = kf.generatePublic(keySpec);
+
+            // Display the results
+            System.out.println(pubKey);
+            this.publicKey = pubKey;
+        }catch(Exception ex){
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-        }
+        }        
     }
 
     /**

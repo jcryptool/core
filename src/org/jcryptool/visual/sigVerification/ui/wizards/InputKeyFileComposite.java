@@ -93,7 +93,7 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             }
 
             txtPath.setText(file.getAbsolutePath());           
-
+            
             page.setPageComplete(true);
             page.inputKeyWizard.enableFinish = true;
             page.getWizard().getContainer().updateButtons();
