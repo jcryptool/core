@@ -175,7 +175,7 @@ public class SigVerComposite extends Composite {
 
         {
             Group border = new Group(this, SWT.NONE);
-            border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            //border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             border.setBounds(10, 99, 1035, 584);
             border.setText(Messages.SigVerComposite_lblTitle);
 
