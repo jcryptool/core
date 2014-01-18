@@ -81,25 +81,25 @@ public class SignaturResult extends Shell {
 
         Label signature = new Label(composite, SWT.READ_ONLY);
         signature.setText(Messages.SignaturResult_grpSignature);
-        signature.setBounds(0, 108, 137, 21);
+        signature.setBounds(0, 116, 137, 21);
 
         Label signatureLength = new Label(composite, SWT.READ_ONLY);
         signatureLength.setText(Messages.SignaturResult_lengthSig + signatureLengh + " Bits");
-        signatureLength.setBounds(0, 284, 430, 21);
+        signatureLength.setBounds(0, 292, 430, 21);
 
         Label hash = new Label(composite, SWT.READ_ONLY);
         hash.setText(Messages.SignaturResult_grpMessage);
-        hash.setBounds(0, 311, 137, 21);
+        hash.setBounds(0, 319, 137, 21);
 
         Label hashLength = new Label(composite, SWT.READ_ONLY);
         hashLength.setText(Messages.SignaturResult_lengthMessage + hashBitSize + " Bits");
-        hashLength.setBounds(0, 486, 430, 21);
+        hashLength.setBounds(0, 494, 430, 21);
 
         // create table to show the generated signature
         tableSig = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
         tableSig.setLinesVisible(true);
         tableSig.setHeaderVisible(true);
-        tableSig.setBounds(0, 127, 484, 151);
+        tableSig.setBounds(0, 135, 484, 151);
 
         TableColumn tblclmnAddress = new TableColumn(tableSig, SWT.NONE);
         tblclmnAddress.setResizable(false);
@@ -160,7 +160,7 @@ public class SignaturResult extends Shell {
         tableHash = new Table(composite, SWT.BORDER | SWT.FULL_SELECTION);
         tableHash.setLinesVisible(true);
         tableHash.setHeaderVisible(true);
-        tableHash.setBounds(0, 332, 484, 150);
+        tableHash.setBounds(0, 340, 484, 150);
 
         TableColumn tblclmnAddress_1 = new TableColumn(tableHash, SWT.NONE);
         tblclmnAddress_1.setResizable(false);
@@ -229,18 +229,18 @@ public class SignaturResult extends Shell {
 
         Text txtTextopeneditor = new Text(composite, SWT.WRAP);
         txtTextopeneditor.setEditable(false);
-        txtTextopeneditor.setBounds(2, 532, 475, 41);
+        txtTextopeneditor.setBounds(2, 540, 475, 41);
         txtTextopeneditor.setText(Messages.SignaturResult_editorDescripton);
         txtTextopeneditor.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
         Group group = new Group(composite, SWT.NONE);
         group.setLayout(null);
         group.setText("Optionen für Signaturen anzeigen");
-        group.setBounds(0, 54, 484, 48);
+        group.setBounds(0, 54, 484, 59);
 
         // text field to show signature as hex, octal or decimal
         final Label txtSigNum = new Label(composite, SWT.BORDER | SWT.WRAP);
-        txtSigNum.setBounds(0, 127, 484, 151);
+        txtSigNum.setBounds(0, 135, 484, 151);
         txtSigNum.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 
         Button btnOkt = new Button(group, SWT.RADIO);
@@ -253,7 +253,7 @@ public class SignaturResult extends Shell {
             }
         });
         btnOkt.setText("Octal");
-        btnOkt.setBounds(186, 10, 70, 16);
+        btnOkt.setBounds(186, 16, 70, 16);
 
         Button btnDec = new Button(group, SWT.RADIO);
         btnDec.addSelectionListener(new SelectionAdapter() {
@@ -265,7 +265,7 @@ public class SignaturResult extends Shell {
             }
         });
         btnDec.setText("Decimal");
-        btnDec.setBounds(262, 10, 80, 16);
+        btnDec.setBounds(262, 16, 80, 16);
 
         Button btnHex = new Button(group, SWT.RADIO);
         btnHex.addSelectionListener(new SelectionAdapter() {
@@ -277,7 +277,7 @@ public class SignaturResult extends Shell {
             }
         });
         btnHex.setText("Hex");
-        btnHex.setBounds(348, 10, 70, 16);
+        btnHex.setBounds(348, 16, 70, 16);
 
         Button btnHexdump = new Button(group, SWT.RADIO);
         btnHexdump.setText("Hex dump (hex and ascii)");
@@ -289,7 +289,7 @@ public class SignaturResult extends Shell {
             }
         });
         btnHexdump.setSelection(true);
-        btnHexdump.setBounds(10, 10, 170, 16);
+        btnHexdump.setBounds(10, 16, 170, 16);
 
         Button btnVerificationModels = new Button(composite, SWT.NONE);
         btnVerificationModels.setBounds(0, 593, 137, 25);
