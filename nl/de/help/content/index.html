@@ -6,48 +6,50 @@
 </head>
 <body>
 	<h1>SSL/TLS-Visualisierung</h1>
-	<p>Willkommen zur Onlinehilfe der SSL/TLS – Visualisierung, welche sich mit der grafischen Darstellung eines TLS-Handshakes beschäftigt. SSL/TLS ist das am häufigsten verwendete Protokoll zur verschlüsselten Kommunikation im Internet, z.B. zwischen Webbrowser (Client) und Webserver.</p>
+	<p>Willkommen zur Onlinehilfe der SSL/TLS-Visualisierung, welche sich mit der grafischen Darstellung eines TLS-Handshakes beschäftigt. SSL/TLS ist das am häufigsten verwendete Protokoll zur verschlüsselten Kommunikation im Internet, z.B. zwischen Webbrowser (Client) und Webserver. Bevor Nutzdaten übertragen werden können, müssen über ein Protokoll im Hintergrund bestimmte Parameter berechnet werden. Bei SSL/TLS funktioniert dies über den Handshake, wo sich Client und Server auf einen Verschlüsselungsalgorithmus einigen und die - für die Verschlüsselung der Übertragung von Nutzdaten notwendigen - Schlüssel berechnen.</p>
 
     <p>Grundsätzlich kann man die Visualisierung in zwei Bereiche aufteilen. Auf der linken Seite befindet sich der grafische Ablauf des Handshakes, auf der rechten Seite werden Informationen und Parameter zu den soeben durchgeführten Schritten angezeigt.</p>
 
-    <p>Der Handshake wurde dazu in einzelne Schritte unterteilt. In jedem Schritt ist es möglich, die einzelnen, benötigten Parameter einzugeben bzw. auszuwählen. Sollten Parameter nicht richtig eingegeben werden, so werden sie mittels einer Message-Box darauf aufmerksam gemacht. 
-Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passieren, dass der User zum 1. Schritt zurückgesendet wird. Dies bedeutet entweder, dass durch die ausgewählten Parameter der Handshake angegriffen werden kann, oder beim <i>ServerHello</i> eine <i>CipherSuite</i> benötigt wird, welche in der Nachricht des Clients nicht enthalten war.</p>
+    <p>Der Handshake wurde dazu in einzelne Schritte - er besteht insgesamt aus 8 Schritten - unterteilt. In jedem Schritt ist es möglich, die einzelnen, benötigten Parameter einzugeben bzw. auszuwählen. Sollten Parameter nicht richtig eingegeben werden, so wird der Benutzer mittels einer Message-Box darauf aufmerksam gemacht.
+Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passieren, dass der Benutzer zum 1. Schritt zurück verwiesen wird. Dies bedeutet entweder, dass durch die ausgewählten Parameter der Handshake angegriffen werden kann, oder dass beim <i>ServerHello</i> eine <i>CipherSuite</i> benötigt wird, welche in der Nachricht des Clients nicht enthalten war.</p>
     <br />
 
-    <b>Client Hello</b>
-    <p>Der Handshake beginnt mit dem Schritt <i>ClientHello</i>, durch den die Kommunikation beginnt. Alle danach folgenden Schritte werden im weiteren Verlauf des Handshakes eingeblendet. Die <i>ClientHello</i>-Nachricht verfügt über folgende Parameter:</p>
+    <b>Schritt 1: Client Hello</b>
+    <p>Der Handshake beginnt mit dem Schritt <i>ClientHello</i>, durch den die Kommunikation beginnt. Alle danach folgenden Schritte werden im weiteren Verlauf des Handshakes eingeblendet. Die ClientHello-Nachricht verfügt über folgende Parameter:</p>
 
     <ul>
-        <li>TLS-Version: Ist jene Version, welche der Client dem Server zur Kommunikation anbietet. </li>
-        <li>Random: Ist ein zufällig generierter Wert. Der Zufallswert besteht aus 32 Byte (dies entspricht 64 Hexadezimalzeichen). Die ersten 4 Byte sind ein Zeitstempel, bestehend aus den Sekunden zwischen dem aktuellen Zeitpunkt und dem 1.Januar 1970 UTC. Die restlichen 28 Byte werden durch einen Zufallsgenerator generiert.</li>
-        <li>CipherSuite: Sind jene Kombinationen von Verschlüsselungs-, Schlüsselaustausch-, Signatur- und Hashalgorithmen, die vom Client unterstützt werden.</li>
-        <li>SessionID: Die ID der Nachricht. Für neue Verbindungen ist diese normalerweise „0“, wenn sich der Client früher bereits einmal zu dem Server verbunden hat und die Parameter von damals verwenden will, kann hier die damals verwendete SessionID eingetragen werden. Da hier nur neue Verbindungen dargestellt werden, ist die SessionID im Plugin immer Wert „0“.</li>
+        <li>TLS-Version: TLS-Version, die der Client dem Server zur Kommunikation anbietet. </li>
+        <li>Random: Ein zufällig generierter Wert. Dieser Wert besteht aus 32 Byte (entspricht 64 Hexadezimalzeichen). Die ersten 4 Byte sind ein Zeitstempel, bestehend aus den Sekunden zwischen dem aktuellen Zeitpunkt und dem 1. Januar 1970 UTC. Die restlichen 28 Byte werden durch einen Zufallsgenerator generiert.</li>
+        <li>CipherSuite: Liste aller Kombinationen von Verschlüsselungs-, Schlüsselaustausch-, Signatur- und Hashalgorithmen, die vom Client unterstützt werden.</li>
+        <li>SessionID: ID der Nachricht. Für neue Verbindungen ist diese normalerweise „0“. Wenn sich der Client früher bereits einmal zu dem Server verbunden hat und die Parameter von damals verwenden will, kann hier die damals verwendete SessionID eingetragen werden. Da hier nur neue Verbindungen dargestellt werden, hat die SessionID in dieser Visualisierung immer Wert „0“.</li>
+        <li>Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
     </ul>
     <p>Der Client kann dem Server mehrere <i>CipherSuites</i> und TLS-Versionen anbieten. Die gewählten <i>CipherSuites</i> und der Zufallswert werden in der rechten Informationsbox angezeigt.</p>
      <br />
 
-    <b>Server Hello</b>
+    <b>Schritt 2: Server Hello</b>
     <p>Der zweite Schritt ist <i>ServerHello</i>. Dieser Abschnitt startet, wenn der Client seine <i>ClientHello</i>-Nachricht gesendet hat. In diesem Schritt treten folgende Parameter auf:</p>
     <ul>
-        <li>TLS-Version: Der Server wählt jene TLS-Version aus, die er verwenden möchte. Es kann vorkommen, dass der Server nur über neuere/ältere Versionen verfügt als der Client.</li>
-        <li>Random: Ist ein zufällig generierter Wert. (weitere Infos siehe <i>ClientHello</i>!)</li>
-        <li>CipherSuite: Der Server wählt jene <i>CipherSuite</i>, die er verwenden möchte bzw. die er beherrscht.</li>
-        <li>SessionID: Die ID der Nachricht.</li>
+        <li>TLS-Version: Der Server wählt jene TLS-Version aus, die er verwenden möchte. Es kann vorkommen, dass der Server nur über neuere/ältere Versionen verfügt, als der Client.</li>
+        <li>Random: Ein zufällig generierter Wert (weitere Infos siehe <i>ClientHello</i>)</li>
+        <li>CipherSuite: Der Server wählt eine <i>CipherSuite</i>, die er verwenden möchte bzw. die er beherrscht.</li>
+        <li>SessionID: ID der Nachricht.</li>
+        <li>Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
     </ul>
-    <p>Es entscheidet also allein der Server, welche TLS-Version mit welcher <i>CipherSuite</i>schlussendlich verwendet wird. Wählt der Server eine TLS-Version bzw. eine <i>CipherSuite</i> aus, welche vom Client laut der <i>ClientHello</i>-Nachricht nicht unterstützt wird, so ist kein Verbindungsaufbau möglich. Der Server teilt dem Client dies mit Hilfe einer Nachricht mit und der Client hat danach die Möglichkeit, erneut eine <i>ClientHello</i>-Nachricht zu senden, welche ggf. um die geforderte TLS-Version bzw. <i>CipherSuite</i> erweitert wird.</p>
+    <p>Es entscheidet also allein der Server, welche TLS-Version mit welcher <i>CipherSuite</i> schlussendlich verwendet wird. Wählt der Server eine TLS-Version bzw. eine <i>CipherSuite</i> aus, welche vom Client laut der <i>ClientHello</i>-Nachricht nicht unterstützt wird, so ist kein Verbindungsaufbau möglich. Der Server teilt dies dem Client mit Hilfe einer Nachricht mit und der Client hat danach die Möglichkeit, erneut eine <i>ClientHello</i>-Nachricht zu senden, welche ggf. um die geforderte TLS-Version bzw. <i>CipherSuite</i> erweitert wird.</p>
     <br />
 
-    <b>Server Certificate</b>
+    <b>Schritt 3: Server Certificate</b>
     <p>Nachdem sich Client und Server auf eine <i>CipherSuite</i> geeinigt haben, werden notwendige Schlüssel berechnet und Zertifikate ausgetauscht:</p>
     <ul>
-        <li>ServerCertificate: Der Server stellt dem Client ein Zertifikat zur Verfügung, welches seinen öffentlichen Schlüssel beinhaltet und durch den Signatur-/Hashalgorithmus unterschrieben ist. Server verfügen meist über eine große Anzahl von Zertifikaten.</li>
-        <li>ServerKeyExchange: Diese Nachricht wird vom Server nur versendet, wenn das Zertifikat nicht genügend Informationen beinhaltet, um den öffentlichen Schlüssel zwischen den Kommunikationspartnern auszutauschen. Dies ist für die folgenden Schlüsselaustauschverfahren gültig: DHE_DSS, DHE_RSA.</li>
+        <li>ServerCertificate: Der Server stellt dem Client ein Zertifikat zur Verfügung, welches seinen öffentlichen Schlüssel beinhaltet. Server verfügen meist über eine große Anzahl von Zertifikaten.</li>
+        <li>ServerKeyExchange: Diese Nachricht wird vom Server nur versendet, wenn das Zertifikat nicht genügend Informationen beinhaltet, um den öffentlichen Schlüssel zwischen den Kommunikationspartnern auszutauschen. Dies ist für die folgenden Schlüsselaustauschverfahren der Fall: DHE_DSS, DHE_RSA.</li>
         <li>CertificateRequest: Dem Server steht die Möglichkeit offen vom Client ein Zertifikat anzufordern. Dies ist allerdings nur gestattet, wenn es sich um keinen anonymen Server handelt. Bei einer klassischen Client-Server-Kommunikation ist dies nicht der Fall, darum ist bei diesem Parameter „Nein“ vorausgewählt.</li>
     </ul>
     <p>Der Server beendet seine Kommunikation nun mit der <i>ServerHelloDone</i>-Nachricht und wartet auf eine Reaktion des Clients.</p>
    <br />
 
-    <b>Client Certificate</b>
+    <b>Schritt 4: Client Certificate</b>
     <p>Sobald der Client die <i>ServerHelloDone</i>-Nachricht erhalten hat, wird zuerst das Zertifikat des Servers verifiziert. Ist dieses valide, so antwortet er auf dem Server mit folgenden Parametern:</p>
     <ul>
         <li>ClientCertificate: Verlangt der Server ein Zertifikat vom Client, sendet der Client nun sein Zertifikat an den Server.</li>
@@ -57,30 +59,36 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <p>Nach diesem Schritt sind die Schlüsselinformationen ausgetauscht und sowohl Server als auch Client verfügen über sämtliche notwendigen Informationen um die Kommunikation zu starten.</p>
        <br />
 
-    <b>Client-/Server-ChangeCipherSpec</b>
+      <b>Schritt 7/5: Client-/Server-ChangeCipherSpec</b>
+    <p>Im nächsten Schritt wird von beiden Teilnehmern eine <i>ChangeCipherSpec</i>-Nachricht versendet.</p>
+    <ul>
+        <li>ChangeCipherSpec: Der Client bzw. Server teilt seinem Gesprächspartner nun mit, dass er von nun an den ausgewählten Verschlüsselungsalgorithmus für die restliche Kommunikation verwenden wird. </li>
+    </ul>
+          <br />
+
+    <b>Schritt 8/6: Client-/Server-Finished</b>
     <p>Um den Handshake zu beenden, wird eine letzte Nachricht versendet:</p>
     <ul>
-        <li>Finished: Die Finished-Nachricht wird von Client und Server versendet. Sie wird mit dem ausgewählten Verschlüsselungsalgorithmus verschlüsselt und beinhaltet die Informationen aller vorher übertragenen Nachrichten. Ist es dem Gesprächspartner möglich, diese Informationen zu lesen, so ist der Handshake erfolgreich abgeschlossen.</li>
-        <li>Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
+        <li>Finished: Die <i>Finished</i>-Nachricht wird sowohl vom Client, als auch vom Server versendet. Sie wird mit dem ausgewählten Verschlüsselungsalgorithmus verschlüsselt und beinhaltet die Informationen aller vorher übertragenen Nachrichten. Ist es dem Gesprächspartner möglich, diese Informationen zu lesen, so ist der Handshake erfolgreich abgeschlossen.</li>
     </ul>
           <br />
 
     <b>Schaltflächen</b>
     <ul>
-        <li>Information/Parameter: Der Informations-Button gibt detaillierter Informationen über den soeben bearbeiteten Schritt im Handshake. Durch erneutes Klicken werden wieder die Parameter angezeigt.</li>
-        <li>Nächster Schritt: Beendet den momentanen Schritt und wechselt zum nächsten Schritt im Handshake. Wurden nicht alle Felder ausgefüllt, wird mit den Standardwerten fortgesetzt.</li>
-        <li>Vorheriger Schritt: Beendet den momentanen Schritt und wechselt zum vorherigen Schritt im Handshake. Bereits eingegebene Daten im aktuellen Schritt gehen verloren.</li>
-        <li>Neustart: Der Handshake wird vollständig zurückgesetzt. Sämtliche ausgewählten Parameter gehen verloren bzw. werden zurückgesetzt.</li>
+        <li><b>Information/Parameter:</b> Der Informations-Button gibt detaillierter Informationen über den soeben bearbeiteten Schritt im Handshake. Durch erneutes Klicken werden wieder die Parameter angezeigt. Dabei wechselt der Text auf dem Button bei jedem Klick.</li>
+        <li><b>Nächster Schritt:</b> Beendet den momentanen Schritt und wechselt zum nächsten Schritt im Handshake. Wurden nicht alle Felder ausgefüllt, wird mit den Standardwerten fortgesetzt.</li>
+        <li><b>Vorheriger Schritt:</b> Beendet den momentanen Schritt und wechselt zum vorherigen Schritt im Handshake. Bereits eingegebene Daten im aktuellen Schritt gehen verloren.</li>
+        <li><b>Neustart:</b> Der Handshake wird vollständig zurückgesetzt. Sämtliche ausgewählten Parameter gehen verloren bzw. werden zurückgesetzt.</li>
     </ul>
 <br />
 
     <b>Angriffe</b>
-    <p>Der TLS-Handshake existiert bereits sehr lange und so wurden im Laufe der Jahre mehrere Schwachstellen entdeckt und auch wieder gelöst. Diese Schwachstellen haben einige Angriffe auf den Handshake erlaubt:</p>
+    <p>Der TLS-Handshake existiert bereits seit Jänner 1999 und so wurden im Laufe der Jahre mehrere Schwachstellen entdeckt und das Protokoll entsprechend verbessert. Diese Schwachstellen erlaubten bzw. erlauben immer noch folgende Angriffe auf den Handshake:</p>
     <ul>
-        <li>BREACH: Dieser Angriff kann auf alle SSL- und TLS-Versionen angewendet werden, ganz gleich welche Verschlüsselungsalgorithmen verwendet werden. BREACH nutzt die HTTP-Kompression aus, welche nicht ausgeschaltet werden kann, da alle Webserver sich auf diese Kompression verlassen. Der Angriff wurde im Plugin nicht mit aufgenommen, da er ansonsten immer angezeigt werden würde.</li>
-        <li>BEAST: Der Angriff BEAST nutzt vorhandene Sicherheitslücken und Fehlverhalten innerhalb des sogenannten Cipher Block Chaining-Mode(CBC) aus. Er trat das erste Mal im Herbst 2011 auf. Durch diese Anfälligkeit von CBC kann ein Man-in-the-Middle-Angriff (MitM) auf die SSL/TLS-Verbindung gestartet werden. Dabei kann ein Dritter unentdeckt die Schlüssel abfangen und den Datenaustausch zwischen Client und Server mitverfolgen. Durch die Einführung von TLS 1.1 wurde diese Lücke allerdings ausgebessert und stellt bei Verwendung von TLS1.1 oder 1.2 kein Problem mehr dar.</li>
-        <li>CRIME: Der Angriff CRIME nutzt ein optionales SSL/TLS-Feature aus, die Kompression von Daten. Dadurch können geheime Authentifizierungsdaten wiederhergestellt werden, wodurch weitere Angriffe auf die Verbindung ermöglicht werden. Dieser Angriff wurde ins Plugin nicht mit aufgenommen, da die Kompression nicht berücksichtigt wird.</li>
-        <li>aFBPPS13-Attack: Diese Attacke ist besser unter dem Namen RC4-Attacke bekannt. Sie tritt auf, wenn RC4 als <i>CipherSuite</i> ausgewählt wird. RC4 wurde sehr lange als eine sehr sichere <i>CipherSuite</i> angesehen, da sie weder über Padding noch IVs verfügt und dadurch nicht anfällig für BEAST oder Lucky13 ist. Allerdings hat sich im März 2013 durch akademische Arbeiten ergeben, dass sehr viele zusätzliche Kollisionen gefunden wurden. Durch diese Kollisionen ist es nun möglich, eine statistische Auswertung von verschlüsselten Texten durchzuführen, welche früher oder später den wahren Text ergeben. Dadurch können verschlüsselt übertragene Cookies ausgelesen werden. Als Lösung wird vorgeschlagen, RC4 nicht mehr zu verwenden.</li>
+        <li>BREACH: Dieser Angriff kann auf alle SSL- und TLS-Versionen angewendet werden, ganz gleich welche Verschlüsselungsalgorithmen verwendet werden. BREACH baut auf den Angriff CRIME auf und nutzt ebenfalls die HTTP-Kompression aus, welche nicht ausgeschaltet werden kann, da alle Webserver sich auf diese Kompression verlassen. Dieser Angriff wurde im August 2013 bekannt. Der Angriff wurde im Plugin nicht mit aufgenommen, da er ansonsten immer angezeigt werden würde.</li>
+        <li>BEAST: Der Angriff BEAST nutzt vorhandene Sicherheitslücken und Fehlverhalten innerhalb des sogenannten Cipher Block Chaining-Mode(CBC) aus. Er wurde im Herbst 2011 bekannt. Durch diese Anfälligkeit von CBC kann ein Man-in-the-Middle-Angriff (MitM) auf die SSL/TLS-Verbindung gestartet werden. Dabei kann ein Dritter unentdeckt die Schlüssel abfangen und den Datenaustausch zwischen Client und Server mitverfolgen. Durch die Einführung von TLS 1.1 wurde diese Lücke allerdings ausgebessert und stellt bei Verwendung von TLS1.1 oder 1.2 kein Problem mehr dar.</li>
+        <li>CRIME: Der Angriff CRIME nutzt ein optionales SSL/TLS-Feature aus, die Kompression von Daten. Dadurch können geheime Authentifizierungsdaten wiederhergestellt werden, wodurch weitere Angriffe auf die Verbindung ermöglicht werden. Der Angriff wurde 2012 bekannt. Dieser Angriff wurde ins Plugin nicht mit aufgenommen, da die Kompression nicht berücksichtigt wird.</li>
+        <li>aFBPPS13-Attack: Diese Attacke ist besser unter dem Namen RC4-Attacke bekannt. Sie tritt auf, wenn RC4 als CipherSuite ausgewählt wird. RC4 wurde sehr lange als eine sehr sichere CipherSuite angesehen, da sie weder über Padding noch IVs verfügt und dadurch nicht anfällig für BEAST oder Lucky13 ist. Allerdings hat sich im März 2013 durch akademische Arbeiten ergeben, dass sehr viele zusätzliche Kollisionen gefunden wurden. Durch diese Kollisionen ist es nun möglich, eine statistische Auswertung von verschlüsselten Texten durchzuführen, welche früher oder später den Klartext ergeben. Dadurch können verschlüsselt übertragene Cookies ausgelesen werden. Als Lösung wird vorgeschlagen, RC4 nicht mehr zu verwenden.</li>
         <li>Lucky13: Der Lucky13-Angriff trat das erste Mal im Februar 2013 auf und greift das verwendete Padding in einer SSL/TLS-Kommunikation an. Sie tritt bei AES im CBC-Mode auf, da hier immer Blöcke der Länge 16 Byte verschlüsselt und entschlüsselt werden. Ist ein Block nicht lang genug, so ist es nötig ein Padding anzuhängen. Der Angriff basiert nun darauf, dass der letzte Block abgeschnitten wird und mit zufälligem „Padding“ an den Empfänger gesendet wird. Abhängig von der Zeit bis eine Fehlermeldung zurückkommt kann festgestellt werden, ob das korrekte Padding angefügt wurde oder nicht. Dauert es länger bis die Fehlermeldung eintrifft, so war dies der Fall. Dadurch ist es nun möglich Schritt für Schritt 2 Bytes zu entschlüsseln, bis die komplette Nachricht entschlüsselt ist. Als Schutz gegen diesen Angriff wird die Verwendung vom Galois-Counter-Mode (GCM) geraten.</li>
         <li>SHA1- bzw. MD5-Attacks: Sowohl SHA1 als auch MD5 sind nicht mehr kollisionssicher und sollten deshalb nicht mehr zur Bildung von sicherheitsrelevanten Hashwerten verwendet werden.</li>
     </ul>
@@ -90,12 +98,12 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <p>Dies bedeutet, dass ein für den Client ausgestelltes Zertifikat an den Client gebunden wird. Bei jedem weiteren Verbindungsaufbau zu dem Server, von dem dieses Zertifikat ausgestellt wurde, wird überprüft, ob das Zertifikat vom Client mit dem vom Server übereinstimmt. Das Zertifikat des Clients muss in regelmäßigen Abständen (meistens 1 oder 2 Jahre) aktualisiert werden.</p>
  <br />
 
-    <b>Beschränkungen des Plugin</b>
+    <b>Beschränkungen der Visualisierung</b>
     <p>Das Plugin beschränkt sich rein auf TLS-Versionen. Die Unterschiede zu SSL sind nicht groß, TLS1.0 gleicht SSL3.0 sehr stark. Nachdem SSL im Jänner 1999 im RFC 2246 als Standard festgelegt wurde, benannte man es in TLS (Transport Layer Security) um. Die im Plugin zur Verfügung stehenden Versionen beschränken sich rein auf TLS1.0, TLS1.1 und TLS1.2, da zu SSL kein Standard existiert und die veralteten Versionen unsicher sind und nicht mehr verwendet werden sollten.</p>
  <br />
 
     <b>Zur Verfügung stehende <i>CipherSuites</i>:</b>
-    <p>In dieser Visualisierung sind aus Gründen der Übersicht und Verständlichkeit nur folgende <i>CipherSuites</i> enthalten:</p>
+    <p>In dieser Visualisierung sind aus Gründen der Übersicht und Verständlichkeit "nur" folgende <i>CipherSuites</i> enthalten. Es wurden alle CipherSuites mit elliptische Kurven ausgeschlossen.</p>
     TLS_RSA_WITH_NULL_MD5 <br />
     TLS_RSA_WITH_NULL_SHA <br />
     TLS_RSA_WITH_NULL_SHA256 <br />
@@ -151,7 +159,16 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <p>RFC 5288: AES Galois Counter Mode (GCM) Cipher Suites for TLS (zu finden unter <a href="http://www.ietf.org/rfc/rfc5288.txt">http://www.ietf.org/rfc/rfc5288.txt</a>)</p>
     <br />
     <b>Literaturhinweise</b>
-     <p>Wikipedia: <a href="http://de.wikipedia.org/wiki/Transport_Layer_Security">http://de.wikipedia.org/wiki/Transport_Layer_Security</a></p>
-    
+        <p>TLS-Wikipedia (de): <a href="http://de.wikipedia.org/wiki/Transport_Layer_Security">http://de.wikipedia.org/wiki/Transport_Layer_Security</a></p>
+        <p>TLS-Wikipedia (en): <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">http://en.wikipedia.org/wiki/Transport_Layer_Security</a></p>
+        <p>BREACH-Wikipedia (en): <a href="http://en.wikipedia.org/wiki/BREACH_%28security_exploit%29">http://en.wikipedia.org/wiki/BREACH_%28security_exploit%29</a></p>
+        <p>BREACH (en): <a href="http://breachattack.com/">http://breachattack.com/</a></p>
+        <p>BEAST (de): <a href="http://www.guntiahoster.de/blog/2011/allgemein/beast-attack-ssl-jederzeit-angreifbar/">http://www.guntiahoster.de/blog/2011/allgemein/beast-attack-ssl-jederzeit-angreifbar/</a></p>
+        <p>aFBPPS13-Attack (en): <a href="http://www.isg.rhul.ac.uk/tls/">http://www.isg.rhul.ac.uk/tls/</a></p>
+        <p>CRIME-Wikipedia (en): <a href="http://en.wikipedia.org/wiki/CRIME_%28security_exploit%29">http://en.wikipedia.org/wiki/CRIME_%28security_exploit%29</a></p>
+        <p>Lucky13-Wikipedia (en): <a href="http://en.wikipedia.org/wiki/Lucky_Thirteen_attack">http://en.wikipedia.org/wiki/Lucky_Thirteen_attack</a></p>
+        <p>MD5-Wikipedia (de): <a href="http://de.wikipedia.org/wiki/Message-Digest_Algorithm_5">http://de.wikipedia.org/wiki/Message-Digest_Algorithm_5</a></p>
+        <p>SHA1-Wikipedia (de): <a href="http://de.wikipedia.org/wiki/Secure_Hash_Algorithm">http://de.wikipedia.org/wiki/Secure_Hash_Algorithm</a></p>
+
 </body>
 </html>
