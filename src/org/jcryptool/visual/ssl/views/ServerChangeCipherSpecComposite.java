@@ -139,11 +139,10 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 	public void startStep() {
 		c = new Crypto();
 		SecureRandom random = new SecureRandom();
-		String seed;
+		String seed = serverRandom + clientRandom;
 		int newIndex;
 		
 		secret = getPremasterSecret();
-		seed = serverRandom + clientRandom;
 		
 		if(Message.getServerHelloVersion() != "0303"){ //TLS1.0 or TLS1.1
 			masterSecret = PRF(secret, "master secret", seed);
@@ -265,6 +264,40 @@ public class ServerChangeCipherSpecComposite extends Composite implements
 			}else { //no IVs necessary
 				serverIV = Messages.ServerChangeCipherSpecNoIV;
 			}
+		}		
+		
+		if(Message.getServerHelloCipher() == "RC4_128") {
+			//16 Byte key
+			if(serverKey.length() < 128) {
+				serverKey = PRF(serverKey, "key expansion", seed);
+				serverKey = serverKey.substring(0, 128);
+			}
+		}else if(Message.getServerHelloCipher() == "AES_128") {
+			//16 Byte key
+			if(serverKey.length() < 128) {
+				serverKey = PRF(serverKey, "key expansion", seed);
+				serverKey = serverKey.substring(0, 128);
+			}
+		}else if(Message.getServerHelloCipher() == "AES_256") {
+			//32 Byte key
+			if(serverKey.length() < 256) {
+				serverKey = PRF(serverKey, "key expansion", seed);
+				serverKey = serverKey.substring(0, 256);
+			}
+		}else if(Message.getServerHelloCipher() == "DES") {
+			//7 Byte key
+			if(serverKey.length() < 56) {
+				serverKey = PRF(serverKey, "key expansion", seed);
+				serverKey = serverKey.substring(0, 56);
+			}
+		}else if(Message.getServerHelloCipher() == "3DES") {
+			//21 Byte key
+			if(serverKey.length() < 168) {
+				serverKey = PRF(serverKey, "key expansion", seed);
+				serverKey = serverKey.substring(0, 168);
+			}
+		}else { //no Encryption
+			serverKey = null;
 		}
 		
 		Message.setServerKey(serverKey);

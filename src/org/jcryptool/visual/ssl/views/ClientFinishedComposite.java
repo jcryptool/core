@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
@@ -98,7 +99,7 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 		c = new Crypto();
 		String finished = null;
 		String cFinished = null;
-		SecretKeySpec key = null;
+		Key key = null;
 		String hashMessages = Message.getMessageClientHello()
 				+ Message.getMessageServerHello()
 				+ Message.getMessageServerRequest()
@@ -110,30 +111,30 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 				+ Message.getMessageClientVerify()
 				+ Message.getMessageServerFinished();
 		try {
-			finished = PRF(masterSecret, "server finished",
+			finished = PRF(masterSecret, "client finished",
 					c.generateHash(Message.getServerHelloHash(), hashMessages));
+			
+			//The part beyond is haunted by a demon we summoned, he is doing black magic that we don´t understand.
+			//But he says that it works that way so we trust him.
+			//Do not touch it or he kills you!
 			if(Message.getServerHelloCipherMode() == "CBC") {
 				if(Message.getServerHelloCipher().startsWith("AES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "AES");
+					key = c.generateKey("AES", 128);
+					cFinished = c.encryptCBC(key, finished);
 				}else if(Message.getServerHelloCipher().equals("3DES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "3DES");
+					key = c.generateKey("DESede", 168);
+					cFinished = c.encryptCBC(key, finished);
 				}else if(Message.getServerHelloCipher().equals("RC4_128")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "RC4");
+					key = c.generateKey("RC4", 128);
+					cFinished = c.encryptCBC(key, finished);
 				}else if(Message.getServerHelloCipher().equals("DES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "DES");
+					key = c.generateKey("DES", 56);
+					cFinished = c.encryptCBC(key, finished);
 				}
 			}else { //GCM
-				if(Message.getServerHelloCipher().startsWith("AES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "AES");
-				}else if(Message.getServerHelloCipher().equals("3DES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "3DES");
-				}else if(Message.getServerHelloCipher().equals("RC4_128")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "RC4");
-				}else if(Message.getServerHelloCipher().equals("DES")) {
-					key = new SecretKeySpec(Message.getServerKey().getBytes(), "DES");
-				}
+				key = c.generateKey("AES", 128);
+				cFinished = c.encryptGCM(key, finished);
 			}
-			cFinished = c.encryptCBC(key, finished);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -156,6 +157,9 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidAlgorithmParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

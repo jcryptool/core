@@ -1,6 +1,10 @@
 package org.jcryptool.visual.ssl.views;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
+import javax.crypto.KeyAgreement;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -21,6 +25,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 	private SslView sslView;
 	private Group grpClientChangeCipher;
 	private Label lblChangeCipherSpec;
+	private int count = 0;
 	
 	/**
 	 * Content Typ of the ChangeCipherSpec Message
@@ -31,6 +36,21 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 	 * The master secret needed for the encryption.
 	 */
 	private String masterSecret;
+	
+	/**
+	 * The premaster secret of the server
+	 */
+	private String secret;
+	
+	/**
+	 * The random number generated for the message clientHello
+	 */
+	private String clientRandom = Message.getClientHelloRandom();
+	
+	/**
+	 * The random number generated for the message serverHello
+	 */
+	private String serverRandom = Message.getServerHelloRandom();
 	
 	/**
 	 * 
@@ -100,6 +120,9 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		c = new Crypto();
 		SecureRandom random = new SecureRandom();
 		int newIndex;
+		String seed = serverRandom + clientRandom;
+		
+		secret = getPremasterSecret();
 		
 		if(Message.getServerHelloVersion() != "0303"){ //TLS1.0 or TLS1.1
 			masterSecret = Message.getMasterSecret();
@@ -214,6 +237,35 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			}
 		}
 
+		if(Message.getServerHelloCipher() == "RC4_128") {
+			//16 Byte key
+			if(clientKey.length() < 128) {
+				clientKey = PRF(clientKey, "key expansion", seed);
+			}
+		}else if(Message.getServerHelloCipher() == "AES_128") {
+			//16 Byte key
+			if(clientKey.length() < 128) {
+				clientKey = PRF(clientKey, "key expansion", seed);
+			}
+		}else if(Message.getServerHelloCipher() == "AES_256") {
+			//32 Byte key
+			if(clientKey.length() < 256) {
+				clientKey = PRF(clientKey, "key expansion", seed);
+			}
+		}else if(Message.getServerHelloCipher() == "DES") {
+			//7 Byte key
+			if(clientKey.length() < 56) {
+				clientKey = PRF(clientKey, "key expansion", seed);
+			}
+		}else if(Message.getServerHelloCipher() == "3DES") {
+			//21 Byte key
+			if(clientKey.length() < 192) {
+				clientKey = PRF(clientKey, "key expansion", seed);
+			}
+		}else { //no Encryption
+			clientKey = null;
+		}
+		
 		Message.setClientKey(clientKey);
 		
 		strText = Messages.ClientChangeCipherSpecInitationText
@@ -227,6 +279,94 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				+ clientIV;
 		refreshInformations();
 	}
+	
+	/**
+	 * The pseudorandom-function to generate the master secret
+	 * @param secret
+	 * @param string
+	 * @param seed
+	 * @return
+	 */
+	private String PRF(String secret, String string, String seed) {
+		String hash = "";
+		int hash_length;
+		String S1;
+		String S2;
+		byte[] b1;
+		byte[] b2;
+		int b_length;
+		int i;
+		count++;
+		
+		if(Message.getServerHelloHash() == "MD5") {
+			hash = P_hash(secret, seed, count, "MD5");
+		}else if(Message.getServerHelloHash() == "SHA1")
+		{
+			hash = P_hash(secret, seed, count, "SHA1");
+		}else if(Message.getServerHelloHash() == "SHA256") {
+			hash = P_hash(secret, seed, count, "SHA256");
+		}else { //SHA384
+			hash = P_hash(secret, seed, count, "SHA384");
+		}
+		
+		hash_length = hash.length();
+		S1 = hash.substring(0, (hash_length/2)-1);
+		S2 = hash.substring(hash_length/2);
+		
+		b1 = P_hash(S1, string + seed, count, "MD5").getBytes();
+		b2 = P_hash(S2, string + seed, count, "SHA1").getBytes();
+		b_length = b1.length;
+		
+		byte[] b3 = new byte[b_length];
+		
+		for(i = 0; i < b_length; i++) {
+			b3[i] = (byte) (b1[i] ^ b2[i]);
+		}
+		return bytArrayToHex(b3);
+	}
+
+	/**
+	 * The hashfunction for the PRF of the master secret
+	 * @param secret
+	 * @param seed
+	 * @param count
+	 * @param Hash
+	 * @return
+	 */
+	private String P_hash(String secret, String seed, int max, String Hash) {
+		String hash = "";
+		for(int i = 0; i < max; i++) {
+			try {
+				hash = hash + c.generateHash(Hash, secret + A(i, Hash) + seed);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+		return hash;
+	}
+	
+	/**
+	 * A hashfunction to generate more bytes for the master secret
+	 * @param i
+	 * @param Hash
+	 * @return
+	 */
+	private String A(int i, String Hash) {
+		if(i == 0) {
+			return clientRandom + serverRandom;
+		}else {
+			try {
+				return c.generateHash(Hash, secret + A(i-1, Hash) + clientRandom + serverRandom);
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return clientRandom + serverRandom;
+		}
+	}
 
 	/**
 	 * @param a
@@ -237,6 +377,26 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		for (byte b : a)
 			sb.append(String.format("%02x", b & 0xff));
 		return sb.toString();
+	}
+	
+	public String getPremasterSecret() {
+		try {
+			if (Message.getServerHelloKeyExchange().equals("RSA")) {
+				secret = c.decryptCBC(Message
+						.getServerCertificateServerKeyExchange().getPrivate(),
+						Message.getClientCertificatePremasterEncrypted());
+			} else {
+				KeyAgreement k = Message.getServerKeyAgreement();
+				k.doPhase(Message.getClientCertificateServerKeyExchange()
+						.getPublic(), true);
+				Message.setServerKeyAgreement(k);
+				secret = bytArrayToHex(Message.getServerKeyAgreement()
+						.generateSecret());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return secret;
 	}
 
 	public void refreshInformations() {
