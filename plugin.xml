@@ -18,6 +18,14 @@
       </view>
    </extension>
    
+     <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/help/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+   
     <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
@@ -62,12 +70,10 @@
          </command>
       </menuContribution>
    </extension>
-   
-   
    <extension
          point="org.eclipse.help.contexts">
       <contexts
-            file="contexts.xml">
+            file="$nl$/help/contexts.xml">
       </contexts>
    </extension>
 

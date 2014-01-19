@@ -225,8 +225,7 @@ public class ServerCertificateComposite extends Composite implements
 					CertificateShow cShow = new CertificateShow(certServer,
 							exchKey.getPublic());
 				} catch (IllegalStateException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+
 				}
 			}
 		});
@@ -261,8 +260,6 @@ public class ServerCertificateComposite extends Composite implements
 		try {
 			calculateCertificate(exchKey, Message.getServerHelloHash());
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		// Server Certificate Request
@@ -325,8 +322,6 @@ public class ServerCertificateComposite extends Composite implements
 					+ getNumber(ServerCertificate.length()) + ServerCertificate;
 			Message.setMessageServerCertificate(ServerCertificate);
 		} catch (CertificateEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 
 		// Sets a certificate request hex message
@@ -372,11 +367,8 @@ public class ServerCertificateComposite extends Composite implements
 					+ ServerKeyExchange;
 			Message.setMessageServerKeyExchange(ServerKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -422,8 +414,6 @@ public class ServerCertificateComposite extends Composite implements
 			}
 			strText = strText + exchKey.getPublic();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		return exchKey;
 	}

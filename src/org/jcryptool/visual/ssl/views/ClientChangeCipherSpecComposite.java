@@ -124,11 +124,11 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		
 		secret = getPremasterSecret();
 		
-		if(Message.getServerHelloVersion() != "0303"){ //TLS1.0 or TLS1.1
+		if(!Message.getServerHelloVersion().equals("0303")){ //TLS1.0 or TLS1.1
 			masterSecret = Message.getMasterSecret();
 			
 			//create encryption parameters
-			if(Message.getServerHelloHash() == "MD5") {
+			if(Message.getServerHelloHash().equals("MD5")) {
 				//16 Byte MAC key
 				clientMACsecret = masterSecret.substring(0, 32);
 				newIndex = 64;
@@ -138,23 +138,23 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				newIndex = 80;
 			}
 			
-			if(Message.getServerHelloCipher() == "RC4_128") {
+			if(Message.getServerHelloCipher().equals("RC4_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				newIndex = newIndex + 64;
-			}else if(Message.getServerHelloCipher() == "AES_128") {
+			}else if(Message.getServerHelloCipher().equals("AES_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				newIndex = newIndex + 64;
-			}else if(Message.getServerHelloCipher() == "AES_256") {
+			}else if(Message.getServerHelloCipher().equals("AES_256")) {
 				//32 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 64);
 				newIndex = newIndex + 128;
-			}else if(Message.getServerHelloCipher() == "DES") {
+			}else if(Message.getServerHelloCipher().equals("DES")) {
 				//7 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 14);
 				newIndex = newIndex + 28;
-			}else if(Message.getServerHelloCipher() == "3DES") {
+			}else if(Message.getServerHelloCipher().equals("3DES")) {
 				//21 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 42);
 				newIndex = newIndex + 84;
@@ -162,15 +162,15 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				clientKey = null;
 			}
 			
-			if(Message.getServerHelloVersion() != "0302") { //TLS1.0
-				if(Message.getServerHelloCipherMode() == "CBC") {
+			if(!Message.getServerHelloVersion().equals("0302")) { //TLS1.0
+				if(Message.getServerHelloCipherMode().equals("CBC")) {
 					//16 Byte IV
 					clientIV = masterSecret.substring(newIndex, newIndex + 32);
 				}else { //no IVs necessary
 					clientIV = Messages.ServerChangeCipherSpecNoIV;
 				}
 			}else { //TLS1.1
-				if(Message.getServerHelloCipherMode() == "CBC") {
+				if(Message.getServerHelloCipherMode().equals("CBC")) {
 					//16 Byte IV
 					clientIV = bytArrayToHex(random.generateSeed(16));
 				}else { //no IVs necessary
@@ -182,15 +182,15 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			masterSecret = Message.getMasterSecret();
 			
 			//create encryption parameters
-			if(Message.getServerHelloHash() == "MD5") {
+			if(Message.getServerHelloHash().equals("MD5")) {
 				//16 Byte MAC key
 				clientMACsecret = masterSecret.substring(0, 32);
 				newIndex = 64;
-			}else if(Message.getServerHelloHash() == "SHA1"){
+			}else if(Message.getServerHelloHash().equals("SHA1")){
 				//20 Byte MAC key
 				clientMACsecret = masterSecret.substring(0, 40);
 				newIndex = 80;
-			}else if(Message.getServerHelloHash() == "SHA256") {
+			}else if(Message.getServerHelloHash().equals("SHA256")) {
 				//32 Byte MAC key
 				clientMACsecret = masterSecret.substring(0, 64);
 				newIndex = 128;
@@ -200,23 +200,23 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				newIndex = 192;
 			}
 			
-			if(Message.getServerHelloCipher() == "RC4_128") {
+			if(Message.getServerHelloCipher().equals("RC4_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				newIndex = newIndex + 64;
-			}else if(Message.getServerHelloCipher() == "AES_128") {
+			}else if(Message.getServerHelloCipher().equals("AES_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
 				newIndex = newIndex + 64;
-			}else if(Message.getServerHelloCipher() == "AES_256") {
+			}else if(Message.getServerHelloCipher().equals("AES_256")) {
 				//32 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 64);
 				newIndex = newIndex + 128;
-			}else if(Message.getServerHelloCipher() == "DES") {
+			}else if(Message.getServerHelloCipher().equals("DES")) {
 				//7 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 14);
 				newIndex = newIndex + 28;
-			}else if(Message.getServerHelloCipher() == "3DES") {
+			}else if(Message.getServerHelloCipher().equals("3DES")) {
 				//21 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 42);
 				newIndex = newIndex + 84;
@@ -224,8 +224,8 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				clientKey = null;
 			}
 			
-			if(Message.getServerHelloCipherMode() == "GCM") {
-				if(Message.getServerHelloCipher() == "AES_128") {
+			if(Message.getServerHelloCipherMode().equals("GCM")) {
+				if(Message.getServerHelloCipher().equals("AES_128")) {
 					//16 Byte IV
 					clientIV = bytArrayToHex(random.generateSeed(16));
 				}else { //AES-256
@@ -237,27 +237,27 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			}
 		}
 
-		if(Message.getServerHelloCipher() == "RC4_128") {
+		if(Message.getServerHelloCipher().equals("RC4_128")) {
 			//16 Byte key
 			if(clientKey.length() < 128) {
 				clientKey = PRF(clientKey, "key expansion", seed);
 			}
-		}else if(Message.getServerHelloCipher() == "AES_128") {
+		}else if(Message.getServerHelloCipher().equals("AES_128")) {
 			//16 Byte key
 			if(clientKey.length() < 128) {
 				clientKey = PRF(clientKey, "key expansion", seed);
 			}
-		}else if(Message.getServerHelloCipher() == "AES_256") {
+		}else if(Message.getServerHelloCipher().equals("AES_256")) {
 			//32 Byte key
 			if(clientKey.length() < 256) {
 				clientKey = PRF(clientKey, "key expansion", seed);
 			}
-		}else if(Message.getServerHelloCipher() == "DES") {
+		}else if(Message.getServerHelloCipher().equals("DES")) {
 			//7 Byte key
 			if(clientKey.length() < 56) {
 				clientKey = PRF(clientKey, "key expansion", seed);
 			}
-		}else if(Message.getServerHelloCipher() == "3DES") {
+		}else if(Message.getServerHelloCipher().equals("3DES")) {
 			//21 Byte key
 			if(clientKey.length() < 192) {
 				clientKey = PRF(clientKey, "key expansion", seed);
@@ -298,12 +298,12 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		int i;
 		count++;
 		
-		if(Message.getServerHelloHash() == "MD5") {
+		if(Message.getServerHelloHash().equals("MD5")) {
 			hash = P_hash(secret, seed, count, "MD5");
-		}else if(Message.getServerHelloHash() == "SHA1")
+		}else if(Message.getServerHelloHash().equals("SHA1"))
 		{
 			hash = P_hash(secret, seed, count, "SHA1");
-		}else if(Message.getServerHelloHash() == "SHA256") {
+		}else if(Message.getServerHelloHash().equals("SHA256")) {
 			hash = P_hash(secret, seed, count, "SHA256");
 		}else { //SHA384
 			hash = P_hash(secret, seed, count, "SHA384");

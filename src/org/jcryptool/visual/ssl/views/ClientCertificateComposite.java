@@ -157,8 +157,6 @@ public class ClientCertificateComposite extends Composite implements
 					CertificateShow cShow = new CertificateShow(certClient,
 							exchangeKey.getPublic());
 				} catch (IllegalStateException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		});
@@ -285,7 +283,7 @@ public class ClientCertificateComposite extends Composite implements
 						+ Messages.ClientCertificateCompositeRSAEncrypt
 						+ Message.getClientCertificatePremasterEncrypted();
 			} catch (Exception e) {
-				e.printStackTrace();
+				 
 			}
 		} else {
 			// Calculates a DH Key
@@ -304,7 +302,7 @@ public class ClientCertificateComposite extends Composite implements
 				secret = Hex.encode(Message.getClientKeyAgreement()
 						.generateSecret());
 			} catch (Exception e) {
-				e.printStackTrace();
+				 
 			}
 			strText = strText + exchangeKey.getPublic()
 					+ Messages.ClientCertificateCompositeDHSecret + secret;
@@ -335,7 +333,6 @@ public class ClientCertificateComposite extends Composite implements
 					Message.getServerCertificateHash(),
 					Message.getServerCertificateSignature());
 		} catch (Exception e1) {
-			e1.printStackTrace();
 		}
 	}
 
@@ -365,11 +362,8 @@ public class ClientCertificateComposite extends Composite implements
 					+ ClientKeyExchange;
 			Message.setMessageClientKeyExchange(ClientKeyExchange);
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		} catch (NullPointerException e) {
-			e.printStackTrace();
 		}
 		Message.setClientCertificateServerKeyExchange(exchangeKey);
 		return true;
@@ -401,8 +395,6 @@ public class ClientCertificateComposite extends Composite implements
 					+ getNumber(ClientCertificate.length()) + ClientCertificate;
 			Message.setMessageClientCertfificate(ClientCertificate);
 		} catch (CertificateEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
 		}
 	}
 

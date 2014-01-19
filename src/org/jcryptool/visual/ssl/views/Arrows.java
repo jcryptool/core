@@ -3,6 +3,7 @@ package org.jcryptool.visual.ssl.views;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Panel;
 import java.awt.geom.AffineTransform;
 import java.util.Vector;
 
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
  * @author Denk Gandalf
  * 
  */
-public class Arrows extends JPanel {
+public class Arrows extends Panel {
 
 	/**
 	 * Represents the size of the arrowhead.

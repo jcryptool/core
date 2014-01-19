@@ -117,7 +117,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 			//The part beyond is haunted by a demon we summoned, he is doing black magic that we don´t understand.
 			//But he says that it works that way so we trust him.
 			//Do not touch it or he kills you!
-			if(Message.getServerHelloCipherMode() == "CBC") {
+			if(Message.getServerHelloCipherMode().equals("CBC")) {
 				if(Message.getServerHelloCipher().startsWith("AES")) {
 					key = c.generateKey("AES", 128);
 					cFinished = c.encryptCBC(key, finished);
@@ -186,11 +186,11 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 		int b_length;
 		int i;
 
-		if (Message.getServerHelloHash() == "MD5") {
+		if (Message.getServerHelloHash().equals("MD5")) {
 			hash = P_hash(secret, seed, 5, "MD5");
-		} else if (Message.getServerHelloHash() == "SHA1") {
+		} else if (Message.getServerHelloHash().equals("SHA1")) {
 			hash = P_hash(secret, seed, 4, "SHA1");
-		} else if (Message.getServerHelloHash() == "SHA256") {
+		} else if (Message.getServerHelloHash().equals("SHA256")) {
 			hash = P_hash(secret, seed, 4, "SHA256");
 		} else { // SHA384
 			hash = P_hash(secret, seed, 4, "SHA384");
