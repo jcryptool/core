@@ -178,7 +178,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 		for (int i = 0; i < tls2.size(); i++) {
 			cmdCipher.add(tls2.get(i));
 		}
-		cmdCipher.select(35);
+		cmdCipher.select(33);
 
 
 		btnInformation = new Button(grpClientHello, SWT.NONE);
@@ -255,7 +255,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 		}
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ClientHelloInformationText);
-		} else if(txtRandom.getText() == ""){
+		} else if(txtRandom.getText().equals("")){
 			sslView.setStxInformationText(Messages.stxInformationSelectedCiphers
 					+ text0
 					+ Messages.stxInformationTLS1
@@ -633,7 +633,7 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 		for (int i = 0; i < tls2.size(); i++) {
 			cmdCipher.add(tls2.get(i));
 		}
-		cmdCipher.select(35);
+		cmdCipher.select(33);
 		tls2CipherSuites.add(cmdCipher.getItem(cmdCipher.getSelectionIndex()));
 		tls2CipherSuitesHex.add(tls2Hex.get(cmdCipher.getSelectionIndex()));
 		txtRandom.setText("");

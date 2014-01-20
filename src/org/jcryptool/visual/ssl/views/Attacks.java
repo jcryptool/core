@@ -38,7 +38,8 @@ public class Attacks{
 		{
 			createDialog(Messages.AttacksLucky13);
 		}
-		if(Message.getServerHelloKeyExchange().equals("RSA"))
+		//if(Message.getServerHelloKeyExchange().equals("RSA"))
+		if(Message.getServerHelloKeyExchange().equals("RSA")||Message.getServerHelloKeyExchange().equals("DH_RSA")||Message.getServerHelloKeyExchange().equals("DH_DSS"))
 		{
 			createDialog(Messages.AttacksRSA);
 		}
