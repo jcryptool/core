@@ -64,6 +64,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         rdo2.setText(Messages.SignatureWizard_RSA);
 
         rdo3 = new Button(grpSignatures, SWT.RADIO);
+        rdo3.setEnabled(false);
         rdo3.setBounds(10, 67, 118, 18);
         rdo3.setText(Messages.SignatureWizard_ECDSA);
 

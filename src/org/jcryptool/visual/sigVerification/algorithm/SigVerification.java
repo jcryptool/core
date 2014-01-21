@@ -1,13 +1,11 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.PublicKey;
 import java.security.KeyPair;
 import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.cert.Certificate;
-import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Enumeration;
 
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
@@ -135,52 +133,30 @@ public class SigVerification {
     }
 
     /**
-     * Selects the right function to convert the input key (RSA, DSA, ECDSA).
+     * !!! YET NOT IMPLEMENTED !!!
+     * Selects the right function to convert the input key from byte array to PublicKey (RSA, DSA, ECDSA).
      * 
      * @param pubKeyBytes
      * @param input A instance of Input (contains signaturemethod)
      */
-    public void publicKeyFile(byte[] pubKeyBytes, Input input) {
+    /*public void publicKeyFile(byte[] pubKeyBytes, Input input) {
         if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA") {
             setDsaRsaPublicKeyFile(pubKeyBytes, input);
         } else {
             ;// ECDSA noch keine Methode zum Einlesen von ECDSA keys gefunden
         }
-    }
+    }*/
 
     /**
+     * !!! NOT YET IMPLEMENTED!!!
      * Converts the imported key (byte array) in a DSA/RSA public key.
      * 
      * @param pubKeyBytes A byte array
      * @param input A instance of Input
-     */
-    @SuppressWarnings("deprecation")
+     *//*
     public void setDsaRsaPublicKeyFile(byte[] pubKeyBytes, Input input) {
-        try{
- /*           String pem = new String(pubKeyBytes);
-            
-            // Remove the first and last lines
-            String privKeyPEM = pem.replace("-----BEGIN ENCRYPTED PRIVATE KEY-----\n", "");
-            privKeyPEM = privKeyPEM.replace("-----END ENCRYPTED PRIVATE KEY-----", "");
-            
-
-            // Base64 decode the data
-            byte [] encoded = Base64.decode(privKeyPEM);*/
-
-            System.out.println(new String(pubKeyBytes,0));
-            // PKCS8 decode the encoded RSA private key
-            //X509EncodedKeySpec keySpec = new X509EncodedKeySpec(pubKeyBytes);
-            PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(pubKeyBytes);
-            KeyFactory kf = KeyFactory.getInstance("RSA");
-            PublicKey pubKey = kf.generatePublic(keySpec);
-
-            // Display the results
-            System.out.println(pubKey);
-            this.publicKey = pubKey;
-        }catch(Exception ex){
-            LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-        }        
-    }
+ 
+    }*/
 
     /**
      * Returns the result (boolean).

@@ -42,10 +42,16 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         this.inputKeyWizard = page.inputKeyWizard;
 
         rdoFromFile = new Button(this, SWT.RADIO);
+        // Radiobutton rdoFromFile is disabled because
+        // function publicKeyFile in class sigVerification is not implemented !!!
+        rdoFromFile.setEnabled(false);
         rdoFromFile.setBounds(10, 10, 430, 18);
         rdoFromFile.setText(Messages.InputKeyWizard_rdoFromFile);
 
         rdoFromEditor = new Button(this, SWT.RADIO);
+        // Radiobutton rdoFromFile is disabled because
+        // function publicKeyFile in class sigVerification is not implemented !!!
+        rdoFromEditor.setEnabled(false);
         rdoFromEditor.setBounds(10, 34, 333, 18);
         rdoFromEditor.setText(Messages.InputKeyWizard_rdoFromEditor);
         parent.setSize(600, 400);
@@ -55,8 +61,7 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
 
-        rdoFromFile.setSelection(true);
-
+        rdoFromKeyStore.setSelection(true);
         rdoFromKeyStore.addSelectionListener(this);
     }
 

@@ -57,9 +57,12 @@ public class InputKeyEditorComposite extends Composite {
                     page.setPageComplete(true);
                     page.inputKeyWizard.enableFinish = true;
                     page.getWizard().getContainer().updateButtons();
-                    byte[] pubKey = text.getText().getBytes();
+                    // ToDo: Remove comment after function publicKeyFile is implemented !!!
+                    // byte[] pubKey = text.getText().getBytes();
                     try {
-                        sigVerification.publicKeyFile(pubKey, input);
+                        // Byte Array in Typ PublicKey umwandeln.
+                        // ToDo: Function publicKeyFile in class sigVerification is not implemented !!!
+                        // sigVerification.publicKeyFile(pubKey, input);
                     } catch (Exception ex) {
                         LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
                     }

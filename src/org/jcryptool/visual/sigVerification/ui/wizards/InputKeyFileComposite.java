@@ -97,8 +97,11 @@ public class InputKeyFileComposite extends Composite implements SelectionListene
             page.setPageComplete(true);
             page.inputKeyWizard.enableFinish = true;
             page.getWizard().getContainer().updateButtons();
+            
             // Byte Array in Typ PublicKey umwandeln.
-            sigVerification.publicKeyFile(pubKey, input);
+            // ToDo: Function publicKeyFile in class sigVerification is not implemented !!!
+            // sigVerification.publicKeyFile(pubKey, input);
+            
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
