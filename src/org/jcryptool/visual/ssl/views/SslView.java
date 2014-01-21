@@ -1,15 +1,16 @@
 package org.jcryptool.visual.ssl.views;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
@@ -120,11 +121,12 @@ public class SslView extends ViewPart
 		Composite swtAwtComponent = new Composite(content, SWT.EMBEDDED);
 		GridData gd_drawPanel = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_drawPanel.widthHint = 100;
+		gd_drawPanel.heightHint=760;
 		swtAwtComponent.setLayoutData(gd_drawPanel);
 		swtAwtComponent.setLayout(new GridLayout());
-		java.awt.Frame frame = SWT_AWT.new_Frame(swtAwtComponent);
-		arrow = new Arrows();
-		frame.add(arrow);
+		arrow = new Arrows(swtAwtComponent, SWT.NONE, new Color(Display.getCurrent(),0,0,0));
+		arrow.setLayoutData(gd_drawPanel);
+		arrow.setLayout(new GridLayout());
 		
 		
 		//Server Composites

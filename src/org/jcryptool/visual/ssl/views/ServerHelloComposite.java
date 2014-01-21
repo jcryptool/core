@@ -41,7 +41,6 @@ public class ServerHelloComposite extends Composite implements ProtocolStep {
 	private List<String> tls0 = new ArrayList<String>();
 	private List<String> tls1 = new ArrayList<String>();
 	private List<String> tls2 = new ArrayList<String>();
-	
 	private List<String> tls0Hex = new ArrayList<String>();
 	private List<String> tls1Hex = new ArrayList<String>();
 	private List<String> tls2Hex = new ArrayList<String>();

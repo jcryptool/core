@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.draw2d.CheckBox;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
@@ -41,7 +40,6 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 	private List<String> tls0 = new ArrayList<String>();
 	private List<String> tls1 = new ArrayList<String>();
 	private List<String> tls2 = new ArrayList<String>();
-	private List<CheckBox> cb0 = new ArrayList<CheckBox>();
 	private List<String> tls0CipherSuites = new ArrayList<String>();
 	private List<String> tls1CipherSuites = new ArrayList<String>();
 	private List<String> tls2CipherSuites = new ArrayList<String>();
@@ -67,8 +65,6 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 		this.sslView = sslView;
 
 		defineTlsLists();
-
-		cb0.add(new CheckBox("Hey"));
 
 		Group grpClientHello = new Group(this, SWT.NONE);
 		grpClientHello.setText(Messages.ClientHelloCompositeGrpClientHello);

@@ -1,13 +1,18 @@
 package org.jcryptool.visual.ssl.views;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Panel;
-import java.awt.geom.AffineTransform;
+//import java.awt.Color;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.geom.AffineTransform;
 import java.util.Vector;
 
-import javax.swing.JPanel;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.widgets.Canvas;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * This class implements a JPanel that provides functions for drawing a list of
@@ -16,7 +21,8 @@ import javax.swing.JPanel;
  * @author Denk Gandalf
  * 
  */
-public class Arrows extends Panel {
+public class Arrows extends Canvas 
+{
 
 	/**
 	 * Represents the size of the arrowhead.
@@ -31,8 +37,28 @@ public class Arrows extends Panel {
 	/**
 	 * Constructor of the class, creates a new Vector for the arrows
 	 */
-	public Arrows() {
+	public Arrows(Composite parent, int style, Color color) {
+		this(parent, style);
+	}
+	public Arrows(Composite parent, int style) {
+		super(parent, style);
 		arrows = new Vector();
+		addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) 
+            {
+            	int a[] = { 0, 0, 0, 0, 0, 0, 0 };
+        		int i;
+        		Device device = Display.getCurrent ();
+        		e.gc.setBackground(new Color(device, 240, 240, 240));
+        		//e.gc.fillRectangle(0,0,350,760);
+        		e.gc.fillRectangle(getClientArea());
+        		for (i = 0; i < arrows.size(); i++) {
+        			a = arrows.get(i);
+        			e.gc.setForeground(new Color(device, a[4], a[5], a[6]));
+        			drawArrow(e, a[0], a[1], a[2], a[3]);
+        		}
+            }
+        });
 	}
 
 	/**
@@ -50,26 +76,46 @@ public class Arrows extends Panel {
 	 * @param y2
 	 *            Y-coordination of the end point
 	 */
-	private void drawArrow(Graphics g1, int x1, int y1, int x2, int y2) {
-		Graphics2D g = (Graphics2D) g1.create();
+	private void drawArrow(PaintEvent e, int x1, int y1, int x2, int y2) {
+		PaintEvent g = (PaintEvent) e;
 
 		double dx = x2 - x1, dy = y2 - y1;
 		double angle = Math.atan2(dy, dx);
 		int len = (int) Math.sqrt(dx * dx + dy * dy);
-		AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
-		at.concatenate(AffineTransform.getRotateInstance(angle));
-		g.transform(at);
+		
+		//Alter Code
+		//AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
+		//at.concatenate(AffineTransform.getRotateInstance(angle));
 
-		g.drawLine(0, 0, len, 0);
-		g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
-				new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+		//Neuer Code - funkt nicht
+		//Transform awt = new Transform(Display.getCurrent(),1,0,0,1,x1,y1);
+		
+		/*Transform t;
+            t = new Transform(Display.getCurrent());
+            double[] matrix = new double[6];
+            at.getMatrix(matrix);
+            t.setElements((float) matrix[0], (float) matrix[1],
+                    (float) matrix[2], (float) matrix[3],
+                    (float) matrix[4], (float) matrix[5]);
+
+		//Neuer Code
+		g.gc.setTransform(t);*/
+		
+		
+		g.gc.drawLine(x1, y1, x2,y2);
+		
+		//Alter Code
+		//e.gc.fillPolygon(new g.drawLine(0, 0, len, 0);int[]{len,0,len - ARR_SIZE,-ARR_SIZE,len - ARR_SIZE,0,len});
+		//g.drawLine(0, 0, len, 0);
+		//g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
+				//new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
 	}
 
 	/**
 	 * Overwrites the paint method. Paints all arrows in the Vector arrow inside
 	 * the panel and sets the background to grey.
 	 */
-	public void paint(Graphics g) {
+	/*public void paint(Graphics g) {
 		int a[] = { 0, 0, 0, 0, 0, 0, 0 };
 		int i;
 		g.setColor(new Color(240, 240, 240));
@@ -79,7 +125,7 @@ public class Arrows extends Panel {
 			g.setColor(new Color(a[4], a[5], a[6]));
 			this.drawArrow(g, a[0], a[1], a[2], a[3]);
 		}
-	}
+	}*/
 
 	/**
 	 * Adds an arrow to the list of arrows which are painted. The arrow can be
@@ -98,7 +144,7 @@ public class Arrows extends Panel {
 	public void nextArrow(int x1, int y1, int x2, int y2, int r, int g, int b) {
 		int aro[] = { x1, y1, x2, y2, r, g, b };
 		arrows.addElement(aro);
-		repaint();
+		redraw();
 	}
 
 	/**
@@ -106,7 +152,7 @@ public class Arrows extends Panel {
 	 */
 	public void removeLastArrow() {
 		arrows.removeElementAt(arrows.size() - 1);
-		repaint();
+		redraw();
 	}
 
 	/**
@@ -114,7 +160,7 @@ public class Arrows extends Panel {
 	 */
 	public void resetArrows() {
 		arrows.clear();
-		repaint();
+		redraw();
 	}
 
 	/**
@@ -133,6 +179,6 @@ public class Arrows extends Panel {
 			a[3] = a[3] - distance;
 			arrows.set(i, a);
 		}
-		repaint();
+		redraw();
 	}
 }
