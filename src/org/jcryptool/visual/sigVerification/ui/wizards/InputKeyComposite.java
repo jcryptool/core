@@ -60,9 +60,18 @@ public class InputKeyComposite extends Composite implements SelectionListener {
         rdoFromKeyStore.setBounds(10, 58, 430, 18);
         rdoFromKeyStore.setText(Messages.InputKeyWizard_rdoFromKeyStore);
         parent.setSize(600, 400);
-
-        rdoFromKeyStore.setSelection(true);
+        
         rdoFromKeyStore.addSelectionListener(this);
+        rdoFromKeyStore.setSelection(true);
+        
+        // ToDo: Remove the following lines after function 
+        // publicKeyFile in class sigVerification is implemented!
+        // *** start removing ***
+        inputKeyWizard.enableFinish = true;
+        this.page.enableNext = false;
+        this.page.setPageComplete(true); 
+        // *** end removing ***
+        
     }
 
     public void widgetSelected(SelectionEvent e) {
@@ -107,8 +116,7 @@ public class InputKeyComposite extends Composite implements SelectionListener {
     }
 
     @Override
-    public void widgetDefaultSelected(SelectionEvent e) {
-        // TODO Auto-generated method stub
+    public void widgetDefaultSelected(SelectionEvent e) {       
 
     }
 }

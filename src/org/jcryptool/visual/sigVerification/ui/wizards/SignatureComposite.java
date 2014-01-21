@@ -115,7 +115,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         case 1: // SHA1: RSA, DSA, ECDSA, RSA + MGF1
             rdo1.setEnabled(true);
             rdo2.setEnabled(true);
-            rdo3.setEnabled(true);
+            rdo3.setEnabled(false);
             rdo4.setEnabled(true);
 
             rdo1.setSelection(true);
@@ -127,7 +127,7 @@ public class SignatureComposite extends Composite implements SelectionListener {
         case 3:
         case 4: // SHA256+: RSA, ECDSA, RSA + MGF1
             rdo2.setEnabled(true);
-            rdo3.setEnabled(true);
+            rdo3.setEnabled(false);
             rdo4.setEnabled(true);
             rdo1.setEnabled(false);
 
