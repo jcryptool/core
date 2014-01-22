@@ -40,6 +40,10 @@ public class Arrows extends Canvas
 	public Arrows(Composite parent, int style, Color color) {
 		this(parent, style);
 	}
+	/**
+	 * Overwrites the paint method. Paints all arrows in the Vector arrow inside
+	 * the panel and sets the background to grey.
+	 */
 	public Arrows(Composite parent, int style) {
 		super(parent, style);
 		arrows = new Vector();
@@ -50,10 +54,10 @@ public class Arrows extends Canvas
         		int i;
         		Device device = Display.getCurrent ();
         		e.gc.setBackground(new Color(device, 240, 240, 240));
-        		//e.gc.fillRectangle(0,0,350,760);
         		e.gc.fillRectangle(getClientArea());
         		for (i = 0; i < arrows.size(); i++) {
         			a = arrows.get(i);
+        			e.gc.setBackground(new Color(device, a[4], a[5], a[6]));
         			e.gc.setForeground(new Color(device, a[4], a[5], a[6]));
         			drawArrow(e, a[0], a[1], a[2], a[3]);
         		}
@@ -78,54 +82,21 @@ public class Arrows extends Canvas
 	 */
 	private void drawArrow(PaintEvent e, int x1, int y1, int x2, int y2) {
 		PaintEvent g = (PaintEvent) e;
-
-		double dx = x2 - x1, dy = y2 - y1;
-		double angle = Math.atan2(dy, dx);
-		int len = (int) Math.sqrt(dx * dx + dy * dy);
-		
-		//Alter Code
-		//AffineTransform at = AffineTransform.getTranslateInstance(x1, y1);
-		//at.concatenate(AffineTransform.getRotateInstance(angle));
-
-		//Neuer Code - funkt nicht
-		//Transform awt = new Transform(Display.getCurrent(),1,0,0,1,x1,y1);
-		
-		/*Transform t;
-            t = new Transform(Display.getCurrent());
-            double[] matrix = new double[6];
-            at.getMatrix(matrix);
-            t.setElements((float) matrix[0], (float) matrix[1],
-                    (float) matrix[2], (float) matrix[3],
-                    (float) matrix[4], (float) matrix[5]);
-
-		//Neuer Code
-		g.gc.setTransform(t);*/
-		
-		
 		g.gc.drawLine(x1, y1, x2,y2);
-		
-		//Alter Code
-		//e.gc.fillPolygon(new g.drawLine(0, 0, len, 0);int[]{len,0,len - ARR_SIZE,-ARR_SIZE,len - ARR_SIZE,0,len});
-		//g.drawLine(0, 0, len, 0);
-		//g.fillPolygon(new int[] { len, len - ARR_SIZE, len - ARR_SIZE, len },
-				//new int[] { 0, -ARR_SIZE, ARR_SIZE, 0 }, 4);
+		if(y1!=y2)
+		{
+			e.gc.fillPolygon(new int[]{x2-5,y2-6,x2-15,y2-11,x2-8,y2-18});
+		}
+		else if(x2>x1)
+		{
+			e.gc.fillPolygon(new int[]{x2-5,y2,x2-15,y2+5,x2-15,y2-5});
+		}
+		else
+		{
+			e.gc.fillPolygon(new int[]{x2,y2,x2+10,y2+5,x2+10,y2-5});
+		}
 	}
 
-	/**
-	 * Overwrites the paint method. Paints all arrows in the Vector arrow inside
-	 * the panel and sets the background to grey.
-	 */
-	/*public void paint(Graphics g) {
-		int a[] = { 0, 0, 0, 0, 0, 0, 0 };
-		int i;
-		g.setColor(new Color(240, 240, 240));
-		g.fillRect(0, 0, 350, 760);
-		for (i = 0; i < arrows.size(); i++) {
-			a = arrows.get(i);
-			g.setColor(new Color(a[4], a[5], a[6]));
-			this.drawArrow(g, a[0], a[1], a[2], a[3]);
-		}
-	}*/
 
 	/**
 	 * Adds an arrow to the list of arrows which are painted. The arrow can be
