@@ -15,11 +15,11 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <br />
 
     <b>Schritt 1: Client Hello</b>
-    <p>Der Handshake beginnt mit dem Schritt <i>ClientHello</i>, durch den die Kommunikation beginnt. Alle danach folgenden Schritte werden im weiteren Verlauf des Handshakes eingeblendet. Die ClientHello-Nachricht verfügt über folgende Parameter:</p>
+    <p>Der Handshake beginnt mit dem Schritt <i>ClientHello</i>. Alle danach folgenden Schritte werden im weiteren Verlauf des Handshakes eingeblendet. Die <i>ClientHello</i>-Nachricht verfügt über folgende Parameter:</p>
 
     <ul>
         <li>TLS-Version: TLS-Version, die der Client dem Server zur Kommunikation anbietet. </li>
-        <li>Random: Ein zufällig generierter Wert. Dieser Wert besteht aus 32 Byte (entspricht 64 Hexadezimalzeichen). Die ersten 4 Byte sind ein Zeitstempel, bestehend aus den Sekunden zwischen dem aktuellen Zeitpunkt und dem 1. Januar 1970 UTC. Die restlichen 28 Byte werden durch einen Zufallsgenerator generiert.</li>
+        <li>Random: Ein zufällig generierter Wert, der dem Replayschutz dient. Dieser Wert besteht aus 32 Byte (entspricht 64 Hexadezimalzeichen). Die ersten 4 Byte sind ein Zeitstempel, bestehend aus den Sekunden zwischen dem aktuellen Zeitpunkt und dem 1. Januar 1970 UTC. Die restlichen 28 Byte werden durch einen Zufallsgenerator generiert.</li>
         <li>CipherSuite: Liste aller Kombinationen von Verschlüsselungs-, Schlüsselaustausch-, Signatur- und Hashalgorithmen, die vom Client unterstützt werden.</li>
         <li>SessionID: ID der Nachricht. Für neue Verbindungen ist diese normalerweise „0“. Wenn sich der Client früher bereits einmal zu dem Server verbunden hat und die Parameter von damals verwenden will, kann hier die damals verwendete SessionID eingetragen werden. Da hier nur neue Verbindungen dargestellt werden, hat die SessionID in dieser Visualisierung immer Wert „0“.</li>
         <li>Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
@@ -31,12 +31,12 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <p>Der zweite Schritt ist <i>ServerHello</i>. Dieser Abschnitt startet, wenn der Client seine <i>ClientHello</i>-Nachricht gesendet hat. In diesem Schritt treten folgende Parameter auf:</p>
     <ul>
         <li>TLS-Version: Der Server wählt jene TLS-Version aus, die er verwenden möchte. Es kann vorkommen, dass der Server nur über neuere/ältere Versionen verfügt, als der Client.</li>
-        <li>Random: Ein zufällig generierter Wert (weitere Infos siehe <i>ClientHello</i>)</li>
+        <li>Random: Ein zufällig generierter Wert (weitere Infos siehe <i>ClientHello</i>), der dem Replayschutz dient. Die ersten 4 Byte sind ein Zeitstempel, bestehend aus den Sekunden zwischen dem aktuellen Zeitpunkt und dem 1. Januar 1970 UTC. Die restlichen 28 Byte werden durch einen Zufallsgenerator generiert.</li>
         <li>CipherSuite: Der Server wählt eine <i>CipherSuite</i>, die er verwenden möchte bzw. die er beherrscht.</li>
         <li>SessionID: ID der Nachricht.</li>
         <li>Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
     </ul>
-    <p>Es entscheidet also allein der Server, welche TLS-Version mit welcher <i>CipherSuite</i> schlussendlich verwendet wird. Wählt der Server eine TLS-Version bzw. eine <i>CipherSuite</i> aus, welche vom Client laut der <i>ClientHello</i>-Nachricht nicht unterstützt wird, so ist kein Verbindungsaufbau möglich. Der Server teilt dies dem Client mit Hilfe einer Nachricht mit und der Client hat danach die Möglichkeit, erneut eine <i>ClientHello</i>-Nachricht zu senden, welche ggf. um die geforderte TLS-Version bzw. <i>CipherSuite</i> erweitert wird.</p>
+    <p>Es entscheidet also allein der Server, welche TLS-Version mit welcher <i>CipherSuite</i> schlussendlich verwendet wird. Wählt der Server eine TLS-Version bzw. eine <i>CipherSuite</i> aus, die vom Client laut der <i>ClientHello</i>-Nachricht nicht unterstützt wird, so ist kein Verbindungsaufbau möglich. Der Server teilt dies dem Client mit Hilfe einer Nachricht mit und der Client hat danach die Möglichkeit, erneut eine <i>ClientHello</i>-Nachricht zu senden, welche ggf. um die geforderte TLS-Version bzw. <i>CipherSuite</i> erweitert wird.</p>
     <br />
 
     <b>Schritt 3: Server Certificate</b>
@@ -59,14 +59,14 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     <p>Nach diesem Schritt sind die Schlüsselinformationen ausgetauscht und sowohl Server als auch Client verfügen über sämtliche notwendigen Informationen um die Kommunikation zu starten.</p>
        <br />
 
-      <b>Schritt 7/5: Client-/Server-ChangeCipherSpec</b>
-    <p>Im nächsten Schritt wird von beiden Teilnehmern eine <i>ChangeCipherSpec</i>-Nachricht versendet.</p>
+      <b>Schritt 5/7: Server-/Client-ChangeCipherSpec</b>
+    <p>In beiden dieser Schritte wird von der jeweiligen Seite eine <i>ChangeCipherSpec</i>-Nachricht versendet.</p>
     <ul>
-        <li>ChangeCipherSpec: Der Client bzw. Server teilt seinem Gesprächspartner nun mit, dass er von nun an den ausgewählten Verschlüsselungsalgorithmus für die restliche Kommunikation verwenden wird. </li>
+        <li>ChangeCipherSpec: Der Client bzw. Server teilt seinem Gesprächspartner nun mit, dass er von nun an den ausgewählten Verschlüsselungsalgorithmus für die Kommunikation verwenden wird. </li>
     </ul>
           <br />
 
-    <b>Schritt 8/6: Client-/Server-Finished</b>
+    <b>Schritt 6/8: Server-/Client-Finished</b>
     <p>Um den Handshake zu beenden, wird eine letzte Nachricht versendet:</p>
     <ul>
         <li>Finished: Die <i>Finished</i>-Nachricht wird sowohl vom Client, als auch vom Server versendet. Sie wird mit dem ausgewählten Verschlüsselungsalgorithmus verschlüsselt und beinhaltet die Informationen aller vorher übertragenen Nachrichten. Ist es dem Gesprächspartner möglich, diese Informationen zu lesen, so ist der Handshake erfolgreich abgeschlossen.</li>
@@ -88,7 +88,7 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
         <li>BREACH: Dieser Angriff kann auf alle SSL- und TLS-Versionen angewendet werden, ganz gleich welche Verschlüsselungsalgorithmen verwendet werden. BREACH baut auf den Angriff CRIME auf und nutzt ebenfalls die HTTP-Kompression aus, welche nicht ausgeschaltet werden kann, da alle Webserver sich auf diese Kompression verlassen. Dieser Angriff wurde im August 2013 bekannt. Der Angriff wurde im Plugin nicht mit aufgenommen, da er ansonsten immer angezeigt werden würde.</li>
         <li>BEAST: Der Angriff BEAST nutzt vorhandene Sicherheitslücken und Fehlverhalten innerhalb des sogenannten Cipher Block Chaining-Mode(CBC) aus. Er wurde im Herbst 2011 bekannt. Durch diese Anfälligkeit von CBC kann ein Man-in-the-Middle-Angriff (MitM) auf die SSL/TLS-Verbindung gestartet werden. Dabei kann ein Dritter unentdeckt die Schlüssel abfangen und den Datenaustausch zwischen Client und Server mitverfolgen. Durch die Einführung von TLS 1.1 wurde diese Lücke allerdings ausgebessert und stellt bei Verwendung von TLS1.1 oder 1.2 kein Problem mehr dar.</li>
         <li>CRIME: Der Angriff CRIME nutzt ein optionales SSL/TLS-Feature aus, die Kompression von Daten. Dadurch können geheime Authentifizierungsdaten wiederhergestellt werden, wodurch weitere Angriffe auf die Verbindung ermöglicht werden. Der Angriff wurde 2012 bekannt. Dieser Angriff wurde ins Plugin nicht mit aufgenommen, da die Kompression nicht berücksichtigt wird.</li>
-        <li>aFBPPS13-Attack: Diese Attacke ist besser unter dem Namen RC4-Attacke bekannt. Sie tritt auf, wenn RC4 als CipherSuite ausgewählt wird. RC4 wurde sehr lange als eine sehr sichere CipherSuite angesehen, da sie weder über Padding noch IVs verfügt und dadurch nicht anfällig für BEAST oder Lucky13 ist. Allerdings hat sich im März 2013 durch akademische Arbeiten ergeben, dass sehr viele zusätzliche Kollisionen gefunden wurden. Durch diese Kollisionen ist es nun möglich, eine statistische Auswertung von verschlüsselten Texten durchzuführen, welche früher oder später den Klartext ergeben. Dadurch können verschlüsselt übertragene Cookies ausgelesen werden. Als Lösung wird vorgeschlagen, RC4 nicht mehr zu verwenden.</li>
+        <li>aFBPPS13-Attack: Diese Attacke ist besser unter dem Namen RC4-Attacke bekannt. Sie tritt auf, wenn RC4 als <i>CipherSuite</i> ausgewählt wird. RC4 wurde sehr lange als eine sehr sichere <i>CipherSuite</i> angesehen, da sie weder über Padding noch IVs verfügt und dadurch nicht anfällig für BEAST oder Lucky13 ist. Allerdings hat sich im März 2013 durch akademische Arbeiten ergeben, dass sehr viele zusätzliche Kollisionen gefunden wurden. Durch diese Kollisionen ist es nun möglich, eine statistische Auswertung von verschlüsselten Texten durchzuführen, welche früher oder später den Klartext ergeben. Dadurch können verschlüsselt übertragene Cookies ausgelesen werden. Als Lösung wird vorgeschlagen, RC4 nicht mehr zu verwenden.</li>
         <li>Lucky13: Der Lucky13-Angriff trat das erste Mal im Februar 2013 auf und greift das verwendete Padding in einer SSL/TLS-Kommunikation an. Sie tritt bei AES im CBC-Mode auf, da hier immer Blöcke der Länge 16 Byte verschlüsselt und entschlüsselt werden. Ist ein Block nicht lang genug, so ist es nötig ein Padding anzuhängen. Der Angriff basiert nun darauf, dass der letzte Block abgeschnitten wird und mit zufälligem „Padding“ an den Empfänger gesendet wird. Abhängig von der Zeit bis eine Fehlermeldung zurückkommt kann festgestellt werden, ob das korrekte Padding angefügt wurde oder nicht. Dauert es länger bis die Fehlermeldung eintrifft, so war dies der Fall. Dadurch ist es nun möglich Schritt für Schritt 2 Bytes zu entschlüsseln, bis die komplette Nachricht entschlüsselt ist. Als Schutz gegen diesen Angriff wird die Verwendung vom Galois-Counter-Mode (GCM) geraten.</li>
         <li>SHA1- bzw. MD5-Attacks: Sowohl SHA1 als auch MD5 sind nicht mehr kollisionssicher und sollten deshalb nicht mehr zur Bildung von sicherheitsrelevanten Hashwerten verwendet werden.</li>
     </ul>
@@ -103,7 +103,7 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
  <br />
 
     <b>Zur Verfügung stehende <i>CipherSuites</i>:</b>
-    <p>In dieser Visualisierung sind aus Gründen der Übersicht und Verständlichkeit "nur" folgende <i>CipherSuites</i> enthalten. Es wurden alle CipherSuites mit elliptische Kurven ausgeschlossen.</p>
+    <p>In dieser Visualisierung sind aus Gründen der Übersicht und Verständlichkeit "nur" folgende <i>CipherSuites</i> enthalten. Es wurden alle <i>CipherSuites</i> mit elliptische Kurven ausgeschlossen.</p>
     TLS_RSA_WITH_NULL_MD5 <br />
     TLS_RSA_WITH_NULL_SHA <br />
     TLS_RSA_WITH_NULL_SHA256 <br />
@@ -151,12 +151,12 @@ Eine Besonderheit bietet der 2. Schritt <i>ServerHello</i>. Hier kann es passier
     TLS_DH_DSS_WITH_AES_256_GCM_SHA384<br />
     <br /><br />
     <b>Referenzen</b>
-    <p>RFC 2246: The TLS Protocol Version 1.0 (zu finden unter <a href="http://www.ietf.org/rfc/rfc2246.txt">http://www.ietf.org/rfc/rfc2246.txt</a>)</p>
-    <p>RFC 4346: The TLS Protocol Version 1.1 (zu finden unter <a href="http://www.ietf.org/rfc/rfc4346.txt">http://www.ietf.org/rfc/rfc4346.txt</a>)</p>
-    <p>RFC 5246: The TLS Protocol Version 1.2 (zu finden unter <a href="http://www.ietf.org/rfc/rfc5246.txt">http://www.ietf.org/rfc/rfc5246.txt</a>)</p>
-    <p>RFC 5116: An Interface and Algorithms for Authenticated Encryption (zu finden unter <a href="http://www.ietf.org/rfc/rfc5116.txt">http://www.ietf.org/rfc/rfc5116.txt</a>)</p>
-    <p>RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile (zu finden unter <a href="http://www.ietf.org/rfc/rfc5280.txt">http://www.ietf.org/rfc/rfc5280.txt</a>)</p>
-    <p>RFC 5288: AES Galois Counter Mode (GCM) Cipher Suites for TLS (zu finden unter <a href="http://www.ietf.org/rfc/rfc5288.txt">http://www.ietf.org/rfc/rfc5288.txt</a>)</p>
+    <p>RFC 2246: The TLS Protocol Version 1.0 <a href="http://www.ietf.org/rfc/rfc2246.txt">http://www.ietf.org/rfc/rfc2246.txt</a></p>
+    <p>RFC 4346: The TLS Protocol Version 1.1 <a href="http://www.ietf.org/rfc/rfc4346.txt">http://www.ietf.org/rfc/rfc4346.txt</a></p>
+    <p>RFC 5246: The TLS Protocol Version 1.2 <a href="http://www.ietf.org/rfc/rfc5246.txt">http://www.ietf.org/rfc/rfc5246.txt</a></p>
+    <p>RFC 5116: An Interface and Algorithms for Authenticated Encryption <a href="http://www.ietf.org/rfc/rfc5116.txt">http://www.ietf.org/rfc/rfc5116.txt</a></p>
+    <p>RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <a href="http://www.ietf.org/rfc/rfc5280.txt">http://www.ietf.org/rfc/rfc5280.txt</a></p>
+    <p>RFC 5288: AES Galois Counter Mode (GCM) Cipher Suites for TLS <a href="http://www.ietf.org/rfc/rfc5288.txt">http://www.ietf.org/rfc/rfc5288.txt</a></p>
     <br />
     <b>Literaturhinweise</b>
         <p>TLS-Wikipedia (de): <a href="http://de.wikipedia.org/wiki/Transport_Layer_Security">http://de.wikipedia.org/wiki/Transport_Layer_Security</a></p>
