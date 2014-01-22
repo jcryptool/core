@@ -1,10 +1,7 @@
 package org.jcryptool.visual.ssl.views;
 
-//import java.awt.Color;
-//import java.awt.Graphics;
-//import java.awt.Graphics2D;
-//import java.awt.geom.AffineTransform;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -13,6 +10,7 @@ import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+
 
 /**
  * This class implements a JPanel that provides functions for drawing a list of
@@ -24,15 +22,11 @@ import org.eclipse.swt.widgets.Display;
 public class Arrows extends Canvas 
 {
 
-	/**
-	 * Represents the size of the arrowhead.
-	 */
-	private final int ARR_SIZE = 5;
 
 	/**
 	 * A vector which saves all arrows which need to be painted
 	 */
-	private Vector<int[]> arrows;
+	private List<int[]> arrows;
 
 	/**
 	 * Constructor of the class, creates a new Vector for the arrows
@@ -46,7 +40,7 @@ public class Arrows extends Canvas
 	 */
 	public Arrows(Composite parent, int style) {
 		super(parent, style);
-		arrows = new Vector();
+		arrows = new ArrayList<int[]>();
 		addPaintListener(new PaintListener() {
             public void paintControl(PaintEvent e) 
             {
@@ -114,7 +108,7 @@ public class Arrows extends Canvas
 	 */
 	public void nextArrow(int x1, int y1, int x2, int y2, int r, int g, int b) {
 		int aro[] = { x1, y1, x2, y2, r, g, b };
-		arrows.addElement(aro);
+		arrows.add(aro);
 		redraw();
 	}
 
@@ -122,7 +116,7 @@ public class Arrows extends Canvas
 	 * Removes the arrow that has been added latest
 	 */
 	public void removeLastArrow() {
-		arrows.removeElementAt(arrows.size() - 1);
+		arrows.remove(arrows.size() - 1);
 		redraw();
 	}
 
