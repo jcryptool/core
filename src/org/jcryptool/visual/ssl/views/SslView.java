@@ -392,6 +392,8 @@ public class SslView extends ViewPart
 			serverChangeCipherSpecComposite.setVisible(false);
 			serverChangeCipherSpecComposite.resetStep();
 			clientCertificateComposite.enableControls();
+			if (!Message.getServerCertificateServerCertificateRequest()) 
+				clientCertificateComposite.btnShow.setEnabled(false);
 			arrow.removeLastArrow();
 		}
 		else if(clientCertificateComposite.getVisible() == true)
@@ -399,6 +401,7 @@ public class SslView extends ViewPart
 			clientCertificateComposite.setVisible(false);
 			clientCertificateComposite.resetStep();
 			serverCertificateComposite.enableControls();
+
 			arrow.removeLastArrow();
 		}
 		else if(serverCertificateComposite.getVisible() == true)
