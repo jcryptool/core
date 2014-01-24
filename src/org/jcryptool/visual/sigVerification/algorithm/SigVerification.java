@@ -59,11 +59,12 @@ public class SigVerification {
     public void setPublicKey(Input input) {
         try {
             KeyStoreManager ksm = KeyStoreManager.getInstance();
-            // System.out.println(ksm.getAllPublicKeys()); // Gibt alle Public Key aliases aus.
+            System.out.println(ksm.getAllPublicKeys()); // Gibt alle Public Key aliases aus.
             Enumeration<String> aliases = ksm.getAliases();
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 alias.getAliasString();
+                System.out.println(alias);
                 if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1") { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                         Certificate cert = ksm.getCertificate(alias);

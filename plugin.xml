@@ -13,7 +13,13 @@
             restorable="true">
       </view>
    </extension>
-  
+  	<extension point="org.eclipse.help.contexts">
+      <contexts
+            file="nl/de/help/contexts.xml"
+            plugin="org.jcryptool.visual.sigVerification">
+      </contexts>
+   </extension>
+   
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
@@ -25,15 +31,8 @@
    <extension
          point="org.eclipse.help.toc">
        <toc
-            file="$nl$/toc.xml"
+            file="nl/de/help/toc.xml"
             primary="false">
       </toc>
    </extension>
-   <extension
-         point="org.eclipse.help.contexts">
-      <contexts
-            file="$nl$/contexts.xml">
-      </contexts>
-   </extension>
-
 </plugin>
