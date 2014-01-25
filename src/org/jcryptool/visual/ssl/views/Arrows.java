@@ -3,12 +3,12 @@ package org.jcryptool.visual.ssl.views;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 
 /**
@@ -41,8 +41,16 @@ public class Arrows extends Canvas
             	int a[] = { 0, 0, 0, 0, 0, 0, 0 };
         		for (int i = 0; i < arrows.size(); i++) {
         			a = arrows.get(i);
-        			e.gc.setBackground(new Color(Display.getCurrent(), a[4], a[5], a[6]));
-        			e.gc.setForeground(new Color(Display.getCurrent(), a[4], a[5], a[6]));
+        			if(a[5]==180)
+        			{
+        				e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+        				e.gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+        			}
+        			else
+        			{
+        				e.gc.setBackground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        				e.gc.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        			}
         			drawArrow(e, a[0], a[1], a[2], a[3]);
         		}
             }
