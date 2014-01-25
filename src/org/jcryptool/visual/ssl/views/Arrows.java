@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -21,8 +20,6 @@ import org.eclipse.swt.widgets.Display;
  */
 public class Arrows extends Canvas 
 {
-
-
 	/**
 	 * A vector which saves all arrows which need to be painted
 	 */
@@ -31,11 +28,8 @@ public class Arrows extends Canvas
 	/**
 	 * Constructor of the class, creates a new Vector for the arrows
 	 */
-	public Arrows(Composite parent, int style, Color color) {
-		this(parent, style);
-	}
 	/**
-	 * Overwrites the paint method. Paints all arrows in the Vector arrow inside
+	 * Implements the paint method. Paints all arrows in the Vector arrow inside
 	 * the panel and sets the background to grey.
 	 */
 	public Arrows(Composite parent, int style) {
@@ -45,14 +39,10 @@ public class Arrows extends Canvas
             public void paintControl(PaintEvent e) 
             {
             	int a[] = { 0, 0, 0, 0, 0, 0, 0 };
-        		int i;
-        		Device device = Display.getCurrent ();
-        		e.gc.setBackground(new Color(device, 240, 240, 240));
-        		e.gc.fillRectangle(getClientArea());
-        		for (i = 0; i < arrows.size(); i++) {
+        		for (int i = 0; i < arrows.size(); i++) {
         			a = arrows.get(i);
-        			e.gc.setBackground(new Color(device, a[4], a[5], a[6]));
-        			e.gc.setForeground(new Color(device, a[4], a[5], a[6]));
+        			e.gc.setBackground(new Color(Display.getCurrent(), a[4], a[5], a[6]));
+        			e.gc.setForeground(new Color(Display.getCurrent(), a[4], a[5], a[6]));
         			drawArrow(e, a[0], a[1], a[2], a[3]);
         		}
             }
@@ -75,15 +65,14 @@ public class Arrows extends Canvas
 	 *            Y-coordination of the end point
 	 */
 	private void drawArrow(PaintEvent e, int x1, int y1, int x2, int y2) {
-		PaintEvent g = (PaintEvent) e;
-		g.gc.drawLine(x1, y1, x2,y2);
+		e.gc.drawLine(x1, y1, x2,y2);
 		if(y1!=y2)
 		{
-			e.gc.fillPolygon(new int[]{x2-5,y2-6,x2-15,y2-11,x2-8,y2-18});
+			e.gc.fillPolygon(new int[]{x2,y2,x2-10,y2-5,x2-3,y2-12});
 		}
 		else if(x2>x1)
 		{
-			e.gc.fillPolygon(new int[]{x2-5,y2,x2-15,y2+5,x2-15,y2-5});
+			e.gc.fillPolygon(new int[]{x2,y2,x2-10,y2+5,x2-10,y2-5});
 		}
 		else
 		{
@@ -136,9 +125,8 @@ public class Arrows extends Canvas
 	 *            the distance the arrows are moved
 	 */
 	public void moveArrowsby(int distance) {
-		int i = 0;
 		int a[] = { 0, 0, 0, 0, 0, 0, 0 };
-		for (; i < arrows.size(); i++) {
+		for (int i = 0; i < arrows.size(); i++) {
 			a = arrows.get(i);
 			a[1] = a[1] - distance;
 			a[3] = a[3] - distance;
