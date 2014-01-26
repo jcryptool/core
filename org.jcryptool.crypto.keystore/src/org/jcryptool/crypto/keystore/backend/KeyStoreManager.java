@@ -546,7 +546,7 @@ public class KeyStoreManager {
      * @param privateAlias The private key metadata
      */
     public void addKeyPair(PrivateKey privateKey, Certificate publicKey, char[] password, IKeyStoreAlias privateAlias,
-            KeyStoreAlias publicAlias) {
+            IKeyStoreAlias publicAlias) {
         Certificate[] certs = new Certificate[1];
         certs[0] = publicKey;
         try {
