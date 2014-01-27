@@ -116,12 +116,10 @@ public class SslView extends ViewPart
 		
 		
 		//Draw Panel
-		Composite swtAwtComponent = new Composite(content, SWT.EMBEDDED);
 		GridData gd_drawPanel = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
 		gd_drawPanel.widthHint = 100;
 		gd_drawPanel.heightHint=760;
-		swtAwtComponent.setLayout(new GridLayout());
-		arrow = new Arrows(swtAwtComponent, SWT.NONE);
+		arrow = new Arrows(content, SWT.NONE);
 		arrow.setLayoutData(gd_drawPanel);
 		
 		
