@@ -1,9 +1,6 @@
 package org.jcryptool.visual.sigVerification.algorithm;
 
-import java.security.KeyPairGenerator;
 import java.security.PublicKey;
-import java.security.KeyPair;
-import java.security.SecureRandom;
 import java.security.Signature;
 import java.security.cert.Certificate;
 import java.util.Enumeration;
@@ -13,6 +10,7 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
+import de.flexiprovider.ec.keys.ECPrivateKey;
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
 
@@ -34,21 +32,14 @@ public class SigVerification {
      * @param hash A instance of Hash
      */
     public void verifySignature(Input input, Hash hash) {
-        if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA" || input.signaturemethod == "RSA and MGF1") {
+        if (input.signaturemethod == "RSA" || input.signaturemethod == "DSA" || input.signaturemethod == "RSA and MGF1" || input.signaturemethod == "ECDSA") {
             if (this.publicKey != null) {
                 verifySig(input, hash);
             } else {
                 setPublicKey(input);
                 verifySig(input, hash);
             }
-        } else if (input.signaturemethod == "ECDSA") {
-            if (this.publicKey != null) {
-                verifySig(input, hash);
-            } else {
-                setKeyECDSA(input);
-                verifySig(input, hash);
-            }
-        }
+        } 
     }
 
     /**
@@ -80,6 +71,14 @@ public class SigVerification {
 
                         System.out.println("DSA PrivateKey found");
                     } // end if
+                } else if (input.signaturemethod == "ECDSA") { // ECDSA
+                    if (alias.getClassName().equals(ECPrivateKey.class.getName())) {
+                        // Fill in keys
+                        Certificate cert = ksm.getCertificate(alias);
+                        this.publicKey = cert.getPublicKey();
+
+                        System.out.println("ECDSA PrivateKey found");
+                    } // end if
                 }
             }
         } catch (Exception ex) {
@@ -100,6 +99,8 @@ public class SigVerification {
             Signature signature;
             if (input.signaturemethod == "RSA and MGF1") {
                 signature = Signature.getInstance(hash.hashmethod + "WithRSA/PSS", "BC");
+            } else if (input.signaturemethod == "ECDSA") {
+                signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiEC");
             } else {
                 signature = Signature.getInstance(hash.hashmethod + "with" + input.signaturemethod, "FlexiCore");
             }
@@ -112,22 +113,6 @@ public class SigVerification {
             this.result = signature.verify(input.signature);
 
             System.out.println("Signature Verification was correct: " + this.result);
-        } catch (Exception ex) {
-            LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
-        }
-    }
-
-    /**
-     * Sets the ECDSA keys.
-     * 
-     * @param input A instance of Input.
-     */
-    public void setKeyECDSA(Input input) {
-        try {
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC"); //$NON-NLS-1$
-            keyGen.initialize(256, SecureRandom.getInstance("SHA1PRNG")); //$NON-NLS-1$
-            KeyPair pair = keyGen.generateKeyPair();
-            this.publicKey = pair.getPublic();
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
