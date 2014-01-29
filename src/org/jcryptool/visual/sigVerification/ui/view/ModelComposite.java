@@ -162,17 +162,6 @@ public class ModelComposite extends Composite {
                 lblrootChoose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
                 lblrootChoose.setBounds(773, 133, 146, 67);
             }
-//            lblrootChoose.addModifyListener(new ModifyListener() {
-//                @Override
-//                public void modifyText(ModifyEvent e) {
-//                    if (lblrootChoose.getText().length() > 0) {
-//                    	String temp=new String(lblrootChoose.getText());
-//                    	changeRoot=toDate(temp);
-//                    	for(int i=0;i<temp.length();i++)
-//                    			btnNewResult.setEnabled(true);    
-//                    }
-//                }
-//            });}
             temp=Certificates.getLevel2().getNotAfter();
         	dateLevel2=setFormat(temp);
             {
@@ -193,7 +182,7 @@ public class ModelComposite extends Composite {
             }
             {
                 btnNewResult = new Button(border, SWT.NONE);
-                btnNewResult.setEnabled(false);
+                btnNewResult.setEnabled(true);
                 btnNewResult.setBounds(293, 515, 322, 31);
                 btnNewResult.setText(Messages.ModelComposite_btnNewResult);
             }
@@ -227,15 +216,10 @@ public class ModelComposite extends Composite {
             	lblResult = new Label(border, SWT.NONE);
             	lblResult.setBounds(275, 395, 121, 107);
             }
-//            boolean verify=Certificates.verify(Certificates.getNow());
-//            System.out.println(verify);
         	}
         }
 
-            	
-            
-        
-    
+
     @SuppressWarnings("deprecation")
 	private Date toDate(String string){
     	Date date=new Date();
@@ -271,8 +255,6 @@ public class ModelComposite extends Composite {
                  if (textValidDate.getText().length() > 0) {
                  	String temp=new String(textValidDate.getText());
                  	changeTest=toDate(temp);
-                 	for(int i=0;i<temp.length();i++)
-                 			btnNewResult.setEnabled(true);    
                  }
              }
          });
@@ -281,9 +263,7 @@ public class ModelComposite extends Composite {
              public void modifyText(ModifyEvent e) {
                  if (lblrootChoose.getText().length() > 0) {
                  	String temp=new String(lblrootChoose.getText());
-                 	changeRoot=toDate(temp);
-                 	for(int i=0;i<temp.length();i++)
-                 			btnNewResult.setEnabled(true);    
+                 	changeRoot=toDate(temp);   
                  }
              }
          });
@@ -292,9 +272,7 @@ public class ModelComposite extends Composite {
              public void modifyText(ModifyEvent e) {
                  if (lbllevel2Choose.getText().length() > 0) {
                  	String temp=new String(lbllevel2Choose.getText());
-                 	changeLevel2=toDate(temp);
-                 	for(int i=0;i<temp.length();i++)
-                 			btnNewResult.setEnabled(true);    
+                 	changeLevel2=toDate(temp);  
                  }
              }
          });
@@ -304,8 +282,6 @@ public class ModelComposite extends Composite {
                  if (lbllevel3Choose.getText().length() > 0) {
                  	String temp=new String(lbllevel3Choose.getText());
                  	changeUser=toDate(temp);
-                 	for(int i=0;i<temp.length();i++)
-                 			btnNewResult.setEnabled(true);    
                  }
              }
          });
@@ -313,19 +289,35 @@ public class ModelComposite extends Composite {
     	 	
      	btnNewResult.addSelectionListener(new SelectionAdapter(){
      		public void widgetSelected(SelectionEvent e) {
+     			lblResult.redraw();
      			
                  try {
                  	boolean verify = false;
                       reset(0);
                       
-                      if(changeTest!=null){
-                     	 verify=Certificates.verify(changeTest);
-                      }else if(changeRoot!=null){
-                      	 verify=Certificates.verify(changeTest);
-                       }else if(changeLevel2!=null){
-                       	 verify=Certificates.verify(changeTest);
+                      if(changeRoot!=null){
+//                    	  Certificates.createCertificate(1,changeRoot);
+//                    	  Certificates.createCertificate(2,changeRoot);
+//                    	  Certificates.createCertificate(3,changeRoot);
+//                    	  System.out.println(Certificates.getRoot());
+//                    	  System.out.println(Certificates.getLevel2());
+//                    	  System.out.println(Certificates.getUser());
+//                      	 verify=Certificates.verify(changeRoot); 	
+                      }else if(changeLevel2!=null){
+//                    	  Certificates.createCertificate(1,changeLevel2);
+//                    	  Certificates.createCertificate(2,changeLevel2);
+//                    	  Certificates.createCertificate(3,changeLevel2);
+//                      	 verify=Certificates.verify(changeLevel2);
                        }else if(changeUser!=null){
+//                    	   Certificates.createCertificate(1,changeUser);
+//                     	  Certificates.createCertificate(2,changeUser);
+//                     	  Certificates.createCertificate(3,changeUser);
+//                       	 verify=Certificates.verify(changeUser);
+                       }
+                       if(changeTest!=null){
                        	 verify=Certificates.verify(changeTest);
+                       }else if(changeTest==null){
+                    	   verify=Certificates.verify(Certificates.getNow());
                        }
                      
                       
@@ -350,7 +342,7 @@ public class ModelComposite extends Composite {
         // step (keep the chosen algorithms)
         switch (step) {
         case 0:
-             btnNewResult.setEnabled(false);
+             btnNewResult.setEnabled(true);
         case 1:
             // btnDecrypt.setEnabled(false);
         case 2:
