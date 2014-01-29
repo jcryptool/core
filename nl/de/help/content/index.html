@@ -9,13 +9,13 @@
         <p>
 		Willkommen in der Online Hilfe des Plug-Ins zur Visualisierung der Signaturverifizierung.
 		Nachfolgenden finden Sie einen Überblick des Plug-Ins sowie eine detaillierte Erklärung zu jeden Schritt des Signaturverifizierungsprozesses. 
-		Hier kommen Sie zur Hilfe der <a href="#GUI2">Validierung von Zertifikaten nach dem Schalenmodell. </a>
+		Hier kommen Sie zur Hilfe der <a href="#GUI2">Validierung von Zertifikaten nach Gültigkeitsmodellen. </a>
         <br>
 		Die Visualisierung soll die Verifizierung einer Signatur für ein bestimmtes signiertes Dokument zeigen.
 		Eine digitale Signatur kann zur Authentisierung der Identität des Senders oder des Unterzeichners des Dokuments genutzt werden. 
 		Sie sichert außerdem die Integrität des Dokumentes selbst.
 		</p>
-		<!--Bild der 1. Oberfläche (kommt noch)<img src="MainStart.png"> -->
+		<img src="GUI1.png"> 
 		<h2>Allgemeine Informationen</h2>
         <h3>Schritt zurück-Funktion</h3>
 		<p>Schrittweises zurückgehen. Alle vorgenommenen Änderungen oder Einstellungen bleiben gespeichert, bis zu dem Schritt zu dem man zurück geht.</p>
@@ -56,14 +56,13 @@
         <p>Eine Mask Generation Function (MGF) ist eine Funktion zum Generieren von Pseudozufallszahlen in beliebiger Länge. Ohne Kenntnis über den Startwert (Seed), ist es praktisch nicht möglich die Zufallszahlen vorherzusagen. MGF1 ist ein in der PKCS#1 spezifiziertes Verfahren, welches Hash-Funktionen wie SHA-1 einsetzt, um Pseudozufallszahlen zu generieren.</p>
         
 		<h3>Öffentlichen Schlüssel auswählen</h3>
-		<p>Nun benötigen Sie noch den öffentlichen Schlüssel. Wurde die Signatur mit einen Schlüssel signiert, der vom Standard-JCT-Keystore zu Verfügung gestellt wurde, kann dieser mit der Option "öffentlichen Schlüssel aus Java Keystore laden" geladen werden. Ansonten können Sie den öffentlichen Schlüssel aus einer Datei, die Sie auswählen müssen, auslesen lassen, oder Sie geben den öffentlichen Schlüssel manuell im Editor ein.</p>
+		<p>Nun benötigen Sie noch den öffentlichen Schlüssel. Wurde die Signatur mit einen Schlüssel signiert, der vom Standard-JCT-Keystore zu Verfügung gestellt wurde, kann dieser mit der Option "öffentlichen Schlüssel aus Java Keystore laden" geladen werden.</p>
 		<img src="SchlusselAuswahlen.png">
-		<img src="SchlusselAusDatei.png">
-		<img src="SchlusselEditor.png">
+
 		
         <h2>Schritt 4 – Ergebnis anzeigen</h2>
-        <!-- Bild mit grünem Hackn/ rotes Kreutz bei Ergebnis anzeigen (muss ich noch machen)<img src="MainFinished.png">
-        <img src="MainFinished.png">-->
+        <img src="Hacken.png">
+        <img src="Kreutz.png">
         <p>Wenn die Signatur als gültig verifiziert wurde, erscheint ein grüner Hacken neben dem Button "Ergebnis anzeigen", ansonsten erscheint ein rotes Kreutz. Für nähere Informationen des Ergebnisses, klicken Sie auf den Button „Ergebnis anzeigen“. Dort finden Sie alle relevanten Informationen zu der verifizierten Signatur:</p>
         <ul>
             <li>Den verwendeten Schlüssel/ verwendete Kurve</li>
@@ -74,7 +73,27 @@
         <p>Klicken Sie auf den Button “Gültigkeitsmodelle” um sich die Verifizierung von Zertifikaten nach dem Schalenmodell genauer anzusehen.</p>
 		<img src="ErgebnisAnzeigen.png">
 		
-		<h1><a id=GUI2>Hilfe der Validierung von Zertifikaten nach dem Schalenmodell</a></h1>
-		<p>Folgt in Kürze</p>
+		<h1><a id=GUI2>Hilfe der Validierung von Zertifikaten nach Gültigkeitsmodellen</a></h1>
+		<p>Diese für Lernzwecke erstellte Oberfläche zeigt, wie sich die Verwendung unterschiedlicher Gültigkeitsmodelle (Schalenmodell, Kettenmodell) auf die Gültigkeit von Zertifikaten auswirkt</p>
+		<img src="2ob.png">
+		<h2>Schalenmodell</h2>
+		<p>Beim Schalenmodell wird eine Signatur nur als gültig erklärt, wenn zum Überprüfungszeitpunkt alle Zertifikate gültig sind. Dh. wenn zur Überprüfung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch gültig, das Wurzel-Zertifikat aber nicht mehr gültig ist, dann wird die Signatur als ungültig erklärt.</p>
+		<h3>Zertifikate</h3>
+		<h4>Wurzel-Zertifikat</h4>
+		<p>Oberstes Zertifikat, welches die Gültigkeit aller untergeordneten Zertifikate bestätigt.</p>
+		<h4>Level 2-Zertifikat</h4>
+		<p>Dieses Zertifikat verweist auf das Wurzel-Zertifikat, denn es wurde von diesem signiert um dessen Korrektheit zu signalisieren.</p>
+		<h4>Teilnehmen-Zertifikat</h4>
+		<p>Das Teilnehmer-Zertifikat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als gültig verifiziert wird, müssen sowohl das Teilnehmer-Zertifikat sowie auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) gültig sein.</p>
+		<h3>Aktionen</h3>
+		<h4>Schalenmodell | Kettenmodell</h4>
+		<p>Auswahlmöglichkeit zwischen dem Schalenmodell und dem Kettenmodell. Achtung! Bis jetzt ist nur das Schalenmodell implementiert und steht somit als einziges Gültigkeitsmodell zur Verfügung</p>
+		<h4>Schritt zurück</h4>
+		<p>Schrittweises zurückgehen. Alle vorgenommenen Änderungen oder Einstellungen bleiben gespeichert, bis zu dem Schritt zu dem man zurück geht.</p>
+		<h4>Gültigkeitsdaten</h4>
+		<p>Hier können Sie die Gültigkeiten der einzelnen Zertifikate umstellen und die Auswirkungen auf die Gesamtgültigkeit betrachten. Dazu müssen Sie noch auf "Ergebnis neu berechnen" klicken.</p>
+		<h4>Ergebnis neu berechnen</h4>
+		<p>Berechnet die Gültigkeit neu und entscheidet nach dem Schalenmodell ob die Zertifikatskette gültig ist oder nicht. Ist sie immer noch gültig, erscheint wieder ein grüner Hacken, ansonsten erscheind ein rotes Kreutz</p>
+		
     </body>
 </html>
