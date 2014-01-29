@@ -11,14 +11,8 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-<<<<<<< HEAD
-<<<<<<< HEAD
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-=======
->>>>>>> d12805e4462dec12c57c21c504770e4e54836bd1
-=======
->>>>>>> d87d127009b59ded2397c78ecb75271b6c87c8e7
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -37,7 +31,6 @@ import org.eclipse.swt.widgets.Canvas;
 public class ModelComposite extends Composite {
     private Label lblGeneralDescription;
     private Text lblHeader;
-    private Text lblTitle;
     private Button btnShellM;
     private Button btnChainM;
     private Label lblRoot;
@@ -63,7 +56,6 @@ public class ModelComposite extends Composite {
 	private Canvas canvas;
 	private Label lblResult1;
 	private Label lblResult2;
-	private Composite border;
     
     
     public ModelComposite(final Composite parent, final int style, final SigVerView sigVerView) {
@@ -99,37 +91,26 @@ public class ModelComposite extends Composite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
-<<<<<<< HEAD
-<<<<<<< HEAD
+
         {
             lblGeneralDescription = new Label(this, SWT.NONE);
             lblGeneralDescription.setBounds(10, 37, 964, 78);            
             lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
             lblGeneralDescription.setText(Messages.ModelComposite_description);
-
         }
+        
         lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-=======
-=======
->>>>>>> d87d127009b59ded2397c78ecb75271b6c87c8e7
         lblGeneralDescription = new Label(this, SWT.NONE);
 		lblGeneralDescription.setBounds(10, 37, 964, 78);
 		lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
 		lblGeneralDescription.setText(Messages.ModelComposite_description);
+
 		lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-<<<<<<< HEAD
->>>>>>> d12805e4462dec12c57c21c504770e4e54836bd1
-=======
->>>>>>> d87d127009b59ded2397c78ecb75271b6c87c8e7
         lblHeader.setEditable(false);
         lblHeader.setBounds(10, 10, 964, 31);
         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
         lblHeader.setText(Messages.ModelComposite_lblHeader);
         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
-
-<<<<<<< HEAD
-<<<<<<< HEAD
         {
             Group border = new Group(this, SWT.BORDER);
             border.setText(Messages.ModelComposite_lblTitle);
@@ -209,14 +190,8 @@ public class ModelComposite extends Composite {
                 btnNewResult.setBounds(293, 515, 322, 31);
                 btnNewResult.setText(Messages.ModelComposite_btnNewResult);
             }
-=======
-=======
->>>>>>> d87d127009b59ded2397c78ecb75271b6c87c8e7
-        lblTitle = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        lblTitle.setEditable(false);
-        lblTitle.setBounds(20, 121, 216, 27);
-        lblTitle.setText(Messages.ModelComposite_lblTitle);
-        border = new Composite(this, SWT.BORDER);
+        
+        border = new Group(this, SWT.BORDER);
 		border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		border.setBounds(10, 132, 964, 560);
 		btnShellM = new Button(border, SWT.NONE);
@@ -227,11 +202,6 @@ public class ModelComposite extends Composite {
 		    btnChainM.setEnabled(false);
 		    btnChainM.setBounds(470, 10, 171, 36);
 		    btnChainM.setText(Messages.ModelComposite_btnChainM);
-<<<<<<< HEAD
->>>>>>> d12805e4462dec12c57c21c504770e4e54836bd1
-=======
->>>>>>> d87d127009b59ded2397c78ecb75271b6c87c8e7
-
 		}
 		{
 		    lblRoot = new Label(border, SWT.NONE);
@@ -314,7 +284,8 @@ public class ModelComposite extends Composite {
 		
 		lblResult2=new Label (border, SWT.NONE);
 		lblResult2.setBounds(275, 395, 121, 107);
-        }
+		}
+    }
 
 
     @SuppressWarnings("deprecation")
