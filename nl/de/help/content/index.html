@@ -75,6 +75,7 @@
 		
 		<h1><a id=GUI2>Hilfe der Validierung von Zertifikaten nach Gültigkeitsmodellen</a></h1>
 		<p>Diese für Lernzwecke erstellte Oberfläche zeigt, wie sich die Verwendung unterschiedlicher Gültigkeitsmodelle (Schalenmodell, Kettenmodell) auf die Gültigkeit von Zertifikaten auswirkt</p>
+		<img src="2ob.png">
 		<h2>Schalenmodell</h2>
 		<p>Beim Schalenmodell wird eine Signatur nur als gültig erklärt, wenn zum Überprüfungszeitpunkt alle Zertifikate gültig sind. Dh. wenn zur Überprüfung zwar das Teilnehmer-Zertifikat und das Level 2-Zertifikat noch gültig, das Wurzel-Zertifikat aber nicht mehr gültig ist, dann wird die Signatur als ungültig erklärt.</p>
 		<h3>Zertifikate</h3>
@@ -83,7 +84,7 @@
 		<h4>Level 2-Zertifikat</h4>
 		<p>Dieses Zertifikat verweist auf das Wurzel-Zertifikat, denn es wurde von diesem signiert um dessen Korrektheit zu signalisieren.</p>
 		<h4>Teilnehmen-Zertifikat</h4>
-		<p>Das Teilnehmer-Zertifkat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als gültig verifiziert wird, müssen sowohl das Teilnehmer-Zertifikat sowie auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) gültig sein.</p>
+		<p>Das Teilnehmer-Zertifikat ist das unterste Zertifikat in der Zertifikatskette. Damit dieses Zertifikat als gültig verifiziert wird, müssen sowohl das Teilnehmer-Zertifikat sowie auch alle anderen Zertifikate der Kette (in diesem Fall das Teilnehmer- und das Wurzel-Zertifikat) gültig sein.</p>
 		<h3>Aktionen</h3>
 		<h4>Schalenmodell | Kettenmodell</h4>
 		<p>Auswahlmöglichkeit zwischen dem Schalenmodell und dem Kettenmodell. Achtung! Bis jetzt ist nur das Schalenmodell implementiert und steht somit als einziges Gültigkeitsmodell zur Verfügung</p>
@@ -93,6 +94,6 @@
 		<p>Hier können Sie die Gültigkeiten der einzelnen Zertifikate umstellen und die Auswirkungen auf die Gesamtgültigkeit betrachten. Dazu müssen Sie noch auf "Ergebnis neu berechnen" klicken.</p>
 		<h4>Ergebnis neu berechnen</h4>
 		<p>Berechnet die Gültigkeit neu und entscheidet nach dem Schalenmodell ob die Zertifikatskette gültig ist oder nicht. Ist sie immer noch gültig, erscheint wieder ein grüner Hacken, ansonsten erscheind ein rotes Kreutz</p>
-		<!-- ein paar Bilder zur 2. Oberfläche-->
+		
     </body>
 </html>
