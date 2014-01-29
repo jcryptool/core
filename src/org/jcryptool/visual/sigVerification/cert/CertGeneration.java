@@ -109,6 +109,15 @@ public void setEnd(Date end) {
       Security.addProvider(new BouncyCastleProvider());
   }
 
+  /**
+* @param args
+* @throws Exception
+//*/
+//  public static void main(String[] args) throws Exception {
+//	  System.out.println("Generated");
+//      CertGeneration Certificate = new CertGeneration();
+//  }
+
   @SuppressWarnings("deprecation")
 public X509Certificate createCertificate(int x) throws Exception{
 	  this.x=x;
@@ -131,27 +140,7 @@ public X509Certificate createCertificate(int x) throws Exception{
       return cert;
   }
 
-  @SuppressWarnings("deprecation")
-  public X509Certificate createCertificate(int x,Date after) throws Exception{
-  	  this.x=x;
-        X509Certificate cert = null;
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(CERTIFICATE_ALGORITHM);
-        keyPairGenerator.initialize(CERTIFICATE_BITS, new SecureRandom());
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
-        // GENERATE THE X509 CERTIFICATE
-        X509V3CertificateGenerator v3CertGen = new X509V3CertificateGenerator();
-        v3CertGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
-        v3CertGen.setIssuerDN(new X509Principal(CERTIFICATE_DN));
-        v3CertGen.setNotBefore(now);
-        v3CertGen.setNotAfter(after);
-        v3CertGen.setSubjectDN(new X509Principal(CERTIFICATE_DN));
-        v3CertGen.setPublicKey(keyPair.getPublic());
-        v3CertGen.setSignatureAlgorithm("SHA256WithRSAEncryption");
-        cert = v3CertGen.generateX509Certificate(keyPair.getPrivate());
-        saveCert(cert,keyPair.getPrivate());
-        return cert;
-    }
 
 private void saveCert(X509Certificate cert, PrivateKey key) throws Exception {
       KeyStore keyStore = KeyStore.getInstance("JKS");
@@ -161,26 +150,61 @@ private void saveCert(X509Certificate cert, PrivateKey key) throws Exception {
       keyStore.store( new FileOutputStream(file), "JCT".toCharArray() );    
   }
   
-  public X509Certificate[] setChain(){
-	  chain=new X509Certificate[3];
-	  chain[0]=user;
-	  chain[1]=level2;
-	  chain[2]=root;
-	  
-	  return chain;
-  }
+//  public X509Certificate[] setChain(){
+//	  chain=new X509Certificate[3];
+//	  chain[0]=user;
+//	  chain[1]=level2;
+//	  chain[2]=root;
+//	  
+//	  return chain;
+//  }
   
-  public boolean verify(Date date){
-	  Date temp=user.getNotBefore();
-	  if(user.getNotBefore().after(date)==true&&user.getNotAfter().before(date)==true){
-		  if(level2.getNotBefore().after(date)==true&&level2.getNotAfter().before(date)==true){
-			  if(root.getNotBefore().after(date)==true&&root.getNotAfter().before(date)==true){
+ public boolean verify(Date date){	  
+	 verify=false;
+	  if(check(user,date)==true){
+		  if(check(level2,date)==true){
+			  if(check(root,date)==true){
 				  verify=true;
 			  }
 		  }
 	  }
 	  return verify;
-
   }
   
+  @SuppressWarnings("deprecation")
+private boolean check(X509Certificate toCheck,Date date){
+	  boolean check=false;
+	  
+	  if(toCheck.getNotBefore().getYear()<date.getYear()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()<date.getMonth()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()<date.getDate()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()==date.getDate()){
+		  if(toCheck.getNotAfter().getYear()>date.getYear()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()>date.getMonth()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()==date.getMonth()&&toCheck.getNotAfter().getDate()>date.getDate()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()==date.getDate()){
+			  check=true;
+		  }
+	  }
+	  return check;
+  }
+
+
+
+@SuppressWarnings("deprecation")
+public X509Certificate createCertificateNew(int x, Date newend) throws Exception{
+	this.x=x;
+    X509Certificate cert = null;
+    KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(CERTIFICATE_ALGORITHM);
+    keyPairGenerator.initialize(CERTIFICATE_BITS, new SecureRandom());
+    KeyPair keyPair = keyPairGenerator.generateKeyPair();
+
+    // GENERATE THE X509 CERTIFICATE
+    X509V3CertificateGenerator v3CertGen = new X509V3CertificateGenerator();
+    v3CertGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
+    v3CertGen.setIssuerDN(new X509Principal(CERTIFICATE_DN));
+    v3CertGen.setNotBefore(now);
+    v3CertGen.setNotAfter(newend);
+    v3CertGen.setSubjectDN(new X509Principal(CERTIFICATE_DN));
+    v3CertGen.setPublicKey(keyPair.getPublic());
+    v3CertGen.setSignatureAlgorithm("SHA256WithRSAEncryption");
+    cert = v3CertGen.generateX509Certificate(keyPair.getPrivate());
+    saveCert(cert,keyPair.getPrivate());
+    return cert;
+}
+
 }
