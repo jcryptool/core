@@ -129,7 +129,7 @@ public class SigVerComposite extends Composite {
      * Create the application window.
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
-        super(parent, style);        
+        super(parent, style);
         setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         createContents(parent);
         createActions();
@@ -176,12 +176,34 @@ public class SigVerComposite extends Composite {
         {
             Group border = new Group(this, SWT.NONE);
             border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-            //border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            // border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             border.setBounds(10, 99, 1035, 549);
             border.setText(Messages.SigVerComposite_lblTitle);
 
             {
-                Group littleBorder = new Group(border, SWT.NONE);
+                final Group littleBorder = new Group(border, SWT.NONE);
+                littleBorder.addPaintListener(new PaintListener() {
+                    public void paintControl(PaintEvent e) {
+                        Rectangle clientArea;
+                        int width;
+                        int height;
+                        GC gc;
+
+                        gc = e.gc;
+                        // Get the size of the canvas area
+                        clientArea = littleBorder.getClientArea();
+                        width = clientArea.width;
+                        height = clientArea.height;
+
+                        // Insert the image of the right doc
+                        ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
+                        ImageData imD = id.getImageData();
+                        Image img = new Image(Display.getCurrent(), imD);
+                        gc.drawImage(img, width - 170, height - 222);
+
+                    }
+                });
+
                 littleBorder.setBounds(793, 65, 218, 268);
                 littleBorder.setText(Messages.SigVerComposite_btnSignature);
 
@@ -198,7 +220,7 @@ public class SigVerComposite extends Composite {
                     ImageData imD1 = id1.getImageData();
                     Image img1 = new Image(Display.getCurrent(), imD1);
                     resultTrue = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
-                    resultTrue.setMarginWidth(-15);
+                    resultTrue.setMarginWidth(-18);
                     resultTrue.setDescriptionText(Messages.SigVerComposite_resutTrueDescription);
                     resultTrue.setImage(img1);
                     resultTrue.hide();
@@ -207,7 +229,7 @@ public class SigVerComposite extends Composite {
                     ImageData imD2 = id2.getImageData();
                     Image img2 = new Image(Display.getCurrent(), imD2);
                     resultFalse = new ControlDecoration(littleBorder, SWT.LEFT | SWT.BOTTOM);
-                    resultFalse.setMarginWidth(-17);
+                    resultFalse.setMarginWidth(-20);
                     resultFalse.setDescriptionText(Messages.SigVerComposite_resutFalseDescription);
                     resultFalse.setImage(img2);
                     resultFalse.hide();
@@ -274,11 +296,11 @@ public class SigVerComposite extends Composite {
                     tabStep1.setControl(lblDescriptionStep1);
                 }
             }
-            
+
             canvas1 = new Canvas(border, SWT.NONE);
-            //canvas1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+            // canvas1.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             canvas1.setBounds(10, 88, 1011, 320);
-            
+
             Menu menu1 = new Menu(lblDescriptionStep1);
             lblDescriptionStep1.setMenu(menu1);
 
@@ -361,7 +383,7 @@ public class SigVerComposite extends Composite {
                 img = new Image(Display.getCurrent(), imD);
                 gc.drawImage(img, 70, 10); // first doch pic
                 // draw second doc pic
-                gc.drawImage(img, 820, 10);
+                // gc.drawImage(img, 820, 10);
 
                 gc.setBackground(lightgrey);
                 // Color the all the areas in lightgrey
@@ -537,7 +559,7 @@ public class SigVerComposite extends Composite {
 
                             // Shows green check mark or red fail sign if comparison is
                             // correct or false
-                            if (sigVerification.getResult()==true) {
+                            if (sigVerification.getResult() == true) {
                                 resultFalse.hide();
                                 resultTrue.show();
                             } else {
