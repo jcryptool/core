@@ -130,6 +130,7 @@ public class SigVerComposite extends Composite {
      */
     public SigVerComposite(Composite parent, int style, SigVerView view) {
         super(parent, style);        
+        setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
         createContents(parent);
         createActions();
         this.sigVerView = view;
@@ -174,6 +175,7 @@ public class SigVerComposite extends Composite {
 
         {
             Group border = new Group(this, SWT.NONE);
+            border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             //border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
             border.setBounds(10, 99, 1035, 549);
             border.setText(Messages.SigVerComposite_lblTitle);
@@ -535,7 +537,7 @@ public class SigVerComposite extends Composite {
 
                             // Shows green check mark or red fail sign if comparison is
                             // correct or false
-                            if (sigVerification.getResult()) {
+                            if (sigVerification.getResult()==true) {
                                 resultFalse.hide();
                                 resultTrue.show();
                             } else {
