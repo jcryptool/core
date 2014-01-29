@@ -66,7 +66,7 @@ public class ModelComposite extends Composite {
 
         // Adds reset button to the Toolbar
          IToolBarManager toolBarMenu = sigVerView.getViewSite().getActionBars().getToolBarManager();
-         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
+         Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {reset();}}; //$NON-NLS-1$
          action.setImageDescriptor(SigVerificationPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
          toolBarMenu.add(action);
     }
@@ -221,12 +221,6 @@ public class ModelComposite extends Composite {
     		}else if(i==9){//year
     			value=(((temp[i-3]-48)*1000)+((temp[i-2]-48)*100)+((temp[i-1]-48)*10)+(temp[i]-48)-1900);
     			date.setYear(value);
-    		}else if(i==12){//hours
-    			value=((temp[i-1]-48)*10)+(temp[i]-48);
-    			date.setHours(value);
-    		}else if(i==15){//minutes
-    			value=((temp[i-1]-48)*10)+(temp[i]-48);
-    			date.setMinutes(value);
     		}
     	}
     	
@@ -274,21 +268,28 @@ public class ModelComposite extends Composite {
      	btnNewResult.addSelectionListener(new SelectionAdapter(){
      		public void widgetSelected(SelectionEvent e) {
      			boolean result = false;
-                reset(0);
      			
                 try {
                     if(changeRoot!=null){
               			Certificates.setRoot(Certificates.createCertificateNew(1,changeRoot));
             			Certificates.setLevel2(Certificates.createCertificateNew(2,changeRoot));
             			Certificates.setUser(Certificates.createCertificateNew(3,changeRoot));
+            			
+//            			temp=Certificates.getRoot().getNotAfter();
+//            			System.out.println(dateRoot=setFormat(temp));
+//            			lblrootChoose.setText(dateRoot);
+//            			lbllevel2Choose.setText(dateRoot);
+//            			lbllevel3Choose.setText(dateRoot);
                     }else if(changeLevel2!=null){
                     	Certificates.setRoot(Certificates.createCertificateNew(1,changeLevel2));
               			Certificates.setLevel2(Certificates.createCertificateNew(2,changeLevel2));
               			Certificates.setUser(Certificates.createCertificateNew(3,changeLevel2));
+              			
                     }else if(changeUser!=null){
                     	Certificates.setRoot(Certificates.createCertificateNew(1,changeUser));
                			Certificates.setLevel2(Certificates.createCertificateNew(2,changeUser));
                			Certificates.setUser(Certificates.createCertificateNew(3,changeUser));
+               			
                     }
                     
                     if(changeTest!=null){
@@ -317,12 +318,24 @@ public class ModelComposite extends Composite {
      
     
 
-    private void reset(int step) {
+    private void reset() {
     	btnNewResult.setEnabled(true);
         try {
 			Certificates.setRoot(Certificates.createCertificate(1));
 			Certificates.setLevel2(Certificates.createCertificate(2));
 	 		Certificates.setUser(Certificates.createCertificate(3));
+	 		
+	 		temp=Certificates.getRoot().getNotAfter();
+			dateRoot=setFormat(temp);
+			lblrootChoose.setText(dateRoot);
+			
+			temp=Certificates.getLevel2().getNotAfter();
+			dateLevel2=setFormat(temp);
+			lbllevel2Choose.setText(dateLevel2);
+			
+			temp=Certificates.getUser().getNotAfter();
+			dateUser=setFormat(temp);
+			lbllevel3Choose.setText(dateUser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -341,16 +354,6 @@ public class ModelComposite extends Composite {
     		result+="0"+(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
     	}else{
     		result+=(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
-    	}
-    	if(date.getHours()<=9){
-    		result+="0"+date.getHours()+":";
-    	}else{
-    		result+=date.getHours()+":";
-    	}
-    	if(date.getMinutes()<=9){
-    		result+="0"+date.getMinutes();
-    	}else{
-    		result+=date.getMinutes()+"";
     	}
     	
   	  return result;
