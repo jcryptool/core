@@ -515,13 +515,13 @@ public class SigVerComposite extends Composite {
                                                                        // input
 
                         // Print lines for debugging and error searches
-                        System.out.println("Inported data: " + new String(input.data));
+                        /*System.out.println("Inported data: " + new String(input.data));
                         System.out.println("Plaintext: " + new String(input.plain));
                         System.out.println("Hash: " + new String(hashInst.getHash()));
                         System.out.println("Hash in hex format: " + hashInst.getHashHex());
                         System.out.println("Inported signature: " + new String(input.signature));
                         System.out.println("Used signature method: " + input.signaturemethod);
-                        System.out.println("Key length: " + input.signatureSize);
+                        System.out.println("Key length: " + input.signatureSize);*/
 
                         // Shows the description for the actual step
                         tabFolder.setSelection(3);

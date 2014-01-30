@@ -15,8 +15,7 @@
    </extension>
   	<extension point="org.eclipse.help.contexts">
       <contexts
-            file="nl/de/help/contexts.xml"
-            plugin="org.jcryptool.visual.sigVerification">
+            file="nl/de/contexts.xml">
       </contexts>
    </extension>
    
@@ -31,7 +30,7 @@
    <extension
          point="org.eclipse.help.toc">
        <toc
-            file="nl/de/help/toc.xml"
+            file="nl/de/toc.xml"
             primary="false">
       </toc>
    </extension>

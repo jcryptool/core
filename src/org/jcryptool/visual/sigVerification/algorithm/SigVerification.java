@@ -55,21 +55,20 @@ public class SigVerification {
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 alias.getAliasString();
-                System.out.println(alias);
+                // System.out.println(alias);
                 if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1") { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                         Certificate cert = ksm.getCertificate(alias);
                         // input.signatureSize = alias.getKeyLength();
                         this.publicKey = cert.getPublicKey();
-                        System.out.println("RSA PrivateCrtKey found");
+                        // System.out.println("RSA PrivateCrtKey found");
                     }
                 } else if (input.signaturemethod == "DSA") { // DSA
                     if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
                         // Fill in keys
                         Certificate cert = ksm.getCertificate(alias);
                         this.publicKey = cert.getPublicKey();
-
-                        System.out.println("DSA PrivateKey found");
+                        // System.out.println("DSA PrivateKey found");
                     } // end if
                 } else if (input.signaturemethod == "ECDSA") { // ECDSA
                     if (alias.getClassName().equals(ECPrivateKey.class.getName())) {
@@ -77,7 +76,7 @@ public class SigVerification {
                         Certificate cert = ksm.getCertificate(alias);
                         this.publicKey = cert.getPublicKey();
 
-                        System.out.println("ECDSA PrivateKey found");
+                        // System.out.println("ECDSA PrivateKey found");
                     } // end if
                 }
             }
