@@ -199,7 +199,7 @@ public class SigVerComposite extends Composite {
                         ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
                         ImageData imD = id.getImageData();
                         Image img = new Image(Display.getCurrent(), imD);
-                        gc.drawImage(img, width - 170, height - 222);
+                        gc.drawImage(img, width - 175, height - 222);
 
                     }
                 });
@@ -212,9 +212,6 @@ public class SigVerComposite extends Composite {
                 btnResult.setBounds(13, 189, 190, 50);
                 btnResult.setText(Messages.SigVerComposite_btnResult);
 
-                // Zum Anzeigen des Composite im Windowbuilder: folgenden Inhalt der "{ ... }"
-                // kommentieren.
-                // Kommentar Anfang
                 {
                     ImageDescriptor id1 = SigVerificationPlugin.getImageDescriptor("icons/gruenerHacken.png"); //$NON-NLS-1$
                     ImageData imD1 = id1.getImageData();
@@ -234,7 +231,7 @@ public class SigVerComposite extends Composite {
                     resultFalse.setImage(img2);
                     resultFalse.hide();
                 }
-                // Kommentar Ende
+               
             }
 
             btnHash = new Button(border, SWT.NONE);
@@ -375,15 +372,14 @@ public class SigVerComposite extends Composite {
                 ImageDescriptor id = SigVerificationPlugin.getImageDescriptor("icons/key.png"); //$NON-NLS-1$
                 ImageData imD = id.getImageData();
                 Image img = new Image(Display.getCurrent(), imD);
-                gc.drawImage(img, 435, 218);
+                gc.drawImage(img, 425, 218);
 
                 // Insert the image of the document
                 id = SigVerificationPlugin.getImageDescriptor("icons/image3013.png"); //$NON-NLS-1$
                 imD = id.getImageData();
                 img = new Image(Display.getCurrent(), imD);
                 gc.drawImage(img, 70, 10); // first doch pic
-                // draw second doc pic
-                // gc.drawImage(img, 820, 10);
+
 
                 gc.setBackground(lightgrey);
                 // Color the all the areas in lightgrey
@@ -394,7 +390,7 @@ public class SigVerComposite extends Composite {
                 gc.fillRectangle(220, height - 195, width - 480, 30);
                 gc.fillPolygon(new int[] { width - 265, height - 150, width - 265, height - 210, width - 240,
                         height - 180 });
-                gc.fillRectangle(465, 188, 35, 30);
+                gc.fillRectangle(455, 188, 35, 30);
                 gc.setBackground(darkgrey);
 
                 gc.dispose();
@@ -560,9 +556,11 @@ public class SigVerComposite extends Composite {
                             // Shows green check mark or red fail sign if comparison is
                             // correct or false
                             if (sigVerification.getResult() == true) {
+                            	lblDescriptionStep4.setText(Messages.SigVerComposite_resutTrueDescription+Messages.SigVerComposite_txtDescriptionOfStep4);
                                 resultFalse.hide();
                                 resultTrue.show();
                             } else {
+                            	lblDescriptionStep4.setText(Messages.SigVerComposite_resutFalseDescription+Messages.SigVerComposite_txtDescriptionOfStep4);
                                 resultTrue.hide();
                                 resultFalse.show();
                             }
@@ -639,6 +637,7 @@ public class SigVerComposite extends Composite {
             break;
         case 2:
             btnResult.setEnabled(false);
+            lblDescriptionStep4.setText(Messages.SigVerComposite_txtDescriptionOfStep4);
             sigVerification.reset();
             tabFolder.setSelection(2);
             lblProgress.setText(String.format(Messages.SigVerComposite_lblProgress, 3));

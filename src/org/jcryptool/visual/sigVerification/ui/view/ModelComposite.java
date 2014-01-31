@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.ui.view;
 
 import java.util.Date;
@@ -11,8 +20,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -21,7 +28,6 @@ import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.cert.CertGeneration;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Canvas;
 
 /**
  * This class contains all the code required for the design and functionality of the verification
@@ -29,8 +35,9 @@ import org.eclipse.swt.widgets.Canvas;
  * 
  */
 public class ModelComposite extends Composite {
-    private Label lblGeneralDescription;
+    private Text lblGeneralDescription;
     private Text lblHeader;
+    private Text lblTitle;
     private Button btnShellM;
     private Button btnChainM;
     private Label lblRoot;
@@ -42,7 +49,6 @@ public class ModelComposite extends Composite {
     private Button btnNewResult;
     private Text lblChoose;
     private CertGeneration Certificates;
-    private Label lblDate;
     private Text textValidDate;
 	private String now;
 	private String dateRoot;
@@ -53,9 +59,9 @@ public class ModelComposite extends Composite {
 	private Date changeRoot;
 	private Date changeLevel2;
 	private Date changeUser;
-	private Canvas canvas;
 	private Label lblResult1;
 	private Label lblResult2;
+	private Composite border;
     
     
     public ModelComposite(final Composite parent, final int style, final SigVerView sigVerView) {
@@ -83,117 +89,36 @@ public class ModelComposite extends Composite {
         setLayout(null);
 	        
         Certificates = new CertGeneration();
-        try {
+        try {//create default certificates
 			Certificates.setRoot(Certificates.createCertificate(1));
 			Certificates.setLevel2(Certificates.createCertificate(2));
 			Certificates.setUser(Certificates.createCertificate(3));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-        {
-            lblGeneralDescription = new Label(this, SWT.NONE);
-            lblGeneralDescription.setBounds(10, 37, 964, 78);            
-            lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
-            lblGeneralDescription.setText(Messages.ModelComposite_description);
-        }
         
-        lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
-        lblGeneralDescription = new Label(this, SWT.NONE);
+        lblGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        lblGeneralDescription.setEditable(false);
 		lblGeneralDescription.setBounds(10, 37, 964, 78);
 		lblGeneralDescription.setBackground(SWTResourceManager.getColor(255, 255, 255));
 		lblGeneralDescription.setText(Messages.ModelComposite_description);
-
+		
 		lblHeader = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
         lblHeader.setEditable(false);
         lblHeader.setBounds(10, 10, 964, 31);
         lblHeader.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
         lblHeader.setText(Messages.ModelComposite_lblHeader);
         lblHeader.setBackground(SWTResourceManager.getColor(255, 255, 255));
-        {
-            Group border = new Group(this, SWT.BORDER);
-            border.setText(Messages.ModelComposite_lblTitle);
-            border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-            border.setBounds(10, 132, 964, 560);
-            {
-                btnShellM = new Button(border, SWT.NONE);
-                btnShellM.setBounds(293, 10, 180, 36);
-                btnShellM.setText(Messages.ModelComposite_btnShellM);
-            }
-            {
-                btnChainM = new Button(border, SWT.NONE);
-                btnChainM.setEnabled(false);
-                btnChainM.setBounds(470, 10, 171, 36);
-                btnChainM.setText(Messages.ModelComposite_btnChainM);
 
-            }
-            {
-                lblRoot = new Label(border, SWT.NONE);
-                lblRoot.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lblRoot.setBounds(64, 133, 380, 67);
-                lblRoot.setText(Messages.ModelComposite_lblroot);
-            }
-            {
-                lbllevel2 = new Label(border, SWT.NONE);
-                lbllevel2.setText(Messages.ModelComposite_lbllevel2);
-                lbllevel2.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lbllevel2.setBounds(103, 219, 341, 67);
-            }
-            {
-                lbllevel3 = new Label(border, SWT.NONE);
-                lbllevel3.setText(Messages.ModelComposite_lbllevel3);
-                lbllevel3.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lbllevel3.setBounds(145, 304, 299, 67);
-            }
-            temp=Certificates.getRoot().getNotAfter();
-        	dateRoot=setFormat(temp);
-            {
-                lblrootChoose = new Text(border, SWT.BORDER);
-                lblrootChoose.setEditable(true);
-                lblrootChoose.setText(dateRoot);
-                lblrootChoose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lblrootChoose.setBounds(773, 133, 146, 67);
-            }
-//            lblrootChoose.addModifyListener(new ModifyListener() {
-//                @Override
-//                public void modifyText(ModifyEvent e) {
-//                    if (lblrootChoose.getText().length() > 0) {
-//                    	String temp=new String(lblrootChoose.getText());
-//                    	changeRoot=toDate(temp);
-//                    	for(int i=0;i<temp.length();i++)
-//                    			btnNewResult.setEnabled(true);    
-//                    }
-//                }
-//            });}
-            temp=Certificates.getLevel2().getNotAfter();
-        	dateLevel2=setFormat(temp);
-            {
-                lbllevel2Choose = new Text(border, SWT.BORDER);
-                lbllevel2Choose.setEditable(true);
-                lbllevel2Choose.setText(dateLevel2);
-                lbllevel2Choose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lbllevel2Choose.setBounds(773, 219, 146, 67);
-            }
-            temp=Certificates.getUser().getNotAfter();
-        	dateUser=setFormat(temp);
-            {
-                lbllevel3Choose = new Text(border, SWT.BORDER);
-                lbllevel3Choose.setEditable(true);
-                lbllevel3Choose.setText(dateUser);
-                lbllevel3Choose.setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_BACKGROUND));
-                lbllevel3Choose.setBounds(773, 304, 146, 67);
-            }
-            {
-                btnNewResult = new Button(border, SWT.NONE);
-                btnNewResult.setEnabled(false);
-                btnNewResult.setBounds(293, 515, 322, 31);
-                btnNewResult.setText(Messages.ModelComposite_btnNewResult);
-            }
+        lblTitle = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        lblTitle.setEditable(false);
+        lblTitle.setBounds(20, 121, 216, 27);
+        lblTitle.setText(Messages.ModelComposite_lblTitle);
         
-        border = new Group(this, SWT.BORDER);
+        border = new Composite(this, SWT.BORDER);
 		border.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		border.setBounds(10, 132, 964, 560);
+		
 		btnShellM = new Button(border, SWT.NONE);
 		btnShellM.setBounds(293, 10, 180, 36);
 		btnShellM.setText(Messages.ModelComposite_btnShellM);
@@ -202,6 +127,7 @@ public class ModelComposite extends Composite {
 		    btnChainM.setEnabled(false);
 		    btnChainM.setBounds(470, 10, 171, 36);
 		    btnChainM.setText(Messages.ModelComposite_btnChainM);
+
 		}
 		{
 		    lblRoot = new Label(border, SWT.NONE);
@@ -260,18 +186,18 @@ public class ModelComposite extends Composite {
 		btnReset.addSelectionListener(new SelectionAdapter() {
 		    @Override
 		    public void widgetSelected(SelectionEvent e) {
-		    	
+		    	reset();	
 		    }
 		});
-		btnReset.setText(Messages.SigVerComposite_btnReset);
+		btnReset.setText(Messages.ModelComposite_btnReset);
 		{
 		    lblChoose = new Text(border, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
 		    lblChoose.setEditable(false);
 		    lblChoose.setText(Messages.ModelComposite_Choose);
 		    lblChoose.setBounds(719, 70, 200, 50);
 		}
-		temp=Certificates.getNow();
-		now=setFormat(temp);
+		temp=Certificates.getNow();//default date for validity checks
+		now=setFormat(temp); //to string
 		{
 			textValidDate = new Text(border, SWT.BORDER);
 			textValidDate.setEditable(true);
@@ -284,34 +210,12 @@ public class ModelComposite extends Composite {
 		
 		lblResult2=new Label (border, SWT.NONE);
 		lblResult2.setBounds(275, 395, 121, 107);
-		}
-    }
+        }
 
 
-    @SuppressWarnings("deprecation")
-	private Date toDate(final String string){
-    	Date date=new Date();
-    	char[] temp=string.toCharArray();
-    	int i=1;
-    	int value;
-    	
-    	for(;i<string.length();i++){
-    		if(i<=1){//day
-    			value=((temp[i-1]-48)*10)+(temp[i]-48);
-    			date.setDate(value);
-    		}else if(i==4){//month
-    			value=(((temp[i-1]-48)*10)+(temp[i]-48)-1);
-    			date.setMonth(value);
-    		}else if(i==9){//year
-    			value=(((temp[i-3]-48)*1000)+((temp[i-2]-48)*100)+((temp[i-1]-48)*10)+(temp[i]-48)-1900);
-    			date.setYear(value);
-    		}
-    	}
-    	
-    	return date;
-    }
-
+ 
     private void createActions() {
+    	//Listener for the new date to valid at
     	 textValidDate.addModifyListener(new ModifyListener() {
              public void modifyText(final ModifyEvent e) {
                  if (textValidDate.getText().length() > 0) {
@@ -321,6 +225,7 @@ public class ModelComposite extends Composite {
              }
          });
     	 
+    	 //listener for the root validity
     	 lblrootChoose.addModifyListener(new ModifyListener() {
              public void modifyText(final ModifyEvent e) {
                  if (lblrootChoose.getText().length() > 0) {
@@ -330,6 +235,7 @@ public class ModelComposite extends Composite {
              }
          });
     	 
+    	//listener for the level2 validity
     	 lbllevel2Choose.addModifyListener(new ModifyListener() {
              public void modifyText(final ModifyEvent e) {
                  if (lbllevel2Choose.getText().length() > 0) {
@@ -339,6 +245,7 @@ public class ModelComposite extends Composite {
              }
          });
     	 
+    	//listener for the user validity
     	 lbllevel3Choose.addModifyListener(new ModifyListener() {
              public void modifyText(final ModifyEvent e) {
                  if (lbllevel3Choose.getText().length() > 0) {
@@ -354,40 +261,26 @@ public class ModelComposite extends Composite {
      			boolean result = false;
      			
                 try {
-                    if(changeRoot!=null){
-              			Certificates.setRoot(Certificates.createCertificateNew(1,changeRoot));
-            			Certificates.setLevel2(Certificates.createCertificateNew(2,changeRoot));
-            			Certificates.setUser(Certificates.createCertificateNew(3,changeRoot));
-            			
-//            			temp=Certificates.getRoot().getNotAfter();
-//            			System.out.println(dateRoot=setFormat(temp));
-//            			lblrootChoose.setText(dateRoot);
-//            			lbllevel2Choose.setText(dateRoot);
-//            			lbllevel3Choose.setText(dateRoot);
-                    }else if(changeLevel2!=null){
-                    	Certificates.setRoot(Certificates.createCertificateNew(1,changeLevel2));
-              			Certificates.setLevel2(Certificates.createCertificateNew(2,changeLevel2));
-              			Certificates.setUser(Certificates.createCertificateNew(3,changeLevel2));
-              			
-                    }else if(changeUser!=null){
-                    	Certificates.setRoot(Certificates.createCertificateNew(1,changeUser));
-               			Certificates.setLevel2(Certificates.createCertificateNew(2,changeUser));
+                    if(changeRoot!=null){//if root has a new validity
+              			Certificates.setRoot(Certificates.createCertificateNew(1,changeRoot));           			
+                    }
+                    if(changeLevel2!=null){//if level2 has a new validity
+              			Certificates.setLevel2(Certificates.createCertificateNew(2,changeLevel2));	
+                    }
+                    if(changeUser!=null){//if user has a new validity
                			Certificates.setUser(Certificates.createCertificateNew(3,changeUser));
-               			
                     }
                     
-                    if(changeTest!=null){
+                    if(changeTest!=null){//if the date to validate was changed
                        	result=Certificates.verify(changeTest);
                     }else if(changeTest==null){
                     	result=Certificates.verify(Certificates.getNow());
                     }
                      
-                    if(result==true){
-//                    	lblResult2.redraw();
+                    if(result==true){//if certificates are valid show green tick
                     	lblResult1.moveAbove(lblResult2);
                       	lblResult1.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/gruenerHacken.png"));
-                    }else{
-//                    	lblResult1.redraw();
+                    }else{//if certificates are not valid show red cross
                     	lblResult2.moveAbove(lblResult1);	
                       	lblResult2.setImage(SWTResourceManager.getImage(SigVerComposite.class, "/icons/rotesKreuz.png"));
                     }
@@ -400,24 +293,132 @@ public class ModelComposite extends Composite {
          });
     }
      
-    
+    /**
+     * Converts a date from a String to a Date and requests for the date to be checked
+     * @param string - the date (in form of a string) to save
+     * @return the string as a date
+     */
+    @SuppressWarnings("deprecation")
+ 	private Date toDate(final String string){
+     	Date date=new Date();
+     	char[] temp=string.toCharArray();
+     	int i=1;
+     	int day=0,month = 0,year=0;
+     	
+     	for(;i<string.length();i++){
+     		if(i<=1){//day
+     			day=((temp[i-1]-48)*10)+(temp[i]-48);
+     			date.setDate(day);
+     		}else if(i==4){//month
+     			month=(((temp[i-1]-48)*10)+(temp[i]-48)-1);
+     			date.setMonth(month);
+     		}else if(i==9){//year
+     			year=(((temp[i-3]-48)*1000)+((temp[i-2]-48)*100)+((temp[i-1]-48)*10)+(temp[i]-48)-1900);
+     			date.setYear(year);
+     		}
+     	}
+     	if(checkDate(day,(month+1),(year+1990))!=true){
+     		btnNewResult.setEnabled(false);
+     	}else{
+     		btnNewResult.setEnabled(true);
+     	}
+     	return date;
+     }
 
-    private void reset() {
+
+    /**
+     * checks whether a date is a valid date
+     * @param day
+     * @param month
+     * @param year
+     * @return true - if the given date exists
+     */
+    private boolean checkDate(int day, int month, int year) {
+    	boolean result=true;
+    	
+		if(month<1 || month>12){
+			result=false;
+		}
+		/*months with 31 days*/
+		if(month == 1 || month == 3 ||month == 5 ||month == 7 ||month == 8 ||month == 10 ||month == 12){
+			if(day <1 || day>31){
+				result=false;
+			}
+		}
+		/*months with 30 days*/
+		if(month == 4 || month == 6 ||month == 9 ||month == 11){
+			if(day <1 || day >30){
+				result=false;
+			}
+		}
+		if(month==2 && leapyear(year)==true){
+			if(day <1 || day >29){
+				result=false;
+				}
+			}
+		if(month==2 && leapyear(year)==false){
+			if(day<1 || day >28){
+				result=false;
+			}
+		}
+		return result;	
+	}
+    
+    /**
+     * checks whether a given year is a leap year
+     * @param year
+     * @return true if it's a leap year
+     */
+    public static boolean leapyear(int year){
+		if(year%4 == 0 && (year%100 != 0 || year%400 == 0)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+    /**
+     * Converts a Date to a String (in order to be displayed on the user interface)
+     * @param date to convert
+     * @return the String
+     */
+    @SuppressWarnings("deprecation")
+ 	public String setFormat(Date date){
+     	String result;
+     	
+     	if(date.getDate()<=9){
+     		result="0"+date.getDate()+".";
+     	}else{
+     		result=date.getDate()+".";
+     	}
+     	if(date.getMonth()<=9){
+     		result+="0"+(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
+     	}else{
+     		result+=(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
+     	}
+     	
+   	  return result;
+     }
+
+	/**
+	 * resets the certificates to the default certificates 
+	 * and resets the shown dates
+	 */
+	private void reset() {
     	btnNewResult.setEnabled(true);
         try {
 			Certificates.setRoot(Certificates.createCertificate(1));
 			Certificates.setLevel2(Certificates.createCertificate(2));
 	 		Certificates.setUser(Certificates.createCertificate(3));
+	 		System.out.println(Certificates.getRoot());
 	 		
-	 		temp=Certificates.getRoot().getNotAfter();
+	 		temp=Certificates.getEnd();
 			dateRoot=setFormat(temp);
 			lblrootChoose.setText(dateRoot);
 			
-			temp=Certificates.getLevel2().getNotAfter();
 			dateLevel2=setFormat(temp);
 			lbllevel2Choose.setText(dateLevel2);
 			
-			temp=Certificates.getUser().getNotAfter();
 			dateUser=setFormat(temp);
 			lbllevel3Choose.setText(dateUser);
 		} catch (Exception e) {
@@ -425,23 +426,7 @@ public class ModelComposite extends Composite {
 		}
     }
     
-    @SuppressWarnings("deprecation")
-	public String setFormat(Date date){
-    	String result;
-    	
-    	if(date.getDate()<=9){
-    		result="0"+date.getDate()+".";
-    	}else{
-    		result=date.getDate()+".";
-    	}
-    	if(date.getMonth()<=9){
-    		result+="0"+(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
-    	}else{
-    		result+=(date.getMonth()+1)+"."+(date.getYear()+1900)+" ";
-    	}
-    	
-  	  return result;
-    }
+ 
 
     /**
      * Create the menu manager.

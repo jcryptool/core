@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification;
 
 import org.eclipse.osgi.util.NLS;
@@ -33,7 +42,6 @@ public class Messages {
     public static String SigVerComposite_lblHeader;
     public static String SigVerComposite_MessageTitleReturn;
     public static String SigVerComposite_MessageTextReturn;
-    public static String SigVerComposite_txtDescriptionOfStep4_Success;
     public static String SigVerComposite_menu;
     public static String SigVerComposite_btnDecrypt;
     public static String SigVerComposite_lblPubKey;
@@ -48,6 +56,7 @@ public class Messages {
     public static String ModelComposite_lbllevel3;
     public static String ModelComposite_btnNewResult;
     public static String ModelComposite_Choose;
+    public static String ModelComposite_btnReset;
 
     static {
         // initialize resource bundle

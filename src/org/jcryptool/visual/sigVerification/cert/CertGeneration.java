@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.sigVerification.cert;
 
 import java.io.File;
@@ -9,8 +18,6 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.Security;
-import java.security.cert.CertificateExpiredException;
-import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
@@ -21,10 +28,12 @@ import org.bouncycastle.x509.X509V3CertificateGenerator;
 
 /**
 * This class uses the Bouncycastle lightweight API to generate X.509 certificates programmatically.
+* also allows to check validity of x.509 certificates (shell model)
 *
-* @author abdul
+* @author abdul/Huber
 *
 */
+@SuppressWarnings("deprecation")
 public class CertGeneration{
 
   private static final String CERTIFICATE_ALIAS = "JCT";
@@ -32,19 +41,16 @@ public class CertGeneration{
   private static final String CERTIFICATE_DN = "CN=JCT, O=JCT, L=Hagenberg, ST=OOE, C= AUT";
   private static final String CERTIFICATE_NAME = "jct.SigVerification";
   private static final int CERTIFICATE_BITS = 1024;
-  private int x;
-  private X509Certificate root;
-  private X509Certificate level2;
-  private X509Certificate user;
-  private X509Certificate[] chain;
-  private boolean verify=false;
-  private Date now;
-  private Date end;
+  private int x; //changes to either 1,2 or 3 concerning the certificate(root=1;..)
+  private X509Certificate root; //the root certificate
+  private X509Certificate level2;//the 2nd level certificate
+  private X509Certificate user;//the user certificate
+  private Date now; //certificate not before date - save to allow reset
+  private Date end; //certificate not after date - save to allow reset
   
   public X509Certificate getRoot() {
 	return root;
 }
-
 
 
 public void setRoot(X509Certificate root) {
@@ -52,11 +58,9 @@ public void setRoot(X509Certificate root) {
 }
 
 
-
 public X509Certificate getLevel2() {
 	return level2;
 }
-
 
 
 public void setLevel2(X509Certificate level2) {
@@ -64,11 +68,9 @@ public void setLevel2(X509Certificate level2) {
 }
 
 
-
 public X509Certificate getUser() {
 	return user;
 }
-
 
 
 public void setUser(X509Certificate user) {
@@ -76,11 +78,9 @@ public void setUser(X509Certificate user) {
 }
 
 
-
 public Date getNow() {
 	return now;
 }
-
 
 
 public void setNow(Date now) {
@@ -88,18 +88,19 @@ public void setNow(Date now) {
 }
 
 
-
 public Date getEnd() {
 	return end;
 }
-
 
 
 public void setEnd(Date end) {
 	this.end = end;
 }
   
- public CertGeneration(){
+ /**
+ * Saves the current start- and enddate for the certificates in order to keep them valid whenever the plugin is started
+ */
+public CertGeneration(){
 	 this.now=new Date(System.currentTimeMillis() - 1000L * 60 * 60 * 24);
 	 this.end=new Date(System.currentTimeMillis() + (1000L * 60 * 60 * 24 * 365*10));
  }
@@ -109,16 +110,14 @@ public void setEnd(Date end) {
       Security.addProvider(new BouncyCastleProvider());
   }
 
-  /**
-* @param args
-* @throws Exception
-//*/
-//  public static void main(String[] args) throws Exception {
-//	  System.out.println("Generated");
-//      CertGeneration Certificate = new CertGeneration();
-//  }
 
-  @SuppressWarnings("deprecation")
+  /**
+   * this method creates the x.509 certificate and the needed keypair
+ * @param x - the number value of the certificate (root=1)
+ * @return the generated certificate
+ * @throws Exception
+ */
+@SuppressWarnings("deprecation")
 public X509Certificate createCertificate(int x) throws Exception{
 	  this.x=x;
       X509Certificate cert = null;
@@ -142,6 +141,12 @@ public X509Certificate createCertificate(int x) throws Exception{
 
 
 
+/**
+ * this method saves the created certificate
+ * @param cert - the certificate to save
+ * @param key - the private key
+ * @throws Exception
+ */
 private void saveCert(X509Certificate cert, PrivateKey key) throws Exception {
       KeyStore keyStore = KeyStore.getInstance("JKS");
       keyStore.load(null, null);
@@ -150,33 +155,57 @@ private void saveCert(X509Certificate cert, PrivateKey key) throws Exception {
       keyStore.store( new FileOutputStream(file), "JCT".toCharArray() );    
   }
   
-//  public X509Certificate[] setChain(){
-//	  chain=new X509Certificate[3];
-//	  chain[0]=user;
-//	  chain[1]=level2;
-//	  chain[2]=root;
-//	  
-//	  return chain;
-//  }
-  
- public boolean verify(Date date){	  
-	 verify=false;
+ /**
+  * checks all validity terms 
+ * @param date - the date to validate
+ * @return true if the verification succeeded
+ */
+public boolean verify(Date date){	  
+	 boolean verify=false;
 	  if(check(user,date)==true){
 		  if(check(level2,date)==true){
 			  if(check(root,date)==true){
-				  verify=true;
+				  if (checkTurn()==true){
+					 verify=true;
+				  }
+				 
 			  }
 		  }
 	  }
 	  return verify;
   }
   
-  @SuppressWarnings("deprecation")
+  /**
+   * higher leveled certificates need to have a later/the same not after date then those lower than them
+ * @return true if the validity periods are correct
+ */
+@SuppressWarnings("deprecation")
+private boolean checkTurn() {
+	boolean verify=false;
+	
+	if(root.getNotAfter().getYear()>level2.getNotAfter().getYear()||root.getNotAfter().getYear()==level2.getNotAfter().getYear()&&root.getNotAfter().getMonth()>level2.getNotAfter().getMonth()||root.getNotAfter().getYear()==level2.getNotAfter().getYear()&&root.getNotAfter().getMonth()==level2.getNotAfter().getMonth()&&root.getNotAfter().getDate()>level2.getNotAfter().getDate()||root.getNotAfter().getYear()==level2.getNotAfter().getYear()&&root.getNotAfter().getMonth()==level2.getNotAfter().getMonth()&&root.getNotAfter().getDate()==level2.getNotAfter().getDate()){
+		if(level2.getNotAfter().getYear()>user.getNotAfter().getYear()||level2.getNotAfter().getYear()==user.getNotAfter().getYear()&&level2.getNotAfter().getMonth()>user.getNotAfter().getMonth()||level2.getNotAfter().getYear()==user.getNotAfter().getYear()&&level2.getNotAfter().getMonth()==user.getNotAfter().getMonth()&&level2.getNotAfter().getDate()>user.getNotAfter().getDate()||level2.getNotAfter().getYear()==user.getNotAfter().getYear()&&level2.getNotAfter().getMonth()==user.getNotAfter().getMonth()&&level2.getNotAfter().getDate()==user.getNotAfter().getDate()){
+			verify=true;
+		}
+	}
+	
+	return verify;
+}
+
+
+
+/**
+ * makes sure that the date is within the certificates validity period
+ * @param toCheck - the certificate to be checked
+ * @param date - the date on question
+ * @return true if the validity periods are correct
+ */
+@SuppressWarnings("deprecation")
 private boolean check(X509Certificate toCheck,Date date){
 	  boolean check=false;
 	  
 	  if(toCheck.getNotBefore().getYear()<date.getYear()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()<date.getMonth()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()<date.getDate()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()==date.getDate()){
-		  if(toCheck.getNotAfter().getYear()>date.getYear()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()>date.getMonth()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()==date.getMonth()&&toCheck.getNotAfter().getDate()>date.getDate()||toCheck.getNotBefore().getYear()==date.getYear()&&toCheck.getNotBefore().getMonth()==date.getMonth()&&toCheck.getNotBefore().getDate()==date.getDate()){
+		  if(toCheck.getNotAfter().getYear()>date.getYear()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()>date.getMonth()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()==date.getMonth()&&toCheck.getNotAfter().getDate()>date.getDate()||toCheck.getNotAfter().getYear()==date.getYear()&&toCheck.getNotAfter().getMonth()==date.getMonth()&&toCheck.getNotAfter().getDate()==date.getDate()){
 			  check=true;
 		  }
 	  }
@@ -185,6 +214,12 @@ private boolean check(X509Certificate toCheck,Date date){
 
 
 
+/**
+ * this method creates the needed keypair and the x.509 certificate valid till the given date
+ * @param x - the number value of the certificate (root=1)
+ * @param newend - the new not after date
+ * @return the generated certificate
+ */
 @SuppressWarnings("deprecation")
 public X509Certificate createCertificateNew(int x, Date newend) throws Exception{
 	this.x=x;
