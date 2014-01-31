@@ -21,6 +21,7 @@ public class Messages extends NLS
 	public static String stxInformationSelectedCiphers;
 	public static String stxInformationServerHello;
 	public static String stxInformationRandomValue;
+	public static String stxInformationTLS0;
 	public static String stxInformationTLS1;
 	public static String stxInformationTLS2;
 	public static String stxInformationCipherSuiteRefused1;

@@ -251,25 +251,45 @@ public class ClientHelloComposite extends Composite implements ProtocolStep {
 		}
 		if (infoText) {
 			sslView.setStxInformationText(Messages.ClientHelloInformationText);
-		} else if(txtRandom.getText().equals("")){
-			sslView.setStxInformationText(Messages.stxInformationSelectedCiphers
-					+ text0
-					+ Messages.stxInformationTLS1
-					+ text1
-					+ Messages.stxInformationTLS2
-					+ text2
-					+ "\n\n");
-		}else {
-			sslView.setStxInformationText(Messages.stxInformationSelectedCiphers
-					+ text0
-					+ Messages.stxInformationTLS1
-					+ text1
-					+ Messages.stxInformationTLS2
-					+ text2
-					+ "\n"
-					+ Messages.stxInformationRandomValue
-					+ txtRandom.getText()
-					+ "\n\n");
+		} 
+		else if(txtRandom.getText().equals(""))
+		{
+			String infoText="";
+			infoText += Messages.stxInformationSelectedCiphers;
+			if(tls0CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS0+text0;
+			}
+			if(tls1CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS1+text1;
+			}
+			if(tls2CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS2+text2;
+			}
+			infoText+="\n\n";
+			sslView.setStxInformationText(infoText);
+		}
+		else 
+		{
+			String infoText="";
+			infoText += Messages.stxInformationSelectedCiphers;
+			if(tls0CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS0+text0;
+			}
+			if(tls1CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS1+text1;
+			}
+			if(tls2CipherSuites.isEmpty()==false)
+			{
+				infoText+=Messages.stxInformationTLS2+text2;
+			}
+			infoText+="\n"+Messages.stxInformationRandomValue+txtRandom.getText();
+			infoText+="\n\n";
+			sslView.setStxInformationText(infoText);
 		}
 	}
 
