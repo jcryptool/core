@@ -1,6 +1,7 @@
 package edu.kit.iks.zudoku;
 
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import java.awt.Color;
@@ -102,12 +103,11 @@ public class Card extends JPanel {
 	
 	private class CardAnimation implements ActionListener {
 		// animation lasts Zudoku.ANIMATIONS_DURATION milliseconds
-		private final int FRAMES = (int)((float)Zudoku.ANIMATIONS_DURATION / 1000.0 * Zudoku.ANIMATIONS_FRAMERATE); 
+		private final int FRAMES = (int)((float)ZudokuConfig.ANIMATIONS_DURATION / 1000.0 * ZudokuConfig.ANIMATIONS_FRAMERATE); 
 		private Point from;
 		private Point to;
 		private int framecounter;
 		private Timer timer;
-		
 		
 		public CardAnimation(Point from, Point to) {
 			super();
@@ -115,7 +115,7 @@ public class Card extends JPanel {
 			this.to = to;
 			this.framecounter = 0;
 			
-			timer = new Timer(1000 / Zudoku.ANIMATIONS_FRAMERATE, this);
+			timer = new Timer(1000 / ZudokuConfig.ANIMATIONS_FRAMERATE, this);
 			timer.setInitialDelay(0);
 			timer.start(); 
 			
@@ -168,7 +168,7 @@ public class Card extends JPanel {
 		this.stack = stack;
 		
 		setBounds(new Rectangle(stack.getLocation().x, stack.getLocation().y,
-				                Zudoku.CARD_WIDTH, Zudoku.CARD_HEIGHT));
+				                ZudokuConfig.CARD_WIDTH, ZudokuConfig.CARD_HEIGHT));
 		
 		assert(number > 0);
 		this.number = number;
@@ -178,10 +178,10 @@ public class Card extends JPanel {
 		
 		setOpaque(false); 
 		
-		front_font = new Font("Comic Sans", Font.PLAIN, Zudoku.CARD_FONT_HEIGHT);
+		front_font = new Font("Comic Sans", Font.PLAIN, ZudokuConfig.CARD_FONT_HEIGHT);
 		this.front_image = null;
         try {
-			this.front_image = ImageIO.read(getClass().getResource(Zudoku.CARD_FRONT_IMAGE));
+			this.front_image = ImageIO.read(getClass().getResource(ZudokuConfig.CARD_FRONT_IMAGE));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -189,7 +189,7 @@ public class Card extends JPanel {
 		
         this.back_image = null;
         try {
-			this.back_image = ImageIO.read(getClass().getResource(Zudoku.CARD_BACK_IMAGE));
+			this.back_image = ImageIO.read(getClass().getResource(ZudokuConfig.CARD_BACK_IMAGE));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,14 +275,14 @@ public class Card extends JPanel {
 			// draw front of the card
 			if(fixed) {
 				Color old_color = g.getColor();
-				g.setColor(Zudoku.CARD_FIXED_BORDER_COLOR);
+				g.setColor(ZudokuConfig.CARD_FIXED_BORDER_COLOR);
 				g.fillRect(0, 0, current_bounds.width, current_bounds.height);
 				g.setColor(old_color);
 			}
 			
 			int FONT_HEIGHT = 20;
 			g.drawImage(front_image, image_x, image_y, image_width, image_height, this);
-			g.setColor(Zudoku.KRYPTOLOGIKUM_BLUE);
+			g.setColor(ZudokuConfig.KRYPTOLOGIKUM_BLUE);
 			g.setFont(front_font);
 			g.drawString(Integer.toString(number), image_width / 2 - FONT_HEIGHT / 4 + 5, image_height / 2 + FONT_HEIGHT / 2); 
 		}

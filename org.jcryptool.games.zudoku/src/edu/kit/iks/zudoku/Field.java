@@ -23,6 +23,6 @@ public class Field extends CardStack {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		setBackground(Zudoku.STACK_BACKGROUND_COLOR);
+		setBackground(ZudokuConfig.STACK_BACKGROUND_COLOR);
 	}
 }

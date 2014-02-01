@@ -19,7 +19,7 @@ public abstract class CardStack extends JPanel {
 		assert(parent != null);
 		this.parent = parent;
 		
-		setBounds(new Rectangle(location.x, location.y, Zudoku.STACK_WIDTH, Zudoku.STACK_HEIGHT));		
+		setBounds(new Rectangle(location.x, location.y, ZudokuConfig.STACK_WIDTH, ZudokuConfig.STACK_HEIGHT));		
 		cards = new Stack<Card>();
 		
 		setOpaque(true);

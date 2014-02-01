@@ -13,7 +13,7 @@ import javax.swing.JButton;
 @SuppressWarnings("serial") // Objects of this class are not meant to be serialized. 
 public class GenericRoundedButton extends JButton {
 	private final Font font = new Font("Comic Sans", Font.PLAIN, 20);
-	private Color text_color = Zudoku.KRYPTOLOGIKUM_BLUE;
+	private Color text_color = ZudokuConfig.KRYPTOLOGIKUM_BLUE;
 	
 	public GenericRoundedButton(String text) {
 		super(text);

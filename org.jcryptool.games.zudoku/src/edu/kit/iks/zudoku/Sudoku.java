@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 public class Sudoku {
 	public static final int MARKER_THICKNESS = 4;
-	public static final int MARKER_PADDING = Zudoku.STACK_PADDING / 2 + MARKER_THICKNESS / 2;
+	public static final int MARKER_PADDING = ZudokuConfig.STACK_PADDING / 2 + MARKER_THICKNESS / 2;
 	
 	/*
 	 * The hard coded 4x4 solutions (transposed)
@@ -70,11 +70,11 @@ public class Sudoku {
 		this.pos_y = pos_y;
 		this.active = active;
 		
-		this.fields = new Field[Zudoku.SUDOKU_SIZE][Zudoku.SUDOKU_SIZE];
+		this.fields = new Field[ZudokuConfig.SUDOKU_SIZE][ZudokuConfig.SUDOKU_SIZE];
 		for(int i = 0; i < this.fields.length; i++) {
 			for(int j = 0; j < this.fields.length; j++) {
-				int x = this.pos_x + i * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING);
-				int y = this.pos_y + j * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING);
+				int x = this.pos_x + i * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING);
+				int y = this.pos_y + j * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING);
 				this.fields[i][j] = new Field(this.parent, new Point(x, y));
 				this.parent.add(fields[i][j], SudokuField.STACK_LAYER);
 			}
@@ -85,7 +85,7 @@ public class Sudoku {
 		 * 
 		 * NOTE: Hints might not lead to a unique solution this way.
 		 */
-		if(Zudoku.SUDOKU_SIZE == 4) {
+		if(ZudokuConfig.SUDOKU_SIZE == 4) {
 			int r = (int)Math.floor(Sudoku.SOLUTIONS.length * Math.random());
 			this.solution = Sudoku.SOLUTIONS[r].clone();
 			
@@ -95,7 +95,7 @@ public class Sudoku {
 			// until enough fields are selected. 
 			int n = 0;
 			int k = (int)Math.floor(Math.random() * this.fields.length);
-			while(n < Math.min(Zudoku.NUMBER_OF_HINTS, this.fields.length * this.fields.length)) {
+			while(n < Math.min(ZudokuConfig.NUMBER_OF_HINTS, this.fields.length * this.fields.length)) {
 				int l = (int)Math.floor(Math.random() * this.fields.length);
 				int i = getBlockIndexI(k, l);
 				int j = getBlockIndexJ(k, l);
@@ -112,7 +112,7 @@ public class Sudoku {
 			}
 		} else {
 			// TODO: Include solutions for other sizes (implement generator?)
-			this.solution = new int[Zudoku.SUDOKU_SIZE][Zudoku.SUDOKU_SIZE];
+			this.solution = new int[ZudokuConfig.SUDOKU_SIZE][ZudokuConfig.SUDOKU_SIZE];
 		}
 	}
 	
@@ -185,10 +185,10 @@ public class Sudoku {
 	
 	public JLabel getColumnMarker(int i, Color color) {
 		JLabel marker = new JLabel();
-		int x = pos_x + i * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING) - MARKER_PADDING;
+		int x = pos_x + i * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING) - MARKER_PADDING;
 		int y = pos_y - MARKER_PADDING;
-		int width = Zudoku.STACK_WIDTH + 2 * MARKER_PADDING;
-		int height = fields.length * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING) - Zudoku.STACK_PADDING + 2 * MARKER_PADDING; 
+		int width = ZudokuConfig.STACK_WIDTH + 2 * MARKER_PADDING;
+		int height = fields.length * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING) - ZudokuConfig.STACK_PADDING + 2 * MARKER_PADDING; 
 		marker.setBounds(x, y, width, height);
 		marker.setBorder(BorderFactory.createLineBorder(color, MARKER_THICKNESS));
 		return marker;
@@ -208,9 +208,9 @@ public class Sudoku {
 	public JLabel getRowMarker(int j, Color color) {
 		JLabel marker = new JLabel();
 		int x = pos_x - MARKER_PADDING;
-		int y = pos_y + j * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING) - MARKER_PADDING;
-		int width = fields.length * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING) - Zudoku.STACK_PADDING + 2 * MARKER_PADDING;
-		int height = Zudoku.STACK_HEIGHT + 2 * MARKER_PADDING; 
+		int y = pos_y + j * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING) - MARKER_PADDING;
+		int width = fields.length * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING) - ZudokuConfig.STACK_PADDING + 2 * MARKER_PADDING;
+		int height = ZudokuConfig.STACK_HEIGHT + 2 * MARKER_PADDING; 
 		marker.setBounds(x, y, width, height);
 		marker.setBorder(BorderFactory.createLineBorder(color, MARKER_THICKNESS));
 		return marker;
@@ -242,10 +242,10 @@ public class Sudoku {
 		JLabel marker = new JLabel();
 		int i = getBlockIndexI(k, 0);
 		int j = getBlockIndexJ(k, 0);
-		int x = pos_x + i * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING) - MARKER_PADDING;
-		int y = pos_y + j * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING) - MARKER_PADDING;
-		int width = (int)Math.sqrt(fields.length) * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING) - Zudoku.STACK_PADDING + 2 * MARKER_PADDING;
-		int height = (int)Math.sqrt(fields.length) * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING) - Zudoku.STACK_PADDING + 2 * MARKER_PADDING;
+		int x = pos_x + i * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING) - MARKER_PADDING;
+		int y = pos_y + j * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING) - MARKER_PADDING;
+		int width = (int)Math.sqrt(fields.length) * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING) - ZudokuConfig.STACK_PADDING + 2 * MARKER_PADDING;
+		int height = (int)Math.sqrt(fields.length) * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING) - ZudokuConfig.STACK_PADDING + 2 * MARKER_PADDING;
 		marker.setBounds(x, y, width, height);
 		marker.setBorder(BorderFactory.createLineBorder(color, MARKER_THICKNESS));
 		return marker;
@@ -297,7 +297,7 @@ public class Sudoku {
 			
 			int rand_num;
 			do {
-				rand_num = (int)(Zudoku.SUDOKU_SIZE * Math.random()) + 1;
+				rand_num = (int)(ZudokuConfig.SUDOKU_SIZE * Math.random()) + 1;
 			} while(rand_num == rand_card.getNumber());
 			rand_card.setNumber(rand_num);
 			rand_card.repaint();

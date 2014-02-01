@@ -1,5 +1,4 @@
 package edu.kit.iks.zudoku;
-
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashSet;
@@ -27,14 +26,14 @@ public class SudokuField extends JLayeredPane {
 	
 	private void createSupplyStacks() {
 		assert(supply_stacks == null);
-		supply_stacks = new SupplyStack[Zudoku.SUDOKU_SIZE];
+		supply_stacks = new SupplyStack[ZudokuConfig.SUDOKU_SIZE];
     	for(int i = 0; i < supply_stacks.length; i++) {
     		supply_stacks[i] =
     			new SupplyStack(
     				this,
-    				new Point(Zudoku.BORDER_PADDING, 
-    				            Zudoku.BORDER_PADDING + Zudoku.STACK_HEIGHT + Zudoku.SUDOKU_LEFT_PADDING 
-    				          + i * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING)),
+    				new Point(ZudokuConfig.BORDER_PADDING, 
+    				            ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_HEIGHT + ZudokuConfig.SUDOKU_LEFT_PADDING 
+    				          + i * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING)),
     				i + 1); 
     		add(supply_stacks[i]);//, STACK_LAYER);
     	}
@@ -43,13 +42,13 @@ public class SudokuField extends JLayeredPane {
 	private void createVerificationStacks() {
 		assert(verify_stacks == null);
 		
-		verify_stacks = new Field[Zudoku.SUDOKU_SIZE];
+		verify_stacks = new Field[ZudokuConfig.SUDOKU_SIZE];
     	for(int i = 0; i < verify_stacks.length; i++) {
     		verify_stacks[i] = 
     			new Field(this,
-    					  new Point(  Zudoku.BORDER_PADDING + Zudoku.STACK_WIDTH + Zudoku.SUDOKU_LEFT_PADDING
-    							    + i * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING),
-    							    Zudoku.BORDER_PADDING));
+    					  new Point(  ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_WIDTH + ZudokuConfig.SUDOKU_LEFT_PADDING
+    							    + i * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING),
+    							    ZudokuConfig.BORDER_PADDING));
     		add(verify_stacks[i]); //, STACK_LAYER);
     	}
 	}
@@ -64,19 +63,19 @@ public class SudokuField extends JLayeredPane {
 		setOpaque(false);
 		
 		setPreferredSize(
-		    	new Dimension(  Zudoku.BORDER_PADDING + Zudoku.STACK_WIDTH + Zudoku.SUDOKU_LEFT_PADDING
-		    			      + Zudoku.SUDOKU_SIZE * (Zudoku.STACK_WIDTH + Zudoku.STACK_PADDING)
-		    			      + Zudoku.BORDER_PADDING, 
-		    			        Zudoku.BORDER_PADDING + Zudoku.STACK_HEIGHT + Zudoku.SUDOKU_TOP_PADDING 
-		    			      + Zudoku.SUDOKU_SIZE * (Zudoku.STACK_HEIGHT + Zudoku.STACK_PADDING)
-		    			      + Zudoku.BORDER_PADDING));
+		    	new Dimension(  ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_WIDTH + ZudokuConfig.SUDOKU_LEFT_PADDING
+		    			      + ZudokuConfig.SUDOKU_SIZE * (ZudokuConfig.STACK_WIDTH + ZudokuConfig.STACK_PADDING)
+		    			      + ZudokuConfig.BORDER_PADDING, 
+		    			        ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_HEIGHT + ZudokuConfig.SUDOKU_TOP_PADDING 
+		    			      + ZudokuConfig.SUDOKU_SIZE * (ZudokuConfig.STACK_HEIGHT + ZudokuConfig.STACK_PADDING)
+		    			      + ZudokuConfig.BORDER_PADDING));
 		if(active) {
 			createSupplyStacks();
 		}
 	    createVerificationStacks();
 	    sudoku = new Sudoku(this,
-	    		            Zudoku.BORDER_PADDING + Zudoku.STACK_WIDTH + Zudoku.SUDOKU_LEFT_PADDING, 
-		                    Zudoku.BORDER_PADDING + Zudoku.STACK_HEIGHT + Zudoku.SUDOKU_TOP_PADDING,
+	    		            ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_WIDTH + ZudokuConfig.SUDOKU_LEFT_PADDING, 
+		                    ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_HEIGHT + ZudokuConfig.SUDOKU_TOP_PADDING,
 		                    active);	
 	}
 	
@@ -90,8 +89,8 @@ public class SudokuField extends JLayeredPane {
 		 * Create new sudoku
 		 */
 		sudoku = new Sudoku(this, 
-				            Zudoku.BORDER_PADDING + Zudoku.STACK_WIDTH + Zudoku.SUDOKU_LEFT_PADDING, 
-				            Zudoku.BORDER_PADDING + Zudoku.STACK_HEIGHT + Zudoku.SUDOKU_TOP_PADDING,
+				            ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_WIDTH + ZudokuConfig.SUDOKU_LEFT_PADDING, 
+				            ZudokuConfig.BORDER_PADDING + ZudokuConfig.STACK_HEIGHT + ZudokuConfig.SUDOKU_TOP_PADDING,
 				            active);
 		repaint();
 	}
