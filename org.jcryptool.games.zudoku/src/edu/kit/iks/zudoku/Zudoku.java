@@ -1,7 +1,9 @@
 package edu.kit.iks.zudoku;
 
 import java.awt.Color;
+
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial") // Objects of this class are not meant to be serialized. 
 public class Zudoku extends JPanel {
@@ -55,29 +57,8 @@ public class Zudoku extends JPanel {
 	public static final int ANIMATIONS_FRAMERATE = FRAMERATE;
 	public static final int ANIMATIONS_DURATION = 2000; // Duration in milliseconds
 
-	/*
-	 * Identifiers for the card layout
-	 */
-	public static final String WELCOME_CARD = "WELCOME_CARD";
-	public static final String PROOF_CARD = "PROOF_CARD"; 
-	public static final String VERIFICATION_CARD = "VERIFICATION_CARD"; 
-	
-	private VerificationPanel verification_panel;
-	
 	public Zudoku() {
-		if(PROOF_MODE_ACTIVE && VERIFICATION_MODE_ACTIVE) {
-			// Proof mode not implemented yet.			
-		}
-		
-		if(PROOF_MODE_ACTIVE) {
-			// Proof mode not implemented yet.
-		}
-		
-		if(VERIFICATION_MODE_ACTIVE) {
-			verification_panel = new VerificationPanel(this, new SudokuField(false));
-			add(verification_panel, VERIFICATION_CARD);	
-		}
-		
+		add(new VerificationPanel(this, new SudokuField(false)));	
 		setBackground(Color.BLACK);
 	}
 }

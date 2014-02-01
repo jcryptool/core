@@ -1,8 +1,10 @@
 package org.jcryptool.games.zudoku.views;
 
+import java.awt.BorderLayout;
 import java.awt.Frame;
 
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
@@ -19,7 +21,8 @@ public class ZudokuView extends ViewPart {
     	Frame frame = SWT_AWT.new_Frame(c);
 	    JComponent content = new Zudoku(); 
 	    content.setOpaque(true);
-	    frame.add(content);
+	    JScrollPane scroller = new JScrollPane(content);  
+	    frame.add(scroller, BorderLayout.CENTER);  
 	    frame.pack();
 	    frame.setVisible(true); 
     }

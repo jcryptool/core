@@ -285,20 +285,6 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		GenericRoundedButton button = null;
 		List<JButton> buttons = new ArrayList<JButton>();
 		
-		if(Zudoku.PROOF_MODE_ACTIVE && Zudoku.VERIFICATION_MODE_ACTIVE) {
-			// If both modes are active, there is a welcome panel to go back to.
-			// Otherwise omit this button.
-			button = new GenericRoundedButton();
-			button.setText("Zurück");
-			button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					((CardLayout)VerificationPanel.this.parent.getLayout()).show(VerificationPanel.this.parent, Zudoku.WELCOME_CARD);
-				}
-			});
-			buttons.add(button);
-		}
-		
 		button = new GenericRoundedButton();
 		button.setText(" Neues Sudoku  ");
 		button.addActionListener(new ActionListener() {
