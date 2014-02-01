@@ -1,6 +1,5 @@
 package edu.kit.iks.zudoku;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 
@@ -9,7 +8,7 @@ public class Zudoku extends JPanel {
 	/* 
 	 * Settings
 	 */
-	public static boolean PROOF_MODE_ACTIVE = false;
+	public static boolean PROOF_MODE_ACTIVE = false; // Proof mode not implemented yet.
 	public static boolean VERIFICATION_MODE_ACTIVE = true;
 	
 	public static int SUDOKU_SIZE = 4;
@@ -63,20 +62,15 @@ public class Zudoku extends JPanel {
 	public static final String PROOF_CARD = "PROOF_CARD"; 
 	public static final String VERIFICATION_CARD = "VERIFICATION_CARD"; 
 	
-	private WelcomePanel welcome_panel;
-	private ProofPanel proof_panel;
 	private VerificationPanel verification_panel;
 	
 	public Zudoku() {
 		if(PROOF_MODE_ACTIVE && VERIFICATION_MODE_ACTIVE) {
-			setLayout(new CardLayout());
-			welcome_panel = new WelcomePanel(this);
-			add(welcome_panel, WELCOME_CARD);
+			// Proof mode not implemented yet.			
 		}
 		
 		if(PROOF_MODE_ACTIVE) {
-			proof_panel = new ProofPanel(this, new SudokuField(true));
-			add(proof_panel, PROOF_CARD);
+			// Proof mode not implemented yet.
 		}
 		
 		if(VERIFICATION_MODE_ACTIVE) {
@@ -85,9 +79,5 @@ public class Zudoku extends JPanel {
 		}
 		
 		setBackground(Color.BLACK);
-	}
-	
-	public ProofPanel getProofPanel() {
-		return proof_panel;
 	}
 }
