@@ -3,7 +3,6 @@ package edu.kit.iks.zudoku;
 import java.awt.Color;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial") // Objects of this class are not meant to be serialized. 
 public class Zudoku extends JPanel {
