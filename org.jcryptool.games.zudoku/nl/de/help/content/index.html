@@ -2,104 +2,36 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Sudoku-L&ouml;ser</title>
+		<title>Zudo-Ku</title>
 	</head>
 <body>
-	<h1>Sudoku-L&ouml;ser</h1>
+	<h1>Zudo-Ku</h1>
 	
-	<p>Mit diesem Plugin k&ouml;nnen die folgender <b>drei Arten von Sudokus</b> gel&ouml;st werden: Normale Sudokus, Killer-Sudokus und hexadezimales Sudokus.</p>	
-	<p>Die folgende Hilfe dazu besteht aus 4 Abschnitten: <a href="#expl">Erkl&auml;rung der Sudokus</a>, <a href="#tact">Sudoku-L&ouml;sungstaktik</a>, <a href="#view">Bedienung des Plugins</a> und <a href="#filehandling">Datei-Support</a>.</p>
-
-
-	<h2 id="expl">Erkl&auml;rung der Sudokus</h2>
-	
-	<p>Die <b>normale Variante</b> ist aus Zeitungen gut bekannt: Sie besteht aus einem 9x9-Quadrat, bei dem in jedes der 81 Felder eine Zahl zwischen 1 und 9 eingetragen werden muss. Jede der neun Zahlen muss so eingetragen werden, dass sie in jeder Zeile, jeder Spalte und in jedem 3x3-Teilquadrat (angezeigt durch die dickeren Linien) nur einmal vorkommt.</p>
-	<p>Ein <b>hexadezimales Sudoku</b> ist lediglich eine Erweiterung dieses Sudokus auf ein 16x16-Quadrat mit 4x4-Teilquadraten. Nun muss in jedes der 256 Felder eindeutig eines von 16 Zeichen (oft bezeichnet mit den Hexziffern 0 bis 9 und A bis F) eingetragen werden. Die Restriktionen sind entsprechend zur normalen Variante.</p>
-	<p>Die meisten betrachten das <b>Killer-Sudoku</b> als das schwierigste der drei Typen. Hierbei gibt es unterschiedliche Boxen mit mathematischen Operationen (Addition, Subtraktion, Multiplikation und Division). Wendet man die Operation auf alle Zahlen einer Box an, muss das in der Box angegebene Ergebnis entstehen. Wiederum sind die Zahlen pro Zeile, pro Spalte und pro "Rechen-Box" eindeutig. Es kann auch sein, dass zus&auml;tzlich die Zahlen in jedem 3x3-Teilquadrat nur einmal vorkommen d&uuml;rfen. Das Plugin erlaubt, diese zus&auml;tzliche Teilquadrate-Regel (Box-Regel) ein- und auszuschalten.</p>
-
-
-	<h2 id="tact">Sudoku-L&ouml;sungstaktik</h2>
-	
-	<p>Nachdem Sudoku popul&auml;r wurde, sind zahlreiche Taktiken zur L&ouml;sung online ver&ouml;ffentlicht worden. Einige dieser Taktiken sind in diesem L&ouml;ser implementiert worden, um einem Benutzer zu helfen, ein Sudoku zu l&ouml;sen. F&uuml;r das normale und das Killer-Sudoku enth&auml;lt dieses Plugin momentan keine Taktiken, denn diese k&ouml;nnen mit einem Brute-Force-Ansatz gel&ouml;st werden (Ausprobieren aller M&ouml;glichkeiten). </p>
-	
-	<p>Das Killer-Sudoku l&auml;sst sich aufgrund der zus&auml;tzlichen Restriktionen deutlich schwieriger per Brute-Force l&ouml;sen. Trotzdem sind auch dazu momentan keine Taktiken in das Plugin eingebaut, weil wir keine "guten" Taktiken fanden. Der eingebaute Brute-Force-Ansatz berechnet alle M&ouml;glichkeiten pro Einzelfeld unter Beachtung der mathematischen Beschr&auml;nkungen (indem er mit der kleinsten Anzahl M&ouml;glichkeiten beginnt).</p>
-	
-	<p>Das hexadezimale Sudoku ist wahrscheinlich am schwierigsten mit einem Brute-Force-Ansatz zu l&ouml;sen aufgrund des vergr&ouml;ßerten Quadrats. Deshalb sind f&uuml;r diese Typ einige Taktiken eingebaut. Diese Taktiken werden f&uuml;r das normale Sudoku erkl&auml;rt auf <a href="http://www.su-doku.net/tech.php">www.su-doku.net</a> und <a href="www.sudokuoftheday.com">www.sudokuoftheday.com</a>. Die folgenden Taktiken sind hierf&uuml;r verf&uuml;gbar:
-	<ul>
-		<li><a href="http://www.su-doku.net/tech.php">One possible (nicht erkl&auml;rt)
-		</a></li>
-		<li><a href="http://www.su-doku.net/tech.php">Naked single</a></li>
-		<li><a href="http://www.su-doku.net/tech.php">Hidden single</a></li>
-		<li><a href="http://www.su-doku.net/tech.php">Block and Column</a></li>
-		<li><a href="http://www.su-doku.net/tech.php">Naked subset</a></li>
-		<li><a href="http://www.sudokuoftheday.com/pages/techniques-3.php">Candidate line</a></li>
-		<li><a href="http://www.sudokuoftheday.com/pages/techniques-4.php">Double pair</a></li>
-		<li><a href="http://www.sudokuoftheday.com/pages/techniques-5.php">Multiple lines</a></li>
-	</ul></p>
-
-	<h2 id="view">Bedienung des Plugins</h2>
-	<p>Das Plugin hat zwei Modi: Eingabe und L&ouml;sen. Beim Start ist es im <b>Eingabe-Modus</b>, in dem man entweder ein existierendes Sudoku laden oder in dem man das neue Sudoku von Hand eintippen kann. Das Eingeben eines normalen oder hexadezimalen Sudokus ist unkompliziert: Die gegebenen Zahlen werden einfach in die richtigen Felder eingetragen.</p>
-	<p>Ein Killer-Sudoku einzugeben ist etwas komplizierter: Die Zahlen einzugeben ist wieder einfach, aber zus&auml;tzlich sind noch die Fl&auml;chen (Rechen-Boxen), die mathematische Operation und das Ergebnis einzugeben. Dazu muss man nacheinander die Felder einer Rechen-Box anklicken, wodurch sie rot werden. Hat man alle Einzelfelder f&uuml;r eine Rechen-Box ausgew&auml;hlt, wird der Operator aus dem Men&uuml; links gew&auml;hlt und das erforderliche Ergebnis eingegeben. Es ist zu beachten, dass nur Einzelfelder, die nebeneinander liegen, in einer Rechen-Box liegen k&ouml;nnen.</p>
-	<p>Nachdem ein Sudoku geladen oder fertig eingegeben ist, muss man in den <b>L&ouml;sen-Modus</b> wechseln. Um das Sudoku dann zu l&ouml;sen, ist als n&auml;chstes ein Einzelfeld anzuklicken und die entsprechende Zahl einzugeben. Das Plugin verhindert, dass man eine Zahl eingibt, die eine der gegebenen Regeln verletzt. Um es einfacher zu haben, kann das Plugin auch in allen Einzelfeldern alle m&ouml;glichen Zahlen anzeigen. Wenn man nicht weiter weiß, kann man sich einen Hinweis geben lassen. Das Plugin w&auml;hlt dazu ein leeres Einzelfeld zuf&auml;llig aus und tr&auml;gt die korrekte Zahl ein. Beachte, das der "Hinweis"-Button nicht sofort aufrufbar ist, wenn man in den L&ouml;sen-Modus wechselt, weil das Plugin zuerst das gesamte Sudoku im Hintergrund l&ouml;st.</p>
-	<p>Mit dem Plugin kan man Sudokus nicht nur laden, sondern auch abspeichern, so dass man jederzeit unterbrechen kann. <br />
-	Man kann sich auch Sudokus aus dem Internet herunterladen und diese in diesem JCT-Plugin &ouml;ffnen: Diese m&uuml;ssen nur zu den jeweiligen Dateiformaten f&uuml;r die drei unterschiedlichen Sudoku-Typen passen (siehe <a href="#filehandling">Datei-Support</a>).</p>
-
-
-	<h2 id="filehandling">Datei-Support</h2>
-	<p>Das Plugin unterst&uuml;tzt unterschiedliche Dateiformate f&uuml;r die verschiedenen Sudoku-Typen. Im Folgenden wird erkl&auml;rt, wie die Datei aussehen soll.</p>
-	<p>F&uuml;r normale Sudokus ist das Format sehr flexibel: Das Plugin versucht, 81 unterscheidbare Zahlen zu finden (wobei die leeren Einzelfelder normalerweise als '0' oder '.' dargestellt werden).</p>
-	<p>Killer-Sudokus erfodern ein striktes Dateiformat: Alle Einzelfelder, die zu einer Rechenbox geh&ouml;ren, m&uuml;ssen dasselbe Zeichen (Character) enthalten. Diese Zeichen sind pro Rechenbox eindeutig. Die Zeichen m&uuml;ssen so angeordnet werden, wie sie auch im Sudoku stehen. Unterhalb des Sudokus ist dann f&uuml;r jedes Zeichen ein String anzugeben, der die Operation und das Ergebnis enth&auml;lt, z.B. a x 24 or b + 12. Anstelle von '+' kann man als Operator auch '=' angeben. Ein komplettes Beispiel finden Sie <a href="#killerfile">unten</a>.</p>
-	<p>Bei hexadezimalen Sudokus werden zwei Formate akzeptiert: Ein leeres Einzelfeld kann entweder per '.' oder per Leerzeichen gekennzeichnet werden. Im ersten Fall werden die Eingaben zeilenweise ohne Leerzeichen dazwischen erwartet. Im zweiten Fall werden die Eingaben auch zeilenweisen erwartet -- mit einem Leerzeichen zwischen jedem Zeichen.	
-	Welcher Typ benutzt wird, muss 	mit einer '1' oder '2' in der ersten Zeile der Datei angezeigt werden.</p>
-	<p>Das Klicken des "Autofill"-Buttons f&uuml;llt ein leeres Einzelfeld, in dem nur eine Zahl m&ouml;glich war. Das gef&uuml;llte Einzelfeld blinkt danach rot.
-	Im Fall des hexadezimalen Sudokus wird durch Klick auf einen der Strategie-Buttons die entsprechende Strategie angewandt und die entspechenden Eintr&auml;ge vorgenommen. Die gew&auml;hlte Strategie wird (ohne weitere Benutzereingabe) so oft wiederholt, bis damit keine weiteren leeren Einzelfelder mehr gef&uuml;llt werden k&ouml;nnen.	</p>
-
-	<h3 id="killerfile">Beispiel für eine Killer-Sudoku-Datei</h3>
-	
-	<pre>
-	+-------+-------+-------+
-	| a a b | b c d | d e e |
-	| f g b | b c h | h e e |
-	| f g g | i c c | h e j |
-	+-------+-------+-------+
-	| k k i | i l m | n n j |
-	| o o p | l l m | m m   | 
-	| q q p | p r s | t u u |
-	+-------+-------+-------+
-	| v q w | p r s | t x y |
-	| v q w | & z z | x x y |
-	| v * * | & # # | # # y |
-	+-------+-------+-------+
-
-	a x 12
-	b x 648
-	c x 1440
-	d x 56
-	e + 24
-	f : 7
-	g + 13
-	h x 50
-	i x 27
-	j - 4
-	k - 3
-	l + 16
-	m x 192
-	n : 4
-	o - 7
-	p x 560
-	q + 16
-	r x 12
-	s - 4
-	t + 12
-	u - 1
-	v x 135
-	w : 5
-	x + 15
-	y x 216
-	z : 2
-	* + 10
-	# x 144
-	& - 1
-	</pre>
+	<p>
+	 	Lass dir beweisen, dass dein Gegen&uuml;ber - gespielt vom Rechner - ein Sudoku gel&ouml;st hat.
+	</p>
+	<p>
+		Klicke auf "Herausfordern" und w&auml;hle eine Zeile, eine Spalte oder einen Block aus.
+	</p>
+	<p>
+		Die dazugeh&ouml;rigen Karten werden nun gemischt und aufgedeckt.
+	</p>
+	<p>
+		&uuml;berpr&uuml;fe, ob jede Zahl von eins bis vier genau einmal vorkommt.
+	</p>
+	<p>
+		Die Karten werden wieder gemischt und zur&uuml;ckgelegt.
+	</p>
+	<p>
+		Fordere den Rechner erneut heraus. Nach wie vielen Herausforderungen glaubst du
+		ihm, dass er tats&auml;chlich das Sudoku gel&ouml;st hat? Wenn ja, hat er dir die L&ouml;sung
+		vielleicht einfach verraten, damit du ihm glaubst? Versuche doch mal, aus
+		seinen Antworten die L&ouml;sung zusammenzusetzen.
+	</p>
+	<p>
+		Klicke auf "Schummeln". Der Rechner versucht nun, dich mit einer
+		unvollst&auml;ndigen L&ouml;sung zu &uuml;berzeugen. Nach wie vielen Herausforderungen
+		ertappst du ihn?
+	</p>
 </body>
 </html>

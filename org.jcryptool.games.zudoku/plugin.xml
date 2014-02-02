@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Zudo-Ku"
+            name="%view.name"
             icon="icons/view.gif"
             category="org.jcryptool.games"
             class="org.jcryptool.games.zudoku.views.ZudokuView"
@@ -22,7 +22,7 @@
          point="org.jcryptool.core.operations.games">
       <Game
             contextHelpId="org.jcryptool.games.zudoku.zudokuview"
-            name="Zudo-Ku"
+            name="%Game.name"
             viewId="org.jcryptool.games.zudoku.views.ZudokuView">
       </Game>
    </extension>
@@ -39,7 +39,8 @@
          <command
                commandId="org.jcryptool.games.zudoku.newGameCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
-               style="push">
+               style="push"
+               tooltip="%newgame.command.tooltip">
          </command>
          <command
                commandId="org.jcryptool.games.zudoku.helpCommand"
@@ -53,7 +54,8 @@
          <command
                commandId="org.jcryptool.games.zudoku.newGameCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
-               style="push">
+               style="push"
+               tooltip="%newgame.command.tooltip">
          </command>
          <command
                commandId="org.jcryptool.games.zudoku.helpCommand"
