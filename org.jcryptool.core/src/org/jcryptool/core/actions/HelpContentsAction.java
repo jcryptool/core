@@ -1,13 +1,12 @@
-//-----BEGIN DISCLAIMER-----
+// -----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2013 JCrypTool Team and Contributors
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*******************************************************************************/
-//-----END DISCLAIMER-----
+ * Copyright (c) 2013 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.core.actions;
 
 import org.eclipse.core.runtime.IPath;
@@ -18,20 +17,24 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
 
-/*
- * @see IWorkbenchWindowActionDelegate
+/**
+ * This action loads the help page of the currently active plug-in (its view). The corresponding
+ * help page is identified by the plug-in-id and the topic id. A plug-in developer only needs to
+ * provide help for the plug-in, there are no other requirements. JCrypTool takes care of the rest.
+ * 
+ * @author Dominik Schadow
  */
 public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
     private IWorkbenchWindow window;
 
     /**
-     * The action has been activated. The argument of the method represents the 'real' action sitting in the workbench
-     * UI.
+     * The action has been activated. The argument of the method represents the 'real' action
+     * sitting in the workbench UI.
      * 
      * @see IWorkbenchWindowActionDelegate#run
      */
@@ -57,14 +60,15 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
             private String findContextId() {
                 if (window != null) {
                     IWorkbenchPage page = window.getActivePage();
-                    IWorkbenchPartReference ref;
                     if (page != null) {
-                        ref = page.getActivePartReference();
-                        if (ref != null) {
-                            return ref.getId();
+                        IWorkbenchPart activePart = page.getActivePart();
+
+                        if (activePart != null) {
+                            return activePart.getSite().getPluginId();
                         }
                     }
                 }
+
                 return null;
             }
 
@@ -97,15 +101,15 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
                 if (href == null || href.isEmpty()) {
                     return false;
                 }
-                String idStart = href.split("" + IPath.SEPARATOR)[1].toLowerCase();
-                return id.toLowerCase().startsWith(idStart);
+
+                return id.equalsIgnoreCase(href.split("" + IPath.SEPARATOR)[1]);
             }
         });
     }
 
     /**
-     * Selection in the workbench has been changed. We can change the state of the 'real' action here if we want, but
-     * this can only happen after the delegate has been created.
+     * Selection in the workbench has been changed. We can change the state of the 'real' action
+     * here if we want, but this can only happen after the delegate has been created.
      * 
      * @see IWorkbenchWindowActionDelegate#selectionChanged
      */
@@ -121,7 +125,8 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
     }
 
     /**
-     * We will cache window object in order to be able to provide parent shell for the message dialog.
+     * We will cache window object in order to be able to provide parent shell for the message
+     * dialog.
      * 
      * @see IWorkbenchWindowActionDelegate#init
      */
