@@ -296,16 +296,7 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(vfy_step == 0 && cheat_overlay == null) {
-					cheat_counter = 0;
-					ouvert = false;
-					button_flip.setText(Messages.VP_EXPOSE_CARDS);
-					field.newSudoku();
-					field.getSudoku().solve();
-					if(!ouvert) {
-						field.getSudoku().flipCards();
-					}
-				}
+				newSudoku();
 			}
 		});
 		buttons.add(button);
@@ -633,6 +624,19 @@ public class VerificationPanel extends JPanel implements ActionListener {
 			System.err.println("Unknown verification step: " + step);
 			break;
 		}
+	}
+	
+	public void newSudoku() {
+		if(vfy_step == 0 && cheat_overlay == null) {
+			cheat_counter = 0;
+			ouvert = false;
+			button_flip.setText(Messages.VP_EXPOSE_CARDS);
+			field.newSudoku();
+			field.getSudoku().solve();
+			if(!ouvert) {
+				field.getSudoku().flipCards();
+			}
+		}		
 	}
 
 	@Override

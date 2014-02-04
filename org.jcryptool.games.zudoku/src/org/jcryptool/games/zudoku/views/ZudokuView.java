@@ -14,12 +14,13 @@ import org.eclipse.ui.part.ViewPart;
 import edu.kit.iks.zudoku.Zudoku;
 
 public class ZudokuView extends ViewPart {
+	public final Zudoku zudoku = new Zudoku();
 
     @Override
     public void createPartControl(Composite parent) {
     	Composite c = new Composite(parent, SWT.EMBEDDED);
-    	Frame frame = SWT_AWT.new_Frame(c);
-	    JComponent content = new Zudoku(); 
+    	Frame frame = SWT_AWT.new_Frame(c);    	
+	    JComponent content = zudoku; 
 	    content.setOpaque(true);
 	    JScrollPane scroller = new JScrollPane(content);  
 	    frame.add(scroller, BorderLayout.CENTER);  

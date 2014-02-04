@@ -35,7 +35,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="toolbar:org.jcryptool.games.zudoku.ZudokuView">
+            locationURI="toolbar:org.jcryptool.games.zudoku.views.ZudokuView">
          <command
                commandId="org.jcryptool.games.zudoku.newGameCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
