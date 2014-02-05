@@ -39,16 +39,16 @@ public class Huffman {
 	 * This method performs the compression of the file inFilename. It writes
 	 * the results to the OutputStream out.
 	 * 
-	 * @param inFilename
+	 * @param input
 	 *            the file to compress
 	 * @param out
 	 * 				the OutputStream
 	 * @throws IOException
 	 */
-	public void compress(String inFilename, OutputStream out) throws IOException {
+	public void compress(String input, OutputStream out) throws IOException {
 		this.out = out;
 
-		InputStream is = new ByteArrayInputStream(inFilename.getBytes());
+		InputStream is = new ByteArrayInputStream(input.getBytes());
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
 		HuffmanStreamWriter hsw = new HuffmanStreamWriter(out);
@@ -96,24 +96,24 @@ public class Huffman {
 	 * This method performs the uncompression of the file inFilename. It writes
 	 * the results to the OutputStream out.
 	 * 
-	 * @param inFilename
+	 * @param path
 	 * 				the file to uncompress
 	 * @throws IOException
 	 */
-	public void uncompress(String inFilename) throws IOException {
+	public void uncompress(String path) throws IOException {
 
 		sb = new StringBuilder();
-		HuffmanStreamReader hsr = new HuffmanStreamReader(new FileInputStream(inFilename));
+		HuffmanStreamReader hsr = new HuffmanStreamReader(new FileInputStream(path));
 
 		table = hsr.getCodeTable();
 		root = buildTreeReverse(table);
 
-		for (Node node : resultNodeList) {
-			if (node.isLeaf()) {
-				BitString bs = table[node.getName()];
-				node.setCode(bs.toString());
-			}
-		}
+//		for (Node node : resultNodeList) {
+//			if (node.isLeaf()) {
+//				BitString bs = table[node.getName()];
+//				node.setCode(bs.toString());
+//			}
+//		}
 
 		/*
 		 * output for Debugging
@@ -268,6 +268,7 @@ public class Huffman {
 							if (j == currentBits.length - 1) {
 								currentNode.getLeft().setName(i);
 								currentNode.getLeft().setLeaf(true);
+								currentNode.setCode(table[i].toString());
 							}
 						}
 						currentNode = currentNode.getLeft();
@@ -282,6 +283,7 @@ public class Huffman {
 							if (j == currentBits.length - 1) {
 								currentNode.getRight().setName(i);
 								currentNode.getRight().setLeaf(true);
+								currentNode.setCode(table[i].toString());
 							}
 						}
 						currentNode = currentNode.getRight();

@@ -36,7 +36,7 @@ public class BabystepGiantstep {
 		this.gruppenElement = gruppenElement;
 		this.n = computeGroupOrder(this.zyklischeGruppe);
 		this.m = computeUpperLimit(this.n);
-		this.multInv = berechneMultiplikativeInverse(this.zyklischeGruppe);			
+		this.multInv = computeMultInverse(this.zyklischeGruppe);			
 		this.babystepMenge = new HashMap<BigInteger, BigInteger>();
 		this.giantstepMenge = new ArrayList<BigInteger>();
 	}
@@ -94,7 +94,7 @@ public class BabystepGiantstep {
 		return obereSchranke;
 	}
 
-	private BigInteger berechneMultiplikativeInverse(BigInteger zyklischeGruppe) throws ArithmeticException {
+	private BigInteger computeMultInverse(BigInteger zyklischeGruppe) throws ArithmeticException {
 		BigInteger multInv = erzeuger.modInverse(zyklischeGruppe);
 		return multInv;
 	}
