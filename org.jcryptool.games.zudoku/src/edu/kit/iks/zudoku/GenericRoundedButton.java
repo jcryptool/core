@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 Florian Böhl <florian@boehl.name>
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package edu.kit.iks.zudoku;
 
 import java.awt.Color;
@@ -13,7 +23,7 @@ import javax.swing.JButton;
 @SuppressWarnings("serial") // Objects of this class are not meant to be serialized. 
 public class GenericRoundedButton extends JButton {
 	private final Font font = new Font("Comic Sans", Font.PLAIN, 20);
-	private Color text_color = Zudoku.KRYPTOLOGIKUM_BLUE;
+	private Color text_color = ZudokuConfig.KRYPTOLOGIKUM_BLUE;
 	
 	public GenericRoundedButton(String text) {
 		super(text);

@@ -1,3 +1,13 @@
+//-----BEGIN DISCLAIMER-----
+/*******************************************************************************
+* Copyright (c) 2013 Florian Böhl <florian@boehl.name>
+* 
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+//-----END DISCLAIMER-----
 package edu.kit.iks.zudoku;
 
 import java.util.EmptyStackException;
@@ -19,7 +29,7 @@ public abstract class CardStack extends JPanel {
 		assert(parent != null);
 		this.parent = parent;
 		
-		setBounds(new Rectangle(location.x, location.y, Zudoku.STACK_WIDTH, Zudoku.STACK_HEIGHT));		
+		setBounds(new Rectangle(location.x, location.y, ZudokuConfig.STACK_WIDTH, ZudokuConfig.STACK_HEIGHT));		
 		cards = new Stack<Card>();
 		
 		setOpaque(true);
