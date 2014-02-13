@@ -150,7 +150,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		styledTextDescription.setStyleRange(title);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
 		gd_styledTextDescription.widthHint = 960;
-		gd_styledTextDescription.heightHint = 80;
+		gd_styledTextDescription.heightHint = 110;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
 		grpSzenario = new Group(composite, SWT.NONE);
@@ -185,6 +185,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					isCompressed = false;
 
 					styledTextTree.setText(""); //$NON-NLS-1$
+					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+					styledTextTree.setAlignment(SWT.LEFT);
+					styledTextTree.setFont(FontService.getNormalFont());
 					markedConnectionList = new ArrayList<GraphConnection>();
 					layoutCounter = 1;
 					codeTableControls.clear();
@@ -224,6 +227,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					isCompressed = false;
 
 					styledTextTree.setText(""); //$NON-NLS-1$
+					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+					styledTextTree.setAlignment(SWT.LEFT);
+					styledTextTree.setFont(FontService.getNormalFont());
 					markedConnectionList = new ArrayList<GraphConnection>();
 					layoutCounter = 1;
 					codeTableControls.clear();
@@ -288,6 +294,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 					viewer.setLayoutAlgorithm(layout, true);
 					viewer.applyLayout();
+					styledTextTree.setText(Messages.ZestLabelProvider_4);
 
 					createCodeTable(huffmanCode.getCodeTable());
 
@@ -341,6 +348,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 						viewer.setLayoutAlgorithm(layout, true);
 						viewer.applyLayout();
+						styledTextTree.setText(Messages.ZestLabelProvider_4);
 						resetCodeTable();
 						createCodeTable(huffmanCode.getCodeTable());
 					}
@@ -408,11 +416,17 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		});
 		compositeTree.setLayout(new GridLayout(1, false));
 
-		styledTextTree = new StyledText(compositeTree, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
-		styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-		styledTextTree.setAlignment(SWT.CENTER);
-		styledTextTree.setFont(FontService.getHugeFont());
-		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextTree.setFont(FontService.getNormalFont());
+		
+//		styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+//		styledTextTree.setAlignment(SWT.CENTER);
+		
+		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		gd_styledTextTree.widthHint = 960;
+		gd_styledTextTree.heightHint = 40;
+		styledTextTree.setLayoutData(gd_styledTextTree);
+		
 
 		viewer = new GraphViewer(compositeTree, SWT.NONE);
 		viewer.setContentProvider(new ZestNodeContentProvider());
@@ -431,7 +445,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					Node n = (Node) node.getData();
 
 					if (n.isLeaf()) {
-						styledTextTree.setText(n.getCode());
+						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+						styledTextTree.setFont(FontService.getHugeFont());
+						styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " + n.getCode());
 
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
@@ -445,7 +461,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 							unmarkBranch(markedConnectionList);
 							markedConnectionList.clear();
 						}
-						styledTextTree.setText(""); //$NON-NLS-1$
+						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+						styledTextTree.setAlignment(SWT.LEFT);
+						styledTextTree.setFont(FontService.getNormalFont());
+						styledTextTree.setText(Messages.ZestLabelProvider_4); //$NON-NLS-1$
 					}
 				}
 			}
@@ -725,7 +744,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 									Node n = (Node) gn.getData();
 									if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
 										graphNode = gn;
-										styledTextTree.setText(n.getCode());
+										styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+										styledTextTree.setFont(FontService.getHugeFont());
+										styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " + n.getCode());
 										break;
 									}
 								}
@@ -845,7 +866,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 	@Override
 	public void setFocus() {
-		textInput.setFocus();
+		if (!textInput.isDisposed()) {
+			textInput.setFocus();			
+		}
 	}
 
 	@Override
@@ -927,6 +950,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		textInput.setFocus();
 
 		styledTextTree.setText(""); //$NON-NLS-1$
+		styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
+		styledTextTree.setAlignment(SWT.LEFT);
+		styledTextTree.setFont(FontService.getNormalFont());
+				
 		markedConnectionList = new ArrayList<GraphConnection>();
 		layoutCounter = 1;
 		codeTableControls.clear();
