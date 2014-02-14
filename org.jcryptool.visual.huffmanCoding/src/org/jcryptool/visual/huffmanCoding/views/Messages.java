@@ -39,6 +39,8 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_btnPfadbernehmen_text;
 	public static String ZestLabelProvider_4;
 	public static String ZestLabelProvider_5;
+	public static String HuffmanCodingView_grpNextSteps_text;
+	public static String HuffmanCodingView_inputText;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
