@@ -1,20 +1,15 @@
 package org.jcryptool.visual.huffmanCoding.views;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -22,7 +17,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
@@ -31,21 +25,17 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
@@ -64,17 +54,11 @@ import org.eclipse.zest.layouts.algorithms.HorizontalTreeLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.RadialLayoutAlgorithm;
 import org.eclipse.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.huffmanCoding.HuffmanCodingPlugin;
 import org.jcryptool.visual.huffmanCoding.algorithm.BitString;
 import org.jcryptool.visual.huffmanCoding.algorithm.Huffman;
 import org.jcryptool.visual.huffmanCoding.algorithm.InvalidCharacterException;
 import org.jcryptool.visual.huffmanCoding.algorithm.Node;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 
 /**
  * 
@@ -88,6 +72,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private TabFolder tabFolder;
 	private Text textInput;
 	private Text textOutput;
+	private Button btnCompress;
 	private Button btnUncompress;
 
 	private Huffman huffmanCode;
@@ -118,18 +103,14 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private Button btnRadioCompress;
 	private Button btnRadioUncompress;
 	private Group grpSzenario;
+	private Button btnApplyFile;
 	private Group grpCompress;
+	private Label lblDummy;
 	private Composite composite;
 
 	private MenuManager zoom;
 	
 	private DecimalFormat df = new DecimalFormat();
-	private Group grpNextSteps;
-//	private Group grpCompressButton;
-	private Button btnCompress;
-	private Button btnApplyFile;
-	private Button btnRadioExampleText;
-	private Button btnRadioContentFromFile;
 
 	public HuffmanCodingView() {
 		markedConnectionList = new ArrayList<GraphConnection>();
@@ -158,7 +139,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 		composite = new Composite(tabFolder, SWT.NONE);
 		tbtmParameter.setControl(composite);
-		composite.setLayout(new GridLayout(2, false));
+		composite.setLayout(new GridLayout(3, false));
 
 		styledTextDescription = new StyledText(composite, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextDescription.setText(Messages.HuffmanCodingView_16 + "\n" + Messages.HuffmanCodingView_1); //$NON-NLS-1$
@@ -167,17 +148,15 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		title.length = Messages.HuffmanCodingView_16.length();
 		title.fontStyle = SWT.BOLD;
 		styledTextDescription.setStyleRange(title);
-		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
+		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
 		gd_styledTextDescription.widthHint = 960;
-		gd_styledTextDescription.heightHint = 110;
+		gd_styledTextDescription.heightHint = 80;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
 		grpSzenario = new Group(composite, SWT.NONE);
-		GridData gd_grpSzenario = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_grpSzenario.widthHint = 120;
-		grpSzenario.setLayoutData(gd_grpSzenario);
+		grpSzenario.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 3, 1));
 		grpSzenario.setText(Messages.HuffmanCodingView_grpSzenario_text);
-		grpSzenario.setLayout(new GridLayout(1, false));
+		grpSzenario.setLayout(new GridLayout(6, false));
 
 		btnRadioCompress = new Button(grpSzenario, SWT.RADIO);
 		btnRadioCompress.addSelectionListener(new SelectionAdapter() {
@@ -191,9 +170,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 				if (tmp.getSelection()) {
 					grpCompress.dispose();
-					grpNextSteps.dispose();
-					
-					grpNextSteps = createCompressButtonGroup();
 					grpCompress = createCompressGroup();
 					composite.layout();
 					setFocus();
@@ -209,24 +185,19 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					isCompressed = false;
 
 					styledTextTree.setText(""); //$NON-NLS-1$
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
 					markedConnectionList = new ArrayList<GraphConnection>();
 					layoutCounter = 1;
 					codeTableControls.clear();
-					
-					loadExampleText();
 				}
 
 			}
 		});
 		GridData gd_btnRadioCompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnRadioCompress.widthHint = 110;
+		gd_btnRadioCompress.widthHint = 180;
 		btnRadioCompress.setLayoutData(gd_btnRadioCompress);
 		btnRadioCompress.setSelection(true);
 		btnRadioCompress.setText(Messages.HuffmanCodingView_6);
-		
+
 		btnRadioUncompress = new Button(grpSzenario, SWT.RADIO);
 		btnRadioUncompress.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -239,13 +210,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 				if (tmp.getSelection()) {
 					grpCompress.dispose();
-					grpNextSteps.dispose();
-					
-					grpNextSteps = createUncompressButtonGroup();
 					grpCompress = createUncompressGroup();
 					composite.layout();
 
-//					btnApplyFile.setEnabled(false);
+					btnApplyFile.setEnabled(false);
 
 					/*
 					 * reset tabs
@@ -256,9 +224,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					isCompressed = false;
 
 					styledTextTree.setText(""); //$NON-NLS-1$
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
 					markedConnectionList = new ArrayList<GraphConnection>();
 					layoutCounter = 1;
 					codeTableControls.clear();
@@ -266,317 +231,16 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 			}
 		});
 		GridData gd_btnRadioUncompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnRadioUncompress.widthHint = 110;
+		gd_btnRadioUncompress.widthHint = 180;
 		btnRadioUncompress.setLayoutData(gd_btnRadioUncompress);
 		btnRadioUncompress.setText(Messages.HuffmanCodingView_7);
-		
-				
 
-		/*
-		 * create the compress / uncompress group
-		 */
+		lblDummy = new Label(grpSzenario, SWT.NONE);
+		lblDummy.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+		lblDummy.setText(""); //$NON-NLS-1$
 
-		grpNextSteps = createCompressButtonGroup();		
-		grpCompress = createCompressGroup();
-		
-		
-//		grpNextSteps = createUncompressButtonGroup();
-//		grpCompress = createUncompressGroup();
-
-		TabItem tbtmHuffmanTree = new TabItem(tabFolder, SWT.NONE);
-		tbtmHuffmanTree.setText(Messages.HuffmanCodingView_13);
-
-		compositeTree = new Composite(tabFolder, SWT.NONE);
-		compositeTree.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(ControlEvent e) {
-				viewer.applyLayout();
-			}
-		});
-		compositeTree.setLayout(new GridLayout(1, false));
-
-		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextTree.setFont(FontService.getNormalFont());
-		
-//		styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-//		styledTextTree.setAlignment(SWT.CENTER);
-		
-		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
-		gd_styledTextTree.widthHint = 960;
-		gd_styledTextTree.heightHint = 40;
-		styledTextTree.setLayoutData(gd_styledTextTree);
-		
-
-		viewer = new GraphViewer(compositeTree, SWT.NONE);
-		viewer.setContentProvider(new ZestNodeContentProvider());
-		viewer.setLabelProvider(new ZestLabelProvider());
-		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-
-		Control control = viewer.getControl();
-		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-
-		Graph graph = viewer.getGraphControl();
-		graph.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (e.item instanceof GraphNode) {
-					GraphNode node = (GraphNode) e.item;
-					Node n = (Node) node.getData();
-
-					if (n.isLeaf()) {
-						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-						styledTextTree.setFont(FontService.getHugeFont());
-						styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " + n.getCode());
-
-						if (markedConnectionList.size() == 0) {
-							markBranch(node);
-						} else {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-							markBranch(node);
-						}
-					} else {
-						if (markedConnectionList.size() != 0) {
-							unmarkBranch(markedConnectionList);
-							markedConnectionList.clear();
-						}
-						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-						styledTextTree.setAlignment(SWT.LEFT);
-						styledTextTree.setFont(FontService.getNormalFont());
-						styledTextTree.setText(Messages.ZestLabelProvider_4); //$NON-NLS-1$
-					}
-				}
-			}
-		});
-
-		tbtmHuffmanTree.setControl(compositeTree);
-
-		tbtmCodeTable = new TabItem(tabFolder, SWT.NONE);
-		tbtmCodeTable.setText(Messages.HuffmanCodingView_14);
-
-		scrolledCompositeCT = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL);
-		tbtmCodeTable.setControl(scrolledCompositeCT);
-		scrolledCompositeCT.setExpandHorizontal(true);
-		scrolledCompositeCT.setExpandVertical(true);
-
-		compositeCT = new Composite(scrolledCompositeCT, SWT.NONE);
-		compositeCT.setLayout(new GridLayout(1, false));
-		
-
-		/*
-		 * BEGIN: for designing the code table tab
-		 */
-		// Label labelElement = new Label(compositeCT, SWT.BORDER);
-		// labelElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-		// false, 1, 1));
-		// labelElement.setText("NUL");
-		//
-		// Label labelEqual = new Label(compositeCT, SWT.NONE);
-		// labelEqual.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-		// false, 1, 1));
-		// labelEqual.setText("=");
-		//
-		// Text textCode = new Text(compositeCT, SWT.BORDER | SWT.READ_ONLY);
-		// textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-		// false, 1, 1));
-		//
-		// btnAnimate = new Button(compositeCT, SWT.NONE);
-		// btnAnimate.addSelectionListener(new SelectionAdapter() {
-		// @Override
-		// public void widgetSelected(SelectionEvent e) {
-		//
-		// }
-		// });
-		// GridData gd_btnAnimate = new GridData(SWT.LEFT, SWT.CENTER, false,
-		// false, 1, 1);
-		// gd_btnAnimate.widthHint = 120;
-		// btnAnimate.setLayoutData(gd_btnAnimate);
-		// btnAnimate.setText("Animate");
-		/*
-		 * END for designing the code table tab
-		 */
-
-		scrolledCompositeCT.setContent(compositeCT);
-		scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-		scrolledComposite.setContent(tabFolder);
-		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-
-		fillToolBar();
-		
-        loadExampleText();
-		
-	}
-
-	private void createCodeTable(BitString[] bitStrings) {
-		if (compositeCT.getChildren().length > 0) {
-			System.out.println(compositeCT.getChildren().length);
-			for (int i = 0; i < compositeCT.getChildren().length; i++) {
-				compositeCT.getChildren()[i].dispose();
-			}
-		}
-		
-		final Table table = new Table(compositeCT, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
-		
-		TableColumn tblclmnCharacter = new TableColumn(table, SWT.NONE);
-		tblclmnCharacter.setWidth(100);
-		tblclmnCharacter.setText(Messages.HuffmanCodingView_tblclmnCharacter_text);
-		
-		TableColumn tblclmnCode = new TableColumn(table, SWT.NONE);
-		tblclmnCode.setWidth(100);
-		tblclmnCode.setText(Messages.HuffmanCodingView_tblclmnCode_text);
-		
-		TableColumn tblclmnProbability = new TableColumn(table, SWT.NONE);
-		tblclmnProbability.setWidth(100);
-		tblclmnProbability.setText(Messages.HuffmanCodingView_tblclmnPropability_text);
-		
-		TableColumn tblclmnBranch = new TableColumn(table, SWT.NONE);
-		tblclmnBranch.setWidth(100);
-		tblclmnBranch.setText(Messages.HuffmanCodingView_tblclmnBranch_text);		
-		
-		if (bitStrings != null) {
-			for (int i = 0; i < bitStrings.length; i++) {
-				if (bitStrings[i] != null) {
-
-					TableItem item = new TableItem(table, SWT.NONE);
-					
-					switch (i) {
-					case 0:
-						item.setText(0, "NUL"); // Null //$NON-NLS-1$
-						break;
-					case 9:
-						item.setText(0, "TAB"); // Tabulator //$NON-NLS-1$
-						break;
-					case 10:
-						item.setText(0, "LF"); // Line Feed //$NON-NLS-1$
-						break;
-					case 13:
-						item.setText(0, "CR"); // Carriage Return //$NON-NLS-1$
-						break;
-					case 32:
-						item.setText(0, "\u2423"); // Space //$NON-NLS-1$ 
-						break;
-					case 38:
-						item.setText(0, "&&"); // & //$NON-NLS-1$
-
-						break;
-					default:
-						item.setText(0, String.valueOf((char)i));
-					}
-					item.setText(1, bitStrings[i].toString());
-					
-					TableEditor tableEditor = new TableEditor(table);
-					
-					Button btnShowBranch = new Button(table, SWT.PUSH);
-					btnShowBranch.addSelectionListener(new SelectionAdapter() {
-						@Override
-						public void widgetSelected(SelectionEvent e) {
-							if (e.getSource() instanceof Button) {
-								Button b = (Button) e.getSource();
-																
-								int index = codeTableControls.indexOf(b);
-								TableItem tmpItem = table.getItem(index);
-								String code = tmpItem.getText(1);
-								GraphNode graphNode = null;
-
-								List<GraphNode> graphNodeList = viewer.getGraphControl().getNodes();
-								for (GraphNode gn : graphNodeList) {
-									Node n = (Node) gn.getData();
-									if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
-										graphNode = gn;
-										styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-										styledTextTree.setFont(FontService.getHugeFont());
-										styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " + n.getCode());
-										break;
-									}
-								}
-
-								if (!markedConnectionList.isEmpty()) {
-									unmarkBranch(markedConnectionList);
-								}
-								markBranch(graphNode);
-								tabFolder.setSelection(1);
-								
-								table.setSelection(index);
-							}
-						}
-					});
-					
-					
-					btnShowBranch.setText(Messages.HuffmanCodingView_15);
-					btnShowBranch.computeSize(SWT.DEFAULT, table.getItemHeight());
-					
-					tableEditor.grabHorizontal = true;
-					tableEditor.minimumHeight = btnShowBranch.getSize().y;
-					tableEditor.minimumWidth = btnShowBranch.getSize().x;
-					
-					tableEditor.setEditor(btnShowBranch, item, 3);
-					
-					Node tmp = null;
-					for (Node n : huffmanCode.getResultNodeList()) {
-						if (n.getName() == i) {
-							tmp = n;
-							break;
-						}
-					}
-					
-					item.setText(2, String.valueOf(String.format("%2.9f", tmp.getValue())));
-					
-					codeTableControls.add(btnShowBranch);
-					
-//					table.addListener(SWT.MeasureItem, new Listener() {
-//
-//						@Override
-//						public void handleEvent(Event event) {
-//							switch (event.type) {
-//							case SWT.MeasureItem: {
-//								Rectangle rect = new Rectangle(0, 0, 20, 20);
-//								event.width += rect.width;
-//								event.height = Math.max(event.height, rect.height + 2);
-//								break;
-//							}
-//							}
-//						}
-//					});
-					
-				}
-			}
-		}
-		scrolledCompositeCT.setContent(compositeCT);
-		scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-		
-	}
-
-	private void loadExampleText() {
-		try {
-        	URL url = HuffmanCodingPlugin.getDefault().getBundle().getEntry("/");
-        	File template = new File(FileLocator.toFileURL(url).getFile() + "templates" + File.separatorChar + Messages.HuffmanCodingView_inputText);
-			
-			Scanner scanner = new Scanner(template);
-			String fileString = scanner.useDelimiter("\\Z").next(); //$NON-NLS-1$
-			scanner.close();
-
-			textInput.setText(fileString);
-			
-		} catch (FileNotFoundException e1) {
-			LogUtil.logError(e1);
-		} catch (IOException e1) {
-			LogUtil.logError(e1);
-		}
-	}
-
-	private Group createCompressButtonGroup() {
-		Group grpNextSteps = new Group(composite, SWT.NONE);
-		GridLayout gl_grpNextSteps = new GridLayout(2, false);
-		grpNextSteps.setLayout(gl_grpNextSteps);
-		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpNextSteps.setText(Messages.HuffmanCodingView_grpNextSteps_text);
-		
-		btnCompress = new Button(grpNextSteps, SWT.NONE);
-		GridData gd_btnCompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		btnCompress = new Button(grpSzenario, SWT.NONE);
+		GridData gd_btnCompress = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnCompress.widthHint = 180;
 		btnCompress.setLayoutData(gd_btnCompress);
 		btnCompress.setEnabled(false);
@@ -624,7 +288,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 					viewer.setLayoutAlgorithm(layout, true);
 					viewer.applyLayout();
-					styledTextTree.setText(Messages.ZestLabelProvider_4);
 
 					createCodeTable(huffmanCode.getCodeTable());
 
@@ -657,50 +320,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 			}
 		});
 		btnCompress.setText(Messages.HuffmanCodingView_6);
-		btnCompress.setEnabled(false);
-		
-		btnApplyFile = new Button(grpNextSteps, SWT.NONE);
-		GridData gd_btnApplyFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnApplyFile.widthHint = 180;
-		btnApplyFile.setLayoutData(gd_btnApplyFile);
-		btnApplyFile.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				btnRadioUncompress.setSelection(true);
-				btnRadioCompress.setSelection(false);
 
-				File tmpFileComp = fileComp;
-
-				grpCompress.dispose();
-				HuffmanCodingView.this.grpNextSteps.dispose();
-				
-				HuffmanCodingView.this.grpNextSteps = createUncompressButtonGroup();
-				grpCompress = createUncompressGroup();
-				composite.layout();
-
-//				textFileCompName.setText(tmpFileComp.getAbsolutePath());
-//				textFileCompSize.setText(String.valueOf(tmpFileComp.length()));
-//
-//				btnOpenCompFile.setEnabled(false);
-//				btnUncompress.setEnabled(true);
-//				btnApplyFile.setEnabled(false);
-
-			}
-		});
-		btnApplyFile.setEnabled(false);
-		btnApplyFile.setText(Messages.HuffmanCodingView_btnPfadbernehmen_text);
-						
-		return grpNextSteps;
-	}
-
-	private Group createUncompressButtonGroup() {
-		Group grpNextSteps = new Group(composite, SWT.NONE);
-		grpNextSteps.setLayout(new GridLayout(1, false));
-		grpNextSteps.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
-		grpNextSteps.setText(Messages.HuffmanCodingView_grpNextSteps_text);
-		
-		btnUncompress = new Button(grpNextSteps, SWT.NONE);
-		GridData gd_btnUncompress = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		btnUncompress = new Button(grpSzenario, SWT.NONE);
+		GridData gd_btnUncompress = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
 		gd_btnUncompress.widthHint = 180;
 		btnUncompress.setLayoutData(gd_btnUncompress);
 		btnUncompress.addSelectionListener(new SelectionAdapter() {
@@ -719,7 +341,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 						viewer.setLayoutAlgorithm(layout, true);
 						viewer.applyLayout();
-						styledTextTree.setText(Messages.ZestLabelProvider_4);
 						resetCodeTable();
 						createCodeTable(huffmanCode.getCodeTable());
 					}
@@ -739,16 +360,157 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		});
 		btnUncompress.setEnabled(false);
 		btnUncompress.setText(Messages.HuffmanCodingView_7);
-		btnUncompress.setEnabled(false);
-		
-		return grpNextSteps;
+
+		btnApplyFile = new Button(grpSzenario, SWT.NONE);
+		btnApplyFile.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btnRadioUncompress.setSelection(true);
+				btnRadioCompress.setSelection(false);
+
+				File tmpFileComp = fileComp;
+
+				grpCompress.dispose();
+				grpCompress = createUncompressGroup();
+				composite.layout();
+
+				textFileCompName.setText(tmpFileComp.getAbsolutePath());
+				textFileCompSize.setText(String.valueOf(tmpFileComp.length()));
+
+				btnOpenCompFile.setEnabled(false);
+				btnUncompress.setEnabled(true);
+				btnApplyFile.setEnabled(false);
+
+			}
+		});
+		btnApplyFile.setEnabled(false);
+		GridData gd_btnApplyFile = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnApplyFile.widthHint = 180;
+		btnApplyFile.setLayoutData(gd_btnApplyFile);
+		btnApplyFile.setText(Messages.HuffmanCodingView_btnPfadbernehmen_text);
+
+		/*
+		 * create the compress / uncompress group
+		 */
+
+		grpCompress = createCompressGroup();
+		// grpCompress = createUncompressGroup();
+
+		TabItem tbtmHuffmanTree = new TabItem(tabFolder, SWT.NONE);
+		tbtmHuffmanTree.setText(Messages.HuffmanCodingView_13);
+
+		compositeTree = new Composite(tabFolder, SWT.NONE);
+		compositeTree.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				viewer.applyLayout();
+			}
+		});
+		compositeTree.setLayout(new GridLayout(1, false));
+
+		styledTextTree = new StyledText(compositeTree, SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY);
+		styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
+		styledTextTree.setAlignment(SWT.CENTER);
+		styledTextTree.setFont(FontService.getHugeFont());
+		styledTextTree.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+
+		viewer = new GraphViewer(compositeTree, SWT.NONE);
+		viewer.setContentProvider(new ZestNodeContentProvider());
+		viewer.setLabelProvider(new ZestLabelProvider());
+		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
+
+		Control control = viewer.getControl();
+		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		Graph graph = viewer.getGraphControl();
+		graph.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (e.item instanceof GraphNode) {
+					GraphNode node = (GraphNode) e.item;
+					Node n = (Node) node.getData();
+
+					if (n.isLeaf()) {
+						styledTextTree.setText(n.getCode());
+
+						if (markedConnectionList.size() == 0) {
+							markBranch(node);
+						} else {
+							unmarkBranch(markedConnectionList);
+							markedConnectionList.clear();
+							markBranch(node);
+						}
+					} else {
+						if (markedConnectionList.size() != 0) {
+							unmarkBranch(markedConnectionList);
+							markedConnectionList.clear();
+						}
+						styledTextTree.setText(""); //$NON-NLS-1$
+					}
+				}
+			}
+		});
+
+		tbtmHuffmanTree.setControl(compositeTree);
+
+		tbtmCodeTable = new TabItem(tabFolder, SWT.NONE);
+		tbtmCodeTable.setText(Messages.HuffmanCodingView_14);
+
+		scrolledCompositeCT = new ScrolledComposite(tabFolder, SWT.H_SCROLL | SWT.V_SCROLL);
+		tbtmCodeTable.setControl(scrolledCompositeCT);
+		scrolledCompositeCT.setExpandHorizontal(true);
+		scrolledCompositeCT.setExpandVertical(true);
+
+		compositeCT = new Composite(scrolledCompositeCT, SWT.NONE);
+		compositeCT.setLayout(new GridLayout(4, false));
+
+		/*
+		 * BEGIN: for designing the code table tab
+		 */
+		// Label labelElement = new Label(compositeCT, SWT.BORDER);
+		// labelElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+		// false, 1, 1));
+		// labelElement.setText("NUL");
+		//
+		// Label labelEqual = new Label(compositeCT, SWT.NONE);
+		// labelEqual.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+		// false, 1, 1));
+		// labelEqual.setText("=");
+		//
+		// Text textCode = new Text(compositeCT, SWT.BORDER | SWT.READ_ONLY);
+		// textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+		// false, 1, 1));
+		//
+		// btnAnimate = new Button(compositeCT, SWT.NONE);
+		// btnAnimate.addSelectionListener(new SelectionAdapter() {
+		// @Override
+		// public void widgetSelected(SelectionEvent e) {
+		//
+		// }
+		// });
+		// GridData gd_btnAnimate = new GridData(SWT.LEFT, SWT.CENTER, false,
+		// false, 1, 1);
+		// gd_btnAnimate.widthHint = 120;
+		// btnAnimate.setLayoutData(gd_btnAnimate);
+		// btnAnimate.setText("Animate");
+		/*
+		 * END for designing the code table tab
+		 */
+
+		scrolledCompositeCT.setContent(compositeCT);
+		scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		scrolledComposite.setContent(tabFolder);
+		scrolledComposite.setMinSize(tabFolder.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+		fillToolBar();
 	}
-	
+
 	private Group createUncompressGroup() {
 		fileUncomp = null;
 
-//		btnCompress.setEnabled(false);
-//		btnUncompress.setEnabled(false);
+		btnCompress.setEnabled(false);
+		btnUncompress.setEnabled(false);
 
 		Group grpCompress = new Group(composite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_7);
@@ -775,7 +537,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					int filesize = (int) fileComp.length();
 					textFileCompSize.setText(df.format(filesize));
 
-//					btnCompress.setEnabled(false);
+					btnCompress.setEnabled(false);
 					btnUncompress.setEnabled(true);
 					btnUncompress.setFocus();
 				}
@@ -791,9 +553,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 		textFileCompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
 		textFileCompSize.setEnabled(false);
-		GridData gd_textFileCompSize = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textFileCompSize.widthHint = 140;
-		textFileCompSize.setLayoutData(gd_textFileCompSize);
+		textFileCompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group grpOutputText = new Group(grpCompress, SWT.NONE);
 		grpOutputText.setLayout(new GridLayout(1, false));
@@ -805,14 +565,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		textOutput = new Text(grpOutputText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		textOutput.setEnabled(false);
 		textOutput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
-		if (fileComp != null) {
-			textFileCompName.setText(fileComp.getAbsolutePath());
-			textFileCompSize.setText(String.valueOf(fileComp.length()));
-
-			btnOpenCompFile.setEnabled(false);
-			btnUncompress.setEnabled(true);
-		}
 
 		return grpCompress;
 	}
@@ -821,85 +573,15 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		fileComp = null;
 		fileUncomp = null;
 
+		btnCompress.setEnabled(false);
+		btnUncompress.setEnabled(false);
+
 		Group grpCompress = new Group(composite, SWT.NONE);
 		grpCompress.setText(Messages.HuffmanCodingView_6);
-		grpCompress.setLayout(new GridLayout(5, false));
-		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 3, 1));
-		
-		btnRadioExampleText = new Button(grpCompress, SWT.RADIO);
-		btnRadioExampleText.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (textInput.getText().isEmpty()) {
-					loadExampleText();
-					btnOpenUncompFile.setEnabled(false);
-					btnApplyFile.setEnabled(false);
-					textInput.setEditable(true);
-					textFileUncompName.setText("");
-					textFileUncompSize.setText("");
-					fileUncomp = null;
-					
-					resetCodeTable();
+		grpCompress.setLayout(new GridLayout(4, false));
+		grpCompress.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 4, 1));
 
-					viewer.setInput(null);
-					isCompressed = false;
-
-					styledTextTree.setText(""); //$NON-NLS-1$
-					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-					styledTextTree.setAlignment(SWT.LEFT);
-					styledTextTree.setFont(FontService.getNormalFont());
-					markedConnectionList = new ArrayList<GraphConnection>();
-					layoutCounter = 1;
-					codeTableControls.clear();
-
-					
-					
-					
-					
-				}
-			}
-		});
-		btnRadioExampleText.setSelection(true);
-		btnRadioExampleText.setText(Messages.HuffmanCodingView_btnExampleText_text);
-		new Label(grpCompress, SWT.NONE);
-		new Label(grpCompress, SWT.NONE);
-		new Label(grpCompress, SWT.NONE);
-		new Label(grpCompress, SWT.NONE);
-		
-		btnRadioContentFromFile = new Button(grpCompress, SWT.RADIO);
-		btnRadioContentFromFile.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				textInput.setText("");
-				textInput.setEditable(false);
-				btnApplyFile.setEnabled(false);
-				textFileUncompName.setText("");
-				textFileUncompSize.setText("");
-				fileUncomp = null;
-				btnOpenUncompFile.setEnabled(true);
-				
-				resetCodeTable();
-
-				viewer.setInput(null);
-				isCompressed = false;
-
-				styledTextTree.setText(""); //$NON-NLS-1$
-				styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-				styledTextTree.setAlignment(SWT.LEFT);
-				styledTextTree.setFont(FontService.getNormalFont());
-				markedConnectionList = new ArrayList<GraphConnection>();
-				layoutCounter = 1;
-				codeTableControls.clear();
-
-			}
-		});
-		GridData gd_btnRadioContentFromFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnRadioContentFromFile.widthHint = 125;
-		btnRadioContentFromFile.setLayoutData(gd_btnRadioContentFromFile);
-		btnRadioContentFromFile.setText(Messages.HuffmanCodingView_btnContentFromFile_text);
-		
 		btnOpenUncompFile = new Button(grpCompress, SWT.NONE);
-		btnOpenUncompFile.setEnabled(false);
 		GridData gd_btnOpenUncompFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_btnOpenUncompFile.widthHint = 180;
 		btnOpenUncompFile.setLayoutData(gd_btnOpenUncompFile);
@@ -944,24 +626,15 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		lblFileUncompSize.setText(Messages.HuffmanCodingView_4);
 
 		textFileUncompSize = new Text(grpCompress, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER);
-		GridData gd_textFileUncompSize = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-		gd_textFileUncompSize.widthHint = 140;
-		textFileUncompSize.setLayoutData(gd_textFileUncompSize);
-	
+		textFileUncompSize.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+		textFileUncompSize.setEnabled(false);
+
 		Group grpInputText = new Group(grpCompress, SWT.NONE);
-		grpInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 5, 1));
+		grpInputText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 4, 1));
 		grpInputText.setLayout(new GridLayout(1, false));
 		grpInputText.setText(Messages.HuffmanCodingView_5);
-		
+
 		textInput = new Text(grpInputText, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
-		textInput.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.stateMask == SWT.CTRL && e.keyCode == 'a'){     
-				      textInput.selectAll();
-				 }
-			}
-		});
 		textInput.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -971,19 +644,20 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textField = (Text) e.getSource();
 
 					if (textField.getText().isEmpty()) {
+						btnOpenUncompFile.setEnabled(true);
 						btnCompress.setEnabled(false);
 					} else {
+						btnOpenUncompFile.setEnabled(false);
 						btnCompress.setEnabled(true);
 					}
 				}
 			}
 		});
 		textInput.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-		
 
 		return grpCompress;
 	}
-	
+
 	/**
 	 * Creation of the code table tab
 	 * 
@@ -991,95 +665,93 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 *            - the bitstring array which contains all elements of the
 	 *            huffman tree
 	 */
-//	private void createCodeTable(BitString[] bitStrings) {
-//
-//		if (compositeCT.getChildren().length > 0) {
-//			for (int i = 0; i < compositeCT.getChildren().length; i++) {
-//				compositeCT.getChildren()[i].dispose();
-//			}
-//		}
-//
-//		if (bitStrings != null) {
-//			for (int i = 0; i < bitStrings.length; i++) {
-//				if (bitStrings[i] != null) {
-//					Label labelElement = new Label(compositeCT, SWT.NONE);
-//					labelElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-//					switch (i) {
-//					case 0:
-//						labelElement.setText("NUL"); // Null //$NON-NLS-1$
-//						break;
-//					case 9:
-//						labelElement.setText("TAB"); // Tabulator //$NON-NLS-1$
-//						break;
-//					case 10:
-//						labelElement.setText("LF"); // Line Feed //$NON-NLS-1$
-//						break;
-//					case 13:
-//						labelElement.setText("CR"); // Carriage Return //$NON-NLS-1$
-//						break;
-//					case 32:
-//						labelElement.setText("\u2423"); // Space //$NON-NLS-1$
-//						break;
-//					case 38:
-//						labelElement.setText("&&"); // Space //$NON-NLS-1$
-//						break;
-//					default:
-//						labelElement.setText(String.valueOf((char) i));
-//					}
-//
-//					Label labelEqual = new Label(compositeCT, SWT.NONE);
-//					labelEqual.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-//					labelEqual.setText("="); //$NON-NLS-1$
-//
-//					Text textCode = new Text(compositeCT, SWT.BORDER | SWT.READ_ONLY);
-//					textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-//					textCode.setText(bitStrings[i].toString());
-//
-//					Button btnShowBranch = new Button(compositeCT, SWT.NONE);
-//					btnShowBranch.addSelectionListener(new SelectionAdapter() {
-//						@Override
-//						public void widgetSelected(SelectionEvent e) {
-//							if (e.getSource() instanceof Button) {
-//								Button b = (Button) e.getSource();
-//
-//								int index = codeTableControls.indexOf(b);
-//								String code = ((Text) codeTableControls.get(index - 1)).getText();
-//								GraphNode graphNode = null;
-//
-//								List<GraphNode> graphNodeList = viewer.getGraphControl().getNodes();
-//								for (GraphNode gn : graphNodeList) {
-//									Node n = (Node) gn.getData();
-//									if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
-//										graphNode = gn;
-//										styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-//										styledTextTree.setFont(FontService.getHugeFont());
-//										styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " + n.getCode());
-//										break;
-//									}
-//								}
-//
-//								if (!markedConnectionList.isEmpty()) {
-//									unmarkBranch(markedConnectionList);
-//								}
-//								markBranch(graphNode);
-//								tabFolder.setSelection(1);
-//							}
-//						}
-//					});
-//					GridData gd_btnAnimate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-//					gd_btnAnimate.widthHint = 120;
-//					btnShowBranch.setLayoutData(gd_btnAnimate);
-//					btnShowBranch.setText(Messages.HuffmanCodingView_15);
-//
-//					codeTableControls.add(textCode);
-//					codeTableControls.add(btnShowBranch);
-//				}
-//			}
-//		}
-//		scrolledCompositeCT.setContent(compositeCT);
-//		scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-//
-//	}
+	private void createCodeTable(BitString[] bitStrings) {
+
+		if (compositeCT.getChildren().length > 0) {
+			for (int i = 0; i < compositeCT.getChildren().length; i++) {
+				compositeCT.getChildren()[i].dispose();
+			}
+		}
+
+		if (bitStrings != null) {
+			for (int i = 0; i < bitStrings.length; i++) {
+				if (bitStrings[i] != null) {
+					Label labelElement = new Label(compositeCT, SWT.NONE);
+					labelElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+					switch (i) {
+					case 0:
+						labelElement.setText("NUL"); // Null //$NON-NLS-1$
+						break;
+					case 9:
+						labelElement.setText("TAB"); // Tabulator //$NON-NLS-1$
+						break;
+					case 10:
+						labelElement.setText("LF"); // Line Feed //$NON-NLS-1$
+						break;
+					case 13:
+						labelElement.setText("CR"); // Carriage Return //$NON-NLS-1$
+						break;
+					case 32:
+						labelElement.setText("\u2423"); // Space //$NON-NLS-1$
+						break;
+					case 38:
+						labelElement.setText("&&"); // Space //$NON-NLS-1$
+						break;
+					default:
+						labelElement.setText(String.valueOf((char) i));
+					}
+
+					Label labelEqual = new Label(compositeCT, SWT.NONE);
+					labelEqual.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+					labelEqual.setText("="); //$NON-NLS-1$
+
+					Text textCode = new Text(compositeCT, SWT.BORDER | SWT.READ_ONLY);
+					textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+					textCode.setText(bitStrings[i].toString());
+
+					Button btnShowBranch = new Button(compositeCT, SWT.NONE);
+					btnShowBranch.addSelectionListener(new SelectionAdapter() {
+						@Override
+						public void widgetSelected(SelectionEvent e) {
+							if (e.getSource() instanceof Button) {
+								Button b = (Button) e.getSource();
+
+								int index = codeTableControls.indexOf(b);
+								String code = ((Text) codeTableControls.get(index - 1)).getText();
+								GraphNode graphNode = null;
+
+								List<GraphNode> graphNodeList = viewer.getGraphControl().getNodes();
+								for (GraphNode gn : graphNodeList) {
+									Node n = (Node) gn.getData();
+									if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
+										graphNode = gn;
+										styledTextTree.setText(n.getCode());
+										break;
+									}
+								}
+
+								if (!markedConnectionList.isEmpty()) {
+									unmarkBranch(markedConnectionList);
+								}
+								markBranch(graphNode);
+								tabFolder.setSelection(1);
+							}
+						}
+					});
+					GridData gd_btnAnimate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+					gd_btnAnimate.widthHint = 120;
+					btnShowBranch.setLayoutData(gd_btnAnimate);
+					btnShowBranch.setText(Messages.HuffmanCodingView_15);
+
+					codeTableControls.add(textCode);
+					codeTableControls.add(btnShowBranch);
+				}
+			}
+		}
+		scrolledCompositeCT.setContent(compositeCT);
+		scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+	}
 
 	/**
 	 * Marks the whole branch begining from the leaf node
@@ -1145,10 +817,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		IActionBars bars = getViewSite().getActionBars();
 		bars.getMenuManager().removeAll();
 
-//		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
-//		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
-//		zoom.add(toolbarZoomContributionViewItem);
-//		bars.getMenuManager().add(zoom);
+		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
+		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
+		zoom.add(toolbarZoomContributionViewItem);
+		bars.getMenuManager().add(zoom);
 
 		/*
 		 * adding popup menu
@@ -1173,9 +845,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 	@Override
 	public void setFocus() {
-		if (!textInput.isDisposed()) {
-			textInput.setFocus();			
-		}
+		textInput.setFocus();
 	}
 
 	@Override
@@ -1242,16 +912,13 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 */
 	private void reset() {
 		grpCompress.dispose();
-		grpNextSteps.dispose();
-		
-		grpNextSteps = createCompressButtonGroup();
 		grpCompress = createCompressGroup();
 		composite.layout();
 
 		huffmanCode = null;
 		btnCompress.setEnabled(false);
-//		btnUncompress.setEnabled(false);
-//		btnApplyFile.setEnabled(false);
+		btnUncompress.setEnabled(false);
+		btnApplyFile.setEnabled(false);
 
 		resetCodeTable();
 
@@ -1260,14 +927,8 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		textInput.setFocus();
 
 		styledTextTree.setText(""); //$NON-NLS-1$
-		styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
-		styledTextTree.setAlignment(SWT.LEFT);
-		styledTextTree.setFont(FontService.getNormalFont());
-				
 		markedConnectionList = new ArrayList<GraphConnection>();
 		layoutCounter = 1;
 		codeTableControls.clear();
-		
-		loadExampleText();
 	}
 }

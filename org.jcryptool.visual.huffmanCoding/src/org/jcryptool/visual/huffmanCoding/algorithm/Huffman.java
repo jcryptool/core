@@ -268,7 +268,7 @@ public class Huffman {
 							if (j == currentBits.length - 1) {
 								currentNode.getLeft().setName(i);
 								currentNode.getLeft().setLeaf(true);
-								currentNode.getLeft().setCode(table[i].toString());
+								currentNode.setCode(table[i].toString());
 							}
 						}
 						currentNode = currentNode.getLeft();
@@ -283,7 +283,7 @@ public class Huffman {
 							if (j == currentBits.length - 1) {
 								currentNode.getRight().setName(i);
 								currentNode.getRight().setLeaf(true);
-								currentNode.getRight().setCode(table[i].toString());
+								currentNode.setCode(table[i].toString());
 							}
 						}
 						currentNode = currentNode.getRight();
