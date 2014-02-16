@@ -32,5 +32,31 @@
             file="$nl$/help/contexts.xml">
       </contexts>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.visual.babystepgiantstep.command.Restart"
+            name="%restart.command.name">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.babystepgiantstep.handlers.RestartHandler"
+            commandId="org.jcryptool.visual.babystepgiantstep.command.Restart">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.babystepgiantstep.views.BabystepGiantstepView">
+         <command
+               commandId="org.jcryptool.visual.babystepgiantstep.command.Restart"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>

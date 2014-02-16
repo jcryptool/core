@@ -18,6 +18,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
@@ -111,6 +112,8 @@ public class BabystepGiantstepView extends ViewPart {
 	private Composite compositeStep2Btn;
 	private Composite compositeStep3Btn;
 	private Composite compositeStep4Btn;
+	
+	private Composite parent;
 
 	/**
 	 * The constructor.
@@ -120,6 +123,8 @@ public class BabystepGiantstepView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		this.parent = parent;
+		
 		parent.setLayout(new GridLayout(1, false));
 
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -628,5 +633,15 @@ public class BabystepGiantstepView extends ViewPart {
 	@Override
 	public void setFocus() {
 		comboGroup.setFocus();
+	}
+	
+	public void resetView() {
+		Control[] children = parent.getChildren();
+		for (Control control : children) {
+			control.dispose();
+		}
+		createPartControl(parent);
+		
+		parent.layout();
 	}
 }
