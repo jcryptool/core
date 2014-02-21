@@ -7,21 +7,21 @@
 <body>
 <h1>Shanks Babystep-Giantstep</h1>
 
-<p>Diese Demonstration soll die Funktionsweise von <b>Shanks Babystep-Giantstep</b> Plug-ins zeigen.<p>
+<p>Diese Visualisierung soll die Funktionsweise von <b>Shanks Babystep-Giantstep</b> Plug-ins zeigen.<p>
 
 <p>Das Plug-in <b>Shanks Babystep-Giantstep</b> lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer 
-im Tab <b>Visualisierungen</b> starten und in seiner Ansicht maximieren.<p>
+im Tab <b>Visualisierungen</b> starten.<p>
 
 <img src="babystepgiantstep_plugin.jpg">
 
 <p>Die Sicht des Plug-ins besteht aus 6 Bereichen: <p>
 
-<p>Der erste Bereich beschreibt dynamisch den Algorithmus in seinem Ablauf. Für jeden Schritt werden hier die entsprechenden Erklärungen angezeigt. 
+<p><b>1)</b> Der erste Bereich beschreibt dynamisch den Algorithmus in seinem Ablauf. Für jeden Schritt werden hier die entsprechenden Erklärungen angezeigt. 
 <p>
 
 <img src="beschreibung.jpg">
 
-<p>Der zweite Bereich beinhaltet die Benutzereingaben. Dort können Werte eingegeben werden oder aus den Dropdown-Boxen vorgegebene Werte ausgewählt werden.
+<p><b>2)</b> Der zweite Bereich beinhaltet die Benutzereingaben. Dort können Werte eingegeben werden oder aus den Dropdown-Boxen vorgegebene Werte ausgewählt werden.
 <p>
 
 <img src="schritt1.jpg">
@@ -33,20 +33,20 @@ im Tab <b>Visualisierungen</b> starten und in seiner Ansicht maximieren.<p>
 <img src="parameter.jpg">
 
 <p>
-Im dritten Bereich werden die Gruppenordnung, die obere Schranke der Gruppenordnung und die multiplikative Inverse berechnet. 
+<b>3)</b> Im dritten Bereich werden die Gruppenordnung, die obere Schranke der Gruppenordnung und die multiplikative Inverse berechnet. 
 Danach wird der Button <b>Weiter zu Schritt 3</b> aktiviert.
 <p>
 
 <img src="schritt2.jpg">
 
 <p>
-Im vierten Bereich werden die Babysteps berechnet und in einer Tabelle mit allen Iterationsschritten präsentiert. 
+<b>4)</b> Im vierten Bereich werden die Babysteps berechnet und in einer Tabelle mit allen Iterationsschritten präsentiert. 
 <p>
 
 <img src="schritt3.jpg">
 
 <p>
-Per Klick auf den Button <b>Weiter zu Schritt 4</b> werden die Giantsteps berechnet und ebenfalls in einer Tabelle dargestellt. Je nachdem, 
+<b>5)</b> Per Klick auf den Button <b>Weiter zu Schritt 4</b> werden die Giantsteps berechnet und ebenfalls in einer Tabelle dargestellt. Je nachdem, 
 welche Eingabeparameter man eingegeben hat, kann es sein, dass dieser Schritt übersprungen wird. In diesem Fall liefern die Babysteps bereits die Lösung, da ein Paar (r,1) gefunden 
 wurde, das die Gleichung a = g ^ x mod p erfüllt. Man braucht dann die Giantsteps nicht mehr zu berechnen.
 <p>
@@ -63,7 +63,7 @@ jeweils mit gleichen Farben markiert.
 
 <p>
 
-Das Endergebnis wird im <b>Ergebnis</b>-Bereich in der Farbe <b>Grün</b> dargestellt. Des Weiteren werden die Berechnungsformel und die Ausgangsgleichung angezeigt.
+<b>6)</b> Das Endergebnis wird im <b>Ergebnis</b>-Bereich in der Farbe <b>Grün</b> dargestellt. Des Weiteren werden die Berechnungsformel und die Ausgangsgleichung angezeigt.
 <p>
 
 <img src="ergebnis.jpg">
@@ -76,9 +76,17 @@ Falls der diskrete Logarithmus nicht berechnet werden konnte, wird dazu eine ent
 <img src="ergebnis_false.jpg">
 
 <p>
-Der Button <b>Eingaben zurücksetzen</b> löscht alle Benutzereingaben, Berechnungen, Ergebnisse und leert die Tabellen und man kann den Algorithmus von vorne beginnen.
+Der Button <b>Eingaben zurücksetzen</b> löscht alle Benutzereingaben, Berechnungen, Ergebnisse und leert die Tabellen. Dann kann man den Algorithmus von vorne beginnen.
 </p>
 
 <img src="zuruecksetzen.jpg">
+
+<p>
+
+Quellen
+<ol type="1">
+<li>Buchmann, Johannes: <i>Einfhrung in die Kryptographie.</i> 4., erweiterte Auflage. Springer Verlag, 2008. – ISBN 978–3–540–74451–1
+</ol>
+
 </body>
 </html>
