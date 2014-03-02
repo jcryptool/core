@@ -13,12 +13,14 @@ import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView;
  *
  */
 public class ChangeLayout extends AbstractHandler {
+	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IViewPart findView = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().findView(HuffmanCodingView.ID);
 		HuffmanCodingView view = (HuffmanCodingView) findView;
-		view.setLayoutManager();
+		view.setLayoutManager();		
 		return null;
 	}
+	
 
 }

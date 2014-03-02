@@ -42,10 +42,15 @@
             id="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
             name="%changeLayout.comand.name">
       </command>
+       <command
+            name="Sample Command"
+            id="com.foo.example.propertytester.commands.sampleCommand">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
+            allPopups="false"
             locationURI="toolbar:org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView">
          <command
                commandId="org.jcryptool.visual.huffmanCoding.command.Restart"

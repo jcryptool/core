@@ -7,8 +7,6 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jcryptool.visual.huffmanCoding.views.HuffmanCodingView;
 
 /**
- * This handler starts a new game.
- * 
  * @author Miray Inel
  */
 public class RestartHandler extends AbstractHandler {
