@@ -54,6 +54,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.zest.core.widgets.Graph;
 import org.eclipse.zest.core.widgets.GraphConnection;
 import org.eclipse.zest.core.widgets.GraphItem;
@@ -116,9 +117,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 	private ArrayList<GraphConnection> markedConnectionList;
 	private ArrayList<Control> codeTableControls;
-	private ArrayList<TableEditor> tableEditorList;
-	private Hashtable<Integer, Button> tableButtonList;
-
 	private StyledText styledTextDescription;
 	private Button btnRadioCompress;
 	private Button btnRadioUncompress;
@@ -134,18 +132,16 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	private Button btnApplyFile;
 	private Button btnRadioExampleText;
 	private Button btnRadioContentFromFile;
-	private TableColumn tblclmnBranch;
 	private StyledText styledTextCodetable;
 	private String modus = "COMPRESS"; //$NON-NLS-1$
-	private Table table_1;
 	private Button btnShowBranch;
 	private Group grpInputText;
 
 	public HuffmanCodingView() {
 		markedConnectionList = new ArrayList<GraphConnection>();
 		codeTableControls = new ArrayList<Control>();
-		tableEditorList = new ArrayList<TableEditor>();
-		tableButtonList = new Hashtable<Integer, Button>();
+		new ArrayList<TableEditor>();
+		new Hashtable<Integer, Button>();
 	}
 
 	/**
@@ -350,7 +346,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
 						styledTextTree.setFont(FontService.getNormalFont());
-						styledTextTree.setText(Messages.ZestLabelProvider_4); 
+						styledTextTree.setText(Messages.ZestLabelProvider_4);
 					}
 
 					Table table = (Table) compositeCT.getChildren()[2];
@@ -435,6 +431,13 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 	}
 
+	/**
+	 * Creation of the code table tab
+	 * 
+	 * @param bitStrings
+	 *            - the bitstring array which contains all elements of the
+	 *            huffman tree
+	 */
 	private void createCodeTable(BitString[] bitStrings) {
 		if (compositeCT.getChildren().length > 0) {
 			for (int i = 0; i < compositeCT.getChildren().length; i++) {
@@ -498,18 +501,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					tblclmnCharacterMode = true;
 				}
 				btnShowBranch.setEnabled(false);
-
-				// TODO remove all buttons and create button again
-
-				// items = table.getItems();
-				// for (int i = 0; i < items.length; i++) {
-				// String[] values = { items[i].getText(0), items[i].getText(1),
-				// items[i].getText(2), items[i].getText(3),
-				// items[i].getText(4) };
-				// items[i].dispose();
-				// TableItem item = new TableItem(table, SWT.NONE, i);
-				// item.setText(values);
-				// }
 			}
 		});
 
@@ -553,15 +544,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					tblclmnProbabilityMode = true;
 				}
 				btnShowBranch.setEnabled(false);
-				// items = table.getItems();
-				// for (int i = 0; i < items.length; i++) {
-				// String[] values = { items[i].getText(0), items[i].getText(1),
-				// items[i].getText(2), items[i].getText(3),
-				// items[i].getText(4) };
-				// items[i].dispose();
-				// TableItem item = new TableItem(table, SWT.NONE, i);
-				// item.setText(values);
-				// }
 			}
 		});
 
@@ -605,15 +587,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					tblclmnCodeMode = true;
 				}
 				btnShowBranch.setEnabled(false);
-				// items = table.getItems();
-				// for (int i = 0; i < items.length; i++) {
-				// String[] values = { items[i].getText(0), items[i].getText(1),
-				// items[i].getText(2), items[i].getText(3),
-				// items[i].getText(4) };
-				// items[i].dispose();
-				// TableItem item = new TableItem(table, SWT.NONE, i);
-				// item.setText(values);
-				// }
 			}
 		});
 
@@ -656,21 +629,8 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					tblclmnCodeLengthMode = true;
 				}
 				btnShowBranch.setEnabled(false);
-				// items = table.getItems();
-				// for (int i = 0; i < items.length; i++) {
-				// String[] values = { items[i].getText(0), items[i].getText(1),
-				// items[i].getText(2), items[i].getText(3),
-				// items[i].getText(4) };
-				// items[i].dispose();
-				// TableItem item = new TableItem(table, SWT.NONE, i);
-				// item.setText(values);
-				// }
 			}
 		});
-
-		// tblclmnBranch = new TableColumn(table, SWT.NONE);
-		// tblclmnBranch.setWidth(100);
-		// tblclmnBranch.setText(Messages.HuffmanCodingView_tblclmnBranch_text);
 
 		int counter = 0;
 		double avarageCodelength = 0.0;
@@ -709,63 +669,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					item.setText(2, bitStrings[i].toString());
 					item.setText(3, String.valueOf(bitStrings[i].toString().length()));
 
-					// TableEditor tableEditor = new TableEditor(table);
-					//
-					// tableEditorList.add(tableEditor);
-					//
-					// Button btnShowBranch = new Button(table, SWT.PUSH);
-					//
-					// tableButtonList.put(i, btnShowBranch);
-					//
-					// btnShowBranch.addSelectionListener(new SelectionAdapter()
-					// {
-					// @Override
-					// public void widgetSelected(SelectionEvent e) {
-					// if (e.getSource() instanceof Button) {
-					// Button b = (Button) e.getSource();
-					//
-					// int index = codeTableControls.indexOf(b);
-					// TableItem tmpItem = table.getItem(index);
-					// String code = tmpItem.getText(2);
-					// GraphNode graphNode = null;
-					//
-					// List<GraphNode> graphNodeList =
-					// viewer.getGraphControl().getNodes();
-					// for (GraphNode gn : graphNodeList) {
-					// Node n = (Node) gn.getData();
-					// if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
-					// graphNode = gn;
-					// styledTextTree.setForeground(new Color(null, new RGB(1,
-					// 70, 122)));
-					// styledTextTree.setFont(FontService.getHugeFont());
-					//										styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" + n.getNameAsString() + "': " //$NON-NLS-1$ //$NON-NLS-2$
-					// + n.getCode());
-					// break;
-					// }
-					// }
-					//
-					// if (!markedConnectionList.isEmpty()) {
-					// unmarkBranch(markedConnectionList);
-					// }
-					// markBranch(graphNode);
-					// tabFolder.setSelection(1);
-					//
-					// table.setSelection(index);
-					// }
-					// }
-					// });
-					//
-					// btnShowBranch.setText(Messages.HuffmanCodingView_15);
-					// btnShowBranch.computeSize(SWT.DEFAULT,
-					// table.getItemHeight());
-					// codeTableControls.add(btnShowBranch);
-					//
-					// tableEditor.grabHorizontal = true;
-					// tableEditor.minimumHeight = btnShowBranch.getSize().y;
-					// tableEditor.minimumWidth = btnShowBranch.getSize().x;
-					//
-					// tableEditor.setEditor(btnShowBranch, item, 4);
-
 					Node tmp = null;
 					for (Node n : huffmanCode.getResultNodeList()) {
 						if (n.getName() == i) {
@@ -775,13 +678,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					}
 
 					item.setText(1, String.valueOf(String.format("%2.9f", tmp.getValue()))); //$NON-NLS-1$
-
-					// table.addListener(SWT.MeasureItem, new Listener() {
-					// public void handleEvent(Event event) {
-					//
-					// event.height = 30;
-					// }
-					// });
 
 					if (minCodelenght > bitStrings[i].getLength())
 						minCodelenght = bitStrings[i].getLength();
@@ -799,45 +695,8 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 			sb.append(Messages.HuffmanCodingView_codetable_stat_1 + counter);
 			sb.append("\t\t\t"); //$NON-NLS-1$
 
-			//			ResourceBundle bundle = ResourceBundle.getBundle("org.jcryptool.visual.huffmanCoding.views.messages"); //$NON-NLS-1$
-
-			//			if (bundle.getLocale().toString().compareToIgnoreCase("de") == 0) { //$NON-NLS-1$
-			// if (counter >= 100)
-			//					sb.append("\t\t\t\t\t"); //$NON-NLS-1$
-			// else if (counter >= 10 && counter < 100)
-			//					sb.append("\t\t\t\t"); //$NON-NLS-1$
-			// else
-			//					sb.append("\t\t\t\t\t"); //$NON-NLS-1$
-			// } else {
-			// if (counter >= 100)
-			//					sb.append("\t\t\t\t"); //$NON-NLS-1$
-			// else if (counter >= 10 && counter < 100)
-			//					sb.append("\t\t\t\t"); //$NON-NLS-1$
-			// else
-			//					sb.append("\t\t\t\t"); //$NON-NLS-1$
-			//
-			// }
-
 			sb.append(Messages.HuffmanCodingView_codetable_stat_3 + minCodelenght);
 			sb.append("\t\t\t"); //$NON-NLS-1$
-
-			//			if (bundle.getLocale().toString().compareToIgnoreCase("de") == 0) { //$NON-NLS-1$
-			//
-			// if (counter >= 100)
-			//					sb.append("\t\t\t"); //$NON-NLS-1$
-			// else if (counter >= 10 && counter < 100)
-			//					sb.append("\t\t"); //$NON-NLS-1$
-			// else
-			//					sb.append("\t\t"); //$NON-NLS-1$
-			// } else {
-			// if (counter > 100)
-			//					sb.append("\t\t\t\t\t"); //$NON-NLS-1$
-			// else if (counter >= 10 && counter < 100)
-			//					sb.append("\t\t\t\t\t"); //$NON-NLS-1$
-			// else
-			//					sb.append("\t\t\t\t"); //$NON-NLS-1$
-			//
-			// }
 
 			sb.append(Messages.HuffmanCodingView_codetable_stat_4 + maxCodelenght);
 			sb.append("\t\t\t"); //$NON-NLS-1$
@@ -1159,7 +1018,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					markedConnectionList = new ArrayList<GraphConnection>();
 					layoutCounter = 1;
 					codeTableControls.clear();
-					
+
 					grpInputText.setText(Messages.HuffmanCodingView_5);
 
 				}
@@ -1196,7 +1055,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 				markedConnectionList = new ArrayList<GraphConnection>();
 				layoutCounter = 1;
 				codeTableControls.clear();
-				
+
 				grpInputText.setText(Messages.HuffmanCodingView_17);
 
 			}
@@ -1292,109 +1151,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	}
 
 	/**
-	 * Creation of the code table tab
-	 * 
-	 * @param bitStrings
-	 *            - the bitstring array which contains all elements of the
-	 *            huffman tree
-	 */
-	// private void createCodeTable(BitString[] bitStrings) {
-	//
-	// if (compositeCT.getChildren().length > 0) {
-	// for (int i = 0; i < compositeCT.getChildren().length; i++) {
-	// compositeCT.getChildren()[i].dispose();
-	// }
-	// }
-	//
-	// if (bitStrings != null) {
-	// for (int i = 0; i < bitStrings.length; i++) {
-	// if (bitStrings[i] != null) {
-	// Label labelElement = new Label(compositeCT, SWT.NONE);
-	// labelElement.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-	// false, 1, 1));
-	// switch (i) {
-	// case 0:
-	//						labelElement.setText("NUL"); // Null //$NON-NLS-1$
-	// break;
-	// case 9:
-	//						labelElement.setText("TAB"); // Tabulator //$NON-NLS-1$
-	// break;
-	// case 10:
-	//						labelElement.setText("LF"); // Line Feed //$NON-NLS-1$
-	// break;
-	// case 13:
-	//						labelElement.setText("CR"); // Carriage Return //$NON-NLS-1$
-	// break;
-	// case 32:
-	//						labelElement.setText("\u2423"); // Space //$NON-NLS-1$
-	// break;
-	// case 38:
-	//						labelElement.setText("&&"); // Space //$NON-NLS-1$
-	// break;
-	// default:
-	// labelElement.setText(String.valueOf((char) i));
-	// }
-	//
-	// Label labelEqual = new Label(compositeCT, SWT.NONE);
-	// labelEqual.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-	// false, 1, 1));
-	//					labelEqual.setText("="); //$NON-NLS-1$
-	//
-	// Text textCode = new Text(compositeCT, SWT.BORDER | SWT.READ_ONLY);
-	// textCode.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1,
-	// 1));
-	// textCode.setText(bitStrings[i].toString());
-	//
-	// Button btnShowBranch = new Button(compositeCT, SWT.NONE);
-	// btnShowBranch.addSelectionListener(new SelectionAdapter() {
-	// @Override
-	// public void widgetSelected(SelectionEvent e) {
-	// if (e.getSource() instanceof Button) {
-	// Button b = (Button) e.getSource();
-	//
-	// int index = codeTableControls.indexOf(b);
-	// String code = ((Text) codeTableControls.get(index - 1)).getText();
-	// GraphNode graphNode = null;
-	//
-	// List<GraphNode> graphNodeList = viewer.getGraphControl().getNodes();
-	// for (GraphNode gn : graphNodeList) {
-	// Node n = (Node) gn.getData();
-	// if (n.isLeaf() && n.getCode().compareTo(code) == 0) {
-	// graphNode = gn;
-	// styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
-	// styledTextTree.setFont(FontService.getHugeFont());
-	// styledTextTree.setText(Messages.ZestLabelProvider_5 + " '" +
-	// n.getNameAsString() + "': " + n.getCode());
-	// break;
-	// }
-	// }
-	//
-	// if (!markedConnectionList.isEmpty()) {
-	// unmarkBranch(markedConnectionList);
-	// }
-	// markBranch(graphNode);
-	// tabFolder.setSelection(1);
-	// }
-	// }
-	// });
-	// GridData gd_btnAnimate = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-	// 1, 1);
-	// gd_btnAnimate.widthHint = 120;
-	// btnShowBranch.setLayoutData(gd_btnAnimate);
-	// btnShowBranch.setText(Messages.HuffmanCodingView_15);
-	//
-	// codeTableControls.add(textCode);
-	// codeTableControls.add(btnShowBranch);
-	// }
-	// }
-	// }
-	// scrolledCompositeCT.setContent(compositeCT);
-	// scrolledCompositeCT.setMinSize(compositeCT.computeSize(SWT.DEFAULT,
-	// SWT.DEFAULT));
-	//
-	// }
-
-	/**
 	 * Marks the whole branch begining from the leaf node
 	 * 
 	 * @param leaf
@@ -1458,31 +1214,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		IActionBars bars = getViewSite().getActionBars();
 		bars.getMenuManager().removeAll();
 
-		//		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
-		// ZoomContributionViewItem toolbarZoomContributionViewItem = new
-		// ZoomContributionViewItem(this);
-		// zoom.add(toolbarZoomContributionViewItem);
-		// bars.getMenuManager().add(zoom);
-
-		/*
-		 * adding popup menu
-		 * 
-		 * final ZoomContributionViewItem zoomContributionItem = new
-		 * ZoomContributionViewItem(this);
-		 * 
-		 * MenuManager menuMgr = new MenuManager("#PopupMenu");
-		 * menuMgr.setRemoveAllWhenShown(true); menuMgr.addMenuListener(new
-		 * IMenuListener() { public void menuAboutToShow(IMenuManager manager) {
-		 * fillContextMenu(manager); }
-		 * 
-		 * private void fillContextMenu(IMenuManager manager) { manager.add(new
-		 * Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		 * manager.add(zoomContributionItem); } });
-		 * 
-		 * Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		 * viewer.getControl().setMenu(menu);
-		 * getSite().registerContextMenu(menuMgr, viewer);
-		 */
+		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
+		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
+		zoom.add(toolbarZoomContributionViewItem);
+		bars.getMenuManager().add(zoom);
 	}
 
 	@Override
