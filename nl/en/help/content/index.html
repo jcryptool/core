@@ -6,43 +6,43 @@
 </head>
 <body>
 	<h1>SSL/TLS-Visualization</h1>
-	<p>Welcome to our online help for the SSL/TLS- visualization-plugin. This tool is a graphical step by step instruction of the Handshake. SSL/TLS is the most used protocol to secure communication on the internet. Before user data can be transferred there must be a calculation of some parameters in the background. In SSL/TLS it´s the handshake, where client and server come to an agreement about which cipher suite they use for calculating the keys, which are necessary to encrypt the user data.</p>
+	<p>Welcome to our online help for the SSL/TLS- visualization-plugin. This tool is a graphical step by step instruction of the Handshake. SSL/TLS is the most used protocol to secure communication on the internet. Before user data can be transferred, there must be a calculation of some parameters in the background. In SSL/TLS it´s the handshake, where client and server come to an agreement about which cipher suite they use for calculating the keys, which are necessary to encrypt the user data.</p>
 
-    <p>The plugin is separated in two parts. On the left hand side, there is the graphical process of the handshake. On the other side, there is some information about the current step and all submitted parameters.</p>
+    <p>The plugin is separated in two parts. On the left hand side, there is the graphical process of the handshake. On the right hand side, there is some information about the current step and all submitted parameters.</p>
 
-    <p>The visualization is separated in multiple steps, all in all 8. Each step offers the possibility to insert or choose the necessary values. If any parameter is wrong, this will be shown by an alert.</p>
-    <p>The second step <i>ServerHello</i> offers a special characteristic. If the chosen cipher suite can be attacked, or the parameter <i>CipherSuite</i> at <i>ServerHello</i> doesn´t agree with one of the selected <i>CipherSuites</i> at <i>ClientHello</i>, the user will be sent back to step 1.</p>
+    <p>The visualization is separated into eight different steps. Each step offers the possibility to insert or choose the necessary values. If any parameter is wrong, this will be shown by an alert.</p>
     <br />
 
     <b>Step 1: ClientHello</b>
-    <p>The first step of the handshake is <i>ClientHello</i>. All following steps will be shown later in the handshake. The <i>ClientHello</i>-message contains the following parameters:</p>
+    <p>The first step of the handshake is <i>ClientHello</i>. The <i>ClientHello</i>-message contains the following parameters:</p>
 
     <ul>
         <li>TLS-version: TLS-version, which the client offers the server to use for the communication.</li>
-        <li>Random: A random generated value, which is used as a replay protection. The key consists of 32 Byte (which are 64 hexadecimal characters). The first 4 Byte are used as a timestamp, the remaining 28 Byte are generated random.</li>
+        <li>Random: A randomly generated value, which is used as a replay protection. The key consists of 32 Byte (which are 64 hexadecimal characters). The first 4 Byte are used as a timestamp, the remaining 28 Byte are generated randomly.</li>
         <li>CipherSuite: A list of possible combinations of encryption-, key-exchange-, signature- and hash-algorithms which are supported by the client.</li>
-        <li>SessionID: ID of the message. This value allows picking up a connection which was established in the past. In order to do this, the client sets the SessionID to the same value that was used back then. In this visualization the value is always “0”, which represents a new Handshake.  </li>
-        <li>There are extensions attached to this message. They depend on several factors like the used browser, OS and many more. They are not included here because they are not necessary to understand the function of the TLS-handshake.Bei dieser Nachricht werden Extensions angehängt, die von verschiedenen Parametern abhängig sind (z.B. verwendeter Browser, Betriebssystem, u.v.m.). Diese Extensions werden bei dieser Visualisierung nicht dargestellt, da sie für das Verständnis der Funktionsweise des TLS-Handshakes unbedeutend sind.</li>
+        <li>SessionID: ID of the message. This value allows picking up a connection which was established in the past. In order to do this, the client sets the SessionID to the same value that was used back then. In this visualization, the value is always “0”, which represents a new Handshake.  </li>
+        <li>There are extensions attached to this message. They depend on several factors like the used browser, OS and many more. They are not included here because they are not necessary to understand the function of the TLS-handshake.</li>
     </ul>
     <p>The client is able to offer the server more than one <i>CipherSuite</i> and TLS-version. The selected <i>CipherSuites</i> and the random value will be shown in the information field on the right side.</p>
      <br />
 
     <b>Step 2: ServerHello</b>
-    <p>This is the second step of the visualization. <i>ServerHello</i> starts, after the client sent its <i>ClientHello</i> message. There appear the following parameters in this step:</p>
+    <p>The second step of the visualization. <i>ServerHello</i> starts, after the client sent its <i>ClientHello</i> message. There appear the following parameters in this step:</p>
     <ul>
         <li>TLS-version: The server selects a TLS-version he wants to use. It can happen that the server only possesses older/newer versions than the client.</li>
-        <li>Random: A random generated value (for more information see <i>ClientHello</i>), which is used as a replay protection. The key consists of 32 Byte (which are 64 hexadecimal characters). The first 4 Byte are used as a timestamp, the remaining 28 Byte are generated random.</li>
+        <li>Random: A randomly generated value (for more information see <i>ClientHello</i>), which is used as a replay protection. The key consists of 32 Byte (which are 64 hexadecimal characters). The first 4 Byte are used as a timestamp, the remaining 28 Byte are generated random.</li>
         <li>CipherSuite: The server selects a <i>CipherSuite</i> he wants to use.</li>
         <li>SessionID: ID of the message.</li>
         <li>There are extensions attached to this message. They depend on several factors like the used browser, OS and many more. They are not included here because they are not necessary to understand the function of the TLS-handshake.</li>
     </ul>
-    <p>It´s the server´s task to choose the TLS-version and <i>CipherSuite</i>, which are finally used. If the server chooses a combination of TLS-version and <i>CipherSuite</i>, that the client does not support, a connection is not possible. In this case the server sends an alert-message to the client and offers the client the possibility to send a new <i>ClientHello</i>-message, which will - if applicable - be extended with the needed TLS-verion or rather <i>CipherSuite</i>.</p>
+    <p>It is the server´s task to choose the TLS-version and <i>CipherSuite</i>, which are finally used. If the server chooses a combination of TLS-version and <i>CipherSuite</i>, that the client does not support, a connection is not possible. In this case the server sends an alert-message to the client and offers the client the possibility to send a new <i>ClientHello</i>-message, which will - if applicable - be extended with the needed TLS-verion or rather <i>CipherSuite</i>.</p>
+    <p>This step <i>ServerHello</i> offers a special characteristic. If the chosen cipher suite can be attacked, or the parameter <i>CipherSuite</i> at <i>ServerHello</i> doesn´t agree with one of the selected <i>CipherSuites</i> at <i>ClientHello</i>, the user will be sent back to step 1.</p>
     <br />
 
     <b>Step 3: Server Certificate</b>
     <p>After client and server found a matching <i>CipherSuite</i> and TLS-version, the necessary keys will be calculated and they will change certificates, if needed.</p>
     <ul>
-        <li>ServerCertificate: The server sends his certificate, which contains his public key. Most servers do have numerousness different certificates.</li>
+        <li>ServerCertificate: The server sends his certificate, which contains his public key. Most servers do have numerous different certificates.</li>
         <li>ServerKeyExchange: This message is just sent, if there is not enough information in the certificate to exchange the public keys between the client and the server. This case only appears with the following <i>CipherSuites</i>: DHE_DSS, DHE_RSA.</li>
         <li>CertificateRequest: The server has the possibility to request the clients’ certificate.  But the server is only allowed to, if he is no anonymous server. In a classical client-server-communication he is an anonymous server, so the default-parameter is “No”.</li>
     </ul>
@@ -50,7 +50,7 @@
    <br />
 
     <b>Step 4: ClientCertificate</b>
-    <p>As soon as the client has received the <i>ServerHelloDone</i>-message, he verifies the servers’ certificate. If it is valid, an answer will be sent. This answer includes the following parameters:</p>
+    <p>As soon as the client has received the <i>ServerHelloDone</i>-message, he verifies the server's certificate. If it is valid, an answer will be sent. This answer includes the following parameters:</p>
     <ul>
         <li>ClientCertificate: If the server requested a certificate, the client sends it now.</li>
         <li>ClientKeyExchange: This message is always sent. It contains information for the public-key-exchange between client and server.</li>
@@ -60,7 +60,7 @@
        <br />
 
       <b>Step 5/7: Server-/Client- ChangeCipherSpec</b>
-    <p>In each of these steps, the actual side sends a <i>ChangeCipherSpec</i>-message.</p>
+    <p>In each of these steps, the active side sends a <i>ChangeCipherSpec</i>-message.</p>
     <ul>
         <li>ChangeCipherSpec: The client/server informs his conversational partner, that he is now ready to use the specified keys for the communication.</li>
     </ul>
@@ -77,25 +77,31 @@
     <ul>
         <li><b>Information/Parameter:</b> Using the “Information”-Button changes the information field to detailed information about the previous step. Pressing the button again returns to the parameters again. The text on the “Information”-Button changes with each click.</li>
         <li><b>Next Step:</b> Pressing this Button changes to the next step of this plugin. If not all fields are filled, they get filled with default parameters.</li>
-        <li><b>Previous Step:</b> Pressing this Button changes to the previous step of this plugin. Selected parameters will be reseted.</li>
-        <li><b>Reset:</b> Resets the Handshake. All chosen parameters are lost or rather reseted.</li>
+        <li><b>Previous Step:</b> Pressing this Button changes to the previous step of this plugin. Selected parameters will be reset.</li>
+        <li><b>Reset:</b> Resets the Handshake. All chosen parameters are lost or rather reset.</li>
     </ul>
 <br />
 
     <b>Attacks</b>
     <p>The TLS handshake exists since January 1999, and so several vulnerabilities have been discovered over the years and the protocol improved accordingly. These vulnerabilities allowed/allow the following attacks on the handshake:</p>
     <ul>
-        <li>BREACH: This attack can be applied to all SSL- and TLS-versions, no matter what encryption algorithm is used. BREACH extends the attack CRIME and uses the HTTP compression, which cannot be turned off because all webservers rely on these compressions. This attack became disclosed in august 2013. The attack is not included in the plugin, as it would otherwise be displayed always.</li>
-        <li>BEAST: This attack uses existing vulnerabilities and misconducts from within the so-called Cipher Block Chaining (CBC) mode. It was announced in autumn 2011. Because of this vulnerability by CBC, a man-in-the-middle attack (MitM) is possible on the SSL / TLS connection. In this case, a third party may intercept the key undetected and is able to watch the data transfer between client and server. With the introduction of TLS 1.1, this gap was repaired and is no longer a problem when using TLS 1.1 or 1.2.</li>
+        <li>BREACH: This attack can be applied to all SSL- and TLS-versions, no matter what encryption algorithm is used. BREACH extends the attack CRIME and uses the HTTP compression, which cannot be turned off because all webservers rely on these compressions. This attack became disclosed in August 2013. The attack is not included in the plugin, as it would otherwise be displayed always.</li>
+        <li>BEAST: This attack uses existing vulnerabilities and misconducts from within the so-called Cipher Block Chaining (CBC) mode. The attack was announced in autumn 2011. Because of this vulnerability by CBC, a man-in-the-middle attack (MitM) is possible on the SSL / TLS connection. In this case, a third party may intercept the key undetected and is able to watch the data transfer between client and server. With the introduction of TLS 1.1, this gap was repaired and is no longer a problem when using TLS 1.1 or 1.2.</li>
         <li>CRIME: This attack takes advantage of an optional SSL / TLS feature, the compression of data. This allows that secret authentication data is restored. Thereby further attacks are enabled on the connection. This attack became disclosed in 2012. This attack is not included in the plugin, because compressions are not considered.</li>
         <li>aFBPPS13-attack: This attack is better known as RC4-attack. It can be applied when RC4 is chosen for encryption. For a long time RC4 was seen as a very safe <i>CipherSuite</i>, because there is no padding in it and it also has no initialization vectors. Therefore the BEAST and Lucky13 attack are not a problem. In March 2013 however an academic research found out, that a lot of collisions can be found. This allows a statistical analysis of the cipher text. This makes it possible to recreate the plain text. The only solution is not to use RC4 anymore.</li>
-        <li>Lucky13: This attack was announced in February 2013, and attacks the padding used in SSL / TLS communication. It occurs with AES in CBC mode, because here always blocks of 16 bytes length are used for encryption. If a block is not long enough, it is necessary to enlarge it with padding. This attack is based on the try to guess the padding. Depending on the time needed for an answer, you know if you guessed right or wrong. A protection against is not to use the CBC mode, but instead the Galois-Counter-Mode (GCM).</li>
-        <li>SHA1- and MD5-attacks: These algorithms are not collision resistant and should not be used.</li>
+        <li>Lucky13: This attack was announced in February 2013, and attacks the padding used in SSL / TLS communication. It occurs with AES in CBC mode, because here always blocks of 16 Bytes length are used for encryption. If a block is not long enough, it is necessary to enlarge it with padding. This attack is based on trying to guess the padding. Depending on the time needed for an answer, you know if you guessed right or wrong. A protection against is not to use the CBC mode, but instead the Galois-Counter-Mode (GCM).</li>
+        <li>SHA1- and MD5-attacks: These hash-algorithms are not collision resistant and should not be used any more. any more. For compatibility with deployed web servers, SHA1 might still be offered as non-standard.</li>
+        <li>A key length of <2048 Bit with RSA and <100 Bit with symmetric keys: Through the permanent performance raise of home systems it is getting easier to perform brute-force-attacks against the keys. To guarantee the security furthermore, it is necessary to choose keys of a given minimum length. ECRYPT II recommends using a minimum key length of 112 Bit, to guarantee the security till 2030. NIST recommends a minimum key length of 2048 Bit for RSA since 2011.</li>
+        <li>Non- forward secrecy (non- Diffie-Hellman): Perfect forward secrecy is reached by calculating new key material in each session for all parameters. This is important, especially for the key exchange. Such algorithms are marked by the word ephemeral, which means that the key is valid for a maximum of 24 hours. If it is possible for an attacker to get the key for the key exchange with an ephemeral algorithm, he/she is only able to decrypt this single communication. If it would not be an ephemeral algorithm, he/she could decrypt all communication between this server and client.</li>
     </ul>
     <br />
 
     <b>Certificate Pinning</b>
     <p>Certificate Pinning means, that each server-certificate is attached to the client it is sent to. As a result, each time the client connects again, it is checked, if the certificates match. The client’s certificate has to be refreshed regularly (each 1 to 2 years).</p>
+ <br />
+
+     <b>Limitations of the Visualization</b>
+    <p>This Plugin is limited to TLS-Versions. There are no big differences between TLS and SSL, TLS1.0 is nearly the same as SSL3.0.  After SSL got his own RFC-standard (RFC 2246) in January 1999 it was renamed in TLS. The reason why the plugin offers only TLS1.0, 1.1 and 1.2 but no SSL-versions is that SSL has no standard and is considered insecure due to multiple attacks.</p>
  <br />
 
 
