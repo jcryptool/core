@@ -15,7 +15,7 @@
    </extension>
   	<extension point="org.eclipse.help.contexts">
       <contexts
-            file="nl/de/contexts.xml">
+            file="$nl$/contexts.xml">
       </contexts>
    </extension>
    
