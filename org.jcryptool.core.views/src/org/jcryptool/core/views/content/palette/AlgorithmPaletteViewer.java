@@ -125,7 +125,6 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 				algorithmList.add(action);
 			}
 		}
-		// TODO take care of the case when we have a Handler rather than an Action
 	}
 
 	/**

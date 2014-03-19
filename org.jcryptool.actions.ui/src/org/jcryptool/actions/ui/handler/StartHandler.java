@@ -30,9 +30,11 @@ import org.jcryptool.actions.ui.ActionsUIPlugin;
 import org.jcryptool.actions.ui.preferences.PreferenceConstants;
 import org.jcryptool.actions.ui.views.ActionView;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.dataobject.DataObjectConverter;
@@ -112,12 +114,16 @@ public class StartHandler extends AbstractHandler {
                     });
 
                     OperationsPlugin op = OperationsPlugin.getDefault();
-                    IAction[] actions = op.getAlgorithmsManager().getShadowAlgorithmActions();
+                    CommandOrAction[] actions = op.getAlgorithmsManager().getShadowAlgorithmActions();
 
                     // Try to find an CryptoAlgorithm-Plug-in (Classic or Modern)
                     for (int i = 0, length = actions.length; i < length; i++) {
-                        if (a.getPluginId().equals(actions[i].getId())) {
-                            ((ShadowAlgorithmAction) actions[i]).run(convert(a));
+                        if (actions[i].getHandler() != null && a.getPluginId().equals(actions[i].getCommandId())) {
+                            ((ShadowAlgorithmHandler) actions[i].getHandler()).run(convert(a));
+                            executed = true;
+                        }
+                        if (!executed && actions[i].getAction() != null && a.getPluginId().equals(actions[i].getAction().getId())) {
+                            ((ShadowAlgorithmAction) actions[i].getAction()).run(convert(a));
                             executed = true;
                         }
                     }

@@ -1,7 +1,10 @@
 package org.jcryptool.core.operations;
 
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 
 public class CommandOrAction {
 	private IAction action;
@@ -34,8 +37,13 @@ public class CommandOrAction {
 			action.setEnabled(active);
 		}
 		// TODO enable the Command somehow
-		// if(handler != null) {
-		//	handler.setBaseEnabled(active);
-		// }
+		if(handler != null) {
+			ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+			Command cmd = commandService.getCommand(commandId);
+			if(active)
+				cmd.setHandler(handler);
+			else
+				cmd.setHandler(null);
+		}
 	}
 }

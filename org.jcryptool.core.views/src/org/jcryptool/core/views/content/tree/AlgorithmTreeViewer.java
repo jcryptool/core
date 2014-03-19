@@ -47,6 +47,7 @@ import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
@@ -67,7 +68,7 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
     private TreeViewer viewer = this;
     private TreeParent invisibleRoot;
     private Action doubleClickAction;
-    private ArrayList<ShadowAlgorithmAction> algorithmList = new ArrayList<ShadowAlgorithmAction>();
+    private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
     private String search;
     protected String extensionPointId = "org.jcryptool.core.operations.algorithms"; //$NON-NLS-1$
 
@@ -174,11 +175,10 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
      */
     private void loadAlgorithms() {
         for (CommandOrAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
-            if (action.getAction() != null && !algorithmList.contains(((ShadowAlgorithmAction) action.getAction()))) {
-                algorithmList.add(((ShadowAlgorithmAction) action.getAction()));
+            if (!algorithmList.contains(action)) {
+                algorithmList.add(action);
             }
         }
-        // TODO take care of the case when we have a Handler rather than an Action
     }
 
     /**
@@ -189,32 +189,50 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
     private void createTree(String[] needles) {
         HashMap<String, TreeParent> types = new HashMap<String, TreeParent>();
 
-        Iterator<ShadowAlgorithmAction> it = algorithmList.iterator();
-        ShadowAlgorithmAction act = null;
+        Iterator<CommandOrAction> it = algorithmList.iterator();
+        CommandOrAction act = null;
 
         while (it.hasNext()) {
             act = it.next();
 
+			String text = "";
+			String type = "";
+			String toolTipText = "";
+			boolean isFlexiProviderAlgorithm = false;
+			
+			if(act.getHandler() != null) {
+				ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)act.getHandler();
+				text = handler.getText();
+				type = handler.getType();
+				toolTipText = "";
+			} else if(act.getAction() != null) {
+				ShadowAlgorithmAction action = (ShadowAlgorithmAction)act.getAction();
+				text = action.getText();
+				type = action.getType();
+				toolTipText = action.getToolTipText();
+				isFlexiProviderAlgorithm = action.isFlexiProviderAlgorithm();
+			}
+            
             // filter
             boolean show = true;
             for (String needle : needles) {
-                if (!act.getText().toLowerCase().matches(".*" + needle.toLowerCase() + ".*")) //$NON-NLS-1$ //$NON-NLS-2$
+                if (!text.toLowerCase().matches(".*" + needle.toLowerCase() + ".*")) //$NON-NLS-1$ //$NON-NLS-2$
                     show = false;
             }
 
             if (show) {
                 // Create Category
-                if (types.get(act.getType()) == null) {
+                if (types.get(type) == null) {
                     // translate
-                    String type = ApplicationActionBarAdvisor.getTypeTranslation(act.getType());
-                    types.put(act.getType(), new TreeParent(type));
+                    String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(type);
+                    types.put(type, new TreeParent(translatedType));
                 }
 
                 // Add element
-                TreeObject object = new TreeObject(act.getText());
-                if (act.isFlexiProviderAlgorithm())
+                TreeObject object = new TreeObject(text);
+                if (isFlexiProviderAlgorithm)
                     object.setIsFlexiProviderAlgorithm();
-                types.get(act.getType()).addChild(object);
+                types.get(type).addChild(object);
             }
         }
         ArrayList<TreeParent> parents = new ArrayList<TreeParent>(types.values());
@@ -242,11 +260,15 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
                         && (!treeObject.getParent().getName().equals(org.jcryptool.core.Messages.applicationActionBarAdvisor_Menu_Algorithms_PRNG))) {
                     AlgorithmView.showMessage(Messages.AlgorithmView_warning_message_no_active_editor);
                 } else {
-                    Iterator<ShadowAlgorithmAction> it9 = algorithmList.iterator();
-                    ShadowAlgorithmAction action = null;
+                    Iterator<CommandOrAction> it9 = algorithmList.iterator();
+                    CommandOrAction cmdOrAction = null;
                     while (it9.hasNext()) {
-                        action = it9.next();
-                        if (treeObject.getName().equals(action.getText())) {
+                        cmdOrAction = it9.next();
+                        ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+                        ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
+                        if(handler != null && treeObject.getName().equals(handler.getText())) {
+                        	handler.execute(null);
+                        } else if (action != null && treeObject.getName().equals(action.getText())) {
                             action.run();
                         }
                     }
