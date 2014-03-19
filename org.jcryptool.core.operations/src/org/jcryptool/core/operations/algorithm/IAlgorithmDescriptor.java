@@ -10,6 +10,7 @@
 package org.jcryptool.core.operations.algorithm;
 
 import org.eclipse.jface.action.IAction;
+import org.jcryptool.core.operations.CommandOrAction;
 
 /**
  * The specifications for descriptors.
@@ -52,7 +53,7 @@ public interface IAlgorithmDescriptor {
      * 
      * @return The action that will activate the plug-in and perform the algorithm
      */
-    public IAction getAction();
+    public CommandOrAction getAction();
 
     /**
      * Returns an int array containing all supported key lengths of this algorithm.

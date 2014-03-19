@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.jface.action.IAction;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandOrAction;
 
 /**
  * Descriptor for algorithms.<br>
@@ -35,7 +36,7 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
     private String extensionUID;
 
     /** The menu action associated with this algorithm */
-    private IAction menuAction;
+    private CommandOrAction menuAction;
 
     /** The supported key lengths of this algorithm */
     private int[] supportedKeyLengths;
@@ -61,7 +62,7 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
      * @param tooltipText The tooltip text
      */
     public AlgorithmDescriptor(String name, String type, String algorithmID, String extensionUID, String keylengths,
-            String blocklengths, String tooltipText, boolean isFlexiProviderAlgorithm) {
+            String blocklengths, String tooltipText, boolean isFlexiProviderAlgorithm, boolean useCommands) {
         this.name = name;
         this.type = type;
         this.algorithmID = algorithmID;
@@ -70,7 +71,11 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
         setBlockLengths(blocklengths);
         this.tooltipText = tooltipText;
         this.isFlexiProviderAlgorithm = isFlexiProviderAlgorithm;
-        menuAction = new ShadowAlgorithmAction(this);
+        if(useCommands) {
+        	menuAction = new CommandOrAction(algorithmID, new ShadowAlgorithmHandler(this));
+        } else {
+        	menuAction = new CommandOrAction(new ShadowAlgorithmAction(this));
+        }
     }
 
     /**
@@ -183,7 +188,7 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
     /**
      * @see org.jcryptool.core.operations.algorithm.IAlgorithmDescriptor#getAction()
      */
-    public IAction getAction() {
+    public CommandOrAction getAction() {
         return menuAction;
     }
 

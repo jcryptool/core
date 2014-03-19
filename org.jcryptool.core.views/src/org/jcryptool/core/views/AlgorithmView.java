@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
@@ -289,11 +290,12 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
     }
 
     private void loadAlgorithms() {
-        IAction[] actions = OperationsPlugin.getDefault().getAlgorithmsManager()
+        CommandOrAction[] actions = OperationsPlugin.getDefault().getAlgorithmsManager()
                 .getShadowAlgorithmActions();
         for (int i = 0, length = actions.length; i < length; i++) {
-            if (!algorithmTypes.contains(((ShadowAlgorithmAction) actions[i]))) {
-                algorithmTypes.add(((ShadowAlgorithmAction) actions[i]));
+        	IAction action = actions[i].getAction();
+            if (!algorithmTypes.contains(((ShadowAlgorithmAction) action))) {
+                algorithmTypes.add(((ShadowAlgorithmAction) action));
             }
         }
     }

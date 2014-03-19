@@ -43,6 +43,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
@@ -172,11 +173,12 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
      * loads the algorithms from the extension point
      */
     private void loadAlgorithms() {
-        for (IAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
-            if (!algorithmList.contains(((ShadowAlgorithmAction) action))) {
-                algorithmList.add(((ShadowAlgorithmAction) action));
+        for (CommandOrAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
+            if (action.getAction() != null && !algorithmList.contains(((ShadowAlgorithmAction) action.getAction()))) {
+                algorithmList.add(((ShadowAlgorithmAction) action.getAction()));
             }
         }
+        // TODO take care of the case when we have a Handler rather than an Action
     }
 
     /**

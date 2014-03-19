@@ -33,8 +33,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
+import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
 import org.jcryptool.core.views.ViewsPlugin;
@@ -50,7 +52,7 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 	private Action doubleClickAction;
 	private AlgorithmPaletteViewer viewer = this;
 	private PaletteRoot invisibleRoot;
-	private ArrayList<ShadowAlgorithmAction> algorithmList = new ArrayList<ShadowAlgorithmAction>();
+	private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
 	private String search;
 	private String extensionPointId = "org.jcryptool.core.operations.algorithms"; //$NON-NLS-1$
 
@@ -118,11 +120,12 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 	 * loads the algorithms from the extension point
 	 */
 	private void loadAlgorithms() {
-		for (IAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
-			if (!algorithmList.contains(((ShadowAlgorithmAction) action))) {
-				algorithmList.add(((ShadowAlgorithmAction) action));
+		for (CommandOrAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
+			if (!algorithmList.contains(action)) {
+				algorithmList.add(action);
 			}
 		}
+		// TODO take care of the case when we have a Handler rather than an Action
 	}
 
 	/**
@@ -136,23 +139,40 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 		TreeMap<String, PaletteDrawer> types = new TreeMap<String, PaletteDrawer>();
 		TreeMap<String, SelectionToolEntry> sortList = new TreeMap<String, SelectionToolEntry>();
 
-		Iterator<ShadowAlgorithmAction> it = algorithmList.iterator();
-		ShadowAlgorithmAction act = null;
+		Iterator<CommandOrAction> it = algorithmList.iterator();
+		CommandOrAction act = null;
 
 		while (it.hasNext()) {
 			act = it.next();
 
+			String text = "";
+			String type = "";
+			String toolTipText = "";
+			boolean isFlexiProviderAlgorithm = false;
+			
+			if(act.getHandler() != null) {
+				ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)act.getHandler();
+				text = handler.getText();
+				type = handler.getType();
+				toolTipText = "";
+			} else if(act.getAction() != null) {
+				ShadowAlgorithmAction action = (ShadowAlgorithmAction)act.getAction();
+				text = action.getText();
+				type = action.getType();
+				toolTipText = action.getToolTipText();
+				isFlexiProviderAlgorithm = action.isFlexiProviderAlgorithm();
+			}
+			
 			// filter
 			boolean show = true;
 			for (String needle : needles) {
-				if (!act.getText().toLowerCase()
+				if (!text.toLowerCase()
 						.matches(".*" + needle.toLowerCase() + ".*")) //$NON-NLS-1$ //$NON-NLS-2$
 					show = false;
 			}
 
 			if (show) {
 				// Create Category
-				String type = act.getType();
 				if (types.get(type) == null) {
 					// translate
 					type = ApplicationActionBarAdvisor.getTypeTranslation(type);
@@ -162,13 +182,13 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 							.getImageDescriptor(TreeView.ICON_FOLDER));
 					paletteDrawer.setLargeIcon(ViewsPlugin
 							.getImageDescriptor(TreeView.ICON_FOLDER));
-					types.put(act.getType(), paletteDrawer);
+					types.put(type, paletteDrawer);
 				}
 
 				// Add element
 				SelectionToolEntry paletteEntry = new SelectionToolEntry(
-						act.getText(), act.getToolTipText());
-				if (act.isFlexiProviderAlgorithm()) { // FlexiProvider item
+						text, toolTipText);
+				if (isFlexiProviderAlgorithm) { // FlexiProvider item
 					paletteEntry.setSmallIcon(ViewsPlugin
 							.getImageDescriptor(TreeView.ICON_ITEM_FLEXI));
 					paletteEntry.setLargeIcon(ViewsPlugin
@@ -181,7 +201,7 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 				}
 				paletteEntry
 						.setUserModificationPermission(PaletteEntry.PERMISSION_NO_MODIFICATION);
-				paletteEntry.setType(act.getType());
+				paletteEntry.setType(type);
 
 				sortList.put(paletteEntry.getLabel(), paletteEntry); // temporary save in list
 			}
@@ -227,12 +247,18 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 						AlgorithmView
 								.showMessage(Messages.AlgorithmPaletteViewer_0);
 					} else {
-						Iterator<ShadowAlgorithmAction> it9 = algorithmList
+						Iterator<CommandOrAction> it9 = algorithmList
 								.iterator();
-						ShadowAlgorithmAction action = null;
+						CommandOrAction cmdOrAction = null;
 						while (it9.hasNext()) {
-							action = it9.next();
-							if (model.toString().equals(
+							cmdOrAction = it9.next();
+							ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+							ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
+							if (handler != null && model.toString().equals(
+									"Palette Entry (" + handler.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
+								handler.execute(null);
+							}
+							if (action != null && model.toString().equals(
 									"Palette Entry (" + action.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
 								action.run();
 							}

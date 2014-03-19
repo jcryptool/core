@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.fileexplorer.FileExplorerPlugin;
 import org.jcryptool.fileexplorer.views.FileExplorerView;
@@ -62,10 +63,14 @@ public class CryptoContributionItem extends ContributionItem {
 
         SortedMap<String, Menu> typeMap = new TreeMap<String, Menu>(menuStringsComparator);
         SortedMap<String, HashMap<String, IAction>> actionMap = new TreeMap<String, HashMap<String, IAction>>(menuStringsComparator);
-        IAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
+        CommandOrAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
 
-        for (final IAction action : algorithmActions) {
-            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(action));
+        for (final CommandOrAction cmdOrAction : algorithmActions) {
+        	IAction action = cmdOrAction.getAction();
+        	if(action == null)
+        		continue;
+        	// TODO take care of the case when we have a Handler rather than an Action
+            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(cmdOrAction));
 
             if (!typeMap.containsKey(translatedType)) {
                 typeMap.put(translatedType, new Menu(algorithmsMenu));

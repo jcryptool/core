@@ -38,9 +38,9 @@ public abstract class AbstractOperationsManager {
     /**
      * Subclasses must provide a getter for the algorithm actions.
      * 
-     * @return an IAction array of the algorithm actions
+     * @return an CommandOrAction array of the algorithm actions
      */
-    public abstract IAction[] getShadowAlgorithmActions();
+    public abstract CommandOrAction[] getShadowAlgorithmActions();
 
     /**
      * Subclasses must provide a getter for a specific algorithm type. The type is retrieved via a passed action object.
@@ -48,5 +48,5 @@ public abstract class AbstractOperationsManager {
      * @param action
      * @return
      */
-    public abstract String getAlgorithmType(IAction action);
+    public abstract String getAlgorithmType(CommandOrAction action);
 }

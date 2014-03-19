@@ -39,6 +39,9 @@ public interface IOperationsConstants {
     String ATT_ENGINE_CLASS = "engineClass"; //$NON-NLS-1$
 
     /** An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
+    String ATT_HANDLER_CLASS = "handlerClass"; //$NON-NLS-1$
+
+    /** An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
     String ATT_HELP_CONTEXT_ID = "contextHelpId"; //$NON-NLS-1$
 
     /** An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
@@ -93,6 +96,9 @@ public interface IOperationsConstants {
     String PL_ALGORITHMS = "algorithms"; //$NON-NLS-1$
 
     /** A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
+    String PL_ALGORITHMS_CMD = "algorithms_cmd"; //$NON-NLS-1$
+
+    /** A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
     String PL_ALGORITHM_WIZARDS = "algorithmWizards"; //$NON-NLS-1$
 
     /** A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
@@ -112,6 +118,9 @@ public interface IOperationsConstants {
 
     /** A tag for an Extension. The value is <code>{@value}</code> */
     String TAG_ALGORITHM = "algorithm"; //$NON-NLS-1$
+
+    /** A tag for an Extension. The value is <code>{@value}</code> */
+    String TAG_ALGORITHM_CMD = "algorithm_cmd"; //$NON-NLS-1$
 
     /** A tag for an Extension. The value is <code>{@value}</code> */
     String TAG_PROVIDER = "provider"; //$NON-NLS-1$
