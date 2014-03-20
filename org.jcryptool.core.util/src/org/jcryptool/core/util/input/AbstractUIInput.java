@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -11,6 +11,9 @@ package org.jcryptool.core.util.input;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.Activator;
 
 /**
  * An AbstractUIInput instance stands for one single user input. It ensures, that the stored input
@@ -77,7 +80,11 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
      */
     public AbstractUIInput() {
         initializationActions();
-        tryToSetDefaultValues();
+        try {
+        	tryToSetDefaultValues();
+        } catch(Exception ex) {
+        	LogUtil.logError(Activator.PLUGIN_ID, ex);
+        }
     }
 
     /**
