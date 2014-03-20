@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -72,7 +72,8 @@ import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
  * 
  * @author amro
  * @author Dominik Schadow
- * @version 0.9.5
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.6
  */
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     private IWorkbenchAction preferencesAction;

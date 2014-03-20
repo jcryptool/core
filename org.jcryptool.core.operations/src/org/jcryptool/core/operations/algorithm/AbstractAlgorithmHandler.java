@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2013 JCrypTool Team and Contributors
+ * Copyright (c) 2013, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -44,11 +44,12 @@ import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.operations.editors.EditorsManager;
 
 /**
- * The standard abstract implementation of an algorithm action.
+ * The standard abstract implementation of an algorithm command handler.
  * 
  * @author amro
  * @author Dominik Schadow
- * @version 0.9.4
+ * @author Holger Friedrich (supprt for Commands, adapted from AbstractAlgorithmAction)
+ * @version 0.9.5
  */
 public abstract class AbstractAlgorithmHandler extends AbstractHandler {
     /** Type of an algorithm (classic, asymmetric etc). */

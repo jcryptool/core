@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
+ * Copyright (c) 2011, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -42,7 +42,8 @@ import org.jcryptool.fileexplorer.views.FileExplorerView;
  * installed cryptographic algorithms that do extend the <code>AlgorithmsManager</code>.
  *
  * @author Dominik Schadow
- * @version 0.9.5
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.6
  */
 public class CryptoContributionItem extends ContributionItem {
     private Menu algorithmsMenu;

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
+ * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -34,7 +34,8 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * 
  * @author amro
  * @author t-kern
- * @version 0.6.0
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.6.1
  * 
  */
 public class AlgorithmRegistry extends AbstractOperationsManager implements IExtensionChangeHandler {

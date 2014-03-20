@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool team and contributors
+ * Copyright (c) 2010, 2014 JCrypTool team and contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -54,7 +54,8 @@ import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
  * <b>Start handler</b> for the Actions view. Runs the created or imported action cascade.
  * 
  * @author Dominik Schadow
- * @version 0.9.3
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.4
  */
 public class StartHandler extends AbstractHandler {
 

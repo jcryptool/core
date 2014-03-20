@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,7 +46,8 @@ import org.jcryptool.core.views.content.TreeView;
  * A PaletteViewer for the algorithm extension point.
  *
  * @author mwalthart
- * @version 0.9.4
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.5
  */
 public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable {
 	private Action doubleClickAction;

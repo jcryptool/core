@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
+ * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -48,7 +48,8 @@ import org.jcryptool.core.views.content.TreeView;
  * Displays all available algorithms in a tree or palette view.
  *
  * @author t-kern
- * @version 0.9.1
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.2
  */
 public class AlgorithmView extends ViewPart implements IOperationsConstants {
     public static final String ID = "org.jcryptool.core.views.AlgorithmView"; //$NON-NLS-1$
@@ -298,5 +299,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
                 algorithmTypes.add(((ShadowAlgorithmAction) action));
             }
         }
+        // TODO This doesn't quite support the case when we have a Handler rather than an Action in the CommandOrAction.
+        // Is this loadAlgorithms() method used anywhere?
     }
 }

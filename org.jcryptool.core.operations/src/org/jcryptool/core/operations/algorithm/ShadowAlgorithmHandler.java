@@ -28,13 +28,14 @@ import org.jcryptool.core.operations.dataobject.modern.ModernDataObject;
 
 /**
  * To support lazy loading of the 'algorithms' extensions kind of a helper pattern is used. The helper is represented by
- * the ShadowAlgorithmAction class.
+ * the ShadowAlgorithmHandler class.
  * 
- * The class encapsulates the appropriate algorithm action. In its run-method it just calls the run-method of the
- * algorithm action. To guarantee lazy loading, the appropriate algorithm is loaded, the first time a run is invoked.
+ * The class encapsulates the appropriate algorithm command handler. In its run-method it just calls the execute method of the
+ * algorithm command handler. To guarantee lazy loading, the appropriate algorithm is loaded, the first time an execute is invoked.
  * 
  * @author amro
  * @author t-kern
+ * @author Holger Friedrich (support for Commands, adapted from ShadowAlgorithmAction)
  * 
  */
 public class ShadowAlgorithmHandler extends AbstractHandler {
@@ -47,7 +48,7 @@ public class ShadowAlgorithmHandler extends AbstractHandler {
     private String algorithmActionID;
 
     /**
-     * the appropriate algorithm handler
+     * the appropriate algorithm command handler
      */
     private AbstractAlgorithmHandler algorithmHandler;
 

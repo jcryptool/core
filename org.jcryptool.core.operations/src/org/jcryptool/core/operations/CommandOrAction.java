@@ -1,3 +1,13 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2014 JCrypTool Team and Contributors
+ * 
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
+
 package org.jcryptool.core.operations;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -6,6 +16,14 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 
+/**
+ * Class containing an IAction and an AbstractHandler to support both Actions and Commands.
+ * This is used in various lists and maps containing the Actions/Commands for various algorithms.
+ * The understanding is that either the IAction is non-null and the command ID and the AbstractHandler are both null,
+ * or the IAction is null and the command ID and the AbstractHandler are both null.
+ * 
+ * @author Holger Friedrich
+ */
 public class CommandOrAction {
 	private IAction action;
 	private String commandId;
