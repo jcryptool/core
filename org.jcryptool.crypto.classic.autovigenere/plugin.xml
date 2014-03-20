@@ -2,16 +2,18 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.jcryptool.crypto.classic.autovigenere.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.autovigenere.algorithm.AutoVigenereAlgorithmAction"
+         id="id3"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.classic.autovigenere.algorithm.AutoVigenereAlgorithm"
             contextHelpId="org.jcryptool.crypto.classic.autovigenere.algorithm"
             engineClass="org.jcryptool.crypto.classic.autovigenere.algorithm.AutoVigenereEngine"
-            id="org.jcryptool.crypto.classic.autovigenere.algorithm"
+            handlerClass="org.jcryptool.crypto.classic.autovigenere.algorithm.AutoVigenereAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.autovigenere.algorithm_cmd3"
+            isFlexiProviderAlgorithm="false"
             name="%algorithm.name"
-            type="classic"/>
+            type="classic">
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.toc">
