@@ -31,6 +31,7 @@ import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandOrAction;
+import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.fileexplorer.FileExplorerPlugin;
 import org.jcryptool.fileexplorer.views.FileExplorerView;
@@ -62,24 +63,26 @@ public class CryptoContributionItem extends ContributionItem {
         };
 
         SortedMap<String, Menu> typeMap = new TreeMap<String, Menu>(menuStringsComparator);
-        SortedMap<String, HashMap<String, IAction>> actionMap = new TreeMap<String, HashMap<String, IAction>>(menuStringsComparator);
+        SortedMap<String, HashMap<String, CommandOrAction>> actionMap = new TreeMap<String, HashMap<String, CommandOrAction>>(menuStringsComparator);
         CommandOrAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
 
         for (final CommandOrAction cmdOrAction : algorithmActions) {
-        	IAction action = cmdOrAction.getAction();
-        	if(action == null)
-        		continue;
-        	// TODO take care of the case when we have a Handler rather than an Action
             String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(cmdOrAction));
 
             if (!typeMap.containsKey(translatedType)) {
                 typeMap.put(translatedType, new Menu(algorithmsMenu));
             }
 
-            HashMap<String, IAction> map = new HashMap<String, IAction>(1);
-            map.put(translatedType, action);
+            HashMap<String, CommandOrAction> map = new HashMap<String, CommandOrAction>(1);
+            map.put(translatedType, cmdOrAction);
 
-            actionMap.put(action.getText(), map);
+            String text = null;
+            if(cmdOrAction.getHandler() != null) {
+            	text = ((ShadowAlgorithmHandler)cmdOrAction.getHandler()).getText();
+            } else if(cmdOrAction.getAction() != null) {
+            	text = cmdOrAction.getAction().getText();
+            }
+            actionMap.put(text, map);
         }
 
         for (String subMenuKey : typeMap.keySet()) {
@@ -88,21 +91,33 @@ public class CryptoContributionItem extends ContributionItem {
             item.setMenu(typeMap.get(subMenuKey));
         }
 
-        for (HashMap<String, IAction> algorithmItems : actionMap.values()) {
+        for (HashMap<String, CommandOrAction> algorithmItems : actionMap.values()) {
             String translatedType = algorithmItems.keySet().iterator().next();
-            final IAction action = algorithmItems.get(translatedType);
+            final CommandOrAction cmdOrAction = algorithmItems.get(translatedType);
 
             // get the menu
             Menu typeMenu = typeMap.get(translatedType);
 
             // create an item for the algorithm
             MenuItem item = new MenuItem(typeMenu, SWT.CASCADE);
-            item.setText(action.getText());
-            item.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent e) {
-                    run(action);
-                }
-            });
+            final IAction action = cmdOrAction.getAction();
+            final ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+            
+            if(handler != null) {
+            	item.setText(handler.getText());
+            	item.addSelectionListener(new SelectionAdapter() {
+            		public void widgetSelected(SelectionEvent e) {
+            			run(handler);
+            		}
+            	});
+            } else if(action != null) {
+            	item.setText(action.getText());
+            	item.addSelectionListener(new SelectionAdapter() {
+            		public void widgetSelected(SelectionEvent e) {
+            			run(action);
+            		}
+            	});
+            }
 
             // update the menu
             typeMap.put(translatedType, typeMenu);
@@ -121,6 +136,19 @@ public class CryptoContributionItem extends ContributionItem {
         try {
             handler.execute(event);
             cryptoAction.run();
+        } catch (ExecutionException ex) {
+            LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
+        }
+    }
+
+    public void run(ShadowAlgorithmHandler cryptoHandler) {
+        final IHandlerService handlerService = (IHandlerService) view.getSite().getService(IHandlerService.class);
+        IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
+        ExecutionEvent event = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
+        try {
+            handler.execute(event);
+            cryptoHandler.execute(event);
         } catch (ExecutionException ex) {
             LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
         }
