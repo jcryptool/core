@@ -2,16 +2,17 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.jcryptool.crypto.classic.vigenere.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.vigenere.algorithm.VigenereAlgorithmAction"
+         id="org.jcryptool.crypto.classic.vigenere.algorithm_cmd"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.classic.vigenere.algorithm.VigenereAlgorithm"
             contextHelpId="org.jcryptool.crypto.classic.vigenere.algorithm"
             engineClass="org.jcryptool.crypto.classic.vigenere.algorithm.VigenereEngine"
-            id="org.jcryptool.crypto.classic.vigenere.algorithm"
+            handlerClass="org.jcryptool.crypto.classic.vigenere.algorithm.VigenereAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.vigenere.algorithm_cmd"
             name="%algorithm.name"
-            type="classic"/>
+            type="classic">
+      </algorithm_cmd>
    </extension>
    <!-- Help -->
    <extension
