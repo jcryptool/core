@@ -2,134 +2,133 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="id1"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa.RsaAction"
+         id="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa.Rsa"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.RSAWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa.RsaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.rsa"
             isFlexiProviderAlgorithm="true"
             name="RSA"
             type="asymmetric">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id2"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5.Md5Action"
+         id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5.Md5"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.MD5Wizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5.Md5Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.md5"
             isFlexiProviderAlgorithm="true"
             name="MD5"
             type="hash">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id3"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes.AesAction"
+         id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes.Aes"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.AESWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes.AesHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.aes"
-            isFlexiProviderAlgorithm="true"
             name="AES"
             type="symmetric">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id4"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.ShaAction"
+         id="id14"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.Sha"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHAWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.ShaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha"
             isFlexiProviderAlgorithm="true"
             name="SHA"
             type="hash">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id5"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6.Rc6Action"
+         id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6.Rc6"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.RC6Wizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6.Rc6Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.rc6"
             isFlexiProviderAlgorithm="true"
             name="RC6"
             type="symmetric">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id6"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea.IdeaAction"
+         id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea.Idea"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.IDEAWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea.IdeaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.blockcipher.idea"
             isFlexiProviderAlgorithm="true"
             name="IDEA"
             type="symmetric">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id7"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.signature.dsa.DsaAction"
+         id="org.jcryptool.crypto.flexiprovider.integrator.signature.dsa"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.signature.dsa.Dsa"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.DSAWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.signature.dsa.DsaHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.signature.dsa"
             isFlexiProviderAlgorithm="true"
             name="DSA"
             type="signature">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id8"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal.ElGamalAction"
+         id="id18"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal.ElGamal"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.ElGamalWizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal.ElGamalHandler"
             id="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal"
             isFlexiProviderAlgorithm="true"
             name="ElGamal"
             type="asymmetric">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id9"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5.HMacMd5Action"
+         id="org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5.HMacMd5"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.HMacMD5Wizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5.HMacMd5Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.mac.hmacmd5"
             isFlexiProviderAlgorithm="true"
             name="HMacMD5"
             type="mac">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
-         id="id10"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1Action"
+         id="id20"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1"
             contextHelpId="org.jcryptool.crypto.flexiprovider.integrator.SHA1Wizard"
+            handlerClass="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1Handler"
             id="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1"
             isFlexiProviderAlgorithm="true"
             name="SHA1"
             type="prng">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.contexts">
