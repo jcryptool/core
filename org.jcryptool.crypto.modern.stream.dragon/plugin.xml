@@ -3,14 +3,15 @@
 <plugin>
    <extension
          id="org.jcryptool.crypto.modern.stream.dragon.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.modern.stream.dragon.algorithm.DragonAlgorithmAction"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.modern.stream.dragon.algorithm.DragonAlgorithm"
             contextHelpId="org.jcryptool.crypto.modern.stream.dragon.wizard"
+            handlerClass="org.jcryptool.crypto.modern.stream.dragon.algorithm.DragonAlgorithmHandler"
             id="org.jcryptool.crypto.modern.stream.dragon.algorithm"
             name="%algorithm.name"
-            type="symmetric"/>
+            type="symmetric">
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.toc">
