@@ -40,7 +40,7 @@
       </algorithm_cmd>
    </extension>
    <extension
-         id="id14"
+         id="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha"
          point="org.jcryptool.core.operations.algorithms_cmd">
       <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.messagedigest.sha.Sha"
@@ -92,7 +92,7 @@
       </algorithm_cmd>
    </extension>
    <extension
-         id="id18"
+         id="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal"
          point="org.jcryptool.core.operations.algorithms_cmd">
       <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.asymmetric.elgamal.ElGamal"
@@ -118,7 +118,7 @@
       </algorithm_cmd>
    </extension>
    <extension
-         id="id20"
+         id="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1"
          point="org.jcryptool.core.operations.algorithms_cmd">
       <algorithm_cmd
             class="org.jcryptool.crypto.flexiprovider.integrator.prng.sha1.Sha1"
