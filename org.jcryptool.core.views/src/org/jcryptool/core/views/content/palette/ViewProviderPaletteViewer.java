@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,9 @@ package org.jcryptool.core.views.content.palette;
 
 import java.util.TreeMap;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -21,12 +24,12 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.palette.editparts.PaletteEditPart;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.jcryptool.core.actions.ShowPluginViewAction;
+import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
 import org.jcryptool.core.views.ViewsPlugin;
@@ -36,13 +39,14 @@ import org.jcryptool.core.views.content.TreeView;
  * A palette viewer for the ViewProviders (analysis, visuals, games).
  *
  * @author mwalthart
- * @version 0.9.1
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.2
  */
 public class ViewProviderPaletteViewer extends PaletteViewer implements ISearchable {
     private String extensionPointId;
     private PaletteRoot invisibleRoot = new PaletteRoot();
     private PaletteViewer viewer = this;
-    private Action doubleClickAction;
+    private AbstractHandler doubleClickHandler;
     private String search;
 
     /**
@@ -65,8 +69,8 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
      * Creates the actions and assigns them to the viewers double click listener.
      */
     private void makeAndAssignActions() {
-        doubleClickAction = new Action() {
-            public void run() {
+        doubleClickHandler = new AbstractHandler() {
+            public Object execute(ExecutionEvent event) {
                 Object obj = ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 
                 if (obj instanceof PaletteEditPart) {
@@ -76,12 +80,13 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
                     for (IConfigurationElement element : elements) {
                         if (element.getAttribute("name").equals(( //$NON-NLS-1$
                                 (PaletteEntry) part.getModel()).getLabel())) {
-                            (new ShowPluginViewAction(
+                            return (new ShowPluginViewHandler(
                                     element.getAttribute("viewId"), //$NON-NLS-1$
-                                    element.getAttribute("name"))).run(); //$NON-NLS-1$
+                                    element.getAttribute("name"))).execute(event); //$NON-NLS-1$
                         }
                     }
                 }
+                return(null);
             }
         };
 
@@ -89,7 +94,11 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
             @Override
             public void mouseDoubleClick(final MouseEvent e) {
                 if (e.button == 1) { // only left button double clicks
-                    doubleClickAction.run(); // run assigned action
+                	try {
+                		doubleClickHandler.execute(null); // run assigned action
+                	} catch (ExecutionException ex) {
+                		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                	}
                 }
             }
 

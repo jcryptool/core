@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,9 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.views.content.tree;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -23,7 +26,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.core.actions.ShowPluginViewAction;
+import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.views.AlgorithmView;
 import org.jcryptool.core.views.ISearchable;
 import org.jcryptool.core.views.ViewsPlugin;
@@ -37,13 +41,14 @@ import org.jcryptool.core.views.content.structure.ViewLabelProvider;
  * A tree viewer for the ViewProviders (Analysis, Visuals, Games)
  *
  * @author mwalthart
- * @version 0.9.1
+ * @author Holger Friedrich (support for Commands)
+ * @version 0.9.2
  */
 public class ViewProviderTreeViewer extends TreeViewer implements ISearchable {
     private String extensionPointId;
     private TreeParent invisibleRoot = new TreeParent(""); //$NON-NLS-1$
     protected TreeViewer viewer = this;
-    protected Action doubleClickAction;
+    protected AbstractHandler doubleClickHandler;
     private String search;
 
     /**
@@ -103,18 +108,19 @@ public class ViewProviderTreeViewer extends TreeViewer implements ISearchable {
      * creates the actions and assigns them to the viewers double click listener
      */
     private void makeAndAssignActions() {
-        doubleClickAction = new Action() {
-            public void run() {
+        doubleClickHandler = new AbstractHandler() {
+            public Object execute(ExecutionEvent event) {
                 TreeObject treeObject = (TreeObject) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 
                 IConfigurationElement[] elements = Platform.getExtensionRegistry()
                         .getExtensionPoint(extensionPointId).getConfigurationElements();
                 for (IConfigurationElement element : elements) {
                     if (element.getAttribute("name").equals(treeObject.getName())) { //$NON-NLS-1$
-                        (new ShowPluginViewAction(
-                                element.getAttribute("viewId"), element.getAttribute("name"))).run(); //$NON-NLS-1$ //$NON-NLS-2$
+                        return (new ShowPluginViewHandler(
+                                element.getAttribute("viewId"), element.getAttribute("name"))).execute(event); //$NON-NLS-1$ //$NON-NLS-2$
                     }
                 }
+                return(null);
             }
         };
 
@@ -129,7 +135,11 @@ public class ViewProviderTreeViewer extends TreeViewer implements ISearchable {
                         viewer.expandToLevel(obj, 1);
                     }
                 } else if (obj instanceof TreeObject) {
-                    doubleClickAction.run(); // run assigned action
+                	try {
+                		doubleClickHandler.execute(null); // run assigned action
+                	} catch(ExecutionException ex) {
+                		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                	}
                 }
             }
         });
