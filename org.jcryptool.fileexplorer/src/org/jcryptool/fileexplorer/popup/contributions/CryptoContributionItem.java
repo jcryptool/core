@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
@@ -27,6 +28,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -102,13 +104,14 @@ public class CryptoContributionItem extends ContributionItem {
             // create an item for the algorithm
             MenuItem item = new MenuItem(typeMenu, SWT.CASCADE);
             final IAction action = cmdOrAction.getAction();
+            final String commandId = cmdOrAction.getCommandId();
             final ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
             
-            if(handler != null) {
+            if(commandId != null) {
             	item.setText(handler.getText());
             	item.addSelectionListener(new SelectionAdapter() {
             		public void widgetSelected(SelectionEvent e) {
-            			run(handler);
+            			run(commandId);
             		}
             	});
             } else if(action != null) {
@@ -142,15 +145,18 @@ public class CryptoContributionItem extends ContributionItem {
         }
     }
 
-    public void run(ShadowAlgorithmHandler cryptoHandler) {
+    public void run(String commandId) {
         final IHandlerService handlerService = (IHandlerService) view.getSite().getService(IHandlerService.class);
         IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
         ExecutionEvent event = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
 
+        final ICommandService commandService = (ICommandService)view.getSite().getService(ICommandService.class);
+        Command command = commandService.getCommand(commandId);
+        
         try {
             handler.execute(event);
-            cryptoHandler.execute(event);
-        } catch (ExecutionException ex) {
+            command.executeWithChecks(event);
+        } catch (Exception ex) {
             LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
         }
     }

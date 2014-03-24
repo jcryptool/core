@@ -10,11 +10,14 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.views.content.palette;
 
+import java.util.Collections;
 import java.util.TreeMap;
 
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -28,6 +31,9 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.views.AlgorithmView;
@@ -71,6 +77,8 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
     private void makeAndAssignActions() {
         doubleClickHandler = new AbstractHandler() {
             public Object execute(ExecutionEvent event) {
+                final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+
                 Object obj = ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 
                 if (obj instanceof PaletteEditPart) {
@@ -80,9 +88,13 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
                     for (IConfigurationElement element : elements) {
                         if (element.getAttribute("name").equals(( //$NON-NLS-1$
                                 (PaletteEntry) part.getModel()).getLabel())) {
-                            return (new ShowPluginViewHandler(
-                                    element.getAttribute("viewId"), //$NON-NLS-1$
-                                    element.getAttribute("name"))).execute(event); //$NON-NLS-1$
+                            Command command = commandService.getCommand(element.getAttribute("viewId")); //$NON-NLS-1$
+                            try {
+                            	return command.executeWithChecks(event);
+                            } catch(Exception ex) {
+                            	LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                            	return(null);
+                            }
                         }
                     }
                 }
@@ -94,8 +106,12 @@ public class ViewProviderPaletteViewer extends PaletteViewer implements ISearcha
             @Override
             public void mouseDoubleClick(final MouseEvent e) {
                 if (e.button == 1) { // only left button double clicks
-                	try {
-                		doubleClickHandler.execute(null); // run assigned action
+                    final IHandlerService handlerService = (IHandlerService)PlatformUI.getWorkbench().getService(IHandlerService.class);
+                    IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
+                    ExecutionEvent event = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
+                    try {
+                		doubleClickHandler.execute(event); // run assigned action
                 	} catch (ExecutionException ex) {
                 		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
                 	}

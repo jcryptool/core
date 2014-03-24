@@ -10,9 +10,13 @@
 //-----END DISCLAIMER-----
 package org.jcryptool.core.views.content.tree;
 
+import java.util.Collections;
+
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -26,6 +30,8 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.views.AlgorithmView;
@@ -110,14 +116,20 @@ public class ViewProviderTreeViewer extends TreeViewer implements ISearchable {
     private void makeAndAssignActions() {
         doubleClickHandler = new AbstractHandler() {
             public Object execute(ExecutionEvent event) {
+                final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+
                 TreeObject treeObject = (TreeObject) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 
                 IConfigurationElement[] elements = Platform.getExtensionRegistry()
                         .getExtensionPoint(extensionPointId).getConfigurationElements();
                 for (IConfigurationElement element : elements) {
                     if (element.getAttribute("name").equals(treeObject.getName())) { //$NON-NLS-1$
-                        return (new ShowPluginViewHandler(
-                                element.getAttribute("viewId"), element.getAttribute("name"))).execute(event); //$NON-NLS-1$ //$NON-NLS-2$
+                    	Command command = commandService.getCommand(element.getAttribute("viewId")); //$NON-NLS-1$
+                    	try {
+                    		return command.executeWithChecks(event);
+                    	} catch(Exception ex) {
+                    		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                    	}
                     }
                 }
                 return(null);
@@ -136,7 +148,11 @@ public class ViewProviderTreeViewer extends TreeViewer implements ISearchable {
                     }
                 } else if (obj instanceof TreeObject) {
                 	try {
-                		doubleClickHandler.execute(null); // run assigned action
+                        final IHandlerService handlerService = (IHandlerService)PlatformUI.getWorkbench().getService(IHandlerService.class);
+                        IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
+                        ExecutionEvent executionEvent = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
+                        doubleClickHandler.execute(executionEvent); // run assigned action
                 	} catch(ExecutionException ex) {
                 		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
                 	}

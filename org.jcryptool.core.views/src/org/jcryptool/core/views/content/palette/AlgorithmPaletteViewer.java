@@ -11,9 +11,15 @@
 package org.jcryptool.core.views.content.palette;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.TreeMap;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.gef.palette.PaletteDrawer;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
@@ -32,7 +38,10 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
@@ -50,7 +59,7 @@ import org.jcryptool.core.views.content.TreeView;
  * @version 0.9.5
  */
 public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable {
-	private Action doubleClickAction;
+	private AbstractHandler doubleClickHandler;
 	private AlgorithmPaletteViewer viewer = this;
 	private PaletteRoot invisibleRoot;
 	private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
@@ -226,8 +235,8 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 	 * assigns the actions to the doubleclick listener of the viewer
 	 */
 	private void makeAndAssignActions() {
-		doubleClickAction = new Action() {
-			public void run() {
+		doubleClickHandler = new AbstractHandler() {
+			public Object execute(ExecutionEvent event) {
 				Object selection = ((IStructuredSelection) viewer
 						.getSelection()).getFirstElement();
 
@@ -247,16 +256,26 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 						AlgorithmView
 								.showMessage(Messages.AlgorithmPaletteViewer_0);
 					} else {
-						Iterator<CommandOrAction> it9 = algorithmList
+		                final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+
+		                Iterator<CommandOrAction> it9 = algorithmList
 								.iterator();
 						CommandOrAction cmdOrAction = null;
 						while (it9.hasNext()) {
 							cmdOrAction = it9.next();
 							ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+							String commandId = cmdOrAction.getCommandId();
 							ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
-							if (handler != null && model.toString().equals(
+							if (commandId != null && model.toString().equals(
 									"Palette Entry (" + handler.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
-								handler.execute(null);
+								Command command = commandService.getCommand(commandId);
+								try
+								{
+									return command.executeWithChecks(event);
+								} catch(Exception ex) {
+									LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+									return(null);
+								}
 							}
 							if (action != null && model.toString().equals(
 									"Palette Entry (" + action.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
@@ -265,6 +284,7 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 						}
 					}
 				}
+				return(null);
 			}
 		};
 
@@ -272,7 +292,15 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 			@Override
 			public void mouseDoubleClick(final MouseEvent e) {
 				if (e.button == 1) { // only left button double clicks
-					doubleClickAction.run(); // run assigned action
+                    final IHandlerService handlerService = (IHandlerService)PlatformUI.getWorkbench().getService(IHandlerService.class);
+                    IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
+                    ExecutionEvent event = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
+                    try {
+						doubleClickHandler.execute(event); // run assigned action
+					} catch(ExecutionException ex) {
+						LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+					}
 				}
 			}
 

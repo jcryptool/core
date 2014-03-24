@@ -12,12 +12,16 @@ package org.jcryptool.core.views.content.tree;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -41,6 +45,8 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandOrAction;
@@ -68,7 +74,7 @@ import org.jcryptool.core.views.content.structure.ViewLabelProvider;
 public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
     private TreeViewer viewer = this;
     private TreeParent invisibleRoot;
-    private Action doubleClickAction;
+    private AbstractHandler doubleClickHandler;
     private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
     private String search;
     protected String extensionPointId = "org.jcryptool.core.operations.algorithms"; //$NON-NLS-1$
@@ -251,8 +257,8 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
      * viewers double click listener
      */
     private void makeAndAssignActions() {
-        doubleClickAction = new Action() {
-            public void run() {
+        doubleClickHandler = new AbstractHandler() {
+            public Object execute(ExecutionEvent event) {
                 TreeObject treeObject = (TreeObject) ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 
                 IEditorReference[] editorReferences = PlatformUI.getWorkbench()
@@ -261,19 +267,29 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
                         && (!treeObject.getParent().getName().equals(org.jcryptool.core.Messages.applicationActionBarAdvisor_Menu_Algorithms_PRNG))) {
                     AlgorithmView.showMessage(Messages.AlgorithmView_warning_message_no_active_editor);
                 } else {
+                    final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+
                     Iterator<CommandOrAction> it9 = algorithmList.iterator();
                     CommandOrAction cmdOrAction = null;
                     while (it9.hasNext()) {
                         cmdOrAction = it9.next();
                         ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+                        String commandId = cmdOrAction.getCommandId();
                         ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
-                        if(handler != null && treeObject.getName().equals(handler.getText())) {
-                        	handler.execute(null);
+                        if(commandId != null && treeObject.getName().equals(handler.getText())) {
+                        	Command command = commandService.getCommand(commandId);
+                        	try {
+                        		return command.executeWithChecks(event);
+                        	} catch(Exception ex) {
+                        		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                        		return(null);
+                        	}
                         } else if (action != null && treeObject.getName().equals(action.getText())) {
                             action.run();
                         }
                     }
                 }
+                return(null);
             }
         };
 
@@ -288,7 +304,15 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
                         viewer.expandToLevel(obj, 1);
                     }
                 } else if (obj instanceof TreeObject) {
-                    doubleClickAction.run(); // run assigned action
+                	try {
+                        final IHandlerService handlerService = (IHandlerService)PlatformUI.getWorkbench().getService(IHandlerService.class);
+                        IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
+                        ExecutionEvent executionEvent = new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
+                        doubleClickHandler.execute(executionEvent); // run assigned action
+                	} catch(ExecutionException ex) {
+                		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
+                	}
                 }
             }
         });
