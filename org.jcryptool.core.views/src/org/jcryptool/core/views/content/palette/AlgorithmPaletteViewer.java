@@ -163,7 +163,8 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 				ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)act.getHandler();
 				text = handler.getText();
 				type = handler.getType();
-				toolTipText = "";
+				toolTipText = handler.getToolTipText();
+				isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
 			} else if(act.getAction() != null) {
 				ShadowAlgorithmAction action = (ShadowAlgorithmAction)act.getAction();
 				text = action.getText();

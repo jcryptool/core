@@ -60,8 +60,11 @@ public class ShadowAlgorithmHandler extends AbstractHandler {
     /** The flag for FlexiProvider algorithms */
     private boolean isFlexiProviderAlgorithm;
     
-    /** a ShadowAlgorithAction has a setText() method, so a ShadowAlgorithmHandler needs a Text field too **/ 
+    /** the text to use in menu, palette and tree entries */ 
     private String text;
+    
+    /** the tool tip text */
+    private String toolTipText;
 
     /**
      * Creates a new instance of ShadowAlgorithmAction with the given descriptor.
@@ -73,8 +76,8 @@ public class ShadowAlgorithmHandler extends AbstractHandler {
         // TODO do we need those?
         // setId(descriptor.getAlgorithmID());
         setText(descriptor.getName());
-        // if (descriptor.getToolTipText() != null)
-        //    setToolTipText(descriptor.getToolTipText());
+        if (descriptor.getToolTipText() != null)
+            this.toolTipText = descriptor.getToolTipText();
         this.type = descriptor.getType();
         this.extensionID = descriptor.getExtensionUID();
         this.algorithmActionID = descriptor.getAlgorithmID();
@@ -88,6 +91,10 @@ public class ShadowAlgorithmHandler extends AbstractHandler {
     
     public String getText() {
     	return(text);
+    }
+    
+    public String getToolTipText() {
+    	return(toolTipText);
     }
     
     /**
