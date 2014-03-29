@@ -4,6 +4,7 @@
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors: Dominik Schadow - initial API and implementation
+ *               Holger Friedrich - support of Commands
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.commands;
 
@@ -12,11 +13,12 @@ import java.util.ArrayList;
 
 import org.apache.xml.security.keys.keyresolver.KeyResolverException;
 import org.apache.xml.security.signature.XMLSignatureException;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.crypto.xml.core.verify.VerificationResult;
 import org.jcryptool.crypto.xml.core.verify.VerifyDocument;
@@ -30,9 +32,10 @@ import org.jcryptool.crypto.xml.ui.verify.SignatureView;
  * </p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @author Holger Friedrich (support of Commands)
+ * @version 0.5.1
  */
-public class NewVerificationCommand extends AbstractAlgorithmAction {
+public class NewVerificationCommand extends AbstractAlgorithmHandler {
     /** The data to sign. */
     private InputStream data = null;
 
@@ -67,8 +70,9 @@ public class NewVerificationCommand extends AbstractAlgorithmAction {
     }
 
     @Override
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         run(null);
+        return(null);
     }
 
     @Override

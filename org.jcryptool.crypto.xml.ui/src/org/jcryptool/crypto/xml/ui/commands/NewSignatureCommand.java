@@ -5,6 +5,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors: Dominik Schadow - initial API and implementation
+ *               Holger Friedrich - support of Commands
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.commands;
 
@@ -12,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -25,7 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.IOperationsConstants;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.util.constants.IConstants;
@@ -44,9 +46,10 @@ import org.xml.sax.SAXParseException;
  * </p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @author Holger Friedrich (support of Commands)
+ * @version 0.5.1
  */
-public class NewSignatureCommand extends AbstractAlgorithmAction {
+public class NewSignatureCommand extends AbstractAlgorithmHandler {
     /** Selected text in the editor. */
     private ITextSelection textSelection = null;
     /** The data to sign. */
@@ -159,7 +162,7 @@ public class NewSignatureCommand extends AbstractAlgorithmAction {
     private void callEncryptionWizard() throws ExecutionException {
         NewEncryptionCommand encrypt = new NewEncryptionCommand();
         encrypt.encryptAfterSignature(data);
-        encrypt.run();
+        encrypt.execute(null);
     }
 
     /**
@@ -174,8 +177,9 @@ public class NewSignatureCommand extends AbstractAlgorithmAction {
     }
 
     @Override
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         run(null);
+        return(null);
     }
 
     @Override

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
  <plugin>
-   <extension
-         id="org.jcryptool.crypto.classic.xor.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.xor.algorithm.XorAlgorithmAction"
-            class="org.jcryptool.crypto.classic.xor.algorithm.XorAlgorithm"
-            contextHelpId="org.jcryptool.crypto.classic.xor.algorithm"
-            engineClass="org.jcryptool.crypto.classic.xor.algorithm.XorEngine"
-            id="org.jcryptool.crypto.classic.xor.algorithm"
-            name="%algorithm.name"
-            type="classic"/>
-   </extension>
+    <extension
+          id="org.jcryptool.crypto.classic.xor.algorithm_cmd"
+          point="org.jcryptool.core.operations.algorithms_cmd">
+       <algorithm_cmd
+             class="org.jcryptool.crypto.classic.xor.algorithm.XorAlgorithm"
+             contextHelpId="org.jcryptool.crypto.classic.xor.algorithm"
+             engineClass="org.jcryptool.crypto.classic.xor.algorithm.XorEngine"
+             handlerClass="org.jcryptool.crypto.classic.xor.algorithm.XorAlgorithmHandler"
+             id="org.jcryptool.crypto.classic.xor.algorithm_cmd"
+             name="%algorithm.name"
+             type="classic">
+       </algorithm_cmd>
+    </extension>
    <extension
          point="org.eclipse.help.toc">
       <toc

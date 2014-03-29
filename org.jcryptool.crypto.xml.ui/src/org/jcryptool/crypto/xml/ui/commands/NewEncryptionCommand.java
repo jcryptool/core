@@ -5,11 +5,13 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors: Dominik Schadow - initial API and implementation
+ *               Holger Friedrich - support of Commands
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.commands;
 
 import java.io.InputStream;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -23,7 +25,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.IOperationsConstants;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
 import org.jcryptool.core.util.constants.IConstants;
@@ -41,9 +43,10 @@ import org.w3c.dom.Document;
  * </p>
  *
  * @author Dominik Schadow
- * @version 0.5.0
+ * @author Holger Friedrich (support of Commands)
+ * @version 0.5.1
  */
-public class NewEncryptionCommand extends AbstractAlgorithmAction {
+public class NewEncryptionCommand extends AbstractAlgorithmHandler {
     /** Selected text in the editor. */
     private ITextSelection textSelection = null;
     /** The data to encrypt. */
@@ -151,7 +154,7 @@ public class NewEncryptionCommand extends AbstractAlgorithmAction {
     private void callSignatureWizard() throws ExecutionException {
         NewSignatureCommand sign = new NewSignatureCommand();
         sign.signAfterEncryption(data);
-        sign.run();
+        sign.execute(null);
     }
 
     /**
@@ -166,8 +169,9 @@ public class NewEncryptionCommand extends AbstractAlgorithmAction {
     }
 
     @Override
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         run(null);
+        return(null);
     }
 
     @Override

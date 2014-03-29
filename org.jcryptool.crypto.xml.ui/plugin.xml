@@ -130,80 +130,80 @@
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.canonWithoutComments"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationRemoveCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.canonicalize.CreateCanonicalization"
             contextHelpId="org.jcryptool.crypto.xml.help.canonicalization"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationRemoveCommand"
             id="org.jcryptool.crypto.xml.ui.newCanonWithoutComments"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.canonWithComments"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationMaintainCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.canonicalize.CreateCanonicalization"
             contextHelpId="org.jcryptool.crypto.xml.help.canonicalizationcomments"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewCanonicalizationMaintainCommand"
             id="org.jcryptool.crypto.xml.ui.newCanonWithComments"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.0"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.signature"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewSignatureCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.sign.CreateSignature"
             contextHelpId="org.jcryptool.crypto.xml.help.signature"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewSignatureCommand"
             id="org.jcryptool.crypto.xml.ui.newSignature"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.1"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.verification"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewVerificationCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.verify.VerifyDocument"
             contextHelpId="org.jcryptool.crypto.xml.help.verification"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewVerificationCommand"
             id="org.jcryptool.crypto.xml.ui.newVerification"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.2"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.encryption"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewEncryptionCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.encrypt.CreateEncryption"
             contextHelpId="org.jcryptool.crypto.xml.help.encryption"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewEncryptionCommand"
             id="org.jcryptool.crypto.xml.ui.newEncryption"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.3"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
    <extension
          id="org.eclipse.wst.xml.security.decryption"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.xml.ui.commands.NewDecryptionCommand"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.xml.core.decrypt.CreateDecryption"
             contextHelpId="org.jcryptool.crypto.xml.help.decryption"
+            handlerClass="org.jcryptool.crypto.xml.ui.commands.NewDecryptionCommand"
             id="org.jcryptool.crypto.xml.ui.newDecryption"
             isFlexiProviderAlgorithm="false"
             name="%algorithm.name.4"
             type="xml">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
 </plugin>
