@@ -177,7 +177,13 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		styledTextDescription.setStyleRange(title);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, false, false, 2, 1);
 		gd_styledTextDescription.widthHint = 960;
-		gd_styledTextDescription.heightHint = 110;
+
+		if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("de") == 0) {
+			gd_styledTextDescription.heightHint = 110;
+		} else if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("en") == 0) {
+			gd_styledTextDescription.heightHint = 95;			
+		}
+		
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
 		grpSzenario = new Group(composite, SWT.NONE);
@@ -303,6 +309,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		compositeTree.setLayout(new GridLayout(1, false));
 
 		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextTree.setText(Messages.HuffmanCodingView_28);
 		styledTextTree.setFont(FontService.getNormalFont());
 
 		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
@@ -377,9 +384,11 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		compositeCT.setLayout(new GridLayout(2, false));
 
 		styledTextCodetable = new StyledText(compositeCT, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextCodetable.setText(Messages.HuffmanCodingView_29);
+		styledTextCodetable.setFont(FontService.getNormalFont());
 		styledTextCodetable.setEditable(false);
 		GridData gd_styledTextCodetable = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
-		gd_styledTextCodetable.heightHint = 80;
+		gd_styledTextCodetable.heightHint = 90;
 		styledTextCodetable.setLayoutData(gd_styledTextCodetable);
 
 		btnShowBranch = new Button(compositeCT, SWT.NONE);
@@ -760,7 +769,18 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					if (fileUncomp == null) {
 						String outputPath = System.getProperty("user.home") + System.getProperty("file.separator") + "Documents" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 								+ System.getProperty("file.separator"); //$NON-NLS-1$ 
-						outputFilename = outputPath + "out.huffman"; //$NON-NLS-1$
+						if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("de") == 0) {
+							outputFilename = outputPath + "out_de.huffman"; //$NON-NLS-1$							
+						} else if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("en") == 0) {
+							outputFilename = outputPath + "out_en.huffman"; //$NON-NLS-1$														
+						} else {
+							outputFilename = outputPath + "out.huffman"; //$NON-NLS-1$
+						}
+
+						
+						
+						
+						
 					} else {
 						outputFilename = fileUncomp.getParent() + System.getProperty("file.separator") //$NON-NLS-1$
 								+ fileUncomp.getName().substring(0, fileUncomp.getName().lastIndexOf(".txt")) + ".huffman"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -829,7 +849,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 		btnApplyFile = new Button(grpNextSteps, SWT.NONE);
 		GridData gd_btnApplyFile = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_btnApplyFile.widthHint = 180;
+		gd_btnApplyFile.widthHint = 325;
 		btnApplyFile.setLayoutData(gd_btnApplyFile);
 		btnApplyFile.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -847,7 +867,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 				composite.layout();
 
 				textFileCompName.setText(tmpFileComp.getAbsolutePath());
-				textFileCompSize.setText(String.valueOf(tmpFileComp.length()));
+				textFileCompSize.setText(df.format(tmpFileComp.length()));
 
 				fileComp = tmpFileComp;
 
@@ -1269,7 +1289,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 				c[i].dispose();
 		}
 
-		styledTextCodetable.setText(""); //$NON-NLS-1$
+		styledTextCodetable.setText(Messages.HuffmanCodingView_29);
 
 		tblclmnCharacterMode = false;
 		tblclmnProbabilityMode = false;
@@ -1312,7 +1332,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		isCompressed = false;
 		textInput.setFocus();
 
-		styledTextTree.setText(""); //$NON-NLS-1$
+		styledTextTree.setText(Messages.HuffmanCodingView_28);
 		styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 		styledTextTree.setAlignment(SWT.LEFT);
 		styledTextTree.setFont(FontService.getNormalFont());

@@ -42,10 +42,6 @@
             id="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
             name="%changeLayout.comand.name">
       </command>
-       <command
-            name="Sample Command"
-            id="com.foo.example.propertytester.commands.sampleCommand">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -60,7 +56,8 @@
          <command
                commandId="org.jcryptool.visual.huffmanCoding.command.ChangeLayout"
                icon="platform:/plugin/org.eclipse.ui/icons/full/obj16/generic_elements.gif"
-               style="push">
+               style="push"
+               tooltip="%changeLayout.comand.tooltip">
          </command>
       </menuContribution>
    </extension>

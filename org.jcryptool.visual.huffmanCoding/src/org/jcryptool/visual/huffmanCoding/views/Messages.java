@@ -53,6 +53,8 @@ public class Messages extends NLS {
 	public static String HuffmanCodingView_codetable_stat_3;
 	public static String HuffmanCodingView_codetable_stat_4;
 	public static String HuffmanCodingView_codetable_stat_5;
+	public static String HuffmanCodingView_28;
+	public static String HuffmanCodingView_29;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
