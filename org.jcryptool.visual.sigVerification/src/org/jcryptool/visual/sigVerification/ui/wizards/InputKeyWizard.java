@@ -14,7 +14,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
-import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
  * This class contains the two pages of the input key wizard.

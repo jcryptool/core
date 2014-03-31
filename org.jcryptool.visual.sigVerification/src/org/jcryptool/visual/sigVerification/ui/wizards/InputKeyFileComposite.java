@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -27,7 +28,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
-import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
  * This class contains the GUI elements for key file input. It also contains a method to convert the

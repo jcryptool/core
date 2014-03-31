@@ -5,14 +5,14 @@ import java.security.Signature;
 import java.security.cert.Certificate;
 import java.util.Enumeration;
 
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.sigVerification.SigVerificationPlugin;
 
-import de.flexiprovider.ec.keys.ECPrivateKey;
 import de.flexiprovider.core.dsa.DSAPrivateKey;
 import de.flexiprovider.core.rsa.RSAPrivateCrtKey;
+import de.flexiprovider.ec.keys.ECPrivateKey;
 
 /**
  * Verifies the signature of the input with the selected signature method.

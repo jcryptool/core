@@ -20,7 +20,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.algorithm.classic.AbstractClassicAlgorithm;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;

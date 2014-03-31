@@ -14,7 +14,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.visual.sigVerification.algorithm.Hash;
 import org.jcryptool.visual.sigVerification.algorithm.Input;
 import org.jcryptool.visual.sigVerification.algorithm.SigVerification;
-import org.jcryptool.visual.sigVerification.ui.wizards.Messages;
 
 /**
  * This class contains loads the composite for the first page of the input key wizard.

@@ -10,11 +10,10 @@
 //-----END DISCLAIMER-----
 package edu.kit.iks.zudoku;
 
-import java.util.EmptyStackException;
-import java.util.Stack;
-
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.EmptyStackException;
+import java.util.Stack;
 
 import javax.swing.JPanel;
 
