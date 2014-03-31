@@ -20,6 +20,7 @@ public class Messages extends NLS {
     public static String SelectOutputFileAction_1;
     public static String SelectSignatureAction_0;
     public static String SelectSignatureAction_1;
+    public static String SelectSignatureAction_2;
     public static String SetInputEditorAction_0;
     public static String SetInputEditorAction_1;
     public static String SetOutputEditorAction_0;
