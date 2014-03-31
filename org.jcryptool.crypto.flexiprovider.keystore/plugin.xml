@@ -32,5 +32,36 @@
             type="import">
       </keyStoreAction>
    </extension>
+   <extension
+         id="org.jcryptool.crypto.flexiprovider.keystore"
+         point="org.jcryptool.crypto.keystore.keyStoreCommands">
+      <keyStoreCommand
+            handlerClass="org.jcryptool.crypto.flexiprovider.keystore.actions.NewSymmetricKeyHandler"
+            icon="icons/16x16/kgpg_key1.png"
+            id="org.jcryptool.crypto.flexiprovider.keystore.keyStoreCommand1"
+            name="%keyStoreAction.name"
+            text="%keyStoreAction.text"
+            toolTipText="%keyStoreAction.toolTipText"
+            type="newSymmetricKey">
+      </keyStoreCommand>
+      <keyStoreCommand
+            handlerClass="org.jcryptool.crypto.flexiprovider.keystore.actions.NewKeyPairHandler"
+            icon="icons/16x16/kgpg_key2.png"
+            id="org.jcryptool.crypto.flexiprovider.keystore.keyStoreCommand2"
+            name="%keyStoreAction.name.0"
+            text="%keyStoreAction.text.0"
+            toolTipText="%keyStoreAction.toolTipText.0"
+            type="newKeyPair">
+      </keyStoreCommand>
+      <keyStoreCommand
+            handlerClass="org.jcryptool.crypto.flexiprovider.keystore.actions.ImportKeyHandler"
+            icon="icons/16x16/kgpg_import.png"
+            id="org.jcryptool.crypto.flexiprovider.keystore.keyStoreCommand3"
+            name="%keyStoreAction.name.1"
+            text="%keyStoreAction.text.1"
+            toolTipText="%keyStoreAction.toolTipText.1"
+            type="import">
+      </keyStoreCommand>
+   </extension>
 
 </plugin>

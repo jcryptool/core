@@ -48,7 +48,7 @@ public class KeyStoreActionManager {
 
     private void loadKeyStoreActions() {
         IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(KeyStorePlugin.PLUGIN_ID,
-                IKeyStoreConstants.PL_KEYSTORE_ACTIONS);
+                IKeyStoreConstants.PL_KEYSTORE_COMMANDS);
 
         IExtension[] extensions = extensionPoint.getExtensions();
         for (int i = 0; i < extensions.length; i++) {

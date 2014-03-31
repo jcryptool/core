@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="keyStoreActions" name="KeyStore Action Contributions" schema="schema/keyStoreActions.exsd"/>
+   <extension-point id="keyStoreCommands" name="KeyStore Command Contributions" schema="schema/keyStoreCommands.exsd"/>
 
    <extension
          point="org.eclipse.ui.views">
