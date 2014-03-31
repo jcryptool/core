@@ -16,7 +16,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.actions.del.Messages;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;

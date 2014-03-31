@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.action.Action;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.IKeyStoreConstants;

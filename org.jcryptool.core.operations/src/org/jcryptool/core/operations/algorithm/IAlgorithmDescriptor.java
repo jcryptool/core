@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.operations.algorithm;
 
-import org.eclipse.jface.action.IAction;
 import org.jcryptool.core.operations.CommandOrAction;
 
 /**

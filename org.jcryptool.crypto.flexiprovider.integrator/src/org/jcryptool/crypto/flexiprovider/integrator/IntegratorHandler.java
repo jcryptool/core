@@ -20,7 +20,6 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.editors.EditorsManager;

@@ -25,7 +25,6 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.keystore.ImportManager;
 import org.jcryptool.crypto.flexiprovider.keystore.wizards.ImportWizard;
 import org.jcryptool.crypto.keystore.descriptors.ImportDescriptor;

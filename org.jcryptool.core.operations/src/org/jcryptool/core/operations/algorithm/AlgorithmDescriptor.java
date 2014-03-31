@@ -11,7 +11,6 @@ package org.jcryptool.core.operations.algorithm;
 
 import java.util.StringTokenizer;
 
-import org.eclipse.jface.action.IAction;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandOrAction;
 

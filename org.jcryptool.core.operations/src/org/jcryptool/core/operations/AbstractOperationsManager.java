@@ -9,7 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.operations;
 
-import org.eclipse.jface.action.IAction;
 
 /**
  * Abstract base class for plug-ins that integrate with an operations manager.

@@ -13,7 +13,6 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.PlatformUI;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
 import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 

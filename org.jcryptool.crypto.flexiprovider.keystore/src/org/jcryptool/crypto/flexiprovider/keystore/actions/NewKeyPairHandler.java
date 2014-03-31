@@ -28,11 +28,9 @@ import org.jcryptool.crypto.flexiprovider.keystore.FlexiProviderKeystorePlugin;
 import org.jcryptool.crypto.flexiprovider.keystore.wizards.NewKeyPairWizard;
 import org.jcryptool.crypto.flexiprovider.reflect.Reflector;
 import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
-import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewKeyWizard;
-import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
 import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryHandler;
 
 import de.flexiprovider.api.Registry;

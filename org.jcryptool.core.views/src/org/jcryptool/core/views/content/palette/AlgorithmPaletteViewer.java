@@ -26,8 +26,6 @@ import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.palette.SelectionToolEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.palette.editparts.PaletteEditPart;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.util.TransferDragSourceListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.dnd.DragSourceEvent;
