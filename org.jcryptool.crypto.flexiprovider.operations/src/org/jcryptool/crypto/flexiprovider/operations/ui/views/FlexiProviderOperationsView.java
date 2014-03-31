@@ -361,6 +361,13 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     private EntryNode currentEntryNode;
 
     public EntryNode getFlexiProviderOperation() {
+    	if(currentEntryNode == null && viewer.getTree().getItemCount() == 1)
+    	{
+    		// return(viewer.getTree().getItem(0));	// Duh.  That's a TreeItem, not a node...
+    		Object obj = ((FlexiProviderOperationsViewContentProvider)viewer.getContentProvider()).getElements(getViewSite())[0];
+    		if(obj instanceof EntryNode)
+    			return (EntryNode)obj;
+    	}
         return currentEntryNode;
     }
 
