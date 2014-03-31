@@ -2,7 +2,6 @@ package org.jcryptool.visual.ssl.views;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -12,7 +11,6 @@ import java.security.NoSuchProviderException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -24,9 +22,6 @@ import org.eclipse.swt.widgets.Label;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
-
-import codec.CorruptedCodeException;
-import codec.Hex;
 
 public class ServerFinishedComposite extends Composite implements ProtocolStep {
 	private boolean infoText = false;
@@ -114,7 +109,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 			finished = PRF(masterSecret, "server finished",
 					c.generateHash(Message.getServerHelloHash(), hashMessages));
 	        
-			//The part beyond is haunted by a demon we summoned, he is doing black magic that we don´t understand.
+			//The part beyond is haunted by a demon we summoned, he is doing black magic that we donï¿½t understand.
 			//But he says that it works that way so we trust him.
 			//Do not touch it or he kills you!
 			if(Message.getServerHelloCipherMode().equals("CBC")) {

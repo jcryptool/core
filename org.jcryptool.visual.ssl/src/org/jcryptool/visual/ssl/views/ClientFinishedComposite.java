@@ -11,7 +11,6 @@ import java.security.NoSuchProviderException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -114,7 +113,7 @@ public class ClientFinishedComposite extends Composite implements ProtocolStep {
 			finished = PRF(masterSecret, "client finished",
 					c.generateHash(Message.getServerHelloHash(), hashMessages));
 			
-			//The part beyond is haunted by a demon we summoned, he is doing black magic that we don´t understand.
+			//The part beyond is haunted by a demon we summoned, he is doing black magic that we donï¿½t understand.
 			//But he says that it works that way so we trust him.
 			//Do not touch it or he kills you!
 			if(Message.getServerHelloCipherMode().equals("CBC")) {
