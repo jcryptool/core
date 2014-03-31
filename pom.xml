@@ -87,9 +87,10 @@
 	<module>org.jcryptool.visual.sidechannelattack.dpa</module>
 	<module>org.jcryptool.visual.sidechannelattack.spa</module>
 	<module>org.jcryptool.visual.sig</module>
-<!--
+	<!--
 	<module>../org.jcryptool.visual.sigVerification</module>
--->
+	-->
+	<module>org.jcryptool.visual.ssl</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
 	<module>org.jcryptool.visual.viterbi</module>
