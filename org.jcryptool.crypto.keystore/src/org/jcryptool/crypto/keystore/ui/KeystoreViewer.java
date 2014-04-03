@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /**************************************************************************************************
- * Copyright (c) 2013 JCrypTool Team and Contributors
+ * Copyright (c) 2013, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -9,7 +9,9 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.crypto.keystore.ui;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -21,6 +23,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.views.KeyDragListener;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.KeyPairNode;
 import org.jcryptool.crypto.keystore.ui.views.providers.KeyStoreViewContentProvider;
@@ -28,6 +32,7 @@ import org.jcryptool.crypto.keystore.ui.views.providers.KeyStoreViewLabelProvide
 
 /**
  * @author Anatoli Barski
+ * @author Holger Friedrich (replaced an Action with a Handler)
  * 
  */
 public class KeystoreViewer extends TreeViewer {
@@ -36,7 +41,7 @@ public class KeystoreViewer extends TreeViewer {
     private final Transfer[] transfers = new Transfer[] { TextTransfer.getInstance() };
     private KeyDragListener dragListener;
 
-    private Action doubleClickAction;
+    private AbstractHandler doubleClickHandler;
 
     /**
      * Create the composite.
@@ -73,9 +78,9 @@ public class KeystoreViewer extends TreeViewer {
      * Adds a listener, which will fold or unfold the nodes.
      */
     private void hookActions() {
-        doubleClickAction = new Action() {
+        doubleClickHandler = new AbstractHandler() {
             @Override
-            public void run() {
+            public Object execute(ExecutionEvent event) {
                 ISelection selection = getSelection();
                 Object obj = ((IStructuredSelection) selection).getFirstElement();
 
@@ -88,6 +93,7 @@ public class KeystoreViewer extends TreeViewer {
                 } else if (obj instanceof KeyPairNode) {
                     // OperationsManager.getInstance().algorithmCalled(((AlgorithmNode) obj).getAlgorithm());
                 }
+                return(null);
             }
         };
 
@@ -95,7 +101,11 @@ public class KeystoreViewer extends TreeViewer {
             @Override
             public void mouseDoubleClick(final MouseEvent e) {
                 if (e.button == 1) { // only left button double clicks
-                    doubleClickAction.run(); // run assigned action
+                	try {
+                		doubleClickHandler.execute(null); // run assigned action
+                	} catch(ExecutionException ex) {
+                		LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
+                	}
                 }
             }
 

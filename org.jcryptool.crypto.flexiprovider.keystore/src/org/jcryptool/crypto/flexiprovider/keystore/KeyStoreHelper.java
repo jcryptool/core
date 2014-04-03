@@ -34,7 +34,7 @@ import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewSecretKeyDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewKeyWizard;
-import org.jcryptool.crypto.keystore.ui.actions.AbstractKeyStoreAction;
+import org.jcryptool.crypto.keystore.ui.actions.AbstractKeyStoreHandler;
 
 import de.flexiprovider.api.Registry;
 import de.flexiprovider.api.exceptions.InvalidAlgorithmParameterException;
@@ -128,7 +128,7 @@ public class KeyStoreHelper {
 							PrivateKey priv = keyPair.getPrivate();
 							PublicKey pub = keyPair.getPublic();
 							NewKeyPairDescriptor descriptor = new NewKeyPairDescriptor(nkd, priv, pub);
-							resultAlias.notifyAboutAlias(AbstractKeyStoreAction.addKeyPairStatic(descriptor, ((NewKeyPairDescriptor)descriptor).getPrivateKey(), ((NewKeyPairDescriptor)descriptor).getPublicKey()));
+							resultAlias.notifyAboutAlias(AbstractKeyStoreHandler.addKeyPairStatic(descriptor, ((NewKeyPairDescriptor)descriptor).getPrivateKey(), ((NewKeyPairDescriptor)descriptor).getPublicKey()));
 						} catch (NoSuchAlgorithmException e) {
 							LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "NoSuchAlgorithmException while generating a key pair", e, true);
 						} catch (InvalidAlgorithmParameterException e) {
@@ -221,7 +221,7 @@ public class KeyStoreHelper {
 							SecretKey key = generator.generateKey();
 
 							INewEntryDescriptor descriptor = new NewSecretKeyDescriptor(nkd, key);
-							resultAlias.notifyAboutAlias(AbstractKeyStoreAction.addSecretKeyStatic(descriptor , ((NewSecretKeyDescriptor)descriptor).getSecretKey()));
+							resultAlias.notifyAboutAlias(AbstractKeyStoreHandler.addSecretKeyStatic(descriptor , ((NewSecretKeyDescriptor)descriptor).getSecretKey()));
 						} catch (SecurityException e) {
 							LogUtil.logError(FlexiProviderKeystorePlugin.PLUGIN_ID, "SecurityException while generating a secret key", e, true);
 						} catch (IllegalArgumentException e) {
