@@ -181,9 +181,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("de") == 0) {
 			gd_styledTextDescription.heightHint = 110;
 		} else if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("en") == 0) {
-			gd_styledTextDescription.heightHint = 95;			
+			gd_styledTextDescription.heightHint = 95;
 		}
-		
+
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 
 		grpSzenario = new Group(composite, SWT.NONE);
@@ -222,7 +222,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					viewer.setInput(null);
 					isCompressed = false;
 
-					styledTextTree.setText(""); //$NON-NLS-1$
+					styledTextTree.setText(Messages.HuffmanCodingView_28);
 					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 					styledTextTree.setAlignment(SWT.LEFT);
 					styledTextTree.setFont(FontService.getNormalFont());
@@ -269,7 +269,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					viewer.setInput(null);
 					isCompressed = false;
 
-					styledTextTree.setText(""); //$NON-NLS-1$
+					styledTextTree.setText(Messages.HuffmanCodingView_28);
 					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 					styledTextTree.setAlignment(SWT.LEFT);
 					styledTextTree.setFont(FontService.getNormalFont());
@@ -400,7 +400,12 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 				int selection = table.getSelectionIndex();
 
 				TableItem tmpItem = table.getItem(selection);
-				String code = tmpItem.getText(2);
+				String code;
+				if (modus.compareTo("COMPRESS") == 0) {
+					code = tmpItem.getText(2);
+				} else {
+					code = tmpItem.getText(1);
+				}
 				GraphNode graphNode = null;
 
 				List<GraphNode> graphNodeList = viewer.getGraphControl().getNodes();
@@ -437,7 +442,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		fillToolBar();
 
 		loadExampleText();
-
 	}
 
 	/**
@@ -447,7 +451,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 	 *            - the bitstring array which contains all elements of the
 	 *            huffman tree
 	 */
-	private void createCodeTable(BitString[] bitStrings) {
+	private void createCodeTableCompress(BitString[] bitStrings) {
 		if (compositeCT.getChildren().length > 0) {
 			for (int i = 0; i < compositeCT.getChildren().length; i++) {
 				if (compositeCT.getChildren()[i] instanceof Table)
@@ -725,6 +729,242 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		}
 	}
 
+	/**
+	 * Creation of the code table tab
+	 * 
+	 * @param bitStrings
+	 *            - the bitstring array which contains all elements of the
+	 *            huffman tree
+	 */
+	private void createCodeTableUncompress(BitString[] bitStrings) {
+		if (compositeCT.getChildren().length > 0) {
+			for (int i = 0; i < compositeCT.getChildren().length; i++) {
+				if (compositeCT.getChildren()[i] instanceof Table)
+					compositeCT.getChildren()[i].dispose();
+			}
+		}
+		styledTextCodetable.setText(""); //$NON-NLS-1$
+
+		table = new Table(compositeCT, SWT.BORDER | SWT.FULL_SELECTION);
+		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+
+		table.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				btnShowBranch.setEnabled(true);
+			}
+
+		});
+
+		final TableColumn tblclmnCharacter = new TableColumn(table, SWT.NONE);
+		tblclmnCharacter.setWidth(100);
+		tblclmnCharacter.setText(Messages.HuffmanCodingView_tblclmnCharacter_text);
+		tblclmnCharacter.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TableItem[] items = table.getItems();
+				Collator collator = Collator.getInstance(Locale.getDefault());
+				for (int i = 1; i < items.length; i++) {
+					String value1 = items[i].getText(0);
+					for (int j = 0; j < i; j++) {
+						String value2 = items[j].getText(0);
+						if (tblclmnCharacterMode) {
+							if (collator.compare(value1, value2) < 0) {
+
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						} else {
+							if (collator.compare(value1, value2) > 0) {
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						}
+					}
+				}
+				if (tblclmnCharacterMode) {
+					tblclmnCharacterMode = false;
+				} else {
+					tblclmnCharacterMode = true;
+				}
+				btnShowBranch.setEnabled(false);
+			}
+		});
+
+		TableColumn tblclmnCode = new TableColumn(table, SWT.NONE);
+		tblclmnCode.setWidth(140);
+		tblclmnCode.setText(Messages.HuffmanCodingView_tblclmnCode_text);
+		tblclmnCode.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TableItem[] items = table.getItems();
+				Collator collator = Collator.getInstance(Locale.getDefault());
+				for (int i = 1; i < items.length; i++) {
+					String value1 = items[i].getText(1);
+					for (int j = 0; j < i; j++) {
+						String value2 = items[j].getText(1);
+						if (tblclmnCodeMode) {
+							if (collator.compare(value1, value2) < 0) {
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						} else {
+							if (collator.compare(value1, value2) > 0) {
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						}
+					}
+				}
+				if (tblclmnCodeMode) {
+					tblclmnCodeMode = false;
+				} else {
+					tblclmnCodeMode = true;
+				}
+				btnShowBranch.setEnabled(false);
+			}
+		});
+
+		TableColumn tblclmnCodeLength = new TableColumn(table, SWT.NONE);
+		tblclmnCodeLength.setWidth(100);
+		tblclmnCodeLength.setText(Messages.HuffmanCodingView_tblclmnCodeLength_text);
+		tblclmnCodeLength.addListener(SWT.Selection, new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				TableItem[] items = table.getItems();
+				for (int i = 1; i < items.length; i++) {
+					int value1 = Integer.parseInt(items[i].getText(2));
+					for (int j = 0; j < i; j++) {
+						int value2 = Integer.parseInt(items[j].getText(2));
+						if (tblclmnCodeLengthMode) {
+							if (value1 > value2) {
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						} else {
+							if (value1 < value2) {
+								String[] values = { items[i].getText(0), items[i].getText(1), items[i].getText(2) };
+								items[i].dispose();
+								TableItem item = new TableItem(table, SWT.NONE, j);
+								item.setText(values);
+								items = table.getItems();
+								break;
+							}
+						}
+					}
+				}
+				if (tblclmnCodeLengthMode) {
+					tblclmnCodeLengthMode = false;
+				} else {
+					tblclmnCodeLengthMode = true;
+				}
+				btnShowBranch.setEnabled(false);
+			}
+		});
+
+		int counter = 0;
+		double avarageCodelength = 0.0;
+		int maxCodelenght = bitStrings[0].getLength();
+		int minCodelenght = bitStrings[0].getLength();
+
+		if (bitStrings != null) {
+			for (int i = 0; i < bitStrings.length; i++) {
+				if (bitStrings[i] != null) {
+
+					TableItem item = new TableItem(table, SWT.NONE);
+
+					switch (i) {
+					case 0:
+						item.setText(0, "NUL"); // Null //$NON-NLS-1$
+						break;
+					case 9:
+						item.setText(0, "TAB"); // Tabulator //$NON-NLS-1$
+						break;
+					case 10:
+						item.setText(0, "LF"); // Line Feed //$NON-NLS-1$
+						break;
+					case 13:
+						item.setText(0, "CR"); // Carriage Return //$NON-NLS-1$
+						break;
+					case 32:
+						item.setText(0, "\u2423"); // Space //$NON-NLS-1$ 
+						break;
+					case 38:
+						item.setText(0, "&&"); // & //$NON-NLS-1$
+
+						break;
+					default:
+						item.setText(0, String.valueOf((char) i));
+					}
+					item.setText(1, bitStrings[i].toString());
+					item.setText(2, String.valueOf(bitStrings[i].toString().length()));
+
+					Node tmp = null;
+					for (Node n : huffmanCode.getResultNodeList()) {
+						if (n.getName() == i) {
+							tmp = n;
+							break;
+						}
+					}
+
+					if (minCodelenght > bitStrings[i].getLength())
+						minCodelenght = bitStrings[i].getLength();
+
+					if (maxCodelenght < bitStrings[i].getLength())
+						maxCodelenght = bitStrings[i].getLength();
+
+					counter++;
+					avarageCodelength += tmp.getValue() * bitStrings[i].getLength();
+				}
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.append(Messages.HuffmanCodingView_codetable_stat_header);
+
+			sb.append(Messages.HuffmanCodingView_codetable_stat_1 + counter);
+			sb.append("\t\t\t"); //$NON-NLS-1$
+
+			sb.append(Messages.HuffmanCodingView_codetable_stat_3 + minCodelenght);
+			sb.append("\t\t\t"); //$NON-NLS-1$
+
+			sb.append(Messages.HuffmanCodingView_codetable_stat_4 + maxCodelenght);
+			sb.append("\t\t\t"); //$NON-NLS-1$
+
+			sb.append("\n\n" + Messages.HuffmanCodingView_codetable_stat_2);
+			styledTextCodetable.setText(sb.toString());
+
+			StyleRange title = new StyleRange();
+			title.start = 0;
+			title.length = Messages.HuffmanCodingView_codetable_stat_header.length();
+			title.fontStyle = SWT.BOLD;
+			styledTextCodetable.setStyleRange(title);
+		}
+	}
+
 	private void loadExampleText() {
 		try {
 			URL url = HuffmanCodingPlugin.getDefault().getBundle().getEntry("/"); //$NON-NLS-1$
@@ -776,11 +1016,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						} else {
 							outputFilename = outputPath + "out.huffman"; //$NON-NLS-1$
 						}
-
-						
-						
-						
-						
 					} else {
 						outputFilename = fileUncomp.getParent() + System.getProperty("file.separator") //$NON-NLS-1$
 								+ fileUncomp.getName().substring(0, fileUncomp.getName().lastIndexOf(".txt")) + ".huffman"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -813,7 +1048,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					viewer.applyLayout();
 					styledTextTree.setText(Messages.ZestLabelProvider_4);
 
-					createCodeTable(huffmanCode.getCodeTable());
+					createCodeTableCompress(huffmanCode.getCodeTable());
 
 					btnCompress.setEnabled(false);
 					btnOpenUncompFile.setEnabled(false);
@@ -871,7 +1106,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 
 				fileComp = tmpFileComp;
 
-				btnOpenCompFile.setEnabled(false);
+				// btnOpenCompFile.setEnabled(false);
 				btnUncompress.setEnabled(true);
 			}
 		});
@@ -899,17 +1134,20 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					if (!isCompressed) {
 						huffmanCode = new Huffman();
 					}
+
 					huffmanCode.uncompress(fileComp.getAbsolutePath());
 					textOutput.setText(huffmanCode.getSb().toString());
 
 					if (!isCompressed) {
+
+						viewer.setInput(null);
 						viewer.setInput(huffmanCode.getResultNodeList());
 						LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 						viewer.setLayoutAlgorithm(layout, true);
 						viewer.applyLayout();
 						styledTextTree.setText(Messages.ZestLabelProvider_4);
 						resetCodeTable();
-						createCodeTable(huffmanCode.getCodeTable());
+						createCodeTableUncompress(huffmanCode.getCodeTable());
 
 						compositeCT.layout();
 					}
@@ -962,6 +1200,9 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					textFileCompName.setSelection(filePath.length());
 					int filesize = (int) fileComp.length();
 					textFileCompSize.setText(df.format(filesize));
+
+					isCompressed = false;
+					modus = "UNCOMPRESS";
 
 					btnUncompress.setEnabled(true);
 					btnUncompress.setFocus();
@@ -1031,7 +1272,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 					viewer.setInput(null);
 					isCompressed = false;
 
-					styledTextTree.setText(""); //$NON-NLS-1$
+					styledTextTree.setText(Messages.HuffmanCodingView_28);
 					styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 					styledTextTree.setAlignment(SWT.LEFT);
 					styledTextTree.setFont(FontService.getNormalFont());
@@ -1068,7 +1309,7 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 				viewer.setInput(null);
 				isCompressed = false;
 
-				styledTextTree.setText(""); //$NON-NLS-1$
+				styledTextTree.setText(Messages.HuffmanCodingView_28);
 				styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 				styledTextTree.setAlignment(SWT.LEFT);
 				styledTextTree.setFont(FontService.getNormalFont());
@@ -1234,10 +1475,11 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		IActionBars bars = getViewSite().getActionBars();
 		bars.getMenuManager().removeAll();
 
-		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
-		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
-		zoom.add(toolbarZoomContributionViewItem);
-		bars.getMenuManager().add(zoom);
+		//		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
+		// ZoomContributionViewItem toolbarZoomContributionViewItem = new
+		// ZoomContributionViewItem(this);
+		// zoom.add(toolbarZoomContributionViewItem);
+		// bars.getMenuManager().add(zoom);
 	}
 
 	@Override
