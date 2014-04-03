@@ -97,7 +97,7 @@ public class ShadowAlgorithmHandler extends AbstractHandler {
     }
     
     /**
-     * @see org.eclipse.jface.action.Action#run()
+     * @see org.eclipse.core.commands.AbstractHandler#execute()
      */
     @Override
     public Object execute(ExecutionEvent event) {

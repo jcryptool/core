@@ -11,12 +11,19 @@ package org.jcryptool.crypto.flexiprovider.operations.ui.views;
 
 import java.awt.MouseInfo;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Category;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.CommandManager;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -38,23 +45,33 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.part.EditorInputTransfer;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.IServiceLocator;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RemoveAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RemoveKeyAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RenameAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RemoveHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RemoveKeyHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.RenameHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectInputFileAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectInputFileHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectOutputFileAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectOutputFileHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectSignatureAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SelectSignatureHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SetInputEditorAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SetInputEditorHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SetOutputEditorAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.DecryptAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.EncryptAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ExecuteOperationAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ExportOperationAction;
-import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ImportOperationAction;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.SetOutputEditorHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.DecryptHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.EncryptHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ExecuteOperationHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ExportOperationHandler;
+import org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.ImportOperationHandler;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.IOperationChangedListener;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.ISelectedOperationListener;
 import org.jcryptool.crypto.flexiprovider.operations.ui.views.nodes.EntryNode;
@@ -75,24 +92,43 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
 
     private TreeViewer viewer;
 
-    private Action doubleClickAction;
+    private AbstractHandler doubleClickHandler;
 
     // menu
-    private Action importAction;
-    private Action exportAction;
-    private Action executeAction;
+    private final static String importCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.import";
+    private final static String exportCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.export";
+    private final static String executeCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.execute";
+
+    private AbstractHandler importHandler;
+    private AbstractHandler exportHandler;
+    private AbstractHandler executeHandler;
 
     // context
-    private Action renameAction;
-    private Action removeAction;
-    private Action removeKeyAction;
-    private Action selectInputFileAction;
-    private Action setInputEditorAction;
-    private Action selectOutputFileAction;
-    private Action setOutputEditorAction;
-    private Action selectSignatureOutputAction;
-    private Action encryptAction;
-    private Action decryptAction;
+    private final static String renameCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.rename"; 
+    private final static String removeCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.remove"; 
+    private final static String removeKeyCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.removeKey"; 
+    
+    private AbstractHandler renameHandler;
+    private AbstractHandler removeHandler;
+    private AbstractHandler removeKeyHandler;
+
+    private final static String selectInputFileCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.selectInputFile";
+    private final static String setInputEditorCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.setInputEditor";
+    private final static String selectOutputFileCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.selectOutputFile";
+    private final static String setOutputEditorCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.setOutputEditor";
+    private final static String selectSignatureOutputCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.selectSignatureOutput";
+    
+    private AbstractHandler selectInputFileHandler;
+    private AbstractHandler setInputEditorHandler;
+    private AbstractHandler selectOutputFileHandler;
+    private AbstractHandler setOutputEditorHandler;
+    private AbstractHandler selectSignatureOutputHandler;
+
+    private final static String encryptCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.encrypt"; 
+    private final static String decryptCommandId = "org.jcryptool.crypto.flexiprovider.operations.commands.decrypt"; 
+
+    private AbstractHandler encryptHandler;
+    private AbstractHandler decryptHandler;
 
     private final int dropOps = DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_LINK | DND.DROP_MOVE;
     private final Transfer[] keyTransfers = new Transfer[] { TextTransfer.getInstance() };
@@ -100,6 +136,10 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
 
     private Label currentEntryLabel;
 
+    private ICommandService commandService;
+    private Category autogeneratedCategory;
+    private IServiceLocator serviceLocator;
+    
     /**
      * The constructor.
      */
@@ -107,23 +147,78 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
         OperationsManager.getInstance().addOperationChangedListener(this);
     }
 
-    private void registerActions() {
-        // menu
-        importAction = new ImportOperationAction();
-        exportAction = new ExportOperationAction(this);
-        executeAction = new ExecuteOperationAction(this);
-        // context
-        renameAction = new RenameAction(this);
-        removeAction = new RemoveAction(this);
-        removeKeyAction = new RemoveKeyAction(this);
-        selectInputFileAction = new SelectInputFileAction(this);
-        setInputEditorAction = new SetInputEditorAction(this);
-        selectOutputFileAction = new SelectOutputFileAction(this);
-        setOutputEditorAction = new SetOutputEditorAction(this);
-        selectSignatureOutputAction = new SelectSignatureAction(this);
-        encryptAction = new EncryptAction(this);
-        decryptAction = new DecryptAction(this);
+    private void defineCommand(final String commandId, final String name, final AbstractHandler handler) {
+        Command command = commandService.getCommand(commandId);
+        command.define(name, null, autogeneratedCategory);
+        command.setHandler(handler);
     }
+
+    private void defineAllCommands() {
+        commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+        autogeneratedCategory = commandService.getCategory(CommandManager.AUTOGENERATED_CATEGORY_ID);
+
+    	// menu
+        importHandler = new ImportOperationHandler();
+        exportHandler = new ExportOperationHandler(this);
+        executeHandler = new ExecuteOperationHandler(this);
+
+        defineCommand(importCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ImportOperationAction_0,
+        	importHandler);
+        defineCommand(exportCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExportOperationAction_0,
+        	exportHandler);
+        defineCommand(executeCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExecuteOperationAction_0,
+        	executeHandler);
+        
+        // context
+        renameHandler = new RenameHandler(this);
+        removeHandler = new RemoveHandler(this);
+        removeKeyHandler = new RemoveKeyHandler(this);
+
+        defineCommand(renameCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RenameAction_0,
+        	renameHandler);
+        defineCommand(removeCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveAction_0,
+        	removeHandler);
+        defineCommand(removeKeyCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveKeyAction_0,
+        	removeKeyHandler);
+        
+        selectInputFileHandler = new SelectInputFileHandler(this);
+        setInputEditorHandler = new SetInputEditorHandler(this);
+        selectOutputFileHandler = new SelectOutputFileHandler(this);
+        setOutputEditorHandler = new SetOutputEditorHandler(this);
+        selectSignatureOutputHandler = new SelectSignatureHandler(this);
+
+        defineCommand(selectInputFileCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.Messages.SelectInputFileAction_0,
+        	selectInputFileHandler);
+        defineCommand(setInputEditorCommandId,
+            org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.Messages.SetInputEditorAction_0,
+            setInputEditorHandler);
+        defineCommand(selectOutputFileCommandId,
+            org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.Messages.SelectOutputFileAction_0,
+            selectOutputFileHandler);
+        defineCommand(setOutputEditorCommandId,
+            org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.Messages.SetOutputEditorAction_0,
+            setOutputEditorHandler);
+        defineCommand(selectSignatureOutputCommandId,
+            org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.io.Messages.SelectSignatureAction_0,
+            selectSignatureOutputHandler);
+
+        encryptHandler = new EncryptHandler(this);
+        decryptHandler = new DecryptHandler(this);
+
+        defineCommand(encryptCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.Messages.EncryptAction_0,
+        	encryptHandler);
+        defineCommand(decryptCommandId,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.ops.Messages.DecryptAction_0,
+        	decryptHandler);
+}
 
     /**
      * This is a callback that will allow us to create the viewer and initialize it.
@@ -153,7 +248,8 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
         viewer.addDragSupport(dropOps, editorTransfers, new EditorDragListener(viewer));
         viewer.addDropSupport(dropOps, keyTransfers, new KeyDropListener());
         parent.setLayout(new GridLayout());
-        registerActions();
+        defineAllCommands();
+        serviceLocator = PlatformUI.getWorkbench();
         hookContextMenu();
         hookActions();
         // hookDoubleClickAction();
@@ -167,11 +263,11 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
      * Adds a listener, which will fold or unfold the nodes.
      */
     private void hookActions() {
-        doubleClickAction = new Action() {
+        doubleClickHandler = new AbstractHandler() {
             private ToolTip keyTipViewer;
 
             @Override
-            public void run() {
+            public Object execute(ExecutionEvent event) {
                 ISelection selection = viewer.getSelection();
                 Object obj = ((IStructuredSelection) selection).getFirstElement();
 
@@ -231,6 +327,7 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
                         }
                     }
                 }
+                return(null);
             }
         };
 
@@ -238,7 +335,11 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
             @Override
             public void mouseDoubleClick(final MouseEvent e) {
                 if (e.button == 1) { // only left button double clicks
-                    doubleClickAction.run(); // run assigned action
+                	try {
+                		doubleClickHandler.execute(null); // run assigned action
+                	} catch(Exception ex) {
+                		LogUtil.logError(FlexiProviderOperationsPlugin.PLUGIN_ID, ex);
+                	}
                 }
             }
         });
@@ -289,32 +390,47 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
                 || currentEntryNode.getRegistryType().equals(RegistryType.ASYMMETRIC_BLOCK_CIPHER);
     }
 
+    private void addContributionItem(IContributionManager manager, final String commandId,
+    	final ImageDescriptor icon, final String tooltip)
+    {
+    	CommandContributionItemParameter param = new CommandContributionItemParameter(serviceLocator,
+    		null, commandId, SWT.PUSH);
+    	if(icon != null)
+    		param.icon = icon;
+    	if(tooltip != null && !tooltip.equals(""))
+    		param.tooltip = tooltip;
+    	CommandContributionItem item = new CommandContributionItem(param);
+    	manager.add(item);
+    }
+    
     private void fillEntryNodeContextMenu(IMenuManager manager) {
-        manager.add(renameAction);
-        manager.add(removeAction);
+        addContributionItem(manager, renameCommandId, null, null);
+        addContributionItem(manager, removeCommandId,
+        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	//$NON-NLS-1$
     }
 
     private void fillEncryptDecryptNodeContextMenu(IMenuManager manager) {
-        manager.add(encryptAction);
-        manager.add(decryptAction);
+    	addContributionItem(manager, encryptCommandId, null, null);
+    	addContributionItem(manager, decryptCommandId, null, null);
     }
 
     private void fillKeyNodeContextMenu(IMenuManager manager) {
-        manager.add(removeKeyAction);
+    	addContributionItem(manager, removeKeyCommandId,
+    		FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/cancel.png"), null);	//$NON-NLS-1$
     }
 
     private void fillInputContextMenu(IMenuManager manager) {
-        manager.add(setInputEditorAction);
-        manager.add(selectInputFileAction);
+    	addContributionItem(manager, setInputEditorCommandId, null, null);
+    	addContributionItem(manager, selectInputFileCommandId, null, null);
     }
 
     private void fillOutputContextMenu(IMenuManager manager) {
-        manager.add(setOutputEditorAction);
-        manager.add(selectOutputFileAction);
+    	addContributionItem(manager, setOutputEditorCommandId, null, null);
+    	addContributionItem(manager, selectOutputFileCommandId, null, null);
     }
 
     private void fillSignatureOutputContextMenu(IMenuManager manager) {
-        manager.add(selectSignatureOutputAction);
+    	addContributionItem(manager, selectSignatureOutputCommandId, null, null);
     }
 
     private void contributeToActionBars() {
@@ -323,10 +439,18 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
     }
 
     private void fillLocalToolBar(IToolBarManager manager) {
-        manager.add(executeAction);
+        addContributionItem(manager, executeCommandId,
+        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif"),	//$NON-NLS-1$
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExecuteOperationAction_1);
+
         manager.add(new Separator());
-        manager.add(importAction);
-        manager.add(exportAction);
+
+        addContributionItem(manager, importCommandId,
+        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/import.gif"),	//$NON-NLS-1$
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ImportOperationAction_1);
+        addContributionItem(manager, exportCommandId,
+        	FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/export.gif"),	//$NON-NLS-1$
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu.Messages.ExportOperationAction_1);
     }
 
     /**
