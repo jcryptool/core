@@ -25,9 +25,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;

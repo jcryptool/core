@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	 <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="true"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
+            icon="icons/view.gif"
+            id="org.jcryptool.visual.sigVerification.view"
+            name="%view.name"
+            restorable="true">
+      </view>
+   </extension>
+  	<extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+   
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="%Visual.name"
+            viewId="org.jcryptool.visual.sigVerification.view"
+            contextHelpId="org.jcryptool.visual.sigVerification.SigVerView">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+       <toc
+            file="nl/de/toc.xml"
+            primary="false">
+      </toc>
+   </extension>
+</plugin>

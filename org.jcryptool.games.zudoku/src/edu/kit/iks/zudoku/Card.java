@@ -10,10 +10,6 @@
 //-----END DISCLAIMER-----
 package edu.kit.iks.zudoku;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -25,7 +21,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
