@@ -13,5 +13,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: net.sourceforge.ehep,net.sourceforge.ehep.actions,net.sourceforge.ehep.core,net.sourceforge.ehep.editors,net.sourceforge.ehep.events,net.sourceforge.ehep.gui,net.sourceforge.ehep.popup.actions,net.sourceforge.ehep.preferences
 Bundle-ManifestVersion: 2
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.jcryptool.core.logging.utils

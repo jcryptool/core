@@ -14,5 +14,5 @@ Export-Package: com.thoughtworks.qdox,
  com.thoughtworks.qdox.parser.impl,
  com.thoughtworks.qdox.parser.structs,
  com.thoughtworks.qdox.tools
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
