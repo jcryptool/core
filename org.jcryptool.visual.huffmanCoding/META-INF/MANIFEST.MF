@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.help,
  org.eclipse.core.expressions;bundle-version="3.4.300",
  org.eclipse.jface.text;bundle-version="3.7.2"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts

@@ -5,5 +5,5 @@ Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis.tests;singleto
 Bundle-Version: 1.0.0
 Bundle-Vendor: jcryptool.org
 Fragment-Host: org.jcryptool.analysis.transpositionanalysis;bundle-version="0.9.5"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit;bundle-version="4.8.2"

@@ -7,6 +7,6 @@ Bundle-Vendor: jcryptool.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.jcryptool.core.operations
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.commons.codec.binary,
  org.jcryptool.core.logging.utils

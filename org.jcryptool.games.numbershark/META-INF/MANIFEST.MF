@@ -7,7 +7,7 @@ Bundle-Activator: org.jcryptool.games.numbershark.NumberSharkPlugin
 Require-Bundle: org.eclipse.help.ui;bundle-version="3.5.100"
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts,
