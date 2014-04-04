@@ -1475,11 +1475,10 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		IActionBars bars = getViewSite().getActionBars();
 		bars.getMenuManager().removeAll();
 
-		//		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
-		// ZoomContributionViewItem toolbarZoomContributionViewItem = new
-		// ZoomContributionViewItem(this);
-		// zoom.add(toolbarZoomContributionViewItem);
-		// bars.getMenuManager().add(zoom);
+		zoom = new MenuManager("Zoom"); //$NON-NLS-1$
+		ZoomContributionViewItem toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
+		zoom.add(toolbarZoomContributionViewItem);
+		bars.getMenuManager().add(zoom);
 	}
 
 	@Override
