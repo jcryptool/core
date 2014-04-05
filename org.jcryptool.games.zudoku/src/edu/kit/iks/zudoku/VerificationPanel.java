@@ -627,7 +627,6 @@ public class VerificationPanel extends JPanel implements ActionListener {
 		default:
 			// We should never end up here
 			// TODO: Throw Exception
-			System.err.println("Unknown verification step: " + step);
 			break;
 		}
 	}

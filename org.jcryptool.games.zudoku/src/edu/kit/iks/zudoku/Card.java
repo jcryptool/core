@@ -88,9 +88,6 @@ public class Card extends JPanel {
 		public void mouseDragged(MouseEvent e) {
 			if(dragging) {
 				Point current_mouse_position = getAbsoluteMousePosition(e);
-				// TODO
-				// System.err.println("mouseDragged: " + (current_mouse_position.x - last_mouse_position.x) + ", "
-				//	   	                               + (current_mouse_position.y - last_mouse_position.y));
 				Card.this.moveCard(current_mouse_position.x - last_mouse_position.x,
 	                               current_mouse_position.y - last_mouse_position.y);
 				this.last_mouse_position = current_mouse_position;
