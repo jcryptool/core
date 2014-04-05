@@ -164,9 +164,9 @@ public class SubstitutionKeyEditor extends Composite {
 	private Label lblPasswordExplanation;
 
 	private KeyInput<String> passwordInput;
-	
+
 	private boolean complete = false;
-	
+
 	private List<Observer> observers;
 
 	private PasswordToKeyMethod keyCreationMethod;
@@ -183,7 +183,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 	/**
 	 * Create the composite.
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
@@ -203,8 +203,8 @@ public class SubstitutionKeyEditor extends Composite {
 	private static class SubstitutionKeyHolder {
 		public SubstitutionKey key = null;
 	}
-	
-	
+
+
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 
@@ -243,7 +243,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 		txtPassword = new Text(composite_1, SWT.BORDER);
 		txtPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-		
+
 		txtPassword.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -252,7 +252,7 @@ public class SubstitutionKeyEditor extends Composite {
 				}
 			}
 		});
-		
+
 		Composite compSetPassword = new Composite(composite_1, SWT.NONE);
 		GridLayout compSetPasswordLayout = new GridLayout(4, false);
 		compSetPasswordLayout.marginWidth = 0;
@@ -260,7 +260,7 @@ public class SubstitutionKeyEditor extends Composite {
 		compSetPassword.setLayout(compSetPasswordLayout);
 		GridData compSetPasswordLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		compSetPassword.setLayoutData(compSetPasswordLData);
-		
+
 		btnSet = new Button(compSetPassword, SWT.NONE);
 		btnSet.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		btnSet.setText(Messages.SubstitutionKeyEditor_5);
@@ -270,10 +270,10 @@ public class SubstitutionKeyEditor extends Composite {
 				setKeyByPassword();
 			}
 		});
-		
+
 		Label restOfAlphaLabel = new Label(compSetPassword, SWT.NONE);
 		restOfAlphaLabel.setText(Messages.SubstitutionKeyEditor_6);
-		
+
 		Composite compRestDirection = new Composite(compSetPassword, SWT.NONE);
 		GridLayout compRestDirectionLayout = new GridLayout(1, false);
 		compRestDirectionLayout.marginWidth = 0;
@@ -281,21 +281,21 @@ public class SubstitutionKeyEditor extends Composite {
 		compRestDirection.setLayout(compRestDirectionLayout);
 		GridData compRestDirectionLData = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 2);
 		compRestDirection.setLayoutData(compRestDirectionLData);
-		
+
 		restOfAlphaLexical = new Button(compRestDirection, SWT.RADIO);
 		restOfAlphaLexical.setText(Messages.SubstitutionKeyEditor_8);
 		boolean lexicalBtnSelection = !spec.getDefaultKeyCreationMethod().equals(keyMethodAntilexical);
 		restOfAlphaLexical.setSelection(
 				lexicalBtnSelection
 				);
-		
+
 		restOfAlphaAntilexical = new Button(compRestDirection, SWT.RADIO);
 		restOfAlphaAntilexical.setText(Messages.SubstitutionKeyEditor_9);
 		restOfAlphaAntilexical.setSelection(
 				!lexicalBtnSelection
 				);
-		
-		
+
+
 		btnReset = new Button(compSetPassword, SWT.NONE);
 		btnReset.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		btnReset.setText(Messages.SubstitutionKeyEditor_10);
@@ -307,7 +307,7 @@ public class SubstitutionKeyEditor extends Composite {
 				passwordInput.synchronizeWithUserSide();
 			}
 		});
-		
+
 		Composite compKeyExplanation = new Composite(composite_1, SWT.NONE);
 		GridLayout compKeyExplanationLayout = new GridLayout(2, false);
 		compKeyExplanationLayout.marginWidth = 0;
@@ -316,21 +316,21 @@ public class SubstitutionKeyEditor extends Composite {
 		GridData compKeyExplanationLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		compKeyExplanationLayoutData.horizontalSpan = 2;
 		compKeyExplanation.setLayoutData(compKeyExplanationLayoutData);
-		
+
 		Label lblInfoImg = new Label(compKeyExplanation, SWT.NONE);
 		lblInfoImg.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
 		//TODO: activate image
 		Image infoImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_INFO_TSK);
 		lblInfoImg.setImage(infoImg);
 //		lblInfoImg.setText("(i)");
-		
-		
+
+
 		lblPasswordExplanation = new Label(compKeyExplanation, SWT.WRAP);
 		GridData lblPasswordExplanationLData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		lblPasswordExplanationLData.widthHint = (int) (WIDTH_HINT_GLOBAL * 0.9);
 		lblPasswordExplanation.setLayoutData(lblPasswordExplanationLData);
 		lblPasswordExplanation.setText(Messages.SubstitutionKeyEditor_7);
-		
+
 		passwordInput = new KeyInput<String>() {
 
 			@Override
@@ -374,10 +374,10 @@ public class SubstitutionKeyEditor extends Composite {
 			}
 		};
 		passwordInput.addObserver(inputHandler);
-		
+
 		complete = checkMappingComplete();
 	}
-	
+
 	private void setKeyByPassword() {
 		if(!txtPassword.getText().equals("")) { //$NON-NLS-1$
 			setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
@@ -386,14 +386,14 @@ public class SubstitutionKeyEditor extends Composite {
 
 	protected void setKeyByPassword(String text, PasswordToKeyMethod passwordToKeyMethod) {
 		SubstitutionKey keyToSet = passwordToKeyMethod.createKey(text, plaintextAlphabet);
-		
+
 		setCharMappingExternal(keyToSet.getSubstitutions());
 	}
 
 	private void updateUnusedCharsList() {
 		List<Character> usedChars = new LinkedList<Character>();
 		for(Character c: this.charMapping.values()) if(c!=null) usedChars.add(c);
-		
+
 		for(SubstitutionLetterInputField ctrl: this.charInputControls.values()) {
 			ctrl.setCharactersInUse(usedChars);
 		}
@@ -433,7 +433,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 		final SubstitutionLetterInputField characterInputControl = new SubstitutionLetterInputField(comp, Mode.VERTICAL_POPUP, plaintextAlphabet);
 		charInputControls.put(plaintextChar, characterInputControl);
-		
+
 		final TextfieldInput<Character> input = characterInputControl.getCharInput();
 		input.writeContent(plaintextChar);
 		input.synchronizeWithUserSide();
@@ -462,18 +462,12 @@ public class SubstitutionKeyEditor extends Composite {
 					}
 
 					setTextfieldSubstitutionUndetermined(characterInputControl, input.getContent() == null);
-					
+
 					complete = checkMappingComplete();
 					for(Observer obs: SubstitutionKeyEditor.this.observers) {
 						obs.update(null, null);
 					}
-				} else {
-					if(arg instanceof InputVerificationResult) {
-//						InputVerificationResult inputVerificationResult = (InputVerificationResult) arg;
-//						System.out.println(String.format("Verif. for %s: %s\n\t\t%s", Character.valueOf(plaintextChar), inputVerificationResult.getMessage(), inputVerificationResult.toString()));
-					}
 				}
-
 			}
 		});
 
@@ -494,7 +488,7 @@ public class SubstitutionKeyEditor extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-	
+
 	/**
 	 * Returns the selected character mapping (even if cancelled).
 	 * To check, whether the mapping is complete, call {@link #isCompleteData()}.<br />
@@ -502,7 +496,7 @@ public class SubstitutionKeyEditor extends Composite {
 	 * This map contains all alphabet characters as keys. If {@link #isCompleteData()} returns true, all alphabet characters
 	 * have a unique, non-null mapping.<br /><br />
 	 * Please note, that the method {@link #wasFinished()} returns whether the dialog was finished or cancelled.
-	 * 
+	 *
 	 * @return the selected character mapping
 	 */
 	public Map<Character, Character> getCharMapping() {
@@ -515,26 +509,26 @@ public class SubstitutionKeyEditor extends Composite {
 	public boolean isCompleteData() {
 		return complete;
 	}
-	
+
 	private boolean checkMappingComplete() {
 		for(Map.Entry<Character, Character> entry: getCharMapping().entrySet()) {
 			if(entry.getValue() == null) return false;
 		}
 		return true;
 	}
-	
+
 	public void setKeyCreationMethod(SubstitutionKey.PasswordToKeyMethod method) {
 		this.keyCreationMethod = method;
 	}
-	
+
 	public AbstractAlphabet getAlphabet() {
 		return plaintextAlphabet;
 	}
-	
+
 	public String getPassword() {
 		return passwordInput.getContent();
 	}
-	
+
 	public PasswordToKeyMethod getKeyCreationMethod() {
 		if(restOfAlphaLexical.getSelection()) {
 			return new SubstitutionKey.PasswordToKeyMethod(true, true, true);
@@ -542,10 +536,10 @@ public class SubstitutionKeyEditor extends Composite {
 			return new SubstitutionKey.PasswordToKeyMethod(true, true, false);
 		}
 	}
-	
+
 	/**
 	 * populates the substitutions with a password like it would happen when using the password text field.
-	 * 
+	 *
 	 * @param password the password
 	 */
 	public void setPasswordExternal(String password, boolean apply) {
@@ -554,17 +548,17 @@ public class SubstitutionKeyEditor extends Composite {
 		for(char c: password.toCharArray()) {
 			passwordInput.writeContent(passwordInput.getContent()+c);
 			passwordInput.synchronizeWithUserSide();
-			
+
 		}
-		
+
 		if(apply) {
 			setKeyByPassword(passwordInput.getContent(), getKeyCreationMethod());
 		}
 	}
-	
+
 	/**
 	 * @param o an observer which will be notified when the character mapping changes by editing through this composite.<br />
-	 * Note, that both arguments of the {@link Observer#update(Observable, Object)} method will be null; 
+	 * Note, that both arguments of the {@link Observer#update(Observable, Object)} method will be null;
 	 * frequent updates are possible.
 	 */
 	public void addObserver(Observer o) {
