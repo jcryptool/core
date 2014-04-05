@@ -27,6 +27,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import org.jcryptool.core.logging.utils.LogUtil;
+
 @SuppressWarnings("serial") // Objects of this class are not meant to be serialized.
 public class Card extends JPanel {
 	private class CardDNDListener implements MouseListener, MouseMotionListener {
@@ -190,16 +192,14 @@ public class Card extends JPanel {
         try {
 			this.front_image = ImageIO.read(getClass().getResource(ZudokuConfig.CARD_FRONT_IMAGE));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 
         this.back_image = null;
         try {
 			this.back_image = ImageIO.read(getClass().getResource(ZudokuConfig.CARD_BACK_IMAGE));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		}
 
         if(this.active && !this.fixed) {

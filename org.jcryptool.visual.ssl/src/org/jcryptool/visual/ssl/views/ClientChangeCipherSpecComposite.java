@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -26,44 +27,44 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 	private Group grpClientChangeCipher;
 	private Label lblChangeCipherSpec;
 	private int count = 0;
-	
+
 	/**
 	 * Content Typ of the ChangeCipherSpec Message
 	 */
 	private static String CHANGE_CIPHER_MESSAGE = "14";
-	
+
 	/**
 	 * The master secret needed for the encryption.
 	 */
 	private String masterSecret;
-	
+
 	/**
 	 * The premaster secret of the server
 	 */
 	private String secret;
-	
+
 	/**
 	 * The random number generated for the message clientHello
 	 */
 	private String clientRandom = Message.getClientHelloRandom();
-	
+
 	/**
 	 * The random number generated for the message serverHello
 	 */
 	private String serverRandom = Message.getServerHelloRandom();
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private String clientMACsecret;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private String clientKey;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private String clientIV;
 
@@ -71,10 +72,10 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 	 * The object which provides crypto functions
 	 */
 	private Crypto c = null;
-	
+
 	/**
 	 * Create the composite.
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
@@ -103,7 +104,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 					btnInformationen.setText(Messages.btnInformationToggleParams);
 				}
 				refreshInformations();
-				
+
 			}
 		});
 		btnInformationen.setLocation(216, 140);
@@ -121,12 +122,12 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		SecureRandom random = new SecureRandom();
 		int newIndex;
 		String seed = serverRandom + clientRandom;
-		
+
 		secret = getPremasterSecret();
-		
+
 		if(!Message.getServerHelloVersion().equals("0303")){ //TLS1.0 or TLS1.1
 			masterSecret = Message.getMasterSecret();
-			
+
 			//create encryption parameters
 			if(Message.getServerHelloHash().equals("MD5")) {
 				//16 Byte MAC key
@@ -137,7 +138,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				clientMACsecret = masterSecret.substring(0, 40);
 				newIndex = 80;
 			}
-			
+
 			if(Message.getServerHelloCipher().equals("RC4_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
@@ -161,7 +162,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			}else { //no Encryption
 				clientKey = null;
 			}
-			
+
 			if(!Message.getServerHelloVersion().equals("0302")) { //TLS1.0
 				if(Message.getServerHelloCipherMode().equals("CBC")) {
 					//16 Byte IV
@@ -180,7 +181,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		}else {
 			//TLS1.2
 			masterSecret = Message.getMasterSecret();
-			
+
 			//create encryption parameters
 			if(Message.getServerHelloHash().equals("MD5")) {
 				//16 Byte MAC key
@@ -199,7 +200,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				clientMACsecret = masterSecret.substring(0, 96);
 				newIndex = 192;
 			}
-			
+
 			if(Message.getServerHelloCipher().equals("RC4_128")) {
 				//16 Byte key
 				clientKey = masterSecret.substring(newIndex, newIndex + 32);
@@ -223,7 +224,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			}else { //no Encryption
 				clientKey = null;
 			}
-			
+
 			if(Message.getServerHelloCipherMode().equals("GCM")) {
 				if(Message.getServerHelloCipher().equals("AES_128")) {
 					//16 Byte IV
@@ -265,9 +266,9 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		}else { //no Encryption
 			clientKey = null;
 		}
-		
+
 		Message.setClientKey(clientKey);
-		
+
 		strText = Messages.ClientChangeCipherSpecInitationText
 				+ Messages.ServerChangeCipherSpecMasterSecret
 				+ masterSecret
@@ -279,7 +280,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 				+ clientIV;
 		refreshInformations();
 	}
-	
+
 	/**
 	 * The pseudorandom-function to generate the master secret
 	 * @param secret
@@ -297,7 +298,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		int b_length;
 		int i;
 		count++;
-		
+
 		if(Message.getServerHelloHash().equals("MD5")) {
 			hash = P_hash(secret, seed, count, "MD5");
 		}else if(Message.getServerHelloHash().equals("SHA1"))
@@ -308,17 +309,17 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		}else { //SHA384
 			hash = P_hash(secret, seed, count, "SHA384");
 		}
-		
+
 		hash_length = hash.length();
 		S1 = hash.substring(0, (hash_length/2)-1);
 		S2 = hash.substring(hash_length/2);
-		
+
 		b1 = P_hash(S1, string + seed, count, "MD5").getBytes();
 		b2 = P_hash(S2, string + seed, count, "SHA1").getBytes();
 		b_length = b1.length;
-		
+
 		byte[] b3 = new byte[b_length];
-		
+
 		for(i = 0; i < b_length; i++) {
 			b3[i] = (byte) (b1[i] ^ b2[i]);
 		}
@@ -339,14 +340,14 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			try {
 				hash = hash + c.generateHash(Hash, secret + A(i, Hash) + seed);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			}
 		}
 		return hash;
 	}
-	
+
 	/**
 	 * A hashfunction to generate more bytes for the master secret
 	 * @param i
@@ -360,9 +361,9 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			try {
 				return c.generateHash(Hash, secret + A(i-1, Hash) + clientRandom + serverRandom);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			}
 			return clientRandom + serverRandom;
 		}
@@ -378,7 +379,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 			sb.append(String.format("%02x", b & 0xff));
 		return sb.toString();
 	}
-	
+
 	public String getPremasterSecret() {
 		try {
 			if (Message.getServerHelloKeyExchange().equals("RSA")) {
@@ -394,7 +395,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 						.generateSecret());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+            LogUtil.logError(e);
 		}
 		return secret;
 	}
@@ -423,7 +424,7 @@ public class ClientChangeCipherSpecComposite extends Composite implements
 		refreshInformations();
 		return true;
 	}
-	
+
 	/**
 	 * Calculates the hex message for the ClientChangeCipherSpec message. The message looks like:
 	 * <ul>

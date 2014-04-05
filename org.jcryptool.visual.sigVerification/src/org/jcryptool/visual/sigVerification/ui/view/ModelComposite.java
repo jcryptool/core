@@ -94,7 +94,7 @@ public class ModelComposite extends Composite {
 			Certificates.setLevel2(Certificates.createCertificate(2));
 			Certificates.setUser(Certificates.createCertificate(3));
 		} catch (Exception e) {
-			e.printStackTrace();
+            LogUtil.logError(e);
 		}
 
         lblGeneralDescription = new Text(this, SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
@@ -421,7 +421,7 @@ public class ModelComposite extends Composite {
 			dateUser=setFormat(temp);
 			lbllevel3Choose.setText(dateUser);
 		} catch (Exception e) {
-			e.printStackTrace();
+            LogUtil.logError(e);
 		}
     }
 

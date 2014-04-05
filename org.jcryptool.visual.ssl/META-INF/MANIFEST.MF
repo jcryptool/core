@@ -17,5 +17,6 @@ Import-Package: codec,
  org.bouncycastle.crypto.prng,
  org.bouncycastle.jce,
  org.bouncycastle.x509,
+ org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,
  org.jcryptool.visual.sig.algorithm

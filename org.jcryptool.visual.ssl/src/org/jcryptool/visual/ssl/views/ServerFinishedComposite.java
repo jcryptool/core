@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.ssl.protocol.Crypto;
 import org.jcryptool.visual.ssl.protocol.Message;
 import org.jcryptool.visual.ssl.protocol.ProtocolStep;
@@ -53,7 +54,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 
 	/**
 	 * Create the composite.
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
@@ -108,7 +109,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 		try {
 			finished = PRF(masterSecret, "server finished",
 					c.generateHash(Message.getServerHelloHash(), hashMessages));
-	        
+
 			//The part beyond is haunted by a demon we summoned, he is doing black magic that we don�t understand.
 			//But he says that it works that way so we trust him.
 			//Do not touch it or he kills you!
@@ -131,32 +132,23 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 				cFinished = c.encryptGCM(key, finished);
 			}
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (NoSuchProviderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		} catch (InvalidAlgorithmParameterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            LogUtil.logError(e);
 		}
 
 		strText = Messages.ServerFinishedInitationText + cFinished;
@@ -165,7 +157,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 
 	/**
 	 * The pseudorandom-function to generate the master secret
-	 * 
+	 *
 	 * @param secret
 	 * @param string
 	 * @param seed
@@ -209,7 +201,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 
 	/**
 	 * The hashfunction for the PRF of the master secret
-	 * 
+	 *
 	 * @param secret
 	 * @param seed
 	 * @param count
@@ -222,9 +214,9 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 			try {
 				hash = hash + c.generateHash(Hash, secret + A(i, Hash) + seed);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			}
 		}
 		return hash;
@@ -232,7 +224,7 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 
 	/**
 	 * A hashfunction to generate more bytes for the master secret
-	 * 
+	 *
 	 * @param i
 	 * @param Hash
 	 * @return
@@ -245,9 +237,9 @@ public class ServerFinishedComposite extends Composite implements ProtocolStep {
 				return c.generateHash(Hash, masterSecret + A(i - 1, Hash)
 						+ clientRandom + serverRandom);
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+	            LogUtil.logError(e);
 			}
 			return clientRandom + serverRandom;
 		}

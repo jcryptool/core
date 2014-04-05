@@ -8,6 +8,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.eclipse.swt.widgets.Display;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 public class Bruteforce {
 	private Set<Character> plaintextCharacters;
@@ -108,7 +109,7 @@ public class Bruteforce {
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec);
 			originalMessage = new String(cipher.doFinal(ciphertextByteArray));
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.logError(e);
 		}
 		return originalMessage;
 	}
