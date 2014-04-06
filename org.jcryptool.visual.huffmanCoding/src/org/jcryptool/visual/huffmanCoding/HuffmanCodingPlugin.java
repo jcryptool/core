@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext;
 public class HuffmanCodingPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.visual.huffman"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.jcryptool.visual.huffmanCoding"; //$NON-NLS-1$
 
 	// The shared instance
 	private static HuffmanCodingPlugin plugin;
@@ -23,7 +23,7 @@ public class HuffmanCodingPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -36,7 +36,7 @@ public class HuffmanCodingPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -49,7 +49,7 @@ public class HuffmanCodingPlugin extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static HuffmanCodingPlugin getDefault() {
@@ -59,7 +59,7 @@ public class HuffmanCodingPlugin extends AbstractUIPlugin {
 	/**
 	 * Returns an image descriptor for the image file at the given plug-in
 	 * relative path
-	 * 
+	 *
 	 * @param path
 	 *            the path
 	 * @return the image descriptor
