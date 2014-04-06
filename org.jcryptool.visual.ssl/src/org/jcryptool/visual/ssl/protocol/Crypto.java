@@ -15,9 +15,7 @@ import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.cert.CertificateEncodingException;
 import java.security.cert.X509Certificate;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -39,9 +37,9 @@ import codec.Hex;
  * <p>
  * It holds functions for key exchange calculation, hashes, keys and
  * certificates.
- * 
+ *
  * @author Denk Gandalf
- * 
+ *
  */
 public class Crypto {
 
@@ -61,7 +59,7 @@ public class Crypto {
 	 * Generates a default certificate with the given key pair {@link pubKey}
 	 * The certificate will be singed with the {@link sigKey} and uses the
 	 * {@link strHash} with and the {@link strSignature} algorithm.
-	 * 
+	 *
 	 * @param key
 	 * @throws CertificateEncodingException
 	 * @throws InvalidKeyException
@@ -76,20 +74,19 @@ public class Crypto {
 			IllegalStateException, NoSuchProviderException,
 			NoSuchAlgorithmException, SignatureException {
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date notBefor = new Date();
-		Date notAfter = new Date();
-		notAfter.setYear(notBefor.getYear() + 1);
-		notAfter.setHours(23);
-		notAfter.setMinutes(59);
-		notAfter.setSeconds(59);
+	    Calendar notBefore = Calendar.getInstance();
+		Calendar notAfter = Calendar.getInstance();
+		notAfter.set(Calendar.YEAR, notBefore.get(Calendar.YEAR) + 1);
+		notAfter.set(Calendar.HOUR, 23);
+		notAfter.set(Calendar.MINUTE, 59);
+		notAfter.set(Calendar.SECOND, 59);
 
 		X509V3CertificateGenerator certGen = new X509V3CertificateGenerator();
 		X500Principal certName = new X500Principal("CN=Test Server Certificate");
 		certGen.setSerialNumber(BigInteger.valueOf(System.currentTimeMillis()));
 		certGen.setIssuerDN(certName);
-		certGen.setNotAfter(notAfter);
-		certGen.setNotBefore(notBefor);
+		certGen.setNotAfter(notAfter.getTime());
+		certGen.setNotBefore(notBefore.getTime());
 		certGen.setSubjectDN(certName);
 		certGen.setPublicKey(pubKey.getPublic());
 		certGen.setSignatureAlgorithm(strHash + "With" + strSignature);
@@ -101,7 +98,7 @@ public class Crypto {
 
 	/**
 	 * Generates the hash of a given strMessage with the given strHash
-	 * 
+	 *
 	 * @param strHash
 	 *            The hash used
 	 * @param strMessage
@@ -122,7 +119,7 @@ public class Crypto {
 
 	/**
 	 * Decrypts a given message using the GCM mode
-	 * 
+	 *
 	 * @param Key
 	 *            the key which is used for decryption
 	 * @param message
@@ -159,7 +156,7 @@ public class Crypto {
 
 	/**
 	 * Encrypts a given message with the key using the GCm mode
-	 * 
+	 *
 	 * @param Key
 	 *            the key which is used for encryption
 	 * @param message
@@ -191,7 +188,7 @@ public class Crypto {
 
 	/**
 	 * Decrypts a given message with a key using the CBC mode.
-	 * 
+	 *
 	 * @param Key
 	 *            the key which is used for decryption
 	 * @param message
@@ -232,7 +229,7 @@ public class Crypto {
 
 	/**
 	 * Encrypts a given message with a key using the CBC mode.
-	 * 
+	 *
 	 * @param Key
 	 *            Key which is used for encryption
 	 * @param message
@@ -261,7 +258,7 @@ public class Crypto {
 	/**
 	 * Generates the Key for a cipher with the given algorithm {@link strKeyTyp}
 	 * and the size {@link KeySize}.
-	 * 
+	 *
 	 * @param strKeyTyp
 	 *            Kind of key which is generated
 	 * @param KeySize
@@ -284,7 +281,7 @@ public class Crypto {
 	/**
 	 * Generates a key pair generator for the given algorithm {@link strKeyTyp}
 	 * and with the size of {@link KeySize}.
-	 * 
+	 *
 	 * @param strKeyTyp
 	 *            The kind of algorithmn which is used
 	 * @param KeySize
@@ -310,7 +307,7 @@ public class Crypto {
 
 	/**
 	 * Generates a public and private key from a given KeyPairGenerator
-	 * 
+	 *
 	 * @param kpG
 	 *            the KeyPair Generator
 	 * @return the KeyPair

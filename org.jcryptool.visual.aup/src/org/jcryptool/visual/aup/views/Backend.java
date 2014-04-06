@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2012 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -29,11 +29,11 @@ import org.jcryptool.visual.aup.AndroidUnlockPatternPlugin;
 import org.jcryptool.visual.aup.views.AupView.ApuState;
 
 /**
- * 
+ *
  * @author Michael Schäfer
  * @author Stefan Kraus <stefan.kraus05@gmail.com>
- * 
- * 
+ *
+ *
  */
 public class Backend {
 
@@ -66,7 +66,7 @@ public class Backend {
 
     /**
      * Initialize some variables
-     * 
+     *
      * @param aupView
      */
     public Backend(AupView aupView) {
@@ -101,7 +101,7 @@ public class Backend {
 
     /**
      * adds the number to the array which should be checked.
-     * 
+     *
      * @param btnNummer number which should be added to the patter
      */
     public void add(int btnNummer) {
@@ -186,16 +186,13 @@ public class Backend {
                 length++;
             }
         }
-        // for(int a : order)
-        // System.out.print(a + " ");
-        // System.out.println();
     }
 
     /**
      * Computes the greatest common divisor of a and b.
      * <p>
      * Enforce that neither a nor b is 0!
-     * 
+     *
      * @param a != 0
      * @param b != 0
      * @return gcd(a, b)
@@ -420,7 +417,7 @@ public class Backend {
 
     /**
      * check whether the pattern is long enough (>4)
-     * 
+     *
      * @return
      */
     private boolean isGreatEnough() {
@@ -641,7 +638,7 @@ public class Backend {
 
     /**
      * checks which Modus is active and set it in the UI also disables non-available modes
-     * 
+     *
      */
     public void updateModus() {
         // visual.getSetPattern().setEnabled(true);
@@ -692,7 +689,7 @@ public class Backend {
 
     /**
      * saves order[] in AUP savefile separated by semicolon
-     * 
+     *
      * @return false on error else true
      */
     public boolean save() {

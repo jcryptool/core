@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2013 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -37,7 +39,7 @@ import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.keys.KeyType;
-import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
+import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryHandler;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
@@ -57,11 +59,11 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
 
 /**
  * Represents all actions concerning Identities
- * 
+ *
  * @author Christoph Schnepf, Patrick Zillner
- * 
+ *
  */
-public class IdentityManager extends AbstractNewKeyStoreEntryAction {
+public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
     private static IdentityManager identityManager;
 
     private Enumeration<String> aliases;
@@ -94,7 +96,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * method to create an identity with a key (GENERATED parameters)
-     * 
+     *
      * @param name of the identity
      * @param algorithm used for the new key
      * @param password for the private key
@@ -170,7 +172,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * method to create a "big" new multi-prime RSA key with GENERATED parameters
-     * 
+     *
      * @param name the name of the identity
      * @param password the password for the private key
      * @param keyLength
@@ -253,7 +255,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * method to create a classic RSA-key with chosen parameters
-     * 
+     *
      * @param name the name of the alias
      * @param password for the private key
      * @param crackedBy specifies the name of the identity, who has cracked the key. If the key hasn't been cracked,
@@ -307,7 +309,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * method to create a multi-prime RSA-key with chosen parameters
-     * 
+     *
      * @param name of the alias
      * @param password for the private key
      * @param crackedBy specifies the name of the identity, who has cracked the key. If the key hasn't been cracked,
@@ -404,7 +406,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * gets the OID to a certain algorithm
-     * 
+     *
      * @param algorithm the algorithm, you want to know the OID from
      * @return the OID
      */
@@ -435,7 +437,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * method to get all available contacts
-     * 
+     *
      * @return the contacts in a Vector<String>
      */
     public Vector<String> getContacts() {
@@ -455,7 +457,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get all asymmetric algorithms of an identity
-     * 
+     *
      * @param identity the identity
      * @return a Vector<String> with the algorithm-names
      */
@@ -495,7 +497,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * Method to get publicKeys for a certain identity
-     * 
+     *
      * @param identity specifies the identity looking for public keys
      */
     public HashMap<String, KeyStoreAlias> getPublicKeys(String identity) {
@@ -538,7 +540,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * Method to get publicKeys to attack for a certain identity
-     * 
+     *
      * @param identity specifies the identity looking for public keys
      */
     public HashMap<String, KeyStoreAlias> getAttackablePublicKeys(String identity) {
@@ -575,7 +577,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get all keys for an identity
-     * 
+     *
      * @param identity the identity
      * @return HashMap<String, KeyStoreAlias>
      */
@@ -674,7 +676,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get all public key parameters of an RSA key
-     * 
+     *
      * @param alias the alias for the key
      * @return the parameters in an Vector<String> in the following order: algorithm, format, e, N
      */
@@ -697,7 +699,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get all private key parameters of an RSA key
-     * 
+     *
      * @param alias the alias for the key
      * @param password the password for the key
      * @return the parameters in an Vector<String> in the following order: algorithm, format, p, q, d, e, N
@@ -720,7 +722,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get all private key parameters of an MULTI-PRIME! RSA key
-     * 
+     *
      * @param alias the alias for the key
      * @param password the password for the key
      * @return the parameters in an Vector<String> in the following order: algorithm, format, p, q, other Primes, d, e,
@@ -751,7 +753,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get N and e of the public key
-     * 
+     *
      * @param alias The alias who wants to get his publicKey
      * @return parameters: contains the publicKey Parameters. The first parameter is 'N', the second 'e'
      */
@@ -811,7 +813,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
 
     /**
      * get the privateKey parameters
-     * 
+     *
      * @param privkey contains the privateKey parameters
      * @return vector with parameters in the following order: N, d, p, q, e
      */
@@ -874,6 +876,12 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
             if (alias.getHashValue().equalsIgnoreCase(privAlias.getHashValue()) && alias != privAlias)
                 return alias;
         }
+        return null;
+    }
+
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        // TODO Auto-generated method stub
         return null;
     }
 

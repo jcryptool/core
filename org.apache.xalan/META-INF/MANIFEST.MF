@@ -53,5 +53,5 @@ Export-Package: java_cup.runtime,
  org.apache.xpath.operations,
  org.apache.xpath.patterns,
  org.apache.xpath.res
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

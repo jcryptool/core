@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2013 JCrypTool team and contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -20,8 +20,8 @@ public class RedoSourceProvider extends AbstractSourceProvider {
     public static final String REDO_COMMAND_STATE = "org.jcryptool.games.divide.redo";
 
     // instance vars
-    private final String ENABLED = "enabled";
-    private final String DISABLED = "disabled";
+    private static final String ENABLED = "enabled";
+    private static final String DISABLED = "disabled";
     private boolean isEnabled;
 
     // constructor

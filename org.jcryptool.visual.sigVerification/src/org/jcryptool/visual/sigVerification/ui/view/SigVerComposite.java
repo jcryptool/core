@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2013 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -55,7 +55,7 @@ import org.jcryptool.visual.sigVerification.ui.wizards.SignatureWizard;
  * This class contains all the code required for the design and functionality of the main view. It
  * creates the components, calls the wizards and constructs the string ("SHA256withECDSA" etc.) used
  * for signing.
- * 
+ *
  * @author Wilfing/Huber
  */
 public class SigVerComposite extends Composite {
@@ -145,7 +145,7 @@ public class SigVerComposite extends Composite {
 
     /**
      * Create contents of the application window.
-     * 
+     *
      * @param parent
      */
     private void createContents(Composite parent) { // vs Control createContents
@@ -231,7 +231,7 @@ public class SigVerComposite extends Composite {
                     resultFalse.setImage(img2);
                     resultFalse.hide();
                 }
-               
+
             }
 
             btnHash = new Button(border, SWT.NONE);
@@ -509,15 +509,6 @@ public class SigVerComposite extends Composite {
                         hashInst.hashInput(hashes[hash], input.plain); // Hash
                                                                        // the
                                                                        // input
-
-                        // Print lines for debugging and error searches
-                        /*System.out.println("Inported data: " + new String(input.data));
-                        System.out.println("Plaintext: " + new String(input.plain));
-                        System.out.println("Hash: " + new String(hashInst.getHash()));
-                        System.out.println("Hash in hex format: " + hashInst.getHashHex());
-                        System.out.println("Inported signature: " + new String(input.signature));
-                        System.out.println("Used signature method: " + input.signaturemethod);
-                        System.out.println("Key length: " + input.signatureSize);*/
 
                         // Shows the description for the actual step
                         tabFolder.setSelection(3);
