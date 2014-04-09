@@ -13,6 +13,9 @@ package org.jcryptool.visual.library;
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -24,6 +27,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import javax.print.attribute.IntegerSyntax;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
@@ -563,6 +568,49 @@ public class Lib {
 			}
 		}
 		return rv.mod(modulus).toString(Constants.HEXBASE);
+	}
+
+	static byte[] integersToBytes(int[] values) throws IOException
+	{
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   DataOutputStream dos = new DataOutputStream(baos);
+	   for(int i=0; i < values.length; ++i)
+	   {
+	        dos.writeInt(values[i]);
+	   }
+
+	   return baos.toByteArray();
+	}
+	
+	public static Integer hash(List<Integer> plainTextAsNumbers,
+			boolean simple, BigInteger modulus) {
+		BigInteger rv = BigInteger.ZERO;
+		if (simple) {
+			for (final Integer c : plainTextAsNumbers) {
+				rv = rv.add(new BigInteger(c.toString())); //$NON-NLS-1$
+		}
+		} else {
+			MessageDigest md;
+			try {
+				int[] intarray = new int[plainTextAsNumbers.size()];
+				for (int j = 0; j < plainTextAsNumbers.size(); j++) {
+					Integer i = plainTextAsNumbers.get(j);
+					intarray[j] = i;
+				}
+				byte[] bytearray;
+				try {
+					bytearray = integersToBytes(intarray);
+				} catch (IOException e) {
+					bytearray = new byte[]{0};
+					e.printStackTrace();
+				}
+				md = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
+				rv = new BigInteger(md.digest(bytearray));
+			} catch (final NoSuchAlgorithmException e) {
+				LogUtil.logError(e);
+			}
+		}
+		return rv.mod(modulus).intValue();
 	}
 
 	/**
