@@ -76,6 +76,7 @@ public class DivideView extends ViewPart implements Observer {
     private CLabel[] labels;
     private GameMachine gameMachine;
     private Text textStartValue;
+    private Label gameType;
 
     // constructor
     public DivideView() {
@@ -107,6 +108,7 @@ public class DivideView extends ViewPart implements Observer {
 
         // gaps
         RowData smallGapLayout = new RowData(1, SWT.DEFAULT);
+        RowData mediumGapLayout = new RowData(25, SWT.DEFAULT);
         // RowData largeGapLayout = new RowData(15, SWT.DEFAULT);
         RowData hugeGapLayout = new RowData(50, SWT.DEFAULT);
 
@@ -115,26 +117,6 @@ public class DivideView extends ViewPart implements Observer {
         optionsGroup.setLayout(new RowLayout());
         optionsGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
         RowData fieldData = new RowData(SWT.DEFAULT, SWT.DEFAULT);
-
-        Label gameType = new Label(optionsGroup, SWT.LEFT);
-        gameType.setText(Messages.DivideView_1);
-        gameType.setFont(FontService.getNormalBoldFont());
-        Label gap1 = new Label(optionsGroup, SWT.LEFT);
-        gap1.setLayoutData(smallGapLayout);
-        button1pVsComp = new Button(optionsGroup, SWT.RADIO);
-        button1pVsComp.setLayoutData(fieldData);
-        button1pVsComp.setText(Messages.DivideView_2);
-        button1pVsComp.setFont(FontService.getNormalFont());
-        button1pVsComp.setSelection(true);
-        Label gap2 = new Label(optionsGroup, SWT.LEFT);
-        gap2.setLayoutData(smallGapLayout);
-        button1pVs2P = new Button(optionsGroup, SWT.RADIO);
-        button1pVs2P.setLayoutData(fieldData);
-        button1pVs2P.setText(Messages.DivideView_3);
-        button1pVs2P.setFont(FontService.getNormalFont());
-        button1pVs2P.setSelection(false);
-        Label gap3 = new Label(optionsGroup, SWT.LEFT);
-        gap3.setLayoutData(hugeGapLayout);
 
         Label labelStartValue = new Label(optionsGroup, SWT.LEFT);
         labelStartValue.setText(Messages.DivideView_4);
@@ -155,9 +137,32 @@ public class DivideView extends ViewPart implements Observer {
                 }
             }
         });
-
         Label gap5 = new Label(optionsGroup, SWT.LEFT);
-        gap5.setLayoutData(hugeGapLayout);
+        gap5.setLayoutData(mediumGapLayout);
+
+        gameType = new Label(optionsGroup, SWT.LEFT);
+        gameType.setText(Messages.DivideView_1);
+        gameType.setFont(FontService.getNormalBoldFont());
+        Label gap1 = new Label(optionsGroup, SWT.LEFT);
+        gap1.setLayoutData(smallGapLayout);
+
+        Composite gameTypeOptions = new Composite(optionsGroup, SWT.LEFT);
+        gameTypeOptions.setLayout(new GridLayout(1, true));
+
+        button1pVsComp = new Button(gameTypeOptions, SWT.RADIO);
+        // button1pVsComp.setLayoutData(fieldData);
+        button1pVsComp.setText(Messages.DivideView_2);
+        button1pVsComp.setFont(FontService.getNormalFont());
+        button1pVsComp.setSelection(true);
+
+        button1pVs2P = new Button(gameTypeOptions, SWT.RADIO);
+        // button1pVs2P.setLayoutData(fieldData);
+        button1pVs2P.setText(Messages.DivideView_3);
+        button1pVs2P.setFont(FontService.getNormalFont());
+        button1pVs2P.setSelection(false);
+
+        Label gap3 = new Label(optionsGroup, SWT.LEFT);
+        gap3.setLayoutData(hugeGapLayout);
         buttonStartGame = new Button(optionsGroup, SWT.PUSH);
         buttonStartGame.setText(Messages.DivideView_5);
         buttonStartGame.setFont(FontService.getNormalFont());
@@ -251,6 +256,8 @@ public class DivideView extends ViewPart implements Observer {
                 case START_EVENT: {
                     // disable new game command button
                     MenuBarActivation.enableNewGameState(false);
+                    // disable save game command button
+                    MenuBarActivation.enableSaveGameState(false);
                     // disable options
                     enableOptionsGroup(false);
 
@@ -325,6 +332,7 @@ public class DivideView extends ViewPart implements Observer {
                     addTableRow(state);
 
                     MenuBarActivation.enableNewGameState(true);
+                    MenuBarActivation.enableSaveGameState(true);
                     MenuBarActivation.enableUndo(false);
                     MenuBarActivation.enableRedo(false);
                     gameMachine.deleteObserver(DivideView.this);
@@ -497,5 +505,18 @@ public class DivideView extends ViewPart implements Observer {
 
     public GameMachine getGameMachine() {
         return gameMachine;
+    }
+
+    public Table getScoreTable() {
+        return scoreTable;
+    }
+
+    public boolean getGameType() {
+        // 0 = 1P/Comp 1 = 1P/2P
+        return button1pVsComp.getSelection() ? true : false;
+    }
+
+    public Text getTextStartValue() {
+        return textStartValue;
     }
 }
