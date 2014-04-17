@@ -19,7 +19,6 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
-import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.ISelectedOperationListener;
 

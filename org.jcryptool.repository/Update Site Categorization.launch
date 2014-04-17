@@ -14,6 +14,12 @@
 <booleanAttribute key="default" value="true"/>
 <booleanAttribute key="includeOptional" value="true"/>
 <stringAttribute key="location" value="${workspace_loc}/../Runtime"/>
+<setAttribute key="name.schedenig.eclipse.grepconsole.DisabledIds"/>
+<setAttribute key="name.schedenig.eclipse.grepconsole.EnabledIds"/>
+<setAttribute key="name.schedenig.eclipse.grepconsole.FilterDisabledIds"/>
+<setAttribute key="name.schedenig.eclipse.grepconsole.FilterEnabledIds"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-console -consolelog -application org.eclipse.equinox.p2.publisher.CategoryPublisher &#13;&#10;-metadataRepository file:/${workspace_loc:/org.jcryptool.repository/target/repository}&#13;&#10;-categoryDefinition file:/${workspace_loc:/org.jcryptool.repository/category.xml}&#13;&#10;-categoryQualifier&#13;&#10;-compress"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="pde.version" value="3.3"/>

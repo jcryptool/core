@@ -4,5 +4,5 @@ Bundle-Name: Hex Editor Plugin NL German
 Bundle-SymbolicName: net.sourceforge.ehep.nl_de;singleton:=true
 Bundle-Version: 1.0.0
 Fragment-Host: net.sourceforge.ehep;bundle-version="1.0.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: jcryptool.org

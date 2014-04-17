@@ -12,13 +12,11 @@ package org.jcryptool.crypto.flexiprovider.operations.ui.actions.menu;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
-import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 
 public class ImportOperationHandler extends AbstractHandler {

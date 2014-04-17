@@ -13,7 +13,6 @@ package org.jcryptool.crypto.flexiprovider.operations.ui.actions.context;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.jcryptool.crypto.flexiprovider.descriptors.IFlexiProviderOperation;
-import org.jcryptool.crypto.flexiprovider.operations.FlexiProviderOperationsPlugin;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.ISelectedOperationListener;
 
 public class RemoveKeyHandler extends AbstractHandler {
