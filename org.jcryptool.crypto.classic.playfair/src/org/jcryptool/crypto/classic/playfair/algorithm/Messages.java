@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2011 JCrypTool Team and Contributors
+ * Copyright (c) 2011, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -13,9 +13,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.playfair.algorithm.messages"; //$NON-NLS-1$
-	public static String PlayfairAlgorithmAction_0;
-	public static String PlayfairAlgorithmAction_1;
-	public static String PlayfairAlgorithmAction_2;
+	public static String PlayfairAlgorithmHandler_0;
+	public static String PlayfairAlgorithmHandler_1;
+	public static String PlayfairAlgorithmHandler_2;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

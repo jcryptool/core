@@ -62,14 +62,14 @@ public class TranspositionAlgorithmHandler extends AbstractAlgorithmHandler{
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.TranspositionAlgorithmAction_0) {
+            Job job = new Job(Messages.TranspositionAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.TranspositionAlgorithmAction_1;
+                        String jobTitle = Messages.TranspositionAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.TranspositionAlgorithmAction_2;
+                            jobTitle = Messages.TranspositionAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

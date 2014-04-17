@@ -62,14 +62,14 @@ public class DoppelkastenAlgorithmHandler extends AbstractAlgorithmHandler{
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.DoppelkastenAlgorithmAction_0) {
+            Job job = new Job(Messages.DoppelkastenAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.DoppelkastenAlgorithmAction_1;
+                        String jobTitle = Messages.DoppelkastenAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.DoppelkastenAlgorithmAction_2;
+                            jobTitle = Messages.DoppelkastenAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

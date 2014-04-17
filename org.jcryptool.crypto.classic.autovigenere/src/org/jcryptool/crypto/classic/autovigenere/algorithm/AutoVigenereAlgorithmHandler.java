@@ -64,14 +64,14 @@ public class AutoVigenereAlgorithmHandler extends AbstractAlgorithmHandler{
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.AutoVigenereAlgorithmAction_0) {
+            Job job = new Job(Messages.AutoVigenereAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.AutoVigenereAlgorithmAction_1;
+                        String jobTitle = Messages.AutoVigenereAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.AutoVigenereAlgorithmAction_2;
+                            jobTitle = Messages.AutoVigenereAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

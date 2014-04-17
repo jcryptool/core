@@ -53,14 +53,14 @@ public class CaesarAlgorithmHandler extends AbstractAlgorithmHandler {
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.CaesarAlgorithmAction_0) {
+            Job job = new Job(Messages.CaesarAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.CaesarAlgorithmAction_1;
+                        String jobTitle = Messages.CaesarAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.CaesarAlgorithmAction_2;
+                            jobTitle = Messages.CaesarAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

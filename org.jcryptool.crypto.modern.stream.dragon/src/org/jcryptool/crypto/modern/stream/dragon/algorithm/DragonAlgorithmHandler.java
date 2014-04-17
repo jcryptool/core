@@ -40,7 +40,7 @@ import org.jcryptool.crypto.modern.stream.dragon.ui.DragonWizardPage.DisplayOpti
  * @see org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler
  *
  * @author Tahir Kacak
- * @author Holger Friedrich (support for Commands, new class based on DragonAlgorithmAction)
+ * @author Holger Friedrich (support for Commands, additional class based on DragonAlgorithmAction)
  * @version 0.1
  */
 public class DragonAlgorithmHandler extends AbstractAlgorithmHandler{

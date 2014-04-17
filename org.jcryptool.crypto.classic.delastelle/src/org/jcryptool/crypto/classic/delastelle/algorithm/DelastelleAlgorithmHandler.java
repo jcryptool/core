@@ -64,14 +64,14 @@ public class DelastelleAlgorithmHandler extends AbstractAlgorithmHandler{
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.DelastelleAlgorithmAction_0) {
+            Job job = new Job(Messages.DelastelleAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.DelastelleAlgorithmAction_1;
+                        String jobTitle = Messages.DelastelleAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.DelastelleAlgorithmAction_2;
+                            jobTitle = Messages.DelastelleAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

@@ -38,7 +38,7 @@ import org.jcryptool.crypto.modern.sha3.ui.SHA3Wizard;
  * Action class for sha3 plugin, managing the wizard and all algorithms
  *
  * @author Michael Starzer
- * @author Holger Friedrich (support for Commands, new class based on SHA3Action)
+ * @author Holger Friedrich (support for Commands, additional class based on SHA3Action)
  *
  */
 public class SHA3Handler extends AbstractAlgorithmHandler {

@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2013 JCrypTool Team and Contributors
+ * Copyright (c) 2013, 2014 JCrypTool Team and Contributors
  * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -37,7 +38,7 @@ import org.jcryptool.crypto.keystore.descriptors.NewEntryDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.NewKeyPairDescriptor;
 import org.jcryptool.crypto.keystore.descriptors.interfaces.INewEntryDescriptor;
 import org.jcryptool.crypto.keystore.keys.KeyType;
-import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryAction;
+import org.jcryptool.crypto.keystore.ui.actions.AbstractNewKeyStoreEntryHandler;
 import org.jcryptool.crypto.keystore.ui.views.nodes.Contact;
 import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
@@ -59,9 +60,11 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
  * Represents all actions concerning Identities
  * 
  * @author Christoph Schnepf, Patrick Zillner
+ * @author Holger Friedrich (support for Eclipse Commands -- now derived from new class AbstractNewKeyStoreEntryHandler
+ * based on the old AbstractNewKeyStoreEntryAction, also added a dummy implementation of the execute() method)
  * 
  */
-public class IdentityManager extends AbstractNewKeyStoreEntryAction {
+public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
     private static IdentityManager identityManager;
 
     private Enumeration<String> aliases;
@@ -90,6 +93,15 @@ public class IdentityManager extends AbstractNewKeyStoreEntryAction {
                 getKeyIDFromDB(alias);
             }
         }
+    }
+    
+    /**
+     * TODO Where and when has the run() or execute() method been lost?
+     * Adding a dummy implementation to work around the compiler error
+     * -- but a meaningful implementation might actually be needed
+     */
+    public Object execute(ExecutionEvent event) {
+    	return(null);
     }
 
     /**

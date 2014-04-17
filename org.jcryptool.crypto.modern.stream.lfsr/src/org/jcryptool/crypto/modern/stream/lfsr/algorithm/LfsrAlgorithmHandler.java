@@ -39,7 +39,7 @@ import org.jcryptool.crypto.modern.stream.lfsr.ui.LfsrWizardPage.DisplayOption;
  * @see org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler
  *
  * @author Tahir Kacak, Daniel Dwyer
- * @author Holger Friedrich (support for Commands, new class based on LfsrAlgorithmAction)
+ * @author Holger Friedrich (support for Commands, additional class based on LfsrAlgorithmAction)
  * @version 0.2
  */
 public class LfsrAlgorithmHandler extends AbstractAlgorithmHandler {

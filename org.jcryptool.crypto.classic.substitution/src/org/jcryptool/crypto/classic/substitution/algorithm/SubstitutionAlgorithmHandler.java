@@ -53,14 +53,14 @@ public class SubstitutionAlgorithmHandler extends AbstractAlgorithmHandler {
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.SubstitutionAlgorithmAction_0) {
+            Job job = new Job(Messages.SubstitutionAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.SubstitutionAlgorithmAction_1;
+                        String jobTitle = Messages.SubstitutionAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.SubstitutionAlgorithmAction_2;
+                            jobTitle = Messages.SubstitutionAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

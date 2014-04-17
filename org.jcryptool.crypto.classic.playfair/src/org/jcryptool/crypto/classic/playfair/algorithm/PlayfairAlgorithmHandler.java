@@ -63,14 +63,14 @@ public class PlayfairAlgorithmHandler extends AbstractAlgorithmHandler{
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
-            Job job = new Job(Messages.PlayfairAlgorithmAction_0) {
+            Job job = new Job(Messages.PlayfairAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
                     try {
-                        String jobTitle = Messages.PlayfairAlgorithmAction_1;
+                        String jobTitle = Messages.PlayfairAlgorithmHandler_1;
 
                         if (!wizard.encrypt()) {
-                            jobTitle = Messages.PlayfairAlgorithmAction_2;
+                            jobTitle = Messages.PlayfairAlgorithmHandler_2;
                         }
 
                         monitor.beginTask(jobTitle, 4);

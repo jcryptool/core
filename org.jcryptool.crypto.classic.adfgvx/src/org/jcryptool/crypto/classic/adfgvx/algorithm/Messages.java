@@ -13,9 +13,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.adfgvx.algorithm.messages"; //$NON-NLS-1$
-	public static String AdfgvxAlgorithmAction_0;
-	public static String AdfgvxAlgorithmAction_1;
-	public static String AdfgvxAlgorithmAction_2;
+	public static String AdfgvxAlgorithmHandler_0;
+	public static String AdfgvxAlgorithmHandler_1;
+	public static String AdfgvxAlgorithmHandler_2;
 	public static String AdfgvxCmd_specifySubstKey;
 	public static String AdfgvxCmd_specifyTranspKey;
 	public static String AdfgvxCmd_substKeyDescription;
