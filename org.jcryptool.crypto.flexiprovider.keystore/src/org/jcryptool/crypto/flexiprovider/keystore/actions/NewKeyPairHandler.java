@@ -44,7 +44,7 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 
 /**
  * @author t-kern
- * @author Holger Friedrich (support for Commands, new class based on NewKeyPairAction)
+ * @author Holger Friedrich (support for Commands, additional class based on NewKeyPairAction)
  * 
  */
 public class NewKeyPairHandler extends AbstractNewKeyStoreEntryHandler {
@@ -52,7 +52,7 @@ public class NewKeyPairHandler extends AbstractNewKeyStoreEntryHandler {
     private WizardDialog dialog;
 
     /**
-     * Creates a new instance of NewAsymmetricKeyAction.
+     * Creates a new instance of NewKeyPairHandler.
      */
     public NewKeyPairHandler() {
         // this.setText(Messages.NewKeyPairAction_0);
@@ -79,10 +79,10 @@ public class NewKeyPairHandler extends AbstractNewKeyStoreEntryHandler {
                 argument[0] = arg;
                 final Integer keyLen = argument[0];
                 LogUtil.logInfo("nkd.getKeyLength: " + argument[0]); //$NON-NLS-1$
-                Job job = new Job(Messages.NewKeyPairAction_2) {
+                Job job = new Job(Messages.NewKeyPairHandler_2) {
                     @Override
                     protected IStatus run(IProgressMonitor monitor) {
-                        monitor.beginTask(Messages.NewKeyPairAction_3, IProgressMonitor.UNKNOWN);
+                        monitor.beginTask(Messages.NewKeyPairHandler_3, IProgressMonitor.UNKNOWN);
                         try {
                             IMetaKeyGenerator gen = AlgorithmsXMLManager.getInstance().getKeyPairGenerator(
                                     nkd.getAlgorithmName());

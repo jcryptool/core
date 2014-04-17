@@ -14,7 +14,7 @@ import org.jcryptool.crypto.flexiprovider.integrator.IntegratorHandler;
 /**
  * Provides specifications for the DummyAction
  * @author mwalthart
- * @author Holger Friedrich (support for Commands, new class based on DsaAction)
+ * @author Holger Friedrich (support for Commands, additional class based on DsaAction)
  *
  */
 public class DsaHandler extends IntegratorHandler {

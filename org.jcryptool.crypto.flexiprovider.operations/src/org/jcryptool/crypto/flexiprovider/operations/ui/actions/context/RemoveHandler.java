@@ -35,7 +35,7 @@ public class RemoveHandler extends AbstractHandler {
         this.entry = listener.getFlexiProviderOperation();
         LogUtil.logInfo("remove... (" + entry.getTimestamp() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
         boolean result = MessageDialog.openQuestion(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                Messages.RemoveAction_2, Messages.RemoveAction_3);
+                Messages.RemoveHandler_2, Messages.RemoveHandler_3);
         if (result) {
             OperationsManager.getInstance().removeOperation(entry.getTimestamp());
         }

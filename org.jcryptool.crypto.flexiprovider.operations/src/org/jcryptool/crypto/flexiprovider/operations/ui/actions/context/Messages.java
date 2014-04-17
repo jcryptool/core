@@ -14,16 +14,16 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.messages"; //$NON-NLS-1$
-    public static String RemoveAction_0;
-    public static String RemoveAction_1;
-    public static String RemoveAction_2;
-    public static String RemoveAction_3;
-    public static String RemoveKeyAction_0;
-    public static String RemoveKeyAction_1;
-    public static String RenameAction_0;
-    public static String RenameAction_1;
-    public static String RenameAction_2;
-    public static String RenameAction_3;
+    public static String RemoveHandler_0;
+    public static String RemoveHandler_1;
+    public static String RemoveHandler_2;
+    public static String RemoveHandler_3;
+    public static String RemoveKeyHandler_0;
+    public static String RemoveKeyHandler_1;
+    public static String RenameHandler_0;
+    public static String RenameHandler_1;
+    public static String RenameHandler_2;
+    public static String RenameHandler_3;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

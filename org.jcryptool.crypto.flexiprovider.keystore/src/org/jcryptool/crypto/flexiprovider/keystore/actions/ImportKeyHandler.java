@@ -37,7 +37,7 @@ import codec.pkcs12.PFX;
 
 /**
  * @author tkern
- * @author Holger Friedrich (support for Commands, new class based on ImportKeyAction)
+ * @author Holger Friedrich (support for Commands, additional class based on ImportKeyAction)
  *
  */
 public class ImportKeyHandler extends AbstractImportKeyStoreEntryHandler {

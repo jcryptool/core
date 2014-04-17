@@ -32,8 +32,8 @@ public class RenameHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) {
         this.entry = listener.getFlexiProviderOperation();
         LogUtil.logInfo("rename... (" + entry.getTimestamp() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.RenameAction_2,
-                Messages.RenameAction_3 + entry.getEntryName(), "", null); //$NON-NLS-1$
+        InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), Messages.RenameHandler_2,
+                Messages.RenameHandler_3 + entry.getEntryName(), "", null); //$NON-NLS-1$
 
         int result = dialog.open();
         if (result == Window.OK) {

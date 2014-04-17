@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2008 JCrypTool Team and Contributors
+ * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -14,7 +14,10 @@ import java.net.URL;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.eclipse.jface.action.Action;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.help.IContext;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -45,7 +48,7 @@ import org.jdom.input.SAXBuilder;
 public class FlexiProviderAlgorithmsView extends ViewPart {
     public static final String ID = "org.jcryptool.crypto.flexiprovider.algorithms.ui.views.FlexiProviderAlgorithmsView"; //$NON-NLS-1$
 
-    private Action doubleClickAction;
+    private AbstractHandler doubleClickHandler;
     private TreeViewer viewer;
 
     public void createPartControl(Composite parent) {
@@ -85,8 +88,8 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
      */
     @SuppressWarnings("unchecked")
     private void hookActions(String xmlfile) {
-        doubleClickAction = new Action() {
-            public void run() {
+        doubleClickHandler = new AbstractHandler() {
+            public Object execute(ExecutionEvent event) {
                 ISelection selection = viewer.getSelection();
                 Object obj = ((IStructuredSelection) selection).getFirstElement();
 
@@ -99,6 +102,7 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
                 } else if (obj instanceof AlgorithmNode) {
                     AlgorithmsManager.getInstance().algorithmCalled(((AlgorithmNode) obj).getAlgorithm());
                 }
+                return(null);
             }
         };
 
@@ -131,7 +135,11 @@ public class FlexiProviderAlgorithmsView extends ViewPart {
                 @Override
                 public void mouseDoubleClick(final MouseEvent e) {
                     if (e.button == 1) { // only left button double clicks
-                        doubleClickAction.run(); // run assigned action
+                    	try {
+                    		doubleClickHandler.execute(null); // run assigned action
+                    	} catch(ExecutionException ex) {
+                    		LogUtil.logError(FlexiProviderAlgorithmsPlugin.PLUGIN_ID, ex);
+                    	}
                     }
                 }
 

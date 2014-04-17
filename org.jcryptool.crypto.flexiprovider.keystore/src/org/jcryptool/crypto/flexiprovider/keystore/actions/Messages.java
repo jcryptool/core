@@ -13,14 +13,14 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.flexiprovider.keystore.actions.messages"; //$NON-NLS-1$
-    public static String ImportKeyAction_0;
-    public static String ImportKeyAction_1;
-    public static String NewKeyPairAction_0;
-    public static String NewKeyPairAction_1;
-    public static String NewKeyPairAction_2;
-    public static String NewKeyPairAction_3;
-    public static String NewSymmetricKeyAction_0;
-    public static String NewSymmetricKeyAction_1;
+    public static String ImportKeyHandler_0;
+    public static String ImportKeyHandler_1;
+    public static String NewKeyPairHandler_0;
+    public static String NewKeyPairHandler_1;
+    public static String NewKeyPairHandler_2;
+    public static String NewKeyPairHandler_3;
+    public static String NewSymmetricKeyHandler_0;
+    public static String NewSymmetricKeyHandler_1;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

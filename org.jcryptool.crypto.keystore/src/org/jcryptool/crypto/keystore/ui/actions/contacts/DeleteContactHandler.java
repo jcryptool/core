@@ -21,7 +21,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 
 /**
  * @author tkern
- * @author Holger Friedrich (support for Commands, new class based on DeleteContactAction)
+ * @author Holger Friedrich (support for Commands, additional class based on DeleteContactAction)
  * 
  */
 public class DeleteContactHandler extends AbstractHandler {

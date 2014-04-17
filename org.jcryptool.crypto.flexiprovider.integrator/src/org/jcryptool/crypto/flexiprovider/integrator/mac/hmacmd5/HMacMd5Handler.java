@@ -14,7 +14,7 @@ import org.jcryptool.crypto.flexiprovider.integrator.IntegratorHandler;
 /**
  * Provides specifications for the DummyAction
  * @author mwalthart
- * @author Holger Friedrich (support for Commands, new class based on HMacMd5Action)
+ * @author Holger Friedrich (support for Commands, additional class based on HMacMd5Action)
  *
  */
 public class HMacMd5Handler extends IntegratorHandler {

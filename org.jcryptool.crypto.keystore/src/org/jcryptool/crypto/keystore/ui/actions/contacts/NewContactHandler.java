@@ -22,7 +22,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 
 /**
  * @author Anatoli Barski
- * @author Holger Friedrich (support for Commands, new class based on NewContactAction)
+ * @author Holger Friedrich (support for Commands, additional class based on NewContactAction)
  * 
  */
 public class NewContactHandler extends AbstractHandler {

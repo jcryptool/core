@@ -29,14 +29,14 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 
 /**
  * @author tkern
- * @author Holger Friedrich (support for Commands, new class based on ExportSecretKeyAction)
+ * @author Holger Friedrich (support for Commands, additional class based on ExportSecretKeyAction)
  * 
  */
 public class ExportSecretKeyHandler extends AbstractHandler {
     private IViewKeyInformation info;
 
     /**
-     * Creates a new instance of ExportSecretKeyAction
+     * Creates a new instance of ExportSecretKeyHandler
      */
     public ExportSecretKeyHandler(IViewKeyInformation info) {
         this.info = info;
@@ -51,8 +51,8 @@ public class ExportSecretKeyHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] { Messages.getString("ExportSecretKeyAction.2") }); //$NON-NLS-1$
-        dialog.setFilterNames(new String[] { Messages.getString("ExportSecretKeyAction.3") }); //$NON-NLS-1$
+        dialog.setFilterExtensions(new String[] { Messages.getString("ExportSecretKeyHandler.2") }); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] { Messages.getString("ExportSecretKeyHandler.3") }); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
         String filename = dialog.open();
@@ -65,7 +65,7 @@ public class ExportSecretKeyHandler extends AbstractHandler {
                     ImportExportManager.getInstance().exportSecretKey(new Path(filename),
                             KeyStoreManager.getInstance().getSecretKey(info.getSelectedKeyAlias(), password));
                 } catch (Exception ex) {
-                    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.getString("ExportSecretKeyAction.4"), ex, true); //$NON-NLS-1$
+                    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.getString("ExportSecretKeyHandler.4"), ex, true); //$NON-NLS-1$
                 }
             }
         }
@@ -74,7 +74,7 @@ public class ExportSecretKeyHandler extends AbstractHandler {
 
     private char[] promptPassword() {
         InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                Messages.getString("ExportSecretKeyAction.0"), Messages.getString("ExportSecretKeyAction.1"), //$NON-NLS-1$ //$NON-NLS-2$
+                Messages.getString("ExportSecretKeyHandler.0"), Messages.getString("ExportSecretKeyHandler.1"), //$NON-NLS-1$ //$NON-NLS-2$
                 "", null) { //$NON-NLS-1$
 
             protected Control createDialogArea(Composite parent) {

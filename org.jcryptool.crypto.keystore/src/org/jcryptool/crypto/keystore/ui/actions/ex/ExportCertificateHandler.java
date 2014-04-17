@@ -27,14 +27,14 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 
 /**
  * @author t-kern
- * @author Holger Friedrich (support for Commands, new class based on ExportCertificateAction)
+ * @author Holger Friedrich (support for Commands, additional class based on ExportCertificateAction)
  * 
  */
 public class ExportCertificateHandler extends AbstractHandler {
     private IViewKeyInformation info;
 
     /**
-     * Creates a new instance of ExportSecretKeyAction
+     * Creates a new instance of ExportCertificateHandler
      */
     public ExportCertificateHandler(IViewKeyInformation info) {
         this.info = info;
@@ -46,8 +46,8 @@ public class ExportCertificateHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] { Messages.getString("ExportCertificateAction.0") }); //$NON-NLS-1$
-        dialog.setFilterNames(new String[] { Messages.getString("ExportCertificateAction.1") }); //$NON-NLS-1$
+        dialog.setFilterExtensions(new String[] { Messages.getString("ExportCertificateHandler.0") }); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] { Messages.getString("ExportCertificateHandler.1") }); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
         String filename = dialog.open();

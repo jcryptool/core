@@ -29,14 +29,14 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.IViewKeyInformation;
 
 /**
  * @author t-kern
- * @author Holger Friedrich (support for Commands, new class based on ExportKeyPairAction)
+ * @author Holger Friedrich (support for Commands, additional class based on ExportKeyPairAction)
  * 
  */
 public class ExportKeyPairHandler extends AbstractHandler {
     private IViewKeyInformation info;
 
     /**
-     * Creates a new instance of ExportSecretKeyAction
+     * Creates a new instance of ExportKeyPairHandler
      */
     public ExportKeyPairHandler(IViewKeyInformation info) {
         this.info = info;
@@ -48,8 +48,8 @@ public class ExportKeyPairHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
-        dialog.setFilterExtensions(new String[] { Messages.getString("ExportKeyPairAction.2") }); //$NON-NLS-1$
-        dialog.setFilterNames(new String[] { Messages.getString("ExportKeyPairAction.4") }); //$NON-NLS-1$
+        dialog.setFilterExtensions(new String[] { Messages.getString("ExportKeyPairHandler.2") }); //$NON-NLS-1$
+        dialog.setFilterNames(new String[] { Messages.getString("ExportKeyPairHandler.4") }); //$NON-NLS-1$
         dialog.setOverwrite(true);
 
         String filename = dialog.open();
@@ -64,7 +64,7 @@ public class ExportKeyPairHandler extends AbstractHandler {
                             KeyStoreManager.getInstance().getCertificateChain(info.getSelectedKeyAlias(), password),
                             password);
                 } catch (Exception ex) {
-                    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.getString("ExportKeyPairAction.3"), ex, true); //$NON-NLS-1$
+                    LogUtil.logError(KeyStorePlugin.PLUGIN_ID, Messages.getString("ExportKeyPairHandler.3"), ex, true); //$NON-NLS-1$
                 }
             }
         }
@@ -73,7 +73,7 @@ public class ExportKeyPairHandler extends AbstractHandler {
 
     private char[] promptPassword() {
         InputDialog dialog = new InputDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-                Messages.getString("ExportKeyPairAction.0"), Messages.getString("ExportKeyPairAction.1"), "", null) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                Messages.getString("ExportKeyPairHandler.0"), Messages.getString("ExportKeyPairHandler.1"), "", null) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
             protected Control createDialogArea(Composite parent) {
                 Control control = super.createDialogArea(parent);

@@ -67,7 +67,7 @@ import org.jcryptool.crypto.keystore.ui.views.nodes.keys.SecretKeyNode;
  * @author Holger Friedrich (support for Commands)
  */
 public class KeystoreView extends ViewPart implements ISelectedNodeListener, IViewKeyInformation {
-    private boolean newSymmetricKeyActionContributed = false;
+    private boolean newSymmetricKeyCommandContributed = false;
 
     private final String exportSecretKeyCommandId = "org.jcryptool.keystore.commands.exportSecretKey";
     private final String exportKeyPairCommandId = "org.jcryptool.keystore.commands.exportKeyPair";
@@ -328,9 +328,9 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         	defineCommand(commandId, descriptor.getText(), new ShadowKeyStoreHandler(descriptor));
         	addContributionItem(manager, commandId, 
         		KeyStorePlugin.getImageDescriptor(descriptor.getIcon()), null);
-            newSymmetricKeyActionContributed = true;
+            newSymmetricKeyCommandContributed = true;
         }
-        if (newSymmetricKeyActionContributed) {
+        if (newSymmetricKeyCommandContributed) {
             manager.add(new Separator());
         }
         Iterator<IKeyStoreActionDescriptor> keyPairActionIterator = KeyStoreActionManager.getInstance()

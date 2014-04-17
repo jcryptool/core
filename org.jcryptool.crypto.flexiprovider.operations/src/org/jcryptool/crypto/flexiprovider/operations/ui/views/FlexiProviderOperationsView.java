@@ -172,13 +172,13 @@ public class FlexiProviderOperationsView extends ViewPart implements Listener, I
         removeKeyHandler = new RemoveKeyHandler(this);
 
         defineCommand(renameCommandId,
-        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RenameAction_0,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RenameHandler_0,
         	renameHandler);
         defineCommand(removeCommandId,
-        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveAction_0,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveHandler_0,
         	removeHandler);
         defineCommand(removeKeyCommandId,
-        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveKeyAction_0,
+        	org.jcryptool.crypto.flexiprovider.operations.ui.actions.context.Messages.RemoveKeyHandler_0,
         	removeKeyHandler);
         
         selectInputFileHandler = new SelectInputFileHandler(this);

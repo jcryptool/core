@@ -18,7 +18,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 
 /**
  * @author t-kern
- * @author Holger Friedrich (support for Commands, new class based on DeleteKeyPairAction)
+ * @author Holger Friedrich (support for Commands, additional class based on DeleteKeyPairAction)
  * 
  */
 public class DeleteKeyPairHandler extends AbstractHandler {

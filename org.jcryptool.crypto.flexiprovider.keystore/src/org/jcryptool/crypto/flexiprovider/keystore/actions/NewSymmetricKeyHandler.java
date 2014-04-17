@@ -39,7 +39,7 @@ import de.flexiprovider.api.parameters.AlgorithmParameterSpec;
 
 /**
  * @author tkern
- * @author Holger Friedrich (support for Commands, new class based on NewSymmetricKeyAction)
+ * @author Holger Friedrich (support for Commands, additional class based on NewSymmetricKeyAction)
  *
  */
 public class NewSymmetricKeyHandler extends AbstractNewKeyStoreEntryHandler {
@@ -50,7 +50,7 @@ public class NewSymmetricKeyHandler extends AbstractNewKeyStoreEntryHandler {
 	private WizardDialog dialog;
 
 	/**
-	 * Creates a new instance of NewSymmetricKeyAction.
+	 * Creates a new instance of NewSymmetricKeyHandler.
 	 */
 	public NewSymmetricKeyHandler() {
 		// this.setText(Messages.NewSymmetricKeyAction_0);

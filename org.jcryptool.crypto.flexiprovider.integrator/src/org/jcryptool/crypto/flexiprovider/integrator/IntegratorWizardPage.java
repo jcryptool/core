@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
@@ -64,6 +64,8 @@ import org.jcryptool.crypto.keystore.keys.KeyType;
  * The wizard page for the FlexiProvider ciphers.
  *
  * @author mwalthart
+ * @author Holger Friedrich (side effects of adding support for Eclipse Commands:  some constants
+ * that used to be in the IntegratorAction class are now in IntegratorHandler)
  */
 public class IntegratorWizardPage extends WizardPage {
 
@@ -295,7 +297,7 @@ public class IntegratorWizardPage extends WizardPage {
         this.encrypt = encryptMode;
 
         if (createNewKeyButton != null) {
-            if (algorithmType != IntegratorAction.TYPE_SIGNATURE) {
+            if (algorithmType != IntegratorHandler.TYPE_SIGNATURE) {
                 createNewKeyButton.setEnabled(encryptMode);
             } else {
                 createNewKeyButton.setEnabled(!encryptMode);
@@ -482,12 +484,12 @@ public class IntegratorWizardPage extends WizardPage {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 // preAddContacts = KeyStoreManager.getInstance().
-                if (algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK
-                        || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID) {
+                if (algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_BLOCK
+                        || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID) {
                     makeNewKeypair();
-                } else if (algorithmType == IntegratorAction.TYPE_CIPHER
-                        || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK
-                        || algorithmType == IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
+                } else if (algorithmType == IntegratorHandler.TYPE_CIPHER
+                        || algorithmType == IntegratorHandler.TYPE_CIPHER_BLOCK
+                        || algorithmType == IntegratorHandler.TYPE_MESSAGE_AUTHTIFICATION_CODE) {
                     makeNewKey();
                 }
 
@@ -516,7 +518,7 @@ public class IntegratorWizardPage extends WizardPage {
 
         setKeyForShowcase(null);
         if (!(isAlgorithmTypeAsymmetric() || isAlgorithmTypeSymmetric()
-                || algorithmType == IntegratorAction.TYPE_MESSAGE_AUTHTIFICATION_CODE || algorithmType == IntegratorAction.TYPE_SIGNATURE)) {
+                || algorithmType == IntegratorHandler.TYPE_MESSAGE_AUTHTIFICATION_CODE || algorithmType == IntegratorHandler.TYPE_SIGNATURE)) {
             hideObject(createNewKeyLabel, true);
             hideObject(createNewKeyComposite, true);
         }
@@ -671,12 +673,12 @@ public class IntegratorWizardPage extends WizardPage {
     }
 
     private boolean isAlgorithmTypeAsymmetric() {
-        return algorithmType == IntegratorAction.TYPE_ASYMMETRIC_BLOCK
-                || algorithmType == IntegratorAction.TYPE_ASYMMETRIC_HYBRID;
+        return algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_BLOCK
+                || algorithmType == IntegratorHandler.TYPE_ASYMMETRIC_HYBRID;
     }
 
     private boolean isAlgorithmTypeSymmetric() {
-        return algorithmType == IntegratorAction.TYPE_CIPHER || algorithmType == IntegratorAction.TYPE_CIPHER_BLOCK;
+        return algorithmType == IntegratorHandler.TYPE_CIPHER || algorithmType == IntegratorHandler.TYPE_CIPHER_BLOCK;
     }
 
     private void setKeyForShowcase(KeyStoreAlias publicKeyAlias) {

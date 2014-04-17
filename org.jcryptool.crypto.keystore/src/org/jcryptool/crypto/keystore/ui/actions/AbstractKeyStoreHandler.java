@@ -33,7 +33,7 @@ import org.jcryptool.crypto.keystore.keys.KeyType;
  * Abstract (and empty) top-level action for plug-in.
  * 
  * @author tkern
- * @author Holger Friedrich (support for Commands, new class based on AbstractKeyStoreAction)
+ * @author Holger Friedrich (support for Commands, additional class based on AbstractKeyStoreAction)
  * 
  */
 public abstract class AbstractKeyStoreHandler extends AbstractHandler {

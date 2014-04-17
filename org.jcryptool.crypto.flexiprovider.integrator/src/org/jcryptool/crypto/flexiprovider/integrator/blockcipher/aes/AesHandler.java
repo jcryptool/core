@@ -14,7 +14,7 @@ import org.jcryptool.crypto.flexiprovider.integrator.IntegratorHandler;
 /**
  * Provides specifications for the DummyAction
  * @author mwalthart
- * @author Holger Friedrich (support for Commands, new class based on AesAction)
+ * @author Holger Friedrich (support for Commands, additional class based on AesAction)
  *
  */
 public class AesHandler extends IntegratorHandler {

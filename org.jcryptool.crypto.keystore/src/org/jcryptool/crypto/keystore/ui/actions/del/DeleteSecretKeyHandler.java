@@ -18,7 +18,7 @@ import org.jcryptool.crypto.keystore.ui.views.interfaces.ISelectedNodeListener;
 
 /**
  * @author tkern
- * @author Holger Friedrich (supportfor Commands, new class based on DeleteSecretKeyAction)
+ * @author Holger Friedrich (supportfor Commands, additional class based on DeleteSecretKeyAction)
  * 
  */
 public class DeleteSecretKeyHandler extends AbstractHandler {
