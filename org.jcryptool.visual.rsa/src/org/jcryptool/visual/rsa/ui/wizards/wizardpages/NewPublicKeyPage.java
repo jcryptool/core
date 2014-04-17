@@ -52,7 +52,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         /** the N to set. */
         private BigInteger n;
         private BigInteger e;
-        
+
         public void run() {
             calcNField.setText(n.toString());
             calcEField.setText(e.toString());
@@ -64,7 +64,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
         public void setN(BigInteger n) {
             this.n = n;
         }
-        
+
         /**
          * @param e the e to set
          */
@@ -105,7 +105,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
     /** Field for the calculated replacement-n. */
     private Text calcNField;
-    
+
     /** Field for the calculated replacement-e. */
     private Text calcEField;
 
@@ -240,7 +240,7 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
          label = new Label(composite, SWT.CENTER);
          label.setText("");
          label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-                
+
         // Separator
         new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL).setLayoutData(gd1);
 
@@ -336,7 +336,6 @@ public class NewPublicKeyPage extends WizardPage implements ModifyListener, Veri
 
                 // TODO / BUG , nextProbablePrime doesnt work properly?
                 // BigDecimal root = BigSquareRoot.get(n);
-                //System.out.println("FOO"+ root.toBigInteger().nextProbablePrime());
                 //BigInteger possibleP = root.toBigInteger().nextProbablePrime();
                 //BigInteger possibleQ = possibleP.add(BigInteger.ONE).nextProbablePrime();
             	BigInteger possibleQ = new BigInteger("19");

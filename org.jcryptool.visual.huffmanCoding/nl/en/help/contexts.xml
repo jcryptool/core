@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contexts>
    <context id="view" title="Huffman Coding">
-      <description>On the left side the description and the computational procedure of the current step is presented, on the right side the input and results of the calculation.</description>
+      <description>Huffman coding is a method for lossless data compression which assigns to each character of the input text a bit sequence of a variable length depending on the frequency of the occurrence of this character. Frequent characters are represented with a short bit sequence; characters occurring rarely have a longer bit sequence. In this way, redundant information is summarized and the required storage space reduced.</description>
       <topic href="nl/en/help/content/index.html" label="Huffman Coding"/>
    </context>
 </contexts>

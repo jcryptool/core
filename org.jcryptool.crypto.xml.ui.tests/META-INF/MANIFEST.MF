@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.jcryptool.crypto.xml.ui;bundle-version="0.9.8",
  org.junit;bundle-version="4.8.2"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Activator: org.jcryptool.crypto.xml.ui.tests.XMLSecurityToolsUITestPlugin
 Export-Package: org.jcryptool.crypto.xml.ui.tests,
  org.jcryptool.crypto.xml.ui.tests.verify

@@ -16,7 +16,7 @@ Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.crypto.classic.xor,
  org.jcryptool.crypto.classic.xor.algorithm,
  org.jcryptool.crypto.classic.xor.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.directories,
  org.jcryptool.crypto.classic.model.ui.wizard

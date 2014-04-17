@@ -13,6 +13,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.ISourceProviderService;
 
 public class MenuBarActivation {
+    private MenuBarActivation() {
+    }
 
     public static void enableNewGameState(boolean isEnabled) {
         ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
@@ -20,6 +22,18 @@ public class MenuBarActivation {
         if (service != null) {
             NewGameStateSourceProvider provider = (NewGameStateSourceProvider) service
                     .getSourceProvider(NewGameStateSourceProvider.NEW_GAME_COMMAND_STATE);
+            if (provider != null) {
+                provider.setState(isEnabled);
+            }
+        }
+    }
+
+    public static void enableSaveGameState(boolean isEnabled) {
+        ISourceProviderService service = (ISourceProviderService) PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getService(ISourceProviderService.class);
+        if (service != null) {
+            SaveStateSourceProvider provider = (SaveStateSourceProvider) service
+                    .getSourceProvider(SaveStateSourceProvider.SAVE_COMMAND_STATE);
             if (provider != null) {
                 provider.setState(isEnabled);
             }

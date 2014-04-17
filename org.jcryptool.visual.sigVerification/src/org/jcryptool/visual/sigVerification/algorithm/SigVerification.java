@@ -16,7 +16,7 @@ import de.flexiprovider.ec.keys.ECPrivateKey;
 
 /**
  * Verifies the signature of the input with the selected signature method.
- * 
+ *
  * @author Wilfing
  */
 public class SigVerification {
@@ -27,7 +27,7 @@ public class SigVerification {
     /**
      * Chooses the correct function to verify the signature for the input with the selected
      * signature method.
-     * 
+     *
      * @param input A instance of Input
      * @param hash A instance of Hash
      */
@@ -39,44 +39,38 @@ public class SigVerification {
                 setPublicKey(input);
                 verifySig(input, hash);
             }
-        } 
+        }
     }
 
     /**
      * Sets the RSA and DSA public key. Loads public key from JCT keystore.
-     * 
+     *
      * @param input A instance of Input (contains the signaturemethod)
      */
     public void setPublicKey(Input input) {
         try {
             KeyStoreManager ksm = KeyStoreManager.getInstance();
-            System.out.println(ksm.getAllPublicKeys()); // Gibt alle Public Key aliases aus.
             Enumeration<String> aliases = ksm.getAliases();
             while (aliases != null && aliases.hasMoreElements()) {
                 alias = new KeyStoreAlias(aliases.nextElement());
                 alias.getAliasString();
-                // System.out.println(alias);
                 if (input.signaturemethod == "RSA" || input.signaturemethod == "RSA and MGF1") { // RSA
                     if (alias.getClassName().equals(RSAPrivateCrtKey.class.getName())) {
                         Certificate cert = ksm.getCertificate(alias);
                         // input.signatureSize = alias.getKeyLength();
                         this.publicKey = cert.getPublicKey();
-                        // System.out.println("RSA PrivateCrtKey found");
                     }
                 } else if (input.signaturemethod == "DSA") { // DSA
                     if (alias.getClassName().equals(DSAPrivateKey.class.getName())) {
                         // Fill in keys
                         Certificate cert = ksm.getCertificate(alias);
                         this.publicKey = cert.getPublicKey();
-                        // System.out.println("DSA PrivateKey found");
                     } // end if
                 } else if (input.signaturemethod == "ECDSA") { // ECDSA
                     if (alias.getClassName().equals(ECPrivateKey.class.getName())) {
                         // Fill in keys
                         Certificate cert = ksm.getCertificate(alias);
                         this.publicKey = cert.getPublicKey();
-
-                        // System.out.println("ECDSA PrivateKey found");
                     } // end if
                 }
             }
@@ -88,7 +82,7 @@ public class SigVerification {
     /**
      * Verifies RSA, DSA (ECDSA) and RSA with MGF1 signatures. Sets the variable result (boolean)
      * TRUE if the signature is correct.
-     * 
+     *
      * @param input A instance of Input (contains the signature, the plaintext, and the
      *            signaturemethod)
      * @param hash A instance of Hash (contains the hashmethod)
@@ -110,8 +104,6 @@ public class SigVerification {
 
             // Signatur ausgeben
             this.result = signature.verify(input.signature);
-
-            System.out.println("Signature Verification was correct: " + this.result);
         } catch (Exception ex) {
             LogUtil.logError(SigVerificationPlugin.PLUGIN_ID, ex);
         }
@@ -120,7 +112,7 @@ public class SigVerification {
     /**
      * !!! YET NOT IMPLEMENTED !!!
      * Selects the right function to convert the input key from byte array to PublicKey (RSA, DSA, ECDSA).
-     * 
+     *
      * @param pubKeyBytes
      * @param input A instance of Input (contains signaturemethod)
      */
@@ -135,17 +127,17 @@ public class SigVerification {
     /**
      * !!! NOT YET IMPLEMENTED!!!
      * Converts the imported key (byte array) in a DSA/RSA public key.
-     * 
+     *
      * @param pubKeyBytes A byte array
      * @param input A instance of Input
      *//*
     public void setDsaRsaPublicKeyFile(byte[] pubKeyBytes, Input input) {
- 
+
     }*/
 
     /**
      * Returns the result (boolean).
-     * 
+     *
      * @return result A boolean
      */
     public boolean getResult() {
@@ -154,7 +146,7 @@ public class SigVerification {
 
     /**
      * Sets the public Key.
-     * 
+     *
      * @param pubKey PublicKey
      */
     public void setPublicKey(PublicKey pubKey) {

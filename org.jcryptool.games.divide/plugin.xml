@@ -27,6 +27,11 @@
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
                style="push">
          </command>
+         <command
+               commandId="org.jcryptool.games.divide.saveGameCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/save_edit.gif"
+               style="push">
+         </command>
          <separator
                name="org.jcryptool.games.divide.separator1"
                visible="true">
@@ -70,6 +75,10 @@
             id="org.jcryptool.games.divide.helpCommand"
             name="%Toolbar.Help">
       </command>
+      <command
+            id="org.jcryptool.games.divide.saveGameCommand"
+            name="Save">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -103,6 +112,18 @@
          <activeWhen>
             <with
                   variable="org.jcryptool.games.divide.redo">
+               <equals
+                     value="enabled">
+               </equals>
+            </with>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.jcryptool.games.divide.handler.SaveGameHandler"
+            commandId="org.jcryptool.games.divide.saveGameCommand">
+         <activeWhen>
+            <with
+                  variable="org.jcryptool.games.divide.save">
                <equals
                      value="enabled">
                </equals>
@@ -147,6 +168,13 @@
             provider="org.jcryptool.games.divide.sourceProviders.RedoSourceProvider">
          <variable
                name="org.jcryptool.games.divide.redo"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+      <sourceProvider
+            provider="org.jcryptool.games.divide.sourceProviders.SaveStateSourceProvider">
+         <variable
+               name="org.jcryptool.games.divide.save"
                priorityLevel="workbench">
          </variable>
       </sourceProvider>

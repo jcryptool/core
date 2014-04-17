@@ -26,5 +26,5 @@ Export-Package: com.lowagie.text,
  com.lowagie.text.xml.simpleparser,
  com.lowagie.text.xml.xmp,
  com.lowagie.tools
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
