@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -23,24 +22,21 @@ import org.jcryptool.crypto.flexiprovider.operations.OperationsManager;
 import org.jcryptool.crypto.flexiprovider.operations.ui.listeners.ISelectedOperationListener;
 
 public class ExportOperationHandler extends AbstractHandler {
-    private IFlexiProviderOperation descriptor;
     private ISelectedOperationListener listener;
 
     public ExportOperationHandler(ISelectedOperationListener listener) {
-        // this.setText(Messages.ExportOperationAction_0);
-        // this.setToolTipText(Messages.ExportOperationAction_1);
-        // this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/export.gif")); //$NON-NLS-1$
         this.listener = listener;
     }
 
     public Object execute(ExecutionEvent event) {
-        this.descriptor = listener.getFlexiProviderOperation();
-        if (this.descriptor != null) {
+        IFlexiProviderOperation descriptor = listener.getFlexiProviderOperation();
+
+        if (descriptor != null) {
             LogUtil.logInfo("exporting... (" + descriptor.getTimestamp() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
             FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
             dialog.setFilterPath(DirectoryService.getUserHomeDir());
-            dialog.setFilterExtensions(new String[] {IConstants.ALL_FILTER_EXTENSION});
-            dialog.setFilterNames(new String[] {IConstants.ALL_FILTER_NAME});
+            dialog.setFilterExtensions(new String[] { IConstants.ALL_FILTER_EXTENSION });
+            dialog.setFilterNames(new String[] { IConstants.ALL_FILTER_NAME });
             dialog.setOverwrite(true);
 
             String filename = dialog.open();
@@ -48,7 +44,6 @@ public class ExportOperationHandler extends AbstractHandler {
                 OperationsManager.getInstance().export(descriptor.getTimestamp(), filename);
             }
         }
-        return(null);
+        return (null);
     }
-
 }
