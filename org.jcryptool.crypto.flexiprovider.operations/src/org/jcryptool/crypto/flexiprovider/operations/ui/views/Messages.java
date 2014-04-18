@@ -14,6 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.flexiprovider.operations.ui.views.messages"; //$NON-NLS-1$
+    public static String InputType;
     public static String FlexiProviderOperationsView_0;
     public static String FlexiProviderOperationsView_2;
     public static String FlexiProviderOperationsView_3;

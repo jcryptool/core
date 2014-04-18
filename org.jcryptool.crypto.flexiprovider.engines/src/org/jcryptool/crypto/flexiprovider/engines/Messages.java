@@ -18,6 +18,7 @@ public class Messages extends NLS {
     public static String FlexiProviderEngine_1;
     public static String FlexiProviderEngine_2;
     public static String FlexiProviderEngine_3;
+    public static String InputType;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

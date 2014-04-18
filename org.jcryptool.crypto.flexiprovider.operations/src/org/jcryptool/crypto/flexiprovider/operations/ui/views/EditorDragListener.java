@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -36,13 +36,13 @@ public class EditorDragListener extends DragSourceAdapter {
         }
         if (selected instanceof InputNode) {
             InputNode node = (InputNode) selected;
-            if (node.getInput().equals("-1") || node.getInput().equals("<Editor>")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (node.getInput().equals("-1") || node.getInput().equals(Messages.InputType)) { //$NON-NLS-1$
                 LogUtil.logInfo("not doing it"); //$NON-NLS-1$
                 event.doit = false;
             }
         } else if (selected instanceof OutputNode) {
             OutputNode node = (OutputNode) selected;
-            if (!node.getOutput().equals("-1") && !node.getOutput().equals("<Editor>")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (!node.getOutput().equals("-1") && !node.getOutput().equals("<Editor>")) { //$NON-NLS-1$
                 LogUtil.logInfo("not doing it"); //$NON-NLS-1$
                 event.doit = false;
             }
@@ -54,7 +54,7 @@ public class EditorDragListener extends DragSourceAdapter {
         if (selected instanceof InputNode) {
             InputNode node = (InputNode) selected;
             LogUtil.logInfo("Input: " + node.getInput()); //$NON-NLS-1$
-            if (!node.getInput().equals("-1") && !node.getInput().equals("<Editor>")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (!node.getInput().equals("-1") && !node.getInput().equals(Messages.InputType)) { //$NON-NLS-1$
                 EditorInputTransfer.EditorInputData data = EditorInputTransfer.createEditorInputData(
                         IOperationsConstants.ID_HEX_EDITOR, new PathEditorInput(node.getInput())); //$NON-NLS-1$
                 event.data = new EditorInputTransfer.EditorInputData[] { data };
@@ -62,7 +62,7 @@ public class EditorDragListener extends DragSourceAdapter {
         } else if (selected instanceof OutputNode) {
             OutputNode node = (OutputNode) selected;
             LogUtil.logInfo("Output: " + node.getOutput()); //$NON-NLS-1$
-            if (!node.getOutput().equals("-1") && !node.getOutput().equals("<Editor>")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (!node.getOutput().equals("-1") && !node.getOutput().equals("<Editor>")) { //$NON-NLS-1$
                 EditorInputTransfer.EditorInputData data = EditorInputTransfer.createEditorInputData(
                 		IOperationsConstants.ID_HEX_EDITOR, new PathEditorInput(node.getOutput())); //$NON-NLS-1$
                 event.data = new EditorInputTransfer.EditorInputData[] { data };
