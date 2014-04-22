@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            category="org.jcryptool.visual"
+            category="org.jcryptool.analysis"
             class="org.jcryptool.visual.viterbi.views.ViterbiView"
             icon="icons/view.gif"
           	id="org.jcryptool.visual.viterbi.views.ViterbiView"
