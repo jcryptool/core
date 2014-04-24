@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi.algorithm;
+package org.jcryptool.analysis.viterbi.algorithm;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -16,8 +16,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.jcryptool.analysis.viterbi.ViterbiPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.visual.viterbi.ViterbiPlugin;
 
 /**
  * This class is for reading, creating and writing into textfiles.

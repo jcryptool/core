@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi.algorithm;
+package org.jcryptool.analysis.viterbi.algorithm;
 
 import java.util.Collections;
 import java.util.LinkedList;

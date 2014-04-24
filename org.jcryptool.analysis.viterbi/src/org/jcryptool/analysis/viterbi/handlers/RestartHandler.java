@@ -1,4 +1,4 @@
-package org.jcryptool.visual.viterbi.handlers;
+package org.jcryptool.analysis.viterbi.handlers;
 
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
@@ -14,7 +14,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.jcryptool.visual.viterbi.views.ViterbiView;
+import org.jcryptool.analysis.viterbi.views.ViterbiView;
 /**
  * This handler starts a new game.
  *

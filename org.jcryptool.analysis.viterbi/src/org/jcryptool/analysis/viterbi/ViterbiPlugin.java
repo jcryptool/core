@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi;
+package org.jcryptool.analysis.viterbi;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -19,7 +19,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class ViterbiPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jcryptool.visual.viterbi";
+	public static final String PLUGIN_ID = "org.jcryptool.analysis.viterbi";
 
     /**
      * The shared instance

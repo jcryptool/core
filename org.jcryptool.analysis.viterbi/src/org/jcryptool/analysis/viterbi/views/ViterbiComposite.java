@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi.views;
+package org.jcryptool.analysis.viterbi.views;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,19 +31,19 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.analysis.viterbi.ViterbiPlugin;
+import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
+import org.jcryptool.analysis.viterbi.algorithm.Combination;
+import org.jcryptool.analysis.viterbi.algorithm.IO;
+import org.jcryptool.analysis.viterbi.algorithm.LanguageModel;
+import org.jcryptool.analysis.viterbi.algorithm.NGramProvider;
+import org.jcryptool.analysis.viterbi.algorithm.Path;
+import org.jcryptool.analysis.viterbi.algorithm.Viterbi;
+import org.jcryptool.analysis.viterbi.algorithm.ViterbiObserver;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.viterbi.ViterbiPlugin;
-import org.jcryptool.visual.viterbi.algorithm.BitwiseXOR;
-import org.jcryptool.visual.viterbi.algorithm.Combination;
-import org.jcryptool.visual.viterbi.algorithm.IO;
-import org.jcryptool.visual.viterbi.algorithm.LanguageModel;
-import org.jcryptool.visual.viterbi.algorithm.NGramProvider;
-import org.jcryptool.visual.viterbi.algorithm.Path;
-import org.jcryptool.visual.viterbi.algorithm.Viterbi;
-import org.jcryptool.visual.viterbi.algorithm.ViterbiObserver;
 
 /**
  * This class generates the content of the "Viterbi" tab. With this tab the user can break the running key cipher

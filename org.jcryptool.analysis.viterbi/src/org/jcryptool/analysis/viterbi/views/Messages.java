@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi.views;
+package org.jcryptool.analysis.viterbi.views;
 
 import org.eclipse.osgi.util.NLS;
 
@@ -23,7 +23,7 @@ import org.eclipse.osgi.util.NLS;
  */
 
 public class Messages extends NLS {
-	private static final String BUNDLE_NAME = "org.jcryptool.visual.viterbi.views.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jcryptool.analysis.viterbi.views.messages"; //$NON-NLS-1$
 
 	public static String XORComposite_tab_title;
 	public static String XORComposite_description;

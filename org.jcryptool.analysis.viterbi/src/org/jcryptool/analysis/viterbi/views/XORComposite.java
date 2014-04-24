@@ -1,5 +1,5 @@
 // -----BEGIN DISCLAIMER-----
-package org.jcryptool.visual.viterbi.views;
+package org.jcryptool.analysis.viterbi.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
@@ -16,13 +16,13 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.analysis.viterbi.algorithm.BitwiseXOR;
+import org.jcryptool.analysis.viterbi.algorithm.Combination;
+import org.jcryptool.analysis.viterbi.algorithm.IO;
+import org.jcryptool.analysis.viterbi.algorithm.ModularAddition;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 import org.jcryptool.core.util.fonts.FontService;
-import org.jcryptool.visual.viterbi.algorithm.BitwiseXOR;
-import org.jcryptool.visual.viterbi.algorithm.Combination;
-import org.jcryptool.visual.viterbi.algorithm.IO;
-import org.jcryptool.visual.viterbi.algorithm.ModularAddition;
 
 /**
  *

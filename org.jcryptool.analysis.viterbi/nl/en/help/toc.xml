@@ -3,7 +3,5 @@
 
 <toc label="Viterbi" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#analysisPlugins">
 	<topic href="nl/en/help/content/index.html" label="Viterbi">
-    <topic href="nl/en/help/content/algorithm.html" label="Viterbi Algorithm">
-    </topic>
  </topic>
 </toc>

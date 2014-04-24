@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.visual.viterbi.views;
+package org.jcryptool.analysis.viterbi.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.visual.viterbi.ViterbiPlugin;
-import org.jcryptool.visual.viterbi.algorithm.Combination;
+import org.jcryptool.analysis.viterbi.ViterbiPlugin;
+import org.jcryptool.analysis.viterbi.algorithm.Combination;
 
 /**
  * This class provides the basic structure for the gui. It creates the tabs.

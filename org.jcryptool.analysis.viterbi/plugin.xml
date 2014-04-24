@@ -6,9 +6,9 @@
          point="org.eclipse.ui.views">
       <view
             category="org.jcryptool.analysis"
-            class="org.jcryptool.visual.viterbi.views.ViterbiView"
+            class="org.jcryptool.analysis.viterbi.views.ViterbiView"
             icon="icons/view.gif"
-          	id="org.jcryptool.visual.viterbi.views.ViterbiView"
+          	id="org.jcryptool.analysis.viterbi.views.ViterbiView"
             name="%view.name.0">
       </view>
    </extension>
@@ -22,9 +22,9 @@
    <extension
          point="org.jcryptool.core.operations.analysis">
       <analysis
-            contextHelpId="org.jcryptool.visual.viterbi.view"
+            contextHelpId="org.jcryptool.analysis.viterbi.view"
             name="%Visual.name.0"
-            viewId="org.jcryptool.visual.viterbi.views.ViterbiView">
+            viewId="org.jcryptool.analysis.viterbi.views.ViterbiView">
       </analysis>
    </extension>
    <extension
@@ -36,31 +36,31 @@
 <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.jcryptool.visual.viterbi.handlers.RestartHandler"
-            commandId="org.jcryptool.visual.viterbi.restartCommand">
+            class="org.jcryptool.analysis.viterbi.handlers.RestartHandler"
+            commandId="org.jcryptool.analysis.viterbi.restartCommand">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.jcryptool.visual.viterbi.restartCommand"
+            id="org.jcryptool.analysis.viterbi.restartCommand"
             name="%restart.command.name">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.jcryptool.visual.viterbi.views.ViterbiView">
+            locationURI="menu:org.jcryptool.analysis.viterbi.views.ViterbiView">
          <command
-               commandId="org.jcryptool.visual.viterbi.restartCommand"
+               commandId="org.jcryptool.analysis.viterbi.restartCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
                style="push">
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:org.jcryptool.visual.viterbi.views.ViterbiView">
+            locationURI="toolbar:org.jcryptool.analysis.viterbi.views.ViterbiView">
          <command
-               commandId="org.jcryptool.visual.viterbi.restartCommand"
+               commandId="org.jcryptool.analysis.viterbi.restartCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
                style="push">
          </command>
