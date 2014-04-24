@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Viterbi">
+      <description>Der Viterbi-Algorithmus ist eine komplexe Form der Häufigkeitsanalyse. Mithilfe von Wahrscheinlichkeiten des Auftretens von Zeichenketten wird versucht, die Klartexte zusammenzubauen.</description>
+      <topic href="nl/de/help/content/index.html" label="Viterbi Tutorial"/>
+   </context>
+</contexts>
