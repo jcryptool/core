@@ -8,6 +8,6 @@
 		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.jcryptool.visual.viterbi</artifactId>
+	<artifactId>org.jcryptool.analysis.viterbi</artifactId>
 	<packaging>eclipse-plugin</packaging>
 </project>
