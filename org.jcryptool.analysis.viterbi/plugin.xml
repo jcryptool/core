@@ -23,7 +23,7 @@
          point="org.jcryptool.core.operations.analysis">
       <analysis
             contextHelpId="org.jcryptool.analysis.viterbi.view"
-            name="%Visual.name.0"
+            name="%visual.name.0"
             viewId="org.jcryptool.analysis.viterbi.views.ViterbiView">
       </analysis>
    </extension>
