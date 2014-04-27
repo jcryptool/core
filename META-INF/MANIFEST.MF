@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cert Verification
+Bundle-SymbolicName: org.jcryptool.visual.crtVerification;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jcryptool.visual.crtverification.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

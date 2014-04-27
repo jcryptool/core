@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Sample Category"
+            id="org.jcryptool.visual.crtVerification">
+      </category>
+      <view
+            name="Cert Verification"
+            icon="icons/sample.gif"
+            category="org.jcryptool.visual.crtVerification"
+            class="org.jcryptool.visual.crtverification.views.CrtVerView"
+            id="org.jcryptool.visual.crtverification.views.CrtVerView">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="Cert Verification"
+            viewId="org.jcryptool.visual.crtverification.views.CrtVerView"
+            contextHelpId="org.jcryptool.visual.crtverification.views.CrtVerView">
+      </Visual>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>
