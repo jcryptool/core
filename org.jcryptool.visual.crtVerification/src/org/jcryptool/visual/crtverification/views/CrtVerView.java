@@ -2,27 +2,22 @@ package org.jcryptool.visual.crtverification.views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.swt.events.DragDetectListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.jcryptool.visual.crtverification.*;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.DragDetectListener;
-import org.eclipse.swt.events.DragDetectEvent;
-import org.eclipse.swt.widgets.DateTime;
 
 public class CrtVerView extends Composite {
 	private Text txt_root_ca_from_day;
@@ -301,14 +296,14 @@ public class CrtVerView extends Composite {
 			@Override
 			public void controlMoved(ControlEvent e) {
 				int a = root_ca_end.getSelection();
-				lbl_thru_rootca.setText("text"+a);
+				lbl_thru_rootca.setText("value: "+a);
 			}
 		});
 
 		root_ca_end.addDragDetectListener(new DragDetectListener() {
 			public void dragDetected(DragDetectEvent e) {
 				int a = root_ca_end.getSelection();
-				lbl_thru_rootca.setText("text"+a);
+				lbl_thru_rootca.setText("value: "+a);
 			}
 		});
 		
