@@ -11,6 +11,7 @@
       <view
             name="Cert Verification"
             icon="icons/sample.gif"
+            category="org.jcryptool.visual.crtVerification"
             class="org.jcryptool.visual.crtverification.views.CrtVerView"
             id="org.jcryptool.visual.crtverification.views.CrtVerView">
       </view>
