@@ -17,6 +17,14 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+<<<<<<< HEAD
+=======
+import org.jcryptool.visual.crtverification.*;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DragDetectListener;
+import org.eclipse.swt.events.DragDetectEvent;
+>>>>>>> FETCH_HEAD
 
 public class CrtVerView extends Composite {
 	private Text txt_root_ca_from_day;
@@ -42,6 +50,7 @@ public class CrtVerView extends Composite {
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
+<<<<<<< HEAD
 		composite.setLayout(new FormLayout());
 		
 		Scale root_ca_begin = new Scale(composite, SWT.NONE);
@@ -172,6 +181,115 @@ public class CrtVerView extends Composite {
 		fd_grpDetails.top = new FormAttachment(lblDetails, 6);
 		fd_grpDetails.left = new FormAttachment(root_ca_begin, 0, SWT.LEFT);
 		grpDetails.setLayoutData(fd_grpDetails);
+=======
+		composite.setLayout(new GridLayout(9, false));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Label lblNotValidBefore = new Label(composite, SWT.NONE);
+		lblNotValidBefore.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblNotValidBefore.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblNotValidBefore.setAlignment(SWT.CENTER);
+		lblNotValidBefore.setText("Not Valid Before");
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Label lblNotValidAfter = new Label(composite, SWT.NONE);
+		lblNotValidAfter.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1));
+		lblNotValidAfter.setText("Not Valid After");
+		lblNotValidAfter.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblNotValidAfter.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale root_ca_begin = new Scale(composite, SWT.NONE);
+		root_ca_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		final Scale root_ca_end = new Scale(composite, SWT.NONE);
+		
+		
+		root_ca_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		root_ca_end.setSelection(50);
+		
+		Label lblRootCa = new Label(composite, SWT.NONE);
+		lblRootCa.setText("Root CA");
+		lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblRootCa.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Scale ca_begin = new Scale(composite, SWT.NONE);
+		ca_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale ca_end = new Scale(composite, SWT.NONE);
+		ca_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		ca_end.setSelection(50);
+		
+		Label lblCa = new Label(composite, SWT.NONE);
+		lblCa.setText("CA");
+		lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblCa.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Scale crt_begin = new Scale(composite, SWT.NONE);
+		crt_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale crt_end = new Scale(composite, SWT.NONE);
+		crt_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		crt_end.setSelection(50);
+		
+		Label lblUserCertificate = new Label(composite, SWT.NONE);
+		lblUserCertificate.setText("User Certificate");
+		lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblUserCertificate.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Label label = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, false, false, 8, 1);
+		gd_label.widthHint = 395;
+		label.setLayoutData(gd_label);
+		new Label(composite, SWT.NONE);
+		
+		Scale scale = new Scale(composite, SWT.NONE);
+		scale.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 7, 1));
+		scale.setSelection(50);
+		
+		Label lblSignatureDate = new Label(composite, SWT.NONE);
+		lblSignatureDate.setText("Signature Date");
+		lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblSignatureDate.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Group grpDetails = new Group(composite, SWT.NONE);
+		grpDetails.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 9, 1));
+		grpDetails.setText("Details");
+		grpDetails.setLayout(new GridLayout(6, false));
+>>>>>>> FETCH_HEAD
 		new Label(grpDetails, SWT.NONE);
 		
 		Label lblRootCa_1 = new Label(grpDetails, SWT.NONE);
@@ -251,7 +369,11 @@ public class CrtVerView extends Composite {
 		gd_text_2.widthHint = 20;
 		text_2.setLayoutData(gd_text_2);
 		
+<<<<<<< HEAD
 		Label lbl_thru_rootca = new Label(composite_thru_rootca, SWT.NONE);
+=======
+		final Label lbl_thru_rootca = new Label(composite_thru_rootca, SWT.NONE);
+>>>>>>> FETCH_HEAD
 		lbl_thru_rootca.setText("New Label");
 		
 		Composite composite_thru_ca = new Composite(grpDetails, SWT.NONE);
@@ -278,6 +400,7 @@ public class CrtVerView extends Composite {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		
+<<<<<<< HEAD
 		Button btnCalculate = new Button(composite, SWT.NONE);
 		FormData fd_btnCalculate = new FormData();
 		fd_btnCalculate.top = new FormAttachment(grpDetails, 11);
@@ -309,6 +432,40 @@ public class CrtVerView extends Composite {
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmKettenmodell.setText("Kettenmodell");
 
+=======
+		Button btnReset = new Button(composite, SWT.NONE);
+		btnReset.setText("Reset");
+		
+		Button btnBack = new Button(composite, SWT.NONE);
+		btnBack.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
+		btnBack.setText("Back");
+		
+		Button btnForward = new Button(composite, SWT.NONE);
+		btnForward.setText("Forward");
+		
+		Button btnCalculate = new Button(composite, SWT.NONE);
+		btnCalculate.setText("Calculate");
+		new Label(composite, SWT.NONE);
+		
+		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
+		tbtmKettenmodell.setText("Kettenmodell");
+		
+		root_ca_end.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlMoved(ControlEvent e) {
+				int a = root_ca_end.getSelection();
+				lbl_thru_rootca.setText("text"+a);
+			}
+		});
+
+		root_ca_end.addDragDetectListener(new DragDetectListener() {
+			public void dragDetected(DragDetectEvent e) {
+				int a = root_ca_end.getSelection();
+				lbl_thru_rootca.setText("text"+a);
+			}
+		});
+		
+>>>>>>> FETCH_HEAD
 	}
 
 	@Override
