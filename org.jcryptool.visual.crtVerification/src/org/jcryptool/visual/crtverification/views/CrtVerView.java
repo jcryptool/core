@@ -1,190 +1,321 @@
 package org.jcryptool.visual.crtverification.views;
 
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.part.*;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.visual.crtverification.*;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DragDetectListener;
+import org.eclipse.swt.events.DragDetectEvent;
+import org.eclipse.swt.widgets.DateTime;
 
-
-/**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
- */
-
-public class CrtVerView extends ViewPart {
-
-	/**
-	 * The ID of the view as specified by the extension.
-	 */
-	public static final String ID = "org.jcryptool.visual.crtverification.views.CrtVerView";
-
-	private TableViewer viewer;
-	private Action action1;
-	private Action action2;
-	private Action doubleClickAction;
-
-	/*
-	 * The content provider class is responsible for
-	 * providing objects to the view. It can wrap
-	 * existing objects in adapters or simply return
-	 * objects as-is. These objects may be sensitive
-	 * to the current input of the view, or ignore
-	 * it and always show the same content 
-	 * (like Task List, for example).
-	 */
-	 
-	class ViewContentProvider implements IStructuredContentProvider {
-		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		}
-		public void dispose() {
-		}
-		public Object[] getElements(Object parent) {
-			return new String[] { "One", "Two", "Three" };
-		}
-	}
-	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
-		public String getColumnText(Object obj, int index) {
-			return getText(obj);
-		}
-		public Image getColumnImage(Object obj, int index) {
-			return getImage(obj);
-		}
-		public Image getImage(Object obj) {
-			return PlatformUI.getWorkbench().
-					getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
-		}
-	}
-	class NameSorter extends ViewerSorter {
-	}
+public class CrtVerView extends Composite {
+	private Text txt_root_ca_from_day;
+	private Text text;
+	private Text text_1;
+	private Text text_2;
+	private Text text_3;
+	private Text text_4;
 
 	/**
-	 * The constructor.
+	 * Create the composite.
+	 * @param parent
+	 * @param style
 	 */
-	public CrtVerView() {
-	}
-
-	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
-	 */
-	public void createPartControl(Composite parent) {
-		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		viewer.setContentProvider(new ViewContentProvider());
-		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
-		viewer.setInput(getViewSite());
-
-		// Create the help context id for the viewer's control
-		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jcryptool.visual.crtVerification.viewer");
-		makeActions();
-		hookContextMenu();
-		hookDoubleClickAction();
-		contributeToActionBars();
-	}
-
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				CrtVerView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
-	}
-
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
-	}
-
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
-		manager.add(action2);
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-	
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-	}
-
-	private void makeActions() {
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+	public CrtVerView(Composite parent, int style) {
+		super(parent, style);
+		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
-			}
-		};
-	}
-
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
+		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
+		
+		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
+		tbtmSchalenmodell.setText("Schalenmodell");
+		
+		Composite composite = new Composite(tabFolder, SWT.NONE);
+		tbtmSchalenmodell.setControl(composite);
+		composite.setLayout(new GridLayout(9, false));
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Label lblNotValidBefore = new Label(composite, SWT.NONE);
+		lblNotValidBefore.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		lblNotValidBefore.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblNotValidBefore.setAlignment(SWT.CENTER);
+		lblNotValidBefore.setText("Not Valid Before");
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Label lblNotValidAfter = new Label(composite, SWT.NONE);
+		lblNotValidAfter.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1));
+		lblNotValidAfter.setText("Not Valid After");
+		lblNotValidAfter.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblNotValidAfter.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale root_ca_begin = new Scale(composite, SWT.NONE);
+		root_ca_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		final Scale root_ca_end = new Scale(composite, SWT.NONE);
+		
+		
+		root_ca_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		root_ca_end.setSelection(50);
+		
+		Label lblRootCa = new Label(composite, SWT.NONE);
+		lblRootCa.setText("Root CA");
+		lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblRootCa.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Scale ca_begin = new Scale(composite, SWT.NONE);
+		ca_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale ca_end = new Scale(composite, SWT.NONE);
+		ca_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		ca_end.setSelection(50);
+		
+		Label lblCa = new Label(composite, SWT.NONE);
+		lblCa.setText("CA");
+		lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblCa.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Scale crt_begin = new Scale(composite, SWT.NONE);
+		crt_begin.setSelection(50);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Scale crt_end = new Scale(composite, SWT.NONE);
+		crt_end.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+		crt_end.setSelection(50);
+		
+		Label lblUserCertificate = new Label(composite, SWT.NONE);
+		lblUserCertificate.setText("User Certificate");
+		lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblUserCertificate.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Label label = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		GridData gd_label = new GridData(SWT.LEFT, SWT.CENTER, false, false, 8, 1);
+		gd_label.widthHint = 395;
+		label.setLayoutData(gd_label);
+		new Label(composite, SWT.NONE);
+		
+		Scale scale = new Scale(composite, SWT.NONE);
+		scale.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false, 7, 1));
+		scale.setSelection(50);
+		
+		Label lblSignatureDate = new Label(composite, SWT.NONE);
+		lblSignatureDate.setText("Signature Date");
+		lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblSignatureDate.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		
+		Group grpDetails = new Group(composite, SWT.NONE);
+		grpDetails.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 9, 1));
+		grpDetails.setText("Details");
+		grpDetails.setLayout(new GridLayout(6, false));
+		new Label(grpDetails, SWT.NONE);
+		
+		Label lblRootCa_1 = new Label(grpDetails, SWT.NONE);
+		lblRootCa_1.setAlignment(SWT.CENTER);
+		GridData gd_lblRootCa_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblRootCa_1.widthHint = 100;
+		lblRootCa_1.setLayoutData(gd_lblRootCa_1);
+		lblRootCa_1.setText("Root CA");
+		
+		Label lblCa_1 = new Label(grpDetails, SWT.NONE);
+		lblCa_1.setAlignment(SWT.CENTER);
+		GridData gd_lblCa_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblCa_1.widthHint = 100;
+		lblCa_1.setLayoutData(gd_lblCa_1);
+		lblCa_1.setText("CA");
+		
+		Label lblUserCertificate_1 = new Label(grpDetails, SWT.NONE);
+		lblUserCertificate_1.setAlignment(SWT.CENTER);
+		GridData gd_lblUserCertificate_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_lblUserCertificate_1.widthHint = 100;
+		lblUserCertificate_1.setLayoutData(gd_lblUserCertificate_1);
+		lblUserCertificate_1.setText("User Certificate");
+		
+		SashForm sashForm = new SashForm(grpDetails, SWT.NONE);
+		sashForm.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+		sashForm.setSashWidth(4);
+		sashForm.setWeights(new int[] {});
+		
+		Label lblValidFrom = new Label(grpDetails, SWT.NONE);
+		lblValidFrom.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+		lblValidFrom.setText("valid from:");
+		
+		Composite composite_from_rootca = new Composite(grpDetails, SWT.NONE);
+		composite_from_rootca.setLayout(new GridLayout(2, false));
+		
+		txt_root_ca_from_day = new Text(composite_from_rootca, SWT.BORDER);
+		GridData gd_txt_root_ca_from_day = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_txt_root_ca_from_day.widthHint = 20;
+		txt_root_ca_from_day.setLayoutData(gd_txt_root_ca_from_day);
+		txt_root_ca_from_day.setSize(24, 19);
+		
+		Label lbl_from_rootca = new Label(composite_from_rootca, SWT.NONE);
+		lbl_from_rootca.setText("09/2014");
+		
+		Composite composite_from_ca = new Composite(grpDetails, SWT.NONE);
+		composite_from_ca.setLayout(new GridLayout(2, false));
+		
+		text = new Text(composite_from_ca, SWT.BORDER);
+		GridData gd_text = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_text.widthHint = 20;
+		text.setLayoutData(gd_text);
+		
+		Label lbl_from_ca = new Label(composite_from_ca, SWT.NONE);
+		lbl_from_ca.setText("New Label");
+		
+		Composite composite_from_user_cert = new Composite(grpDetails, SWT.NONE);
+		composite_from_user_cert.setLayout(new GridLayout(2, false));
+		
+		text_1 = new Text(composite_from_user_cert, SWT.BORDER);
+		GridData gd_text_1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_text_1.widthHint = 20;
+		text_1.setLayoutData(gd_text_1);
+		
+		Label lbl_from_user_cert = new Label(composite_from_user_cert, SWT.NONE);
+		lbl_from_user_cert.setText("New Label");
+		new Label(grpDetails, SWT.NONE);
+		new Label(grpDetails, SWT.NONE);
+		
+		Label lblValidThru = new Label(grpDetails, SWT.NONE);
+		lblValidThru.setText("valid thru:");
+		
+		Composite composite_thru_rootca = new Composite(grpDetails, SWT.NONE);
+		composite_thru_rootca.setLayout(new GridLayout(2, false));
+		
+		text_2 = new Text(composite_thru_rootca, SWT.BORDER);
+		GridData gd_text_2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_text_2.widthHint = 20;
+		text_2.setLayoutData(gd_text_2);
+		
+		final Label lbl_thru_rootca = new Label(composite_thru_rootca, SWT.NONE);
+		lbl_thru_rootca.setText("New Label");
+		
+		Composite composite_thru_ca = new Composite(grpDetails, SWT.NONE);
+		composite_thru_ca.setLayout(new GridLayout(2, false));
+		
+		text_3 = new Text(composite_thru_ca, SWT.BORDER);
+		GridData gd_text_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_text_3.widthHint = 20;
+		text_3.setLayoutData(gd_text_3);
+		
+		Label lbl_thru_ca = new Label(composite_thru_ca, SWT.NONE);
+		lbl_thru_ca.setText("New Label");
+		
+		Composite composite_thru_user_cert = new Composite(grpDetails, SWT.NONE);
+		composite_thru_user_cert.setLayout(new GridLayout(2, false));
+		
+		text_4 = new Text(composite_thru_user_cert, SWT.BORDER);
+		GridData gd_text_4 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_text_4.widthHint = 20;
+		text_4.setLayoutData(gd_text_4);
+		
+		Label lbl_thru_user_cert = new Label(composite_thru_user_cert, SWT.NONE);
+		lbl_thru_user_cert.setText("New Label");
+		new Label(grpDetails, SWT.NONE);
+		new Label(grpDetails, SWT.NONE);
+		
+		Button btnReset = new Button(composite, SWT.NONE);
+		btnReset.setText("Reset");
+		
+		Button btnBack = new Button(composite, SWT.NONE);
+		btnBack.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
+		btnBack.setText("Back");
+		
+		Button btnForward = new Button(composite, SWT.NONE);
+		btnForward.setText("Forward");
+		
+		Button btnCalculate = new Button(composite, SWT.NONE);
+		btnCalculate.setText("Calculate");
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		DateTime dateTime = new DateTime(composite, SWT.BORDER);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
+		tbtmKettenmodell.setText("Kettenmodell");
+		
+		root_ca_end.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlMoved(ControlEvent e) {
+				int a = root_ca_end.getSelection();
+				lbl_thru_rootca.setText("text"+a);
 			}
 		});
-	}
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"Cert Verification",
-			message);
+
+		root_ca_end.addDragDetectListener(new DragDetectListener() {
+			public void dragDetected(DragDetectEvent e) {
+				int a = root_ca_end.getSelection();
+				lbl_thru_rootca.setText("text"+a);
+			}
+		});
+		
 	}
 
-	/**
-	 * Passing the focus request to the viewer's control.
-	 */
-	public void setFocus() {
-		viewer.getControl().setFocus();
+	@Override
+	protected void checkSubclass() {
+		// Disable the check that prevents subclassing of SWT components
 	}
 }
