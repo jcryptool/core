@@ -38,14 +38,14 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 
 	<repositories>
 		<repository>
-			<id>eclipse-indigo</id>
+			<id>eclipse-kepler</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/indigo</url>
+			<url>http://download.eclipse.org/releases/kepler</url>
 		</repository>
 		<repository>
-			<id>eclipse-babel-indigo</id>
+			<id>eclipse-babel-kepler</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.1/indigo</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.1/kepler</url>
 		</repository>
 	</repositories>
 
@@ -93,11 +93,6 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 							<os>win32</os>
 							<ws>win32</ws>
 							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>carbon</ws>
-							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>macosx</os>
