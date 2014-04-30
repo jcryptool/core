@@ -204,6 +204,9 @@
                value="JCrypTool">
          </property>
          <property
+			   name="preferenceCustomization"
+			   value="plugin_customization.ini"/>
+         <property
 			   name="applicationCSS"
 			   value="org.jcryptool.themes.default">
 		 </property>
