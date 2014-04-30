@@ -40,9 +40,9 @@
          </action>
       </actionSet>-->
       <command
-            description="Show help"
+            description="%command.description"
             id="org.jcryptool.core.commands.showHelp"
-            name="Show help">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -60,7 +60,7 @@
                commandId="org.jcryptool.core.commands.showHelp"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
                style="push"
-               tooltip="Show help">
+               tooltip="%command.tooltip">
          </command>
       </menuContribution>
    </extension>
