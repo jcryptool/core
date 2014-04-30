@@ -6,6 +6,46 @@
 </head>
 <body>
 	<h1>Viterbi Analysis</h1>
-    <p>The Viterbi algorithm is a complex form of the frequency analysis.</p>
+
+	<h2>Viterbi Algorithm</h2>
+
+	<p>The Viterbi algorithm is used to break a <a href="http://en.wikipedia.org/wiki/Running_key_cipher">running-key cipher</a> in a ciphertext-only mode.</p>
+
+	<p>The running-key cipher combines two plaintexts using methods like XOR on the single characters to generate a ciphertext. Recovering one of the plaintexts requires little effort if the other plaintext is known. However, in our case here, only the ciphertext is known. The algorithm is based on the assumption, that the plaintexts have similar patterns as text in ordinary books. The underlying <a href="http://en.wikipedia.org/wiki/Hidden_Markov_model">hidden Markov model</a> uses frequency distribution of sequences of letters. The development of this code is based on the work of <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Ekerå and B. Terelius</a> (M. Ekerå and B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. March 2008).</p>
+
+	<p>In the following parts of the online help we describe in 4 steps how to use the plug-in in practice.</p>
+
+	<ol>
+		<li>The tab Running-Key Encryption<br>
+			<img src="images/rk_enc_tab.png"><br clear="all">
+			First, you have to generate a ciphertext. To do so, the tab "Running-Key Encryption" provides methods to combine two plaintexts. The plaintexts can be either entered manually or loaded from text files.</li>
+		<li>Parameters for the Running-Key Encryption<br>
+			<img src="images/encryption.png"><br clear="all">
+			The ciphertext can be generated using XOR or modular addition. To generate the ciphertext press the button "Calculate ciphertext". Because the ciphertext often contains non-printable characters, it is normally displayed in a hexadecimal form. Pressing the button "Next tab (analysis)" copies the ciphertext to the analysis tab. If you want to use this plugin solely for running-key encryption (for obvious reasons not recommended) the "Export" button can be used to store the ciphertext into a text file (the hex digits are written as shown into the text file).</li>
+		<li>The tab Viterbi Analysis<br>
+			<img src="images/viterbi_analysis_tab.png"><br clear="all">
+			The second tab focuses on the actual attack against the ciphertext. If the ciphertext was generated using the other tab, it was loaded automatically into this tab. Alternatively, you can load here the ciphertexts to be analyzed from a text files.
+		</li>
+		<li>Parameters of the Viterbi Analysis<br>
+			<img src="images/analysis_params.png"><br clear="all">
+			As the whole analysis is based on the language model, it is very important to select the expected language of the plaintexts before beginning the analysis. The parameter "N-gram size" defines the maximum length of the analyzed sequences. Currently, only the n-grams with a length from 1 to 5 are possible (these are stored as pre-calculated tables) to save disc space. The parameter "Search depth" influences the quality of the results: A higher search depth improves the results but decreases performance. To see the results press the button "Start analysis". Again, the results with the decrypted plaintexts can be exported into text files.
+		</li>
+	</ol>
+
+	<h2>Remarks</h2>
+
+	<ul>
+		<li>Currently, both plaintexts have to be in the same language.</li>
+		<li>The reconstructed plaintexts usually contain more mistakes at the beginning than towards the end. This is because the algorithm uses the already reconstructed part to predict the likelihood of the next character. At the beginning this information is not available.</li>
+	</ul>
+
+	<h2>Possible future work</h2>
+
+	<ul>
+		<li>Implement new cryptanalysis approaches against the running-key cipher like the one from <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy and Kevin Knight</a> which uses a word-based language model instead of a character-based model (Sravana Reddy and Kevin Knight. "Decoding running key ciphers", ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers - Volume 2. 2012).</li>
+		<li>GUI for calculating the N-Grams dynamically. The corresponding sourcecode can be found at /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java.</li>
+		<li>Analysis of a ciphertext built from two plaintexts of different languages.</li>
+		<li>Vertical and horizontal scrollbars are missing.</li>
+	</ul>
 </body>
 </html>

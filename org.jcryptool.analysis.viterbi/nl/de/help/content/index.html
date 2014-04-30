@@ -6,7 +6,48 @@
 </head>
 <body>
 	<h1>Viterbi-Analyse</h1>
-	<p>Der Viterbi-Algorithmus ist eine komplexe Form der Häufigkeitsanalyse. Mithilfe von Wahrscheinlichkeiten des
-	Auftretens von Zeichenketten wird versucht, die Klartexte zusammenzubauen.</p>
+
+	<h2>Viterbi-Algorithmus</h2>
+
+	<p>Der Viterbi-Algorithmus dient Angriffen auf die <a href="http://en.wikipedia.org/wiki/Running_key_cipher">Running-Key-Verschlüsselung</a> im Ciphertext-only-Modus.</p>
+
+	<p>Die Running-Key-Verschlüsselung kombiniert zwei Klartexte mittels XOR oder anderen Verfahren. Das Finden eines einzelnen Klartextes ist nur mit geringem Aufwand verbunden,
+	wenn der jeweils andere Klartext bekannt ist. In dem Szenario hier ist jedoch nur der Geheimtext bekannt. Der Algorithmus basiert auf der Annahme, dass die Klartexte ähnliche Muster
+	wie normale Bücher aufweisen. Das zugrunde liegende <a href="http://en.wikipedia.org/wiki/Hidden_Markov_model">Hidden-Markov-Modell</a> nutzt die Häufigkeitsanalyse von Zeichenfolgen. Die Implementierung basiert auf der Arbeit von <a href="http://www.csc.kth.se/utbildning/kth/kurser/DD2449/krypto09/pdf/rapport_vernam080309.pdf">M. Ekerå und B. Terelius</a> (M. Ekerå und B. Terelius. "Automatic solution in depth of one time pads". Royal Institute of Technology, Stockholm, Sweden. März 2008).</p>
+
+	<p>In den folgenden Teilen der Onlinehilfe wird in 4 Schritten erklärt, wie man das Plug-in praktisch benutzt.</p>
+
+	<ol>
+		<li>Der Reiter Running-Key-Verschlüsselung<br>
+			<img src="images/rk_enc_tab.png"><br clear="all">
+			Zuerst muss man den Geheimtext erzeugen. Dazu bietet der Reiter "Running-Key-Verschlüsselung" Methoden zum Kombinieren von zwei Klartexten. Die Klartexte können entweder manuell eingegeben werden, oder aus Textdateien geladen werden.</li>
+		<li>Parameter für die Running-Key-Verschlüsselung<br>
+			<img src="images/encryption.png"><br clear="all">
+			Der Geheimtext kann entweder durch XOR oder durch modulare Addition erzeugt werden. Durch das Drücken des Buttons "Geheimtext berechnen" wird der Geheimtext erzeugt. Weil dieser oft nicht-druckbare Zeichen enthält, ist die Anzeige per Default in hexadezimaler Form. Der Button "Weiter zur Analyse" überträgt den Geheimtext in den zweiten Reiter. Falls das Plugin rein zur Verschlüsselung verwendet werden soll (was natürlich nicht empfohlen ist), kann der Geheimtext mit dem "Exportieren"-Button in eine Textdatei geschrieben werden (die Hexzeichen stehen dann wie hier angezeigt in der Textdatei).</li>
+		<li>Der Reiter Viterbi-Analyse<br>
+			<img src="images/viterbi_analysis_tab.png"><br clear="all">
+			Der zweite Reiter beschäftigt sich mit dem eigentlichen Angriff. Wurde der Geheimtext mit dem ersten Reiter erzeugt, konnte man den Geheimtext von dort aus automatisch hierher laden. Alternativ können die zu analysierenden Geheimtexte können auch aus einer Textdatei geladen werden.
+		</li>
+		<li>Parameter der Viterbi-Analyse<br>
+			<img src="images/analysis_params.png"><br clear="all">
+			Weil die Analyse stark vom Sprachmodel abhängt, ist die Auswahl der erwarteten Sprache der Klartexte von besonderer Bedeutung. Der Parameter "N-Gram-Größe" definiert die maximale Länge der analysierten Zeichenfolgen. Momentan kann man nur N-Gramme der Länge 1-5 auswählen (diese sind als vorberechnete Tabellen abgespeichert), um Speicherplatz zu sparen. Der Parameter "Suchtiefe" beeinflusst die Qualität der Ergebnisse: Ein hoher Wert erzeugt bessere Ergebnisse, verschlechtert jedoch die Performance. Um die Ergebnisse angezeigt zu bekommen, muss man den Button "Analyse starten" drücken. Die Ergebnisse mit den entschlüsselten Klartexten können wiederum in Textdateien exportiert werden.
+		</li>
+	</ol>
+
+	<h2>Anmerkungen</h2>
+
+	<ul>
+		<li>Momentan müssen beide Klartexte aus derselben Sprache stammen.</li>
+		<li>Bei der Analyse ist der Anfang der gefundenen Klartexte normalerweise deutlich fehlerhafter als der Rest (das liegt daran, dass die Analyse Buchstaben aus der Umgebung vor und hinter dem Buchstaben braucht, aber am Anfang nur Buchstaben danach hat).</li>
+	</ul>
+
+	<h2>Mögliche zukünftige Erweiterungen</h2>
+
+	<ul>
+		<li>Neuere kryptoanalytische Ansätze gegen die Running-Key-Verschlüsselung implementieren, wie z.B. den Ansatz von <a href="http://dl.acm.org/citation.cfm?id=2390686">Sravana Reddy und Kevin Knight</a>, der Wort-basierte statt Zeichen-basierte Sprach-Modelle benutzt (Sravana Reddy and Kevin Knight. "Decoding running key ciphers", ACL '12 Proceedings of the 50th Annual Meeting of the Association for Computational Linguistics: Short Papers - Volume 2. 2012).</li>
+		<li>GUI für die dynamische Berechnung von N-Grammen. Der Quellcode dazu ist unter /src/org/jcryptool/analysis/viterbi/algorithm/NGramGen.java verfügbar.</li>
+		<li>Analyse bei Klartexten mit verschiedenen Sprachen.</li>
+		<li>Vertikale und horizontale Scrollbars fehlen.</li>
+	</ul>
 </body>
 </html>
