@@ -23,7 +23,8 @@
    </extension>
 
    <extension
-         point="org.eclipse.ui.actionSets">
+         point="org.eclipse.ui.commands">
+         <!--
       <actionSet
             id="org.jcryptool.core.editorsActionSet"
             label="%editors.actionSet.label"
@@ -37,21 +38,31 @@
                toolbarPath="org.jcryptool.core.toolbar/fileStart"
                tooltip="%editors.action.tooltip">
          </action>
-      </actionSet>
-      <actionSet
-            id="org.jcryptool.core.actionSet"
-            label="Help Action Set"
-            visible="true">
-         <action
-               class="org.jcryptool.core.actions.HelpContentsAction"
+      </actionSet>-->
+      <command
+            description="Show help"
+            id="org.jcryptool.core.commands.showHelp"
+            name="Show help">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.core.commands.ShowHelpContents"
+            commandId="org.jcryptool.core.commands.showHelp">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
+         <command
+               commandId="org.jcryptool.core.commands.showHelp"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif"
-               id="org.jcryptool.core.actions.HelpContentsAction"
-               label="&amp;Help Contents"
-               menubarPath="helpMenu/helpGroup"
-               toolbarPath="helpGroup"
-               tooltip="%helpButton.tooltip">
-         </action>
-      </actionSet>
+               style="push"
+               tooltip="Show help">
+         </command>
+      </menuContribution>
    </extension>
 
    <extension
