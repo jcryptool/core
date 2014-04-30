@@ -1,13 +1,13 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * Copyright (c) 2014 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.core.actions;
+package org.jcryptool.core.commands;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +15,9 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -22,8 +25,6 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -32,19 +33,18 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IActionDelegate;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
 import org.jcryptool.core.CorePlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.framework.Bundle;
 
 /**
- * a class to show all registered editors in a drop down list at the coolbar the action should open a new editors page.
- * 
+ * a class to show all registered editors in a drop down list at the coolbar the action should open
+ * a new editors page.
+ *
  * @author mwalthart
  * @version 0.5.0
  */
-public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDelegate {
+public class NewEditorPulldown extends AbstractHandler {
 
     private Menu showEditorsPulldownMenu;
 
@@ -65,7 +65,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
 
     /**
      * Creates the menu.
-     * 
+     *
      * @param parent
      * @param menu
      * @return
@@ -168,25 +168,8 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
         return menu;
     }
 
-    /**
-     * Removes the menu.
-     */
-    public void dispose() {
-        if (showEditorsPulldownMenu != null) {
-            showEditorsPulldownMenu.dispose();
-        }
-    }
-
-    /**
-     * Unused.
-     */
-    public void init(IWorkbenchWindow window) {
-    }
-
-    /**
-     * Rhe implementation of the on click action.
-     */
-    public void run(IAction action) {
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
         // connects to the extension point
         IExtensionPoint point = Platform.getExtensionRegistry().getExtensionPoint("org.jcryptool.core.editorButton"); //$NON-NLS-1$
         IExtension extension = point.getExtensions()[0];
@@ -198,11 +181,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
         } catch (CoreException ex) {
             LogUtil.logError(CorePlugin.PLUGIN_ID, ex);
         }
-    }
 
-    /**
-     * Unused.
-     */
-    public void selectionChanged(IAction action, ISelection selection) {
+        return null;
     }
 }

@@ -24,21 +24,11 @@
 
    <extension
          point="org.eclipse.ui.commands">
-         <!--
-      <actionSet
-            id="org.jcryptool.core.editorsActionSet"
-            label="%editors.actionSet.label"
-            visible="true">
-         <action
-               class="org.jcryptool.core.actions.ShowEditorsPulldownMenuAction"
-               icon="icons/editors.gif"
-               id="EditorsToolbar.EditorsPulldownAction"
-               label="%editors.action.label"
-               style="pulldown"
-               toolbarPath="org.jcryptool.core.toolbar/fileStart"
-               tooltip="%editors.action.tooltip">
-         </action>
-      </actionSet>-->
+      <command
+            description="%command.description.0"
+            id="org.jcryptool.core.commands.newEditor"
+            name="%command.name.0">
+      </command>
       <command
             description="%command.description"
             id="org.jcryptool.core.commands.showHelp"
@@ -48,12 +38,25 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
+            class="org.jcryptool.core.commands.NewEditorPulldown"
+            commandId="org.jcryptool.core.commands.newEditor">
+      </handler>
+      <handler
             class="org.jcryptool.core.commands.ShowHelpContents"
             commandId="org.jcryptool.core.commands.showHelp">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.jcryptool.core.toolbar">
+         <command
+               commandId="org.jcryptool.core.commands.newEditor"
+               icon="icons/editors.gif"
+               style="pulldown"
+               tooltip="%command.tooltip.0">
+         </command>
+      </menuContribution>
       <menuContribution
             locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
          <command
