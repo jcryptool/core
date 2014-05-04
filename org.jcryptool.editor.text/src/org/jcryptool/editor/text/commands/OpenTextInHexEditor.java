@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2014 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.editor.text.action;
+package org.jcryptool.editor.text.commands;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
@@ -28,9 +28,8 @@ import org.jcryptool.core.operations.util.PathEditorInput;
  * opens it with the hex editor.
  *
  * @author amro
- * @version 0.9.2
  */
-public class OpenInHexAction implements IEditorActionDelegate {
+public class OpenTextInHexEditor implements IEditorActionDelegate {
     /** The active editor. */
     private IEditorPart editor;
     /** Active workbench page. */
@@ -76,12 +75,12 @@ public class OpenInHexAction implements IEditorActionDelegate {
                 page.closeEditor(editor, true);
                 page.openEditor(input, IOperationsConstants.ID_HEX_EDITOR, true);
             } catch (PartInitException e) {
-                MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
-                        Messages.OpenInHexAction_1);
+                MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenTextInHexEditor_3,
+                        Messages.OpenTextInHexEditor_1);
             }
         } else {
-            MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
-                    Messages.OpenInHexAction_2);
+            MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenTextInHexEditor_3,
+                    Messages.OpenTextInHexEditor_2);
         }
     }
 

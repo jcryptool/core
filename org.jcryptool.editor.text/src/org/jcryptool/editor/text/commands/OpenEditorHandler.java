@@ -28,7 +28,6 @@ import org.jcryptool.editor.text.editor.JCTTextEditor;
  * Command handler to include the text editor in the File Explorer view context menu (open with...).
  *
  * @author Dominik Schadow
- * @version 0.5
  */
 public class OpenEditorHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {

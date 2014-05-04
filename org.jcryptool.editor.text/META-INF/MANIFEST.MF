@@ -13,9 +13,10 @@ Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.jcryptool.editor.text,
- org.jcryptool.editor.text.action,
+ org.jcryptool.editor.text.commands,
  org.jcryptool.editor.text.editor,
- org.jcryptool.editor.text.service
+ org.jcryptool.editor.text.service,
+ org.jcryptool.editor.text.startup
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,
  org.jcryptool.core.operations.editors,
