@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 
 /**
  * Abstract superclass for an Alphabet.
- * 
+ *
  * @author t-kern
- * 
+ *
  */
 public abstract class AbstractAlphabet {
 
@@ -47,7 +47,7 @@ public abstract class AbstractAlphabet {
 
     /**
      * returns all characters included by the alphabet
-     * 
+     *
      * @since 0.01
      * @deprecated soon to be replaced by List<Character> getCharacterSet()
      */
@@ -55,7 +55,7 @@ public abstract class AbstractAlphabet {
 
     /**
      * returns method missing characters are displayed by the alphabet
-     * 
+     *
      * @since 0.01
      * @deprecated functionality to be moved to the AlphabetManager
      */
@@ -63,7 +63,7 @@ public abstract class AbstractAlphabet {
 
     /**
      * returns the name of the alphabet
-     * 
+     *
      * @since 0.01
      * @deprecated functionality to be moved to the AlphabetManager
      */
@@ -77,7 +77,7 @@ public abstract class AbstractAlphabet {
 
     /**
      * returns the character which is show as placeholder for characters which are not in the alphabet
-     * 
+     *
      * @since 0.01
      * @deprecated functionality to be removed
      */
@@ -124,8 +124,8 @@ public abstract class AbstractAlphabet {
 
     /**
      * converts an alphabet's content to a String. This makes sure that linebreaks etc. are shown as "\n" etc.<br />
-     * 
-     * 
+     *
+     *
      * @param alpha the alphabet
      * @return a string containing a representation of every character in the alphabet
      */
@@ -149,17 +149,6 @@ public abstract class AbstractAlphabet {
         } else {
             return String.valueOf(c);
         }
-    }
-
-    private static boolean isCharacterOnKeyboard(char c) {
-        boolean isControlChar = Character.isISOControl(c);
-        boolean isNonANSIChar = (int) c > 125;
-        boolean isGermanUmlaut = Character.valueOf(c).equals('ä') || Character.valueOf(c).equals('ö')
-                || Character.valueOf(c).equals('ü') || Character.valueOf(c).equals('Ä')
-                || Character.valueOf(c).equals('Ö') || Character.valueOf(c).equals('Ü')
-                || Character.valueOf(c).equals('ß');
-
-        return (!isControlChar && !isNonANSIChar) || isGermanUmlaut;
     }
 
     /**
