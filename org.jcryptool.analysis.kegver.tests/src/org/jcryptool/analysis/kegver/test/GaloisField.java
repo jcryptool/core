@@ -16,10 +16,7 @@ import org.jcryptool.analysis.kegver.layer3.U;
 public class GaloisField {
 
 	private BigInteger order = U.ZERO;
-	private BigInteger orderSuper = U.ZERO;
 	private GaloisField aGF_g = null;
-	private GaloisField aGF_h = null;
-	private BigInteger numberOfElements = null;
 
 	public GaloisField(BigInteger inOrder){
 		this.setOrder(inOrder);
@@ -32,7 +29,6 @@ public class GaloisField {
 	}
 
 	private BigInteger setOrderSuper(BigInteger inOrderSuper) {
-		this.orderSuper = inOrderSuper;
 		return this.getOrderSuper();
 	}
 

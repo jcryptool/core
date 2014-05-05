@@ -307,23 +307,6 @@ public class Huffman {
         return tmpNode;
     }
 
-    /**
-     * Preorder travesierung(for Debugging)
-     *
-     * @param n root
-     */
-    private ArrayList<Integer> getPreOrderRek(Node n, ArrayList<Integer> result) {
-        if (n != null) {
-            if (n.isLeaf()) {
-                result.add(n.getName());
-                return result;
-            }
-            getPreOrderRek(n.getLeft(), result);
-            getPreOrderRek(n.getRight(), result);
-        }
-        return result;
-    }
-
     private BitString[] createTable(ArrayList<Node> leafSet) {
         Node tmpNode;
         Node tmpParent;
