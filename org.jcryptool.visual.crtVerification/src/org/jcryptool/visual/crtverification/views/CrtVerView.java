@@ -17,6 +17,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 public class CrtVerView extends ViewPart {
+	public CrtVerView() {
+	}
     private Composite parent;
 
     /**
