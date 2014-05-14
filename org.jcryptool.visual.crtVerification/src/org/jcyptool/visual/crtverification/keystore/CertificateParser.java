@@ -8,10 +8,13 @@ import java.security.cert.CertPath;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.visual.crtverification.Activator;
 
 /**
@@ -50,7 +53,16 @@ public class CertificateParser {
         // return loadCertificate(tornezeder);
         // return loadCertificate(revolutions);
         File[] files = {gTN, gCA, gRoot};
-        loadCertificatePath(files);
+        //loadCertificatePath(files);
+        
+        KeystoreConnector mKeystoreConnector = new KeystoreConnector();
+        ArrayList<Certificate> certs = mKeystoreConnector.getAllCertificates();
+        for(Certificate cert : certs){
+            System.out.println(cert.toString());
+        }
+        
+        //addCertificate();
+        
         return null;
     }
 
@@ -104,5 +116,13 @@ public class CertificateParser {
 
         System.out.println(mCertPath.toString());
         return mCertPath;
+    }
+    
+    public void addCertificate(){
+        KeystoreConnector mKeystoreConnector = new KeystoreConnector();
+        IKeyStoreAlias alias = mKeystoreConnector.getAliasByContactName("ific");
+        
+        Certificate cert = loadCertificate(gRoot);
+        mKeystoreConnector.addCertificate(cert, alias);
     }
 }
