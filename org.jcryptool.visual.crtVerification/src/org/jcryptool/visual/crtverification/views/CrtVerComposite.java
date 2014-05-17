@@ -1,5 +1,7 @@
 package org.jcryptool.visual.crtverification.views;
 
+import org.eclipse.jface.window.Window;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -8,13 +10,17 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Scale;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerComposite extends Composite {
 	private Text TextRootCaFromDay;
@@ -342,6 +348,29 @@ public class CrtVerComposite extends Composite {
 		
 		Button btnReset = new Button(composite, SWT.NONE);
 		btnReset.setText("Reset");
+		// Selection Listeners | Scales
+        btnReset.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    TestWizard wiz = new TestWizard();
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                };
+                if (dialog.open() == Window.OK) {
+                   // Hier kann man Aktionen durfuehren die passieren sollen wenn die WizardPage aufgerufen wird
+                   // zB aktivieren/deaktivieren von Buttons der Hauptansicht
+                }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
