@@ -11,33 +11,12 @@ import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.alphabets.Messages;
 import org.jcryptool.crypto.ui.alphabets.alphabetblocks.BlockAlphabet;
-import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 public class ShowAlphaContentWindow extends Shell {
 	private Composite composite;
 	private Label lblCharactersInThe;
 	private Text text;
 	private AbstractAlphabet alpha;
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		try {
-			Display display = Display.getDefault();
-			ShowAlphaContentWindow shell = new ShowAlphaContentWindow(display, new AtomAlphabet("")); //$NON-NLS-1$
-			shell.open();
-			shell.layout();
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the shell.

@@ -15,12 +15,11 @@ public class UnlockPattern {
 	public boolean verify() throws Exception {
 		resetIsActive();
 		boolean isEnd=false;
-		
+
 		if (order.length != 10) {
 			throw new Exception("Internal Error: Wrong length of Array");
 		}
 		if(!(order[9]==0)){
-			System.out.println("Internal Error:last cypher != 0");
 			return false;
 		}
 		for (int i = 0; i < order.length - 1; i++) {
@@ -113,7 +112,7 @@ public class UnlockPattern {
 		for (int i = 0; i < order.length; i++) {
 			isActive[i] = false;
 		}
-		
+
 	}
 	public void addNumber(int number) {
 		for (int i = 0; i < order.length; i++) {

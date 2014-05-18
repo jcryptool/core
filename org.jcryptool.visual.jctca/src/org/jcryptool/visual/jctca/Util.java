@@ -75,7 +75,7 @@ public class Util {
         }
         PrivateKey priv;
         try {
-            priv = mng.getPrivateKey(csr.getPrivAlias(), "1234".toCharArray());
+            priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.KEY_PASSWORD);
             return Util.certificateForKeyPair(csr.getFirst() + " " + csr.getLast(), csr.getCountry(),//$NON-NLS-1$
                     csr.getStreet(), csr.getZip(), csr.getTown(), "", "", csr.getMail(), pub,//$NON-NLS-1$ //$NON-NLS-2$
                     priv, serialNumber, caCert, expiryDate, startDate, caKey);

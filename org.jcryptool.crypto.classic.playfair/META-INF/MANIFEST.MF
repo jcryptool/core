@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.classic.playfair;singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.crypto.classic.playfair.PlayfairPlugin
 Bundle-Vendor: %bundleVendor
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
@@ -16,6 +16,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.playfair,
  org.jcryptool.crypto.classic.playfair.algorithm,
  org.jcryptool.crypto.classic.playfair.ui
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

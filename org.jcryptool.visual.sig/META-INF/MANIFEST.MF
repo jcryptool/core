@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.sig; singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.8",
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.jcryptool.core.logging;bundle-version="0.9.8",
  org.bouncycastle;bundle-version="1.48.0",
  org.eclipse.help
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Activator: org.jcryptool.visual.sig.SigPlugin
 Bundle-ActivationPolicy: lazy
 Import-Package: de.flexiprovider.core.dsa,

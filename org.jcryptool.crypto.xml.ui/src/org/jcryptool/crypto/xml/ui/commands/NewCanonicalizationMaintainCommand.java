@@ -4,12 +4,14 @@
  * distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors: Dominik Schadow - initial API and implementation
+ *               Holger Friedrich - support of Commands
  *******************************************************************************/
 package org.jcryptool.crypto.xml.ui.commands;
 
 import java.io.InputStream;
 
 import org.apache.xml.security.c14n.Canonicalizer;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -17,7 +19,7 @@ import org.eclipse.ui.IEditorInput;
 import org.jcryptool.core.logging.dialogs.JCTMessageDialog;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.IOperationsConstants;
-import org.jcryptool.core.operations.algorithm.AbstractAlgorithmAction;
+import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.modern.hybrid.HybridDataObject;
 import org.jcryptool.core.operations.editors.AbstractEditorService;
@@ -40,9 +42,10 @@ import org.jcryptool.crypto.xml.ui.utils.IXMLSecurityConstants;
  * </p>
  * 
  * @author Dominik Schadow
- * @version 0.9.5
+ * @author Holger Friedrich (support of Commands)
+ * @version 0.9.6
  */
-public class NewCanonicalizationMaintainCommand extends AbstractAlgorithmAction {
+public class NewCanonicalizationMaintainCommand extends AbstractAlgorithmHandler {
     /** Canonicalization version (exclusive or inclusive). */
     private String canonVersion;
 
@@ -114,8 +117,9 @@ public class NewCanonicalizationMaintainCommand extends AbstractAlgorithmAction 
     }
 
     @Override
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         run(null);
+        return(null);
     }
 
     @Override

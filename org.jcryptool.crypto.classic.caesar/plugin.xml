@@ -2,16 +2,17 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.jcryptool.crypto.classic.caesar.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.caesar.algorithm.CaesarAlgorithmAction"
+         id="id1"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.classic.caesar.algorithm.CaesarAlgorithm"
             contextHelpId="org.jcryptool.crypto.classic.caesar.algorithm"
             engineClass="org.jcryptool.crypto.classic.caesar.algorithm.CaesarEngine"
-            id="org.jcryptool.crypto.classic.caesar.algorithm"
+            handlerClass="org.jcryptool.crypto.classic.caesar.algorithm.CaesarAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.caesar.algorithm_cmd"
             name="%algorithm.name"
-            type="classic"/>
+            type="classic">
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.toc">

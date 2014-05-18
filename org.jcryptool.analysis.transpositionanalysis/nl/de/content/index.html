@@ -29,9 +29,9 @@ Verschl&uuml;sseltes Wort = &quot;TTSE&quot;</p>
 
 <h3>Die Rolle des Transpositions-Analyse-Plug-ins</h3>
 
-<p>Das Transpositions-Analyse-Plugin &uuml;bernimmt die Aufteilung des Geheimtextes in Spalten und Zeilen, und erm&ouml;glicht die Umsortierung der Spalten des Textes. Der Text wird in einer Tabelle angeordnet, deren Spalten sich umsortieren lassen. Damit ist das Austesten verschiedener Blockl&auml;ngen und Schl&uuml;sselworte ein Leichtes, und das Ziel ist, in der Tabelle schlussendlich den Klartext stehen zu sehen.</p>
+<p>Das Transpositions-Analyse-Plug-in &uuml;bernimmt die Aufteilung des Geheimtextes in Spalten und Zeilen, und erm&ouml;glicht die Umsortierung der Spalten des Textes. Der Text wird in einer Tabelle angeordnet, deren Spalten sich umsortieren lassen. Damit ist das Austesten verschiedener Blockl&auml;ngen und Schl&uuml;sselworte ein Leichtes, und das Ziel ist, in der Tabelle schlussendlich den Klartext stehen zu sehen.</p>
 
-<p>Das Transpositions-Plugin bietet zurzeit die rein manuelle Entzifferung - Umsortierung der Spalten, bis ein &quot;sinnmachender&quot; Text in der Tabelle steht. Es sind jedoch auch halbautomatische und automatische Analysem&ouml;glichkeiten in Arbeit.</p>
+<p>Das Transpositions-Plug-in bietet zurzeit die rein manuelle Entzifferung - Umsortierung der Spalten, bis ein &quot;sinnmachender&quot; Text in der Tabelle steht. Es sind jedoch auch halbautomatische und automatische Analysem&ouml;glichkeiten in Arbeit.</p>
 
 <h2>Bedienung der Benutzeroberfl&auml;che</h2>
 
@@ -54,7 +54,7 @@ Verschl&uuml;sseltes Wort = &quot;TTSE&quot;</p>
 
 <p>Wir betrachten den verschl&uuml;sselten Text</p>
 <p><pre>Dei  itsdJi eCTrpyoBo leiipsetladeiiS.ee okn nnedeise eDtaie ufrn ieecns hlnleetnS amr tiCtJ r</pre></p>
-<p>und laden diesen in das Plugin. Zu Anfang haben wir keinen Anhaltspunkt f&uuml;r das Einstellen einer bestimmten Schl&uuml;ssell&auml;nge, also lassen wir als Anzahl der Spalten in der Tabelle den Wert &quot;0&quot; eingestellt, das bedeutet, wir sehen den Text in einer Zeile. Wir erhalten:</p>
+<p>und laden diesen in das Plug-in. Zu Anfang haben wir keinen Anhaltspunkt f&uuml;r das Einstellen einer bestimmten Schl&uuml;ssell&auml;nge, also lassen wir als Anzahl der Spalten in der Tabelle den Wert &quot;0&quot; eingestellt, das bedeutet, wir sehen den Text in einer Zeile. Wir erhalten:</p>
 <p><img src="1.png" /></p>
 <p>Offensichtlich steht der Buchstabe &quot;D&quot; f&uuml;r den Beginn eines Wortes, oder (wahrscheinlicher) f&uuml;r den Beginn des Satzes. Die zwei Leerzeichen deuten darauf hin, dass hier relativ kurze W&ouml;rter stehen, da zwei Leerzeichen auf 8 Buchstaben kommen. Genug Anhaltspunkte f&uuml;r einen Versuch: Wir raten die Blockl&auml;nge als 4 (Anpassen im Feld &quot;Spaltenzahl[...]&quot; &uuml;ber der Tabelle) und sortieren die Spalten (Drag'n'drop) wie folgt:</p>
 <p><img src="2.png" /></p>
@@ -67,7 +67,7 @@ Verschl&uuml;sseltes Wort = &quot;TTSE&quot;</p>
 
 <h3>Nach der Analyse</h3>
 <p><img src="after1_de.png" /></p>
-<p>Wenn es nun so aussieht, als ob Sie den richten Schl&uuml;ssel gefunden haben, ist der n&auml;chste Schritt die Entschl&uuml;sselung des Textes f&uuml;r den Gebrauch außerhalb des Analyseplugins. Der Button oberhalb des Vorschau-Textfeldes kann genau das mit einem Klick erledigen. Allerdings k&ouml;nnen Sie auch den Schl&uuml;ssel kopieren (siehe unten: kryptographisch nutzbare Version) und den Transpositions-Verschl&uuml;sselung-Assistent aufrufen (Algorithmen-Ansicht). Damit k&ouml;nnen Sie den Text dann manuell entschl&uuml;sseln. W&auml;hlen Sie dazu &quot;Entschl&uuml;sseln&quot;, kopieren Sie den Schl&uuml;ssel in das erste Schl&uuml;sselfeld, und beenden Sie den Assistent.</p>
+<p>Wenn es nun so aussieht, als ob Sie den richten Schl&uuml;ssel gefunden haben, ist der n&auml;chste Schritt die Entschl&uuml;sselung des Textes f&uuml;r den Gebrauch außerhalb des Analyse-Plug-ins. Der Button oberhalb des Vorschau-Textfeldes kann genau das mit einem Klick erledigen. Allerdings k&ouml;nnen Sie auch den Schl&uuml;ssel kopieren (siehe unten: kryptographisch nutzbare Version) und den Transpositions-Verschl&uuml;sselung-Assistent aufrufen (Algorithmen-Ansicht). Damit k&ouml;nnen Sie den Text dann manuell entschl&uuml;sseln. W&auml;hlen Sie dazu &quot;Entschl&uuml;sseln&quot;, kopieren Sie den Schl&uuml;ssel in das erste Schl&uuml;sselfeld, und beenden Sie den Assistent.</p>
 <p>Der gefundene Schl&uuml;ssel ist zwar in der Gruppe "Ergebnisse" zu sehen, jedoch bietet der Link "Export" neben dem Schl&uuml;sselfeld noch einige wichtige Funktionen:</p>
 <p><img src="keyviewer_de.png" /></p>
 <p>Die &quot;H&uuml;bsche Version&quot;, die auch in der Hauptansicht zu sehen ist, kann in einen Text o. &auml;. kopiert werden, kann jedoch meist nicht als Eingabe f&uuml;r kryptographische Verfahren dienen.</p>

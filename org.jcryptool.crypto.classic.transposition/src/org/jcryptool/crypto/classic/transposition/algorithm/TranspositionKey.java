@@ -17,6 +17,7 @@ import java.util.TreeSet;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 
@@ -64,8 +65,8 @@ public class TranspositionKey {
 	}
 
 //	/**
-//	 * Returns the characters that are allowed 
-//	 * 
+//	 * Returns the characters that are allowed
+//	 *
 //	 * @param baseAlphabet
 //	 * @return
 //	 */
@@ -75,16 +76,16 @@ public class TranspositionKey {
 //			additionalCharacters += s;
 //		}
 //		String result = String.valueOf(baseAlphabet);
-//		
+//
 //		for(char c: additionalCharacters.toCharArray()) {
 //			if(String.valueOf(baseAlphabet).indexOf(c)==-1) {
 //				result += String.valueOf(c);
 //			}
 //		}
-//		
+//
 //		return result.toCharArray();
 //	}
-	
+
 	/**
 	 * Clears all content.
 	 */
@@ -154,7 +155,7 @@ public class TranspositionKey {
 	public static class KeyFromStringParseResult {
 		public enum Mode {
 			LIMITER, NOTINALPHA, DEFAULT;
-			
+
 			public boolean isSuccessful() {
 				if(this != NOTINALPHA) {
 					return true;
@@ -162,20 +163,20 @@ public class TranspositionKey {
 				return false;
 			}
 		}
-		
+
 		public Mode mode;
 		public String limiter;
 		public Character notinalphaChar;
 		public String newkey;
 	}
-	
+
 	public static KeyFromStringParseResult generateKeyFromStringMode(String argString, char[] alphabet) {
 		KeyFromStringParseResult result = new KeyFromStringParseResult();
 		KeyFromStringParseResult.Mode mode = KeyFromStringParseResult.Mode.DEFAULT;
 		String limiter = null;
-		
+
 		String[] possibleLimiterStrings = POSSIBLE_PARSE_SEPARATORS;
-		
+
 		limiter = keyStringIsWithLimiters(argString, possibleLimiterStrings);
 		if(limiter != null) {
 			mode = KeyFromStringParseResult.Mode.LIMITER;
@@ -193,9 +194,9 @@ public class TranspositionKey {
 			limiter = ",";
 			mode = KeyFromStringParseResult.Mode.LIMITER;
 		}
-		
-		
-		
+
+
+
 		// check for not-in-alpha characters
 		if(mode==KeyFromStringParseResult.Mode.DEFAULT) {
 			Character lastFoundCharOutOfAlpha = null;
@@ -208,7 +209,7 @@ public class TranspositionKey {
 						result.notinalphaChar = c;
 						return result;
 					}
-					
+
 				}
 			}
 			if(lastFoundCharOutOfAlpha != null) {
@@ -217,12 +218,12 @@ public class TranspositionKey {
 				return result;
 			}
 		}
-		
+
 		result.mode = mode;
 		result.limiter = limiter;
 		return result;
 	}
-	
+
 	/**
 	 * Reads a unformatted String into the key. The key is interpreted
 	 * by using the given currentAlphabet (as char-array) <br /><br />
@@ -240,7 +241,7 @@ public class TranspositionKey {
 		if(! mode.isSuccessful()) {
 			throw new RuntimeException("Can't parse this string to a transposition key because it does not comply with any special form and there is a character out of the specified alphabet: " + modeObj.notinalphaChar);
 		}
-		
+
 		if(mode == KeyFromStringParseResult.Mode.DEFAULT) {
 			String alphaString = String.valueOf(alphabet);
 			char[] inputArray = argString.toCharArray();
@@ -263,7 +264,7 @@ public class TranspositionKey {
 						Integer part = Integer.parseInt(splitPart);
 						numbers.add(part);
 					} catch(NumberFormatException e) {
-						System.err.println("Somehow TranspositionKey.fromString decided to use limiter-based transposition key reading, but there were problems parsing numbers from the string.");
+			            LogUtil.logError(e);
 					}
 				}
 			}
@@ -271,12 +272,10 @@ public class TranspositionKey {
 			for (int i = 0; i < key.length; i++) {
 				key[i] = numbers.get(i);
 			}
-			
+
 			int[] resultArray = generateKeyArrayFromNumberArray(key);
-			
+
 			this.fromArray(resultArray);
-		} else {
-			System.err.println("unhandled case in TranspositionKey.fromString(...)!");
 		}
 	}
 
@@ -310,7 +309,7 @@ public class TranspositionKey {
 	 * Checks, if a transposition key string uses one of the given strings as exclusive limiter for numbers.
 	 * for example, the method would return "," for the following key string: "1,2,3,4" but not for "1,,2,3,4".
 	 * if only blanks after a delimiter would prevent the limiter from being accepted, they will be ignored.
-	 * 
+	 *
 	 * @param keyString
 	 * @param possibleLimiterStrings
 	 * @return
@@ -323,16 +322,16 @@ public class TranspositionKey {
 		}
 		return null;
 	}
-	
+
 	private static String replaceAllNoRegex(String str, String target, String replacement) {
 		return str.replaceAll(Pattern.quote(target), replacement);
 	}
-	
+
 	/**
 	 * Checks, if a transposition key string uses the given string as exclusive limiter for numbers.
 	 * for example, the method would return "," for the following key string: "1,2,3,4" but not for "1,,2,3,4". (neither would "1,a,2,3" be accepted)
 	 * if only blanks after a delimiter would prevent the limiter from being accepted, they will be ignored.
-	 * 
+	 *
 	 * @param keyString
 	 * @param possibleLimiterString
 	 * @return
@@ -343,13 +342,13 @@ public class TranspositionKey {
 		for(String digit: digits) {
 			keyString = replaceAllNoRegex(keyString, digit, "");
 		}
-		
+
 		keyString = replaceAllNoRegex(keyString, possibleLimiterString, "");
 		keyString = replaceAllNoRegex(keyString, " ", "");
 		if(keyString.length() == 0) return true;
 		return false;
 	}
-	
+
 	/**
 	 * Read an array of integer values into the key. This content
 	 * replaces the current one.
@@ -550,7 +549,7 @@ public class TranspositionKey {
 					counter++;
 				}
 			}
-			
+
 			boolean couldSpareTheZero = digitSet[0] == '0' && k.getLength()<10;
 			if(couldSpareTheZero) {
 				alphaSet = new char[9];
@@ -562,18 +561,18 @@ public class TranspositionKey {
 			}
 
 		}
-		
+
 		//would delete all non-digits and non-A-Z characters suffice?
 		if(!inDigits) {
 			String alphaString = String.valueOf(a);
 			String nonNecessaryCharacters = "[^0-9A-Za-z]";
 			alphaString = alphaString.replaceAll(nonNecessaryCharacters, "");
-			
+
 			if(k.getLength() <= alphaString.length()) {
 				alphaSet = alphaString.toCharArray();
 			}
 		}
-		
+
 
 		char[] output = new char[Math.min(alphaSet.length, k.getLength())];
 		int[] key = k.toArray();
@@ -586,7 +585,7 @@ public class TranspositionKey {
 		return null;
 
 	}
-	
+
 	/**
 	 * Retrieves a key String without delimiters for a specific currentAlphabet.
 	 * if the currentAlphabet is null, the standard Alphabet will be used. <br>

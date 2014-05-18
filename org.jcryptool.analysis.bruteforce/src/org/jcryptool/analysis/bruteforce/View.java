@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 public class View extends ViewPart {
 
@@ -99,10 +100,10 @@ public class View extends ViewPart {
 						String ciphertext = getCiphertext();
 						ProgressDialog progressDialog = new ProgressDialog(key, ciphertext, gui);
 						progressDialog.start();
-					} catch (InvocationTargetException e1) {
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
+					} catch (InvocationTargetException ex) {
+					    LogUtil.logError(ex);
+					} catch (InterruptedException ex) {
+					    LogUtil.logError(ex);
 					}
 				}
 

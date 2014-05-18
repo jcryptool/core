@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License v1.0 which
@@ -14,9 +14,9 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.caesar.algorithm.messages"; //$NON-NLS-1$
-    public static String CaesarAlgorithmAction_0;
-	public static String CaesarAlgorithmAction_1;
-	public static String CaesarAlgorithmAction_2;
+    public static String CaesarAlgorithmHandler_0;
+	public static String CaesarAlgorithmHandler_1;
+	public static String CaesarAlgorithmHandler_2;
 	public static String CaesarCmd_keydetail;
     static {
         // initialize resource bundle

@@ -56,9 +56,9 @@ public class TextInputWithSourceDisplayer extends Composite {
         public Style(boolean images, boolean showFrontLabel) {
 			this.images = images;
 			this.showFrontLabel = showFrontLabel;
-        	
+
         }
-        
+
         public Style(boolean images) {
             this(images, true);
         }
@@ -582,8 +582,6 @@ public class TextInputWithSourceDisplayer extends Composite {
                                 .openEditor(input, IOperationsConstants.ID_HEX_EDITOR);
                     } catch (PartInitException e) {
                         LogUtil.logError(OperationsPlugin.PLUGIN_ID, e);
-
-                        System.err.println("could not open editor in " + editorId);//$NON-NLS-1$
                     }
                 }
             }

@@ -1,8 +1,8 @@
 package org.jcryptool.crypto.ui.alphabets.composite;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class Test extends Composite {

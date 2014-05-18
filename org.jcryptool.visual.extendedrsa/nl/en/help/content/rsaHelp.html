@@ -9,14 +9,14 @@
 <body>
 
 <h1>RSA Cryptosystem (including Identities and Multi-Prime RSA)</h1>
-<p>This plugin visualizes the usage of RSA for message encryption. In most usage scenarios, this algorithm utilizes two prime numbers for key generation, and has – as every asymmetric algorithm – a private and a public key.</p>
-<p>This algorithm can also be used with more than two prime numbers – which is then called „multi-prime RSA“. The key generation and the encryption are working analogously to the classic RSA-algorithm with two prime numbers (N is the product of all chosen prime numbers).</p>
+<p>This plug-in visualizes the usage of RSA for message encryption. In most usage scenarios, this algorithm utilizes two prime numbers for key generation, and has – as every asymmetric algorithm – a private and a public key.</p>
+<p>This algorithm can also be used with more than two prime numbers – which is then called <strong>multi-prime RSA</strong. The key generation and the encryption are working analogously to the classic RSA-algorithm with two prime numbers (N is the product of all chosen prime numbers).</p>
 <p><b>Please note </b>that in this visualization the operations are performed on each single character. In practice, though the operations are performed on blocks or even the whole message. However, in the typical use cases RSA is not used to encrypt large amounts of data. Instead it is used to encrypt a symmetric session key, with which the actual data is encrypted (using e.g. AES or 3DES). This is typically referred to as ‘hybrid encryption’. (Another typical use case is to sign the hash value of a message.)</p>
 
 <h2>Explanation of the RSA Scheme</h2>
 <p>RSA is the most-commonly used asymmetric algorithm, and has been developed by Ronald Rivest, Adi Shamir and Leonard Adleman in 1977 (and named after their last names’ initials). The private and public keys are constructed using two randomly selected large prime numbers p and q which can be specified by the user. Then the user calculates two natural numbers (i.e., positive integers) e and d such that (e*d) = 1 mod ((p-1)(q-1)).
-The product p*q = N and e then serve as the public key, the exponent d as the private key.  The primes p and q then can be deleted.</p>
-<p>As this encryption algorithm only works on non-negative integers, first the plaintext letters must be converted to natural numbers. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. In this plugin the ASCII code is used.</p>
+The product p*q = N and e then serve as the public key, the exponent d as the private key. The primes p and q then can be deleted.</p>
+<p>As this encryption algorithm only works on non-negative integers, first the plaintext letters must be converted to natural numbers. This is generally done using the ASCII code, but one can of course also agree on A=0, B=1 .... Z=25. In this plug-in the ASCII code is used.</p>
 <p>However, the ordinal number of each plaintext letter must be smaller than the product N. This becomes clear when you examine the encryption and decryption functions (m = numeric value of the plaintext letter, c = numeric value of the ciphertext letter): c = m^e mod N and m = c^d mod N.
 Calculating modulo you can also first determine the remainder from each factor and then the rest of its product modulo N. It would not always be possible to obtain a unique ciphertext character if m could be greater than N.
 The security of the RSA scheme is based on two mathematical problems. First, it is hard for big numbers to extract a root modulo N (RSA problem). Second, factorization of a number N = p*q is hard, if the factors are sufficiently large (RSA key problem).</p>

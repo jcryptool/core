@@ -36,7 +36,7 @@ public class BabystepGiantstep {
 		this.gruppenElement = gruppenElement;
 		this.n = computeGroupOrder(this.zyklischeGruppe);
 		this.m = computeUpperLimit(this.n);
-		this.multInv = berechneMultiplikativeInverse(this.zyklischeGruppe);			
+		this.multInv = computeMultInverse(this.zyklischeGruppe);			
 		this.babystepMenge = new HashMap<BigInteger, BigInteger>();
 		this.giantstepMenge = new ArrayList<BigInteger>();
 	}
@@ -89,13 +89,12 @@ public class BabystepGiantstep {
 	}
 
 	private BigInteger computeUpperLimit(BigInteger gruppenOrdnung) {
-		// double wurzel = Math.sqrt(gruppenOrdnung);
 		BigInteger wurzel = sqrt(gruppenOrdnung);
 		BigInteger obereSchranke = wurzel.add(BigInteger.ONE);
 		return obereSchranke;
 	}
 
-	private BigInteger berechneMultiplikativeInverse(BigInteger zyklischeGruppe) throws ArithmeticException {
+	private BigInteger computeMultInverse(BigInteger zyklischeGruppe) throws ArithmeticException {
 		BigInteger multInv = erzeuger.modInverse(zyklischeGruppe);
 		return multInv;
 	}
@@ -117,26 +116,27 @@ public class BabystepGiantstep {
 	}
 
 	public void computeGiantSteps() {
-
-		BigInteger giantstep = erzeuger.modPow(m, zyklischeGruppe);
-
-		giantstepMenge.add(giantstep);
-
 		boolean found = false;
-		q = BigInteger.ONE;
-		while (!found && q.compareTo(m.subtract(BigInteger.ONE)) < 0) {
+		BigInteger giantstep = null;
 
-			giantstep = (giantstep.multiply(erzeuger.modPow(m, zyklischeGruppe))).mod(zyklischeGruppe);
+		q = BigInteger.ZERO;
+		while (!found && q.compareTo(m.subtract(BigInteger.ONE)) < 0) {
+			q = q.add(BigInteger.ONE);
+
+			if (q.compareTo(BigInteger.ONE) == 0) {
+				giantstep = erzeuger.modPow(m, zyklischeGruppe);				
+			}else {
+				giantstep = (giantstep.multiply(erzeuger.modPow(m, zyklischeGruppe))).mod(zyklischeGruppe);				
+			}
 
 			giantstepMenge.add(giantstep);
 
 			r = babystepMenge.get(giantstep);
 
 			if (r != null) {
-				x = q.add(BigInteger.ONE).multiply(m).add(r);
+				x = q.multiply(m).add(r);
 				found = true;
 			}
-			q = q.add(BigInteger.ONE);
 		}
 
 	}

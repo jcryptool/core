@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.xml.ui;singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Bundle-Vendor: %bundleProvider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.core.runtime;bundle-version="3.7.0",
@@ -24,7 +24,8 @@ Export-Package: org.jcryptool.crypto.xml.ui,
  org.jcryptool.crypto.xml.ui.sign,
  org.jcryptool.crypto.xml.ui.utils,
  org.jcryptool.crypto.xml.ui.verify
-Import-Package: org.jcryptool.core.logging.dialogs,
+Import-Package: org.eclipse.core.expressions,
+ org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,

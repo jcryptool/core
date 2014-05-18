@@ -7,8 +7,8 @@
     <body>
         <h1>Signature Demonstration</h1>
         <p>
-        Welcome to the online help of the Signature Visualization plug-in. 
-		Below you find an overview of the plug-in and a more detailed description of each step of the signature generation.
+        Welcome to the online help of the Signature Visualization plug in. 
+		Below you find an overview of the plug in and a more detailed description of each step of the signature generation.
 		<br>
 		This visualization demonstrates the creation of a digital signature for a specific document. 
 		A digital signature can be used to authenticate the sender’s identity or the identity of the document's signer. 
@@ -16,9 +16,9 @@
 		<img src="MainStart.png">
         <h2>General information</h2>
         <h3>Reset function</h3>
-		<p>The selected hash and signature function are saved. Everything else is reset to the initial state of the plug-in.</p>
+		<p>The selected hash and signature function are saved. Everything else is reset to the initial state of the plug in.</p>
 		<h3>Relaunch</h3>
-		<p>Everything is reset to the initial state of the plug-in, including the selected hash and signature function.</p>
+		<p>Everything is reset to the initial state of the plug in, including the selected hash and signature function.</p>
               
         <h2>Step 1 – Choose input</h2>
         <p>Use the button “Choose input” to start the signature process. Select an existing file or enter a text by yourself. If you want to sign an existing file, you can choose any file type you want, but the maximum file size is 10 MB.</p>
@@ -56,7 +56,7 @@
         <h4>ECDSA</h4>
         <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analog of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
         <h4>RSA and MGF1</h4>
-        <p>missing ;)</p>
+        <p>A Mask Generation Function (MGF) is used to generate pseudo random numbers in an arbitrary length. Without knowing the initial value (seed) it is infeasible to predict these random numbers. MGF1, specified in PKCS#1, is a method to archive this goal by using Hash functions like SHA-1. Random numbers are an important part of Public Key Cryptography. Using MGF1 and therefore random Numbers ensure plaintext awareness. Without knowing anything about the plaintext it is basically impossible to generate a valid ciphertext.</p>
         <h3>More information about the advanced cryptographic library BouncyCastle:</h3>
        	<ul>
         	<li><a href="http://www.bouncycastle.org/">Visit BouncyCastle</a></li>

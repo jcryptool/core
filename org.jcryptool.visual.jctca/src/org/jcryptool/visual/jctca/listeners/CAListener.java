@@ -210,10 +210,9 @@ public class CAListener implements SelectionListener {
             TreeItem sel = requests.getSelection()[0];
             RR rr = (RR) sel.getData();
             KeyStoreAlias pubAlias = rr.getAlias();
-            KeyStoreManager mng = KeyStoreManager.getInstance();
             Certificate c = null;
             try {
-                c = mng.getCertificate(pubAlias);
+                c = KeyStoreManager.getInstance().getCertificate(pubAlias);
             } catch (UnrecoverableEntryException e) {
                 LogUtil.logError(e);
             } catch (NoSuchAlgorithmException e) {
@@ -228,14 +227,14 @@ public class CAListener implements SelectionListener {
                 // mng.addCertificate(cert, new KeyStoreAlias("JCT-CA Certificate Revocation List - DO NOT DELETE",
                 // KeyType.PUBLICKEY, "RSA", 1024, cert.getPublicKey().hashCode()+"",cert.getClass().toString()));
                 KeyPair kp = Util.asymmetricKeyPairToNormalKeyPair(CertificateCSRR.getInstance().getCAKey(0));
-                mng.addKeyPair(
+                KeyStoreManager.getInstance().addKeyPair(
                         kp.getPrivate(),
                         cert,
-                        "1234".toCharArray(),
+                        KeyStoreManager.KEY_PASSWORD,
                         new KeyStoreAlias(
-                                "JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, cert.getPublicKey().hashCode() + "", cert.getClass().toString()), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                "JCT-PKI Certificate Revocation List", KeyType.KEYPAIR_PRIVATE_KEY, "RSA", 1024, kp.getPrivate().hashCode() + "", cert.getClass().toString()), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         new KeyStoreAlias(
-                                "JCT-PKI Certificate Revocation List - DO NOT DELETE", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime() + "", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                                "JCT-PKI Certificate Revocation List", KeyType.KEYPAIR_PUBLIC_KEY, revokeTime.getTime() + "", 1024, kp.getPrivate().hashCode() + "", kp.getPrivate().getClass().toString())); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 this.removeEntry(sel);
                 Util.showMessageBox(Messages.CAListener_msgbox_title_cert_revoked,
                         Messages.CAListener_msgbox_text_cert_revoked, SWT.ICON_INFORMATION);
@@ -269,9 +268,9 @@ public class CAListener implements SelectionListener {
             X509Certificate cert = Util.certificateForKeyPair(csr, serialNumber, caCert, expiryDate, startDate,
                     kp.getPrivate());
             try {
-                PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), "1234".toCharArray());
+                PrivateKey priv = mng.getPrivateKey(csr.getPrivAlias(), KeyStoreManager.KEY_PASSWORD);
                 this.removeEntry(sel);
-                mng.addKeyPair(priv, cert, "1234".toCharArray(), csr.getPrivAlias(), csr.getPubAlias());
+                mng.addKeyPair(priv, cert, KeyStoreManager.KEY_PASSWORD, csr.getPrivAlias(), csr.getPubAlias());
                 Util.showMessageBox(Messages.CAListener_msgbox_title_cert_created,
                         Messages.CAListener_msgbox_text_cert_created, SWT.ICON_INFORMATION);
 

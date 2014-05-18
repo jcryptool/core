@@ -2,16 +2,17 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-   		 id="org.jcryptool.crypto.classic.substitution.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-          <algorithm
-                actionClass="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithmAction"
-                class="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithm"
-                contextHelpId="org.jcryptool.crypto.classic.substitution.algorithm"
-                engineClass="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionEngine"
-                id="org.jcryptool.crypto.classic.substitution.algorithm"
-                name="%algorithm.name"
-                type="classic"/>
+         id="id7"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
+            class="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithm"
+            contextHelpId="org.jcryptool.crypto.classic.substitution.algorithm"
+            engineClass="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionEngine"
+            handlerClass="org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.substitution.algorithm_cmd"
+            name="%algorithm.name"
+            type="classic">
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.toc">

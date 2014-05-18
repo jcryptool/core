@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
@@ -159,8 +160,8 @@ public class SubstitutionWizardPage extends AbstractClassicCryptoPage {
 			private SubstitutionKey generateSubstKeyFromCompleteMapping(AbstractAlphabet alphabet, Map<Character, Character> characterMapping) {
 				try {
 					return new SubstitutionKey(characterMapping);
-				} catch (SubstitutionKeyValidityException e) {
-					e.printStackTrace();
+				} catch (SubstitutionKeyValidityException ex) {
+				    LogUtil.logError(ex);
 					return SubstitutionKey.createIdentitySubstitution(getSelectedAlphabet());
 				}
 			}

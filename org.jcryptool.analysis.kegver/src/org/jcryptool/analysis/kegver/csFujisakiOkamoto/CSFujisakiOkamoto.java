@@ -56,8 +56,6 @@ import java.math.BigInteger;
  */
 public class CSFujisakiOkamoto {
 
-	private static int m = 0;
-
 	public int selectMRandomly(BigInteger inN){
 		return 0;
 		//TODO

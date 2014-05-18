@@ -18,7 +18,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.analysis.substitution.ui.modules.utils.SubstitutionLetterInputField.Mode;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
-import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 
 public class SubstitutionKeyEditor extends Composite {
@@ -39,7 +38,7 @@ public class SubstitutionKeyEditor extends Composite {
 	private AbstractAlphabet plaintextAlphabet;
 
 	private boolean complete = false;
-	
+
 	private List<Observer> observers;
 
 
@@ -56,7 +55,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 	/**
 	 * Create the composite.
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
@@ -72,23 +71,23 @@ public class SubstitutionKeyEditor extends Composite {
 		UNDETERMINED_SUBST_COLOR = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
 		createGUI(plaintextAlphabet);
 	}
-	
+
 	/**
 	 * Create the composite.
-	 * 
+	 *
 	 * @param parent
 	 * @param style
 	 */
 	public SubstitutionKeyEditor(Composite parent, int style, AbstractAlphabet plaintextAlphabet) {
 		this(parent, style, plaintextAlphabet, true, plaintextAlphabet.asList());
 	}
-	
+
 	public void setDisplayUndefinedChars(boolean displayUndefinedChars) {
 		this.displayUndefinedChars = displayUndefinedChars;
 	}
 
-	
-	
+
+
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 
@@ -113,7 +112,7 @@ public class SubstitutionKeyEditor extends Composite {
 		scrollCompMain.setLayout(new GridLayout(1, false));
 		scrollCompMain.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 		scrolledComposite.setContent(scrollCompMain);
-		
+
 		createSubstitutionControls(plaintextAlphabet);
 		this.charMapping = readMapping();
 		updateUnusedCharsList();
@@ -126,7 +125,7 @@ public class SubstitutionKeyEditor extends Composite {
 	private void updateUnusedCharsList() {
 		List<Character> usedChars = new LinkedList<Character>();
 		for(Character c: this.charMapping.values()) if(c!=null) usedChars.add(c);
-		
+
 		for(SubstitutionLetterInputField ctrl: this.charInputControls.values()) {
 			ctrl.setCharactersInUse(usedChars);
 		}
@@ -149,7 +148,7 @@ public class SubstitutionKeyEditor extends Composite {
 		layout.marginHeight = 0;
 		centerComp.setLayout(layout);
 		centerComp.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-		
+
 		if(showIllustrativeMapper) {
 			Composite compIllustration = new Composite(centerComp, SWT.NONE);
 			GridLayout layoutIllustration = new GridLayout(1, false);
@@ -166,14 +165,14 @@ public class SubstitutionKeyEditor extends Composite {
 			arrow.setText(String.valueOf((char) 8595));
 
 			final IllustrationSubstitutionLetterInputField characterInputControl = new IllustrationSubstitutionLetterInputField(compIllustration, plaintextAlphabet);
-			
+
 			//spaceholder
 			Label placeholder = new Label(centerComp, SWT.NONE);
 			GridData layoutDataPlaceHolder = new GridData();
 			layoutDataPlaceHolder.widthHint = 15;
 			placeholder.setLayoutData(layoutDataPlaceHolder);
 		}
-		
+
 		for (int i = 0; i < plaintextChars.size(); i++) {
 			char c = plaintextChars.get(i);
 			Composite substAtomControl = createSingleSubstitutionControl(centerComp, c, i);
@@ -198,7 +197,7 @@ public class SubstitutionKeyEditor extends Composite {
 
 		final SubstitutionLetterInputField characterInputControl = new SubstitutionLetterInputField(comp, Mode.VERTICAL_POPUP, plaintextAlphabet);
 		charInputControls.put(plaintextChar, characterInputControl);
-		
+
 		final TextfieldInput<Character> input = characterInputControl.getCharInput();
 		input.writeContent(plaintextChar);
 		input.synchronizeWithUserSide();
@@ -227,15 +226,10 @@ public class SubstitutionKeyEditor extends Composite {
 					}
 
 					setTextfieldSubstitutionUndetermined(characterInputControl, input.getContent() == null);
-					
+
 					complete = checkMappingComplete();
 					for(Observer obs: SubstitutionKeyEditor.this.observers) {
 						obs.update(null, null);
-					}
-				} else {
-					if(arg instanceof InputVerificationResult) {
-//						InputVerificationResult inputVerificationResult = (InputVerificationResult) arg;
-//						System.out.println(String.format("Verif. for %s: %s\n\t\t%s", Character.valueOf(plaintextChar), inputVerificationResult.getMessage(), inputVerificationResult.toString()));
 					}
 				}
 
@@ -259,7 +253,7 @@ public class SubstitutionKeyEditor extends Composite {
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
 	}
-	
+
 	/**
 	 * Returns the selected character mapping (even if cancelled).
 	 * To check, whether the mapping is complete, call {@link #isCompleteData()}.<br />
@@ -267,7 +261,7 @@ public class SubstitutionKeyEditor extends Composite {
 	 * This map contains all alphabet characters as keys. If {@link #isCompleteData()} returns true, all alphabet characters
 	 * have a unique, non-null mapping.<br /><br />
 	 * Please note, that the method {@link #wasFinished()} returns whether the dialog was finished or cancelled.
-	 * 
+	 *
 	 * @return the selected character mapping
 	 */
 	public Map<Character, Character> getCharMapping() {
@@ -280,23 +274,23 @@ public class SubstitutionKeyEditor extends Composite {
 	public boolean isCompleteData() {
 		return complete;
 	}
-	
+
 	private boolean checkMappingComplete() {
 		for(Map.Entry<Character, Character> entry: getCharMapping().entrySet()) {
 			if(entry.getValue() == null) return false;
 		}
 		return true;
 	}
-	
+
 	public AbstractAlphabet getAlphabet() {
 		return plaintextAlphabet;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * @param o an observer which will be notified when the character mapping changes by editing through this composite.<br />
-	 * Note, that both arguments of the {@link Observer#update(Observable, Object)} method will be null; 
+	 * Note, that both arguments of the {@link Observer#update(Observable, Object)} method will be null;
 	 * frequent updates are possible.
 	 */
 	public void addObserver(Observer o) {

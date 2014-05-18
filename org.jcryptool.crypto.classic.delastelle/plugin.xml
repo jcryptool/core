@@ -2,17 +2,17 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension
-         id="org.jcryptool.crypto.classic.delastelle.algorithm"
-         name="%algorithm.name"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.delastelle.algorithm.DelastelleAlgorithmAction"
+         id="id4"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.classic.delastelle.algorithm.DelastelleAlgorithm"
             contextHelpId="org.jcryptool.crypto.classic.delastelle.algorithm"
             engineClass="org.jcryptool.crypto.classic.delastelle.algorithm.DelastelleEngine"
-            id="org.jcryptool.crypto.classic.delastelle.algorithm"
+            handlerClass="org.jcryptool.crypto.classic.delastelle.algorithm.DelastelleAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.delastelle.algorithm_cmd"
             name="%algorithm.name"
-            type="classic"/>
+            type="classic">
+      </algorithm_cmd>
    </extension>
    <extension
          point="org.eclipse.help.toc">

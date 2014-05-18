@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Vernam
 Bundle-SymbolicName: org.jcryptool.crypto.classic.vernam;singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.crypto.classic.vernam.VernamPlugin
 Export-Package: org.jcryptool.crypto.classic.vernam,
  org.jcryptool.crypto.classic.vernam.algorithm,
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.algorithm,
  org.jcryptool.crypto.classic.model.ui.wizard

@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.analysis.feature"
       label="JCrypTool Analysis Feature"
-      version="0.9.8"
+      version="1.0.0"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.analysis">
 
@@ -288,6 +288,13 @@ litigation.
 
    <plugin
          id="org.jcryptool.analysis.substitution"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.analysis.viterbi"
          download-size="0"
          install-size="0"
          version="0.0.0"

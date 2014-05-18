@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.games.feature"
       label="JCrypTool Games Feature"
-      version="0.9.8"
+      version="1.0.0"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.games">
 
@@ -239,6 +239,20 @@ litigation.
 
    <plugin
          id="org.jcryptool.games.sudoku"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.games.zudoku"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.games.divide"
          download-size="0"
          install-size="0"
          version="0.0.0"

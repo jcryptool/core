@@ -1,7 +1,7 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
 * Copyright (c) 2008 JCrypTool Team and Contributors
-* 
+*
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
 * which accompanies this distribution, and is available at
@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.AbstractUIInput;
@@ -35,26 +34,16 @@ import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
 
 /**
  * The WizardPage for the AddAlphabet wizard.
- * 
+ *
  * @author simlei
  *
  */
 public class CreateCustomAlphabetsWizardPage extends WizardPage {
 
-	private Group alphabetCharsGroup;
-	private Label charsLabel;
-	private Label filterDescriptionLabel;
-	private Text charsText;
-	private Group alphabetNameGroup;
-	private Label nameLabel;
-	private Text nameText;
-	private Label maxNameCharsLabel;
-
 	/** The name of the new alphabet */
 	private String name;
-	
+
 	/** The charset of the new alphabet */
-	private String chars;
 	private ComposeAlphabetComposite compositeAlphaInput;
 	private Button btnComposeAlphabetFrom;
 	private Button btnEnterEachCharacter;
@@ -66,11 +55,10 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 	private Group compCharacterData;
 	private AlphabetManualInputField textualAlphaInput;
 	private AbstractUIInput<AbstractAlphabet> alphabetInput;
-	private Composite parentComp;
 	private Composite pageComposite;
 	private TextfieldInput<String> nameInput;
-	
-	
+
+
 	/**
 	 * Creates a new instance of AddAlphabetWizardPage.
 	 */
@@ -85,8 +73,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 	 */
 	@Override
 	public void createControl(Composite parent) {
-		parentComp = parent;
-		pageComposite = new Composite(parent, SWT.NULL);	
+		pageComposite = new Composite(parent, SWT.NULL);
 //		pageComposite.setSize(new Point(350, 175));
 		GridLayout gl_pageComposite = new GridLayout();
 		gl_pageComposite.numColumns = 2;
@@ -110,7 +97,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 					text = new Text(compNameData, SWT.BORDER);
 					text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 					text.setSize(564, 21);
-					
+
 					nameInput = new TextfieldInput<String>() {
 
 						@Override
@@ -166,7 +153,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 						btnComposeAlphabetFrom = new Button(composite_1, SWT.RADIO);
 						btnComposeAlphabetFrom.setSize(299, 16);
 						btnComposeAlphabetFrom.setText(Messages.getString("AddAlphabetWizardPage2.btnComposeAlphabetFrom.text")); //$NON-NLS-1$
-						
+
 						btnComposeAlphabetFrom.addSelectionListener(new SelectionAdapter() {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
@@ -178,7 +165,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 						btnEnterEachCharacter = new Button(composite_1, SWT.RADIO);
 						btnEnterEachCharacter.setSize(206, 16);
 						btnEnterEachCharacter.setText(Messages.getString("AddAlphabetWizardPage2.btnEnterEachCharacter.text")); //$NON-NLS-1$
-						
+
 						btnEnterEachCharacter.addSelectionListener(new SelectionAdapter() {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
@@ -194,13 +181,13 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				{
 					compositeAlphaInput = new ComposeAlphabetComposite(compCharacterData);
 					compositeAlphaInput.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
-					compositeAlphaInput.layoutRoot = pageComposite; 
+					compositeAlphaInput.layoutRoot = pageComposite;
 					//TODO: das mit der übergebenen layout root für dynamische größenverändernde ui spielereien muss auch irgendwie anders gehen
 				}
-				
+
 			}
 		}
-		
+
 		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
 
 			private boolean compositeInput = true;
@@ -215,7 +202,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				AbstractAlphabet charData = btnComposeAlphabetFrom.getSelection()?
 					compositeAlphaInput.getAlphabet():
 					textualAlphaInput.getAlphabet();
-				
+
 				name = text.getText();
 				charData.setName(name);
 				charData.setShortName(name);
@@ -243,17 +230,17 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 			public String getName() {
 				return "Alphabet"; //$NON-NLS-1$
 			}
-			
+
 			@Override
 			protected void saveDefaultRawUserInput() {
 				compositeInput = true;
 			}
-			
+
 			@Override
 			protected void saveRawUserInput() {
 				compositeInput = btnComposeAlphabetFrom.getSelection();
 			}
-			
+
 			@Override
 			protected void resetUserInput() {
 				btnComposeAlphabetFrom.setSelection(compositeInput);
@@ -262,7 +249,7 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				super.resetUserInput();
 			}
 		};
-		
+
 		btnComposeAlphabetFrom.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -276,23 +263,23 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 				alphabetInput.synchronizeWithUserSide();
 			}
 		});
-		
+
 		textualAlphaInput.getAlphabetInput().addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
 				alphabetInput.synchronizeWithUserSide();
 			}
 		});
-		
+
 		compositeAlphaInput.getAlphabetInput().addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
 				alphabetInput.synchronizeWithUserSide();
 			}
 		});
-		
+
 		nameInput.addObserver(alphabetInput);
-		
+
 		alphabetInput.addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
@@ -301,25 +288,25 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 		});
 
 		setPageComplete(isWizardComplete());
-		setControl(pageComposite);		
+		setControl(pageComposite);
 	}
-	
+
 	private boolean isWizardComplete() {
 		boolean nameComplete =alphabetInput.getContent().getName().length()>0;
 		boolean alphabetComplete = alphabetInput.getContent().getCharacterSet().length>0;
-		
+
 		return nameComplete && alphabetComplete;
 	}
-	
+
 	protected void displayBlockInputForm(boolean composite) {
 		GridData composLData = (GridData) compositeAlphaInput.getLayoutData();
 		GridData textLData = (GridData) textualAlphaInput.getLayoutData();
-		
+
 		composLData.exclude = !composite;
 		compositeAlphaInput.setVisible(composite);
 		textLData.exclude = composite;
 		textualAlphaInput.setVisible(!composite);
-		
+
 		compCharacterData.layout(new Control[]{compositeAlphaInput, textualAlphaInput});
 //		pageComposite.layout();
 	}
@@ -331,16 +318,16 @@ public class CreateCustomAlphabetsWizardPage extends WizardPage {
 
 	/**
 	 * Returns the name of the new alphabet.
-	 * 
+	 *
 	 * @return	The name of the new alphabet
 	 */
 	public String getAlphabetName() {
 		return alphabetInput.getContent().getName();
 	}
-	
+
 	/**
 	 * Returns the charset of the new alphabet.
-	 * 
+	 *
 	 * @return	The charset of the new alphabet
 	 */
 	public String getAlphabetCharset() {

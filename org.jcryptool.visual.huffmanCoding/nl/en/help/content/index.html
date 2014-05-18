@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Huffman Coding</title>
+</head>
+<body>
+<h1>Huffman Coding</h1>
+
+<p>
+This online help explains the functioning of the <b>Huffman Coding</b> plug-in.
+<p>
+Contents overview:<br>
+<br>
+<b>1)</b> <a href="#Chapter1">The tab <b>Compression/Decompression</b> and scenario selection</a><br>
+<br>
+<b>2)</b> <a href="#Chapter2">The tab <b>Huffman tree</b></a><br>
+<br>
+<b>3)</b> <a href="#Chapter3">The tab <b>Code table</b></a><br>
+<br>
+<b>4)</b> <a href="#Chapter4">The meaning of the icons in the menu bar</a><br>
+<br>
+<b>5)</b> <a href="#Chapter5">References</a>
+
+
+<p>
+The <b>Huffman Coding</b> plug-in could be started by the menu <b>Visualization</b> 
+or via the Crypto Explorer tab <b>Visualization</b>.
+<p>
+
+<img src="huffmankodierung_plugin.jpg">
+
+<p>
+This plug-in contains three tabs: <b>Compression/Decompression</b>, <b>Huffman tree</b> 
+and <b>Code table</b>.
+<p>
+
+<img src="huffmankodierung_registerkarten.jpg">
+
+<p>
+<a name="Chapter1"><b>1)</b></a> On the first tab <b>Compression/Decompression</b> there are two scenarios to choose:</a>
+<p>
+
+<img src="huffman_szenario.jpg">
+
+<p>
+<b>Scenario 1 -- Compress</b><br>
+This scenario applies the compression of text. You can load a text file or enter a text into 
+the field <b>Input text</b>. 
+
+<p>
+<b>a)</b> To load a text file click on the button <b>Open uncompressed file...</b>. A file chooser dialog 
+of the operating system is opened and filtered by text files 
+(ISO-8859-1). <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a> is a eight bit character encoding standard. 
+<p>
+
+<img src="huffman_unkompdatei_laden.jpg">
+
+<p>
+After choosing the file the content of the file is loaded into the field <b>Input text</b> and the button 
+<b>Compress</b> is enabled. The file size is determined and is displayed near to the text <b>File size (in bytes)</b>.
+You can use it to compare the file sizes before and after compression.
+<p>
+
+<img src="huffman_unkompdatei_geladen.jpg">
+
+<p>
+<b>b)</b> You can also compress a manually entered text. To do so just enter the text into the field <b>Input text</b>. 
+Once the text is entered the button <b>Open uncompressed file...</b> is disabled.
+So you can choose between the manually entered text and loading a text file.  To return to the initial 
+state just clear the text that you previously entered. This enables the button 
+<b>Open uncompressed file...</b> again.
+<p>
+
+ <img src="huffman_manu_input.jpg">
+
+<p>
+Click on the <b>Compress</b> button <img src="huffman_unkompdatei_komprimiert.jpg"> to compress the text shown in the field <b>Input text</b>.
+After the compression is completed, a message is displayed about the compression. 
+<p>
+
+ <img src="huffman_status.jpg">
+
+<p>
+An output file with the file extension 
+<b>.huffman</b> is generated in the user's home directory. The file path and the size of the output file
+are displayed. The button <b>Compress</b> is disabled and the button <b>Uncompress</b> enabled.
+<p>
+
+Now you can click on the button <b>Apply file for uncompression</b> <img src="huffman_datei_uebernehmen.jpg"> to change the view to the 
+scenario 2 <b>Uncompress</b> and to uncompress the previously compressed text.
+
+<p>
+
+<b>Scenario 2 -- Uncompress</b><br>
+In this scenario you can uncompress a compressed file. To perform that you have to click the button 
+<b>Open compressed file...</b> to open a file chooser dialog of the operating system. In this dialog files with the extension <b>.huffman</b> are filtered.
+<p>
+
+<img src="huffman_kompdatei_laden.jpg">
+
+<p>
+
+After you choose a <b>.huffman</b> file the file size is determined and displayed near the text
+<b>file size (in bytes)</b>. The button <b>Uncompress</b> is enabled.
+<p>
+
+ <img src="huffman_kompdatei_geladen.jpg">
+
+<p>
+A click on the button <b>Uncompress</b> will uncompress the file and displays its content in the field
+<b>Output text</b>.
+<p>
+
+<img src="huffman_kompdatei_dekomprimiert.jpg">
+<p>
+<img src="huffman_output.jpg">
+
+<p>
+
+<a name="Chapter2"><b>2)</b></a> Depending on whether a compression or uncompression is performed, the <b>Huffman tree</b> structure will be displayed on the second tab.
+For the graphical structure of the Huffman tree, the <a href="http://www.eclipse.org/gef/zest/">ZEST</a> framework was used. ZEST is a visualization toolkit with a set of visualization components built for Eclipse.
+With ZEST it is possible to visualize trees in an easy way.</a>
+
+<p>
+The Huffman tree is a binary tree, which
+transmits the information to its leafs. The leafs are <b>green</b> marked and present the <b>ASCII characters</b> of the input text. 
+
+<p>
+On the edges of the graph the bits <b>1</b> or <b>0</b> are displayed which generate the code words for each character. 
+
+<p>
+On the root and the inner nodes of the tree, which was produced by compression, the probabilities of the characters are displayed. On 
+a tree which was generated by uncompressing, the root and the inner nodes are displayed as empty nodes because in this 
+case no probabilities are calculated.
+<p>
+
+<img src="huffman_huffmanbaum.jpg">
+
+<p>
+When you move with the mouse over a leaf, a tooltip shows the code word of the input character.
+<p>
+
+<img src="huffman_blatt_tooltip.jpg">
+
+<p>
+
+When you click on one of the leafs the corresponding branch will be selected: The branch from the root to the clicked leaf will be highlighted and you can move the branch as needed. The code word of 
+the selected leaf is displayed at the top.
+<p>
+
+<img src="huffman_blatt_selektieren.jpg">
+
+<p>
+
+<a name="Chapter3"><b>3)</b></a> On the third tab the code table is displayed. For each <b>ASCII character</b> which appears in the
+input text, its associated code word is displayed. By clicking on the button 
+<b>Show branch</b> the view switches to the tab <b>Huffman tree</b> and selects the corresponding branch.</a>
+<p>
+
+<img src="huffman_zweig_anzeigen.jpg">
+
+<p>
+
+<a name="Chapter4"><b>4)</b></a> The meaning of the icons in the menu bar</a>
+<p>
+<ol type="a">
+	<li>In the menu bar you can click on the <img src="huffman_zuruecksetzen_icon.jpg"> icon to return to the initial state of the plug-in 
+	and start the algorithm with new user input.
+	</li>
+	<li>You can change the layout of the tree by clicking on the <img src="huffman_strukturwechseln.jpg"> icon in the menu bar. The 
+	layout of Huffman tree changes dynamically. Per default, the Huffman tree is shown in <b>tree layout</b>. There are also the 
+	layouts <b>horizontal tree layout</b> and <b>radial layout</b> available. Different displaying options of the Huffman tree are 
+	offered to simplify the readability of the tree.</li>
+	<li>The size of the Huffman tree is directly adapted to the size of the view by creation, so that the tree is completely shown. 
+	The view can also be zoomed by clicking on the <img src="huffman_baumzoom.jpg"> icon.</li>
+</ol>
+
+
+<p>
+<a name="Chapter5"><b>5)</b></a> References
+<ol type="1">
+<li>&nbsp The Eclipse Visualization Toolkit <a href="http://www.eclipse.org/gef/zest/">ZEST</a>
+<li>&nbsp Wikipedia link <a href="http://en.wikipedia.org/wiki/Huffman_coding">Huffman Coding</a>
+<li>&nbsp Wikipedia link <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a>
+<li>&nbsp Inel, Miray: <i>Entwurf und Implementierung von Plug-ins für JCrypTool - Shanks Babystep-Giantstep und Huffman-Kodierung</i> Bachelor-Thesis 2014 - TU-Darmstadt
+</ol>
+</body>
+</html>

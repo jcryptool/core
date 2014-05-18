@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 
 public class IntroductionAndParameters {
@@ -69,10 +70,10 @@ public class IntroductionAndParameters {
 		label.setBackground(white);
 		label.setText(Messages.IntroductionAndParameters_0); //$NON-NLS-1$
 
-		label = new Label(compositeIntro, SWT.READ_ONLY | SWT.WRAP);
-		label.setText(Messages.IntroductionAndParameters_1); //$NON-NLS-1$
-		label.setBackground(white);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		Text text = new Text(compositeIntro, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
+		text.setText(Messages.IntroductionAndParameters_1); //$NON-NLS-1$
+		text.setBackground(white);
+		text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 
 		Group groupParameters = new Group(parent, SWT.NONE);
 		groupParameters.setLayout(new GridLayout(1, false));

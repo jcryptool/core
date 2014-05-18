@@ -77,7 +77,7 @@ public class CRTGroup extends Composite implements Constants {
     private ScrolledComposite scrolledComposite_2;
     private Composite compositeTitleArea;
     private Label lblHeader;
-    private Label lblHeaderInfoText;
+    private Text lblHeaderInfoText;
 
     /**
      * Create the composite
@@ -121,7 +121,7 @@ public class CRTGroup extends Composite implements Constants {
         lblHeader.setBounds(10, 0, 666, 24);
         lblHeader.setText(Messages.CRTGroup_Header);
         
-        lblHeaderInfoText = new Label(compositeTitleArea, SWT.NONE);
+        lblHeaderInfoText = new Text(compositeTitleArea, SWT.WRAP | SWT.MULTI | SWT.READ_ONLY);
         lblHeaderInfoText.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
         lblHeaderInfoText.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
         lblHeaderInfoText.setBounds(10, 30, 666, 45);

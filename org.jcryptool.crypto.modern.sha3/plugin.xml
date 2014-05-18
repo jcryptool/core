@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-	<extension
-			id="org.jcryptool.crypto.modern.sha3"
-			point="org.jcryptool.core.operations.algorithms">
-		<algorithm
-        actionClass="org.jcryptool.crypto.modern.sha3.SHA3Action"
-        class="org.jcryptool.crypto.modern.sha3.skein.algorithm.SkeinAlgorithm"
-        contextHelpId="org.jcryptool.crypto.modern.sha3.wizardhelp"
-        id="org.jcryptool.crypto.modern.sha3."
-        isFlexiProviderAlgorithm="false"
-        name="%algorithm.name"
-        type="hash">
-		</algorithm>
-	</extension>
+ <extension
+       id="org.jcryptool.crypto.modern.sha3"
+       point="org.jcryptool.core.operations.algorithms_cmd">
+    <algorithm_cmd
+          class="org.jcryptool.crypto.modern.sha3.skein.algorithm.SkeinAlgorithm"
+          contextHelpId="org.jcryptool.crypto.modern.sha3.wizardhelp"
+          handlerClass="org.jcryptool.crypto.modern.sha3.SHA3Handler"
+          id="org.jcryptool.crypto.modern.sha3."
+          isFlexiProviderAlgorithm="false"
+          name="%algorithm.name"
+          type="hash">
+    </algorithm_cmd>
+ </extension>
 	<extension
 			point="org.eclipse.help.toc">
 		<toc

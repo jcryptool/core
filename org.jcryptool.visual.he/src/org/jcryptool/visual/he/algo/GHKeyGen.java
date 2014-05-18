@@ -103,7 +103,6 @@ public class GHKeyGen {
 			//calculate the last x_i from the first s-1, try until the sum is invertible
 			while (pkBlocksX[fheparams.s-1] == null) {
 				try {
-					//if(nTrials2%100==0) System.out.println("trials: " + nTrials2);
 					pkBlocksIdX[fheparams.s-1] = r.nextInt(fheparams.S);
 					factor = new BigInteger("2").modPow((new BigInteger(Integer.toString(pkBlocksIdX[fheparams.s-1]))).multiply(new BigInteger(Integer.toString(fheparams.logR))),det);
 					factor = factor.modInverse(det);

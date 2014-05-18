@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.crypto.xml.core;singleton:=true
-Bundle-Version: 0.9.8
+Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.crypto.xml.core.XmlSecurityPlugin
 Bundle-Vendor: %bundleProvider
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.jcryptool.core.operations;bundle-version="0.9.8",
  org.jcryptool.crypto.keystore;bundle-version="0.9.8"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.jcryptool.crypto.xml.core,
  org.jcryptool.crypto.xml.core.canonicalize,
  org.jcryptool.crypto.xml.core.cryptography,

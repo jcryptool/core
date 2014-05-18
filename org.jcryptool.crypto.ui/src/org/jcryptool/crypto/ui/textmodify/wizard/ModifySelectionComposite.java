@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.Vector;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -75,22 +74,12 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
 //    private static Mode defaultMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
     private static Mode defaultMode = Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON;
-    
-    /**
-     * the alphabets to be displayed in the alphabet box
-     */
-    private String[] alphabets;
-    /**
-     * the name of the default alphabet (the selected entry in the alphabet combo box) - if the alphabet is not found,
-     * the first Alphabet is used
-     */
-    private String defaultAlphabet;
 
     private String tryString;
     private PreviewViewer myExampleViewer;
 	private Mode customAlphabetMode = defaultMode;
 	private AlphabetSelectorComposite alphabetComboNew;
-	
+
 
     /**
      * @param parent the parent composite
@@ -109,12 +98,9 @@ public class ModifySelectionComposite extends Composite implements Listener {
         super(parent, style);
 
         this.customAlphabetMode = customAlphaMode;
-        
+
         GridLayout layout = new GridLayout();
         this.setLayout(layout);
-
-        this.alphabets = getAlphabetList();
-        this.defaultAlphabet = getStandardAlphabetName();
 
         try {
             createUppercaseGroup(this);
@@ -126,8 +112,6 @@ public class ModifySelectionComposite extends Composite implements Listener {
             LogUtil.logError(CryptoUIPlugin.PLUGIN_ID, e);
         }
 
-        // initAlphabetComposites(this.defaultAlphabet);
-
         setTransformData(defaultData);
     }
 
@@ -138,18 +122,18 @@ public class ModifySelectionComposite extends Composite implements Listener {
 
 	public TransformData getTransformData() {
     	//TODO: !provisory getNameForAlphabet
-        return new TransformData(getSelectedFilterAlphabet(), 
-        		doUppercase, 
-        		uppercaseTransformationOn, 
+        return new TransformData(getSelectedFilterAlphabet(),
+        		doUppercase,
+        		uppercaseTransformationOn,
         		leerTransformationON,
-                alphabetTransformationON, 
+                alphabetTransformationON,
                 umlautTransformationON);
     }
-    
+
     //TODO: !relocate
     /**
      * retrieves a name for a given alphabet object that is supposed to be in the JCT alphabets store.
-     * 
+     *
      * @param a the alphabet object
      * @return the name, or null, if not found
      */
@@ -188,14 +172,7 @@ public class ModifySelectionComposite extends Composite implements Listener {
         alphabetComboNew.getAlphabetInput().writeContent(selectAlphabet);
         alphabetComboNew.getAlphabetInput().synchronizeWithUserSide();
     }
-    
-    private static AbstractAlphabet getAlphabetForName(String name) {
-    	for(AbstractAlphabet a: AlphabetsManager.getInstance().getAlphabets()) {
-    		if(a.getName().equals(name)) return a;
-    	}
-    	return null;
-    }
-    
+
     public AbstractAlphabet getSelectedFilterAlphabet() {
     	return alphabetComboNew.getAlphabetInput().getContent();
     }
@@ -451,19 +428,6 @@ public class ModifySelectionComposite extends Composite implements Listener {
         tryButton.setText(Messages.ModifySelectionComposite_howwillitlooklike);
         tryButton.setLayoutData(tryButtonGridData);
         tryButton.addListener(SWT.Selection, this);
-    }
-
-    private String getStandardAlphabetName() {
-        return AlphabetsManager.getInstance().getDefaultAlphabet().getName();
-    }
-
-    private String[] getAlphabetList() {
-        Vector<String> myV = new Vector<String>();
-        AbstractAlphabet[] alphas = AlphabetsManager.getInstance().getAlphabets();
-        for (int i = 0; i < alphas.length; i++) {
-            myV.addElement(alphas[i].getName());
-        }
-        return myV.toArray(new String[0]);
     }
 
     /**

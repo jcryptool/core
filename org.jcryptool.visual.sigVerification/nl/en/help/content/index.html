@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang = "de">
+    <head>
+        <meta charset="utf-8">
+        <title>Signature-Verification</title>
+    </head>
+    <body>
+        <h1>Signature-Verification</h1>
+        <p>
+		Welcome to the online help of the Signature Verification plug-in.
+		Below you find an overview of the plug-in and a more detailed description of each step of the signature verification.
+		Please click to skip the first part and scroll forward to the help for the <a href="#GUI2">Verification of certificates using different validity models. </a>
+        <br>
+		This visualization shows the verification process of a signature of a signed document. A digital signature ensures the authenticity and the integrity of the sender. 
+		</p>
+		<img src="GUI1.png"> 
+		<h2>General Information</h2>
+        <h3>Back function</h3>
+		<p>Step by step return. All changes and attitudes are preserved till the chosen step.</p>
+		
+		<h2>Step 1 – Choose input</h2>
+        <p>In order to start the verification process click the button "Choose input". Select an existing signed file, the maximum data size is 10 MB. If you don't own a signed file yet feel free to create one using the plug in Signature-Demo: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.sig">Signature-Demo</a></</p>
+      	<p><img src="DateiAuswahlen.png"></p>
+		
+		<h2>Step 2 – Choose hash method</h2>
+        <p>he second step of the signature verification process is to calculate the message digest or hash value of the document. A hash function is an algorithm or subroutine that maps data sets of variable length to data sets of a fixed length (digest). Signing the message digest rather than the documents (the message or the file) improves the efficiency of the process because the message digest is usually much smaller in size than the document. The same hash algorithm used by the creator of the digital signature must be used by the verifier of a digital signature.</p>
+        <img src="HashWahlen.png">
+        <h3>Description of provided hash functions</h3>
+        <h4>MD5</h4>
+        <p>The MD5 algorithm (published in 1992 and specified in RFC 1321) takes as input a message of arbitrary length and produces as output a 128-bit "fingerprint" or "message digest". The MD5 algorithm is intended for digital signature applications, where a large file must be "compressed" in a secure manner before being encrypted with a private key under a public-key cryptosystem such as RSA.</p>
+        <h4>SHA-1</h4>
+        <p>The “Secure Hash Algorithm“ (published in 1995 by the United States NIST) computes a condensed representation of a message or a data file. When a message of any length < 264 bits is input, the SHA-1 produces a 160-bit output. The SHA-1 is called secure because it was computationally infeasible to find a message which corresponds to a given message digest, or to find two different messages which produce the same message digest. Any change to a message in transit will, with very high probability, result in a different message digest, and the signature will fail to verify.</p>
+        <h4>SHA-256</h4>
+        <p>SHA-256 is one of the successor hash functions to SHA-1 (collectively referred to as SHA-2), and is one of the strongest hash functions available. While SHA-1 has not been compromised in real-world conditions (however in theory), SHA-256 is not much more complex to code. It is recommended to use this method instead of SHA-1.</p>
+        <h4>SHA-384</h4>
+        <p>SHA-384 is like SHA-512, but they differ in the size of the hash value (SHA-384 is truncated). The initial hash is calculated from the 64 decimal bits of the square roots of the consecutive primes (23, 29, etc.). In the end only the first six 64-bit words from the result are used. The attached number indicates the length of each hash value (in bits).</p>
+        <h4>SHA-512</h4>
+        <p>SHA-256 and SHA-512 differ in the word size. SHA-256 uses 32-bit words where SHA-512 uses 64-bit words. The attached number indicates the length of each hash value (in bits).</p>
+        
+        <h2>Step  3 – Verify signature</h2>
+        <p>If you want to verify your signature you need to select the used signature function.</p>
+        <img src="Signaturmethode.png">
+        
+        <h3>Description of provided signature functions</h3>
+        <h4>DSA</h4>
+        <p>The Digital Signature Algorithm (DSA) (published by the NIST in 1991) is a United States Federal Government standard for digital signatures. With DSA, the entropy, secrecy, and uniqueness of the random signature value is critical. It is so critical that violating any one of those three requirements can reveal the entire private key to an attacker. Using the same value twice (even while keeping random signature value secret), using a predictable value, or leaking even a few bits of random signature value in each of several signatures, is enough to break DSA.</p>
+        <p>To learn more about DSA:  <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.dsa">Visit JCT-DSA</a></p>
+        <h4>RSA</h4>
+        <p>RSA (the algorithm was published in 1977) is an algorithm for public-key cryptography that is based on the presumed difficulty of factoring large integers, the factoring problem. Anyone can use the public key to encrypt a message, but with currently published methods, if the public key is large enough, only someone with knowledge of the prime factors can feasibly decode the message. Secure padding schemes such as RSA-PSS are as essential for the security of message signing as they are for message encryption. The PKCS #1 cryptography standard provides recommendations for the implementation of public-key cryptography based on the RSA algorithm.</p>
+        <p>To learn more about RSA: <a href="https://github.com/jcryptool/crypto/tree/master/org.jcryptool.visual.rsa">Visit JCT-RSA</a></p>
+        <h4>ECDSA</h4>
+        <p>The Elliptic Curve Digital Signature Algorithm (ECDSA) (proposed in 1992 by Scott Vanstone) is the elliptic curve analog of the Digital Signature Algorithm (DSA). Unlike the ordinary discrete logarithm problem and the integer factorization problem, no sub exponential-time algorithm is known for the elliptic curve discrete logarithm problem. The size of a private key that is considered secure is much smaller with ECDSA. At a security level of 80 bits, meaning an attacker requires the equivalent of about 2^80 signature generations to find the private key, the size of a DSA public key is at least 1024 bits, whereas the size of an ECDSA public key would be 160 bits.</p>
+        <h4>RSA and MGF1</h4>
+        <p>A Mask Generation Function (MGF) is a function to generate pseudo random numbers of variable length. It's practically impossible to tell the random number without any knowledge about the starting value(seed). MGF1 is a method specified within the PKCS#1 which uses hash methods like SHA-1 to create pseudo random numbers.  </p>
+        
+		<h3>Select public key</h3>
+		<p>You now still need the public key. If the signature was created using a key from the Default-JCT-Keystore you can load it by clicking on "Load public key from java keystore". The other two options are not yet implemented and will be deactivated till they are completed. </p>
+		<img src="SchlusselAuswahlen.png">
+
+		
+        <h2>Step 4 – Show result</h2>
+        <img src="Hacken.png">
+        <img src="Kreutz.png">
+        <p>If the verification succeeded there will be a green tick next to the button "Show result". If not there will be a red cross. For further information click on the button "Show result". There you'll find more relevant informations :</p>
+        <ul>
+            <li>The used key/curve</li>
+            <li>The verification function</li>
+            <li>hexadecimal, octal or binary representation of the signature as well as the signature length</li>
+			<li>hexadecimal representation of the hash and its length</li>
+		</ul>
+        <p>Click on the button "Validity models" to take a look at the verification of certificates using the shell model (chain model will follow)</p>
+		<img src="ErgebnisAnzeigen.png">
+		
+		<h1><a id=GUI2>Certificate verification using validity models</a></h1>
+		<p>This user interface was included for learning purposes. It shows how the usage of different validity models(shell and chain model) affects the validation of certificates.</p>
+		<img src="2ob.png">
+		<h2>Shell model</h2>
+		<p>The shell model validation only succeeds if all certificates are valid at the time of the verification. I.e. if the user certificate and the level 2 certificate are valid at the time of the verification but the root certificate is not the signature is considered invalid. At the same time lower certificates are not allowed to have a longer validity period than those of a higher level(e.g.: Level 2 compared to root).</p>
+		<h3>Certificates</h3>
+		<h4>Root certificate</h4>
+		<p>Highest certificate level. Determines validity of following certificates.</p>
+		<h4>Level 2 certificate</h4>
+		<p>Signed with the root certificate.</p>
+		<h4>User certificate</h4>
+		<p>Certificate of the lowest level. In order for it to be valid all higher certificates(in this case root and level 2 certificate) have to be considered valid.</p>
+		<h3>Actions</h3>
+		<h4>Shell model | Chain model</h4>
+		<p>Option to choose whether to validate using the shell or the chain model. Attention: For now only the shell model has been implemented, the chain model will be implemented in a follow up project) </p>
+		<h4>Back</h4>
+		<p>Restores the default certificates which were created by first opening the 2nd user interface.</p>
+		<h4>New validity dates</h4>
+		<p>This enables you to change the validity dates of all certificates. In order to see the new results press the button "Recalculate".</p>
+		<h4>Recalculate</h4>
+		<p>Starts the recalculation according to the shell model. If the certificates are still valid you will see a green tick if not a red cross. Please note that this button is only enabled if the given date is a real valid date.</p>
+		
+    </body>
+</html>
