@@ -1,5 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -39,7 +40,10 @@ public class CrtVerComposite extends Composite {
 	private Label thruCert;
 	private Label fromCert;
 	private Label signatureDate;
+	private Label validity;
 	CrtVerViewController controller = new CrtVerViewController();
+	private Text TextVerificationDateDay;
+	private Text txtDiesIstDer;
 	
 	/**
 	 * Create the composite.
@@ -60,16 +64,14 @@ public class CrtVerComposite extends Composite {
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
 		composite.setLayout(new GridLayout(10, false));
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+		
+		txtDiesIstDer = new Text(composite, SWT.BORDER);
+		txtDiesIstDer.setEnabled(false);
+		txtDiesIstDer.setEditable(false);
+		txtDiesIstDer.setText("Dies ist der Testtext.");
+		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 10, 1);
+		gd_txtDiesIstDer.heightHint = 19;
+		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -159,8 +161,31 @@ public class CrtVerComposite extends Composite {
 		gd_ScaleCertEnd.widthHint = 240;
 		ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
 		ScaleCertEnd.setSelection(120);
-		
 		Button btnLoadUserCert = new Button(composite, SWT.NONE);
+		// Selection Listeners | Scales
+        btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert();
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                };
+                if (dialog.open() == Window.OK) {
+                   // Hier kann man Aktionen durfuehren die passieren sollen wenn die WizardPage aufgerufen wird
+                   // zB aktivieren/deaktivieren von Buttons der Hauptansicht
+                }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
+			
 		GridData gd_btnLoadUserCert = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_btnLoadUserCert.widthHint = 100;
 		btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
@@ -189,12 +214,25 @@ public class CrtVerComposite extends Composite {
 		lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
 		lblSignatureDate.setAlignment(SWT.CENTER);
 		
+		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
+		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL, false, false, 8, 1);
+		gd_ScaleVerificationDate.widthHint = 480;
+		ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
+		ScaleVerificationDate.setMaximum(480);
+		ScaleVerificationDate.setSelection(240);
+		new Label(composite, SWT.NONE);
+		
+		Label lblVerificationDate = new Label(composite, SWT.NONE);
+		lblVerificationDate.setText("Verification Date");
+		lblVerificationDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblVerificationDate.setAlignment(SWT.CENTER);
+		
 		Group grpDetails = new Group(composite, SWT.NONE);
 		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 10, 1);
 		gd_grpDetails.widthHint = 608;
 		grpDetails.setLayoutData(gd_grpDetails);
 		grpDetails.setText("Details");
-		grpDetails.setLayout(new GridLayout(9, false));
+		grpDetails.setLayout(new GridLayout(10, false));
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		
@@ -226,6 +264,9 @@ public class CrtVerComposite extends Composite {
 		
 		Label LabelHeaderSignatureDate = new Label(grpDetails, SWT.NONE);
 		LabelHeaderSignatureDate.setText("Signature Date");
+		
+		Label LabelHeaderVerificationDate = new Label(grpDetails, SWT.NONE);
+		LabelHeaderVerificationDate.setText("Verification Date");
 		Label lblValidFrom = new Label(grpDetails, SWT.NONE);
 		lblValidFrom.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblValidFrom.setText("valid from:");
@@ -294,6 +335,18 @@ public class CrtVerComposite extends Composite {
 		// Initialize Label "Signature Date" with actual date
 		LabelSignatureDate.setText(controller.now());
 		
+		Composite composite_2 = new Composite(grpDetails, SWT.NONE);
+		composite_2.setLayout(new GridLayout(2, false));
+		
+		TextVerificationDateDay = new Text(composite_2, SWT.BORDER);
+		TextVerificationDateDay.setText("1");
+		GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_TextVerificationDateDay.widthHint = 20;
+		TextVerificationDateDay.setLayoutData(gd_TextVerificationDateDay);
+		
+		final Label LabelVerificationDate = new Label(composite_2, SWT.NONE);
+		LabelVerificationDate.setText("05/14");
+		
 		Label lblValidThru = new Label(grpDetails, SWT.NONE);
 		lblValidThru.setText("valid thru:");
 		new Label(grpDetails, SWT.NONE);
@@ -345,32 +398,28 @@ public class CrtVerComposite extends Composite {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
+		new Label(grpDetails, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		Label lblvalidity = new Label(composite, SWT.NONE);
+		validity = lblvalidity;
+		lblvalidity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
+		lblvalidity.setAlignment(SWT.CENTER);
+		lblvalidity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		GridData gd_lblvalidity = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
+		gd_lblvalidity.heightHint = 25;
+		gd_lblvalidity.widthHint = 400;
+		lblvalidity.setLayoutData(gd_lblvalidity);
+		lblvalidity.setText("NOT VALID");
+		new Label(composite, SWT.NONE);
 		
 		Button btnReset = new Button(composite, SWT.NONE);
 		btnReset.setText("Reset");
-		// Selection Listeners | Scales
-        btnReset.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                try {
-                    TestWizard wiz = new TestWizard();
-                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
-                        @Override
-                        protected void configureShell(Shell newShell) {
-                            super.configureShell(newShell);
-                            // set size of the wizard-window (x,y)
-                            newShell.setSize(550, 500);
-                        }
-                };
-                if (dialog.open() == Window.OK) {
-                   // Hier kann man Aktionen durfuehren die passieren sollen wenn die WizardPage aufgerufen wird
-                   // zB aktivieren/deaktivieren von Buttons der Hauptansicht
-                }
-                } catch (Exception ex) {
-                    LogUtil.logError(Activator.PLUGIN_ID, ex);
-                }
-            }
-        });
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -386,7 +435,27 @@ public class CrtVerComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		
 		Button btnCalculate = new Button(composite, SWT.NONE);
-		btnCalculate.setText("Calculate");
+		btnCalculate.setText("Validate");
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmKettenmodell.setText("Kettenmodell");
@@ -446,6 +515,14 @@ public class CrtVerComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				signatureDate.setText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 240));
+			}
+		});
+		
+		ScaleVerificationDate.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				//Add or Remain Time dependent on selection
+				LabelVerificationDate.setText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 240));
 			}
 		});
 		

@@ -3,10 +3,10 @@ package org.jcryptool.visual.crtverification.views;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
-public class TestWizardPage extends WizardPage {
-    private TestComposite compositeFile;
+public class ChooseCertPage extends WizardPage {
+    private ChooseCertComposite compositeFile;
 
-    public TestWizardPage(String pageName) {
+    public ChooseCertPage(String pageName) {
         super(pageName);
 
         setTitle(pageName);
@@ -16,14 +16,14 @@ public class TestWizardPage extends WizardPage {
     // TestComposite wird erzeugt
     public void createControl(Composite parent) {
         setPageComplete(false);
-        compositeFile = new TestComposite(parent, NONE);
+        compositeFile = new ChooseCertComposite(parent, NONE);
         setControl(compositeFile);
     }
 
     /**
      * @return the compositeFile
      */
-    public TestComposite getCompositeFile() {
+    public ChooseCertComposite getCompositeFile() {
         return compositeFile;
     }
 

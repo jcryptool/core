@@ -2,18 +2,18 @@ package org.jcryptool.visual.crtverification.views;
 
 import org.eclipse.jface.wizard.Wizard;
 
-public class TestWizard extends Wizard {
+public class ChooseCert extends Wizard {
     private String name = "TestWizard";
-    private TestWizardPage page;
+    private ChooseCertPage page;
 
-    public TestWizard() {
+    public ChooseCert() {
         super();
         setWindowTitle(name);
     }
 
     @Override
     public void addPages() {
-        page = new TestWizardPage(name);
+        page = new ChooseCertPage(name);
         addPage(page);
     }
 

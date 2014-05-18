@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 
-public class TestComposite extends Composite {
+public class ChooseCertComposite extends Composite {
     private Text text;
 
     /**
@@ -13,7 +13,7 @@ public class TestComposite extends Composite {
      * @param parent
      * @param style
      */
-    public TestComposite(Composite parent, int style) {
+    public ChooseCertComposite(Composite parent, int style) {
         super(parent, style);
         
         // Design with Window Builder
