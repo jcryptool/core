@@ -90,6 +90,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 	private AbstractAlphabet defaultAlphabet;
 
+	private boolean showCustomCreationHint = true;
+
 	/**
 	* Overriding checkSubclass allows this class to extend org.eclipse.swt.widgets.Composite
 	*/
@@ -202,6 +204,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 							}
 						}
 					});
+					
 				}
 
 				comboAlphas = new Combo(this, SWT.NONE);
@@ -225,13 +228,13 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 							if(btnCustomAlphabet.getSelection()) {
 								customAlphaByBtn = makeCustomAlphabet(e);
 								boolean customAlphaWasMade = customAlphaByBtn!=null;
-
+								
 								if(customAlphaWasMade) {
 									reloadAlphabetCombo();
 								}
 
 								alphabetInput.synchronizeWithUserSide();
-
+								
 
 								if(btnCustomAlphabet.getSelection()) {
 									showCustomAlphabetSelection();
@@ -296,7 +299,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		if(returnCode == Window.OK) {
 			return wiz.getAlphabet();
 		}
-
+		
 		return null;
 	}
 
@@ -317,7 +320,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		this.acceptor = createAllAlphabetsAcceptor();
 		reloadAlphabetCombo();
 	}
-
+	
 	private void reloadAlphabetCombo() {
 		boolean afterResetSelectCustomAlphaItem = false;
 		if(comboAlphas.getSelectionIndex() == getComboIndexForUnregisteredAlphabet()) {
@@ -349,8 +352,9 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 			comboAlphas.select(0);
 			if(alphabetInput != null) alphabetInput.synchronizeWithUserSide();
 		}
-
+		
 		comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
+		btnSelectAlphabet.setEnabled(registeredAlphas.size() > 0);
 	}
 
 	private String makeAlphaStringForCombo(AbstractAlphabet alpha, boolean custom) {
@@ -363,6 +367,10 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 	private String makeAlphaStringForBtn(AbstractAlphabet alpha) {
 		return getCustomAlphabetLabel() + Messages.getString("AlphabetSelectorComposite.current") + alpha.getName() + "; Zeichen: " + AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
+
+	private String makeAbbreviatedContentString(AbstractAlphabet alpha) {
+		return AbstractAlphabet.alphabetContentAsString(alpha.getCharacterSet());
 	}
 
 	private int getIndexForRegisteredAlphabet(AbstractAlphabet content) {
@@ -378,7 +386,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
 			private boolean alphabetFromComboWasCustom;
 			private boolean alphabetWasFromCustomBtn;
-
+			
 			@Override
 			protected boolean canAutocorrect(InputVerificationResult result) {
 				if(result.getMessage().contains("cancelled")) {
@@ -461,6 +469,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 					} else if(isRegisteredAlphabetSetInCombo()) {
 						return getAlphabetFromCombo();
 					} else {
+//						return this.getContent();
 						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found."); //$NON-NLS-1$
 					}
 				}
@@ -550,7 +559,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		if(mode.isWithCustomButton()) {
 			btnCustomAlphabet.setToolTipText(generateAlphaContentTip(alphabetInput.getContent()));
 		}
-
+		
 		alphabetInput.addObserver(new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
@@ -670,8 +679,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 	protected Button getBtnCustomAlphabet() {
 		return btnCustomAlphabet;
 	}
-
-
+	
+	
 	Map<Control, Boolean> enabledStateMap = new HashMap<Control, Boolean>();
 	@Override
 	public void setEnabled(boolean enabled) {
@@ -684,7 +693,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 		super.setEnabled(enabled);
 	}
-
+	
 	public boolean isCustomAlphabetSelected() {
 		if(mode.isWithCustomButton()) {
 			return btnCustomAlphabet.getSelection();

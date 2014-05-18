@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -41,19 +41,19 @@ import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmSpecification;
 import org.jcryptool.crypto.classic.model.ui.wizard.util.MWizardMessage;
-import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.AlphabetAcceptor;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite.Mode;
+import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 /**
  * Implementation of a generic classic cryptoalgorithm wizard page for en-/decryption. Can be instantiated directly, but
  * is rather intended to be subclassed. <br>
  * This wizard page contains basic controls for en-/decryption parameters, like a key input text box, or an
  * currentAlphabet selection combo.
- *
+ * 
  * @author SLeischnig
- *
+ * 
  */
 public class AbstractClassicCryptoPage extends WizardPage {
 
@@ -83,7 +83,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * This standard message is the one displayed when everything is normal, and is generated from the message parameter
      * in the constructor and the file/editor name opened.
      */
-    protected MWizardMessage normalStatusMsg;
+    protected MWizardMessage normalStatusMsg; 
     protected AbstractUIInput<Boolean> operationInput;
     // protected AbstractUIInput<AbstractAlphabet> alphabetInput;
     protected AbstractUIInput<Boolean> filterInput;
@@ -112,13 +112,15 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     private Label lblConsoleDescr;
 
+    private Label lblConsoleFurther;
+
     private Text txtConsoleCommand;
 
 	protected Composite pageComposite;
 
     /**
      * Creates a new instance of AbstractClassicCryptoPage
-     *
+     * 
      * @wbp.parser.constructor
      */
     public AbstractClassicCryptoPage() {
@@ -127,7 +129,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Creates a new instance of AbstractClassicCryptoPage, defining its window title.
-     *
+     * 
      * @param title the window title
      */
     public AbstractClassicCryptoPage(String title) {
@@ -136,7 +138,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Creates a new instance of AbstractClassicCryptoPage, defining its window title and message.
-     *
+     * 
      * @param title the window title
      * @param message the message of the page
      */
@@ -421,7 +423,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
                     if (transformationInput.getContent()) {
                         updateTransformationPage(getAlphabetInput().getContent());
                     } else {
-                        updateTransformationPage(null);
+                        updateTransformationPage(null); 
                     }
                 }
             }
@@ -431,7 +433,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     /**
      * Creates a standard input verification handler, which displays ballon popups beneath controls, when an error in
      * the input occured.
-     *
+     * 
      * @param shell
      */
     protected void createInputVerificationHandler(Shell shell) {
@@ -473,7 +475,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 			verificationDisplayHandler.addInputWidgetMapping(filterInput, filterCheckBox);
 		if (keyInput != null)
 			verificationDisplayHandler.addInputWidgetMapping(keyInput, keyText);
-		if (transformationInput != null)
+		if (transformationInput != null) 
 			verificationDisplayHandler.addInputWidgetMapping(transformationInput, transformCheckBox);
     }
 
@@ -488,7 +490,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * Provides the key verificators for the standard implementation of the KeyInput. This method is meant for usage
      * when nothing else but key verificators have to be changed in the key input mechanism apart from the standard
      * implementation. Ideally, key verificators should be specified in the Algorithm Specification class.
-     *
+     * 
      * @return a list of key verificators
      */
     protected List<KeyVerificator> getKeyVerificators() {
@@ -511,7 +513,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
      * Subclasses should override this procedure to set the Help available flag and id, like
      * PlatformUI.getWorkbench().getHelpSystem().setHelp(getControl(), DelastellePlugin.PLUGIN_ID +
      * ".delastelleWizard");
-     *
+     * 
      */
     protected void setHelpAvailable() {
 
@@ -519,7 +521,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns the available alphabets. Meant to be overridden in subclasses.
-     *
+     * 
      * @return all available alphabets for this wizard page.
      */
     protected List<AbstractAlphabet> getAvailableAlphabets() {
@@ -537,7 +539,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns the currentAlphabet that will be selected first. Meant to be overridden in subclasses.
-     *
+     * 
      * @return the standard currentAlphabet for this wizard.
      */
     protected AbstractAlphabet getDefaultAlphabet() {
@@ -563,7 +565,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns <code>true</code>, if the page is complete and the wizard may finish.
-     *
+     * 
      * @return <code>true</code>, if the page is complete and the wizard may finish
      */
     protected boolean mayFinish() {
@@ -575,7 +577,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns the selected currentAlphabet.
-     *
+     * 
      * @return The selected currentAlphabet
      */
     public AbstractAlphabet getSelectedAlphabet() {
@@ -595,7 +597,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns the entered key. This method should only be used, when the wizard page is complete.
-     *
+     * 
      * @return The key in string form
      */
     public String getKey() {
@@ -604,7 +606,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Returns <code>true</code>, if the desired operation is <i>Encrypt</i>.
-     *
+     * 
      * @return <code>true</code>, if the desired operation is <i>Encrypt</i>
      */
     public boolean encrypt() {
@@ -614,7 +616,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
     /**
      * Returns <code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be
      * filtered out.
-     *
+     * 
      * @return <code>true</code>, if characters who are not part of the selected currentAlphabet are supposed to be
      *         filtered out
      */
@@ -871,7 +873,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
             GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
             layoutData2.verticalIndent = 10;
 			separator.setLayoutData(layoutData2);
-
+        	
         	consoleGroup = new Group(parent, SWT.NONE);
             consoleGroup.setLayout(new GridLayout(2, false));
             GridData layoutData3 = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -939,7 +941,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Sets a warning to be displayed in the command line section
-     *
+     * 
      * @param warning if null, the warning disappears
      */
     protected void setCommandLineWarning(String warning) {
@@ -949,10 +951,10 @@ public class AbstractClassicCryptoPage extends WizardPage {
     /**
      * This method generates a JCT console string which should result in the exact same result which would have been
      * yielded when finishing this wizard.
-     *
+     * 
      * It is safe to assume when extending this function, that the wizard is filled out correctly, and the "finish"
      * button is enabled.
-     *
+     * 
      * @return
      */
     protected String generateCommandLineString() {
@@ -969,7 +971,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Sets a MWizardMessage Object to this WizardPage
-     *
+     * 
      * @param message
      */
     protected void setTitleBarMessage(MWizardMessage message) {
@@ -978,7 +980,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Excludes a control from Layout calculation
-     *
+     * 
      * @param that
      * @param hideit
      */
@@ -992,13 +994,13 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
     /**
      * Updates the Transformation Wizard Page to load the Transformation setting for a specified currentAlphabet
-     *
+     * 
      * @param abstractAlphabet the name of the currentAlphabet
      */
     protected void updateTransformationPage(AbstractAlphabet abstractAlphabet) {
         TransformData myTransformation;
         if (abstractAlphabet == null) {
-        	myTransformation = new TransformData();
+        	myTransformation = new TransformData(); 
         } else {
             myTransformation = AbstractClassicTransformationPage.getTransformFromName(abstractAlphabet);
         }
