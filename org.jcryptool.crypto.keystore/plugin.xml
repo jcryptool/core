@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.4"?>
 <plugin>
    <extension-point id="keyStoreActions" name="KeyStore Action Contributions" schema="schema/keyStoreActions.exsd"/>
    <extension-point id="keyStoreCommands" name="KeyStore Command Contributions" schema="schema/keyStoreCommands.exsd"/>
