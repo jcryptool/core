@@ -3,6 +3,7 @@
 	<name>org.jcryptool.visual.crtVerification</name>
 	<comment></comment>
 	<projects>
+		<project>org.jcryptool.crypto.keystore</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
