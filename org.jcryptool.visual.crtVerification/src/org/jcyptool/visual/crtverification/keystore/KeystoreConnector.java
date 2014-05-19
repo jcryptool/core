@@ -20,18 +20,18 @@ import org.jcryptool.visual.crtverification.Activator;
  * 
  */
 public class KeystoreConnector {
-    private static final char[] KEYSTORE_PASSWORD = { 'j', 'c', 'r', 'y', 'p', 't', 'o', 'o', 'l' };
+   
 
     /**
      * @return all Aliases currently in the JCT Keystore
      */
     public Enumeration<String> getAllAliases() {
-        KeyStoreManager ksm = KeyStoreManager.getInstance();
+        KeyStoreManager ksm = KeyStoreManager.getInstance();     
         return ksm.getAliases();
     }
 
     /**
-     * Returns the alias of a given contacts name
+     * Returns the alias of a given contact name
      * 
      * @param contactName the contacts name in the Keystore
      * @return the contacts alias or null if none was found
@@ -69,7 +69,8 @@ public class KeystoreConnector {
     }
 
     /**
-     * Adds a new certificate to the JCT Keystore bound to a given Keystore contact
+     * Adds a new certificate to the JCT Keystore bound to a given Keystore contact<p>
+     * Only one certificate per alias can be added 
      * 
      * @param cert the certificate to add
      * @param alias the contacts alias
@@ -89,6 +90,7 @@ public class KeystoreConnector {
         }
     }
 
+    //not working
     public void addCertificateChain(CertPath path, IKeyStoreAlias alias) {
         if (path != null && alias != null) {
             for (Certificate cert : path.getCertificates()) {
@@ -96,7 +98,6 @@ public class KeystoreConnector {
             }
         } else {
             NullPointerException e;
-
             if (path == null) {
                 e = new NullPointerException("CertPath null");
             } else {
@@ -105,4 +106,7 @@ public class KeystoreConnector {
             throw e;
         }
     }
+    
+    
+  
 }
