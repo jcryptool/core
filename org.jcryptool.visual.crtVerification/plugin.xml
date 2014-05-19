@@ -9,7 +9,7 @@
             id="org.jcryptool.visual.crtVerification">
       </category>
       <view
-            name="Cert Verification"
+            name="Certificate Verification"
             icon="icons/sample.gif"
             category="org.jcryptool.visual.crtVerification"
             class="org.jcryptool.visual.crtverification.views.CrtVerView"
@@ -20,7 +20,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="Cert Verification"
+            name="Certificate Verification"
             viewId="org.jcryptool.visual.crtverification.views.CrtVerView"
             contextHelpId="org.jcryptool.visual.crtverification.views.CrtVerView">
       </Visual>

@@ -31,7 +31,7 @@ public class CrtVerView extends ViewPart {
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.crtverification.CrtVerView"); //$NON-NLS-1$
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(parent.getShell(), "org.jcryptool.visual.crtverification.views.CrtVerView"); //$NON-NLS-1$
     }
 
     /**
