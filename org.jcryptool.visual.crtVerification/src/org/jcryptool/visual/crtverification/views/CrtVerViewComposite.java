@@ -23,7 +23,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 
-public class CrtVerComposite extends Composite {
+public class CrtVerViewComposite extends Composite {
 	private Text TextRootCaFromDay;
 	private Text TextCaFromDay;
 	private Text TextCertFromDay;
@@ -52,7 +52,7 @@ public class CrtVerComposite extends Composite {
 	 * @param parent
 	 * @param style
 	 */
-	public CrtVerComposite(Composite parent, int style, CrtVerView view) {
+	public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 		
