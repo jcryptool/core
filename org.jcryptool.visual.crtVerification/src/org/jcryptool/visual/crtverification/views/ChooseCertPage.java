@@ -10,7 +10,7 @@ public class ChooseCertPage extends WizardPage {
         super(pageName);
 
         setTitle(pageName);
-        setDescription("Description TestWizard");
+        setDescription("Bitte wählen Sie ein zu ladendes Zertifikat aus dem Java Keystore aus.");
     }
     
     // TestComposite wird erzeugt

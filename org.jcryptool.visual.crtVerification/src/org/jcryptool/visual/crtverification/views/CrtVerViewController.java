@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class CrtVerViewController {
 	private Calendar calendar = Calendar.getInstance();
-	private SimpleDateFormat dt1 = new SimpleDateFormat("MM/yy");
+	private SimpleDateFormat dt1 = new SimpleDateFormat("/MMM/yy");
 	private Date now = calendar.getTime();
 	
 	public CrtVerViewController(){
