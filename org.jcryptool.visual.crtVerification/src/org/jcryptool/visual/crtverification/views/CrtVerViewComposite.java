@@ -70,7 +70,7 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer = new Text(composite, SWT.BORDER);
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
-		txtDiesIstDer.setText("Dieses Tool dient zur Visualisierung der Gültigkeiten von Zertifikatsbäumen ");
+		txtDiesIstDer.setText("Dieses Tool dient zur Visualisierung der G\u00FCltigkeiten von Zertifikatsb\u00E4umen");
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 10, 1);
 		gd_txtDiesIstDer.heightHint = 70;
 		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
