@@ -31,6 +31,7 @@ public class CrtVerComposite extends Composite {
 	private Text TextCaThruDay;
 	private Text TextCertThruDay;
 	private Text TextSignatureDateDay;
+	private Text TextVerificationDateDay;
 
 	// Date now Instance
 	private Label thruRootCa;
@@ -40,9 +41,10 @@ public class CrtVerComposite extends Composite {
 	private Label thruCert;
 	private Label fromCert;
 	private Label signatureDate;
+	private Label verificationDate;
 	private Label validity;
 	CrtVerViewController controller = new CrtVerViewController();
-	private Text TextVerificationDateDay;
+
 	private Text txtDiesIstDer;
 	
 	/**
@@ -63,15 +65,18 @@ public class CrtVerComposite extends Composite {
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
-		composite.setLayout(new GridLayout(10, false));
+		composite.setLayout(new GridLayout(11, false));
 		
 		txtDiesIstDer = new Text(composite, SWT.BORDER);
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
-		txtDiesIstDer.setText("Dies ist der Testtext.");
+		txtDiesIstDer.setText("Dieses Tool dient zur Visualisierung der Gültigkeiten von Zertifikatsbäumen ");
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 10, 1);
-		gd_txtDiesIstDer.heightHint = 19;
+		gd_txtDiesIstDer.heightHint = 70;
 		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -97,70 +102,77 @@ public class CrtVerComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
+		Label lblRootCa = new Label(composite, SWT.NONE);
+		lblRootCa.setText("Root CA");
+		lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblRootCa.setAlignment(SWT.CENTER);
+		
 		final Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
 		
-		ScaleRootCaBegin.setMaximum(240);
+		ScaleRootCaBegin.setMaximum(360);
 		GridData gd_ScaleRootCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1);
-		gd_ScaleRootCaBegin.widthHint = 240;
+		gd_ScaleRootCaBegin.widthHint = 360;
 		ScaleRootCaBegin.setLayoutData(gd_ScaleRootCaBegin);
-		ScaleRootCaBegin.setSelection(120);
+		ScaleRootCaBegin.setSelection(180);
 		
 		final Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
 		GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_ScaleRootCaEnd.widthHint = 240;
+		gd_ScaleRootCaEnd.widthHint = 360;
 		ScaleRootCaEnd.setLayoutData(gd_ScaleRootCaEnd);
-		ScaleRootCaEnd.setMaximum(240);
-		ScaleRootCaEnd.setSelection(120);
+		ScaleRootCaEnd.setMaximum(360);
+		ScaleRootCaEnd.setSelection(180);
 		
 		Button btnLoadRootCa = new Button(composite, SWT.NONE);
 		GridData gd_btnLoadRootCa = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
 		gd_btnLoadRootCa.widthHint = 100;
 		btnLoadRootCa.setLayoutData(gd_btnLoadRootCa);
 		btnLoadRootCa.setText("Load Root CA");
-		
-		Label lblRootCa = new Label(composite, SWT.NONE);
-		lblRootCa.setText("Root CA");
-		lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
-		lblRootCa.setAlignment(SWT.CENTER);
-		
-		final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
-		ScaleCaBegin.setMaximum(240);
-		GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1);
-		gd_ScaleCaBegin.widthHint = 240;
-		ScaleCaBegin.setLayoutData(gd_ScaleCaBegin);
-		ScaleCaBegin.setSelection(120);
-		
-		final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
-		ScaleCaEnd.setMaximum(240);
-		GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_ScaleCaEnd.widthHint = 240;
-		ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
-		ScaleCaEnd.setSelection(120);
-		
-		Button btnLoadCa = new Button(composite, SWT.NONE);
-		GridData gd_btnLoadCa = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnLoadCa.widthHint = 100;
-		btnLoadCa.setLayoutData(gd_btnLoadCa);
-		btnLoadCa.setText("Load CA");
+		new Label(composite, SWT.NONE);
 		
 		Label lblCa = new Label(composite, SWT.NONE);
 		lblCa.setText("CA");
 		lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
 		lblCa.setAlignment(SWT.CENTER);
 		
+		final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
+		ScaleCaBegin.setMaximum(360);
+		GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1);
+		gd_ScaleCaBegin.widthHint = 360;
+		ScaleCaBegin.setLayoutData(gd_ScaleCaBegin);
+		ScaleCaBegin.setSelection(180);
+		
+		final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
+		ScaleCaEnd.setMaximum(360);
+		GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_ScaleCaEnd.widthHint = 360;
+		ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
+		ScaleCaEnd.setSelection(180);
+		
+		Button btnLoadCa = new Button(composite, SWT.NONE);
+		GridData gd_btnLoadCa = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
+		gd_btnLoadCa.widthHint = 100;
+		btnLoadCa.setLayoutData(gd_btnLoadCa);
+		btnLoadCa.setText("Load CA");
+		new Label(composite, SWT.NONE);
+		
+		Label lblUserCertificate = new Label(composite, SWT.NONE);
+		lblUserCertificate.setText("User Certificate");
+		lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+		lblUserCertificate.setAlignment(SWT.CENTER);
+		
 		final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
-		ScaleCertBegin.setMaximum(240);
+		ScaleCertBegin.setMaximum(360);
 		GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 7, 1);
-		gd_ScaleCertBegin.widthHint = 240;
+		gd_ScaleCertBegin.widthHint = 360;
 		ScaleCertBegin.setLayoutData(gd_ScaleCertBegin);
-		ScaleCertBegin.setSelection(120);
+		ScaleCertBegin.setSelection(180);
 		
 		final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
-		ScaleCertEnd.setMaximum(240);
+		ScaleCertEnd.setMaximum(360);
 		GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_ScaleCertEnd.widthHint = 240;
+		gd_ScaleCertEnd.widthHint = 360;
 		ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
-		ScaleCertEnd.setSelection(120);
+		ScaleCertEnd.setSelection(180);
 		Button btnLoadUserCert = new Button(composite, SWT.NONE);
 		// Selection Listeners | Scales
         btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
@@ -190,46 +202,47 @@ public class CrtVerComposite extends Composite {
 		gd_btnLoadUserCert.widthHint = 100;
 		btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
 		btnLoadUserCert.setText("Load User Cert");
-		
-		Label lblUserCertificate = new Label(composite, SWT.NONE);
-		lblUserCertificate.setText("User Certificate");
-		lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
-		lblUserCertificate.setAlignment(SWT.CENTER);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_SeperatorHorizontal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 10, 1);
-		gd_SeperatorHorizontal.widthHint = 689;
+		gd_SeperatorHorizontal.widthHint = 962;
 		SeperatorHorizontal.setLayoutData(gd_SeperatorHorizontal);
-		
-		final Scale ScaleSignatureDate = new Scale(composite, SWT.NONE);
-		ScaleSignatureDate.setMaximum(480);
-		GridData gd_ScaleSignatureDate = new GridData(SWT.FILL, SWT.FILL, false, false, 8, 1);
-		gd_ScaleSignatureDate.widthHint = 480;
-		ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
-		ScaleSignatureDate.setSelection(240);
-		new Label(composite, SWT.NONE);
 		
 		Label lblSignatureDate = new Label(composite, SWT.NONE);
 		lblSignatureDate.setText("Signature Date");
 		lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
 		lblSignatureDate.setAlignment(SWT.CENTER);
 		
-		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
-		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL, false, false, 8, 1);
-		gd_ScaleVerificationDate.widthHint = 480;
-		ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
-		ScaleVerificationDate.setMaximum(480);
-		ScaleVerificationDate.setSelection(240);
+		final Scale ScaleSignatureDate = new Scale(composite, SWT.NONE);
+		ScaleSignatureDate.setMaximum(720);
+		GridData gd_ScaleSignatureDate = new GridData(SWT.FILL, SWT.FILL, false, false, 8, 1);
+		gd_ScaleSignatureDate.widthHint = 480;
+		ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
+		ScaleSignatureDate.setSelection(360);
+		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
 		Label lblVerificationDate = new Label(composite, SWT.NONE);
+		
 		lblVerificationDate.setText("Verification Date");
 		lblVerificationDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
 		lblVerificationDate.setAlignment(SWT.CENTER);
 		
+		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
+		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL, false, false, 8, 1);
+		gd_ScaleVerificationDate.widthHint = 480;
+		ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
+		ScaleVerificationDate.setMaximum(720);
+		ScaleVerificationDate.setSelection(360);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
 		Group grpDetails = new Group(composite, SWT.NONE);
 		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 10, 1);
-		gd_grpDetails.widthHint = 608;
+		gd_grpDetails.widthHint = 717;
 		grpDetails.setLayoutData(gd_grpDetails);
 		grpDetails.setText("Details");
 		grpDetails.setLayout(new GridLayout(10, false));
@@ -277,46 +290,58 @@ public class CrtVerComposite extends Composite {
 		
 		TextRootCaFromDay = new Text(composite_from_rootca, SWT.BORDER);
 		TextRootCaFromDay.setText("1");
+		TextRootCaFromDay.setTextLimit(2);
 		GridData gd_TextRootCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextRootCaFromDay.widthHint = 20;
+		gd_TextRootCaFromDay.widthHint = 17;
 		TextRootCaFromDay.setLayoutData(gd_TextRootCaFromDay);
 		TextRootCaFromDay.setSize(24, 19);
 		
 		Label LabelRootCaFrom = new Label(composite_from_rootca, SWT.NONE);
+		GridData gd_LabelRootCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelRootCaFrom.widthHint = 60;
+		LabelRootCaFrom.setLayoutData(gd_LabelRootCaFrom);
 		fromRootCa = LabelRootCaFrom;
 		
 		// Initialize Label "From Root CA" with actual date
-		LabelRootCaFrom.setText(controller.now());
+		LabelRootCaFrom.setText("/May/14");
 		
 		Composite composite_from_ca = new Composite(grpDetails, SWT.NONE);
 		composite_from_ca.setLayout(new GridLayout(2, false));
 		
 		TextCaFromDay = new Text(composite_from_ca, SWT.BORDER);
 		TextCaFromDay.setText("1");
+		TextCaFromDay.setTextLimit(2);
 		GridData gd_TextCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextCaFromDay.widthHint = 20;
+		gd_TextCaFromDay.widthHint = 17;
 		TextCaFromDay.setLayoutData(gd_TextCaFromDay);
 		
 		Label LabelCaFrom = new Label(composite_from_ca, SWT.NONE);
+		GridData gd_LabelCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelCaFrom.widthHint = 60;
+		LabelCaFrom.setLayoutData(gd_LabelCaFrom);
 		fromCa = LabelCaFrom;
 		
 		// Initialize Label "From CA" with actual date
-		LabelCaFrom.setText(controller.now());
+		LabelCaFrom.setText("/May/14");
 		
 		Composite composite_from_user_cert = new Composite(grpDetails, SWT.NONE);
 		composite_from_user_cert.setLayout(new GridLayout(2, false));
 		
 		TextCertFromDay = new Text(composite_from_user_cert, SWT.BORDER);
 		TextCertFromDay.setText("1");
+		TextCertFromDay.setTextLimit(2);
 		GridData gd_TextCertFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextCertFromDay.widthHint = 20;
+		gd_TextCertFromDay.widthHint = 17;
 		TextCertFromDay.setLayoutData(gd_TextCertFromDay);
 		
 		Label LabelCertFrom = new Label(composite_from_user_cert, SWT.NONE);
+		GridData gd_LabelCertFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelCertFrom.widthHint = 60;
+		LabelCertFrom.setLayoutData(gd_LabelCertFrom);
 		fromCert = LabelCertFrom;
 		
 		// Initialize Label "From User Cert" with actual date
-		LabelCertFrom.setText(controller.now());
+		LabelCertFrom.setText("/May/14");
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		
@@ -325,27 +350,36 @@ public class CrtVerComposite extends Composite {
 		
 		TextSignatureDateDay = new Text(composite_1, SWT.BORDER);
 		TextSignatureDateDay.setText("1");
+		TextSignatureDateDay.setTextLimit(2);
 		GridData gd_TextSignatureDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextSignatureDateDay.widthHint = 20;
+		gd_TextSignatureDateDay.widthHint = 17;
 		TextSignatureDateDay.setLayoutData(gd_TextSignatureDateDay);
 		
 		Label LabelSignatureDate = new Label(composite_1, SWT.NONE);
+		GridData gd_LabelSignatureDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelSignatureDate.widthHint = 60;
+		LabelSignatureDate.setLayoutData(gd_LabelSignatureDate);
 		signatureDate = LabelSignatureDate;
 		
 		// Initialize Label "Signature Date" with actual date
-		LabelSignatureDate.setText(controller.now());
+		LabelSignatureDate.setText("/May/14");
 		
 		Composite composite_2 = new Composite(grpDetails, SWT.NONE);
 		composite_2.setLayout(new GridLayout(2, false));
 		
 		TextVerificationDateDay = new Text(composite_2, SWT.BORDER);
 		TextVerificationDateDay.setText("1");
+		TextVerificationDateDay.setTextLimit(2);
 		GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextVerificationDateDay.widthHint = 20;
+		gd_TextVerificationDateDay.widthHint = 17;
 		TextVerificationDateDay.setLayoutData(gd_TextVerificationDateDay);
 		
 		final Label LabelVerificationDate = new Label(composite_2, SWT.NONE);
-		LabelVerificationDate.setText("05/14");
+		GridData gd_LabelVerificationDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelVerificationDate.widthHint = 60;
+		LabelVerificationDate.setLayoutData(gd_LabelVerificationDate);
+		verificationDate = LabelVerificationDate;
+		LabelVerificationDate.setText("/May/14");
 		
 		Label lblValidThru = new Label(grpDetails, SWT.NONE);
 		lblValidThru.setText("valid thru:");
@@ -356,69 +390,107 @@ public class CrtVerComposite extends Composite {
 		
 		TextRootCaThruDay = new Text(composite_thru_rootca, SWT.BORDER);
 		TextRootCaThruDay.setText("1");
+		TextRootCaThruDay.setTextLimit(2);
 		GridData gd_TextRootCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextRootCaThruDay.widthHint = 20;
+		gd_TextRootCaThruDay.widthHint = 17;
 		TextRootCaThruDay.setLayoutData(gd_TextRootCaThruDay);
 		
 		Label LabelRootCaThru = new Label(composite_thru_rootca, SWT.NONE);
+		GridData gd_LabelRootCaThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelRootCaThru.widthHint = 60;
+		LabelRootCaThru.setLayoutData(gd_LabelRootCaThru);
 		thruRootCa = LabelRootCaThru;
 		
 		// Initialize Label "Thru Root CA" with actual date
-		LabelRootCaThru.setText(controller.now());
+		LabelRootCaThru.setText("/May/14");
 		
 		Composite composite_thru_ca = new Composite(grpDetails, SWT.NONE);
 		composite_thru_ca.setLayout(new GridLayout(2, false));
 		
 		TextCaThruDay = new Text(composite_thru_ca, SWT.BORDER);
 		TextCaThruDay.setText("1");
+		TextCaThruDay.setTextLimit(2);
 		GridData gd_TextCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextCaThruDay.widthHint = 20;
+		gd_TextCaThruDay.widthHint = 17;
 		TextCaThruDay.setLayoutData(gd_TextCaThruDay);
 		
 		Label LabelCaThru = new Label(composite_thru_ca, SWT.NONE);
+		GridData gd_LabelCaThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelCaThru.widthHint = 60;
+		LabelCaThru.setLayoutData(gd_LabelCaThru);
 		thruCa = LabelCaThru;
 		
 		// Initialize Label "Thru CA" with actual date
-		LabelCaThru.setText(controller.now());
+		LabelCaThru.setText("/May/14");
 		
 		Composite composite_thru_user_cert = new Composite(grpDetails, SWT.NONE);
 		composite_thru_user_cert.setLayout(new GridLayout(2, false));
 		
 		TextCertThruDay = new Text(composite_thru_user_cert, SWT.BORDER);
 		TextCertThruDay.setText("1");
+		TextCertThruDay.setTextLimit(2);
 		GridData gd_TextCertThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_TextCertThruDay.widthHint = 20;
+		gd_TextCertThruDay.widthHint = 17;
 		TextCertThruDay.setLayoutData(gd_TextCertThruDay);
 		
 		Label LabelCertThru = new Label(composite_thru_user_cert, SWT.NONE);
+		GridData gd_LabelCertThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_LabelCertThru.widthHint = 60;
+		LabelCertThru.setLayoutData(gd_LabelCertThru);
 		thruCert = LabelCertThru;
 		
 		// Initialize Label "Thru User Cert" with actual date
-		LabelCertThru.setText(controller.now());
+		LabelCertThru.setText("/May/14");
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblvalidity = new Label(composite, SWT.NONE);
 		validity = lblvalidity;
 		lblvalidity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
 		lblvalidity.setAlignment(SWT.CENTER);
 		lblvalidity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		GridData gd_lblvalidity = new GridData(SWT.CENTER, SWT.CENTER, false, false, 3, 1);
+		GridData gd_lblvalidity = new GridData(SWT.CENTER, SWT.CENTER, false, false, 10, 1);
 		gd_lblvalidity.heightHint = 25;
 		gd_lblvalidity.widthHint = 400;
 		lblvalidity.setLayoutData(gd_lblvalidity);
 		lblvalidity.setText("NOT VALID");
 		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
 		
 		Button btnReset = new Button(composite, SWT.NONE);
+		btnReset.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				ScaleRootCaBegin.setSelection(180);
+				ScaleRootCaEnd.setSelection(180);
+				ScaleCaBegin.setSelection(180);
+				ScaleCaEnd.setSelection(180);
+				ScaleCertBegin.setSelection(180);
+				ScaleCertEnd.setSelection(180);
+				ScaleVerificationDate.setSelection(360);
+				ScaleSignatureDate.setSelection(360);
+				
+				fromRootCa.setText(controller.scaleUpdate(180, 180));
+				thruRootCa.setText(controller.scaleUpdate(180, 180));
+				fromCa.setText(controller.scaleUpdate(180, 180));
+				thruCa.setText(controller.scaleUpdate(180, 180));
+				fromCert.setText(controller.scaleUpdate(180, 180));
+				thruCert.setText(controller.scaleUpdate(180, 180));
+				signatureDate.setText(controller.scaleUpdate(360, 360));
+				verificationDate.setText(controller.scaleUpdate(360, 360));
+				
+				TextRootCaFromDay.setText("1");
+				TextRootCaThruDay.setText("1");
+				TextCaFromDay.setText("1");
+				TextCaThruDay.setText("1");
+				TextCertFromDay.setText("1");
+				TextCertThruDay.setText("1");
+				TextVerificationDateDay.setText("1");
+				TextSignatureDateDay.setText("1");
+			}
+		});
 		btnReset.setText("Reset");
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -432,29 +504,9 @@ public class CrtVerComposite extends Composite {
 		
 		Button btnForward = new Button(composite, SWT.NONE);
 		btnForward.setText("Forward");
-		new Label(composite, SWT.NONE);
 		
 		Button btnCalculate = new Button(composite, SWT.NONE);
 		btnCalculate.setText("Validate");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
@@ -466,7 +518,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				fromRootCa.setText(controller.scaleUpdate(ScaleRootCaBegin.getSelection(), 120));
+				fromRootCa.setText(controller.scaleUpdate(ScaleRootCaBegin.getSelection(), 180));
 			}
 		});
 		
@@ -474,7 +526,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				thruRootCa.setText(controller.scaleUpdate(ScaleRootCaEnd.getSelection(), 120));
+				thruRootCa.setText(controller.scaleUpdate(ScaleRootCaEnd.getSelection(), 180));
 			}
 		});
 		
@@ -482,7 +534,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				fromCa.setText(controller.scaleUpdate(ScaleCaBegin.getSelection(), 120));
+				fromCa.setText(controller.scaleUpdate(ScaleCaBegin.getSelection(), 180));
 			}
 		});
 		
@@ -490,7 +542,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				thruCa.setText(controller.scaleUpdate(ScaleCaEnd.getSelection(), 120));
+				thruCa.setText(controller.scaleUpdate(ScaleCaEnd.getSelection(), 180));
 			}
 		});
 		
@@ -498,7 +550,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				fromCert.setText(controller.scaleUpdate(ScaleCertBegin.getSelection(), 120));
+				fromCert.setText(controller.scaleUpdate(ScaleCertBegin.getSelection(), 180));
 			}
 		});
 		
@@ -506,7 +558,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				thruCert.setText(controller.scaleUpdate(ScaleCertEnd.getSelection(), 120));
+				thruCert.setText(controller.scaleUpdate(ScaleCertEnd.getSelection(), 180));
 			}
 		});
 		
@@ -514,7 +566,7 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				signatureDate.setText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 240));
+				signatureDate.setText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 360));
 			}
 		});
 		
@@ -522,13 +574,11 @@ public class CrtVerComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
-				LabelVerificationDate.setText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 240));
+				LabelVerificationDate.setText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 360));
 			}
 		});
 		
 	}
-
-	
 	
 	@Override
 	protected void checkSubclass() {

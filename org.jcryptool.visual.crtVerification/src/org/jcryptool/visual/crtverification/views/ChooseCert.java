@@ -3,7 +3,7 @@ package org.jcryptool.visual.crtverification.views;
 import org.eclipse.jface.wizard.Wizard;
 
 public class ChooseCert extends Wizard {
-    private String name = "TestWizard";
+    private String name = "Java Keystore";
     private ChooseCertPage page;
 
     public ChooseCert() {
