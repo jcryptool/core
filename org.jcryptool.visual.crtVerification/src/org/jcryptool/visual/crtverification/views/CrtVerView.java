@@ -27,7 +27,7 @@ public class CrtVerView extends ViewPart {
         final ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        CrtVerComposite c = new CrtVerComposite(sc, SWT.NONE, this);
+        CrtVerViewComposite c = new CrtVerViewComposite(sc, SWT.NONE, this);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
