@@ -49,7 +49,7 @@ This scenario applies the compression of text. You can load a text file or enter
 the field <b>Input text</b>. 
 
 <p>
-<b>a)</b> To load a text file click on the button <b>Open uncompressed file...</b>. A file chooser dialog 
+<b>a)</b> To load a text file you have to click <b>Plaintext from file</b> to switch the modus from exampletext to load plaintext. Now you can click on the button <b>Open file...</b>. A file chooser dialog 
 of the operating system is opened and filtered by text files 
 (ISO-8859-1). <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">ISO-8859-1</a> is a eight bit character encoding standard. 
 <p>
@@ -65,11 +65,9 @@ You can use it to compare the file sizes before and after compression.
 <img src="huffman_unkompdatei_geladen.jpg">
 
 <p>
-<b>b)</b> You can also compress a manually entered text. To do so just enter the text into the field <b>Input text</b>. 
-Once the text is entered the button <b>Open uncompressed file...</b> is disabled.
-So you can choose between the manually entered text and loading a text file.  To return to the initial 
-state just clear the text that you previously entered. This enables the button 
-<b>Open uncompressed file...</b> again.
+<b>b)</b> You can also compress a manually entered text. To do so just change the mode to <b>Exampletext</b> by clicking <b>Exampletext</b> and enter or override the text into the field <b>Input text</b>. 
+In this mode the button <b>Open file...</b> is disabled.
+So you can choose between the manually entered text and loading a text file.
 <p>
 
  <img src="huffman_manu_input.jpg">
@@ -87,14 +85,22 @@ An output file with the file extension
 are displayed. The button <b>Compress</b> is disabled and the button <b>Uncompress</b> enabled.
 <p>
 
-Now you can click on the button <b>Apply file for uncompression</b> <img src="huffman_datei_uebernehmen.jpg"> to change the view to the 
-scenario 2 <b>Uncompress</b> and to uncompress the previously compressed text.
+When you compress a the exampletext or an munually entered text then the following message will be displayed.
+<p>
+
+ <img src="huffman_status_manu.jpg">
 
 <p>
 
-<b>Scenario 2 -- Uncompress</b><br>
+
+Now you can click on the button <b>Apply the generated file for the decompression scenario</b> <img src="huffman_datei_uebernehmen.jpg"> to change the view to the 
+scenario 2 <b>Decompress</b> and to uncompress the previously compressed text.
+
+<p>
+
+<b>Scenario 2 -- Decompress</b><br>
 In this scenario you can uncompress a compressed file. To perform that you have to click the button 
-<b>Open compressed file...</b> to open a file chooser dialog of the operating system. In this dialog files with the extension <b>.huffman</b> are filtered.
+<b>Open file...</b> to open a file chooser dialog of the operating system. In this dialog files with the extension <b>.huffman</b> are filtered.
 <p>
 
 <img src="huffman_kompdatei_laden.jpg">
@@ -102,13 +108,13 @@ In this scenario you can uncompress a compressed file. To perform that you have 
 <p>
 
 After you choose a <b>.huffman</b> file the file size is determined and displayed near the text
-<b>file size (in bytes)</b>. The button <b>Uncompress</b> is enabled.
+<b>file size (in bytes)</b>. The button <b>Decompress</b> is enabled.
 <p>
 
  <img src="huffman_kompdatei_geladen.jpg">
 
 <p>
-A click on the button <b>Uncompress</b> will uncompress the file and displays its content in the field
+A click on the button <b>Decompress</b> will uncompress the file and displays its content in the field
 <b>Output text</b>.
 <p>
 
@@ -152,6 +158,25 @@ the selected leaf is displayed at the top.
 <img src="huffman_blatt_selektieren.jpg">
 
 <p>
+
+You can change the layout of the <b>Huffman tree</b> by clicking the <img src="huffman_strukturwechseln.jpg"> icon in the menu bar.
+The default layout is the <b>TreeLayout</b>. 
+<br>
+Also available are:
+
+<b>HorizontalTreeLayout</b>
+<p>
+
+<img src="huffman_layout_1.jpg">
+
+<p>
+and <b>RadialLayout</b>
+<p>
+
+<img src="huffman_layout_2.jpg">
+
+<p>
+
 
 <a name="Chapter3"><b>3)</b></a> On the third tab the code table is displayed. For each <b>ASCII character</b> which appears in the
 input text, its associated code word is displayed. By clicking on the button 

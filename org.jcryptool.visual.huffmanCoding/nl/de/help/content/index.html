@@ -50,7 +50,7 @@ aus einer Datei zu laden oder ihn manuell in das Feld <b>Eingabetext</b> einzuge
 
 <p>
 <b>a)</b> Für das Laden einer Datei kann man folgendermaßen vorgehen:
-Per Klick auf den Button <b>Unkomprimierte Datei öffnen...</b> wird der Dateiauswahl-Dialog des 
+Man klickt zuerst auf <b>Klartext aus Datei</b>, um den Modus zu wechseln. Per Klick auf den Button <b>Datei öffnen...</b> wird der Dateiauswahl-Dialog des 
 Betriebssystems geöffnet und nach Textdateien (ISO-8859-1) gefiltert.
 <a href="http://de.wikipedia.org/wiki/ISO_8859-1"><b>ISO-8859-1</b></a> ist ein Standard zur Zeichenkodierung mit acht Bit.
 <p>
@@ -67,7 +67,7 @@ neben dem Text <b>Dateigröße (in Bytes)</b> angezeigt. Dadurch kann man die Da
 
 <p>
 
-<b>b)</b> Für das manuelle Eingeben eines Textes kann man direkt im Feld <b>Eingabetext</b> einen gewünschten Freitext eingeben.
+<b>b)</b> Für das manuelle Eingeben eines Textes muss man den Modus wechseln, in dem man auf <b>Beispieltext</b> klickt. Man kann direkt im Feld <b>Eingabetext</b> einen gewünschten Freitext eingeben bzw. den Beispieltext überschreiben.
 Sobald der Freitext eingegeben wurde, wird der Button <b>Unkomprimierte Datei öffnen...</b> deaktiviert. Somit kann man zwischen 
 manueller Texteingabe und Laden einer Datei wählen bzw. zum Initial-Zustand zurückkehren, indem man den zuvor manuell eingegeben 
 Text wieder löscht. Dadurch wird der Button <b>Unkomprimierte Datei öffnen...</b> wieder aktiviert.
@@ -77,6 +77,7 @@ Text wieder löscht. Dadurch wird der Button <b>Unkomprimierte Datei öffnen...<
 
 <p>
 
+
 Durch Klick auf den Button <b>Komprimieren</b> <img src="huffman_unkompdatei_komprimiert.jpg"> wird der Text im Feld 
 <b>Eingabetext</b> komprimiert. Nachdem die Komprimierung abgeschlossen ist, wird eine Meldung über die Komprimierung angezeigt.
 <p>
@@ -84,18 +85,25 @@ Durch Klick auf den Button <b>Komprimieren</b> <img src="huffman_unkompdatei_kom
  <img src="huffman_status.jpg">
 
 <p>
+Für einen manuell eingegebenen Text erscheind folgende Meldung:
+<p>
+
+ <img src="huffman_status_manu.jpg">
+
+<p>
+
 Eine Ausgabedatei mit der Dateierweiterung <b>.huffman</b> wird im Home-Verzeichnis des Benutzers erzeugt. Der Dateipfad und die 
 Größe der Ausgabedatei werden angezeigt. Der Button <b>Komprimieren</b> wird deaktiviert und der Button <b>Datei übernehmen</b> 
 aktiviert.
 <p>
 
-Nun kann man durch Klick auf den Button <b>Datei übernehmen</b> <img src="huffman_datei_uebernehmen.jpg"> in das Szenario 2 
+Nun kann man durch Klick auf den Button <b>Die erzeugte Datei für das Dekomprimieren-Szenario nutzen</b> <img src="huffman_datei_uebernehmen.jpg"> in das Szenario 2 
 <b>Dekomprimieren</b> wechseln und den zuvor komprimierten Text dekomprimieren.
 <p>
 
 <b>Szenario 2 -- Dekomprimieren</b><br>
 In diesem Szenario kann man eine komprimierte Datei dekomprimieren. Dafür klickt man auf den Button 
-<b>Komprimierte Datei öffnen...</b>, um den Dateiauswahl-Dialog des Betriebssystems zu öffnen. Dabei wird nach 
+<b>Datei öffnen...</b>, um den Dateiauswahl-Dialog des Betriebssystems zu öffnen. Dabei wird nach 
 <b>.huffman</b>-Dateien gefiltert.
 <p>
 
@@ -156,6 +164,23 @@ angezeigt.
 <img src="huffman_blatt_selektieren.jpg">
 
 <p>
+
+Das Layout des Huffman-Baums kann durch Klicken auf das <img src="huffman_strukturwechseln.jpg">-Icon gewechselt werden. Das Standard-Layout ist das <b>TreeLayout</b>.
+<br>Weitere verfügbare Layouts sind:  <b>HorizontalTreeLayout</b>
+<p>
+
+<img src="huffman_layout_1.jpg">
+
+<p>
+und <b>RadialLayout</b>
+
+<p>
+
+<img src="huffman_layout_2.jpg">
+
+<p>
+
+
 <a name="Kapitel3"><b>3)</b></a> Auf der dritten Registerkarte wird die Code-Tabelle angezeigt. Dabei wird für jedes <b>ASCII-Zeichen</b>, das in dem 
 Eingabetext vorkommt, das dazu gehörige Codewort angezeigt. Beim Klick auf den Button <b>Zweig anzeigen</b>, wechselt die 
 Ansicht auf die Registerkarte <b>Huffman-Baum</b> und selektiert den dazu passenden Zweig. </a>
