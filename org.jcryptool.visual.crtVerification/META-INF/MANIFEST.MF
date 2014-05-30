@@ -8,6 +8,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
-Import-Package: org.jcryptool.core.logging.utils,
+Import-Package: org.bouncycastle.jce.provider,
+ org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.keys
