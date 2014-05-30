@@ -22,8 +22,6 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class CrtVerViewComposite extends Composite {
 	private Text TextRootCaFromDay;
@@ -63,7 +61,7 @@ public class CrtVerViewComposite extends Composite {
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 		
 		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
-		tbtmSchalenmodell.setText("Schalenmodell");
+		tbtmSchalenmodell.setText("Shell Model");
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
@@ -72,7 +70,7 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer = new Text(composite, SWT.BORDER);
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
-		txtDiesIstDer.setText("Dieses Tool dient zur Visualisierung der G\u00FCltigkeiten von Zertifikatsb\u00E4umen");
+		txtDiesIstDer.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit eines Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
 		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
@@ -117,11 +115,11 @@ public class CrtVerViewComposite extends Composite {
 		composite_4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1));
 		
 		Label label = new Label(composite_4, SWT.NONE);
-		label.setText(controller.scaleUpdate(0, 180, true));
+		label.setText(controller.scaleUpdate(0, 180, "yyyy"));
 		label.setBounds(0, 0, 59, 14);
 		
 		Label label_1 = new Label(composite_4, SWT.NONE);
-		label_1.setText(controller.scaleUpdate(360, 180, true));
+		label_1.setText(controller.scaleUpdate(360, 180, "yyyy"));
 		label_1.setAlignment(SWT.RIGHT);
 		label_1.setBounds(301, 0, 59, 14);
 		
@@ -132,12 +130,12 @@ public class CrtVerViewComposite extends Composite {
 		
 		Label label_2 = new Label(composite_3, SWT.NONE);
 		label_2.setBounds(0, 0, 59, 14);
-		label_2.setText(controller.scaleUpdate(0, 180, true));
+		label_2.setText(controller.scaleUpdate(0, 180, "yyyy"));
 		
 		Label label_3 = new Label(composite_3, SWT.NONE);
 		label_3.setAlignment(SWT.RIGHT);
 		label_3.setBounds(301, 0, 59, 14);
-		label_3.setText(controller.scaleUpdate(360, 180, true));
+		label_3.setText(controller.scaleUpdate(360, 180, "yyyy"));
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -295,11 +293,11 @@ public class CrtVerViewComposite extends Composite {
 		composite_5.setLayoutData(gd_composite_5);
 		
 		Label label_4 = new Label(composite_5, SWT.NONE);
-		label_4.setText(controller.scaleUpdate(0, 360, true));
+		label_4.setText(controller.scaleUpdate(0, 360, "yyyy"));
 		label_4.setBounds(0, 0, 59, 14);
 		
 		Label label_5 = new Label(composite_5, SWT.NONE);
-		label_5.setText(controller.scaleUpdate(720, 360, true));
+		label_5.setText(controller.scaleUpdate(720, 360, "yyyy"));
 		label_5.setAlignment(SWT.RIGHT);
 		label_5.setBounds(666, 0, 59, 14);
 		new Label(composite, SWT.NONE);
@@ -603,13 +601,21 @@ public class CrtVerViewComposite extends Composite {
 				ScaleSignatureDate.setSelection(360);
 				
 				fromRootCa.setText(controller.scaleUpdate(180, 180));
+				fromRootCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				thruRootCa.setText(controller.scaleUpdate(180, 180));
+				thruRootCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				fromCa.setText(controller.scaleUpdate(180, 180));
+				fromCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				thruCa.setText(controller.scaleUpdate(180, 180));
+				thruCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				fromCert.setText(controller.scaleUpdate(180, 180));
+				fromCert.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				thruCert.setText(controller.scaleUpdate(180, 180));
+				thruCert.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
 				signatureDate.setText(controller.scaleUpdate(360, 360));
+				signatureDate.setToolTipText(controller.scaleUpdate(360, 360, "yyyy"));
 				verificationDate.setText(controller.scaleUpdate(360, 360));
+				verificationDate.setToolTipText(controller.scaleUpdate(360, 360, "yyyy"));
 				
 				TextRootCaFromDay.setText("1");
 				TextRootCaThruDay.setText("1");
@@ -655,7 +661,7 @@ public class CrtVerViewComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
-		tbtmKettenmodell.setText("Kettenmodell");
+		tbtmKettenmodell.setText("Chain Model");
 		
 		
 		// Selection Listeners | Scales
@@ -664,7 +670,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromRootCa.setText(controller.scaleUpdate(ScaleRootCaBegin.getSelection(), 180));
-				ScaleRootCaBegin.setToolTipText(controller.scaleUpdate(ScaleRootCaBegin.getSelection(), 180));
+				ScaleRootCaBegin.setToolTipText(controller.scaleUpdate(ScaleRootCaBegin.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -673,7 +679,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruRootCa.setText(controller.scaleUpdate(ScaleRootCaEnd.getSelection(), 180));
-				ScaleRootCaEnd.setToolTipText(controller.scaleUpdate(ScaleRootCaEnd.getSelection(), 180));
+				ScaleRootCaEnd.setToolTipText(controller.scaleUpdate(ScaleRootCaEnd.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -682,7 +688,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromCa.setText(controller.scaleUpdate(ScaleCaBegin.getSelection(), 180));
-				ScaleCaBegin.setToolTipText(controller.scaleUpdate(ScaleCaBegin.getSelection(), 180));
+				ScaleCaBegin.setToolTipText(controller.scaleUpdate(ScaleCaBegin.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -691,7 +697,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruCa.setText(controller.scaleUpdate(ScaleCaEnd.getSelection(), 180));
-				ScaleCaEnd.setToolTipText(controller.scaleUpdate(ScaleCaEnd.getSelection(), 180));
+				ScaleCaEnd.setToolTipText(controller.scaleUpdate(ScaleCaEnd.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -700,7 +706,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromCert.setText(controller.scaleUpdate(ScaleCertBegin.getSelection(), 180));
-				ScaleCertBegin.setToolTipText(controller.scaleUpdate(ScaleCertBegin.getSelection(), 180));
+				ScaleCertBegin.setToolTipText(controller.scaleUpdate(ScaleCertBegin.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -709,7 +715,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruCert.setText(controller.scaleUpdate(ScaleCertEnd.getSelection(), 180));
-				ScaleCertEnd.setToolTipText(controller.scaleUpdate(ScaleCertEnd.getSelection(), 180));
+				ScaleCertEnd.setToolTipText(controller.scaleUpdate(ScaleCertEnd.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -718,7 +724,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				signatureDate.setText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 360));
-				ScaleSignatureDate.setToolTipText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 180));
+				ScaleSignatureDate.setToolTipText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 180, "yyyy"));
 			}
 		});
 		
@@ -727,7 +733,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				LabelVerificationDate.setText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 360));
-				ScaleVerificationDate.setToolTipText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 180));
+				ScaleVerificationDate.setToolTipText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 180, "yyyy"));
 
 			}
 		});
