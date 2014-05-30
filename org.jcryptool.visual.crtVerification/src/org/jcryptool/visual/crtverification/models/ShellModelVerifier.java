@@ -97,6 +97,40 @@ public class ShellModelVerifier {
 
     }
 
+    /**
+     * checks if the verificationDate (or the signatureDate when using the modified model) is within
+     * the valididity periods of the certificate chain Expects valididy periods for all three certs
+     * in this order:
+     * 
+     * @param clientNotBefore
+     * @param clientNotAfter
+     * @param caNotBefore
+     * @param caNotAfter
+     * @param rootNotBefore
+     * @param rootNotAfter
+     * @param sigDate
+     * @param verDate
+     * @return true if the certificate chain is valid (based only on time)
+     */
+    public boolean verifyChangedDate(Date clientNotBefore, Date clientNotAfter, Date caNotBefore, Date caNotAfter,
+            Date rootNotBefore, Date rootNotAfter, Date sigDate, Date verDate) {
+        boolean valid = true;
+
+        if (modifiedShellModel) {
+            sigDate = verDate;
+        }
+
+        if (clientNotBefore.after(verDate) || clientNotAfter.before(verDate)) {
+            valid = false;
+        } else if (caNotBefore.after(verDate) || caNotAfter.before(verDate)) {
+            valid = false;
+        } else if (rootNotBefore.after(verDate) || rootNotAfter.before(verDate)) {
+            valid = false;
+        }
+
+        return valid;
+    }
+
     public void setCertificiates(Certificate rootCert, Certificate caCert, Certificate clientCert) {
         if (rootCert == null || caCert == null || clientCert == null) {
             throw new NullPointerException("Certificates cannot be null!");
