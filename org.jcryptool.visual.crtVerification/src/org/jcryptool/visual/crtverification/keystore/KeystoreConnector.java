@@ -3,6 +3,7 @@ package org.jcryptool.visual.crtverification.keystore;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -68,11 +69,11 @@ public class KeystoreConnector {
     }
 
     /**
-     * @return A List of all Certificates currently stored in the JCT Keystore
+     * @return A ArrayList of all Certificates currently stored in the JCT Keystore as X509Certificates
      */
-    public ArrayList<Certificate> getAllCertificates() {
+    public ArrayList<X509Certificate> getAllCertificates() {
         KeyStoreManager ksm = KeyStoreManager.getInstance();
-        ArrayList<Certificate> certificates = new ArrayList<Certificate>(ksm.getAllPublicKeys().size());
+        ArrayList<X509Certificate> certificates = new ArrayList<X509Certificate>(ksm.getAllPublicKeys().size());
 
         ArrayList<String> aliases = Collections.list(getAllAliases());
 
@@ -80,7 +81,7 @@ public class KeystoreConnector {
             try {
                 KeyStoreAlias alias = new KeyStoreAlias(string);
 
-                Certificate cert = ksm.getCertificate(alias);
+                X509Certificate cert = (X509Certificate) ksm.getCertificate(alias);
                 if (cert != null && !certificates.contains(cert)) {
                     certificates.add(cert);
                 }
