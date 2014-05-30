@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class CrtVerViewController {
 	private Calendar calendar = Calendar.getInstance();
-	private SimpleDateFormat dt1 = new SimpleDateFormat("/MMM/yy");
-	private SimpleDateFormat dt2 = new SimpleDateFormat("yyyy");
+	private String dateformat = "/MMM/yy";
+	private SimpleDateFormat dt1 = new SimpleDateFormat(dateformat);
 	private Date now = calendar.getTime();
 	
 	public CrtVerViewController(){
@@ -34,6 +34,8 @@ public class CrtVerViewController {
 	 * @return The modified date represented as a String
 	 */
 	public String scaleUpdate(int selection, int default_selection){
+		String format = "/MMM/yy";
+		dt1.applyPattern(format);
 		calendar.setTime(now);
 		calendar.add(Calendar.MONTH, selection - default_selection);
 		return String.valueOf(dt1.format(calendar.getTime()));
@@ -44,16 +46,14 @@ public class CrtVerViewController {
 	 * 
 	 * @param selection The actual selection getting with .getSelection() 
 	 * @param default_selection The default Selection of Scale Receiver, it will be subtracted from the value
-	 * @param year If True this method only returns the year.
+	 * @param format The date format to represent
 	 * @return The modified date represented as a String
 	 */
-	public String scaleUpdate(int selection, int default_selection, boolean year){
+	public String scaleUpdate(int selection, int default_selection, String format){
+		dt1.applyPattern(format);
 		calendar.setTime(now);
 		calendar.add(Calendar.MONTH, selection - default_selection);
-		if(year){
-			return String.valueOf(dt2.format(calendar.getTime()));
-		}
-		return String.valueOf(dt1.format(calendar.getTime()));
+			return String.valueOf(dt1.format(calendar.getTime()));
 	}
 	
 	/**
