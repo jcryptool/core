@@ -5,10 +5,11 @@ import org.eclipse.swt.widgets.Composite;
 
 public class ChooseCertPage extends WizardPage {
     private ChooseCertComposite compositeFile;
-
-    public ChooseCertPage(String pageName) {
+    int certType; // [1] UserCert; [2] Cert; [3] RootCert
+    
+    public ChooseCertPage(String pageName, int type) {
         super(pageName);
-
+        certType = type;
         setTitle(pageName);
         setDescription("Bitte wählen Sie ein zu ladendes Zertifikat aus dem Java Keystore aus.");
     }

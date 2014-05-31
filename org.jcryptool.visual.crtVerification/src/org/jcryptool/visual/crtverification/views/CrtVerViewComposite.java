@@ -171,6 +171,28 @@ public class CrtVerViewComposite extends Composite {
 		gd_btnLoadRootCa.widthHint = 100;
 		btnLoadRootCa.setLayoutData(gd_btnLoadRootCa);
 		btnLoadRootCa.setText("Load Root CA");
+		btnLoadRootCa.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert(3);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                };
+                if (dialog.open() == Window.OK) {
+                   // Hier kann man Aktionen durfuehren die passieren sollen wenn die WizardPage aufgerufen wird
+                   // zB aktivieren/deaktivieren von Buttons der Hauptansicht
+                }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
@@ -203,6 +225,29 @@ public class CrtVerViewComposite extends Composite {
 		gd_btnLoadCa.widthHint = 100;
 		btnLoadCa.setLayoutData(gd_btnLoadCa);
 		btnLoadCa.setText("Load CA");
+		btnLoadCa.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert(2);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                };
+                if (dialog.open() == Window.OK) {
+                   // Hier kann man Aktionen durfuehren die passieren sollen wenn die WizardPage aufgerufen wird
+                   // zB aktivieren/deaktivieren von Buttons der Hauptansicht
+                }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
+		
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
@@ -234,7 +279,7 @@ public class CrtVerViewComposite extends Composite {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    ChooseCert wiz = new ChooseCert();
+                    ChooseCert wiz = new ChooseCert(1);
                     WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz){
                         @Override
                         protected void configureShell(Shell newShell) {
