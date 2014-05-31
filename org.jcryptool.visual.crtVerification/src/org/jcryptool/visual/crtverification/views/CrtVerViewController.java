@@ -5,10 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Text;
 
 public class CrtVerViewController {
 	private Calendar calendar = Calendar.getInstance();
+	private Calendar calendar1 = Calendar.getInstance();
 	private String dateformat = "/MMM/yy";
 	private SimpleDateFormat dt1 = new SimpleDateFormat(dateformat);
 	private Date now = calendar.getTime();
@@ -21,27 +23,27 @@ public class CrtVerViewController {
 	}
 	
 	// GETTER AND SETTER
-		public static X509Certificate getRootCA() {
+		public X509Certificate getRootCA() {
 			return RootCA;
 		}
 
-		public static void setRootCA(X509Certificate rootCA) {
+		public void setRootCA(X509Certificate rootCA) {
 			RootCA = rootCA;
 		}
 
-		public static X509Certificate getCA() {
+		public X509Certificate getCA() {
 			return CA;
 		}
 
-		public static void setCA(X509Certificate cA) {
+		public void setCA(X509Certificate cA) {
 			CA = cA;
 		}
 
-		public static X509Certificate getTN() {
+		public X509Certificate getTN() {
 			return TN;
 		}
 
-		public static void setTN(X509Certificate tN) {
+		public void setTN(X509Certificate tN) {
 			TN = tN;
 		}
 	
@@ -100,16 +102,17 @@ public class CrtVerViewController {
 		}
 	}
 	
-	public int dateOffset(int CertType){
-		long offset = 0;
-		int a = 0;
-		if(CertType == 1){
-			calendar.setTimeInMillis(TN.getNotBefore().getTime() - now.getTime());
-			dt1.format(calendar.getTime());
-			dt1.format("MM");
-		}
+	public int dateOffset(Date date){
 		
-		return a;
+		int offset = 0;
+		int month = 0, year=0;
+		calendar.setTime(now);
+		calendar1.setTime(date);
+		month = calendar1.get(Calendar.MONTH) - calendar.get(Calendar.MONTH);
+		year = calendar1.get(Calendar.YEAR) - calendar.get(Calendar.YEAR);
+		offset = month + 12*year;
+		calendar.add(Calendar.MONTH, offset);
+		return offset;
 	}
 	
 }
