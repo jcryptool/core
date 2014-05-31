@@ -15,25 +15,32 @@
    </extension>
 
    <extension point="org.eclipse.ui.commands">
-      <category id="org.jcryptool.core.editors" name="JCrypTool Editors"/>
-      <command categoryId="org.jcryptool.core.editors" description="%command.description.0" id="org.jcryptool.core.commands.newEditor" name="%command.name.0" defaultHandler="org.jcryptool.core.commands.NewEditorDefaultCommand"/>
       <command description="%command.description" id="org.jcryptool.core.commands.showHelp" name="%command.name"/>
-   </extension>
-
-   <extension point="org.eclipse.ui.commandImages">
-      <image commandId="org.jcryptool.core.commands.newEditor" icon="icons/editors.gif"/>
    </extension>
 
    <extension point="org.eclipse.ui.handlers">
       <handler class="org.jcryptool.core.commands.ShowHelpContents" commandId="org.jcryptool.core.commands.showHelp"/>
    </extension>
 
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jcryptool.core.editorsActionSet"
+            label="%editors.actionSet.label"
+            visible="true">
+         <action
+               class="org.jcryptool.core.actions.ShowEditorsPulldownMenuAction"
+               icon="icons/editors.gif"
+               id="EditorsToolbar.EditorsPulldownAction"
+               label="%editors.action.label"
+               style="pulldown"
+               toolbarPath="org.jcryptool.core.toolbar/fileStart"
+               tooltip="%editors.action.tooltip">
+         </action>
+      </actionSet>
+   </extension>
+
    <extension point="org.eclipse.ui.menus">
-      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
-         <toolbar id="org.jcryptool.core.editors.toolbar">
-            <command commandId="org.jcryptool.core.commands.newEditor" id="org.jcryptool.core.editors.toolbar.command" style="pulldown" tooltip="%command.tooltip.0"/>
-         </toolbar>
-      </menuContribution>
       <menuContribution locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
          <command commandId="org.jcryptool.core.commands.showHelp" icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/help_contents.gif" style="push" tooltip="%command.tooltip"/>
       </menuContribution>

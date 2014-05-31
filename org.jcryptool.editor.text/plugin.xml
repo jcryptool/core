@@ -55,9 +55,33 @@
       </menuContribution>
    </extension>
    <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="org.jcryptool.editor.text.actionSet1"
+            label="%action.set"
+            visible="true">
+         <action
+               class="org.jcryptool.editor.text.action.NewEmptyFileJCTTextEditorAction"
+               icon="icons/text.gif"
+               id="org.jcryptool.editor.text.newEmptyFile"
+               label="%emptyeditor.label"
+               menubarPath="file/newfile/1"
+               style="push">
+         </action>
+         <action
+               class="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction"
+               icon="icons/text.gif"
+               id="org.jcryptool.editor.text.newFile"
+               label="%sampleeditor.label"
+               menubarPath="file/newfile/3"
+               style="push">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
          point="org.jcryptool.core.editorButton">
       <OnClick
-            OnClickClass="org.jcryptool.editor.text.commands.NewSampleTextFile">
+            OnClickClass="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction">
       </OnClick>
    </extension>
    <extension
@@ -68,7 +92,7 @@
             icon="icons/text.gif"
             id="org.jcryptool.editor.text"
             label="%sampleeditor.label"
-            pushAction="org.jcryptool.editor.text.commands.NewSampleTextFile">
+            pushAction="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction">
       </service>
       <service
             category="4"
@@ -76,7 +100,7 @@
             icon="icons/text.gif"
             id="org.jcryptool.editor.text"
             label="%emptyeditor.label"
-            pushAction="org.jcryptool.editor.text.commands.NewEmptyTextFile">
+            pushAction="org.jcryptool.editor.text.action.NewEmptyFileJCTTextEditorAction">
       </service>
    </extension>
    <extension
@@ -85,7 +109,7 @@
             id="org.jcryptool.editor.text.editorContribution.JCTTextEditor"
             targetID="org.jcryptool.editor.text.editor.JCTTextEditor">
          <action
-               class="org.jcryptool.editor.text.commands.OpenTextInHexEditor"
+               class="org.jcryptool.editor.text.action.OpenInHexAction"
                id="org.jcryptool.editor.text.action.openInHex"
                label="%action.switch.editor"
                menubarPath="edit/showin/start"
