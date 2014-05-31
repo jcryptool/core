@@ -1,8 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
 
-import java.util.Calendar;
-
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -795,70 +793,6 @@ public class CrtVerViewComposite extends Composite {
 		});
 		
 	}
-//	public static void setScales(int CertType) {
-//		Calendar cal = Calendar.getInstance();
-//		switch (CertType){
-//			case 1:
-//				// Scale From User Certificate
-//				ScaleFromTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotBefore()));
-//				fromCert.setText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180));
-//				ScaleFromTN.setToolTipText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | From TN
-//				cal.setTime(controller.getTN().getNotBefore());
-//				TextCertFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				
-//				// Scale Thru User Certificate
-//				ScaleThruTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotAfter()));
-//				thruCert.setText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180));
-//				ScaleThruTN.setToolTipText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | Thru TN
-//				cal.setTime(controller.getTN().getNotAfter());
-//				TextCertThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				break;
-//			case 2:
-//				// Scale From CA
-//				ScaleFromCA.setSelection(180 + controller.dateOffset(controller.getCA().getNotBefore()));
-//				fromCa.setText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180));
-//				ScaleFromCA.setToolTipText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | From CA
-//				cal.setTime(controller.getCA().getNotBefore());
-//				TextCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				
-//				// Scale Thru CA
-//				ScaleThruCA.setSelection(180 + controller.dateOffset(controller.getCA().getNotAfter()));
-//				thruCa.setText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180));
-//				ScaleThruCA.setToolTipText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | Thru CA
-//				cal.setTime(controller.getCA().getNotAfter());
-//				TextCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				break;
-//			case 3:
-//				// Scale From CA
-//				ScaleFromRoot.setSelection(180 + controller.dateOffset(controller.getRootCA().getNotBefore()));
-//				fromRootCa.setText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180));
-//				ScaleFromRoot.setToolTipText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | From CA
-//				cal.setTime(controller.getRootCA().getNotBefore());
-//				TextRootCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				
-//				// Scale Thru CA
-//				ScaleThruRoot.setSelection(180 + controller.dateOffset(controller.getRootCA().getNotAfter()));
-//				thruRootCa.setText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180));
-//				ScaleThruRoot.setToolTipText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180, "yyyy"));
-//				
-//				// Set Textfield for the Day | Thru CA
-//				cal.setTime(controller.getRootCA().getNotAfter());
-//				TextRootCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
-//				break;
-//		}
-			
-	//}
-	
 	
 	@Override
 	protected void checkSubclass() {
