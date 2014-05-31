@@ -16,7 +16,7 @@ public class ChooseCertPage extends WizardPage {
     // TestComposite wird erzeugt
     public void createControl(Composite parent) {
         setPageComplete(false);
-        compositeFile = new ChooseCertComposite(parent, NONE);
+        compositeFile = new ChooseCertComposite(parent, NONE, this);
         setControl(compositeFile);
     }
 
