@@ -1,5 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +12,9 @@ public class CrtVerViewController {
 	private String dateformat = "/MMM/yy";
 	private SimpleDateFormat dt1 = new SimpleDateFormat(dateformat);
 	private Date now = calendar.getTime();
+	public static X509Certificate RootCA;
+	public static X509Certificate CA;
+	private static X509Certificate TN;
 	
 	public CrtVerViewController(){
 		super();
@@ -69,6 +73,14 @@ public class CrtVerViewController {
 		else{
 			return false;
 		}
+	}
+
+	public static X509Certificate getTN() {
+		return TN;
+	}
+
+	public static void setTN(X509Certificate tN) {
+		TN = tN;
 	}
 	
 }

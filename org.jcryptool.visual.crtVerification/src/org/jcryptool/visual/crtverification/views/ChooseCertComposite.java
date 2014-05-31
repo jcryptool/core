@@ -11,6 +11,9 @@ import org.jcryptool.visual.crtverification.keystore.KeystoreConnector;
 public class ChooseCertComposite extends Composite {
 	private Composite parent;
 	private ChooseCertPage page;
+	private int SelectedCertIndex;
+	KeystoreConnector ksc = new KeystoreConnector();
+	private CrtVerViewController controller = new CrtVerViewController();
 
     /**
      * Create the composite.
@@ -22,21 +25,26 @@ public class ChooseCertComposite extends Composite {
         this.parent = parent;
         this.page = p;
         
+        
         ListViewer listViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL);
-        List list = listViewer.getList();
+        final List list = listViewer.getList();
+        list.setBounds(10, 10, 430, 280);
+        
+        for(int i=0;i<ksc.getAllCertificates().size();i++){
+        	list.add(ksc.getAllCertificates().get(i).getSubjectDN().toString());
+        }
+        
         list.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		page.setPageComplete(true);
+        		SelectedCertIndex = list.getSelectionIndex();
+        		controller.setTN(ksc.getAllCertificates().get(SelectedCertIndex));
         	}
         });
         
        
-        list.setBounds(10, 10, 430, 280);
-        KeystoreConnector ksc = new KeystoreConnector(); 
-        for(int i=0;i<ksc.getAllCertificates().size();i++){
-        	list.add(ksc.getAllCertificates().get(i).getSubjectDN().toString());
-        }
+       
        
         // Example End
         
