@@ -24,6 +24,7 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite {
+	
 	private Text TextRootCaFromDay;
 	private Text TextCaFromDay;
 	private Text TextCertFromDay;
@@ -43,7 +44,11 @@ public class CrtVerViewComposite extends Composite {
 	private Label signatureDate;
 	private Label verificationDate;
 	private Label validity;
-	CrtVerViewController controller = new CrtVerViewController();
+	
+	static Scale ScaleFromTN;
+	static Scale ScaleThruTN;
+	
+	static CrtVerViewController controller = new CrtVerViewController();
 
 	private Text txtDiesIstDer;
 	
@@ -261,6 +266,7 @@ public class CrtVerViewComposite extends Composite {
 		lblUserCertificate.setAlignment(SWT.CENTER);
 		
 		final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
+		ScaleFromTN = ScaleCertBegin;
 		ScaleCertBegin.setMaximum(360);
 		GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
 		gd_ScaleCertBegin.widthHint = 360;
@@ -268,6 +274,7 @@ public class CrtVerViewComposite extends Composite {
 		ScaleCertBegin.setSelection(180);
 		
 		final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
+		ScaleThruTN = ScaleCertEnd;
 		ScaleCertEnd.setMaximum(360);
 		GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_ScaleCertEnd.widthHint = 360;
@@ -784,6 +791,15 @@ public class CrtVerViewComposite extends Composite {
 		});
 		
 	}
+	public static void setScales(int CertType) {
+		switch (CertType){
+			case 1:
+				ScaleThruTN.setSelection(controller.dateOffset(CertType));
+				break;
+		}
+			
+	}
+	
 	
 	@Override
 	protected void checkSubclass() {

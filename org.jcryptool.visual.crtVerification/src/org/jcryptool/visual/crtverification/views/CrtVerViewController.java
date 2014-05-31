@@ -51,7 +51,7 @@ public class CrtVerViewController {
 	 * @return Returns the actual date as MM/yy format
 	 */
 	public String now(){
-		return String.valueOf(dt1.format(now));
+		return dt1.format(now);
 	}
 	
 	
@@ -98,6 +98,18 @@ public class CrtVerViewController {
 		else{
 			return false;
 		}
+	}
+	
+	public int dateOffset(int CertType){
+		long offset = 0;
+		int a = 0;
+		if(CertType == 1){
+			calendar.setTimeInMillis(TN.getNotBefore().getTime() - now.getTime());
+			dt1.format(calendar.getTime());
+			dt1.format("MM");
+		}
+		
+		return a;
 	}
 	
 }

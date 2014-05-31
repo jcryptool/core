@@ -38,6 +38,7 @@ public class ChooseCertComposite extends Composite {
         		switch (page.certType){
         		    case 1:   // [1] UserCert
         		        CrtVerViewController.setTN(ksc.getAllCertificates().get(list.getSelectionIndex()));
+        		        CrtVerViewComposite.setScales(1);
         		        break;
         		    case 2:   // [2] Cert
                         CrtVerViewController.setCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
