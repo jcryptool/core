@@ -20,6 +20,31 @@ public class CrtVerViewController {
 		super();
 	}
 	
+	// GETTER AND SETTER
+		public static X509Certificate getRootCA() {
+			return RootCA;
+		}
+
+		public static void setRootCA(X509Certificate rootCA) {
+			RootCA = rootCA;
+		}
+
+		public static X509Certificate getCA() {
+			return CA;
+		}
+
+		public static void setCA(X509Certificate cA) {
+			CA = cA;
+		}
+
+		public static X509Certificate getTN() {
+			return TN;
+		}
+
+		public static void setTN(X509Certificate tN) {
+			TN = tN;
+		}
+	
 	/**
 	 * Method to get the actual date in "MM/yy" Format
 	 * 
@@ -73,14 +98,6 @@ public class CrtVerViewController {
 		else{
 			return false;
 		}
-	}
-
-	public static X509Certificate getTN() {
-		return TN;
-	}
-
-	public static void setTN(X509Certificate tN) {
-		TN = tN;
 	}
 	
 }
