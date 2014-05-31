@@ -113,6 +113,7 @@ public class CrtVerViewController {
 		offset = month + 12*year;
 		calendar.add(Calendar.MONTH, offset);
 		return offset;
+		//test
 	}
 	
 }
