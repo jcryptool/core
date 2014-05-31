@@ -1,6 +1,8 @@
 package org.jcryptool.visual.crtverification.views;
 
 
+import java.util.Calendar;
+
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -25,25 +27,25 @@ import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite {
 	
-	private Text TextRootCaFromDay;
-	private Text TextCaFromDay;
-	private Text TextCertFromDay;
-	private Text TextRootCaThruDay;
-	private Text TextCaThruDay;
-	private Text TextCertThruDay;
-	private Text TextSignatureDateDay;
-	private Text TextVerificationDateDay;
+	static Text TextRootCaFromDay;
+	static Text TextCaFromDay;
+	static Text TextCertFromDay;
+	static Text TextRootCaThruDay;
+	static Text TextCaThruDay;
+	static Text TextCertThruDay;
+	static Text TextSignatureDateDay;
+	static Text TextVerificationDateDay;
 
 	// Date now Instance
-	private static Label thruRootCa;
-	private static Label fromRootCa;
-	private static Label thruCa;
-	private static Label fromCa;
-	private static Label thruCert;
-	private static Label fromCert;
-	private static Label signatureDate;
-	private static Label verificationDate;
-	private Label validity;
+	static Label thruRootCa;
+	static Label fromRootCa;
+	static Label thruCa;
+	static Label fromCa;
+	static Label thruCert;
+	static Label fromCert;
+	static Label signatureDate;
+	static Label verificationDate;
+	static Label validity;
 	
 	static Scale ScaleFromTN;
 	static Scale ScaleThruTN;
@@ -74,7 +76,7 @@ public class CrtVerViewComposite extends Composite {
 		
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
-		composite.setLayout(new GridLayout(17, false));
+		composite.setLayout(new GridLayout(15, false));
 		
 		txtDiesIstDer = new Text(composite, SWT.BORDER);
 		txtDiesIstDer.setEnabled(false);
@@ -83,10 +85,6 @@ public class CrtVerViewComposite extends Composite {
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
 		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
@@ -117,8 +115,6 @@ public class CrtVerViewComposite extends Composite {
 		lblNotValidAfter.setAlignment(SWT.CENTER);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Composite composite_4 = new Composite(composite, SWT.NONE);
 		composite_4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1));
@@ -145,8 +141,6 @@ public class CrtVerViewComposite extends Composite {
 		label_3.setAlignment(SWT.RIGHT);
 		label_3.setBounds(301, 0, 59, 14);
 		label_3.setText(controller.scaleUpdate(360, 180, "yyyy"));
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
 		Label lblRootCa = new Label(composite, SWT.NONE);
@@ -204,8 +198,6 @@ public class CrtVerViewComposite extends Composite {
                 }
             }
         });
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblCa = new Label(composite, SWT.NONE);
 		GridData gd_lblCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -260,9 +252,6 @@ public class CrtVerViewComposite extends Composite {
                 }
             }
         });
-		
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblUserCertificate = new Label(composite, SWT.NONE);
 		GridData gd_lblUserCertificate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -333,17 +322,11 @@ public class CrtVerViewComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		GridData gd_SeperatorHorizontal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 14, 1);
 		gd_SeperatorHorizontal.widthHint = 835;
 		SeperatorHorizontal.setLayoutData(gd_SeperatorHorizontal);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
@@ -361,8 +344,6 @@ public class CrtVerViewComposite extends Composite {
 		label_5.setAlignment(SWT.RIGHT);
 		label_5.setBounds(666, 0, 59, 14);
 		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblSignatureDate = new Label(composite, SWT.NONE);
 		GridData gd_lblSignatureDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -379,8 +360,6 @@ public class CrtVerViewComposite extends Composite {
 		gd_ScaleSignatureDate.widthHint = 480;
 		ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
 		ScaleSignatureDate.setSelection(360);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		
 		Label lblVerificationDate = new Label(composite, SWT.NONE);
@@ -416,13 +395,9 @@ public class CrtVerViewComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Group grpDetails = new Group(composite, SWT.NONE);
-		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 16, 1);
+		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 13, 1);
 		gd_grpDetails.widthHint = 717;
 		grpDetails.setLayoutData(gd_grpDetails);
 		grpDetails.setText("Details");
@@ -626,21 +601,32 @@ public class CrtVerViewComposite extends Composite {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		Label lblvalidity = new Label(composite, SWT.NONE);
 		validity = lblvalidity;
-		lblvalidity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
-		lblvalidity.setAlignment(SWT.CENTER);
-		lblvalidity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		GridData gd_lblvalidity = new GridData(SWT.CENTER, SWT.CENTER, false, false, 13, 1);
-		gd_lblvalidity.heightHint = 25;
-		gd_lblvalidity.widthHint = 400;
-		lblvalidity.setLayoutData(gd_lblvalidity);
-		lblvalidity.setText("NOT VALID");
+		validity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
+		validity.setAlignment(SWT.CENTER);
+		GridData gd_validity = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+		gd_validity.heightHint = 25;
+		gd_validity.widthHint = 200;
+		validity.setLayoutData(gd_validity);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		new Label(composite, SWT.NONE);
+		
+		final Button btnModifiedShellModel = new Button(composite, SWT.CHECK);
+		btnModifiedShellModel.setText("Modified Shell Model");
 		new Label(composite, SWT.NONE);
 		
 		Button btnReset = new Button(composite, SWT.NONE);
@@ -661,21 +647,21 @@ public class CrtVerViewComposite extends Composite {
 				ScaleSignatureDate.setSelection(360);
 				
 				fromRootCa.setText(controller.scaleUpdate(180, 180));
-				fromRootCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				fromRootCa.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				thruRootCa.setText(controller.scaleUpdate(180, 180));
-				thruRootCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				thruRootCa.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				fromCa.setText(controller.scaleUpdate(180, 180));
-				fromCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				fromCa.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				thruCa.setText(controller.scaleUpdate(180, 180));
-				thruCa.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				thruCa.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				fromCert.setText(controller.scaleUpdate(180, 180));
-				fromCert.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				fromCert.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				thruCert.setText(controller.scaleUpdate(180, 180));
-				thruCert.setToolTipText(controller.scaleUpdate(180, 180, "yyyy"));
+				thruCert.setToolTipText(controller.scaleUpdate(180, 180, "MMM/yy"));
 				signatureDate.setText(controller.scaleUpdate(360, 360));
-				signatureDate.setToolTipText(controller.scaleUpdate(360, 360, "yyyy"));
+				signatureDate.setToolTipText(controller.scaleUpdate(360, 360, "MMM/yy"));
 				verificationDate.setText(controller.scaleUpdate(360, 360));
-				verificationDate.setToolTipText(controller.scaleUpdate(360, 360, "yyyy"));
+				verificationDate.setToolTipText(controller.scaleUpdate(360, 360, "MMM/yy"));
 				
 				TextRootCaFromDay.setText("1");
 				TextRootCaThruDay.setText("1");
@@ -685,6 +671,8 @@ public class CrtVerViewComposite extends Composite {
 				TextCertThruDay.setText("1");
 				TextVerificationDateDay.setText("1");
 				TextSignatureDateDay.setText("1");
+				validity.setBackground(null);
+				validity.setText("");
 			}
 		});
 		btnReset.setText("Reset");
@@ -708,8 +696,12 @@ public class CrtVerViewComposite extends Composite {
 		btnCalculate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-				validity.setText("VALID");
+				if(btnModifiedShellModel.getSelection()){
+					controller.validate(2);
+				}
+				else{
+					controller.validate(1);
+				}
 			}
 		});
 		GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
@@ -717,8 +709,6 @@ public class CrtVerViewComposite extends Composite {
 		gd_btnCalculate.heightHint = 30;
 		btnCalculate.setLayoutData(gd_btnCalculate);
 		btnCalculate.setText("Validate");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 		
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmKettenmodell.setText("Chain Model");
@@ -730,7 +720,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromRootCa.setText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180));
-				ScaleFromRoot.setToolTipText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180, "yyyy"));
+				ScaleFromRoot.setToolTipText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -739,7 +730,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruRootCa.setText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180));
-				ScaleThruRoot.setToolTipText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180, "yyyy"));
+				ScaleThruRoot.setToolTipText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -748,7 +740,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromCa.setText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180));
-				ScaleFromCA.setToolTipText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180, "yyyy"));
+				ScaleFromCA.setToolTipText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -757,7 +750,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruCa.setText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180));
-				ScaleThruCA.setToolTipText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180, "yyyy"));
+				ScaleThruCA.setToolTipText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -766,7 +760,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				fromCert.setText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180));
-				ScaleFromTN.setToolTipText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180, "yyyy"));
+				ScaleFromTN.setToolTipText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -775,7 +770,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				thruCert.setText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180));
-				ScaleThruTN.setToolTipText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180, "yyyy"));
+				ScaleThruTN.setToolTipText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180, "MMM/yy"));
+				CrtVerViewController.flag=false;
 			}
 		});
 		
@@ -784,7 +780,7 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				signatureDate.setText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 360));
-				ScaleSignatureDate.setToolTipText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 180, "yyyy"));
+				ScaleSignatureDate.setToolTipText(controller.scaleUpdate(ScaleSignatureDate.getSelection(), 360, "MMM/yy"));
 			}
 		});
 		
@@ -793,25 +789,75 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				//Add or Remain Time dependent on selection
 				LabelVerificationDate.setText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 360));
-				ScaleVerificationDate.setToolTipText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 180, "yyyy"));
+				ScaleVerificationDate.setToolTipText(controller.scaleUpdate(ScaleVerificationDate.getSelection(), 360, "MMM/yy"));
 
 			}
 		});
 		
 	}
-	public static void setScales(int CertType) {
-		switch (CertType){
-			case 1:
-				ScaleFromTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotBefore()));
-				fromCert.setText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180));
-				ScaleFromTN.setToolTipText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180, "yyyy"));
-				ScaleThruTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotAfter()));
-				thruCert.setText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180));
-				ScaleThruTN.setToolTipText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180, "yyyy"));
-				break;
-		}
+//	public static void setScales(int CertType) {
+//		Calendar cal = Calendar.getInstance();
+//		switch (CertType){
+//			case 1:
+//				// Scale From User Certificate
+//				ScaleFromTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotBefore()));
+//				fromCert.setText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180));
+//				ScaleFromTN.setToolTipText(controller.scaleUpdate(ScaleFromTN.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | From TN
+//				cal.setTime(controller.getTN().getNotBefore());
+//				TextCertFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				
+//				// Scale Thru User Certificate
+//				ScaleThruTN.setSelection(180 + controller.dateOffset(controller.getTN().getNotAfter()));
+//				thruCert.setText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180));
+//				ScaleThruTN.setToolTipText(controller.scaleUpdate(ScaleThruTN.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | Thru TN
+//				cal.setTime(controller.getTN().getNotAfter());
+//				TextCertThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				break;
+//			case 2:
+//				// Scale From CA
+//				ScaleFromCA.setSelection(180 + controller.dateOffset(controller.getCA().getNotBefore()));
+//				fromCa.setText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180));
+//				ScaleFromCA.setToolTipText(controller.scaleUpdate(ScaleFromCA.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | From CA
+//				cal.setTime(controller.getCA().getNotBefore());
+//				TextCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				
+//				// Scale Thru CA
+//				ScaleThruCA.setSelection(180 + controller.dateOffset(controller.getCA().getNotAfter()));
+//				thruCa.setText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180));
+//				ScaleThruCA.setToolTipText(controller.scaleUpdate(ScaleThruCA.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | Thru CA
+//				cal.setTime(controller.getCA().getNotAfter());
+//				TextCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				break;
+//			case 3:
+//				// Scale From CA
+//				ScaleFromRoot.setSelection(180 + controller.dateOffset(controller.getRootCA().getNotBefore()));
+//				fromRootCa.setText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180));
+//				ScaleFromRoot.setToolTipText(controller.scaleUpdate(ScaleFromRoot.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | From CA
+//				cal.setTime(controller.getRootCA().getNotBefore());
+//				TextRootCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				
+//				// Scale Thru CA
+//				ScaleThruRoot.setSelection(180 + controller.dateOffset(controller.getRootCA().getNotAfter()));
+//				thruRootCa.setText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180));
+//				ScaleThruRoot.setToolTipText(controller.scaleUpdate(ScaleThruRoot.getSelection(), 180, "yyyy"));
+//				
+//				// Set Textfield for the Day | Thru CA
+//				cal.setTime(controller.getRootCA().getNotAfter());
+//				TextRootCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+//				break;
+//		}
 			
-	}
+	//}
 	
 	
 	@Override
