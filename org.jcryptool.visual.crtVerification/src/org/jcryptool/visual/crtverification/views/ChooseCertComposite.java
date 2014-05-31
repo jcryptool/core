@@ -4,6 +4,7 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
 import org.jcryptool.visual.crtverification.keystore.KeystoreConnector;
@@ -11,9 +12,7 @@ import org.jcryptool.visual.crtverification.keystore.KeystoreConnector;
 public class ChooseCertComposite extends Composite {
 	private Composite parent;
 	private ChooseCertPage page;
-	private int SelectedCertIndex;
 	KeystoreConnector ksc = new KeystoreConnector();
-	private CrtVerViewController controller = new CrtVerViewController();
 
     /**
      * Create the composite.
@@ -28,25 +27,23 @@ public class ChooseCertComposite extends Composite {
         
         ListViewer listViewer = new ListViewer(this, SWT.BORDER | SWT.V_SCROLL);
         final List list = listViewer.getList();
-        list.setBounds(10, 10, 430, 280);
+        list.setBounds(10, 10, 430, 211);
         
-        for(int i=0;i<ksc.getAllCertificates().size();i++){
-        	list.add(ksc.getAllCertificates().get(i).getSubjectDN().toString());
-        }
-        
-        list.addSelectionListener(new SelectionAdapter() {
+        Button btnLoad = new Button(this, SWT.NONE);
+        btnLoad.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
         		page.setPageComplete(true);
-        		SelectedCertIndex = list.getSelectionIndex();
-        		controller.setTN(ksc.getAllCertificates().get(SelectedCertIndex));
+        		CrtVerViewController.setTN(ksc.getAllCertificates().get(list.getSelectionIndex()));
         	}
         });
+        btnLoad.setBounds(346, 227, 94, 28);
+        btnLoad.setText("Load");
         
+        for(int i=0;i<ksc.getAllCertificates().size();i++){
+        	list.add(ksc.getAllCertificates().get(i).getSubjectDN().toString());
+        } 
        
-       
-       
-        // Example End
         
     }
 }
