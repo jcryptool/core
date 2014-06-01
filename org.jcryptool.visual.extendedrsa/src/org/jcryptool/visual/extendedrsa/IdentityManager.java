@@ -102,7 +102,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
      * -- but a meaningful implementation might actually be needed
      */
     @Override
-    public Object execute(ExecutionEvent event) {
+    public Object execute(ExecutionEvent event) throws ExecutionException {
     	return(null);
     }
 
