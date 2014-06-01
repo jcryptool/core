@@ -1,5 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
+import org.eclipse.wb.swt.ResourceManager;
 
 public class CrtVerViewComposite extends Composite {
 	// Object Controller
@@ -57,6 +59,8 @@ public class CrtVerViewComposite extends Composite {
 
 	private Text txtDiesIstDer;
 
+    static ControlDecoration validitySymbol;
+	
 	/**
 	 * Create the composite.
 	 * 
@@ -736,6 +740,9 @@ public class CrtVerViewComposite extends Composite {
 		btnCalculate.setLayoutData(gd_btnCalculate);
 		btnCalculate.setText("Validate");
 
+		validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
+        validitySymbol.hide();
+		
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmKettenmodell.setText("Chain Model");
 
@@ -765,6 +772,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(fromRootCa, ScaleRootCaBegin, 180);
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -773,6 +782,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(thruRootCa, ScaleRootCaEnd, 180);
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -781,6 +792,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(fromCa, ScaleCaBegin, 180);
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -789,6 +802,8 @@ public class CrtVerViewComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(thruCa, ScaleCaEnd, 180);
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -796,7 +811,9 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(fromCert, ScaleCertBegin, 180);
+				controller.updateElements(fromCert, ScaleCertBegin, 180);				
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -804,7 +821,9 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(thruCert, ScaleCertEnd, 180);
+				controller.updateElements(thruCert, ScaleCertEnd, 180);				
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -812,7 +831,9 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(signatureDate, ScaleSignatureDate, 360);
+				controller.updateElements(signatureDate, ScaleSignatureDate, 360);				
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
@@ -820,13 +841,35 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
+				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);				
+				// Hide Validity Symbols (red/green)
+                validitySymbol.hide();
 			}
 		});
 
 		controller.reset();
 	}
 
+	/**
+     * Sets the symbols for a successful or unsuccessful validation.
+     * The symbols are a red cross or a green checkmark.
+     * 
+     * @param type int: 
+     *     [1] valid
+     *     [2] invalid
+     */
+    public static void setValidtiySymbol(int type){
+        if (type == 1){
+            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification", "icons/gruenerHakenKlein.png"));
+            validitySymbol.setDescriptionText("Sucessfully validated");
+            validitySymbol.show();
+        }else{
+            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification", "icons/rotesKreuzKlein.png"));
+            validitySymbol.setDescriptionText("Unsucessfully validated");
+            validitySymbol.show();
+        }
+    }
+	
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components

@@ -245,12 +245,14 @@ public class CrtVerViewController {
 				if(getRootCA()!=null && getCA()!=null && getTN()!=null){
 					try{
 						if(cpv.validate(CertPathVerifier.SHELL_MODEL)){
-							CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-							CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
+//							CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+//							CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
+						    CrtVerViewComposite.setValidtiySymbol(1);
 						}
 						else{
-							CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-							CrtVerViewComposite.validity.setText("NOT VALID");
+//							CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+//							CrtVerViewComposite.validity.setText("NOT VALID");
+						    CrtVerViewComposite.setValidtiySymbol(2);
 						}
 					}
 					catch (InvalidAlgorithmParameterException e){
@@ -263,12 +265,14 @@ public class CrtVerViewController {
 				CertPathVerifier cpv = new CertPathVerifier(null, null, null, verificationDate, signatureDate);
 				try {
 					if(cpv.verifyChangedDate(CertPathVerifier.SHELL_MODEL, fromCert, thruCert, fromCa, thruCa, fromRootCa, thruRootCa, signatureDate, verificationDate)){
-						CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-						CrtVerViewComposite.validity.setText("VALID SHELL MODEL");
+//						CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+//						CrtVerViewComposite.validity.setText("VALID SHELL MODEL");
+						CrtVerViewComposite.setValidtiySymbol(1);
 					}
 					else{
-						CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-						CrtVerViewComposite.validity.setText("NOT VALID");
+//						CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+//						CrtVerViewComposite.validity.setText("NOT VALID");
+						CrtVerViewComposite.setValidtiySymbol(2);
 					}
 				} catch (InvalidAlgorithmParameterException e) {
 					LogUtil.logError(Activator.PLUGIN_ID, e);
@@ -356,8 +360,9 @@ public class CrtVerViewController {
     	CrtVerViewComposite.TextCertThruDay.setText("1");
     	CrtVerViewComposite.TextVerificationDateDay.setText("1");
     	CrtVerViewComposite.TextSignatureDateDay.setText("1");
-    	CrtVerViewComposite.validity.setBackground(null);
-    	CrtVerViewComposite.validity.setText("");
+//    	CrtVerViewComposite.validity.setBackground(null);
+//    	CrtVerViewComposite.validity.setText("");
+    	CrtVerViewComposite.validitySymbol.hide();
     }
     
     public void loadCertificate(ChooseCertPage p, List list){
