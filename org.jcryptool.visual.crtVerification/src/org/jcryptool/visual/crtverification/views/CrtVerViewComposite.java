@@ -23,9 +23,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite {
-
 	// Object Controller
-	static CrtVerViewController controller = new CrtVerViewController();
+	CrtVerViewController controller = new CrtVerViewController();
 
 	// Variables
 	static Text TextRootCaFromDay;
@@ -47,12 +46,12 @@ public class CrtVerViewComposite extends Composite {
 	static Label verificationDate;
 	static Label validity;
 
-	static Scale ScaleFromTN;
-	static Scale ScaleThruTN;
-	static Scale ScaleFromCA;
-	static Scale ScaleThruCA;
-	static Scale ScaleFromRoot;
-	static Scale ScaleThruRoot;
+	static Scale ScaleCertBegin;
+	static Scale ScaleCertEnd;
+	static Scale ScaleCaBegin;
+	static Scale ScaleCaEnd;
+	static Scale ScaleRootCaBegin;
+	static Scale ScaleRootCaEnd;
 	static Scale ScaleVerificationDate;
 	static Scale ScaleSignatureDate;
 
@@ -165,19 +164,19 @@ public class CrtVerViewComposite extends Composite {
 				SWT.NORMAL));
 		lblRootCa.setAlignment(SWT.CENTER);
 
-		Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
-		ScaleFromRoot = ScaleRootCaBegin;
-		ScaleFromRoot.setToolTipText("");
+		final Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleRootCaBegin = ScaleRootCaBegin;
+		ScaleRootCaBegin.setToolTipText("");
 
-		ScaleFromRoot.setMaximum(360);
-		GridData gd_ScaleFromRoot = new GridData(SWT.LEFT, SWT.CENTER, false,
+		ScaleRootCaBegin.setMaximum(360);
+		GridData gd_ScaleRootCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 12, 1);
-		gd_ScaleFromRoot.widthHint = 360;
-		ScaleFromRoot.setLayoutData(gd_ScaleFromRoot);
-		ScaleFromRoot.setSelection(180);
+		gd_ScaleRootCaBegin.widthHint = 360;
+		ScaleRootCaBegin.setLayoutData(gd_ScaleRootCaBegin);
+		ScaleRootCaBegin.setSelection(180);
 
-		Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
-		ScaleThruRoot = ScaleRootCaEnd;
+		final Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleRootCaEnd = ScaleRootCaEnd;
 		GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
 		gd_ScaleRootCaEnd.widthHint = 360;
@@ -229,23 +228,23 @@ public class CrtVerViewComposite extends Composite {
 				SWT.NORMAL));
 		lblCa.setAlignment(SWT.CENTER);
 
-		Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
-		ScaleFromCA = ScaleCaBegin;
-		ScaleFromCA.setMaximum(360);
-		GridData gd_ScaleFromCA = new GridData(SWT.LEFT, SWT.CENTER, false,
+		final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleCaBegin = ScaleCaBegin;
+		ScaleCaBegin.setMaximum(360);
+		GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 12, 1);
-		gd_ScaleFromCA.widthHint = 360;
-		ScaleFromCA.setLayoutData(gd_ScaleFromCA);
-		ScaleFromCA.setSelection(180);
+		gd_ScaleCaBegin.widthHint = 360;
+		ScaleCaBegin.setLayoutData(gd_ScaleCaBegin);
+		ScaleCaBegin.setSelection(180);
 
-		Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
-		ScaleThruCA = ScaleCaEnd;
-		ScaleThruCA.setMaximum(360);
-		GridData gd_ScaleThruCA = new GridData(SWT.LEFT, SWT.CENTER, false,
+		final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleCaEnd = ScaleCaEnd;
+		ScaleCaEnd.setMaximum(360);
+		GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
-		gd_ScaleThruCA.widthHint = 360;
-		ScaleThruCA.setLayoutData(gd_ScaleThruCA);
-		ScaleThruCA.setSelection(180);
+		gd_ScaleCaEnd.widthHint = 360;
+		ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
+		ScaleCaEnd.setSelection(180);
 
 		Button btnLoadCa = new Button(composite, SWT.NONE);
 		GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false,
@@ -291,23 +290,23 @@ public class CrtVerViewComposite extends Composite {
 				12, SWT.NORMAL));
 		lblUserCertificate.setAlignment(SWT.CENTER);
 
-		Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
-		ScaleFromTN = ScaleCertBegin;
-		ScaleFromTN.setMaximum(360);
-		GridData gd_ScaleFromTN = new GridData(SWT.LEFT, SWT.CENTER, false,
+		final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
+		ScaleCertBegin.setMaximum(360);
+		GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 12, 1);
-		gd_ScaleFromTN.widthHint = 360;
-		ScaleFromTN.setLayoutData(gd_ScaleFromTN);
-		ScaleFromTN.setSelection(180);
+		gd_ScaleCertBegin.widthHint = 360;
+		ScaleCertBegin.setLayoutData(gd_ScaleCertBegin);
+		ScaleCertBegin.setSelection(180);
 
-		Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
-		ScaleThruTN = ScaleCertEnd;
-		ScaleThruTN.setMaximum(360);
-		GridData gd_ScaleThruTN = new GridData(SWT.LEFT, SWT.CENTER, false,
+		final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
+		CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
+		ScaleCertEnd.setMaximum(360);
+		GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
-		gd_ScaleThruTN.widthHint = 360;
-		ScaleThruTN.setLayoutData(gd_ScaleThruTN);
-		ScaleThruTN.setSelection(180);
+		gd_ScaleCertEnd.widthHint = 360;
+		ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
+		ScaleCertEnd.setSelection(180);
 		Button btnLoadUserCert = new Button(composite, SWT.NONE);
 		// Selection Listeners | Scales
 		btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
@@ -707,13 +706,9 @@ public class CrtVerViewComposite extends Composite {
 		gd_btnReset.widthHint = 100;
 		gd_btnReset.heightHint = 30;
 		btnReset.setLayoutData(gd_btnReset);
-		btnReset.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				controller.reset();
-			}
-		});
 		btnReset.setText("Reset");
+		
+		
 		new Label(composite, SWT.NONE);
 
 		Button btnBack = new Button(composite, SWT.NONE);
@@ -733,16 +728,7 @@ public class CrtVerViewComposite extends Composite {
 		btnForward.setText("Forward");
 
 		Button btnCalculate = new Button(composite, SWT.NONE);
-		btnCalculate.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if (btnModifiedShellModel.getSelection()) {
-					controller.validate(2);
-				} else {
-					controller.validate(1);
-				}
-			}
-		});
+		
 		GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnCalculate.widthHint = 100;
@@ -753,18 +739,32 @@ public class CrtVerViewComposite extends Composite {
 		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmKettenmodell.setText("Chain Model");
 
+		
+		btnReset.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				controller.reset();
+			}
+		});
+
+		
+		btnCalculate.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				if (btnModifiedShellModel.getSelection()) {
+					controller.validate(2);
+				} else {
+					controller.validate(1);
+				}
+			}
+		});
+		
 		// Selection Listeners | Scales
-		ScaleFromRoot.addSelectionListener(new SelectionAdapter() {
+		ScaleRootCaBegin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				fromRootCa.setText(controller.scaleUpdate(
-						ScaleFromRoot.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleFromRoot.setToolTipText(controller.scaleUpdate(
-						ScaleFromRoot.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(fromRootCa, ScaleRootCaBegin, 180);
 			}
 		});
 
@@ -772,69 +772,39 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				thruRootCa.setText(controller.scaleUpdate(
-						ScaleThruRoot.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleThruRoot.setToolTipText(controller.scaleUpdate(
-						ScaleThruRoot.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(thruRootCa, ScaleRootCaEnd, 180);
 			}
 		});
 
-		ScaleFromCA.addSelectionListener(new SelectionAdapter() {
+		ScaleCaBegin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				fromCa.setText(controller.scaleUpdate(
-						ScaleFromCA.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleFromCA.setToolTipText(controller.scaleUpdate(
-						ScaleFromCA.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(fromCa, ScaleCaBegin, 180);
 			}
 		});
 
-		ScaleThruCA.addSelectionListener(new SelectionAdapter() {
+		ScaleCaEnd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				thruCa.setText(controller.scaleUpdate(
-						ScaleThruCA.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleThruCA.setToolTipText(controller.scaleUpdate(
-						ScaleThruCA.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(thruCa, ScaleCaEnd, 180);
 			}
 		});
 
-		ScaleFromTN.addSelectionListener(new SelectionAdapter() {
+		ScaleCertBegin.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				fromCert.setText(controller.scaleUpdate(
-						ScaleFromTN.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleFromTN.setToolTipText(controller.scaleUpdate(
-						ScaleFromTN.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(fromCert, ScaleCertBegin, 180);
 			}
 		});
 
-		ScaleThruTN.addSelectionListener(new SelectionAdapter() {
+		ScaleCertEnd.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				thruCert.setText(controller.scaleUpdate(
-						ScaleThruTN.getSelection(), 180,
-						controller.getDateformat1()));
-				ScaleThruTN.setToolTipText(controller.scaleUpdate(
-						ScaleThruTN.getSelection(), 180,
-						controller.getDateformat2()));
-				CrtVerViewController.flag = false;
+				controller.updateElements(thruCert, ScaleCertEnd, 180);
 			}
 		});
 
@@ -842,12 +812,7 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				signatureDate.setText(controller.scaleUpdate(
-						ScaleSignatureDate.getSelection(), 360,
-						controller.getDateformat1()));
-				ScaleSignatureDate.setToolTipText(controller.scaleUpdate(
-						ScaleSignatureDate.getSelection(), 360,
-						controller.getDateformat2()));
+				controller.updateElements(signatureDate, ScaleSignatureDate, 360);
 			}
 		});
 
@@ -855,15 +820,10 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				LabelVerificationDate.setText(controller.scaleUpdate(
-						ScaleVerificationDate.getSelection(), 360,
-						controller.getDateformat1()));
-				ScaleVerificationDate.setToolTipText(controller.scaleUpdate(
-						ScaleVerificationDate.getSelection(), 360,
-						controller.getDateformat2()));
-
+				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
 			}
 		});
+
 		controller.reset();
 	}
 
