@@ -36,12 +36,26 @@ public class ShellModelVerifier {
     private Certificate caCertificate;
     private Certificate rootCertificate;
 
+    /**
+     * Constructs a new Verifier for the shell model or the modified shell model
+     * 
+     * @param rootCert the root certificate, used as trust anchor of the certificate path
+     * @param caCert the ca certificate
+     * @param clientCert the client certificate
+     * @param modifiedModelEnabled true if the modified shell model should be used
+     * @param signatureDate the date when the signature was created, required if the modified shell
+     *            model is used
+     */
     public ShellModelVerifier(Certificate rootCert, Certificate caCert, Certificate clientCert,
             boolean modifiedModelEnabled, Date signatureDate) {
         if (rootCert == null || caCert == null || clientCert == null) {
             throw new NullPointerException("Certificates cannot be null!");
         } else if (signatureDate == null) {
-            throw new NullPointerException("signatureDate cannot be null");
+            if (modifiedShellModel) {
+                throw new NullPointerException("signatureDate cannot be null");
+            } else {
+                signatureDate = new Date();
+            }
         } else {
             this.modifiedShellModel = modifiedModelEnabled;
             this.signatureDate = signatureDate;
@@ -116,21 +130,27 @@ public class ShellModelVerifier {
             Date rootNotBefore, Date rootNotAfter, Date sigDate, Date verDate) {
         boolean valid = true;
 
+        // check verification an signature date or only signature date based on used model
         if (modifiedShellModel) {
-            sigDate = verDate;
-        }
-
-        if (clientNotBefore.after(verDate) || clientNotAfter.before(verDate)) {
-            valid = false;
-        } else if (caNotBefore.after(verDate) || caNotAfter.before(verDate)) {
-            valid = false;
-        } else if (rootNotBefore.after(verDate) || rootNotAfter.before(verDate)) {
-            valid = false;
+            valid = compareDates(sigDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter);
+        } else {
+            valid = compareDates(verDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter);
+            valid = compareDates(sigDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter);
         }
 
         return valid;
     }
 
+    /**
+     * sets the certificates for the validator
+     * 
+     * @param rootCert root certificate
+     * @param caCert CA certificate
+     * @param clientCert client certificate
+     */
     public void setCertificiates(Certificate rootCert, Certificate caCert, Certificate clientCert) {
         if (rootCert == null || caCert == null || clientCert == null) {
             throw new NullPointerException("Certificates cannot be null!");
@@ -141,10 +161,19 @@ public class ShellModelVerifier {
         }
     }
 
+    /**
+     * sets the model which should be used
+     * 
+     * @param modifiedModelEnabled true if the modified shell model should be used, false if shell
+     *            model
+     */
     public void setModifiedShellModell(boolean modifiedModelEnabled) {
         this.modifiedShellModel = modifiedModelEnabled;
     }
 
+    /**
+     * build a CertPath from root, ca and client certificate for validation
+     */
     private CertPath buildCertPath(Certificate client, Certificate ca, Certificate root) {
         CertPath path = null;
 
@@ -156,5 +185,22 @@ public class ShellModelVerifier {
         }
 
         return path;
+    }
+
+    /**
+     * @return true if all dates are within validity periodes
+     */
+    private boolean compareDates(Date compareDate, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
+            Date caNotAfter, Date rootNotBefore, Date rootNotAfter) {
+        boolean valid = true;
+
+        if (clientNotBefore.after(compareDate) || clientNotAfter.before(compareDate)) {
+            valid = false;
+        } else if (caNotBefore.after(compareDate) || caNotAfter.before(compareDate)) {
+            valid = false;
+        } else if (rootNotBefore.after(compareDate) || rootNotAfter.before(compareDate)) {
+            valid = false;
+        }
+        return valid;
     }
 }
