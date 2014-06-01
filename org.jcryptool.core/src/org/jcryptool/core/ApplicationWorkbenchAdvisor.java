@@ -1,6 +1,6 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2010 JCrypTool Team and Contributors
+ * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
  *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
@@ -29,7 +29,9 @@ import org.jcryptool.core.util.constants.IConstants;
  * The ApplicationWorkbenchAdvisor class is used for configuring the workbench.
  *
  * @author Dominik Schadow
- * @version 0.9.5
+ * @author Holger Friedrich (a method in org.jcryptool.core.operations was renamed
+ * as part of the effort to remove support for Actions)
+ * @version 0.9.6
  */
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     /**
@@ -89,7 +91,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
             });
 
             if (getWorkbenchConfigurer().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor() != null) {
-                OperationsPlugin.getDefault().getAlgorithmsManager().setActionsEnabled(true);
+                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             }
         }
     }
@@ -127,12 +129,12 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     private void setAlgorithmActionStatus(IWorkbenchPart part) {
         try {
             if (getWorkbenchConfigurer().getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor() != null) {
-                OperationsPlugin.getDefault().getAlgorithmsManager().setActionsEnabled(true);
+                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(true);
             } else {
-                OperationsPlugin.getDefault().getAlgorithmsManager().setActionsEnabled(false);
+                OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
             }
         } catch (Exception ex) {
-            OperationsPlugin.getDefault().getAlgorithmsManager().setActionsEnabled(false);
+            OperationsPlugin.getDefault().getAlgorithmsManager().setCommandsEnabled(false);
         }
     }
 

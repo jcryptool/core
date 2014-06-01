@@ -49,10 +49,9 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.CommandOrAction;
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.views.AlgorithmView;
@@ -69,13 +68,13 @@ import org.jcryptool.core.views.content.structure.ViewLabelProvider;
  *
  * @author mwalthart
  * @author Holger Friedrich (support for Commands)
- * @version 0.9.2
+ * @version 0.9.3
  */
 public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
     private TreeViewer viewer = this;
     private TreeParent invisibleRoot;
     private AbstractHandler doubleClickHandler;
-    private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
+    private ArrayList<CommandInfo> algorithmList = new ArrayList<CommandInfo>();
     private String search;
     protected String extensionPointId = "org.jcryptool.core.operations.algorithms"; //$NON-NLS-1$
 
@@ -181,9 +180,9 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
      * loads the algorithms from the extension point
      */
     private void loadAlgorithms() {
-        for (CommandOrAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
-            if (!algorithmList.contains(action)) {
-                algorithmList.add(action);
+        for (CommandInfo info : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmCommands()) {
+            if (!algorithmList.contains(info)) {
+                algorithmList.add(info);
             }
         }
     }
@@ -196,30 +195,22 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
     private void createTree(String[] needles) {
         HashMap<String, TreeParent> types = new HashMap<String, TreeParent>();
 
-        Iterator<CommandOrAction> it = algorithmList.iterator();
-        CommandOrAction act = null;
+        Iterator<CommandInfo> it = algorithmList.iterator();
+        CommandInfo info = null;
 
         while (it.hasNext()) {
-            act = it.next();
+            info = it.next();
 
 			String text = "";
 			String type = "";
 			String toolTipText = "";
 			boolean isFlexiProviderAlgorithm = false;
 			
-			if(act.getHandler() != null) {
-				ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)act.getHandler();
-				text = handler.getText();
-				type = handler.getType();
-				toolTipText = handler.getToolTipText();
-				isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
-			} else if(act.getAction() != null) {
-				ShadowAlgorithmAction action = (ShadowAlgorithmAction)act.getAction();
-				text = action.getText();
-				type = action.getType();
-				toolTipText = action.getToolTipText();
-				isFlexiProviderAlgorithm = action.isFlexiProviderAlgorithm();
-			}
+			ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)info.getHandler();
+			text = handler.getText();
+			type = handler.getType();
+			toolTipText = handler.getToolTipText();
+			isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
             
             // filter
             boolean show = true;
@@ -270,13 +261,12 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
                 } else {
                     final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
 
-                    Iterator<CommandOrAction> it9 = algorithmList.iterator();
-                    CommandOrAction cmdOrAction = null;
+                    Iterator<CommandInfo> it9 = algorithmList.iterator();
+                    CommandInfo commandInfo = null;
                     while (it9.hasNext()) {
-                        cmdOrAction = it9.next();
-                        ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
-                        String commandId = cmdOrAction.getCommandId();
-                        ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
+                        commandInfo = it9.next();
+                        ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)commandInfo.getHandler();
+                        String commandId = commandInfo.getCommandId();
                         if(commandId != null && treeObject.getName().equals(handler.getText())) {
                         	Command command = commandService.getCommand(commandId);
                         	try {
@@ -285,8 +275,6 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
                         		LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
                         		return(null);
                         	}
-                        } else if (action != null && treeObject.getName().equals(action.getText())) {
-                            action.run();
                         }
                     }
                 }

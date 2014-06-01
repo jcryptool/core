@@ -40,6 +40,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmAction;
@@ -54,15 +55,15 @@ import org.jcryptool.core.views.content.TreeView;
  *
  * @author mwalthart
  * @author Holger Friedrich (support for Commands)
- * @version 0.9.5
+ * @version 0.9.6
  */
 public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable {
 	private AbstractHandler doubleClickHandler;
 	private AlgorithmPaletteViewer viewer = this;
 	private PaletteRoot invisibleRoot;
-	private ArrayList<CommandOrAction> algorithmList = new ArrayList<CommandOrAction>();
+	private ArrayList<CommandInfo> algorithmList = new ArrayList<CommandInfo>();
 	private String search;
-	private String extensionPointId = "org.jcryptool.core.operations.algorithms"; //$NON-NLS-1$
+	private String extensionPointId = "org.jcryptool.core.operations.algorithms_cmd"; //$NON-NLS-1$
 
 	/**
 	 * creates a palette viewer
@@ -128,9 +129,9 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 	 * loads the algorithms from the extension point
 	 */
 	private void loadAlgorithms() {
-		for (CommandOrAction action : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions()) {
-			if (!algorithmList.contains(action)) {
-				algorithmList.add(action);
+		for (CommandInfo command : OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmCommands()) {
+			if (!algorithmList.contains(command)) {
+				algorithmList.add(command);
 			}
 		}
 	}
@@ -146,30 +147,22 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 		TreeMap<String, PaletteDrawer> types = new TreeMap<String, PaletteDrawer>();
 		TreeMap<String, SelectionToolEntry> sortList = new TreeMap<String, SelectionToolEntry>();
 
-		Iterator<CommandOrAction> it = algorithmList.iterator();
-		CommandOrAction act = null;
+		Iterator<CommandInfo> it = algorithmList.iterator();
+		CommandInfo info = null;
 
 		while (it.hasNext()) {
-			act = it.next();
+			info = it.next();
 
 			String text = "";
 			String type = "";
 			String toolTipText = "";
 			boolean isFlexiProviderAlgorithm = false;
 			
-			if(act.getHandler() != null) {
-				ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)act.getHandler();
-				text = handler.getText();
-				type = handler.getType();
-				toolTipText = handler.getToolTipText();
-				isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
-			} else if(act.getAction() != null) {
-				ShadowAlgorithmAction action = (ShadowAlgorithmAction)act.getAction();
-				text = action.getText();
-				type = action.getType();
-				toolTipText = action.getToolTipText();
-				isFlexiProviderAlgorithm = action.isFlexiProviderAlgorithm();
-			}
+			ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)info.getHandler();
+			text = handler.getText();
+			type = handler.getType();
+			toolTipText = handler.getToolTipText();
+			isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
 			
 			// filter
 			boolean show = true;
@@ -257,14 +250,13 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 					} else {
 		                final ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
 
-		                Iterator<CommandOrAction> it9 = algorithmList
+		                Iterator<CommandInfo> it9 = algorithmList
 								.iterator();
-						CommandOrAction cmdOrAction = null;
+						CommandInfo commandInfo = null;
 						while (it9.hasNext()) {
-							cmdOrAction = it9.next();
-							ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
-							String commandId = cmdOrAction.getCommandId();
-							ShadowAlgorithmAction action = (ShadowAlgorithmAction)cmdOrAction.getAction();
+							commandInfo = it9.next();
+							ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)commandInfo.getHandler();
+							String commandId = commandInfo.getCommandId();
 							if (commandId != null && model.toString().equals(
 									"Palette Entry (" + handler.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
 								Command command = commandService.getCommand(commandId);
@@ -275,10 +267,6 @@ public class AlgorithmPaletteViewer extends PaletteViewer implements ISearchable
 									LogUtil.logError(ViewsPlugin.PLUGIN_ID, ex);
 									return(null);
 								}
-							}
-							if (action != null && model.toString().equals(
-									"Palette Entry (" + action.getText() + ")")) { //$NON-NLS-1$ //$NON-NLS-2$
-								action.run();
 							}
 						}
 					}

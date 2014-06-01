@@ -33,14 +33,14 @@ public abstract class AbstractOperationsManager {
      * @param active if the parameter is <i>true</i> the actions will be enabled and if it is <i>false</i> the actions
      *            will be disabled
      */
-    public abstract void setActionsEnabled(boolean active);
+    public abstract void setCommandsEnabled(boolean active);
 
     /**
      * Subclasses must provide a getter for the algorithm actions.
      * 
      * @return an CommandOrAction array of the algorithm actions
      */
-    public abstract CommandOrAction[] getShadowAlgorithmActions();
+    public abstract CommandInfo[] getShadowAlgorithmCommands();
 
     /**
      * Subclasses must provide a getter for a specific algorithm type. The type is retrieved via a passed action object.
@@ -48,5 +48,5 @@ public abstract class AbstractOperationsManager {
      * @param action
      * @return
      */
-    public abstract String getAlgorithmType(CommandOrAction action);
+    public abstract String getAlgorithmType(CommandInfo command);
 }

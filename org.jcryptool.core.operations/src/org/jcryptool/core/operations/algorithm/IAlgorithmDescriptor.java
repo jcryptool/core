@@ -9,6 +9,7 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.core.operations.algorithm;
 
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.CommandOrAction;
 
 /**
@@ -53,7 +54,7 @@ public interface IAlgorithmDescriptor {
      * 
      * @return The action that will activate the plug-in and perform the algorithm
      */
-    public CommandOrAction getAction();
+    public CommandInfo getCommand();
 
     /**
      * Returns an int array containing all supported key lengths of this algorithm.

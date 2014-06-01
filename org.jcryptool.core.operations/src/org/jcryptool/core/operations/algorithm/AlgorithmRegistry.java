@@ -21,10 +21,9 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionChangeHandler;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
-import org.eclipse.jface.action.IAction;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.AbstractOperationsManager;
-import org.jcryptool.core.operations.CommandOrAction;
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.OperationsPlugin;
 
@@ -35,7 +34,7 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * @author amro
  * @author t-kern
  * @author Holger Friedrich (support for Commands)
- * @version 0.6.1
+ * @version 0.6.2
  * 
  */
 public class AlgorithmRegistry extends AbstractOperationsManager implements IExtensionChangeHandler {
@@ -50,7 +49,7 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
         IExtensionRegistry registry = Platform.getExtensionRegistry();
 
         IExtensionPoint extensionPoint = registry.getExtensionPoint(OperationsPlugin.PLUGIN_ID,
-                IOperationsConstants.PL_ALGORITHMS);
+                IOperationsConstants.PL_ALGORITHMS_CMD);
 
         IExtension[] extensions = extensionPoint.getExtensions();
         List<IExtension> ext = new ArrayList<IExtension>();
@@ -58,13 +57,6 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
         	ext.add(extension);
         }
 
-        extensionPoint = registry.getExtensionPoint(OperationsPlugin.PLUGIN_ID,
-        		IOperationsConstants.PL_ALGORITHMS_CMD);
-
-        extensions = extensionPoint.getExtensions();
-        for(IExtension extension: extensions) {
-        	ext.add(extension);
-        }
         extensions = ext.toArray(new IExtension[0]);
         
         for (int i = 0; i < extensions.length; i++) {
@@ -91,8 +83,7 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
                             element.getAttribute(IOperationsConstants.ATT_ID), extension.getUniqueIdentifier(),
                             element.getAttribute(IOperationsConstants.ATT_KEYLENGTHS),
                             element.getAttribute(IOperationsConstants.ATT_BLOCKLENGTHS),
-                            element.getAttribute(IOperationsConstants.ATT_TOOLTIP), isFlexiProviderAlgorithm,
-                            element.getName().equals(IOperationsConstants.TAG_ALGORITHM_CMD));
+                            element.getAttribute(IOperationsConstants.ATT_TOOLTIP), isFlexiProviderAlgorithm);
 
                     addAlgorithm(desc);
                 }
@@ -101,26 +92,22 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
     }
 
     /**
-     * @see org.jcryptool.core.operations.AbstractOperationsManager#getShadowAlgorithmActions()
+     * @see org.jcryptool.core.operations.AbstractOperationsManager#getShadowAlgorithmCommands()
      */
-    public CommandOrAction[] getShadowAlgorithmActions() {
-        CommandOrAction[] actions = new CommandOrAction[algorithms.size()];
-        for (int i = 0; i < actions.length; i++) {
-            actions[i] = algorithms.get(i).getAction();
+    public CommandInfo[] getShadowAlgorithmCommands() {
+        CommandInfo[] commands = new CommandInfo[algorithms.size()];
+        for (int i = 0; i < commands.length; i++) {
+            commands[i] = algorithms.get(i).getCommand();
         }
 
-        return actions;
+        return commands;
     }
 
     /**
-     * @see org.jcryptool.core.operations.AbstractOperationsManager#getAlgorithmType(org.eclipse.jface.action.IAction)
+     * @see org.jcryptool.core.operations.AbstractOperationsManager#getAlgorithmType(org.jcryptool.core.operations.CommandInfo)
      */
-    public String getAlgorithmType(CommandOrAction cmdOrAction) {
-    	IAction action = cmdOrAction.getAction();
-        if (action != null && action instanceof ShadowAlgorithmAction) {
-            return ((ShadowAlgorithmAction) action).getType();
-        }
-        IHandler handler = cmdOrAction.getHandler();
+    public String getAlgorithmType(CommandInfo command) {
+        IHandler handler = command.getHandler();
         if(handler != null && handler instanceof ShadowAlgorithmHandler) {
         	return ((ShadowAlgorithmHandler)handler).getType();
         } else {
@@ -129,12 +116,12 @@ public class AlgorithmRegistry extends AbstractOperationsManager implements IExt
     }
 
     /**
-     * @see org.jcryptool.core.operations.AbstractOperationsManager#setActionsEnabled(boolean)
+     * @see org.jcryptool.core.operations.AbstractOperationsManager#setCommandsEnabled(boolean)
      */
-    public void setActionsEnabled(boolean active) {
+    public void setCommandsEnabled(boolean active) {
         Iterator<IAlgorithmDescriptor> it = algorithms.iterator();
         while (it.hasNext()) {
-            it.next().getAction().setEnabled(active);
+            it.next().getCommand().setEnabled(active);
         }
     }
 

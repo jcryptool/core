@@ -18,11 +18,9 @@ import java.util.TreeMap;
 
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.jface.action.ContributionItem;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -32,7 +30,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.operations.CommandOrAction;
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.fileexplorer.FileExplorerPlugin;
@@ -45,7 +43,7 @@ import org.jcryptool.fileexplorer.views.FileExplorerView;
  *
  * @author Dominik Schadow
  * @author Holger Friedrich (support for Commands)
- * @version 0.9.6
+ * @version 0.9.7
  */
 public class CryptoContributionItem extends ContributionItem {
     private Menu algorithmsMenu;
@@ -66,26 +64,22 @@ public class CryptoContributionItem extends ContributionItem {
         };
 
         SortedMap<String, Menu> typeMap = new TreeMap<String, Menu>(menuStringsComparator);
-        SortedMap<String, HashMap<String, CommandOrAction>> actionMap = new TreeMap<String, HashMap<String, CommandOrAction>>(menuStringsComparator);
-        CommandOrAction[] algorithmActions = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmActions();
+        SortedMap<String, HashMap<String, CommandInfo>> commandMap = new TreeMap<String, HashMap<String, CommandInfo>>(menuStringsComparator);
+        CommandInfo[] algorithmCommands = OperationsPlugin.getDefault().getAlgorithmsManager().getShadowAlgorithmCommands();
 
-        for (final CommandOrAction cmdOrAction : algorithmActions) {
-            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(cmdOrAction));
+        for (final CommandInfo commandInfo : algorithmCommands) {
+            String translatedType = ApplicationActionBarAdvisor.getTypeTranslation(OperationsPlugin.getDefault().getAlgorithmsManager().getAlgorithmType(commandInfo));
 
             if (!typeMap.containsKey(translatedType)) {
                 typeMap.put(translatedType, new Menu(algorithmsMenu));
             }
 
-            HashMap<String, CommandOrAction> map = new HashMap<String, CommandOrAction>(1);
-            map.put(translatedType, cmdOrAction);
+            HashMap<String, CommandInfo> map = new HashMap<String, CommandInfo>(1);
+            map.put(translatedType, commandInfo);
 
             String text = null;
-            if(cmdOrAction.getHandler() != null) {
-            	text = ((ShadowAlgorithmHandler)cmdOrAction.getHandler()).getText();
-            } else if(cmdOrAction.getAction() != null) {
-            	text = cmdOrAction.getAction().getText();
-            }
-            actionMap.put(text, map);
+           	text = commandInfo.getText();
+            commandMap.put(text, map);
         }
 
         for (String subMenuKey : typeMap.keySet()) {
@@ -94,34 +88,24 @@ public class CryptoContributionItem extends ContributionItem {
             item.setMenu(typeMap.get(subMenuKey));
         }
 
-        for (HashMap<String, CommandOrAction> algorithmItems : actionMap.values()) {
+        for (HashMap<String, CommandInfo> algorithmItems : commandMap.values()) {
             String translatedType = algorithmItems.keySet().iterator().next();
-            final CommandOrAction cmdOrAction = algorithmItems.get(translatedType);
+            final CommandInfo commandInfo = algorithmItems.get(translatedType);
 
             // get the menu
             Menu typeMenu = typeMap.get(translatedType);
 
             // create an item for the algorithm
             MenuItem item = new MenuItem(typeMenu, SWT.CASCADE);
-            final IAction action = cmdOrAction.getAction();
-            final String commandId = cmdOrAction.getCommandId();
-            final ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)cmdOrAction.getHandler();
+            final String commandId = commandInfo.getCommandId();
+            final ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)commandInfo.getHandler();
             
-            if(commandId != null) {
-            	item.setText(handler.getText());
-            	item.addSelectionListener(new SelectionAdapter() {
-            		public void widgetSelected(SelectionEvent e) {
-            			run(commandId);
-            		}
-            	});
-            } else if(action != null) {
-            	item.setText(action.getText());
-            	item.addSelectionListener(new SelectionAdapter() {
-            		public void widgetSelected(SelectionEvent e) {
-            			run(action);
-            		}
-            	});
-            }
+            item.setText(commandInfo.getText());
+            item.addSelectionListener(new SelectionAdapter() {
+            	public void widgetSelected(SelectionEvent e) {
+            		run(commandId);
+            	}
+            });
 
             // update the menu
             typeMap.put(translatedType, typeMenu);
@@ -132,6 +116,7 @@ public class CryptoContributionItem extends ContributionItem {
         item.setMenu(algorithmsMenu);
     }
 
+    /* This should hopefully be obsolete
     public void run(IAction cryptoAction) {
         final IHandlerService handlerService = (IHandlerService) view.getSite().getService(IHandlerService.class);
         IEvaluationContext evaluationContext = handlerService.createContextSnapshot(true);
@@ -144,6 +129,7 @@ public class CryptoContributionItem extends ContributionItem {
             LogUtil.logError(FileExplorerPlugin.PLUGIN_ID, ex);
         }
     }
+    */
 
     public void run(String commandId) {
         final IHandlerService handlerService = (IHandlerService) view.getSite().getService(IHandlerService.class);

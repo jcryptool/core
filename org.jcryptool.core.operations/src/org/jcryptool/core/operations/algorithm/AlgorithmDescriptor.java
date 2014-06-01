@@ -12,6 +12,7 @@ package org.jcryptool.core.operations.algorithm;
 import java.util.StringTokenizer;
 
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.CommandOrAction;
 
 /**
@@ -36,7 +37,7 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
     private String extensionUID;
 
     /** The menu action associated with this algorithm */
-    private CommandOrAction menuAction;
+    private CommandInfo menuCommand;
 
     /** The supported key lengths of this algorithm */
     private int[] supportedKeyLengths;
@@ -62,7 +63,7 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
      * @param tooltipText The tooltip text
      */
     public AlgorithmDescriptor(String name, String type, String algorithmID, String extensionUID, String keylengths,
-            String blocklengths, String tooltipText, boolean isFlexiProviderAlgorithm, boolean useCommands) {
+            String blocklengths, String tooltipText, boolean isFlexiProviderAlgorithm) {
         this.name = name;
         this.type = type;
         this.algorithmID = algorithmID;
@@ -71,11 +72,8 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
         setBlockLengths(blocklengths);
         this.tooltipText = tooltipText;
         this.isFlexiProviderAlgorithm = isFlexiProviderAlgorithm;
-        if(useCommands) {
-        	menuAction = new CommandOrAction(algorithmID, new ShadowAlgorithmHandler(this));
-        } else {
-        	menuAction = new CommandOrAction(new ShadowAlgorithmAction(this));
-        }
+        menuCommand = new CommandInfo(algorithmID, new ShadowAlgorithmHandler(this));
+        menuCommand.setText(name);
     }
 
     /**
@@ -186,10 +184,10 @@ public class AlgorithmDescriptor implements IAlgorithmDescriptor {
     }
 
     /**
-     * @see org.jcryptool.core.operations.algorithm.IAlgorithmDescriptor#getAction()
+     * @see org.jcryptool.core.operations.algorithm.IAlgorithmDescriptor#getCommand()
      */
-    public CommandOrAction getAction() {
-        return menuAction;
+    public CommandInfo getCommand() {
+        return menuCommand;
     }
 
     /**
