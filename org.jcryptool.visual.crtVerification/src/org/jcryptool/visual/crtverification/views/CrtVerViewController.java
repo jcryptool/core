@@ -184,6 +184,7 @@ public class CrtVerViewController {
 		// Mode 1: Schalenmodell
 		// Mode 2: Modifiziertes Schalenmodell
 		// Mode 3: Kettenmodell
+		
 		if(mode == 1){
 			if(getRootCA()!=null && getCA()!=null && getTN()!=null){
 				ShellModelVerifier smv = new ShellModelVerifier(getRootCA(), getCA(), getTN(), false, now);
@@ -196,11 +197,16 @@ public class CrtVerViewController {
 					CrtVerViewComposite.validity.setText("NOT VALID");
 				}
 			}
+			else {
+				if(!flag){
+					
+				}
+			}
 		}
 		else if(mode == 2){
-			if(getRootCA()!=null && getCA()!=null && getTN()!=null && flag){
+			if(getRootCA()!=null && getCA()!=null && getTN()!=null){
 				ShellModelVerifier smv = new ShellModelVerifier(getRootCA(), getCA(), getTN(), false, now);
-				if(smv.verify()){
+				if(flag && smv.verify()){
 					CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
 					CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
 				}
