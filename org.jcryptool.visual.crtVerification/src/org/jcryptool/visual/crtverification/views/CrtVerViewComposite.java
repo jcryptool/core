@@ -58,6 +58,10 @@ public class CrtVerViewComposite extends Composite {
 	static Scale ScaleSignatureDate;
 
 	private Text txtDiesIstDer;
+	
+	static Button btnLoadRootCa;
+	static Button btnLoadCa;
+	static Button btnLoadUserCert;
 
     static ControlDecoration validitySymbol;
 	
@@ -188,7 +192,7 @@ public class CrtVerViewComposite extends Composite {
 		ScaleRootCaEnd.setMaximum(360);
 		ScaleRootCaEnd.setSelection(180);
 
-		Button btnLoadRootCa = new Button(composite, SWT.NONE);
+		btnLoadRootCa = new Button(composite, SWT.NONE);
 		GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadRootCa.heightHint = 30;
@@ -210,11 +214,11 @@ public class CrtVerViewComposite extends Composite {
 						}
 					};
 					if (dialog.open() == Window.OK) {
-						// Hier kann man Aktionen durfuehren die passieren
-						// sollen wenn die WizardPage aufgerufen wird
-						// zB aktivieren/deaktivieren von Buttons der
-						// Hauptansicht
-					}
+                        // Hier kann man Aktionen durfuehren die passieren
+                        // sollen wenn die WizardPage aufgerufen wird
+                        // zB aktivieren/deaktivieren von Buttons der
+                        // Hauptansicht
+                    }
 				} catch (Exception ex) {
 					LogUtil.logError(Activator.PLUGIN_ID, ex);
 				}
@@ -250,7 +254,7 @@ public class CrtVerViewComposite extends Composite {
 		ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
 		ScaleCaEnd.setSelection(180);
 
-		Button btnLoadCa = new Button(composite, SWT.NONE);
+		btnLoadCa = new Button(composite, SWT.NONE);
 		GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadCa.heightHint = 30;
@@ -311,7 +315,8 @@ public class CrtVerViewComposite extends Composite {
 		gd_ScaleCertEnd.widthHint = 360;
 		ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
 		ScaleCertEnd.setSelection(180);
-		Button btnLoadUserCert = new Button(composite, SWT.NONE);
+		
+		btnLoadUserCert = new Button(composite, SWT.NONE);
 		// Selection Listeners | Scales
 		btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -774,6 +779,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(fromRootCa, ScaleRootCaBegin, 180);
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -784,6 +790,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(thruRootCa, ScaleRootCaEnd, 180);
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -794,6 +801,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(fromCa, ScaleCaBegin, 180);
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -804,6 +812,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(thruCa, ScaleCaEnd, 180);
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -814,6 +823,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(fromCert, ScaleCertBegin, 180);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -824,6 +834,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(thruCert, ScaleCertEnd, 180);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -834,6 +845,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(signatureDate, ScaleSignatureDate, 360);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -844,6 +856,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -868,6 +881,17 @@ public class CrtVerViewComposite extends Composite {
             validitySymbol.setDescriptionText("Unsucessfully validated");
             validitySymbol.show();
         }
+    }
+    
+    
+    /**
+     * Sets the font-color of the buttons btnLoadRootCa, btnLoadCa and btnLoadUserCert to orange.
+     * This happens when the scales are modified.
+     */
+    public void setLoadBtnsOrange(){
+        CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
+        CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
+        CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
     }
 	
 	@Override

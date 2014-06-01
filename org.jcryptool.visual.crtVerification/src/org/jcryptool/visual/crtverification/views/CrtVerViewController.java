@@ -363,6 +363,9 @@ public class CrtVerViewController {
 //    	CrtVerViewComposite.validity.setBackground(null);
 //    	CrtVerViewComposite.validity.setText("");
     	CrtVerViewComposite.validitySymbol.hide();
+        CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
     }
     
     public void loadCertificate(ChooseCertPage p, List list){
@@ -371,16 +374,19 @@ public class CrtVerViewController {
 	        setTN(ksc.getAllCertificates().get(list.getSelectionIndex()));
 	        setScales(1);
 	        flag=true;
+            CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
 	        break;
 	    case 2:   // [2] Cert
             setCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
             setScales(2);
             flag=true;
+            CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             break;
 	    case 3:   // [3] RootCert
             setRootCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
             setScales(3);
             flag=true;
+            CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             break;
     	}
     	p.setPageComplete(true);
