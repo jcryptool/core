@@ -21,9 +21,19 @@ import org.jcryptool.visual.crtverification.Activator;
 
 public class CertPathVerifier {
 
+    /**
+     * identifier for the shell model
+     */
     public static final int SHELL_MODEL = 0;
 
+    /**
+     * identifier for the modified shell model
+     */
     public static final int MODIFIED_SHELL_MODEL = 1;
+
+    /**
+     * identifier for the chain model
+     */
     public static final int CHAIN_MODEL = 2;
 
     /**
@@ -41,30 +51,79 @@ public class CertPathVerifier {
     private Certificate rootCertificate;
 
     /**
-     * Constructs a new Validator for a certificate path
+     * Constructs a new validator for a certification Path
+     * 
+     * @param verificationDate the date when the signature is verified
+     * @param signatureDate the date when the signarue was created
+     */
+    public CertPathVerifier(Date verificationDate, Date signatureDate) {
+        if (verificationDate == null || signatureDate == null) {
+            throw new NullPointerException("Dates cannot be null");
+        } else {
+            this.verificationDate = verificationDate;
+            this.signatureDate = signatureDate;
+        }
+    }
+
+    /**
+     * Constructs a new validator for a certificate path
      * 
      * @param rootCert the root certificate, used as TrustAnchor
      * @param caCert the intermediate CA certificate
      * @param clientCert the client certificate
+     * @param verificationDate the date when the signature is verified
      * @param signatureDate the date when the signature was created, required if the modified shell
      *            model or the chain model is used
      */
     public CertPathVerifier(Certificate rootCert, Certificate caCert, Certificate clientCert, Date verificationDate,
             Date signatureDate) {
+        this(verificationDate, signatureDate);
 
         if (rootCert == null || caCert == null || clientCert == null) {
             throw new NullPointerException("Certificates cannot be null!");
-
-        } else if (signatureDate == null) {
-            throw new NullPointerException("signatureDate cannot be null");
-        } else if (verificationDate == null) {
-            throw new NullPointerException("verificationDate cannot be null");
         } else {
-
-            this.signatureDate = signatureDate;
             this.clientCertificate = clientCert;
             this.caCertificate = caCert;
             this.rootCertificate = rootCert;
+        }
+    }
+
+    /**
+     * sets the certificates for the validator
+     * 
+     * @param rootCert root certificate
+     * @param caCert CA certificate
+     * @param clientCert client certificate
+     */
+    public void setCertificiates(Certificate rootCert, Certificate caCert, Certificate clientCert) {
+        if (rootCert == null || caCert == null || clientCert == null) {
+            throw new NullPointerException("Certificates cannot be null!");
+        } else {
+            this.clientCertificate = clientCert;
+            this.caCertificate = caCert;
+            this.rootCertificate = rootCert;
+        }
+    }
+
+    /**
+     * @param signatureDate the date when the signature was created
+     */
+    public void setSignatureDate(Date signatureDate) {
+        if (signatureDate != null) {
+            this.signatureDate = signatureDate;
+        } else {
+            throw new NullPointerException("signatureDate cannot be null");
+        }
+    }
+
+    /**
+     * @param verificationDate the date when the signature is verified
+     */
+    public void setVerificationDate(Date verificationDate) {
+        if (signatureDate != null) {
+            this.verificationDate = verificationDate;
+        } else {
+            throw new NullPointerException("verificationeDate cannot be null");
         }
     }
 
@@ -81,6 +140,8 @@ public class CertPathVerifier {
 
         if (model != 0 && model != 1 && model != 2) {
             throw new InvalidAlgorithmParameterException();
+        } else if (clientCertificate == null || caCertificate == null || rootCertificate == null) {
+            throw new NullPointerException("certificates cannot be null");
         }
 
         try {
@@ -88,6 +149,7 @@ public class CertPathVerifier {
             CertPath path = buildCertPath(clientCertificate, caCertificate, rootCertificate);
             ExtendedPKIXParameters mExtendedPKIXParameters = null;
 
+            // set rootcert as trust anchor
             TrustAnchor anchor = new TrustAnchor((X509Certificate) rootCertificate, null);
             HashSet<TrustAnchor> trustAnchors = new HashSet<TrustAnchor>();
             trustAnchors.add(anchor);
@@ -112,7 +174,7 @@ public class CertPathVerifier {
 
             mCertPathValidator.validate(path, mExtendedPKIXParameters);
 
-            // verify a second time at signing time for shell model
+            // if shell model, verify a second time at signing time
             if (model == 0) {
                 mExtendedPKIXParameters.setDate(signatureDate);
                 mCertPathValidator.validate(path, mExtendedPKIXParameters);
@@ -129,23 +191,6 @@ public class CertPathVerifier {
     }
 
     /**
-     * sets the certificates for the validator
-     * 
-     * @param rootCert root certificate
-     * @param caCert CA certificate
-     * @param clientCert client certificate
-     */
-    public void setCertificiates(Certificate rootCert, Certificate caCert, Certificate clientCert) {
-        if (rootCert == null || caCert == null || clientCert == null) {
-            throw new NullPointerException("Certificates cannot be null!");
-        } else {
-            this.clientCertificate = clientCert;
-            this.caCertificate = caCert;
-            this.rootCertificate = rootCert;
-        }
-    }
-
-    /**
      * checks if the verification and/or signature dates are within the valididity periods of the
      * certificate chain, based on the selected validity model. Expects validity periods for all
      * three certs in this order:
@@ -157,13 +202,13 @@ public class CertPathVerifier {
      * @param caNotAfter
      * @param rootNotBefore
      * @param rootNotAfter
-     * @param sigDate
-     * @param verDate
+     * @param signatureDate
+     * @param verificationDate
      * @return true if the certificate chain is valid (based only on time)
      * @throws InvalidAlgorithmParameterException if a non existing model is selected
      */
     public boolean verifyChangedDate(int model, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
-            Date caNotAfter, Date rootNotBefore, Date rootNotAfter, Date sigDate, Date verDate)
+            Date caNotAfter, Date rootNotBefore, Date rootNotAfter, Date signatureDate, Date verificationDate)
             throws InvalidAlgorithmParameterException {
         boolean valid = true;
 
@@ -173,16 +218,16 @@ public class CertPathVerifier {
 
         // check verification an signature date or only signature date based on used model
         if (model == 1) {
-            valid = compareDates(sigDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
-                    rootNotAfter);
+            valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
+                    rootNotBefore, rootNotAfter);
         } else if (model == 0) {
-            valid = compareDates(verDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
-                    rootNotAfter);
-            valid = compareDates(sigDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
-                    rootNotAfter);
+            valid = compareDates(verificationDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
+                    rootNotBefore, rootNotAfter);
+            valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
+                    rootNotBefore, rootNotAfter);
         } else {
             // chain model
-            if (clientNotBefore.after(sigDate) || clientNotAfter.before(sigDate)) {
+            if (clientNotBefore.after(signatureDate) || clientNotAfter.before(signatureDate)) {
                 valid = false;
             } else if (caNotBefore.after(clientNotBefore) || caNotAfter.before(clientNotBefore)) {
                 valid = false;
