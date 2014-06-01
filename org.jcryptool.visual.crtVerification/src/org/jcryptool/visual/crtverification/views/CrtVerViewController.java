@@ -39,14 +39,12 @@ public class CrtVerViewController {
 	
 	
 	// Elements of Composite
-	Scale ScaleFromTN = CrtVerViewComposite.ScaleCertBegin;
-	Scale ScaleThruTN = CrtVerViewComposite.ScaleCertEnd;
-	Scale ScaleFromCA = CrtVerViewComposite.ScaleCaBegin;
-	Scale ScaleThruCA = CrtVerViewComposite.ScaleCaEnd;
-	Scale ScaleFromRoot = CrtVerViewComposite.ScaleRootCaBegin;
-	Scale ScaleThruRoot = CrtVerViewComposite.ScaleRootCaEnd;
-	Scale ScaleVerificationDate = CrtVerViewComposite.ScaleVerificationDate;
-	Scale ScaleSignatureDate = CrtVerViewComposite.ScaleSignatureDate;
+	private Scale ScaleFromTN = CrtVerViewComposite.ScaleCertBegin;
+	private Scale ScaleThruTN = CrtVerViewComposite.ScaleCertEnd;
+	private Scale ScaleFromCA = CrtVerViewComposite.ScaleCaBegin;
+	private Scale ScaleThruCA = CrtVerViewComposite.ScaleCaEnd;
+	private Scale ScaleFromRoot = CrtVerViewComposite.ScaleRootCaBegin;
+	private Scale ScaleThruRoot = CrtVerViewComposite.ScaleRootCaEnd;
 	
 	
 	private static X509Certificate RootCA = null;
