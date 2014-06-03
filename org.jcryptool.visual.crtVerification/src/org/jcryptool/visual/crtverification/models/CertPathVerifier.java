@@ -218,13 +218,17 @@ public class CertPathVerifier {
 
         // check verification an signature date or only signature date based on used model
         if (model == 1) {
-            valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
-                    rootNotBefore, rootNotAfter);
+            if (compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter)) {
+                valid = verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
+                        rootNotBefore, rootNotAfter);
+            }
         } else if (model == 0) {
-            valid = compareDates(verificationDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
-                    rootNotBefore, rootNotAfter);
-            valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
-                    rootNotBefore, rootNotAfter);
+            if (compareDates(verificationDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter)) {
+                valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
+                        rootNotBefore, rootNotAfter);
+            }
         } else {
             // chain model
             if (clientNotBefore.after(signatureDate) || clientNotAfter.before(signatureDate)) {
@@ -269,6 +273,19 @@ public class CertPathVerifier {
         } else if (rootNotBefore.after(compareDate) || rootNotAfter.before(compareDate)) {
             valid = false;
         }
+        return valid;
+    }
+
+    private boolean verifyShellModelPeriodes(Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
+            Date caNotAfter, Date rootNotBefore, Date rootNotAfter) {
+        boolean valid = true;
+
+        if (clientNotBefore.before(caNotBefore) || clientNotAfter.after(caNotAfter)) {
+            valid = false;
+        } else if (caNotBefore.before(rootNotBefore) || caNotAfter.after(rootNotAfter)) {
+            valid = false;
+        }
+
         return valid;
     }
 
