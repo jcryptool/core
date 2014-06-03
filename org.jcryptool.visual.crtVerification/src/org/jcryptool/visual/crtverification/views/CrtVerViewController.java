@@ -245,15 +245,16 @@ public class CrtVerViewController {
             if (flag) {
                 cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(), verificationDate, signatureDate);
 
-                if (cpv.validate(mode-1)) {
+                if (cpv.validate(mode)) {
                     valid = true;
                 }
             } else {
                 cpv = new CertPathVerifier(verificationDate, signatureDate);
-                if (cpv.verifyChangedDate(CertPathVerifier.SHELL_MODEL, fromCert, thruCert, fromCa, thruCa, fromRootCa,
+                if (cpv.verifyChangedDate(mode, fromCert, thruCert, fromCa, thruCa, fromRootCa,
                         thruRootCa, signatureDate, verificationDate)) {
                     valid = true;
                 }
+               
             }
 
             if (valid) {

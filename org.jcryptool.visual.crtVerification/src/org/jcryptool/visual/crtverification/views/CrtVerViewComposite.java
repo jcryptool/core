@@ -78,7 +78,7 @@ public class CrtVerViewComposite extends Composite {
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 
 		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
-		tbtmSchalenmodell.setText("Shell Model");
+		tbtmSchalenmodell.setText("Certificate Verification");
 
 		Composite composite = new Composite(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setControl(composite);
@@ -436,21 +436,6 @@ public class CrtVerViewComposite extends Composite {
 		ScaleVerificationDate.setSelection(360);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
 
 		Group grpDetails = new Group(composite, SWT.NONE);
 		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false,
@@ -704,9 +689,20 @@ public class CrtVerViewComposite extends Composite {
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
-
-		final Button btnModifiedShellModel = new Button(composite, SWT.CHECK);
-		btnModifiedShellModel.setText("Modified Shell Model");
+		
+		Composite composite_6 = new Composite(composite, SWT.NONE);
+		composite_6.setLayout(new GridLayout(1, false));
+		composite_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+						
+						final Button btnShellModel = new Button(composite_6, SWT.RADIO);
+						btnShellModel.setSelection(true);
+						btnShellModel.setText("Shell Model");
+						
+						final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
+						btnModifiedShellModel.setText("Modified Shell Model");
+						
+						final Button btnChainModel = new Button(composite_6, SWT.RADIO);
+						btnChainModel.setText("Chain Model");
 		new Label(composite, SWT.NONE);
 
 		Button btnReset = new Button(composite, SWT.NONE);
@@ -747,9 +743,6 @@ public class CrtVerViewComposite extends Composite {
 
 		validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
         validitySymbol.hide();
-		
-		TabItem tbtmKettenmodell = new TabItem(tabFolder, SWT.NONE);
-		tbtmKettenmodell.setText("Chain Model");
 
 		
 		btnReset.addSelectionListener(new SelectionAdapter() {
@@ -763,10 +756,14 @@ public class CrtVerViewComposite extends Composite {
 		btnCalculate.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (btnModifiedShellModel.getSelection()) {
-					controller.validate(2);
-				} else {
+				if(btnShellModel.getSelection()){
+					controller.validate(0);
+				}
+				else if(btnModifiedShellModel.getSelection()){
 					controller.validate(1);
+				}
+				else if(btnChainModel.getSelection()){
+					controller.validate(2);
 				}
 			}
 		});
