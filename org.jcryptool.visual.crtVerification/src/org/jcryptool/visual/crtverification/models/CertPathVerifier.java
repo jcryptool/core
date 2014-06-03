@@ -41,6 +41,21 @@ public class CertPathVerifier {
     private Certificate rootCertificate;
 
     /**
+     * Constructs a new validator for a certification Path
+     * 
+     * @param verificationDate the date when the signature is verified
+     * @param signatureDate the date when the signarue was created
+     */
+    public CertPathVerifier(Date verificationDate, Date signatureDate) {
+        if (verificationDate == null || signatureDate == null) {
+            throw new NullPointerException("Dates cannot be null");
+        } else {
+            this.verificationDate = verificationDate;
+            this.signatureDate = signatureDate;
+        }
+    }
+    
+    /**
      * Constructs a new Validator for a certificate path
      * 
      * @param rootCert the root certificate, used as TrustAnchor
