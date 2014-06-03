@@ -4,8 +4,17 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
 public class ChooseCertPage extends WizardPage {
-    private ChooseCertComposite compositeFile;
+   	private ChooseCertComposite compositeFile;
     int certType; // [1] UserCert; [2] Cert; [3] RootCert
+    
+    public int getCertType() {
+		return certType;
+	}
+
+
+	public void setCertType(int certType) {
+		this.certType = certType;
+	}
     
     public ChooseCertPage(String pageName, int type) {
         super(pageName);

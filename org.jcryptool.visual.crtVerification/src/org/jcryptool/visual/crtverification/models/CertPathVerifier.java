@@ -64,9 +64,15 @@ public class CertPathVerifier {
             this.signatureDate = signatureDate;
         }
     }
+<<<<<<< HEAD
 
     /**
      * Constructs a new validator for a certificate path
+=======
+    
+    /**
+     * Constructs a new Validator for a certificate path
+>>>>>>> GUI_Development
      * 
      * @param rootCert the root certificate, used as TrustAnchor
      * @param caCert the intermediate CA certificate
