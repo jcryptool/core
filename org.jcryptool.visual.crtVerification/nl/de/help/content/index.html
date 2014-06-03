@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Zertifikat-Verifikation</title>
+</head>
+
+<body>
+<h1>Zertifikat-Verifikation</h1>
+<p>Willkommen in der Online Hilfe des Plugins zur Verifikation von Zertifikaten nach den Gültigkeitsmodellen:</p>
+<ul>
+  <li>Schalenmodell,</li>
+  <li>modifiziertes Schalenmodell</li>
+  <li>und Kettenmodell.</li>
+</ul>
+<p>Nachfolgenden finden Sie einen Überblick des Plugins sowie eine detaillierte Erklärung zur Verwändung des Plugins. 
+  Dieses Plugin zeigt, ob ein Zertifikatspfad bestehend aus Root-CA, CA und Teilnehmer gültig ist. Des Weiteren kann die Gültigkeitsdauer von jedem dieser Zertifikate, sowie der Verifizierungs- und der Signierzeitpunkt, mit Hilfe von Schiebereglern, manipuliert  und danach erneut eine Überprüfung durchgeführt werden. Zu beachten ist, dass die Veränderung der Schiebereglern rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert, noch neue erstellt.</p>
+<p>Am Ende finden Sie noch eine Beschreibung der Funktionsweise der Gültigkeitsmodelle.</p>
+<p><img src="GUI-Start.png" width="661" height="412" alt="Grafische Oberfläche: Zertifikat-Verifikation" /></p>
+<h2>Allgemeine Informationen</h2>
+<h3>Reset-Funktion</h3>
+<p>Das Plugin wird auf seinen Ursprungszustand zurückgesetzt. Alle vom User getätigten Änderungen werden verworfen.</p>
+<h3>Back</h3>
+<p>Da das Plugin Inhaltlich auf dem PKI-Plugin aufsetzt, wird beim Betätigen des Back-Buttons dieses Plugin aufgerufen.</p>
+<h3>Forward</h3>
+<p>Das Signatur-Verifikations-Plugin wird aufgerufen.</p>
+<p>&nbsp;</p>
+<h2>Nutzung des Plugins</h2>
+<h3>Schritt 1</h3>
+<p>Der erste Schritt ist das Laden der Zertifikate. Beim Klicken auf die Buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; und &quot;Load User Cert&quot; öffnet sich ein Fenster (siehe Abbildung) zum Auswählen des zu Ladenten Zertifikats. In diesem Fenster wählen Sie das gwünschte Zertifikat in der Liste aus und klicken auf &quot;Load&quot; und dann auf &quot;Finish&quot;. Die Regler in der Oberfläche haben sich nun entsprechend der geladenen Zertifikate angepasst und die Schrift des Buttons zum Laden in der Hauptoberfläche ist jetzt grün.</p>
+<p><img src="PopUp.png" width="417" height="380" alt="Fenster zum Laden der Zertifikate" /></p>
+<h3>&nbsp;</h3>
+<h3>Schritt 2</h3>
+<p>Wenn Sie alle drei Zertifikate (Root-CA, CA und Teilnehmer) erfolgreich geladen haben, wählen Sie nach welchem Gültigkeitsmodell Sie validieren möchten und können dann auf den Button &quot;Validate&quot; drücken und erfahren nun, anhand der Symbole X im roten Kreis oder Häkchen im grünen Kreis, ob die geladene Kette gültig ist oder nicht. </p>
+<p>Auswahl des Gültigkeitsmodells:</p>
+<p><img src="Gueltigkeitsmodelle.png" width="235" height="115" alt="Auswahl des Gültigkeitsmodells" /></p>
+<p>Erfolgreich validiert:</p>
+<p><img src="gruenerHaken.png" width="271" height="41" alt="Erfolgreich validiert" /></p>
+<p>Erfolglos validiert:</p>
+<p><img src="rotesKreuz.png" width="273" height="43" alt="Erfolglos validiert" /></p>
+<p>&nbsp;</p>
+<h3>Schritt 3</h3>
+<p>Zu Anschauungszwecken können Sie nun anhand der Schieberegler die  Gültigkeitsdauer von jedem der Zertifikate, sowie der Verifizierungs- und der Signierzeitpunkt manipulieren  und danach erneut eine Überprüfung mit dem &quot;Validate&quot;-Buttton durchgeführt werden. Mit Hilfe der Schieberegler können die Monate angepasst werden. Damit Sie genauere Daten angeben können, gibt es unter Details Textfeldern, in welchen die Tage eingestellt werden können. Nach einer Manipulation der Schieberegler wird die Schrift der Buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; und &quot;Load User Cert&quot; orange.</p>
+<p>Zu beachten ist, dass die Veränderung der Schiebereglern rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert, noch neue erstellt.</p>
+<p>Schieberegler:</p>
+<p><img src="Schieberegler.png" width="745" height="279" alt="Schieberegler" /></p>
+<p>Details:</p>
+<p><img src="Details.png" width="744" height="125" alt="Details" /></p>
+</body>
+</html>
