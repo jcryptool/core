@@ -88,7 +88,7 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
 		txtDiesIstDer
-				.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit eines Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+				.setText("DE: Mit diesem Plugin k\u00f6nnen Sie sehen, wie es zu einer Bewertung der G\u00fcltigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsb\u00e4ume und unterschiedliche G\u00fcltigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
