@@ -149,11 +149,6 @@ public class RSAComposite extends Composite {
     /** current index for the stepping through the fast exponentiation. */
     private int numberIndex = 0;
 
-    /**
-     * small field showing whether the signature is ok when we chose to verify a signature and entered plaintext.
-     */
-    private StyledText verifiedText;
-
     /** Textlayout for the base^2^k in the Table. */
     private final TextLayout fastExpText = new TextLayout(getDisplay());
 
@@ -1160,8 +1155,23 @@ public class RSAComposite extends Composite {
     private void createResultGroup(final Composite parent) {
         final Group group = new Group(parent, SWT.NONE);
         group.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-        group.setLayout(new GridLayout(3, false));
+        group.setLayout(new GridLayout(2, false));
         group.setText(Messages.RSAComposite_result);
+        
+        
+        Composite verSuccessDisplay = new Composite(group, SWT.NONE);
+        GridLayout layout = new GridLayout();
+        layout.marginWidth = 0;
+        layout.marginHeight = 0;
+		verSuccessDisplay.setLayout(layout);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		layoutData.exclude = true;
+		verSuccessDisplay.setLayoutData(layoutData);
+		
+		Label verSuccessLbl = new Label(verSuccessDisplay, SWT.NONE);
+		verSuccessLbl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		
+        
         //TODO: dynamic change of repr options
         resultDisplay = new NumberblocksAndTextViewer(group, SWT.NONE, Repr.values());
         resultDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
@@ -1188,10 +1198,6 @@ public class RSAComposite extends Composite {
 //                }
 //            }
 //        });
-
-        verifiedText = new StyledText(group, SWT.READ_ONLY);
-        verifiedText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false));
-        verifiedText.setText("                "); //$NON-NLS-1$
 
         copyButton = new Button(group, SWT.PUSH);
         copyButton.setEnabled(false);
@@ -1428,7 +1434,6 @@ public class RSAComposite extends Composite {
         setTextfieldResultBlockContent(new LinkedList<Integer>());
         setSignHash(0, true);
         copyButton.setEnabled(false);
-        verifiedText.setText(""); //$NON-NLS-1$
         styl0r.setText(""); //$NON-NLS-1$
         stylor.setText(""); //$NON-NLS-1$
         styledFastExtText.redraw();
