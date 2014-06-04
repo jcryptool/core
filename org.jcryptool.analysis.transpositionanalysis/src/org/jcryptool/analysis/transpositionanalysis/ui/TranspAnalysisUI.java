@@ -718,6 +718,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			textPageConfiguration = textWizard.getTextPageConfig();
 			textTransformData = textWizard.getTransformData();
 			setText(textPageConfiguration.getText(), false);
+			setReadInMode(textPageConfiguration.getReadInDirection(), false);
+			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
+			setCrop(textPageConfiguration.isCrop(), false);
+			setCroplength(textPageConfiguration.getCropLength(), false);
+			setBlocklength(textPageConfiguration.getColumnCount(), false);
 			if(textTransformData!=null && !textTransformData.isUnmodified()) {
 				displayTextTransformBtn(true, true, textTransformData);
 				applyTransformationInput.writeContent(true);
@@ -727,11 +732,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				applyTransformationInput.writeContent(false);
 				applyTransformationInput.synchronizeWithUserSide();
 			}
-			setReadInMode(textPageConfiguration.getReadInDirection(), false);
-			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
-			setCrop(textPageConfiguration.isCrop(), false);
-			setCroplength(textPageConfiguration.getCropLength(), false);
-			setBlocklength(textPageConfiguration.getColumnCount(), false);
 
 			doAutoCrop = (blocklength > 0 && !crop || blocklength == 0 && crop);
 
