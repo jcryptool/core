@@ -579,11 +579,7 @@ public class CrtVerViewComposite extends Composite {
 		lblVerificationDate.setAlignment(SWT.CENTER);
 
 		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
-		ScaleVerificationDate.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				ScaleVerificationDate.redraw();
-			}
-		});
+		
 		CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
 		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL,
 				false, false, 13, 1);
