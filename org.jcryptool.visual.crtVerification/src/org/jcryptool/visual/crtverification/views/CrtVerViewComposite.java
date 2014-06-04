@@ -202,6 +202,28 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		ScaleRootCaEnd.setSelection(180);
 
 		btnLoadRootCa = new Button(composite, SWT.NONE);
+		btnLoadRootCa.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+			    // Get button bounds.
+				String text = "Load Root CA";
+			    Button button = (Button)e.widget;
+			    int buttonWidth = button.getSize().x;
+			    int buttonHeight = button.getSize().y;
+			    
+			    
+			    // Get text bounds.
+			    int textWidth = e.gc.textExtent( text ).x;
+			    int textHeight = e.gc.textExtent( text ).y;
+
+			    // Calculate text coordinates.
+			    int textX = (( buttonWidth - textWidth ) / 2 );
+			    int textY = (( buttonHeight - textHeight ) / 2 );
+
+			    // Draw the new text.
+			    e.gc.drawText( text, textX, textY, true);
+			   
+			}
+		});
 		GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadRootCa.heightHint = 30;
@@ -264,6 +286,26 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		ScaleCaEnd.setSelection(180);
 
 		btnLoadCa = new Button(composite, SWT.NONE);
+		btnLoadCa.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				String text = "Load CA";
+			    Button button = (Button)e.widget;
+			    int buttonWidth = button.getSize().x;
+			    int buttonHeight = button.getSize().y;
+			    
+			    
+			    // Get text bounds.
+			    int textWidth = e.gc.textExtent( text ).x;
+			    int textHeight = e.gc.textExtent( text ).y;
+
+			    // Calculate text coordinates.
+			    int textX = (( buttonWidth - textWidth ) / 2 );
+			    int textY = (( buttonHeight - textHeight ) / 2 );
+
+			    // Draw the new text.
+			    e.gc.drawText( text, textX, textY, true);
+			}
+		});
 		GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadCa.heightHint = 30;
@@ -326,6 +368,26 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		ScaleCertEnd.setSelection(180);
 		
 		btnLoadUserCert = new Button(composite, SWT.NONE);
+		btnLoadUserCert.addPaintListener(new PaintListener() {
+			public void paintControl(PaintEvent e) {
+				String text = "Load User Cert";
+			    Button button = (Button)e.widget;
+			    int buttonWidth = button.getSize().x;
+			    int buttonHeight = button.getSize().y;
+			    
+			    
+			    // Get text bounds.
+			    int textWidth = e.gc.textExtent( text ).x;
+			    int textHeight = e.gc.textExtent( text ).y;
+
+			    // Calculate text coordinates.
+			    int textX = (( buttonWidth - textWidth ) / 2 );
+			    int textY = (( buttonHeight - textHeight ) / 2 );
+
+			    // Draw the new text.
+			    e.gc.drawText( text, textX, textY, true);
+			}
+		});
 		// Selection Listeners | Scales
 		btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
 			@Override
