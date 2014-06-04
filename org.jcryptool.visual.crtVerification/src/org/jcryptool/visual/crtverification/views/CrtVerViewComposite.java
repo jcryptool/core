@@ -1003,7 +1003,7 @@ public class CrtVerViewComposite extends Composite {
 				canvas2.redraw();
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
-                setLoadBtnsOrange();
+                
 			}
 		});
 
@@ -1015,7 +1015,7 @@ public class CrtVerViewComposite extends Composite {
 				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
-                setLoadBtnsOrange();
+                
 			}
 		});
 
