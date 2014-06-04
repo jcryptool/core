@@ -410,9 +410,9 @@ public class CrtVerViewController {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        CrtVerViewComposite.arrowDiff=0;
-        CrtVerViewComposite.canvas1.redraw();
-        CrtVerViewComposite.canvas2.redraw();
+        // CrtVerViewComposite.arrowDiff=0;
+        //CrtVerViewComposite.canvas1.redraw();
+        //CrtVerViewComposite.canvas2.redraw();
     }
 
     public void loadCertificate(ChooseCertPage p, List list) {

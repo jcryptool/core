@@ -438,7 +438,7 @@ public class CrtVerViewComposite extends Composite {
 		lblV.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		lblV.setText("Signature Date");
 		
-		canvas1 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		canvas1 = new Canvas(composite, SWT.NONE);
 		canvas1.setLayout(new GridLayout(1, false));
 		GridData gd_canvas1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
 		gd_canvas1.widthHint = 359;
@@ -478,7 +478,7 @@ public class CrtVerViewComposite extends Composite {
 			}
 		});
 		
-		canvas2 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		canvas2 = new Canvas(composite, SWT.NONE);
 		GridData gd_canvas2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
@@ -1016,7 +1016,6 @@ public class CrtVerViewComposite extends Composite {
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-            
 			}
 		});
 
