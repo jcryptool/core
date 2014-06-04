@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -29,7 +29,7 @@ public class SetInputEditorHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) {
         this.entryNode = listener.getFlexiProviderOperation();
         LogUtil.logInfo("setting input editor (" + entryNode.getTimestamp() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-        entryNode.setInput("<Editor>"); //$NON-NLS-1$
+        entryNode.setInput(Messages.InputType);
         return(null);
     }
 

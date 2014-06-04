@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010, 2014 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -39,7 +39,7 @@ import de.flexiprovider.api.exceptions.NoSuchAlgorithmException;
 
 /**
  * This class provides the actions for FlexiProvider algorithms.
- * 
+ *
  * @author mwalthart
  * @author Holger Friedrich (support for Commands, based on IntegratorAction)
  * @version 0.9.1
@@ -77,21 +77,21 @@ public abstract class IntegratorHandler extends AbstractAlgorithmHandler {
 
     /**
      * returns the name of the algorithms as the FlexiProvider refers to it
-     * 
+     *
      * @return the name of the algorithms as the FlexiProvider refers to it
      */
     protected abstract String getFlexiProviderAlgorithmName();
 
     /**
      * returns the human readable name of the algorithm
-     * 
+     *
      * @return the human readable name of the algorithm
      */
     protected abstract String getReadableAlgorithmName();
 
     /**
      * returns the key id needed for this algorithms
-     * 
+     *
      * @return the key id needed for this algorithms
      */
     protected abstract String getShowKey();
@@ -276,7 +276,7 @@ public abstract class IntegratorHandler extends AbstractAlgorithmHandler {
             IntegratorOperation operation = new IntegratorOperation(descriptor);
 
             operation.setEntryName(""); //$NON-NLS-1$
-            operation.setInput("<Editor>"); //$NON-NLS-1$
+            operation.setInput(Messages.getString("InputType")); //$NON-NLS-1$
             operation.setOutput("<Editor>"); //$NON-NLS-1$
             operation.setSignature(wizard.signature());
             operation.setUseCustomKey(wizard.useCustomKey());

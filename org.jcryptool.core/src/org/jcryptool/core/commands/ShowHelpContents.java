@@ -1,44 +1,44 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
- * Copyright (c) 2013 JCrypTool Team and Contributors
- * 
+ * Copyright (c) 2014 JCrypTool Team and Contributors
+ *
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.core.actions;
+package org.jcryptool.core.commands;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.help.HelpSystem;
 import org.eclipse.help.IToc;
 import org.eclipse.help.ITopic;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * This action loads the help page of the currently active plug-in (its view). The corresponding
+ * This command loads the help page of the currently active plug-in (its view). The corresponding
  * help page is identified by the plug-in-id and the topic id. A plug-in developer only needs to
  * provide help for the plug-in, there are no other requirements. JCrypTool takes care of the rest.
- * 
+ *
  * @author Dominik Schadow
  */
-public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
-    private IWorkbenchWindow window;
-
+public class ShowHelpContents extends AbstractHandler {
     /**
      * The action has been activated. The argument of the method represents the 'real' action
      * sitting in the workbench UI.
-     * 
+     *
      * @see IWorkbenchWindowActionDelegate#run
      */
-    public void run(IAction action) {
+    @Override
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
         BusyIndicator.showWhile(null, new Runnable() {
             public void run() {
                 IToc[] tocs = HelpSystem.getTocs();
@@ -58,14 +58,12 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
             }
 
             private String findContextId() {
-                if (window != null) {
-                    IWorkbenchPage page = window.getActivePage();
-                    if (page != null) {
-                        IWorkbenchPart activePart = page.getActivePart();
+                IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
+                if (page != null) {
+                    IWorkbenchPart activePart = page.getActivePart();
 
-                        if (activePart != null) {
-                            return activePart.getSite().getPluginId();
-                        }
+                    if (activePart != null) {
+                        return activePart.getSite().getPluginId();
                     }
                 }
 
@@ -105,32 +103,7 @@ public class HelpContentsAction implements IWorkbenchWindowActionDelegate {
                 return id.equalsIgnoreCase(href.split("" + IPath.SEPARATOR)[1]);
             }
         });
-    }
 
-    /**
-     * Selection in the workbench has been changed. We can change the state of the 'real' action
-     * here if we want, but this can only happen after the delegate has been created.
-     * 
-     * @see IWorkbenchWindowActionDelegate#selectionChanged
-     */
-    public void selectionChanged(IAction action, ISelection selection) {
-    }
-
-    /**
-     * We can use this method to dispose of any system resources we previously allocated.
-     * 
-     * @see IWorkbenchWindowActionDelegate#dispose
-     */
-    public void dispose() {
-    }
-
-    /**
-     * We will cache window object in order to be able to provide parent shell for the message
-     * dialog.
-     * 
-     * @see IWorkbenchWindowActionDelegate#init
-     */
-    public void init(IWorkbenchWindow window) {
-        this.window = window;
+        return null;
     }
 }

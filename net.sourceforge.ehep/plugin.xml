@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  *==========================================================================
- * 
+ *
  * plugin.xml
- * 
+ *
  * $Author: anatolibarski $
  * $Revision: 1.12 $
  * $Date: 2012/11/06 16:45:22 $
- * 
+ *
  * Created by Marcel Palko alias Randallco (randallco@users.sourceforge.net)
  *==========================================================================
 -->
-<?eclipse version="3.0"?>
+<?eclipse version="3.4"?>
 <plugin>
 
 	<extension point="org.eclipse.ui.editors">

@@ -2,9 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  *
- * All rights reserved. This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License v1.0 which
- * accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -21,41 +20,38 @@ import org.jcryptool.crypto.flexiprovider.engines.signature.SignatureEngine;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
 
 /**
- * this is class is used to create a flexi provider engine for a type
+ * Creates a FlexiProviderEngine for a registry type.
+ *
  * @author Anatoli Barski
  */
-
 public class FlexiProviderEngineFactory {
-
-	public static FlexiProviderEngine createEngine(RegistryType registryType) {
-		FlexiProviderEngine engine = null;
-		switch (registryType) {
-	        case ASYMMETRIC_BLOCK_CIPHER:
-	            engine = new AsymmetricBlockCipherEngine();
-	            break;
-	        case ASYMMETRIC_HYBRID_CIPHER:
-	            engine = new AsymmetricHybridCipherEngine();
-	            break;
-	        case BLOCK_CIPHER:
-	            engine = new BlockCipherEngine();
-	            break;
-	        case CIPHER:
-	            engine = new CipherEngine();
-	            break;
-	        case MAC:
-	            engine = new MacEngine();
-	            break;
-	        case MESSAGE_DIGEST:
-	            engine = new MessageDigestEngine();
-	            break;
-	        case SECURE_RANDOM:
-	            engine = new SecureRandomEngine();
-	            break;
-	        case SIGNATURE:
-	            engine = new SignatureEngine();
-	            break;
-		}
-		return engine;
-	}
-
+    /**
+     * Returns the matching FlexiProviderEngine for the given registry type. Will return null in
+     * case of an unknown registry type.
+     *
+     * @param registryType The registry type to look for
+     * @return The FlexiProviderEngine, may be null
+     */
+    public static FlexiProviderEngine createEngine(RegistryType registryType) {
+        switch (registryType) {
+        case ASYMMETRIC_BLOCK_CIPHER:
+            return new AsymmetricBlockCipherEngine();
+        case ASYMMETRIC_HYBRID_CIPHER:
+            return new AsymmetricHybridCipherEngine();
+        case BLOCK_CIPHER:
+            return new BlockCipherEngine();
+        case CIPHER:
+            return new CipherEngine();
+        case MAC:
+            return new MacEngine();
+        case MESSAGE_DIGEST:
+            return new MessageDigestEngine();
+        case SECURE_RANDOM:
+            return new SecureRandomEngine();
+        case SIGNATURE:
+            return new SignatureEngine();
+        default:
+            return null;
+        }
+    }
 }

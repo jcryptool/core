@@ -28,7 +28,7 @@ import org.jcryptool.actions.core.utils.ImportUtils;
 import org.jcryptool.actions.ui.ActionsUIPlugin;
 import org.jcryptool.actions.ui.views.ActionView;
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.editor.text.action.StartUp;
+import org.jcryptool.editor.text.startup.StartUp;
 
 /**
  * @author Anatoli Barski

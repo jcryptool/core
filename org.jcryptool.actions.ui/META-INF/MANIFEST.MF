@@ -26,6 +26,6 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.crypto.flexiprovider.integrator,
  org.jcryptool.crypto.flexiprovider.operations.engines,
  org.jcryptool.crypto.keystore.keys,
- org.jcryptool.editor.text.action
+ org.jcryptool.editor.text.startup
 Export-Package: org.jcryptool.actions.ui,
  org.jcryptool.actions.ui.views

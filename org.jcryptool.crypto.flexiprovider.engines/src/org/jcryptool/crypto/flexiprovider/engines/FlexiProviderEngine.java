@@ -90,7 +90,7 @@ public abstract class FlexiProviderEngine {
 
     protected InputStream initInput(String input) {
         InputStream is = null;
-        if (input.equals("<Editor>")) { //$NON-NLS-1$
+        if (input.equals(Messages.InputType)) {
             if (EditorsManager.getInstance().isEditorOpen()) {
                 is = EditorsManager.getInstance().getActiveEditorContentInputStream();
             } else {
@@ -105,7 +105,6 @@ public abstract class FlexiProviderEngine {
     }
 
     protected OutputStream initOutput(String output) {
-        OutputStream os;
         if (output.equals("<Editor>")) { //$NON-NLS-1$
             outputURI = getTempFileURI();
             LogUtil.logInfo("outputURI: " + outputURI.toASCIIString()); //$NON-NLS-1$
@@ -113,8 +112,8 @@ public abstract class FlexiProviderEngine {
             outputURI = URIUtil.toURI(output);
             LogUtil.logInfo("outputURI: " + outputURI.toASCIIString()); //$NON-NLS-1$
         }
-        os = getFileOutputStream(outputURI);
-        return os;
+
+        return getFileOutputStream(outputURI);
     }
 
     private OutputStream getFileOutputStream(URI uri) {
@@ -122,7 +121,7 @@ public abstract class FlexiProviderEngine {
             IFileStore store = EFS.getStore(uri);
             return store.openOutputStream(EFS.NONE, null);
         } catch (CoreException e) {
-            LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "CoreException while opening an output stream from a file store", e, false);
+            LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "CoreException while opening an output stream from a file store", e, false); //$NON-NLS-1$
         }
         return null;
     }
@@ -133,7 +132,7 @@ public abstract class FlexiProviderEngine {
             IFileStore store = EFS.getStore(uri);
             return new BufferedInputStream(store.openInputStream(EFS.NONE, null));
         } catch (CoreException e) {
-            LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "CoreException while opening an input stream from a file store", e, false);
+            LogUtil.logError(FlexiProviderEnginesPlugin.PLUGIN_ID, "CoreException while opening an input stream from a file store", e, false); //$NON-NLS-1$
         }
         return null;
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.4"?>
 <plugin>
    <extension-point id="algorithms" name="All kind of Algorithms (Symmetric, Asymmetric etc) using Actions" schema="schema/algorithms.exsd"/>
    <extension-point id="algorithms_cmd" name="All kind of Algorithms (Symmetric, Asymmetric etc) using Commands" schema="schema/algorithms_cmd.exsd"/>

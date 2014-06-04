@@ -37,6 +37,8 @@ public class Messages extends NLS {
 	public static String StartHandler_3;
 	public static String StartHandler_4;
 	public static String StartHandler_5;
+    public static String StartHandler_6;
+    public static String InputType;
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -1,9 +1,9 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2008, 2014 JCrypTool Team and Contributors
- * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -24,29 +24,26 @@ import org.jcryptool.crypto.flexiprovider.types.OperationType;
 import org.jcryptool.crypto.flexiprovider.types.RegistryType;
 
 public class ExecuteOperationHandler extends AbstractHandler {
-    private IFlexiProviderOperation operation;
     private ISelectedOperationListener listener;
 
     public ExecuteOperationHandler(ISelectedOperationListener listener) {
-        // this.setText(Messages.ExecuteOperationAction_0);
-        // this.setToolTipText(Messages.ExecuteOperationAction_1);
-        // this.setImageDescriptor(FlexiProviderOperationsPlugin.getImageDescriptor("icons/16x16/start.gif")); //$NON-NLS-1$
         this.listener = listener;
     }
 
     public Object execute(ExecutionEvent event) {
-        this.operation = listener.getFlexiProviderOperation();
+        IFlexiProviderOperation operation = listener.getFlexiProviderOperation();
+
         if (operation == null) {
             JCTMessageDialog.showInfoDialog(new Status(IStatus.WARNING, FlexiProviderOperationsPlugin.PLUGIN_ID,
                     Messages.ExecuteOperationAction_2));
-            return(null);
+            return (null);
         }
         if (isComplete(operation)) {
             PerformOperationManager.getInstance().firePerformOperation(operation);
         } else {
             showIncompleteDialog();
         }
-        return(null);
+        return (null);
     }
 
     private void showIncompleteDialog() {
@@ -95,5 +92,4 @@ public class ExecuteOperationHandler extends AbstractHandler {
         }
         return true;
     }
-
 }

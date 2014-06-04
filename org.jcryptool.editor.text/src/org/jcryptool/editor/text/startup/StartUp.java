@@ -1,6 +1,6 @@
 //-----BEGIN DISCLAIMER-----
 /*******************************************************************************
-* Copyright (c) 2010 JCrypTool Team and Contributors
+* Copyright (c) 2014 JCrypTool Team and Contributors
 *
 * All rights reserved. This program and the accompanying materials
 * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.editor.text.action;
+package org.jcryptool.editor.text.startup;
 
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IViewReference;
@@ -41,7 +41,7 @@ public class StartUp implements IStartup {
                     try {
                         page.openEditor(AbstractEditorService.createTemporaryFile(), JCTTextEditor.ID);
                     } catch (PartInitException e) {
-                        LogUtil.logError(JCTTextEditorPlugin.PLUGIN_ID, Messages.NewFileJCTTextEditorAction_0, e, true);
+                        LogUtil.logError(JCTTextEditorPlugin.PLUGIN_ID, Messages.StartUp_0, e, true);
                     }
                 }
             }

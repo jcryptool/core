@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2010 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -40,7 +40,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * a class to show all registered editors in a drop down list at the coolbar the action should open a new editors page.
- * 
+ *
  * @author mwalthart
  * @version 0.5.0
  */
@@ -65,7 +65,7 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
 
     /**
      * Creates the menu.
-     * 
+     *
      * @param parent
      * @param menu
      * @return
