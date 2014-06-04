@@ -386,13 +386,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
                 sortedSubMenus.put(type, new TreeMap<String, CommandInfo>(menuStringsComparator));
             }
 
-// #ifdef _DEBUG
-			if(algorithmCommand.getText() == null)
-			{
-				System.err.println("text is null for algorithmCommand " + algorithmCommand.getCommandId());
-				algorithmCommand.setText("?");
-			}
-// #endif
            	sortedSubMenus.get(type).put(algorithmCommand.getText(), algorithmCommand);
         }
 

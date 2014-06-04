@@ -160,7 +160,7 @@ public class AlgorithmView extends ViewPart implements IOperationsConstants {
         showTab(MENU_TEXT_ALGORITHM);
 
         // create the command to switch the views
-        // TODO:  This may be a little tricky to translate to Commands.
+        // This may be a little tricky to translate to Commands.
         // The Action seems to change its own text, tool tip and icon when it is invoked...
         // Perhaps we should create two CommandContributionItems and switch between them
         // as the view style is switched from palette to tree and vice versa.
