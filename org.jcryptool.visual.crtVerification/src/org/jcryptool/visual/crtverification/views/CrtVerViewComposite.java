@@ -4,8 +4,13 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -23,8 +28,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.widgets.Canvas;
 
-public class CrtVerViewComposite extends Composite {
+public class CrtVerViewComposite extends Composite implements PaintListener {
 	// Object Controller
 	CrtVerViewController controller = new CrtVerViewController();
 
@@ -62,6 +68,9 @@ public class CrtVerViewComposite extends Composite {
 	static Button btnLoadRootCa;
 	static Button btnLoadCa;
 	static Button btnLoadUserCert;
+	static Canvas canvas1;
+	static Canvas canvas2;
+	static int arrowDiff=0;
 
     static ControlDecoration validitySymbol;
 	
@@ -88,7 +97,7 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
 		txtDiesIstDer
-				.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit eines Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+				.setText("DE: Mit diesem Plugin k\u00f6nnen Sie sehen, wie es zu einer Bewertung der G\u00fcltigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsb\u00e4ume und unterschiedliche G\u00fcltigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
@@ -350,20 +359,24 @@ public class CrtVerViewComposite extends Composite {
 		gd_btnLoadUserCert.widthHint = 100;
 		btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
 		btnLoadUserCert.setText("Load User Cert");
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+		
+		Label lblV = new Label(composite, SWT.NONE);
+		lblV.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
+		lblV.setText("Signature Date");
+		
+		canvas1 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		canvas1.setLayout(new GridLayout(1, false));
+		GridData gd_canvas1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
+		gd_canvas1.widthHint = 359;
+		canvas1.setLayoutData(gd_canvas1);
+		canvas1.addPaintListener(this);
+		
+		canvas2 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		GridData gd_canvas2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		gd_canvas2.widthHint = 364;
+		canvas2.setLayoutData(gd_canvas2);
+		canvas2.setLayout(new GridLayout(1, false));
+		canvas2.addPaintListener(this);
 		new Label(composite, SWT.NONE);
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
@@ -743,7 +756,6 @@ public class CrtVerViewComposite extends Composite {
 
 		validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
         validitySymbol.hide();
-
 		
 		btnReset.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -839,7 +851,10 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(signatureDate, ScaleSignatureDate, 360);				
+				controller.updateElements(signatureDate, ScaleSignatureDate, 360);	
+				arrowDiff = ScaleSignatureDate.getSelection()-360;
+				canvas1.redraw();
+				canvas2.redraw();
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
@@ -878,6 +893,42 @@ public class CrtVerViewComposite extends Composite {
             validitySymbol.setDescriptionText("Unsucessfully validated");
             validitySymbol.show();
         }
+    }
+    
+    /**
+     * This method paints the arrows used to indicate the validate date.
+     * 
+     * @param e
+     */
+    public void paintControl(PaintEvent e) {
+        // Set the used color
+        Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
+        Rectangle clientArea;
+        int width;
+        int height;
+        // Coordinates of the document icon
+        GC gc;
+
+        gc = e.gc;
+        
+        // Max position right are left are +/-180
+        if (arrowDiff< -178){
+            arrowDiff=-178;
+        }else if (arrowDiff>178){
+            arrowDiff=178;
+        }
+        
+        // Get the size of the canvas area
+        clientArea = canvas1.getClientArea();
+        width = clientArea.width;
+        height = clientArea.height;
+
+        // Draw shaft
+        gc.setBackground(darkgrey);
+        gc.fillRectangle(width/2+arrowDiff, 5, 2, height);
+        gc.fillPolygon(new int[] {(width/2-2+arrowDiff), 5, (width/2+1+arrowDiff), 0, (width/2+4+arrowDiff), 5});        
+        gc.dispose();
+        
     }
     
     
