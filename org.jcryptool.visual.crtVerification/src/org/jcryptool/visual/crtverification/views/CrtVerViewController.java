@@ -133,7 +133,17 @@ public class CrtVerViewController {
     public String scaleUpdate(int selection, int default_selection, String format) {
         dt1.applyPattern(format);
         calendar.setTime(now);
-        calendar.add(Calendar.MONTH, selection - default_selection);
+        if(default_selection == 360){
+        		if(((selection - default_selection) % 2) == 0){
+        			calendar.add(Calendar.MONTH, (selection - default_selection)/2);
+        		}
+        		else{
+        			calendar.add(Calendar.MONTH, ((selection+1)-default_selection)/2);
+        		}
+        }
+        else{
+        	calendar.add(Calendar.MONTH, selection - default_selection);
+        }
         return String.valueOf(dt1.format(calendar.getTime()));
     }
 

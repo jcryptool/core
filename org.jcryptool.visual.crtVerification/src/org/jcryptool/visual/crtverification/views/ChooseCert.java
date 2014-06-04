@@ -21,6 +21,7 @@ public class ChooseCert extends Wizard {
 
     @Override
     public boolean performFinish() {
+    	CrtVerViewComposite.btnValidate.setFocus();
         return true;
     }
 
