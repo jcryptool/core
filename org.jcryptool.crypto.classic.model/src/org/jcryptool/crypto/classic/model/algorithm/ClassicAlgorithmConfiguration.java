@@ -25,24 +25,24 @@ import org.jcryptool.crypto.classic.model.ClassicCryptoModelPlugin;
  *
  */
 public abstract class ClassicAlgorithmConfiguration {
-	
+
 	protected String algorithmName;
 	protected TransformData preOpTransformData;
 	protected boolean filterNonalpha;
 	protected AbstractAlphabet plaintextAlpha;
 	protected boolean encryptMode;
-	
-	private static Map<IEditorPart, ClassicAlgorithmConfiguration> editorsToAlgorithmConfigMap = new HashMap<IEditorPart, ClassicAlgorithmConfiguration>(); 
-	
+
+	private static Map<IEditorPart, ClassicAlgorithmConfiguration> editorsToAlgorithmConfigMap = new HashMap<IEditorPart, ClassicAlgorithmConfiguration>();
+
 	public static void storeAlgorithmConfigForEditor(
 			IEditorPart part, ClassicAlgorithmConfiguration config) {
 		editorsToAlgorithmConfigMap.put(part, config);
 	}
-	
+
 	public static ClassicAlgorithmConfiguration getAlgorithmConfigForEditor(IEditorPart part) {
 		return editorsToAlgorithmConfigMap.get(part);
 	}
-	
+
 	public static Observer createEditorOpenHandler(
 			final AbstractClassicAlgorithm algorithm, final ClassicAlgorithmConfiguration algorithmConfig) {
 		return new Observer() {
@@ -57,7 +57,7 @@ public abstract class ClassicAlgorithmConfiguration {
 			}
 		};
 	}
-	
+
 	public ClassicAlgorithmConfiguration(boolean encryptMode, String algorithmName, AbstractAlphabet plaintextAlpha, boolean filterNonalpha, TransformData preOpTransformData) {
 		this.setEncryptMode(encryptMode);
 		this.algorithmName = algorithmName;
@@ -65,11 +65,11 @@ public abstract class ClassicAlgorithmConfiguration {
 		this.filterNonalpha = filterNonalpha;
 		this.preOpTransformData = preOpTransformData;
 	}
-	
+
 	/**
 	 * Displays the algorithm configuration by creating ui elements and returning them after.<br />
 	 * Enclosing layout must be a GridLayout.
-	 * 
+	 *
 	 * @param parent the parent composite where to display the algorithm configuration
 	 * @return the controls created
 	 */
@@ -109,7 +109,7 @@ public abstract class ClassicAlgorithmConfiguration {
 	public void setPlaintextAlpha(AbstractAlphabet plaintextAlpha) {
 		this.plaintextAlpha = plaintextAlpha;
 	}
-	
+
 	public boolean isEncryptMode() {
 		return encryptMode;
 	}
@@ -126,45 +126,40 @@ public abstract class ClassicAlgorithmConfiguration {
 		main.setLayout(mainLayout);
 		GridData mainLayoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		main.setLayoutData(mainLayoutData);
-		
+
 		{
 			Label titleLbl = generateTitleLabel(main, editor);
 		}
-		
+
 		{
 			Label descr = new Label(main, SWT.NONE);
 			descr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 			descr.setText(Messages.ClassicAlgorithmConfiguration_2);
-			
+
 			Composite alphaDisplay = generateAlphabetDisplay(main, editor);
 		}
-		
+
 		{
 			Label descr = new Label(main, SWT.NONE);
 			descr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 			descr.setText(Messages.ClassicAlgorithmConfiguration_3);
-			
+
 			Control filterDisplay = generateFilterNonalphaDisplay(main, editor);
 		}
-		
-		
-		
+
+
+
 //		Composite filterNonalphaDisplay = generateFilterNonalphaDisplay(main, editor);
 //		Composite preOpTransformDisplay = generatePreOpTransformDisplay(main, editor);
-		
-		return main;
-	}
 
-	private Composite generatePreOpTransformDisplay(Composite main, IEditorPart editor) {
-		// TODO Auto-generated method stub
-		return null;
+		return main;
 	}
 
 	private Button generateFilterNonalphaDisplay(Composite main, IEditorPart editor) {
 		Button b = new Button(main, SWT.CHECK);
 		b.setEnabled(false);
 		b.setSelection(filterNonalpha);
-		
+
 		return b;
 	}
 
@@ -177,7 +172,7 @@ public abstract class ClassicAlgorithmConfiguration {
 		alphaDisplay.setLayout(layout);
 		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 		alphaDisplay.setLayoutData(layoutData);
-		
+
 		Label alphaNameTitle = new Label(alphaDisplay, SWT.NONE);
 		GridData layoutData0 = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		alphaNameTitle.setLayoutData(layoutData0);
@@ -187,7 +182,7 @@ public abstract class ClassicAlgorithmConfiguration {
 		GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		alphaContentTitle.setLayoutData(layoutData2);
 		alphaContentTitle.setText(Messages.ClassicAlgorithmConfiguration_5);
-		
+
 		Text alphabetName = new Text(alphaDisplay, SWT.BORDER);
 		GridData layoutData3 = new GridData(SWT.FILL, SWT.CENTER, false, false);
 		alphabetName.setLayoutData(layoutData3);
@@ -200,7 +195,7 @@ public abstract class ClassicAlgorithmConfiguration {
 		alphabetContent.setLayoutData(layoutData4);
 		alphabetContent.setEditable(false);
 		alphabetContent.setText(AbstractAlphabet.alphabetContentAsString(getPlaintextAlpha().getCharacterSet()));
-		
+
 		return alphaDisplay;
 	}
 
@@ -212,7 +207,7 @@ public abstract class ClassicAlgorithmConfiguration {
 		lbl.setLayoutData(layoutData);
 		String encDecString = isEncryptMode()?Messages.ClassicAlgorithmConfiguration_6:Messages.ClassicAlgorithmConfiguration_7;
 		lbl.setText(String.format(Messages.ClassicAlgorithmConfiguration_8, editor.getTitle(), encDecString, getAlgorithmName()));
-		
+
 		return lbl;
 	}
 

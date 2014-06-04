@@ -336,13 +336,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.jcryptool.visual.viterbi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.jcryptool.visual.he"
          download-size="0"
          install-size="0"

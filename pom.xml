@@ -33,6 +33,7 @@
 	<module>org.jcryptool.analysis.textmodify</module>
 	<module>org.jcryptool.analysis.transpositionanalysis</module>
 	<module>org.jcryptool.analysis.vigenere</module>
+	<module>org.jcryptool.analysis.viterbi</module>
 	<module>org.jcryptool.crypto.classic</module>
 	<module>org.jcryptool.crypto.classic.adfgvx</module>
 	<module>org.jcryptool.crypto.classic.alphabets</module>
@@ -91,7 +92,6 @@
 	<module>org.jcryptool.visual.ssl</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
-	<module>org.jcryptool.visual.viterbi</module>
 	<module>org.jcryptool.visual.xeuclidean</module>
 	<module>org.jcryptool.visual.zeroknowledge</module>
   </modules>

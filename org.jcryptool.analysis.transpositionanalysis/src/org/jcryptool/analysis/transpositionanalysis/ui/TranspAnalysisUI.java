@@ -67,7 +67,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private TextInputWithSource text = null;
 	private Composite composite7;
 	private Label labelReadDir;
-	private Composite compReadOutDir;
 	private Link linkExport;
 	private Composite composite8;
 	private Button btnDecipher;
@@ -110,7 +109,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private Link linkChooseText;
 	private Link linkSetKey;
 	private Label label_1;
-	
+
 	private String ownKeyInputString;
 	private Label lblNewLabel;
 	private Label lblLoadedTextwith;
@@ -174,7 +173,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		transpTable.setColumnOrder(order);
 		columnsReordered(transpTable.getColumnOrder());
 	}
-	
+
 	/**
 	 * @param blocklength
 	 *            the blocklength to set
@@ -347,30 +346,30 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
 						layoutData.widthHint = 100;
 						btnCheckButton.setLayoutData(layoutData);
-						
+
 						applyTransformationInput = new ButtonInput() {
-							
+
 							@Override
 							protected InputVerificationResult verifyUserChange() {
 								return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
 							}
-							
+
 							@Override
 							public String getName() {
 								return "ApplyTransformation"; //$NON-NLS-1$
 							}
-							
+
 							@Override
 							protected Boolean getDefaultContent() {
 								return false;
 							}
-							
+
 							@Override
 							public Button getButton() {
 								return btnCheckButton;
 							}
 						};
-						
+
 						applyTransformationInput.addObserver(new Observer() {
 							@Override
 							public void update(Observable o, Object arg) {
@@ -399,7 +398,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						readinDirChooser = new ReadDirectionChooser(compReadDir, false);
 						readinDirChooser.setDirection(TranspositionTable.DIR_ROWWISE);
 						readinDirChooser.setEnabled(false);
-						
+
 						readinDirChooser.getInput().addObserver(new Observer() {
 							@Override
 							public void update(Observable o, Object arg) {
@@ -460,7 +459,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					GridLayout layout = new GridLayout(2, false);
 					layout.marginWidth = 0;
 					layout.marginHeight = 0;
-					
+
 					compSolvableWarning.setLayout(layout);
 					compSolvableWarning.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 					{
@@ -566,9 +565,9 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 										TranspositionKey oldKey = getKeyUsedToEncrypt();
 										wiz.setPageConfig(new TranspositionKeyInputWizardPage.PageConfiguration(oldKey, ownKeyInputString));
-										
+
 										int dialogResult = dialog.open();
-										
+
 										if(dialogResult == Window.OK) {
 											TranspositionKey key = wiz.getPageConfig().getKey();
 											spinner.setSelection(key.getLength());
@@ -588,7 +587,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 							}
 							{
 								linkExport = new Link(composite8, SWT.NONE);
-								linkExport.setText("<a>" + Messages.TranspAnalysisUI_Export + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$ 
+								linkExport.setText("<a>" + Messages.TranspAnalysisUI_Export + "</a>"); //$NON-NLS-1$ //$NON-NLS-2$
 								linkExport.setEnabled(false);
 								linkExport.addSelectionListener(new SelectionAdapter() {
 									@Override
@@ -656,7 +655,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 					}
 				}
 			}
-			
+
 			//hide source display
 			displaySolvableWarningLabel(false, false);
 			displayTextTransformBtn(false, false, new TransformData());
@@ -674,7 +673,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private void spinnerSelected() {
 		ownKeyInputString = null;
-		
+
 		if (doAutoCrop) {
 			if (spinner.getSelection() > 0) {
 				// if blocklength is greater than zero, make the text now
@@ -719,6 +718,11 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			textPageConfiguration = textWizard.getTextPageConfig();
 			textTransformData = textWizard.getTransformData();
 			setText(textPageConfiguration.getText(), false);
+			setReadInMode(textPageConfiguration.getReadInDirection(), false);
+			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
+			setCrop(textPageConfiguration.isCrop(), false);
+			setCroplength(textPageConfiguration.getCropLength(), false);
+			setBlocklength(textPageConfiguration.getColumnCount(), false);
 			if(textTransformData!=null && !textTransformData.isUnmodified()) {
 				displayTextTransformBtn(true, true, textTransformData);
 				applyTransformationInput.writeContent(true);
@@ -728,11 +732,6 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 				applyTransformationInput.writeContent(false);
 				applyTransformationInput.synchronizeWithUserSide();
 			}
-			setReadInMode(textPageConfiguration.getReadInDirection(), false);
-			readinDirChooser.setDirection(textPageConfiguration.getReadInDirection());
-			setCrop(textPageConfiguration.isCrop(), false);
-			setCroplength(textPageConfiguration.getCropLength(), false);
-			setBlocklength(textPageConfiguration.getColumnCount(), false);
 
 			doAutoCrop = (blocklength > 0 && !crop || blocklength == 0 && crop);
 
@@ -741,10 +740,10 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 			setColumnOrder(textPageConfiguration.getColumnOrder());
 			columnsReordered(transpTable.getColumnOrder());
-			
+
 
 			displayTextSource(textPageConfiguration.getText(), true, true);
-			
+
 			spinner.setEnabled(true);
 			linkSetKey.setEnabled(true);
 			linkExport.setEnabled(true);
@@ -755,23 +754,23 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	/**
 	 * switch load text / show text source composites.
-	 * 
+	 *
 	 * @param text2 if the source composite is displayed: what should be displayed there. (else this parameter is mute)
 	 * @param show whether to show the source composite (true) or the load Text button (false)
 	 * @param layout whether to layout after this operation (recommended if another layout of master composite does not follow directly anyway)
 	 */
 	private void displayTextSource(TextInputWithSource text, boolean show, boolean layout) {
-		
+
 		((GridData) compTextSource.getLayoutData()).exclude = !show;
 		((GridData) compLoadTextBtn.getLayoutData()).exclude = show;
-		
+
 		compTextSource.setVisible(show);
 		compLoadTextBtn.setVisible(!show);
-		
+
 		if(show) {
 			sourceDisplayer.setText(text);
 		}
-		
+
 		if(layout) {
 			this.layout(new Control[]{compTextSource, compLoadTextBtn});
 		}
@@ -780,25 +779,25 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 	private void displayTextTransformBtn(boolean b, boolean layout, TransformData transformData) {
 		((GridData) compApplyTransform.getLayoutData()).exclude = !b;
 		compApplyTransform.setVisible(b);
-		
+
 		if(b) {
 			btnCheckButton.setText(String.format(Messages.TranspAnalysisUI_btnCheckButton_text, transformData.toReadableString()));
 		}
-		
+
 		if(layout) {
 			this.layout(new Control[]{compApplyTransform});
 		}
 	}
-	
+
 	private void displaySolvableWarningLabel(boolean b, boolean layout) {
 		((GridData) compSolvableWarning.getLayoutData()).exclude = !b;
 		compSolvableWarning.setVisible(b);
-		
+
 		if(layout) {
 			this.layout(new Control[]{compApplyTransform});
 		}
 	}
-	
+
 	private String calcText() {
 		return Transform.transformText(text.getText(), applyTransformationInput.getContent()?textTransformData:new TransformData());
 	}
@@ -808,7 +807,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			transpTable.setReadInOrder(readinDirChooser.getInput().getContent(), false);
 			transpTable.setText(calcText(), blocklength, !crop, croplength);
 		}
-		
+
 		checkIsSolvableWarningNeeded();
 	}
 
@@ -822,7 +821,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (transpTable != null) {
 			previewPlaintext();
 		}
-		
+
 		checkIsSolvableWarningNeeded();
 	}
 
@@ -831,7 +830,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if(isCipherParametersComplete()) {
 			if(/*readoutDirChooser.getInput().getContent() == TranspositionTable.DIR_COLUMNWISE ||*/
 				readinDirChooser.getInput().getContent() == TranspositionTable.DIR_COLUMNWISE) {
-				
+
 				if(text.getText().length() % getKeyUsedToEncrypt().getLength() != 0) {
 					needed = true;
 				}
@@ -843,19 +842,19 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 
 	private void previewPlaintext() {
 		if (transpTable != null) {
-			
+
 			if(isCipherParametersComplete()) {
 				TranspositionTable table = new TranspositionTable(transpTable.getColumnCountDisplayed());
-				
+
 				table.fillCharsIntoTable(calcText().toCharArray(), readinDirChooser.getInput().getContent());
 				table.transposeColumns(getKeyUsedToEncrypt().getReverseKey());
 				lastPreviewedText = String.valueOf(table.readOutContent(readoutDirChooser.getInput().getContent()));
 				previewText.setText(lastPreviewedText);
 				btnDecipher.setEnabled(true);
-				
-				
+
+
 				String maskParams = Messages.TranspAnalysisUI_lbl_params_mask;
-				String paramsLblText = Messages.TranspAnalysisUI_lblNewLabel_1_text + String.format(maskParams, 
+				String paramsLblText = Messages.TranspAnalysisUI_lblNewLabel_1_text + String.format(maskParams,
 					TranspositionTable.readDirectionToString(readoutDirChooser.getInput().getContent()),
 					TranspositionTable.readDirectionToString(readinDirChooser.getInput().getContent())
 					);
@@ -888,7 +887,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		if (key != null) {
 			this.keyUsedToEncrypt = new TranspositionKey(key);
 			labelKeypreview.setText(" " + keyUsedToEncrypt.toStringOneRelative() + "|"); //$NON-NLS-1$ //$NON-NLS-2$
-			
+
 //			btnDecipher.setEnabled(true);
 			actualKeyLength = keyUsedToEncrypt.getLength();
 			labelKeypreview.setEnabled(true);
@@ -896,9 +895,9 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 			this.keyUsedToEncrypt = null;
 //			btnDecipher.setEnabled(false);
 			labelKeypreview.setText(Messages.TranspAnalysisUI_keypreview_zerocolumns);
-			
+
 			lblParameters.setText(Messages.TranspAnalysisUI_lblNewLabel_1_text);
-			
+
 			actualKeyLength = 0;
 			labelKeypreview.setEnabled(false);
 		}
@@ -911,7 +910,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 		//mode: not using the transposition algorithm for now because of special characters issue
 		TextInputWithSourceDisplayer.openTextInEditor(lastPreviewedText, "deciphered_transposition"); //$NON-NLS-1$
 		return;
-//		
+//
 //		final String TRANSPOSITION_ALGORITHM = "org.jcryptool.crypto.classic.transposition.algorithm"; //$NON-NLS-1$
 //
 //		OperationsPlugin op = OperationsPlugin.getDefault();
@@ -942,15 +941,5 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 //				break;
 //			}
 //		}
-	}
-
-	private boolean getOutputMethodDecryption() {
-		return readinDirChooser.getInput().getContent();
-	}
-
-	private boolean getInputMethodDecryption() {
-		// its vice-versa, because the entered mode was the read-OUT of the
-		// DECRYPTION
-		return readoutDirChooser.getInput().getContent();
 	}
 }

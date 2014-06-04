@@ -200,11 +200,6 @@ public class SubstitutionKeyEditor extends Composite {
 		createGUI(plaintextAlphabet);
 	}
 
-	private static class SubstitutionKeyHolder {
-		public SubstitutionKey key = null;
-	}
-
-
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 

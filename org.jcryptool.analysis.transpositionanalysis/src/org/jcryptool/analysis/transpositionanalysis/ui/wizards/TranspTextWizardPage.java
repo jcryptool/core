@@ -372,6 +372,11 @@ public class TranspTextWizardPage extends WizardPage {
 					}
 				}
 			}
+			Label nextPageInfo = new Label(grpText, SWT.WRAP);
+			GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
+			layoutData.widthHint = 300;
+			nextPageInfo.setLayoutData(layoutData);
+			nextPageInfo.setText(Messages.TranspTextWizardPage_zzz);
 		}
 		{
 			parttextGroup = new Group(pageComposite, SWT.NONE);

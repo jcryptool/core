@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.4"?>
 <plugin>
-
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -50,7 +49,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu;org.jcryptool.visual.crt.view">
+            locationURI="menu:org.jcryptool.visual.crt.view">
          <command
                commandId="org.jcryptool.visual.crt.restartCommand"
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"

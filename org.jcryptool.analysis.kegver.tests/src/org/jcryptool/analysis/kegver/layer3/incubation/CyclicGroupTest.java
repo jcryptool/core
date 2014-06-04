@@ -19,8 +19,6 @@ import org.junit.Test;
 
 public class CyclicGroupTest {
 
-	private static int prime = 31;
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}

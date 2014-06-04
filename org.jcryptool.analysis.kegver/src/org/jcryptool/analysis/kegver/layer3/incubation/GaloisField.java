@@ -18,8 +18,6 @@ public class GaloisField {
 	private BigInteger order = U.ZERO;
 	private BigInteger orderSuper = U.ZERO;
 	private GaloisField aGF_g = null;
-	private GaloisField aGF_h = null;
-	private BigInteger numberOfElements = null;
 
 	public GaloisField(BigInteger inOrder){
 		this.setOrder(inOrder);

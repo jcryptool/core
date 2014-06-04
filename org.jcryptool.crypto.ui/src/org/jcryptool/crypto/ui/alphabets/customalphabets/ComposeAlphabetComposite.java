@@ -28,7 +28,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -69,19 +68,12 @@ import org.jcryptool.crypto.ui.alphabets.composite.CompositeAlphabet;
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
 public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite {
-	private Composite composite_1;
-	private Composite composite_2;
-	private Link linkViewHint;
 	private Composite compMain;
-	private Label lblKlickenSieDie;
 	private Group grpBausteine;
 	private Composite compBlocks;
-	private Label label;
-	private Label label_1;
 	private Composite comp_block_controls;
 	private Button btnVorhandeneAlphabeteAls;
 	private Button btnNeuerBaustein;
-	private Composite spacer_footer;
 	private Group compResult;
 	private Label lblAlphabetinhaltergebnis;
 	private Composite composite;
@@ -89,7 +81,6 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	private Label lblLnge;
 	private Text text_ResultCharacters;
 	private Label lbl_ResultLength;
-	private Label label_3;
 	private Composite comp_blocks_hull;
 	private Label lblA;
 
@@ -111,9 +102,8 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	private GridData gd_compBlocks;
 	private Composite grpBlockResult;
 	private Label lblHierErscheinenDie;
-	private Label lblAusgewhlteBlcke;
 	private AbstractAlphabet result = new AtomAlphabet(""); //$NON-NLS-1$
-	
+
 	public Composite layoutRoot = null;
 	private AbstractUIInput<AbstractAlphabet> alphabetInput;
 	private Label lblrightclickOnThe;
@@ -243,7 +233,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				}
 			};
 			btnVorhandeneAlphabeteAls.setEnabled(true);
-			
+
 			showExistingAlphasAsBlocks.addObserver(new Observer() {
 				@Override
 				public void update(Observable o, Object arg) {
@@ -301,7 +291,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			compResult.setText(Messages.getString("ComposeAlphabetComposite.6")); //$NON-NLS-1$
 			compResult.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 			compResult.setLayout(new GridLayout(1, false));
-			
+
 			grpBlockResult = new Composite(compResult, SWT.NONE);
 			RowLayout rl_grpBlockResult = new RowLayout(SWT.HORIZONTAL);
 			rl_grpBlockResult.marginTop = 0;
@@ -317,11 +307,11 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			lblHierErscheinenDie.setLayoutData(new RowData());
 			lblHierErscheinenDie.setEnabled(false);
 			lblHierErscheinenDie.setText(Messages.getString("ComposeAlphabetComposite.7")); //$NON-NLS-1$
-			
+
 			lblrightclickOnThe = new Label(compResult, SWT.NONE);
 			lblrightclickOnThe.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
 			lblrightclickOnThe.setText(Messages.getString("ComposeAlphabetComposite.9")); //$NON-NLS-1$
-			
+
 			lblAlphabetinhaltergebnis = new Label(compResult, SWT.NONE);
 			GridData gd_lblAlphabetinhaltergebnis = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 			gd_lblAlphabetinhaltergebnis.verticalIndent = 5;
@@ -355,7 +345,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 		}
 
 		initializeAvailableBlocks();
-		
+
 		alphabetInput = new AbstractUIInput<AbstractAlphabet>() {
 
 			@Override
@@ -395,7 +385,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 
 	/**
 	 * Prompts user action to create a new blockalphabet.
-	 * 
+	 *
 	 * @return null if canceled.
 	 */
 	protected BlockAlphabet createNewBlockAlphabet() {
@@ -480,13 +470,13 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				}
 			}
 		});
-		
+
 		if(grpBlockResult.getChildren().length > 1) {
 			lblHierErscheinenDie.setVisible(false);
 			RowData l = (RowData) lblHierErscheinenDie.getLayoutData();
 			l.exclude = true;
 		}
-		
+
 		refreshContextMenusSelectedButtons();
 
 		grpBlockResult.pack();
@@ -502,26 +492,26 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
 			Image showImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
 			showContentItem.setImage(showImg);
-			
+
 			showContentItem.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					showBlockContentOnscreen(button, actualBlockForm, getTypeFor(originalAlphaBlock));
 				}
 			});
-			
+
 			MenuItem removeBlockItem = new MenuItem(contextMenu, SWT.PUSH);
 			removeBlockItem.setText(Messages.getString("ComposeAlphabetComposite.28")); //$NON-NLS-1$
 			Image removeImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 			removeBlockItem.setImage(removeImg);
-			
+
 			removeBlockItem.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					selectAvailableAlphabet(originalAlphaBlock, false);
 				}
 			});
-			
+
 			boolean isEligibleForShiftLeft = selectedBlockAlphabetsInOrder.indexOf(originalAlphaBlock) > 0;
 			boolean showShiftLeft = true;
 			if(showShiftLeft) {
@@ -530,7 +520,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				shiftLeftItem.setText(Messages.getString("ComposeAlphabetComposite.29")); //$NON-NLS-1$
 				Image shiftLeftImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_BACK);
 				shiftLeftItem.setImage(shiftLeftImg);
-				
+
 				shiftLeftItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -558,7 +548,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				shiftRightItem.setText(Messages.getString("ComposeAlphabetComposite.30")); //$NON-NLS-1$
 				Image shiftLeftImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_FORWARD);
 				shiftRightItem.setImage(shiftLeftImg);
-				
+
 				shiftRightItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -577,7 +567,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					}
 				});
 			}
-			
+
 			boolean isEligibleForReverse = actualBlockForm.getCharacterSet().length > 1;
 			MenuItem reverseAlphaItem;
 			if(isEligibleForReverse) {
@@ -585,7 +575,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				reverseAlphaItem.setText(Messages.getString("ComposeAlphabetComposite.31")); //$NON-NLS-1$
 				Image reverseImg = null;//PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 				reverseAlphaItem.setImage(reverseImg);
-				
+
 				reverseAlphaItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -597,7 +587,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					}
 				});
 			}
-			
+
 			boolean isEligibleForLeaveOneOut = actualBlockForm.getCharacterSet().length > 1;
 			MenuItem looItem = null;
 			if(isEligibleForLeaveOneOut) {
@@ -605,7 +595,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				looItem.setText(Messages.getString("ComposeAlphabetComposite.32")); //$NON-NLS-1$
 				Image looImg = null;//PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 				looItem.setImage(looImg);
-				
+
 				looItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -617,7 +607,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					}
 				});
 			}
-			
+
 			MenuItem looCancelItem = null;
 			boolean isEligibleForCancelLeaveOneOut = actualBlockForm instanceof ExcludeCharBlock;
 			if(isEligibleForCancelLeaveOneOut) {
@@ -625,7 +615,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				looCancelItem.setText(Messages.getString("ComposeAlphabetComposite.33")); //$NON-NLS-1$
 				Image looCancelImg = null;//PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 				looCancelItem.setImage(looCancelImg);
-				
+
 				looCancelItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -641,14 +631,14 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					}
 				});
 			}
-			
+
 			boolean isEligibleForResetModifications = actualBlockForm instanceof HasOriginalBlockAlpha;
 			if(isEligibleForResetModifications) {
 				MenuItem resetItem = new MenuItem(contextMenu, SWT.PUSH);
 				resetItem.setText(Messages.getString("ComposeAlphabetComposite.34")); //$NON-NLS-1$
 				Image resetImg = null;//PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 				resetItem.setImage(resetImg);
-				
+
 				resetItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -660,14 +650,14 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 					}
 				});
 			}
-			
+
 			if(isEligibleForLeaveOneOut && isEligibleForCancelLeaveOneOut) {
 				new MenuItem(contextMenu, SWT.SEPARATOR, contextMenu.indexOf(looItem));
 				if(contextMenu.getItemCount()-1>contextMenu.indexOf(looCancelItem)) {
 					new MenuItem(contextMenu, SWT.SEPARATOR, contextMenu.indexOf(looItem)+2);
 				}
 			}
-			
+
 			if(contextMenu.getItemCount() > 2) {//after view/remove
 				new MenuItem(contextMenu, SWT.SEPARATOR, 2);
 			}
@@ -675,23 +665,23 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				new MenuItem(contextMenu, SWT.SEPARATOR, 5);
 			}
 		}
-		
+
 		return contextMenu;
 	}
 
 	/**
 	 * Transforms a selected alphabet with the given method. May involve blocking user interface interaction.
-	 * 
+	 *
 	 * @param alpha the originally selected alphabet block
 	 * @param method the method (class of the new BlockAlphabet) to perform.
-	 * 
+	 *
 	 * @returns true if the user didn't cancel
 	 */
 	protected BlockAlphabet transformAlphabetBlock(BlockAlphabet alpha, Class<? extends BlockAlphabet> method) {
 		Button btn = getButtonForSelectedBlockAlphabet(alpha);
-		BlockAlphabet alphaNow = selectedBlockAlphabets.get(alpha); //This is necessary, 
+		BlockAlphabet alphaNow = selectedBlockAlphabets.get(alpha); //This is necessary,
 			//because the could've been a transformation in place already (so we chain those)
-		
+
 		if(method == RevertBlock.class) {
 			if(alphaNow instanceof RevertBlock) {
 				return ((RevertBlock) alphaNow).getOrigAlphabet();
@@ -702,7 +692,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 			LeaveOutCharSelectorWizard charSelectorWizard = new LeaveOutCharSelectorWizard(alphaNow);
 			WizardDialog charSelector = new WizardDialog(getShell(), charSelectorWizard);
 			int dialogResult = charSelector.open();
-						
+
 			Character leaveOutChar = charSelectorWizard.getSelectedChar();
 			if(leaveOutChar != null) {
 				return new ExcludeCharBlock(alphaNow, leaveOutChar);
@@ -717,7 +707,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 
 	/**
 	 * displays a selected block-alphabet on a button.
-	 * 
+	 *
 	 * @param button the button
 	 * @param alpha the alphabet in it's post-selection transformed form (because the alphabet may be transformed after it has been selected)
 	 */
@@ -744,16 +734,12 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 		}
 	}
 
-	private BlockAlphabet getSelectedBlockAlphaForButton(Button btn) {
-		return selectedBlockAlphabetsInOrder.get(blockButtonsSelected.indexOf(btn));
-	}
-
 	private Button getButtonForSelectedBlockAlphabet(BlockAlphabet alpha) {
 		return blockButtonsSelected.get(selectedBlockAlphabetsInOrder.indexOf(alpha));
 	}
 
 	protected void selectAvailableAlphabet(BlockAlphabet alpha, boolean selection) {
-		
+
 		if(selectedBlockAlphabetsInOrder.contains(alpha) != selection) {
 			if(selection) {
 				selectedBlockAlphabetsInOrder.add(alpha);
@@ -783,7 +769,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				createMenuForSelectedBlockBtn(originalAlphaBlock, selectedBlockAlphabets.get(originalAlphaBlock), buttonForSelectedBlockAlphabet)
 			);
 	}
-	
+
 	private void refreshContextMenusSelectedButtons() {
 		for(BlockAlphabet alpha: selectedBlockAlphabetsInOrder) {
 			refreshContextMenuForSelectedBlockBtn(alpha);
@@ -840,13 +826,6 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 	private void removeAvailableBlockAlphabet(BlockAlphabet blockAlpha) {
 		removeAvailableBlockAlphabet(blockAlpha, true);
 	}
-	private void removeAvailableBlockAlphabets(Collection<BlockAlphabet> blockAlphas) {
-		int counter = 0;
-		for(BlockAlphabet alpha: blockAlphas) {
-			removeAvailableBlockAlphabet(alpha, counter == blockAlphas.size()-1);
-			counter++;
-		}
-	}
 
 	private void addAvailableBlockAlphabet(final BlockAlphabet blockAlphabet, final BlockType type, boolean layout) {
 		final Button newButton = new Button(compBlocks, SWT.TOGGLE);
@@ -865,7 +844,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				selectAvailableAlphabet(correspondingAvailableAlphabet, father.getSelection());
 			}
 		});
-		
+
 		Menu contextMenu = new Menu(compMain.getShell(), SWT.POP_UP);
 		{
 			MenuItem showContentItem = new MenuItem(contextMenu, SWT.PUSH);
@@ -873,20 +852,20 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 //			Image showImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
 			Image showImg = CryptoUIPlugin.getImageDescriptor("img/search.gif").createImage(); //$NON-NLS-1$
 			showContentItem.setImage(showImg);
-			
+
 			showContentItem.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					showBlockContentOnscreen(newButton, blockAlphabet, type);
 				}
 			});
-			
+
 			if(type == BlockType.SELFCREATED) {
 				MenuItem removeBlockItem = new MenuItem(contextMenu, SWT.PUSH);
 				removeBlockItem.setText(Messages.getString("ComposeAlphabetComposite.42")); //$NON-NLS-1$
 				Image removeImg = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_TOOL_DELETE);
 				removeBlockItem.setImage(removeImg);
-				
+
 				removeBlockItem.addSelectionListener(new SelectionAdapter() {
 					@Override
 					public void widgetSelected(SelectionEvent e) {
@@ -895,9 +874,9 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 				});
 			}
 		}
-		
+
 		newButton.setMenu(contextMenu);
-		
+
 
 		if(layout) {
 			compBlocks.layout();
@@ -907,7 +886,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 
 	/**
 	 * Displays the content of an alphabet block onscreen.
-	 * 
+	 *
 	 * @param representant the widget representing the alphabet block
 	 * @param blockAlphabet the blockAlphabet
 	 * @param type the type
@@ -932,17 +911,6 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 		}
 	}
 
-	private void resetBlockSelections() {
-		LinkedList<BlockAlphabet> blockAlphabetsCurrentlyAvailableClone = new LinkedList<BlockAlphabet>(blockAlphabetsAvailable);
-		for(BlockAlphabet a: blockAlphabetsCurrentlyAvailableClone) {
-			selectAvailableAlphabet(a, false);
-		}
-	}
-
-	private boolean isBlockAlphabetSelected(BlockAlphabet a) {
-		return selectedBlockAlphabetsInOrder.contains(a);
-	}
-	
 	public AbstractAlphabet getAlphabet() {
 		return alphabetInput.getContent();
 	}

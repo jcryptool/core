@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.2"?>
+<?eclipse version="3.4"?>
 <plugin>
-
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -32,7 +31,7 @@
             contextHelpId="org.jcryptool.visual.ecc.eccview">
       </Visual>
    </extension>
-		
+
 <extension
          point="org.eclipse.ui.handlers">
       <handler

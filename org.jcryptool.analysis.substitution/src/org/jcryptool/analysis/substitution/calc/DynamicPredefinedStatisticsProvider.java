@@ -25,7 +25,6 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.editors.EditorUtils;
 import org.jcryptool.crypto.classic.alphabets.preferences.TransformationPreferenceSet;
 import org.osgi.framework.Bundle;
-import org.osgi.service.prefs.Preferences;
 
 public class DynamicPredefinedStatisticsProvider implements PredefinedStatisticsProvider {
 
@@ -138,17 +137,6 @@ public class DynamicPredefinedStatisticsProvider implements PredefinedStatistics
         text = Transform.transformText(text, alphaTransformation);
 
         return text;
-    }
-
-    /**
-     * prooves, if a specific node in the transformation settings exists
-     * 
-     * @param myNode parent node
-     * @return whether the node exists or not
-     */
-    private static boolean nodeExists(Preferences myNode) {
-        if (!myNode.get(TransformationPreferenceSet.ID_TRANSFORM_DATA, "default").equals("default"))return true; //$NON-NLS-1$ //$NON-NLS-2$
-        return false;
     }
 
     private Map<AbstractAlphabet, TransformData> getAlphabetTransformDataMapping() {
