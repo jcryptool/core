@@ -46,8 +46,19 @@ public class CertPathVerifier {
      */
     private Date verificationDate;
 
+    /**
+     * The client certificate used to sign
+     */
     private Certificate clientCertificate;
+
+    /**
+     * The intermediate CAs certificate
+     */
     private Certificate caCertificate;
+
+    /**
+     * The root CAs certificate, used as trust anchor
+     */
     private Certificate rootCertificate;
 
     /**
@@ -217,27 +228,39 @@ public class CertPathVerifier {
             throw new InvalidAlgorithmParameterException();
         }
 
-        // check verification an signature date or only signature date based on used model
-        if (model == 1) {
-            if (compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+        if (model == 0 || model == 1) {
+            // check if ver and sig date are within the validity period of the client cert
+            if (verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
                     rootNotAfter)) {
-                valid = verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
-                        rootNotBefore, rootNotAfter);
+                // check if sig date is before ver date
+                if (signatureDate.after(verificationDate)) {
+                    return false;
+
+                }
+
+                // check sig and ver date if shell model
+                if (model == 0) {
+
+                    if (!isDateWithinPeriod(verificationDate, clientNotBefore, clientNotAfter)
+                            || !isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter)) {
+                        return false;
+                    }
+                    // check only sig date if modified shell model
+                } else {
+                    valid = isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter);
+                }
+            } else {
+                valid =false;
             }
-        } else if (model == 0) {
-            if (compareDates(verificationDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
-                    rootNotAfter)) {
-                valid = compareDates(signatureDate, clientNotBefore, clientNotAfter, caNotBefore, caNotAfter,
-                        rootNotBefore, rootNotAfter);
-            }
+
         } else {
             // chain model
             if (clientNotBefore.after(signatureDate) || clientNotAfter.before(signatureDate)) {
-                valid = false;
+                return false;
             } else if (caNotBefore.after(clientNotBefore) || caNotAfter.before(clientNotBefore)) {
-                valid = false;
+                return false;
             } else if (rootNotBefore.after(caNotBefore) || rootNotAfter.before(caNotBefore)) {
-                valid = false;
+                return false;
             }
         }
 
@@ -261,33 +284,45 @@ public class CertPathVerifier {
     }
 
     /**
-     * @return true if all dates are within validity periodes
+     * check if client is within the ca, and ca within the root validity period
+     * <p>
+     * Requires the dates in the following order:
+     * 
+     * @param clientNotBefore
+     * @param clientNotAfter
+     * @param caNotBefore
+     * @param caNotAfter
+     * @param rootNotBefore
+     * @param rootNotAfter
+     * @return true if the periods are ok
      */
-    private boolean compareDates(Date compareDate, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
-            Date caNotAfter, Date rootNotBefore, Date rootNotAfter) {
-        boolean valid = true;
-
-        if (clientNotBefore.after(compareDate) || clientNotAfter.before(compareDate)) {
-            valid = false;
-        } else if (caNotBefore.after(compareDate) || caNotAfter.before(compareDate)) {
-            valid = false;
-        } else if (rootNotBefore.after(compareDate) || rootNotAfter.before(compareDate)) {
-            valid = false;
-        }
-        return valid;
-    }
-
     private boolean verifyShellModelPeriodes(Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
             Date caNotAfter, Date rootNotBefore, Date rootNotAfter) {
-        boolean valid = true;
 
         if (clientNotBefore.before(caNotBefore) || clientNotAfter.after(caNotAfter)) {
-            valid = false;
+            return false;
         } else if (caNotBefore.before(rootNotBefore) || caNotAfter.after(rootNotAfter)) {
-            valid = false;
+            return false;
         }
 
-        return valid;
+        return true;
+    }
+
+    /**
+     * checks if a date is within two other dates
+     * 
+     * @param compareDate the date to compare
+     * @param validityBegin the begin of the valid period
+     * @param validityEnd the end of the valid period
+     * @return true if the date is within the valid period
+     */
+    private boolean isDateWithinPeriod(Date compareDate, Date validityBegin, Date validityEnd) {
+
+        if (validityBegin.before(compareDate) && validityEnd.after(compareDate)) {
+            return true;
+        }
+
+        return false;
     }
 
 }
