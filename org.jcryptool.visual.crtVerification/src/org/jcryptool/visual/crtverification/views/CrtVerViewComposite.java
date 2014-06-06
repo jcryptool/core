@@ -52,7 +52,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	static Label fromCert;
 	static Label signatureDate;
 	static Label verificationDate;
-	static Label validity;
 
 	static Scale ScaleCertBegin;
 	static Scale ScaleCertEnd;
@@ -381,7 +380,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		
 		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER);
 		txtTheCertificatechainAlias.setText("Successfully validated!\n\nUsed model:\n\tChain-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
-		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 5));
+		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);
@@ -678,16 +677,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
-
-		Label lblvalidity = new Label(composite, SWT.NONE);
-		validity = lblvalidity;
-		validity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
-		validity.setAlignment(SWT.CENTER);
-		GridData gd_validity = new GridData(SWT.FILL, SWT.CENTER, false, false,
-				1, 1);
-		gd_validity.heightHint = 25;
-		gd_validity.widthHint = 200;
-		validity.setLayoutData(gd_validity);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
