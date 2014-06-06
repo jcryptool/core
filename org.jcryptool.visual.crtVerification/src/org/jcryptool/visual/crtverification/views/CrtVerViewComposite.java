@@ -15,7 +15,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -25,12 +24,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
+import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.widgets.Canvas;
 
-public class CrtVerViewComposite extends Composite {
+public class CrtVerViewComposite extends Composite implements PaintListener {
 	// Object Controller
 	CrtVerViewController controller = new CrtVerViewController();
 
@@ -98,11 +98,7 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
 		txtDiesIstDer
-<<<<<<< HEAD
-				.setText("DE: Mit diesem Plugin k\u00f6nnen Sie sehen, wie es zu einer Bewertung der G\u00fcltigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsb\u00e4ume und unterschiedliche G\u00fcltigkeitsmodelle benutzt. \r\n \r\n EN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
-=======
 				.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
->>>>>>> master
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
@@ -207,31 +203,6 @@ public class CrtVerViewComposite extends Composite {
 		ScaleRootCaEnd.setSelection(180);
 
 		btnLoadRootCa = new Button(composite, SWT.NONE);
-		btnLoadRootCa.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-				
-			    // Get button bounds.
-				String text = "Load Root CA";
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
-
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
-
-			    // Draw the new text.
-			    btnLoadRootCa.setText("");
-			    e.gc.drawText( text, textX, textY, true);
-			    
-			}
-		});
 		GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadRootCa.heightHint = 30;
@@ -294,30 +265,6 @@ public class CrtVerViewComposite extends Composite {
 		ScaleCaEnd.setSelection(180);
 
 		btnLoadCa = new Button(composite, SWT.NONE);
-		btnLoadCa.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-				
-				String text = "Load CA";
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
-
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
-
-			    // Draw the new text.
-			    btnLoadCa.setText("");
-			    e.gc.drawText( text, textX, textY, true);
-			    
-			}
-		});
 		GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnLoadCa.heightHint = 30;
@@ -380,30 +327,6 @@ public class CrtVerViewComposite extends Composite {
 		ScaleCertEnd.setSelection(180);
 		
 		btnLoadUserCert = new Button(composite, SWT.NONE);
-		btnLoadUserCert.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-				
-				String text = "Load User Cert";
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
-
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
-
-			    // Draw the new text.
-			    btnLoadUserCert.setText("");
-			    e.gc.drawText( text, textX, textY, true);
-			    
-			}
-		});
 		// Selection Listeners | Scales
 		btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -442,93 +365,23 @@ public class CrtVerViewComposite extends Composite {
 		lblV.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
 		lblV.setText("Signature Date");
 		
-		canvas1 = new Canvas(composite, SWT.NONE);
+		canvas1 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
 		canvas1.setLayout(new GridLayout(1, false));
 		GridData gd_canvas1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
 		gd_canvas1.widthHint = 359;
 		canvas1.setLayoutData(gd_canvas1);
-		canvas1.addPaintListener(new PaintListener() {
-			
-			@Override
-			public void paintControl(PaintEvent e) {
-				// Set the used color
-		        Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
-		        Rectangle clientArea;
-		        int width;
-		        int height;
-		        // Coordinates of the document icon
-		        GC gc;
-
-		        gc = e.gc;
-		        
-		        // Max position right are left are +/-180
-		        if (arrowDiff< -178){
-		            arrowDiff=-178;
-		        }else if (arrowDiff>178){
-		            arrowDiff=178;
-		        }
-		        
-		        // Get the size of the canvas area
-		        clientArea = canvas1.getClientArea();
-		        width = clientArea.width;
-		        height = clientArea.height;
-
-		        // Draw shaft
-		        gc.setBackground(darkgrey);
-		        gc.fillRectangle(width/2+arrowDiff, 5, 2, height);
-		        gc.fillPolygon(new int[] {(width/2-2+arrowDiff), 5, (width/2+1+arrowDiff), 0, (width/2+4+arrowDiff), 5});        
-		        gc.dispose();
-				
-			}
-		});
+		canvas1.addPaintListener(this);
 		
-		canvas2 = new Canvas(composite, SWT.NONE);
+		canvas2 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
 		GridData gd_canvas2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
 		canvas2.setLayout(new GridLayout(1, false));
-<<<<<<< HEAD
-		canvas2.addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(PaintEvent e) {
-			
-				        // Set the used color
-				        Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
-				        Rectangle clientArea;
-				        int width;
-				        int height;
-				        // Coordinates of the document icon
-				        GC gc;
-
-				        gc = e.gc;
-				        
-				        // Max position right are left are +/-180
-				        if (arrowDiff< -178){
-				            arrowDiff=-178;
-				        }else if (arrowDiff>178){
-				            arrowDiff=178;
-				        }
-				        
-				        // Get the size of the canvas area
-				        clientArea = canvas1.getClientArea();
-				        width = clientArea.width;
-				        height = clientArea.height;
-
-				        // Draw shaft
-				        gc.setBackground(darkgrey);
-				        gc.fillRectangle(width/2+arrowDiff, 5, 2, height);
-				        gc.fillPolygon(new int[] {(width/2-2+arrowDiff), 5, (width/2+1+arrowDiff), 0, (width/2+4+arrowDiff), 5});        
-				        gc.dispose();
-			}
-		});
-		new Label(composite, SWT.NONE);
-=======
 		canvas2.addPaintListener(this);
 		
 		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER);
 		txtTheCertificatechainAlias.setText("Successfully validated!\n\nUsed model:\n\tChain-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
 		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
->>>>>>> master
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);
@@ -588,7 +441,6 @@ public class CrtVerViewComposite extends Composite {
 		lblVerificationDate.setAlignment(SWT.CENTER);
 
 		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
-		
 		CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
 		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL,
 				false, false, 13, 1);
@@ -883,7 +735,7 @@ public class CrtVerViewComposite extends Composite {
 		btnForward.setLayoutData(gd_btnForward);
 		btnForward.setText("Forward");
 
-		final Button btnCalculate = new Button(composite, SWT.NONE);
+		Button btnCalculate = new Button(composite, SWT.NONE);
 		btnValidate = btnCalculate;
 		GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
@@ -989,19 +841,13 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(signatureDate, ScaleSignatureDate, 360);
-				if(((ScaleSignatureDate.getSelection() - 360) % 2) == 0){
-        			arrowDiff = (ScaleSignatureDate.getSelection()-360)/2;
-        		}
-        		else{
-        			arrowDiff = ((ScaleSignatureDate.getSelection()+1)-360)/2;
-        		}
-				//arrowDiff = ScaleSignatureDate.getSelection()-360;
+				controller.updateElements(signatureDate, ScaleSignatureDate, 360);	
+				arrowDiff = ScaleSignatureDate.getSelection()-360;
 				canvas1.redraw();
 				canvas2.redraw();
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
-                
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -1009,11 +855,10 @@ public class CrtVerViewComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				
 				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);				
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
-                
+                setLoadBtnsOrange();
 			}
 		});
 
@@ -1040,6 +885,41 @@ public class CrtVerViewComposite extends Composite {
         }
     }
     
+    /**
+     * This method paints the arrows used to indicate the validate date.
+     * 
+     * @param e
+     */
+    public void paintControl(PaintEvent e) {
+        // Set the used color
+        Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
+        Rectangle clientArea;
+        int width;
+        int height;
+        // Coordinates of the document icon
+        GC gc;
+
+        gc = e.gc;
+        
+        // Max position right are left are +/-180
+        if (arrowDiff< -178){
+            arrowDiff=-178;
+        }else if (arrowDiff>178){
+            arrowDiff=178;
+        }
+        
+        // Get the size of the canvas area
+        clientArea = canvas1.getClientArea();
+        width = clientArea.width;
+        height = clientArea.height;
+
+        // Draw shaft
+        gc.setBackground(darkgrey);
+        gc.fillRectangle(width/2+arrowDiff, 5, 2, height);
+        gc.fillPolygon(new int[] {(width/2-2+arrowDiff), 5, (width/2+1+arrowDiff), 0, (width/2+4+arrowDiff), 5});        
+        gc.dispose();
+        
+    }
     
     
     /**
