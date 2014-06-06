@@ -52,7 +52,6 @@ public class CrtVerViewComposite extends Composite {
 	static Label fromCert;
 	static Label signatureDate;
 	static Label verificationDate;
-	static Label validity;
 
 	static Scale ScaleCertBegin;
 	static Scale ScaleCertEnd;
@@ -74,6 +73,7 @@ public class CrtVerViewComposite extends Composite {
 	static int arrowDiff=0;
 
     static ControlDecoration validitySymbol;
+    private Text txtTheCertificatechainAlias;
 	
 	/**
 	 * Create the composite.
@@ -98,7 +98,11 @@ public class CrtVerViewComposite extends Composite {
 		txtDiesIstDer.setEnabled(false);
 		txtDiesIstDer.setEditable(false);
 		txtDiesIstDer
+<<<<<<< HEAD
 				.setText("DE: Mit diesem Plugin k\u00f6nnen Sie sehen, wie es zu einer Bewertung der G\u00fcltigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsb\u00e4ume und unterschiedliche G\u00fcltigkeitsmodelle benutzt. \r\n \r\n EN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+=======
+				.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+>>>>>>> master
 		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true,
 				false, 15, 1);
 		gd_txtDiesIstDer.heightHint = 70;
@@ -483,6 +487,7 @@ public class CrtVerViewComposite extends Composite {
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
 		canvas2.setLayout(new GridLayout(1, false));
+<<<<<<< HEAD
 		canvas2.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
@@ -517,6 +522,13 @@ public class CrtVerViewComposite extends Composite {
 			}
 		});
 		new Label(composite, SWT.NONE);
+=======
+		canvas2.addPaintListener(this);
+		
+		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER);
+		txtTheCertificatechainAlias.setText("Successfully validated!\n\nUsed model:\n\tChain-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
+		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
+>>>>>>> master
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);
@@ -524,7 +536,6 @@ public class CrtVerViewComposite extends Composite {
 				false, false, 14, 1);
 		gd_SeperatorHorizontal.widthHint = 835;
 		SeperatorHorizontal.setLayoutData(gd_SeperatorHorizontal);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
 		Composite composite_5 = new Composite(composite, SWT.NONE);
@@ -543,7 +554,6 @@ public class CrtVerViewComposite extends Composite {
 				controller.getDateformat3()));
 		label_5.setAlignment(SWT.RIGHT);
 		label_5.setBounds(666, 0, 59, 14);
-		new Label(composite, SWT.NONE);
 
 		Label lblSignatureDate = new Label(composite, SWT.NONE);
 		GridData gd_lblSignatureDate = new GridData(SWT.LEFT, SWT.CENTER,
@@ -564,7 +574,6 @@ public class CrtVerViewComposite extends Composite {
 		gd_ScaleSignatureDate.widthHint = 480;
 		ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
 		ScaleSignatureDate.setSelection(360);
-		new Label(composite, SWT.NONE);
 
 		Label lblVerificationDate = new Label(composite, SWT.NONE);
 		GridData gd_lblVerificationDate = new GridData(SWT.LEFT, SWT.CENTER,
@@ -587,7 +596,6 @@ public class CrtVerViewComposite extends Composite {
 		ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
 		ScaleVerificationDate.setMaximum(720);
 		ScaleVerificationDate.setSelection(360);
-		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 
 		Group grpDetails = new Group(composite, SWT.NONE);
@@ -818,16 +826,6 @@ public class CrtVerViewComposite extends Composite {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
-
-		Label lblvalidity = new Label(composite, SWT.NONE);
-		validity = lblvalidity;
-		validity.setFont(SWTResourceManager.getFont("Arial", 14, SWT.BOLD));
-		validity.setAlignment(SWT.CENTER);
-		GridData gd_validity = new GridData(SWT.FILL, SWT.CENTER, false, false,
-				1, 1);
-		gd_validity.heightHint = 25;
-		gd_validity.widthHint = 200;
-		validity.setLayoutData(gd_validity);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
 		new Label(composite, SWT.NONE);
