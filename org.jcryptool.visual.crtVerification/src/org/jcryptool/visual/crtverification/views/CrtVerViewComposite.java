@@ -15,6 +15,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -24,11 +25,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.widgets.Canvas;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
 	// Object Controller
@@ -855,7 +855,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(signatureDate, ScaleSignatureDate, 360);	
-				arrowSigDiff = ScaleSignatureDate.getSelection()-360;
+				if(((ScaleSignatureDate.getSelection() - 360) % 2) == 0){
+					arrowSigDiff = (ScaleSignatureDate.getSelection()-360)/2;
+        		}
+        		else{
+        			arrowSigDiff = ((ScaleSignatureDate.getSelection()+1)-360)/2;
+        		}
+				//arrowSigDiff = ScaleSignatureDate.getSelection()-360;
 				canvas1.redraw();
 				canvas2.redraw();
 				// Hide Validity Symbols (red/green)
@@ -869,7 +875,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
-				arrowVerDiff = ScaleVerificationDate.getSelection()-360;
+				if(((ScaleVerificationDate.getSelection() - 360) % 2) == 0){
+					arrowVerDiff = (ScaleVerificationDate.getSelection()-360)/2;
+        		}
+        		else{
+        			arrowVerDiff = ((ScaleVerificationDate.getSelection()+1)-360)/2;
+        		}
+				//arrowVerDiff = ScaleVerificationDate.getSelection()-360;
                 canvas1.redraw();
                 canvas2.redraw();
 				// Hide Validity Symbols (red/green)
