@@ -4,6 +4,8 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -74,7 +76,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	static int arrowVerDiff=0;
 
     static ControlDecoration validitySymbol;
-    private Text txtTheCertificatechainAlias;
+    static Text txtTheCertificatechainAlias;
 	
 	/**
 	 * Create the composite.
@@ -391,9 +393,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
 		lblArrowVer.setText("Verification Date");
 		
-		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER);
+		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER | SWT.V_SCROLL);
 		txtTheCertificatechainAlias.setEditable(false);
-		txtTheCertificatechainAlias.setText("Unsuccessfully validated!\n\nUsed model:\n\tShell-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
+		txtTheCertificatechainAlias.setText("Logging:\n");
 		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
@@ -519,6 +521,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_rootca.setLayout(new GridLayout(2, false));
 
 		TextRootCaFromDay = new Text(composite_from_rootca, SWT.BORDER);
+		TextRootCaFromDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextRootCaFromDay);
+			}
+		});
+		TextRootCaFromDay.setToolTipText("Root Ca From Day");
 		TextRootCaFromDay.setText("1");
 		TextRootCaFromDay.setTextLimit(2);
 		GridData gd_TextRootCaFromDay = new GridData(SWT.LEFT, SWT.CENTER,
@@ -541,6 +549,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_ca.setLayout(new GridLayout(2, false));
 
 		TextCaFromDay = new Text(composite_from_ca, SWT.BORDER);
+		TextCaFromDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextCaFromDay);
+			}
+		});
+		TextCaFromDay.setToolTipText("Ca From Day");
 		TextCaFromDay.setText("1");
 		TextCaFromDay.setTextLimit(2);
 		GridData gd_TextCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false,
@@ -562,6 +576,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_user_cert.setLayout(new GridLayout(2, false));
 
 		TextCertFromDay = new Text(composite_from_user_cert, SWT.BORDER);
+		TextCertFromDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextCertFromDay);
+			}
+		});
+		TextCertFromDay.setToolTipText("User Certificate From Day");
 		TextCertFromDay.setText("1");
 		TextCertFromDay.setTextLimit(2);
 		GridData gd_TextCertFromDay = new GridData(SWT.LEFT, SWT.CENTER, false,
@@ -585,6 +605,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_1.setLayout(new GridLayout(2, false));
 
 		TextSignatureDateDay = new Text(composite_1, SWT.BORDER);
+		TextSignatureDateDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextSignatureDateDay);
+			}
+		});
+		TextSignatureDateDay.setToolTipText("Signature Date Day");
 		TextSignatureDateDay.setText("1");
 		TextSignatureDateDay.setTextLimit(2);
 		GridData gd_TextSignatureDateDay = new GridData(SWT.LEFT, SWT.CENTER,
@@ -606,6 +632,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_2.setLayout(new GridLayout(2, false));
 
 		TextVerificationDateDay = new Text(composite_2, SWT.BORDER);
+		TextVerificationDateDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextVerificationDateDay);
+			}
+		});
+		TextVerificationDateDay.setToolTipText("Verification Date Day");
 		TextVerificationDateDay.setText("1");
 		TextVerificationDateDay.setTextLimit(2);
 		GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT,
@@ -629,6 +661,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_rootca.setLayout(new GridLayout(2, false));
 
 		TextRootCaThruDay = new Text(composite_thru_rootca, SWT.BORDER);
+		TextRootCaThruDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextRootCaThruDay);
+			}
+		});
+		TextRootCaThruDay.setToolTipText("Root Ca Thru Day");
 		TextRootCaThruDay.setText("1");
 		TextRootCaThruDay.setTextLimit(2);
 		GridData gd_TextRootCaThruDay = new GridData(SWT.LEFT, SWT.CENTER,
@@ -650,6 +688,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_ca.setLayout(new GridLayout(2, false));
 
 		TextCaThruDay = new Text(composite_thru_ca, SWT.BORDER);
+		TextCaThruDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextCaThruDay);
+			}
+		});
+		
+		TextCaThruDay.setToolTipText("Ca Thru Day");
 		TextCaThruDay.setText("1");
 		TextCaThruDay.setTextLimit(2);
 		GridData gd_TextCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false,
@@ -671,6 +716,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_user_cert.setLayout(new GridLayout(2, false));
 
 		TextCertThruDay = new Text(composite_thru_user_cert, SWT.BORDER);
+		TextCertThruDay.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				controller.inputcheck(TextCertThruDay);
+			}
+		});
+		TextCertThruDay.setToolTipText("User Certificate Thru Day");
 		TextCertThruDay.setText("1");
 		TextCertThruDay.setTextLimit(2);
 		GridData gd_TextCertThruDay = new GridData(SWT.LEFT, SWT.CENTER, false,
@@ -733,6 +784,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		new Label(composite, SWT.NONE);
 
 		Button btnBack = new Button(composite, SWT.NONE);
+		btnBack.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+		});
 		GridData gd_btnBack = new GridData(SWT.RIGHT, SWT.CENTER, false, false,
 				1, 1);
 		gd_btnBack.widthHint = 100;
@@ -970,6 +1027,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
+        controller.flushCertificates();
     }
 	
 	@Override

@@ -111,13 +111,18 @@ public class CrtVerViewController {
         TN = tN;
     }
 
+    
     /**
      * Method to get the actual date in "MM/yy" Format
      * 
      * @return Returns the actual date as MM/yy format
      */
-    public String now() {
-        return dt1.format(now);
+    public String now(String format) {
+    	Calendar cal = Calendar.getInstance();
+    	Date time_now = cal.getTime();
+        cal.setTime(time_now);
+    	dt1.applyPattern(format);
+        return dt1.format(time_now);
     }
 
     /**
@@ -153,12 +158,11 @@ public class CrtVerViewController {
      * @param input The text field
      * @return True if Textfield has a valid value
      */
-    public boolean inputcheck(Text input) {
+    public void inputcheck(Text input) {
         int value = Integer.parseInt(input.getText());
-        if (value > 0 && value <= 31) {
-            return true;
-        } else {
-            return false;
+        if (!(value > 0 && value <= 31)) {
+            input.setText("1");
+            CrtVerViewComposite.txtTheCertificatechainAlias.append(input.getToolTipText()+" had an invalid Value (>31 or <0) it has been resetted to default value: 1 \r\n");
         }
     }
 
@@ -243,9 +247,9 @@ public class CrtVerViewController {
      * @param mode 1=Shell Model, 2=Modified Shell Model, 3=Chain Model
      */
     public void validate(int mode) {
-        // Mode 1: Shell Model
-        // Mode 2: Modified Shell Model
-        // Mode 3: Chain Model
+        // Mode 0: Shell Model
+        // Mode 1: Modified Shell Model
+        // Mode 2: Chain Model
         parseDatesFromComposite();
 
         try {
@@ -257,14 +261,61 @@ public class CrtVerViewController {
 
                 if (cpv.validate(mode)) {
                     valid = true;
+                    switch(mode){
+                    	case 0:
+                    		setLogText("Certificate Chain SUCCESSFULLY validated with SHELL MODEL!");
+                    		break;
+                    	case 1: 
+                    		setLogText("Certificate Chain SUCCESSFULLY validated with MODIFIED SHELL MODEL!");
+                    		break;
+                    	case 2:
+                    		setLogText("Certificate Chain SUCCESSFULLY validated with CHAIN MODEL!");
+                    		break;
+                    }
+                }
+                else{
+                	switch(mode){
+                	case 0:
+                		setLogText("Certificate Chain FAILED to validate with SHELL MODEL!");
+                		break;
+                	case 1: 
+                		setLogText("Certificate Chain FAILED to validate with MODIFIED SHELL MODEL!");
+                		break;
+                	case 2:
+                		setLogText("Certificate Chain FAILED to validate with CHAIN MODEL!");
+                		break;
+                }
                 }
             } else {
                 cpv = new CertPathVerifier(verificationDate, signatureDate);
                 if (cpv.verifyChangedDate(mode, fromCert, thruCert, fromCa, thruCa, fromRootCa,
                         thruRootCa, signatureDate, verificationDate)) {
                     valid = true;
+                    switch(mode){
+                    	case 0:
+                    		setLogText("Dates based on selection SUCCESSFULLY validated with SHELL MODEL!");
+                    		break;
+                    	case 1:
+                    		setLogText("Dates based on selection SUCCESSFULLY validated with MODIFIED SHELL MODEL!");
+                    		break;
+                    	case 2:
+                    		setLogText("Dates based on selection SUCCESSFULLY validated with CHAIN MODEL!");
+                    		break;
+                    }
                 }
-               
+                else{
+                	switch(mode){
+                	case 0:
+                		setLogText("Dates based on selection FAILED to validate with SHELL MODEL!");
+                		break;
+                	case 1:
+                		setLogText("Dates based on selection FAILED to validate with MODIFIED SHELL MODEL!");
+                		break;
+                	case 2:
+                		setLogText("Dates based on selection FAILED to validate with CHAIN MODEL!");
+                		break;
+                }
+                }
             }
 
             if (valid) {
@@ -274,59 +325,17 @@ public class CrtVerViewController {
             }
 
         } catch (NullPointerException | InvalidAlgorithmParameterException e) {
+        	if(RootCA==null){
+        		setLogText("Root CA certificate missing for certificate chain validation");
+        	}
+        	if(CA==null){
+        		setLogText("CA certificate missing for certificate chain validation");
+        	}
+        	if(TN==null){
+        		setLogText("TN certificate missing for certificate chain validation");
+        	}
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
-
-//        // Shell Model
-//        if (mode == 1) {
-//            // Check Certificate Path only if all three Certs are valid.
-//            if (flag) {
-//                CertPathVerifier cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(), verificationDate,
-//                        signatureDate);
-//                if (getRootCA() != null && getCA() != null && getTN() != null) {
-//                    try {
-//                        if (cpv.validate(CertPathVerifier.SHELL_MODEL)) {
-//                            // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-//                            // CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
-//                            CrtVerViewComposite.setValidtiySymbol(1);
-//                        } else {
-//                            // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-//                            // CrtVerViewComposite.validity.setText("NOT VALID");
-//                            CrtVerViewComposite.setValidtiySymbol(2);
-//                        }
-//                    } catch (InvalidAlgorithmParameterException e) {
-//                        LogUtil.logError(Activator.PLUGIN_ID, e);
-//                    }
-//                }
-//            }
-//            // Only Validate the Dates from the Scales in Composite View.
-//            if (!flag) {
-//                CertPathVerifier cpv = new CertPathVerifier(verificationDate, signatureDate);
-//                try {
-//                    if (cpv.verifyChangedDate(CertPathVerifier.SHELL_MODEL, fromCert, thruCert, fromCa, thruCa,
-//                            fromRootCa, thruRootCa, signatureDate, verificationDate)) {
-//                        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-//                        // CrtVerViewComposite.validity.setText("VALID SHELL MODEL");
-//                        CrtVerViewComposite.setValidtiySymbol(1);
-//                    } else {
-//                        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-//                        // CrtVerViewComposite.validity.setText("NOT VALID");
-//                        CrtVerViewComposite.setValidtiySymbol(2);
-//                    }
-//                } catch (InvalidAlgorithmParameterException e) {
-//                    LogUtil.logError(Activator.PLUGIN_ID, e);
-//                }
-//            }
-//        }
-//        // Modified Shell Model
-//        if (mode == 2) {
-//
-//        }
-//
-//        // Chain Model
-//        if (mode == 3) {
-//
-//        }
     }
 
     /**
@@ -414,6 +423,19 @@ public class CrtVerViewController {
         CrtVerViewComposite.arrowVerDiff=0;
         CrtVerViewComposite.canvas1.redraw();
         CrtVerViewComposite.canvas2.redraw();
+        
+        flushCertificates();
+        
+        CrtVerViewComposite.txtTheCertificatechainAlias.setText("Logging: \r\n");
+    }
+    /**
+     * Flushing Certificates
+     */
+    public void flushCertificates(){
+    	RootCA = null;
+        CA = null;
+        TN = null;
+        setLogText("Certificates flushed");
     }
 
     public void loadCertificate(ChooseCertPage p, List list) {
@@ -423,18 +445,21 @@ public class CrtVerViewController {
             setScales(1);
             flag = true;
             CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            setLogText("User Certificate successfully loaded");
             break;
         case 2: // [2] Cert
             setCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
             setScales(2);
             flag = true;
             CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            setLogText("CA Certificate successfully loaded");
             break;
         case 3: // [3] RootCert
             setRootCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
             setScales(3);
             flag = true;
             CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            setLogText("Root Ca Certificate successfully loaded");
             break;
         }
         p.setPageComplete(true);
@@ -443,6 +468,20 @@ public class CrtVerViewController {
     public void updateElements(Label l, Scale s, int default_selection) {
         l.setText(scaleUpdate(s.getSelection(), default_selection, getDateformat1()));
         s.setToolTipText(scaleUpdate(s.getSelection(), default_selection, getDateformat2()));
+        if(default_selection==180){
+        	if(RootCA != null || CA != null || TN != null){
+        		flushCertificates();
+        	}
+        }
         flag = false;
+    }
+  
+    /**
+     * Setting the Log Text
+     * 
+     * @param s The String to append to Log Field
+     */
+    public void setLogText(String s){
+    		CrtVerViewComposite.txtTheCertificatechainAlias.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
     }
 }
