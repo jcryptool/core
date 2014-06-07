@@ -1,5 +1,8 @@
 package org.jcryptool.visual.crtverification.views;
 
+import java.security.cert.X509Certificate;
+import java.util.Enumeration;
+
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -7,6 +10,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.List;
+import org.jcryptool.crypto.keystore.backend.KeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
+import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public class ChooseCertComposite extends Composite {
 	private ChooseCertPage page;
@@ -34,7 +40,7 @@ public class ChooseCertComposite extends Composite {
         btnLoad.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
-        		controller.loadCertificate(page, list);
+        		controller.loadCertificate(page, (X509Certificate)controller.ksc.getAllCertificates().get(list.getSelectionIndex()));
         	}
         });
         
@@ -46,10 +52,22 @@ public class ChooseCertComposite extends Composite {
             }
         });
         
-        for(int i=0;i<controller.getKsc().getAllCertificates().size();i++){
-        	list.add(controller.getKsc().getAllCertificates().get(i).getSubjectDN().toString());
-        } 
        
-        
+        //ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
+        Enumeration<String> aliases = controller.getKsc().getAllAliases();
+        //ArrayList<X509Certificate> certificates = controller.getKsc().getAllCertificates();
+		while (aliases.hasMoreElements()) {
+		    IKeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
+		    KeyType type = alias.getKeyStoreEntryType();
+		    if(type == KeyType.KEYPAIR_PUBLIC_KEY || type == KeyType.PUBLICKEY){
+		    	list.add(alias.getContactName() + " | Keylength: " + alias.getKeyLength());
+		    }
+		}  
+		
+		/* for(int i=0;i<controller.getKsc().getAllCertificates().size();i++){
+	        	list.add(controller.getKsc().getAllCertificates().get(i).getSubjectDN().toString());
+	        } */	
+	        
+		
     }
 }

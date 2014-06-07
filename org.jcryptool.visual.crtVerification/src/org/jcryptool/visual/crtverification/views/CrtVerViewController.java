@@ -9,7 +9,6 @@ import java.util.Date;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -438,24 +437,24 @@ public class CrtVerViewController {
         setLogText("Certificates flushed");
     }
 
-    public void loadCertificate(ChooseCertPage p, List list) {
+    public void loadCertificate(ChooseCertPage p, X509Certificate cert) {
         switch (p.getCertType()) {
         case 1: // [1] UserCert
-            setTN(ksc.getAllCertificates().get(list.getSelectionIndex()));
+            setTN(cert);
             setScales(1);
             flag = true;
             CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             setLogText("User Certificate successfully loaded");
             break;
         case 2: // [2] Cert
-            setCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
+            setCA(cert);
             setScales(2);
             flag = true;
             CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             setLogText("CA Certificate successfully loaded");
             break;
         case 3: // [3] RootCert
-            setRootCA(ksc.getAllCertificates().get(list.getSelectionIndex()));
+            setRootCA(cert);
             setScales(3);
             flag = true;
             CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
