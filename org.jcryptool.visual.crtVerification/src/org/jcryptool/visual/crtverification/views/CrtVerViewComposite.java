@@ -1,5 +1,8 @@
 package org.jcryptool.visual.crtverification.views;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -87,6 +90,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
+		
+	    // Adds reset button to the toolbar
+	    IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
+	    Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {controller.reset();}}; //$NON-NLS-1$
+	    action.setImageDescriptor(Activator.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
+	    toolBarMenu.add(action);
 
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 
@@ -1028,7 +1037,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
     }
-	
+    
 	@Override
 	protected void checkSubclass() {
 		// Disable the check that prevents subclassing of SWT components
