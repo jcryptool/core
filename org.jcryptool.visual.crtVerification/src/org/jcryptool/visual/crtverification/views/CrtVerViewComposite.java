@@ -1,5 +1,8 @@
 package org.jcryptool.visual.crtverification.views;
 
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -88,6 +91,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		super(parent, style);
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
+		 // Adds reset button to the toolbar
+	    IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
+	    Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {controller.reset();}}; //$NON-NLS-1$
+	    action.setImageDescriptor(Activator.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
+	    toolBarMenu.add(action);
+		
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 
 		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
