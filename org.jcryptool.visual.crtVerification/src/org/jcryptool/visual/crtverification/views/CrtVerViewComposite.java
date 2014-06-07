@@ -372,7 +372,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
 		lblArrowSig.setText("Signature Date");
 		
-		canvas1 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		canvas1 = new Canvas(composite, SWT.NONE);
 		canvas1.setLayout(new GridLayout(1, false));
 		GridData gd_canvas1 = new GridData(SWT.FILL, SWT.FILL, false, false, 12, 2);
 		gd_canvas1.heightHint = 25;
@@ -380,7 +380,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		canvas1.setLayoutData(gd_canvas1);
 		canvas1.addPaintListener(this);
 		
-		canvas2 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
+		canvas2 = new Canvas(composite, SWT.NONE);
 		GridData gd_canvas2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
@@ -393,7 +393,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
 		lblArrowVer.setText("Verification Date");
 		
-		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER | SWT.V_SCROLL);
+		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
 		txtTheCertificatechainAlias.setEditable(false);
 		txtTheCertificatechainAlias.setText("Logging:\n");
 		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
@@ -1027,7 +1027,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
-        controller.flushCertificates();
     }
 	
 	@Override

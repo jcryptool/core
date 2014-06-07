@@ -468,11 +468,11 @@ public class CrtVerViewController {
     public void updateElements(Label l, Scale s, int default_selection) {
         l.setText(scaleUpdate(s.getSelection(), default_selection, getDateformat1()));
         s.setToolTipText(scaleUpdate(s.getSelection(), default_selection, getDateformat2()));
-        if(default_selection==180){
+        //if(default_selection==180){
         	if(RootCA != null || CA != null || TN != null){
         		flushCertificates();
         	}
-        }
+        //}
         flag = false;
     }
   
