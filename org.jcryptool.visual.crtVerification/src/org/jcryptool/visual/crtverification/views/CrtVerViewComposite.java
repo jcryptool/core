@@ -67,6 +67,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	static Button btnLoadRootCa;
 	static Button btnLoadCa;
 	static Button btnLoadUserCert;
+	static Button btnValidate;
 	static Canvas canvas1;
 	static Canvas canvas2;
 	static int arrowDiff=0;
@@ -735,7 +736,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		btnForward.setText("Forward");
 
 		Button btnCalculate = new Button(composite, SWT.NONE);
-		
+		btnValidate = btnCalculate;
 		GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false,
 				false, 1, 1);
 		gd_btnCalculate.widthHint = 100;
