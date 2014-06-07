@@ -70,7 +70,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	static Button btnValidate;
 	static Canvas canvas1;
 	static Canvas canvas2;
-	static int arrowDiff=0;
+	static int arrowSigDiff=0;
+	static int arrowVerDiff=0;
 
     static ControlDecoration validitySymbol;
     private Text txtTheCertificatechainAlias;
@@ -361,26 +362,38 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
 		btnLoadUserCert.setText("Load User Cert");
 		
-		Label lblV = new Label(composite, SWT.NONE);
-		lblV.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
-		lblV.setText("Signature Date");
+		Label lblArrowSig = new Label(composite, SWT.NONE);
+		lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+		GridData gd_lblArrowSig = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+		gd_lblArrowSig.heightHint = 13;
+		lblArrowSig.setLayoutData(gd_lblArrowSig);
+		lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
+		lblArrowSig.setText("Signature Date");
 		
 		canvas1 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
 		canvas1.setLayout(new GridLayout(1, false));
-		GridData gd_canvas1 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
+		GridData gd_canvas1 = new GridData(SWT.FILL, SWT.FILL, false, false, 12, 2);
+		gd_canvas1.heightHint = 25;
 		gd_canvas1.widthHint = 359;
 		canvas1.setLayoutData(gd_canvas1);
 		canvas1.addPaintListener(this);
 		
 		canvas2 = new Canvas(composite, SWT.NONE | SWT.TRANSPARENT);
-		GridData gd_canvas2 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+		GridData gd_canvas2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
 		canvas2.setLayout(new GridLayout(1, false));
 		canvas2.addPaintListener(this);
+		new Label(composite, SWT.NONE);
+		
+		Label lblArrowVer = new Label(composite, SWT.NONE);
+		lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
+		lblArrowVer.setText("Verification Date");
 		
 		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER);
-		txtTheCertificatechainAlias.setText("Successfully validated!\n\nUsed model:\n\tChain-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
+		txtTheCertificatechainAlias.setEditable(false);
+		txtTheCertificatechainAlias.setText("Unsuccessfully validated!\n\nUsed model:\n\tShell-model\n\nCertificate-chain:\n\tCert-Alias 1\n\tCert-Alias 2\n\tCert-Alias 3\n");
 		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
@@ -842,7 +855,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
 				controller.updateElements(signatureDate, ScaleSignatureDate, 360);	
-				arrowDiff = ScaleSignatureDate.getSelection()-360;
+				arrowSigDiff = ScaleSignatureDate.getSelection()-360;
 				canvas1.redraw();
 				canvas2.redraw();
 				// Hide Validity Symbols (red/green)
@@ -855,7 +868,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				// Add or Remain Time dependent on selection
-				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);				
+				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
+				arrowVerDiff = ScaleVerificationDate.getSelection()-360;
+                canvas1.redraw();
+                canvas2.redraw();
 				// Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
@@ -892,7 +908,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
      */
     public void paintControl(PaintEvent e) {
         // Set the used color
-        Color darkgrey = new Color(Display.getCurrent(), 128, 128, 128);
+        Color lightblue = new Color(Display.getCurrent(), 30, 144, 255);
+        Color darkblue = new Color(Display.getCurrent(), 72, 61,139);
         Rectangle clientArea;
         int width;
         int height;
@@ -902,10 +919,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gc = e.gc;
         
         // Max position right are left are +/-180
-        if (arrowDiff< -178){
-            arrowDiff=-178;
-        }else if (arrowDiff>178){
-            arrowDiff=178;
+        if (arrowSigDiff< -180){
+            arrowSigDiff=-180;
+        }else if (arrowSigDiff>180){
+            arrowSigDiff=180;
+        }
+        if (arrowVerDiff< -180){
+            arrowVerDiff=-180;
+        }else if (arrowVerDiff>180){
+            arrowVerDiff=178;
         }
         
         // Get the size of the canvas area
@@ -913,10 +935,16 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         width = clientArea.width;
         height = clientArea.height;
 
-        // Draw shaft
-        gc.setBackground(darkgrey);
-        gc.fillRectangle(width/2+arrowDiff, 5, 2, height);
-        gc.fillPolygon(new int[] {(width/2-2+arrowDiff), 5, (width/2+1+arrowDiff), 0, (width/2+4+arrowDiff), 5});        
+        // Draw Arrow Signature Date
+        gc.setBackground(lightblue);
+        gc.fillRectangle(width/2+arrowSigDiff-4, 9, 8, height);
+        gc.fillPolygon(new int[] {(width/2-8+arrowSigDiff), 9, (width/2+arrowSigDiff), 0, (width/2+8+arrowSigDiff), 9});        
+        
+     // Draw Arrow Verification Date
+        gc.setBackground(darkblue);
+        gc.fillRectangle(width/2+arrowVerDiff-4, 9, 8, height-4);
+        gc.fillPolygon(new int[] {(width/2-8+arrowVerDiff), 11, (width/2+arrowVerDiff), 2, (width/2+8+arrowVerDiff), 11}); 
+        
         gc.dispose();
         
     }
