@@ -1,6 +1,7 @@
 package org.jcryptool.visual.crtverification.views;
 
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 public class ChooseCertPage extends WizardPage {
@@ -27,7 +28,7 @@ public class ChooseCertPage extends WizardPage {
     // TestComposite wird erzeugt
     public void createControl(Composite parent) {
         setPageComplete(false);
-        compositeFile = new ChooseCertComposite(parent, NONE, this);
+        compositeFile = new ChooseCertComposite(parent, SWT.NONE, this);
         setControl(compositeFile);
     }
 

@@ -22,13 +22,22 @@ public class ChooseCert extends Wizard {
     @Override
     public boolean performFinish() {
     	CrtVerViewComposite.btnValidate.setFocus();
+<<<<<<< HEAD
         return true;
     }
     
     @Override
     public boolean performCancel() {
     	CrtVerViewComposite.btnValidate.setFocus();
+=======
+>>>>>>> GUI_Development
         return true;
     }
+    
 
+    @Override
+    public boolean performCancel() {
+    	CrtVerViewComposite.btnValidate.setFocus();
+        return true;
+    }
 }
