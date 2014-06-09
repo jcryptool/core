@@ -1,4 +1,4 @@
-package org.jcryptool.visual.crtverification.verification;
+package org.jcryptool.visual.crtverification.models;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -10,18 +10,14 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.x509.ExtendedPKIXParameters;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.jcryptool.visual.crtverification.verification.Messages;
-import org.osgi.framework.Bundle;
 
 public class CertPathVerifier {
 
@@ -64,11 +60,6 @@ public class CertPathVerifier {
      * The root CAs certificate, used as trust anchor
      */
     private Certificate rootCertificate;
-
-    /**
-     * A list containing all error messages of the path validation
-     */
-    private ArrayList<String> errors;
 
     /**
      * Constructs a new validator for a certification Path
@@ -211,7 +202,6 @@ public class CertPathVerifier {
         return valid;
     }
 
-    // TODO javadoc neu machen
     /**
      * checks if the verification and/or signature dates are within the valididity periods of the
      * certificate chain, based on the selected validity model. Expects validity periods for all
@@ -229,10 +219,10 @@ public class CertPathVerifier {
      * @return true if the certificate chain is valid (based only on time)
      * @throws InvalidAlgorithmParameterException if a non existing model is selected
      */
-    public ArrayList<String> verifyChangedDate(int model, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
+    public boolean verifyChangedDate(int model, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
             Date caNotAfter, Date rootNotBefore, Date rootNotAfter, Date signatureDate, Date verificationDate)
             throws InvalidAlgorithmParameterException {
-        errors = new ArrayList<String>();
+        boolean valid = true;
 
         if (model != 0 && model != 1 && model != 2) {
             throw new InvalidAlgorithmParameterException();
@@ -240,50 +230,41 @@ public class CertPathVerifier {
 
         if (model == 0 || model == 1) {
             // check if ver and sig date are within the validity period of the client cert
-            verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
-                    rootNotAfter);
-            // check if sig date is before ver date
-            if (signatureDate.after(verificationDate)) {
-                errors.add(Messages.CrtVerification_sigDateAfterVerDate);
+            if (verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
+                    rootNotAfter)) {
+                // check if sig date is before ver date
+                if (signatureDate.after(verificationDate)) {
+                    return false;
 
-            }
-
-            if (!isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter)) {
-                errors.add(Messages.CrtVericiation_sigDateNotWithinClient);
-            }
-
-            // check sig and ver date if shell model
-            if (model == 0) {
-
-                if (!isDateWithinPeriod(verificationDate, clientNotBefore, clientNotAfter)) {
-                    errors.add(Messages.CrtVericiation_verDateNotWithinClient);
                 }
 
+                // check sig and ver date if shell model
+                if (model == 0) {
+
+                    if (!isDateWithinPeriod(verificationDate, clientNotBefore, clientNotAfter)
+                            || !isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter)) {
+                        return false;
+                    }
+                    // check only sig date if modified shell model
+                } else {
+                    valid = isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter);
+                }
+            } else {
+                valid =false;
             }
 
         } else {
             // chain model
-            if (clientNotBefore.after(signatureDate)) {
-                errors.add(Messages.CrtVericiation_clientNotBeforeAfterSigDate);
-
-            } else if (clientNotAfter.before(signatureDate)) {
-                errors.add(Messages.CrtVericiation_clientNotBeforeAfterSigDate);
-
-            } else if (caNotBefore.after(clientNotBefore)) {
-                errors.add(Messages.CrtVericiation_caNotBeforeAfterClientNotBefore);
-
-            } else if (caNotAfter.before(clientNotBefore)) {
-                errors.add(Messages.CrtVericiation_caNotAfterBeforeClientNotAfter);
-
-            } else if (rootNotBefore.after(caNotBefore)) {
-                errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
-
-            } else if (rootNotAfter.before(caNotBefore)) {
-                errors.add(Messages.CrtVericiation_rootNotAfterBeforeCANotAfter);
+            if (clientNotBefore.after(signatureDate) || clientNotAfter.before(signatureDate)) {
+                return false;
+            } else if (caNotBefore.after(clientNotBefore) || caNotAfter.before(clientNotBefore)) {
+                return false;
+            } else if (rootNotBefore.after(caNotBefore) || rootNotAfter.before(caNotBefore)) {
+                return false;
             }
         }
 
-        return errors;
+        return valid;
     }
 
     /**
@@ -315,21 +296,16 @@ public class CertPathVerifier {
      * @param rootNotAfter
      * @return true if the periods are ok
      */
-    private void verifyShellModelPeriodes(Date clientNotBefore, Date clientNotAfter, Date caNotBefore, Date caNotAfter,
-            Date rootNotBefore, Date rootNotAfter) {
+    private boolean verifyShellModelPeriodes(Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
+            Date caNotAfter, Date rootNotBefore, Date rootNotAfter) {
 
-        if (clientNotBefore.before(caNotBefore)) {
-            errors.add(Messages.CrtVericiation_caNotBeforeAfterClientNotBefore);
-        } else if (clientNotAfter.after(caNotAfter)) {
-            errors.add(Messages.CrtVericiation_caNotAfterBeforeClientNotAfter);
-
-        } else if (caNotBefore.before(rootNotBefore)) {
-            errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
-        } else if (caNotAfter.after(rootNotAfter)) {
-            errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
-
+        if (clientNotBefore.before(caNotBefore) || clientNotAfter.after(caNotAfter)) {
+            return false;
+        } else if (caNotBefore.before(rootNotBefore) || caNotAfter.after(rootNotAfter)) {
+            return false;
         }
 
+        return true;
     }
 
     /**
