@@ -1,4 +1,4 @@
-package org.jcryptool.visual.crtverification.keystore;
+package org.jcryptool.visual.crtverification.verification;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
