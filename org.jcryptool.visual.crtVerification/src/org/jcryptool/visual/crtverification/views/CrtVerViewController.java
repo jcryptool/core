@@ -4,6 +4,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,8 +16,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.jcryptool.visual.crtverification.keystore.KeystoreConnector;
-import org.jcryptool.visual.crtverification.models.CertPathVerifier;
+import org.jcryptool.visual.crtverification.verification.CertPathVerifier;
+import org.jcryptool.visual.crtverification.verification.KeystoreConnector;
 
 public class CrtVerViewController {
     private String dateformat1 = "/MMM/yy";
@@ -238,6 +239,8 @@ public class CrtVerViewController {
         // Mode 3: Chain Model
         parseDatesFromComposite();
 
+        ArrayList<String> errors = new ArrayList<String>();
+
         try {
             CertPathVerifier cpv = null;
             boolean valid = false;
@@ -250,11 +253,15 @@ public class CrtVerViewController {
                 }
             } else {
                 cpv = new CertPathVerifier(verificationDate, signatureDate);
-                if (cpv.verifyChangedDate(mode, fromCert, thruCert, fromCa, thruCa, fromRootCa,
-                        thruRootCa, signatureDate, verificationDate)) {
+                errors = cpv.verifyChangedDate(mode, fromCert, thruCert, fromCa, thruCa, fromRootCa, thruRootCa,
+                        signatureDate, verificationDate);
+                
+                if (errors.isEmpty()) {
                     valid = true;
+                } else {
+                    // TODO display error messages
                 }
-               
+
             }
 
             if (valid) {
@@ -267,56 +274,62 @@ public class CrtVerViewController {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
 
-//        // Shell Model
-//        if (mode == 1) {
-//            // Check Certificate Path only if all three Certs are valid.
-//            if (flag) {
-//                CertPathVerifier cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(), verificationDate,
-//                        signatureDate);
-//                if (getRootCA() != null && getCA() != null && getTN() != null) {
-//                    try {
-//                        if (cpv.validate(CertPathVerifier.SHELL_MODEL)) {
-//                            // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-//                            // CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
-//                            CrtVerViewComposite.setValidtiySymbol(1);
-//                        } else {
-//                            // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-//                            // CrtVerViewComposite.validity.setText("NOT VALID");
-//                            CrtVerViewComposite.setValidtiySymbol(2);
-//                        }
-//                    } catch (InvalidAlgorithmParameterException e) {
-//                        LogUtil.logError(Activator.PLUGIN_ID, e);
-//                    }
-//                }
-//            }
-//            // Only Validate the Dates from the Scales in Composite View.
-//            if (!flag) {
-//                CertPathVerifier cpv = new CertPathVerifier(verificationDate, signatureDate);
-//                try {
-//                    if (cpv.verifyChangedDate(CertPathVerifier.SHELL_MODEL, fromCert, thruCert, fromCa, thruCa,
-//                            fromRootCa, thruRootCa, signatureDate, verificationDate)) {
-//                        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
-//                        // CrtVerViewComposite.validity.setText("VALID SHELL MODEL");
-//                        CrtVerViewComposite.setValidtiySymbol(1);
-//                    } else {
-//                        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
-//                        // CrtVerViewComposite.validity.setText("NOT VALID");
-//                        CrtVerViewComposite.setValidtiySymbol(2);
-//                    }
-//                } catch (InvalidAlgorithmParameterException e) {
-//                    LogUtil.logError(Activator.PLUGIN_ID, e);
-//                }
-//            }
-//        }
-//        // Modified Shell Model
-//        if (mode == 2) {
-//
-//        }
-//
-//        // Chain Model
-//        if (mode == 3) {
-//
-//        }
+        // // Shell Model
+        // if (mode == 1) {
+        // // Check Certificate Path only if all three Certs are valid.
+        // if (flag) {
+        // CertPathVerifier cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(),
+        // verificationDate,
+        // signatureDate);
+        // if (getRootCA() != null && getCA() != null && getTN() != null) {
+        // try {
+        // if (cpv.validate(CertPathVerifier.SHELL_MODEL)) {
+        // //
+        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+        // // CrtVerViewComposite.validity.setText("VALID CERTIFICATE CHAIN");
+        // CrtVerViewComposite.setValidtiySymbol(1);
+        // } else {
+        // //
+        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+        // // CrtVerViewComposite.validity.setText("NOT VALID");
+        // CrtVerViewComposite.setValidtiySymbol(2);
+        // }
+        // } catch (InvalidAlgorithmParameterException e) {
+        // LogUtil.logError(Activator.PLUGIN_ID, e);
+        // }
+        // }
+        // }
+        // // Only Validate the Dates from the Scales in Composite View.
+        // if (!flag) {
+        // CertPathVerifier cpv = new CertPathVerifier(verificationDate, signatureDate);
+        // try {
+        // if (cpv.verifyChangedDate(CertPathVerifier.SHELL_MODEL, fromCert, thruCert, fromCa,
+        // thruCa,
+        // fromRootCa, thruRootCa, signatureDate, verificationDate)) {
+        // //
+        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+        // // CrtVerViewComposite.validity.setText("VALID SHELL MODEL");
+        // CrtVerViewComposite.setValidtiySymbol(1);
+        // } else {
+        // //
+        // CrtVerViewComposite.validity.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+        // // CrtVerViewComposite.validity.setText("NOT VALID");
+        // CrtVerViewComposite.setValidtiySymbol(2);
+        // }
+        // } catch (InvalidAlgorithmParameterException e) {
+        // LogUtil.logError(Activator.PLUGIN_ID, e);
+        // }
+        // }
+        // }
+        // // Modified Shell Model
+        // if (mode == 2) {
+        //
+        // }
+        //
+        // // Chain Model
+        // if (mode == 3) {
+        //
+        // }
     }
 
     /**
@@ -400,7 +413,7 @@ public class CrtVerViewController {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        CrtVerViewComposite.arrowDiff=0;
+        CrtVerViewComposite.arrowDiff = 0;
         CrtVerViewComposite.canvas1.redraw();
         CrtVerViewComposite.canvas2.redraw();
     }
