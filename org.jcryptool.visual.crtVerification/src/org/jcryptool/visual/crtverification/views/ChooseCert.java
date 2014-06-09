@@ -30,5 +30,5 @@ public class ChooseCert extends Wizard {
     	CrtVerViewComposite.btnValidate.setFocus();
         return true;
     }
-
+    
 }
