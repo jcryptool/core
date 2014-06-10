@@ -799,14 +799,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnBack.widthHint = 100;
         gd_btnBack.heightHint = 30;
         btnBack.setLayoutData(gd_btnBack);
-        btnBack.setText("Back");
+        btnBack.setText("PKI Plugin");
 
         Button btnForward = new Button(composite, SWT.NONE);
         GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_btnForward.widthHint = 100;
+        gd_btnForward.widthHint = 161;
         gd_btnForward.heightHint = 30;
         btnForward.setLayoutData(gd_btnForward);
-        btnForward.setText("Forward");
+        btnForward.setText("Signature Verification");
 
         Button btnCalculate = new Button(composite, SWT.NONE);
         btnValidate = btnCalculate;
