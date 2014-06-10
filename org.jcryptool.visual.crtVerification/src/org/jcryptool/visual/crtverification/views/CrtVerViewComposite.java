@@ -36,950 +36,877 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
-	// Object Controller
-	CrtVerViewController controller = new CrtVerViewController();
+    // Object Controller
+    CrtVerViewController controller = new CrtVerViewController();
 
-	// Variables
-	static Text TextRootCaFromDay;
-	static Text TextCaFromDay;
-	static Text TextCertFromDay;
-	static Text TextRootCaThruDay;
-	static Text TextCaThruDay;
-	static Text TextCertThruDay;
-	static Text TextSignatureDateDay;
-	static Text TextVerificationDateDay;
+    // Variables
+    static Text TextRootCaFromDay;
+    static Text TextCaFromDay;
+    static Text TextCertFromDay;
+    static Text TextRootCaThruDay;
+    static Text TextCaThruDay;
+    static Text TextCertThruDay;
+    static Text TextSignatureDateDay;
+    static Text TextVerificationDateDay;
 
-	static Label thruRootCa;
-	static Label fromRootCa;
-	static Label thruCa;
-	static Label fromCa;
-	static Label thruCert;
-	static Label fromCert;
-	static Label signatureDate;
-	static Label verificationDate;
+    static Label thruRootCa;
+    static Label fromRootCa;
+    static Label thruCa;
+    static Label fromCa;
+    static Label thruCert;
+    static Label fromCert;
+    static Label signatureDate;
+    static Label verificationDate;
 
-	static Scale ScaleCertBegin;
-	static Scale ScaleCertEnd;
-	static Scale ScaleCaBegin;
-	static Scale ScaleCaEnd;
-	static Scale ScaleRootCaBegin;
-	static Scale ScaleRootCaEnd;
-	static Scale ScaleVerificationDate;
-	static Scale ScaleSignatureDate;
+    static Scale ScaleCertBegin;
+    static Scale ScaleCertEnd;
+    static Scale ScaleCaBegin;
+    static Scale ScaleCaEnd;
+    static Scale ScaleRootCaBegin;
+    static Scale ScaleRootCaEnd;
+    static Scale ScaleVerificationDate;
+    static Scale ScaleSignatureDate;
 
-	private Text txtDiesIstDer;
-	
-	static Button btnLoadRootCa;
-	static Button btnLoadCa;
-	static Button btnLoadUserCert;
-	static Button btnValidate;
-	static Canvas canvas1;
-	static Canvas canvas2;
-	static int arrowSigDiff=0;
-	static int arrowVerDiff=0;
+    private Text txtDiesIstDer;
+
+    static Button btnLoadRootCa;
+    static Button btnLoadCa;
+    static Button btnLoadUserCert;
+    static Button btnValidate;
+    static Canvas canvas1;
+    static Canvas canvas2;
+    static int arrowSigDiff = 0;
+    static int arrowVerDiff = 0;
 
     static ControlDecoration validitySymbol;
     static Text txtLogWindow;
-	
-	/**
-	 * Create the composite.
-	 * 
-	 * @param parent
-	 * @param style
-	 */
-	public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
-		super(parent, style);
-		setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		 // Adds reset button to the toolbar
-	    IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
-	    Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {controller.reset();}}; //$NON-NLS-1$
-	    action.setImageDescriptor(Activator.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
-	    toolBarMenu.add(action);
-		
-		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
+    /**
+     * Create the composite.
+     * 
+     * @param parent
+     * @param style
+     */
+    public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
+        super(parent, style);
+        setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
-		tbtmSchalenmodell.setText("Certificate Verification");
+        // Adds reset button to the toolbar
+        IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
+        Action action = new Action("Reset", IAction.AS_PUSH_BUTTON) {public void run() {controller.reset();}}; //$NON-NLS-1$
+        action.setImageDescriptor(Activator.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
+        toolBarMenu.add(action);
 
-		Composite composite = new Composite(tabFolder, SWT.NONE);
-		tbtmSchalenmodell.setControl(composite);
-		composite.setLayout(new GridLayout(15, false));
+        TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 
-		txtDiesIstDer = new Text(composite, SWT.BORDER);
-		txtDiesIstDer.setEnabled(false);
-		txtDiesIstDer.setEditable(false);
-		txtDiesIstDer
-				.setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
-		GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true,
-				false, 15, 1);
-		gd_txtDiesIstDer.heightHint = 70;
-		txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+        TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
+        tbtmSchalenmodell.setText("Certificate Verification");
 
-		Label lblNotValidBefore = new Label(composite, SWT.NONE);
-		lblNotValidBefore.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER,
-				false, false, 12, 1));
-		lblNotValidBefore.setFont(SWTResourceManager.getFont("Lucida Grande",
-				12, SWT.NORMAL));
-		lblNotValidBefore.setAlignment(SWT.CENTER);
-		lblNotValidBefore.setText("Not Valid Before");
+        Composite composite = new Composite(tabFolder, SWT.NONE);
+        tbtmSchalenmodell.setControl(composite);
+        composite.setLayout(new GridLayout(15, false));
 
-		Label lblNotValidAfter = new Label(composite, SWT.NONE);
-		lblNotValidAfter.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER,
-				false, false, 1, 1));
-		lblNotValidAfter.setText("Not Valid After");
-		lblNotValidAfter.setFont(SWTResourceManager.getFont("Lucida Grande",
-				12, SWT.NORMAL));
-		lblNotValidAfter.setAlignment(SWT.CENTER);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
+        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.CANCEL);
+        txtDiesIstDer.setEnabled(false);
+        txtDiesIstDer.setEditable(false);
+        txtDiesIstDer
+                .setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+        GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1);
+        gd_txtDiesIstDer.heightHint = 70;
+        txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
 
-		Composite composite_4 = new Composite(composite, SWT.NONE);
-		composite_4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 12, 1));
+        Label lblNotValidBefore = new Label(composite, SWT.NONE);
+        lblNotValidBefore.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 12, 1));
+        lblNotValidBefore.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblNotValidBefore.setAlignment(SWT.CENTER);
+        lblNotValidBefore.setText("Not Valid Before");
 
-		Label label = new Label(composite_4, SWT.NONE);
-		label.setText(controller.scaleUpdate(0, 180,
-				controller.getDateformat3()));
-		label.setBounds(0, 0, 59, 14);
+        Label lblNotValidAfter = new Label(composite, SWT.NONE);
+        lblNotValidAfter.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+        lblNotValidAfter.setText("Not Valid After");
+        lblNotValidAfter.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblNotValidAfter.setAlignment(SWT.CENTER);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
 
-		Label label_1 = new Label(composite_4, SWT.NONE);
-		label_1.setText(controller.scaleUpdate(360, 180,
-				controller.getDateformat3()));
-		label_1.setAlignment(SWT.RIGHT);
-		label_1.setBounds(301, 0, 59, 14);
+        Composite composite_4 = new Composite(composite, SWT.NONE);
+        composite_4.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1));
 
-		Composite composite_3 = new Composite(composite, SWT.NONE);
-		GridData gd_composite_3 = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_composite_3.widthHint = 360;
-		composite_3.setLayoutData(gd_composite_3);
+        Label label = new Label(composite_4, SWT.NONE);
+        label.setText(controller.scaleUpdate(0, 180, controller.getDateformat3()));
+        label.setBounds(0, 0, 59, 14);
 
-		Label label_2 = new Label(composite_3, SWT.NONE);
-		label_2.setBounds(0, 0, 59, 14);
-		label_2.setText(controller.scaleUpdate(0, 180,
-				controller.getDateformat3()));
+        Label label_1 = new Label(composite_4, SWT.NONE);
+        label_1.setText(controller.scaleUpdate(360, 180, controller.getDateformat3()));
+        label_1.setAlignment(SWT.RIGHT);
+        label_1.setBounds(301, 0, 59, 14);
 
-		Label label_3 = new Label(composite_3, SWT.NONE);
-		label_3.setAlignment(SWT.RIGHT);
-		label_3.setBounds(301, 0, 59, 14);
-		label_3.setText(controller.scaleUpdate(360, 180,
-				controller.getDateformat3()));
-		new Label(composite, SWT.NONE);
+        Composite composite_3 = new Composite(composite, SWT.NONE);
+        GridData gd_composite_3 = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_composite_3.widthHint = 360;
+        composite_3.setLayoutData(gd_composite_3);
 
-		Label lblRootCa = new Label(composite, SWT.NONE);
-		GridData gd_lblRootCa = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_lblRootCa.heightHint = 30;
-		gd_lblRootCa.verticalIndent = 10;
-		lblRootCa.setLayoutData(gd_lblRootCa);
-		lblRootCa.setText("Root CA");
-		lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12,
-				SWT.NORMAL));
-		lblRootCa.setAlignment(SWT.CENTER);
+        Label label_2 = new Label(composite_3, SWT.NONE);
+        label_2.setBounds(0, 0, 59, 14);
+        label_2.setText(controller.scaleUpdate(0, 180, controller.getDateformat3()));
 
-		final Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleRootCaBegin = ScaleRootCaBegin;
-		ScaleRootCaBegin.setToolTipText("");
+        Label label_3 = new Label(composite_3, SWT.NONE);
+        label_3.setAlignment(SWT.RIGHT);
+        label_3.setBounds(301, 0, 59, 14);
+        label_3.setText(controller.scaleUpdate(360, 180, controller.getDateformat3()));
+        new Label(composite, SWT.NONE);
 
-		ScaleRootCaBegin.setMaximum(360);
-		GridData gd_ScaleRootCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 12, 1);
-		gd_ScaleRootCaBegin.widthHint = 360;
-		ScaleRootCaBegin.setLayoutData(gd_ScaleRootCaBegin);
-		ScaleRootCaBegin.setSelection(180);
+        Label lblRootCa = new Label(composite, SWT.NONE);
+        GridData gd_lblRootCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_lblRootCa.heightHint = 30;
+        gd_lblRootCa.verticalIndent = 10;
+        lblRootCa.setLayoutData(gd_lblRootCa);
+        lblRootCa.setText("Root CA");
+        lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblRootCa.setAlignment(SWT.CENTER);
 
-		final Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleRootCaEnd = ScaleRootCaEnd;
-		GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_ScaleRootCaEnd.widthHint = 360;
-		ScaleRootCaEnd.setLayoutData(gd_ScaleRootCaEnd);
-		ScaleRootCaEnd.setMaximum(360);
-		ScaleRootCaEnd.setSelection(180);
+        final Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleRootCaBegin = ScaleRootCaBegin;
+        ScaleRootCaBegin.setToolTipText("");
 
-		btnLoadRootCa = new Button(composite, SWT.NONE);
-		GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1);
-		gd_btnLoadRootCa.heightHint = 30;
-		gd_btnLoadRootCa.widthHint = 100;
-		btnLoadRootCa.setLayoutData(gd_btnLoadRootCa);
-		btnLoadRootCa.setText("Load Root CA");
-		btnLoadRootCa.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					ChooseCert wiz = new ChooseCert(3);
-					WizardDialog dialog = new WizardDialog(new Shell(Display
-							.getCurrent()), wiz) {
-						@Override
-						protected void configureShell(Shell newShell) {
-							super.configureShell(newShell);
-							// set size of the wizard-window (x,y)
-							newShell.setSize(550, 500);
-						}
-					};
-					if (dialog.open() == Window.OK) {
+        ScaleRootCaBegin.setMaximum(360);
+        GridData gd_ScaleRootCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
+        gd_ScaleRootCaBegin.widthHint = 360;
+        ScaleRootCaBegin.setLayoutData(gd_ScaleRootCaBegin);
+        ScaleRootCaBegin.setSelection(180);
+
+        final Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleRootCaEnd = ScaleRootCaEnd;
+        GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_ScaleRootCaEnd.widthHint = 360;
+        ScaleRootCaEnd.setLayoutData(gd_ScaleRootCaEnd);
+        ScaleRootCaEnd.setMaximum(360);
+        ScaleRootCaEnd.setSelection(180);
+
+        btnLoadRootCa = new Button(composite, SWT.NONE);
+        GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_btnLoadRootCa.heightHint = 30;
+        gd_btnLoadRootCa.widthHint = 100;
+        btnLoadRootCa.setLayoutData(gd_btnLoadRootCa);
+        btnLoadRootCa.setText("Load Root CA");
+        btnLoadRootCa.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert(3);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
                         // Hier kann man Aktionen durfuehren die passieren
                         // sollen wenn die WizardPage aufgerufen wird
                         // zB aktivieren/deaktivieren von Buttons der
                         // Hauptansicht
                     }
-				} catch (Exception ex) {
-					LogUtil.logError(Activator.PLUGIN_ID, ex);
-				}
-			}
-		});
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
 
-		Label lblCa = new Label(composite, SWT.NONE);
-		GridData gd_lblCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1,
-				1);
-		gd_lblCa.verticalIndent = 10;
-		gd_lblCa.heightHint = 30;
-		lblCa.setLayoutData(gd_lblCa);
-		lblCa.setText("CA");
-		lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12,
-				SWT.NORMAL));
-		lblCa.setAlignment(SWT.CENTER);
+        Label lblCa = new Label(composite, SWT.NONE);
+        GridData gd_lblCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_lblCa.verticalIndent = 10;
+        gd_lblCa.heightHint = 30;
+        lblCa.setLayoutData(gd_lblCa);
+        lblCa.setText("CA");
+        lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblCa.setAlignment(SWT.CENTER);
 
-		final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleCaBegin = ScaleCaBegin;
-		ScaleCaBegin.setMaximum(360);
-		GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 12, 1);
-		gd_ScaleCaBegin.widthHint = 360;
-		ScaleCaBegin.setLayoutData(gd_ScaleCaBegin);
-		ScaleCaBegin.setSelection(180);
+        final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleCaBegin = ScaleCaBegin;
+        ScaleCaBegin.setMaximum(360);
+        GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
+        gd_ScaleCaBegin.widthHint = 360;
+        ScaleCaBegin.setLayoutData(gd_ScaleCaBegin);
+        ScaleCaBegin.setSelection(180);
 
-		final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleCaEnd = ScaleCaEnd;
-		ScaleCaEnd.setMaximum(360);
-		GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_ScaleCaEnd.widthHint = 360;
-		ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
-		ScaleCaEnd.setSelection(180);
+        final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleCaEnd = ScaleCaEnd;
+        ScaleCaEnd.setMaximum(360);
+        GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_ScaleCaEnd.widthHint = 360;
+        ScaleCaEnd.setLayoutData(gd_ScaleCaEnd);
+        ScaleCaEnd.setSelection(180);
 
-		btnLoadCa = new Button(composite, SWT.NONE);
-		GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1);
-		gd_btnLoadCa.heightHint = 30;
-		gd_btnLoadCa.widthHint = 100;
-		btnLoadCa.setLayoutData(gd_btnLoadCa);
-		btnLoadCa.setText("Load CA");
-		btnLoadCa.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					ChooseCert wiz = new ChooseCert(2);
-					WizardDialog dialog = new WizardDialog(new Shell(Display
-							.getCurrent()), wiz) {
-						@Override
-						protected void configureShell(Shell newShell) {
-							super.configureShell(newShell);
-							// set size of the wizard-window (x,y)
-							newShell.setSize(550, 500);
-						}
-					};
-					if (dialog.open() == Window.OK) {
-						// Hier kann man Aktionen durfuehren die passieren
-						// sollen wenn die WizardPage aufgerufen wird
-						// zB aktivieren/deaktivieren von Buttons der
-						// Hauptansicht
-					}
-				} catch (Exception ex) {
-					LogUtil.logError(Activator.PLUGIN_ID, ex);
-				}
-			}
-		});
+        btnLoadCa = new Button(composite, SWT.NONE);
+        GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_btnLoadCa.heightHint = 30;
+        gd_btnLoadCa.widthHint = 100;
+        btnLoadCa.setLayoutData(gd_btnLoadCa);
+        btnLoadCa.setText("Load CA");
+        btnLoadCa.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert(2);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
+                        // Hier kann man Aktionen durfuehren die passieren
+                        // sollen wenn die WizardPage aufgerufen wird
+                        // zB aktivieren/deaktivieren von Buttons der
+                        // Hauptansicht
+                    }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
 
-		Label lblUserCertificate = new Label(composite, SWT.NONE);
-		GridData gd_lblUserCertificate = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_lblUserCertificate.verticalIndent = 10;
-		gd_lblUserCertificate.heightHint = 30;
-		lblUserCertificate.setLayoutData(gd_lblUserCertificate);
-		lblUserCertificate.setText("User Certificate");
-		lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande",
-				12, SWT.NORMAL));
-		lblUserCertificate.setAlignment(SWT.CENTER);
+        Label lblUserCertificate = new Label(composite, SWT.NONE);
+        GridData gd_lblUserCertificate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_lblUserCertificate.verticalIndent = 10;
+        gd_lblUserCertificate.heightHint = 30;
+        lblUserCertificate.setLayoutData(gd_lblUserCertificate);
+        lblUserCertificate.setText("User Certificate");
+        lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblUserCertificate.setAlignment(SWT.CENTER);
 
-		final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
-		ScaleCertBegin.setMaximum(360);
-		GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 12, 1);
-		gd_ScaleCertBegin.widthHint = 360;
-		ScaleCertBegin.setLayoutData(gd_ScaleCertBegin);
-		ScaleCertBegin.setSelection(180);
+        final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
+        ScaleCertBegin.setMaximum(360);
+        GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
+        gd_ScaleCertBegin.widthHint = 360;
+        ScaleCertBegin.setLayoutData(gd_ScaleCertBegin);
+        ScaleCertBegin.setSelection(180);
 
-		final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
-		ScaleCertEnd.setMaximum(360);
-		GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_ScaleCertEnd.widthHint = 360;
-		ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
-		ScaleCertEnd.setSelection(180);
-		
-		btnLoadUserCert = new Button(composite, SWT.NONE);
-		// Selection Listeners | Scales
-		btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				try {
-					ChooseCert wiz = new ChooseCert(1);
-					WizardDialog dialog = new WizardDialog(new Shell(Display
-							.getCurrent()), wiz) {
-						@Override
-						protected void configureShell(Shell newShell) {
-							super.configureShell(newShell);
-							// set size of the wizard-window (x,y)
-							newShell.setSize(550, 500);
-						}
-					};
-					if (dialog.open() == Window.OK) {
-						// Hier kann man Aktionen durfuehren die passieren
-						// sollen wenn die WizardPage aufgerufen wird
-						// zB aktivieren/deaktivieren von Buttons der
-						// Hauptansicht
-					}
-				} catch (Exception ex) {
-					LogUtil.logError(Activator.PLUGIN_ID, ex);
-				}
-			}
-		});
+        final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
+        ScaleCertEnd.setMaximum(360);
+        GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_ScaleCertEnd.widthHint = 360;
+        ScaleCertEnd.setLayoutData(gd_ScaleCertEnd);
+        ScaleCertEnd.setSelection(180);
 
-		GridData gd_btnLoadUserCert = new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1);
-		gd_btnLoadUserCert.heightHint = 30;
-		gd_btnLoadUserCert.widthHint = 100;
-		btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
-		btnLoadUserCert.setText("Load User Cert");
-		
-		Label lblArrowSig = new Label(composite, SWT.NONE);
-		lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
-		GridData gd_lblArrowSig = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-		gd_lblArrowSig.heightHint = 13;
-		lblArrowSig.setLayoutData(gd_lblArrowSig);
-		lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
-		lblArrowSig.setText("Signature Date");
-		
-		canvas1 = new Canvas(composite, SWT.NONE);
-		canvas1.setLayout(new GridLayout(1, false));
-		GridData gd_canvas1 = new GridData(SWT.FILL, SWT.FILL, false, false, 12, 2);
-		gd_canvas1.heightHint = 25;
-		gd_canvas1.widthHint = 359;
-		canvas1.setLayoutData(gd_canvas1);
-		canvas1.addPaintListener(this);
-		
-		canvas2 = new Canvas(composite, SWT.NONE);
-		GridData gd_canvas2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
-		gd_canvas2.widthHint = 364;
-		canvas2.setLayoutData(gd_canvas2);
-		canvas2.setLayout(new GridLayout(1, false));
-		canvas2.addPaintListener(this);
-		new Label(composite, SWT.NONE);
-		
-		Label lblArrowVer = new Label(composite, SWT.NONE);
-		lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
-		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
-		lblArrowVer.setText("Verification Date");
-		
-		txtLogWindow = new Text(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
-		txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
-		txtLogWindow.setEditable(false);
-		txtLogWindow.setText("Logging:\n");
-		txtLogWindow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
+        btnLoadUserCert = new Button(composite, SWT.NONE);
+        // Selection Listeners | Scales
+        btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    ChooseCert wiz = new ChooseCert(1);
+                    WizardDialog dialog = new WizardDialog(new Shell(Display.getCurrent()), wiz) {
+                        @Override
+                        protected void configureShell(Shell newShell) {
+                            super.configureShell(newShell);
+                            // set size of the wizard-window (x,y)
+                            newShell.setSize(550, 500);
+                        }
+                    };
+                    if (dialog.open() == Window.OK) {
+                        // Hier kann man Aktionen durfuehren die passieren
+                        // sollen wenn die WizardPage aufgerufen wird
+                        // zB aktivieren/deaktivieren von Buttons der
+                        // Hauptansicht
+                    }
+                } catch (Exception ex) {
+                    LogUtil.logError(Activator.PLUGIN_ID, ex);
+                }
+            }
+        });
 
-		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
-				| SWT.HORIZONTAL);
-		GridData gd_SeperatorHorizontal = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 14, 1);
-		gd_SeperatorHorizontal.widthHint = 835;
-		SeperatorHorizontal.setLayoutData(gd_SeperatorHorizontal);
-		new Label(composite, SWT.NONE);
+        GridData gd_btnLoadUserCert = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_btnLoadUserCert.heightHint = 30;
+        gd_btnLoadUserCert.widthHint = 100;
+        btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
+        btnLoadUserCert.setText("Load User Cert");
 
-		Composite composite_5 = new Composite(composite, SWT.NONE);
-		GridData gd_composite_5 = new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 13, 1);
-		gd_composite_5.widthHint = 720;
-		composite_5.setLayoutData(gd_composite_5);
+        Label lblArrowSig = new Label(composite, SWT.NONE);
+        lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+        GridData gd_lblArrowSig = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
+        gd_lblArrowSig.heightHint = 13;
+        lblArrowSig.setLayoutData(gd_lblArrowSig);
+        lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
+        lblArrowSig.setText("Signature Date");
 
-		Label label_4 = new Label(composite_5, SWT.NONE);
-		label_4.setText(controller.scaleUpdate(0, 360,
-				controller.getDateformat3()));
-		label_4.setBounds(0, 0, 59, 14);
+        canvas1 = new Canvas(composite, SWT.NONE);
+        canvas1.setLayout(new GridLayout(1, false));
+        GridData gd_canvas1 = new GridData(SWT.FILL, SWT.FILL, false, false, 12, 2);
+        gd_canvas1.heightHint = 25;
+        gd_canvas1.widthHint = 359;
+        canvas1.setLayoutData(gd_canvas1);
+        canvas1.addPaintListener(this);
 
-		Label label_5 = new Label(composite_5, SWT.NONE);
-		label_5.setText(controller.scaleUpdate(720, 360,
-				controller.getDateformat3()));
-		label_5.setAlignment(SWT.RIGHT);
-		label_5.setBounds(666, 0, 59, 14);
+        canvas2 = new Canvas(composite, SWT.NONE);
+        GridData gd_canvas2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 2);
+        gd_canvas2.widthHint = 364;
+        canvas2.setLayoutData(gd_canvas2);
+        canvas2.setLayout(new GridLayout(1, false));
+        canvas2.addPaintListener(this);
+        new Label(composite, SWT.NONE);
 
-		Label lblSignatureDate = new Label(composite, SWT.NONE);
-		GridData gd_lblSignatureDate = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_lblSignatureDate.verticalIndent = 10;
-		gd_lblSignatureDate.heightHint = 30;
-		lblSignatureDate.setLayoutData(gd_lblSignatureDate);
-		lblSignatureDate.setText("Signature Date");
-		lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande",
-				12, SWT.NORMAL));
-		lblSignatureDate.setAlignment(SWT.CENTER);
+        Label lblArrowVer = new Label(composite, SWT.NONE);
+        lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+        lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
+        lblArrowVer.setText("Verification Date");
 
-		final Scale ScaleSignatureDate = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleSignatureDate = ScaleSignatureDate;
-		ScaleSignatureDate.setMaximum(720);
-		GridData gd_ScaleSignatureDate = new GridData(SWT.FILL, SWT.FILL,
-				false, false, 13, 1);
-		gd_ScaleSignatureDate.widthHint = 480;
-		ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
-		ScaleSignatureDate.setSelection(360);
+        txtLogWindow = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
+        txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
+        txtLogWindow.setEditable(false);
+        txtLogWindow.setText("Logging:\n");
+        txtLogWindow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
-		Label lblVerificationDate = new Label(composite, SWT.NONE);
-		GridData gd_lblVerificationDate = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_lblVerificationDate.verticalIndent = 10;
-		gd_lblVerificationDate.heightHint = 30;
-		lblVerificationDate.setLayoutData(gd_lblVerificationDate);
+        Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData gd_SeperatorHorizontal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 14, 1);
+        gd_SeperatorHorizontal.widthHint = 835;
+        SeperatorHorizontal.setLayoutData(gd_SeperatorHorizontal);
+        new Label(composite, SWT.NONE);
 
-		lblVerificationDate.setText("Verification Date");
-		lblVerificationDate.setFont(SWTResourceManager.getFont("Lucida Grande",
-				12, SWT.NORMAL));
-		lblVerificationDate.setAlignment(SWT.CENTER);
+        Composite composite_5 = new Composite(composite, SWT.NONE);
+        GridData gd_composite_5 = new GridData(SWT.FILL, SWT.CENTER, false, false, 13, 1);
+        gd_composite_5.widthHint = 720;
+        composite_5.setLayoutData(gd_composite_5);
 
-		final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
-		CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
-		GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL,
-				false, false, 13, 1);
-		gd_ScaleVerificationDate.widthHint = 480;
-		ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
-		ScaleVerificationDate.setMaximum(720);
-		ScaleVerificationDate.setSelection(360);
-		new Label(composite, SWT.NONE);
+        Label label_4 = new Label(composite_5, SWT.NONE);
+        label_4.setText(controller.scaleUpdate(0, 360, controller.getDateformat3()));
+        label_4.setBounds(0, 0, 59, 14);
 
-		Group grpDetails = new Group(composite, SWT.NONE);
-		GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 13, 1);
-		gd_grpDetails.widthHint = 717;
-		grpDetails.setLayoutData(gd_grpDetails);
-		grpDetails.setText("Details");
-		grpDetails.setLayout(new GridLayout(10, false));
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
+        Label label_5 = new Label(composite_5, SWT.NONE);
+        label_5.setText(controller.scaleUpdate(720, 360, controller.getDateformat3()));
+        label_5.setAlignment(SWT.RIGHT);
+        label_5.setBounds(666, 0, 59, 14);
 
-		Label LabelHeaderRootCa = new Label(grpDetails, SWT.NONE);
-		LabelHeaderRootCa.setAlignment(SWT.CENTER);
-		GridData gd_LabelHeaderRootCa = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_LabelHeaderRootCa.widthHint = 100;
-		LabelHeaderRootCa.setLayoutData(gd_LabelHeaderRootCa);
-		LabelHeaderRootCa.setText("Root CA");
+        Label lblSignatureDate = new Label(composite, SWT.NONE);
+        GridData gd_lblSignatureDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_lblSignatureDate.verticalIndent = 10;
+        gd_lblSignatureDate.heightHint = 30;
+        lblSignatureDate.setLayoutData(gd_lblSignatureDate);
+        lblSignatureDate.setText("Signature Date");
+        lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblSignatureDate.setAlignment(SWT.CENTER);
 
-		Label LabelHeaderCa = new Label(grpDetails, SWT.NONE);
-		LabelHeaderCa.setAlignment(SWT.CENTER);
-		GridData gd_LabelHeaderCa = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelHeaderCa.widthHint = 100;
-		LabelHeaderCa.setLayoutData(gd_LabelHeaderCa);
-		LabelHeaderCa.setText("CA");
+        final Scale ScaleSignatureDate = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleSignatureDate = ScaleSignatureDate;
+        ScaleSignatureDate.setMaximum(720);
+        GridData gd_ScaleSignatureDate = new GridData(SWT.FILL, SWT.FILL, false, false, 13, 1);
+        gd_ScaleSignatureDate.widthHint = 480;
+        ScaleSignatureDate.setLayoutData(gd_ScaleSignatureDate);
+        ScaleSignatureDate.setSelection(360);
 
-		Label LabelHeaderCert = new Label(grpDetails, SWT.NONE);
-		LabelHeaderCert.setAlignment(SWT.CENTER);
-		GridData gd_LabelHeaderCert = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelHeaderCert.widthHint = 100;
-		LabelHeaderCert.setLayoutData(gd_LabelHeaderCert);
-		LabelHeaderCert.setText("User Certificate");
-		new Label(grpDetails, SWT.NONE);
+        Label lblVerificationDate = new Label(composite, SWT.NONE);
+        GridData gd_lblVerificationDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_lblVerificationDate.verticalIndent = 10;
+        gd_lblVerificationDate.heightHint = 30;
+        lblVerificationDate.setLayoutData(gd_lblVerificationDate);
 
-		Label SeperatorDetailsVertical = new Label(grpDetails, SWT.SEPARATOR
-				| SWT.VERTICAL);
-		SeperatorDetailsVertical.setLayoutData(new GridData(SWT.LEFT,
-				SWT.CENTER, false, false, 1, 3));
-		new Label(grpDetails, SWT.NONE);
+        lblVerificationDate.setText("Verification Date");
+        lblVerificationDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
+        lblVerificationDate.setAlignment(SWT.CENTER);
 
-		Label LabelHeaderSignatureDate = new Label(grpDetails, SWT.NONE);
-		LabelHeaderSignatureDate.setText("Signature Date");
+        final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
+        CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
+        GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL, false, false, 13, 1);
+        gd_ScaleVerificationDate.widthHint = 480;
+        ScaleVerificationDate.setLayoutData(gd_ScaleVerificationDate);
+        ScaleVerificationDate.setMaximum(720);
+        ScaleVerificationDate.setSelection(360);
+        new Label(composite, SWT.NONE);
 
-		Label LabelHeaderVerificationDate = new Label(grpDetails, SWT.NONE);
-		LabelHeaderVerificationDate.setText("Verification Date");
-		Label lblValidFrom = new Label(grpDetails, SWT.NONE);
-		lblValidFrom.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-				false, 1, 1));
-		lblValidFrom.setText("valid from:");
-		new Label(grpDetails, SWT.NONE);
+        Group grpDetails = new Group(composite, SWT.NONE);
+        GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 13, 1);
+        gd_grpDetails.widthHint = 717;
+        grpDetails.setLayoutData(gd_grpDetails);
+        grpDetails.setText("Details");
+        grpDetails.setLayout(new GridLayout(10, false));
+        new Label(grpDetails, SWT.NONE);
+        new Label(grpDetails, SWT.NONE);
 
-		Composite composite_from_rootca = new Composite(grpDetails, SWT.NONE);
-		composite_from_rootca.setLayout(new GridLayout(2, false));
+        Label LabelHeaderRootCa = new Label(grpDetails, SWT.NONE);
+        LabelHeaderRootCa.setAlignment(SWT.CENTER);
+        GridData gd_LabelHeaderRootCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelHeaderRootCa.widthHint = 100;
+        LabelHeaderRootCa.setLayoutData(gd_LabelHeaderRootCa);
+        LabelHeaderRootCa.setText("Root CA");
 
-		TextRootCaFromDay = new Text(composite_from_rootca, SWT.BORDER);
-		TextRootCaFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextRootCaFromDay);
-			}
-		});
-		TextRootCaFromDay.setToolTipText("Root Ca From Day");
-		TextRootCaFromDay.setText("1");
-		TextRootCaFromDay.setTextLimit(2);
-		GridData gd_TextRootCaFromDay = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_TextRootCaFromDay.widthHint = 17;
-		TextRootCaFromDay.setLayoutData(gd_TextRootCaFromDay);
-		TextRootCaFromDay.setSize(24, 19);
+        Label LabelHeaderCa = new Label(grpDetails, SWT.NONE);
+        LabelHeaderCa.setAlignment(SWT.CENTER);
+        GridData gd_LabelHeaderCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelHeaderCa.widthHint = 100;
+        LabelHeaderCa.setLayoutData(gd_LabelHeaderCa);
+        LabelHeaderCa.setText("CA");
 
-		Label LabelRootCaFrom = new Label(composite_from_rootca, SWT.NONE);
-		GridData gd_LabelRootCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelRootCaFrom.widthHint = 60;
-		LabelRootCaFrom.setLayoutData(gd_LabelRootCaFrom);
-		fromRootCa = LabelRootCaFrom;
+        Label LabelHeaderCert = new Label(grpDetails, SWT.NONE);
+        LabelHeaderCert.setAlignment(SWT.CENTER);
+        GridData gd_LabelHeaderCert = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelHeaderCert.widthHint = 100;
+        LabelHeaderCert.setLayoutData(gd_LabelHeaderCert);
+        LabelHeaderCert.setText("User Certificate");
+        new Label(grpDetails, SWT.NONE);
 
-		// Initialize Label "From Root CA" with actual date
-		LabelRootCaFrom.setText("");
+        Label SeperatorDetailsVertical = new Label(grpDetails, SWT.SEPARATOR | SWT.VERTICAL);
+        SeperatorDetailsVertical.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 3));
+        new Label(grpDetails, SWT.NONE);
 
-		Composite composite_from_ca = new Composite(grpDetails, SWT.NONE);
-		composite_from_ca.setLayout(new GridLayout(2, false));
+        Label LabelHeaderSignatureDate = new Label(grpDetails, SWT.NONE);
+        LabelHeaderSignatureDate.setText("Signature Date");
 
-		TextCaFromDay = new Text(composite_from_ca, SWT.BORDER);
-		TextCaFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextCaFromDay);
-			}
-		});
-		TextCaFromDay.setToolTipText("Ca From Day");
-		TextCaFromDay.setText("1");
-		TextCaFromDay.setTextLimit(2);
-		GridData gd_TextCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_TextCaFromDay.widthHint = 17;
-		TextCaFromDay.setLayoutData(gd_TextCaFromDay);
+        Label LabelHeaderVerificationDate = new Label(grpDetails, SWT.NONE);
+        LabelHeaderVerificationDate.setText("Verification Date");
+        Label lblValidFrom = new Label(grpDetails, SWT.NONE);
+        lblValidFrom.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+        lblValidFrom.setText("valid from:");
+        new Label(grpDetails, SWT.NONE);
 
-		Label LabelCaFrom = new Label(composite_from_ca, SWT.NONE);
-		GridData gd_LabelCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelCaFrom.widthHint = 60;
-		LabelCaFrom.setLayoutData(gd_LabelCaFrom);
-		fromCa = LabelCaFrom;
+        Composite composite_from_rootca = new Composite(grpDetails, SWT.NONE);
+        composite_from_rootca.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "From CA" with actual date
-		LabelCaFrom.setText("");
+        TextRootCaFromDay = new Text(composite_from_rootca, SWT.BORDER);
+        TextRootCaFromDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextRootCaFromDay);
+            }
+        });
+        TextRootCaFromDay.setToolTipText("Root Ca From Day");
+        TextRootCaFromDay.setText("1");
+        TextRootCaFromDay.setTextLimit(2);
+        GridData gd_TextRootCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextRootCaFromDay.widthHint = 17;
+        TextRootCaFromDay.setLayoutData(gd_TextRootCaFromDay);
+        TextRootCaFromDay.setSize(24, 19);
 
-		Composite composite_from_user_cert = new Composite(grpDetails, SWT.NONE);
-		composite_from_user_cert.setLayout(new GridLayout(2, false));
+        Label LabelRootCaFrom = new Label(composite_from_rootca, SWT.NONE);
+        GridData gd_LabelRootCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelRootCaFrom.widthHint = 60;
+        LabelRootCaFrom.setLayoutData(gd_LabelRootCaFrom);
+        fromRootCa = LabelRootCaFrom;
 
-		TextCertFromDay = new Text(composite_from_user_cert, SWT.BORDER);
-		TextCertFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextCertFromDay);
-			}
-		});
-		TextCertFromDay.setToolTipText("User Certificate From Day");
-		TextCertFromDay.setText("1");
-		TextCertFromDay.setTextLimit(2);
-		GridData gd_TextCertFromDay = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_TextCertFromDay.widthHint = 17;
-		TextCertFromDay.setLayoutData(gd_TextCertFromDay);
+        // Initialize Label "From Root CA" with actual date
+        LabelRootCaFrom.setText("");
 
-		Label LabelCertFrom = new Label(composite_from_user_cert, SWT.NONE);
-		GridData gd_LabelCertFrom = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelCertFrom.widthHint = 60;
-		LabelCertFrom.setLayoutData(gd_LabelCertFrom);
-		fromCert = LabelCertFrom;
+        Composite composite_from_ca = new Composite(grpDetails, SWT.NONE);
+        composite_from_ca.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "From User Cert" with actual date
-		LabelCertFrom.setText("");
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
+        TextCaFromDay = new Text(composite_from_ca, SWT.BORDER);
+        TextCaFromDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextCaFromDay);
+            }
+        });
+        TextCaFromDay.setToolTipText("Ca From Day");
+        TextCaFromDay.setText("1");
+        TextCaFromDay.setTextLimit(2);
+        GridData gd_TextCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextCaFromDay.widthHint = 17;
+        TextCaFromDay.setLayoutData(gd_TextCaFromDay);
 
-		Composite composite_1 = new Composite(grpDetails, SWT.NONE);
-		composite_1.setLayout(new GridLayout(2, false));
+        Label LabelCaFrom = new Label(composite_from_ca, SWT.NONE);
+        GridData gd_LabelCaFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelCaFrom.widthHint = 60;
+        LabelCaFrom.setLayoutData(gd_LabelCaFrom);
+        fromCa = LabelCaFrom;
 
-		TextSignatureDateDay = new Text(composite_1, SWT.BORDER);
-		TextSignatureDateDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextSignatureDateDay);
-			}
-		});
-		TextSignatureDateDay.setToolTipText("Signature Date Day");
-		TextSignatureDateDay.setText("1");
-		TextSignatureDateDay.setTextLimit(2);
-		GridData gd_TextSignatureDateDay = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_TextSignatureDateDay.widthHint = 17;
-		TextSignatureDateDay.setLayoutData(gd_TextSignatureDateDay);
+        // Initialize Label "From CA" with actual date
+        LabelCaFrom.setText("");
 
-		Label LabelSignatureDate = new Label(composite_1, SWT.NONE);
-		GridData gd_LabelSignatureDate = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_LabelSignatureDate.widthHint = 60;
-		LabelSignatureDate.setLayoutData(gd_LabelSignatureDate);
-		signatureDate = LabelSignatureDate;
+        Composite composite_from_user_cert = new Composite(grpDetails, SWT.NONE);
+        composite_from_user_cert.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "Signature Date" with actual date
-		LabelSignatureDate.setText("");
+        TextCertFromDay = new Text(composite_from_user_cert, SWT.BORDER);
+        TextCertFromDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextCertFromDay);
+            }
+        });
+        TextCertFromDay.setToolTipText("User Certificate From Day");
+        TextCertFromDay.setText("1");
+        TextCertFromDay.setTextLimit(2);
+        GridData gd_TextCertFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextCertFromDay.widthHint = 17;
+        TextCertFromDay.setLayoutData(gd_TextCertFromDay);
 
-		Composite composite_2 = new Composite(grpDetails, SWT.NONE);
-		composite_2.setLayout(new GridLayout(2, false));
+        Label LabelCertFrom = new Label(composite_from_user_cert, SWT.NONE);
+        GridData gd_LabelCertFrom = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelCertFrom.widthHint = 60;
+        LabelCertFrom.setLayoutData(gd_LabelCertFrom);
+        fromCert = LabelCertFrom;
 
-		TextVerificationDateDay = new Text(composite_2, SWT.BORDER);
-		TextVerificationDateDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextVerificationDateDay);
-			}
-		});
-		TextVerificationDateDay.setToolTipText("Verification Date Day");
-		TextVerificationDateDay.setText("1");
-		TextVerificationDateDay.setTextLimit(2);
-		GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT,
-				SWT.CENTER, false, false, 1, 1);
-		gd_TextVerificationDateDay.widthHint = 17;
-		TextVerificationDateDay.setLayoutData(gd_TextVerificationDateDay);
+        // Initialize Label "From User Cert" with actual date
+        LabelCertFrom.setText("");
+        new Label(grpDetails, SWT.NONE);
+        new Label(grpDetails, SWT.NONE);
 
-		final Label LabelVerificationDate = new Label(composite_2, SWT.NONE);
-		GridData gd_LabelVerificationDate = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_LabelVerificationDate.widthHint = 60;
-		LabelVerificationDate.setLayoutData(gd_LabelVerificationDate);
-		verificationDate = LabelVerificationDate;
-		LabelVerificationDate.setText("");
+        Composite composite_1 = new Composite(grpDetails, SWT.NONE);
+        composite_1.setLayout(new GridLayout(2, false));
 
-		Label lblValidThru = new Label(grpDetails, SWT.NONE);
-		lblValidThru.setText("valid thru:");
-		new Label(grpDetails, SWT.NONE);
+        TextSignatureDateDay = new Text(composite_1, SWT.BORDER);
+        TextSignatureDateDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextSignatureDateDay);
+            }
+        });
+        TextSignatureDateDay.setToolTipText("Signature Date Day");
+        TextSignatureDateDay.setText("1");
+        TextSignatureDateDay.setTextLimit(2);
+        GridData gd_TextSignatureDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextSignatureDateDay.widthHint = 17;
+        TextSignatureDateDay.setLayoutData(gd_TextSignatureDateDay);
 
-		Composite composite_thru_rootca = new Composite(grpDetails, SWT.NONE);
-		composite_thru_rootca.setLayout(new GridLayout(2, false));
+        Label LabelSignatureDate = new Label(composite_1, SWT.NONE);
+        GridData gd_LabelSignatureDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelSignatureDate.widthHint = 60;
+        LabelSignatureDate.setLayoutData(gd_LabelSignatureDate);
+        signatureDate = LabelSignatureDate;
 
-		TextRootCaThruDay = new Text(composite_thru_rootca, SWT.BORDER);
-		TextRootCaThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextRootCaThruDay);
-			}
-		});
-		TextRootCaThruDay.setToolTipText("Root Ca Thru Day");
-		TextRootCaThruDay.setText("1");
-		TextRootCaThruDay.setTextLimit(2);
-		GridData gd_TextRootCaThruDay = new GridData(SWT.LEFT, SWT.CENTER,
-				false, false, 1, 1);
-		gd_TextRootCaThruDay.widthHint = 17;
-		TextRootCaThruDay.setLayoutData(gd_TextRootCaThruDay);
+        // Initialize Label "Signature Date" with actual date
+        LabelSignatureDate.setText("");
 
-		Label LabelRootCaThru = new Label(composite_thru_rootca, SWT.NONE);
-		GridData gd_LabelRootCaThru = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelRootCaThru.widthHint = 60;
-		LabelRootCaThru.setLayoutData(gd_LabelRootCaThru);
-		thruRootCa = LabelRootCaThru;
+        Composite composite_2 = new Composite(grpDetails, SWT.NONE);
+        composite_2.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "Thru Root CA" with actual date
-		LabelRootCaThru.setText("");
+        TextVerificationDateDay = new Text(composite_2, SWT.BORDER);
+        TextVerificationDateDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextVerificationDateDay);
+            }
+        });
+        TextVerificationDateDay.setToolTipText("Verification Date Day");
+        TextVerificationDateDay.setText("1");
+        TextVerificationDateDay.setTextLimit(2);
+        GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextVerificationDateDay.widthHint = 17;
+        TextVerificationDateDay.setLayoutData(gd_TextVerificationDateDay);
 
-		Composite composite_thru_ca = new Composite(grpDetails, SWT.NONE);
-		composite_thru_ca.setLayout(new GridLayout(2, false));
+        final Label LabelVerificationDate = new Label(composite_2, SWT.NONE);
+        GridData gd_LabelVerificationDate = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelVerificationDate.widthHint = 60;
+        LabelVerificationDate.setLayoutData(gd_LabelVerificationDate);
+        verificationDate = LabelVerificationDate;
+        LabelVerificationDate.setText("");
 
-		TextCaThruDay = new Text(composite_thru_ca, SWT.BORDER);
-		TextCaThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextCaThruDay);
-			}
-		});
-		
-		TextCaThruDay.setToolTipText("Ca Thru Day");
-		TextCaThruDay.setText("1");
-		TextCaThruDay.setTextLimit(2);
-		GridData gd_TextCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_TextCaThruDay.widthHint = 17;
-		TextCaThruDay.setLayoutData(gd_TextCaThruDay);
+        Label lblValidThru = new Label(grpDetails, SWT.NONE);
+        lblValidThru.setText("valid thru:");
+        new Label(grpDetails, SWT.NONE);
 
-		Label LabelCaThru = new Label(composite_thru_ca, SWT.NONE);
-		GridData gd_LabelCaThru = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelCaThru.widthHint = 60;
-		LabelCaThru.setLayoutData(gd_LabelCaThru);
-		thruCa = LabelCaThru;
+        Composite composite_thru_rootca = new Composite(grpDetails, SWT.NONE);
+        composite_thru_rootca.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "Thru CA" with actual date
-		LabelCaThru.setText("");
+        TextRootCaThruDay = new Text(composite_thru_rootca, SWT.BORDER);
+        TextRootCaThruDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextRootCaThruDay);
+            }
+        });
+        TextRootCaThruDay.setToolTipText("Root Ca Thru Day");
+        TextRootCaThruDay.setText("1");
+        TextRootCaThruDay.setTextLimit(2);
+        GridData gd_TextRootCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextRootCaThruDay.widthHint = 17;
+        TextRootCaThruDay.setLayoutData(gd_TextRootCaThruDay);
 
-		Composite composite_thru_user_cert = new Composite(grpDetails, SWT.NONE);
-		composite_thru_user_cert.setLayout(new GridLayout(2, false));
+        Label LabelRootCaThru = new Label(composite_thru_rootca, SWT.NONE);
+        GridData gd_LabelRootCaThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelRootCaThru.widthHint = 60;
+        LabelRootCaThru.setLayoutData(gd_LabelRootCaThru);
+        thruRootCa = LabelRootCaThru;
 
-		TextCertThruDay = new Text(composite_thru_user_cert, SWT.BORDER);
-		TextCertThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				controller.inputcheck(TextCertThruDay);
-			}
-		});
-		TextCertThruDay.setToolTipText("User Certificate Thru Day");
-		TextCertThruDay.setText("1");
-		TextCertThruDay.setTextLimit(2);
-		GridData gd_TextCertThruDay = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_TextCertThruDay.widthHint = 17;
-		TextCertThruDay.setLayoutData(gd_TextCertThruDay);
+        // Initialize Label "Thru Root CA" with actual date
+        LabelRootCaThru.setText("");
 
-		Label LabelCertThru = new Label(composite_thru_user_cert, SWT.NONE);
-		GridData gd_LabelCertThru = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_LabelCertThru.widthHint = 60;
-		LabelCertThru.setLayoutData(gd_LabelCertThru);
-		thruCert = LabelCertThru;
+        Composite composite_thru_ca = new Composite(grpDetails, SWT.NONE);
+        composite_thru_ca.setLayout(new GridLayout(2, false));
 
-		// Initialize Label "Thru User Cert" with actual date
-		LabelCertThru.setText("");
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		new Label(composite, SWT.NONE);
-		
-		Composite composite_6 = new Composite(composite, SWT.NONE);
-		composite_6.setLayout(new GridLayout(1, false));
-		composite_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-						
-						final Button btnShellModel = new Button(composite_6, SWT.RADIO);
-						btnShellModel.setSelection(true);
-						btnShellModel.setText("Shell Model");
-						
-						final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
-						btnModifiedShellModel.setText("Modified Shell Model");
-						
-						final Button btnChainModel = new Button(composite_6, SWT.RADIO);
-						btnChainModel.setText("Chain Model");
-		new Label(composite, SWT.NONE);
+        TextCaThruDay = new Text(composite_thru_ca, SWT.BORDER);
+        TextCaThruDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextCaThruDay);
+            }
+        });
 
-		Button btnReset = new Button(composite, SWT.NONE);
-		GridData gd_btnReset = new GridData(SWT.LEFT, SWT.CENTER, false, false,
-				10, 1);
-		gd_btnReset.widthHint = 100;
-		gd_btnReset.heightHint = 30;
-		btnReset.setLayoutData(gd_btnReset);
-		btnReset.setText("Reset");
-		
-		
-		new Label(composite, SWT.NONE);
+        TextCaThruDay.setToolTipText("Ca Thru Day");
+        TextCaThruDay.setText("1");
+        TextCaThruDay.setTextLimit(2);
+        GridData gd_TextCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextCaThruDay.widthHint = 17;
+        TextCaThruDay.setLayoutData(gd_TextCaThruDay);
 
-		Button btnBack = new Button(composite, SWT.NONE);
-		btnBack.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				
-			}
-		});
-		GridData gd_btnBack = new GridData(SWT.RIGHT, SWT.CENTER, false, false,
-				1, 1);
-		gd_btnBack.widthHint = 100;
-		gd_btnBack.heightHint = 30;
-		btnBack.setLayoutData(gd_btnBack);
-		btnBack.setText("Back");
+        Label LabelCaThru = new Label(composite_thru_ca, SWT.NONE);
+        GridData gd_LabelCaThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelCaThru.widthHint = 60;
+        LabelCaThru.setLayoutData(gd_LabelCaThru);
+        thruCa = LabelCaThru;
 
-		Button btnForward = new Button(composite, SWT.NONE);
-		GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false,
-				false, 1, 1);
-		gd_btnForward.widthHint = 100;
-		gd_btnForward.heightHint = 30;
-		btnForward.setLayoutData(gd_btnForward);
-		btnForward.setText("Forward");
+        // Initialize Label "Thru CA" with actual date
+        LabelCaThru.setText("");
 
-		Button btnCalculate = new Button(composite, SWT.NONE);
-		btnValidate = btnCalculate;
-		GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false,
-				false, 1, 1);
-		gd_btnCalculate.widthHint = 100;
-		gd_btnCalculate.heightHint = 30;
-		btnCalculate.setLayoutData(gd_btnCalculate);
-		btnCalculate.setText("Validate");
+        Composite composite_thru_user_cert = new Composite(grpDetails, SWT.NONE);
+        composite_thru_user_cert.setLayout(new GridLayout(2, false));
 
-		validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
+        TextCertThruDay = new Text(composite_thru_user_cert, SWT.BORDER);
+        TextCertThruDay.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                controller.inputcheck(TextCertThruDay);
+            }
+        });
+        TextCertThruDay.setToolTipText("User Certificate Thru Day");
+        TextCertThruDay.setText("1");
+        TextCertThruDay.setTextLimit(2);
+        GridData gd_TextCertThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_TextCertThruDay.widthHint = 17;
+        TextCertThruDay.setLayoutData(gd_TextCertThruDay);
+
+        Label LabelCertThru = new Label(composite_thru_user_cert, SWT.NONE);
+        GridData gd_LabelCertThru = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_LabelCertThru.widthHint = 60;
+        LabelCertThru.setLayoutData(gd_LabelCertThru);
+        thruCert = LabelCertThru;
+
+        // Initialize Label "Thru User Cert" with actual date
+        LabelCertThru.setText("");
+        new Label(grpDetails, SWT.NONE);
+        new Label(grpDetails, SWT.NONE);
+        new Label(grpDetails, SWT.NONE);
+        new Label(grpDetails, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+        new Label(composite, SWT.NONE);
+
+        Composite composite_6 = new Composite(composite, SWT.NONE);
+        composite_6.setLayout(new GridLayout(1, false));
+        composite_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        final Button btnShellModel = new Button(composite_6, SWT.RADIO);
+        btnShellModel.setSelection(true);
+        btnShellModel.setText("Shell Model");
+
+        final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
+        btnModifiedShellModel.setText("Modified Shell Model");
+
+        final Button btnChainModel = new Button(composite_6, SWT.RADIO);
+        btnChainModel.setText("Chain Model");
+        new Label(composite, SWT.NONE);
+
+        Button btnReset = new Button(composite, SWT.NONE);
+        GridData gd_btnReset = new GridData(SWT.LEFT, SWT.CENTER, false, false, 10, 1);
+        gd_btnReset.widthHint = 100;
+        gd_btnReset.heightHint = 30;
+        btnReset.setLayoutData(gd_btnReset);
+        btnReset.setText("Reset");
+
+        new Label(composite, SWT.NONE);
+
+        Button btnBack = new Button(composite, SWT.NONE);
+        btnBack.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+            }
+        });
+        GridData gd_btnBack = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+        gd_btnBack.widthHint = 100;
+        gd_btnBack.heightHint = 30;
+        btnBack.setLayoutData(gd_btnBack);
+        btnBack.setText("Back");
+
+        Button btnForward = new Button(composite, SWT.NONE);
+        GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        gd_btnForward.widthHint = 100;
+        gd_btnForward.heightHint = 30;
+        btnForward.setLayoutData(gd_btnForward);
+        btnForward.setText("Forward");
+
+        Button btnCalculate = new Button(composite, SWT.NONE);
+        btnValidate = btnCalculate;
+        GridData gd_btnCalculate = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_btnCalculate.widthHint = 100;
+        gd_btnCalculate.heightHint = 30;
+        btnCalculate.setLayoutData(gd_btnCalculate);
+        btnCalculate.setText("Validate");
+
+        validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
         validitySymbol.hide();
-		
-		btnReset.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				controller.reset();
-			}
-		});
 
-		
-		btnCalculate.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				if(btnShellModel.getSelection()){
-					controller.validate(0);
-				}
-				else if(btnModifiedShellModel.getSelection()){
-					controller.validate(1);
-				}
-				else if(btnChainModel.getSelection()){
-					controller.validate(2);
-				}
-			}
-		});
-		
-		// Selection Listeners | Scales
-		ScaleRootCaBegin.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(fromRootCa, ScaleRootCaBegin, 180);
-				// Hide Validity Symbols (red/green)
+        btnReset.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                controller.reset();
+            }
+        });
+
+        btnCalculate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (btnShellModel.getSelection()) {
+                    controller.validate(0);
+                } else if (btnModifiedShellModel.getSelection()) {
+                    controller.validate(1);
+                } else if (btnChainModel.getSelection()) {
+                    controller.validate(2);
+                }
+            }
+        });
+
+        // Selection Listeners | Scales
+        ScaleRootCaBegin.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(fromRootCa, ScaleRootCaBegin, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleRootCaEnd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(thruRootCa, ScaleRootCaEnd, 180);
-				// Hide Validity Symbols (red/green)
+        ScaleRootCaEnd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(thruRootCa, ScaleRootCaEnd, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleCaBegin.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(fromCa, ScaleCaBegin, 180);
-				// Hide Validity Symbols (red/green)
+        ScaleCaBegin.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(fromCa, ScaleCaBegin, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleCaEnd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(thruCa, ScaleCaEnd, 180);
-				// Hide Validity Symbols (red/green)
+        ScaleCaEnd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(thruCa, ScaleCaEnd, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleCertBegin.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(fromCert, ScaleCertBegin, 180);				
-				// Hide Validity Symbols (red/green)
+        ScaleCertBegin.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(fromCert, ScaleCertBegin, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleCertEnd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(thruCert, ScaleCertEnd, 180);				
-				// Hide Validity Symbols (red/green)
+        ScaleCertEnd.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(thruCert, ScaleCertEnd, 180);
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		ScaleSignatureDate.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(signatureDate, ScaleSignatureDate, 360);	
-				if(((ScaleSignatureDate.getSelection() - 360) % 2) == 0){
-					arrowSigDiff = (ScaleSignatureDate.getSelection()-360)/2;
-        		}
-        		else{
-        			arrowSigDiff = ((ScaleSignatureDate.getSelection()+1)-360)/2;
-        		}
-				//arrowSigDiff = ScaleSignatureDate.getSelection()-360;
-				canvas1.redraw();
-				canvas2.redraw();
-				// Hide Validity Symbols (red/green)
-                validitySymbol.hide();
-                setLoadBtnsOrange();
-			}
-		});
-
-		ScaleVerificationDate.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				// Add or Remain Time dependent on selection
-				controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
-				if(((ScaleVerificationDate.getSelection() - 360) % 2) == 0){
-					arrowVerDiff = (ScaleVerificationDate.getSelection()-360)/2;
-        		}
-        		else{
-        			arrowVerDiff = ((ScaleVerificationDate.getSelection()+1)-360)/2;
-        		}
-				//arrowVerDiff = ScaleVerificationDate.getSelection()-360;
+        ScaleSignatureDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(signatureDate, ScaleSignatureDate, 360);
+                if (((ScaleSignatureDate.getSelection() - 360) % 2) == 0) {
+                    arrowSigDiff = (ScaleSignatureDate.getSelection() - 360) / 2;
+                } else {
+                    arrowSigDiff = ((ScaleSignatureDate.getSelection() + 1) - 360) / 2;
+                }
+                // arrowSigDiff = ScaleSignatureDate.getSelection()-360;
                 canvas1.redraw();
                 canvas2.redraw();
-				// Hide Validity Symbols (red/green)
+                // Hide Validity Symbols (red/green)
                 validitySymbol.hide();
                 setLoadBtnsOrange();
-			}
-		});
+            }
+        });
 
-		controller.reset();
-	}
+        ScaleVerificationDate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                // Add or Remain Time dependent on selection
+                controller.updateElements(LabelVerificationDate, ScaleVerificationDate, 360);
+                if (((ScaleVerificationDate.getSelection() - 360) % 2) == 0) {
+                    arrowVerDiff = (ScaleVerificationDate.getSelection() - 360) / 2;
+                } else {
+                    arrowVerDiff = ((ScaleVerificationDate.getSelection() + 1) - 360) / 2;
+                }
+                // arrowVerDiff = ScaleVerificationDate.getSelection()-360;
+                canvas1.redraw();
+                canvas2.redraw();
+                // Hide Validity Symbols (red/green)
+                validitySymbol.hide();
+                setLoadBtnsOrange();
+            }
+        });
 
-	/**
-     * Sets the symbols for a successful or unsuccessful validation.
-     * The symbols are a red cross or a green checkmark.
+        controller.reset();
+    }
+
+    /**
+     * Sets the symbols for a successful or unsuccessful validation. The symbols are a red cross or
+     * a green checkmark.
      * 
-     * @param type int: 
-     *     [1] valid
-     *     [2] invalid
+     * @param type int: [1] valid [2] invalid
      */
-    public static void setValidtiySymbol(int type){
-        if (type == 1){
-            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification", "icons/gruenerHakenKlein.png"));
+    public static void setValidtiySymbol(int type) {
+        if (type == 1) {
+            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification",
+                    "icons/gruenerHakenKlein.png"));
             validitySymbol.setDescriptionText("Sucessfully validated");
             validitySymbol.show();
-        }else{
-            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification", "icons/rotesKreuzKlein.png"));
+        } else {
+            validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification",
+                    "icons/rotesKreuzKlein.png"));
             validitySymbol.setDescriptionText("Unsucessfully validated");
             validitySymbol.show();
         }
     }
-    
+
     /**
      * This method paints the arrows used to indicate the validate date.
      * 
@@ -988,7 +915,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
     public void paintControl(PaintEvent e) {
         // Set the used color
         Color lightblue = new Color(Display.getCurrent(), 30, 144, 255);
-        Color darkblue = new Color(Display.getCurrent(), 72, 61,139);
+        Color darkblue = new Color(Display.getCurrent(), 72, 61, 139);
         Rectangle clientArea;
         int width;
         int height;
@@ -996,19 +923,19 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         GC gc;
 
         gc = e.gc;
-        
+
         // Max position right are left are +/-180
-        if (arrowSigDiff< -180){
-            arrowSigDiff=-180;
-        }else if (arrowSigDiff>180){
-            arrowSigDiff=180;
+        if (arrowSigDiff < -180) {
+            arrowSigDiff = -180;
+        } else if (arrowSigDiff > 180) {
+            arrowSigDiff = 180;
         }
-        if (arrowVerDiff< -180){
-            arrowVerDiff=-180;
-        }else if (arrowVerDiff>180){
-            arrowVerDiff=178;
+        if (arrowVerDiff < -180) {
+            arrowVerDiff = -180;
+        } else if (arrowVerDiff > 180) {
+            arrowVerDiff = 178;
         }
-        
+
         // Get the size of the canvas area
         clientArea = canvas1.getClientArea();
         width = clientArea.width;
@@ -1016,31 +943,32 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         // Draw Arrow Signature Date
         gc.setBackground(lightblue);
-        gc.fillRectangle(width/2+arrowSigDiff-4, 9, 8, height);
-        gc.fillPolygon(new int[] {(width/2-8+arrowSigDiff), 9, (width/2+arrowSigDiff), 0, (width/2+8+arrowSigDiff), 9});        
-        
-     // Draw Arrow Verification Date
+        gc.fillRectangle(width / 2 + arrowSigDiff - 4, 9, 8, height);
+        gc.fillPolygon(new int[] { (width / 2 - 8 + arrowSigDiff), 9, (width / 2 + arrowSigDiff), 0,
+                (width / 2 + 8 + arrowSigDiff), 9 });
+
+        // Draw Arrow Verification Date
         gc.setBackground(darkblue);
-        gc.fillRectangle(width/2+arrowVerDiff-4, 9, 8, height-4);
-        gc.fillPolygon(new int[] {(width/2-8+arrowVerDiff), 11, (width/2+arrowVerDiff), 2, (width/2+8+arrowVerDiff), 11}); 
-        
+        gc.fillRectangle(width / 2 + arrowVerDiff - 4, 9, 8, height - 4);
+        gc.fillPolygon(new int[] { (width / 2 - 8 + arrowVerDiff), 11, (width / 2 + arrowVerDiff), 2,
+                (width / 2 + 8 + arrowVerDiff), 11 });
+
         gc.dispose();
-        
+
     }
-    
-    
+
     /**
      * Sets the font-color of the buttons btnLoadRootCa, btnLoadCa and btnLoadUserCert to orange.
      * This happens when the scales are modified.
      */
-    public void setLoadBtnsOrange(){
+    public void setLoadBtnsOrange() {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
     }
-	
-	@Override
-	protected void checkSubclass() {
-		// Disable the check that prevents subclassing of SWT components
-	}
+
+    @Override
+    protected void checkSubclass() {
+        // Disable the check that prevents subclassing of SWT components
+    }
 }
