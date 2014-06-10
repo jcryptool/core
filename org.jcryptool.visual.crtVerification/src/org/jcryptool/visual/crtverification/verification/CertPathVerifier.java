@@ -8,6 +8,7 @@ import java.security.cert.CertPathValidatorException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.PKIXCertPathValidatorResult;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -195,20 +196,23 @@ public class CertPathVerifier {
             // if shell model, verify a second time at signing time
             if (model == 0) {
                 mExtendedPKIXParameters.setDate(signatureDate);
-                mCertPathValidator.validate(path, mExtendedPKIXParameters);
+                PKIXCertPathValidatorResult res = (PKIXCertPathValidatorResult) mCertPathValidator.validate(path, mExtendedPKIXParameters);
+                System.out.println(res.toString());
             }
 
             // if no exception is thrown, the path is valid
             valid = true;
 
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | CertPathValidatorException e) {
+        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
+        } catch (CertPathValidatorException e){
+           LogUtil.logError(Activator.PLUGIN_ID, e);
+           System.out.println(e.getMessage());
         }
 
         return valid;
     }
 
-    // TODO javadoc neu machen
     /**
      * checks if the verification and/or signature dates are within the valididity periods of the
      * certificate chain, based on the selected validity model. Expects validity periods for all
@@ -223,7 +227,8 @@ public class CertPathVerifier {
      * @param rootNotAfter
      * @param signatureDate
      * @param verificationDate
-     * @return true if the certificate chain is valid (based only on time)
+     * @return an ArrayList containing all error messages as Strings, if no errors occoured, the
+     *         list is empty
      * @throws InvalidAlgorithmParameterException if a non existing model is selected
      */
     public ArrayList<String> verifyChangedDate(int model, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
@@ -285,6 +290,11 @@ public class CertPathVerifier {
 
     /**
      * build a CertPath from root, ca and client certificate for validation
+     * 
+     * @param client's the client certificate
+     * @param ca the intermediate ca's certificate
+     * @param root the root ca's certificate
+     * @return the constructed CertPath
      */
     private CertPath buildCertPath(Certificate client, Certificate ca, Certificate root) {
         CertPath path = null;
@@ -300,7 +310,8 @@ public class CertPathVerifier {
     }
 
     /**
-     * check if client is within the ca, and ca within the root validity period
+     * check if client is within the ca, and ca within the root validity period, occoured errors are
+     * added to the errors list
      * <p>
      * Requires the dates in the following order:
      * 
@@ -310,7 +321,6 @@ public class CertPathVerifier {
      * @param caNotAfter
      * @param rootNotBefore
      * @param rootNotAfter
-     * @return true if the periods are ok
      */
     private void verifyShellModelPeriodes(Date clientNotBefore, Date clientNotAfter, Date caNotBefore, Date caNotAfter,
             Date rootNotBefore, Date rootNotAfter) {
