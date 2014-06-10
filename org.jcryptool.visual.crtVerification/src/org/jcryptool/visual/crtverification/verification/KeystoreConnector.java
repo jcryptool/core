@@ -30,8 +30,6 @@ public class KeystoreConnector {
         return ksm.getAliases();
     }
 
-    
-    //not working
     /**
      * Returns the alias of a given contact name
      * 
@@ -42,10 +40,13 @@ public class KeystoreConnector {
         IKeyStoreAlias alias = null;
         KeyStoreManager ksm = KeyStoreManager.getInstance();
 
-        for (IKeyStoreAlias pubAlias : ksm.getAllPublicKeys()) {
-            System.out.println(pubAlias.toString());
-            if (pubAlias.getContactName().contains(contactName)) {
-                alias = pubAlias;
+        Enumeration<String> allAliases = ksm.getAliases();
+        String encodedContactName = encode(contactName).toLowerCase();
+
+        while (allAliases.hasMoreElements()) {
+            String compareAlias = allAliases.nextElement();
+            if (compareAlias.contains(encodedContactName)) {
+                alias = new KeyStoreAlias(compareAlias);
             }
         }
 
@@ -69,7 +70,8 @@ public class KeystoreConnector {
     }
 
     /**
-     * @return A ArrayList of all Certificates currently stored in the JCT Keystore as X509Certificates
+     * @return A ArrayList of all Certificates currently stored in the JCT Keystore as
+     *         X509Certificates
      */
     public ArrayList<X509Certificate> getAllCertificates() {
         KeyStoreManager ksm = KeyStoreManager.getInstance();
@@ -114,6 +116,29 @@ public class KeystoreConnector {
             }
             throw e;
         }
+    }
+
+    /**
+     * Encodes the given string to ASCII.
+     * 
+     * @param string The string parameter that will be encoded into ASCII
+     * @return The corresponding ASCII value
+     */
+    private String encode(String string) {
+        if (string == null) {
+            return ""; //$NON-NLS-1$
+        }
+        StringBuffer sb = new StringBuffer();
+        char c;
+        for (int i = 0; i < string.length(); ++i) {
+            c = string.charAt(i);
+            String hex = Integer.toHexString(c).toUpperCase();
+            for (int j = 0; j < 2 - hex.length(); j++) {
+                sb.append('0');
+            }
+            sb.append(hex);
+        }
+        return sb.toString();
     }
 
 }

@@ -21,6 +21,7 @@ public class ChooseCertPage extends WizardPage {
         super(pageName);
         certType = type;
         setTitle(pageName);
+        //TODO Message
         setDescription("Bitte w\u00e4hlen Sie ein zu ladendes Zertifikat aus dem Java Keystore aus.");
     }
     
