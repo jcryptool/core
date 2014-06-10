@@ -72,7 +72,7 @@ public class ChooseCertComposite extends Composite {
 		    IKeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
 		    KeyType type = alias.getKeyStoreEntryType();
 		    if(type == KeyType.KEYPAIR_PUBLIC_KEY || type == KeyType.PUBLICKEY){
-		    	list.add(alias.getContactName() + " | Keylength: " + alias.getKeyLength());
+		    	list.add(alias.getContactName());
 		    }
 		}  
 		

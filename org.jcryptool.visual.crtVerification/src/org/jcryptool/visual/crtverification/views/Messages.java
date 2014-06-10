@@ -17,6 +17,11 @@ public class Messages extends NLS {
     public static String crtVerification_status_dateSucChain;
     public static String crtVerification_status_dateSucModShell;
     public static String crtVerification_status_dateSucShell;
+    public static String crtVerification_status_missingRootCert;
+    public static String crtVerification_status_missingClientCert;
+    public static String crtVerification_status_missingCACert;
+    public static String crtVerification_status_invalidDate;
+    
 
     static {
         // initialize resource bundle

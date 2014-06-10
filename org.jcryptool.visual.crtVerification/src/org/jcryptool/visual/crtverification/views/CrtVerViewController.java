@@ -160,7 +160,7 @@ public class CrtVerViewController {
         if (!(value > 0 && value <= 31)) {
             input.setText("1");
             CrtVerViewComposite.txtLogWindow.append(input.getToolTipText()
-                    + " had an invalid Value (>31 or <0) it has been resetted to default value: 1 \r\n");
+                    +Messages.crtVerification_status_invalidDate +"  \r\n");
         }
     }
 
@@ -331,13 +331,13 @@ public class CrtVerViewController {
 
         } catch (NullPointerException | InvalidAlgorithmParameterException e) {
             if (RootCA == null) {
-                setLogText("Root CA certificate missing for certificate chain validation");
+                setLogText(Messages.crtVerification_status_missingRootCert);
             }
             if (CA == null) {
-                setLogText("CA certificate missing for certificate chain validation");
+                setLogText(Messages.crtVerification_status_missingCACert);
             }
             if (TN == null) {
-                setLogText("TN certificate missing for certificate chain validation");
+                setLogText(Messages.crtVerification_status_missingClientCert);
             }
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
