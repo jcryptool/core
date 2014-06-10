@@ -79,7 +79,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	static int arrowVerDiff=0;
 
     static ControlDecoration validitySymbol;
-    static Text txtTheCertificatechainAlias;
+    static Text txtLogWindow;
 	
 	/**
 	 * Create the composite.
@@ -402,10 +402,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
 		lblArrowVer.setText("Verification Date");
 		
-		txtTheCertificatechainAlias = new Text(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
-		txtTheCertificatechainAlias.setEditable(false);
-		txtTheCertificatechainAlias.setText("Logging:\n");
-		txtTheCertificatechainAlias.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
+		txtLogWindow = new Text(composite, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
+		txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
+		txtLogWindow.setEditable(false);
+		txtLogWindow.setText("Logging:\n");
+		txtLogWindow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
 		Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR
 				| SWT.HORIZONTAL);

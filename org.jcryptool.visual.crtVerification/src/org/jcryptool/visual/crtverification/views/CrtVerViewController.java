@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
@@ -16,8 +15,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.jcryptool.visual.crtverification.verification.KeystoreConnector;
 import org.jcryptool.visual.crtverification.verification.CertPathVerifier;
+import org.jcryptool.visual.crtverification.verification.KeystoreConnector;
 
 public class CrtVerViewController {
     private String dateformat1 = "/MMM/yy";
@@ -160,7 +159,7 @@ public class CrtVerViewController {
         int value = Integer.parseInt(input.getText());
         if (!(value > 0 && value <= 31)) {
             input.setText("1");
-            CrtVerViewComposite.txtTheCertificatechainAlias.append(input.getToolTipText()
+            CrtVerViewComposite.txtLogWindow.append(input.getToolTipText()
                     + " had an invalid Value (>31 or <0) it has been resetted to default value: 1 \r\n");
         }
     }
@@ -255,6 +254,8 @@ public class CrtVerViewController {
             CertPathVerifier cpv = null;
             boolean valid = false;
 
+            resetLog();
+
             if (flag) {
                 cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(), verificationDate, signatureDate);
 
@@ -262,25 +263,25 @@ public class CrtVerViewController {
                     valid = true;
                     switch (mode) {
                     case 0:
-                        setLogText("Certificate Chain SUCCESSFULLY validated with SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_chainSucShell);
                         break;
                     case 1:
-                        setLogText("Certificate Chain SUCCESSFULLY validated with MODIFIED SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_chainSucModShell);
                         break;
                     case 2:
-                        setLogText("Certificate Chain SUCCESSFULLY validated with CHAIN MODEL!");
+                        setLogText(Messages.crtVerification_status_chainSucChain);
                         break;
                     }
                 } else {
                     switch (mode) {
                     case 0:
-                        setLogText("Certificate Chain FAILED to validate with SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_chainFailShell);
                         break;
                     case 1:
-                        setLogText("Certificate Chain FAILED to validate with MODIFIED SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_chainFailModShell);
                         break;
                     case 2:
-                        setLogText("Certificate Chain FAILED to validate with CHAIN MODEL!");
+                        setLogText(Messages.crtVerification_status_chainFailChain);
                         break;
                     }
                 }
@@ -293,29 +294,29 @@ public class CrtVerViewController {
                     valid = true;
                     switch (mode) {
                     case 0:
-                        setLogText("Dates based on selection SUCCESSFULLY validated with SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_dateSucShell);
                         break;
                     case 1:
-                        setLogText("Dates based on selection SUCCESSFULLY validated with MODIFIED SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_dateSucModShell);
                         break;
                     case 2:
-                        setLogText("Dates based on selection SUCCESSFULLY validated with CHAIN MODEL!");
+                        setLogText(Messages.crtVerification_status_dateSucChain);
                         break;
                     }
-                    
+
                 } else {
                     switch (mode) {
                     case 0:
-                        setLogText("Dates based on selection FAILED to validate with SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_dateFailShell);
                         break;
                     case 1:
-                        setLogText("Dates based on selection FAILED to validate with MODIFIED SHELL MODEL!");
+                        setLogText(Messages.crtVerification_status_dateFailModShell);
                         break;
                     case 2:
-                        setLogText("Dates based on selection FAILED to validate with CHAIN MODEL!");
+                        setLogText(Messages.crtVerification_status_dateFailChain);
                         break;
                     }
-                    
+
                     for (String string : errors) {
                         setLogText(string);
                     }
@@ -430,7 +431,7 @@ public class CrtVerViewController {
 
         flushCertificates();
 
-        CrtVerViewComposite.txtTheCertificatechainAlias.setText("Logging: \r\n");
+        CrtVerViewComposite.txtLogWindow.setText("Logging: \r\n");
     }
 
     /**
@@ -487,6 +488,11 @@ public class CrtVerViewController {
      * @param s The String to append to Log Field
      */
     public void setLogText(String s) {
-        CrtVerViewComposite.txtTheCertificatechainAlias.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
+        // CrtVerViewComposite.txtLogWindow.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
+        CrtVerViewComposite.txtLogWindow.append(s + "\n");
+    }
+
+    public void resetLog() {
+        CrtVerViewComposite.txtLogWindow.setText("Logging:\n");
     }
 }

@@ -14,14 +14,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.x509.ExtendedPKIXParameters;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.jcryptool.visual.crtverification.verification.Messages;
-import org.osgi.framework.Bundle;
 
 public class CertPathVerifier {
 

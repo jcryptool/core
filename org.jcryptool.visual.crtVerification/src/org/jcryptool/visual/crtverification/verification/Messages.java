@@ -5,7 +5,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.jcryptool.visual.crtVerification.verification.messages";
 
-    public static final String InputKeyFileWizard_btnBrowse = null;
 
     public static String CrtVerifciation_sigDateAfterVerDate;
     public static String CrtVericiation_verDateNotWithinClient;
