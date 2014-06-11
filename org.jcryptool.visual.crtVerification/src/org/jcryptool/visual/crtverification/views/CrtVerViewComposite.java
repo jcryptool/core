@@ -100,7 +100,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         TabFolder tabFolder = new TabFolder(this, SWT.NONE);
 
         TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
-        tbtmSchalenmodell.setText("Certificate Verification");
+        tbtmSchalenmodell.setText(Messages.CrtVerViewComposite_title);
 
         Composite composite = new Composite(tabFolder, SWT.NONE);
         tbtmSchalenmodell.setControl(composite);
@@ -110,7 +110,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         txtDiesIstDer.setEnabled(false);
         txtDiesIstDer.setEditable(false);
         txtDiesIstDer
-                .setText("DE: Mit diesem Plugin können Sie sehen, wie es zu einer Bewertung der Gültigkeit einer Signatur kommt, wenn man unterschiedliche Zertifikatsbäume und unterschiedliche Gültigkeitsmodelle benutzt.\n\nEN: This plugin helps to demonstrate the validation checks of the shell- and chain model. ");
+                .setText(Messages.CrtVerViewComposite_description);
         GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1);
         gd_txtDiesIstDer.heightHint = 70;
         txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
@@ -135,11 +135,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblNotValidBefore.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 12, 1));
         lblNotValidBefore.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblNotValidBefore.setAlignment(SWT.CENTER);
-        lblNotValidBefore.setText("Not Valid Before");
+        lblNotValidBefore.setText(Messages.CrtVerViewComposite_notValidBefore);
 
         Label lblNotValidAfter = new Label(composite, SWT.NONE);
         lblNotValidAfter.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
-        lblNotValidAfter.setText("Not Valid After");
+        lblNotValidAfter.setText(Messages.CrtVerViewComposite_notValidAfter);
         lblNotValidAfter.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblNotValidAfter.setAlignment(SWT.CENTER);
         new Label(composite, SWT.NONE);
@@ -177,7 +177,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblRootCa.heightHint = 30;
         gd_lblRootCa.verticalIndent = 10;
         lblRootCa.setLayoutData(gd_lblRootCa);
-        lblRootCa.setText("Root CA");
+        lblRootCa.setText(Messages.CrtVerViewComposite_RootCa);
         lblRootCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblRootCa.setAlignment(SWT.CENTER);
 
@@ -202,7 +202,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnLoadRootCa = new Button(composite, SWT.NONE);
         btnLoadRootCa.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				String text = "Load Root CA";
+				String text = Messages.CrtVerViewComposite_loadRootCa;
 			    Button button = (Button)e.widget;
 			    int buttonWidth = button.getSize().x;
 			    int buttonHeight = button.getSize().y;
@@ -224,7 +224,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnLoadRootCa.heightHint = 30;
         gd_btnLoadRootCa.widthHint = 100;
         btnLoadRootCa.setLayoutData(gd_btnLoadRootCa);
-        btnLoadRootCa.setText("Load Root CA");
+        btnLoadRootCa.setText(Messages.CrtVerViewComposite_loadRootCa);
         btnLoadRootCa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -255,7 +255,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblCa.verticalIndent = 10;
         gd_lblCa.heightHint = 30;
         lblCa.setLayoutData(gd_lblCa);
-        lblCa.setText("CA");
+        lblCa.setText(Messages.CrtVerViewComposite_Ca);
         lblCa.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblCa.setAlignment(SWT.CENTER);
 
@@ -278,7 +278,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnLoadCa = new Button(composite, SWT.NONE);
         btnLoadCa.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				String text = "Load CA";
+				String text = Messages.CrtVerViewComposite_loadCa;
 			    Button button = (Button)e.widget;
 			    int buttonWidth = button.getSize().x;
 			    int buttonHeight = button.getSize().y;
@@ -300,7 +300,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnLoadCa.heightHint = 30;
         gd_btnLoadCa.widthHint = 100;
         btnLoadCa.setLayoutData(gd_btnLoadCa);
-        btnLoadCa.setText("Load CA");
+        btnLoadCa.setText(Messages.CrtVerViewComposite_loadCa);
         btnLoadCa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -331,7 +331,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblUserCertificate.verticalIndent = 10;
         gd_lblUserCertificate.heightHint = 30;
         lblUserCertificate.setLayoutData(gd_lblUserCertificate);
-        lblUserCertificate.setText("User Certificate");
+        lblUserCertificate.setText(Messages.CrtVerViewComposite_UserCertificate);
         lblUserCertificate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblUserCertificate.setAlignment(SWT.CENTER);
 
@@ -354,7 +354,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnLoadUserCert = new Button(composite, SWT.NONE);
         btnLoadUserCert.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
-				String text = "Load User Cert";
+				String text = Messages.CrtVerViewComposite_loadUserCert;
 			    Button button = (Button)e.widget;
 			    int buttonWidth = button.getSize().x;
 			    int buttonHeight = button.getSize().y;
@@ -402,7 +402,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnLoadUserCert.heightHint = 30;
         gd_btnLoadUserCert.widthHint = 100;
         btnLoadUserCert.setLayoutData(gd_btnLoadUserCert);
-        btnLoadUserCert.setText("Load User Cert");
+        btnLoadUserCert.setText(Messages.CrtVerViewComposite_loadUserCert);
 
         Label lblArrowSig = new Label(composite, SWT.NONE);
         lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
@@ -410,7 +410,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblArrowSig.heightHint = 13;
         lblArrowSig.setLayoutData(gd_lblArrowSig);
         lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
-        lblArrowSig.setText("Signature Date");
+        lblArrowSig.setText(Messages.CrtVerViewComposite_signatureDate);
 
         canvas1 = new Canvas(composite, SWT.NONE);
         canvas1.setLayout(new GridLayout(1, false));
@@ -431,12 +431,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         Label lblArrowVer = new Label(composite, SWT.NONE);
         lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
         lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
-        lblArrowVer.setText("Verification Date");
+        lblArrowVer.setText(Messages.CrtVerViewComposite_verificationDate);
 
         txtLogWindow = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
         txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
         txtLogWindow.setEditable(false);
-        txtLogWindow.setText("Logging:\n");
+        txtLogWindow.setText(Messages.crtVerification_status_logDefault +"\n");
         txtLogWindow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
 
         Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -464,7 +464,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblSignatureDate.verticalIndent = 10;
         gd_lblSignatureDate.heightHint = 30;
         lblSignatureDate.setLayoutData(gd_lblSignatureDate);
-        lblSignatureDate.setText("Signature Date");
+        lblSignatureDate.setText(Messages.CrtVerViewComposite_signatureDate);
         lblSignatureDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblSignatureDate.setAlignment(SWT.CENTER);
 
@@ -482,7 +482,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_lblVerificationDate.heightHint = 30;
         lblVerificationDate.setLayoutData(gd_lblVerificationDate);
 
-        lblVerificationDate.setText("Verification Date");
+        lblVerificationDate.setText(Messages.CrtVerViewComposite_verificationDate);
         lblVerificationDate.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblVerificationDate.setAlignment(SWT.CENTER);
 
@@ -499,7 +499,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         GridData gd_grpDetails = new GridData(SWT.LEFT, SWT.CENTER, false, false, 13, 1);
         gd_grpDetails.widthHint = 717;
         grpDetails.setLayoutData(gd_grpDetails);
-        grpDetails.setText("Details");
+        grpDetails.setText(Messages.CrtVerViewComposite_details);
         grpDetails.setLayout(new GridLayout(10, false));
         new Label(grpDetails, SWT.NONE);
         new Label(grpDetails, SWT.NONE);
@@ -509,21 +509,21 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         GridData gd_LabelHeaderRootCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_LabelHeaderRootCa.widthHint = 100;
         LabelHeaderRootCa.setLayoutData(gd_LabelHeaderRootCa);
-        LabelHeaderRootCa.setText("Root CA");
+        LabelHeaderRootCa.setText(Messages.CrtVerViewComposite_RootCa);
 
         Label LabelHeaderCa = new Label(grpDetails, SWT.NONE);
         LabelHeaderCa.setAlignment(SWT.CENTER);
         GridData gd_LabelHeaderCa = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_LabelHeaderCa.widthHint = 100;
         LabelHeaderCa.setLayoutData(gd_LabelHeaderCa);
-        LabelHeaderCa.setText("CA");
+        LabelHeaderCa.setText(Messages.CrtVerViewComposite_Ca);
 
         Label LabelHeaderCert = new Label(grpDetails, SWT.NONE);
         LabelHeaderCert.setAlignment(SWT.CENTER);
         GridData gd_LabelHeaderCert = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_LabelHeaderCert.widthHint = 100;
         LabelHeaderCert.setLayoutData(gd_LabelHeaderCert);
-        LabelHeaderCert.setText("User Certificate");
+        LabelHeaderCert.setText(Messages.CrtVerViewComposite_UserCertificate);
         new Label(grpDetails, SWT.NONE);
 
         Label SeperatorDetailsVertical = new Label(grpDetails, SWT.SEPARATOR | SWT.VERTICAL);
@@ -531,13 +531,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         new Label(grpDetails, SWT.NONE);
 
         Label LabelHeaderSignatureDate = new Label(grpDetails, SWT.NONE);
-        LabelHeaderSignatureDate.setText("Signature Date");
+        LabelHeaderSignatureDate.setText(Messages.CrtVerViewComposite_signatureDate);
 
         Label LabelHeaderVerificationDate = new Label(grpDetails, SWT.NONE);
-        LabelHeaderVerificationDate.setText("Verification Date");
+        LabelHeaderVerificationDate.setText(Messages.CrtVerViewComposite_verificationDate);
         Label lblValidFrom = new Label(grpDetails, SWT.NONE);
         lblValidFrom.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-        lblValidFrom.setText("valid from:");
+        lblValidFrom.setText(Messages.CrtVerViewComposite_validFrom);
         new Label(grpDetails, SWT.NONE);
 
         Composite composite_from_rootca = new Composite(grpDetails, SWT.NONE);
@@ -549,7 +549,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextRootCaFromDay);
             }
         });
-        TextRootCaFromDay.setToolTipText("Root Ca From Day");
+        TextRootCaFromDay.setToolTipText(Messages.CrtVerViewComposite_rootCaFromDay);
         TextRootCaFromDay.setText("1");
         TextRootCaFromDay.setTextLimit(2);
         GridData gd_TextRootCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -575,7 +575,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextCaFromDay);
             }
         });
-        TextCaFromDay.setToolTipText("Ca From Day");
+        TextCaFromDay.setToolTipText(Messages.CrtVerViewComposite_caFromDay);
         TextCaFromDay.setText("1");
         TextCaFromDay.setTextLimit(2);
         GridData gd_TextCaFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -600,7 +600,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextCertFromDay);
             }
         });
-        TextCertFromDay.setToolTipText("User Certificate From Day");
+        TextCertFromDay.setToolTipText(Messages.CrtVerViewComposite_userCertificateFromDay);
         TextCertFromDay.setText("1");
         TextCertFromDay.setTextLimit(2);
         GridData gd_TextCertFromDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -627,7 +627,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextSignatureDateDay);
             }
         });
-        TextSignatureDateDay.setToolTipText("Signature Date Day");
+        TextSignatureDateDay.setToolTipText(Messages.CrtVerViewComposite_signatureDateDay);
         TextSignatureDateDay.setText("1");
         TextSignatureDateDay.setTextLimit(2);
         GridData gd_TextSignatureDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -652,7 +652,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextVerificationDateDay);
             }
         });
-        TextVerificationDateDay.setToolTipText("Verification Date Day");
+        TextVerificationDateDay.setToolTipText(Messages.CrtVerViewComposite_verificationDateDay);
         TextVerificationDateDay.setText("1");
         TextVerificationDateDay.setTextLimit(2);
         GridData gd_TextVerificationDateDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -667,7 +667,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         LabelVerificationDate.setText("");
 
         Label lblValidThru = new Label(grpDetails, SWT.NONE);
-        lblValidThru.setText("valid thru:");
+        lblValidThru.setText(Messages.CrtVerViewComposite_validThru);
         new Label(grpDetails, SWT.NONE);
 
         Composite composite_thru_rootca = new Composite(grpDetails, SWT.NONE);
@@ -679,7 +679,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextRootCaThruDay);
             }
         });
-        TextRootCaThruDay.setToolTipText("Root Ca Thru Day");
+        TextRootCaThruDay.setToolTipText(Messages.CrtVerViewComposite_rootCaThruDay);
         TextRootCaThruDay.setText("1");
         TextRootCaThruDay.setTextLimit(2);
         GridData gd_TextRootCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -705,7 +705,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
             }
         });
 
-        TextCaThruDay.setToolTipText("Ca Thru Day");
+        TextCaThruDay.setToolTipText(Messages.CrtVerViewComposite_caThruDay);
         TextCaThruDay.setText("1");
         TextCaThruDay.setTextLimit(2);
         GridData gd_TextCaThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -730,7 +730,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
                 controller.inputcheck(TextCertThruDay);
             }
         });
-        TextCertThruDay.setToolTipText("User Certificate Thru Day");
+        TextCertThruDay.setToolTipText(Messages.CrtVerViewComposite_userCertificateThruDay);
         TextCertThruDay.setText("1");
         TextCertThruDay.setTextLimit(2);
         GridData gd_TextCertThruDay = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -770,13 +770,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         final Button btnShellModel = new Button(composite_6, SWT.RADIO);
         btnShellModel.setSelection(true);
-        btnShellModel.setText("Shell Model");
+        btnShellModel.setText(Messages.CrtVerViewComposite_shellModel);
 
         final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
-        btnModifiedShellModel.setText("Modified Shell Model");
+        btnModifiedShellModel.setText(Messages.CrtVerViewComposite_modifiedshellModel);
 
         final Button btnChainModel = new Button(composite_6, SWT.RADIO);
-        btnChainModel.setText("Chain Model");
+        btnChainModel.setText(Messages.CrtVerViewComposite_chainModel);
         new Label(composite, SWT.NONE);
 
         Button btnReset = new Button(composite, SWT.NONE);
@@ -784,7 +784,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnReset.widthHint = 100;
         gd_btnReset.heightHint = 30;
         btnReset.setLayoutData(gd_btnReset);
-        btnReset.setText("Reset");
+        btnReset.setText(Messages.CrtVerViewComposite_reset);
 
         new Label(composite, SWT.NONE);
 
@@ -799,14 +799,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnBack.widthHint = 100;
         gd_btnBack.heightHint = 30;
         btnBack.setLayoutData(gd_btnBack);
-        btnBack.setText("PKI Plugin");
+        btnBack.setText(Messages.CrtVerViewComposite_pki_plugin);
 
         Button btnForward = new Button(composite, SWT.NONE);
         GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_btnForward.widthHint = 161;
         gd_btnForward.heightHint = 30;
         btnForward.setLayoutData(gd_btnForward);
-        btnForward.setText("Signature Verification");
+        btnForward.setText(Messages.CrtVerViewComposite_signatureVerification);
 
         Button btnCalculate = new Button(composite, SWT.NONE);
         btnValidate = btnCalculate;
@@ -814,7 +814,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gd_btnCalculate.widthHint = 100;
         gd_btnCalculate.heightHint = 30;
         btnCalculate.setLayoutData(gd_btnCalculate);
-        btnCalculate.setText("Validate");
+        btnCalculate.setText(Messages.CrtVerViewComposite_validate);
 
         validitySymbol = new ControlDecoration(btnCalculate, SWT.LEFT | SWT.TOP);
         validitySymbol.hide();
@@ -957,12 +957,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         if (type == 1) {
             validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification",
                     "icons/gruenerHakenKlein.png"));
-            validitySymbol.setDescriptionText("Sucessfully validated");
+            validitySymbol.setDescriptionText(Messages.CrtVerViewComposite_validateSuccessful);
             validitySymbol.show();
         } else {
             validitySymbol.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.crtVerification",
                     "icons/rotesKreuzKlein.png"));
-            validitySymbol.setDescriptionText("Unsucessfully validated");
+            validitySymbol.setDescriptionText(Messages.CrtVerViewComposite_validateUnSuccessful);
             validitySymbol.show();
         }
     }
