@@ -431,7 +431,7 @@ public class CrtVerViewController {
 
         flushCertificates();
 
-        CrtVerViewComposite.txtLogWindow.setText("Logging: \r\n");
+        CrtVerViewComposite.txtLogWindow.setText(Messages.crtVerification_status_logDefault+" \n");
     }
 
     /**
@@ -441,7 +441,7 @@ public class CrtVerViewController {
         RootCA = null;
         CA = null;
         TN = null;
-        setLogText("Certificates flushed");
+        setLogText(Messages.crtVerification_status_flushCerts);
     }
 
     public void loadCertificate(ChooseCertPage p, X509Certificate cert) {
@@ -451,21 +451,21 @@ public class CrtVerViewController {
             setScales(1);
             flag = true;
             CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
-            setLogText("User Certificate successfully loaded");
+            setLogText(Messages.crtVerification_status_UserCertLoaded);
             break;
         case 2: // [2] Cert
             setCA(cert);
             setScales(2);
             flag = true;
             CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
-            setLogText("CA Certificate successfully loaded");
+            setLogText(Messages.crtVerification_status_CaLoaded);
             break;
         case 3: // [3] RootCert
             setRootCA(cert);
             setScales(3);
             flag = true;
             CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
-            setLogText("Root Ca Certificate successfully loaded");
+            setLogText(Messages.crtVerification_status_RootCaLoaded);
             break;
         }
         p.setPageComplete(true);
@@ -493,6 +493,6 @@ public class CrtVerViewController {
     }
 
     public void resetLog() {
-        CrtVerViewComposite.txtLogWindow.setText("Logging:\n");
+        CrtVerViewComposite.txtLogWindow.setText(Messages.crtVerification_status_logDefault+" \n");
     }
 }

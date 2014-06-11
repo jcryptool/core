@@ -21,6 +21,11 @@ public class Messages extends NLS {
     public static String crtVerification_status_missingClientCert;
     public static String crtVerification_status_missingCACert;
     public static String crtVerification_status_invalidDate;
+    public static String crtVerification_status_flushCerts;
+    public static String crtVerification_status_logDefault;
+    public static String crtVerification_status_UserCertLoaded;
+    public static String crtVerification_status_CaLoaded;
+    public static String crtVerification_status_RootCaLoaded;
     
 
     static {
