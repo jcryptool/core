@@ -106,12 +106,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         tbtmSchalenmodell.setControl(composite);
         composite.setLayout(new GridLayout(15, false));
 
-        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.CANCEL);
+        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
         txtDiesIstDer.setEnabled(false);
         txtDiesIstDer.setEditable(false);
         txtDiesIstDer
                 .setText(Messages.CrtVerViewComposite_description);
-        GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.CENTER, true, false, 15, 1);
+        GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.FILL, true, false, 15, 1);
         gd_txtDiesIstDer.heightHint = 70;
         txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
         new Label(composite, SWT.NONE);
@@ -521,7 +521,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         Label LabelHeaderCert = new Label(grpDetails, SWT.NONE);
         LabelHeaderCert.setAlignment(SWT.CENTER);
         GridData gd_LabelHeaderCert = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_LabelHeaderCert.widthHint = 100;
+        gd_LabelHeaderCert.widthHint = 120;
         LabelHeaderCert.setLayoutData(gd_LabelHeaderCert);
         LabelHeaderCert.setText(Messages.CrtVerViewComposite_UserCertificate);
         new Label(grpDetails, SWT.NONE);
