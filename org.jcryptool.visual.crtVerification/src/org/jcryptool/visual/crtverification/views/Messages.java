@@ -3,7 +3,7 @@ package org.jcryptool.visual.crtverification.views;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.visual.crtVerification.views.messages";
+    private static final String BUNDLE_NAME = "org.jcryptool.visual.crtverification.views.messages";
 
     public static String crtVerification_status_chainFailChain;
     public static String crtVerification_status_chainFailModShell;

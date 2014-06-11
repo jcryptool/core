@@ -13,3 +13,7 @@ Import-Package: org.bouncycastle.jce.provider,
  org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.keys
+Export-Package: org.eclipse.wb.swt,
+ org.jcryptool.visual.crtverification,
+ org.jcryptool.visual.crtverification.verification,
+ org.jcryptool.visual.crtverification.views
