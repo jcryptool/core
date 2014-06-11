@@ -107,13 +107,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         composite.setLayout(new GridLayout(15, false));
 
         txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
+        txtDiesIstDer.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
         txtDiesIstDer.setEnabled(false);
         txtDiesIstDer.setEditable(false);
-        txtDiesIstDer
-                .setText(Messages.CrtVerViewComposite_description);
+        txtDiesIstDer.setText(Messages.CrtVerViewComposite_description);
         GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.FILL, true, false, 15, 1);
         gd_txtDiesIstDer.heightHint = 70;
-        txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
+        txtDiesIstDer.setLayoutData( gd_txtDiesIstDer);
         new Label(composite, SWT.NONE);
         new Label(composite, SWT.NONE);
         new Label(composite, SWT.NONE);
