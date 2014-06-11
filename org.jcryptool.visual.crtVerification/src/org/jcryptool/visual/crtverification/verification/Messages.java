@@ -3,7 +3,7 @@ package org.jcryptool.visual.crtverification.verification;
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.visual.crtVerification.verification.messages";
+    private static final String BUNDLE_NAME = "org.jcryptool.visual.crtverification.verification.messages";
 
 
     public static String CrtVerifciation_sigDateAfterVerDate;
