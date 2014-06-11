@@ -1,5 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
+import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.wizard.Wizard;
 
 public class ChooseCert extends Wizard {
@@ -9,6 +10,7 @@ public class ChooseCert extends Wizard {
 
     public ChooseCert(int type) {
         super();
+        TrayDialog.setDialogHelpAvailable(false);
         setWindowTitle(name);
         certType = type;        
     }

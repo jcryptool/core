@@ -769,13 +769,34 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         composite_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         final Button btnShellModel = new Button(composite_6, SWT.RADIO);
+        btnShellModel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                validitySymbol.hide();
+                ScaleVerificationDate.setEnabled(true);
+            }
+        });
         btnShellModel.setSelection(true);
         btnShellModel.setText(Messages.CrtVerViewComposite_shellModel);
 
         final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
+        btnModifiedShellModel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                validitySymbol.hide();
+                ScaleVerificationDate.setEnabled(false);
+            }
+        });
         btnModifiedShellModel.setText(Messages.CrtVerViewComposite_modifiedshellModel);
 
         final Button btnChainModel = new Button(composite_6, SWT.RADIO);
+        btnChainModel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                validitySymbol.hide();
+                ScaleVerificationDate.setEnabled(false);
+            }
+        });
         btnChainModel.setText(Messages.CrtVerViewComposite_chainModel);
         new Label(composite, SWT.NONE);
 
