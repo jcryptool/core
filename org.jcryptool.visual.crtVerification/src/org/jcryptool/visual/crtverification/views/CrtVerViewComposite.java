@@ -101,16 +101,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
         tbtmSchalenmodell.setText(Messages.CrtVerViewComposite_title);
-
+        
         Composite composite = new Composite(tabFolder, SWT.NONE);
         tbtmSchalenmodell.setControl(composite);
         composite.setLayout(new GridLayout(15, false));
 
-        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
-        txtDiesIstDer.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
+        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
         txtDiesIstDer.setEnabled(false);
+        txtDiesIstDer.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
         txtDiesIstDer.setEditable(false);
-        txtDiesIstDer.setText(Messages.CrtVerViewComposite_description);
         GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.FILL, true, false, 15, 1);
         gd_txtDiesIstDer.heightHint = 70;
         txtDiesIstDer.setLayoutData( gd_txtDiesIstDer);
@@ -1046,6 +1045,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
+    }
+    
+    
+    /**
+     * Sets the text of the description at the top of the GUI.
+     */
+    public void setText(){
+        txtDiesIstDer.setText(Messages.CrtVerViewComposite_description);
     }
 
     @Override
