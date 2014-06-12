@@ -254,8 +254,6 @@ public class CrtVerViewController {
             CertPathVerifier cpv = null;
             boolean valid = false;
 
-            resetLog();
-
             if (flag) {
                 cpv = new CertPathVerifier(getRootCA(), getCA(), getTN(), verificationDate, signatureDate);
 
@@ -492,7 +490,5 @@ public class CrtVerViewController {
         CrtVerViewComposite.txtLogWindow.append(s + "\n");
     }
 
-    public void resetLog() {
-        CrtVerViewComposite.txtLogWindow.setText(Messages.crtVerification_status_logDefault+" \n");
-    }
+    
 }

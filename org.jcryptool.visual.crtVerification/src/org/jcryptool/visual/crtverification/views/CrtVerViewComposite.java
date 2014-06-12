@@ -773,7 +773,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
             public void widgetSelected(SelectionEvent e) {
                 validitySymbol.hide();
                 ScaleVerificationDate.setEnabled(true);
-                controller.resetLog();
             }
         });
         btnShellModel.setSelection(true);
@@ -785,7 +784,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
             public void widgetSelected(SelectionEvent e) {
                 validitySymbol.hide();
                 ScaleVerificationDate.setEnabled(false);
-                controller.resetLog();
             }
         });
         btnModifiedShellModel.setText(Messages.CrtVerViewComposite_modifiedshellModel);
@@ -796,7 +794,6 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
             public void widgetSelected(SelectionEvent e) {
                 validitySymbol.hide();
                 ScaleVerificationDate.setEnabled(false);
-                controller.resetLog();
             }
         });
         btnChainModel.setText(Messages.CrtVerViewComposite_chainModel);
@@ -845,7 +842,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnReset.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                controller.reset();
+                //controller.reset();
             }
         });
 
