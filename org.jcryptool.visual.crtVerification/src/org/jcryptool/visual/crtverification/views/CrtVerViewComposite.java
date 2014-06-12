@@ -30,6 +30,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -404,9 +406,9 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnLoadUserCert.setText(Messages.CrtVerViewComposite_loadUserCert);
 
         Label lblArrowSig = new Label(composite, SWT.NONE);
-        lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+        lblArrowSig.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         GridData gd_lblArrowSig = new GridData(SWT.FILL, SWT.FILL, false, false, 1, 1);
-        gd_lblArrowSig.heightHint = 13;
+        gd_lblArrowSig.heightHint = 16;
         lblArrowSig.setLayoutData(gd_lblArrowSig);
         lblArrowSig.setForeground(SWTResourceManager.getColor(30, 144, 255));
         lblArrowSig.setText(Messages.CrtVerViewComposite_signatureDate);
@@ -425,18 +427,21 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         canvas2.setLayoutData(gd_canvas2);
         canvas2.setLayout(new GridLayout(1, false));
         canvas2.addPaintListener(this);
-        new Label(composite, SWT.NONE);
+        
+        Label lblLog = new Label(composite, SWT.NONE);
+        lblLog.setText(Messages.CrtVerViewComposite_lblLog_text);
 
         Label lblArrowVer = new Label(composite, SWT.NONE);
-        lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 9, SWT.NORMAL));
+        lblArrowVer.setFont(SWTResourceManager.getFont("Lucida Grande", 12, SWT.NORMAL));
         lblArrowVer.setForeground(SWTResourceManager.getColor(72, 61, 139));
         lblArrowVer.setText(Messages.CrtVerViewComposite_verificationDate);
 
         txtLogWindow = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL);
         txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
         txtLogWindow.setEditable(false);
-        txtLogWindow.setText(Messages.crtVerification_status_logDefault +"\n");
-        txtLogWindow.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6));
+        GridData gd_txtLogWindow = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 6);
+        gd_txtLogWindow.heightHint = 256;
+        txtLogWindow.setLayoutData(gd_txtLogWindow);
 
         Label SeperatorHorizontal = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
         GridData gd_SeperatorHorizontal = new GridData(SWT.LEFT, SWT.CENTER, false, false, 14, 1);
@@ -809,6 +814,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         new Label(composite, SWT.NONE);
 
         Button btnBack = new Button(composite, SWT.NONE);
+        btnBack.setEnabled(false);
         btnBack.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -822,6 +828,17 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnBack.setText(Messages.CrtVerViewComposite_pki_plugin);
 
         Button btnForward = new Button(composite, SWT.NONE);
+        btnForward.addSelectionListener(new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		try {
+					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.sigVerification.view");
+				} catch (PartInitException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+        	}
+        });
         GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_btnForward.widthHint = 161;
         gd_btnForward.heightHint = 30;
@@ -842,7 +859,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnReset.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                //controller.reset();
+                controller.reset();
             }
         });
 

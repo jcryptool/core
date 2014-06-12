@@ -59,7 +59,7 @@ public class ChooseCertComposite extends Composite {
                 String contact_name = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
                 IKeyStoreAlias alias = controller.ksc.getAliasByContactName(contact_name);
                 X509Certificate cert = (X509Certificate) controller.ksc.getCertificate(alias);
-                controller.loadCertificate(page, cert);
+                controller.loadCertificate(page, cert, contact_name);
             }
         });
 
