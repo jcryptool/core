@@ -834,8 +834,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         		try {
 					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.sigVerification.view");
 				} catch (PartInitException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				    LogUtil.logError(Activator.PLUGIN_ID, e1);
 				}
         	}
         });
