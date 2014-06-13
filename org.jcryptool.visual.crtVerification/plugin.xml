@@ -5,11 +5,11 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            name="Sample Category"
+            name="%category.name"
             id="org.jcryptool.visual.crtVerification">
       </category>
       <view
-            name="Certificate Verification"
+            name="%view.name"
             icon="icons/sample.gif"
             category="org.jcryptool.visual.crtVerification"
             class="org.jcryptool.visual.crtverification.views.CrtVerView"
@@ -20,7 +20,7 @@
    <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="Certificate Verification"
+            name="%Visual.name"
             viewId="org.jcryptool.visual.crtverification.views.CrtVerView"
             contextHelpId="org.jcryptool.visual.crtverification.views.CrtVerView">
       </Visual>

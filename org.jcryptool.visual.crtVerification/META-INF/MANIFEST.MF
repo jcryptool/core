@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Certificate Verification
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.crtVerification;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.jcryptool.visual.crtverification.Activator
@@ -17,3 +17,4 @@ Export-Package: org.eclipse.wb.swt,
  org.jcryptool.visual.crtverification,
  org.jcryptool.visual.crtverification.verification,
  org.jcryptool.visual.crtverification.views
+Bundle-Localization: OSGI-INF/l10n/bundle
