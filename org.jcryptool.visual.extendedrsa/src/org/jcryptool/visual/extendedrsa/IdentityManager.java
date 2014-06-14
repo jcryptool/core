@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2013, 2014 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -22,6 +22,7 @@ import java.util.TreeMap;
 import java.util.Vector;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -62,7 +63,7 @@ import de.flexiprovider.core.rsa.RSAPublicKey;
  * @author Christoph Schnepf, Patrick Zillner
  * @author Holger Friedrich (support for Eclipse Commands -- now derived from new class AbstractNewKeyStoreEntryHandler
  * based on the old AbstractNewKeyStoreEntryAction, also added a dummy implementation of the execute() method)
- * 
+ *
  */
 public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
     private static IdentityManager identityManager;
@@ -94,7 +95,7 @@ public class IdentityManager extends AbstractNewKeyStoreEntryHandler {
             }
         }
     }
-    
+
     /**
      * TODO Where and when has the run() or execute() method been lost?
      * Adding a dummy implementation to work around the compiler error
