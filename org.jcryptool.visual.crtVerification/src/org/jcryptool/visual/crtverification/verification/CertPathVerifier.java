@@ -8,7 +8,6 @@ import java.security.cert.CertPathValidatorException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
-import java.security.cert.PKIXCertPathValidatorResult;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -196,9 +195,7 @@ public class CertPathVerifier {
             // if shell model, verify a second time at signing time
             if (model == 0) {
                 mExtendedPKIXParameters.setDate(signatureDate);
-                PKIXCertPathValidatorResult res = (PKIXCertPathValidatorResult) mCertPathValidator.validate(path,
-                        mExtendedPKIXParameters);
-                System.out.println(res.toString());
+                mCertPathValidator.validate(path, mExtendedPKIXParameters);
             }
 
             // if no exception is thrown, the path is valid
@@ -208,7 +205,6 @@ public class CertPathVerifier {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         } catch (CertPathValidatorException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
-            System.out.println(e.getMessage());
         }
 
         return valid;
