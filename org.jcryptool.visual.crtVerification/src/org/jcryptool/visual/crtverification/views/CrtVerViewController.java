@@ -112,35 +112,35 @@ public class CrtVerViewController {
     }
 
     public String getThruRootCa() {
-        return CrtVerViewComposite.TextRootCaThruDay.getText() + CrtVerViewComposite.thruRootCa.getText();
+        return parseDateToString(thruRootCa);
     }
 
     public String getFromRootCa() {
-        return CrtVerViewComposite.TextRootCaFromDay.getText() + CrtVerViewComposite.fromRootCa.getText();
+        return parseDateToString(fromRootCa);
     }
 
     public String getThruCA() {
-        return CrtVerViewComposite.TextCaThruDay.getText() + CrtVerViewComposite.thruCa.getText();
+        return parseDateToString(thruCa);
     }
 
     public String getFromCA() {
-        return CrtVerViewComposite.TextCaFromDay.getText() + CrtVerViewComposite.fromCa.getText();
+        return parseDateToString(fromCa);
     }
 
     public String getThruClient() {
-        return CrtVerViewComposite.TextCertThruDay.getText() + CrtVerViewComposite.thruCert.getText();
+        return parseDateToString(thruCert);
     }
 
     public String getFromClient() {
-        return CrtVerViewComposite.TextCertFromDay.getText() + CrtVerViewComposite.fromCert.getText();
+        return parseDateToString(fromCert);
     }
 
     public String getVerDate() {
-        return CrtVerViewComposite.TextVerificationDateDay.getText() + CrtVerViewComposite.verificationDate.getText();
+        return parseDateToString(verificationDate);
     }
 
     public String getSigDate() {
-        return CrtVerViewComposite.TextSignatureDateDay.getText() + CrtVerViewComposite.signatureDate.getText();
+        return parseDateToString(signatureDate);
     }
 
     /**
@@ -392,7 +392,7 @@ public class CrtVerViewController {
     }
 
     /**
-     * Parses a date in format /<Month_3Letters>/<Year_last_two_numbers_><Day>
+     * Parses a date in format /{Month_3Letters}/{Year_last_two_numbers_}{Day}
      * 
      * @param day the day of the date
      * @param monthYear the month and year of the date
@@ -406,10 +406,19 @@ public class CrtVerViewController {
         String year = monthYear.split("/")[2];
 
         int yearInt = Integer.parseInt(year);
+
         if (yearInt < 84) {
-            year = "20" + yearInt;
+            if (String.valueOf(yearInt).length() == 1) {
+                year = "200" + yearInt;
+            } else {
+                year = "20" + yearInt;
+            }
         } else {
-            year = "19" + yearInt;
+            if (String.valueOf(yearInt).length() == 1) {
+                year = "190" + yearInt;
+            } else {
+                year = "19" + yearInt;
+            }
         }
 
         try {
@@ -417,8 +426,13 @@ public class CrtVerViewController {
         } catch (ParseException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
-
+        
         return date;
+    }
+
+    public String parseDateToString(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+        return df.format(date);
     }
 
     public void reset() {
