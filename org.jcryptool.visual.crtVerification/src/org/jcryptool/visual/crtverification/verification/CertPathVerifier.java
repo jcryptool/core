@@ -196,7 +196,8 @@ public class CertPathVerifier {
             // if shell model, verify a second time at signing time
             if (model == 0) {
                 mExtendedPKIXParameters.setDate(signatureDate);
-                PKIXCertPathValidatorResult res = (PKIXCertPathValidatorResult) mCertPathValidator.validate(path, mExtendedPKIXParameters);
+                PKIXCertPathValidatorResult res = (PKIXCertPathValidatorResult) mCertPathValidator.validate(path,
+                        mExtendedPKIXParameters);
                 System.out.println(res.toString());
             }
 
@@ -205,9 +206,9 @@ public class CertPathVerifier {
 
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
-        } catch (CertPathValidatorException e){
-           LogUtil.logError(Activator.PLUGIN_ID, e);
-           System.out.println(e.getMessage());
+        } catch (CertPathValidatorException e) {
+            LogUtil.logError(Activator.PLUGIN_ID, e);
+            System.out.println(e.getMessage());
         }
 
         return valid;
@@ -327,16 +328,19 @@ public class CertPathVerifier {
 
         if (clientNotBefore.before(caNotBefore)) {
             errors.add(Messages.CrtVericiation_caNotBeforeAfterClientNotBefore);
-        } else if (clientNotAfter.after(caNotAfter)) {
-            errors.add(Messages.CrtVericiation_caNotAfterBeforeClientNotAfter);
-
-        } else if (caNotBefore.before(rootNotBefore)) {
-            errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
-        } else if (caNotAfter.after(rootNotAfter)) {
-            errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
-
         }
 
+        if (clientNotAfter.after(caNotAfter)) {
+            errors.add(Messages.CrtVericiation_caNotAfterBeforeClientNotAfter);
+        }
+
+        if (caNotBefore.before(rootNotBefore)) {
+            errors.add(Messages.CrtVericiation_rootNotBeforeAfterCaNotBefore);
+        }
+
+        if (caNotAfter.after(rootNotAfter)) {
+            errors.add(Messages.CrtVericiation_rootNotAfterBeforeCANotAfter);
+        }
     }
 
     /**

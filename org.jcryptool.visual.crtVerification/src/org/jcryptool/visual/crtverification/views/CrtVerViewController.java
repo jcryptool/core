@@ -111,6 +111,38 @@ public class CrtVerViewController {
         TN = tN;
     }
 
+    public String getThruRootCa() {
+        return CrtVerViewComposite.TextRootCaThruDay.getText() + CrtVerViewComposite.thruRootCa.getText();
+    }
+
+    public String getFromRootCa() {
+        return CrtVerViewComposite.TextRootCaFromDay.getText() + CrtVerViewComposite.fromRootCa.getText();
+    }
+
+    public String getThruCA() {
+        return CrtVerViewComposite.TextCaThruDay.getText() + CrtVerViewComposite.thruCa.getText();
+    }
+
+    public String getFromCA() {
+        return CrtVerViewComposite.TextCaFromDay.getText() + CrtVerViewComposite.fromCa.getText();
+    }
+
+    public String getThruClient() {
+        return CrtVerViewComposite.TextCertThruDay.getText() + CrtVerViewComposite.thruCert.getText();
+    }
+
+    public String getFromClient() {
+        return CrtVerViewComposite.TextCertFromDay.getText() + CrtVerViewComposite.fromCert.getText();
+    }
+
+    public String getVerDate() {
+        return CrtVerViewComposite.TextVerificationDateDay.getText() + CrtVerViewComposite.verificationDate.getText();
+    }
+
+    public String getSigDate() {
+        return CrtVerViewComposite.TextSignatureDateDay.getText() + CrtVerViewComposite.signatureDate.getText();
+    }
+
     /**
      * Method to get the actual date in "MM/yy" Format
      * 
@@ -160,7 +192,7 @@ public class CrtVerViewController {
         if (!(value > 0 && value <= 31)) {
             input.setText("1");
             CrtVerViewComposite.txtLogWindow.append(input.getToolTipText()
-                    +Messages.crtVerification_status_invalidDate +"  \r\n");
+                    + Messages.crtVerification_status_invalidDate + "  \r\n");
         }
     }
 
@@ -490,5 +522,4 @@ public class CrtVerViewController {
         CrtVerViewComposite.txtLogWindow.append(s + "\n");
     }
 
-    
 }

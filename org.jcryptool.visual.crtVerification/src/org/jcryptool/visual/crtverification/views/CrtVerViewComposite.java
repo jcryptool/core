@@ -36,6 +36,8 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
     // Object Controller
@@ -103,7 +105,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
         tbtmSchalenmodell.setText(Messages.CrtVerViewComposite_title);
-        
+
         Composite composite = new Composite(tabFolder, SWT.NONE);
         tbtmSchalenmodell.setControl(composite);
         composite.setLayout(new GridLayout(15, false));
@@ -114,7 +116,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         txtDiesIstDer.setEditable(false);
         GridData gd_txtDiesIstDer = new GridData(SWT.FILL, SWT.FILL, true, false, 15, 1);
         gd_txtDiesIstDer.heightHint = 70;
-        txtDiesIstDer.setLayoutData( gd_txtDiesIstDer);
+        txtDiesIstDer.setLayoutData(gd_txtDiesIstDer);
         new Label(composite, SWT.NONE);
         new Label(composite, SWT.NONE);
         new Label(composite, SWT.NONE);
@@ -183,6 +185,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblRootCa.setAlignment(SWT.CENTER);
 
         final Scale ScaleRootCaBegin = new Scale(composite, SWT.NONE);
+        ScaleRootCaBegin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_RootCa + " "
+                        + Messages.CrtVerViewComposite_notValidBefore + " " + Messages.CrtVerViewComposite_dateSet
+                        + " " + controller.getFromRootCa());
+            }
+        });
         CrtVerViewComposite.ScaleRootCaBegin = ScaleRootCaBegin;
         ScaleRootCaBegin.setToolTipText("");
 
@@ -193,6 +204,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         ScaleRootCaBegin.setSelection(180);
 
         final Scale ScaleRootCaEnd = new Scale(composite, SWT.NONE);
+        ScaleRootCaEnd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_RootCa + " "
+                        + Messages.CrtVerViewComposite_notValidAfter + " " + Messages.CrtVerViewComposite_dateSet + " "
+                        + controller.getThruRootCa());
+            }
+        });
         CrtVerViewComposite.ScaleRootCaEnd = ScaleRootCaEnd;
         GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_ScaleRootCaEnd.widthHint = 360;
@@ -202,25 +222,25 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         btnLoadRootCa = new Button(composite, SWT.NONE);
         btnLoadRootCa.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				String text = Messages.CrtVerViewComposite_loadRootCa;
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
+            public void paintControl(PaintEvent e) {
+                String text = Messages.CrtVerViewComposite_loadRootCa;
+                Button button = (Button) e.widget;
+                int buttonWidth = button.getSize().x;
+                int buttonHeight = button.getSize().y;
 
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
+                // Get text bounds.
+                int textWidth = e.gc.textExtent(text).x;
+                int textHeight = e.gc.textExtent(text).y;
 
-			    btnLoadRootCa.setText("");
-			    // Draw the new text.
-			    e.gc.drawText( text, textX, textY, true);
-			}
-		});
+                // Calculate text coordinates.
+                int textX = ((buttonWidth - textWidth) / 2);
+                int textY = ((buttonHeight - textHeight) / 2);
+
+                btnLoadRootCa.setText("");
+                // Draw the new text.
+                e.gc.drawText(text, textX, textY, true);
+            }
+        });
         GridData gd_btnLoadRootCa = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_btnLoadRootCa.heightHint = 30;
         gd_btnLoadRootCa.widthHint = 100;
@@ -261,6 +281,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblCa.setAlignment(SWT.CENTER);
 
         final Scale ScaleCaBegin = new Scale(composite, SWT.NONE);
+        ScaleCaBegin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_Ca + " "
+                        + Messages.CrtVerViewComposite_notValidBefore + " " + Messages.CrtVerViewComposite_dateSet
+                        + " " + controller.getFromCA());
+            }
+        });
         CrtVerViewComposite.ScaleCaBegin = ScaleCaBegin;
         ScaleCaBegin.setMaximum(360);
         GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
@@ -269,6 +298,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         ScaleCaBegin.setSelection(180);
 
         final Scale ScaleCaEnd = new Scale(composite, SWT.NONE);
+        ScaleCaEnd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_Ca + " "
+                        + Messages.CrtVerViewComposite_notValidAfter + " " + Messages.CrtVerViewComposite_dateSet + " "
+                        + controller.getThruCA());
+            }
+        });
         CrtVerViewComposite.ScaleCaEnd = ScaleCaEnd;
         ScaleCaEnd.setMaximum(360);
         GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -278,25 +316,25 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         btnLoadCa = new Button(composite, SWT.NONE);
         btnLoadCa.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				String text = Messages.CrtVerViewComposite_loadCa;
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
+            public void paintControl(PaintEvent e) {
+                String text = Messages.CrtVerViewComposite_loadCa;
+                Button button = (Button) e.widget;
+                int buttonWidth = button.getSize().x;
+                int buttonHeight = button.getSize().y;
 
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
+                // Get text bounds.
+                int textWidth = e.gc.textExtent(text).x;
+                int textHeight = e.gc.textExtent(text).y;
 
-			    btnLoadCa.setText("");
-			    // Draw the new text.
-			    e.gc.drawText( text, textX, textY, true);
-			}
-		});
+                // Calculate text coordinates.
+                int textX = ((buttonWidth - textWidth) / 2);
+                int textY = ((buttonHeight - textHeight) / 2);
+
+                btnLoadCa.setText("");
+                // Draw the new text.
+                e.gc.drawText(text, textX, textY, true);
+            }
+        });
         GridData gd_btnLoadCa = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_btnLoadCa.heightHint = 30;
         gd_btnLoadCa.widthHint = 100;
@@ -337,6 +375,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblUserCertificate.setAlignment(SWT.CENTER);
 
         final Scale ScaleCertBegin = new Scale(composite, SWT.NONE);
+        ScaleCertBegin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_UserCertificate + " "
+                        + Messages.CrtVerViewComposite_notValidBefore + " " + Messages.CrtVerViewComposite_dateSet
+                        + " " + controller.getFromClient());
+            }
+        });
         CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
         ScaleCertBegin.setMaximum(360);
         GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false, false, 12, 1);
@@ -345,6 +392,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         ScaleCertBegin.setSelection(180);
 
         final Scale ScaleCertEnd = new Scale(composite, SWT.NONE);
+        ScaleCertEnd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_UserCertificate + " "
+                        + Messages.CrtVerViewComposite_notValidAfter + " " + Messages.CrtVerViewComposite_dateSet + " "
+                        + controller.getThruClient());
+            }
+        });
         CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
         ScaleCertEnd.setMaximum(360);
         GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
@@ -354,25 +410,25 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         btnLoadUserCert = new Button(composite, SWT.NONE);
         btnLoadUserCert.addPaintListener(new PaintListener() {
-			public void paintControl(PaintEvent e) {
-				String text = Messages.CrtVerViewComposite_loadUserCert;
-			    Button button = (Button)e.widget;
-			    int buttonWidth = button.getSize().x;
-			    int buttonHeight = button.getSize().y;
-			    
-			    // Get text bounds.
-			    int textWidth = e.gc.textExtent( text ).x;
-			    int textHeight = e.gc.textExtent( text ).y;
+            public void paintControl(PaintEvent e) {
+                String text = Messages.CrtVerViewComposite_loadUserCert;
+                Button button = (Button) e.widget;
+                int buttonWidth = button.getSize().x;
+                int buttonHeight = button.getSize().y;
 
-			    // Calculate text coordinates.
-			    int textX = (( buttonWidth - textWidth ) / 2 );
-			    int textY = (( buttonHeight - textHeight ) / 2 );
+                // Get text bounds.
+                int textWidth = e.gc.textExtent(text).x;
+                int textHeight = e.gc.textExtent(text).y;
 
-			    btnLoadUserCert.setText("");
-			    // Draw the new text.
-			    e.gc.drawText( text, textX, textY, true);
-			}
-		});
+                // Calculate text coordinates.
+                int textX = ((buttonWidth - textWidth) / 2);
+                int textY = ((buttonHeight - textHeight) / 2);
+
+                btnLoadUserCert.setText("");
+                // Draw the new text.
+                e.gc.drawText(text, textX, textY, true);
+            }
+        });
         // Selection Listeners | Scales
         btnLoadUserCert.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -427,7 +483,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         canvas2.setLayoutData(gd_canvas2);
         canvas2.setLayout(new GridLayout(1, false));
         canvas2.addPaintListener(this);
-        
+
         Label lblLog = new Label(composite, SWT.NONE);
         lblLog.setText(Messages.CrtVerViewComposite_lblLog_text);
 
@@ -473,6 +529,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblSignatureDate.setAlignment(SWT.CENTER);
 
         final Scale ScaleSignatureDate = new Scale(composite, SWT.NONE);
+        ScaleSignatureDate.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_signatureDate + " "
+                        + Messages.CrtVerViewComposite_dateSet + " " + controller.getSigDate());
+            }
+        });
         CrtVerViewComposite.ScaleSignatureDate = ScaleSignatureDate;
         ScaleSignatureDate.setMaximum(720);
         GridData gd_ScaleSignatureDate = new GridData(SWT.FILL, SWT.FILL, false, false, 13, 1);
@@ -491,6 +555,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         lblVerificationDate.setAlignment(SWT.CENTER);
 
         final Scale ScaleVerificationDate = new Scale(composite, SWT.NONE);
+        ScaleVerificationDate.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseUp(MouseEvent e) {
+                controller.parseDatesFromComposite();
+                controller.setLogText(Messages.CrtVerViewComposite_verificationDate + " "
+                        + Messages.CrtVerViewComposite_dateSet + " " + controller.getVerDate());
+            }
+        });
         CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
         GridData gd_ScaleVerificationDate = new GridData(SWT.FILL, SWT.FILL, false, false, 13, 1);
         gd_ScaleVerificationDate.widthHint = 480;
@@ -829,14 +901,15 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
         Button btnForward = new Button(composite, SWT.NONE);
         btnForward.addSelectionListener(new SelectionAdapter() {
-        	@Override
-        	public void widgetSelected(SelectionEvent e) {
-        		try {
-					PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().showView("org.jcryptool.visual.sigVerification.view");
-				} catch (PartInitException e1) {
-				    LogUtil.logError(Activator.PLUGIN_ID, e1);
-				}
-        	}
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+                            .showView("org.jcryptool.visual.sigVerification.view");
+                } catch (PartInitException e1) {
+                    LogUtil.logError(Activator.PLUGIN_ID, e1);
+                }
+            }
         });
         GridData gd_btnForward = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_btnForward.widthHint = 161;
@@ -1062,12 +1135,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(255, 140, 0));
         CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(255, 140, 0));
     }
-    
-    
+
     /**
      * Sets the text of the description at the top of the GUI.
      */
-    public void setText(){
+    public void setText() {
         txtDiesIstDer.setText(Messages.CrtVerViewComposite_description);
     }
 
