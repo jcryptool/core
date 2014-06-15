@@ -23,6 +23,7 @@ public class AntColHeaderComposite extends Composite{
 
 		final Label label = new Label(this, SWT.NONE);
 		label.setFont(FontService.getHeaderFont());
+        label.setBackground(WHITE);
 		label.setText(Messages.Header_title);
 		StyledText stDescription = new StyledText(this, SWT.READ_ONLY | SWT.MULTI
 				| SWT.WRAP);

@@ -14,18 +14,18 @@
 <p>The screenshot below shows the view of the plug-in when initially loaded. In the upper and lower components brief explanations of the parameters
 and the view can be found. The centered component is the controller of the plug-in.<br>
 <h2>Configuration</h2>
-<p>First of all, a cipher text has to be chosen in the <b>Configuration</b> panel. There are two possibilities to do so:
+<p>First of all, a ciphertext has to be chosen in the <b>Configuration</b> panel. There are two possibilities to do so:
 </p>
 <ul>
-<li><b>Generate cipher text</b> - A wizard will be started. The wizard helps you to generate a cipher text from a plain text by
+<li><b>Generate ciphertext</b> - A wizard will be started. The wizard helps you to generate a ciphertext from a plain text by
 encrypting it with a transposition cipher.<br>
-Therefore, a cipher text can be loaded from a file, from an opened editor window in JCrypTool or the text can be inserted directly.
+Therefore, a ciphertext can be loaded from a file, from an opened editor window in JCrypTool or the text can be inserted directly.
 Next the length of the key of encryption can be chosen. This number indicates in how many columns in the lower table the text will be divided.
 Via drag'n'drop the table columns can easily be swapped and the key of encryption can be changed.<br>
 By pressing on Finish the encoded text will be loaded to the Ant Colony Optimization plug-in.
 </li>
 <li>
-<b>Insert cipher text directly</b> - Alternatively, a pre-encoded text can be inserted in this text field.
+<b>Insert ciphertext directly</b> - Alternatively, a pre-encoded text can be inserted in this text field.
 <br><i>Information: Only upper case characters from A-Z are allowed.</i> 
 </li>
 </ul>
@@ -36,7 +36,7 @@ graph. If you do not know this length, statistic test, e.g. the Friedman test, i
 </li>
 <li>
 <b>Language of text</b> - You can choose between German and English. The output of the algorithm will be compared and rated based on the 
-frequency of common word in the chosen language. Therefore a dictionary will be used.
+frequency of common word in the chosen language. Therefore a dictionary will be used. Further on it is possible to provide your own dictionary by selecting "Load list of words from file".
 </li>
 </ul>
 <p> After completing choosing those setting, the analysis can be started.<br></p>
@@ -109,7 +109,7 @@ graph or the pheromone matrix.</p>
 <ul>
 <li><b>Visualization as graph</b> - 
 The appropriate graph with the current ant on its position and its path will be shown.
-In the graph, each knot contains letters (maximal 5 letters are displayed) of the cipher text. If the ant has not yet reached its final position
+In the graph, each knot contains letters (maximal 5 letters are displayed) of the ciphertext. If the ant has not yet reached its final position
 in the graph, next to each knot transposition probabilities are shown. Those probabilities represent the bigrams of letters which would 
 arise by concatenating the knots. A higher probability therefore means, that the ant would more likely choose this knot.
 </li>

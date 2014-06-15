@@ -2,10 +2,12 @@ package org.jcryptool.visual.aco.view;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
@@ -22,9 +24,10 @@ public class AntColResultComposite extends Composite {
 	private Text currentTrail;
 	private Text bestTrail;
 	private Group resultGroup;
-	private Label emptyText1;
-	private Label emptyText2;
 	private Group bestGroup;
+	private StackLayout stackLayout;
+	private Composite emptyTextComp;
+	private Composite resultComp;
 
 	public AntColResultComposite(CommonModel model, Composite c) {
 
@@ -33,27 +36,44 @@ public class AntColResultComposite extends Composite {
 		resultGroup = new Group(this, SWT.NONE);
 		resultGroup.setText(Messages.Viusal_ResultGroup);
 		resultGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		resultGroup.setLayout(new GridLayout(1, false));
+		stackLayout = new StackLayout();
+		resultGroup.setLayout(stackLayout);
 
-		emptyText1 = new Label(resultGroup, SWT.NONE);
+		emptyTextComp = new Composite(resultGroup, SWT.NONE);
+		emptyTextComp.setLayout(new GridLayout(1, false));
+		emptyTextComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+		resultComp = new Composite(resultGroup, SWT.NONE);
+		resultComp.setLayout(new GridLayout(1, false));
+		resultComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+		
+		Label emptyText1 = new Label(emptyTextComp, SWT.NONE);
 		emptyText1.setText(Messages.Result_emptyText1);
 		emptyText1.setLayoutData(new GridData(SWT.CENTER, SWT.BOTTOM, true,
 				true));
-		emptyText2 = new Label(resultGroup, SWT.NONE);
+		Label emptyText2 = new Label(emptyTextComp, SWT.NONE);
 		emptyText2.setText(Messages.Result_emptyText2);
 		emptyText2.setLayoutData(new GridData(SWT.CENTER, SWT.TOP, true, true));
+		setEmptyText();
 	}
 
+	public void setEmptyText(){
+		stackLayout.topControl = emptyTextComp;
+		resultGroup.layout();
+	}
+	
+	public void setResultContainer(){
+		stackLayout.topControl = resultComp;
+		resultGroup.layout();
+	}
 	public void initComponent() {
 
-		emptyText1.dispose();
-		emptyText2.dispose();
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		GridData dataLabel = new GridData(SWT.FILL, SWT.BOTTOM, true, false, 2, 1);
 		data.heightHint = 18;
-		currAntNolabel = new Label(resultGroup, SWT.NONE);
+		currAntNolabel = new Label(resultComp, SWT.NONE);
 		currAntNolabel.setLayoutData(data);
-		Group currGroup = new Group(resultGroup, SWT.NONE);
+		Group currGroup = new Group(resultComp, SWT.NONE);
 		currGroup.setText(Messages.Viusal_CurrAntGroup);
 		currGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		currGroup.setLayout(new GridLayout(2, false));
@@ -92,10 +112,10 @@ public class AntColResultComposite extends Composite {
 		currentTrail.setLayoutData(data);
 		currentTrail.setEditable(false);
 		
-		filler = new Composite(resultGroup, SWT.NONE);
+		filler = new Composite(resultComp, SWT.NONE);
 		filler.setLayoutData(new GridData(SWT.TOP, SWT.LEFT, true, true));
 		
-		bestGroup = new Group(resultGroup, SWT.NONE);
+		bestGroup = new Group(resultComp, SWT.NONE);
 		bestGroup.setText(Messages.Viusal_BestAntGroup);
 		bestGroup.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		bestGroup.setLayout(new GridLayout(2, false));
@@ -127,7 +147,7 @@ public class AntColResultComposite extends Composite {
 		bestTrail.setLayoutData(data);
 		bestTrail.setEditable(false);
 
-		resultGroup.layout();
+		resultComp.layout();
 	}
 
 	public void setResultText(String curResult, String curTrail,

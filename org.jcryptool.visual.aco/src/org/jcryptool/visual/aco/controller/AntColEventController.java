@@ -70,6 +70,13 @@ public class AntColEventController implements AntColEvents {
 		}
 	}
 
+	public void onStopAnalyseButtonClick() {
+		model.reset();
+		for (AntColEvents con : controllerList) {
+			con.onStopAnalyseButtonClick();
+		}
+	}
+
 	public void onSelectShowGraph() {
 		model.setDisplayGraph(true);
 		model.setAnimateable(true);

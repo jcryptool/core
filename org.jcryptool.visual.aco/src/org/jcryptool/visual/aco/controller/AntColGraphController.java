@@ -127,4 +127,10 @@ public class AntColGraphController implements AntColEvents{
 	 
 		
 	}
+
+	@Override
+	public void onStopAnalyseButtonClick() {
+		// TODO Auto-generated method stub
+		
+	}
 }

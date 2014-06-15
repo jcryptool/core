@@ -31,8 +31,7 @@ public class AntColResultController implements AntColEvents {
 
 	@Override
 	public void onStartAnalyseButtonClick() {
-	 
-
+		
 	}
 
 	@Override
@@ -54,6 +53,7 @@ public class AntColResultController implements AntColEvents {
 	}
 
 	private void refreshView() {
+		resultComp.setResultContainer();
 		resultComp.setResultText(model.toText(false),
 				ConvertToString(model.getTrail()), model.toText(true),
 				ConvertToString(model.getBestTrail()), model.getAntNr()); //$NON-NLS-1$);
@@ -145,6 +145,11 @@ public class AntColResultController implements AntColEvents {
 	public void onPheromoneChanged(double value) {
 	 
 		
+	}
+
+	@Override
+	public void onStopAnalyseButtonClick() {
+		resultComp.setEmptyText();
 	}
 
 }

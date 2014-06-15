@@ -175,4 +175,10 @@ public class AntColVisualController implements
 		
 	}
 
+	@Override
+	public void onStopAnalyseButtonClick() {
+		visualComp.setEnabledRadioGroup(false);
+		updateView();
+	}
+
 }

@@ -13,6 +13,7 @@ public interface AntColEvents{
 	public void onModifyConfiguration();
 	public void onConfigurationChange();
 	public void onPlaceNewAnt();
+	public void onStopAnalyseButtonClick();
 	public void onNewIteration();
 	public void onKeyLengthChange(int value, int oldValue);
 	public void onGenerateText();

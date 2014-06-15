@@ -185,4 +185,9 @@ public class AntColAnalysisController implements
 		
 	}
 
+	@Override
+	public void onStopAnalyseButtonClick() {	
+		analysisComp.setEnabled(false);
+	}
+
 }

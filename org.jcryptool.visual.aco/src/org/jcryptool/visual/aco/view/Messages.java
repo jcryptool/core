@@ -14,6 +14,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages {
 	private static final String BUNDLE_NAME = "org.jcryptool.visual.aco.view.messages"; //$NON-NLS-1$
 
+	public static String Control_language_own;
+
 	public static String graph_probHintLbl;
 
 	public static String Func_allSteps;
@@ -40,6 +42,7 @@ public class Messages {
 	public static String Func_oneStep;
 	public static String Func_proceed;
 	public static String Func_proceedToAnalysis;
+	public static String Func_stopAnalysis;
 	public static String Func_reset;
 	public static String Func_analyseConfiguration;
 	public static String Func_analyseGroupLabel;

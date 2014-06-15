@@ -123,4 +123,9 @@ public class AntColDescriptionController implements AntColEvents {
 		comp.setDescriptionText(3);
 	}
 
+	@Override
+	public void onStopAnalyseButtonClick() {
+		comp.setDescriptionText(0);
+	}
+
 }

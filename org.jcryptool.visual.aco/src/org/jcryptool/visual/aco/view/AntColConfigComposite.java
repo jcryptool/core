@@ -36,6 +36,8 @@ public class AntColConfigComposite extends Composite {
 	private Group firstStepGroup;
 	private int currKeyLength = 4;
 	private Label textLengthLabel;
+	private SelectionAdapter startAnalysisListener;
+	private SelectionAdapter stopAnalysisListener;
 
 	/**
 	 * Konstruktor. Erhaelt das Model, das die Daten des Tutorials verwaltet und
@@ -61,7 +63,7 @@ public class AntColConfigComposite extends Composite {
 
 		GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
 		gridData.widthHint = 220;
-		
+
 		firstStepGroup.setLayoutData(gridData);
 		generateTextButton = new Button(firstStepGroup, SWT.PUSH);
 		generateTextButton.setText(Messages.Control_generateText); //$NON-NLS-1$
@@ -90,7 +92,7 @@ public class AntColConfigComposite extends Composite {
 		GridData fillerData = new GridData(SWT.TOP, SWT.LEFT, false, false);
 		fillerData.heightHint = 6;
 		filler.setLayoutData(fillerData);
-		
+
 		labelSlider = new Label(firstStepGroup, SWT.NONE);
 		labelSlider.setText(Messages.Func_keyLength); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -103,24 +105,24 @@ public class AntColConfigComposite extends Composite {
 				false));
 		keyLengthSlider.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				
-				controller.onKeyLengthChange(keyLengthSlider.getSelection(), currKeyLength);
+
+				controller.onKeyLengthChange(keyLengthSlider.getSelection(),
+						currKeyLength);
 				currKeyLength = keyLengthSlider.getSelection();
 			}
 		});
 
-
 		filler = new Composite(firstStepGroup, SWT.NONE);
 		filler.setLayoutData(fillerData);
-		
+
 		label = new Label(firstStepGroup, SWT.FILL);
 		label.setText(Messages.Func_textLanguage); //$NON-NLS-1$
 		label.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
-		
+
 		languageCombo = new Combo(firstStepGroup, SWT.READ_ONLY);
 		languageCombo.setBounds(50, 50, 150, 65);
 		String items[] = { Messages.Control_language1,
-				Messages.Control_language2 };
+				Messages.Control_language2, Messages.Control_language_own };
 		languageCombo.setItems(items);
 		languageCombo.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, true,
 				false));
@@ -141,13 +143,21 @@ public class AntColConfigComposite extends Composite {
 		startAnalysisButton.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM,
 				true, false));
 		startAnalysisButton.setEnabled(false);
-		startAnalysisButton.addSelectionListener(new SelectionAdapter() {
+		startAnalysisListener = new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				controller.onStartAnalyseButtonClick();
+				toggleAnalyseButton();
 			}
-		});
+		};
+		stopAnalysisListener = new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				controller.onStopAnalyseButtonClick();
+				toggleAnalyseButton();
+			}
+		};
+		startAnalysisButton.addSelectionListener(startAnalysisListener);
 		addCipherTextListener();
-		
+
 		layout();
 	}
 
@@ -214,8 +224,7 @@ public class AntColConfigComposite extends Composite {
 		});
 	}
 
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
+	public void setAllChildsEnabled(boolean enabled) {
 		for (Control child : firstStepGroup.getChildren()) {
 			child.setEnabled(enabled);
 		}
@@ -229,8 +238,26 @@ public class AntColConfigComposite extends Composite {
 		return languageCombo.getText();
 	}
 
+	public void setLanguageComboSelection(String lang) {
+		languageCombo.setText(lang);
+	}
+
 	public void setEnabledStartAnalyseButton(boolean b) {
 		startAnalysisButton.setEnabled(b);
+	}
+
+	public void toggleAnalyseButton() {
+		if (startAnalysisButton.getText().equals(
+				Messages.Func_proceedToAnalysis)) {
+			startAnalysisButton.removeSelectionListener(startAnalysisListener);
+			startAnalysisButton.setText(Messages.Func_stopAnalysis);
+			startAnalysisButton.addSelectionListener(stopAnalysisListener);
+		} else {
+			startAnalysisButton.removeSelectionListener(stopAnalysisListener);
+			startAnalysisButton.setText(Messages.Func_proceedToAnalysis);
+			startAnalysisButton.addSelectionListener(startAnalysisListener);
+		}
+
 	}
 
 	public String getCipherTextFieldValue() {
@@ -245,8 +272,14 @@ public class AntColConfigComposite extends Composite {
 		return keyLengthSlider.getSelection();
 
 	}
-	
-	public void showNoVisualToolTip(){
+
+	public void setKeyLengthSliderValue(int length) {
+		keyLengthSlider.setSelection(length);
+		controller.onKeyLengthChange(keyLengthSlider.getSelection(), length);
+		currKeyLength = length;
+	}
+
+	public void showNoVisualToolTip() {
 		final ToolTip tip = new ToolTip(keyLengthSlider.getShell(), SWT.BALLOON);
 		tip.setMessage(Messages.Control_noVisualAvailable);
 		tip.setVisible(true);

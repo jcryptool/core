@@ -125,4 +125,10 @@ public class AntColPherMatrixController implements AntColEvents{
 	 
 		
 	}
+
+	@Override
+	public void onStopAnalyseButtonClick() {
+		// TODO Auto-generated method stub
+		
+	}
 }

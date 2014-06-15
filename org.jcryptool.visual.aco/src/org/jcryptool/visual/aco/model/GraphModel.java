@@ -9,9 +9,15 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.aco.model;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -61,12 +67,17 @@ public class GraphModel {
 	 */
 	private void readWortliste(String language) {
 		this.wortliste = new Vector<String>();
+
+		
 		try {
-			String liste;
-			liste = this
-					.loadTextResource(
-							"material", language + "/wordlist.txt"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			String liste = tryToReadFromFile(language);
+			if(liste == null){
+				liste = this
+						.loadTextResource(
+								"material", language + "/wordlist.txt"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			}
 			final StringTokenizer stok = new StringTokenizer(liste);
+			
 			String token = stok.nextToken(); // in einzelne Woerter trennen
 			while (stok.hasMoreTokens()) {
 				if (token.length() > 2) {
@@ -78,6 +89,17 @@ public class GraphModel {
 			LogUtil.logError(ACOPlugin.PLUGIN_ID,
 					Messages.Graph_noWordlist, e, true); //$NON-NLS-1$
 		}
+	}
+
+	private String tryToReadFromFile(String path) {
+			byte[] filebytes;
+			try {
+				filebytes = Files.readAllBytes(Paths.get(path));
+
+				return new String(filebytes, Charset.defaultCharset());
+			} catch (IOException e) {
+			}
+		return null;
 	}
 
 	/**
