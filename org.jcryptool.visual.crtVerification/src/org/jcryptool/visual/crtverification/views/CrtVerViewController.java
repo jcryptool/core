@@ -489,6 +489,7 @@ public class CrtVerViewController {
     }
 
     public void loadCertificate(ChooseCertPage p, X509Certificate cert, String contact_name) {
+        CrtVerViewComposite.validitySymbol.hide();
         switch (p.getCertType()) {
         case 1: // [1] UserCert
             setTN(cert);
