@@ -241,11 +241,7 @@ public class CertPathVerifier {
             // check if ver and sig date are within the validity period of the client cert
             verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
                     rootNotAfter);
-            // check if sig date is before ver date
-            if (signatureDate.after(verificationDate)) {
-                errors.add(Messages.CrtVerifciation_sigDateAfterVerDate);
-
-            }
+            
 
             if (!isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter)) {
                 errors.add(Messages.CrtVericiation_sigDateNotWithinClient);
@@ -253,7 +249,12 @@ public class CertPathVerifier {
 
             // check sig and ver date if shell model
             if (model == 0) {
+            	// check if sig date is before ver date
+                if (signatureDate.after(verificationDate)) {
+                    errors.add(Messages.CrtVerifciation_sigDateAfterVerDate);
 
+                }
+            	
                 if (!isDateWithinPeriod(verificationDate, clientNotBefore, clientNotAfter)) {
                     errors.add(Messages.CrtVericiation_verDateNotWithinClient);
                 }
