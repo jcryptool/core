@@ -78,7 +78,7 @@ public class TranspositionTableComposite extends Composite implements ControlLis
 	/**
 	 * The width of a column (inhabited by 1 character) in pixel
 	 */
-	private int columnWidth = 26;
+	private int columnWidth = 30;
 	/**
 	 * Columns are saved for disposal at redraw
 	 */

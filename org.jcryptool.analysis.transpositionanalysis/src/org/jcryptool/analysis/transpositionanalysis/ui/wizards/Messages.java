@@ -51,6 +51,7 @@ public class Messages extends NLS {
 	public static String TranspTextWizardPage_lblIfTheText_text;
 	public static String TranspTextWizardPage_lblCharacters_text;
 	public static String TranspTextWizardPage_lblyouCanChange_text;
+	public static String TranspTextWizardPage_zzz;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
