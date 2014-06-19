@@ -26,8 +26,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -69,12 +69,9 @@ import de.flexiprovider.common.math.ellipticcurves.EllipticCurve;
 import de.flexiprovider.common.math.ellipticcurves.Point;
 
 public class ECDHComposite extends Composite implements PaintListener {
-    private Composite compositeIntro = null;
-    private StyledText stDescription = null;
     private Group groupMain = null;
     private Canvas canvasMain = null;
     private Button btnSetPublicParameters = null;
-    private Group groupParameters = null;
     private Button btnChooseSecrets = null;
     private Button btnCreateSharedKeys = null;
     private Button btnExchangeKeys = null;
@@ -115,7 +112,6 @@ public class ECDHComposite extends Composite implements PaintListener {
     private int valueN;
     private ECDHView view;
     private File logFile;
-    private IWorkbenchPage editorPage;
     private boolean large;
     private EllipticCurve largeCurve;
     private Point pointG;
@@ -165,7 +161,7 @@ public class ECDHComposite extends Composite implements PaintListener {
      *
      */
     private void createCompositeIntro() {
-        compositeIntro = new Composite(this, SWT.NONE);
+        Composite compositeIntro = new Composite(this, SWT.NONE);
         compositeIntro.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
         compositeIntro.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
         compositeIntro.setLayout(new GridLayout(1, false));
@@ -175,7 +171,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
         label.setText(Messages.getString("ECDHView.title")); //$NON-NLS-1$
 
-        stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
+        StyledText stDescription = new StyledText(compositeIntro, SWT.READ_ONLY);
         stDescription.setText(Messages.getString("ECDHView.description")); //$NON-NLS-1$
         stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
     }
@@ -219,10 +215,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         formData.left = new FormAttachment(4);
         formData.top = new FormAttachment(4);
         btnSetPublicParameters.setLayoutData(formData);
-        btnSetPublicParameters.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnSetPublicParameters.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 try {
                     if (showInformationDialogs) {
@@ -272,11 +265,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         formData.top = new FormAttachment(22);
         btnChooseSecrets.setLayoutData(formData);
         btnChooseSecrets.setText(Messages.getString("ECDHView.chooseSecrets")); //$NON-NLS-1$
-        btnChooseSecrets.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnChooseSecrets.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (showInformationDialogs) {
                     MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
@@ -289,7 +278,6 @@ public class ECDHComposite extends Composite implements PaintListener {
                 btnSecretB.setEnabled(true);
                 btnChooseSecrets.setBackground(cGreen);
             }
-
         });
         btnCreateSharedKeys = new Button(canvasMain, SWT.NONE);
         btnCreateSharedKeys.setEnabled(false);
@@ -299,11 +287,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         formData.top = new FormAttachment(40);
         btnCreateSharedKeys.setLayoutData(formData);
         btnCreateSharedKeys.setText(Messages.getString("ECDHView.createSharedKeys")); //$NON-NLS-1$
-        btnCreateSharedKeys.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnCreateSharedKeys.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (showInformationDialogs) {
                     MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
@@ -316,7 +300,6 @@ public class ECDHComposite extends Composite implements PaintListener {
                 btnCalculateSharedB.setEnabled(true);
                 btnCreateSharedKeys.setBackground(cGreen);
             }
-
         });
         btnExchangeKeys = new Button(canvasMain, SWT.NONE);
         btnExchangeKeys.setEnabled(false);
@@ -327,11 +310,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         formData.top = new FormAttachment(57);
         btnExchangeKeys.setLayoutData(formData);
         btnExchangeKeys.setText(Messages.getString("ECDHView.exchangeSharedKeys")); //$NON-NLS-1$
-        btnExchangeKeys.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnExchangeKeys.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (showInformationDialogs) {
                     MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
@@ -354,11 +333,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         formData.top = new FormAttachment(75);
         btnGenerateKey.setLayoutData(formData);
         btnGenerateKey.setText(Messages.getString("ECDHView.generateCommonKey")); //$NON-NLS-1$
-        btnGenerateKey.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnGenerateKey.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (showInformationDialogs) {
                     MessageBox messageBox = new MessageBox(new Shell(Display.getCurrent()), SWT.ICON_INFORMATION
@@ -371,7 +346,6 @@ public class ECDHComposite extends Composite implements PaintListener {
                 btnCalculateKeyB.setEnabled(true);
                 btnGenerateKey.setBackground(cGreen);
             }
-
         });
         createGroupAlice();
         createGroupBob();
@@ -383,7 +357,7 @@ public class ECDHComposite extends Composite implements PaintListener {
      */
     private void createGroupParameters() {
         GridLayout gridLayout = new GridLayout(2, false);
-        groupParameters = new Group(canvasMain, SWT.NONE);
+        Group groupParameters = new Group(canvasMain, SWT.NONE);
         groupParameters.setText(Messages.getString("ECDHView.groupParameters")); //$NON-NLS-1$
         FormData formData = new FormData(525, SWT.DEFAULT);
         formData.left = new FormAttachment(28);
@@ -417,10 +391,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         btnSecretA.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
         btnSecretA.setBackground(cRed);
         btnSecretA.setEnabled(false);
-        btnSecretA.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnSecretA.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 SecretKeyWizard wiz;
                 if (large)
@@ -468,11 +439,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         GridData gridData = new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1);
         gridData.verticalIndent = 40;
         btnCalculateSharedA.setLayoutData(gridData);
-        btnCalculateSharedA.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
+        btnCalculateSharedA.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (large) {
                     shareLargeA = multiplyLargePoint(pointG, secretLargeA);
@@ -507,11 +474,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         gridData.verticalIndent = 130;
         btnCalculateKeyA.setLayoutData(gridData);
         btnCalculateKeyA.setBackground(cRed);
-        btnCalculateKeyA.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnCalculateKeyA.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (large) {
                     keyLargeA = multiplyLargePoint(shareLargeB, secretLargeA);
@@ -587,11 +550,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         btnSecretB.setEnabled(false);
         btnSecretB.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, false, 2, 1));
         btnSecretB.setBackground(cRed);
-        btnSecretB.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
+        btnSecretB.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 SecretKeyWizard wiz;
                 if (large)
@@ -641,11 +600,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         gridData.verticalIndent = 40;
         btnCalculateSharedB.setLayoutData(gridData);
         btnCalculateSharedB.setBackground(cRed);
-        btnCalculateSharedB.addSelectionListener(new SelectionListener() {
-
-            public void widgetDefaultSelected(SelectionEvent e) {
-            }
-
+        btnCalculateSharedB.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (large) {
                     shareLargeB = multiplyLargePoint(pointG, secretLargeB);
@@ -681,11 +636,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         gridData.verticalIndent = 130;
         btnCalculateKeyB.setLayoutData(gridData);
         btnCalculateKeyB.setBackground(cRed);
-        btnCalculateKeyB.addSelectionListener(new SelectionListener() {
-            public void widgetDefaultSelected(SelectionEvent e) {
-                widgetSelected(e);
-            }
-
+        btnCalculateKeyB.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if (large) {
                     keyLargeB = multiplyLargePoint(shareLargeA, secretLargeB);
@@ -892,8 +843,7 @@ public class ECDHComposite extends Composite implements PaintListener {
 
         saveToFile(s);
 
-        if (editorPage == null)
-            editorPage = view.getSite().getPage();
+        IWorkbenchPage editorPage = view.getSite().getPage();
 
         IEditorReference[] er = editorPage.getEditorReferences();
         for (int i = 0; i < er.length; i++) {
@@ -940,8 +890,8 @@ public class ECDHComposite extends Composite implements PaintListener {
 
     private void selectFileLocation() {
         FileDialog dialog = new FileDialog(getShell(), SWT.SAVE);
-        dialog.setFilterNames(new String[] {IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME});
-        dialog.setFilterExtensions(new String[] {IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION});
+        dialog.setFilterNames(new String[] { IConstants.TXT_FILTER_NAME, IConstants.ALL_FILTER_NAME });
+        dialog.setFilterExtensions(new String[] { IConstants.TXT_FILTER_EXTENSION, IConstants.ALL_FILTER_EXTENSION });
         dialog.setFilterPath(DirectoryService.getUserHomeDir());
         dialog.setFileName("ECDH.txt"); //$NON-NLS-1$
         dialog.setOverwrite(true);
@@ -955,59 +905,59 @@ public class ECDHComposite extends Composite implements PaintListener {
 
     private void reset(int i) {
         switch (i) {
-            case 0: // complete reset
-                curve = null;
-                valueN = 0;
-                generator = null;
-                elements = null;
+        case 0: // complete reset
+            curve = null;
+            valueN = 0;
+            generator = null;
+            elements = null;
 
-                textCurve.setText(""); //$NON-NLS-1$
-                textGenerator.setText(""); //$NON-NLS-1$
-                btnSetPublicParameters.setBackground(cRed);
-            case 1:// reset from Set public parameters button
-                secretA = -1;
-                secretB = -1;
-                secretLargeA = null;
-                secretLargeB = null;
+            textCurve.setText(""); //$NON-NLS-1$
+            textGenerator.setText(""); //$NON-NLS-1$
+            btnSetPublicParameters.setBackground(cRed);
+        case 1:// reset from Set public parameters button
+            secretA = -1;
+            secretB = -1;
+            secretLargeA = null;
+            secretLargeB = null;
 
-                btnChooseSecrets.setEnabled(false);
-                btnChooseSecrets.setBackground(cRed);
-                btnSecretA.setEnabled(false);
-                btnSecretA.setBackground(cRed);
-                textSecretA.setText(""); //$NON-NLS-1$
-                btnSecretB.setEnabled(false);
-                btnSecretB.setBackground(cRed);
-                textSecretB.setText(""); //$NON-NLS-1$
-                btnCreateSharedKeys.setEnabled(false);
-            default:
-                shareA = null;
-                shareB = null;
-                keyA = null;
-                keyB = null;
-                shareLargeA = null;
-                shareLargeB = null;
-                keyLargeA = null;
-                keyLargeB = null;
+            btnChooseSecrets.setEnabled(false);
+            btnChooseSecrets.setBackground(cRed);
+            btnSecretA.setEnabled(false);
+            btnSecretA.setBackground(cRed);
+            textSecretA.setText(""); //$NON-NLS-1$
+            btnSecretB.setEnabled(false);
+            btnSecretB.setBackground(cRed);
+            textSecretB.setText(""); //$NON-NLS-1$
+            btnCreateSharedKeys.setEnabled(false);
+        default:
+            shareA = null;
+            shareB = null;
+            keyA = null;
+            keyB = null;
+            shareLargeA = null;
+            shareLargeB = null;
+            keyLargeA = null;
+            keyLargeB = null;
 
-                btnCreateSharedKeys.setBackground(cRed);
-                btnCalculateSharedA.setEnabled(false);
-                btnCalculateSharedA.setBackground(cRed);
-                textSharedA.setText(""); //$NON-NLS-1$
-                btnCalculateSharedB.setEnabled(false);
-                btnCalculateSharedB.setBackground(cRed);
-                textSharedB.setText(""); //$NON-NLS-1$
-                btnExchangeKeys.setEnabled(false);
-                btnExchangeKeys.setBackground(cRed);
-                btnGenerateKey.setEnabled(false);
-                btnGenerateKey.setBackground(cRed);
-                btnCalculateKeyA.setEnabled(false);
-                btnCalculateKeyA.setBackground(cRed);
-                textCommonKeyA.setText(""); //$NON-NLS-1$
-                btnCalculateKeyB.setEnabled(false);
-                btnCalculateKeyB.setBackground(cRed);
-                textCommonKeyB.setText(""); //$NON-NLS-1$
-                action_saveToEditor.setEnabled(false);
-                action_saveToFile.setEnabled(false);
+            btnCreateSharedKeys.setBackground(cRed);
+            btnCalculateSharedA.setEnabled(false);
+            btnCalculateSharedA.setBackground(cRed);
+            textSharedA.setText(""); //$NON-NLS-1$
+            btnCalculateSharedB.setEnabled(false);
+            btnCalculateSharedB.setBackground(cRed);
+            textSharedB.setText(""); //$NON-NLS-1$
+            btnExchangeKeys.setEnabled(false);
+            btnExchangeKeys.setBackground(cRed);
+            btnGenerateKey.setEnabled(false);
+            btnGenerateKey.setBackground(cRed);
+            btnCalculateKeyA.setEnabled(false);
+            btnCalculateKeyA.setBackground(cRed);
+            textCommonKeyA.setText(""); //$NON-NLS-1$
+            btnCalculateKeyB.setEnabled(false);
+            btnCalculateKeyB.setBackground(cRed);
+            textCommonKeyB.setText(""); //$NON-NLS-1$
+            action_saveToEditor.setEnabled(false);
+            action_saveToFile.setEnabled(false);
         }
         canvasMain.redraw();
         layout();
