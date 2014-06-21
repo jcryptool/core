@@ -13,6 +13,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.util,
  org.jcryptool.core.util.calendar,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.directories,
  org.jcryptool.core.util.fonts;uses:="org.eclipse.swt.graphics",
