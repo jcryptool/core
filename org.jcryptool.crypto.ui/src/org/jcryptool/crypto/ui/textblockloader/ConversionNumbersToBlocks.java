@@ -1,6 +1,5 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
-import java.math.BigInteger;
 import java.util.List;
 
 public abstract class ConversionNumbersToBlocks {

@@ -1,7 +1,5 @@
 package org.jcryptool.crypto.ui.textblockloader.conversion;
 
-import java.util.Arrays;
-
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.crypto.ui.textblockloader.ConversionCharsToNumbers;
 

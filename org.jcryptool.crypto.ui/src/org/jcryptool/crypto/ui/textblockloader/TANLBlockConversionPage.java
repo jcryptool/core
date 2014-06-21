@@ -1,30 +1,22 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
-import java.awt.font.NumericShaper;
 import java.text.MessageFormat;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Spinner;
 import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.core.util.input.InputVerificationResult.MessageType;
-import org.jcryptool.crypto.ui.textblockloader.conversion.AlphabetCharsToNumbers;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;
 import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;

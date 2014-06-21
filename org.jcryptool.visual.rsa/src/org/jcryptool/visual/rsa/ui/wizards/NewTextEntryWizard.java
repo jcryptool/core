@@ -1,17 +1,9 @@
 package org.jcryptool.visual.rsa.ui.wizards;
 
-import java.util.List;
-
-import org.eclipse.jface.wizard.IWizardPage;
-import org.jcryptool.core.operations.algorithm.classic.textmodify.Transform;
 import org.jcryptool.crypto.ui.textblockloader.TextAsNumbersLoaderWizard;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
-import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.RSAData;
-import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterCiphertextPage;
-import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterPlaintextPage;
-import org.jcryptool.visual.rsa.ui.wizards.wizardpages.EnterSignaturePage;
 
 public class NewTextEntryWizard extends TextAsNumbersLoaderWizard {
 

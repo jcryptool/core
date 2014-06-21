@@ -1,7 +1,5 @@
 package org.jcryptool.visual.aco.controller;
 
-import java.io.File;
-
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;

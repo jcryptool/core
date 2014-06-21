@@ -1,21 +1,17 @@
 package org.jcryptool.crypto.ui.textblockloader;
 
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.jcryptool.core.logging.utils.LogUtil;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.jcryptool.crypto.ui.textblockloader.conversion.AlphabetCharsToNumbers;
 import org.jcryptool.crypto.ui.textblockloader.conversion.ConversionStringToBlocks;
 import org.jcryptool.crypto.ui.textblockloader.conversion.NumbersToBlocksConversion;

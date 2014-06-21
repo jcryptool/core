@@ -11,18 +11,10 @@ package org.jcryptool.visual.rsa.ui;
 
 import java.util.HashMap;
 
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.MessageBox;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.ui.PlatformUI;
@@ -30,7 +22,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.rsa.Action;
 import org.jcryptool.visual.rsa.Messages;
 import org.jcryptool.visual.rsa.RSAData;
-import org.jcryptool.crypto.ui.textblockloader.TextAsNumbersLoaderWizard;
 
 /**
  * the view displaying this visualization.
