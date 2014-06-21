@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.print.attribute.IntegerSyntax;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
@@ -581,7 +579,7 @@ public class Lib {
 
 	   return baos.toByteArray();
 	}
-	
+
 	public static Integer hash(List<Integer> plainTextAsNumbers,
 			boolean simple, BigInteger modulus) {
 		BigInteger rv = BigInteger.ZERO;
