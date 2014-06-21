@@ -186,16 +186,21 @@ public class KeySelectionWizard extends Wizard {
                             save(true);
                         }
                     } else {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias privAlias = data.getPrivateAlias();
-                        final String password = data.getPassword();
-                        final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
-                        data.setN(privkey.getModulus());
-                        data.setD(privkey.getD().bigInt);
-                        data.setP(privkey.getP().bigInt);
-                        data.setQ(privkey.getQ().bigInt);
-                        data.setE(privkey.getPublicExponent());
+                    	try {
+                        	final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                        	final KeyStoreAlias privAlias = data.getPrivateAlias();
+                        	final String password = data.getPassword();
+                        	final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                        	final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+                        	data.setN(privkey.getModulus());
+                        	data.setD(privkey.getD().bigInt);
+                        	data.setP(privkey.getP().bigInt);
+                        	data.setQ(privkey.getQ().bigInt);
+                        	data.setE(privkey.getPublicExponent());
+                        } catch (GeneralSecurityException secEx ) {
+                        	MessageDialog.openError(getShell(), getWindowTitle(), "Der Schlüssel konnte nicht geladen werden. Das Passwort stimmt wahrscheinlich nicht.");
+                        	return false;
+                        }
                     }
                     break;
                 case EncryptAction:

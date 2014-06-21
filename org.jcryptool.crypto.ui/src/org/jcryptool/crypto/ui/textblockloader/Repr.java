@@ -3,6 +3,9 @@ package org.jcryptool.crypto.ui.textblockloader;
 public enum Repr {
 	DECIMAL(true), BINARY(true), HEX(true), STRING(false);
 	
+	public static Repr[] ALL = new Repr[]{STRING, DECIMAL, HEX, BINARY};
+	public static Repr[] ALLNUM = new Repr[]{DECIMAL, HEX, BINARY};
+	
 	private boolean numeric;
 
 	private Repr(boolean numeric) {

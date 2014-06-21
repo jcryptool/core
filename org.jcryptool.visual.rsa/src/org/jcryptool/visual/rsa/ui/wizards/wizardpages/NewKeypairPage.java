@@ -110,6 +110,8 @@ public class NewKeypairPage extends WizardPage {
 	/** storage space for the φ(N). */
 	private BigInteger phin;
 
+	protected Integer lastValidE;
+
 	/**
 	 * Constructor, setting description completeness-status and data-object.
 	 * 
@@ -296,7 +298,26 @@ public class NewKeypairPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				lastValidE = new BigInteger(elist.getText()).intValue();
 				dfield.setText(calcd().toString());
+			}
+		});
+		elist.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent e) {
+				try {
+					Integer enteredNumber = Integer.parseInt(elist.getText());
+					boolean isValid = phin != null && isValidNumberForE(enteredNumber, phin);
+					if(isValid) {
+						dfield.setText(calcd().toString());
+						lastValidE = enteredNumber;
+					} else {
+						dfield.setText("");
+					}
+				} catch (NumberFormatException e2) {
+					dfield.setText("");
+				}
 			}
 		});
 		// elist.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false,
@@ -331,7 +352,13 @@ public class NewKeypairPage extends WizardPage {
 		dfield.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				setPageComplete(!dfield.getText().equals("")); //$NON-NLS-1$
+				try{
+					int eNr = Integer.parseInt(elist.getText());
+					setPageComplete(!dfield.getText().equals("") && ( isValidNumberForE(eNr, phin) ) ); //$NON-NLS-1$
+				} catch(NumberFormatException nrEx) {
+					// e could not be parsed -> no completion
+					return;
+				}
 			}
 		});
 
@@ -363,6 +390,17 @@ public class NewKeypairPage extends WizardPage {
 
 		// finish
 		setControl(composite);
+	}
+
+	protected boolean isValidNumberForE(Integer e, BigInteger phin2) {
+		int ph = phin2.intValue();
+		return e > 1 && gcdThing(e, ph) == 1 && e <= ph;
+	}
+	private static int gcdThing(int a, int b) {
+	    BigInteger b1 = new BigInteger(""+a); // there's a better way to do this. I forget.
+	    BigInteger b2 = new BigInteger(""+b);
+	    BigInteger gcd = b1.gcd(b2);
+	    return gcd.intValue();
 	}
 
 	/**
