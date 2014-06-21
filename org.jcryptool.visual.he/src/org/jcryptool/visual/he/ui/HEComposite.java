@@ -9,11 +9,6 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.visual.he.ui;
 
-import static org.jcryptool.visual.library.Constants.GREEN;
-import static org.jcryptool.visual.library.Constants.LIGHTGREY;
-import static org.jcryptool.visual.library.Constants.RED;
-import static org.jcryptool.visual.library.Constants.WHITE;
-
 import java.math.BigInteger;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,6 +32,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.he.Messages;
 import org.jcryptool.visual.he.algo.FHEParams;
@@ -96,7 +92,7 @@ public class HEComposite extends Composite {
 
 	/** Reset buttons */
 	private Button resetNumButton, resetAllButton;
-	
+
 	/** Settings button */
 	private Button settingsButton;
 
@@ -128,7 +124,7 @@ public class HEComposite extends Composite {
 	private PaillierData paillierData = new PaillierData();
 
 	private Text modulus;
-	
+
 	/** Textboxes to display initial number and encryption */
 	private Text initialPlain, initialPlainBits, initialEncryptedBits;
 
@@ -202,18 +198,18 @@ public class HEComposite extends Composite {
 					homomorphResultEncryptedBits.append(homomorphResultEncryptedBits.getLineDelimiter());
 				}
 				decryptButton.setEnabled(true);
-				detText.setBackground(LIGHTGREY);
-				rootText.setBackground(LIGHTGREY);
-				cText.setBackground(LIGHTGREY);
-				pkBlockText.setBackground(LIGHTGREY);
-				initialPlain.setBackground(LIGHTGREY);
-				initialPlainBits.setBackground(LIGHTGREY);
-				initialEncryptedBits.setBackground(LIGHTGREY);
+				detText.setBackground(ColorService.LIGHTGRAY);
+				rootText.setBackground(ColorService.LIGHTGRAY);
+				cText.setBackground(ColorService.LIGHTGRAY);
+				pkBlockText.setBackground(ColorService.LIGHTGRAY);
+				initialPlain.setBackground(ColorService.LIGHTGRAY);
+				initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+				initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
 				homomorphPlain.setBackground(YELLOW);
 				homomorphPlainBits.setBackground(YELLOW);
 				homomorphEncryptedBits.setBackground(YELLOW);
-				homomorphResultPlain.setBackground(LIGHTGREY);
-				homomorphResultPlainBits.setBackground(LIGHTGREY);
+				homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
 				homomorphResultEncryptedBits.setBackground(YELLOW);
 				plainResult.setBackground(YELLOW);
 				plainOperations.setBackground(YELLOW);
@@ -235,21 +231,21 @@ public class HEComposite extends Composite {
 				plainOperations.setText(oldOperationText);
 				plainResult.setText(Integer.toString(ghResult));
 				first = oldFirst;
-				detText.setBackground(LIGHTGREY);
-				rootText.setBackground(LIGHTGREY);
-				cText.setBackground(LIGHTGREY);
-				pkBlockText.setBackground(LIGHTGREY);
-				initialPlain.setBackground(LIGHTGREY);
-				initialPlainBits.setBackground(LIGHTGREY);
-				initialEncryptedBits.setBackground(LIGHTGREY);
-				homomorphPlain.setBackground(LIGHTGREY);
-				homomorphPlainBits.setBackground(LIGHTGREY);
-				homomorphEncryptedBits.setBackground(LIGHTGREY);
-				homomorphResultPlain.setBackground(LIGHTGREY);
-				homomorphResultPlainBits.setBackground(LIGHTGREY);
-				homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-				plainResult.setBackground(LIGHTGREY);
-				plainOperations.setBackground(LIGHTGREY);
+				detText.setBackground(ColorService.LIGHTGRAY);
+				rootText.setBackground(ColorService.LIGHTGRAY);
+				cText.setBackground(ColorService.LIGHTGRAY);
+				pkBlockText.setBackground(ColorService.LIGHTGRAY);
+				initialPlain.setBackground(ColorService.LIGHTGRAY);
+				initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+				initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+				homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+				plainResult.setBackground(ColorService.LIGHTGRAY);
+				plainOperations.setBackground(ColorService.LIGHTGRAY);
 			}
 		};
 
@@ -328,13 +324,13 @@ public class HEComposite extends Composite {
 	 */
 	private void createHead() {
 		final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(WHITE);
+        head.setBackground(ColorService.WHITE);
         head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         head.setLayout(new GridLayout());
 
         final Label label = new Label(head, SWT.NONE);
         label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
+        label.setBackground(ColorService.WHITE);
 
         /** Deals with the choice of scheme */
         switch(tabChoice) {
@@ -385,7 +381,7 @@ public class HEComposite extends Composite {
 
         this.keySel = new Button(subComposite, SWT.PUSH);
         this.keySel.setLayoutData(buttonrd);
-        this.keySel.setBackground(RED);
+        this.keySel.setBackground(ColorService.RED);
         this.keySel.setEnabled(true);
         this.keySel.setText(Messages.HEComposite_Keysel);
         this.keySel.setToolTipText(Messages.HEComposite_Key_Tooltip);
@@ -403,22 +399,22 @@ public class HEComposite extends Composite {
         		}
         	}
         });
-        
+
         Composite spacerComposite = new Composite(mainComposite, SWT.NONE);
         Label spacerLabel = new Label(spacerComposite, SWT.NONE);
         switch (tabChoice) {
-        	case GENTRY_HALEVI: spacerLabel.setSize(130, 82); break; // spacerLabel.setSize(130, 139); break; 
+        	case GENTRY_HALEVI: spacerLabel.setSize(130, 82); break; // spacerLabel.setSize(130, 139); break;
         	case RSA: spacerLabel.setSize(130, 12); break;
         	case PAILLIER: spacerLabel.setSize(130, 12); break;
         }
-             
+
         if (tabChoice == GENTRY_HALEVI) {
         	subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
     		subComposite.setText(Messages.HEComposite_Modulus);
     		subComposite.setLayout(mrl);
         	this.modulusSel = new Button(subComposite, SWT.PUSH);
             this.modulusSel.setLayoutData(buttonrd);
-            this.modulusSel.setBackground(RED);
+            this.modulusSel.setBackground(ColorService.RED);
             this.modulusSel.setEnabled(false);
             this.modulusSel.setText(Messages.HEComposite_Keysel);
             this.modulusSel.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
@@ -453,27 +449,27 @@ public class HEComposite extends Composite {
 	        this.modulus.addModifyListener(new ModifyListener() {
 	        	public void modifyText(final ModifyEvent e) {
 	        		logMod = 5 + modulus.indexOf(modulus.getText());
-	        		detText.setBackground(LIGHTGREY);
-					rootText.setBackground(LIGHTGREY);
-					cText.setBackground(LIGHTGREY);
-					pkBlockText.setBackground(LIGHTGREY);
-					initialPlain.setBackground(LIGHTGREY);
-					initialPlainBits.setBackground(LIGHTGREY);
-					initialEncryptedBits.setBackground(LIGHTGREY);
-					homomorphPlain.setBackground(LIGHTGREY);
-					homomorphPlainBits.setBackground(LIGHTGREY);
-					homomorphEncryptedBits.setBackground(LIGHTGREY);
-					homomorphResultPlain.setBackground(LIGHTGREY);
-					homomorphResultPlainBits.setBackground(LIGHTGREY);
-					homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-					plainResult.setBackground(LIGHTGREY);
-					plainOperations.setBackground(LIGHTGREY);
+	        		detText.setBackground(ColorService.LIGHTGRAY);
+					rootText.setBackground(ColorService.LIGHTGRAY);
+					cText.setBackground(ColorService.LIGHTGRAY);
+					pkBlockText.setBackground(ColorService.LIGHTGRAY);
+					initialPlain.setBackground(ColorService.LIGHTGRAY);
+					initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+					initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+					homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					plainResult.setBackground(ColorService.LIGHTGRAY);
+					plainOperations.setBackground(ColorService.LIGHTGRAY);
 	        		initTextSel.setEnabled(true);
 	        	}
 	        });
         }*/
 
-        
+
 
 
 
@@ -483,7 +479,7 @@ public class HEComposite extends Composite {
 		this.initTextSel = new Button(subComposite, SWT.PUSH);
 		this.initTextSel.setToolTipText(Messages.HEComposite_Initial_Tooltip);
         this.initTextSel.setLayoutData(buttonrd);
-        this.initTextSel.setBackground(RED);
+        this.initTextSel.setBackground(ColorService.RED);
         this.initTextSel.setEnabled(false);
         this.initTextSel.setText(Messages.HEComposite_Initial_Text_Select);
         this.initTextSel.addSelectionListener(new SelectionAdapter() {
@@ -561,10 +557,10 @@ public class HEComposite extends Composite {
 	        	}
 	        });
 		}
-		
+
 		spacerLabel = new Label(subComposite, SWT.NONE);
 		spacerLabel.setSize(130,10);
-		
+
         this.decryptButton = new Button(subComposite, SWT.PUSH);
         this.decryptButton.setLayoutData(buttonrd);
         this.decryptButton.setToolTipText(Messages.HEComposite_Decrypt_Tooltip);
@@ -641,7 +637,7 @@ public class HEComposite extends Composite {
 			subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
 			subComposite.setText(Messages.HEComposite_Settings_Group);
 			subComposite.setLayout(mrl);
-			
+
 			this.settingsButton = new Button(subComposite, SWT.PUSH);
 			this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
 			this.settingsButton.setLayoutData(buttonrd);
@@ -655,7 +651,7 @@ public class HEComposite extends Composite {
 	        	}
 
 	        });
-			
+
 		}
 	}
 
@@ -666,8 +662,8 @@ public class HEComposite extends Composite {
 	 * the next necessary user entry is enabled
 	 */
 	private void keySelected() {
-		this.keySel.setBackground(GREEN);
-		this.keySel.setForeground(RED);
+		this.keySel.setBackground(ColorService.GREEN);
+		this.keySel.setForeground(ColorService.RED);
 		this.resetAllButton.setEnabled(true);
 		switch(tabChoice) {
 			case GENTRY_HALEVI: {
@@ -692,9 +688,9 @@ public class HEComposite extends Composite {
 				rootText.setBackground(YELLOW);
 				cText.setBackground(YELLOW);
 				pkBlockText.setBackground(YELLOW);
-				initialPlainBits.setBackground(LIGHTGREY);
-				homomorphPlainBits.setBackground(LIGHTGREY);
-				homomorphResultPlainBits.setBackground(LIGHTGREY);
+				initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case RSA: {
 		        this.initTextSel.setEnabled(true);
@@ -722,38 +718,38 @@ public class HEComposite extends Composite {
 		        gText.setBackground(YELLOW);
 			} break;
 		}
-		initialPlain.setBackground(LIGHTGREY);
-		initialEncryptedBits.setBackground(LIGHTGREY);
-		homomorphPlain.setBackground(LIGHTGREY);
-		homomorphEncryptedBits.setBackground(LIGHTGREY);
-		homomorphResultPlain.setBackground(LIGHTGREY);
-		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-		plainResult.setBackground(LIGHTGREY);
-		plainOperations.setBackground(LIGHTGREY);
+		initialPlain.setBackground(ColorService.LIGHTGRAY);
+		initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		plainResult.setBackground(ColorService.LIGHTGRAY);
+		plainOperations.setBackground(ColorService.LIGHTGRAY);
 
 	}
-	
+
 	private void modulusSelected() {
-		this.modulusSel.setBackground(GREEN);
+		this.modulusSel.setBackground(ColorService.GREEN);
 		logMod = data.getModulus();
 		data.initCount(logMod);
 		modulus.setText(Integer.toString((int)Math.pow(2,logMod)));
-		detText.setBackground(LIGHTGREY);
-		rootText.setBackground(LIGHTGREY);
-		cText.setBackground(LIGHTGREY);
-		pkBlockText.setBackground(LIGHTGREY);
+		detText.setBackground(ColorService.LIGHTGRAY);
+		rootText.setBackground(ColorService.LIGHTGRAY);
+		cText.setBackground(ColorService.LIGHTGRAY);
+		pkBlockText.setBackground(ColorService.LIGHTGRAY);
 		modulus.setBackground(YELLOW);
-		initialPlain.setBackground(LIGHTGREY);
-		initialPlainBits.setBackground(LIGHTGREY);
-		initialEncryptedBits.setBackground(LIGHTGREY);
-		homomorphPlain.setBackground(LIGHTGREY);
-		homomorphPlainBits.setBackground(LIGHTGREY);
-		homomorphEncryptedBits.setBackground(LIGHTGREY);
-		homomorphResultPlain.setBackground(LIGHTGREY);
-		homomorphResultPlainBits.setBackground(LIGHTGREY);
-		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-		plainResult.setBackground(LIGHTGREY);
-		plainOperations.setBackground(LIGHTGREY);
+		initialPlain.setBackground(ColorService.LIGHTGRAY);
+		initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+		initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		plainResult.setBackground(ColorService.LIGHTGRAY);
+		plainOperations.setBackground(ColorService.LIGHTGRAY);
 		initTextSel.setEnabled(true);
 	}
 
@@ -761,7 +757,7 @@ public class HEComposite extends Composite {
 	 * The initial number is selected and encrypted, both being displayed in the algorithm area
 	 */
 	private void initialTextSelected() {
-		this.initTextSel.setBackground(GREEN);
+		this.initTextSel.setBackground(ColorService.GREEN);
 		this.resetNumButton.setEnabled(true);
 		switch(tabChoice) {
 			case GENTRY_HALEVI: {
@@ -780,14 +776,14 @@ public class HEComposite extends Composite {
 				}
 				this.plainOperations.setText(Integer.toString(data.getNumber()));
 
-				detText.setBackground(LIGHTGREY);
-				rootText.setBackground(LIGHTGREY);
-				cText.setBackground(LIGHTGREY);
-				pkBlockText.setBackground(LIGHTGREY);
-				modulus.setBackground(LIGHTGREY);
+				detText.setBackground(ColorService.LIGHTGRAY);
+				rootText.setBackground(ColorService.LIGHTGRAY);
+				cText.setBackground(ColorService.LIGHTGRAY);
+				pkBlockText.setBackground(ColorService.LIGHTGRAY);
+				modulus.setBackground(ColorService.LIGHTGRAY);
 				initialPlainBits.setBackground(YELLOW);
-				homomorphPlainBits.setBackground(LIGHTGREY);
-				homomorphResultPlainBits.setBackground(LIGHTGREY);
+				homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case RSA: {
 				this.homomorphMult.setEnabled(true);
@@ -798,8 +794,8 @@ public class HEComposite extends Composite {
 				this.initialEncryptedBits.setText(this.initialEncrypted[0].toString());
 				this.homomorphResultEncrypted = initialEncrypted;
 				this.plainOperations.setText(rsaEncData.getPlainText());
-		        eText.setBackground(LIGHTGREY);
-		        nText.setBackground(LIGHTGREY);
+		        eText.setBackground(ColorService.LIGHTGRAY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case PAILLIER: {
 				this.homomorphAdd.setEnabled(true);
@@ -810,19 +806,19 @@ public class HEComposite extends Composite {
 				this.initialEncryptedBits.setText(this.initialEncrypted[0].toString());
 				this.homomorphResultEncrypted = this.initialEncrypted;
 				this.plainOperations.setText(paillierData.getPlain().toString());
-		        nText.setBackground(LIGHTGREY);
-		        gText.setBackground(LIGHTGREY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
+		        gText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 		}
 
 		initialPlain.setBackground(YELLOW);
 		initialEncryptedBits.setBackground(YELLOW);
-		homomorphPlain.setBackground(LIGHTGREY);
-		homomorphEncryptedBits.setBackground(LIGHTGREY);
-		homomorphResultPlain.setBackground(LIGHTGREY);
-		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-		plainResult.setBackground(LIGHTGREY);
-		plainOperations.setBackground(LIGHTGREY);
+		homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		plainResult.setBackground(ColorService.LIGHTGRAY);
+		plainOperations.setBackground(ColorService.LIGHTGRAY);
 
 	}
 
@@ -882,13 +878,13 @@ public class HEComposite extends Composite {
 				paillierResult = paillierResult.add(paillierData.getOperation()).mod(paillierData.getPubKey()[0].pow(2));
 				this.plainResult.setText(paillierResult.toString());
 
-		        nText.setBackground(LIGHTGREY);
-		        gText.setBackground(LIGHTGREY);
-				initialPlain.setBackground(LIGHTGREY);
-				initialEncryptedBits.setBackground(LIGHTGREY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
+		        gText.setBackground(ColorService.LIGHTGRAY);
+				initialPlain.setBackground(ColorService.LIGHTGRAY);
+				initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
 				homomorphPlain.setBackground(YELLOW);
 				homomorphEncryptedBits.setBackground(YELLOW);
-				homomorphResultPlain.setBackground(LIGHTGREY);
+				homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
 				homomorphResultEncryptedBits.setBackground(YELLOW);
 				plainResult.setBackground(YELLOW);
 				plainOperations.setBackground(YELLOW);
@@ -949,13 +945,13 @@ public class HEComposite extends Composite {
 				rsaResult = rsaResult.multiply(new BigInteger(rsaEncData.getOperation()));
 				this.plainResult.setText(rsaResult.toString());
 
-				eText.setBackground(LIGHTGREY);
-		        nText.setBackground(LIGHTGREY);
-				initialPlain.setBackground(LIGHTGREY);
-				initialEncryptedBits.setBackground(LIGHTGREY);
+				eText.setBackground(ColorService.LIGHTGRAY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
+				initialPlain.setBackground(ColorService.LIGHTGRAY);
+				initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
 				homomorphPlain.setBackground(YELLOW);
 				homomorphEncryptedBits.setBackground(YELLOW);
-				homomorphResultPlain.setBackground(LIGHTGREY);
+				homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
 				homomorphResultEncryptedBits.setBackground(YELLOW);
 				plainResult.setBackground(YELLOW);
 				plainOperations.setBackground(YELLOW);
@@ -974,12 +970,12 @@ public class HEComposite extends Composite {
 				this.homomorphResultPlainBits.setText(Functions.bitArrayToString(homomorphResultBits));
 				this.homomorphResultPlain.setText(Integer.toString(Functions.bitsToNum(homomorphResultBits)));
 
-				detText.setBackground(LIGHTGREY);
-				rootText.setBackground(LIGHTGREY);
-				cText.setBackground(LIGHTGREY);
-				pkBlockText.setBackground(LIGHTGREY);
-				initialPlainBits.setBackground(LIGHTGREY);
-				homomorphPlainBits.setBackground(LIGHTGREY);
+				detText.setBackground(ColorService.LIGHTGRAY);
+				rootText.setBackground(ColorService.LIGHTGRAY);
+				cText.setBackground(ColorService.LIGHTGRAY);
+				pkBlockText.setBackground(ColorService.LIGHTGRAY);
+				initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
 				homomorphResultPlainBits.setBackground(YELLOW);
 
 			} break;
@@ -987,26 +983,26 @@ public class HEComposite extends Composite {
 				this.homomorphResultPlain.setText(
 				this.homomorphResultEncrypted[0].modPow(rsaDecData.getD(), rsaDecData.getN()).toString());
 
-				eText.setBackground(LIGHTGREY);
-		        nText.setBackground(LIGHTGREY);
+				eText.setBackground(ColorService.LIGHTGRAY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case PAILLIER: {
 				Paillier.decryptResult(paillierData);
 				this.homomorphResultPlain.setText(paillierData.getResultPlain().toString());
 
-		        nText.setBackground(LIGHTGREY);
-		        gText.setBackground(LIGHTGREY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
+		        gText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 		}
 
-		initialPlain.setBackground(LIGHTGREY);
-		initialEncryptedBits.setBackground(LIGHTGREY);
-		homomorphPlain.setBackground(LIGHTGREY);
-		homomorphEncryptedBits.setBackground(LIGHTGREY);
+		initialPlain.setBackground(ColorService.LIGHTGRAY);
+		initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
 		homomorphResultPlain.setBackground(YELLOW);
-		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-		plainResult.setBackground(LIGHTGREY);
-		plainOperations.setBackground(LIGHTGREY);
+		homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		plainResult.setBackground(ColorService.LIGHTGRAY);
+		plainOperations.setBackground(ColorService.LIGHTGRAY);
 	}
 
 	/**
@@ -1032,13 +1028,13 @@ public class HEComposite extends Composite {
 				this.decryptButton.setEnabled(false);
 				this.homomorphMult.setEnabled(false);
 				this.homomorphAdd.setEnabled(false);
-				this.modulusSel.setBackground(RED);
+				this.modulusSel.setBackground(ColorService.RED);
 				//this.modulus.select(0);
 				this.initTextSel.setEnabled(false);
-				this.initTextSel.setBackground(RED);
-				initialPlainBits.setBackground(LIGHTGREY);
-				homomorphPlainBits.setBackground(LIGHTGREY);
-				homomorphResultPlainBits.setBackground(LIGHTGREY);
+				this.initTextSel.setBackground(ColorService.RED);
+				initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+				homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case RSA: {
 				this.initialPlain.setText("");
@@ -1053,7 +1049,7 @@ public class HEComposite extends Composite {
 				this.resetNumButton.setEnabled(false);
 				this.decryptButton.setEnabled(false);
 				this.homomorphMult.setEnabled(false);
-				this.initTextSel.setBackground(RED);
+				this.initTextSel.setBackground(ColorService.RED);
 			} break;
 			case PAILLIER: {
 				this.initialPlain.setText("");
@@ -1068,19 +1064,19 @@ public class HEComposite extends Composite {
 				this.resetNumButton.setEnabled(false);
 				this.decryptButton.setEnabled(false);
 				this.homomorphAdd.setEnabled(false);
-				this.initTextSel.setBackground(RED);
+				this.initTextSel.setBackground(ColorService.RED);
 			}
 		}
 
 
-		initialPlain.setBackground(LIGHTGREY);
-		initialEncryptedBits.setBackground(LIGHTGREY);
-		homomorphPlain.setBackground(LIGHTGREY);
-		homomorphEncryptedBits.setBackground(LIGHTGREY);
-		homomorphResultPlain.setBackground(LIGHTGREY);
-		homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-		plainResult.setBackground(LIGHTGREY);
-		plainOperations.setBackground(LIGHTGREY);
+		initialPlain.setBackground(ColorService.LIGHTGRAY);
+		initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+		homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+		plainResult.setBackground(ColorService.LIGHTGRAY);
+		plainOperations.setBackground(ColorService.LIGHTGRAY);
 	}
 
 	/**
@@ -1098,14 +1094,14 @@ public class HEComposite extends Composite {
 				this.pkBlockText.setText("");
 				this.cText.setText("");
 
-				detText.setBackground(LIGHTGREY);
-				rootText.setBackground(LIGHTGREY);
-				cText.setBackground(LIGHTGREY);
-				pkBlockText.setBackground(LIGHTGREY);
+				detText.setBackground(ColorService.LIGHTGRAY);
+				rootText.setBackground(ColorService.LIGHTGRAY);
+				cText.setBackground(ColorService.LIGHTGRAY);
+				pkBlockText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case RSA: {
 				this.resetAllButton.setEnabled(false);
-				this.keySel.setBackground(RED);
+				this.keySel.setBackground(ColorService.RED);
 				this.initTextSel.setEnabled(false);
 				this.rsaEncData = new RSAData(Action.EncryptAction);
 				this.rsaDecData = new RSAData(Action.DecryptAction);
@@ -1113,12 +1109,12 @@ public class HEComposite extends Composite {
 				this.eText.setText("");
 				this.nText.setText("");
 
-				eText.setBackground(LIGHTGREY);
-		        nText.setBackground(LIGHTGREY);
+				eText.setBackground(ColorService.LIGHTGRAY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
 			} break;
 			case PAILLIER: {
 				this.resetAllButton.setEnabled(false);
-				this.keySel.setBackground(RED);
+				this.keySel.setBackground(ColorService.RED);
 				this.initTextSel.setEnabled(false);
 				this.paillierData = new PaillierData();
 				this.nText.setText("");
@@ -1126,8 +1122,8 @@ public class HEComposite extends Composite {
 				//this.lText.setText("");
 				//this.mText.setText("");
 
-		        nText.setBackground(LIGHTGREY);
-		        gText.setBackground(LIGHTGREY);
+		        nText.setBackground(ColorService.LIGHTGRAY);
+		        gText.setBackground(ColorService.LIGHTGRAY);
 			}
 		}
 	}
@@ -1206,7 +1202,7 @@ public class HEComposite extends Composite {
 		rootText = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		rootText.setLayoutData(textrd);
 		rootText.setEditable(false);
-		
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(4,30));
 
@@ -1254,7 +1250,7 @@ public class HEComposite extends Composite {
         l.setLayoutData(labelrd);
         nText = new Text(subComposite, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         nText.setLayoutData(textrd);
-        
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(3,18));
     }
@@ -1285,7 +1281,7 @@ public class HEComposite extends Composite {
         l.setLayoutData(labelrd);
         gText = new Text(subComposite, SWT.READ_ONLY | SWT.BORDER | SWT.H_SCROLL);
         gText.setLayoutData(textrd);
-        
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(3,18));
 	}
@@ -1323,21 +1319,21 @@ public class HEComposite extends Composite {
 	        this.modulus.addModifyListener(new ModifyListener() {
 	        	public void modifyText(final ModifyEvent e) {
 	        		logMod = 5 + modulus.indexOf(modulus.getText());
-	        		detText.setBackground(LIGHTGREY);
-					rootText.setBackground(LIGHTGREY);
-					cText.setBackground(LIGHTGREY);
-					pkBlockText.setBackground(LIGHTGREY);
-					initialPlain.setBackground(LIGHTGREY);
-					initialPlainBits.setBackground(LIGHTGREY);
-					initialEncryptedBits.setBackground(LIGHTGREY);
-					homomorphPlain.setBackground(LIGHTGREY);
-					homomorphPlainBits.setBackground(LIGHTGREY);
-					homomorphEncryptedBits.setBackground(LIGHTGREY);
-					homomorphResultPlain.setBackground(LIGHTGREY);
-					homomorphResultPlainBits.setBackground(LIGHTGREY);
-					homomorphResultEncryptedBits.setBackground(LIGHTGREY);
-					plainResult.setBackground(LIGHTGREY);
-					plainOperations.setBackground(LIGHTGREY);
+	        		detText.setBackground(ColorService.LIGHTGRAY);
+					rootText.setBackground(ColorService.LIGHTGRAY);
+					cText.setBackground(ColorService.LIGHTGRAY);
+					pkBlockText.setBackground(ColorService.LIGHTGRAY);
+					initialPlain.setBackground(ColorService.LIGHTGRAY);
+					initialPlainBits.setBackground(ColorService.LIGHTGRAY);
+					initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphPlain.setBackground(ColorService.LIGHTGRAY);
+					homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
+					homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
+					plainResult.setBackground(ColorService.LIGHTGRAY);
+					plainOperations.setBackground(ColorService.LIGHTGRAY);
 	        		initTextSel.setEnabled(true);
 	        	}
 	        });*/
@@ -1507,10 +1503,10 @@ public class HEComposite extends Composite {
 		mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		mainComposite.setText(Messages.HEComposite_Result_Area);
 		mainComposite.setLayout(mrl);
-		
+
 		subComposite = new Composite(mainComposite, SWT.NONE);
 		subComposite.setLayout(srl);
-		
+
 		subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
         label = new Label(subComposite, SWT.RIGHT);
@@ -1571,7 +1567,7 @@ public class HEComposite extends Composite {
         mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		mainComposite.setText(Messages.HEComposite_Result_Area);
 		mainComposite.setLayout(mrl);
-		
+
         subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
 
@@ -1625,7 +1621,7 @@ public class HEComposite extends Composite {
         mainComposite = new Group(parent, SWT.SHADOW_NONE);
 		mainComposite.setText(Messages.HEComposite_Result_Area);
 		mainComposite.setLayout(mrl);
-		
+
         subComposite = new Composite(mainComposite, SWT.NONE);
         subComposite.setLayout(srl);
 
@@ -1677,7 +1673,7 @@ public class HEComposite extends Composite {
 		plainResult = new Text(subComposite, SWT.MULTI | SWT.H_SCROLL);
 		plainResult.setLayoutData(textrd);
 		plainResult.setEditable(false);
-		
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(4,30));
 	}
@@ -1712,7 +1708,7 @@ public class HEComposite extends Composite {
 		label.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		plainResult.setLayoutData(textmultird);
-		
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(3,18));
     }
@@ -1747,7 +1743,7 @@ public class HEComposite extends Composite {
 		label.setText(Messages.HEComposite_Result);
 		plainResult = new Text(subComposite, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		plainResult.setLayoutData(textmultird);
-		
+
         Label spacerLabel = new Label(subComposite, SWT.NONE);
         spacerLabel.setLayoutData(new RowData(3,18));
 	}

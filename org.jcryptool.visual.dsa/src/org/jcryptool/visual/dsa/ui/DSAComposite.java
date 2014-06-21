@@ -6,11 +6,8 @@ package org.jcryptool.visual.dsa.ui;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
-import static org.jcryptool.visual.library.Constants.GREEN;
 import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
 import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
-import static org.jcryptool.visual.library.Constants.RED;
-import static org.jcryptool.visual.library.Constants.WHITE;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -52,6 +49,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.dsa.Action;
@@ -166,13 +164,13 @@ public class DSAComposite extends Composite {
 	 */
 	private void createHead() {
 		final Composite head = new Composite(this, SWT.NONE);
-		head.setBackground(WHITE);
+		head.setBackground(ColorService.WHITE);
 		head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
 		head.setLayout(new GridLayout());
 
 		final Label label = new Label(head, SWT.NONE);
 		label.setFont(FontService.getHeaderFont());
-		label.setBackground(WHITE);
+		label.setBackground(ColorService.WHITE);
 		label.setText("DSA Berechnungen");
 
 		final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
@@ -247,7 +245,7 @@ public class DSAComposite extends Composite {
 
 		// Key selection Button
 		keysel = new Button(canvas, SWT.PUSH);
-		keysel.setBackground(RED);
+		keysel.setBackground(ColorService.RED);
 		keysel.setEnabled(false);
 		keysel.setText("Schlüsselwahl");
 		keysel.setLayoutData(fDkeysel);
@@ -266,7 +264,7 @@ public class DSAComposite extends Composite {
 					messageBox.open();
 				}
 				if (new WizardDialog(getShell(), new KeySelectionWizard(action, data, false)).open() == Window.OK) {
-					keysel.setBackground(GREEN);
+					keysel.setBackground(ColorService.GREEN);
 					textEnter.setEnabled(true);
 					for (final Control c : actionChoiceGroup.getChildren()) {
 						((Button) c).setEnabled(false);
@@ -298,7 +296,7 @@ public class DSAComposite extends Composite {
 
 		// Text enter Button
 		textEnter = new Button(canvas, SWT.PUSH);
-		textEnter.setBackground(RED);
+		textEnter.setBackground(ColorService.RED);
 		textEnter.setEnabled(false);
 		textEnter.setText("Text eingeben");
 		textEnter.setLayoutData(fDtextEnter);
@@ -318,7 +316,7 @@ public class DSAComposite extends Composite {
 				}
 				if (new WizardDialog(getShell(), new TextEntryWizard(action, data)).open() == Window.OK) {
 					keysel.setEnabled(false);
-					textEnter.setBackground(GREEN);
+					textEnter.setBackground(ColorService.GREEN);
 					uniqueKeyButton.setEnabled(true);
 					switch (action) {
 					case SignAction:
@@ -328,7 +326,7 @@ public class DSAComposite extends Composite {
 						textText.setText(data.getPlainText());
 						numberText.setText(data.getSignature().split(",")[1].replace(')', ' ').trim());
 						uniqueKeyButton.setEnabled(false);
-						uniqueKeyButton.setBackground(GREEN);
+						uniqueKeyButton.setBackground(ColorService.GREEN);
 						runCalc.setEnabled(true);
 						startButton.setEnabled(true);
 						break;
@@ -347,7 +345,7 @@ public class DSAComposite extends Composite {
 
 		// unique parameter button
 		uniqueKeyButton = new Button(canvas, SWT.PUSH);
-		uniqueKeyButton.setBackground(RED);
+		uniqueKeyButton.setBackground(ColorService.RED);
 		uniqueKeyButton.setEnabled(false);
 		uniqueKeyButton.setText("Parameter wählen");
 		uniqueKeyButton
@@ -358,7 +356,7 @@ public class DSAComposite extends Composite {
 			public void widgetSelected(final SelectionEvent e) {
 				if (new WizardDialog(getShell(), new UniqueKeyWizard(data)).open() == Window.OK) {
 					textEnter.setEnabled(false);
-					uniqueKeyButton.setBackground(GREEN);
+					uniqueKeyButton.setBackground(ColorService.GREEN);
 					runCalc.setEnabled(true);
 					startButton.setEnabled(true);
 				}
@@ -376,7 +374,7 @@ public class DSAComposite extends Composite {
 
 		// Run Calculations Button
 		runCalc = new Button(canvas, SWT.PUSH);
-		runCalc.setBackground(RED);
+		runCalc.setBackground(ColorService.RED);
 		runCalc.setEnabled(false);
 		runCalc.setText("Berechnen");
 		runCalc.setToolTipText("Klicken Sie hier um die Berechnungen abzuschließen ohne weitere Schritte anzuzeigen.");
@@ -387,7 +385,7 @@ public class DSAComposite extends Composite {
 				uniqueKeyButton.setEnabled(false);
 				textEnter.setEnabled(false);
 				runCalc.setEnabled(false);
-				runCalc.setBackground(GREEN);
+				runCalc.setBackground(ColorService.GREEN);
 				startButton.setEnabled(false);
 				stepButton.setEnabled(false);
 				if (dialog) {
@@ -568,7 +566,7 @@ public class DSAComposite extends Composite {
 				stepButton.setEnabled(numberIndex != numbers.length - 1);
 				if (numberIndex == numbers.length - 1) {
 					runCalc.setEnabled(false);
-					runCalc.setBackground(GREEN);
+					runCalc.setBackground(ColorService.GREEN);
 				}
 				startButton.setEnabled(false);
 				textEnter.setEnabled(false);
@@ -593,7 +591,7 @@ public class DSAComposite extends Composite {
 				if (++numberIndex == numbers.length - 1) {
 					stepButton.setEnabled(false);
 					runCalc.setEnabled(false);
-					runCalc.setBackground(GREEN);
+					runCalc.setBackground(ColorService.GREEN);
 				}
 				updateTable();
 			}
@@ -606,7 +604,7 @@ public class DSAComposite extends Composite {
 		// set up a composite to draw final the fast exp shit on
 		fastExpTable = new Composite(g, SWT.NONE);
 		fastExpTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-		fastExpTable.setBackground(WHITE);
+		fastExpTable.setBackground(ColorService.WHITE);
 		fastExpTable.setVisible(false);
 
 		final Label l = new Label(g, SWT.NONE);
@@ -799,10 +797,10 @@ public class DSAComposite extends Composite {
 					String text;
 					if (verifiedText.getData() != null && resultText.getText().trim().equals(verifiedText.getData())) {
 						text = "gültig";
-						verifiedText.setForeground(GREEN);
+						verifiedText.setForeground(ColorService.GREEN);
 					} else {
 						text = "ungültig";
-						verifiedText.setForeground(RED);
+						verifiedText.setForeground(ColorService.RED);
 					}
 					verifiedText.setText(text);
 				}
@@ -896,13 +894,13 @@ public class DSAComposite extends Composite {
 					((Button) c).setSelection(false);
 				}
 				keysel.setEnabled(false);
-				keysel.setBackground(RED);
+				keysel.setBackground(ColorService.RED);
 				textEnter.setEnabled(false);
-				textEnter.setBackground(RED);
+				textEnter.setBackground(ColorService.RED);
 				uniqueKeyButton.setEnabled(false);
-				uniqueKeyButton.setBackground(RED);
+				uniqueKeyButton.setBackground(ColorService.RED);
 				runCalc.setEnabled(false);
-				runCalc.setBackground(RED);
+				runCalc.setBackground(ColorService.RED);
 				data = new DSAData();
 				pText.setText("");
 				gText.setText("");

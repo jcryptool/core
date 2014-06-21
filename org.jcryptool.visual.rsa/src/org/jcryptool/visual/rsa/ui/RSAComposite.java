@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2011 JCrypTool Team and Contributors
- * 
+ *
  * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -12,10 +12,6 @@ package org.jcryptool.visual.rsa.ui;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
-import static org.jcryptool.visual.library.Constants.GREEN;
-import static org.jcryptool.visual.library.Constants.RED;
-import static org.jcryptool.visual.library.Constants.WHITE;
-import static org.jcryptool.visual.library.Constants.GREY;
 
 import java.math.BigInteger;
 import java.util.Collections;
@@ -31,7 +27,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.FontMetrics;
@@ -58,6 +53,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.crypto.ui.textblockloader.NumberblocksAndTextViewer;
 import org.jcryptool.crypto.ui.textblockloader.Repr;
@@ -73,7 +69,7 @@ import org.jcryptool.visual.rsa.ui.wizards.NewTextEntryWizard;
 /**
  * composite, display of everything this visual shows, that is not contained
  * within wizards.
- * 
+ *
  * @author Michael Gaber
  */
 public class RSAComposite extends Composite {
@@ -115,29 +111,11 @@ public class RSAComposite extends Composite {
 	/** buttons for starting and stepping through the fast exponentiation. */
 	private Button stepButton, stepbackButton;
 
-	// /** Array for the StepBack Button */
-	// private String[] stepBArray;
-	/** Array for the StepBack Button */
-	private List<Integer> stepBArray;
-
 	/** field for displaying the result. */
 	private NumberblocksAndTextViewer resultDisplay;
 
 	/** button to copy the result to the clipboard. */
 	private Button copyButton;
-
-	// /** button to switch view dec / hex */
-	// private Button dec;
-	// private Button hex;
-
-	/** selection listener that updates the buttons. */
-	private final SelectionListener view = new SelectionAdapter() {
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			viewHex();
-		}
-	};
 
 	/** array containing the split up numbertext. */
 	private List<Integer> numbers;
@@ -201,7 +179,7 @@ public class RSAComposite extends Composite {
 			if (numberIndex == numbers.size() - 1) {
 				stepButton.setEnabled(false);
 				runCalc.setEnabled(false);
-				runCalc.setBackground(GREEN);
+				runCalc.setBackground(ColorService.GREEN);
 				finish();
 				viewHex();
 			}
@@ -229,7 +207,7 @@ public class RSAComposite extends Composite {
 			started = true;
 			if (numberIndex == numbers.size() - 1) {
 				runCalc.setEnabled(false);
-				runCalc.setBackground(GREEN);
+				runCalc.setBackground(ColorService.GREEN);
 				finish();
 			}
 			// Switch from start- to step-state
@@ -265,7 +243,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * constructor calls super and saves a reference to the view.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite
 	 * @param style
@@ -303,19 +281,19 @@ public class RSAComposite extends Composite {
 	 */
 	private void createHead() {
 		final Composite head = new Composite(this, SWT.NONE);
-		head.setBackground(WHITE);
+		head.setBackground(ColorService.WHITE);
 		head.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false));
 		head.setLayout(new GridLayout());
 
 		final Label label = new Label(head, SWT.NONE); // head
 		label.setFont(FontService.getHeaderFont());
-		label.setBackground(WHITE);
+		label.setBackground(ColorService.WHITE);
 		label.setText(Messages.RSAComposite_title);
 
 		StyledText stDescription = new StyledText(head, SWT.MULTI | SWT.WRAP
 				| SWT.READ_ONLY);
 		// final Label stDescription = new Label(head, SWT.WRAP); // head
-		// stDescription.setBackground(WHITE);
+		// stDescription.setBackground(ColorService.WHITE);
 
 		switch (data.getAction()) {
 		case EncryptAction: {
@@ -369,7 +347,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * create the vertical area for the three main buttons.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent composite
 	 */
@@ -386,7 +364,7 @@ public class RSAComposite extends Composite {
 
 		// Key selection Button
 		keysel = new Button(canvas, SWT.PUSH);
-		keysel.setBackground(RED);
+		keysel.setBackground(ColorService.RED);
 		keysel.setText(Messages.RSAComposite_key_selection);
 		keysel.setLayoutData(fDkeysel);
 		keysel.addSelectionListener(new SelectionAdapter() {
@@ -423,7 +401,7 @@ public class RSAComposite extends Composite {
 
 		// Text enter Button
 		textEnter = new Button(compLoadTextBtns, SWT.PUSH);
-		textEnter.setBackground(RED);
+		textEnter.setBackground(ColorService.RED);
 		textEnter.setEnabled(false);
 		if (data.getAction() != Action.VerifyAction) {
 			textEnter.setText(Messages.RSAComposite_enter_text);
@@ -452,7 +430,7 @@ public class RSAComposite extends Composite {
 		if (data.getAction() == Action.VerifyAction) {
 			// Text enter Button #2
 			textEnter2 = new Button(compLoadTextBtns, SWT.PUSH);
-			// textEnter2.setBackground(RED);
+			// textEnter2.setBackground(ColorService.RED);
 			textEnter2.setEnabled(false);
 			textEnter2.setText(Messages.RSAComposite_1);
 			textEnter2.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
@@ -484,7 +462,7 @@ public class RSAComposite extends Composite {
 
 		// Run Calculations Button
 		runCalc = new Button(canvas, SWT.PUSH);
-		runCalc.setBackground(RED);
+		runCalc.setBackground(ColorService.RED);
 		runCalc.setEnabled(false);
 
 		switch (data.getAction()) {
@@ -516,7 +494,7 @@ public class RSAComposite extends Composite {
 				// if(data.getAction() == Action.VerifyAction)
 				// textEnter2.setEnabled(false);
 				// runCalc.setEnabled(false);
-				runCalc.setBackground(GREEN);
+				runCalc.setBackground(ColorService.GREEN);
 				// startButton.setEnabled(false);
 				if (numberIndex != 0 || started == true) {
 					stepButton.setEnabled(false);
@@ -581,7 +559,7 @@ public class RSAComposite extends Composite {
 		reset.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				boolean keyWasSelected = keysel.getBackground().equals(GREEN);
+				boolean keyWasSelected = keysel.getBackground().equals(ColorService.GREEN);
 				boolean fullReset = !keyWasSelected;
 				reset(fullReset);
 			}
@@ -640,7 +618,7 @@ public class RSAComposite extends Composite {
 
 		if (open == Window.OK) {
 			keysel.setEnabled(false);
-			textEnter.setBackground(GREEN);
+			textEnter.setBackground(ColorService.GREEN);
 			runCalc.setEnabled(true);
 			stepButton.setEnabled(true);
 			setTextfield2BlockContent(data.getPlainTextAsNumbers());
@@ -651,7 +629,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * verification step 1: signature verification step 2: plaintext (optional)
-	 * 
+	 *
 	 * @param dataForWizard
 	 * @param verificationStep
 	 * @return
@@ -665,7 +643,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * create the main algorithm view.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 */
@@ -681,7 +659,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * create the keygroup there e, d and n are displayed.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 */
@@ -726,7 +704,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * create the group where text and "translated" text are displayed.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 */
@@ -870,7 +848,7 @@ public class RSAComposite extends Composite {
 	/**
 	 * create the calculations group where the fast exponentiation table and the
 	 * step result are displayed.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 */
@@ -896,7 +874,6 @@ public class RSAComposite extends Composite {
 				false, 1, 1));
 		stepbackButton.addSelectionListener(new SelectionAdapter() {
 
-			@SuppressWarnings("incomplete-switch")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				--numberIndex;
@@ -910,12 +887,11 @@ public class RSAComposite extends Composite {
 				if (numberIndex == numbers.size() - 2) {
 					stepButton.setEnabled(true);
 					runCalc.setEnabled(true);
-					runCalc.setBackground(GREEN);
+					runCalc.setBackground(ColorService.GREEN);
 					finish();
 					viewHex();
 				}
 
-				stepBArray = data.getTempAsNumbers();
 				data.setTempAsNumbers(data.getTempAsNumbers().subList(0,
 						data.getTempAsNumbers().size() - 2));
 				viewHex();
@@ -1089,7 +1065,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * calculates the yes/no values for the table based on the exponent.
-	 * 
+	 *
 	 * @param b
 	 *            the number
 	 * @return a string[] containing yes or no for every tablefield
@@ -1109,7 +1085,7 @@ public class RSAComposite extends Composite {
 
 	/**
 	 * getter for the right exponent based on the action.
-	 * 
+	 *
 	 * @return the exponent
 	 */
 	private BigInteger getExponent() {
@@ -1149,7 +1125,7 @@ public class RSAComposite extends Composite {
 		BigInteger result = BigInteger.ONE;
 		final BigInteger modul = data.getN();
 		String res = Integer.toHexString(base2) + Messages.RSAComposite_caret
-				+ exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$ 
+				+ exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
 		String text = Integer.toHexString(base2)
 				+ exponent.toString(Constants.HEXBASE) + " = "; //$NON-NLS-1$
 		for (int i = 0; i < fastExpTable.getColumnCount() - 1; i++) {
@@ -1227,7 +1203,7 @@ public class RSAComposite extends Composite {
 	/**
 	 * create the resultgroup where the result and the copy button are
 	 * displayed.
-	 * 
+	 *
 	 * @param parent
 	 *            the parent
 	 */
@@ -1284,10 +1260,10 @@ public class RSAComposite extends Composite {
 		// if (Lib.hash(textText.getText(), data.getSimpleHash(),
 		// data.getN()).equals(data.getTemp().trim())) {
 		// text = Messages.RSAComposite_valid;
-		// verifiedText.setForeground(GREEN);
+		// verifiedText.setForeground(ColorService.GREEN);
 		// } else {
 		// text = Messages.RSAComposite_invalid;
-		// verifiedText.setForeground(RED);
+		// verifiedText.setForeground(ColorService.RED);
 		// }
 		// verifiedText.setText(text);
 		// }
@@ -1351,7 +1327,7 @@ public class RSAComposite extends Composite {
 			layoutData6.widthHint = width / 3;
 			txtSigT.setLayoutData(layoutData6);
 			txtSigT.setText(VER_RESULT_DISPLAY_DEFAULT);
-			txtSigT.setBackground(WHITE);
+			txtSigT.setBackground(ColorService.WHITE);
 			txtSigT.setEditable(false);
 
 			lblEqSign = new Label(compCompare, SWT.NONE);
@@ -1365,7 +1341,7 @@ public class RSAComposite extends Composite {
 			layoutData7.widthHint = width / 3;
 			txtHashT.setLayoutData(layoutData7);
 			txtHashT.setText(VER_RESULT_DISPLAY_DEFAULT);
-			txtHashT.setBackground(WHITE);
+			txtHashT.setBackground(ColorService.WHITE);
 			txtHashT.setEditable(false);
 
 			lblVerResultDisplay = new Label(resultDisplayVerification, SWT.WRAP
@@ -1405,10 +1381,10 @@ public class RSAComposite extends Composite {
 			if (hashIsSet && sigIsSet) {
 				if (hash.equals(sig)) {
 					lblVerResultDisplay.setText(Messages.RSAComposite_11);
-					lblVerResultDisplay.setForeground(GREEN);
+					lblVerResultDisplay.setForeground(ColorService.GREEN);
 				} else {
 					lblVerResultDisplay.setText(Messages.RSAComposite_12);
-					lblVerResultDisplay.setForeground(RED);
+					lblVerResultDisplay.setForeground(ColorService.RED);
 				}
 			} else {
 				if (!hashIsSet && !sigIsSet) {
@@ -1418,7 +1394,7 @@ public class RSAComposite extends Composite {
 				} else {
 					lblVerResultDisplay.setText(Messages.RSAComposite_15);
 				}
-				lblVerResultDisplay.setForeground(GREY);
+				lblVerResultDisplay.setForeground(ColorService.GRAY);
 			}
 		}
 	}
@@ -1576,13 +1552,13 @@ public class RSAComposite extends Composite {
 		data = new RSAData(data.getAction());
 		datas.put(data.getAction(), data);
 		keysel.setEnabled(false);
-		keysel.setBackground(GREEN);
+		keysel.setBackground(ColorService.GREEN);
 		textEnter.setEnabled(false);
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(false);
-		textEnter.setBackground(GREEN);
+		textEnter.setBackground(ColorService.GREEN);
 		runCalc.setEnabled(true);
-		runCalc.setBackground(RED);
+		runCalc.setBackground(ColorService.RED);
 		data.randomKey();
 		// sets eText, dText, nText
 		keySelected();
@@ -1599,13 +1575,13 @@ public class RSAComposite extends Composite {
 		message.open();
 
 		keysel.setEnabled(false);
-		keysel.setBackground(GREEN);
+		keysel.setBackground(ColorService.GREEN);
 		textEnter.setEnabled(false);
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(false);
-		textEnter.setBackground(GREEN);
+		textEnter.setBackground(ColorService.GREEN);
 		runCalc.setEnabled(true);
-		runCalc.setBackground(RED);
+		runCalc.setBackground(ColorService.RED);
 		data.randomPlain();
 		// sets eText, dText, nText
 		keySelected();
@@ -1616,11 +1592,11 @@ public class RSAComposite extends Composite {
 
 	private void reset(boolean full) {
 		keysel.setEnabled(true);
-		keysel.setBackground(RED);
+		keysel.setBackground(ColorService.RED);
 		textEnter.setEnabled(false);
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(false);
-		textEnter.setBackground(RED);
+		textEnter.setBackground(ColorService.RED);
 		switch (data.getAction()) {
 		case EncryptAction:
 		case SignAction: {
@@ -1633,7 +1609,7 @@ public class RSAComposite extends Composite {
 			break;
 		}
 		}
-		runCalc.setBackground(RED);
+		runCalc.setBackground(ColorService.RED);
 
 		BigInteger oldE = data.getE();
 		BigInteger oldD = data.getD();
@@ -1741,7 +1717,7 @@ public class RSAComposite extends Composite {
 	 * called to set the values of the key selection to their fields.
 	 */
 	private void keySelected() {
-		keysel.setBackground(GREEN);
+		keysel.setBackground(ColorService.GREEN);
 		textEnter.setEnabled(true);
 		if (data.getAction() == Action.VerifyAction)
 			textEnter2.setEnabled(true);
@@ -1766,7 +1742,7 @@ public class RSAComposite extends Composite {
 					.getPlainTextConversion();
 		}
 		keysel.setEnabled(false);
-		textEnter.setBackground(GREEN);
+		textEnter.setBackground(ColorService.GREEN);
 		runCalc.setEnabled(true);
 		stepButton.setEnabled(true);
 		switch (data.getAction()) {

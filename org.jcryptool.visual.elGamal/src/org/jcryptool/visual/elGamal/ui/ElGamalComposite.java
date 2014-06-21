@@ -6,11 +6,8 @@ package org.jcryptool.visual.elGamal.ui;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONHEIGHT;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONVERTICALSPACE;
 import static org.jcryptool.visual.library.Constants.BIGBUTTONWIDTH;
-import static org.jcryptool.visual.library.Constants.GREEN;
 import static org.jcryptool.visual.library.Constants.HORIZONTAL_SPACING;
 import static org.jcryptool.visual.library.Constants.MARGIN_WIDTH;
-import static org.jcryptool.visual.library.Constants.RED;
-import static org.jcryptool.visual.library.Constants.WHITE;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -50,6 +47,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jcryptool.core.util.colors.ColorService;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.elGamal.Action;
 import org.jcryptool.visual.elGamal.ElGamalData;
@@ -155,7 +153,7 @@ public class ElGamalComposite extends Composite {
             if (ElGamalComposite.this.numberIndex == ElGamalComposite.this.numbers.length - 1) {
                 ElGamalComposite.this.stepButton.setEnabled(false);
                 ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(GREEN);
+                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
                 ElGamalComposite.this.finish();
             }
         }
@@ -178,7 +176,7 @@ public class ElGamalComposite extends Composite {
             ElGamalComposite.this.updateLabel();
             if (ElGamalComposite.this.numberIndex == ElGamalComposite.this.numbers.length - 1) {
                 ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(GREEN);
+                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
                 ElGamalComposite.this.finish();
             }
             ElGamalComposite.this.stepButton.removeSelectionListener(ElGamalComposite.this.startSelectionListener);
@@ -231,13 +229,13 @@ public class ElGamalComposite extends Composite {
      */
     private void createHead() {
         final Composite head = new Composite(this, SWT.NONE);
-        head.setBackground(WHITE);
+        head.setBackground(ColorService.WHITE);
         head.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
         head.setLayout(new GridLayout());
 
         final Label label = new Label(head, SWT.NONE);
         label.setFont(FontService.getHeaderFont());
-        label.setBackground(WHITE);
+        label.setBackground(ColorService.WHITE);
         label.setText(Messages.ElGamalComposite_title);
 
         final StyledText stDescription = new StyledText(head, SWT.READ_ONLY);
@@ -264,7 +262,7 @@ public class ElGamalComposite extends Composite {
      * called to set the values of the key selection to their fields.
      */
     private void keySelected() {
-        this.keysel.setBackground(GREEN);
+        this.keysel.setBackground(ColorService.GREEN);
         this.textEnter.setEnabled(true);
         if (this.data.getModulus() != null) {
             this.pText.setText(this.data.getModulus().toString());
@@ -298,7 +296,7 @@ public class ElGamalComposite extends Composite {
 
         // Key selection Button
         this.keysel = new Button(canvas, SWT.PUSH);
-        this.keysel.setBackground(RED);
+        this.keysel.setBackground(ColorService.RED);
         this.keysel.setEnabled(true);
         this.keysel.setText(Messages.ElGamalComposite_key_selection);
         this.keysel.setLayoutData(fDkeysel);
@@ -327,7 +325,7 @@ public class ElGamalComposite extends Composite {
 
         // Text enter Button
         this.textEnter = new Button(canvas, SWT.PUSH);
-        this.textEnter.setBackground(RED);
+        this.textEnter.setBackground(ColorService.RED);
         this.textEnter.setEnabled(false);
         this.textEnter.setText(Messages.ElGamalComposite_enter_text);
         this.textEnter.setLayoutData(fDtextEnter);
@@ -357,7 +355,7 @@ public class ElGamalComposite extends Composite {
 
         // unique parameter button
         this.uniqueKeyButton = new Button(canvas, SWT.PUSH);
-        this.uniqueKeyButton.setBackground(RED);
+        this.uniqueKeyButton.setBackground(ColorService.RED);
         this.uniqueKeyButton.setEnabled(false);
         this.uniqueKeyButton.setText(Messages.ElGamalComposite_enter_param);
         this.uniqueKeyButton.setToolTipText(Messages.ElGamalComposite_enter_param_text);
@@ -380,7 +378,7 @@ public class ElGamalComposite extends Composite {
 
         // Run Calculations Button
         this.runCalc = new Button(canvas, SWT.PUSH);
-        this.runCalc.setBackground(RED);
+        this.runCalc.setBackground(ColorService.RED);
         this.runCalc.setEnabled(false);
         this.runCalc.setText(Messages.ElGamalComposite_calculate);
         this.runCalc.setToolTipText(Messages.ElGamalComposite_calculate_popup);
@@ -392,7 +390,7 @@ public class ElGamalComposite extends Composite {
                 ElGamalComposite.this.uniqueKeyButton.setEnabled(false);
                 ElGamalComposite.this.textEnter.setEnabled(false);
                 ElGamalComposite.this.runCalc.setEnabled(false);
-                ElGamalComposite.this.runCalc.setBackground(GREEN);
+                ElGamalComposite.this.runCalc.setBackground(ColorService.GREEN);
                 // startButton.setEnabled(false);
                 ElGamalComposite.this.stepButton.setEnabled(false);
                 if (ElGamalComposite.this.dialog) {
@@ -534,7 +532,7 @@ public class ElGamalComposite extends Composite {
         // set up a composite to draw final the fast exp shit on
         this.fastExpTable = new Composite(g, SWT.NONE);
         this.fastExpTable.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true, numColumns, 1));
-        this.fastExpTable.setBackground(WHITE);
+        this.fastExpTable.setBackground(ColorService.WHITE);
         this.fastExpTable.setVisible(false);
 
         final Label l = new Label(g, SWT.NONE);
@@ -856,10 +854,10 @@ public class ElGamalComposite extends Composite {
                             && ElGamalComposite.this.resultText.getText().trim()
                                     .equals(ElGamalComposite.this.verifiedText.getData())) {
                         text = Messages.ElGamalComposite_valid;
-                        ElGamalComposite.this.verifiedText.setForeground(GREEN);
+                        ElGamalComposite.this.verifiedText.setForeground(ColorService.GREEN);
                     } else {
                         text = Messages.ElGamalComposite_invalid;
-                        ElGamalComposite.this.verifiedText.setForeground(RED);
+                        ElGamalComposite.this.verifiedText.setForeground(ColorService.RED);
                     }
                     ElGamalComposite.this.verifiedText.setText(text);
                 }
@@ -991,13 +989,13 @@ public class ElGamalComposite extends Composite {
      */
     private void reset() {
         this.keysel.setEnabled(true);
-        this.keysel.setBackground(RED);
+        this.keysel.setBackground(ColorService.RED);
         this.textEnter.setEnabled(false);
-        this.textEnter.setBackground(RED);
+        this.textEnter.setBackground(ColorService.RED);
         this.uniqueKeyButton.setEnabled(false);
-        this.uniqueKeyButton.setBackground(RED);
+        this.uniqueKeyButton.setBackground(ColorService.RED);
         this.runCalc.setEnabled(false);
-        this.runCalc.setBackground(RED);
+        this.runCalc.setBackground(ColorService.RED);
         this.data = new ElGamalData(this.data.getAction());
         this.datas.put(this.data.getAction(), this.data);
         this.pText.setText(""); //$NON-NLS-1$
@@ -1024,7 +1022,7 @@ public class ElGamalComposite extends Composite {
      */
     private void textEntered() {
         this.keysel.setEnabled(false);
-        this.textEnter.setBackground(GREEN);
+        this.textEnter.setBackground(ColorService.GREEN);
         this.uniqueKeyButton.setEnabled(true);
         switch (this.data.getAction()) {
             case EncryptAction:
@@ -1038,7 +1036,7 @@ public class ElGamalComposite extends Composite {
                 this.textText.setText(this.data.getPlainText());
                 this.numberText.setText(this.data.getSignature().split(",")[1].replace(')', ' ').trim()); //$NON-NLS-1$
                 this.uniqueKeyButton.setEnabled(false);
-                this.uniqueKeyButton.setBackground(GREEN);
+                this.uniqueKeyButton.setBackground(ColorService.GREEN);
                 this.runCalc.setEnabled(true);
                 this.stepButton.setEnabled(true);
                 break;
@@ -1070,7 +1068,7 @@ public class ElGamalComposite extends Composite {
      */
     private void bEntered() {
         this.textEnter.setEnabled(false);
-        this.uniqueKeyButton.setBackground(GREEN);
+        this.uniqueKeyButton.setBackground(ColorService.GREEN);
         this.runCalc.setEnabled(true);
         this.stepButton.setEnabled(true);
     }

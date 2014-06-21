@@ -12,10 +12,6 @@ package org.jcryptool.visual.library;
 
 import java.math.BigInteger;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
-
 public class Constants {
     public static final int HORIZONTAL_SPACING = 50;
 
@@ -30,18 +26,6 @@ public class Constants {
     /** width of the big buttons */
     public static final int BIGBUTTONWIDTH = 150;
 
-    /** colors for backgrounds. */
-    public static final Color WHITE, GREEN, RED, LIGHTGREY, GREY;
-
-    static {
-        final Display d = Display.getDefault();
-        WHITE = d.getSystemColor(SWT.COLOR_WHITE);
-        GREY = d.getSystemColor(SWT.COLOR_DARK_GRAY);
-        RED = d.getSystemColor(SWT.COLOR_RED);
-        GREEN = d.getSystemColor(SWT.COLOR_GREEN);
-        LIGHTGREY = d.getSystemColor(SWT.COLOR_WIDGET_BACKGROUND);
-    }
-
     /** Basis (16) for Hex Strings. */
     public static final int HEXBASE = 16;
 
@@ -53,5 +37,4 @@ public class Constants {
 
     /** constant 256. */
     public static final BigInteger TWOFIVESIX = new BigInteger("256"); //$NON-NLS-1$
-
 }

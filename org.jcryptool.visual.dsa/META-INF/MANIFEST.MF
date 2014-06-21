@@ -15,5 +15,6 @@ Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.jcryptool.visual.dsa.DSAPlugin
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.colors,
  org.jcryptool.core.util.constants,
  org.jcryptool.core.util.fonts
