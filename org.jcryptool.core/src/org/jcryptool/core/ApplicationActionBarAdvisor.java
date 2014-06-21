@@ -45,9 +45,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
 import org.jcryptool.core.operations.CommandInfo;
-import org.jcryptool.core.operations.CommandOrAction;
 import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 
 /**
  * <p>

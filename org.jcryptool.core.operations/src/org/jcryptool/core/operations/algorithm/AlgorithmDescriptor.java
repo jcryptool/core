@@ -13,7 +13,6 @@ import java.util.StringTokenizer;
 
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
-import org.jcryptool.core.operations.CommandOrAction;
 
 /**
  * Descriptor for algorithms.<br>

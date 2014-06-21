@@ -10,7 +10,6 @@
 package org.jcryptool.core.operations.algorithm;
 
 import org.jcryptool.core.operations.CommandInfo;
-import org.jcryptool.core.operations.CommandOrAction;
 
 /**
  * The specifications for descriptors.
