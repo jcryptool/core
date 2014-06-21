@@ -20,7 +20,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.operations.keys.KeyVerificator;
 import org.jcryptool.core.util.input.InputVerificationResult;
-import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
+import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 /**
  * Specifies aspects of classic algorithms like plain text and cipher text combinations. Implementations

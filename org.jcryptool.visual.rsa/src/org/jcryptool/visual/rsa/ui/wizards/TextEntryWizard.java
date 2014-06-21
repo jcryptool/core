@@ -83,14 +83,14 @@ public class TextEntryWizard extends Wizard {
 			this.transformData = getTransformData();
 			finished = true;
 			// Sets plain text using the inserted text and the transformData
-			data.setPlainText(Transform.transformText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename())).getText(), transformData));
+			data.setPlainText_Old(Transform.transformText(((EnterPlaintextPage) getPage(EnterPlaintextPage.getPagename())).getText(), transformData));
 			break;
 		case DecryptAction:
-			data.setCipherText(((EnterCiphertextPage) getPage(EnterCiphertextPage.getPagename())).getText().trim());
+			data.setCipherText_Old(((EnterCiphertextPage) getPage(EnterCiphertextPage.getPagename())).getText().trim());
 			break;
 		case VerifyAction:
-			data.setSignature(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename())).getText().trim());
-			data.setPlainText(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename())).getPlaintext().trim());
+			data.setSignature_Old(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename())).getText().trim());
+			data.setPlainText_Old(((EnterSignaturePage) getPage(EnterSignaturePage.getPagename())).getPlaintext().trim());
 		default:
 			break;
 		}

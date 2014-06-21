@@ -8,7 +8,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.crypto.classic.model.ui.wizard.util;
+package org.jcryptool.crypto.ui.util;
 
 import java.util.IdentityHashMap;
 import java.util.LinkedList;
@@ -25,7 +25,6 @@ import org.jcryptool.core.util.input.AbstractUIInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.handler.WidgetRelatedUIInputResultHandler;
 import org.jcryptool.core.util.ui.SingleVanishTooltipLauncher;
-import org.jcryptool.crypto.classic.model.ui.wizard.Messages;
 
 /**
  * UIInputhandler which shows Bubbles as informations about verifications beneath

@@ -10,8 +10,10 @@
 package org.jcryptool.visual.rsa.ui.wizards;
 
 import java.math.BigInteger;
+import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -128,9 +130,13 @@ public class KeySelectionWizard extends Wizard {
             case EncryptAction:
             case VerifyAction:
                 page = getPage(EncryptVerifyPage.getPagename());
+                boolean isNewKeyPairPage = getContainer().getCurrentPage().getName().equals(NewKeypairPage.getPagename());
+                boolean isNewPKPage = getContainer().getCurrentPage().getName().equals(NewPublicKeyPage.getPagename());
+                boolean isPrevNewPKPage = ( getContainer().getCurrentPage().getPreviousPage() != null && getContainer().getCurrentPage().getPreviousPage().getName().equals(NewPublicKeyPage.getPagename()) );
+                boolean isPrevNewKeyPairPage = ( getContainer().getCurrentPage().getPreviousPage() != null && getContainer().getCurrentPage().getPreviousPage().getName().equals(NewKeypairPage.getPagename()) );
                 rv &= page.isPageComplete();
                 if (((EncryptVerifyPage) page).wantNewKey()) {
-                    if (getContainer().getCurrentPage().getName().equals(NewPublicKeyPage.getPagename())) {
+					if (isNewPKPage || isPrevNewPKPage) {
                         page = getPage(NewPublicKeyPage.getPagename());
                         rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete()) || (getPage(NewKeypairPage
                                 .getPagename()).isPageComplete()));
@@ -138,20 +144,24 @@ public class KeySelectionWizard extends Wizard {
                             rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())
                                     || (getPage(SaveKeypairPage.getPagename()).isPageComplete());
                         }
-                    } else if (getContainer().getCurrentPage().getName().equals(NewKeypairPage.getPagename())) {
-                        page = getPage(NewKeypairPage.getPagename());
-                        rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete()) || (getPage(NewKeypairPage
-                                .getPagename()).isPageComplete()));
-                        if (((NewKeypairPage) page).wantSave()) {
-                            rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())
-                                    || (getPage(SaveKeypairPage.getPagename()).isPageComplete());
-                        }
                     } else {
-                        rv = false;
-                    }
+						if (isNewKeyPairPage || isPrevNewKeyPairPage ) {
+						    page = getPage(NewKeypairPage.getPagename());
+						    rv &= ((getPage(NewPublicKeyPage.getPagename()).isPageComplete()) || (getPage(NewKeypairPage
+						            .getPagename()).isPageComplete()));
+						    if (((NewKeypairPage) page).wantSave()) {
+						        rv &= (getPage(SavePublicKeyPage.getPagename()).isPageComplete())
+						                || (getPage(SaveKeypairPage.getPagename()).isPageComplete());
+						    }
+						} else {
+						    rv = false;
+						}
+					}
                 } else {
-                    rv &= ((getPage(LoadPublicKeyPage.getPagename()).isPageComplete()) || (getPage(LoadKeypairPage
-                            .getPagename()).isPageComplete()));
+                    rv &= (
+                    		(getPage(LoadPublicKeyPage.getPagename()).isPageComplete()) || 
+                    		(getPage(LoadKeypairPage.getPagename()).isPageComplete())
+                    		);
                 }
                 break;
             default:
@@ -176,16 +186,21 @@ public class KeySelectionWizard extends Wizard {
                             save(true);
                         }
                     } else {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias privAlias = data.getPrivateAlias();
-                        final String password = data.getPassword();
-                        final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
-                        data.setN(privkey.getModulus());
-                        data.setD(privkey.getD().bigInt);
-                        data.setP(privkey.getP().bigInt);
-                        data.setQ(privkey.getQ().bigInt);
-                        data.setE(privkey.getPublicExponent());
+                    	try {
+                        	final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                        	final KeyStoreAlias privAlias = data.getPrivateAlias();
+                        	final String password = data.getPassword();
+                        	final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                        	final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+                        	data.setN(privkey.getModulus());
+                        	data.setD(privkey.getD().bigInt);
+                        	data.setP(privkey.getP().bigInt);
+                        	data.setQ(privkey.getQ().bigInt);
+                        	data.setE(privkey.getPublicExponent());
+                        } catch (GeneralSecurityException secEx ) {
+                        	MessageDialog.openError(getShell(), getWindowTitle(), "Der Schlüssel konnte nicht geladen werden. Das Passwort stimmt wahrscheinlich nicht.");
+                        	return false;
+                        }
                     }
                     break;
                 case EncryptAction:
@@ -197,22 +212,32 @@ public class KeySelectionWizard extends Wizard {
                             save(true);
                         }
                     } else if (getPage(LoadKeypairPage.getPagename()).isPageComplete()) {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias privAlias = data.getPrivateAlias();
-                        final String password = data.getPassword();
-                        final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
-                        final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
-                        data.setN(privkey.getModulus());
-                        data.setD(privkey.getD().bigInt);
-                        data.setP(privkey.getP().bigInt);
-                        data.setQ(privkey.getQ().bigInt);
-                        data.setE(privkey.getPublicExponent());
+                        try {
+                        	final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                        	final KeyStoreAlias privAlias = data.getPrivateAlias();
+                        	final String password = data.getPassword();
+                        	final PrivateKey key = ksm.getPrivateKey(privAlias, password.toCharArray());
+                        	final RSAPrivateCrtKey privkey = (RSAPrivateCrtKey) key;
+                        	data.setN(privkey.getModulus());
+                        	data.setD(privkey.getD().bigInt);
+                        	data.setP(privkey.getP().bigInt);
+                        	data.setQ(privkey.getQ().bigInt);
+                        	data.setE(privkey.getPublicExponent());
+                        } catch (GeneralSecurityException secEx ) {
+                        	MessageDialog.openError(getShell(), getWindowTitle(), "Der Schlüssel konnte nicht geladen werden. Das Passwort stimmt wahrscheinlich nicht.");
+                        	return false;
+                        }
                     } else {
-                        final KeyStoreManager ksm = KeyStoreManager.getInstance();
-                        final KeyStoreAlias publicAlias = data.getPublicAlias();
-                        final RSAPublicKey pubkey = (RSAPublicKey) ksm.getCertificate(publicAlias).getPublicKey();
-                        data.setN(pubkey.getModulus());
-                        data.setE(pubkey.getPublicExponent());
+                    	try {
+                    		final KeyStoreManager ksm = KeyStoreManager.getInstance();
+                            final KeyStoreAlias publicAlias = data.getPublicAlias();
+                            final RSAPublicKey pubkey = (RSAPublicKey) ksm.getCertificate(publicAlias).getPublicKey();
+                            data.setN(pubkey.getModulus());
+                            data.setE(pubkey.getPublicExponent());
+                        } catch (GeneralSecurityException secEx ) {
+                        	MessageDialog.openError(getShell(), getWindowTitle(), "Der Schlüssel konnte nicht geladen werden. Das Passwort stimmt wahrscheinlich nicht.");
+                        	return false;
+                        }
                     }
                     break;
                 default:

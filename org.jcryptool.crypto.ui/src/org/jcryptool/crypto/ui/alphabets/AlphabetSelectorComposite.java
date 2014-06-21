@@ -202,6 +202,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 							}
 						}
 					});
+					
 				}
 
 				comboAlphas = new Combo(this, SWT.NONE);
@@ -351,6 +352,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 
 		comboAlphas.setEnabled(comboAlphas.getItemCount() >= 2);
+		btnSelectAlphabet.setEnabled(registeredAlphas.size() > 0);
 	}
 
 	private String makeAlphaStringForCombo(AbstractAlphabet alpha, boolean custom) {
@@ -461,6 +463,7 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 					} else if(isRegisteredAlphabetSetInCombo()) {
 						return getAlphabetFromCombo();
 					} else {
+//						return this.getContent();
 						throw new UnsupportedOperationException("Notified readContent but selected \"create new Alpha\" and no custom alphabet was found."); //$NON-NLS-1$
 					}
 				}

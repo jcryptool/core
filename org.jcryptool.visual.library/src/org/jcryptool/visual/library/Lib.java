@@ -13,6 +13,9 @@ package org.jcryptool.visual.library;
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -24,6 +27,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import javax.print.attribute.IntegerSyntax;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
@@ -42,11 +47,11 @@ public class Lib {
 
 	/** list of low prime numbers. {x | 1 &le; x &le; 13} */
 	public static final HashSet<Integer> LOWEST_PRIMES = new HashSet<Integer>(
-			Arrays.asList(new Integer[] { 1, 2, 3, 5, 7, 11, 13 }));
+			Arrays.asList(new Integer[] { 1, 2/*, 3, 5, 7, 11, 13*/ }));
 
 	/** list of pre-calculated prime numbers {x | 17 &le; x &le; 1013} */
 	public static final TreeSet<Integer> LOW_PRIMES = new TreeSet<Integer>(
-	        Arrays.asList(new Integer[] { 17, 19, 23, 29, 31, 37, 41, 43, 47,
+	        Arrays.asList(new Integer[] { 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
 	                53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109,
 	                113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179,
 	                181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241,
@@ -563,6 +568,49 @@ public class Lib {
 			}
 		}
 		return rv.mod(modulus).toString(Constants.HEXBASE);
+	}
+
+	static byte[] integersToBytes(int[] values) throws IOException
+	{
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   DataOutputStream dos = new DataOutputStream(baos);
+	   for(int i=0; i < values.length; ++i)
+	   {
+	        dos.writeInt(values[i]);
+	   }
+
+	   return baos.toByteArray();
+	}
+	
+	public static Integer hash(List<Integer> plainTextAsNumbers,
+			boolean simple, BigInteger modulus) {
+		BigInteger rv = BigInteger.ZERO;
+		if (simple) {
+			for (final Integer c : plainTextAsNumbers) {
+				rv = rv.add(new BigInteger(c.toString())); //$NON-NLS-1$
+		}
+		} else {
+			MessageDigest md;
+			try {
+				int[] intarray = new int[plainTextAsNumbers.size()];
+				for (int j = 0; j < plainTextAsNumbers.size(); j++) {
+					Integer i = plainTextAsNumbers.get(j);
+					intarray[j] = i;
+				}
+				byte[] bytearray;
+				try {
+					bytearray = integersToBytes(intarray);
+				} catch (IOException e) {
+					bytearray = new byte[]{0};
+					e.printStackTrace();
+				}
+				md = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
+				rv = new BigInteger(md.digest(bytearray));
+			} catch (final NoSuchAlgorithmException e) {
+				LogUtil.logError(e);
+			}
+		}
+		return rv.mod(modulus).intValue();
 	}
 
 	/**

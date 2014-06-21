@@ -4,7 +4,10 @@
 package org.jcryptool.visual.rsa;
 
 import java.math.BigInteger;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.jcryptool.crypto.ui.textblockloader.Repr;
 import org.jcryptool.visual.library.Constants;
 
 /**
@@ -52,4 +55,23 @@ public enum Action {
 		}
 		return sb.toString();
 	}
+	
+	public List<Integer> run(List<Integer> words, BigInteger exponent, BigInteger n) {
+		final List<Integer> result = new LinkedList<Integer>();
+		BigInteger number;
+		for (final Integer word : words) {
+			number = new BigInteger(word.toString());
+			if (this == DecryptAction) {
+				result.add(number.modPow(exponent, n).intValue());
+			} else {
+				result.add(number.modPow(exponent, n).intValue());
+			}
+		}
+		return result;
+	}
+
+	public boolean usesTextualInput() {
+		return this == EncryptAction || this == SignAction;
+	}
+	
 }

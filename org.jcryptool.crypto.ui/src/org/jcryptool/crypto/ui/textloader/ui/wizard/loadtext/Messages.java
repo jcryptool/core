@@ -4,6 +4,10 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.ui.textloader.ui.wizard.loadtext.messages"; //$NON-NLS-1$
+	public static String LoadTextWizardPage_0;
+	public static String LoadTextWizardPage_1;
+	public static String LoadTextWizardPage_2;
+	public static String LoadTextWizardPage_3;
 	public static String TranspTextModifyPage_textmodifydescription;
 	public static String TranspTextWizardPage_text;
 	public static String TranspTextWizardPage_windowsfiledialogtitle;

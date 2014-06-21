@@ -183,7 +183,7 @@ public class EnterPlaintextPage extends TextWizardPage {
         }
                 
         // fill in old data
-        text.setText(data.getPlainText());
+        text.setText(data.getPlainText_Old());
         // finish
         setControl(composite);
     }

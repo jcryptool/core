@@ -31,11 +31,12 @@ public class Constants {
     public static final int BIGBUTTONWIDTH = 150;
 
     /** colors for backgrounds. */
-    public static final Color WHITE, GREEN, RED, LIGHTGREY, BLACK;
+    public static final Color WHITE, GREEN, RED, LIGHTGREY, BLACK, GREY;
 
     static {
         final Display d = Display.getDefault();
         WHITE = d.getSystemColor(SWT.COLOR_WHITE);
+        GREY = d.getSystemColor(SWT.COLOR_DARK_GRAY);
         RED = d.getSystemColor(SWT.COLOR_RED);
         GREEN = d.getSystemColor(SWT.COLOR_GREEN);
         BLACK = d.getSystemColor(SWT.COLOR_BLACK);

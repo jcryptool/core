@@ -29,9 +29,9 @@ import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.core.util.input.TextfieldInput;
 import org.jcryptool.crypto.classic.model.ui.wizard.KeyInput;
-import org.jcryptool.crypto.classic.model.ui.wizard.util.WidgetBubbleUIInputHandler;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionAlgorithm;
 import org.jcryptool.crypto.classic.transposition.algorithm.TranspositionKey;
+import org.jcryptool.crypto.ui.util.WidgetBubbleUIInputHandler;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
