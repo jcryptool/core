@@ -84,6 +84,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
     static ControlDecoration validitySymbol;
     static Text txtLogWindow;
+    
+    /**
+     * counter for number of performed validations
+     */
+    private static int validationCounter = 0;
 
     /**
      * Create the composite.
@@ -113,7 +118,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         gl_composite.marginBottom = 5;
         composite.setLayout(gl_composite);
 
-        txtDiesIstDer = new Text(composite, SWT.BORDER | SWT.READ_ONLY | SWT.MULTI | SWT.WRAP);
+        txtDiesIstDer = new Text(composite, SWT.READ_ONLY | SWT.WRAP | SWT.MULTI);
         txtDiesIstDer.setFont(SWTResourceManager.getFont("Lucida Grande", 13, SWT.NORMAL));
         txtDiesIstDer.setEditable(false);
         txtDiesIstDer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 6, 1));
@@ -922,6 +927,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
         btnCalculate.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
+                controller.setLogText("### " + String.format("%03d", validationCounter) + " ###");
+                validationCounter++;
+                
+                controller.logValidityDates();
+                
+                
                 if (btnShellModel.getSelection()) {
                     controller.validate(0);
                 } else if (btnModifiedShellModel.getSelection()) {

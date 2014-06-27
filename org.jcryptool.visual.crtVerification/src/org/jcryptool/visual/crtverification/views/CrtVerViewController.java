@@ -426,7 +426,7 @@ public class CrtVerViewController {
         } catch (ParseException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         }
-        
+
         return date;
     }
 
@@ -535,6 +535,26 @@ public class CrtVerViewController {
     public void setLogText(String s) {
         // CrtVerViewComposite.txtLogWindow.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
         CrtVerViewComposite.txtLogWindow.append(s + "\n");
+    }
+
+    /**
+     * Prints the NotBefore, NotAfter of all three certificates and Verification and Signation Time
+     * to the log
+     */
+    public void logValidityDates() {
+
+        parseDatesFromComposite();
+
+        setLogText(Messages.CrtVerViewComposite_RootCa + ": " + Messages.CrtVerViewComposite_validFrom + " "
+                + getFromRootCa() + ", " + Messages.CrtVerViewComposite_validThru + " " + getThruRootCa());
+        setLogText(Messages.CrtVerViewComposite_Ca + ": " + Messages.CrtVerViewComposite_validFrom + " " + getFromCA()
+                + ", " + Messages.CrtVerViewComposite_validThru + " " + getThruCA());
+        setLogText(Messages.CrtVerViewComposite_UserCertificate + ": " + Messages.CrtVerViewComposite_validFrom + " "
+                + getFromClient() + Messages.CrtVerViewComposite_validThru + " " + getThruClient());
+
+        setLogText(Messages.CrtVerViewComposite_signatureDate + ": " + getSigDate());
+        setLogText(Messages.CrtVerViewComposite_verificationDate + ": " + getVerDate());
+
     }
 
 }
