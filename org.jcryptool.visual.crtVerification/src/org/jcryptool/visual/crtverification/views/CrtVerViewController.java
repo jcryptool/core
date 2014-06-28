@@ -476,6 +476,7 @@ public class CrtVerViewController {
         flushCertificates();
 
         CrtVerViewComposite.txtLogWindow.setText("");
+        CrtVerViewComposite.validationCounter = 0;
     }
 
     /**
