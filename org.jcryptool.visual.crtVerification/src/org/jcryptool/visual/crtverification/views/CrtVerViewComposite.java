@@ -98,7 +98,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 */
 	public CrtVerViewComposite(Composite parent, int style, CrtVerView view) {
 		super(parent, style);
-		setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		// Adds reset button to the toolbar
@@ -110,7 +110,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		toolBarMenu.add(action);
 
 		TabFolder tabFolder = new TabFolder(this, SWT.NONE);
-		tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+		tabFolder.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 
 		TabItem tbtmSchalenmodell = new TabItem(tabFolder, SWT.NONE);
 		tbtmSchalenmodell.setText(Messages.CrtVerViewComposite_title);
