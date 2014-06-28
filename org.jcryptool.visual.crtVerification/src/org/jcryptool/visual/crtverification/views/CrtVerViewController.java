@@ -550,7 +550,7 @@ public class CrtVerViewController {
         setLogText(Messages.CrtVerViewComposite_Ca + ": " + Messages.CrtVerViewComposite_validFrom + " " + getFromCA()
                 + ", " + Messages.CrtVerViewComposite_validThru + " " + getThruCA());
         setLogText(Messages.CrtVerViewComposite_UserCertificate + ": " + Messages.CrtVerViewComposite_validFrom + " "
-                + getFromClient() + Messages.CrtVerViewComposite_validThru + " " + getThruClient());
+                + getFromClient() + ", " + Messages.CrtVerViewComposite_validThru + " " + getThruClient());
 
         setLogText(Messages.CrtVerViewComposite_signatureDate + ": " + getSigDate());
         setLogText(Messages.CrtVerViewComposite_verificationDate + ": " + getVerDate());
