@@ -1,7 +1,6 @@
 package org.jcryptool.visual.crtverification.views;
 
 import java.security.cert.X509Certificate;
-
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
@@ -39,6 +38,5 @@ public class ChooseCert extends Wizard {
     public boolean performCancel() {
     	composite.btnValidate.setFocus();
         return true;
-    }
-    
+    }    
 }

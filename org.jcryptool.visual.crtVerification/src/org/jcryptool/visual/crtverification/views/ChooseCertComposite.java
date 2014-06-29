@@ -42,14 +42,6 @@ public class ChooseCertComposite extends Composite {
         fd_list.left = new FormAttachment(0, 5);
         list.setLayoutData(fd_list);
 
-        /*btnLoad = new Button(this, SWT.NONE);
-        fd_list.bottom = new FormAttachment(btnLoad, -6);
-        FormData fd_btnLoad = new FormData();
-        fd_btnLoad.bottom = new FormAttachment(100, -10);
-        fd_btnLoad.right = new FormAttachment(100, -10);
-        btnLoad.setLayoutData(fd_btnLoad);
-        btnLoad.setText("Load");
-        btnLoad.setEnabled(false);*/
 
         // Wenn ein Listen-Element ausgewaehlt wird, wird der Load-Button aktiv
         list.addSelectionListener(new SelectionAdapter() {
@@ -61,9 +53,8 @@ public class ChooseCertComposite extends Composite {
             }
         });
 
-        // ArrayList<IKeyStoreAlias> publicKeys = new ArrayList<IKeyStoreAlias>();
         Enumeration<String> aliases = controller.getKsc().getAllAliases();
-        // ArrayList<X509Certificate> certificates = controller.getKsc().getAllCertificates();
+        
         while (aliases.hasMoreElements()) {
             IKeyStoreAlias alias = new KeyStoreAlias(aliases.nextElement());
             KeyType type = alias.getKeyStoreEntryType();
@@ -71,11 +62,5 @@ public class ChooseCertComposite extends Composite {
                 list.add(alias.getContactName());
             }
         }
-
-        /*
-         * for(int i=0;i<controller.getKsc().getAllCertificates().size();i++){
-         * list.add(controller.getKsc().getAllCertificates().get(i).getSubjectDN().toString()); }
-         */
-
     }
 }

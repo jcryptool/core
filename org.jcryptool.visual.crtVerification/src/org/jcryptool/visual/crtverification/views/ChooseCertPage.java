@@ -24,7 +24,6 @@ public class ChooseCertPage extends WizardPage {
         this.controller = controller;
         certType = type;
         setTitle(pageName);
-        //TODO Message
         setDescription(Messages.ChooseCertPage_description);
     }
     
@@ -40,5 +39,4 @@ public class ChooseCertPage extends WizardPage {
     public ChooseCertComposite getCompositeFile() {
         return compositeFile;
     }
-
 }
