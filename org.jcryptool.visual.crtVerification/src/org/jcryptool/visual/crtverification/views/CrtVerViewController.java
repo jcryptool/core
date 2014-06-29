@@ -436,14 +436,15 @@ public class CrtVerViewController {
     }
 
     public void reset() {
-        CrtVerViewComposite.ScaleRootCaBegin.setSelection(180);
-        CrtVerViewComposite.ScaleRootCaEnd.setSelection(180);
-        CrtVerViewComposite.ScaleCaBegin.setSelection(180);
-        CrtVerViewComposite.ScaleCaEnd.setSelection(180);
-        CrtVerViewComposite.ScaleCertBegin.setSelection(180);
-        CrtVerViewComposite.ScaleCertEnd.setSelection(180);
-        CrtVerViewComposite.ScaleVerificationDate.setSelection(360);
-        CrtVerViewComposite.ScaleSignatureDate.setSelection(360);
+        
+        CrtVerViewComposite.ScaleRootCaBegin.setSelection(70);
+        CrtVerViewComposite.ScaleRootCaEnd.setSelection(330);
+        CrtVerViewComposite.ScaleCaBegin.setSelection(100);
+        CrtVerViewComposite.ScaleCaEnd.setSelection(300);
+        CrtVerViewComposite.ScaleCertBegin.setSelection(130);
+        CrtVerViewComposite.ScaleCertEnd.setSelection(230);
+        CrtVerViewComposite.ScaleVerificationDate.setSelection(380);
+        CrtVerViewComposite.ScaleSignatureDate.setSelection(340);
 
         updateElements(CrtVerViewComposite.fromRootCa, CrtVerViewComposite.ScaleRootCaBegin, 180);
         updateElements(CrtVerViewComposite.thruRootCa, CrtVerViewComposite.ScaleRootCaEnd, 180);
@@ -462,8 +463,6 @@ public class CrtVerViewController {
         CrtVerViewComposite.TextCertThruDay.setText("1");
         CrtVerViewComposite.TextVerificationDateDay.setText("1");
         CrtVerViewComposite.TextSignatureDateDay.setText("1");
-        // CrtVerViewComposite.validity.setBackground(null);
-        // CrtVerViewComposite.validity.setText("");
         CrtVerViewComposite.validitySymbol.hide();
         CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
