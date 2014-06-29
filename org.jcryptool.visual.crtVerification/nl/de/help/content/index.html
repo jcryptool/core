@@ -15,7 +15,8 @@
 </ul>
 <p>Nachfolgenden finden Sie einen Überblick des Plug-ins sowie eine detaillierte Erklärung zur Verwendung des Plug-ins. 
   Dieses Plug-in zeigt, ob ein Zertifikatspfad bestehend aus Root-CA, CA und Teilnehmer gültig ist. Des Weiteren kann die Gültigkeitsdauer von jedem dieser Zertifikate, sowie der Verifizierungs- und der Signierzeitpunkt, mit Hilfe von Schiebereglern, manipuliert  und danach erneut eine Überprüfung durchgeführt werden. Zu beachten ist, dass die Veränderung der Schiebereglern rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert, noch werden neue erstellt.</p>
-<p><img src="GUI-Start.png" width="661" height="412" alt="Grafische Oberfläche: Zertifikat-Verifikation" /></p>
+<p>Zum Schluss werden die Gültikeitsmodelle kurz erklärt.</p>
+<p><img src="GUI-Start.png" width="749" height="466" alt="Grafische Oberfläche: Zertifikat-Verifikation" /></p>
 <h2>Allgemeine Informationen</h2>
 <h3>Reset-Funktion</h3>
 <p>Das Plug-in wird auf seinen Ursprungszustand zurückgesetzt. Alle vom User getätigten Änderungen werden verworfen.</p>
@@ -27,14 +28,14 @@
 <h2>Nutzung des Plug-ins</h2>
 <p>Im Folgenden werden wir die Funktionen des Plug-ins anhand eines möglichen Durchlaufs beschreiben.</p>
 <h3>Schritt 1</h3>
-<p>Der erste Schritt ist das Laden der Zertifikate. Beim Klicken auf die Buttons &quot;Root CA laden&quot;, &quot;CA laden&quot; und &quot;Teilnehmerzertifikat laden&quot; öffnet sich ein Dialogfenster (siehe Abbildung) zum Auswählen des zu Ladenden Zertifikats. In diesem Fenster wählen Sie das gewünschte Zertifikat in der Liste aus und klicken auf &quot;Load&quot; und dann auf &quot;Finish&quot;. Die Regler in der Oberfläche haben sich nun entsprechend der geladenen Zertifikate angepasst und die Schrift des Buttons zum Laden in der Hauptoberfläche ist jetzt grün.</p>
+<p>Der erste Schritt ist das Laden der Zertifikate. Beim Klicken auf die Buttons &quot;Root CA laden&quot;, &quot;CA laden&quot; und &quot;Teilnehmerzertifikat laden&quot; öffnet sich ein Dialogfenster (siehe Abbildung) zum Auswählen des zu Ladenden Zertifikats. In diesem Fenster wählen Sie das gewünschte Zertifikat in der Liste aus und klicken  auf &quot;Finish&quot;. Die Regler in der Oberfläche haben sich nun entsprechend der geladenen Zertifikate angepasst und die Schrift des Buttons zum Laden in der Hauptoberfläche ist jetzt grün.</p>
 <p><img src="PopUp.png" width="417" height="380" alt="Fenster zum Laden der Zertifikate" /></p>
 <h3>&nbsp;</h3>
 <h3>Schritt 2</h3>
 <p>Wenn Sie alle drei Zertifikate (Root-CA, CA und Teilnehmer) erfolgreich geladen haben, wählen Sie, mit Hilfe der Radio-Buttons, nach welchem Gültigkeitsmodell Sie validieren möchten. Nun können Sie auf den Button &quot;Überprüfen&quot; drücken und erfahren,  anhand der Symbole X im roten Kreis oder Häkchen im grünen Kreis, ob die geladene Kette gültig ist oder nicht. </p>
 <p>Im Log finden sie alle Schritte die Sie seit dem Starten oder Reseten des Plug-ins durchgeführt haben in Textform wieder.</p>
 <p>Auswahl des Gültigkeitsmodells:</p>
-<p><img src="Gueltigkeitsmodelle.png" width="345" height="72" alt="Gültigkeitsmodelle" /></p>
+<p><img src="Gueltigkeitsmodelle.png" width="400" height="29" alt="Auswahl der Gültikeitsmodelle" /></p>
 <p>Erfolgreich validiert:</p>
 <p><img src="gruenerHaken.png" width="376" height="36" alt="Erfolgreich validiert" /></p>
 <p>Erfolglos validiert:</p>
@@ -43,10 +44,40 @@
 <p><img src="Log.png" width="349" height="284" alt="Log" /></p>
 <h3>Schritt 3</h3>
 <p>Zu Anschauungszwecken können Sie nun anhand der Schieberegler die  Gültigkeitsdauer von jedem der Zertifikate, sowie der Verifizierungs- (nur beim Schalenmodell) und der Signierzeitpunkt manipulieren  und danach erneut eine Überprüfung mit dem Überprüfen-Button durchgeführt werden. Mit Hilfe der Schieberegler können die Monate angepasst werden. Damit Sie genauere Daten angeben können, gibt es unter Details Textfeldern, in welchen die Tage eingestellt werden können. Nach einer Manipulation der Schieberegler wird die Schrift der Buttons &quot;Root CA laden&quot;, &quot;CA laden&quot; und &quot;Teilnehmerzertifikat laden&quot; orange.</p>
+<p>Der blaue Pfeil unterhalb der Schieberegler, welche die Gültigkeitdauer darstellen, zeigt das Signaturdatum und der violette Pfeil das Verifikationsdatum. Das Verifizierungsdatum lässt sich nur im Schalenmodell manipulieren, da es nur in diesem Modell für die Verifizierung von bedeutung ist.</p>
 <p>Zu beachten ist, dass die Veränderung der Schiebereglern rein zur Anschauung dient. Das heißt, es werden weder die Zertifikate verändert, noch neue erstellt.</p>
 <p>Schieberegler:</p>
 <p><img src="Schieberegler.png" width="745" height="279" alt="Schieberegler" /></p>
 <p>Details:</p>
 <p><img src="Details.png" width="744" height="125" alt="Details" /></p>
+<p>&nbsp;</p>
+<h2>Gültigkeitsmodelle</h2>
+<p>Gültigkeitsmodelle beschreiben, welche Eigenschaften zu welchen Zeitpunkten erfüllt sein müssen, um eine Signatur als gültig zu bewerten. Die Gültigkeitsmodelle sind das Schalenmodell, eine modifizierte Variante davon und das Kettenmodell.</p>
+<h3>Schalenmodell</h3>
+<p>Ein Schlüssel(-paar) ist unter Verwendung des Schalenmodells zu einem bestimmten Zeitpunkt genau dann gültig, wenn zu diesem Zeitpunkt der zugehörige Zertifizierungspfad gültig ist. Der Zertifizierungspfad ist zu einem bestimmten Zeitpunkt ganau dann gültig, wenn alle in ihm enthaltenen Zertifikate zu diesem Zeitpunkt gültig sind.<br />
+  Ein Zertifikat ist zu einem bestimmten Zeitpunkt genau dann gültig, wenn</p>
+<ul>
+  <li>die Signatur des Zertifikates gültig ist.</li>
+  <li>der fragliche Zeitpunkt innerhalb des Gültigkeitszeitraums des Zertifikates liegt.</li>
+  <li>das Zertifikat nicht in der zum Zeitpunkt der Prüfung aktuellen Sperrliste der ausstellenden Zertifizierungsstelle enthalten ist oder das Zertifikat enthalten ist, der angegebene Sperrzeitpunkt jedoch nach dem fraglichen Zeitpunkt liegt.</li>
+</ul>
+<p><img src="schalenmodell.png" width="525" height="166" alt="Schalenmodell" /></p>
+<h3>Modifiziertes Schalenmodell</h3>
+<p>Das modifizierte Schalenmodell entspricht dem eben beschriebenen Schalenmodell  mit der besonderen Randbedingung, dass für die Überprüfung eines Zertifikatspfades der Zeitpunkt der Dokumentsignaturbildung herangezogen wird und nicht wie im Schalenmodell der aktuelle Zeitpunkt.</p>
+<p><img src="modSchalenmodell.png" width="525" height="166" alt="Modifiziertes Schalenmodell" /></p>
+<h3>Kettenmodell</h3>
+<p>Im Kettenmodell wird nur gefordert, dass jedes Zertifikat im Zeitpunkt seiner Anwendung gültig war. Das bedeutet: zum Signierzeitpunkt des Dokuments muss das Teilnehmer-Zertifikat  gültig gewesen sein. Zum Zeitpunkt der Zertifizierung desTeilnehmer-Zertifikates muß das CA Zertifikat gültig gewesen sein usw..  Ob ein Zertifikat seit der Dokumentsignatur gesperrt wurde, bleibt in diesem Modell unberücksichtigt.</p>
+<p><img src="kettenmodell.png" width="529" height="172" /></p>
+<h3>Beispiele</h3>
+<h4>Alle Modelle gültig:</h4>
+<p><img src="alleGueltig.png" width="525" height="178" alt="alleGueltig" /></p>
+<h4>Nur modifiziertes Schalenmodell und Kettenmodell gültig:</h4>
+<p><img src="kettenUndModSchalen2.png" width="529" height="174" alt="Ketten- und modifiziertes Schalenmodell gültig" /></p>
+<p>&nbsp;</p>
+<p><img src="kettenUndModSchalen.png" width="526" height="205" alt="Kettenmodell und modifiziertes Schalenmodell gültig" /></p>
+<h4>Nur Kettenmodell gültig:</h4>
+<p><img src="nurKetten2.png" width="524" height="168" alt="Kettenmodell gültig" /></p>
+<p>&nbsp;</p>
+<p><img src="nurKetten.png" width="524" height="202" alt="Nur Kettenmodell gültig" /></p>
 </body>
 </html>
