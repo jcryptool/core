@@ -969,6 +969,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		new Label(grpDetails, SWT.NONE);
 		new Label(grpDetails, SWT.NONE);
 
+
 		Button btnReset = new Button(composite, SWT.NONE);
 		GridData gd_btnReset = new GridData(SWT.LEFT, SWT.CENTER, false, false,
 				1, 1);
