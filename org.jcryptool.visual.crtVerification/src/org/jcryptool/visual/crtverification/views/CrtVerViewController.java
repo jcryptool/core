@@ -199,8 +199,8 @@ public class CrtVerViewController {
         int value = Integer.parseInt(input.getText());
         if (!(value > 0 && value <= 31)) {
             input.setText("1");
-            composite.txtLogWindow.append(input.getToolTipText()
-                    + Messages.crtVerification_status_invalidDate + "  \r\n");
+            composite.txtLogWindow.append(input.getToolTipText() + Messages.crtVerification_status_invalidDate
+                    + "  \r\n");
         }
     }
 
@@ -385,18 +385,14 @@ public class CrtVerViewController {
      * Updating local variables with the values of the Textfield and Labels from Composite Class.
      */
     public void parseDatesFromComposite() {
-        thruRootCa = parseDate(composite.TextRootCaThruDay.getText(),
-                composite.thruRootCa.getText());
-        fromRootCa = parseDate(composite.TextRootCaFromDay.getText(),
-                composite.fromRootCa.getText());
+        thruRootCa = parseDate(composite.TextRootCaThruDay.getText(), composite.thruRootCa.getText());
+        fromRootCa = parseDate(composite.TextRootCaFromDay.getText(), composite.fromRootCa.getText());
         thruCa = parseDate(composite.TextCaThruDay.getText(), composite.thruCa.getText());
         fromCa = parseDate(composite.TextCaFromDay.getText(), composite.fromCa.getText());
         thruCert = parseDate(composite.TextCertThruDay.getText(), composite.thruCert.getText());
         fromCert = parseDate(composite.TextCertFromDay.getText(), composite.fromCert.getText());
-        verificationDate = parseDate(composite.TextVerificationDateDay.getText(),
-                composite.verificationDate.getText());
-        signatureDate = parseDate(composite.TextSignatureDateDay.getText(),
-                composite.signatureDate.getText());
+        verificationDate = parseDate(composite.TextVerificationDateDay.getText(), composite.verificationDate.getText());
+        signatureDate = parseDate(composite.TextSignatureDateDay.getText(), composite.signatureDate.getText());
     }
 
     /**
@@ -444,14 +440,15 @@ public class CrtVerViewController {
     }
 
     public void reset() {
-        composite.ScaleRootCaBegin.setSelection(180);
-        composite.ScaleRootCaEnd.setSelection(180);
-        composite.ScaleCaBegin.setSelection(180);
-        composite.ScaleCaEnd.setSelection(180);
-        composite.ScaleCertBegin.setSelection(180);
-        composite.ScaleCertEnd.setSelection(180);
-        composite.ScaleVerificationDate.setSelection(360);
-        composite.ScaleSignatureDate.setSelection(360);
+
+        composite.ScaleRootCaBegin.setSelection(70);
+        composite.ScaleRootCaEnd.setSelection(330);
+        composite.ScaleCaBegin.setSelection(100);
+        composite.ScaleCaEnd.setSelection(300);
+        composite.ScaleCertBegin.setSelection(130);
+        composite.ScaleCertEnd.setSelection(230);
+        composite.ScaleVerificationDate.setSelection(380);
+        composite.ScaleSignatureDate.setSelection(340);
 
         updateElements(composite.fromRootCa, composite.ScaleRootCaBegin, 180);
         updateElements(composite.thruRootCa, composite.ScaleRootCaEnd, 180);
@@ -470,8 +467,6 @@ public class CrtVerViewController {
         composite.TextCertThruDay.setText("1");
         composite.TextVerificationDateDay.setText("1");
         composite.TextSignatureDateDay.setText("1");
-        // composite.validity.setBackground(null);
-        // composite.validity.setText("");
         composite.validitySymbol.hide();
         composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
         composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
