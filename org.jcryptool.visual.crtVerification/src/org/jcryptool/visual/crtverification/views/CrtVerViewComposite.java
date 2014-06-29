@@ -40,55 +40,56 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
-	// Object Controller
-	CrtVerViewController controller = new CrtVerViewController();
-
+    // Object Controller
+    CrtVerViewController controller;
+    CrtVerViewComposite crtComposite;
+    
 	// Variables
-	static Text TextRootCaFromDay;
-	static Text TextCaFromDay;
-	static Text TextCertFromDay;
-	static Text TextRootCaThruDay;
-	static Text TextCaThruDay;
-	static Text TextCertThruDay;
-	static Text TextSignatureDateDay;
-	static Text TextVerificationDateDay;
+	Text TextRootCaFromDay;
+	Text TextCaFromDay;
+	Text TextCertFromDay;
+	Text TextRootCaThruDay;
+	Text TextCaThruDay;
+	Text TextCertThruDay;
+	Text TextSignatureDateDay;
+	Text TextVerificationDateDay;
 
-	static Label thruRootCa;
-	static Label fromRootCa;
-	static Label thruCa;
-	static Label fromCa;
-	static Label thruCert;
-	static Label fromCert;
-	static Label signatureDate;
-	static Label verificationDate;
+	Label thruRootCa;
+	Label fromRootCa;
+	Label thruCa;
+	Label fromCa;
+	Label thruCert;
+	Label fromCert;
+	Label signatureDate;
+	Label verificationDate;
 
-	static Scale ScaleCertBegin;
-	static Scale ScaleCertEnd;
-	static Scale ScaleCaBegin;
-	static Scale ScaleCaEnd;
-	static Scale ScaleRootCaBegin;
-	static Scale ScaleRootCaEnd;
-	static Scale ScaleVerificationDate;
-	static Scale ScaleSignatureDate;
+	Scale ScaleCertBegin;
+	Scale ScaleCertEnd;
+	Scale ScaleCaBegin;
+	Scale ScaleCaEnd;
+	Scale ScaleRootCaBegin;
+	Scale ScaleRootCaEnd;
+	Scale ScaleVerificationDate;
+	Scale ScaleSignatureDate;
 
 	private Text txtDescription;
 
-	static Button btnLoadRootCa;
-	static Button btnLoadCa;
-	static Button btnLoadUserCert;
-	static Button btnValidate;
-	static Canvas canvas1;
-	static Canvas canvas2;
-	static int arrowSigDiff = 0;
-	static int arrowVerDiff = 0;
+	Button btnLoadRootCa;
+	Button btnLoadCa;
+	Button btnLoadUserCert;
+	Button btnValidate;
+	Canvas canvas1;
+	Canvas canvas2;
+	int arrowSigDiff = 0;
+	int arrowVerDiff = 0;
 
-	static ControlDecoration validitySymbol;
-	static Text txtLogWindow;
+	ControlDecoration validitySymbol;
+	Text txtLogWindow;
 
 	/**
 	 * counter for number of performed validations
 	 */
-	static int validationCounter = 0;
+	int validationCounter = 0;
 
 	/**
 	 * Create the composite.
@@ -100,6 +101,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		super(parent, style);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		setLayout(new FillLayout(SWT.HORIZONTAL));
+		this.crtComposite = this;
+		this.controller = new CrtVerViewController(this);
 
 		// Adds reset button to the toolbar
 		IToolBarManager toolBarMenu = view.getViewSite().getActionBars()
@@ -211,7 +214,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 						+ controller.getFromRootCa());
 			}
 		});
-		CrtVerViewComposite.ScaleRootCaBegin = ScaleRootCaBegin;
+		this.ScaleRootCaBegin = ScaleRootCaBegin;
 		ScaleRootCaBegin.setToolTipText("");
 
 		ScaleRootCaBegin.setMaximum(360);
@@ -232,7 +235,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 						+ controller.getThruRootCa());
 			}
 		});
-		CrtVerViewComposite.ScaleRootCaEnd = ScaleRootCaEnd;
+		this.ScaleRootCaEnd = ScaleRootCaEnd;
 		GridData gd_ScaleRootCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
 		gd_ScaleRootCaEnd.widthHint = 360;
@@ -271,7 +274,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					ChooseCert wiz = new ChooseCert(3);
+					ChooseCert wiz = new ChooseCert(3, crtComposite);
 					WizardDialog dialog = new WizardDialog(new Shell(Display
 							.getCurrent()), wiz) {
 						@Override
@@ -316,7 +319,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 						+ controller.getFromCA());
 			}
 		});
-		CrtVerViewComposite.ScaleCaBegin = ScaleCaBegin;
+		this.ScaleCaBegin = ScaleCaBegin;
 		ScaleCaBegin.setMaximum(360);
 		GridData gd_ScaleCaBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 5, 1);
@@ -335,7 +338,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 						+ controller.getThruCA());
 			}
 		});
-		CrtVerViewComposite.ScaleCaEnd = ScaleCaEnd;
+		this.ScaleCaEnd = ScaleCaEnd;
 		ScaleCaEnd.setMaximum(360);
 		GridData gd_ScaleCaEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
@@ -374,7 +377,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					ChooseCert wiz = new ChooseCert(2);
+					ChooseCert wiz = new ChooseCert(2, crtComposite);
 					WizardDialog dialog = new WizardDialog(new Shell(Display
 							.getCurrent()), wiz) {
 						@Override
@@ -421,7 +424,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 								controller.getFromClient());
 			}
 		});
-		CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
+		this.ScaleCertBegin = ScaleCertBegin;
 		ScaleCertBegin.setMaximum(360);
 		GridData gd_ScaleCertBegin = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 5, 1);
@@ -441,7 +444,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 								controller.getThruClient());
 			}
 		});
-		CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
+		this.ScaleCertEnd = ScaleCertEnd;
 		ScaleCertEnd.setMaximum(360);
 		GridData gd_ScaleCertEnd = new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 1, 1);
@@ -475,7 +478,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					ChooseCert wiz = new ChooseCert(1);
+					ChooseCert wiz = new ChooseCert(1, crtComposite);
 					WizardDialog dialog = new WizardDialog(new Shell(Display
 							.getCurrent()), wiz) {
 						@Override
@@ -612,7 +615,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 								+ " " + controller.getSigDate());
 			}
 		});
-		CrtVerViewComposite.ScaleSignatureDate = ScaleSignatureDate;
+		this.ScaleSignatureDate = ScaleSignatureDate;
 		ScaleSignatureDate.setMaximum(720);
 		GridData gd_ScaleSignatureDate = new GridData(SWT.LEFT, SWT.FILL,
 				false, false, 6, 1);
@@ -646,7 +649,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 								+ " " + controller.getVerDate());
 			}
 		});
-		CrtVerViewComposite.ScaleVerificationDate = ScaleVerificationDate;
+		this.ScaleVerificationDate = ScaleVerificationDate;
 		GridData gd_ScaleVerificationDate = new GridData(SWT.LEFT, SWT.FILL,
 				false, false, 6, 1);
 		gd_ScaleVerificationDate.widthHint = 720;
@@ -1025,7 +1028,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		Composite composite_6 = new Composite(composite, SWT.NONE);
 		composite_6.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 		composite_6.setLayout(new GridLayout(3, false));
-		composite_6.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+		composite_6.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false,
 				false, 2, 1));
 
 		final Button btnShellModel = new Button(composite_6, SWT.RADIO);
@@ -1210,7 +1213,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 * @param type
 	 *            int: [1] valid [2] invalid
 	 */
-	public static void setValidtiySymbol(int type) {
+	public void setValidtiySymbol(int type) {
 		if (type == 1) {
 			validitySymbol.setImage(ResourceManager.getPluginImage(
 					"org.jcryptool.visual.crtVerification",
@@ -1285,11 +1288,11 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	 * btnLoadUserCert to orange. This happens when the scales are modified.
 	 */
 	public void setLoadBtnsOrange() {
-		CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager
+		btnLoadRootCa.setForeground(SWTResourceManager
 				.getColor(255, 140, 0));
-		CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager
+		btnLoadCa.setForeground(SWTResourceManager
 				.getColor(255, 140, 0));
-		CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager
+		btnLoadUserCert.setForeground(SWTResourceManager
 				.getColor(255, 140, 0));
 	}
 

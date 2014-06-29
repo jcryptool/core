@@ -20,7 +20,7 @@ import org.jcryptool.crypto.keystore.keys.KeyType;
 
 public class ChooseCertComposite extends Composite {
     private ChooseCertPage page;
-    CrtVerViewController controller = new CrtVerViewController();
+    CrtVerViewController controller;
     Button btnLoad;
 
     /**
@@ -29,9 +29,10 @@ public class ChooseCertComposite extends Composite {
      * @param parent
      * @param style
      */
-    public ChooseCertComposite(Composite parent, int style, ChooseCertPage p) {
+    public ChooseCertComposite(Composite parent, int style, ChooseCertPage p, final CrtVerViewController controller) {
         super(parent, style);
         this.page = p;
+        this.controller = controller;
         setLayout(new FormLayout());
 
         ListViewer listViewer = new ListViewer(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);

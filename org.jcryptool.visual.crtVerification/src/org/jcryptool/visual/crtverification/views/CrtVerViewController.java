@@ -38,20 +38,28 @@ public class CrtVerViewController {
     private Date verificationDate;
 
     // Elements of Composite
-    private Scale ScaleFromTN = CrtVerViewComposite.ScaleCertBegin;
-    private Scale ScaleThruTN = CrtVerViewComposite.ScaleCertEnd;
-    private Scale ScaleFromCA = CrtVerViewComposite.ScaleCaBegin;
-    private Scale ScaleThruCA = CrtVerViewComposite.ScaleCaEnd;
-    private Scale ScaleFromRoot = CrtVerViewComposite.ScaleRootCaBegin;
-    private Scale ScaleThruRoot = CrtVerViewComposite.ScaleRootCaEnd;
+    private Scale ScaleFromTN;
+    private Scale ScaleThruTN;
+    private Scale ScaleFromCA;
+    private Scale ScaleThruCA;
+    private Scale ScaleFromRoot;
+    private Scale ScaleThruRoot;
 
     private static X509Certificate RootCA = null;
     private static X509Certificate CA = null;
     private static X509Certificate TN = null;
     static boolean flag = false;
+    private CrtVerViewComposite composite;
 
-    public CrtVerViewController() {
+    public CrtVerViewController(CrtVerViewComposite composite) {
         super();
+        this.composite = composite;
+        ScaleFromTN = composite.ScaleCertBegin;
+        this.ScaleThruTN = composite.ScaleCertEnd;
+        this.ScaleFromCA = composite.ScaleCaBegin;
+        this.ScaleThruCA = composite.ScaleCaEnd;
+        this.ScaleFromRoot = composite.ScaleRootCaBegin;
+        this.ScaleThruRoot = composite.ScaleRootCaEnd;
     }
 
     // GETTER AND SETTER
@@ -191,7 +199,7 @@ public class CrtVerViewController {
         int value = Integer.parseInt(input.getText());
         if (!(value > 0 && value <= 31)) {
             input.setText("1");
-            CrtVerViewComposite.txtLogWindow.append(input.getToolTipText()
+            composite.txtLogWindow.append(input.getToolTipText()
                     + Messages.crtVerification_status_invalidDate + "  \r\n");
         }
     }
@@ -214,59 +222,59 @@ public class CrtVerViewController {
         case 1:
             // Scale From User Certificate
             ScaleFromTN.setSelection(180 + dateOffset(getTN().getNotBefore()));
-            CrtVerViewComposite.fromCert.setText(scaleUpdate(ScaleFromTN.getSelection(), 180, dateformat1));
+            composite.fromCert.setText(scaleUpdate(ScaleFromTN.getSelection(), 180, dateformat1));
             ScaleFromTN.setToolTipText(scaleUpdate(ScaleFromTN.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | From TN
             cal.setTime(getTN().getNotBefore());
-            CrtVerViewComposite.TextCertFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextCertFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
             // Scale Thru User Certificate
             ScaleThruTN.setSelection(180 + dateOffset(getTN().getNotAfter()));
-            CrtVerViewComposite.thruCert.setText(scaleUpdate(ScaleThruTN.getSelection(), 180, dateformat1));
+            composite.thruCert.setText(scaleUpdate(ScaleThruTN.getSelection(), 180, dateformat1));
             ScaleThruTN.setToolTipText(scaleUpdate(ScaleThruTN.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | Thru TN
             cal.setTime(getTN().getNotAfter());
-            CrtVerViewComposite.TextCertThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextCertThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
             break;
         case 2:
             // Scale From CA
             ScaleFromCA.setSelection(180 + dateOffset(getCA().getNotBefore()));
-            CrtVerViewComposite.fromCa.setText(scaleUpdate(ScaleFromCA.getSelection(), 180, dateformat1));
+            composite.fromCa.setText(scaleUpdate(ScaleFromCA.getSelection(), 180, dateformat1));
             ScaleFromCA.setToolTipText(scaleUpdate(ScaleFromCA.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | From CA
             cal.setTime(getCA().getNotBefore());
-            CrtVerViewComposite.TextCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
             // Scale Thru CA
             ScaleThruCA.setSelection(180 + dateOffset(getCA().getNotAfter()));
-            CrtVerViewComposite.thruCa.setText(scaleUpdate(ScaleThruCA.getSelection(), 180, dateformat1));
+            composite.thruCa.setText(scaleUpdate(ScaleThruCA.getSelection(), 180, dateformat1));
             ScaleThruCA.setToolTipText(scaleUpdate(ScaleThruCA.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | Thru CA
             cal.setTime(getCA().getNotAfter());
-            CrtVerViewComposite.TextCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
             break;
         case 3:
             // Scale From Root CA
             ScaleFromRoot.setSelection(180 + dateOffset(getRootCA().getNotBefore()));
-            CrtVerViewComposite.fromRootCa.setText(scaleUpdate(ScaleFromRoot.getSelection(), 180, dateformat1));
+            composite.fromRootCa.setText(scaleUpdate(ScaleFromRoot.getSelection(), 180, dateformat1));
             ScaleFromRoot.setToolTipText(scaleUpdate(ScaleFromRoot.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | From Root CA
             cal.setTime(getRootCA().getNotBefore());
-            CrtVerViewComposite.TextRootCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextRootCaFromDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
 
             // Scale Thru Root CA
             ScaleThruRoot.setSelection(180 + dateOffset(getRootCA().getNotAfter()));
-            CrtVerViewComposite.thruRootCa.setText(scaleUpdate(ScaleThruRoot.getSelection(), 180, dateformat1));
+            composite.thruRootCa.setText(scaleUpdate(ScaleThruRoot.getSelection(), 180, dateformat1));
             ScaleThruRoot.setToolTipText(scaleUpdate(ScaleThruRoot.getSelection(), 180, dateformat2));
 
             // Set Textfield for the Day | Thru Root CA
             cal.setTime(getRootCA().getNotAfter());
-            CrtVerViewComposite.TextRootCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+            composite.TextRootCaThruDay.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
             break;
         }
     }
@@ -354,9 +362,9 @@ public class CrtVerViewController {
             }
 
             if (valid) {
-                CrtVerViewComposite.setValidtiySymbol(1);
+                composite.setValidtiySymbol(1);
             } else {
-                CrtVerViewComposite.setValidtiySymbol(2);
+                composite.setValidtiySymbol(2);
             }
 
         } catch (NullPointerException | InvalidAlgorithmParameterException e) {
@@ -377,18 +385,18 @@ public class CrtVerViewController {
      * Updating local variables with the values of the Textfield and Labels from Composite Class.
      */
     public void parseDatesFromComposite() {
-        thruRootCa = parseDate(CrtVerViewComposite.TextRootCaThruDay.getText(),
-                CrtVerViewComposite.thruRootCa.getText());
-        fromRootCa = parseDate(CrtVerViewComposite.TextRootCaFromDay.getText(),
-                CrtVerViewComposite.fromRootCa.getText());
-        thruCa = parseDate(CrtVerViewComposite.TextCaThruDay.getText(), CrtVerViewComposite.thruCa.getText());
-        fromCa = parseDate(CrtVerViewComposite.TextCaFromDay.getText(), CrtVerViewComposite.fromCa.getText());
-        thruCert = parseDate(CrtVerViewComposite.TextCertThruDay.getText(), CrtVerViewComposite.thruCert.getText());
-        fromCert = parseDate(CrtVerViewComposite.TextCertFromDay.getText(), CrtVerViewComposite.fromCert.getText());
-        verificationDate = parseDate(CrtVerViewComposite.TextVerificationDateDay.getText(),
-                CrtVerViewComposite.verificationDate.getText());
-        signatureDate = parseDate(CrtVerViewComposite.TextSignatureDateDay.getText(),
-                CrtVerViewComposite.signatureDate.getText());
+        thruRootCa = parseDate(composite.TextRootCaThruDay.getText(),
+                composite.thruRootCa.getText());
+        fromRootCa = parseDate(composite.TextRootCaFromDay.getText(),
+                composite.fromRootCa.getText());
+        thruCa = parseDate(composite.TextCaThruDay.getText(), composite.thruCa.getText());
+        fromCa = parseDate(composite.TextCaFromDay.getText(), composite.fromCa.getText());
+        thruCert = parseDate(composite.TextCertThruDay.getText(), composite.thruCert.getText());
+        fromCert = parseDate(composite.TextCertFromDay.getText(), composite.fromCert.getText());
+        verificationDate = parseDate(composite.TextVerificationDateDay.getText(),
+                composite.verificationDate.getText());
+        signatureDate = parseDate(composite.TextSignatureDateDay.getText(),
+                composite.signatureDate.getText());
     }
 
     /**
@@ -436,47 +444,47 @@ public class CrtVerViewController {
     }
 
     public void reset() {
-        CrtVerViewComposite.ScaleRootCaBegin.setSelection(180);
-        CrtVerViewComposite.ScaleRootCaEnd.setSelection(180);
-        CrtVerViewComposite.ScaleCaBegin.setSelection(180);
-        CrtVerViewComposite.ScaleCaEnd.setSelection(180);
-        CrtVerViewComposite.ScaleCertBegin.setSelection(180);
-        CrtVerViewComposite.ScaleCertEnd.setSelection(180);
-        CrtVerViewComposite.ScaleVerificationDate.setSelection(360);
-        CrtVerViewComposite.ScaleSignatureDate.setSelection(360);
+        composite.ScaleRootCaBegin.setSelection(180);
+        composite.ScaleRootCaEnd.setSelection(180);
+        composite.ScaleCaBegin.setSelection(180);
+        composite.ScaleCaEnd.setSelection(180);
+        composite.ScaleCertBegin.setSelection(180);
+        composite.ScaleCertEnd.setSelection(180);
+        composite.ScaleVerificationDate.setSelection(360);
+        composite.ScaleSignatureDate.setSelection(360);
 
-        updateElements(CrtVerViewComposite.fromRootCa, CrtVerViewComposite.ScaleRootCaBegin, 180);
-        updateElements(CrtVerViewComposite.thruRootCa, CrtVerViewComposite.ScaleRootCaEnd, 180);
-        updateElements(CrtVerViewComposite.fromCa, CrtVerViewComposite.ScaleCaBegin, 180);
-        updateElements(CrtVerViewComposite.thruCa, CrtVerViewComposite.ScaleCaEnd, 180);
-        updateElements(CrtVerViewComposite.fromCert, CrtVerViewComposite.ScaleCertBegin, 180);
-        updateElements(CrtVerViewComposite.thruCert, CrtVerViewComposite.ScaleCertEnd, 180);
-        updateElements(CrtVerViewComposite.verificationDate, CrtVerViewComposite.ScaleVerificationDate, 360);
-        updateElements(CrtVerViewComposite.signatureDate, CrtVerViewComposite.ScaleSignatureDate, 360);
+        updateElements(composite.fromRootCa, composite.ScaleRootCaBegin, 180);
+        updateElements(composite.thruRootCa, composite.ScaleRootCaEnd, 180);
+        updateElements(composite.fromCa, composite.ScaleCaBegin, 180);
+        updateElements(composite.thruCa, composite.ScaleCaEnd, 180);
+        updateElements(composite.fromCert, composite.ScaleCertBegin, 180);
+        updateElements(composite.thruCert, composite.ScaleCertEnd, 180);
+        updateElements(composite.verificationDate, composite.ScaleVerificationDate, 360);
+        updateElements(composite.signatureDate, composite.ScaleSignatureDate, 360);
 
-        CrtVerViewComposite.TextRootCaFromDay.setText("1");
-        CrtVerViewComposite.TextRootCaThruDay.setText("1");
-        CrtVerViewComposite.TextCaFromDay.setText("1");
-        CrtVerViewComposite.TextCaThruDay.setText("1");
-        CrtVerViewComposite.TextCertFromDay.setText("1");
-        CrtVerViewComposite.TextCertThruDay.setText("1");
-        CrtVerViewComposite.TextVerificationDateDay.setText("1");
-        CrtVerViewComposite.TextSignatureDateDay.setText("1");
-        // CrtVerViewComposite.validity.setBackground(null);
-        // CrtVerViewComposite.validity.setText("");
-        CrtVerViewComposite.validitySymbol.hide();
-        CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
-        CrtVerViewComposite.arrowSigDiff = 0;
-        CrtVerViewComposite.arrowVerDiff = 0;
-        CrtVerViewComposite.canvas1.redraw();
-        CrtVerViewComposite.canvas2.redraw();
+        composite.TextRootCaFromDay.setText("1");
+        composite.TextRootCaThruDay.setText("1");
+        composite.TextCaFromDay.setText("1");
+        composite.TextCaThruDay.setText("1");
+        composite.TextCertFromDay.setText("1");
+        composite.TextCertThruDay.setText("1");
+        composite.TextVerificationDateDay.setText("1");
+        composite.TextSignatureDateDay.setText("1");
+        // composite.validity.setBackground(null);
+        // composite.validity.setText("");
+        composite.validitySymbol.hide();
+        composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        composite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
+        composite.arrowSigDiff = 0;
+        composite.arrowVerDiff = 0;
+        composite.canvas1.redraw();
+        composite.canvas2.redraw();
 
         flushCertificates();
 
-        CrtVerViewComposite.txtLogWindow.setText("");
-        CrtVerViewComposite.validationCounter = 0;
+        composite.txtLogWindow.setText("");
+        composite.validationCounter = 0;
     }
 
     /**
@@ -490,27 +498,27 @@ public class CrtVerViewController {
     }
 
     public void loadCertificate(ChooseCertPage p, X509Certificate cert, String contact_name) {
-        CrtVerViewComposite.validitySymbol.hide();
+        composite.validitySymbol.hide();
         switch (p.getCertType()) {
         case 1: // [1] UserCert
             setTN(cert);
             setScales(1);
             flag = true;
-            CrtVerViewComposite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadUserCert.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_UserCertLoaded);
             break;
         case 2: // [2] Cert
             setCA(cert);
             setScales(2);
             flag = true;
-            CrtVerViewComposite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_CaLoaded);
             break;
         case 3: // [3] RootCert
             setRootCA(cert);
             setScales(3);
             flag = true;
-            CrtVerViewComposite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
+            composite.btnLoadRootCa.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GREEN));
             setLogText("\"" + contact_name + "\" " + Messages.crtVerification_status_RootCaLoaded);
             break;
         }
@@ -534,8 +542,8 @@ public class CrtVerViewController {
      * @param s The String to append to Log Field
      */
     public void setLogText(String s) {
-        // CrtVerViewComposite.txtLogWindow.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
-        CrtVerViewComposite.txtLogWindow.append(s + "\n");
+        // composite.txtLogWindow.append(now("dd.MM.yy HH:mm:ss") + ": " + s + " \r\n");
+        composite.txtLogWindow.append(s + "\n");
     }
 
     /**
