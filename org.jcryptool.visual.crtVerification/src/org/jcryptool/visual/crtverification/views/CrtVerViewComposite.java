@@ -522,16 +522,17 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
 		canvas1 = new Canvas(composite, SWT.NONE);
 		canvas1.setLayout(new GridLayout(1, false));
-		GridData gd_canvas1 = new GridData(SWT.FILL, SWT.FILL, false, false, 5,
+		GridData gd_canvas1 = new GridData(SWT.FILL, SWT.TOP, false, false, 5,
 				2);
-		gd_canvas1.heightHint = 25;
+		gd_canvas1.heightHint = 51;
 		gd_canvas1.widthHint = 359;
 		canvas1.setLayoutData(gd_canvas1);
 		canvas1.addPaintListener(this);
 
 		canvas2 = new Canvas(composite, SWT.NONE);
-		GridData gd_canvas2 = new GridData(SWT.FILL, SWT.FILL, false, false, 1,
+		GridData gd_canvas2 = new GridData(SWT.FILL, SWT.TOP, false, false, 1,
 				2);
+		gd_canvas2.heightHint = 51;
 		gd_canvas2.widthHint = 364;
 		canvas2.setLayoutData(gd_canvas2);
 		canvas2.setLayout(new GridLayout(1, false));
