@@ -21,7 +21,7 @@ import org.jcryptool.crypto.keystore.keys.KeyType;
 public class ChooseCertComposite extends Composite {
     private ChooseCertPage page;
     CrtVerViewController controller;
-    Button btnLoad;
+    String contact_name;
 
     /**
      * Create the composite.
@@ -29,7 +29,7 @@ public class ChooseCertComposite extends Composite {
      * @param parent
      * @param style
      */
-    public ChooseCertComposite(Composite parent, int style, ChooseCertPage p, final CrtVerViewController controller) {
+    public ChooseCertComposite(Composite parent, int style, final ChooseCertPage p, final CrtVerViewController controller) {
         super(parent, style);
         this.page = p;
         this.controller = controller;
@@ -38,37 +38,21 @@ public class ChooseCertComposite extends Composite {
         ListViewer listViewer = new ListViewer(this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
         final List list = listViewer.getList();
         FormData fd_list = new FormData();
+        fd_list.bottom = new FormAttachment(100, -44);
         fd_list.top = new FormAttachment(0, 5);
         fd_list.right = new FormAttachment(100, -10);
         fd_list.left = new FormAttachment(0, 5);
         list.setLayoutData(fd_list);
 
-        btnLoad = new Button(this, SWT.NONE);
-        fd_list.bottom = new FormAttachment(btnLoad, -6);
-        FormData fd_btnLoad = new FormData();
-        fd_btnLoad.bottom = new FormAttachment(100, -10);
-        fd_btnLoad.right = new FormAttachment(100, -10);
-        btnLoad.setLayoutData(fd_btnLoad);
-        btnLoad.setText("Load");
-        btnLoad.setEnabled(false);
 
-        // Wenn der Load-Button gedrueckt wird wird das Certifikat geladen und der Finish-Button
-        // aktiv
-        btnLoad.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String contact_name = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
-                IKeyStoreAlias alias = controller.ksc.getAliasByContactName(contact_name);
-                X509Certificate cert = (X509Certificate) controller.ksc.getCertificate(alias);
-                controller.loadCertificate(page, cert, contact_name);
-            }
-        });
 
         // Wenn ein Listen-Element ausgewaehlt wird, wird der Load-Button aktiv
         list.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                btnLoad.setEnabled(true);
+             
+                contact_name = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
+                p.setPageComplete(true);
             }
         });
 

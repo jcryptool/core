@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ChooseCertPage extends WizardPage {
    	private ChooseCertComposite compositeFile;
    	private CrtVerViewController controller;
+   	String selectedListItem;
     int certType; // [1] UserCert; [2] Cert; [3] RootCert
     
     public int getCertType() {
@@ -30,6 +31,7 @@ public class ChooseCertPage extends WizardPage {
     public void createControl(Composite parent) {
         setPageComplete(false);
         compositeFile = new ChooseCertComposite(parent, SWT.NONE, this, controller);
+        selectedListItem = compositeFile.contact_name;
         setControl(compositeFile);
     }
 
