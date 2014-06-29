@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Composite;
 public class ChooseCertPage extends WizardPage {
    	private ChooseCertComposite compositeFile;
    	private CrtVerViewController controller;
+   	String contact_name;
     int certType; // [1] UserCert; [2] Cert; [3] RootCert
     
     public int getCertType() {

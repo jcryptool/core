@@ -1,6 +1,5 @@
 package org.jcryptool.visual.crtverification.views;
 
-import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Enumeration;
 
@@ -29,7 +28,7 @@ public class ChooseCertComposite extends Composite {
      * @param parent
      * @param style
      */
-    public ChooseCertComposite(Composite parent, int style, ChooseCertPage p, final CrtVerViewController controller) {
+    public ChooseCertComposite(Composite parent, int style, final ChooseCertPage p, final CrtVerViewController controller) {
         super(parent, style);
         this.page = p;
         this.controller = controller;
@@ -43,32 +42,22 @@ public class ChooseCertComposite extends Composite {
         fd_list.left = new FormAttachment(0, 5);
         list.setLayoutData(fd_list);
 
-        btnLoad = new Button(this, SWT.NONE);
+        /*btnLoad = new Button(this, SWT.NONE);
         fd_list.bottom = new FormAttachment(btnLoad, -6);
         FormData fd_btnLoad = new FormData();
         fd_btnLoad.bottom = new FormAttachment(100, -10);
         fd_btnLoad.right = new FormAttachment(100, -10);
         btnLoad.setLayoutData(fd_btnLoad);
         btnLoad.setText("Load");
-        btnLoad.setEnabled(false);
-
-        // Wenn der Load-Button gedrueckt wird wird das Certifikat geladen und der Finish-Button
-        // aktiv
-        btnLoad.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String contact_name = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
-                IKeyStoreAlias alias = controller.ksc.getAliasByContactName(contact_name);
-                X509Certificate cert = (X509Certificate) controller.ksc.getCertificate(alias);
-                controller.loadCertificate(page, cert, contact_name);
-            }
-        });
+        btnLoad.setEnabled(false);*/
 
         // Wenn ein Listen-Element ausgewaehlt wird, wird der Load-Button aktiv
         list.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                btnLoad.setEnabled(true);
+                String contactName = Arrays.toString(list.getSelection()).replaceAll("\\[", "").replaceAll("\\]", "");
+                page.contact_name = contactName;
+                page.setPageComplete(true);
             }
         });
 
