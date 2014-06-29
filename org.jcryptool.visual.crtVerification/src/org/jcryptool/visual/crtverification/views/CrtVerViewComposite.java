@@ -205,8 +205,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " "
-						+ Messages.CrtVerViewComposite_notValidBefore + " "
+				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \""
+						+ Messages.CrtVerViewComposite_notValidBefore + "\" "
 						+ Messages.CrtVerViewComposite_dateSet + " "
 						+ controller.getFromRootCa());
 			}
@@ -226,8 +226,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " "
-						+ Messages.CrtVerViewComposite_notValidAfter + " "
+				controller.setLogText(Messages.CrtVerViewComposite_RootCa + " \""
+						+ Messages.CrtVerViewComposite_notValidAfter + "\" "
 						+ Messages.CrtVerViewComposite_dateSet + " "
 						+ controller.getThruRootCa());
 			}
@@ -310,8 +310,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_Ca + " "
-						+ Messages.CrtVerViewComposite_notValidBefore + " "
+				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \""
+						+ Messages.CrtVerViewComposite_notValidBefore + "\" "
 						+ Messages.CrtVerViewComposite_dateSet + " "
 						+ controller.getFromCA());
 			}
@@ -329,8 +329,8 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
-				controller.setLogText(Messages.CrtVerViewComposite_Ca + " "
-						+ Messages.CrtVerViewComposite_notValidAfter + " "
+				controller.setLogText(Messages.CrtVerViewComposite_Ca + " \""
+						+ Messages.CrtVerViewComposite_notValidAfter + "\" "
 						+ Messages.CrtVerViewComposite_dateSet + " "
 						+ controller.getThruCA());
 			}
@@ -415,12 +415,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
 				controller
-						.setLogText(Messages.CrtVerViewComposite_UserCertificate
-								+ " "
-								+ Messages.CrtVerViewComposite_notValidBefore
-								+ " "
-								+ Messages.CrtVerViewComposite_dateSet
-								+ " " + controller.getFromClient());
+						.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" + 
+								Messages.CrtVerViewComposite_notValidBefore + "\" "	+ 
+								Messages.CrtVerViewComposite_dateSet + " " + 
+								controller.getFromClient());
 			}
 		});
 		CrtVerViewComposite.ScaleCertBegin = ScaleCertBegin;
@@ -437,12 +435,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 			public void mouseUp(MouseEvent e) {
 				controller.parseDatesFromComposite();
 				controller
-						.setLogText(Messages.CrtVerViewComposite_UserCertificate
-								+ " "
-								+ Messages.CrtVerViewComposite_notValidAfter
-								+ " "
-								+ Messages.CrtVerViewComposite_dateSet
-								+ " " + controller.getThruClient());
+						.setLogText(Messages.CrtVerViewComposite_UserCertificate + " \"" + 
+								Messages.CrtVerViewComposite_notValidAfter + "\" " + 
+								Messages.CrtVerViewComposite_dateSet + " " + 
+								controller.getThruClient());
 			}
 		});
 		CrtVerViewComposite.ScaleCertEnd = ScaleCertEnd;
