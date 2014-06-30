@@ -267,7 +267,7 @@ public class CertPathVerifier {
                 errors.add(Messages.CrtVericiation_clientNotBeforeAfterSigDate);
 
             } else if (clientNotAfter.before(signatureDate)) {
-                errors.add(Messages.CrtVericiation_clientNotBeforeAfterSigDate);
+                errors.add(Messages.CrtVericiation_clientNotAfterBeforeSigDate);
 
             } else if (caNotBefore.after(clientNotBefore)) {
                 errors.add(Messages.CrtVericiation_caNotBeforeAfterClientNotBefore);
