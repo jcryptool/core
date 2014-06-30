@@ -709,7 +709,7 @@ public class ECDHComposite extends Composite implements PaintListener {
             b = keyLargeA == null || keyLargeB == null || !keyLargeA.getXAffin().equals(keyLargeB.getXAffin());
         else
             b = keyA == null || keyB == null || !keyA.equals(keyB);
-        if (!btnChooseSecrets.getEnabled()) {
+        if (btnChooseSecrets == null || !btnChooseSecrets.getEnabled()) {
             height = 0;
         } else if (!btnCreateSharedKeys.getEnabled()) {
             height = 50;
@@ -740,7 +740,7 @@ public class ECDHComposite extends Composite implements PaintListener {
         p.lineTo(160, 495);
         gc.fillPath(p);
 
-        if (!btnGenerateKey.getEnabled())
+        if (btnGenerateKey == null || !btnGenerateKey.getEnabled())
             gc.setBackground(lightGrey);
         else
             gc.setBackground(grey);
