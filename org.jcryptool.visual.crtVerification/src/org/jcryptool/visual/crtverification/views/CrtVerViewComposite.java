@@ -7,8 +7,10 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -36,8 +38,6 @@ import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class CrtVerViewComposite extends Composite implements PaintListener {
     // Object Controller
@@ -78,6 +78,10 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 	Button btnLoadCa;
 	Button btnLoadUserCert;
 	Button btnValidate;
+	Button btnShellModel;
+	Button btnShellModelModified;
+	Button btnChainModel;
+	Button btnReset;
 	Canvas canvas1;
 	Canvas canvas2;
 	int arrowSigDiff = 0;
@@ -539,6 +543,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		canvas2.addPaintListener(this);
 
 		Label lblLog = new Label(composite, SWT.NONE);
+		lblLog.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, false, false, 1, 1));
 		lblLog.setText(Messages.CrtVerViewComposite_lblLog_text);
 
 		Label lblArrowVer = new Label(composite, SWT.NONE);
@@ -557,8 +562,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		txtLogWindow = new Text(composite, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL
 				| SWT.V_SCROLL | SWT.CANCEL);
 		txtLogWindow.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 13,
-				SWT.NORMAL));
+		txtLogWindow.setFont(SWTResourceManager.getFont("Lucida Grande", 11, SWT.NORMAL));
 		txtLogWindow.setEditable(false);
 		GridData gd_txtLogWindow = new GridData(SWT.FILL, SWT.FILL, true,
 				false, 1, 6);
@@ -732,11 +736,14 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_rootca.setLayout(new GridLayout(2, false));
 
 		textRootCaFromDay = new Text(composite_from_rootca, SWT.BORDER);
-		textRootCaFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textRootCaFromDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textRootCaFromDay);
 			}
 		});
+	
+		
 		textRootCaFromDay
 				.setToolTipText(Messages.CrtVerViewComposite_rootCaFromDay);
 		textRootCaFromDay.setText("1");
@@ -761,11 +768,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_ca.setLayout(new GridLayout(2, false));
 
 		textCaFromDay = new Text(composite_from_ca, SWT.BORDER);
-		textCaFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textCaFromDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textCaFromDay);
 			}
 		});
+	
 		textCaFromDay.setToolTipText(Messages.CrtVerViewComposite_caFromDay);
 		textCaFromDay.setText("1");
 		textCaFromDay.setTextLimit(2);
@@ -788,11 +797,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_from_user_cert.setLayout(new GridLayout(2, false));
 
 		textCertFromDay = new Text(composite_from_user_cert, SWT.BORDER);
-		textCertFromDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textCertFromDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textCertFromDay);
 			}
 		});
+		
 		textCertFromDay
 				.setToolTipText(Messages.CrtVerViewComposite_userCertificateFromDay);
 		textCertFromDay.setText("1");
@@ -818,11 +829,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_1.setLayout(new GridLayout(2, false));
 
 		textSignatureDateDay = new Text(composite_1, SWT.BORDER);
-		textSignatureDateDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textSignatureDateDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textSignatureDateDay);
 			}
 		});
+	
 		textSignatureDateDay
 				.setToolTipText(Messages.CrtVerViewComposite_signatureDateDay);
 		textSignatureDateDay.setText("1");
@@ -846,11 +859,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_2.setLayout(new GridLayout(2, false));
 
 		textVerificationDateDay = new Text(composite_2, SWT.BORDER);
-		textVerificationDateDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textVerificationDateDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textVerificationDateDay);
 			}
 		});
+		
 		textVerificationDateDay
 				.setToolTipText(Messages.CrtVerViewComposite_verificationDateDay);
 		textVerificationDateDay.setText("1");
@@ -876,11 +891,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_rootca.setLayout(new GridLayout(2, false));
 
 		textRootCaThruDay = new Text(composite_thru_rootca, SWT.BORDER);
-		textRootCaThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textRootCaThruDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textRootCaThruDay);
 			}
 		});
+		
 		textRootCaThruDay
 				.setToolTipText(Messages.CrtVerViewComposite_rootCaThruDay);
 		textRootCaThruDay.setText("1");
@@ -904,11 +921,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_ca.setLayout(new GridLayout(2, false));
 
 		textCaThruDay = new Text(composite_thru_ca, SWT.BORDER);
-		textCaThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textCaThruDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textCaThruDay);
 			}
 		});
+		
 
 		textCaThruDay.setToolTipText(Messages.CrtVerViewComposite_caThruDay);
 		textCaThruDay.setText("1");
@@ -932,11 +951,13 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		composite_thru_user_cert.setLayout(new GridLayout(2, false));
 
 		textCertThruDay = new Text(composite_thru_user_cert, SWT.BORDER);
-		textCertThruDay.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
+		textCertThruDay.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				controller.inputcheck(textCertThruDay);
 			}
 		});
+		
 		textCertThruDay
 				.setToolTipText(Messages.CrtVerViewComposite_userCertificateThruDay);
 		textCertThruDay.setText("1");
@@ -955,22 +976,12 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 
 		// Initialize Label "Thru User Cert" with actual date
 		LabelCertThru.setText("");
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
-		new Label(grpDetails, SWT.NONE);
+	
 
 
 		Button btnReset = new Button(composite, SWT.NONE);
+		this.btnReset = btnReset;
+		this.btnReset.setEnabled(false);
 		GridData gd_btnReset = new GridData(SWT.LEFT, SWT.CENTER, false, false,
 				1, 1);
 		gd_btnReset.widthHint = 100;
@@ -1034,6 +1045,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 				false, 2, 1));
 
 		final Button btnShellModel = new Button(composite_6, SWT.RADIO);
+		this.btnShellModel = btnShellModel;
 		btnShellModel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1045,6 +1057,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 		btnShellModel.setText(Messages.CrtVerViewComposite_shellModel);
 
 		final Button btnModifiedShellModel = new Button(composite_6, SWT.RADIO);
+		this.btnShellModelModified = btnModifiedShellModel;
 		btnModifiedShellModel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1056,6 +1069,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 				.setText(Messages.CrtVerViewComposite_modifiedshellModel);
 
 		final Button btnChainModel = new Button(composite_6, SWT.RADIO);
+		this.btnChainModel = btnChainModel;
 		btnChainModel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -1094,7 +1108,7 @@ public class CrtVerViewComposite extends Composite implements PaintListener {
 				} else if (btnChainModel.getSelection()) {
 					controller.validate(2);
 				}
-				controller.setLogText("---------------------------------------------------");
+				controller.setLogText("---------------------------------");
 			}
 		});
 

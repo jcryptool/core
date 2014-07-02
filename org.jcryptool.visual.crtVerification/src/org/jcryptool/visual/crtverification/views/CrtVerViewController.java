@@ -192,9 +192,14 @@ public class CrtVerViewController {
 		int value = Integer.parseInt(input.getText());
 		if (!(value > 0 && value <= 31)) {
 			input.setText("1");
-			composite.txtLogWindow.append(input.getToolTipText()
+			composite.txtLogWindow.append(input.getToolTipText() + " "
 					+ Messages.crtVerification_status_invalidDate + "  \r\n");
 		}
+		else{
+			setLogText(input.getToolTipText() + " " + Messages.CrtVerViewComposite_dateSet + " \"" + input.getText() + "\"");
+			
+		}
+
 	}
 
 	public int dateOffset(Date date) {
@@ -420,6 +425,8 @@ public class CrtVerViewController {
 				composite.verificationDate.getText());
 		signatureDate = parseDate(composite.textSignatureDateDay.getText(),
 				composite.signatureDate.getText());
+		if(!composite.btnReset.isEnabled())
+			composite.btnReset.setEnabled(true);
 	}
 
 	/**
@@ -529,6 +536,12 @@ public class CrtVerViewController {
 
 		composite.txtLogWindow.setText("");
 		composite.validationCounter = 0;
+		composite.btnShellModel.setSelection(true);
+		composite.btnShellModelModified.setSelection(false);
+		composite.btnChainModel.setSelection(false);
+		composite.scaleVerificationDate.setEnabled(true);
+		composite.btnReset.setEnabled(false);
+		
 	}
 
 	/**
@@ -574,6 +587,8 @@ public class CrtVerViewController {
 			break;
 		}
 		p.setPageComplete(true);
+		if(!composite.btnReset.isEnabled())
+			composite.btnReset.setEnabled(true);
 	}
 
 	public void updateElements(Label l, Scale s, int default_selection) {
