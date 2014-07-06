@@ -20,6 +20,7 @@ import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.alphabets.AlphabetsManager;
 import org.jcryptool.core.util.input.AbstractUIInput;
+import org.jcryptool.core.util.input.ButtonInput;
 import org.jcryptool.core.util.input.InputVerificationResult;
 import org.jcryptool.crypto.ui.alphabets.AlphabetSelectorComposite;
 import org.jcryptool.crypto.ui.alphabets.composite.AtomAlphabet;
@@ -32,7 +33,10 @@ public class CharsToNumbersComposite extends Composite {
 	private AbstractUIInput<AlphabetCharsToNumbers> uiInput;
 	private Button btnConvertIntoIndices;
 	private Button btnConvertIntoASCII;
+
 	private int maxNumber;
+	private Button btnStartWithOne;
+	private ButtonInput startWithOneInput;
 
 	/**
 	 * Create the composite.
@@ -76,6 +80,33 @@ public class CharsToNumbersComposite extends Composite {
 		alphaSelector = new AlphabetSelectorComposite(alphaSubComp, alphabetsToShow, null, AlphabetSelectorComposite.Mode.COMBO_BOX_WITH_CUSTOM_ALPHABET_BUTTON);
 		alphaSelector.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 		
+		btnStartWithOne = new Button(this, SWT.CHECK);
+		btnStartWithOne.setText(Messages.CharsToNumbersComposite_3);
+		startWithOneInput = new ButtonInput() {
+			
+			@Override
+			protected InputVerificationResult verifyUserChange() {
+				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
+			}
+			
+			@Override
+			public String getName() {
+				return "start with one"; //$NON-NLS-1$
+			}
+			
+			@Override
+			protected Boolean getDefaultContent() {
+				return false;
+			}
+			
+			@Override
+			public Button getButton() {
+				return btnStartWithOne;
+			}
+		};
+		
+		
+		
 		if(!(canUseASCII && (alphabetsToShow.size() == alphas.length))) {
 			Composite warningComposite = new Composite(this, SWT.NONE);
 			GridData warningCompositeLayoutData = new GridData();
@@ -103,6 +134,7 @@ public class CharsToNumbersComposite extends Composite {
 		
 		this.uiInput = makeUIInput();
 		registerInputListenersFor(this.uiInput);
+		this.startWithOneInput.addObserver(this.uiInput);
 		
 		this.uiInput.addObserver(new Observer() {
 			
@@ -181,6 +213,8 @@ public class CharsToNumbersComposite extends Composite {
 	private AbstractUIInput<AlphabetCharsToNumbers> makeUIInput() {
 		AbstractUIInput<AlphabetCharsToNumbers> result = new AbstractUIInput<AlphabetCharsToNumbers>() {
 
+			private Boolean startWithOneSelected;
+
 			@Override
 			protected InputVerificationResult verifyUserChange() {
 				return InputVerificationResult.DEFAULT_RESULT_EVERYTHING_OK;
@@ -195,6 +229,9 @@ public class CharsToNumbersComposite extends Composite {
 				} else {
 					alpha = alphaSelector.getAlphabetInput().getContent();
 				}
+				if(startWithOneInput.getContent() && !isASCII) {
+					alpha = augmentByStartDummy(alpha);
+				}
 				
 				AlphabetCharsToNumbers result = new AlphabetCharsToNumbers(alpha, isASCII);
 				return result;
@@ -206,7 +243,11 @@ public class CharsToNumbersComposite extends Composite {
 				btnConvertIntoIndices.setSelection(!content.isIs256ASCII());
 				
 				if(! content.isIs256ASCII()) {
-					alphaSelector.getAlphabetInput().writeContent(content.getAlpha());
+					if(this.startWithOneSelected) {
+						alphaSelector.getAlphabetInput().writeContent(removeStartDummy(content.getAlpha()));
+					} else {
+						alphaSelector.getAlphabetInput().writeContent(content.getAlpha());
+					}
 					alphaSelector.getAlphabetInput().synchronizeWithUserSide();
 				}
 			}
@@ -220,9 +261,73 @@ public class CharsToNumbersComposite extends Composite {
 			public String getName() {
 				return Messages.CharsToNumbersComposite_5;
 			}
+			
+			@Override
+			protected void saveRawUserInput() {
+				this.startWithOneSelected = startWithOneInput.getContent();
+			}
+			
+			@Override
+			protected void saveDefaultRawUserInput() {
+				this.startWithOneSelected = false;
+			}
 		};
 		
 		return result;
+	}
+
+	protected AbstractAlphabet augmentByStartDummy(AbstractAlphabet alpha) {
+		char[] augmentChars = new char[]{0, 1, 2, 3, 4, 5};
+		char[] newContent = new char[alpha.getCharacterSet().length+1];
+		
+		Character augmentChar = null;
+		for(char c: augmentChars) {
+			if(! alpha.contains(c)) {
+				augmentChar = c;
+			}
+		}
+		if(augmentChar == null) return alpha;
+		
+		char[] characterSet = alpha.getCharacterSet();
+		newContent[0] = augmentChar;
+		for (int i = 0; i < characterSet.length; i++) {
+			char c = characterSet[i];
+			
+			newContent[i+1] = c;
+		}
+		return new AtomAlphabet(newContent);
+	}
+	
+	protected AbstractAlphabet removeStartDummy(AbstractAlphabet alpha) {
+		char[] newContent = new char[alpha.getCharacterSet().length-1];
+		char[] characterSet = alpha.getCharacterSet();
+		for (int i = 1; i < characterSet.length; i++) {
+			char c = characterSet[i];
+			
+			newContent[i-1] = c;
+		}
+		return findAlpha(newContent, alphaSelector.getAvailableAlphas());
+	}
+
+	private AbstractAlphabet findAlpha(char[] alphaContent,
+			List<AbstractAlphabet> availableAlphas) {
+		for(AbstractAlphabet regAlpha: availableAlphas) {
+			if(alphaContent.length == regAlpha.getCharacterSet().length) {
+				boolean match = true;
+				char[] regCharacterSet = regAlpha.getCharacterSet();
+				for (int i = 0; i < regCharacterSet.length; i++) {
+					char cReg = regCharacterSet[i];
+					char cObj = alphaContent[i];
+					
+					if(cReg != cObj) {
+						match = false;
+						break;
+					}
+				}
+				if(match) return regAlpha;
+			}
+		}
+		return new AtomAlphabet(alphaContent);
 	}
 
 	@Override

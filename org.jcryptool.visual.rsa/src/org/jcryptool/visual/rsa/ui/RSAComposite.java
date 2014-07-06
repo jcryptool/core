@@ -181,7 +181,7 @@ public class RSAComposite extends Composite {
 	private Combo inheritCombo;
 
 	/** label showing the currect step if we calculate stepwise */
-	private Label stepLabel;
+	private Text stepLabel;
 
 	private boolean started = false;
 
@@ -574,18 +574,6 @@ public class RSAComposite extends Composite {
 		fDreset.top = new FormAttachment(runCalc, 2 * BIGBUTTONVERTICALSPACE,
 				SWT.BOTTOM);
 
-		// Initialize reset button
-		reset = new Button(canvas, SWT.PUSH);
-		reset.setLayoutData(fDreset);
-		reset.setText(Messages.RSAComposite_reset);
-		reset.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				boolean keyWasSelected = keysel.getBackground().equals(GREEN);
-				boolean fullReset = !keyWasSelected;
-				reset(fullReset);
-			}
-		});
 	}
 
 	private void buttonLoadTextClicked() {
@@ -671,7 +659,9 @@ public class RSAComposite extends Composite {
 	 */
 	private void createAlgoArea(final Composite parent) {
 		final Composite g = new Composite(parent, SWT.SHADOW_NONE);
-		g.setLayout(new GridLayout());
+		GridLayout layout = new GridLayout();
+		layout.verticalSpacing = 20;
+		g.setLayout(layout);
 		g.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		createKeyGroup(g);
 		createTextGroup(g);
@@ -690,7 +680,9 @@ public class RSAComposite extends Composite {
 		final Group g = new Group(parent, SWT.SHADOW_NONE);
 		g.setText(Messages.RSAComposite_key);
 		g.setLayout(gl);
-		g.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridData gL = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		gL.verticalIndent = 3;
+		g.setLayoutData(gL);
 
 		Label l = new Label(g, SWT.NONE);
 		l.setText("e :"); //$NON-NLS-1$
@@ -732,37 +724,39 @@ public class RSAComposite extends Composite {
 	 */
 	private void createTextGroup(final Composite parent) {
 		final Group g = new Group(parent, SWT.NONE);
-		g.setLayout(new GridLayout());
-		g.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-		Composite textDisplaysC = new Composite(g, SWT.NONE);
-		GridLayout layout = new GridLayout(2, true);
-		layout.marginWidth = 0;
-		layout.marginHeight = 0;
-		textDisplaysC.setLayout(layout);
-		textDisplaysC.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-				false));
-		Label label;
-		label = new Label(textDisplaysC, SWT.NONE);
-		label.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+		GridLayout layoutG = new GridLayout();
+		layoutG.marginTop = -4;
+		g.setLayout(layoutG);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+		layoutData.verticalIndent = 25;
+		g.setLayoutData(layoutData);
+//		Composite textDisplaysC = new Composite(g, SWT.NONE);
+//		GridLayout layout = new GridLayout(2, true);
+//		layout.marginWidth = 0;
+//		layout.marginHeight = 0;
+//		textDisplaysC.setLayout(layout);
+//		textDisplaysC.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+//				false));
 		switch (data.getAction()) {
 		case EncryptAction: {
-			label.setText(Messages.RSAComposite_text_enc);
+			g.setText(Messages.RSAComposite_text_enc);
 			break;
 		}
 		case DecryptAction: {
-			label.setText(Messages.RSAComposite_text_dec);
+			g.setText(Messages.RSAComposite_text_dec);
 			break;
 		}
 		case SignAction: {
-			Label label2;
-			label2 = new Label(textDisplaysC, SWT.NONE);
-			label2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-			label.setText(Messages.RSAComposite_text_sig);
-			label2.setText(Messages.RSAComposite_3);
+//			Label textLabel = new Label(textDisplaysC, SWT.NONE);
+//			Label label2;
+//			label2 = new Label(textDisplaysC, SWT.NONE);
+//			label2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+			g.setText(Messages.RSAComposite_text_sig);
+//			label2.setText(Messages.RSAComposite_3);
 			break;
 		}
 		case VerifyAction: {
-			label.setText(Messages.RSAComposite_numbertext_header_ver);
+			g.setText(Messages.RSAComposite_numbertext_header_ver);
 			break;
 		}
 		}
@@ -844,7 +838,7 @@ public class RSAComposite extends Composite {
 		Composite localC = new Composite(g, SWT.NONE);
 
 		boolean withHashDisplay = data.getAction() == Action.SignAction;
-		GridLayout layout = new GridLayout(withHashDisplay ? 2 : 1, true);
+		GridLayout layout = new GridLayout(withHashDisplay ? 3 : 1, false);
 		layout.marginWidth = 0;
 		layout.marginHeight = 0;
 		localC.setLayout(layout);
@@ -863,6 +857,11 @@ public class RSAComposite extends Composite {
 				1));
 
 		if (withHashDisplay) {
+			Label labelHashD = new Label(localC, SWT.NONE);
+			GridData layoutData2 = new GridData(SWT.FILL, SWT.CENTER, false, false);
+			layoutData2.verticalIndent = 13;
+			labelHashD.setLayoutData(layoutData2);
+			labelHashD.setText(Messages.RSAComposite_0);
 			makeHashDisplay(localC);
 		}
 	}
@@ -947,9 +946,12 @@ public class RSAComposite extends Composite {
 		stepButton.addSelectionListener(startSelectionListener);
 
 		// Add Step Status
-		stepLabel = new Label(g, SWT.LEAD | SWT.BORDER);
+		stepLabel = new Text(g, SWT.LEAD | SWT.BORDER);
+		GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+		layoutData.widthHint = 100;
 		stepLabel
-				.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+				.setLayoutData(layoutData);
+		stepLabel.setEditable(false);
 
 		// Set up a composite to draw the fast exp on
 		styledFastExtText = new Composite(g, SWT.NONE);
@@ -1562,6 +1564,21 @@ public class RSAComposite extends Composite {
 			}
 
 		});
+		
+		// Initialize reset button
+				reset = new Button(optionsGroup, SWT.PUSH);
+				GridData layoutData = new GridData(SWT.FILL, SWT.CENTER, false, false);
+				layoutData.horizontalIndent = 12;
+				reset.setLayoutData(layoutData);
+				reset.setText(Messages.RSAComposite_reset);
+				reset.addSelectionListener(new SelectionAdapter() {
+					@Override
+					public void widgetSelected(final SelectionEvent e) {
+						boolean keyWasSelected = keysel.getBackground().equals(GREEN);
+						boolean fullReset = !keyWasSelected;
+						reset(fullReset);
+					}
+				});
 		// comb.setLayoutData(leftAlign);
 	}
 

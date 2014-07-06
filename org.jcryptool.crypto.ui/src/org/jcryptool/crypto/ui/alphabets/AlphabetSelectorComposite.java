@@ -718,4 +718,8 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 		}
 	}
 
+	public List<AbstractAlphabet> getAvailableAlphas() {
+		return registeredAlphas;
+	}
+
 }
