@@ -67,6 +67,13 @@ public class LoadTextWizardPage extends WizardPage {
 		this(null, null);
 	}
 
+	
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		txtInputText.setFocus();
+	}
+	
 	public LoadTextWizardPage(ControlHatcher beforeWizardTextParasiteLabel, ControlHatcher afterWizardTextParasiteLabel) {
 		super(Messages.LoadTextWizardPage_0);
 		this.beforeWizardTextParasiteLabel = beforeWizardTextParasiteLabel;

@@ -7,6 +7,7 @@ public class Messages extends NLS {
 	public static String CharsToNumbersComposite_0;
 	public static String CharsToNumbersComposite_1;
 	public static String CharsToNumbersComposite_2;
+	public static String CharsToNumbersComposite_3;
 	public static String CharsToNumbersComposite_5;
 	public static String CompositeNumberInput_10;
 	public static String CompositeNumberInput_12;
