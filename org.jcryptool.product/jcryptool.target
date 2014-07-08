@@ -2,18 +2,18 @@
 <?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="11">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.rcp.source.feature.group" version="4.3.2.v20140221-1700"/>
-<unit id="org.eclipse.rcp.feature.group" version="4.3.2.v20140221-1700"/>
-<unit id="org.eclipse.rcp.sdk.id" version="4.3.2.M20140221-1700"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.5.1.201308190730"/>
-<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.2.0.v20140221-1852"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.9.1.201308190730"/>
-<unit id="org.eclipse.sdk.ide" version="4.3.2.M20140221-1700"/>
-<repository location="http://download.eclipse.org/releases/kepler/"/>
+<unit id="org.eclipse.rcp.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rcp.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rcp.sdk.id" version="0.0.0"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.sdk.ide" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/luna/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.11.1/kepler"/>
+<repository location="http://download.eclipse.org/technology/babel/update-site/R0.12.0/luna"/>
 </location>
 <location path="${eclipse_home}/../../delta/eclipse" type="Directory"/>
 </locations>
