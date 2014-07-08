@@ -27,7 +27,7 @@
                                 <artifact>
                                     <file>jcryptool.target</file>
                                     <type>target</type>
-                                    <classifier>kepler</classifier>
+                                    <classifier>luna</classifier>
                                 </artifact>
                             </artifacts>
                         </configuration>

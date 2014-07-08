@@ -38,14 +38,14 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 
 	<repositories>
 		<repository>
-			<id>eclipse-kepler</id>
+			<id>eclipse-luna</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/kepler</url>
+			<url>http://download.eclipse.org/releases/luna</url>
 		</repository>
 		<repository>
-			<id>eclipse-babel-kepler</id>
+			<id>eclipse-babel-luna</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.11.1/kepler</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.12.0/luna</url>
 		</repository>
 	</repositories>
 
@@ -161,7 +161,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 				<!-- mvn clean compile site -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>2.5.4</version>
 				<configuration>
 					<effort>Max</effort>
 					<threshold>Low</threshold>
