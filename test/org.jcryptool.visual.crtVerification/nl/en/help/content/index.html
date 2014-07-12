@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Certificate Verification</title>
+</head>
+
+<body>
+<h1>Certificate Verification</h1>
+<p>Welcome to the online help of the plug-in which validates certificates according to the validity models:</p>
+<ul>
+  <li>shell model</li>
+  <li>modified shell model</li>
+  <li>and chain model.</li>
+</ul>
+<p>Below you find an overview of the plug-in and a more detailed description of the usage of the plug-in. This plug-in helps to demonstrate the validity of digital signatures using different certificate trees, consisting  of a Root CA, CA and a User CA, and validity models. It's also possible to change the period of validity of each certificate as well as the verification and signature date with sliders. After this modification you can validate this information. But you have to consider that these changes are just a simulation. That means: No certificates were changed and there were also no new certificates created.</p>
+<p>At the end is a short description of the validity models.</p>
+<p><img src="GUI-Start.png" width="811" height="506" alt="Graphical User Interface" /></p>
+<h2>General information</h2>
+<h3>Reset function</h3>
+<p>Everything is reset to the initial state of the plug-in.</p>
+<h3>PKI Plugin</h3>
+<p>This plug-in builds on top of the PKI plug-in. The button starts the PKI plug-in.</p>
+<h3>Signature Verification</h3>
+<p>This button starts the Signature Verification plug-in.</p>
+<p>&nbsp;</p>
+<h2>Usage of the plug-in</h2>
+<p>Below you find how to use the plug-in  on the basis of an example scenario.</p>
+<h3>Step 1</h3>
+<p>The first step is to load the certificates. If you click on the buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; and &quot;Load User Certificate&quot; a dialog window opens and you can choose the certificate, which you want to load out of the JCT-Keystore. After you have chosen the right certificate you have to click on &quot;finish&quot;. The sliders in the Graphical User Interface are now in the right position and the font colour of the buttons is now green.</p>
+<p><img src="PopUp.png" width="459" height="418" alt="dialog window to load certificates" /></p>
+<h3>&nbsp;</h3>
+<h3>Step 2</h3>
+<p>If all three certificates (Root CA, CA and User CA) were loaded successfully you can choose the validity model with the radio buttons. Now you can press the &quot;Validate&quot; button. If the symbol next to this button is an X in a red circle the validation was unsuccessful if the symbol is a checkmark in a green circle the validation was successful. </p>
+<p>The log shows you all the information, which leads to this result.</p>
+<p>Selection of the validity model:</p>
+<p><img src="Gueltigkeitsmodelle.png" width="327" height="29" alt="validity models" /></p>
+<p>Successfully validated:</p>
+<p><img src="gruenerHaken.png" width="353" height="34" alt="successfully validated" /></p>
+<p>Unsuccessfully validated:</p>
+<p><img src="rotesKreuz.png" width="353" height="31" alt="unsuccessfully validated" /></p>
+<p>Log:</p>
+<p><img src="Log.png" width="350" height="267" alt="Log" /></p>
+<h3>Step 3</h3>
+<p>There is the possibility to change the position of the sliders to simulate what would happen if  the dates change. But you have to consider that these changes are just a simulation. That means: No certificates were changed and there were also no new certificates created. The verification slider can only be manipulated in the shell model because it's the only model where the verification date is needed for the validation. It's possible to adjust the months of a date with the sliders. If you want to set the days too you can do this with the text fields in &quot;Details&quot;. After the modification of a slider the font colour of the buttons &quot;Load Root CA&quot;, &quot;Load CA&quot; and &quot;Load User Certificate&quot; changes to orange.</p>
+<p>Slider:</p>
+<p><img src="Schieberegler.png" width="730" height="294" alt="Slider" /></p>
+<p>Details:</p>
+<p><img src="Details.png" width="734" height="120" alt="Details" /></p>
+<p>&nbsp;</p>
+<h2>Validity models</h2>
+<p>Validity models describe, which requirements have to be fulfilled at a certain point of time to consider a signature as valid. These models are the shell model, a modified version of the shell model and the chain model.</p>
+<h3>Shell model</h3>
+<p>When using the shell model, a key(-pair) is valid at a certain time, if the corresponding certification path is also valid at this time. The certification path is valid, if all contained certificates are valid at this time. <br />
+</p>
+<p>A certificate is valid, if</p>
+<ul>
+  <li> the signature of the certificate is valid,</li>
+  <li>the regarded time is within the validity period of the certificate,</li>
+  <li>when the check is performed, the certificate is not on the issuing CA's Certificate Revocation List or if the certificate is on this list, the revocation time is later than the time of the check</li>
+</ul>
+<p><img src="shellmodel.png" width="524" height="170" alt="shell model" /></p>
+<h3>Modified shell model</h3>
+<p>The modified shell model is, with the exception of a special condition, equivalent to the shell model, which is described above. The difference is, that when  the check of a certification path is performed, the signing date of a document is used.</p>
+<p><img src="modShellmodel.png" width="524" height="166" alt="modified shell model" /></p>
+<h3>Chain model</h3>
+<p>In the chain model, the only requirement is, that each certificate had to be valid at the moment it was used to create a signature. This means that: at the signing time of a document, the client's certificate had to be valid, at the time when the clients' certificate was issued, the issuing's CA's certificate had to be valid and so on. This model does not consider if a certificate was revoked since the signing time.</p>
+<p><img src="chainmodel.png" width="527" height="169" /></p>
+<h3>Examples</h3>
+<h4>All models valid:</h4>
+<p><img src="allValid.png" width="523" height="178" alt="all models valid" /></p>
+<h4>Only modified shell and chain model valid:</h4>
+<p><img src="chainShellValid2.png" width="522" height="177" alt="chain and modified shell models valid" /></p>
+<p>&nbsp;</p>
+<p><img src="chainShellValid.png" width="524" height="202" alt="chain and modified shell model valid" /></p>
+<h4>Only chain model valid:</h4>
+<p><img src="chainValid2.png" width="523" height="164" alt="chain model valid" /></p>
+<p>&nbsp;</p>
+<p><img src="chainValid.png" width="532" height="207" alt="chain model valid" /></p>
+<p>&nbsp;</p>
+</body>
+</html>
