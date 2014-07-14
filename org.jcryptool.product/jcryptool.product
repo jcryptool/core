@@ -116,6 +116,14 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <feature id="org.jcryptool.providers.feature" version="1.0.0"/>
       <feature id="org.jcryptool.views.feature" version="1.0.0"/>
       <feature id="org.jcryptool.visual.feature" version="1.0.0"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.help"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
    </features>
 
    <configurations>
@@ -124,6 +132,7 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
       <plugin id="org.jcryptool.crypto.keystore" autoStart="true" startLevel="4" />
       <property name="Dfile.encoding" value="UTF-8" />
