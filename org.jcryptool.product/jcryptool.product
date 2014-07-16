@@ -14,9 +14,12 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-data @user.home/Documents/.jcryptool</programArgs>
-      <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog</vmArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      <programArgs>-data @user.home/Documents/.jcryptool
+      </programArgs>
+      <vmArgs>-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.SimpleLog
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages i16="/org.jcryptool.core/icons/icon_16.gif" i32="/org.jcryptool.core/icons/icon_32.gif" i48="/org.jcryptool.core/icons/icon_48.gif" i64="/org.jcryptool.core/icons/icon_64.gif" i128="/org.jcryptool.core/icons/icon_128.gif"/>
@@ -116,14 +119,6 @@ Agreement more than one year after the cause of action arose. Each party waives 
       <feature id="org.jcryptool.providers.feature" version="1.0.0"/>
       <feature id="org.jcryptool.views.feature" version="1.0.0"/>
       <feature id="org.jcryptool.visual.feature" version="1.0.0"/>
-      <feature id="org.eclipse.equinox.p2.core.feature"/>
-      <feature id="org.eclipse.rcp"/>
-      <feature id="org.eclipse.help"/>
-      <feature id="org.eclipse.emf.ecore"/>
-      <feature id="org.eclipse.e4.rcp"/>
-      <feature id="org.eclipse.emf.common"/>
-      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
-      <feature id="org.eclipse.equinox.p2.extras.feature"/>
    </features>
 
    <configurations>
