@@ -13,9 +13,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.CommandManager;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
@@ -51,6 +54,11 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.menus.CommandContributionItem;
+import org.eclipse.ui.menus.CommandContributionItemParameter;
+import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.constants.IConstants;
@@ -118,9 +126,14 @@ public class ECDHComposite extends Composite implements PaintListener {
     private FlexiBigInt largeOrder;
     private boolean showAnimation = true;
     private boolean showInformationDialogs = true;
-    private Action action_saveToEditor;
-    private Action action_saveToFile;
-
+    private final String saveToEditorCommandId = "org.jcryptool.visual.ecdh.commands.saveToEditor";
+    private AbstractHandler saveToEditorHandler;
+    private final String saveToFileCommandId = "org.jcryptool.visual.ecdh.commands.saveToFile";
+    private AbstractHandler saveToFileHandler;
+    // private Action action_saveToEditor;
+    // private Action action_saveToFile;
+    private IServiceLocator serviceLocator;
+    
     public ECDHComposite(Composite parent, int style, ECDHView view) {
         super(parent, style);
         this.view = view;
@@ -128,26 +141,76 @@ public class ECDHComposite extends Composite implements PaintListener {
         createCompositeIntro();
         createGroupMain();
 
+        serviceLocator = PlatformUI.getWorkbench();
         IMenuManager dropDownMenu = view.getViewSite().getActionBars().getMenuManager();
-        Action action = new Action(Messages.getString("ECDHComposite.0"), IAction.AS_CHECK_BOX) {public void run() {toggleAnimation();}}; //$NON-NLS-1$
-        action.setChecked(true);
-        dropDownMenu.add(action);
-        action = new Action(Messages.getString("ECDHComposite.1"), IAction.AS_CHECK_BOX) {public void run() {toggleInformationDialogs();}}; //$NON-NLS-1$
-        action.setChecked(true);
-        dropDownMenu.add(action);
+        final String showAnimationCommandId = "org.jcryptool.visual.ecdh.commands.showAnimation";
+        AbstractHandler showAnimationHandler = new AbstractHandler() {
+        	public Object execute(ExecutionEvent event) {
+        		toggleAnimation();
+        		return null;
+        	}
+        };
+        defineCommand(showAnimationCommandId, Messages.getString("ECDHComposite.0"), showAnimationHandler);
+        addContributionItem(dropDownMenu, showAnimationCommandId, null, null, SWT.CHECK);
+        final String showInfoDialogsCommandId = "org.jcryptool.visual.ecdh.commands.showInfoDialogs";
+        AbstractHandler showInfoDialogsHandler = new AbstractHandler() {
+        	public Object execute(ExecutionEvent event) {
+        		toggleInformationDialogs();
+        		return null;
+        	}
+        };
+        defineCommand(showInfoDialogsCommandId, Messages.getString("ECDHComposite.1"), showInfoDialogsHandler);
+        addContributionItem(dropDownMenu, showInfoDialogsCommandId, null, null, SWT.CHECK);
         dropDownMenu.add(new Separator());
-        action_saveToEditor = new Action(Messages.getString("ECDHComposite.2"), IAction.AS_PUSH_BUTTON) {public void run() {saveToEditor();}}; //$NON-NLS-1$
-        action_saveToEditor.setEnabled(false);
-        dropDownMenu.add(action_saveToEditor);
-        action_saveToFile = new Action(Messages.getString("ECDHComposite.3"), IAction.AS_PUSH_BUTTON) {public void run() {saveToFile();}}; //$NON-NLS-1$
-        action_saveToFile.setEnabled(false);
-        dropDownMenu.add(action_saveToFile);
+        saveToEditorHandler = new AbstractHandler() {
+        	public Object execute(ExecutionEvent event) {
+        		saveToEditor();
+        		return null;
+        	}
+        };
+        defineCommand(saveToEditorCommandId, Messages.getString("ECDHComposite.2"), null);	// don't enable the command until we have results to save
+        addContributionItem(dropDownMenu, saveToEditorCommandId, null, null, SWT.PUSH);
+        saveToFileHandler = new AbstractHandler() {
+        	public Object execute(ExecutionEvent event) {
+        		saveToFile();
+        		return null;
+        	}
+        };
+        defineCommand(saveToFileCommandId, Messages.getString("ECDHComposite.3"), null);	// don't enable the command until we have results to save
+        addContributionItem(dropDownMenu, saveToFileCommandId, null, null, SWT.PUSH);
 
         IToolBarManager toolBarMenu = view.getViewSite().getActionBars().getToolBarManager();
-        action = new Action(Messages.getString("ECDHComposite.4"), IAction.AS_PUSH_BUTTON) {public void run() {reset(0);}}; //$NON-NLS-1$
-        action.setImageDescriptor(ECDHPlugin.getImageDescriptor("icons/reset.gif")); //$NON-NLS-1$
-        toolBarMenu.add(action);
+        final String resetCommandId = "org.jcryptool.visual.ecdh.commands.reset";
+        AbstractHandler resetHandler = new AbstractHandler() {
+        	public Object execute(ExecutionEvent event) {
+        		reset(0);
+        		return null;
+        	}
+        };
+        defineCommand(resetCommandId, Messages.getString("ECDHComposite.4"), resetHandler); //$NON_NLS-1$
+        addContributionItem(toolBarMenu, resetCommandId,
+        	ECDHPlugin.getImageDescriptor("icons/reset.gif"), null, SWT.PUSH); //$NON-NLS-1$
     }
+
+    private void defineCommand(final String commandId, final String name, AbstractHandler handler) {
+        ICommandService commandService = (ICommandService)PlatformUI.getWorkbench().getService(ICommandService.class);
+    	Command command = commandService.getCommand(commandId);
+    	command.define(name,  null, commandService.getCategory(CommandManager.AUTOGENERATED_CATEGORY_ID));
+    	command.setHandler(handler);
+    }
+
+    private void addContributionItem(IContributionManager manager, final String commandId,
+           	final ImageDescriptor icon, final String tooltip, int Style)
+        {
+           	CommandContributionItemParameter param = new CommandContributionItemParameter(serviceLocator,
+           		null, commandId, Style);
+           	if(icon != null)
+           		param.icon = icon;
+           	if(tooltip != null && !tooltip.equals(""))
+           		param.tooltip = tooltip;
+           	CommandContributionItem item = new CommandContributionItem(param);
+           	manager.add(item);
+        }
 
     @Override
     public void dispose() {
@@ -499,8 +562,11 @@ public class ECDHComposite extends Composite implements PaintListener {
                 else
                     b = keyA != null && keyB != null;
                 if (b) {
-                    action_saveToEditor.setEnabled(true);
-                    action_saveToFile.setEnabled(true);
+                    ICommandService commandService = (ICommandService)serviceLocator.getService(ICommandService.class);
+                	Command command = commandService.getCommand(saveToEditorCommandId);
+                	command.setHandler(saveToEditorHandler);
+                	command = commandService.getCommand(saveToFileCommandId);
+                	command.setHandler(saveToFileHandler);
                     canvasMain.redraw();
                     if (large)
                         b = keyLargeA.getXAffin().equals(keyLargeB.getXAffin());
@@ -661,8 +727,11 @@ public class ECDHComposite extends Composite implements PaintListener {
                 else
                     b = keyA != null && keyB != null;
                 if (b) {
-                    action_saveToEditor.setEnabled(true);
-                    action_saveToFile.setEnabled(true);
+                    ICommandService commandService = (ICommandService)serviceLocator.getService(ICommandService.class);
+                	Command command = commandService.getCommand(saveToEditorCommandId);
+                	command.setHandler(saveToEditorHandler);
+                	command = commandService.getCommand(saveToFileCommandId);
+                	command.setHandler(saveToFileHandler);
                     canvasMain.redraw();
                     if (large)
                         b = keyLargeA.getXAffin().equals(keyLargeB.getXAffin());
@@ -956,8 +1025,11 @@ public class ECDHComposite extends Composite implements PaintListener {
             btnCalculateKeyB.setEnabled(false);
             btnCalculateKeyB.setBackground(cRed);
             textCommonKeyB.setText(""); //$NON-NLS-1$
-            action_saveToEditor.setEnabled(false);
-            action_saveToFile.setEnabled(false);
+            ICommandService commandService = (ICommandService)serviceLocator.getService(ICommandService.class);
+        	Command command = commandService.getCommand(saveToEditorCommandId);
+        	command.setHandler(null);
+        	command = commandService.getCommand(saveToFileCommandId);
+        	command.setHandler(null);
         }
         canvasMain.redraw();
         layout();
