@@ -193,10 +193,10 @@ public class NewKeypairPage extends WizardPage {
 		xfield.addModifyListener(new ModifyListener() {
 
 			public void modifyText(final ModifyEvent e) {
-				if (xfield.getText() != "") {
+				if (!xfield.getText().isEmpty()) {
 					final BigInteger a = new BigInteger(xfield.getText());
 					if (a.compareTo(Constants.TWO) < 0 || a.compareTo(new BigInteger(lField.getText()).subtract(Constants.TWO)) > 0) {
-						setErrorMessage("Bitte wählen Sie a im angegebenen, gültigen Bereich");
+						setErrorMessage("Bitte wählen Sie a im angegebenen gültigen Bereich");
 						setPageComplete(false);
 					} else {
 						ytext.setText(new BigInteger(qField.getText()).modPow(a, new BigInteger(lField.getText()))

@@ -10,11 +10,8 @@
 
 package org.jcryptool.visual.sidechannelattack.spa.views;
 
-import org.jcryptool.visual.sidechannelattack.SPAPlugIn;
 
 public interface Constants {
-    static String pluginRootDirectory = SPAPlugIn.getDefault().getBundle().getLocation().substring(16);
-
 	String RES_AFTER_MUL = Messages.Constants_145;
 
 	String TOOL_TIP_TEXT_EXPONENT_BINARY = Messages.Constants_144;

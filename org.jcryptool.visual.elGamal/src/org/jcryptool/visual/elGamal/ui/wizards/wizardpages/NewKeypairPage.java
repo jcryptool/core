@@ -212,7 +212,7 @@ public class NewKeypairPage extends WizardPage {
         afield.addModifyListener(new ModifyListener() {
 
             public void modifyText(final ModifyEvent e) {
-                if (afield.getText() != "") { //$NON-NLS-1$
+                if (!afield.getText().isEmpty()) {
                     final BigInteger a = new BigInteger(afield.getText());
                     if (a.compareTo(Constants.TWO) < 0
                             || a.compareTo(new BigInteger(pfield.getText()).subtract(Constants.TWO)) > 0) {

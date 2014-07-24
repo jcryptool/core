@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Extended RSA Cryptosystem Tests
 Bundle-SymbolicName: org.jcryptool.visual.extendedrsa.tests;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: org.jcryptool.visual.extendedrsa.tests.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.jcryptool.visual.extendedrsa;bundle-version="0.9.8",
  org.junit;bundle-version="4.8.2",

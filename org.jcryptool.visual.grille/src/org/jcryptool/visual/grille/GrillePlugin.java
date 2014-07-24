@@ -35,25 +35,25 @@ public class GrillePlugin extends AbstractUIPlugin {
 	 * The constructor
 	 */
 	public GrillePlugin() {
-		plugin = this;
 	}
 	
-	/**
-	 * The method uses the superclass method which refreshes the plug-in actions.
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
+	/*
+     * (non-Javadoc)
+     * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	/**
-	 * The method uses the superclass method which saves this plug-in's 
-	 * preference and dialog stores and shuts down 
-     * its image registry (if they are in use).
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.eclipse.core.runtime.Plugin#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
 
 	/**
 	 * Returns the shared instance.

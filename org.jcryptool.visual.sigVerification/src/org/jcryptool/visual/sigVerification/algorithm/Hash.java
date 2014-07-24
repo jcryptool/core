@@ -50,15 +50,20 @@ public class Hash {
      * @param hashmethod A String with the name of the hashmethod
      */
     public void setHashmethod(String hashmethod) {
-        if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha1) {
+        switch (hashmethod) {
+        case ("SHA-1"):
             this.hashmethod = "SHA1";
-        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha256) {
+            break;
+        case ("SHA-256"):
             this.hashmethod = "SHA256";
-        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha384) {
+            break;
+        case ("SHA-384"):
             this.hashmethod = "SHA384";
-        } else if (hashmethod == org.jcryptool.visual.sigVerification.ui.wizards.Messages.HashWizard_rdosha512) {
+            break;
+        case ("SHA-512"):
             this.hashmethod = "SHA512";
-        } else {
+            break;
+        default:
             this.hashmethod = hashmethod;
         }
     }

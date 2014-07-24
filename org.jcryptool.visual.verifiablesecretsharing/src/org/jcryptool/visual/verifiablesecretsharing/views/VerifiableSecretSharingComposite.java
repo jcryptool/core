@@ -257,7 +257,7 @@ public class VerifiableSecretSharingComposite extends Composite {
                 String text = secretText.getText();
                 BigInteger secret;
                 int bitlength = 0;
-                if (text != "") { //$NON-NLS-1$
+                if (!text.isEmpty()) {
                     if (Integer.parseInt(text) > 2000000) {
                         secretText.setText("2000000"); //$NON-NLS-1$
                         text = "2000000"; //$NON-NLS-1$

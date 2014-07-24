@@ -12,7 +12,6 @@ Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.jcryptool.visual.library;bundle-version="0.9.5",
  org.eclipse.core.runtime;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.jcryptool.visual.dsa.DSAPlugin
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,

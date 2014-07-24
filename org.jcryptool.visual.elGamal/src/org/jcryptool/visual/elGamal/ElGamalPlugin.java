@@ -11,8 +11,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @author Michael Gaber
  */
 public class ElGamalPlugin extends AbstractUIPlugin {
-
-    /** plugin ID. */
+    /** The plug-in ID. */
     public static final String PLUGIN_ID = "org.jcryptool.visual.elGamal"; //$NON-NLS-1$
-
 }
