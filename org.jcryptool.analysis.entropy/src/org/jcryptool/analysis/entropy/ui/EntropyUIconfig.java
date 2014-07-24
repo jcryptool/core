@@ -125,10 +125,9 @@ public class EntropyUIconfig extends Composite {
             {
                 cStatusLabel = new CLabel(this, SWT.BORDER);
                 FormData cStatusLabelLData = new FormData();
-                cStatusLabelLData.width = 543;
-                cStatusLabelLData.height = 19;
-                cStatusLabelLData.left = new FormAttachment(0, 1000, 53);
-                cStatusLabelLData.right = new FormAttachment(1000, 1000, -18);
+                cStatusLabelLData.width = 525;
+                cStatusLabelLData.height = 20;
+                cStatusLabelLData.left = new FormAttachment(0, 1000, 65);
                 cStatusLabelLData.top = new FormAttachment(0, 1000, 240);
                 cStatusLabel.setLayoutData(cStatusLabelLData);
                 cStatusLabel.setText(Messages.EntropyUIconfig_0);
@@ -136,8 +135,8 @@ public class EntropyUIconfig extends Composite {
             {
                 cLabel1 = new CLabel(this, SWT.NONE);
                 FormData cLabel1LData = new FormData();
-                cLabel1LData.width = 41;
-                cLabel1LData.height = 19;
+                cLabel1LData.width = 50;
+                cLabel1LData.height = 20;
                 cLabel1LData.left = new FormAttachment(0, 1000, 13);
                 cLabel1LData.top = new FormAttachment(0, 1000, 240);
                 cLabel1.setLayoutData(cLabel1LData);
