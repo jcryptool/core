@@ -26,17 +26,11 @@ public class CorePlugin extends AbstractUIPlugin {
     private static CorePlugin plugin;
 
     /**
-     * The constructor.
-     */
-    public CorePlugin() {
-        plugin = this;
-    }
-
-    /**
      * The method uses the superclass method which refreshes the plug-in actions.
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
+        plugin = this;
     }
 
     /**
