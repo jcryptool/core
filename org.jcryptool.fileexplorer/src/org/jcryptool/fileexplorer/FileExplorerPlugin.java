@@ -26,19 +26,13 @@ public class FileExplorerPlugin extends AbstractUIPlugin {
     // The shared instance
     private static FileExplorerPlugin plugin;
 
-    /**
-     * The constructor
-     */
-    public FileExplorerPlugin() {
-        plugin = this;
-    }
-
     /*
      * (non-Javadoc)
      * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
+        plugin = this;
 
         DirectoryService.setUserHomeDir(getPreferenceStore().getString(
                 PreferenceConstants.P_START_DIRECTORY));
