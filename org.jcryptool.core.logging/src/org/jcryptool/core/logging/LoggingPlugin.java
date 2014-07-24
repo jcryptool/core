@@ -37,12 +37,6 @@ public class LoggingPlugin extends AbstractUIPlugin {
     /** The shared instance. */
     private static LoggingPlugin plugin;
 
-    /**
-     * The constructor.
-     */
-    public LoggingPlugin() {
-        plugin = this;
-    }
 
     /*
      * (non-Javadoc)
@@ -50,7 +44,9 @@ public class LoggingPlugin extends AbstractUIPlugin {
      */
     public void start(BundleContext context) throws Exception {
         super.start(context);
-        int loglevel = this.getPreferenceStore().getInt(LogUtil.LOGGER_LOG_LEVEL);
+        plugin = this;
+        
+        int loglevel = getPreferenceStore().getInt(LogUtil.LOGGER_LOG_LEVEL);
         if (loglevel != 0) {
             LogUtil.setLogLevel(loglevel);
         }
