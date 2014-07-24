@@ -11,7 +11,6 @@
 package org.jcryptool.crypto.classic.delastelle;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.BundleContext;
 
 /**
  * The Activator class controls the plug-in life cycle
@@ -20,55 +19,6 @@ import org.osgi.framework.BundleContext;
  * @version 0.1
  */
 public class DelastellePlugin extends AbstractUIPlugin {
-	/**
-	 * The plug-in ID
-	 */
+	/** The plug-in ID. */
 	public static final String PLUGIN_ID = "org.jcryptool.crypto.classic.delastelle";
-
-	/**
-	 * The shared instance
-	 */
-	private static DelastellePlugin plugin;
-
-	/**
-	 * The constructor
-	 */
-	public DelastellePlugin() {
-		plugin = this;
-	}
-
-	/**
-	 * Returns this plug-in's log manager.
-	 *
-	 * @return	This plug-in's log manager
-	 */
-
-	/**
-	 * The method uses the superclass method which refreshes the plug-in actions.
-	 */
-	@Override
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-	}
-
-	/**
-	 * The method uses the superclass method which saves this plug-in's
-	 * preference and dialog stores and shuts down
-     * its image registry (if they are in use).
-	 */
-	@Override
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
-
-	/**
-	 * Returns the shared instance.
-	 *
-	 * @return the shared instance.
-	 */
-	public static DelastellePlugin getDefault() {
-		return plugin;
-	}
-
 }
