@@ -83,13 +83,6 @@ public class AlphabetsPlugin extends AbstractUIPlugin {
 		}
 	}
 
-	/**
-	 * The constructor
-	 */
-	public AlphabetsPlugin() {
-		plugin = this;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.core.runtime.Plugins#start(org.osgi.framework.BundleContext)
@@ -97,6 +90,7 @@ public class AlphabetsPlugin extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+        plugin = this;
 	}
 
 	/*
