@@ -20,8 +20,7 @@ import org.osgi.framework.BundleContext;
  *
  */
 public class FreqAnalysisPlugin extends AbstractUIPlugin {
-
-	// The plug-in ID
+    /** The plug-in ID. */
 	public static final String PLUGIN_ID = "org.jcryptool.analysis.freqanalysis"; //$NON-NLS-1$
 
 	// The shared instance
