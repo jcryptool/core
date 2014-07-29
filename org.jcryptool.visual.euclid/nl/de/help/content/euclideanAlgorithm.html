@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <title>Theorie zum Erweiterten Euklidischen Algorithmus</title>
+</head>
+<body>
+	<h1>Theorie zum Erweiterten Euklidischen Algorithmus</h1>
+
+	<p>
+		Der <b>Erweiterter Euklidische Algorithmus</b> berechnet den größten gemeinsamen Teiler zweier ganzer Zahlen <i>p</i> und <i>q</i>. 
+		Zusätzlich liefert der Algorithmus zwei ganze Zahlen <i>x</i> und <i>y</i>, so dass <i>ggT(p, q) = xp + yq</i> gilt. 
+		Der <b>Erweiterter Euklidische Algorithmus</b> ist einer der grundlegenden Algorithmen in der Kryptographie. 
+		Er wird u.a. für die RSA-Verschlüsselung verwendet. 
+		Weitere Anwendungsgebiete sind z.B. der Chinesische Restsatz, die Schlüsselgenerierung, Primzahlgeneratoren und Primzahltests.
+	</p>
+	
+	<b>Theorem 1</b>
+	<ol><i>
+		<li>Wenn  q = 0 ist, dann gilt ggT(p, q) = p.</li>
+		<li>Wenn  q &#x2260; 0 ist, dann gilt ggT(p, q) = ggT(q, p mod q).</li>
+	</i></ol>
+	
+	<p>
+		<b>Beispiel</b>
+		Der <i>ggT(44, 18)</i> ist zu berechnen. Aus Theorem 1 folgt: <i>ggT(44, 18) = ggT(18, 44 mod 18) = ggT(18, 8) = ggT(8, 18 mod 8) = ggT(8, 2) = ggT(2, 8 mod 2) = ggT(2, 0) = 2</i>. 
+	</p>
+	
+	<p>
+		Zuerst wird überprüft welche der beiden Zahlen größer ist. 
+		Die größere Zahl wird als Parameter eins, die kleinere als Parameter zwei deklariert. 
+		Falls beide Zahlen identisch sind, werden keine Änderung vorgenommen, da in diesem Fall der <i>ggT(p, p) = p</i> schon eindeutig bestimmt ist. 
+		Anderenfalls wird solange die Zahl <i>p</i> durch die Zahl <i>q</i> geteilt und modulo gerechnet, bis die Zahl <i>q</i> Null wird. 
+		Für die jeweils nächste Iteration wird <i>q</i> das neue <i>p</i> und das neue <i>q</i> ist der Rest der Moduloberechnung <i>q<sub>neu</sub> = p mod q</i>. 
+		Da <i>q</i> immer der Rest der Moduloberechnung ist und dieser irgendwann Null sein wird, ist sichergestellt, dass der Algorithmus terminiert. 
+		Man kann die Berechnung kompakt in einer Tabelle aufschreiben.
+	</p>
+	
+	<table border=1 style="border-collapse: collapse; text-align: center">
+		<tr>
+			<th>Index</th>
+			<th>Quotient</th>
+			<th>Rest</th>
+		</tr>
+		<tr>
+			<td>0</td>
+			<td></td>
+			<td>44</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>18</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>2</td>
+			<td>8</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>4</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td></td>
+			<td>0</td>
+		</tr>
+	</table>
+	
+	<p>
+		Um die Werte für <i>x</i> und <i>y</i> zu berechnen, initialisieren wir die ersten zwei Iterationen folgendermaßen:
+	</p>
+
+	<p>
+		<i>x<sub>0</sub> = 0, x<sub>1</sub> = 1 und y<sub>0</sub> = 1, y<sub>1</sub> = 0</i> 
+	</p>
+
+	<p>
+		Mit <i>r<sub>0</sub>,…,r<sub>n+1</sub></i> wird die Folge der Reste und mit <i>q<sub>1</sub>,…,q<sub>n</sub></i> die Folge der Quotienten, die bei der Anwendung des <b>Erweiterten Euklids</b> auf <i>p, q</i> entstehen, bezeichnet. 
+		Die Bildungsvorschriften der zwei Folgen <i>(x<sub>k</sub>)</i> und <i>(y<sub>k</sub>)</i> lauten wie folgt:
+	</p>
+
+	<p><i>
+		x<sub>k+1</sub> = x<sub>k-1</sub> - q<sub>k</sub>x<sub>k</sub></br>
+		y<sub>k+1</sub> = y<sub>k-1</sub> - q<sub>k</sub>y<sub>k</sub></br>
+		1 &le; k &le; n
+	</i></p>
+	
+	<p>
+		Dies lässt sich nun für das Ausgangsbeispiel <i>ggT(44, 18)</i> überführen und in die Tabelle von oben eintragen. 
+	</p>
+	
+	<table border=1 style="border-collapse: collapse; text-align: center">
+		<tr>
+			<th>Index</th>
+			<th>Quotient</th>
+			<th>Rest</th>
+			<th> x </th>
+			<th> y </th>
+		</tr>
+		<tr>
+			<td>0</td>
+			<td></td>
+			<td>44</td>
+			<td>1</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+			<td>18</td>
+			<td>0</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>2</td>
+			<td>8</td>
+			<td>1</td>
+			<td>-2</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>4</td>
+			<td>2</td>
+			<td>-2</td>
+			<td>5</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td></td>
+			<td>0</td>
+			<td>9</td>
+			<td>-22</td>
+		</tr>
+	</table>
+	
+	<p>
+		Somit lässt sich jeder entstandene Rest als Linearkombination von <i>p</i> und <i>q</i> darstellen:
+	</p>
+	
+	<table border=1 style="border-collapse: collapse; text-align: center">
+		<tr>
+			<th>Index</th>
+			<th>Rest</th>
+			<th>Linearkombination</th>
+		</tr>
+		<tr>
+			<td>0</td>
+			<td>44</td>
+			<td>1*44 + 0*18</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>18</td>
+			<td>0*44 + 1*18</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>8</td>
+			<td>1*44 + (-2)*18</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>2</td>
+			<td>(-2)*44 + 5*18</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td>0</td>
+			<td>9*44 + (-22)*18</td>
+		</tr>
+	</table>
+	
+	<p>
+		Für das obige Beispiel gilt also:
+	</p>
+	
+	<p>
+		<i>ggT(44, 18) = (-2)*44 + 5*18 = 2</i>
+	</p>
+</body>
+</html>

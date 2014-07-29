@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	  <title>Erweiterter Euklid / Wechselwegnahme</title>
+</head>
+<body>
+<h1>Erweiterter Euklid / Wechselwegnahme</h1>
+
+<p>Diese Visualisierung besteht aus zwei Teilen und soll die <b>Wechselwegnahme</b> (<i>Euklidischer Algorithmus</i>) und den <b>Erweiterten Euklidischen Algorithmus</b> veranschaulichen.</p>
+
+<h2>Reiter 1: Die Wechselwegnahme – Euklidischer Algorithmus</h2>
+
+<p>In die Eingabefelder für <b>p</b> und <b>q</b> können zwei natürliche Zahlen eingegeben werden, deren größter gemeinsamer Teiler (<i>ggT</i>) ermittelt werden soll.</p>
+
+
+<img src="ww-eingabe.png">
+
+<p>Danach kann man mit den 4 dargestellten Schaltflächen das Plug-in bedienen.</p>
+
+<img src="ww-buttons.png">
+
+<ul>
+	<li><b>Schritt vor</b> -  Der nächste Berechnungsschritt wird gezeichnet.</li>
+	<li><b>Schritt zurück</b> - Der zuletzt gezeichnete Berechnungsschritt wird gelöscht.</li>
+	<li><b>Berechnen</b> - Die komplette Berechnung erfolgt automatisch.</li>
+	<li><b>Zurücksetzen</b> - Die Berechnung, sowie die schematische Darstellung, zurücksetzen.</li>
+</ul>
+
+<p>Darunter, im Bereich <b>Berechnung</b>, sieht man, je nach dem für welche Berechnungsvariante man sich entschieden hat,  eine teilweise oder vollständig durchgeführte Berechnung und die Veranschaulichung.
+</br>Unterhalb sieht man ein Beispiel einer vollständig durchgeführten Berechnung: (<font color="GREEN">grüne</font> Rechtecke => größere Zahl p, <font color="RED">rote</font> Rechtecke => kleinere Zahl q, <font color="BLUE">blaue</font> Rechtecke => Rest)</p>
+
+<img src="ww-berechnung.png">
+
+<ul>
+	<li>Zuerst werden die zwei Zahlen p und q gezeichnet (erste zwei Zeilen).</li>
+	<li>Als Nächstes werden die einzelnen Schritte der Wechselwegnahme veranschaulicht.</li>
+	<li>Zum Schluss wird der ggT ausgegeben.</li>
+</ul>
+
+<h2>Reiter 2: Der Erweiterte Euklidische Algorithmus</h2>
+
+<p>Die Bedienung der Visualisierung erfolgt wie schon bei der Wechselwegnahme:
+</br>Man kann die natürlichen Zahlen <b>p</b> und <b>q</b> über die jeweiligen Eingabefelder übergeben und sich dann mit Hilfe der Schaltflächen die Berechnung der Zahlen <b>x</b> und <b>y</b> in der Tabelle im unteren Teil des Plug-ins anzeigen lassen (schrittweise / vollständig):</p>
+
+<img src="ee-eingabe.png">
+
+<p>Unterhalb sieht man eine vollständig durchgeführte Berechnung:</p>
+
+<img src="ee-berechnung.png">
+
+<h3>Aufbau der Tabelle:</h3>
+<p>Die Tabelle ist in 5 Spalten unterteilt: <b>Index, Quotient, Rest, x und y:</b></p>
+
+<ul>
+	<li><b>Index</b> - Dient zur Übersichtlichkeit</li>
+	<li><b>Quotient</b> - Gibt an, wie oft das q der Zeile ganzzahlig durch p teilbar ist. Hierbei steht das p der jeweiligen Berechnungszeile <b>immer eine Zeile über q</b>.</li>
+	<li><b>Rest</b> - Enthält die Reste der Division p/q, welche gleichzeitig auch die Werte für die p und q der einzelnen Berechnungsschritte sind.</li>
+	<li><b>x- und y-Spalte</b> - Enthalten die Werte für x und y der jeweiligen Berechnungszeile.</li>
+</ul>
+
+<p>In den ersten zwei Zeilen wird die Tabelle initialisiert (Rest<sub>0</sub> = p, Rest<sub>1</sub> = q).</p>
+
+<p>Wenn man sich für die schrittweise Berechnung entschieden hat, wird der aktuelle Schritt, sowohl im Textfeld, als auch in der Tabelle selbst, farbig hervorgehoben:</p>
+
+<img src="ee-schrittweise.png">
+
+<p>Nachdem die Berechnung vollständig durchgeführt wurde, werden der ggT und die fertig berechneten x und y oberhalb der Tabelle ausgegeben: (x=><font color="GREEN">grün</font>, y=><font color="RED">rot</font>, ggT(p,q)=><font color="BLUE">blau</font>)</p>
+
+<img src="ee-ausgabe.png">
+
+<p> Außerdem ist es nach vollständig durchgeführter Berechnung möglich, die fertige Berechnungstabelle in drei Formaten (PDF, Tex und CSV) über ein Menü am oberen rechten Plug-in-Rand exportieren.</p> 
+</body>
+</html>
