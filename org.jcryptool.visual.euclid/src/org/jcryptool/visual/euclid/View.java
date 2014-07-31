@@ -40,6 +40,8 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 /**
  * @author Felix Eckardt
  */
@@ -69,6 +71,7 @@ public class View extends ViewPart {
     private Button btnPrevStep_1;
     private Button btnNextStep_1;
     private Button btnCompute_1;
+    private Button btnResetCanvas_1;
     private Button btnResetAll_1;
     private Group grpComputation_1;
     private ScrolledComposite scrolledComposite_canvas;
@@ -105,7 +108,6 @@ public class View extends ViewPart {
     private ArrayList<int[]> values;
     private int step = -1;
     private int state;
-    private Button btnResetCanvas_1;
 
 
     private void initialize_1() {        
@@ -128,6 +130,8 @@ public class View extends ViewPart {
             r = p%q;
             values.add(new int[]{p, q, n, r});
         }
+        
+        scrolledComposite_canvas.setMinSize(canvas.computeSize(20+5*values.get(0)[0], 100+45*values.size()));
         
         btnResetAll_1.setEnabled(true);
     }
@@ -154,7 +158,7 @@ public class View extends ViewPart {
         
         Listener l[] = canvas.getListeners(SWT.Paint);
         canvas.removeListener(SWT.Paint, l[l.length-1]);
-        canvas.redraw(0, 100+45*(step-1), 20+5*values.get(0)[0], 100+45*(step+1), true);
+        canvas.redraw(0, 75+45*(step-1), 20+5*values.get(0)[0], 75+45*(step+1), true);
         canvas.update();
         
         btnNextStep_1.setEnabled(true);
@@ -201,6 +205,7 @@ public class View extends ViewPart {
                     drawLine(10, 60, values.get(0)[1], RED, e.gc);
                 }
             });
+            System.out.println("fail");
             canvas.redraw();
         } else {
             canvas.addPaintListener(new PaintListener() {
@@ -222,8 +227,7 @@ public class View extends ViewPart {
                 }
             });
         }
-        scrolledComposite_canvas.setMinSize(canvas.computeSize(20+5*values.get(0)[0], 100+45*s));
-        canvas.redraw(0, 100+45*(s-1), 20+5*values.get(0)[0], 100+45*s, true);
+        canvas.redraw(0, 75+45*(s-1), 20+5*values.get(0)[0], 75+45*s, false);
         canvas.update();
     }
     
@@ -913,7 +917,7 @@ public class View extends ViewPart {
         scrolledComposite_canvas.setExpandHorizontal(true);
         scrolledComposite_canvas.setExpandVertical(true);
         
-        canvas = new Canvas(scrolledComposite_canvas, SWT.NONE);
+        canvas = new Canvas(scrolledComposite_canvas, SWT.NO_REDRAW_RESIZE);
         scrolledComposite_canvas.setContent(canvas);
         scrolledComposite_canvas.setMinSize(canvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         
