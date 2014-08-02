@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.50.0
+Bundle-Version: 1.51.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
@@ -12,6 +12,7 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.apache.bzip2,
  org.bouncycastle.asn1,
  org.bouncycastle.asn1.bc,
+ org.bouncycastle.asn1.bsi,
  org.bouncycastle.asn1.cmp,
  org.bouncycastle.asn1.cms,
  org.bouncycastle.asn1.cms.ecc,
@@ -75,7 +76,6 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.crypto.util,
  org.bouncycastle.i18n,
  org.bouncycastle.i18n.filter,
- org.bouncycastle.jcajce,
  org.bouncycastle.jcajce.io,
  org.bouncycastle.jcajce.provider.asymmetric,
  org.bouncycastle.jcajce.provider.asymmetric.dh,
@@ -98,15 +98,19 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.jcajce.provider.symmetric.util,
  org.bouncycastle.jcajce.provider.util,
  org.bouncycastle.jcajce.spec,
+ org.bouncycastle.jcajce.util,
  org.bouncycastle.jce,
- org.bouncycastle.jce.examples,
- org.bouncycastle.jce.exception,
  org.bouncycastle.jce.interfaces,
  org.bouncycastle.jce.netscape,
  org.bouncycastle.jce.provider,
  org.bouncycastle.jce.spec,
  org.bouncycastle.math.ec,
- org.bouncycastle.ocsp,
+ org.bouncycastle.math.ec.custom.djb,
+ org.bouncycastle.math.ec.custom.sec,
+ org.bouncycastle.math.ec.endo,
+ org.bouncycastle.math.ec.tools,
+ org.bouncycastle.math.field,
+ org.bouncycastle.math.raw,
  org.bouncycastle.pqc.asn1,
  org.bouncycastle.pqc.crypto,
  org.bouncycastle.pqc.crypto.gmss,
@@ -127,11 +131,10 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.util.io.pem,
  org.bouncycastle.util.test,
  org.bouncycastle.x509,
- org.bouncycastle.x509.examples,
  org.bouncycastle.x509.extension,
  org.bouncycastle.x509.util
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk15on-150.jar
+ libs/bcprov-jdk15on-151.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
