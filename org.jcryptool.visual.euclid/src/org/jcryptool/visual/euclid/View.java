@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 /**
@@ -203,7 +204,6 @@ public class View extends ViewPart {
                     drawLine(10, 60, values.get(0)[1], RED, e.gc);
                 }
             });
-            System.out.println("fail");
             canvas.redraw();
         } else {
             canvas.addPaintListener(new PaintListener() {
@@ -741,8 +741,7 @@ public class View extends ViewPart {
                 }
             };
         } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            LogUtil.logError(e);
         }
     }
 
