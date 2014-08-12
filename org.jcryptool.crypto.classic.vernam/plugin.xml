@@ -3,16 +3,16 @@
 <plugin>
    <extension
          id="org.jcryptool.crypto.classic.vernam.algorithm"
-         point="org.jcryptool.core.operations.algorithms">
-      <algorithm
-            actionClass="org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithmAction"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
             class="org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithm"
             contextHelpId="org.jcryptool.crypto.classic.vernam.wizard"
             engineClass="org.jcryptool.crypto.classic.vernam.algorithm.VernamEngine"
-            id="org.jcryptool.crypto.classic.vernam.algorithm"
+            handlerClass="org.jcryptool.crypto.classic.vernam.algorithm.VernamAlgorithmHandler"
+            id="org.jcryptool.crypto.classic.vernam.algorithm_cmd1"
             name="Vernam"
             type="classic">
-      </algorithm>
+      </algorithm_cmd>
    </extension>
 
 </plugin>
