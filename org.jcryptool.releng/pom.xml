@@ -166,6 +166,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 					<effort>Max</effort>
 					<threshold>Low</threshold>
 					<xmlOutput>true</xmlOutput>
+					<onlyAnalyze>org.jcryptool.*</onlyAnalyze>
 				</configuration>
 			</plugin>
 		</plugins>
