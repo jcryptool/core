@@ -76,6 +76,7 @@
 	<module>org.jcryptool.visual.ecdh</module>
 	<module>org.jcryptool.visual.extendedrsa</module>
 	<module>org.jcryptool.visual.elGamal</module>
+	<module>../Seminarfacharbeit---JCrypTool/org.jcryptool.visual.euclid</module>
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>
 	<module>org.jcryptool.visual.he</module>
@@ -93,7 +94,6 @@
 	<module>org.jcryptool.visual.ssl</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing</module>
 	<module>org.jcryptool.visual.verifiablesecretsharing.lib</module>
-	<module>org.jcryptool.visual.xeuclidean</module>
 	<module>org.jcryptool.visual.zeroknowledge</module>
   </modules>
 </project>
