@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.jcryptool.visual.xeuclidean.algorithm.XEuclid;
+import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
 public class CheckingEquationDialog extends TitleAreaDialog implements Constants{
 

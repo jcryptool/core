@@ -11,7 +11,7 @@ package org.jcryptool.visual.crt.algorithm;
 
 import java.math.BigInteger;
 
-import org.jcryptool.visual.xeuclidean.algorithm.XEuclid;
+import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
 /**
  *

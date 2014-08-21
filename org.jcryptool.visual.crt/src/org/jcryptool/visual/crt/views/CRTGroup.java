@@ -29,7 +29,7 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.crt.algorithm.ChineseRemainderTheorem;
-import org.jcryptool.visual.xeuclidean.algorithm.XEuclid;
+import org.jcryptool.visual.crt.xeuclid.XEuclid;
 
 public class CRTGroup extends Composite implements Constants {
 
