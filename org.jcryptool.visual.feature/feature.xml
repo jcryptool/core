@@ -273,13 +273,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="org.jcryptool.visual.xeuclidean"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.jcryptool.visual.crt"
          download-size="0"
          install-size="0"
@@ -435,6 +428,13 @@ litigation.
 
    <plugin
          id="org.jcryptool.visual.ssl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.visual.euclid"
          download-size="0"
          install-size="0"
          version="0.0.0"
