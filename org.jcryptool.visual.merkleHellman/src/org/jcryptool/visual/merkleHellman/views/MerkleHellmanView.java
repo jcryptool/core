@@ -168,9 +168,7 @@ public class MerkleHellmanView extends ViewPart {
 		Composite compositeMain = new Composite(scrolledComposite, SWT.NONE);
 		compositeMain.setLayout(new GridLayout(2, false));
 
-		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP
-				| SWT.MULTI);
-		styledTextDescription.setEnabled(false);
+		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
 		styledTextDescription.setEditable(false);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		gd_styledTextDescription.widthHint = 300;
