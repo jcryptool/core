@@ -29,6 +29,11 @@ public class Messages extends NLS {
 	public static String MerkleHellmanView_29;
 	public static String MerkleHellmanView_3;
 	public static String MerkleHellmanView_30;
+	public static String MerkleHellmanView_31;
+	public static String MerkleHellmanView_32;
+	public static String MerkleHellmanView_33;
+	public static String MerkleHellmanView_34;
+	public static String MerkleHellmanView_35;
 	public static String MerkleHellmanView_4;
 	public static String MerkleHellmanView_5;
 	public static String MerkleHellmanView_6;
@@ -37,6 +42,7 @@ public class Messages extends NLS {
 	public static String MerkleHellmanView_9;
 	public static String MerkleHellmanView_00;
 	public static String MerkleHellmanView_000;
+	public static String MerkleHellmanView_0000;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

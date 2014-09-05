@@ -2,6 +2,7 @@ package org.jcryptool.visual.merkleHellman.views;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -30,6 +31,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.merkleHellman.algorithm.MerkleHellman;
+import org.eclipse.swt.graphics.Point;
 
 /**
  * 
@@ -174,10 +176,18 @@ public class MerkleHellmanView extends ViewPart {
 		gd_styledTextDescription.widthHint = 300;
 		gd_styledTextDescription.heightHint = 60;
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
-		styledTextDescription.setText(Messages.MerkleHellmanView_0);
+		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
+		
 		header = new StyleRange();
 		header.start = 0;
-		header.length = 14;
+//		if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("de") == 0) {
+//			gd_styledTextDescription.heightHint = 110;
+//		} else if (System.getProperties().get("osgi.nl").toString().compareToIgnoreCase("en") == 0) {
+//			gd_styledTextDescription.heightHint = 95;
+//		}
+		
+		
+		header.length = Messages.MerkleHellmanView_0000.length();
 		header.fontStyle = SWT.BOLD;
 		styledTextDescription.setStyleRange(header);
 
@@ -225,7 +235,7 @@ public class MerkleHellmanView extends ViewPart {
 
 		btnGenerateNewKey = new Button(compositeSelection, SWT.NONE);
 		GridData gd_btnGenerateNewKey = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-		gd_btnGenerateNewKey.widthHint = 160;
+		gd_btnGenerateNewKey.widthHint = 180;
 		btnGenerateNewKey.setLayoutData(gd_btnGenerateNewKey);
 		btnGenerateNewKey.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -295,7 +305,7 @@ public class MerkleHellmanView extends ViewPart {
 		textW.addVerifyListener(vlNumber);
 
 		Label lblGCD = new Label(compositeParameter, SWT.NONE);
-		lblGCD.setText("gcd (M,W) = 1 and 1 <= W < M"); //$NON-NLS-1$
+		lblGCD.setText(Messages.MerkleHellmanView_31);
 
 		Label lblU = new Label(compositeParameter, SWT.NONE);
 		lblU.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
@@ -351,13 +361,13 @@ public class MerkleHellmanView extends ViewPart {
 							MessageDialog
 									.openInformation(
 											null,
-											"Info", Messages.MerkleHellmanView_22 + m.toString() + Messages.MerkleHellmanView_23); //$NON-NLS-1$
+											Messages.MerkleHellmanView_35, Messages.MerkleHellmanView_22 + m.toString() + Messages.MerkleHellmanView_23);
 							return;
 						}
 
 						if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
 							MessageDialog.openError(null,
-									"Info", "GCD(M,W) = " + m.gcd(w).toString() + Messages.MerkleHellmanView_24); //$NON-NLS-1$ //$NON-NLS-2$
+									"Info", Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24); //$NON-NLS-1$
 							return;
 						}
 
@@ -397,7 +407,7 @@ public class MerkleHellmanView extends ViewPart {
 
 						if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
 							MessageDialog.openError(null,
-									"GCD", "GCD(M,W) = " + m.gcd(w).toString() + Messages.MerkleHellmanView_29); //$NON-NLS-1$ //$NON-NLS-2$
+									Messages.MerkleHellmanView_33, Messages.MerkleHellmanView_34 + m.gcd(w).toString() + Messages.MerkleHellmanView_29);
 							return;
 						}
 
@@ -420,13 +430,13 @@ public class MerkleHellmanView extends ViewPart {
 					}
 					textM.setEditable(false);
 					textW.setEditable(false);
-					styledTextDescription.setText(Messages.MerkleHellmanView_00);
+					styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_00);
 					styledTextDescription.setStyleRange(header);
 				}
 			}
 		});
 		GridData gd_btnCreateKeys = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnCreateKeys.widthHint = 160;
+		gd_btnCreateKeys.widthHint = 180;
 		btnCreateKeys.setLayoutData(gd_btnCreateKeys);
 		btnCreateKeys.setText(Messages.MerkleHellmanView_7);
 
@@ -460,10 +470,11 @@ public class MerkleHellmanView extends ViewPart {
 		compositeEquation.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 4, 1));
 
 		Label lblP_encryption = new Label(compositeEquation, SWT.NONE);
-		lblP_encryption.setText("p ="); //$NON-NLS-1$
+		lblP_encryption.setText("m ="); //$NON-NLS-1$
 
 		textP_encryption = new Text(compositeEquation, SWT.BORDER);
 		textP_encryption.setEnabled(false);
+
 		textP_encryption.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -495,11 +506,12 @@ public class MerkleHellmanView extends ViewPart {
 				}
 			}
 		});
+
 		textP_encryption.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		textP_encryption.addVerifyListener(vlPlainText);
 
 		Label lblRange = new Label(compositeEquation, SWT.NONE);
-		lblRange.setText("0 < p <"); //$NON-NLS-1$
+		lblRange.setText("0 < m <"); //$NON-NLS-1$
 
 		textMax = new Text(compositeEquation, SWT.BORDER | SWT.READ_ONLY);
 		textMax.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -522,8 +534,8 @@ public class MerkleHellmanView extends ViewPart {
 		tblclmnIteration_e.setText(Messages.MerkleHellmanView_11);
 
 		TableColumn tblclmnBit = new TableColumn(tableEncrypt, SWT.NONE);
-		tblclmnBit.setWidth(30);
-		tblclmnBit.setText("p(i)"); //$NON-NLS-1$
+		tblclmnBit.setWidth(34);
+		tblclmnBit.setText("m(i)"); //$NON-NLS-1$
 
 		TableColumn tblclmnEquation_e = new TableColumn(tableEncrypt, SWT.NONE);
 		tblclmnEquation_e.setWidth(350);
@@ -538,7 +550,6 @@ public class MerkleHellmanView extends ViewPart {
 		textC_encryption.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		btnEncrypt = new Button(grpEncryption, SWT.NONE);
-		btnEncrypt.setEnabled(false);
 		btnEncrypt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -556,6 +567,18 @@ public class MerkleHellmanView extends ViewPart {
 					tmp.setText(1, String.valueOf(bitRepresentation.charAt(i)));
 					tmp.setText(2, sb.toString());
 				}
+				
+//				StringBuilder sb = new StringBuilder();
+//				StringTokenizer st = new StringTokenizer(textP_encryption.getText(), " ,;|");
+//				
+//				while (st.hasMoreElements()) {
+//					String s = (String) st.nextElement();
+//					sb.append(privKey.encrypt(new BigInteger(s)));
+//					sb.append(" ");
+//				}
+//				
+//				System.out.println(sb.toString());
+				
 				String result = String.valueOf(privKey.encrypt(new BigInteger(textP_encryption.getText())));
 
 				tableEncrypt.setSelection(numberOfElement - 1);
@@ -564,18 +587,19 @@ public class MerkleHellmanView extends ViewPart {
 				textC_encryption.setText(result);
 				textC_encryption.setEnabled(true);
 				textC_decryption.setText(result);
+				textC_decryption.setEnabled(true);
 				textP_encryption.setEditable(false);
 				textP_encryption.setFocus();
 				btnEncrypt.setEnabled(false);
 				btnDecrypt.setEnabled(true);
 				
-				styledTextDescription.setText(Messages.MerkleHellmanView_000);
+				styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_000);
 				styledTextDescription.setStyleRange(header);
 				
 			}
 		});
 		GridData gd_btnEncrypt = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnEncrypt.widthHint = 160;
+		gd_btnEncrypt.widthHint = 180;
 		btnEncrypt.setLayoutData(gd_btnEncrypt);
 		btnEncrypt.setText(Messages.MerkleHellmanView_13);
 
@@ -589,6 +613,8 @@ public class MerkleHellmanView extends ViewPart {
 		lblC_decryption.setText("c ="); //$NON-NLS-1$
 
 		textC_decryption = new Text(grpDecryption, SWT.BORDER | SWT.READ_ONLY);
+		textC_decryption.setEnabled(false);
+		textC_decryption.setEditable(true);
 		textC_decryption.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Label lblCC = new Label(grpDecryption, SWT.NONE);
@@ -613,7 +639,7 @@ public class MerkleHellmanView extends ViewPart {
 
 		Label lblP_decryption = new Label(grpDecryption, SWT.NONE);
 		lblP_decryption.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
-		lblP_decryption.setText("p ="); //$NON-NLS-1$
+		lblP_decryption.setText("m ="); //$NON-NLS-1$
 
 		textBinary_decrypted = new Text(grpDecryption, SWT.BORDER);
 		textBinary_decrypted.setEditable(false);
@@ -621,9 +647,13 @@ public class MerkleHellmanView extends ViewPart {
 		textBinary_decrypted.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
 		btnDecrypt = new Button(grpDecryption, SWT.NONE);
+		btnDecrypt.setEnabled(false);
 		btnDecrypt.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+//				tableDecrypt.clearAll();
+				tableDecrypt.removeAll();
+				
 				BigInteger c = new BigInteger(textC_decryption.getText());
 				BigInteger U = privKey.getU();
 				BigInteger M = privKey.getM();
@@ -662,26 +692,26 @@ public class MerkleHellmanView extends ViewPart {
 				tableDecrypt.setSelection(numberOfElement - 1);
 				textBinary_decrypted.setText(binResult.toString());
 				textBinary_decrypted.setEnabled(true);
-				btnDecrypt.setEnabled(false);
+//				btnDecrypt.setEnabled(false);
 
 				if (textBinary.getText().compareTo(textBinary_decrypted.getText()) == 0) {
 					textBinary.setBackground(new Color(null, new RGB(0, 255, 0)));
 					textBinary_decrypted.setBackground(new Color(null, new RGB(0, 255, 0)));
 					MessageDialog.openInformation(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_19 + textBinary.getText() + " = " + binResult); //$NON-NLS-1$
-
 				} else {
-					MessageDialog.openError(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_30 + textBinary.getText() + " = " + binResult); 
+					textBinary.setBackground(new Color(null, new RGB(255, 0, 0)));
+					textBinary_decrypted.setBackground(new Color(null, new RGB(255, 0, 0)));
+					MessageDialog.openError(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_30 + textBinary.getText() + " = " + binResult);  //$NON-NLS-1$
 					
 				}
 			}
 		});
-		btnDecrypt.setEnabled(false);
 		GridData gd_btnDecrypt = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnDecrypt.widthHint = 160;
+		gd_btnDecrypt.widthHint = 180;
 		btnDecrypt.setLayoutData(gd_btnDecrypt);
 		btnDecrypt.setText(Messages.MerkleHellmanView_17);
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(compositeMain.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		scrolledComposite.setMinSize(new Point(1010, 566));
 
 		int numberOfElements = Integer.parseInt(comboKeyElements.getText());
 		int startValue = Integer.parseInt(comboStartValue.getText());
@@ -790,7 +820,7 @@ public class MerkleHellmanView extends ViewPart {
 		for (Control c : content) {
 			c.dispose();
 		}
-		styledTextDescription.setText(Messages.MerkleHellmanView_0);
+		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
 		styledTextDescription.setStyleRange(header);
 		compositePublicKey.layout();
 		scrolledCompositePublicKey.setMinSize(compositePublicKey.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -814,6 +844,7 @@ public class MerkleHellmanView extends ViewPart {
 		textMax.setText(""); //$NON-NLS-1$
 		textBinary.setText(""); //$NON-NLS-1$
 		textC_decryption.setText(""); //$NON-NLS-1$
+		textC_decryption.setEnabled(false);
 		textC_encryption.setText(""); //$NON-NLS-1$
 		textCC.setText(""); //$NON-NLS-1$
 		textBinary_decrypted.setText(""); //$NON-NLS-1$
