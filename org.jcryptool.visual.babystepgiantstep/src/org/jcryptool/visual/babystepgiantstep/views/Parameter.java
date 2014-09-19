@@ -82,9 +82,9 @@ public class Parameter extends TitleAreaDialog {
 
 			if (!tmpText.getText().isEmpty()) {
 				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
-				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || !tmpTextValue.isProbablePrime(10000)) {
+				if (tmpTextValue.compareTo(Constants.LIMIT) >= 0 || !tmpTextValue.isProbablePrime(10000)) {
 					tmpText.setBackground(Constants.RED);
-					if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0) {
+					if (tmpTextValue.compareTo(Constants.LIMIT) >= 0) {
 						btnNextPrime.setEnabled(false);
 					} else {
 						btnNextPrime.setEnabled(true);
@@ -115,7 +115,7 @@ public class Parameter extends TitleAreaDialog {
 
 			if (!tmpText.getText().isEmpty()) {
 				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
-				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
+				if (tmpTextValue.compareTo(Constants.LIMIT) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
 					tmpText.setBackground(Constants.RED);
 				} else {
 					tmpText.setBackground(Constants.WHITE);
@@ -141,7 +141,7 @@ public class Parameter extends TitleAreaDialog {
 
 			if (!tmpText.getText().isEmpty()) {
 				BigInteger tmpTextValue = new BigInteger(tmpText.getText());
-				if (tmpTextValue.compareTo(Constants.MAX_INTEGER_BI) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
+				if (tmpTextValue.compareTo(Constants.LIMIT) >= 0 || tmpTextValue.compareTo(BigInteger.ONE) == 0) {
 					tmpText.setBackground(Constants.RED);
 				} else {
 					tmpText.setBackground(Constants.WHITE);
@@ -181,7 +181,7 @@ public class Parameter extends TitleAreaDialog {
 
 		if (textGroup.getText().isEmpty() && !textGroupElement.getText().isEmpty()) {
 			textGroup.setBackground(Constants.RED);
-			if (new BigInteger(textGroupElement.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+			if (new BigInteger(textGroupElement.getText()).compareTo(Constants.LIMIT) >= 0
 					|| new BigInteger(textGroupElement.getText()).compareTo(BigInteger.ONE) == 0) {
 				textGroupElement.setBackground(Constants.RED);
 			} else {
@@ -193,7 +193,7 @@ public class Parameter extends TitleAreaDialog {
 
 		if (!textGroup.getText().isEmpty() && textGroupElement.getText().isEmpty()) {
 			textGroupElement.setBackground(Constants.RED);
-			if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+			if (new BigInteger(textGroup.getText()).compareTo(Constants.LIMIT) >= 0
 					|| !(new BigInteger(textGroup.getText()).isProbablePrime(10000))) {
 				textGroup.setBackground(Constants.RED);
 				btnNextPrime.setEnabled(true);
@@ -204,11 +204,11 @@ public class Parameter extends TitleAreaDialog {
 			return;
 		}
 
-		if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+		if (new BigInteger(textGroup.getText()).compareTo(Constants.LIMIT) >= 0
 				|| !(new BigInteger(textGroup.getText()).isProbablePrime(10000))
 				|| new BigInteger(textGroup.getText()).compareTo(BigInteger.ONE) == 0) {
 			textGroup.setBackground(Constants.RED);
-			if (new BigInteger(textGroup.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0) {
+			if (new BigInteger(textGroup.getText()).compareTo(Constants.LIMIT) >= 0) {
 				btnNextPrime.setEnabled(false);
 			} else {
 				btnNextPrime.setEnabled(true);
@@ -217,7 +217,7 @@ public class Parameter extends TitleAreaDialog {
 			textGroup.setBackground(Constants.WHITE);
 		}
 
-		if (new BigInteger(textGroupElement.getText()).compareTo(Constants.MAX_INTEGER_BI) >= 0
+		if (new BigInteger(textGroupElement.getText()).compareTo(Constants.LIMIT) >= 0
 				|| new BigInteger(textGroupElement.getText()).compareTo(BigInteger.ONE) == 0) {
 			textGroupElement.setBackground(Constants.RED);
 		} else {
@@ -309,19 +309,19 @@ public class Parameter extends TitleAreaDialog {
 
 		textGroup.setText(groupValue);
 		BigInteger a = new BigInteger(groupValue);
-		if (a.compareTo(Constants.MAX_INTEGER_BI) > 0) {
+		if (a.compareTo(Constants.LIMIT) > 0) {
 			textGroup.setBackground(Constants.RED);
 		}
 
 		textGenerator.setText(generatorValue);
 		BigInteger b = new BigInteger(generatorValue);
-		if (b.compareTo(Constants.MAX_INTEGER_BI) > 0) {
+		if (b.compareTo(Constants.LIMIT) > 0) {
 			textGenerator.setBackground(Constants.RED);
 		}
 
 		textGroupElement.setText(groupElementValue);
 		BigInteger c = new BigInteger(groupElementValue);
-		if (c.compareTo(Constants.MAX_INTEGER_BI) > 0) {
+		if (c.compareTo(Constants.LIMIT) > 0) {
 			textGroupElement.setBackground(Constants.RED);
 		}
 

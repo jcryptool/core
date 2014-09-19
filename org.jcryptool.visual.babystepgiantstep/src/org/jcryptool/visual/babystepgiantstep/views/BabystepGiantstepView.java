@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
@@ -76,7 +77,8 @@ public class BabystepGiantstepView extends ViewPart {
 			}
 
 			if (comboField == null
-					|| ((comboField.getText().length() == 0 && e.text.compareTo("0") == 0) || (comboField.getSelection().x == 0 && e.keyCode == 48))) {
+					|| ((comboField.getText().length() == 0 && e.text.compareTo("0") == 0) || (comboField
+							.getSelection().x == 0 && e.keyCode == 48))) {
 				e.doit = false;
 				return;
 			}
@@ -112,7 +114,7 @@ public class BabystepGiantstepView extends ViewPart {
 	private Composite compositeStep2Btn;
 	private Composite compositeStep3Btn;
 	private Composite compositeStep4Btn;
-	
+
 	private Composite parent;
 
 	/**
@@ -124,7 +126,7 @@ public class BabystepGiantstepView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
-		
+
 		parent.setLayout(new GridLayout(1, false));
 
 		scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -205,7 +207,8 @@ public class BabystepGiantstepView extends ViewPart {
 		btnContinueToStep2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (!comboGroup.getText().isEmpty() && !comboGenerator.getText().isEmpty() && !comboGroupElement.getText().isEmpty()) {
+				if (!comboGroup.getText().isEmpty() && !comboGenerator.getText().isEmpty()
+						&& !comboGroupElement.getText().isEmpty()) {
 					BigInteger textGroupValue = new BigInteger(comboGroup.getText());
 					BigInteger textGeneratorValue = new BigInteger(comboGenerator.getText());
 					BigInteger textGroupElementValue = new BigInteger(comboGroupElement.getText());
@@ -215,10 +218,11 @@ public class BabystepGiantstepView extends ViewPart {
 					 * element is not a multiple of the cyclic group then
 					 * compute the discrete logarithm
 					 */
-					if (textGroupValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
-							&& textGeneratorValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
-							&& textGroupElementValue.compareTo(Constants.MAX_INTEGER_BI) <= 0
-							&& textGroupValue.compareTo(BigInteger.ONE) != 0 && textGeneratorValue.compareTo(BigInteger.ONE) != 0
+					if (textGroupValue.compareTo(Constants.LIMIT) <= 0
+							&& textGeneratorValue.compareTo(Constants.LIMIT) <= 0
+							&& textGroupElementValue.compareTo(Constants.LIMIT) <= 0
+							&& textGroupValue.compareTo(BigInteger.ONE) != 0
+							&& textGeneratorValue.compareTo(BigInteger.ONE) != 0
 							&& textGroupElementValue.compareTo(BigInteger.ONE) != 0
 							&& textGroupElementValue.mod(textGroupValue).compareTo(BigInteger.ZERO) != 0
 							&& textGroupValue.mod(textGroupElementValue).compareTo(BigInteger.ZERO) != 0
@@ -231,8 +235,8 @@ public class BabystepGiantstepView extends ViewPart {
 						 * the entered values are bigger than an integer or the
 						 * group element is a multiple of the cyclic group
 						 */
-						Parameter parameter = new Parameter(e.display.getActiveShell(), textGroupValue.toString(), textGeneratorValue
-								.toString(), textGroupElementValue.toString());
+						Parameter parameter = new Parameter(e.display.getActiveShell(), textGroupValue.toString(),
+								textGeneratorValue.toString(), textGroupElementValue.toString());
 
 						int rc = parameter.open();
 
@@ -255,7 +259,8 @@ public class BabystepGiantstepView extends ViewPart {
 				try {
 					babyStepGiantStep = new BabystepGiantstep(group, generator, groupElement);
 				} catch (ArithmeticException e) {
-					textResult.setText(Messages.BabystepGiantstepView_95 + comboGenerator.getText()
+					textResult.setText(Messages.BabystepGiantstepView_95
+							+ comboGenerator.getText()
 							+ " " + Messages.BabystepGiantstepView_96 + comboGroup.getText() + Messages.BabystepGiantstepView_97); //$NON-NLS-1$
 					LogUtil.logError(e.toString());
 					StyleRange parameterA = new StyleRange();
@@ -333,37 +338,55 @@ public class BabystepGiantstepView extends ViewPart {
 				BigInteger i = BigInteger.ZERO;
 				BigInteger limit = new BigInteger(textM.getText());
 
-				while (i.compareTo(limit) < 0) {
-					for (Entry<BigInteger, BigInteger> entry : set) {
-						if (entry.getValue().equals(new BigInteger(String.valueOf(i)))) {
-							TableItem tableItem = new TableItem(tableBS, SWT.NONE);
-							tableItem.setText(0, entry.getValue().toString());
-							tableItem.setText(1, entry.getKey().toString());
+				if (babyStepGiantStep.getZyklischeGruppe().compareTo(BigInteger.valueOf((Integer.MAX_VALUE))) <= 0) {
+					while (i.compareTo(limit) < 0) {
+						for (Entry<BigInteger, BigInteger> entry : set) {
+							if (entry.getValue().equals(new BigInteger(String.valueOf(i)))) {
+								TableItem tableItem = new TableItem(tableBS, SWT.NONE);
+								tableItem.setText(0, entry.getValue().toString());
+								tableItem.setText(1, entry.getKey().toString());
 
-							if (i.equals(BigInteger.ZERO)) {
-								StringBuilder sb = new StringBuilder("r = " + i + " => "); //$NON-NLS-1$ //$NON-NLS-2$
-								BigInteger tmp = new BigInteger(comboGroupElement.getText());
-								sb.append(tmp + " "); //$NON-NLS-1$
-								sb.append(Constants.uCongruence + " " + entry.getKey().toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$
+								if (i.equals(BigInteger.ZERO)) {
+									StringBuilder sb = new StringBuilder("r = " + i + " => "); //$NON-NLS-1$ //$NON-NLS-2$
+									BigInteger tmp = new BigInteger(comboGroupElement.getText());
+									sb.append(tmp + " "); //$NON-NLS-1$
+									sb.append(Constants.uCongruence
+											+ " " + entry.getKey().toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$
 
-								tableItem.setText(2, sb.toString());
-							} else {
-								StringBuilder sb = new StringBuilder("r = " + i + " => "); //$NON-NLS-1$ //$NON-NLS-2$
-								sb.append(babyStepGiantStep.getMultInv() + " * " + tableBS.getItem(i.intValue() - 1).getText(1) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
-								BigInteger tmp = babyStepGiantStep.getMultInv().multiply(
-										new BigInteger(tableBS.getItem(i.intValue() - 1).getText(1)));
-								sb.append(tmp + " "); //$NON-NLS-1$
-								sb.append(Constants.uCongruence + " " + entry.getKey().toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$
+									tableItem.setText(2, sb.toString());
+								} else {
+									StringBuilder sb = new StringBuilder("r = " + i + " => "); //$NON-NLS-1$ //$NON-NLS-2$
+									sb.append(babyStepGiantStep.getMultInv()
+											+ " * " + tableBS.getItem(i.intValue() - 1).getText(1) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+									BigInteger tmp = babyStepGiantStep.getMultInv().multiply(
+											new BigInteger(tableBS.getItem(i.intValue() - 1).getText(1)));
+									sb.append(tmp + " "); //$NON-NLS-1$
+									sb.append(Constants.uCongruence
+											+ " " + entry.getKey().toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$
 
-								tableItem.setText(2, sb.toString());
+									tableItem.setText(2, sb.toString());
+								}
+								break;
 							}
-							break;
 						}
+						i = i.add(BigInteger.ONE);
 					}
-					i = i.add(BigInteger.ONE);
-				}
 
-				tableBS.setSelection(tableBS.getItemCount() - 1);
+					tableBS.setSelection(tableBS.getItemCount() - 1);
+				} else {
+					MessageDialog
+							.openInformation(
+									null,
+									"Info",
+									"Auf Grund der Größe der zyklischen Gruppe und der dadurch steigenen Laufzeit wird die tabellarische Darstellung deaktiviert.");
+
+					tableBS.setEnabled(false);
+					tableBS.setRedraw(false);
+					while (tableBS.getColumnCount() > 0) {
+						tableBS.getColumns()[0].dispose();
+					}
+					tableBS.setRedraw(true);
+				}
 
 				btnContinueToStep3.setEnabled(false);
 				if (babyStepGiantStep.getX() == null) {
@@ -421,31 +444,48 @@ public class BabystepGiantstepView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				babyStepGiantStep.computeGiantSteps();
 				ArrayList<BigInteger> giantStepMenge = babyStepGiantStep.getGiantstepMenge();
-				BigInteger q = BigInteger.ONE;
-				for (BigInteger elem : giantStepMenge) {
-					TableItem tableItem = new TableItem(tableGS, SWT.NONE);
-					tableItem.setText(0, q.toString());
-					tableItem.setText(1, elem.toString());
+				if (babyStepGiantStep.getZyklischeGruppe().compareTo(BigInteger.valueOf((Integer.MAX_VALUE))) <= 0) {
+					BigInteger q = BigInteger.ONE;
+					for (BigInteger elem : giantStepMenge) {
+						TableItem tableItem = new TableItem(tableGS, SWT.NONE);
+						tableItem.setText(0, q.toString());
+						tableItem.setText(1, elem.toString());
 
-					if (tableGS.getItemCount() == 1) {
-						StringBuilder sb = new StringBuilder("q = " + q + " => "); //$NON-NLS-1$ //$NON-NLS-2$
-						sb.append(textM.getText() + "^" + q + " " + Constants.uCongruence + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						sb.append(elem.toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$
-						tableItem.setText(2, sb.toString());
-					} else {
-						StringBuilder sb = new StringBuilder("q = " + q + " => "); //$NON-NLS-1$ //$NON-NLS-2$
-						sb.append(textM.getText() + "^" + q + " = "); //$NON-NLS-1$ //$NON-NLS-2$
-						sb.append(textM.getText() + " * " + tableGS.getItem(tableGS.getItemCount() - 2).getText(1) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+						if (tableGS.getItemCount() == 1) {
+							StringBuilder sb = new StringBuilder("q = " + q + " => "); //$NON-NLS-1$ //$NON-NLS-2$
+							sb.append(textM.getText() + "^" + q + " " + Constants.uCongruence + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							sb.append(elem.toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$
+							tableItem.setText(2, sb.toString());
+						} else {
+							StringBuilder sb = new StringBuilder("q = " + q + " => "); //$NON-NLS-1$ //$NON-NLS-2$
+							sb.append(textM.getText() + "^" + q + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+							sb.append(textM.getText()
+									+ " * " + tableGS.getItem(tableGS.getItemCount() - 2).getText(1) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
 
-						BigInteger tmp = new BigInteger(textM.getText());
-						tmp = tmp.multiply(new BigInteger(tableGS.getItem(tableGS.getItemCount() - 2).getText(1)));
-						sb.append(tmp + " " + Constants.uCongruence + " " + elem.toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							BigInteger tmp = new BigInteger(textM.getText());
+							tmp = tmp.multiply(new BigInteger(tableGS.getItem(tableGS.getItemCount() - 2).getText(1)));
+							sb.append(tmp
+									+ " " + Constants.uCongruence + " " + elem.toString() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-						tableItem.setText(2, sb.toString());
+							tableItem.setText(2, sb.toString());
+						}
+						q = q.add(BigInteger.ONE);
 					}
-					q = q.add(BigInteger.ONE);
+					tableGS.setSelection(tableGS.getItemCount() - 1);
+				} else {
+					MessageDialog
+							.openInformation(
+									null,
+									"Info",
+									"Auf Grund der Größe der zyklischen Gruppe und der dadurch steigenen Laufzeit wird die tabellarische Darstellung deaktiviert.");
+
+					tableGS.setEnabled(false);
+					tableGS.setRedraw(false);
+					while (tableGS.getColumnCount() > 0) {
+						tableGS.getColumns()[0].dispose();
+					}
+					tableGS.setRedraw(true);
 				}
-				tableGS.setSelection(tableGS.getItemCount() - 1);
 
 				btnContinueToStep4.setEnabled(false);
 				btnResult.setEnabled(true);
@@ -495,7 +535,8 @@ public class BabystepGiantstepView extends ViewPart {
 		btnResult.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				if (babyStepGiantStep.getX() != null) {
+				if (babyStepGiantStep.getX() != null
+						&& babyStepGiantStep.getZyklischeGruppe().compareTo(BigInteger.valueOf((Integer.MAX_VALUE))) <= 0) {
 					if (babyStepGiantStep.getR() != null) {
 						tableBS.setSelection(babyStepGiantStep.getR().intValue());
 						tableBS.getItem(babyStepGiantStep.getR().intValue()).setForeground(0, Constants.MAGENTA);
@@ -520,15 +561,16 @@ public class BabystepGiantstepView extends ViewPart {
 						parameterA.fontStyle = SWT.BOLD;
 						textResult.setStyleRange(parameterA);
 						StyleRange parameterB = new StyleRange();
-						parameterB.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length()
-								+ 3 + textM.getText().length() + 3;
+						parameterB.start = Messages.BabystepGiantstepView_75.length() + 16
+								+ babyStepGiantStep.getQ().toString().length() + 3 + textM.getText().length() + 3;
 						parameterB.length = babyStepGiantStep.getR().toString().length();
 						parameterB.foreground = Constants.MAGENTA;
 						parameterB.fontStyle = SWT.BOLD;
 						textResult.setStyleRange(parameterB);
 						StyleRange parameterC = new StyleRange();
-						parameterC.start = Messages.BabystepGiantstepView_75.length() + 16 + babyStepGiantStep.getQ().toString().length()
-								+ 3 + textM.getText().length() + 3 + babyStepGiantStep.getR().toString().length() + 3;
+						parameterC.start = Messages.BabystepGiantstepView_75.length() + 16
+								+ babyStepGiantStep.getQ().toString().length() + 3 + textM.getText().length() + 3
+								+ babyStepGiantStep.getR().toString().length() + 3;
 						parameterC.length = babyStepGiantStep.getX().toString().length();
 						parameterC.foreground = Constants.GREEN;
 						parameterC.fontStyle = SWT.BOLD;
@@ -546,7 +588,8 @@ public class BabystepGiantstepView extends ViewPart {
 							tableBS.getItem(babyStepGiantStep.getX().intValue()).setForeground(2, Constants.GREEN);
 						}
 
-						StringBuilder result = new StringBuilder("r = x = " + babyStepGiantStep.getX() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ 
+						StringBuilder result = new StringBuilder(
+								"r = x = " + babyStepGiantStep.getX() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ 
 						textResult.setText(Messages.BabystepGiantstepView_75
 								+ result.toString()
 								+ "\n" + Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX().intValue() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
@@ -606,6 +649,32 @@ public class BabystepGiantstepView extends ViewPart {
 
 				styledText.setText(Messages.BabystepGiantstepView_2);
 
+				if (tableBS.getColumnCount() == 0) {
+					tblclmnR = new TableColumn(tableBS, SWT.NONE);
+					tblclmnR.setWidth(120);
+					tblclmnR.setText("Rest (r)"); //$NON-NLS-1$
+					tblclmnBabySteps = new TableColumn(tableBS, SWT.NONE);
+					tblclmnBabySteps.setWidth(120);
+					tblclmnBabySteps.setText("Babysteps"); //$NON-NLS-1$
+					tblclmnCommentBS = new TableColumn(tableBS, SWT.NONE);
+					tblclmnCommentBS.setWidth(525);
+					tblclmnCommentBS.setText(Messages.BabystepGiantstepView_47);
+					tableBS.setEnabled(true);
+				}
+
+				if (tableGS.getColumnCount() == 0) {
+					tblclmnQ = new TableColumn(tableGS, SWT.NONE);
+					tblclmnQ.setWidth(120);
+					tblclmnQ.setText("Quotient (q)"); //$NON-NLS-1$
+					tblclmnGiantSteps = new TableColumn(tableGS, SWT.NONE);
+					tblclmnGiantSteps.setWidth(120);
+					tblclmnGiantSteps.setText("Giantsteps"); //$NON-NLS-1$
+					tblclmnCommentGS = new TableColumn(tableGS, SWT.NONE);
+					tblclmnCommentGS.setWidth(525);
+					tblclmnCommentGS.setText(Messages.BabystepGiantstepView_69);
+					tableGS.setEnabled(true);
+				}
+
 				comboGroup.setFocus();
 
 			}
@@ -634,14 +703,14 @@ public class BabystepGiantstepView extends ViewPart {
 	public void setFocus() {
 		comboGroup.setFocus();
 	}
-	
+
 	public void resetView() {
 		Control[] children = parent.getChildren();
 		for (Control control : children) {
 			control.dispose();
 		}
 		createPartControl(parent);
-		
+
 		parent.layout();
 	}
 }

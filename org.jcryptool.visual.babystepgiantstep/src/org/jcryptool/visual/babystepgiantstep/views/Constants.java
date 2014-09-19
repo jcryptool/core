@@ -11,9 +11,7 @@ import org.eclipse.swt.widgets.Display;
  * 
  */
 public interface Constants {
-	public static final BigInteger MAX_INTEGER_BI = new BigInteger(String.valueOf(Integer.MAX_VALUE));
-	
-	/*
+/*
 	 * COLORS
 	 */
 	public static final Color BLACK = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
@@ -32,5 +30,6 @@ public interface Constants {
 	 * UNICODE CONSTANTS
 	 */
 	public static final String uCongruence = ("\u2261");
+	public static final BigInteger LIMIT = BigInteger.TEN.pow(24);
 
 }
