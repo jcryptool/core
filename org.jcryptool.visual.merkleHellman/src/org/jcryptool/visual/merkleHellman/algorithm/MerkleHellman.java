@@ -197,4 +197,8 @@ public class MerkleHellman {
 		this.setW();
 	}
 
+	public void updatePrivateKeyOnly(BigInteger[] keys) {
+		this.privateKey = keys;
+	}
+
 }
