@@ -758,11 +758,11 @@ public class MerkleHellmanView extends ViewPart {
 					BigInteger sum = privKey.getSum();
 					textSumA.setText(privKey.getSum().toString());
 
-					if (m.compareTo(sum) <= 0) {
+					if (m.compareTo(sum) <= 0) {					
 						MessageDialog
-								.openError(
-										null,
-										"Info", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
+						.openInformation(
+								null,
+								"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
 						return;
 					}
 
