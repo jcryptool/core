@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String BabystepGiantstepView_65;
 	public static String BabystepGiantstepView_66;
 	public static String BabystepGiantstepView_69;
+	public static String BabystepGiantstepView_7;
 	public static String BabystepGiantstepView_75;
 	public static String BabystepGiantstepView_76;
 	public static String BabystepGiantstepView_88;

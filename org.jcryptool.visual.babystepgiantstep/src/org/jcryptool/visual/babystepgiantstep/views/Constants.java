@@ -29,7 +29,7 @@ public interface Constants {
 	/*
 	 * UNICODE CONSTANTS
 	 */
-	public static final String uCongruence = ("\u2261");
+	public static final String uCongruence = ("\u2261"); //$NON-NLS-1$
 	public static final BigInteger LIMIT = BigInteger.TEN.pow(24);
 
 }

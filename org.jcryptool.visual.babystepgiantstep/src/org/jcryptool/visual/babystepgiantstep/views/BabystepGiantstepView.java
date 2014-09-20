@@ -77,7 +77,7 @@ public class BabystepGiantstepView extends ViewPart {
 			}
 
 			if (comboField == null
-					|| ((comboField.getText().length() == 0 && e.text.compareTo("0") == 0) || (comboField
+					|| ((comboField.getText().length() == 0 && e.text.compareTo("0") == 0) || (comboField //$NON-NLS-1$
 							.getSelection().x == 0 && e.keyCode == 48))) {
 				e.doit = false;
 				return;
@@ -377,8 +377,8 @@ public class BabystepGiantstepView extends ViewPart {
 					MessageDialog
 							.openInformation(
 									null,
-									"Info",
-									"Auf Grund der Größe der zyklischen Gruppe und der dadurch steigenen Laufzeit wird die tabellarische Darstellung deaktiviert.");
+									"Information", //$NON-NLS-1$
+									Messages.BabystepGiantstepView_7);
 
 					tableBS.setEnabled(false);
 					tableBS.setRedraw(false);
@@ -476,8 +476,8 @@ public class BabystepGiantstepView extends ViewPart {
 					MessageDialog
 							.openInformation(
 									null,
-									"Info",
-									"Auf Grund der Größe der zyklischen Gruppe und der dadurch steigenen Laufzeit wird die tabellarische Darstellung deaktiviert.");
+									"Information", //$NON-NLS-1$
+									Messages.BabystepGiantstepView_7);
 
 					tableGS.setEnabled(false);
 					tableGS.setRedraw(false);

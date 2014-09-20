@@ -48,7 +48,7 @@ public class Parameter extends TitleAreaDialog {
 			}
 
 			if (textField == null
-					|| ((textField.getText().length() == 0 && e.text.compareTo("0") == 0) || (textField.getSelection().x == 0 && e.keyCode == 48))) {
+					|| ((textField.getText().length() == 0 && e.text.compareTo("0") == 0) || (textField.getSelection().x == 0 && e.keyCode == 48))) { //$NON-NLS-1$
 				e.doit = false;
 				return;
 			}
