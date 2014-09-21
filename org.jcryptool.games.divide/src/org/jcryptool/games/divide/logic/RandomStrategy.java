@@ -12,6 +12,8 @@ package org.jcryptool.games.divide.logic;
 import java.util.List;
 import java.util.Random;
 
+import org.jcryptool.games.divide.views.Messages;
+
 public class RandomStrategy implements IStrategy {
 
     // instance vars
@@ -20,7 +22,7 @@ public class RandomStrategy implements IStrategy {
     // constructor
     public RandomStrategy() {
         super();
-        this.name = "Random";
+        this.name = Messages.DivideView_24;
     }
 
     @Override

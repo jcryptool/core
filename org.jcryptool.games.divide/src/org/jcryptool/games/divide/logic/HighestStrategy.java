@@ -2,6 +2,8 @@ package org.jcryptool.games.divide.logic;
 
 import java.util.List;
 
+import org.jcryptool.games.divide.views.Messages;
+
 public class HighestStrategy implements IStrategy {
 
     // instance vars
@@ -10,7 +12,7 @@ public class HighestStrategy implements IStrategy {
     // constructor
     public HighestStrategy() {
         super();
-        this.name = "Highest";
+        this.name = Messages.DivideView_25;
     }
 
     @Override
