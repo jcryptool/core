@@ -24,7 +24,7 @@ public class NewGameHandler extends AbstractHandler {
 
         if (workbench != null && workbench instanceof DivideView) {
             DivideView view = (DivideView) HandlerUtil.getActivePart(event);
-            view.enableOptionsGroup(true);
+            view.enableOptionsGroup(view.getOptionsGroup(), true);
         }
 
         return null;

@@ -140,6 +140,12 @@
       <contexts
             file="$nl$/contexts.xml">
       </contexts>
+      <contexts
+            file="nl/en/contexts.xml">
+      </contexts>
+      <contexts
+            file="nl/de/contexts.xml">
+      </contexts>
    </extension>
    <extension
          point="org.eclipse.help.toc">

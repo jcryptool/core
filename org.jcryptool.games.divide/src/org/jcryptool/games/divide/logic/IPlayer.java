@@ -9,15 +9,12 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.games.divide.logic;
 
-import java.util.List;
-
 public interface IPlayer {
 
-    int chooseNumber(List<Integer> n);
-
-    void setName(String name);
+    boolean isHuman();
 
     String getName();
 
-    boolean isHuman();
+    IStrategy getStrategy();
+
 }
