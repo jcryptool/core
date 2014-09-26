@@ -15,24 +15,32 @@ public class HumanPlayer implements IPlayer {
 
     // instance vars
     private String name;
+    private IStrategy strategy;
     private boolean isHuman;
 
     // constructor
     public HumanPlayer(String name) {
         super();
-        this.name = name;
         isHuman = true;
+        this.name = name;
+        this.strategy = new IStrategy() {
+
+            @Override
+            public String getName() {
+                return "Human";
+            }
+
+            @Override
+            public int chooseNumber(List<Integer> n) {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     // methods
     @Override
-    public int chooseNumber(List<Integer> n) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public boolean isHuman() {
+        return isHuman;
     }
 
     @Override
@@ -41,7 +49,7 @@ public class HumanPlayer implements IPlayer {
     }
 
     @Override
-    public boolean isHuman() {
-        return isHuman;
+    public IStrategy getStrategy() {
+        return strategy;
     }
 }

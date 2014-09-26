@@ -1,7 +1,7 @@
 // -----BEGIN DISCLAIMER-----
 /*******************************************************************************
  * Copyright (c) 2013 JCrypTool team and contributors
- *
+ * 
  * All rights reserved. This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
@@ -29,5 +29,25 @@ public class DividerGameUtil {
             ret += "]";
         }
         return ret;
+    }
+
+    public static String getMultiples(List<Integer> listOfNumbers, int number) {
+        String result = "";
+        if (listOfNumbers != null) {
+            for (int i = 0; i < listOfNumbers.size(); i++) {
+                int num = listOfNumbers.get(i);
+                if (num > number && num % number == 0) {
+                    if (result.isEmpty()) {
+                        result += num;
+                    } else {
+                        result += "," + num;
+                    }
+                }
+            }
+        }
+        if (result.isEmpty()) {
+            result = "-";
+        }
+        return result;
     }
 }

@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
@@ -44,13 +45,17 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.games.divide.DividePlugin;
 import org.jcryptool.games.divide.dialogs.ChoosePlayerDialog;
+import org.jcryptool.games.divide.logic.ComputerPlayer;
 import org.jcryptool.games.divide.logic.GameMachine;
 import org.jcryptool.games.divide.logic.GameMachineEvent;
 import org.jcryptool.games.divide.logic.GameState;
+import org.jcryptool.games.divide.logic.HighestStrategy;
 import org.jcryptool.games.divide.logic.HumanPlayer;
 import org.jcryptool.games.divide.logic.IMathEngine;
 import org.jcryptool.games.divide.logic.IPlayer;
-import org.jcryptool.games.divide.logic.RandomPlayer;
+import org.jcryptool.games.divide.logic.IStrategy;
+import org.jcryptool.games.divide.logic.LowestStrategy;
+import org.jcryptool.games.divide.logic.RandomStrategy;
 import org.jcryptool.games.divide.logic.TrivialMathEngine;
 import org.jcryptool.games.divide.sourceProviders.MenuBarActivation;
 import org.jcryptool.games.divide.sourceProviders.NewGameStateSourceProvider;
@@ -77,10 +82,17 @@ public class DivideView extends ViewPart implements Observer {
     private GameMachine gameMachine;
     private Text textStartValue;
     private Label gameType;
+    private Label labelStrategy;
+    private Combo strategyCombo;
+    private ArrayList<IStrategy> strategies;
 
     // constructor
     public DivideView() {
         super();
+        strategies = new ArrayList<IStrategy>();
+        strategies.add(new RandomStrategy());
+        strategies.add(new LowestStrategy());
+        strategies.add(new HighestStrategy());
     }
 
     // methods
@@ -93,15 +105,16 @@ public class DivideView extends ViewPart implements Observer {
         sashForm.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, true));
 
         upperContent = new Composite(sashForm, SWT.NONE);
-        upperContent.setLayout(new GridLayout(1, false));
+        upperContent.setLayout(new GridLayout(1, true));
         upperContent.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
 
         // description
-        descriptionGroup = new Group(upperContent, SWT.NONE);
+        descriptionGroup = new Group(upperContent, SWT.V_SCROLL);
         descriptionGroup.setText(Messages.DivideView_19);
-        descriptionGroup.setLayout(new RowLayout());
+        descriptionGroup.setLayout(new GridLayout(1, false));
         descriptionGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        StyledText description = new StyledText(descriptionGroup, SWT.READ_ONLY);
+        StyledText description = new StyledText(descriptionGroup, SWT.WRAP | SWT.READ_ONLY);
+        description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         description.setText(Messages.DivideView_20);
 
         // options pane
@@ -116,14 +129,16 @@ public class DivideView extends ViewPart implements Observer {
         optionsGroup.setText(Messages.DivideView_0);
         optionsGroup.setLayout(new RowLayout());
         optionsGroup.setLayoutData(new GridData(GridData.FILL, GridData.FILL, true, false));
-        RowData fieldData = new RowData(SWT.DEFAULT, SWT.DEFAULT);
+        // RowData fieldData = new RowData(SWT.DEFAULT, SWT.DEFAULT);
 
         Label labelStartValue = new Label(optionsGroup, SWT.LEFT);
         labelStartValue.setText(Messages.DivideView_4);
         labelStartValue.setFont(FontService.getNormalBoldFont());
-        Label gap4 = new Label(optionsGroup, SWT.LEFT);
-        gap4.setLayoutData(smallGapLayout);
-        textStartValue = new Text(optionsGroup, SWT.RIGHT);
+
+        Label gap1 = new Label(optionsGroup, SWT.LEFT);
+        gap1.setLayoutData(smallGapLayout);
+
+        textStartValue = new Text(optionsGroup, SWT.LEFT);
         textStartValue.setLayoutData(new RowData(60, SWT.DEFAULT));
         textStartValue.setTextLimit(9);
         textStartValue.setText(Messages.DivideView_18);
@@ -137,14 +152,16 @@ public class DivideView extends ViewPart implements Observer {
                 }
             }
         });
-        Label gap5 = new Label(optionsGroup, SWT.LEFT);
-        gap5.setLayoutData(mediumGapLayout);
+
+        Label gap2 = new Label(optionsGroup, SWT.LEFT);
+        gap2.setLayoutData(mediumGapLayout);
 
         gameType = new Label(optionsGroup, SWT.LEFT);
         gameType.setText(Messages.DivideView_1);
         gameType.setFont(FontService.getNormalBoldFont());
-        Label gap1 = new Label(optionsGroup, SWT.LEFT);
-        gap1.setLayoutData(smallGapLayout);
+
+        Label gap3 = new Label(optionsGroup, SWT.LEFT);
+        gap3.setLayoutData(smallGapLayout);
 
         Composite gameTypeOptions = new Composite(optionsGroup, SWT.LEFT);
         gameTypeOptions.setLayout(new GridLayout(1, true));
@@ -160,9 +177,41 @@ public class DivideView extends ViewPart implements Observer {
         button1pVs2P.setText(Messages.DivideView_3);
         button1pVs2P.setFont(FontService.getNormalFont());
         button1pVs2P.setSelection(false);
+        button1pVs2P.addListener(SWT.Selection, new Listener() {
 
-        Label gap3 = new Label(optionsGroup, SWT.LEFT);
-        gap3.setLayoutData(hugeGapLayout);
+            @Override
+            public void handleEvent(Event event) {
+                if (button1pVsComp.getSelection()) {
+                    labelStrategy.setEnabled(true);
+                    strategyCombo.setEnabled(true);
+                } else {
+                    labelStrategy.setEnabled(false);
+                    strategyCombo.setEnabled(false);
+                }
+            }
+        });
+
+        Label gap4 = new Label(optionsGroup, SWT.LEFT);
+        gap4.setLayoutData(mediumGapLayout);
+
+        labelStrategy = new Label(optionsGroup, SWT.LEFT);
+        labelStrategy.setText(Messages.DivideView_21);
+        labelStrategy.setFont(FontService.getNormalBoldFont());
+
+        Label gap5 = new Label(optionsGroup, SWT.LEFT);
+        gap5.setLayoutData(smallGapLayout);
+
+        strategyCombo = new Combo(optionsGroup, SWT.READ_ONLY);
+        for (IStrategy strategy : strategies) {
+            if (strategy != null && strategy.getName() != null) {
+                strategyCombo.add(strategy.getName());
+            }
+        }
+        strategyCombo.select(0);
+
+        Label gap6 = new Label(optionsGroup, SWT.LEFT);
+        gap6.setLayoutData(hugeGapLayout);
+
         buttonStartGame = new Button(optionsGroup, SWT.PUSH);
         buttonStartGame.setText(Messages.DivideView_5);
         buttonStartGame.setFont(FontService.getNormalFont());
@@ -173,10 +222,12 @@ public class DivideView extends ViewPart implements Observer {
                 // start game pushed
                 // create game machine, pass over params and start
                 if (!textStartValue.getText().isEmpty()) {
+                    MenuBarActivation.enableNewGameState(true);
                     ArrayList<IPlayer> players = new ArrayList<IPlayer>();
                     if (button1pVsComp.getSelection()) {
                         players.add(new HumanPlayer(Messages.DivideView_6));
-                        players.add(new RandomPlayer(Messages.DivideView_7));
+                        players.add(new ComputerPlayer(strategies.get(strategyCombo.getSelectionIndex())));
+
                     } else {
                         players.add(new HumanPlayer(Messages.DivideView_8));
                         players.add(new HumanPlayer(Messages.DivideView_9));
@@ -255,11 +306,11 @@ public class DivideView extends ViewPart implements Observer {
 
                 case START_EVENT: {
                     // disable new game command button
-                    MenuBarActivation.enableNewGameState(false);
+                    // MenuBarActivation.enableNewGameState(false);
                     // disable save game command button
                     MenuBarActivation.enableSaveGameState(false);
                     // disable options
-                    enableOptionsGroup(false);
+                    enableOptionsGroup(optionsGroup, false);
 
                     if (NewGameStateSourceProvider.hasBeenEnabledEver() || startingValueChanged()) {
                         /*
@@ -331,7 +382,7 @@ public class DivideView extends ViewPart implements Observer {
                     // update table
                     addTableRow(state);
 
-                    MenuBarActivation.enableNewGameState(true);
+                    // MenuBarActivation.enableNewGameState(true);
                     MenuBarActivation.enableSaveGameState(true);
                     MenuBarActivation.enableUndo(false);
                     MenuBarActivation.enableRedo(false);
@@ -416,6 +467,9 @@ public class DivideView extends ViewPart implements Observer {
                 label.setForeground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
                 label.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
                 label.setEnabled(true);
+                String tooltip = Messages.DivideView_22 + " " + label.getText() + System.lineSeparator()
+                        + Messages.DivideView_23 + " " + DividerGameUtil.getMultiples(listOfNumbers, value);
+                label.setToolTipText(tooltip);
             }
         }
         playingField.layout();
@@ -423,12 +477,15 @@ public class DivideView extends ViewPart implements Observer {
 
     private void nextTurn(IPlayer player, List<Integer> listOfNumbers) {
         if (!player.isHuman()) {
-            gameMachine.nextTurn(player.chooseNumber(listOfNumbers));
+            gameMachine.nextTurn(player.getStrategy().chooseNumber(listOfNumbers));
         }
     }
 
-    public void enableOptionsGroup(boolean b) {
-        for (Control c : optionsGroup.getChildren()) {
+    public void enableOptionsGroup(Composite comp, boolean b) {
+        for (Control c : comp.getChildren()) {
+            if (c instanceof Composite) {
+                enableOptionsGroup((Composite) c, b);
+            }
             c.setEnabled(b);
         }
         optionsGroup.setEnabled(b);
@@ -518,5 +575,9 @@ public class DivideView extends ViewPart implements Observer {
 
     public Text getTextStartValue() {
         return textStartValue;
+    }
+
+    public Combo getStrategyCombo() {
+        return strategyCombo;
     }
 }

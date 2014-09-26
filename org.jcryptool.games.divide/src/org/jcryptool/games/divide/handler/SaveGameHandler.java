@@ -44,21 +44,34 @@ public class SaveGameHandler extends AbstractHandler {
             DivideView view = (DivideView) HandlerUtil.getActivePart(event);
             Shell parent = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
             FileDialog saveDialog = new FileDialog(parent, SWT.SAVE);
-            saveDialog.setFilterExtensions(new String[] { "*.txt" });
+            saveDialog.setFilterExtensions(new String[] { "*.log" });
+            StringBuilder filename = new StringBuilder();
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+            String startingValue = view.getTextStartValue().getText();
+            Table scoreTable = view.getScoreTable();
+            String turn = scoreTable.getItem(scoreTable.getItemCount() - 1).getText(0);
+            String loser = scoreTable.getItem(scoreTable.getItemCount() - 1).getText(1);
+            filename.append("DividerGame_" + timeStamp + "_" + startingValue + "_" + loser + "-lost-with-turn-" + turn);
+            saveDialog.setFileName(filename.toString() + ".log");
             String file = saveDialog.open();
             if (file != null) {
                 String newline = System.lineSeparator();
-                String gameType = view.getGameType() ? Messages.DivideView_2 : Messages.DivideView_3;
-                String startingValue = view.getTextStartValue().getText();
                 // create output
                 StringBuilder output = new StringBuilder();
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
                 output.append("Date: " + timeStamp + newline);
+                String gameType = view.getGameType() ? Messages.DivideView_2 : Messages.DivideView_3;
                 output.append(Messages.DivideView_1 + " " + gameType + newline);
                 output.append(Messages.DivideView_4 + " " + startingValue + newline);
+                if (view.getGameType()) {
+                    // 1pvsComp
+                    output.append(Messages.DivideView_21 + " " + view.getStrategyCombo().getText());
+                } else {
+                    // 1pvs2p
+                    output.append(Messages.DivideView_21 + " " + "-");
+                }
+                output.append(newline);
                 output.append(newline);
 
-                Table scoreTable = view.getScoreTable();
                 int numCols = scoreTable.getColumnCount();
                 int numItems = scoreTable.getItemCount();
                 // save the max length for each column
