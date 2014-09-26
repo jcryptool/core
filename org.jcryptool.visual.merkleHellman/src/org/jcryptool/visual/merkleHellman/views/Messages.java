@@ -47,6 +47,7 @@ public class Messages extends NLS {
 	public static String MerkleHellmanView_000;
 	public static String MerkleHellmanView_0000;
 	public static String MerkleHellmanView_24a;
+	public static String MerkleHellmanView_lblBinaryRepresentationOf_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
