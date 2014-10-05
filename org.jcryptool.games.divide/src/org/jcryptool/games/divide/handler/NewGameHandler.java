@@ -14,6 +14,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jcryptool.games.divide.sourceProviders.MenuBarActivation;
 import org.jcryptool.games.divide.views.DivideView;
 
 public class NewGameHandler extends AbstractHandler {
@@ -25,6 +26,10 @@ public class NewGameHandler extends AbstractHandler {
         if (workbench != null && workbench instanceof DivideView) {
             DivideView view = (DivideView) HandlerUtil.getActivePart(event);
             view.enableOptionsGroup(view.getOptionsGroup(), true);
+            view.cleanupPlayingArea();
+            MenuBarActivation.enableUndo(false);
+            MenuBarActivation.enableRedo(false);
+            view.getGameMachine().deleteObserver(view);
         }
 
         return null;
