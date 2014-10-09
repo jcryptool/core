@@ -19,7 +19,9 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -41,6 +43,8 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 /**
  * @author Felix Eckardt
  */
@@ -98,12 +102,17 @@ public class View extends ViewPart {
     private TableColumn tblclmnX;
     private TableColumn tblclmnY;
     
+    private IMenuManager menuManager;
+    private IToolBarManager toolBarManager;
+    
+    private static final Color WHITE = Display.getCurrent().getSystemColor(SWT.COLOR_WHITE);
     private static final Color BLACK = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
     private static final Color GREEN = Display.getCurrent().getSystemColor(SWT.COLOR_GREEN);
     private static final Color RED = Display.getCurrent().getSystemColor(SWT.COLOR_RED);
     private static final Color BLUE = Display.getCurrent().getSystemColor(SWT.COLOR_BLUE);
     private static final Color MAGENTA = Display.getCurrent().getSystemColor(SWT.COLOR_MAGENTA);
     
+    private ImageBuffer imageBuffer;
     private ArrayList<int[]> values;
     private int step = -1;
     private int state;
@@ -113,14 +122,21 @@ public class View extends ViewPart {
         values = new ArrayList<int[]>();
         int p = Integer.parseInt(textP_1.getText());
         int q = Integer.parseInt(textQ_1.getText());
-        if (p>q)
+        int n;
+        int r;
+        if (p>q) {
             values.add(new int[]{p,q});
-        else
+            n = p/q;
+            r = p%q;
+            values.add(new int[]{p, q, n, r});
+        }
+        else {
             values.add(new int[]{q,p});
+            n = q/p;
+            r = q%p;
+            values.add(new int[]{q, p, n, r});
+        }
         
-        int n = p/q;
-        int r = p%q;
-        values.add(new int[]{p, q, n, r});
         
         while (values.get(values.size()-1)[3]!=0) {
             p = values.get(values.size()-1)[1];
@@ -131,6 +147,10 @@ public class View extends ViewPart {
         }
         
         scrolledComposite_canvas.setMinSize(canvas.computeSize(20+5*values.get(0)[0], 100+45*values.size()));
+        System.out.println(canvas.getSize().x+" "+canvas.getSize().y);
+        Device device = this.getSite().getShell().getDisplay();
+        imageBuffer = new ImageBuffer(device, canvas.getSize().x, canvas.getSize().y);
+        imageBuffer.paintImage(values);
         
         btnResetAll_1.setEnabled(true);
     }
@@ -141,7 +161,9 @@ public class View extends ViewPart {
         if (step==0)
             initialize_1();
         
-        paint(step);
+        //paint(step);
+        canvas.redraw();
+        canvas.update();
        
         if (step>0)
             btnPrevStep_1.setEnabled(true);
@@ -155,9 +177,7 @@ public class View extends ViewPart {
     private void prevStep_1() {
         step--;
         
-        Listener l[] = canvas.getListeners(SWT.Paint);
-        canvas.removeListener(SWT.Paint, l[l.length-1]);
-        canvas.redraw(0, 75+45*(step-1), 20+5*values.get(0)[0], 75+45*(step+1), true);
+        canvas.redraw();
         canvas.update();
         
         btnNextStep_1.setEnabled(true);
@@ -167,13 +187,13 @@ public class View extends ViewPart {
     }
 
     private void compute_1() {
-        step++;
-        if (step==0)
+        if (step==-1)
             initialize_1();
         
-        for(int i=step; i<=values.size()-1; i++)
-            paint(i);
         step=values.size()-1;
+        
+        canvas.redraw();
+        canvas.update();
 
         btnNextStep_1.setEnabled(false);
         btnPrevStep_1.setEnabled(true);
@@ -182,18 +202,17 @@ public class View extends ViewPart {
     }
     
     private void reset_1() {
-        clearCanvas();
         values = null;
         step = -1;
-        textP_1.setText("44");
-        textQ_1.setText("18");
         btnNextStep_1.setEnabled(true);
         btnPrevStep_1.setEnabled(false);
         btnCompute_1.setEnabled(true);
         btnResetAll_1.setEnabled(false);
-     }
+        canvas.redraw();
+        canvas.update();
+    }
     
-    private void paint(final int s) {        
+/*    private void paint(final int s) {        
         if(s==0) {
             canvas.addPaintListener(new PaintListener() {
                 public void paintControl(PaintEvent e) {
@@ -227,23 +246,7 @@ public class View extends ViewPart {
         }
         canvas.redraw(0, 75+45*(s-1), 20+5*values.get(0)[0], 75+45*s, false);
         canvas.update();
-    }
-    
-    private void drawLine(int x, int y, int w, Color color, GC gc) {
-        gc.setForeground(color);
-        gc.drawLine(x, y, x+w*5, y);
-        gc.drawLine(x, y+5, x+w*5, y+5);
-        for(int i=0; i<=w; i++)
-            gc.drawLine(x+5*i, y, x+5*i, y+5);
-    }
-    
-    private void clearCanvas() {
-        Listener[] l = canvas.getListeners(SWT.Paint);
-        for(int i=0; i<l.length; i++)
-            canvas.removeListener(SWT.Paint, l[i]);
-        canvas.redraw();
-        canvas.update();
-    }
+    }*/
     
     private void initialize_2() {
         TableItem tableItem1 = new TableItem(table, SWT.BORDER);
@@ -378,26 +381,26 @@ public class View extends ViewPart {
             if (x2<0)
                 x2_text = "("+x2+")";
             
-            styledText.setText("X: "+x1_text+"-"+q3+"*"+x2_text+" = "+x);
-            stylerange_1.start = ("X: ").length();
+            styledText.setText("x: "+x1_text+"-"+q3+"*"+x2_text+" = "+x);
+            stylerange_1.start = ("x: ").length();
             stylerange_1.length = (x1_text).length();
             stylerange_1.foreground = GREEN;
             stylerange_1.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_1);
             
-            stylerange_2.start = ("X: "+x1_text+"-").length();
+            stylerange_2.start = ("x: "+x1_text+"-").length();
             stylerange_2.length = (""+q3).length();
             stylerange_2.foreground = MAGENTA;
             stylerange_2.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_2);
             
-            stylerange_3.start = ("X: "+x1_text+"-"+q3+"*").length();
+            stylerange_3.start = ("x: "+x1_text+"-"+q3+"*").length();
             stylerange_3.length = (x2_text).length();
             stylerange_3.foreground = RED;
             stylerange_3.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_3);
            
-            stylerange_4.start = ("X: "+x1_text+"-"+q3+"*"+x2_text+" = ").length();
+            stylerange_4.start = ("x: "+x1_text+"-"+q3+"*"+x2_text+" = ").length();
             stylerange_4.length = (""+x).length();
             stylerange_4.foreground = BLUE;
             stylerange_4.fontStyle = SWT.BOLD;
@@ -424,26 +427,26 @@ public class View extends ViewPart {
             if (y2<0)
                 y2_text = "("+y2+")";
             
-            styledText.setText("Y: "+y1_text+"-"+q4+"*"+y2_text+" = "+y);
-            stylerange_1.start = ("Y: ").length();
+            styledText.setText("y: "+y1_text+"-"+q4+"*"+y2_text+" = "+y);
+            stylerange_1.start = ("y: ").length();
             stylerange_1.length = (y1_text).length();
             stylerange_1.foreground = GREEN;
             stylerange_1.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_1);
             
-            stylerange_2.start = ("Y: "+y1_text+"-").length();
+            stylerange_2.start = ("y: "+y1_text+"-").length();
             stylerange_2.length = (""+q4).length();
             stylerange_2.foreground = MAGENTA;
             stylerange_2.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_2);
             
-            stylerange_3.start = ("Y: "+y1_text+"-"+q4+"*").length();
+            stylerange_3.start = ("y: "+y1_text+"-"+q4+"*").length();
             stylerange_3.length = (y2_text).length();
             stylerange_3.foreground = RED;
             stylerange_3.fontStyle = SWT.BOLD;
             styledText.setStyleRange(stylerange_3);
            
-            stylerange_4.start = ("Y: "+y1_text+"-"+q4+"*"+y2_text+" = ").length();
+            stylerange_4.start = ("y: "+y1_text+"-"+q4+"*"+y2_text+" = ").length();
             stylerange_4.length = (""+y).length();
             stylerange_4.foreground = BLUE;
             stylerange_4.fontStyle = SWT.BOLD;
@@ -749,8 +752,8 @@ public class View extends ViewPart {
      * Initialize the menu
      */
     private void initializeMenu() {
-        IMenuManager menuManager = getViewSite().getActionBars().getMenuManager();
-        IToolBarManager toolBarManager = getViewSite().getActionBars().getToolBarManager();
+        menuManager = getViewSite().getActionBars().getMenuManager();
+        toolBarManager = getViewSite().getActionBars().getToolBarManager();
 
         menuManager.add(exportToPdfAction);
         menuManager.add(exportToLatexAction);
@@ -775,16 +778,17 @@ public class View extends ViewPart {
         tabFolder.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 if(tabFolder.getSelectionIndex()==0) {
+                    menuManager.setVisible(false);
                     exportToCSVAction.setEnabled(false);
                     exportToPdfAction.setEnabled(false);
                     exportToLatexAction.setEnabled(false);
                 } else {
-                    System.out.println(state);
+                    menuManager.setVisible(true);
                     if(state==5) {
                         exportToCSVAction.setEnabled(true);
                         exportToPdfAction.setEnabled(true);
                         exportToLatexAction.setEnabled(true);
-                    } 
+                    }
                 }
             }
         });
@@ -880,13 +884,7 @@ public class View extends ViewPart {
         btnResetCanvas_1 = new Button(composite_1, SWT.NONE);
         btnResetCanvas_1.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                clearCanvas();
-                step=-1;
-                values=null;
-                btnNextStep_1.setEnabled(true);
-                btnPrevStep_1.setEnabled(false);
-                btnCompute_1.setEnabled(true);
-                btnResetCanvas_1.setEnabled(false);
+                reset_1();
             }
         });
         btnResetCanvas_1.setEnabled(false);
@@ -896,6 +894,8 @@ public class View extends ViewPart {
         btnResetAll_1.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 reset_1();
+                textP_1.setText("44");
+                textQ_1.setText("18");
                 canvas.redraw();
                 canvas.update();
             }
@@ -904,6 +904,22 @@ public class View extends ViewPart {
         btnResetAll_1.setText(Messages.Euclid_Reset_Button);
         new Label(composite_1, SWT.NONE);
         
+        textP_1.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                if(btnResetCanvas_1.getEnabled()) {
+                reset_1();
+                }
+            }
+        });
+
+        textQ_1.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                if(btnResetCanvas_1.getEnabled()) {
+                    reset_1();
+                }
+            }
+        });
+
         grpComputation_1 = new Group(composite_1, SWT.NONE);
         grpComputation_1.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 6, 1));
         grpComputation_1.setLayout(new GridLayout(1, false));
@@ -917,6 +933,17 @@ public class View extends ViewPart {
         canvas = new Canvas(scrolledComposite_canvas, SWT.NO_REDRAW_RESIZE);
         scrolledComposite_canvas.setContent(canvas);
         scrolledComposite_canvas.setMinSize(canvas.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        canvas.addPaintListener(new PaintListener() {
+            public void paintControl(PaintEvent e) {
+                if(step>-1) {
+                    imageBuffer.copyImageToUI(e);
+                    if(step!=values.size()-1) {
+                        e.gc.setBackground(WHITE);
+                        e.gc.fillRectangle(0, 75+45*(step), canvas.getSize().x, canvas.getSize().y-(75+45*(step)));
+                    }
+                }
+            }
+        });
         
         tbtmXEuclidean = new TabItem(tabFolder, SWT.NONE);
         tbtmXEuclidean.setText(Messages.Euclid_XEuclidean);
