@@ -507,7 +507,7 @@ public class DivideView extends ViewPart implements Observer {
         gameInformationGroup.layout();
     }
 
-    private void cleanupPlayingArea() {
+    public void cleanupPlayingArea() {
         // cleanup playingField
         Control[] currentActiveLabelsPlayingArea = playingField.getChildren();
         if (currentActiveLabelsPlayingArea.length != 0) {

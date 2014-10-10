@@ -551,7 +551,7 @@ public class BabystepGiantstepView extends ViewPart {
 								"r = x = " + babyStepGiantStep.getX() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ 
 						textResult.setText(Messages.BabystepGiantstepView_75
 								+ result.toString()
-								+ ". " + Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX().intValue() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+								+ ". " + Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 						StyleRange parameterA = new StyleRange();
 						parameterA.start = Messages.BabystepGiantstepView_75.length() + 8;
@@ -618,7 +618,7 @@ public class BabystepGiantstepView extends ViewPart {
 									"r = x = " + babyStepGiantStep.getX() + " mod " + comboGroup.getText()); //$NON-NLS-1$ //$NON-NLS-2$ 
 							textResult.setText(Messages.BabystepGiantstepView_75
 									+ result.toString()
-									+ ". " + Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX().intValue() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+									+ ". " + Messages.BabystepGiantstepView_76 + comboGroupElement.getText() + " = " + comboGenerator.getText() + " ^ " + babyStepGiantStep.getX() + " mod " + comboGroup.getText() + "."); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
 							StyleRange parameterA = new StyleRange();
 							parameterA.start = Messages.BabystepGiantstepView_75.length() + 8;
