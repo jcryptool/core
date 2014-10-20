@@ -18,8 +18,8 @@ package org.jcryptool.core.operations;
  */
 public interface IOperationsConstants {
 
-    /** An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
-    String ATT_ACTION_CLASS = "actionClass"; //$NON-NLS-1$
+    /* An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
+    // String ATT_ACTION_CLASS = "actionClass"; //$NON-NLS-1$
 
     /** An attribute in an ExtensionPoint. The value is <code>{@value}</code> */
     String ATT_BLOCKLENGTHS = "blocklengths"; //$NON-NLS-1$
@@ -93,8 +93,8 @@ public interface IOperationsConstants {
     /** An editor ID. The value is <code>{@value}</code> */
     String ID_TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
 
-    /** A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
-    String PL_ALGORITHMS = "algorithms"; //$NON-NLS-1$
+    /* A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
+    //String PL_ALGORITHMS = "algorithms"; //$NON-NLS-1$
 
     /** A Plug-in (ExtensionPoint) identifier. The value is <code>{@value}</code> */
     String PL_ALGORITHMS_CMD = "algorithms_cmd"; //$NON-NLS-1$
