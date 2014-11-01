@@ -26,7 +26,11 @@ public class NewGameHandler extends AbstractHandler {
         if (workbench != null && workbench instanceof DivideView) {
             DivideView view = (DivideView) HandlerUtil.getActivePart(event);
             view.enableOptionsGroup(view.getOptionsGroup(), true);
-            view.cleanupPlayingArea();
+            // view.cleanupPlayingArea();
+            view.disablePlayingArea();
+            view.cleanupGameInformationGroup();
+            view.cleanUpScoreTable();
+            MenuBarActivation.enableSaveGameState(false);
             MenuBarActivation.enableUndo(false);
             MenuBarActivation.enableRedo(false);
             view.getGameMachine().deleteObserver(view);

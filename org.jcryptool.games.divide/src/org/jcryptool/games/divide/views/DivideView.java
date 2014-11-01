@@ -516,15 +516,32 @@ public class DivideView extends ViewPart implements Observer {
             }
         }
         // cleanup gameInformationGroup
+        cleanupGameInformationGroup();
+        // cleanup scoreTable
+        cleanUpScoreTable();
+    }
+
+    public void cleanupGameInformationGroup() {
+        // cleanup gameInformationGroup
         Control[] currentActiveLabelsGameInformationGroup = gameInformationGroup.getChildren();
         if (currentActiveLabelsGameInformationGroup.length != 0) {
             for (Control label : currentActiveLabelsGameInformationGroup) {
                 label.dispose();
             }
         }
+    }
+
+    public void cleanUpScoreTable() {
         // cleanup scoreTable
         if (scoreTable.getItemCount() > 0) {
             scoreTable.removeAll();
+        }
+    }
+
+    public void disablePlayingArea() {
+        for (CLabel label : labels) {
+            label.setEnabled(false);
+            label.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
         }
     }
 
