@@ -2,26 +2,9 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.jcryptool.core.openActionSet"
-            label="%set.fileactions"
-            visible="true">
-         <action
-               class="org.jcryptool.core.action.fileActions.OpenFileAction"
-               definitionId="org.jcryptool.core.action.open"
-               icon="icons/open_file.gif"
-               id="org.jcryptool.core.action.openFile"
-               label="%action.openfile"
-               menubarPath="file/fileStart"
-               style="push"
-               toolbarPath="org.jcryptool.core.toolbar/fileStart"/>
-      </actionSet>
-   </extension>
-   <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="org.jcryptool.core.action.open"
+            commandId="org.jcryptool.core.action.opencmd"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+O"/>
@@ -29,8 +12,24 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            id="org.jcryptool.core.action.open"
-            name="%command.openfile"/>
+            defaultHandler="org.jcryptool.core.action.fileActions.OpenFile"
+            id="org.jcryptool.core.action.opencmd"
+            name="%command.openfile">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:file?after=newfile">
+         <command
+               commandId="org.jcryptool.core.action.opencmd"
+               icon="icons/open_file.gif"
+               label="%command.openfile"
+               mnemonic="O"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>
