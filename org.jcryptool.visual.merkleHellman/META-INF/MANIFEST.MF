@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.jcryptool.visual.merkleHellman;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jcryptool.visual.merkleHellman.MerkleHellmanPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations;bundle-version="1.0.0",
+ org.eclipse.help,
+ org.bouncycastle
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: org.jcryptool.core.logging.utils,
+ org.jcryptool.core.util.fonts
+Bundle-Vendor: %Bundle-Vendor.0
+Bundle-ClassPath: .
