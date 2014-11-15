@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Extended Euclidean / Reciprocal Subtraction">
+      <description>Start by entering two positive integers for &lt;b&gt;p&lt;/b&gt; and &lt;b&gt;q&lt;/b&gt;.
+
+After that use the buttons to execute the calculation step by step or completely automatical.</description>
+      <topic href="nl/de/help/content/index.html" label="Reciprocal Subtraction/Extended Euclidean"/>
+   </context>
+</contexts>
