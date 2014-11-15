@@ -13,7 +13,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.jcryptool.core.logging.utils.LogUtil;
-import org.jcryptool.core.util.Activator;
 
 /**
  * An AbstractUIInput instance stands for one single user input. It ensures, that the stored input
@@ -81,9 +80,9 @@ public abstract class AbstractUIInput<Content> extends Observable implements Obs
     public AbstractUIInput() {
         initializationActions();
         try {
-        	tryToSetDefaultValues();
-        } catch(Exception ex) {
-        	LogUtil.logError(Activator.PLUGIN_ID, ex);
+            tryToSetDefaultValues();
+        } catch (Exception ex) {
+            LogUtil.logError(ex);
         }
     }
 
