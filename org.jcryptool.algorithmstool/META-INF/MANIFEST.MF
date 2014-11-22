@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Algorithmstool
+Bundle-SymbolicName: org.jcryptool.algorithmstool;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: algorithmstool.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.jcryptool.core.operations,
+ org.jcryptool.core.logging,
+ org.jcryptool.crypto.flexiprovider.algorithms,
+ org.jcryptool.crypto.flexiprovider,
+ org.jcryptool.crypto.keystore
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
