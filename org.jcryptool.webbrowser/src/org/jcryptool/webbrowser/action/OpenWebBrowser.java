@@ -9,6 +9,8 @@
 // -----END DISCLAIMER-----
 package org.jcryptool.webbrowser.action;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -24,28 +26,20 @@ import org.jcryptool.webbrowser.BrowserPlugin;
  * @author mwalthart
  *
  */
-public class OpenWebBrowserAction implements IWorkbenchWindowActionDelegate {
-    public OpenWebBrowserAction() {
-    }
-
-    public void dispose() {
-    }
-
-    public void init(IWorkbenchWindow window) {
+public class OpenWebBrowser extends AbstractHandler {
+    public OpenWebBrowser() {
     }
 
     /**
      * opens the webbrowser view
      */
-    public void run(IAction action) {
+    public Object execute(ExecutionEvent event) {
         try {
             PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
                     .showView("org.jcryptool.webbrowser.browser"); //$NON-NLS-1$
         } catch (PartInitException ex) {
             LogUtil.logError(BrowserPlugin.PLUGIN_ID, Messages.OpenWebBrowserAction_0, ex, true);
         }
-    }
-
-    public void selectionChanged(IAction action, ISelection selection) {
+        return null;
     }
 }

@@ -42,20 +42,30 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.jcryptool.webbrowser.actionSet"
-            label="%actionSet.label"
-            visible="true">
-         <action
-               class="org.jcryptool.webbrowser.action.OpenWebBrowserAction"
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.webbrowser.open"
+            name="%action.label">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.webbrowser.action.OpenWebBrowser"
+            commandId="org.jcryptool.webbrowser.open">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.core.toolbar?after=additions">
+         <command
+               commandId="org.jcryptool.webbrowser.open"
                icon="icons/browser.gif"
-               id="org.jcryptool.webbrowser.openwebbrowseraction"
-               label="%action.label"
-               style="push"
-               toolbarPath="org.jcryptool.core.toolbar/additions">
-         </action>
-      </actionSet>
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>
