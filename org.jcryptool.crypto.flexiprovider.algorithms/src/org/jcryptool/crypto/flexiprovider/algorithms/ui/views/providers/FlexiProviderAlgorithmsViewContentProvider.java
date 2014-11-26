@@ -30,7 +30,7 @@ import org.jcryptool.crypto.flexiprovider.xml.AlgorithmsXMLManager;
 public class FlexiProviderAlgorithmsViewContentProvider implements
 IStructuredContentProvider, ITreeContentProvider {
 
-	private static ITreeNode _invisibleRoot;
+	public static ITreeNode _invisibleRoot;
 	private static ViewPart _viewPart;
 
 	public FlexiProviderAlgorithmsViewContentProvider(ViewPart viewPart) {
