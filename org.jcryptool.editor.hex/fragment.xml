@@ -37,20 +37,6 @@
 	          pushAction="org.jcryptool.editor.hex.actions.NewEmptyFileAction">
 	    </service>
  	</extension>
-	<extension
-       point="org.eclipse.ui.editorActions">
-    <editorContribution
-          id="org.jcryptool.editor.hex.editorContribution"
-          targetID="org.jcryptool.editors.hex.HexEditor">
-       <action
-             class="org.jcryptool.editor.hex.actions.OpenInTextEditorAction"
-             id="org.jcryptool.editor.hex.action.openInText"
-             label="%action.label.1"
-             menubarPath="edit/showin/start"
-             style="push">
-       </action>
-    </editorContribution>
-   </extension>
    <extension
        point="org.eclipse.ui.handlers">
     <handler
@@ -77,6 +63,10 @@
              </count>
           </with>
        </enabledWhen>
+    </handler>
+    <handler
+          class="org.jcryptool.editor.hex.commands.OpenInTextEditor"
+          commandId="org.jcryptool.editor.hex.command.openIn">
     </handler>
  </extension>
  <extension
@@ -114,12 +104,29 @@
              style="push">
        </command>
     </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="menu:showin">
+       <command
+             commandId="org.jcryptool.editor.hex.command.openIn"
+             style="push">
+          <visibleWhen
+                checkEnabled="true">
+             <with
+                   variable="activeEditorId">
+                <equals
+                      value="org.jcryptool.editors.hex.HexEditor">
+                </equals>
+             </with>
+          </visibleWhen>
+       </command>
+    </menuContribution>
  </extension>
  <extension
        point="org.eclipse.ui.commands">
    
     <command
-          defaultHandler="org.jcryptool.editor.hex.actions.NewEmptyFile"
+          defaultHandler="org.jcryptool.editor.hex.commands.NewEmptyFile"
           id="org.jcryptool.editor.hex.emptyfileCommand"
           name="%emptyfile.label">
     </command>
@@ -130,9 +137,13 @@
           name="%open.command.name">
     </command>
     <command
-          defaultHandler="org.jcryptool.editor.hex.actions.NewFile"
+          defaultHandler="org.jcryptool.editor.hex.commands.NewFile"
           id="org.jcryptool.editor.hex.templatefileCommand"
           name="%samplefile.label">
+    </command>
+    <command
+          id="org.jcryptool.editor.hex.command.openIn"
+          name="%action.label.1">
     </command>
  </extension>
 </fragment>

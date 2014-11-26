@@ -24,6 +24,10 @@
             id="org.jcryptool.editor.text.newSampleFile"
             name="%sampleeditor.label">
       </command>
+      <command
+            id="org.jcryptool.editor.text.openIn"
+            name="%action.switch.editor">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -34,6 +38,10 @@
       <handler
             class="org.jcryptool.editor.text.commands.NewSampleTextFile"
             commandId="org.jcryptool.editor.text.newSampleFile">
+      </handler>
+      <handler
+            class="org.jcryptool.editor.text.commands.OpenInHex"
+            commandId="org.jcryptool.editor.text.openIn">
       </handler>
    </extension>
    <extension
@@ -73,6 +81,23 @@
                visible="true">
          </separator>
       </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:showin">
+         <command
+               commandId="org.jcryptool.editor.text.openIn"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="org.jcryptool.editor.text.editor.JCTTextEditor">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.jcryptool.core.editorButton">
@@ -98,19 +123,6 @@
             label="%emptyeditor.label"
             pushAction="org.jcryptool.editor.text.action.NewEmptyFileJCTTextEditorAction">
       </service>
-   </extension>
-   <extension
-         point="org.eclipse.ui.editorActions">
-      <editorContribution
-            id="org.jcryptool.editor.text.editorContribution.JCTTextEditor"
-            targetID="org.jcryptool.editor.text.editor.JCTTextEditor">
-         <action
-               class="org.jcryptool.editor.text.action.OpenInHexAction"
-               id="org.jcryptool.editor.text.action.openInHex"
-               label="%action.switch.editor"
-               menubarPath="edit/showin/start"
-               style="push"/>
-      </editorContribution>
    </extension>
    <extension
          point="org.eclipse.ui.startup">

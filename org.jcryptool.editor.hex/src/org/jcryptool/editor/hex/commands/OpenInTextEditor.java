@@ -8,8 +8,10 @@
  *******************************************************************************/
 // -----END DISCLAIMER-----
 
-package org.jcryptool.editor.hex.actions;
+package org.jcryptool.editor.hex.commands;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -20,6 +22,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.util.PathEditorInput;
 
@@ -28,9 +31,10 @@ import org.jcryptool.core.operations.util.PathEditorInput;
  * text editor.
  * 
  * @author mwalthart
- * @version 0.1
+ * @author Holger Friedrich (now extending AbstractHandler in order to use Commands instead of Actions)
+ * @version 0.2
  */
-public class OpenInTextEditorAction implements IEditorActionDelegate {
+public class OpenInTextEditor extends AbstractHandler {
     /** The active editor. */
     private IEditorPart editor;
     /** Active workbench page. */
@@ -42,7 +46,6 @@ public class OpenInTextEditorAction implements IEditorActionDelegate {
      * @param action the action proxy that handles presentation portion of the action
      * @param targetEditor the new editor target
      */
-    @Override
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
         editor = targetEditor;
         if (editor != null) {
@@ -66,7 +69,13 @@ public class OpenInTextEditorAction implements IEditorActionDelegate {
      * @param action the action proxy that handles the presentation portion of the action
      */
     @Override
-    public void run(IAction action) {
+    public Object execute(ExecutionEvent event) {
+    	page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    	editor = page.getActiveEditor();
+    	if(editor == null) {
+    		return null;
+    	}
+    	
         IPathEditorInput originalInput = (IPathEditorInput) editor.getEditorInput();
         IEditorInput input = createEditorInput(originalInput.getPath().toString());
 
@@ -83,15 +92,6 @@ public class OpenInTextEditorAction implements IEditorActionDelegate {
             MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInTextEditorAction_0,
                     Messages.OpenInTextEditorAction_2);
         }
-    }
-
-    /**
-     * Notifies this action delegate that the selection in the workbench has changed.
-     * 
-     * @param action action the action proxy that handles presentation portion of the action
-     * @param selection the current selection, or <code>null</code> if there is no selection.
-     */
-    @Override
-    public void selectionChanged(IAction action, ISelection selection) {
+        return null;
     }
 }

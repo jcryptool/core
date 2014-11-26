@@ -8,7 +8,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.editor.hex.actions;
+package org.jcryptool.editor.hex.commands;
 
 import org.eclipse.osgi.util.NLS;
 

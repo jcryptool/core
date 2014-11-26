@@ -8,18 +8,19 @@
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.editor.text.action;
+package org.jcryptool.editor.text.commands;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorActionDelegate;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.operations.IOperationsConstants;
 import org.jcryptool.core.operations.util.PathEditorInput;
 
@@ -28,9 +29,10 @@ import org.jcryptool.core.operations.util.PathEditorInput;
  * opens it with the hex editor.
  *
  * @author amro
- * @version 0.9.2
+ * @author Holger Friedrich (now extending AbstractHandler in order to use Commands instead of Actions)
+ * @version 0.9.3
  */
-public class OpenInHexAction implements IEditorActionDelegate {
+public class OpenInHex extends AbstractHandler {
     /** The active editor. */
     private IEditorPart editor;
     /** Active workbench page. */
@@ -42,7 +44,6 @@ public class OpenInHexAction implements IEditorActionDelegate {
      * @param action the action proxy that handles presentation portion of the action
      * @param targetEditor the new editor target
      */
-    @Override
     public void setActiveEditor(IAction action, IEditorPart targetEditor) {
         editor = targetEditor;
         if (editor != null) {
@@ -66,7 +67,12 @@ public class OpenInHexAction implements IEditorActionDelegate {
      * @param action the action proxy that handles the presentation portion of the action
      */
     @Override
-    public void run(IAction action) {
+    public Object execute(ExecutionEvent event) {
+    	page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+    	editor = page.getActiveEditor();
+    	if(editor == null) {
+    		return null;
+    	}
         IPathEditorInput originalInput = (IPathEditorInput) editor.getEditorInput();
         IEditorInput input = createEditorInput(originalInput.getPath().toString());
 
@@ -76,22 +82,13 @@ public class OpenInHexAction implements IEditorActionDelegate {
                 page.closeEditor(editor, true);
                 page.openEditor(input, IOperationsConstants.ID_HEX_EDITOR, true);
             } catch (PartInitException e) {
-                MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
-                        Messages.OpenInHexAction_1);
+                MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenTextInHexEditor_3,
+                        Messages.OpenTextInHexEditor_1);
             }
         } else {
-            MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenInHexAction_errorTitle,
-                    Messages.OpenInHexAction_2);
+            MessageDialog.openError(page.getWorkbenchWindow().getShell(), Messages.OpenTextInHexEditor_3,
+                    Messages.OpenTextInHexEditor_2);
         }
-    }
-
-    /**
-     * Notifies this action delegate that the selection in the workbench has changed.
-     *
-     * @param action action the action proxy that handles presentation portion of the action
-     * @param selection the current selection, or <code>null</code> if there is no selection.
-     */
-    @Override
-    public void selectionChanged(IAction action, ISelection selection) {
+        return null;
     }
 }
