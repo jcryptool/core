@@ -8,12 +8,12 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 //-----END DISCLAIMER-----
-package org.jcryptool.webbrowser.action;
+package org.jcryptool.webbrowser.command;
 
 import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.webbrowser.action.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.jcryptool.webbrowser.command.messages"; //$NON-NLS-1$
     public static String OpenWebBrowserAction_0;
     static {
         // initialize resource bundle
