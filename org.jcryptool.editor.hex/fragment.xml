@@ -52,30 +52,6 @@
     </editorContribution>
    </extension>
    <extension
-         point="org.eclipse.ui.actionSets">
-         <actionSet
-          id="net.sourceforge.javahexeditor.actionSet1"
-          label="%actionSet.label"
-          visible="true">
-		      <action
-		             class="org.jcryptool.editor.hex.actions.NewFileAction"
-		             icon="icons/hex.png"
-		             id="org.jcryptool.editor.hex.templatefileMenuaction"
-		             label="%samplefile.label"
-		             menubarPath="file/newfile/3"
-		             style="push">
-		       </action>
-		       <action
-		             class="org.jcryptool.editor.hex.actions.NewEmptyFileAction"
-		             icon="icons/hex.png"
-		             id="org.jcryptool.editor.hex.emptyfileMenuaction"
-		             label="%emptyfile.label"
-		             menubarPath="file/newfile/1"
-		             style="push">
-		       </action>
-       </actionSet>
-   </extension>
-   <extension
        point="org.eclipse.ui.handlers">
     <handler
           class="org.jcryptool.editor.hex.commands.OpenEditorHandler"
@@ -116,14 +92,47 @@
              tooltip="%open.command.tooltip">
        </command>
     </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="menu:newfile?after=hexsample">
+       <command
+             commandId="org.jcryptool.editor.hex.emptyfileCommand"
+             icon="icons/hex.png"
+             id="hexempty"
+             label="%emptyfile.label"
+             style="push">
+       </command>
+    </menuContribution>
+    <menuContribution
+          allPopups="false"
+          locationURI="menu:newfile">
+       <command
+             commandId="org.jcryptool.editor.hex.templatefileCommand"
+             icon="icons/hex.png"
+             id="hexsample"
+             label="%samplefile.label"
+             style="push">
+       </command>
+    </menuContribution>
  </extension>
  <extension
        point="org.eclipse.ui.commands">
+   
+    <command
+          defaultHandler="org.jcryptool.editor.hex.actions.NewEmptyFile"
+          id="org.jcryptool.editor.hex.emptyfileCommand"
+          name="%emptyfile.label">
+    </command>
     <command
           description="%open.command.description"
           helpContextId="org.jcryptool.core.help.javahexEditor"
           id="org.jcryptool.editor.hex.openFile"
           name="%open.command.name">
+    </command>
+    <command
+          defaultHandler="org.jcryptool.editor.hex.actions.NewFile"
+          id="org.jcryptool.editor.hex.templatefileCommand"
+          name="%samplefile.label">
     </command>
  </extension>
 </fragment>

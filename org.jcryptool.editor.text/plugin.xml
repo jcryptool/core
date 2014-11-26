@@ -53,30 +53,26 @@
                tooltip="%sampleeditor.label">
          </command>
       </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.jcryptool.editor.text.actionSet1"
-            label="%action.set"
-            visible="true">
-         <action
-               class="org.jcryptool.editor.text.action.NewEmptyFileJCTTextEditorAction"
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:newfile?before=hexsample">
+         <command
+               commandId="org.jcryptool.editor.text.newSampleFile"
                icon="icons/text.gif"
-               id="org.jcryptool.editor.text.newEmptyFile"
-               label="%emptyeditor.label"
-               menubarPath="file/newfile/1"
+               id="txtsample"
                style="push">
-         </action>
-         <action
-               class="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction"
+         </command>
+         <command
+               commandId="org.jcryptool.editor.text.newEmptyFile"
                icon="icons/text.gif"
-               id="org.jcryptool.editor.text.newFile"
-               label="%sampleeditor.label"
-               menubarPath="file/newfile/3"
+               id="txtempty"
                style="push">
-         </action>
-      </actionSet>
+         </command>
+         <separator
+               name="org.jcryptool.editor.text.separator1"
+               visible="true">
+         </separator>
+      </menuContribution>
    </extension>
    <extension
          point="org.jcryptool.core.editorButton">
