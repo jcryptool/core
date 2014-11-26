@@ -13,13 +13,13 @@ package org.jcryptool.editor.hex.commands;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Externalized strings for the <b>org.jcryptool.editor.hex.actions</b> package.
+ * Externalized strings for the <b>org.jcryptool.editor.hex.commands</b> package.
  *
  * @author Dominik Schadow
- * @version 0.6.0
+ * @version 0.6.1
  */
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.jcryptool.editor.hex.actions.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.jcryptool.editor.hex.commands.messages"; //$NON-NLS-1$
     public static String OpenInTextEditorAction_0;
     public static String OpenInTextEditorAction_1;
     public static String OpenInTextEditorAction_2;

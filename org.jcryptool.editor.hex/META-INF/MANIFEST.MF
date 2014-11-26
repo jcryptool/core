@@ -10,7 +10,6 @@ Import-Package: org.eclipse.core.filesystem,
  org.jcryptool.core.operations.editors,
  org.jcryptool.core.operations.util
 Export-Package: org.jcryptool.editor.hex,
- org.jcryptool.editor.hex.actions,
  org.jcryptool.editor.hex.commands,
  org.jcryptool.editor.hex.service
 Bundle-Vendor: jcryptool.org
