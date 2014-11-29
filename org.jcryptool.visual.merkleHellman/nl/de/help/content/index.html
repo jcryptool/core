@@ -11,5 +11,100 @@
 Diese Onlinehilfe erklärt die Funktionsweise des Plug-ins <b>Merkle-Hellman</b>.
 <p>
 
+<p>
+Das Plug-in lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Tab <b>Visualisierungen</b> starten.
+<p>
+
+<p>
+Das Plug-in besteht aus einem Beschreibungsfeld und drei Grundbereichen: <b>Schlüsselerzeugung</b>, <b>Verschlüsselung</b> und 
+<b>Entschlüsselung</b>.
+
+<p>
+In dem Beschreibungsfeld werden dynamisch die entsprechenden Erklärungen über den Algorithmus in seinem Ablauf angezeigt, je nachdem in 
+welchen Grund-Schritt der Benutzer sich befindet.
+
+<p>
+Inhaltsübersicht:<br>
+<br>
+<b>1)</b> <a href="#Kapitel1"><b>Schlüsselerzeugung</b></a><br>
+<br>
+<b>2)</b> <a href="#Kapitel2"><b>Verschlüsselung</b></a><br>
+<br>
+<b>3)</b> <a href="#Kapitel3"><b>Entschlüsselung</b></a><br>
+<br>
+<b>4)</b> <a href="#Kapitel4"><b>Bedeutung der Icons in der Menüleiste</b></a><br>
+<br>
+<b>5)</b> <a href="#Kapitel5"><b>Quellen</b></a>
+
+<p>
+<a name="Kapitel1"><b>1) Schlüsselerzeugung:</b></a> Dieser Bereich fasst die Aktionen zusammen, die zur Erzeugung eines privaten Schlüssels und eines öffentlichen Schlüssels benötigt werden.
+
+<p>
+Als Erstes müssen die Anzahl der Elemente für den privaten Schlüssel und der Startwert über die Dropdown-Boxen ausgewählt werden. Standardmäßig haben diese die Werte 4 und 32. Auf dieser Basis kann der Benutzer die Werte von <b>A(i)</b>, <b>M</b> und <b>W</b> 
+manuell eingeben, die automatisch und zufällig generierte Beispielwerte verwenden oder neue Werte per Klick auf den Button 
+<b>Erzeuge privaten Schlüssel</b> generieren lassen. 
+
+<p>
+Wenn die von dem Benutzer eingegebenen privaten Schlüsselelemente (A(i)s) von einander nicht stark abweichen und der Benutzer auf den Button <b>Erzeuge öffentlichen Schlüssel</b> geklickt hat, wird dem Benutzer folgende Frage-Meldung angezeigt: 
+
+<img src="">
+
+<p>
+Und auch bei der manuellen Eingabe der Werte <b>M</b>, <b>W</b> sind einige Bedingungen vorhanden, auf die der Benutzer achten sollte. Falls die Eingaben diese Bedingungen nicht erfüllen, wird beim Klick auf den Button 
+<b>Erzeuge öffentlichen Schlüssel</b> die folgende Fehlermeldung angezeigt:
+
+<img src="">
+
+
+<p>
+Per Klick auf den Button <b>Erzeuge öffentlichen Schlüssel</b> werden die öffentlichen Schlüsselelemente (B(i)s) 
+erzeugt und werden unter <b>Öffentlicher Schlüssel B</b> angezeigt. Nun nachdem der öffentliche Schlüssel auch
+ berechnet wurde, kann man mit dem Veschlüsselung weitermachen.
+ 
+ <img src="">
+
+<p>
+<a name="Kapitel2"><b>2) Verschlüsselung:</b></a> Im zweiten Bereich kann der Benutzer die Nachricht <b>m</b> in 
+das entsprechende Feld eingeben. Während der Eingabe der Nachricht wird die Binärdarstellung dynamisch berechnet und 
+darunter neben <b>Binärdarstellung von m</b> angezeigt. Sobald ein gültiger Wert von m eingegeben ist, wird der 
+Button <b>Verschlüsseln</b> aktiviert.
+
+<img src="">
+
+<p>
+Beim Klick auf den Button werden die Nachrichten-Teile berechnet und die Berechnungen der Iterationen 
+in darunter liegende Tabelle eingetragen. Der Geheimtext wird ebenfalls berechnet, angezeigt und in die Entschlüsselung übernommen.
+
+<img src="">
+
+<p>
+<a name="Kapitel3"><b>3) Entschlüsselung:</b></a> In diesem Bereich kann der Benutzer einen Geheimtext neben <b>c</b> in das Feld 
+eingeben und anschließend auf den Button <b>Entschlüsseln</b> klicken. Durch diese Aktion wird der Klartext berechnet und mit dem
+ursprünglichen Klartext verglichen. Falls sie identisch sind, wird die folgende Meldung angezeigt:
+
+<img src="">
+
+<p>
+Falls anhand des eingegebenen Geheimtextes berechneter Klartext und ursprünglicher Klartext nicht identisch sind, 
+wird die folgende Meldung angezeigt:
+
+<img src="">
+
+<p>
+<a name="Kapitel4"><b>4) Bedeutung der Icons in der Menüleiste</b></a>
+<p>
+<ol type="a">
+	<li>Durch Klicken auf das <img src="">-Icon (<b>Neustart</b>) kehrt man zum Initial-Zustand des 
+	Plug-ins zurück und kann den Algorithmus von vorne beginnen.</li>
+	<li>Man kann durch Klicken auf das <img src="">-Icon ein Schritt zurückkehren(Undo-Funktion)	
+</ol>
+
+<p>
+<a name="Kapitel5"><b>5) Quellen</b></a> 
+<ol type="1">
+<li>&nbsp Wikipedia-Link <a href="http://de.wikipedia.org/wiki/Merkle-Hellman-Kryptosystem">Merkle-Hellman-Kryptosystem</a>
+<li>&nbsp Dogan, Ferit: <i>Entwurf und Implementierung von Plug-ins für JCrypTool - Merkle-Hellman und ... </i> Diplom-Thesis 2015 - TU-Darmstadt
+</ol>
+
 </body>
 </html>
