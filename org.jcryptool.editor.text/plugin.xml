@@ -102,7 +102,7 @@
    <extension
          point="org.jcryptool.core.editorButton">
       <OnClick
-            OnClickClass="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction">
+            OnClickClass="org.jcryptool.editor.text.commands.NewSampleTextFile">
       </OnClick>
    </extension>
    <extension
@@ -113,7 +113,7 @@
             icon="icons/text.gif"
             id="org.jcryptool.editor.text"
             label="%sampleeditor.label"
-            pushAction="org.jcryptool.editor.text.action.NewFileJCTTextEditorAction">
+            pushAction="org.jcryptool.editor.text.commands.NewSampleTextFile">
       </service>
       <service
             category="4"
@@ -121,7 +121,7 @@
             icon="icons/text.gif"
             id="org.jcryptool.editor.text"
             label="%emptyeditor.label"
-            pushAction="org.jcryptool.editor.text.action.NewEmptyFileJCTTextEditorAction">
+            pushAction="org.jcryptool.editor.text.commands.NewEmptyTextFile">
       </service>
    </extension>
    <extension
