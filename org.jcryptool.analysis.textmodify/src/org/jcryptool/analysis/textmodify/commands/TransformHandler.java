@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
-package org.jcryptool.analysis.textmodify.actions;
+package org.jcryptool.analysis.textmodify.commands;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,13 +15,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowActionDelegate;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.analysis.textmodify.TextmodifyPlugin;
@@ -34,7 +32,7 @@ import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.crypto.ui.textmodify.wizard.ModifyWizard;
 
-public class TransformAction implements IWorkbenchWindowActionDelegate {
+public class TransformHandler extends AbstractHandler {
     /**
      * get the text from an opened editor
      */
@@ -99,7 +97,7 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
      * @see IWorkbenchWindowActionDelegate#run
      */
     @Override
-	public void run(IAction action) {
+	public Object execute(ExecutionEvent event) {
         if (EditorsManager.getInstance().isEditorOpen()) {
             String text = getEditorText();
             final TransformData transform = getTransformWizardSettings(new TransformData());
@@ -121,34 +119,6 @@ public class TransformAction implements IWorkbenchWindowActionDelegate {
                 }
             }
         }
-    }
-
-    /**
-     * Selection in the workbench has been changed. We can change the state of the 'real' action
-     * here if we want, but this can only happen after the delegate has been created.
-     *
-     * @see IWorkbenchWindowActionDelegate#selectionChanged
-     */
-    @Override
-	public void selectionChanged(IAction action, ISelection selection) {
-    }
-
-    /**
-     * We can use this method to dispose of any system resources we previously allocated.
-     *
-     * @see IWorkbenchWindowActionDelegate#dispose
-     */
-    @Override
-	public void dispose() {
-    }
-
-    /**
-     * We will cache window object in order to be able to provide parent shell for the message
-     * dialog.
-     *
-     * @see IWorkbenchWindowActionDelegate#init
-     */
-    @Override
-	public void init(IWorkbenchWindow window) {
+        return null;
     }
 }

@@ -2,26 +2,36 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            id="org.jcryptool.analysis.textmodify.actionSet"
-            label="%actionSet.label"
-            visible="true">
-         <action
-               class="org.jcryptool.analysis.textmodify.actions.TransformAction"
-               icon="icons/transform.gif"
-               id="org.jcryptool.analysis.textmodify.actions.SampleAction"
-               label="%transformMenuEntry.label"
-               menubarPath="edit/"
-               tooltip="%transformMenuEntry.tooltip">
-         </action>
-      </actionSet>
-   </extension>
-   <extension
          point="org.eclipse.help.contexts">
       <contexts
             file="$nl$/contexts.xml">
       </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.analysis.textmodify.commands.TransformHandler"
+            commandId="org.jcryptool.analysis.textmodify.commands.transform">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.jcryptool.analysis.textmodify.commands.transform"
+            name="%transformMenuEntry.label">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:edit">
+         <command
+               commandId="org.jcryptool.analysis.textmodify.commands.transform"
+               icon="icons/transform.gif"
+               style="push">
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>
