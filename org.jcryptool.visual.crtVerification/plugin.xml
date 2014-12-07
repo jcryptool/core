@@ -4,14 +4,10 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="%category.name"
-            id="org.jcryptool.visual.crtVerification">
-      </category>
       <view
             name="%view.name"
             icon="icons/view.gif"
-            category="org.jcryptool.visual.crtVerification"
+            category="org.jcryptool.visual"
             class="org.jcryptool.visual.crtverification.views.CrtVerView"
             id="org.jcryptool.visual.crtverification.views.CrtVerView">
       </view>
