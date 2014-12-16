@@ -38,6 +38,10 @@
             id="org.jcryptool.visual.merkleHellman.command.Restart"
             name="%restart.command.name">
       </command>
+      <command
+            id="org.jcryptool.visual.merkleHellman.command.Reset"
+            name="%reset.command.name">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -49,6 +53,11 @@
                icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
                style="push">
          </command>
+         <command
+               commandId="org.jcryptool.visual.merkleHellman.command.Reset"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/clear.gif"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
    <extension
@@ -56,6 +65,10 @@
       <handler
             class="org.jcryptool.visual.merkleHellman.handlers.RestartHandler"
             commandId="org.jcryptool.visual.merkleHellman.command.Restart">
+      </handler>
+      <handler
+            class="org.jcryptool.visual.merkleHellman.handlers.ResetHandler"
+            commandId="org.jcryptool.visual.merkleHellman.command.Reset">
       </handler>
    </extension>
 

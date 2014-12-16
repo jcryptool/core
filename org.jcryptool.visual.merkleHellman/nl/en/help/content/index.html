@@ -2,25 +2,13 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Merkle-Hellman</title>
+<title>Merkle Hellman Knapsack Cryptosystem</title>
 </head>
 <body>
-<h1>Merkle-Hellman</h1>
+<h1>Merkle Hellman Knapsack Cryptosystem</h1>
 
 <p>
 This online help describes the functionality of the plug-in <b>Merkle-Hellman</b>.
-<p>
-
-<p>
-The plug-in can be started via the menu <b>Visualizations</b> or via the crypto explorer tab <b>Visualizations</b>.
-<p>
-
-<p>
-The plug-in consists of a description field and three basic areas: <b>Key generation</b>, <b>Encryption</b> and <b>Decryption</b>.
-
-<p>
-In the description field the corresponding statements about the algorithm in its sequence are displayed dynamically, depending on which basic step the user is located. 
-
 <p>
 
 Table of the contents:<br>
@@ -36,62 +24,86 @@ Table of the contents:<br>
 <b>5)</b> <a href="#Kapitel5"><b>Sources</b></a>
 
 <p>
+The plug-in can be started via the menu <b>Visuals</b> or via the crypto explorer tab <b>Visuals</b>.
+<p>
+
+<img src="merkleHellman_main.jpg">
+
+<p>
+The plug-in consists of a description field and three basic areas: <b>Key generation</b>, <b>Encryption</b> and <b>Decryption</b>.
+
+<p>
+In the description field the corresponding statements about the algorithm in its sequence are displayed dynamically, depending on which basic step the user is located. 
+
+<p>
 <a name="Kapitel1"><b>1) Key generation:</b></a> This section summarizes the actions that are required to generate a private key and a public key.
 
 <p>
-First of all the number of the elements for the private key and the initial value must be selected from the drop-down boxes. By default, 
-these values are ​​4 and 32. On this basis, the user can enter the values ​​of <b>A (i)</b>, <b>M</b> and <b>W</b> manually using automatically and randomly generated sample 
-values ​​or allow new values ​​to generate private key by clicking on the button <b>Generate private key</b>
+First of all the number of the elements for the private key and the initial start value must be selected from the drop-down boxes. By default, the number of elements for the private key is 4 and the start value is 32. The start value is needed for the generation of the first element of the private key A(1). It will be used a random number in the range of [start value/2 - start value]. The number of the private key elements will be dynamicly created depending on user selection. 
+<p>
+<img src="merkleHellman_key.jpg">
+<p>
+On this selection, the user can use the automatically and randomly generated sample values for <b>A(i)</b>, <b>M</b> and <b>W</b>, enter manually new the values or can generate new values ​for the private key by clicking the button <b>Generate private key</b> <img src="merkleHellman_generatePrivKey.jpg">.
 
 <p>
-If the input from the user private key elements (A (i) s) differ from each other not strong and the user has clicked on the button <b>Generate public key</b>, the user gets following question message displayed: 
+If the entered private key elements A(i)s are not a super increasing vector and the user is clicking  on the button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">, the user gets the following note message displayed:
+<p>
+<img src="merkleHellman_superIncreasing.jpg">
+<p>
 
-<img src="">
+There is also a check for the parameters ​​<b>M</b> and <b>W</b> when the user is clicking the button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">. Depending on which condition is violated information dialogs are shown to the user.
+<p>
+For M <= SUM(A(i)) the following information is shown:
+<p>
+<img src="merkleHellman_M.jpg">
+<p>
+For ggT(M,W) != 1 the following information is shown:
+<p>
+<img src="merkleHellman_W.jpg">
+<p>
+
+Now that all the conditions are fulfilled the public key will be calculated and the elements B(i)s are shown in the <b>Public key B</b> area.
+<p>
+<img src="merkleHellman_pubKey.jpg">
+<p>
+
+<a name="Kapitel2"><b>2) Encryption:</b></a> Now that the key are generated the user can enter a message <b>m</b> in the corresponding field. As you type the message, the binary representation is dynamically calculated and shown below in addition to the field <b>binary representation of m</b>. The button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> will be activated once a valid value <b>m</b> is entered.
+<p>
+<img src="merkleHellman_bin.jpg">
+<p>
+When you click on the button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> the message parts are calculated and the iterationt of the calculations will be shown in the underlying table. The cipher text is also calculated, displayed and entered for the decryption.
+<p>
+<img src="merkleHellman_encryptIteration.jpg">
+<p>
+
+<a name="Kapitel3"><b>3) Decryption:</b></a> For the decryption you can enter any value for <b>c</b>. Again the binary representation of the entered value is dynamically calculated and shown. 
 
 <p>
-By entering manual values of ​​<b>M</b>, <b>W</b> some conditions are present, to which the user should pay attention. If the entries do not meet these conditions, you receive the following error message when you click on the button <b>Generate public key</b>:
-
-<img src="">
-
-
+<img src="merkleHellman_decrypt.jpg">
 <p>
-By clicking on the button <b>Generate public key</b>, the public key elements are (B (i) s) generated and displayed under <b>Public key B</b>. Now, after the public key was also calculated, you can continue with the encryption.
- 
- <img src="">
-
+By clicking the button <img src="merkleHellman_decrypt_button.jpg" style="vertical-align:middle"> the cipher text will be decryped and its iterations of the calculation will be shown in the table. After the decryption the user has the possibility to decrypt other messages with the same keys.
 <p>
-<a name="Kapitel2"><b>2) Encryption:</b></a> In the second section, the user can enter the message <b>m</b> in the corresponding field. As you type the message, the binary representation is dynamically calculated and shown below in addition to the <b>binary representation of m</b>. 
-Once a valid value is entered by m, the button <b>Encrypt</b> is activated. 
-
-<img src="">
-
+<img src="merkleHellman_decrypt_iteration.jpg">
 <p>
-When you click on the button the message parts are calculated and entered into the calculations of the iterations in the underlying table. The ciphertext is also calculated, displayed and entered in the decryption.
-
-<img src="">
-
+In case that the decryption was successful the following message will be displayed and both the plain text and the cipher test will be colored green:
 <p>
-<a name="Kapitel3"><b>3) Decryption:</b></a> In this section the user can input a ciphertext c in the next box then click on the button <b>Decrypt</b>. By this action, the plaintext is calculated and compared to the original plaintext. If they are identical, the following message is displayed:
-
-
-<img src="">
-
+<img src="merkleHellman_decrypt_success.jpg">
 <p>
-If the calculated plaintext and the original plaintext are not the same on the basis of the input ciphertext, the following message is displayed:
-
-<img src="">
-
+Otherwise, the plain text and the cipher text is highlighted in red color and the following message appears:
 <p>
+<img src="merkleHellman_decrypt_failed.jpg">
+<p>
+
 <a name="Kapitel4"><b>4) Meaning of the icons in the menu bar</b></a>
 <p>
 <ol type="a">
-	<li>A click on the icon <img src=""> (<b>Restart</b>) it returns to the initial state of the plug-in back and can start the algorithm from 
+	<li>A click on the icon <img src="merkleHellman_icon_new.jpg" style="vertical-align:middle"> (<b>Restart</b>) it returns to the initial state of the plug-in back and can start the algorithm from 
 	scratch.</li>
-	<li>You can go back one step by clicking on the icon <img src="">(undo function)	
+	<li>You can change the values of the private key by clicking on the icon <img src="merkleHellman_icon_undo.jpg" style="vertical-align:middle"> (undo function).
 </ol>
 
 <p>
-<a name="Kapitel5"><b>5) Quellen</b></a> 
+<a name="Kapitel5"><b>5) References</b></a> 
 <ol type="1">
 <li>&nbsp Wikipedia-Link <a href="http://en.wikipedia.org/wiki/Merkle%E2%80%93Hellman_knapsack_cryptosystem">Merkle-Hellman-Kryptosystem</a>
 <li>&nbsp Dogan, Ferit: <i>Design and Implementation of Plug-ins for JCrypTool - Merkle-Hellman and ... </i> Diploma Thesis 2015 - TU-Darmstadt
