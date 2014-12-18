@@ -15,8 +15,7 @@ public class ResetHandler extends AbstractHandler {
 		if (HandlerUtil.getActivePart(event) instanceof MerkleHellmanView) {
 			MerkleHellmanView view = ((MerkleHellmanView) HandlerUtil.getActivePart(event));
 			
-			view.resetView();
-			view.init();
+			view.undo();
 		}
 		return null;
 	}
