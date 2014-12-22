@@ -12,27 +12,6 @@
     <entry keyword="Über JCrypTool">
     	<topic href="help/users/about/about.html" />
     </entry>
-    <entry keyword="Allgemeine Informationen zur Entwicklung">
-    	<topic href="help/developers/general/general.html" />
-    </entry>
-    <entry keyword="Eclipse Plug-ins">
-    	<topic href="help/developers/general/plugins.html" />
-    </entry>
-    <entry keyword="Erweitern der Online-Hilfe">
-    	<topic href="help/developers/develop/plugins/help.html" />
-    </entry>
-    <entry keyword="Internationalisierung von Plug-ins">
-    	<topic href="help/developers/develop/plugins/internationalization.html" />
-    </entry>
-    <entry keyword="Entwicklung von Plug-ins">
-    	<topic href="help/developers/develop/plugins/plugin.html" />
-    </entry>
-    <entry keyword="Erweitern der Benutzereinstellungen">
-    	<topic href="help/developers/develop/plugins/preferences.html" />
-    </entry>
-    <entry keyword="Entwicklung von Features">
-    	<topic href="help/developers/develop/features/feature.html" />
-    </entry>
     <entry keyword="Überblick über Kryptologie">
     	<topic href="help/users/cryptology/cryptology.html" />
     </entry>
