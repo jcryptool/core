@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="XML Security" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#algorithmPlugins">
+<toc label="XML Security" link_to="../org.jcryptool.core.help/$nl$/toc.xml#algorithmPlugins">
    <topic href="nl/en/help/contents.html" label="XML Security">
 	   <topic href="nl/en/help/overview/overview.html" label="Overview">
 	   </topic>

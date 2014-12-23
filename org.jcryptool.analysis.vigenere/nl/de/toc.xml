@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Vigenère-Breaker" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#analysisPlugins">
+<toc label="Vigenère-Breaker" link_to="../org.jcryptool.core.help/$nl$/toc.xml#analysisPlugins">
     <topic label="Vigenère-Breaker" href="$nl$/content/index.html" />
 </toc>

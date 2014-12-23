@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Teilerspiel" link_to="../org.jcryptool.core.help/$nl$/toc_users_guide.xml#gamePlugins" topic="$nl$/help/toc.html">
+<toc label="Teilerspiel" link_to="../org.jcryptool.core.help/$nl$/toc.xml#gamePlugins" topic="$nl$/help/toc.html">
   <topic href="$nl$/help/toc.html" label="Teilerspiel" topic="$nl$/help/toc.html">
    </topic>
 </toc>
