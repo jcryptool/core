@@ -6,7 +6,4 @@
     <entry keyword="Actions Preferences">
         <topic href="help/preferences.html" />
     </entry>
-    <entry keyword="Extending Actions">
-        <topic href="help/dev.html" />
-    </entry>
 </index>
