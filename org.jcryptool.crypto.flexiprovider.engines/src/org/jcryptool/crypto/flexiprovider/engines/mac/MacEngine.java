@@ -135,7 +135,9 @@ public class MacEngine extends FlexiProviderEngine {
      * @author farndt
      */
     private class CustomKey extends HMacKey {
-		protected CustomKey(byte[] keyBytes) {
+        private static final long serialVersionUID = -5931470639830190744L;
+
+        protected CustomKey(byte[] keyBytes) {
 			super(keyBytes);
 		}    	
     }
