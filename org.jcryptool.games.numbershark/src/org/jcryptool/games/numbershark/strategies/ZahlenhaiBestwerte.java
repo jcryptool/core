@@ -191,6 +191,7 @@ public class ZahlenhaiBestwerte {
 
     // eine nuetzliche Abkuerzung:
     static class L extends LinkedList<Integer> {
+        private static final long serialVersionUID = -2507500531472253381L;
     }
 
     /*

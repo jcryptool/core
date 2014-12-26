@@ -27,7 +27,9 @@ import org.eclipse.ui.PlatformUI;
 // - Variablen f�r Text anlegen
 // - V3 Extensions anlegen
 public class CertificateShow extends JDialog implements ActionListener {
-	/**
+    private static final long serialVersionUID = 6369515539274727894L;
+
+    /**
 	 * TextAre which holds the Text of the certificate
 	 */
 	TextArea txtCert = new TextArea();
