@@ -30,11 +30,11 @@
       startupMessageRect="7,238,445,20"
       startupForegroundColor="C0C0C0" />
    <launcher name="JCrypTool">
-      <linux icon="/icons/icons_linux.xpm"/>
-      <macosx icon="/icons/icons_mac.icns"/>
+      <linux icon="icons/icons_linux.xpm"/>
+      <macosx icon="icons/icons_osx.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/icons/icons_w32.ico"/>
+         <ico path="icons/icons_windows.ico"/>
          <bmp/>
       </win>
    </launcher>
