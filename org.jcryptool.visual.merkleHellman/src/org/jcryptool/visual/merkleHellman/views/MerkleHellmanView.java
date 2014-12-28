@@ -366,15 +366,15 @@ public class MerkleHellmanView extends ViewPart {
 
 						if (m.compareTo(sum) <= 0) {
 							MessageDialog
-									.openInformation(
+									.openError(
 											null,
-											"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
 							return;
 						}
 
 						if (w.compareTo(m) >= 0) {
 							MessageDialog
-									.openInformation(
+									.openError(
 											null,
 											Messages.MerkleHellmanView_35,
 											Messages.MerkleHellmanView_22a
@@ -387,7 +387,7 @@ public class MerkleHellmanView extends ViewPart {
 							MessageDialog
 									.openError(
 											null,
-											"Info", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
 							return;
 						}
 
@@ -416,17 +416,17 @@ public class MerkleHellmanView extends ViewPart {
 
 						if (m.compareTo(sum) <= 0) {
 							MessageDialog
-									.openInformation(
+									.openError(
 											null,
-											"Info", Messages.MerkleHellmanView_25 + privKey.getSum() + Messages.MerkleHellmanView_26); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_25 + privKey.getSum() + Messages.MerkleHellmanView_26); //$NON-NLS-1$
 							return;
 						}
 
 						if (w.compareTo(m) >= 0) {
 							MessageDialog
-									.openInformation(
+									.openError(
 											null,
-											"Info", Messages.MerkleHellmanView_27 + m.toString() + Messages.MerkleHellmanView_28); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_27 + m.toString() + Messages.MerkleHellmanView_28); //$NON-NLS-1$
 							return;
 						}
 
@@ -434,7 +434,7 @@ public class MerkleHellmanView extends ViewPart {
 							MessageDialog
 									.openError(
 											null,
-											"Info", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
 							return;
 						}
 
@@ -508,17 +508,17 @@ public class MerkleHellmanView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (e.getSource() instanceof Text) {
-					Text tmp = (Text) e.getSource();
+					Text message = (Text) e.getSource();
 
-					if (tmp.getText().compareTo("") != 0) { //$NON-NLS-1$
-						BigInteger numberOfElements = new BigInteger(comboKeyElements.getText());
+					if (message.getText().compareTo("") != 0) { //$NON-NLS-1$
+						int numberOfElements = Integer.parseInt(comboKeyElements.getText());
 
-						BigInteger a = new BigInteger(tmp.getText());
+						BigInteger a = new BigInteger(message.getText());
 						String bitRepresentation = a.toString(2);
 
 						StringBuilder sb = new StringBuilder();
-						if (bitRepresentation.length() <= numberOfElements.intValue()) {
-							int counter = numberOfElements.intValue() - bitRepresentation.length();
+						if (bitRepresentation.length() <= numberOfElements) {
+							int counter = numberOfElements - bitRepresentation.length();
 
 							for (int i = 0; i < counter; i++) {
 								sb.append("0"); //$NON-NLS-1$
@@ -604,12 +604,12 @@ public class MerkleHellmanView extends ViewPart {
 				tableEncrypt.setSelection(numberOfElement - 1);
 				tableEncrypt.showSelection();
 
-//				for (Text privKeyText : privateKeyFields) {
-//					privKeyText.setEditable(true);
-//				}
-//				textM.setEditable(true);
-//				textW.setEditable(true);
-
+				for (Text privKeyText : privateKeyFields) {
+					privKeyText.setEditable(true);
+				}
+				textM.setEditable(true);
+				textW.setEditable(true);
+				
 				textC_encryption.setText(result);
 				textC_encryption.setEnabled(true);
 				textC_decryption.setText(result);
@@ -653,7 +653,8 @@ public class MerkleHellmanView extends ViewPart {
 					Text tmp = (Text) e.getSource();
 
 					if (tmp.getText().compareTo("") != 0) { //$NON-NLS-1$
-						BigInteger numberOfElements = new BigInteger(comboKeyElements.getText());
+
+
 
 						BigInteger a = new BigInteger(tmp.getText());
 						String bitRepresentation = a.toString(2);
