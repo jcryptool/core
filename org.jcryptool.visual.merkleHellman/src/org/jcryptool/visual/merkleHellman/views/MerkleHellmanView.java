@@ -330,7 +330,7 @@ public class MerkleHellmanView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean useManualValues = true;
-				if (!textM.getText().isEmpty() && !textW.getText().isEmpty()) {
+				if (!textM.getText().isEmpty() && !textW.getText().isEmpty() && !isPrivateKeyEmpty()) {
 					if (privateKeyValuesChanged() && !mAndWValuesChanged()) {
 						if (!isSuperIncreasing()) {
 							useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
@@ -714,192 +714,195 @@ public class MerkleHellmanView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				tableDecrypt.removeAll();
 				boolean useManualValues = true;
-				if (privateKeyValuesChanged() && !mAndWValuesChanged()) {
-					if (!isSuperIncreasing()) {
-						useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
-								Messages.MerkleHellmanView_37);
-
-						if (!useManualValues) {
+				
+				if (!textM.getText().isEmpty() && !textW.getText().isEmpty() && !isPrivateKeyEmpty()) {
+					if (privateKeyValuesChanged() && !mAndWValuesChanged()) {
+						if (!isSuperIncreasing()) {
+							useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
+									Messages.MerkleHellmanView_37);
+	
+							if (!useManualValues) {
+								return;
+							}
+						}
+	
+						BigInteger[] keys = updatePrivateKeyFields();
+	
+						privKey.updatePrivateKey(keys);
+						textM.setText(privKey.getM().toString());
+						textSumA.setText(privKey.getSum().toString());
+						textU.setText(privKey.getU().toString());
+						textW.setText(privKey.getW().toString());
+	
+					} else if (!privateKeyValuesChanged() && mAndWValuesChanged()) {
+						if (!isSuperIncreasing()) {
+							useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
+									Messages.MerkleHellmanView_37);
+	
+							if (!useManualValues) {
+								return;
+							}
+						}
+	
+						BigInteger m = new BigInteger(textM.getText());
+						BigInteger w = new BigInteger(textW.getText());
+	
+						BigInteger sum = privKey.getSum();
+	
+						if (m.compareTo(sum) <= 0) {
+							MessageDialog
+									.openInformation(
+											null,
+											"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
 							return;
 						}
-					}
-
-					BigInteger[] keys = updatePrivateKeyFields();
-
-					privKey.updatePrivateKey(keys);
-					textM.setText(privKey.getM().toString());
-					textSumA.setText(privKey.getSum().toString());
-					textU.setText(privKey.getU().toString());
-					textW.setText(privKey.getW().toString());
-
-				} else if (!privateKeyValuesChanged() && mAndWValuesChanged()) {
-					if (!isSuperIncreasing()) {
-						useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
-								Messages.MerkleHellmanView_37);
-
-						if (!useManualValues) {
+	
+						if (w.compareTo(m) >= 0) {
+							MessageDialog.openInformation(
+									null,
+									Messages.MerkleHellmanView_35,
+									Messages.MerkleHellmanView_22a
+											+ w.toString()
+											+ " " + Messages.MerkleHellmanView_22b + m.toString() + "." + Messages.MerkleHellmanView_23); //$NON-NLS-1$ //$NON-NLS-2$
 							return;
 						}
-					}
-
-					BigInteger m = new BigInteger(textM.getText());
-					BigInteger w = new BigInteger(textW.getText());
-
-					BigInteger sum = privKey.getSum();
-
-					if (m.compareTo(sum) <= 0) {
-						MessageDialog
-								.openInformation(
-										null,
-										"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
-						return;
-					}
-
-					if (w.compareTo(m) >= 0) {
-						MessageDialog.openInformation(
-								null,
-								Messages.MerkleHellmanView_35,
-								Messages.MerkleHellmanView_22a
-										+ w.toString()
-										+ " " + Messages.MerkleHellmanView_22b + m.toString() + "." + Messages.MerkleHellmanView_23); //$NON-NLS-1$ //$NON-NLS-2$
-						return;
-					}
-
-					if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
-						MessageDialog
-								.openError(
-										null,
-										"Info", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
-						return;
-					}
-
-					privKey.setM(m);
-					privKey.setW(w);
-					textU.setText(privKey.getU().toString());
-				} else if (privateKeyValuesChanged() && mAndWValuesChanged()) {
-					if (!isSuperIncreasing()) {
-						useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
-								Messages.MerkleHellmanView_37);
-
-						if (!useManualValues) {
+	
+						if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
+							MessageDialog
+									.openError(
+											null,
+											"Info", Messages.MerkleHellmanView_24 + Messages.MerkleHellmanView_32 + m.gcd(w).toString() + Messages.MerkleHellmanView_24a); //$NON-NLS-1$
 							return;
 						}
-					}
-
-					BigInteger[] keys = updatePrivateKeyFields();
-
-					privKey.updatePrivateKey(keys);
-
-					BigInteger m = new BigInteger(textM.getText());
-					BigInteger w = new BigInteger(textW.getText());
-
-					BigInteger sum = privKey.getSum();
-					textSumA.setText(privKey.getSum().toString());
-
-					if (m.compareTo(sum) <= 0) {
-						MessageDialog
-								.openInformation(
-										null,
-										"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
-						return;
-					}
-
-					if (w.compareTo(m) >= 0) {
-						MessageDialog.openInformation(
-								null,
-								Messages.MerkleHellmanView_35,
-								Messages.MerkleHellmanView_22a
-										+ w.toString()
-										+ " " + Messages.MerkleHellmanView_22b + m.toString() + "." + Messages.MerkleHellmanView_23); //$NON-NLS-1$ //$NON-NLS-2$
-						return;
-					}
-
-					if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
-						MessageDialog.openError(null, Messages.MerkleHellmanView_33, Messages.MerkleHellmanView_34
-								+ m.gcd(w).toString() + Messages.MerkleHellmanView_29);
-						return;
-					}
-
-					privKey.setM(m);
-					privKey.setW(w);
-					textU.setText(privKey.getU().toString());
-				} else {
-					if (!isSuperIncreasing()) {
-						useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
-								Messages.MerkleHellmanView_37);
-
-						if (!useManualValues) {
+	
+						privKey.setM(m);
+						privKey.setW(w);
+						textU.setText(privKey.getU().toString());
+					} else if (privateKeyValuesChanged() && mAndWValuesChanged()) {
+						if (!isSuperIncreasing()) {
+							useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
+									Messages.MerkleHellmanView_37);
+	
+							if (!useManualValues) {
+								return;
+							}
+						}
+	
+						BigInteger[] keys = updatePrivateKeyFields();
+	
+						privKey.updatePrivateKey(keys);
+	
+						BigInteger m = new BigInteger(textM.getText());
+						BigInteger w = new BigInteger(textW.getText());
+	
+						BigInteger sum = privKey.getSum();
+						textSumA.setText(privKey.getSum().toString());
+	
+						if (m.compareTo(sum) <= 0) {
+							MessageDialog
+									.openInformation(
+											null,
+											"Info", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
 							return;
 						}
-					}
-				}
-
-				// if (privateKeyValuesChanged()) {
-				// BigInteger[] keys = updatePrivateKeyFields();
-				//
-				// privKey.updatePrivateKeyOnly(keys);
-				//
-				// // textM.setText(privKey.getM().toString());
-				// // textSumA.setText(privKey.getSum().toString());
-				// // textU.setText(privKey.getU().toString());
-				// // textW.setText(privKey.getW().toString());
-				//
-				// }
-
-				BigInteger c = new BigInteger(textC_decryption.getText());
-				BigInteger U = privKey.getU();
-				BigInteger M = privKey.getM();
-
-				BigInteger cc = c.multiply(U).mod(M);
-				textCC.setText(String.valueOf(cc));
-
-				int numberOfElement = Integer.parseInt(comboKeyElements.getText());
-
-				BigInteger tmpCC = cc;
-				StringBuilder binResult = new StringBuilder();
-				for (int i = numberOfElement - 1; i >= 0; i--) {
-					StringBuilder sb = new StringBuilder();
-					BigInteger tmpA = privKey.getPrivateKeyElement(i);
-
-					if (tmpCC.compareTo(tmpA) >= 0) {
-						sb.append("c' = " + tmpCC + " >= " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-						sb.append(" ==> p(" + i + ") = 1, "); //$NON-NLS-1$ //$NON-NLS-2$
-						sb.append("c' = " + tmpCC + " - " + tmpA + " = " + (tmpCC = tmpCC.subtract(tmpA))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-						binResult.insert(0, "1"); //$NON-NLS-1$
+	
+						if (w.compareTo(m) >= 0) {
+							MessageDialog.openInformation(
+									null,
+									Messages.MerkleHellmanView_35,
+									Messages.MerkleHellmanView_22a
+											+ w.toString()
+											+ " " + Messages.MerkleHellmanView_22b + m.toString() + "." + Messages.MerkleHellmanView_23); //$NON-NLS-1$ //$NON-NLS-2$
+							return;
+						}
+	
+						if (m.gcd(w).compareTo(BigInteger.ONE) != 0) {
+							MessageDialog.openError(null, Messages.MerkleHellmanView_33, Messages.MerkleHellmanView_34
+									+ m.gcd(w).toString() + Messages.MerkleHellmanView_29);
+							return;
+						}
+	
+						privKey.setM(m);
+						privKey.setW(w);
+						textU.setText(privKey.getU().toString());
 					} else {
-						sb.append("c' = " + tmpCC + "  < " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-						sb.append(" ==> p(" + i + ") = 0, "); //$NON-NLS-1$ //$NON-NLS-2$
-						sb.append("c' = " + tmpCC + " - 0" + " = " + (tmpCC = tmpCC.subtract(BigInteger.ZERO))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-						binResult.insert(0, "0"); //$NON-NLS-1$
+						if (!isSuperIncreasing()) {
+							useManualValues = MessageDialog.openQuestion(null, Messages.MerkleHellmanView_36,
+									Messages.MerkleHellmanView_37);
+	
+							if (!useManualValues) {
+								return;
+							}
+						}
 					}
-
-					TableItem tmp = new TableItem(tableDecrypt, SWT.BORDER);
-					tmp.setText(0, String.valueOf(i));
-					tmp.setText(1, sb.toString());
-
+	
+					// if (privateKeyValuesChanged()) {
+					// BigInteger[] keys = updatePrivateKeyFields();
+					//
+					// privKey.updatePrivateKeyOnly(keys);
+					//
+					// // textM.setText(privKey.getM().toString());
+					// // textSumA.setText(privKey.getSum().toString());
+					// // textU.setText(privKey.getU().toString());
+					// // textW.setText(privKey.getW().toString());
+					//
+					// }
+	
+					BigInteger c = new BigInteger(textC_decryption.getText());
+					BigInteger U = privKey.getU();
+					BigInteger M = privKey.getM();
+	
+					BigInteger cc = c.multiply(U).mod(M);
+					textCC.setText(String.valueOf(cc));
+	
+					int numberOfElement = Integer.parseInt(comboKeyElements.getText());
+	
+					BigInteger tmpCC = cc;
+					StringBuilder binResult = new StringBuilder();
+					for (int i = numberOfElement - 1; i >= 0; i--) {
+						StringBuilder sb = new StringBuilder();
+						BigInteger tmpA = privKey.getPrivateKeyElement(i);
+	
+						if (tmpCC.compareTo(tmpA) >= 0) {
+							sb.append("c' = " + tmpCC + " >= " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+							sb.append(" ==> p(" + i + ") = 1, "); //$NON-NLS-1$ //$NON-NLS-2$
+							sb.append("c' = " + tmpCC + " - " + tmpA + " = " + (tmpCC = tmpCC.subtract(tmpA))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	
+							binResult.insert(0, "1"); //$NON-NLS-1$
+						} else {
+							sb.append("c' = " + tmpCC + "  < " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+							sb.append(" ==> p(" + i + ") = 0, "); //$NON-NLS-1$ //$NON-NLS-2$
+							sb.append("c' = " + tmpCC + " - 0" + " = " + (tmpCC = tmpCC.subtract(BigInteger.ZERO))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	
+							binResult.insert(0, "0"); //$NON-NLS-1$
+						}
+	
+						TableItem tmp = new TableItem(tableDecrypt, SWT.BORDER);
+						tmp.setText(0, String.valueOf(i));
+						tmp.setText(1, sb.toString());
+	
+					}
+	
+					tableDecrypt.setSelection(numberOfElement - 1);
+					textBinary_decrypted.setText(binResult.toString());
+					textBinary_decrypted.setEnabled(true);
+					// btnDecrypt.setEnabled(false);
+	
+					if (textBinaryM.getText().compareTo(textBinary_decrypted.getText()) == 0) {
+						textBinaryM.setBackground(new Color(null, new RGB(0, 255, 0)));
+						textBinary_decrypted.setBackground(new Color(null, new RGB(0, 255, 0)));
+						MessageDialog.openInformation(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_19
+								+ textBinaryM.getText() + " = " + binResult); //$NON-NLS-1$
+					} else {
+						textBinaryM.setBackground(new Color(null, new RGB(255, 0, 0)));
+						textBinary_decrypted.setBackground(new Color(null, new RGB(255, 0, 0)));
+						MessageDialog.openError(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_30
+								+ textBinaryM.getText() + " = " + binResult); //$NON-NLS-1$
+	
+					}
+					textC_decryption.setFocus();
+					btnDecrypt.setFocus();
 				}
-
-				tableDecrypt.setSelection(numberOfElement - 1);
-				textBinary_decrypted.setText(binResult.toString());
-				textBinary_decrypted.setEnabled(true);
-				// btnDecrypt.setEnabled(false);
-
-				if (textBinaryM.getText().compareTo(textBinary_decrypted.getText()) == 0) {
-					textBinaryM.setBackground(new Color(null, new RGB(0, 255, 0)));
-					textBinary_decrypted.setBackground(new Color(null, new RGB(0, 255, 0)));
-					MessageDialog.openInformation(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_19
-							+ textBinaryM.getText() + " = " + binResult); //$NON-NLS-1$
-				} else {
-					textBinaryM.setBackground(new Color(null, new RGB(255, 0, 0)));
-					textBinary_decrypted.setBackground(new Color(null, new RGB(255, 0, 0)));
-					MessageDialog.openError(null, Messages.MerkleHellmanView_18, Messages.MerkleHellmanView_30
-							+ textBinaryM.getText() + " = " + binResult); //$NON-NLS-1$
-
-				}
-				textC_decryption.setFocus();
-				btnDecrypt.setFocus();
 			}
 		});
 		GridData gd_btnDecrypt = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
@@ -1144,6 +1147,15 @@ public class MerkleHellmanView extends ViewPart {
 			keys[i] = k;
 		}
 		return keys;
+	}
+	
+	private boolean isPrivateKeyEmpty() {
+		for (Text t : privateKeyFields) {
+			if (t.getText().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
