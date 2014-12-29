@@ -3,7 +3,7 @@
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.12.0/luna"/>
+<repository location="http://download.eclipse.org/technology/babel/update-site/R0.12.1/luna"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="3.10.0.v20140909-1633"/>
