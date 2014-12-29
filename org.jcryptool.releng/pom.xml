@@ -45,7 +45,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<repository>
 			<id>eclipse-babel-luna</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/technology/babel/update-site/R0.12.0/luna</url>
+			<url>http://download.eclipse.org/technology/babel/update-site/R0.12.1/luna</url>
 		</repository>
 	</repositories>
 
