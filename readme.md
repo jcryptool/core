@@ -10,3 +10,5 @@ Have a look at our [wiki](https://github.com/jcryptool/core/wiki) for more infor
 JCrypTool downloads are available as [weekly builds](http://www.cryptool.org/en/jct-downloads-en/jct-downloads-weekly-en) (unstable) and as [release builds](http://www.cryptool.org/en/jct-downloads-en/jct-downloads-stable-en) (stable).
 
 General information on the CrypTool and JCrypTool projects is available in the [CrypTool](http://www.cryptool.org) portal.
+
+[![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/dschadow/jcryptool)
