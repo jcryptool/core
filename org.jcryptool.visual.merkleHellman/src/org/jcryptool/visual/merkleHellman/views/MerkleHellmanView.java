@@ -861,16 +861,16 @@ public class MerkleHellmanView extends ViewPart {
 					StringBuilder binResult = new StringBuilder();
 					for (int i = numberOfElement - 1; i >= 0; i--) {
 						StringBuilder sb = new StringBuilder();
-						BigInteger tmpA = privKey.getPrivateKeyElement(i);
+						BigInteger tmpPrivateKeyElement = privKey.getPrivateKeyElement(i);
 	
-						if (tmpCC.compareTo(tmpA) >= 0) {
-							sb.append("c' = " + tmpCC + " >= " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+						if (tmpCC.compareTo(tmpPrivateKeyElement) >= 0) {
+							sb.append("c' = " + tmpCC + " >= " + tmpPrivateKeyElement + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 							sb.append(" ==> p(" + i + ") = 1, "); //$NON-NLS-1$ //$NON-NLS-2$
-							sb.append("c' = " + tmpCC + " - " + tmpA + " = " + (tmpCC = tmpCC.subtract(tmpA))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							sb.append("c' = " + tmpCC + " - " + tmpPrivateKeyElement + " = " + (tmpCC = tmpCC.subtract(tmpPrivateKeyElement))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	
 							binResult.insert(0, "1"); //$NON-NLS-1$
 						} else {
-							sb.append("c' = " + tmpCC + "  < " + tmpA + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+							sb.append("c' = " + tmpCC + "  < " + tmpPrivateKeyElement + " = A(" + (i + 1) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 							sb.append(" ==> p(" + i + ") = 0, "); //$NON-NLS-1$ //$NON-NLS-2$
 							sb.append("c' = " + tmpCC + " - 0" + " = " + (tmpCC = tmpCC.subtract(BigInteger.ZERO))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	
