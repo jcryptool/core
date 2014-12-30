@@ -26,6 +26,10 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
+	
+	<modules>
+		<module>../../core</module>
+	</modules>
 
 	<properties>
 		<tycho.version>0.22.0</tycho.version>
@@ -106,34 +110,23 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	</build>
 
 	<profiles>
+		<!-- crypto is an optional module not required to build the core -->
 		<profile>
-	        <id>core</id>
-	        <activation>
-	            <file>
-	                <exists>../../core/pom.xml</exists>
-	            </file>
-	        </activation>
-	        <modules>
-	            <module>../../core</module>
-	        </modules>
-	    </profile>
-
-	    <profile>
-	        <id>crypto</id>
-	        <activation>
-	            <file>
-	                <exists>../../crypto/pom.xml</exists>
-	            </file>
-	        </activation>
-	        <modules>
-	            <module>../../crypto</module>
-	        </modules>
-	    </profile>
+			<id>crypto</id>
+			<activation>
+				<file>
+					<exists>../../crypto/pom.xml</exists>
+				</file>
+			</activation>
+			<modules>
+				<module>../../crypto</module>
+			</modules>
+		</profile>
 
 		<profile>
-			<!-- release is only signed if jcryptool.keystore is given as runtime
-				parameter (more parameters are required): mvn clean package -Djcryptool.keystore=[path
-				to jks file] -Djcryptool.alias=[key alias] -Djcryptool.storepass=[store password]
+			<!-- release is only signed if jcryptool.keystore is given as runtime 
+				parameter (more parameters are required): mvn clean package -Djcryptool.keystore=[path 
+				to jks file] -Djcryptool.alias=[key alias] -Djcryptool.storepass=[store password] 
 				-Djcryptool.keypass=[key password] -->
 			<id>signRelease</id>
 			<activation>
