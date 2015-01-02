@@ -1,12 +1,3 @@
-// -----BEGIN DISCLAIMER-----
-/*******************************************************************************
- * Copyright (c) 2014 JCrypTool Team and Contributors
- *
- * All rights reserved. This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-// -----END DISCLAIMER-----
 package org.jcryptool.visual.merkleHellman.algorithm;
 
 import java.math.BigInteger;
@@ -49,12 +40,12 @@ public class MerkleHellman {
 	}
 
 	public void setM() {
-		/* t is the bitlength of last element in superincreasing sequence */
+		/* t is the bit length of last element in super increasing sequence */
 		BigInteger t = BigInteger.valueOf(this.privateKey[dim - 1].bitLength());
 		t = BigInteger.ONE.shiftLeft(t.intValue());
 
 		/* choose M to be a 2^t bit number with M > SUM(Ai) */
-		this.M = randomNumber(getSum().add(BigInteger.ONE).max(t), (t.shiftLeft(1).subtract(new BigInteger("-1"))));
+		this.M = randomNumber(getSum().add(BigInteger.ONE).max(t), (t.shiftLeft(1).subtract(BigInteger.ONE)));
 	}
 
 	/* get sum of all elements */
@@ -72,30 +63,15 @@ public class MerkleHellman {
 			setM();
 
 		BigInteger w = randomNumber(new BigInteger("2"), this.M.subtract(new BigInteger("2")));
-
-		BigInteger bigW = w;
-		BigInteger bigM = this.M;
-
-		BigInteger d = bigW.gcd(bigM);
+		BigInteger d = w.gcd(this.M);
 
 		while (d.compareTo(BigInteger.ONE) != 0) {
 			w = w.divide(d);
-
-			bigW = w;
-			bigM = this.M;
-
-			d = bigW.gcd(bigM);
+			d = w.gcd(this.M);
 		}
 
-		bigW = w;
-		bigM = this.M;
-
-		this.W = w.divide(bigW.gcd(bigM));
-
-		bigW = this.W;
-		bigM = this.M;
-
-		this.U = bigW.modInverse(bigM);
+		this.W = w.divide(w.gcd(this.M));
+		this.U = w.modInverse(this.M);
 	}
 
 	public void setW(BigInteger w) {
@@ -128,21 +104,17 @@ public class MerkleHellman {
 		/* choose set[i] to be a (t+i)-bit number so that set[i] > sum */
 		for (int i = 1; i < dim; i++) {
 			this.privateKey[i] = randomNumber(sum.add(BigInteger.ONE).max(t),
-					(t.shiftLeft(1).subtract(new BigInteger("-1"))));
+					(t.shiftLeft(1).subtract(BigInteger.ONE)));
 			sum = sum.add(this.getPrivateKeyElement(i));
 
 			t = t.shiftLeft(1);
 		}
 	}
 
-	public MerkleHellman createPublicKeys() {
-
+	public void createPublicKeys() {
 		for (int i = 0; i < dim; i++) {
 			setPublicKeyElement(i, this.W.multiply(this.privateKey[i]).mod(this.M));
 		}
-
-		return null;
-
 	}
 
 	public BigInteger getPrivateKeyElement(int i) {
@@ -209,5 +181,5 @@ public class MerkleHellman {
 	public void updatePrivateKeyOnly(BigInteger[] keys) {
 		this.privateKey = keys;
 	}
-
+		
 }
