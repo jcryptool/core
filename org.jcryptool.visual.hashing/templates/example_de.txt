@@ -1,0 +1,32 @@
+Dies ist die JCrypTool Beispieldatei.
+
+Sie können diese Datei für einen schnellen Start mit JCrypTool
+nutzen, indem Sie die Datei z.B. über das Menü "Algorithmen"
+verschlüsseln oder digital signieren, oder im Menü
+"Analyse" verschiedene Analysen auf eine verschlüsselte Datei anwenden.
+
+Noch einfacher gelangen Sie zu sämtlichen kryptografischen
+Operationen über die "Krypto-Explorer" Sicht auf der rechten Seite.
+Nach einem Doppelklick auf den gewünschten Eintrag auf dem
+"Algorithmen" Tab öffnet sich ein Assistent und führt Sie
+Schritt für Schritt durch den Verschlüsselungsprozess. Das
+Entschlüsseln erfolgt später auf dieselbe Art und Weise.
+
+Alle angebotenen Algorithmen und auch die Analysen
+benötigen immer eine geöffnete Datei in einem der JCrypTool
+Editoren. Visualisierungen und Spiele sind dagegen in der Regel
+unabhängig von einer geöffneten Datei. Wo auch immer eine Datei
+benötigt wird, können Sie diese Beispieldatei verwenden oder
+eine beliebige eigene Datei öffnen. Ihre Originaldatei bleibt
+dabei stets unangetastet erhalten, jede kryptografische
+Operation generiert eine neue Arbeitsdatei.
+
+Bei der Suche nach einem bestimmten Algorithmus (auch Analyse,
+Visualisierung oder Spiel) hilft Ihnen das Filterfeld oben in
+der "Krypto-Explorer" Sicht. Hiermit wird der gerade aktive Tab auf
+zum Suchbegriff passende Einträge eingeschränkt.
+
+Weitere Informationen zum Lernen, Anwenden und Erweitern von
+JCrypTool finden Sie in der umfangreichen Online-Hilfe, die Sie
+über das Menü "Hilfe" --> "Inhaltsverzeichnis der Hilfetexte"
+aufrufen können.
