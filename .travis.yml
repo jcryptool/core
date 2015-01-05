@@ -2,4 +2,4 @@ language: java
 before_install:
   - git clone https://github.com/jcryptool/crypto.git ~/build/jcryptool/crypto
 install:
-  mvn -f org.jcryptool.releng/pom.xml -DskipTests=true
+  - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true
