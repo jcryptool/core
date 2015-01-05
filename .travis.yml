@@ -2,4 +2,4 @@ language: java
 before_install:
   - git clone https://github.com/jcryptool/crypto.git ~/build/jcryptool/crypto
 install:
-  - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true -DMAVEN_OPTS=-"-Xmx512m -XX:MaxPermSize=128m"
+  - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true -DMAVEN_OPTS=-"-Xmx512m -XX:MaxPermSize=128m -XX:+CMSClassUnloadingEnabled"
