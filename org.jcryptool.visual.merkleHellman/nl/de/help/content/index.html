@@ -39,10 +39,12 @@ welchen Grund-Schritt der Benutzer sich befindet.
 
 <p>
 
-<a name="Kapitel1"><b>1) Schlüsselerzeugung:</b></a> Dieser Bereich fasst die Aktionen zusammen, die zur Erzeugung eines privaten Schlüssels und eines öffentlichen Schlüssels benötigt werden.
+<a name="Kapitel1"><b>1) Schlüsselerzeugung</b></a>
+<p>
+Dieser Bereich fasst die Aktionen zusammen, die zur Erzeugung eines privaten Schlüssels und eines öffentlichen Schlüssels benötigt werden.
 
 <p>
-Zu erst muß die Anzahl der Elemente für den privaten Schlüssel und der Startwert über die Dropdown-Boxen ausgewählt werden. Standardmäßig hat die Anzahl der Schüsselelement den Wert 4 und der Starterwert ist 32. Der Startwert wird für die Berechnung des ersten Schlüsselelements A(1) verwendet. Es wird eine Zufallszahl in dem Bereich [Startwert/2 - Startwert] gewählt. Die Anzahl Schlüsselelemente werden je nachdem was der Benutzer ausgewählt hat dynamisch erzeugt.
+Zu erst müssen die Anzahl der Elemente für den privaten Schlüssel und der Startwert über die Dropdown-Boxen ausgewählt werden. Standardmäßig hat die Anzahl der Schlüsselelemente den Wert 4 und der Startwert ist 32. Der Startwert wird für die Berechnung des ersten Schlüsselelements A(1) verwendet. Es wird eine Zufallszahl aus dem Bereich [Startwert/2 - Startwert] gewählt. Die Schlüsselelemente werden dann anhand der Benutzer-Eingaben dynamisch erzeugt.
 <p>
 <img src="merkleHellman_key.jpg">
 <p>
@@ -51,12 +53,12 @@ Der Benutzer kann nun die automatisch und zufällig generierten Beispielwerte f�
  <img src="merkleHellman_generatePrivKey.jpg" style="vertical-align:middle"> generieren lassen. 
 
 <p>
-Wenn die von dem Benutzer eingegebenen privaten Schlüsselelemente A(i)s keinen stark wachsenden Vektor bilden und der Benutzer auf den Button<img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">geklickt, dann erscheint der folgende Hinweis: 
+Wenn die vom Benutzer selbst eingegebenen privaten Schlüsselelemente A(i) keinen stark wachsenden Vektor bilden und der Benutzer auf den Button<img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle">klickt, erscheint der folgende Hinweis: 
 <p>
 <img src="merkleHellman_superIncreasing.jpg">
 <p>
 
-Auch für die Werte <b>M</b> und <b>W</b> werden die Bedingungen geprüft, wenn der Benutzer auf den Button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle"> geklickt. Je nachdem welche Bedingung versetzt ist, werden Hinweise dem Benutzer angezeigt.
+Auch für die Werte <b>M</b> und <b>W</b> werden die Bedingungen geprüft, wenn der Benutzer auf den Button <img src="merkleHellman_generatePubKey.jpg" style="vertical-align:middle"> klickt. Je nachdem welche Bedingung verletzt ist, werden dem Benutzer entsprechende Hinweise angezeigt.
 <p>
 Für M <= SUM(A(i)) wird folgender Hinweis angezeigt:
 <p>
@@ -67,27 +69,31 @@ Für ggT(M,W) != 1 wird folgender Hinweis angezeigt:
 <img src="merkleHellman_W.jpg">
 <p>
 
-Nachdem nun alle Bedingungen erfüllt sind, wird der öffentliche Schlüssel erzeugt und die Elemente B(i)s in dem Bereich <b>Öffentlicher Schlüssel B</b> angezeigt.
+Nachdem nun alle Bedingungen erfüllt sind, wird der öffentliche Schlüssel erzeugt und die Elemente B(i) werden in dem Grundbereich <b>Öffentlicher Schlüssel B</b> angezeigt.
 <p>
 <img src="merkleHellman_pubKey.jpg">
 <p>
 
-<a name="Kapitel2"><b>2) Verschlüsselung:</b></a> Nachdem nun die Schlüssel erzeugt sind, kann der Benutzer eine Nachricht <b>m</b> in 
-das entsprechende Feld eingeben. Binärdarstellung der Nachricht <b>m</b> wird dynamisch erzeugt und in dem Feld <b>Binärdarstellung von m</b> angezeigt. Der Button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> wird aktiv, sobald ein gültiger Wert <b>m</b> eingegeben wurde.
+<a name="Kapitel2"><b>2) Verschlüsselung</b></a>
+<p>
+Nachdem nun die Schlüssel erzeugt sind, kann der Benutzer eine Nachricht <b>m</b> in 
+das entsprechende Feld eingeben. Der Zahlenwert der Nachricht <b>m</b> wird auch im Zweiersystem berechnet und in dem Feld <b>Binärdarstellung von m</b> angezeigt. Der Button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> wird aktiv, sobald ein gültiger Wert <b>m</b> eingegeben wurde.
 <p>
 <img src="merkleHellman_bin.jpg">
 <p>
 
-Beim Klick auf den Button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> werden die Nachrichten-Teile berechnet und die Iterationen der Berechnungen in darunter liegende Tabelle eingetragen. Der Geheimtext wird ebenfalls berechnet, angezeigt und für die Entschlüsselung übernommen.
+Beim Klick auf den Button <img src="merkleHellman_encrypt.jpg" style="vertical-align:middle"> werden die Nachrichten-Teile berechnet und die Iterationen der Berechnungen in die darunter liegende Tabelle eingetragen. Der Geheimtext wird ebenfalls berechnet, angezeigt und für die Entschlüsselung übernommen.
 <p>
 <img src="merkleHellman_encryptIteration.jpg">
 <p>
 
-<a name="Kapitel3"><b>3) Entschlüsselung:</b></a> Für die Entschlüsselung kann man nun einen beliebigen Wert für <b>c</b> eingeben. Wieder wird die Binärdarstellung des eingegebenen Wertes dynamisch erzeugt und angezeigt.
+<a name="Kapitel3"><b>3) Entschlüsselung</b></a>
+<p>
+Für die Entschlüsselung kann man nun einen beliebigen Wert für <b>c</b> eingeben. Wieder wird die Binärdarstellung des eingegebenen Wertes dynamisch erzeugt und angezeigt.
 <p>
 <img src="merkleHellman_decrypt.jpg">
 <p>
-Durch den Klick auf den Button <img src="merkleHellman_decrypt_button.jpg" style="vertical-align:middle"> wird der Geheimtext entschlüsselt und die Iterationen der Berechung in der Tabelle angezeigt. Nach der Entschlüsselung ist es möglich andere Geheimtexte mit den gleichen Schlüsseln zu entschlüsseln.
+Durch einen Klick auf den Button <img src="merkleHellman_decrypt_button.jpg" style="vertical-align:middle"> wird der Geheimtext entschlüsselt und die Iterationen der Berechung werden in der Tabelle angezeigt. Nach der Entschlüsselung ist es möglich andere Geheimtexte mit den gleichen Schlüsseln zu entschlüsseln.
 <p>
 <img src="merkleHellman_decrypt_iteration.jpg">
 <p>
@@ -107,14 +113,14 @@ Andernfalls wird der Klar- und Geheimtext mit de Farbe rot hinterlegt und folgen
 <ol type="a">
 	<li>Durch Klicken auf das <img src="merkleHellman_icon_new.jpg" style="vertical-align:middle">-Icon (<b>Neustart</b>) kehrt man zum Initial-Zustand des 
 	Plug-ins zurück und kann den Algorithmus von vorne beginnen.</li>
-	<li>Man kann durch Klicken auf das <img src="merkleHellman_icon_undo.jpg" style="vertical-align:middle">-Icon die Werte des privaten Schlüssels ändern (Zurücksetzen-Funktion).
+	<li>Man kann durch Klicken auf das <img src="merkleHellman_icon_undo.jpg" style="vertical-align:middle">-Icon die Werte des privaten Schlüssels ändern (<b>Zurücksetzen</b>-Funktion).
 </ol>
 
 <p>
 <a name="Kapitel5"><b>5) Quellen</b></a> 
 <ol type="1">
 <li>&nbsp Wikipedia-Link <a href="http://de.wikipedia.org/wiki/Merkle-Hellman-Kryptosystem">Merkle-Hellman-Kryptosystem</a>
-<li>&nbsp Dogan, Ferit: <i>Entwurf und Implementierung von Plug-ins für JCrypTool - Merkle-Hellman und Hashes Visualisierung </i> Diplom-Thesis 2015 - TU-Darmstadt
+<li>&nbsp Dogan, Ferit: <i>Design and implementation of plug-ins for JCrypTool - Merkle-Hellman and Hashes Visualization</i> Diplom-Thesis 2015 - TU-Darmstadt
 </ol>
 
 </body>
