@@ -18,6 +18,7 @@ import java.util.TreeMap;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
 import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -30,8 +31,13 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.bindings.Binding;
+import org.eclipse.jface.bindings.keys.KeyBinding;
+import org.eclipse.jface.bindings.keys.KeySequence;
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -40,10 +46,12 @@ import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.commands.ICommandService;
+import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 
@@ -67,27 +75,9 @@ import org.jcryptool.core.operations.OperationsPlugin;
  * @author amro
  * @author Dominik Schadow
  * @author Holger Friedrich (support for Commands)
- * @version 0.9.7
+ * @version 0.9.8
  */
 public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
-    private IWorkbenchAction preferencesAction;
-    private IWorkbenchAction saveAllAction;
-    private IWorkbenchAction closeAction;
-    private IWorkbenchAction exitAction;
-    private IWorkbenchAction undoAction;
-    private IWorkbenchAction redoAction;
-    private IWorkbenchAction findAction;
-    private IWorkbenchAction saveAction;
-    private IWorkbenchAction saveAsAction;
-    private IWorkbenchAction cutAction;
-    private IWorkbenchAction copyAction;
-    private IWorkbenchAction pasteAction;
-    private IWorkbenchAction deleteAction;
-    private IWorkbenchAction selectAllAction;
-    private IWorkbenchAction printAction;
-    private IWorkbenchAction closeAllAction;
-    private IWorkbenchAction editActionSetsAction;
-    private IWorkbenchAction resetPerspectiveAction;
 
     /** Perspectives sub menu. */
     private MenuManager perspectiveMenu;
@@ -121,10 +111,11 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
     protected void fillCoolBar(ICoolBarManager coolBar) {
         // ToolBar File & Additions
         IToolBarManager fileToolBar = new ToolBarManager(coolBar.getStyle());
+        IServiceLocator serviceLocator = PlatformUI.getWorkbench();
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
-        fileToolBar.add(saveAction);
-        fileToolBar.add(saveAllAction);
-        fileToolBar.add(printAction);
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE));
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL));
+        fileToolBar.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT));
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         fileToolBar.add(new Separator());
         fileToolBar.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -139,8 +130,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         // CoolBar Context Menu
         MenuManager coolBarContextMenuManager = new MenuManager(null, CorePlugin.PLUGIN_ID + ".contextMenu"); //$NON-NLS-1$
         coolBar.setContextMenuManager(coolBarContextMenuManager);
-        coolBarContextMenuManager.add(getAction(ActionFactory.LOCK_TOOL_BAR.getId()));
-        coolBarContextMenuManager.add(getAction(ActionFactory.EDIT_ACTION_SETS.getId()));
+        coolBarContextMenuManager.add(createContributionItem(serviceLocator, null,
+        		IWorkbenchCommandConstants.WINDOW_LOCK_TOOLBAR));
+        coolBarContextMenuManager.add(createContributionItem(serviceLocator, null,
+        		IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE));	// maps to EDIT_ACTION_SETS in the Actions
         coolBarContextMenuManager.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
     }
 
@@ -259,8 +252,9 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the about action, Mac OS X adds this automatically
-            hiddenMenu.add(ActionFactory.ABOUT.create(window));
+            hiddenMenu.add(createContributionItem(PlatformUI.getWorkbench(), null, IWorkbenchCommandConstants.HELP_ABOUT));
         }
+        // TODO:  Do we need to move this below the registration of the ActionFactory.ABOUT action?
 
         register(ActionFactory.HELP_SEARCH.create(window));
         register(ActionFactory.DYNAMIC_HELP.create(window));
@@ -272,21 +266,23 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_File,
                 IWorkbenchActionConstants.M_FILE);
 
+        IServiceLocator serviceLocator = PlatformUI.getWorkbench();
+
         menu.add(new MenuManager(Messages.applicationActionBarAdvisor_Menu_New_File, "newfile")); //$NON-NLS-1$
         menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_START));
         menu.add(new Separator());
-        menu.add(closeAction);
-        menu.add(closeAllAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_CLOSE_ALL));
         menu.add(new Separator());
-        menu.add(saveAction);
-        menu.add(saveAsAction);
-        menu.add(saveAllAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_AS));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_SAVE_ALL));
         menu.add(new Separator());
-        menu.add(printAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_PRINT));
         menu.add(ContributionItemFactory.REOPEN_EDITORS.create(window));
         menu.add(new GroupMarker(IWorkbenchActionConstants.MRU));
         menu.add(new Separator());
-        menu.add(exitAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.FILE_EXIT));
         menu.add(new GroupMarker(IWorkbenchActionConstants.FILE_END));
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
@@ -298,26 +294,28 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
                 IWorkbenchActionConstants.M_EDIT);
         menu.add(new GroupMarker(IWorkbenchActionConstants.EDIT_START));
 
+        IServiceLocator serviceLocator = PlatformUI.getWorkbench();
+        
         // undo, redo
-        menu.add(undoAction);
-        menu.add(redoAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_UNDO));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_REDO));
         menu.add(new GroupMarker(IWorkbenchActionConstants.UNDO_EXT));
         menu.add(new Separator());
 
         // cut, copy, paste
-        menu.add(cutAction);
-        menu.add(copyAction);
-        menu.add(pasteAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_CUT));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_COPY));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_PASTE));
         menu.add(new GroupMarker(IWorkbenchActionConstants.CUT_EXT));
         menu.add(new Separator());
 
         // delete, select all
-        menu.add(deleteAction);
-        menu.add(selectAllAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_DELETE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_SELECT_ALL));
         menu.add(new Separator());
 
         // find
-        menu.add(findAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE));
         menu.add(new GroupMarker(IWorkbenchActionConstants.FIND_EXT));
         menu.add(new GroupMarker(IWorkbenchActionConstants.ADD_EXT));
 
@@ -411,6 +409,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         MenuManager menu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Window,
                 IWorkbenchActionConstants.M_WINDOW);
 
+        IServiceLocator serviceLocator = PlatformUI.getWorkbench();
+
         // create actions for "open perspective" menu
         perspectiveMenu = new MenuManager(Messages.applicationActionBarAdvisor_Menu_Open_Perspective, "openPerspective"); //$NON-NLS-1$
         perspectiveMenu.add(ContributionItemFactory.PERSPECTIVES_SHORTLIST.create(window));
@@ -422,15 +422,15 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         menu.add(perspectiveMenu);
         menu.add(showViewMenu);
         menu.add(new Separator());
-        menu.add(editActionSetsAction);
-        menu.add(resetPerspectiveAction);
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_CUSTOMIZE_PERSPECTIVE));
+        menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_RESET_PERSPECTIVE));
 
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the preferences action, Mac OS X adds this automatically
-            hiddenMenu.add(preferencesAction);
+            hiddenMenu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES));
         } else {
             menu.add(new Separator());
-            menu.add(preferencesAction);
+            menu.add(createContributionItem(serviceLocator, null, IWorkbenchCommandConstants.WINDOW_PREFERENCES));
         }
 
         menu.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -438,66 +438,67 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         return menu;
     }
 
-    /* TODO:  Are those the kind of Action we no longer want to support? */
+    /* TODO:  According to the information I have, we can use the standard command IDs
+     * but need to enable those commands by registering actions created through the ActionFactory.
+     * It is conceivable that this may change in future versions of Eclipse.
+     */
     private void createFileActions(IWorkbenchWindow window) {
-        saveAction = ActionFactory.SAVE.create(window);
-        register(saveAction);
+        register(ActionFactory.SAVE.create(window));
+        register(ActionFactory.SAVE_AS.create(window));
+        register(ActionFactory.SAVE_ALL.create(window));
+        register(ActionFactory.CLOSE.create(window));
+        register(ActionFactory.CLOSE_ALL.create(window));
+        register(ActionFactory.PRINT.create(window));
 
-        saveAsAction = ActionFactory.SAVE_AS.create(window);
-        register(saveAsAction);
-
-        saveAllAction = ActionFactory.SAVE_ALL.create(window);
-        register(saveAllAction);
-
-        closeAction = ActionFactory.CLOSE.create(window);
-        register(closeAction);
-
-        closeAllAction = ActionFactory.CLOSE_ALL.create(window);
-        register(closeAllAction);
-
-        printAction = ActionFactory.PRINT.create(window);
-        register(printAction);
-
-        exitAction = ActionFactory.QUIT.create(window);
-        exitAction.setAccelerator(SWT.ALT | SWT.F4);
+        IWorkbenchAction exitAction = ActionFactory.QUIT.create(window);
+        exitAction.setAccelerator(SWT.ALT | SWT.F4);	// this doesn't seem to work when I use Commands
         register(exitAction);
+        
+        // TODO:  This doesn't seem to have any effect right now
+        try {
+        	ICommandService commandService = (ICommandService)window.getService(ICommandService.class);
+        	KeyStroke keyStroke = KeyStroke.getInstance(SWT.ALT, SWT.F4);
+        	KeySequence keySequence = KeySequence.getInstance(keyStroke);
+        	KeyBinding binding = new KeyBinding(keySequence,
+        		new ParameterizedCommand(commandService.getCommand(IWorkbenchCommandConstants.FILE_EXIT), null),
+        		"org.eclipse.ui.defaultAcceleratorConfiguration",
+        		"org.eclipse.ui.contexts.window", null, null, null, Binding.SYSTEM);
+
+        	IBindingService bindingService = (IBindingService)window.getService(IBindingService.class);
+        	Binding[] oldBindings = bindingService.getBindings();
+        	Binding[] newBindings = new Binding[oldBindings.length + 1];
+        	System.arraycopy(oldBindings, 0, newBindings, 0, oldBindings.length);
+        	newBindings[oldBindings.length] = binding;
+        	bindingService.savePreferences(bindingService.getActiveScheme(), newBindings);
+        } catch(Exception ex) {
+        	LogUtil.logError(ex);
+        }
     }
+    /* TODO:  Figure out how to use accelerators (key bindings) with Commands.
+     * The provided pointers to IWorkbenchCommandSupport, IWorkbenchContextSupport,
+     * ICommandService, and IHandlerService all don't seem to lead anywhere.
+     * Maybe IBindingService?
+     */
 
     private void createEditActions(IWorkbenchWindow window) {
-        undoAction = ActionFactory.UNDO.create(window);
-        register(undoAction);
+        register(ActionFactory.UNDO.create(window));
+        register(ActionFactory.REDO.create(window));
+        register(ActionFactory.CUT.create(window));
+        register(ActionFactory.COPY.create(window));
+        register(ActionFactory.PASTE.create(window));
+        register(ActionFactory.DELETE.create(window));
+        register(ActionFactory.SELECT_ALL.create(window));
 
-        redoAction = ActionFactory.REDO.create(window);
-        register(redoAction);
-
-        cutAction = ActionFactory.CUT.create(window);
-        register(cutAction);
-
-        copyAction = ActionFactory.COPY.create(window);
-        register(copyAction);
-
-        pasteAction = ActionFactory.PASTE.create(window);
-        register(pasteAction);
-
-        deleteAction = ActionFactory.DELETE.create(window);
-        register(deleteAction);
-
-        selectAllAction = ActionFactory.SELECT_ALL.create(window);
-        register(selectAllAction);
-
-        findAction = ActionFactory.FIND.create(window);
-        register(findAction);
+        register(ActionFactory.FIND.create(window));
+        // maps to EDIT_FIND_AND_REPLACE
     }
 
     private void createWindowActions(IWorkbenchWindow window) {
-        editActionSetsAction = ActionFactory.EDIT_ACTION_SETS.create(window);
-        register(editActionSetsAction);
+        register(ActionFactory.EDIT_ACTION_SETS.create(window));
+        // maps to WINDOW_CUSTOMIZE_PERSPECTIVE
 
-        resetPerspectiveAction = ActionFactory.RESET_PERSPECTIVE.create(window);
-        register(resetPerspectiveAction);
-
-        preferencesAction = ActionFactory.PREFERENCES.create(window);
-        register(preferencesAction);
+        register(ActionFactory.RESET_PERSPECTIVE.create(window));
+        register(ActionFactory.PREFERENCES.create(window));
     }
 
     private void createContextActions(IWorkbenchWindow window) {

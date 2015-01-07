@@ -16,10 +16,18 @@
 
    <extension point="org.eclipse.ui.commands">
       <command description="%command.description" id="org.jcryptool.core.commands.showHelp" name="%command.name"/>
+      <command
+            id="org.jcryptool.core.command.editorsPulldown"
+            name="%command.name.0">
+      </command>
    </extension>
 
    <extension point="org.eclipse.ui.handlers">
       <handler class="org.jcryptool.core.commands.ShowHelpContents" commandId="org.jcryptool.core.commands.showHelp"/>
+      <handler
+            class="org.jcryptool.core.commands.ShowEditorsPulldownMenu"
+            commandId="org.jcryptool.core.command.editorsPulldown">
+      </handler>
    </extension>
 
    <extension
@@ -64,6 +72,15 @@
                   </not>
                </visibleWhen>
             </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.core.toolbar">
+         <menu
+               commandId="org.jcryptool.core.command.editorsPulldown"
+               label="label"
+               tooltip="%command.tooltip.0">
          </menu>
       </menuContribution>
    </extension>
