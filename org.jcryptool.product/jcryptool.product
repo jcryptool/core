@@ -22,7 +22,7 @@
       </vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/org.jcryptool.core/icons/icon_16.gif" i32="/org.jcryptool.core/icons/icon_32.gif" i48="/org.jcryptool.core/icons/icon_48.gif" i64="/org.jcryptool.core/icons/icon_64.gif" i128="/org.jcryptool.core/icons/icon_128.gif"/>
+   <windowImages i16="/org.jcryptool.core/icons/icon_16.gif" i32="/org.jcryptool.core/icons/icon_32.gif" i48="/org.jcryptool.core/icons/icon_48.gif" i64="/org.jcryptool.core/icons/icon_64.gif" i128="/org.jcryptool.core/icons/icon_128.gif" i256="/org.jcryptool.core/icons/icon_256.gif"/>
 
    <splash
       location="org.jcryptool.core"
@@ -30,11 +30,11 @@
       startupMessageRect="7,238,445,20"
       startupForegroundColor="C0C0C0" />
    <launcher name="JCrypTool">
-      <linux icon="/icons/icons_linux.xpm"/>
-      <macosx icon="/icons/icons_mac.icns"/>
+      <linux icon="icons/icons_linux.xpm"/>
+      <macosx icon="icons/icons_osx.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/icons/icons_w32.ico"/>
+         <ico path="icons/icons_windows.ico"/>
          <bmp/>
       </win>
    </launcher>

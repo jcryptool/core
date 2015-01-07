@@ -27,10 +27,6 @@
             file="$nl$/toc.xml"
             primary="false">
       </toc>
-      <toc
-            file="$nl$/toc_dev.xml"
-            primary="false">
-      </toc>
    </extension>
    <extension
          point="org.eclipse.ui.commands">

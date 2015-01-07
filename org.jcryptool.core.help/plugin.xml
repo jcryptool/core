@@ -5,12 +5,9 @@
    <extension
          point="org.eclipse.help.toc">
       <toc
-            file="$nl$/toc_users_guide.xml"
+            file="$nl$/toc.xml"
             primary="true">
       </toc>
-      <toc
-            file="$nl$/toc_developers_guide.xml"
-            primary="true"/>
    </extension>
    <extension
          point="org.eclipse.help.index">

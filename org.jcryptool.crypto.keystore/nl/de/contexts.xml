@@ -7,6 +7,5 @@ JCrypTool interne Schlüssel beginnen normalerweise mit &lt;b&gt;JCT&lt;/b&gt;. 
 
 Über die Toolbar und das Menü der Sicht können neue Schlüssel angelegt, vorhandene gelöscht sowie im- und exportiert werden. 
       </description>
-      <topic href="nl/de/help/keystoremanager.html" label="Zugriff auf den Schlüsselspeicher"/>
    </context>
 </contexts>
