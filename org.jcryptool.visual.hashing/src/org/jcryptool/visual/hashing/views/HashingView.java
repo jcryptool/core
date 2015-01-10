@@ -296,7 +296,7 @@ public class HashingView extends ViewPart {
 		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(new Point(1010, 566));
+		scrolledComposite.setMinSize(new Point(1000, 590));
 
 		loadExampleText();
 	}
