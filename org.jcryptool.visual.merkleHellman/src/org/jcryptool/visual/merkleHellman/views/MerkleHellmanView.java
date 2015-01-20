@@ -174,7 +174,11 @@ public class MerkleHellmanView extends ViewPart {
 		styledTextDescription.setEditable(false);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		gd_styledTextDescription.widthHint = 300;
-		gd_styledTextDescription.heightHint = 60;
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			gd_styledTextDescription.heightHint = 80;
+		} else {
+			gd_styledTextDescription.heightHint = 60;			
+		}
 		styledTextDescription.setLayoutData(gd_styledTextDescription);
 		styledTextDescription.setText(Messages.MerkleHellmanView_0000 + Messages.MerkleHellmanView_0);
 
@@ -234,7 +238,13 @@ public class MerkleHellmanView extends ViewPart {
 
 		btnGenerateNewKey = new Button(compositeSelection, SWT.NONE);
 		GridData gd_btnGenerateNewKey = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
-		gd_btnGenerateNewKey.widthHint = 180;
+		
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			gd_btnGenerateNewKey.widthHint = 220;						
+		} else {
+			gd_btnGenerateNewKey.widthHint = 180;			
+		}
+		
 		btnGenerateNewKey.setLayoutData(gd_btnGenerateNewKey);
 		btnGenerateNewKey.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -368,7 +378,7 @@ public class MerkleHellmanView extends ViewPart {
 							MessageDialog
 									.openError(
 											null,
-											"Error", Messages.MerkleHellmanView_20 + privKey.getSum() + Messages.MerkleHellmanView_21); //$NON-NLS-1$
+											"Error", Messages.MerkleHellmanView_20 + privKey.getSum() + "." + Messages.MerkleHellmanView_21); //$NON-NLS-1$ //$NON-NLS-2$
 							return;
 						}
 
@@ -464,8 +474,12 @@ public class MerkleHellmanView extends ViewPart {
 				}
 			}
 		});
-		GridData gd_btnCreateKeys = new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1);
-		gd_btnCreateKeys.widthHint = 180;
+		GridData gd_btnCreateKeys = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			gd_btnCreateKeys.widthHint = 220;
+		} else {
+			gd_btnCreateKeys.widthHint = 180;
+		}
 		btnCreateKeys.setLayoutData(gd_btnCreateKeys);
 		btnCreateKeys.setText(Messages.MerkleHellmanView_7);
 
@@ -625,7 +639,11 @@ public class MerkleHellmanView extends ViewPart {
 			}
 		});
 		GridData gd_btnEncrypt = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnEncrypt.widthHint = 180;
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			gd_btnEncrypt.widthHint = 220;
+		} else {
+			gd_btnEncrypt.widthHint = 180;			
+		}
 		btnEncrypt.setLayoutData(gd_btnEncrypt);
 		btnEncrypt.setText(Messages.MerkleHellmanView_13);
 
@@ -906,12 +924,19 @@ public class MerkleHellmanView extends ViewPart {
 			}
 		});
 		GridData gd_btnDecrypt = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
-		gd_btnDecrypt.widthHint = 180;
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			gd_btnDecrypt.widthHint = 220;
+		} else {
+			gd_btnDecrypt.widthHint = 180;			
+		}
 		btnDecrypt.setLayoutData(gd_btnDecrypt);
 		btnDecrypt.setText(Messages.MerkleHellmanView_17);
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(new Point(1010, 566));
-
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			scrolledComposite.setMinSize(new Point(1310, 566));
+		} else {
+			scrolledComposite.setMinSize(new Point(1010, 566));			
+		}
 		int numberOfElements = Integer.parseInt(comboKeyElements.getText());
 		int startValue = Integer.parseInt(comboStartValue.getText());
 
