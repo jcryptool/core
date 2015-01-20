@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
+import org.jcryptool.visual.hashing.algorithms.HashFunction;
 
 /**
  * 
@@ -50,26 +51,26 @@ public class HashingView extends ViewPart {
 	public static final String ID = "org.jcryptool.visual.hashing.views.HashingView"; //$NON-NLS-1$
 	private static final int OUTPUT_SEPERATOR = 144;
 
-	public enum HashFunction {
-		MD2("MD2 (128 bits)"), MD4("MD4 (128 bits)"), MD5("MD5 (128 bits)"), SHA1("SHA-1 (160 bits)"), SHA256( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				"SHA-256 (256 bits)"), SHA512("SHA-512 (512 bits)"), RIPEMD160("RIPEMD-160 (160 bits)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-		private final String hashFunctionName;
-
-		private HashFunction(String name) {
-			hashFunctionName = name;
-		}
-
-		public HashFunction getName(String name) {
-			for (HashFunction h : values()) {
-				if (h.hashFunctionName.compareToIgnoreCase(name) == 0) {
-					HashFunction value = valueOf(h.name());
-					return value;
-				}
-			}
-			return null;
-		}
-	}
+//	public enum HashFunction {
+//		MD2("MD2 (128 bits)"), MD4("MD4 (128 bits)"), MD5("MD5 (128 bits)"), SHA1("SHA-1 (160 bits)"), SHA256( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+//				"SHA-256 (256 bits)"), SHA512("SHA-512 (512 bits)"), RIPEMD160("RIPEMD-160 (160 bits)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+//
+//		private final String hashFunctionName;
+//
+//		private HashFunction(String name) {
+//			hashFunctionName = name;
+//		}
+//
+//		public HashFunction getName(String name) {
+//			for (HashFunction h : values()) {
+//				if (h.hashFunctionName.compareToIgnoreCase(name) == 0) {
+//					HashFunction value = valueOf(h.name());
+//					return value;
+//				}
+//			}
+//			return null;
+//		}
+//	}
 
 	private HashFunction hash = HashFunction.MD2;
 	private String hashInputValueHex = ""; //$NON-NLS-1$
@@ -128,13 +129,11 @@ public class HashingView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 
 				if (!textInput.getText().isEmpty()) {
-					hashInputValueHex = computeHash(comboHash.getText(), textInput.getText(), textHashInput,
-							hashInputValueHex);
+					hashInputValueHex = computeHash(comboHash.getText(), textInput.getText(), textHashInput);
 				}
 
 				if (!textOutput.getText().isEmpty()) {
-					hashOutputValueHex = computeHash(comboHash.getText(), textOutput.getText(), textHashOutput,
-							hashOutputValueHex);
+					hashOutputValueHex = computeHash(comboHash.getText(), textOutput.getText(), textHashOutput);
 				}
 
 				if (!textInput.getText().isEmpty() && !textOutput.getText().isEmpty()) {
@@ -190,7 +189,6 @@ public class HashingView extends ViewPart {
 					hash = hash.replaceAll(".{3}", "$0 "); //$NON-NLS-1$ //$NON-NLS-2$
 					textHashOutput.setText(hash);
 				}
-
 			}
 		});
 		btnDezimal.setLayoutData(new GridData(SWT.CENTER, SWT.FILL, true, true, 1, 1));
@@ -228,8 +226,7 @@ public class HashingView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!textInput.getText().isEmpty()) {
-					hashInputValueHex = computeHash(comboHash.getText(), textInput.getText(), textHashInput,
-							hashInputValueHex);
+					hashInputValueHex = computeHash(comboHash.getText(), textInput.getText(), textHashInput);
 				} else {
 					textHashInput.setText(""); //$NON-NLS-1$
 				}
@@ -263,8 +260,7 @@ public class HashingView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				if (!textOutput.getText().isEmpty()) {
-					hashOutputValueHex = computeHash(comboHash.getText(), textOutput.getText(), textHashOutput,
-							hashOutputValueHex);
+					hashOutputValueHex = computeHash(comboHash.getText(), textOutput.getText(), textHashOutput);
 				} else {
 					textHashOutput.setText(""); //$NON-NLS-1$
 				}
@@ -365,7 +361,7 @@ public class HashingView extends ViewPart {
 		loadExampleText();
 	}
 
-	private String computeHash(String hashName, String inputText, Text hashText, String hashInOutValue) {
+	private String computeHash(String hashName, String inputText, Text hashText) {
 		hash = hash.getName(hashName);
 		byte[] digest = null;
 		switch (hash) {
@@ -390,7 +386,6 @@ public class HashingView extends ViewPart {
 			md5.doFinal(digest, 0);
 
 			break;
-
 		case SHA1:
 			SHA1Digest sha1 = new SHA1Digest();
 			sha1.update(inputText.getBytes(), 0, inputText.getBytes().length);
@@ -423,21 +418,21 @@ public class HashingView extends ViewPart {
 			break;
 		}
 
-		hashInOutValue = new String(Hex.encode(digest));
+		String hashHexValue = new String(Hex.encode(digest));
 		if (btnHexadezimal.getSelection()) {
-			String hashValueOutput = hashInOutValue.toUpperCase().replaceAll(".{2}", "$0 "); //$NON-NLS-1$ //$NON-NLS-2$
+			String hashValueOutput = hashHexValue.toUpperCase().replaceAll(".{2}", "$0 "); //$NON-NLS-1$ //$NON-NLS-2$
 			hashText.setText(hashValueOutput);
 		} else if (btnDezimal.getSelection()) {
-			String hashValue = hexToDecimal(hashInOutValue);
+			String hashValue = hexToDecimal(hashHexValue);
 			hashValue = hashValue.replaceAll(".{3}", "$0 "); //$NON-NLS-1$ //$NON-NLS-2$
 			hashText.setText(hashValue);
 		} else if (btnBinary.getSelection()) {
-			String hashValue = hexToBinary(hashInOutValue);
+			String hashValue = hexToBinary(hashHexValue);
 			hashValue = hashValue.replaceAll(".{8}", "$0#"); //$NON-NLS-1$ //$NON-NLS-2$
 			hashText.setText(hashValue);
 		}
 
-		return hashInOutValue;
+		return hashHexValue;
 	}
 
 	private void computeDifference() {
