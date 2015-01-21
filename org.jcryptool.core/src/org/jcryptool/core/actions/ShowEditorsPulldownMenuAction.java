@@ -11,10 +11,14 @@ package org.jcryptool.core.actions;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.IHandler;
+import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -34,6 +38,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowPulldownDelegate;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.jcryptool.core.CorePlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.osgi.framework.Bundle;
@@ -155,10 +161,22 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
                 // Handle selection
                 menuItem.addSelectionListener(new SelectionAdapter() {
                     public void widgetSelected(SelectionEvent e) {
+                        final IHandlerService handlerService
+                        	= (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+                        IEvaluationContext evaluationContext
+                        	= handlerService.createContextSnapshot(true);
+                        ExecutionEvent event
+                        	= new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
                         // execute the actions
                         Object o = ((MenuItem) e.getSource()).getData();
-                        IActionDelegate iad = (IActionDelegate) o;
-                        iad.run(null);
+                        try {
+                        	IHandler handler = (IHandler) o;
+                        	handler.execute(event);
+                        }
+                        catch(Exception ex) {
+                        	LogUtil.logError(CorePlugin.PLUGIN_ID, ex);
+                        }
                     }
                 });
             }
