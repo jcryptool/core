@@ -2,27 +2,69 @@
 <html>
 <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Hashing-Visualisierung</title>
+<title>Hashes-Visualisierung</title>
 </head>
 <body>
-<h1>Hashing-Visualisierung</h1>
+<h1>Hashes-Visualisierung</h1>
 
 <p>
-Diese Onlinehilfe erklärt die Funktionsweise des Plug-ins <b>Hashing-Visualisierung</b>.
+Diese Onlinehilfe erklärt die Funktionsweise des Plug-ins <b>Hashes-Visualisierung</b>.
 <p>
 
 <p>
 Das Plug-in lässt sich über das Menü <b>Visualisierungen</b> oder über den Krypto-Explorer im Tab <b>Visualisierungen</b> starten.
 <p>
+<img src="hashes.jpg">
+<p>
+Das Plug-in besteht aus einem Beschreibungsfeld und vier Grundbereichen: <b>Hashfunktion</b>, <b>Eingabetext</b>, <b>Ausgabetext</b> und 
+<b>Unterschied</b>.
+<p>
+In dem Beschreibungsfeld wird die Erklärungen über den Algorithmus angezeigt.
+<p>
+In der Hashfunktions-Bereich kann man eine Hashfunktion und dessen Darstellung auswählen.
+<p>
+<img src="selection.jpg">
+<p>
+Folgende Hashfunktionen sind verfügbar:
+<ul>
+  <li>MD2 (128 bits)</li>
+  <li>MD4 (128 bits)</li>
+  <li>MD5 (128 bits)</li>
+  <li>SHA-1 (160 bits)</li>
+  <li>SHA-256 (256 bits)</li>
+  <li>SHA-512 (512 bits)</li>
+  <li>RIPEMD-160 (160 bits)</li>
+</ul> 
 
-<img src="merkleHellman_main.jpg">
-
+Die Hashfunktion kann als <b>hexadezimal</b>, <b>dezimal</b> oder <b>binär</b> dargestellt werden.
+<p>
+<img src="representation.jpg">
 <p>
 
+Man kann in dem Eingabetext-Feld einen beliebigen Text eingeben. Der Hashwert wird berechnet und unten in der ausgewählen Darstellung angezeigt.
 <p>
+<img src="input.jpg">
+<p>
+
+Das Gleiche gilt für für den Ausgabetext.
+<p>
+<img src="output.jpg">
+<p>
+
+Basierend auf der Eingabe des Eingabe- und Ausgabetext wird der Unterschied der Bits im Hashwert unten angezeigt und in der Farbe rot hervorgehoben.
+<p>
+<img src="difference.jpg">
+<p>
+
+Es werden außerdem einige Statistiken angezeigt.
+<p>
+Man kann zu jeder Zeit die Hashfunktion und die Darstellung ändern. Der Hashwert des Eingabe- und des Ausgabetext wird dynamisch berechnet und der Unterschied der Bits des Hashwertes im Berech <b>Unterschied</b> angezeigt.
+<p>
+Wenn man auf das Restart-Icon <img src="restart.jpg" style="vertical-align:middle"> in der Menüleiste klickt, wird der Standardtext in den Einabe- und Ausgabebereich geladen.
+<p>
+
 <b>Quellen</b></a> 
 <ol type="1">
-<li>&nbsp Wikipedia-Link <a href="http://de.wikipedia.org/wiki/Merkle-Hellman-Kryptosystem">Merkle-Hellman-Kryptosystem</a>
 <li>&nbsp Dogan, Ferit: <i>Design and implementation of plug-ins for JCrypTool - Merkle-Hellman and Hashes Visualization </i> Diplom-Thesis 2015 - TU-Darmstadt
 </ol>
 
