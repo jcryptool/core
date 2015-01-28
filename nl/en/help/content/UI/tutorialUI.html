@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ARC4 usage</title>
+</head>
+
+<body>
+<h1 style="text-align: center">Usage ARC4</h3>
+
+<p>This page explains the encryption GUI of ARC4. For generall information about ARC4:<a href="../tutorial.html"> ARC4-Encryption.</a></p>
+
+<h3>operation - encryption and decryption</h3>
+<p>
+ARC4 is a stream cipher, that means that encryption and decryption does the same, because random bit xor plain text is the ciper and the other way round cipher xor random bit is plain text.</p>
+
+<h3>variants of ARC4</h3>
+<p>There are many different implementations of ARC4, we have implemented two: Spritz and ARC4. For more Information: <a href="../tutorial.html">ARC4-Encryption</a></p>
+
+<h3>key</h3>
+
+<table width="100%" border="0">
+  <tr>
+    <td>You have the possibility to choose between Hex and Binary representation. If you start writing your key in Hex and then change to Binary the already written letters will get transformed to Binary, it also works the other way round.<br><br></td>
+    <td><img src="hex-binary.PNG" width="90" height="42" alt="hex-binary" align="middle"/></td>
+  </tr>
+  <tr>
+    <td>For giving the algorithm a short try, you can use the random or 0 generator. Attention: if you plan to decrypt your message again and you choose random generator you should copy your key.<p></p></td>
+    <td><img src="generate.PNG" width="260" height="48" alt="generate" align="middle"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">The "Finish"-Button only getts active when you have a full Byte. Nibbles aren't accepted. The Keylength restrictions are also active here (key length: 5 - 256 Byte.</td>
+  </tr>
+</table>
+
+</body>
+</html>

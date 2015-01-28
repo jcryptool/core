@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+	<context id="wizard" title="ARC4">
+    <description>ARC4 is a stream cipher, it got famous throug WEP/WPA. It's not a secure cipher!</description>
+		<topic href="$nl$/help/content/tutorial.html" label="ARC4"/>
+	</context>
+</contexts>

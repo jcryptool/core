@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ARC4 Bedienung ARC4</title>
+</head>
+
+<body>
+<h1 style="text-align: center">Bedienung ARC4/Spritz</h3>
+
+<p>Diese Seite erkl&auml;rt die Bedienung der Ver-/Entschl&uuml;sselungsoberfl&auml;che der ARC4-Verschl&uuml;sselung. Allgemeine Informationen zu ARC4 und Spritz: <a href="../tutorial.html">ARC4-Verschl&uuml;sselung.</a> </p>
+
+<p>Im Folgenden werden die Optionengruppen des Assistenten vorgestellt.</p>
+
+<h3>Operation - Verschl&uuml;sseln oder Entschl&uuml;sseln</h3>
+<p>
+Da ARC4 eine Symetrische Verschl&uuml;sselung ist, haben die Buttons Verschl&uuml;sseln und Entschl&uuml;sseln keine Auswirkung auf den Algorithmus. Denn Zufalsbittfolge xor Klartext ergibt chiffrat und chiffrat xor Zufalsbittfolge ergibt wieder den Klartext. </p>
+
+<h3>Varianten von ARC4</h3>
+<p>Da ARC4 nicht nur in einer Variante exitiert gibt es hier ebenfalls die M&ouml;glichkeit zwischen mehreren zu w&auml;hlen. F&uuml;r genauere Informationen <a href="../tutorial.html">ARC4-Verschl&uuml;sselung</a></p>
+
+<h3>Schl&uuml;ssel wahl</h3>
+
+<table width="100%" border="0">
+  <tr>
+    <td>Sie haben die M&ouml;glichkeit zwischen Hexadezimaler und Bin&auml;rer Schl&uuml;sseldarstellung zu w&auml;hlen. Wenn Sie anfangen zuerst den Schl&uuml;ssel in Hexadezimal einzugeben und sich umentscheiden ihn weiter in Bin&auml;r ein zu geben, wird er automatisch umgewandelt.<br><br></td>
+    <td><img src="hex-binaer.PNG" width="99" height="45" alt="hex-binaer" align="middle"/></td>
+  </tr>
+  <tr>
+    <td>F&uuml;r ein schnelles ausprobieren des Algorithmus hat man die M&ouml;glichkeit sich zuf&auml;llige Schl&uuml;ssel oder einen Schl&uuml;ssel mit nur 0 Bits zu generieren. Achtung: falls man seine Eingabe wieder entschl&uuml;sseln m&ouml;chte und sich einen Zuf&auml;lligen Schl&uuml;ssel generieren hat lassen, sollte man ihn kopiert haben.<p></p></td>
+    <td><img src="generieren.PNG" width="312" height="45" alt="generieren" align="middle"/></td>
+  </tr>
+  <tr>
+    <td colspan="2">Der "Fertig"-Button wird immer nur aktiv bei vollen Byte eingaben, sprich Nibble sind nicht erlaubt. Ebenfalls gelten hier die Begrenzungen die der Algorithmus vorgibt, mindestens 5 Byte und maximal 256 Byte.</td>
+  </tr>
+</table>
+
+</body>
+</html>

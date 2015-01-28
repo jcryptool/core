@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ARC4-Algorithmus</title>
+</head>
+<body>
+	<h1 style="text-align: center">ARC4-/Spritz-Algorithmus</h1>
+	
+	<p>Willkommen zum Hilfetext des ARC4- und Spritz-Algoithmus. Diese Hilfe beschreibt die Punkte:</p>
+	<ul>
+		<li><a href="#func">Funktionsweise von ARC4</a></li>
+		<li><a href="#sec">Sicherheit von ARC4</a></li>
+		<li><a href="#literature">Weiterf&uuml;hrende Verweise</a></li>
+	</ul>
+	<p>Nat&uuml;rlich m&uuml;ssen sie nicht alle Kapitel lesen, um das Plug-in bedienen zu k&ouml;nnen. Wenn sie nicht an der Geschichte von RC4, seinem 
+	Algorithmus oder seinen Sicherheitsaspekten interessiert sind, k&ouml;nnen sie auch direkt zu den <a href=UI/tutorialUI.html>Nutzerinstruktionen</a> springen.</p>
+	
+	<h2 id="func">Funktionsweise von ARC4</h2>
+	
+	<p>
+	Bei RC4 beziehungsweise ARC4 handelt es sich um eine kryptographische Stromchiffre. Bekannt und verbreitet wurde sie vor allem durch die
+	Verwendung in diversen Standards, wie zum Beispiel HTTPS, SSH1 oder WEP/WPA.
+	Im Jahr 1987 entwickelte Ronald L. Rivest RC4 als Eigenmarke von RSA Security Inc., eine Tochtergesellschaft von EMC Corporation. Somit 
+	ist RC4 eigentlich kein &ouml;ffentlich zug&auml;nglicher Krypto-Algorithmus. Alleged RC4 (ARC4) dagegen basiert auf einer Quelltext-
+	Ver&ouml;ffentlichung aus dem Jahr 1994 aus anonymer Quelle und ist Open-Source, kann also frei verwendet werden.
+	</p>
+	<p>
+	Wie bei allen Stromchiffren wird bei ARC4 eine (pseudo-) zuf&auml;llige Bitfolge erzeugt, welche als Schl&uuml;sselstrom dient und mit dem Klartext
+	mittels XOR verkn&uuml;pft wird. Das Resultat ist der Geheimtext.
+	Grundlage f&uuml;r die Erzeugung des Bit-Stroms ist bei RC4 eine sogenannte S-Box. Diese umfasst 256 Elemente, die zun&auml;chst mit den Werten 0 
+	bis 255 gef&uuml;llt und anschlie&szlig;end mithilfe eines geheimen Schl&uuml;ssels permutiert und substituiert werden. Nach dieser Initialisierung der S-
+	Box beginnt die eigentliche Erzeugung des Bit-Stroms durch eine festgelegte Rechenvorschrift, wobei nach jedem Schritt zwei Werte in der 
+	S-Box miteinander vertauscht werden. Hierf&uuml;r sind nur recht einfache Rechenschritte erforderlich, wodurch der Algorithmus sehr leicht in 
+	Hard- und Software umzusetzen ist und relativ schnell berechenbar ist.
+	</p>
+	<p>Der Algorithmus selbst gestaltet sich wie folgt. Zun&auml;chst wird ein Bytevektor (genannt S-Box) mit initialen Werten belegt:</p>
+	
+	<pre>
+		k[] := Schl&uuml;ssel der L&auml;nge 5 bis 256 Byte
+		L   := L&auml;nge des Schl&uuml;ssels (in Byte)
+		s[] := Byte-Vektor der L&auml;nge 256 (S-Box)
+		
+		F&uuml;r i = 0 bis 255 
+			s[i] = i
+		j = 0
+		F&uuml;r i = 0 bis 255
+			j = (j + s[i] + k[i mod L]) mod 256
+			vertausche s[i] und s[j]
+	</pre>
+
+	<p>
+	Die eigentliche Generierung des Bitstroms und die Verschl&uuml;sselung gestaltet sich folgenderma&szlig;en:
+	</p>
+	
+	<pre>
+		klar[]   := Klartext der Lange X
+		cipher[] := Vektor zum Speichern des Geheimtextes
+		i = 0 
+		j = 0
+	
+		F&uuml;r n = 0 bis X-1
+			i = (i + 1) mod 256
+			j = (j + s[i]) mod 256
+			vertausche s[i] und s[j]
+			zufall = s[ (s[i] + s[j]) mod 256 ]
+			cipher[n] = zufall XOR klar[n]
+	</pre>
+	
+	<p>
+	Eine Verbesserung von RC4 wurde am 27. Oktober 2014 von Ronald Rivest und Jacob Schuldt unter dem Namen "Spritz" vorgestellt. Im Grunde 
+	sind die Algorithmen von Spritz und RC4 gleich, nur einige wenige Rechenvorschriften wurden leicht abge&auml;ndert. Dieser Algorithmus ist 
+	allerdings nur halb so schnell wie RC4, welcher selbst schon deutlich langsamer als AES (Advanced Encryption Standard) ist.
+	</p>
+	
+	<h2 id="sec">Sicherheit von ARC4</h2>
+	
+	<p>
+	F&uuml;r die Sicherheit von RC4 gilt grunds&auml;tzlich dasselbe wie f&uuml;r alle Stromchiffren. Diese sind nur dann sicher, wenn sich der zuf&auml;llige
+	Bitstrom nicht wiederholt bzw. nicht vorhersagbar ist. Hierzu ist es notwendig, dass der Schl&uuml;ssel, der zur Initialisierung benutzt wird,
+	nur einmal verwendet wird und geheim bleibt. Nach dem Geburtstagsparadoxon ist es zudem m&ouml;glich, dass zwei Schl&uuml;ssel ein und diesselbe
+	Zufallsfolge erzeugen.
+	Wie bei allen Stromchiffren bietet auch RC4 keinerlei Integrit&auml;tsschutz. Eine &Auml;nderung eines Bits im Geheimtext f&uuml;hrt direkt zur &Auml;nderung
+	des entsprechenden Bits im Klartext.
+	</p>
+	<p>
+	Jacob Appelbaum, ein bekannter Internetaktivist und Mitentwickler des Anonymisierungs-Netzwerkes TOR, ist der Ansicht, dass die National
+	Security Agency (NSA) RC4 wahrscheinlich in Echtzeit brechen k&ouml;nnte. In dieser Meinung wird er vom ber&uuml;hmten Kryptologen und
+	Sicherheitsspezialisten Bruce Schneier unterst&uuml;tzt.
+	</p>
+	<p>
+	Einige zum Teil gravierende Schw&auml;chen von RC4 zeigten Scott Fluhrer, Itsik Mantin und Adi Shamir in ihrer Arbeit <i>Weaknesses in the Key
+ 	Scheduling Algorithm of RC4</i> auf. Diese beziehen sich haupts&auml;chlich auf die Ableitung des internen Initialzustandes von RC4 aus dem 
+	Schl&uuml;ssel, welche sich aber auch auf die Generierung des Zufallsbitstroms auswirken. In dem sehr mathematisch formulierten Dokument wird 
+	anhand eines leicht abge&auml;nderten Algorithmus aufgezeigt, dass sich bestimmte Bitmuster im Schl&uuml;ssel in bestimmten Bitmustern innerhalb 
+	der S-Box von RC4 manifestieren und sich so aus dem initialen Zustand dieser je nach L&auml;nge des eingesetzten Schl&uuml;ssels gro&szlig;e Teile des 
+	Schl&uuml;ssels wieder ableiten lassen. Die Autoren zeigen allerdings, dass diese Schw&auml;che (in verminderter Schwere) auch auf den 
+	standardm&auml;&szlig;igen RC4-Algorithmus zutrifft. Zudem korrelieren offenbar zus&auml;tzlich der Input eines Schl&uuml;ssels aus einer bestimmten (relativ 
+	gro&szlig;en) Menge an schwachen Schl&uuml;sseln sehr stark mit dem Output des Pseudozufallsgenerators, wodurch sich effektive Algorithmen 
+	entwickeln lassen, um die Sicherheit von RC4 zu kompromittieren. Da ein Verfahren von Shamir und Mantin bereits mit dem zweiten Wort des 
+	Outputs des Zufallsgenerators den Unterschied des Outputs zu wirklich zuf&auml;lligen Bitfolgen erkennen kann, wurde von ihnen empfohlen, die 
+	ersten zwei W&ouml;rter des Outputs grunds&auml;tzlich zu verwerfen und nicht zur Verschl&uuml;sselung zu verwenden. Jedoch zeigte sich sp&auml;ter, dass 
+	auch bei Verwerfen der ersten beiden W&ouml;rter eine Vorhersage bwz. Zur&uuml;ckrechnung auf den Schl&uuml;ssel oder auf Teile davon mit vertretbarem 
+	Aufwand realisierbar ist (der Aufwand betr&auml;gt hierf&uuml;r ungef&auml;hr 2<sup>21</sup>; in der Kryptographie fordert man f&uuml;r sichere Verfahren 
+	jedoch einen Aufwand von mindestens 2<sup>80</sup>).
+	</p>
+	<p>
+	Eine weitere extrem schwerwiegende Schwachstelle ergibt sich zudem wie folgt: Der Schl&uuml;ssel <i>K</i>, den man RC4 &uuml;bergibt, besteht im 
+	Grunde aus einem geheimen Teil <i>sec</i> und einem sogenannten Initialiserungsvektor <i>IV</i>, der dem Angreifer bekannt ist (wie es zum
+ 	Beispiel in WEP der Fall ist), sodass <i>K = sec + IV</i>. Wird f&uuml;r den geheimen Teil des Schl&uuml;ssels &ouml;fters derselbe Wert verwendet, so 
+	ist es einem Angreifer mit geringem Aufwand m&ouml;glich, aus den entsprechenden Outputs und den bekannten Initialiserungsvektoren auf den 
+	geheimen Teil des Schl&uuml;ssels zur&uuml;ckzurechnen, wobei der n&ouml;tige Aufwand nat&uuml;rlich von der L&auml;nge des <i>IV</i> und des Schl&uuml;ssels abh&auml;ngig 
+	ist. Da in der Praxis die ersten W&ouml;rter des Klartextes oftmals immer die gleichen sind bzw. sich leicht erraten lassen (da sie zum 
+	Beispiel in Protokollen zwischen Server und Client aus Zeitstempeln, der Identit&auml;t des Clients oder &auml;hnlichem bestehen), so ist in der 
+	Praxis auf diese 
+	Weise sogar eine Ciphertext-only-Attacke m&ouml;glich; hierbei hat der Angreifer nur den verschl&uuml;sselten Text zur Verf&uuml;gung, um die Sicherheit 
+	des eingesetzten Verfahrens zu brechen. Dabei unterscheidet sich jedoch das Verfahren und der Aufwand f&uuml;r den Angriff, je nach dem ob der 
+	<i>IV</i> auf <i>sec</i> folgt oder umgekehrt. Fluhrer, Mantin und Shamir zeigen im oben genannten Dokument zudem M&ouml;glichkeiten auf, wie 
+	sich diese Schw&auml;chen in der Praxis konkret gegen bestimmte Verfahren, wie zum Beipiel WEP, einsetzen lassen. Andreas Klein beschreibt in 
+	seiner Arbeit <i>Attacks on the RC4 stream cipher</i> einen weiteren Angriff, der auf der Attacke von Fluhrer, Mantin und Shamir basiert. 
+	Hierbei beobachtet er das Verhalten des Algorithmus in der Phase der Schl&uuml;sselgenerierung und dessen Output und kann hierdurch recht 
+	effizient auf einen fr&uuml;hen Zustand der S-Box zur&uuml;ckrechnen. Zudem zeigt er, dass der Angriff, den er in dem genannten Dokument 
+	beschreibt, 
+	auch dann erfolgreich eingesetzt werden kann, wenn die ersten 256 Byte des Outputs des Algorithmus nicht zur Verschl&uuml;sselung verwendet 
+	sondern verworfen werden. Deshalb empfiehlt er, den Output der ersten 12 Runden komplett zu ignorieren, um einen Angriff unm&ouml;glich zu 
+	machen. Im M&auml;rz 2013 beschrieben zuletzt AlFardan, Bernstein, Paterson, Poettering und Schuldt ein Angriffsszenario, bei dem ein 
+	potenzieller Angreifer mehrere RC4-verschl&uuml;sselte Nachrichten, die &uuml;ber eine TLS-Verbindung gesendet werden, mitgehorcht werden, um auf 
+	den urspr&uuml;nglichen Klartext zu schlie&szlig;en. Hierbei ist es jedoch n&ouml;tig, dass derselbe Klartext &uuml;ber mehrere Verbindungen versendet wird. 
+	Hierf&uuml;r nutzen die Autoren eine statistische Neigung der Schl&uuml;sselgenerierung von RC4, die eine Unterscheidung von wirklich zuf&auml;lligen 
+	Bits m&ouml;glich macht und letztendlich zum Brechen von RC4 f&uuml;hrt. Die genannten Autoren empfehlen deshalb langfristig, auf RC4 zu verzichten 
+	und stattdessen sichere Ciphersuites zu verwenden (wie z.B. AES-CBC).
+	</p>
+	<p>
+	Insgesamt raten heute Organisationen und &Auml;mter wie die <i>Europ&auml;ische Agentur f&uuml;r Netz- und Informationssicherheit (ENISA)</i> oder das 
+	deutsche <i>Bundesamt f&uuml;r Sicherheit in der Informationstechnik (BSI)</i> von der praktischen Verwendung von RC4 ab und empfehlen 
+	andere Verfahren zu nutzen. Hierf&uuml;r bieten sich zum Beispiel die Stromchiffren <i>Rabbit</i> oder <i>Snow 3G</i> an bzw. der aktuell 
+	vermutlich am h&auml;ufigsten genutzte <i>Advanced Encryption Standard (AES)</i> (welcher allerdings selbst eine Blockchiffre ist).
+	</p>
+	
+	<h2 id="literature">Weiterf&uuml;hrende Verweise</h2>
+
+	<p>Weitere Informationen zum Thema Kryptographie und (A)RC4 finden sie beispielsweise under:</p>
+	<ul>
+		<li><a href="https://de.wikipedia.org/wiki/RC4">(A)RC4 in der deutschen Wikipedia</a></li>
+		<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">CrypTool-Skript auf deutsch</a></li>
+		<li><a href="http://www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps"><i>Weaknesses in the Key Scheduling Algorithm of RC4
+			</i>, Fluhrer, Mantin, Shamir</a></li>
+		<li><a href="http://www.isg.rhul.ac.uk/tls/"><i>On the Security of RC4 in TLS and WPA</i>, AlFardan, Bernstein, Paterson, 
+			Poettering, Schuldt</a></li>
+	</ul>
+</body>
+
+</html>
