@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.expressions.IEvaluationContext;
 import org.eclipse.core.runtime.CoreException;
@@ -209,11 +210,21 @@ public class ShowEditorsPulldownMenuAction implements IWorkbenchWindowPulldownDe
         IExtensionPoint point = Platform.getExtensionRegistry().getExtensionPoint("org.jcryptool.core.editorButton"); //$NON-NLS-1$
         IExtension extension = point.getExtensions()[0];
         IConfigurationElement element = extension.getConfigurationElements()[0];
+
+        final IHandlerService handlerService
+    		= (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+        IEvaluationContext evaluationContext
+    		= handlerService.createContextSnapshot(true);
+        ExecutionEvent event
+    		= new ExecutionEvent(null, Collections.EMPTY_MAP, null, evaluationContext);
+
         try {
             // runs the defined action
-            IActionDelegate iad = (IActionDelegate) element.createExecutableExtension("OnClickClass"); //$NON-NLS-1$
-            iad.run(null);
+            IHandler handler = (IHandler) element.createExecutableExtension("OnClickClass"); //$NON-NLS-1$
+            handler.execute(event);
         } catch (CoreException ex) {
+            LogUtil.logError(CorePlugin.PLUGIN_ID, ex);
+        } catch (ExecutionException ex) {
             LogUtil.logError(CorePlugin.PLUGIN_ID, ex);
         }
     }
