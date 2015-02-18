@@ -16,6 +16,9 @@ import org.eclipse.core.commands.State;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.e4.core.commands.ECommandService;
+import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
+import org.eclipse.e4.ui.workbench.renderers.swt.HandledContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -67,6 +70,7 @@ import org.jcryptool.fileexplorer.popup.contributions.CryptoContributionItem;
  * @author Dominik Schadow
  * @version 0.6.0
  */
+@SuppressWarnings("restriction")
 public class FileExplorerView extends ViewPart {
     private static final String MEMENTOKEY_INVISIBLE_FILES_HIDDEN = "invisibleFilesHidden";
     private TreeViewer viewer;
@@ -347,23 +351,43 @@ public class FileExplorerView extends ViewPart {
         }
 
         getViewSite().getActionBars().getMenuManager().addMenuListener(new IMenuListener() {
-            public void menuAboutToShow(IMenuManager manager) {
+            @SuppressWarnings("restriction")
+			public void menuAboutToShow(IMenuManager manager) {
                 if (!menuButtonInitialized) {
                     try {
                         IContributionItem[] items = getViewSite().getActionBars().getMenuManager().getItems();
                         for (IContributionItem item : items) {
                             if ("org.jcryptool.fileexplorer.invisibleToggle".equals(item.getId())) {
-                                CommandContributionItem invisibleToggle = (CommandContributionItem) item;
-                                State state = invisibleToggle.getCommand().getCommand().getState(RegistryToggleState.STATE_ID);
-                                if (state == null)
-                                    throw new UnsupportedOperationException(
-                                            "The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
-                                else if (!(state.getValue() instanceof Boolean))
-                                    throw new UnsupportedOperationException(
-                                            "The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
-                                else {
-                                    state.setValue(!isHideInvisible());
-                                }
+                            	if(item instanceof CommandContributionItem) {
+                            		CommandContributionItem invisibleToggle = (CommandContributionItem) item;
+                                	State state = invisibleToggle.getCommand().getCommand().getState(RegistryToggleState.STATE_ID);
+                                	if (state == null)
+                                    	throw new UnsupportedOperationException(
+                                            	"The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
+                                	else if (!(state.getValue() instanceof Boolean))
+                                    	throw new UnsupportedOperationException(
+                                            	"The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
+                                	else {
+                                    	state.setValue(!isHideInvisible());
+                                	}
+                            	} else if(item instanceof HandledContributionItem) {
+                            		HandledContributionItem invisibleToggle = (HandledContributionItem) item;
+                            		// The MCommand's element ID seems to be the command ID
+                            		// Knowing the command ID, we can retrieve the Command (not MCommand!)
+                            		// from the ECommandService
+                            		String commandId = invisibleToggle.getModel().getCommand().getElementId();
+                            		ECommandService commandService = (ECommandService)PlatformUI.getWorkbench().getService(ECommandService.class);
+                                	State state = commandService.getCommand(commandId).getState(RegistryToggleState.STATE_ID);
+                                	if (state == null)
+                                    	throw new UnsupportedOperationException(
+                                            	"The 'show invisible files' command does not have a toggle state"); //$NON-NLS-1$
+                                	else if (!(state.getValue() instanceof Boolean))
+                                    	throw new UnsupportedOperationException(
+                                            	"The 'show invisible files' command's toggle state doesn't contain a boolean value"); //$NON-NLS-1$
+                                	else {
+                                    	state.setValue(!isHideInvisible());
+                                	}
+                            	}
                             }
                         }
 
