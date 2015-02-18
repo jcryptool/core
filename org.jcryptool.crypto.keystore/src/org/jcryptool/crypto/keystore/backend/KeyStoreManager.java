@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -205,6 +206,37 @@ public class KeyStoreManager {
                 }
             }
         }
+    }
+    
+    public void backupKeystore(String pathToFile) {
+        try {
+            File backupFile = new File(pathToFile);
+            URI uri = backupFile.toURI();
+            IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
+            platformKeystore.copy(backupKeystore, EFS.OVERWRITE, null);
+        } catch (Exception ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
+        }    	
+    }
+    
+    public void restoreKeystore(String pathToFile) {
+        try {
+            File flexiProvider = new File(DirectoryService.getWorkspaceDir(), FLEXIPROVIDER_FOLDER);
+            if (!flexiProvider.exists()) {
+                flexiProvider.mkdir();
+            }
+
+            File autoBackupFile = new File(flexiProvider, "autobackup.ksf");
+            backupKeystore(autoBackupFile.getAbsolutePath());
+            
+            File backupFile = new File(pathToFile);
+            URI uri = backupFile.toURI();
+            IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
+            backupKeystore.copy(platformKeystore, EFS.OVERWRITE, null);
+            loadKeystore();
+        } catch (Exception ex) {
+            LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
+        }    	
     }
 
     /**

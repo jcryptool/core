@@ -42,6 +42,8 @@ import org.jcryptool.crypto.keystore.keys.IKeyStoreAlias;
 import org.jcryptool.crypto.keystore.keys.KeyType;
 import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
 import org.jcryptool.crypto.keystore.ui.actions.IKeyStoreActionDescriptor;
+import org.jcryptool.crypto.keystore.ui.actions.KeyStoreBackupHandler;
+import org.jcryptool.crypto.keystore.ui.actions.KeyStoreRestoreHandler;
 import org.jcryptool.crypto.keystore.ui.actions.ShadowKeyStoreHandler;
 import org.jcryptool.crypto.keystore.ui.actions.contacts.DeleteContactHandler;
 import org.jcryptool.crypto.keystore.ui.actions.contacts.NewContactHandler;
@@ -91,6 +93,9 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
     private AbstractHandler deleteKeyPairHandler = new DeleteKeyPairHandler(this);
     private AbstractHandler deleteCertificateHandler = new DeleteCertificateHandler(this);
 
+    private final String commandIdBackup = "org.jcryptool.keystore.commands.backup";
+    private final String commandIdRestore = "org.jcryptool.keystore.commands.restore";
+    
     private NodeType selectedNodeType;
     private String selectedNodeInfo;
     private IKeyStoreAlias selectedNodeAlias;
@@ -352,6 +357,11 @@ public class KeystoreView extends ViewPart implements ISelectedNodeListener, IVi
         	addContributionItem(manager, commandId,
         		KeyStorePlugin.getImageDescriptor(descriptor.getIcon()), null);
         }
+        manager.add(new Separator());
+        defineCommand(commandIdBackup, "Back up Keystore", new KeyStoreBackupHandler());
+        addContributionItem(manager, commandIdBackup, null, null);
+        defineCommand(commandIdRestore, "Restore Keystore", new KeyStoreRestoreHandler());
+        addContributionItem(manager, commandIdRestore, null, null);
     }
 
     public IKeyStoreAlias getSelectedKeyAlias() {
