@@ -29,10 +29,14 @@ import javax.crypto.SecretKey;
 
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.providers.ProviderManager2;
 import org.jcryptool.core.util.directories.DirectoryService;
@@ -213,7 +217,16 @@ public class KeyStoreManager {
             File backupFile = new File(pathToFile);
             URI uri = backupFile.toURI();
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
-            platformKeystore.copy(backupKeystore, EFS.OVERWRITE, null);
+            try {
+            	platformKeystore.copy(backupKeystore, 0, null);
+            } catch(CoreException ex) {
+            	MessageBox mbox = new MessageBox(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+            		SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+            	mbox.setMessage(Messages.KeyStoreManager_9 + pathToFile + Messages.KeyStoreManager_10);
+            	if(mbox.open() == SWT.YES) {
+            		platformKeystore.copy(backupKeystore, EFS.OVERWRITE, null);
+            	}
+            }
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         }    	
@@ -232,8 +245,13 @@ public class KeyStoreManager {
             File backupFile = new File(pathToFile);
             URI uri = backupFile.toURI();
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
-            backupKeystore.copy(platformKeystore, EFS.OVERWRITE, null);
-            loadKeystore();
+        	MessageBox mbox = new MessageBox(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+            	SWT.ICON_QUESTION | SWT.YES | SWT.NO);
+            mbox.setMessage(Messages.KeyStoreManager_11);
+            if(mbox.open() == SWT.YES) {
+            	backupKeystore.copy(platformKeystore, EFS.OVERWRITE, null);
+            	loadKeystore();
+            }
         } catch (Exception ex) {
             LogUtil.logError(KeyStorePlugin.PLUGIN_ID, ex);
         }    	
