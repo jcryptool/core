@@ -17,7 +17,6 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.e4.core.commands.ECommandService;
-import org.eclipse.e4.ui.model.application.ui.menu.MHandledItem;
 import org.eclipse.e4.ui.workbench.renderers.swt.HandledContributionItem;
 import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
@@ -351,7 +350,6 @@ public class FileExplorerView extends ViewPart {
         }
 
         getViewSite().getActionBars().getMenuManager().addMenuListener(new IMenuListener() {
-            @SuppressWarnings("restriction")
 			public void menuAboutToShow(IMenuManager manager) {
                 if (!menuButtonInitialized) {
                     try {
