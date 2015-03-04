@@ -222,7 +222,7 @@ public class KeyStoreManager {
             } catch(CoreException ex) {
             	MessageBox mbox = new MessageBox(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
             		SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-            	mbox.setMessage(Messages.KeyStoreManager_9 + pathToFile + Messages.KeyStoreManager_10);
+            	mbox.setMessage(NLS.bind(Messages.KeyStoreManager_9, pathToFile));
             	if(mbox.open() == SWT.YES) {
             		platformKeystore.copy(backupKeystore, EFS.OVERWRITE, null);
             	}
@@ -247,7 +247,7 @@ public class KeyStoreManager {
             IFileStore backupKeystore = EFS.getLocalFileSystem().getStore(uri);
         	MessageBox mbox = new MessageBox(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
             	SWT.ICON_QUESTION | SWT.YES | SWT.NO);
-            mbox.setMessage(Messages.KeyStoreManager_11);
+            mbox.setMessage(Messages.KeyStoreManager_10);
             if(mbox.open() == SWT.YES) {
             	backupKeystore.copy(platformKeystore, EFS.OVERWRITE, null);
             	loadKeystore();

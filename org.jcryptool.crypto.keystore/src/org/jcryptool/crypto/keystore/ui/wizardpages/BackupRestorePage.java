@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 public class BackupRestorePage extends WizardPage {
-	private static final String PAGENAME = "BackupRestorePage";
+	private static final String PAGENAME = "BackupRestorePage"; //$NON-NLS-1$
 
 	private Button backupButton;
 	private Button restoreButton;
@@ -37,7 +37,7 @@ public class BackupRestorePage extends WizardPage {
 		return restoreRequested;
 	}
 	
-    /** the selection listener which updates the buttons when changing from keypair to pubkey and vice versa. */
+    /** the selection listener which updates the buttons when changing from backup to restore and vice versa. */
     private final SelectionListener sl = new SelectionAdapter() {
 
         public void widgetSelected(SelectionEvent e) {
@@ -54,19 +54,19 @@ public class BackupRestorePage extends WizardPage {
 
         Text text = new Text(composite, 0);
         text.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        text.setText("You can choose to back up or to restore the JCrypTool keystore to or from a file.");
+        text.setText(Messages.BackupRestorePage_1);
         text.setEnabled(false);
         
         backupButton = new Button(composite, SWT.RADIO);
         backupButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        backupButton.setText("Back up the keystore");
-        backupButton.setToolTipText("Back up the keystore to a file");
+        backupButton.setText(Messages.BackupRestorePage_2);
+        backupButton.setToolTipText(Messages.BackupRestorePage_3);
         backupButton.addSelectionListener(sl);
 
         restoreButton = new Button(composite, SWT.RADIO);
         restoreButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        restoreButton.setText("Restore the keystore");
-        restoreButton.setToolTipText("Restore the keystore from a file");
+        restoreButton.setText(Messages.BackupRestorePage_4);
+        restoreButton.setToolTipText(Messages.BackupRestorePage_5);
         restoreButton.addSelectionListener(sl);
         
 		setControl(composite);
