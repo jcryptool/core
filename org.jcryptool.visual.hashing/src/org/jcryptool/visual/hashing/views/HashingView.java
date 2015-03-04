@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +19,7 @@ import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.util.encoders.Hex;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ST;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
@@ -37,6 +39,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
+import org.eclipse.swt.widgets.Label;
 
 /**
  * 
@@ -50,27 +53,6 @@ public class HashingView extends ViewPart {
 	 */
 	public static final String ID = "org.jcryptool.visual.hashing.views.HashingView"; //$NON-NLS-1$
 	private static final int OUTPUT_SEPERATOR = 144;
-
-//	public enum HashFunction {
-//		MD2("MD2 (128 bits)"), MD4("MD4 (128 bits)"), MD5("MD5 (128 bits)"), SHA1("SHA-1 (160 bits)"), SHA256( //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-//				"SHA-256 (256 bits)"), SHA512("SHA-512 (512 bits)"), RIPEMD160("RIPEMD-160 (160 bits)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-//
-//		private final String hashFunctionName;
-//
-//		private HashFunction(String name) {
-//			hashFunctionName = name;
-//		}
-//
-//		public HashFunction getName(String name) {
-//			for (HashFunction h : values()) {
-//				if (h.hashFunctionName.compareToIgnoreCase(name) == 0) {
-//					HashFunction value = valueOf(h.name());
-//					return value;
-//				}
-//			}
-//			return null;
-//		}
-//	}
 
 	private HashFunction hash = HashFunction.MD2;
 	private String hashInputValueHex = ""; //$NON-NLS-1$
@@ -144,7 +126,7 @@ public class HashingView extends ViewPart {
 			}
 		});
 		comboHash.setItems(new String[] { "MD2 (128 bits)", "MD4 (128 bits)", "MD5 (128 bits)", "SHA-1 (160 bits)", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				"SHA-256 (256 bits)", "SHA-512 (512 bits)", "RIPEMD-160 (160 bits)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				"SHA-2 (256 bits)", "SHA-2 (512 bits)", "RIPEMD-160 (160 bits)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		comboHash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboHash.select(0);
 
@@ -242,14 +224,6 @@ public class HashingView extends ViewPart {
 		gd_textInput.heightHint = 90;
 		textInput.setLayoutData(gd_textInput);
 
-		Group grpHashInput = new Group(compositeMain, SWT.NONE);
-		grpHashInput.setLayout(new GridLayout(1, false));
-		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		grpHashInput.setText(Messages.HashingView_10);
-
-		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY);
-		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-
 		Group grpOutput = new Group(compositeMain, SWT.NONE);
 		grpOutput.setLayout(new GridLayout(1, false));
 		grpOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
@@ -275,11 +249,19 @@ public class HashingView extends ViewPart {
 		GridData gd_textOutput = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_textOutput.heightHint = 90;
 		textOutput.setLayoutData(gd_textOutput);
+		
+		Group grpHashInput = new Group(compositeMain, SWT.NONE);
+		grpHashInput.setLayout(new GridLayout(1, false));
+		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+		grpHashInput.setText(Messages.HashingView_10);
+				
+		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY);
+		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group grpHashOutput = new Group(compositeMain, SWT.NONE);
 		grpHashOutput.setLayout(new GridLayout(1, false));
 		grpHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
-		grpHashOutput.setText(Messages.HashingView_10);
+		grpHashOutput.setText(Messages.HashingView_8);
 
 		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY);
 		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
@@ -291,6 +273,9 @@ public class HashingView extends ViewPart {
 
 		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
 		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		textDifference.invokeAction(ST.CUT);
+		textDifference.invokeAction(ST.COPY);
+		textDifference.invokeAction(ST.PASTE);
 		scrolledComposite.setContent(compositeMain);
 		scrolledComposite.setMinSize(new Point(1000, 590));
 
@@ -449,7 +434,8 @@ public class HashingView extends ViewPart {
 			int zeroBits = result.length() - result.replace("0", "").length(); //$NON-NLS-1$ //$NON-NLS-2$
 			int oneBits = result.length() - result.replace("1", "").length(); //$NON-NLS-1$ //$NON-NLS-2$
 			double percent = ((double) oneBits / (double) count) * 100;
-			int[] sequence = find(result);
+			int[] sequence = findUnchanged(result);
+			int[] sequenceChanged = findChanged(result);
 
 			result = result.replaceAll(".{8}", "$0#"); //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -473,6 +459,11 @@ public class HashingView extends ViewPart {
 			textDifference.setText(result + "\n" + String.format("%1$,.2f", percent) //$NON-NLS-1$ //$NON-NLS-2$
 					+ Messages.HashingView_12 + oneBits + Messages.HashingView_13 + (zeroBits + oneBits)
 					+ Messages.HashingView_14 + sequence[1] + Messages.HashingView_15 + sequence[0] + "."); //$NON-NLS-1$
+			
+			if (sequenceChanged[0] != -1) {
+				textDifference.append(Messages.HashingView_17 + sequenceChanged[1] + Messages.HashingView_15 + sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2]);
+			}
+			
 			for (int i = 0; i < bitArray.length; i++) {
 				if (bitArray[i] == '1') {
 					StyleRange bits = new StyleRange();
@@ -485,7 +476,7 @@ public class HashingView extends ViewPart {
 		}
 	}
 
-	private int[] find(String s) {
+	private int[] findUnchanged(String s) {
 		int[] result = new int[2];
 		String currentSequence = null;
 		String prevSequence = null;
@@ -508,6 +499,44 @@ public class HashingView extends ViewPart {
 				result[1] = pos;
 			}
 		}
+		return result;
+	}
+
+	private int[] findChanged(String s) {
+		int[] result = new int[3];
+		result[0] = -1;
+		result[1] = -1;
+		result[2] = -1;
+		
+		String currentSequence = null;
+		String prevSequence = null;
+		
+		Matcher m = Pattern.compile("(1+)").matcher(s); //$NON-NLS-1$
+		if (m.find()) {
+			prevSequence = m.group();
+			currentSequence = m.group();
+			result[0] = prevSequence.length();
+			result[1] = m.start();
+			while (m.find()) {
+				currentSequence = m.group();
+				if (prevSequence.length() < currentSequence.length()) {
+					prevSequence = m.group();
+					int pos = m.start();
+					
+					result[0] = prevSequence.length();
+					result[1] = pos;
+				}
+			}
+		}
+
+		int counter = 0;
+		if (prevSequence != null) {
+			m = Pattern.compile(prevSequence).matcher(s);
+			while (m.find()) {
+				counter++;
+			}
+		}
+		result[2] = counter;
 		return result;
 	}
 

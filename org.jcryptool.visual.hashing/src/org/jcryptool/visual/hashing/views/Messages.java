@@ -13,13 +13,17 @@ public class Messages extends NLS {
 	public static String HashingView_14;
 	public static String HashingView_15;
 	public static String HashingView_16;
+	public static String HashingView_17;
+	public static String HashingView_18;
 	public static String HashingView_2;
 	public static String HashingView_3;
 	public static String HashingView_4;
 	public static String HashingView_5;
 	public static String HashingView_6;
 	public static String HashingView_7;
+	public static String HashingView_8;
 	public static String HashingView_9;
+	public static String HashingView_mntmNewItem_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
