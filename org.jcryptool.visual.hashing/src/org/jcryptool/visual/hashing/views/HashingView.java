@@ -40,6 +40,12 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 
 /**
  * 
@@ -87,6 +93,20 @@ public class HashingView extends ViewPart {
 		compositeMain.setLayout(new GridLayout(2, false));
 
 		styledTextDescription = new StyledText(compositeMain, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
+		styledTextDescription.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				styledTextDescription.setSelection(0, 0);
+			}
+		});
+		styledTextDescription.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					styledTextDescription.selectAll();
+				}
+			}
+		});
 		styledTextDescription.setEditable(false);
 		GridData gd_styledTextDescription = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
 		gd_styledTextDescription.widthHint = 300;
@@ -99,6 +119,29 @@ public class HashingView extends ViewPart {
 		header.length = Messages.HashingView_0.length();
 		header.fontStyle = SWT.BOLD;
 		styledTextDescription.setStyleRange(header);
+
+		Menu menu_1 = new Menu(styledTextDescription);
+		styledTextDescription.setMenu(menu_1);
+
+		MenuItem mntmCopy_1 = new MenuItem(menu_1, SWT.NONE);
+		mntmCopy_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				styledTextDescription.copy();
+			}
+		});
+		mntmCopy_1.setText(Messages.HashingView_mntmCopy_text);
+
+		MenuItem menuItem_1 = new MenuItem(menu_1, SWT.SEPARATOR);
+
+		MenuItem mntmSelectAll_1 = new MenuItem(menu_1, SWT.NONE);
+		mntmSelectAll_1.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				styledTextDescription.selectAll();
+			}
+		});
+		mntmSelectAll_1.setText(Messages.HashingView_mntmSelectAll_text);
 
 		Group grpHashfunction = new Group(compositeMain, SWT.NONE);
 		grpHashfunction.setLayout(new GridLayout(1, false));
@@ -204,6 +247,20 @@ public class HashingView extends ViewPart {
 		grpInput.setText(Messages.HashingView_7);
 
 		textInput = new Text(grpInput, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		textInput.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				textInput.setSelection(0, 0);
+			}
+		});
+		textInput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					textInput.selectAll();
+				}
+			}
+		});
 		textInput.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -230,6 +287,20 @@ public class HashingView extends ViewPart {
 		grpOutput.setText(Messages.HashingView_9);
 
 		textOutput = new Text(grpOutput, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		textOutput.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				textOutput.setSelection(0, 0);
+			}
+		});
+		textOutput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					textOutput.selectAll();
+				}
+			}
+		});
 		textOutput.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
@@ -249,13 +320,21 @@ public class HashingView extends ViewPart {
 		GridData gd_textOutput = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
 		gd_textOutput.heightHint = 90;
 		textOutput.setLayoutData(gd_textOutput);
-		
+
 		Group grpHashInput = new Group(compositeMain, SWT.NONE);
 		grpHashInput.setLayout(new GridLayout(1, false));
 		grpHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 		grpHashInput.setText(Messages.HashingView_10);
-				
+
 		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY);
+		textHashInput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					textHashInput.selectAll();
+				}
+			}
+		});
 		textHashInput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group grpHashOutput = new Group(compositeMain, SWT.NONE);
@@ -264,6 +343,14 @@ public class HashingView extends ViewPart {
 		grpHashOutput.setText(Messages.HashingView_8);
 
 		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY);
+		textHashOutput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					textHashOutput.selectAll();
+				}
+			}
+		});
 		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group grpUnterschied = new Group(compositeMain, SWT.NONE);
@@ -271,8 +358,45 @@ public class HashingView extends ViewPart {
 		grpUnterschied.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 		grpUnterschied.setText(Messages.HashingView_11);
 
-		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.V_SCROLL);
+		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.FULL_SELECTION | SWT.READ_ONLY | SWT.WRAP);
+		textDifference.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				textDifference.setSelection(0, 0);
+			}
+		});
+		textDifference.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.stateMask == SWT.CTRL && e.keyCode == 'a') {
+					textDifference.selectAll();
+				}
+			}
+		});
 		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+
+		Menu menu = new Menu(textDifference);
+		textDifference.setMenu(menu);
+
+		MenuItem mntmCopy = new MenuItem(menu, SWT.NONE);
+		mntmCopy.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				textDifference.copy();
+			}
+		});
+		mntmCopy.setText(Messages.HashingView_mntmCopy_text);
+
+		MenuItem menuItem = new MenuItem(menu, SWT.SEPARATOR);
+
+		MenuItem mntmSelectAll = new MenuItem(menu, SWT.NONE);
+		mntmSelectAll.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				textDifference.selectAll();
+			}
+		});
+		mntmSelectAll.setText(Messages.HashingView_mntmSelectAll_text);
 		textDifference.invokeAction(ST.CUT);
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
@@ -459,11 +583,12 @@ public class HashingView extends ViewPart {
 			textDifference.setText(result + "\n" + String.format("%1$,.2f", percent) //$NON-NLS-1$ //$NON-NLS-2$
 					+ Messages.HashingView_12 + oneBits + Messages.HashingView_13 + (zeroBits + oneBits)
 					+ Messages.HashingView_14 + sequence[1] + Messages.HashingView_15 + sequence[0] + "."); //$NON-NLS-1$
-			
+
 			if (sequenceChanged[0] != -1) {
-				textDifference.append(Messages.HashingView_17 + sequenceChanged[1] + Messages.HashingView_15 + sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2]);
+				textDifference.append(Messages.HashingView_17 + sequenceChanged[1] + Messages.HashingView_15
+						+ sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2]);
 			}
-			
+
 			for (int i = 0; i < bitArray.length; i++) {
 				if (bitArray[i] == '1') {
 					StyleRange bits = new StyleRange();
@@ -507,10 +632,10 @@ public class HashingView extends ViewPart {
 		result[0] = -1;
 		result[1] = -1;
 		result[2] = -1;
-		
+
 		String currentSequence = null;
 		String prevSequence = null;
-		
+
 		Matcher m = Pattern.compile("(1+)").matcher(s); //$NON-NLS-1$
 		if (m.find()) {
 			prevSequence = m.group();
@@ -522,7 +647,7 @@ public class HashingView extends ViewPart {
 				if (prevSequence.length() < currentSequence.length()) {
 					prevSequence = m.group();
 					int pos = m.start();
-					
+
 					result[0] = prevSequence.length();
 					result[1] = pos;
 				}

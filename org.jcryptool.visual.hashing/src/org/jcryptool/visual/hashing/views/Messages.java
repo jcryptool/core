@@ -23,7 +23,8 @@ public class Messages extends NLS {
 	public static String HashingView_7;
 	public static String HashingView_8;
 	public static String HashingView_9;
-	public static String HashingView_mntmNewItem_text;
+	public static String HashingView_mntmCopy_text;
+	public static String HashingView_mntmSelectAll_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
