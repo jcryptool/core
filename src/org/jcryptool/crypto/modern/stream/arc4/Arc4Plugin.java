@@ -3,14 +3,14 @@ package org.jcryptool.crypto.modern.stream.arc4;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
- * The activator class controls the plug-in life cycle
- * 
+ * The activator class controls the plug-in life cycle.
+ *
  * @author David
- * @version 0.1
+ * @version 1.4
  */
 public class Arc4Plugin extends AbstractUIPlugin {
 
-	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "org.jcryptool.crypto.modern.stream.arc4"; //$NON-NLS-1$
+    /** The plug-in ID. */
+    public static final String PLUGIN_ID = "org.jcryptool.crypto.modern.stream.arc4";//$NON-NLS-1$
 
 }

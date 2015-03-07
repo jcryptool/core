@@ -3,36 +3,41 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ARC4 Bedienung ARC4</title>
+    <title>ARC4-Bedienung</title>
 </head>
 
 <body>
-<h1 style="text-align: center">Bedienung ARC4/Spritz</h3>
+<h1 style="text-align: center">Bedienung des Eingabedialogs von ARC4/Spritz</h1>
 
-<p>Diese Seite erkl&auml;rt die Bedienung der Ver-/Entschl&uuml;sselungsoberfl&auml;che der ARC4-Verschl&uuml;sselung. Allgemeine Informationen zu ARC4 und Spritz: <a href="../tutorial.html">ARC4-Verschl&uuml;sselung.</a> </p>
+<p>Diese Seite erkl&auml;rt die Bedienung der Ver-/Entschl&uuml;sselungsoberfl&auml;che der ARC4-Verschl&uuml;sselung. Allgemeine Informationen zu ARC4 und Spritz: siehe <a href="../tutorial.html">ARC4/Spritz-Verschl&uuml;sselung</a>.</p>
 
 <p>Im Folgenden werden die Optionengruppen des Assistenten vorgestellt.</p>
 
-<h3>Operation - Verschl&uuml;sseln oder Entschl&uuml;sseln</h3>
-<p>
-Da ARC4 eine Symetrische Verschl&uuml;sselung ist, haben die Buttons Verschl&uuml;sseln und Entschl&uuml;sseln keine Auswirkung auf den Algorithmus. Denn Zufalsbittfolge xor Klartext ergibt chiffrat und chiffrat xor Zufalsbittfolge ergibt wieder den Klartext. </p>
-
+<h3>Operation - Verschl&uuml;sseln  oder Entschl&uuml;sseln</h3>
+<p>Da ARC4 eine symmetrische Verschl&uuml;sselung ist,  haben die Buttons &bdquo;Verschl&uuml;sseln&ldquo; und &bdquo;Entschl&uuml;sseln&ldquo; keine Auswirkung auf den  Algorithmus: Zufallsbitfolge xor Klartext ergibt Chiffrat, und Chiffrat xor Zufallsbitfolge  ergibt wieder den Klartext.</p>
 <h3>Varianten von ARC4</h3>
-<p>Da ARC4 nicht nur in einer Variante exitiert gibt es hier ebenfalls die M&ouml;glichkeit zwischen mehreren zu w&auml;hlen. F&uuml;r genauere Informationen <a href="../tutorial.html">ARC4-Verschl&uuml;sselung</a></p>
+<table width="100%" border="0">
+  <tr>
+<td>Da  ARC4 nicht nur in einer Variante existiert, gibt es hier die M&ouml;glichkeit,  zwischen zweien zu w&auml;hlen. Bei Spritz hat man zus&auml;tzlich die M&ouml;glichkeit, den Parameter  w zu setzen. F&uuml;r genauere Informationen wie Spritz funktioniert, siehe <a href="../tutorial.html">ARC4-Verschl&uuml;sselung</a>.<td>
+<td><img src="arc4-spritz.PNG" width="231" height="31" alt="hex-binaer" align="middle"/></td>
+</tr>
+</table>
 
-<h3>Schl&uuml;ssel wahl</h3>
+<h3>Schl&uuml;sselwahl</h3>
 
 <table width="100%" border="0">
   <tr>
-    <td>Sie haben die M&ouml;glichkeit zwischen Hexadezimaler und Bin&auml;rer Schl&uuml;sseldarstellung zu w&auml;hlen. Wenn Sie anfangen zuerst den Schl&uuml;ssel in Hexadezimal einzugeben und sich umentscheiden ihn weiter in Bin&auml;r ein zu geben, wird er automatisch umgewandelt.<br><br></td>
+    <td>Sie  haben die M&ouml;glichkeit, zwischen hexadezimaler und bin&auml;rer Schl&uuml;sseldarstellung  zu w&auml;hlen. Wenn Sie den Schl&uuml;ssel zuerst hexadezimal eingeben, sich dann umentscheiden und  ihn weiter bin&auml;r eingeben, wird er automatisch umgewandelt.<br><br></td>
     <td><img src="hex-binaer.PNG" width="99" height="45" alt="hex-binaer" align="middle"/></td>
   </tr>
+  </table>
+  <table width="100%" border="0">
   <tr>
-    <td>F&uuml;r ein schnelles ausprobieren des Algorithmus hat man die M&ouml;glichkeit sich zuf&auml;llige Schl&uuml;ssel oder einen Schl&uuml;ssel mit nur 0 Bits zu generieren. Achtung: falls man seine Eingabe wieder entschl&uuml;sseln m&ouml;chte und sich einen Zuf&auml;lligen Schl&uuml;ssel generieren hat lassen, sollte man ihn kopiert haben.<p></p></td>
+    <td>F&uuml;r  ein schnelles Ausprobieren des Algorithmus hat man die M&ouml;glichkeit, sich  zuf&auml;llige Schl&uuml;ssel oder einen Schl&uuml;ssel mit nur 0-Bits zu generieren. Achtung:  Falls man seine Eingabe wieder entschl&uuml;sseln m&ouml;chte und sich einen zuf&auml;lligen  Schl&uuml;ssel generieren hat lassen, sollte man ihn kopiert haben.      <p></p></td>
     <td><img src="generieren.PNG" width="312" height="45" alt="generieren" align="middle"/></td>
   </tr>
   <tr>
-    <td colspan="2">Der "Fertig"-Button wird immer nur aktiv bei vollen Byte eingaben, sprich Nibble sind nicht erlaubt. Ebenfalls gelten hier die Begrenzungen die der Algorithmus vorgibt, mindestens 5 Byte und maximal 256 Byte.</td>
+    <td colspan="2">Der  &quot;Fertig&quot;-Button wird immer nur aktiv bei vollen Byte-Eingaben, sprich  Nibble sind nicht erlaubt. Ebenfalls gelten hier die Begrenzungen, die der  Algorithmus f&uuml;r Schl&uuml;ssel vorgibt: mindestens 5 Byte und  maximal 256 Byte.</td>
   </tr>
 </table>
 
