@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>ARC4-Algorithmus</title>
+</head>
+<body>
+	<h1 style="text-align: center">Visualisierung des ARC4-Algorithmus</h1>
+	
+	<p>Willkommen zum Hilfetext der Visualisierung des <b>ARC4/Spritz</b>-Algorithmus. Diese Hilfe beschreibt die Punkte:</p>
+	<ul>
+		<li><a href="#func">Funktionsweise von ARC4</a></li>
+		<li><a href="#sec">Sicherheit von ARC4</a></li>
+		<li><a href="#user_instruct">Benutzerinstruktionen</a></li>
+		<li><a href="#example">Beispiel</a></li>
+		<li><a href="#literature">Weiterf&uuml;hrende Verweise</a></li>
+	</ul>
+	<p>Nat&uuml;rlich m&uuml;ssen Sie nicht alle Kapitel lesen, um das Plug-in bedienen zu k&ouml;nnen. Wenn Sie nicht an der Geschichte von 
+	RC4, seinem Algorithmus oder seinen Sicherheitsaspekten interessiert sind, k&ouml;nnen Sie auch direkt zu den Nutzerinstruktionen 
+	springen.</p>
+	
+	<h2 id="func">Funktionsweise von ARC4</h2>
+	
+	<p>
+	Bei RC4 beziehungsweise ARC4 handelt es sich um eine kryptographische Stromchiffre. Bekannt und verbreitet wurde sie vor allem durch die
+	Verwendung in diversen Standards, wie zum Beispiel HTTPS, SSH1 oder WEP/WPA.
+	Im Jahr 1987 entwickelte Ronald L. Rivest RC4 als Eigenmarke von RSA Security Inc., heute eine Tochtergesellschaft von EMC Corporation. 
+	Somit ist RC4 eigentlich kein &ouml;ffentlich zug&auml;nglicher Krypto-Algorithmus. Alleged RC4 (ARC4) dagegen basiert auf einer 
+	Quelltext-Ver&ouml;ffentlichung aus dem Jahr 1994 aus anonymer Quelle und ist Open-Source, kann also frei verwendet werden.
+	</p>
+	<p>
+	Wie bei allen Stromchiffren wird bei ARC4 eine (pseudo-)zuf&auml;llige Bitfolge erzeugt, die als Schl&uuml;sselstrom dient und mit dem 
+	Klartext mittels XOR verkn&uuml;pft wird. Das Resultat ist der Geheimtext.
+	Grundlage f&uuml;r die Erzeugung des Bit-Stroms ist bei RC4 eine sogenannte S-Box. Diese S-Box ist ein Bytevektor mit 256 Elementen, die 
+	zun&auml;chst mit den Werten 0 bis 255 gef&uuml;llt und anschlie&szlig;end mithilfe eines geheimen Schl&uuml;ssels permutiert werden. 
+	Nach dieser Initialisierung der S-Box beginnt die eigentliche Erzeugung des Bit-Stroms durch eine festgelegte Rechenvorschrift, wobei 
+	nach jedem Schritt zwei Werte in der S-Box miteinander vertauscht werden. Hierf&uuml;r sind nur recht einfache Rechenschritte 
+	erforderlich, wodurch der Algorithmus sehr leicht in Hard- und Software umgesetzt werden kann und relativ schnell (im Vergleich zu 
+	anderen Stromchiffren) berechenbar ist.
+	</p>
+	<p>Der Algorithmus selbst gestaltet sich wie folgt. Zun&auml;chst wird ein Bytevektor (genannt S-Box) mit initialen Werten belegt:</p>
+	
+	<pre>
+		k[] := Schl&uuml;ssel der L&auml;nge 5 bis 256 Byte
+		L   := L&auml;nge des Schl&uuml;ssels (in Byte)
+		s[] := Byte-Vektor der L&auml;nge 256 (S-Box)
+		
+		F&uuml;r i = 0 bis 255 
+			s[i] = i
+		j = 0
+		F&uuml;r i = 0 bis 255
+			j = (j + s[i] + k[i mod L]) mod 256
+			vertausche s[i] und s[j]
+	</pre>
+
+	<p>
+	Die eigentliche Generierung des Bitstroms und die Verschl&uuml;sselung gestalten sich folgenderma&szlig;en:
+	</p>
+	
+	<pre>
+		klar[]   := Klartext der L&auml;nge X
+		cipher[] := Vektor zum Speichern des Geheimtextes
+		i = 0 
+		j = 0
+	
+		F&uuml;r n = 0 bis X-1
+			i = (i + 1) mod 256
+			j = (j + s[i]) mod 256
+			vertausche s[i] und s[j]
+			zufall = s[ (s[i] + s[j]) mod 256 ]
+			cipher[n] = zufall XOR klar[n]
+	</pre>
+	
+	<p>
+	Eine Verbesserung von RC4 wurde am 27. Oktober 2014 von Ronald Rivest und Jacob Schuldt unter dem Namen "Spritz" vorgestellt. Im Grunde 
+	sind die Algorithmen von Spritz und RC4 gleich, nur einige wenige Rechenvorschriften wurden leicht abge&auml;ndert. Zudem wurde ein neuer 
+	Parameter w eingef&uuml;hrt, der ungerade Werte von 1 bis 255 annehmen kann und zu einer erh&ouml;hten Sicherheit beitragen soll. 
+	Genaueres zu Spritz finden Sie in den unten aufgelisteten Verweisen (vor allem in dem Artikel von Bruce Schneier).
+	</p>
+	
+	<h2 id="sec">Sicherheit von ARC4</h2>
+	
+	<p>
+	F&uuml;r die Sicherheit von RC4 gilt grunds&auml;tzlich dasselbe wie f&uuml;r alle Stromchiffren. Diese sind nur dann sicher, wenn sich 
+	der zuf&auml;llige Bitstrom nicht wiederholt bzw. nicht vorhersagbar ist. Hierzu ist es notwendig, dass der Schl&uuml;ssel, der zur 
+	Initialisierung benutzt wird, nur einmal verwendet wird und geheim bleibt.
+	Wie bei allen Stromchiffren bietet auch RC4 keinerlei Integrit&auml;tsschutz. Eine &Auml;nderung eines Bits im Geheimtext f&uuml;hrt 
+	direkt zur &Auml;nderung des entsprechenden Bits im Klartext.
+	</p>
+	<p>
+	Einige zum Teil gravierende Schw&auml;chen von RC4 zeigten Scott Fluhrer, Itsik Mantin und Adi Shamir in ihrer Arbeit <i>Weaknesses in 
+	the Key Scheduling Algorithm of RC4</i> auf. Diese Schw&auml;chen beziehen sich haupts&auml;chlich auf die Ableitung des internen 
+	Initialzustandes von RC4 aus dem Schl&uuml;ssel, die sich aber auch auf die Generierung des Zufallsbitstroms auswirken. In dem sehr 
+	mathematisch formulierten Dokument wird anhand eines leicht abge&auml;nderten Algorithmus aufgezeigt, dass sich bestimmte Bitmuster im 
+	Schl&uuml;ssel in bestimmten Bitmustern innerhalb der S-Box von RC4 manifestieren und sich so aus dem initialen Zustand dieser je nach 
+	L&auml;nge des eingesetzten Schl&uuml;ssels gro&szlig;e Teile des Schl&uuml;ssels wieder ableiten lassen. Die Autoren zeigen, dass diese 
+	Schw&auml;che (in verminderter Schwere) auch auf den standardm&auml;&szlig;igen RC4-Algorithmus zutrifft. Zudem korreliert offenbar der 
+	Input eines Schl&uuml;ssels aus einer bestimmten (relativ gro&szlig;en) Menge an schwachen Schl&uuml;sseln sehr stark mit dem Output des 
+	Pseudozufallsgenerators, wodurch sich effektive Algorithmen entwickeln lassen, um die Sicherheit von RC4 zu kompromittieren. Da ein 
+	Verfahren von Shamir und Mantin bereits mit dem zweiten Wort des Outputs des Zufallsgenerators den Unterschied des Outputs zu wirklich 
+	zuf&auml;lligen Bitfolgen erkennen kann, wurde von ihnen empfohlen, die ersten zwei W&ouml;rter des Outputs grunds&auml;tzlich zu 
+	verwerfen und nicht zur Verschl&uuml;sselung zu verwenden. Jedoch zeigte sich sp&auml;ter, dass auch bei Verwerfen der ersten beiden 
+	W&ouml;rter eine Vorhersage bzw. Zur&uuml;ckrechnung auf den Schl&uuml;ssel oder auf Teile davon mit vertretbarem Aufwand realisierbar 
+	ist (der Aufwand betr&auml;gt hierf&uuml;r ungef&auml;hr 2<sup>21</sup>; in der Kryptographie fordert man heutztage f&uuml;r sichere 
+	Verfahren jedoch einen Aufwand von mindestens 2<sup>80</sup>).
+	</p>
+	<p>
+	Eine weitere extrem schwerwiegende Schwachstelle ergibt sich wie folgt: Der Schl&uuml;ssel <i>K</i>, den man RC4 &uuml;bergibt, besteht 
+	aus einem geheimen Teil <i>sec</i> und einem sogenannten Initialisierungsvektor <i>IV</i>, der dem Angreifer bekannt ist (wie es zum
+ 	Beispiel in WEP der Fall ist), sodass <i>K = sec + IV</i>. Wird f&uuml;r den geheimen Teil des Schl&uuml;ssels &ouml;fters derselbe Wert 
+	verwendet, so ist es einem Angreifer mit geringem Aufwand m&ouml;glich, aus den entsprechenden Outputs und den bekannten 
+	Initialisierungsvektoren auf den geheimen Teil des Schl&uuml;ssels zur&uuml;ckzurechnen, wobei der n&ouml;tige Aufwand nat&uuml;rlich von 
+	der L&auml;nge des <i>IV</i> und des Schl&uuml;ssels abh&auml;ngig ist. Da in der Praxis die ersten W&ouml;rter des Klartextes oftmals 
+	immer die gleichen sind bzw. sich leicht erraten lassen (da sie zum Beispiel in Protokollen zwischen Server und Client aus Zeitstempeln, 
+	der Identit&auml;t des Clients oder &auml;hnlichem bestehen), so ist in der Praxis auf diese Weise sogar eine Ciphertext-only-Attacke 
+	m&ouml;glich: Hierbei hat der Angreifer nur den verschl&uuml;sselten Text zur Verf&uuml;gung, um die Sicherheit des eingesetzten 
+	Verfahrens zu brechen. Dabei unterscheiden sich das Verfahren und der Aufwand f&uuml;r den Angriff, je nachdem, ob der 
+	<i>IV</i> auf <i>sec</i> folgt oder umgekehrt. Fluhrer, Mantin und Shamir zeigen im oben genannten Dokument zudem M&ouml;glichkeiten auf, 
+	wie sich diese Schw&auml;chen in der Praxis konkret gegen bestimmte Verfahren, wie zum Beipiel WEP, einsetzen lassen. Andreas Klein 
+	beschreibt in seiner Arbeit <i>Attacks on the RC4 stream cipher</i> einen weiteren Angriff, der auf der Attacke von Fluhrer, Mantin und 
+	Shamir basiert. Hierbei beobachtet er das Verhalten des Algorithmus in der Phase der Schl&uuml;sselgenerierung und dessen Output und kann 
+	hierdurch recht effizient auf einen fr&uuml;hen Zustand der S-Box zur&uuml;ckrechnen. Zudem zeigt er, dass der Angriff, den er in dem 
+	genannten Dokument beschreibt, auch dann erfolgreich eingesetzt werden kann, wenn die ersten 256 Byte des Outputs des Algorithmus nicht 
+	zur Verschl&uuml;sselung verwendet sondern verworfen werden. Deshalb empfiehlt er, den Output der ersten 12 Runden komplett zu 
+	ignorieren, um einen Angriff unm&ouml;glich zu machen (wobei der Autor eine Runde als 256 Byte Output definiert). Im M&auml;rz 2013 
+	beschrieben zuletzt AlFardan, Bernstein, Paterson, Poettering und Schuldt ein Angriffsszenario, bei dem ein potenzieller Angreifer 
+	mehrere RC4-verschl&uuml;sselte Nachrichten, die &uuml;ber eine TLS-Verbindung gesendet werden, mitgehorcht werden, um auf 
+	den urspr&uuml;nglichen Klartext zu schlie&szlig;en. Hierbei ist es jedoch n&ouml;tig, dass derselbe Klartext &uuml;ber mehrere 
+	Verbindungen versendet wird. Hierf&uuml;r nutzen die Autoren eine statistische Neigung der Schl&uuml;sselgenerierung von RC4, die eine 
+	Unterscheidung von wirklich zuf&auml;lligen Bits m&ouml;glich macht und letztendlich zum Brechen von RC4 f&uuml;hrt. Die genannten 
+	Autoren empfehlen deshalb langfristig, auf RC4 zu verzichten und stattdessen sichere Ciphersuites zu verwenden (wie z.B. AES-GCM).
+	</p>
+	<p>
+	Laut einem Artikel vom 20.01.2015, der auf der deutschen IT-News-Website <i>golem.de</i> erschien, k&uuml;ndigten zwei 
+	Forscherteams unabh&auml;ngig voneinander neue Angriffe auf RC4 an. Diese sollen offenbar in naher Zukunft ver&ouml;ffentlicht werden. 
+	Den ganzen Artikel kann man <a href="http://www.golem.de/news/verschluesselung-neue-angriffe-auf-rc4-1501-111805.html">hier</a> nachlesen.
+	</p>
+	<p>
+	Insgesamt raten heute alle relevanten Organisationen und &Auml;mter wie die <i>Europ&auml;ische Agentur f&uuml;r Netz- und 
+	Informationssicherheit (ENISA)</i> oder das deutsche <i>Bundesamt f&uuml;r Sicherheit in der Informationstechnik (BSI)</i> von der 
+	praktischen Verwendung von RC4 ab und empfehlen, andere Verfahren zu nutzen. Hierf&uuml;r bieten sich zum Beispiel die Stromchiffren 
+	<i>Rabbit</i> oder <i>Snow 3G</i> an bzw. die Blockchiffre <i>Advanced Encryption Standard (AES)</i>, die aktuell vermutlich am 
+	h&auml;ufigsten genutzt wird.
+	Seit Februar 2015 hat die IETF die Benutzung von RC4 in TLS mit dem RFC 7465 untersagt (vergleiche <a href="http://www.heise.de/newsticker/meldung/IETF-verbietet-RC4-Verschluesselung-in-TLS-2556520.html">die Heise-Meldung vom 20.2.15</a>).
+	</p>
+	
+	<h2 id="user_instruct">Benutzerinstruktionen</h2>
+
+	<p>Starten Sie die Visualisierung von ARC4, indem Sie im Men&uuml;punkt <i>Visualisierungen</i> den Punkt <i>ARC4 / Spritz</i> anklicken.
+	Daraufhin &ouml;ffnet sich ein neues Fenster. In diesem Fenster sehen Sie oben einen beschreibenden Text zur Visualisierung und zu ihrer 
+	Benutzung. Anweisungen zur Nutzung und Informationen finden Sie auch in den Tooltips, die eingeblendet werden, wenn Sie mit dem Cursor 
+	&uuml;ber ein Element, wie zum Beispiel einen Knopf, fahren.
+	</p>
+	<p>
+	Unter dem Text finden Sie eine mit <i>Byte-Vektor</i> bezeichnte, zweidimensionale Matrix. Diese stellt die S-Box des Algorithmus dar 
+	und ist bereits mit den initialen Werten 0 bis 255 in hexadezimaler Darstellung gef&uuml;llt.</p>
+	<img src="screenshot_vector.png" width="80%" height="80%" alt="S-Box">
+	
+	<p>Rechts davon finden Sie einen Kasten mit dem Namen <i>Variablen</i>.
+	Hier sehen Sie die internen Variablenwerte <i>i</i> und <i>j</i>, sowie die Anzahl der bereits erledigten 
+	Schritte des Algorithmus. Alle drei Werte sind zu Beginn mit 0 vorbelegt und werden sowohl in dezimaler als auch in hexadezimaler 
+	Schreibweise dargestellt.</p>
+	<img src="screenshot_variables.png" alt="Variablen">
+	
+	<p>Unter diesem Kasten finden Sie einen weiteren, mit dem Sie den 
+	Ablauf des Algorithmus steuern k&ouml;nnen. In das Feld <i>Zahl der Schritte</i> kann eine positive Zahl eingetragen werden. Mit einem 
+	Klick auf <i>Ausf&uuml;hren</i> f&uuml;hrt der Algorithmus die eingetragene Zahl an Schritten durch. Mit einem Klick auf <i>Alles 
+	verschl&uuml;sseln</i> wird der Algorithmus auf einmal vollst&auml;ndig durchlaufen. Beachten Sie, dass der Algorithmus hier 272 Schritte 
+	hat. 256 davon werden zur Initialiserung der S-Box ben&ouml;tigt. In den &uuml;brigen 16 Schritten werden dann f&uuml;r den 16 Byte 
+	langen Klartext 16 Zufalls-Bytes zur Verschl&uuml;sselung generiert und XOR-verkn&uuml;pft.</p>
+	<img src="screenshot_control.png" alt="ScreenshotControl">
+
+	<p>Im Kasten darunter (<i>Auswahl des Algorithmus</i>) kann man den gew&uuml;nschten Algorithmus w&auml;hlen. Hierbei stehen der 
+	standardm&auml;&szlig;ige ARC4 und die neuere Version Spritz zur Verf&uuml;gung. Bei der Auswahl von Spritz wird noch ein weiterer 
+	Parameter <i>w</i> ben&ouml;tigt. Dieser l&auml;sst sich &uuml;ber die Dropdown-Box einstellen, die aktiv wird, sobald man Spritz 
+	ausw&auml;hlt. Zul&auml;ssige Werte f&uuml;r <i>w</i> sind dabei alle ungeraden Zahlen zwischen 1 und 255 (inklusive der Randwerte 1 und 
+	255). Man kann die Auswahl des Algorithmus nur &auml;ndern, solange der Algorithmus noch nicht gestartet wurde.</p>
+	<img src="screenshot_choose.png" alt="Auswahl">
+	
+	<p>Darunter befindet sich ein weiterer Kasten namens <i>Diverse Einstellungen</i>. Hier k&ouml;nnen Sie mit den Radio-Buttons 
+	<i>&Auml;nderungen hervorheben</i> und <i>&Auml;nderungen nicht hervorheben</i> bestimmen, ob &Auml;nderungen an der S-Box farbig 
+	hervorgehoben werden sollen. Mit dem Button <i>Z&auml;hler auf Null</i> setzen Sie den Algorithmus auf Schritt 0 zur&uuml;ck, d.h. dass 
+	alle Operationen r&uuml;ckg&auml;ngig gemacht werden (Klartext und Schl&uuml;ssel bleiben aber unver&auml;ndert). Mit dem Button 
+	<i>Randomisieren</i> k&ouml;nnen Sie das Plug-in dazu bewegen, Schl&uuml;ssel und Klartext zuf&auml;llig neu zu generieren. Das 
+	funktionert nat&uuml;rlich nur, solange der Algorithmus noch nicht gestartet wurde.</p>
+	<img src="screenshot_misc.png" alt="Diverses">
+	
+	<p>Unter der S-Box befinden sich 4 Vektoren, die den Schl&uuml;ssel, den Klartext, die generierten Zufallszahlen und den resultierenden 
+	verschl&uuml;sselten Text repr&auml;sentieren, wobei in dieser Visualisierung f&uuml;r alle 16 Byte verwendet werden. 
+	Mit den Buttons <i>In Zwischenablage 
+	kopieren</i> k&ouml;nnen sie die Werte des jeweiligen Vektors in die Zwischenablage ihres Systems kopieren, um diese weiterverwenden 
+	zu k&ouml;nnen. Der Schl&uuml;ssel und der Klartext 
+	sind nach dem Aufruf der Visualisierung bereits mit (pseudo-)zuf&auml;lligen Werten vorbelegt. Sie k&ouml;nnen aber auch beide Werte 
+	selbst festlegen. Hierzu klicken Sie auf die Buttons <i>Ausw&auml;hlen</i> des jeweiligen Wertes.</p>
+	<img src="screenshot_button_choose_key.png" alt="ChooseKey">
+	<img src="screenshot_button_clipboard.png" alt="Copy to clipboard">
+	
+	<p> In beiden F&auml;llen &ouml;ffnet sich ein 
+	Wizard, in dem Sie den Schl&uuml;ssel bzw. den Klartext in hexadezimaler Darstellung eingeben k&ouml;nnen. Es stehen Ihnen entsprechend 
+	16 Bytes (also 32 Hex-Zeichen) zur Verf&uuml;gung. Falsche Eingaben, wie Buchstaben, die keine Hex-Zeichen darstellen, werden nicht 
+	&uuml;bernommen und mit einer entsprechenden Meldung unter dem Eingabefeld gemeldet. Sie k&ouml;nnen die Eingabe jederzeit mit 
+	<i>Abbrechen</i> beenden, wobei der vor dem Aufruf des Wizards gespeicherte Schl&uuml;ssel/Klartext unver&auml;ndert bleibt. Sobald Sie 
+	16 Bytes eingegeben haben, k&ouml;nnen Sie den Button <i>Fertigstellen</i> anklicken, um Ihre Eingabe zu &uuml;bernehmen. Beachten Sie, 
+	dass Sie Schl&uuml;ssel und Klartext nur dann &auml;ndern k&ouml;nnen, wenn Sie den Algorithmus noch nicht mit einem Klick auf 
+	<i>Ausf&uuml;hren</i> gestartet haben, die Anzahl der erledigten Schritte also noch auf 0 steht.</p>
+	<img src="screenshot_wizard_key.png" alt="Wizard Key">
+	
+	<p>Haben Sie den Algorithmus bis Schritt 272 durchgearbeitet, ist der Verschl&uuml;sselungsvorgang abgeschlossen und der 
+	vollst&auml;ndige verschl&uuml;sselte Text Ihres Klartextes ist zu sehen. Wenn Sie danach nochmals auf <i>Ausf&uuml;hren</i> oder 
+	<i>Alles verschl&uuml;sseln</i> klicken, wird eine Nachricht erscheinen, die Sie darauf hinweist, dass der Algorithmus fertig ist. Um die 
+	Visualiserung ein weiteres Mal zu starten und von neuem zu beginnen, k&ouml;nnen Sie auf den kleinen Button <i>Neustart</i> klicken, 
+	rechts oben im Fenster, direkt links von den Butttons <i>Minimieren</i> und <i>Wiederherstellen</i>.<p>
+	<img src="screenshot_button_restart.png" alt="RestartButton">
+	
+	<h2 id="example">Beispiel</h2>
+
+	<p>
+	Als letzter Punkt dieser Hilfe folgt nun ein kleines Beispiel zur Nutzung der beiden ARC4-Plug-ins (<b>Visualisierungs-Plug-in</b> und 
+	<b>Krypto-Plug-in</b>). Hierbei wird ein Text in beiden Plug-ins verschl&uuml;sselt.
+	</p>
+	<p>
+	Zun&auml;chst muss ein gemeinsamer Klartext festgelegt werden. Da dieser in der Visualisierung nur 16 Byte lang sein kann, muss man sich 
+	hier auf diese 16 Byte beschr&auml;nken. Der Klartext in diesem Beispiel lautet:
+	</p>
+	<p>
+	<b>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</b>
+	</p>
+	<p>
+	In der <b>Visualisierung</b> klickt man nach dem &ouml;ffnen auf den Button <i>Ausw&auml;hlen</i> des Klartextes und gibt in dem sich 
+	&ouml;ffnenden Wizard die oben stehende Zeichenfolge ein (ohne Leerzeichen). Danach schlie&szlig;t man den Wizard mit einem Klick auf 
+	<i>Fertigstellen</i>.<br>
+	Im <b>Krypto-Plug-in</b> muss zuerst eine neue Datei ge&ouml;ffnet werden. Hierzu klickt man oben links im JCT auf <i>Datei->Neu->Leere 
+	Datei im Hexeditor</i>. Es sollte sich eine leere Datei &ouml;ffnen. In den leeren Bereich der Datei klickt man mit der linken Maustaste 
+	und im Kontextmen&uuml; dann auf <i>Einf&uuml;gen</i>. Als Menge an Daten gibt man 16 Byte an und klickt auf <i>OK</i>, woraufhin im 
+	Hexeditor eine neue Zeile erscheint. In diese Zeile gibt man dann die oben stehende Zeichenfolge ein, indem man jeweils eine Zelle in der 
+	Zeile anklickt und die entsprechenden Werte eintippt.
+	</p>
+	<p>
+	Als n&auml;chstes braucht man einen Schl&uuml;ssel. F&uuml;r diesen wird hier folgender Wert gew&auml;hlt:
+	</p>
+	<p>
+	<b>00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF</b>
+	</p>
+	<p>
+	In der <b>Visualisierung</b> klickt man hierzu auf den Button <i>Ausw&auml;hlen</i>. Es &ouml;ffnet sich ein Wizard, in dem man den 
+	Schl&uuml;ssel eingibt und anschlie&szlig;end <i>Fertigstellen</i> klickt.<br>
+	Im <b>Krypto-Plug-in</b> gibt man den Schl&uuml;ssel &uuml;ber die vorgegebene Eingabezeile der GUI ein.
+	</p>
+	<p>
+	Um den Text schlie&szlig;lich zu verschl&uuml;sseln, klickt man in der <b>Visualisierung</b> auf <i>Alles verschl&uuml;sseln</i> (oder 
+	man schaut sich den Algorithmus schrittweise an). Im <b>Krypto-Plug-in</b> stellt man sicher, dass die Optionen <i>Verschl&uuml;sseln</i> 
+	und <i>ARC4</i> aktiviert wurden, und klickt dann unten auf <i>Fertigstellen</i>.
+	</p>
+	<p>
+	In der <b>Visualisierung</b> steht das Ergebnis unten in dem Vektor f&uuml;r den Geheimtext. Im <b>Krypto-Plug-in</b> sollte sich ein 
+	neuer Hexeditor mit dem resultierenden Text &ouml;ffnen. In beiden F&auml;llen sollte das Ergebnis wie folgt lauten:
+	</p>
+	<p>
+	<b>2F E0 60 8A 7C D8 61 94 DA 6A FD 6E F3 32 F5 0D</b>
+	</p>
+
+	<h2 id="literature">Weiterf&uuml;hrende Verweise</h2>
+
+	<p>Weitere Informationen zum Thema Kryptographie und (A)RC4 finden Sie beispielsweise unter:</p>
+	<ul>
+		<li><a href="https://de.wikipedia.org/wiki/RC4">(A)RC4 in der deutschen Wikipedia</a></li>
+		<li><a href="http://www.cryptool.org/images/ctp/documents/CrypToolScript-de.pdf">CrypTool-Skript auf Deutsch</a></li>
+		<li><a href="http://www.wisdom.weizmann.ac.il/~itsik/RC4/Papers/Rc4_ksa.ps"><i>Weaknesses in the Key Scheduling Algorithm of RC4
+			</i>, Fluhrer, Mantin, Shamir</a></li>
+		<li><a href="http://www.isg.rhul.ac.uk/tls/"><i>On the Security of RC4 in TLS and WPA</i>, AlFardan, Bernstein, Paterson, 
+			Poettering, Schuldt</a></li>
+		<li><a href="https://www.schneier.com/blog/archives/2014/10/spritz_a_new_rc.html">Bruce Schneier zu Spritz</a></li>
+	</ul>
+<br>
+</body>
+</html>
