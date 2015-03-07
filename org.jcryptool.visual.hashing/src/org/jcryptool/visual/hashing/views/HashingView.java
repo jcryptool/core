@@ -9,13 +9,21 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bouncycastle.crypto.digests.GOST3411Digest;
 import org.bouncycastle.crypto.digests.MD2Digest;
 import org.bouncycastle.crypto.digests.MD4Digest;
 import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
+import org.bouncycastle.crypto.digests.SHA384Digest;
 import org.bouncycastle.crypto.digests.SHA512Digest;
+import org.bouncycastle.crypto.digests.SM3Digest;
+import org.bouncycastle.crypto.digests.SkeinDigest;
+import org.bouncycastle.crypto.digests.TigerDigest;
+import org.bouncycastle.crypto.digests.WhirlpoolDigest;
+import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.jcajce.provider.digest.Skein;
 import org.bouncycastle.util.encoders.Hex;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.swt.SWT;
@@ -168,8 +176,10 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		comboHash.setItems(new String[] { "MD2 (128 bits)", "MD4 (128 bits)", "MD5 (128 bits)", "SHA-1 (160 bits)", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				"SHA-2 (256 bits)", "SHA-2 (512 bits)", "RIPEMD-160 (160 bits)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		comboHash
+				.setItems(new String[] {
+						"MD2 (128 bits)", "MD4 (128 bits)", "MD5 (128 bits)", "SHA-1 (160 bits)", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+						"SHA-2 (256 bits)", "SHA-2 (512 bits)", "SHA-3 (224 bits)", "SHA-3 (256 bits)", "SHA-3 (384 bits)", "SHA-3 (512 bits)", "SKEIN-256 (256 bits)", "SKEIN-512 (512 bits)", "SKEIN-1024 (1024 bits)", "SM3 (256 bits)", "RIPEMD-160 (160 bits)", "TIGER (192 bits)", "GOST3411 (256 bits)", "WHIRLPOOL (512 bits)" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$ //$NON-NLS-13$ //$NON-NLS-14$
 		comboHash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		comboHash.select(0);
 
@@ -358,7 +368,8 @@ public class HashingView extends ViewPart {
 		grpUnterschied.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 		grpUnterschied.setText(Messages.HashingView_11);
 
-		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.FULL_SELECTION | SWT.READ_ONLY | SWT.WRAP);
+		textDifference = new StyledText(grpUnterschied, SWT.BORDER | SWT.FULL_SELECTION | SWT.READ_ONLY | SWT.WRAP
+				| SWT.V_SCROLL);
 		textDifference.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -425,19 +436,35 @@ public class HashingView extends ViewPart {
 		case MD4:
 		case MD5:
 			result = String.format("%128s", result).replace(' ', '0'); //$NON-NLS-1$
-
 			break;
-		case SHA256:
-			result = String.format("%256s", result).replace(' ', '0'); //$NON-NLS-1$
-			break;
-
-		case SHA512:
-			result = String.format("%512s", result).replace(' ', '0'); //$NON-NLS-1$
-			break;
-
-		case SHA1:
 		case RIPEMD160:
 			result = String.format("%160s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case TIGER:
+			result = String.format("%192s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case SHA3_224:
+			result = String.format("%224s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case SHA256:
+		case SHA3_256:
+		case SKEIN_256:
+		case GOST3411:
+		case SM3:
+			result = String.format("%256s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case SHA3_384:
+			result = String.format("%384s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case SHA512:
+		case SHA3_512:
+		case SKEIN_512:
+		case WHIRLPOOL:
+			result = String.format("%512s", result).replace(' ', '0'); //$NON-NLS-1$
+			break;
+		case SHA1:
+		case SKEIN_1024:
+			result = String.format("%1024s", result).replace(' ', '0'); //$NON-NLS-1$
 			break;
 
 		default:
@@ -516,11 +543,97 @@ public class HashingView extends ViewPart {
 			sha512.doFinal(digest, 0);
 
 			break;
+		// SHA3Digest 224, 256, 288, 384, 512
+		// SkeinDigest any byte length 256 bit, 512 bit and 1024 state sizes.
+		// Additional parameterisation using SkeinParameters.
+		// SM3Digest 256 The SM3 Digest.
+		// TigerDigest 192 The Tiger Digest.
+
+		// GOST3411Digest 256 The GOST-3411 Digest.
+		// WhirlpoolDigest 512 The Whirlpool Digest.
+
+		case SHA3_224:
+			SHA3.Digest256 sha3_224 = new SHA3.Digest256();
+			sha3_224.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[sha3_224.getDigestLength()];
+			digest = sha3_224.digest();
+
+			break;
+		case SHA3_256:
+			SHA3.Digest256 sha3_256 = new SHA3.Digest256();
+			sha3_256.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[sha3_256.getDigestLength()];
+			digest = sha3_256.digest();
+
+			break;
+		case SHA3_384:
+			SHA3.Digest384 sha3_384 = new SHA3.Digest384();
+			sha3_384.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[sha3_384.getDigestLength()];
+			digest = sha3_384.digest();
+
+			break;
+		case SHA3_512:
+			SHA3.Digest512 sha3_512 = new SHA3.Digest512();
+			sha3_512.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[sha3_512.getDigestLength()];
+			digest = sha3_512.digest();
+
+			break;
+		case SKEIN_256:
+			Skein.Digest_256_256 skein_256 = new Skein.Digest_256_256();
+			skein_256.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[skein_256.getDigestLength()];
+			digest = skein_256.digest();
+
+			break;
+		case SKEIN_512:
+			Skein.Digest_512_512 skein_512 = new Skein.Digest_512_512();
+			skein_512.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[skein_512.getDigestLength()];
+			digest = skein_512.digest();
+
+			break;
+		case SKEIN_1024:
+			Skein.Digest_1024_1024 skein_1024 = new Skein.Digest_1024_1024();
+			skein_1024.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[skein_1024.getDigestLength()];
+			digest = skein_1024.digest();
+
+			break;
 		case RIPEMD160:
 			RIPEMD160Digest ripemd160 = new RIPEMD160Digest();
 			ripemd160.update(inputText.getBytes(), 0, inputText.getBytes().length);
 			digest = new byte[ripemd160.getDigestSize()];
 			ripemd160.doFinal(digest, 0);
+
+			break;
+		case SM3:
+			SM3Digest sm3 = new SM3Digest();
+			sm3.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[sm3.getDigestSize()];
+			sm3.doFinal(digest, 0);
+
+			break;
+		case TIGER:
+			TigerDigest tiger = new TigerDigest();
+			tiger.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[tiger.getDigestSize()];
+			tiger.doFinal(digest, 0);
+
+			break;
+		case GOST3411:
+			GOST3411Digest gost3411 = new GOST3411Digest();
+			gost3411.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[gost3411.getDigestSize()];
+			gost3411.doFinal(digest, 0);
+
+			break;
+		case WHIRLPOOL:
+			WhirlpoolDigest whirlpool = new WhirlpoolDigest();
+			whirlpool.update(inputText.getBytes(), 0, inputText.getBytes().length);
+			digest = new byte[whirlpool.getDigestSize()];
+			whirlpool.doFinal(digest, 0);
 
 			break;
 		default:
@@ -572,7 +685,7 @@ public class HashingView extends ViewPart {
 				sb.insert(((OUTPUT_SEPERATOR) * (i + 1) + i), "\n"); //$NON-NLS-1$
 			}
 
-			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1) {
+			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1 || hash == HashFunction.TIGER) {
 				sb.insert(sb.length(), "\n"); //$NON-NLS-1$
 			}
 
