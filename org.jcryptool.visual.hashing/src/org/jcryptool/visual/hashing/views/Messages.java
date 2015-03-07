@@ -16,6 +16,7 @@ public class Messages extends NLS {
 	public static String HashingView_17;
 	public static String HashingView_18;
 	public static String HashingView_2;
+	public static String HashingView_21;
 	public static String HashingView_3;
 	public static String HashingView_4;
 	public static String HashingView_5;

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,10 +15,8 @@ import org.bouncycastle.crypto.digests.MD5Digest;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
-import org.bouncycastle.crypto.digests.SHA384Digest;
 import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.digests.SM3Digest;
-import org.bouncycastle.crypto.digests.SkeinDigest;
 import org.bouncycastle.crypto.digests.TigerDigest;
 import org.bouncycastle.crypto.digests.WhirlpoolDigest;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
@@ -47,13 +44,13 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.hashing.HashingPlugin;
 import org.jcryptool.visual.hashing.algorithms.HashFunction;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * 
@@ -337,6 +334,7 @@ public class HashingView extends ViewPart {
 		grpHashInput.setText(Messages.HashingView_10);
 
 		textHashInput = new Text(grpHashInput, SWT.BORDER | SWT.READ_ONLY);
+		textHashInput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
 		textHashInput.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -353,6 +351,7 @@ public class HashingView extends ViewPart {
 		grpHashOutput.setText(Messages.HashingView_8);
 
 		textHashOutput = new Text(grpHashOutput, SWT.BORDER | SWT.READ_ONLY);
+		textHashOutput.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL)); //$NON-NLS-1$
 		textHashOutput.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -412,7 +411,7 @@ public class HashingView extends ViewPart {
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(new Point(1000, 590));
+		scrolledComposite.setMinSize(new Point(1000, 610));
 
 		loadExampleText();
 	}
@@ -437,6 +436,7 @@ public class HashingView extends ViewPart {
 		case MD5:
 			result = String.format("%128s", result).replace(' ', '0'); //$NON-NLS-1$
 			break;
+		case SHA1:
 		case RIPEMD160:
 			result = String.format("%160s", result).replace(' ', '0'); //$NON-NLS-1$
 			break;
@@ -462,7 +462,6 @@ public class HashingView extends ViewPart {
 		case WHIRLPOOL:
 			result = String.format("%512s", result).replace(' ', '0'); //$NON-NLS-1$
 			break;
-		case SHA1:
 		case SKEIN_1024:
 			result = String.format("%1024s", result).replace(' ', '0'); //$NON-NLS-1$
 			break;
@@ -553,7 +552,7 @@ public class HashingView extends ViewPart {
 		// WhirlpoolDigest 512 The Whirlpool Digest.
 
 		case SHA3_224:
-			SHA3.Digest256 sha3_224 = new SHA3.Digest256();
+			SHA3.Digest224 sha3_224 = new SHA3.Digest224();
 			sha3_224.update(inputText.getBytes(), 0, inputText.getBytes().length);
 			digest = new byte[sha3_224.getDigestLength()];
 			digest = sha3_224.digest();
@@ -685,7 +684,7 @@ public class HashingView extends ViewPart {
 				sb.insert(((OUTPUT_SEPERATOR) * (i + 1) + i), "\n"); //$NON-NLS-1$
 			}
 
-			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1 || hash == HashFunction.TIGER) {
+			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1 || hash == HashFunction.TIGER || hash == HashFunction.SHA3_224) {
 				sb.insert(sb.length(), "\n"); //$NON-NLS-1$
 			}
 
@@ -699,7 +698,7 @@ public class HashingView extends ViewPart {
 
 			if (sequenceChanged[0] != -1) {
 				textDifference.append(Messages.HashingView_17 + sequenceChanged[1] + Messages.HashingView_15
-						+ sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2]);
+						+ sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2] + Messages.HashingView_21 + sequence[2] + "."); 
 			}
 
 			for (int i = 0; i < bitArray.length; i++) {
@@ -715,7 +714,11 @@ public class HashingView extends ViewPart {
 	}
 
 	private int[] findUnchanged(String s) {
-		int[] result = new int[2];
+		int[] result = new int[3];
+		result[0] = -1;
+		result[1] = -1;
+		result[2] = -1;
+		
 		String currentSequence = null;
 		String prevSequence = null;
 
@@ -737,6 +740,15 @@ public class HashingView extends ViewPart {
 				result[1] = pos;
 			}
 		}
+		
+		int counter = 0;
+		if (prevSequence != null) {
+			m = Pattern.compile(prevSequence).matcher(s);
+			while (m.find()) {
+				counter++;
+			}
+		}
+		result[2] = counter;
 		return result;
 	}
 
