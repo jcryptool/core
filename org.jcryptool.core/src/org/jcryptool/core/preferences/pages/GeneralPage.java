@@ -161,6 +161,11 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
             fileBak.delete();
         }
 
+        // solve the problem that if the .ini file doesn't exist yet, it can't be created
+        if(!fileOrg.exists()) {
+        	fileOrg.createNewFile();
+        }
+
         fileOrg.renameTo(fileBak);
 
         BufferedReader in = new BufferedReader(new FileReader(fileBak));
