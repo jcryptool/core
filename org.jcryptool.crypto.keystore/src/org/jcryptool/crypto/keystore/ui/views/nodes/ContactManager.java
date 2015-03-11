@@ -85,7 +85,20 @@ public class ContactManager {
         return instance;
     }
 
-    private void initTreeModel() {
+    /**
+     * When a backup of the keystore is restored, we need to call
+     * resetInvisbleRoot() followed by initTreeModel()
+     */
+    public void resetInvisibleRoot() {
+    	invisibleRoot = null;
+    }
+    
+    /**
+     * When a backup of the keystore is restored, we need to call
+     * resetInvisbleRoot() followed by initTreeModel().
+     * Also, getInstance() calls initTreeModel() internally
+     */
+    /*private*/ public void initTreeModel() {
         if (invisibleRoot == null) {
             init();
             invisibleRoot = new TreeNode("INVISIBLE_ROOT"); //$NON-NLS-1$

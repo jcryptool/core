@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.ui.views.KeyDragListener;
+import org.jcryptool.crypto.keystore.ui.views.nodes.ContactManager;
 import org.jcryptool.crypto.keystore.ui.views.nodes.keys.KeyPairNode;
 import org.jcryptool.crypto.keystore.ui.views.providers.KeyStoreViewContentProvider;
 import org.jcryptool.crypto.keystore.ui.views.providers.KeyStoreViewLabelProvider;
@@ -71,6 +72,12 @@ public class KeystoreViewer extends TreeViewer {
     }
 
     public void reload() {
+        ContactManager contactManager = ContactManager.getInstance();
+        contactManager.resetInvisibleRoot();
+        contactManager.initTreeModel();
+        // contactManager.initTreemodel() results in an updated Select Key dialog,
+        // but the TreeViewer still has not been updated -- now what?
+        // as it turns out, the setContentprovider() needs to be moved to the end of the method
         setContentProvider(new KeyStoreViewContentProvider(this));
     }
 

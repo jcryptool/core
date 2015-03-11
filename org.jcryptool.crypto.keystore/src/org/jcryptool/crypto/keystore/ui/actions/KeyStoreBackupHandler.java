@@ -5,17 +5,22 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
+import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
+import org.jcryptool.crypto.keystore.ui.views.KeystoreView;
 import org.jcryptool.crypto.keystore.ui.wizards.BackupRestoreWizard;
 
 public class KeyStoreBackupHandler extends AbstractHandler {
 
-	public KeyStoreBackupHandler() {
-		// TODO Auto-generated constructor stub
+	private KeystoreView view;
+	
+	public KeyStoreBackupHandler(KeystoreView view) {
+		this.view = view;
 	}
 
 	@Override
@@ -48,7 +53,9 @@ public class KeyStoreBackupHandler extends AbstractHandler {
 	public void restore(ExecutionEvent event) {
 		FileDialog dlg = new FileDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell(), SWT.OPEN);
 		String pathToFile = dlg.open();
-		if(pathToFile != null)
+		if(pathToFile != null) {
 			KeyStoreManager.getInstance().restoreKeystore(pathToFile);
+			view.getViewer().reload();
+		}	
 	}
 }
