@@ -4,6 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.keystore.ui.wizardpages.messages"; //$NON-NLS-1$
+	public static String BackupRestorePage_0;
 	public static String BackupRestorePage_1;
 	public static String BackupRestorePage_2;
 	public static String BackupRestorePage_3;

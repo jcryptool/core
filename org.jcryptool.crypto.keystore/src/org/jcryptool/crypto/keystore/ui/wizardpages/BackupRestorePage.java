@@ -10,6 +10,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 public class BackupRestorePage extends WizardPage {
@@ -21,7 +22,7 @@ public class BackupRestorePage extends WizardPage {
 	
 	public BackupRestorePage() {
 		super(getPageName());
-		// TODO Auto-generated constructor stub
+		setTitle(Messages.BackupRestorePage_0);
 	}
 
 	public BackupRestorePage(String title, ImageDescriptor titleImage) {
@@ -52,10 +53,9 @@ public class BackupRestorePage extends WizardPage {
         composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         composite.setLayout(new GridLayout(1, false));
 
-        Text text = new Text(composite, 0);
-        text.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
-        text.setText(Messages.BackupRestorePage_1);
-        text.setEnabled(false);
+        Label label = new Label(composite, 0);
+        label.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        label.setText(Messages.BackupRestorePage_1);
         
         backupButton = new Button(composite, SWT.RADIO);
         backupButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));

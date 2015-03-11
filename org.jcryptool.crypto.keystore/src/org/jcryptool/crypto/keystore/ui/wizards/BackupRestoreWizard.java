@@ -6,7 +6,7 @@ import org.jcryptool.crypto.keystore.ui.wizardpages.BackupRestorePage;
 public class BackupRestoreWizard extends Wizard {
 
 	public BackupRestoreWizard() {
-		// TODO Auto-generated constructor stub
+		setWindowTitle("JCrypTool Keystore");
 	}
 
 	BackupRestorePage page;
