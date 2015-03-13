@@ -26,6 +26,8 @@ public class Messages extends NLS {
 	public static String HashingView_9;
 	public static String HashingView_mntmCopy_text;
 	public static String HashingView_mntmSelectAll_text;
+	public static String HashingView_btnUnchanged_text;
+	public static String HashingView_btnChanged_text;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

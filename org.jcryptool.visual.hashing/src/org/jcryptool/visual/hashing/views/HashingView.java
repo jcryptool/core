@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -80,6 +81,8 @@ public class HashingView extends ViewPart {
 	private Button btnHexadezimal;
 	private Button btnDezimal;
 	private Button btnBinary;
+	private Button btnChanged;
+	private Button btnUnchanged;
 
 	/**
 	 * The constructor.
@@ -363,7 +366,7 @@ public class HashingView extends ViewPart {
 		textHashOutput.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
 		Group grpUnterschied = new Group(compositeMain, SWT.NONE);
-		grpUnterschied.setLayout(new GridLayout(1, false));
+		grpUnterschied.setLayout(new GridLayout(2, false));
 		grpUnterschied.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 		grpUnterschied.setText(Messages.HashingView_11);
 
@@ -383,7 +386,7 @@ public class HashingView extends ViewPart {
 				}
 			}
 		});
-		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+		textDifference.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true, 2, 1));
 
 		Menu menu = new Menu(textDifference);
 		textDifference.setMenu(menu);
@@ -407,11 +410,32 @@ public class HashingView extends ViewPart {
 			}
 		});
 		mntmSelectAll.setText(Messages.HashingView_mntmSelectAll_text);
+
+		btnUnchanged = new Button(grpUnterschied, SWT.RADIO);
+		btnUnchanged.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				computeDifference();
+			}
+		});
+		btnUnchanged.setSelection(true);
+		btnUnchanged.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		btnUnchanged.setText(Messages.HashingView_btnUnchanged_text);
+
+		btnChanged = new Button(grpUnterschied, SWT.RADIO);
+		btnChanged.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				computeDifference();
+			}
+		});
+		btnChanged.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1));
+		btnChanged.setText(Messages.HashingView_btnChanged_text);
 		textDifference.invokeAction(ST.CUT);
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(new Point(1000, 610));
+		scrolledComposite.setMinSize(new Point(1000, 630));
 
 		loadExampleText();
 	}
@@ -542,15 +566,6 @@ public class HashingView extends ViewPart {
 			sha512.doFinal(digest, 0);
 
 			break;
-		// SHA3Digest 224, 256, 288, 384, 512
-		// SkeinDigest any byte length 256 bit, 512 bit and 1024 state sizes.
-		// Additional parameterisation using SkeinParameters.
-		// SM3Digest 256 The SM3 Digest.
-		// TigerDigest 192 The Tiger Digest.
-
-		// GOST3411Digest 256 The GOST-3411 Digest.
-		// WhirlpoolDigest 512 The Whirlpool Digest.
-
 		case SHA3_224:
 			SHA3.Digest224 sha3_224 = new SHA3.Digest224();
 			sha3_224.update(inputText.getBytes(), 0, inputText.getBytes().length);
@@ -670,13 +685,13 @@ public class HashingView extends ViewPart {
 			int zeroBits = result.length() - result.replace("0", "").length(); //$NON-NLS-1$ //$NON-NLS-2$
 			int oneBits = result.length() - result.replace("1", "").length(); //$NON-NLS-1$ //$NON-NLS-2$
 			double percent = ((double) oneBits / (double) count) * 100;
-			int[] sequence = findUnchanged(result);
-			int[] sequenceChanged = findChanged(result);
+			ArrayList<int[]> sequence = findUnchanged(result);
+			ArrayList<int[]> sequenceChanged = findChanged(result);
 
 			result = result.replaceAll(".{8}", "$0#"); //$NON-NLS-1$ //$NON-NLS-2$
 
-			int lenghtPrettyPrint = result.length();
-			count = lenghtPrettyPrint / OUTPUT_SEPERATOR;
+			int lengthPrettyPrint = result.length();
+			count = lengthPrettyPrint / OUTPUT_SEPERATOR;
 
 			StringBuilder sb = new StringBuilder(result);
 
@@ -684,21 +699,47 @@ public class HashingView extends ViewPart {
 				sb.insert(((OUTPUT_SEPERATOR) * (i + 1) + i), "\n"); //$NON-NLS-1$
 			}
 
-			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1 || hash == HashFunction.TIGER || hash == HashFunction.SHA3_224) {
+			if (hash == HashFunction.RIPEMD160 || hash == HashFunction.SHA1 || hash == HashFunction.TIGER
+					|| hash == HashFunction.SHA3_224) {
 				sb.insert(sb.length(), "\n"); //$NON-NLS-1$
 			}
 
-			result = sb.toString();
+			char[] bitArray = sb.toString().toCharArray();
 
-			char[] bitArray = result.toCharArray();
-
-			textDifference.setText(result + "\n" + String.format("%1$,.2f", percent) //$NON-NLS-1$ //$NON-NLS-2$
+			sb.append("\n" + String.format("%1$,.2f", percent) //$NON-NLS-1$ //$NON-NLS-2$
 					+ Messages.HashingView_12 + oneBits + Messages.HashingView_13 + (zeroBits + oneBits)
-					+ Messages.HashingView_14 + sequence[1] + Messages.HashingView_15 + sequence[0] + "."); //$NON-NLS-1$
+					+ Messages.HashingView_14 + sequence.get(0)[1] + Messages.HashingView_15 + sequence.get(0)[0] + "."); //$NON-NLS-1$
 
-			if (sequenceChanged[0] != -1) {
-				textDifference.append(Messages.HashingView_17 + sequenceChanged[1] + Messages.HashingView_15
-						+ sequenceChanged[0] + Messages.HashingView_18 + sequenceChanged[2] + Messages.HashingView_21 + sequence[2] + "."); 
+			if (!sequenceChanged.isEmpty()) {
+				sb.append(Messages.HashingView_17 + sequenceChanged.get(0)[1] + Messages.HashingView_15
+						+ sequenceChanged.get(0)[0] + Messages.HashingView_18 + sequence.size()
+						+ Messages.HashingView_21 + sequenceChanged.size() + "."); //$NON-NLS-1$
+			}
+
+			textDifference.setText(sb.toString());
+			if (btnUnchanged.getSelection()) {
+				for (int[] is : sequence) {
+					StyleRange sr = new StyleRange();
+					if (is[1] >= 8) {
+						sr.start = is[1] + (is[1] / 8);
+					} else {
+						sr.start = is[1];
+					}
+
+					if ((is[1] + is[0]) % 8 != 0) {
+						int seed = ((is[1] % 8) + is[0]) / 8;
+						seed += is[1] / OUTPUT_SEPERATOR;
+						sr.length = is[0] + seed;
+					} else {
+						if (is[1] == 0) {
+							sr.length = result.length();
+						} else {
+							sr.length = is[0] + ((is[1] + ((is[1] / 8))) / OUTPUT_SEPERATOR);
+						}
+					}
+					sr.underline = true;
+					textDifference.setStyleRange(sr);
+				}
 			}
 
 			for (int i = 0; i < bitArray.length; i++) {
@@ -710,15 +751,35 @@ public class HashingView extends ViewPart {
 					textDifference.setStyleRange(bits);
 				}
 			}
+
+			if (btnChanged.getSelection()) {
+				if (btnChanged.getSelection()) {
+					for (int[] is : sequenceChanged) {
+						StyleRange sr = new StyleRange();
+						if (is[1] >= 8) {
+							sr.start = is[1] + (is[1] / 8);
+						} else {
+							sr.start = is[1];
+						}
+						if ((is[1] + is[0]) % 8 != 0) {
+							int seed = ((is[1] % 8) + is[0]) / 8;
+							seed += is[1] / OUTPUT_SEPERATOR;
+							sr.length = is[0] + seed;
+						} else {
+							sr.length = is[0] + ((is[1] + ((is[1] / 8))) / OUTPUT_SEPERATOR);
+						}
+						sr.underline = true;
+						sr.foreground = this.getSite().getShell().getDisplay().getSystemColor(SWT.COLOR_RED);
+						textDifference.setStyleRange(sr);
+					}
+				}
+			}
 		}
 	}
 
-	private int[] findUnchanged(String s) {
-		int[] result = new int[3];
-		result[0] = -1;
-		result[1] = -1;
-		result[2] = -1;
-		
+	private ArrayList<int[]> findUnchanged(String s) {
+		ArrayList<int[]> result = new ArrayList<>();
+
 		String currentSequence = null;
 		String prevSequence = null;
 
@@ -727,36 +788,27 @@ public class HashingView extends ViewPart {
 		prevSequence = m.group();
 		currentSequence = m.group();
 
-		result[0] = prevSequence.length();
-		result[1] = m.start();
-
 		while (m.find()) {
 			currentSequence = m.group();
 			if (prevSequence.length() < currentSequence.length()) {
 				prevSequence = m.group();
-				int pos = m.start();
-
-				result[0] = prevSequence.length();
-				result[1] = pos;
 			}
 		}
-		
-		int counter = 0;
+
 		if (prevSequence != null) {
 			m = Pattern.compile(prevSequence).matcher(s);
 			while (m.find()) {
-				counter++;
+				int[] tmp = new int[2];
+				tmp[0] = m.group().length();
+				tmp[1] = m.start();
+				result.add(tmp);
 			}
 		}
-		result[2] = counter;
 		return result;
 	}
 
-	private int[] findChanged(String s) {
-		int[] result = new int[3];
-		result[0] = -1;
-		result[1] = -1;
-		result[2] = -1;
+	private ArrayList<int[]> findChanged(String s) {
+		ArrayList<int[]> result = new ArrayList<>();
 
 		String currentSequence = null;
 		String prevSequence = null;
@@ -765,28 +817,24 @@ public class HashingView extends ViewPart {
 		if (m.find()) {
 			prevSequence = m.group();
 			currentSequence = m.group();
-			result[0] = prevSequence.length();
-			result[1] = m.start();
+
 			while (m.find()) {
 				currentSequence = m.group();
 				if (prevSequence.length() < currentSequence.length()) {
 					prevSequence = m.group();
-					int pos = m.start();
-
-					result[0] = prevSequence.length();
-					result[1] = pos;
 				}
 			}
 		}
 
-		int counter = 0;
 		if (prevSequence != null) {
 			m = Pattern.compile(prevSequence).matcher(s);
 			while (m.find()) {
-				counter++;
+				int[] tmp = new int[2];
+				tmp[0] = m.group().length();
+				tmp[1] = m.start();
+				result.add(tmp);
 			}
 		}
-		result[2] = counter;
 		return result;
 	}
 
