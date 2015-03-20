@@ -238,6 +238,7 @@ public class MerkleHellmanView extends ViewPart {
 
 		btnGenerateNewKey = new Button(compositeSelection, SWT.NONE);
 		GridData gd_btnGenerateNewKey = new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1);
+		gd_btnGenerateNewKey.widthHint = 200;
 		
 		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
 			gd_btnGenerateNewKey.widthHint = 220;						
@@ -475,6 +476,7 @@ public class MerkleHellmanView extends ViewPart {
 			}
 		});
 		GridData gd_btnCreateKeys = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1);
+		gd_btnCreateKeys.widthHint = 200;
 		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
 			gd_btnCreateKeys.widthHint = 220;
 		} else {
@@ -577,7 +579,7 @@ public class MerkleHellmanView extends ViewPart {
 		tblclmnIteration_e.setText(Messages.MerkleHellmanView_11);
 
 		TableColumn tblclmnBit = new TableColumn(tableEncrypt, SWT.NONE);
-		tblclmnBit.setWidth(34);
+		tblclmnBit.setWidth(50);
 		tblclmnBit.setText("m(i)"); //$NON-NLS-1$
 
 		TableColumn tblclmnEquation_e = new TableColumn(tableEncrypt, SWT.NONE);
@@ -713,7 +715,7 @@ public class MerkleHellmanView extends ViewPart {
 		tblclmnIteration_d.setText(Messages.MerkleHellmanView_15);
 
 		TableColumn tblclmnEquation_d = new TableColumn(tableDecrypt, SWT.NONE);
-		tblclmnEquation_d.setWidth(350);
+		tblclmnEquation_d.setWidth(400);
 		tblclmnEquation_d.setText(Messages.MerkleHellmanView_16);
 
 		Label lblP_decryption = new Label(grpDecryption, SWT.NONE);
