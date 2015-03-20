@@ -435,7 +435,12 @@ public class HashingView extends ViewPart {
 		textDifference.invokeAction(ST.COPY);
 		textDifference.invokeAction(ST.PASTE);
 		scrolledComposite.setContent(compositeMain);
-		scrolledComposite.setMinSize(new Point(1000, 630));
+		
+		if (System.getProperty("os.name").compareToIgnoreCase("Windows 8") == 0) {
+			scrolledComposite.setMinSize(new Point(1600, 830));						
+		} else {
+			scrolledComposite.setMinSize(new Point(1000, 630));			
+		}
 
 		loadExampleText();
 	}
@@ -720,21 +725,19 @@ public class HashingView extends ViewPart {
 			if (btnUnchanged.getSelection()) {
 				for (int[] is : sequence) {
 					StyleRange sr = new StyleRange();
-					if (is[1] >= 8) {
-						sr.start = is[1] + (is[1] / 8);
-					} else {
-						sr.start = is[1];
-					}
+					sr.start = is[1] + (is[1] / 8) + ((is[1] + (is[1] / 8)) / OUTPUT_SEPERATOR);
 
+					int cr = ((((is[1] + (is[1] / 8) ) % OUTPUT_SEPERATOR) + is[0] ) / OUTPUT_SEPERATOR);
 					if ((is[1] + is[0]) % 8 != 0) {
 						int seed = ((is[1] % 8) + is[0]) / 8;
-						seed += is[1] / OUTPUT_SEPERATOR;
-						sr.length = is[0] + seed;
+						sr.length = is[0] + seed + cr;
 					} else {
-						if (is[1] == 0) {
-							sr.length = result.length();
+						int seed = 8 - (is[1] % 8);
+						
+						if (is[0] <= seed) {
+							sr.length = is[0] + cr;
 						} else {
-							sr.length = is[0] + ((is[1] + ((is[1] / 8))) / OUTPUT_SEPERATOR);
+							sr.length = is[0] + ((is[0] + seed) / 8) + cr;
 						}
 					}
 					sr.underline = true;
@@ -755,18 +758,21 @@ public class HashingView extends ViewPart {
 			if (btnChanged.getSelection()) {
 				if (btnChanged.getSelection()) {
 					for (int[] is : sequenceChanged) {
-						StyleRange sr = new StyleRange();
-						if (is[1] >= 8) {
-							sr.start = is[1] + (is[1] / 8);
-						} else {
-							sr.start = is[1];
-						}
+						StyleRange sr = new StyleRange();						
+						sr.start = is[1] + (is[1] / 8) + ((is[1] + (is[1] / 8)) / OUTPUT_SEPERATOR);
+						int cr = ((((is[1] + (is[1] / 8) ) % OUTPUT_SEPERATOR) + is[0] ) / OUTPUT_SEPERATOR);
+						
 						if ((is[1] + is[0]) % 8 != 0) {
 							int seed = ((is[1] % 8) + is[0]) / 8;
-							seed += is[1] / OUTPUT_SEPERATOR;
-							sr.length = is[0] + seed;
+							sr.length = is[0] + seed + cr;
 						} else {
-							sr.length = is[0] + ((is[1] + ((is[1] / 8))) / OUTPUT_SEPERATOR);
+							int seed = 8 - (is[1] % 8);
+							
+							if (is[0] <= seed) {
+								sr.length = is[0] + cr;
+							} else {
+								sr.length = is[0] + ((is[0] + seed) / 8) + cr;
+							}
 						}
 						sr.underline = true;
 						sr.foreground = this.getSite().getShell().getDisplay().getSystemColor(SWT.COLOR_RED);
