@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.editors.feature"
       label="JCrypTool Editors Feature"
-      version="1.0.0"
+      version="0.9.9"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.core">
 
@@ -234,7 +234,7 @@ litigation.
          id="net.sourceforge.ehep"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.9.9"
          unpack="false"/>
 
    <plugin
@@ -249,7 +249,7 @@ litigation.
          id="net.sourceforge.ehep.nl_de"
          download-size="0"
          install-size="0"
-         version="1.0.0"
+         version="0.9.9"
          fragment="true"
          unpack="false"/>
 
