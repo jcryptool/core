@@ -4,7 +4,7 @@
   <parent>
   	<groupId>org.jcryptool</groupId>
   	<artifactId>org.jcryptool.releng</artifactId>
-  	<version>1.0.0</version>
+  	<version>0.9.9</version>
 	<relativePath>../core/org.jcryptool.releng</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -51,6 +51,7 @@
 	<module>org.jcryptool.crypto.modern</module>
 	<module>org.jcryptool.crypto.modern.feature</module>
 	<module>org.jcryptool.crypto.modern.sha3</module>
+	<module>../Hagenberg/org.jcryptool.crypto.modern.stream.arc4</module>
 	<module>org.jcryptool.crypto.modern.stream.dragon</module>
 	<module>org.jcryptool.crypto.modern.stream.lfsr</module>
 	<module>org.jcryptool.crypto.ui</module>
@@ -67,6 +68,7 @@
 	<module>org.jcryptool.games.zudoku</module>
 	<module>org.jcryptool.visual</module>
 	<module>org.jcryptool.visual.aco</module>
+	<module>../Hagenberg/org.jcryptool.visual.arc4</module>
 	<module>org.jcryptool.visual.aup</module>
 	<module>org.jcryptool.visual.babystepgiantstep</module>
 	<module>org.jcryptool.visual.crt</module>
@@ -79,6 +81,7 @@
 	<module>org.jcryptool.visual.euclid</module>
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>
+	<module>../merkleHellman/org.jcryptool.visual.hashing</module>
 	<module>org.jcryptool.visual.he</module>
 	<module>org.jcryptool.visual.huffmanCoding</module>
 	<module>org.jcryptool.visual.jctca</module>
