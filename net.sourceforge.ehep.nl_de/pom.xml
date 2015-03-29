@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.jcryptool</groupId>
 		<artifactId>org.jcryptool.core.parent</artifactId>
-		<version>1.0.0</version>
+		<version>0.9.9</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.sourceforge</groupId>
-	<version>1.0.0</version>
+	<version>0.9.9</version>
 	<packaging>eclipse-plugin</packaging>
 	<artifactId>net.sourceforge.ehep.nl_de</artifactId>
 </project>
