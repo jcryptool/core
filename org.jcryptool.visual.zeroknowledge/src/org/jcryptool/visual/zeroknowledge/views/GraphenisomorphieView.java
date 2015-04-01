@@ -14,13 +14,17 @@ import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GAlice;
 import org.jcryptool.visual.zeroknowledge.algorithm.graphenisomorphie.GBob;
@@ -53,6 +57,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
     private Group info;
     private Group action;
     private Composite parent;
+    private ZKHeaderComposite headerComp;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -67,7 +72,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 
         // Create srollable composite and composite within it
         ScrolledComposite sc =
-                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL /*| SWT.BORDER*/);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
         sc.setLayoutData(gridData);
@@ -78,7 +83,13 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
         pageComposite.setLayout(new GridLayout(1, true));
         pageComposite.setLayoutData(gridData);
 
-        // pointer main points to pageComposite
+		headerComp = new ZKHeaderComposite(pageComposite);
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
+				4, 1));
+		headerComp.setTitle(Messages.GraphenisomorphieView_title);
+		headerComp.setDescription(Messages.GraphenisomorphieView_text);
+
+		// pointer main points to pageComposite
         main = pageComposite;
 
         // Modelle

@@ -17,16 +17,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.zeroknowledge.ModNCalculator;
 import org.jcryptool.visual.zeroknowledge.Protocol;
 import org.jcryptool.visual.zeroknowledge.algorithm.Modell;
@@ -58,6 +61,7 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
     // Amount of entries in a vector
     private static final int vectorEntries = 4;
     private Composite parent;
+    private ZKHeaderComposite headerComp;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -83,7 +87,13 @@ public class FeigeFiatShamirView extends ViewPart implements Observer, ModNCalcu
         pageComposite.setLayout(gridLayout);
         pageComposite.setLayoutData(gridData);
 
-        // pointer main points to pageComposite
+		headerComp = new ZKHeaderComposite(pageComposite);
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
+				4, 1));
+		headerComp.setTitle(Messages.FeigeFiatShamirView_title);
+		headerComp.setDescription(Messages.FeigeFiatShamirView_text);
+
+		// pointer main points to pageComposite
         main = pageComposite;
 
         // Modelle

@@ -15,13 +15,17 @@ import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.zeroknowledge.ModNCalculator;
 import org.jcryptool.visual.zeroknowledge.algorithm.Modell;
 import org.jcryptool.visual.zeroknowledge.algorithm.fiatshamir.FSAlice;
@@ -49,6 +53,7 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
     private PrimeGenerator prime;
     private Group info;
     private Composite parent;
+    private ZKHeaderComposite headerComp;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -76,6 +81,12 @@ public class FiatShamirView extends ViewPart implements Observer, ModNCalculator
         sc.setContent(pageComposite);
         pageComposite.setLayout(gridLayout);
         pageComposite.setLayoutData(gridData);
+
+		headerComp = new ZKHeaderComposite(pageComposite);
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
+				4, 1));
+		headerComp.setTitle(Messages.FiatShamirView_title);
+		headerComp.setDescription(Messages.FiatShamirView_text);
 
         // pointer main points to pageComposite
         main = pageComposite;
