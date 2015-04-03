@@ -3,7 +3,7 @@
 
 <toc label="ARC4/Spritz" link_to="../org.jcryptool.core.help/$nl$/toc.xml#symmetricAlgorithmPlugins"> 
     <topic href="$nl$/help/content/UI/tutorialUI.html" label="ARC4/Spritz">
-       <topic href="$nl$/help/content/tutorial.html" label="ARC4/Spritz">
-       </topic>
+       <!-- <topic href="$nl$/help/content/tutorial.html" label="ARC4/Spritz">
+       </topic> -->
     </topic> 
 </toc>
