@@ -209,7 +209,7 @@ public class DatavectorVisual extends Composite {
      * Create the button that allows you to copy the data from the datavector to the system clipboard
      */
     private void createClipButton(int type) {
-        clipbutton = new Button(this, SWT.PUSH);
+        clipbutton = new Button(this, SWT.PUSH | SWT.CENTER);
         GridData dataClip = new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1);
         dataClip.minimumHeight = ARC4Con.DATAVECTOR_VISUAL_L_B_HEIGHT;
         dataClip.minimumWidth = ARC4Con.DATAVECTOR_VISUAL_L_B_WIDTH;

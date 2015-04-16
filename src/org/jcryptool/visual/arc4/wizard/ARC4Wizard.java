@@ -21,6 +21,9 @@ public class ARC4Wizard extends Wizard {
 
     // the name of the single wizard page
     private String pagename;
+    
+    // the heading of the wizard description
+    private String heading;
 
     // to make the connection to the parent in order to pass the data
     private DatavectorVisual parent;
@@ -47,9 +50,11 @@ public class ARC4Wizard extends Wizard {
         if (this.type == ARC4Con.KEY) {
             this.pagename = Messages.DatavectorVisualKEYWizard;
             this.description = Messages.WizardPageDescriptionKey;
+            this.heading = Messages.KeySelectionWizardHeading;
         } else if (this.type == ARC4Con.PLAIN) {
             this.pagename = Messages.DatavectorVisualPLAINWizard;
             this.description = Messages.WizardPageDescriptionPlain;
+            this.heading = Messages.PlainSelectionWizardHeading;
         }
     }
 
@@ -57,7 +62,8 @@ public class ARC4Wizard extends Wizard {
      * Create the single page and add it to the wizard
      */
     public void addPages() {
-        page = new ARC4WizardPage(pagename, description);
+    	this.setWindowTitle(pagename);
+        page = new ARC4WizardPage(heading, description);
         addPage(page);
     }
 

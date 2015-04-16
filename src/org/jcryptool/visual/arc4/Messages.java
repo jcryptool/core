@@ -136,6 +136,10 @@ public class Messages extends NLS {
     public static String CopyToClipboardTool;
     
     public static String WizardPageHexNotification;
+    
+    public static String KeySelectionWizardHeading;
+    
+    public static String PlainSelectionWizardHeading;
 
     static {
         // initialize resource bundle
