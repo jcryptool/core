@@ -20,6 +20,10 @@
             id="org.jcryptool.core.command.editorsPulldown"
             name="%command.name.0">
       </command>
+      <command
+            id="org.jcryptool.core.action.open"
+            name="%command.openfile">
+      </command>
    </extension>
 
    <extension point="org.eclipse.ui.handlers">
@@ -44,6 +48,21 @@
                style="pulldown"
                toolbarPath="org.jcryptool.core.toolbar/fileStart"
                tooltip="%editors.action.tooltip">
+         </action>
+      </actionSet>
+      <actionSet
+            id="org.jcryptool.core.openActionSet"
+            label="%set.fileactions"
+            visible="true">
+         <action
+               class="org.jcryptool.core.fileActions.OpenFileAction"
+               definitionId="org.jcryptool.core.action.open"
+               icon="icons/open_file.gif"
+               id="org.jcryptool.core.action.openFile"
+               label="%action.openfile"
+               menubarPath="file/fileStart"
+               style="push"
+               toolbarPath="org.jcryptool.core.toolbar/fileStart">
          </action>
       </actionSet>
    </extension>
@@ -144,5 +163,11 @@
 
    <extension point="org.eclipse.ui.bindings">
       <key commandId="org.eclipse.ui.help.dynamicHelp" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="F1"/>
+      <key
+            commandId="org.jcryptool.core.action.open"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+O">
+      </key>
    </extension>
 </plugin>
