@@ -3,6 +3,6 @@
 	<context id="wizard" title="ARC4/Spritz">
     <description>ARC4 ist eine Stromverschlüsselung, die mit WEP/WPA starke Verbreitung gefunden hat.
 ARC4 ist keine sichere Verschlüsselung. Spritz ist eine Weiterentwicklung von ARC4.</description>
-		<topic href="$nl$/help/content/tutorial.html" label="ARC4/Spritz"/>
+		<topic href="$nl$/help/content/UI/tutorialUI.html" label="ARC4/Spritz"/>
 	</context>
 </contexts>

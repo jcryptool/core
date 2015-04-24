@@ -13,12 +13,12 @@
 
 <p>Im Folgenden werden die drei Optionengruppen des Eingabedialogs vorgestellt.</p>
 
-<h3>Operation - Verschl&uuml;sseln  oder Entschl&uuml;sseln</h3>
-<p>Da ARC4 eine Stromchiffre ist, haben die Buttons &bdquo;<i>Verschl&uuml;sseln</i>&ldquo; und &bdquo;<i>Entschl&uuml;sseln</i>&ldquo; keine Auswirkung auf den Algorithmus selbst: Zufallsbitfolge XOR Klartext ergibt Chiffrat, und Chiffrat xor Zufallsbitfolge  ergibt wieder den Klartext.</p>
+<h3>Operation &mdash; Verschl&uuml;sseln  oder Entschl&uuml;sseln</h3>
+<p>Da ARC4 eine Stromchiffre ist, haben die Buttons &bdquo;<i>Verschl&uuml;sseln</i>&ldquo; und &bdquo;<i>Entschl&uuml;sseln</i>&ldquo; keine Auswirkung auf den Algorithmus selbst: Zufallsbitfolge XOR Klartext ergibt Chiffrat, und Chiffrat XOR Zufallsbitfolge  ergibt wieder den Klartext.</p>
 <h3>Varianten von ARC4</h3>
 <table width="100%" border="0">
   <tr>
-<td>Da  ARC4 nicht nur in einer Variante existiert, gibt es hier die M&ouml;glichkeit,  zwischen zweien davon zu w&auml;hlen. Bei Spritz hat man zus&auml;tzlich die M&ouml;glichkeit, den Parameter  <i>w</i> zu setzen. F&uuml;r genauere Informationen wie Spritz funktioniert, siehe die Onlinehilfe zum <a href="../../../../../org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a>.<td>
+<td>Da  ARC4 nicht nur in einer Variante existiert, gibt es hier die M&ouml;glichkeit,  zwischen zweien davon zu w&auml;hlen. Bei Spritz hat man zus&auml;tzlich die M&ouml;glichkeit, den Parameter  <i>w</i> zu setzen. F&uuml;r genauere Informationen wie Spritz funktioniert, siehe die Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a>.<td>
 <td><img src="arc4-spritz.PNG" width="231" height="31" alt="hex-binaer" align="middle"/></td>
 </tr>
 </table>
@@ -33,7 +33,7 @@
   </table>
   <table width="100%" border="0">
   <tr>
-    <td>F&uuml;r  ein schnelles Ausprobieren des Algorithmus hat man die M&ouml;glichkeit, sich  zuf&auml;llige Schl&uuml;ssel oder einen Schl&uuml;ssel mit nur 0-Bits zu generieren. Achtung: Falls man seine Eingabe wieder entschl&uuml;sseln m&ouml;chte und sich einen zuf&auml;lligen Schl&uuml;ssel generieren hat l&auml;sst, sollte man ihn vorher kopieren.<p></p></td>
+    <td>F&uuml;r  ein schnelles Ausprobieren des Algorithmus hat man die M&ouml;glichkeit, sich  zuf&auml;llige Schl&uuml;ssel oder einen Schl&uuml;ssel mit nur 0-Bits zu generieren. Achtung: Falls man seine Eingabe wieder entschl&uuml;sseln m&ouml;chte und sich einen zuf&auml;lligen Schl&uuml;ssel generieren l&auml;sst, sollte man ihn vorher kopieren.<p></p></td>
     <td><img src="generieren.PNG" width="312" height="45" alt="generieren" align="middle"/></td>
   </tr>
   <tr>
@@ -43,13 +43,13 @@
 
 <h3>Beispiel</h3>
   <p>In diesem Beispiel wurden dieselben Daten wie im Beispiel am  Ende der Onlinehilfe zum <a href="PLUGINS_ROOT/org.jcryptool.visual.arc4/$nl$/help/content/index.html">ARC4-Visualisierungs-Plug-in</a> benutzt.</p>
-<p>Klartext.  <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</strong><br />
+<p>Klartext:  <strong>AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99</strong><br />
 <img src="ARC4-Beispiel_Plaintext-im-Editor-4-Crypto_de.png" alt="pic1" width="605" height="161" /></p>
 <p>Schlüssel:  <strong>00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF</strong><br />
 <img src="ARC4-Beispiel_Gesamt-Crypto-Dialog_de.png" alt="pic2" width="605" height="373" /></p>
 <p>Output: Berechneter Geheimtext: <strong>2F E0 60 8A 7C  D8 61 94 DA 6A FD 6E F3 32 F5 0D</strong> <br />
   <img src="ARC4-Beispiel_Output-Ciphertext-im-Editor-4-Crypto_de.png" alt="pic3" width="605" height="161" /></p>
-<p>Bemerkung: Die OperationenVer- und Entschlüsseln liefern  jeweils dasselbe Ergebnis.</p>
+<p>Bemerkung: Die Operationen Ver- und Entschlüsseln liefern  jeweils dasselbe Ergebnis.</p>
 
 </body>
 </html>

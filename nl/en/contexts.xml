@@ -3,6 +3,6 @@
 	<context id="wizard" title="ARC4/Spritz">
     <description>ARC4 is a stream cipher, which got famous through WEP/WPA. It is no secure cipher.
 Spritz is a strengthened variant of ARC4.</description>
-		<topic href="$nl$/help/content/tutorial.html" label="ARC4/Spritz"/>
+		<topic href="$nl$/help/content/UI/tutorialUI.html" label="ARC4/Spritz"/>
 	</context>
 </contexts>
