@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.visual.he.HEPlugin;
 import org.jcryptool.visual.he.Messages;
+import org.eclipse.swt.layout.FillLayout;
 
 
 public class HEView extends ViewPart {
@@ -33,6 +34,7 @@ public class HEView extends ViewPart {
 	@Override
 	public void createPartControl(final Composite parent) {
 		this.parent = parent;
+		parent.setLayout(new FillLayout(SWT.HORIZONTAL));
 		final TabFolder tf = new TabFolder(parent, SWT.TOP);
 
 		// Gentry & Halevi
@@ -41,9 +43,9 @@ public class HEView extends ViewPart {
         ScrolledComposite sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        HEComposite c = new HEComposite(sc, GENTRY_HALEVI, SWT.NONE);
-        sc.setContent(c);
-        sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        GHComposite ghc = new GHComposite(sc, SWT.NONE);
+        sc.setContent(ghc);
+        sc.setMinSize(ghc.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);
 
         // RSA
@@ -52,7 +54,7 @@ public class HEView extends ViewPart {
         sc = new ScrolledComposite(tf, SWT.H_SCROLL | SWT.V_SCROLL);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
-        c = new HEComposite(sc, RSA, SWT.NONE);
+        HEComposite c = new HEComposite(sc, RSA, SWT.NONE);
         sc.setContent(c);
         sc.setMinSize(c.computeSize(SWT.DEFAULT, SWT.DEFAULT));
         ti.setControl(sc);

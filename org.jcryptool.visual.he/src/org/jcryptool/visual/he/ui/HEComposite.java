@@ -371,16 +371,16 @@ public class HEComposite extends Composite {
 		mainComposite.setLayout(new GridLayout());
 		mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		final RowLayout mrl = new RowLayout(SWT.VERTICAL);
-		final RowData buttonrd = new RowData(130,30);
+		//final RowLayout mrl = new RowLayout(SWT.VERTICAL);
+		//final RowData buttonrd = new RowData(130,30);
 		//final RowData textrd = new RowData(100,20);
 
-		Group subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite.setText(Messages.HEComposite_Key);
-		subComposite.setLayout(mrl);
+		Group subComposite1= new Group(mainComposite, SWT.SHADOW_NONE);
+		subComposite1.setText(Messages.HEComposite_Key);
+		subComposite1.setLayout(new RowLayout(SWT.VERTICAL));
 
-        this.keySel = new Button(subComposite, SWT.PUSH);
-        this.keySel.setLayoutData(buttonrd);
+        this.keySel = new Button(subComposite1, SWT.PUSH);
+        this.keySel.setLayoutData(new RowData(130,30));
         this.keySel.setBackground(ColorService.RED);
         this.keySel.setEnabled(true);
         this.keySel.setText(Messages.HEComposite_Keysel);
@@ -409,11 +409,11 @@ public class HEComposite extends Composite {
         }
 
         if (tabChoice == GENTRY_HALEVI) {
-        	subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-    		subComposite.setText(Messages.HEComposite_Modulus);
-    		subComposite.setLayout(mrl);
-        	this.modulusSel = new Button(subComposite, SWT.PUSH);
-            this.modulusSel.setLayoutData(buttonrd);
+        	Group subComposite2 = new Group(mainComposite, SWT.SHADOW_NONE);
+    		subComposite2.setText(Messages.HEComposite_Modulus);
+    		subComposite2.setLayout(new RowLayout(SWT.VERTICAL));
+        	this.modulusSel = new Button(subComposite2, SWT.PUSH);
+            this.modulusSel.setLayoutData(new RowData(130,30));
             this.modulusSel.setBackground(ColorService.RED);
             this.modulusSel.setEnabled(false);
             this.modulusSel.setText(Messages.HEComposite_Keysel);
@@ -428,57 +428,12 @@ public class HEComposite extends Composite {
             });
         }
 
-        /**
-         * Only the scheme by Gentry and Halevi requires the modulus to be manually set,
-         * the other schemes inherit this from the key
-
-        if (tabChoice == GENTRY_HALEVI) {
-	        subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-			subComposite.setText(Messages.HEComposite_Modulus);
-			subComposite.setLayout(mrl);
-	        this.modulus = new Combo(subComposite, SWT.NONE);
-	        this.modulus.setLayoutData(textrd);
-	        this.modulus.setToolTipText(Messages.HEComposite_Modulus_Tooltip);
-	        this.modulus.add("32",0);
-	        this.modulus.add("64",1);
-	        this.modulus.add("128",2);
-	        this.modulus.add("256",3);
-	        this.modulus.add("512",4);
-	        this.modulus.add("1024",5);
-	        this.modulus.setEnabled(false);
-	        this.modulus.addModifyListener(new ModifyListener() {
-	        	public void modifyText(final ModifyEvent e) {
-	        		logMod = 5 + modulus.indexOf(modulus.getText());
-	        		detText.setBackground(ColorService.LIGHTGRAY);
-					rootText.setBackground(ColorService.LIGHTGRAY);
-					cText.setBackground(ColorService.LIGHTGRAY);
-					pkBlockText.setBackground(ColorService.LIGHTGRAY);
-					initialPlain.setBackground(ColorService.LIGHTGRAY);
-					initialPlainBits.setBackground(ColorService.LIGHTGRAY);
-					initialEncryptedBits.setBackground(ColorService.LIGHTGRAY);
-					homomorphPlain.setBackground(ColorService.LIGHTGRAY);
-					homomorphPlainBits.setBackground(ColorService.LIGHTGRAY);
-					homomorphEncryptedBits.setBackground(ColorService.LIGHTGRAY);
-					homomorphResultPlain.setBackground(ColorService.LIGHTGRAY);
-					homomorphResultPlainBits.setBackground(ColorService.LIGHTGRAY);
-					homomorphResultEncryptedBits.setBackground(ColorService.LIGHTGRAY);
-					plainResult.setBackground(ColorService.LIGHTGRAY);
-					plainOperations.setBackground(ColorService.LIGHTGRAY);
-	        		initTextSel.setEnabled(true);
-	        	}
-	        });
-        }*/
-
-
-
-
-
-        subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite.setText(Messages.HEComposite_Initial_Text);
-		subComposite.setLayout(mrl);
-		this.initTextSel = new Button(subComposite, SWT.PUSH);
+        Group subComposite3 = new Group(mainComposite, SWT.SHADOW_NONE);
+		subComposite3.setText(Messages.HEComposite_Initial_Text);
+		subComposite3.setLayout(new RowLayout(SWT.VERTICAL));
+		this.initTextSel = new Button(subComposite3, SWT.PUSH);
 		this.initTextSel.setToolTipText(Messages.HEComposite_Initial_Tooltip);
-        this.initTextSel.setLayoutData(buttonrd);
+        this.initTextSel.setLayoutData(new RowData(130,30));
         this.initTextSel.setBackground(ColorService.RED);
         this.initTextSel.setEnabled(false);
         this.initTextSel.setText(Messages.HEComposite_Initial_Text_Select);
@@ -506,15 +461,15 @@ public class HEComposite extends Composite {
 	    	case PAILLIER: spacerLabel.setSize(130, 106); break;
 	    }
 
-        subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite.setText(Messages.HEComposite_Homomorphic_Text);
-		subComposite.setLayout(mrl);
+        Group subComposite4 = new Group(mainComposite, SWT.SHADOW_NONE);
+		subComposite4.setText(Messages.HEComposite_Homomorphic_Text);
+		subComposite4.setLayout(new RowLayout(SWT.VERTICAL));
 
 		/** Only RSA does not have homomorphic addition */
 		if (tabChoice != RSA) {
-	        this.homomorphAdd = new Button(subComposite, SWT.PUSH);
+	        this.homomorphAdd = new Button(subComposite4, SWT.PUSH);
 	        this.homomorphAdd.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Add);
-	        this.homomorphAdd.setLayoutData(buttonrd);
+	        this.homomorphAdd.setLayoutData(new RowData(130,30));
 	        this.homomorphAdd.setEnabled(false);
 	        this.homomorphAdd.setText(Messages.HEComposite_Homomorphic_Add_Select);
 	        this.homomorphAdd.addSelectionListener(new SelectionAdapter() {
@@ -533,9 +488,9 @@ public class HEComposite extends Composite {
 
 		/** Only Paillier does not have homomorphic multiplication */
 		if (tabChoice != PAILLIER) {
-	        this.homomorphMult = new Button(subComposite, SWT.PUSH);
+	        this.homomorphMult = new Button(subComposite4, SWT.PUSH);
 	        this.homomorphMult.setToolTipText(Messages.HEComposite_Homomorphic_Tooltip_Multiply);
-	        this.homomorphMult.setLayoutData(buttonrd);
+	        this.homomorphMult.setLayoutData(new RowData(130,30));
 	        this.homomorphMult.setEnabled(false);
 	        this.homomorphMult.setText(Messages.HEComposite_Homomorphic_Mult_Select);
 	        this.homomorphMult.addSelectionListener(new SelectionAdapter() {
@@ -558,11 +513,11 @@ public class HEComposite extends Composite {
 	        });
 		}
 
-		spacerLabel = new Label(subComposite, SWT.NONE);
+		spacerLabel = new Label(subComposite4, SWT.NONE);
 		spacerLabel.setSize(130,10);
 
-        this.decryptButton = new Button(subComposite, SWT.PUSH);
-        this.decryptButton.setLayoutData(buttonrd);
+        this.decryptButton = new Button(subComposite4, SWT.PUSH);
+        this.decryptButton.setLayoutData(new RowData(130,30));
         this.decryptButton.setToolTipText(Messages.HEComposite_Decrypt_Tooltip);
         this.decryptButton.setEnabled(false);
         this.decryptButton.setText(Messages.HEComposite_Decrypt_Select);
@@ -601,13 +556,13 @@ public class HEComposite extends Composite {
 	    	case PAILLIER: spacerLabel.setSize(130, 281); break;
 	    }
 
-        subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-		subComposite.setText(Messages.HEComposite_Reset_Text);
-		subComposite.setLayout(mrl);
+        Group subComposite5 = new Group(mainComposite, SWT.SHADOW_NONE);
+		subComposite5.setText(Messages.HEComposite_Reset_Text);
+		subComposite5.setLayout(new RowLayout(SWT.VERTICAL));
 
-		this.resetNumButton = new Button(subComposite, SWT.PUSH);
+		this.resetNumButton = new Button(subComposite5, SWT.PUSH);
 		this.resetNumButton.setToolTipText(Messages.HEComposite_Reset_Numbers_Tooltip);
-		this.resetNumButton.setLayoutData(buttonrd);
+		this.resetNumButton.setLayoutData(new RowData(130,30));
 		this.resetNumButton.setEnabled(false);
 		this.resetNumButton.setText(Messages.HEComposite_Reset_Numbers);
 		this.resetNumButton.addSelectionListener(new SelectionAdapter() {
@@ -619,9 +574,9 @@ public class HEComposite extends Composite {
 
         });
 
-		this.resetAllButton = new Button(subComposite, SWT.PUSH);
+		this.resetAllButton = new Button(subComposite5, SWT.PUSH);
 		this.resetAllButton.setToolTipText(Messages.HEComposite_Reset_All_Tooltip);
-		this.resetAllButton.setLayoutData(buttonrd);
+		this.resetAllButton.setLayoutData(new RowData(130,30));
 		this.resetAllButton.setEnabled(false);
 		this.resetAllButton.setText(Messages.HEComposite_Reset_All);
 		this.resetAllButton.addSelectionListener(new SelectionAdapter() {
@@ -634,13 +589,13 @@ public class HEComposite extends Composite {
         });
 
 		if (tabChoice == GENTRY_HALEVI) {
-			subComposite = new Group(mainComposite, SWT.SHADOW_NONE);
-			subComposite.setText(Messages.HEComposite_Settings_Group);
-			subComposite.setLayout(mrl);
+			Group subComposite6 = new Group(mainComposite, SWT.SHADOW_NONE);
+			subComposite6.setText(Messages.HEComposite_Settings_Group);
+			subComposite6.setLayout(new RowLayout(SWT.VERTICAL));
 
-			this.settingsButton = new Button(subComposite, SWT.PUSH);
+			this.settingsButton = new Button(subComposite6, SWT.PUSH);
 			this.settingsButton.setToolTipText(Messages.HEComposite_Settings_Tooltip);
-			this.settingsButton.setLayoutData(buttonrd);
+			this.settingsButton.setLayoutData(new RowData(130,30));
 			this.settingsButton.setText(Messages.HEComposite_Settings);
 			this.settingsButton.addSelectionListener(new SelectionAdapter() {
 
