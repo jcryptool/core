@@ -2,15 +2,12 @@ package org.jcryptool.visual.wots.files;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
 public abstract class AESPRF extends PseudorandomFunction {
 
-//    private static final Logger logger = LoggerFactory.getLogger(AESPRF.class);
     private final Cipher cipher;
 
     /**
@@ -24,7 +21,6 @@ public abstract class AESPRF extends PseudorandomFunction {
 	try {
 	    cipher = Cipher.getInstance("AES/ECB/NoPadding");
 	} catch (Exception e) {
-//	    logger.error("Exception", e);
 	    throw new RuntimeException(e);
 	}
     }
@@ -37,7 +33,6 @@ public abstract class AESPRF extends PseudorandomFunction {
 
 	    return cipher.doFinal(input);
 	} catch (Exception e) {
-//	    logger.error("Exception", e);
 	    throw new RuntimeException(e);
 	}
     }

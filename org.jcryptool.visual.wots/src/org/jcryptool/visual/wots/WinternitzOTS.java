@@ -9,16 +9,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public class WinternitzOTS implements OTS {
+public class WinternitzOTS {
 
-    // Logger
-    // private static final Logger logger = LoggerFactory.getLogger(WinternitzOTS.class);
     // Lengths 
     private int m, l, l1, l2;
     // Winternitz parameter
@@ -47,7 +43,6 @@ public class WinternitzOTS implements OTS {
 	try {
 	    digest = MessageDigest.getInstance("SHA-256");
 	} catch (NoSuchAlgorithmException e) {
-	    //logger.error("Exception", e);
 	    throw new RuntimeException(e);
 	}
 
@@ -129,13 +124,16 @@ public class WinternitzOTS implements OTS {
      * @param message Message
      * @return Signature of the message
      */
-    public byte[] sign(byte[] message) {
+    public byte[] sign(byte[] message, byte[] b) {
 	byte[][] tmpSignature = new byte[l][n];
 
 	// Hash message
-	message = digest.digest(message);
+	// byte[] message2 = digest.digest(message);
+	// System.out.println("Hash within sign():\n" + org.jcryptool.visual.wots.files.Converter._byteToHex(message2) + "\n" + message2.length);
+	
+	
 	// Calculate exponent b
-	byte[] b = calculateExponentB(message);
+	// byte[] b = calculateExponentB(message);
 
 	// Hash each part bi times
 	for (int i = 0; i < l; i++) {
@@ -157,11 +155,14 @@ public class WinternitzOTS implements OTS {
      * @param signature Signature
      * @return True if the signature is valid, otherwise false
      */
-    public boolean verify(byte[] message, byte[] signature) {
-	// Hash message
-	message = digest.digest(message);
+    public boolean verify(byte[] message, byte[] signature, byte[] b) {
+	
+    // Hash message
+	// message = digest.digest(message);
+	
+	
 	// Calculate exponent b
-	byte[] b = calculateExponentB(message);
+	//byte[] b = calculateExponentB(message);
 	
 	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
 	
@@ -295,5 +296,27 @@ public class WinternitzOTS implements OTS {
      */
     public void setPublicKey(byte[][] p) {
     	this.publicKey = p;
+    }
+    
+    /**
+     * returns hash of given String
+     * @param message
+     * @return
+     */
+    public String getHash(String message) {
+    	return org.jcryptool.visual.wots.files.Converter._byteToHex(digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message)));
+    }
+    
+    /** 
+     * returns the calculated bi from a given message
+     * @param message
+     * @return
+     */
+    public String getBi(String message) {
+    	byte[] m = digest.digest(org.jcryptool.visual.wots.files.Converter._hexStringToByte(message));
+    	
+    	//System.out.println("Länge nach getHash(): " +  m.length);
+    	
+    	return org.jcryptool.visual.wots.files.Converter._byteToHex(calculateExponentB(m));
     }
 }

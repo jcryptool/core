@@ -4,21 +4,18 @@ import org.jcryptool.visual.wots.files.PseudorandomFunction;
 import org.jcryptool.visual.wots.files.ByteUtils;
 import org.jcryptool.visual.wots.files.IntegerUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
 
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
 public class WOTSPlus {
 
-    // Logger
-//    private static final Logger logger = LoggerFactory.getLogger(WinternitzOTS.class);
     // Lengths 
     private int m, l, l1, l2;
     // Winternitz parameter
@@ -48,7 +45,6 @@ public class WOTSPlus {
 	try {
 	    digest = MessageDigest.getInstance("SHA-256");
 	} catch (NoSuchAlgorithmException e) {
-//	    logger.error("Exception", e);
 	    throw new RuntimeException(e);
 	}
 
@@ -149,13 +145,14 @@ public class WOTSPlus {
      * @param message Message
      * @return Signature of the message
      */
-    public byte[] sign(byte[] message) {
+    public byte[] sign(byte[] message, byte[] b) {
 	byte[][] tmpSignature = new byte[l][n];
 	
 	// Hash message
-	message = digest.digest(message);
+	// message = digest.digest(message);
+	
 	// Calculate exponent b
-	byte[] b = calculateExponentB(message);
+	// byte[] b = calculateExponentB(message);
 
 	// Hash each part bi times
 	for (int i = 0; i < l; i++) {
@@ -181,12 +178,14 @@ public class WOTSPlus {
      * @param signature Signature
      * @return True if the signature is valid, otherwise false
      */
-    public boolean verify(byte[] message, byte[] signature) {
+    public boolean verify(byte[] message, byte[] signature, byte[] b) {
 	
     // Hash message
-	message = digest.digest(message);
+	// message = digest.digest(message);
+	
+	
 	// Calculate exponent b
-	byte[] b = calculateExponentB(message);
+	// byte[] b = calculateExponentB(message);
 	
 	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
 	
@@ -327,5 +326,24 @@ public class WOTSPlus {
      */
     public void setPublicKey(byte[][] p) {
     	this.publicKey = p;
+    }
+    
+    /**
+     * returns hash of given String
+     * @param message
+     * @return
+     */
+    public String getHash(String message) {
+    	return org.jcryptool.visual.wots.files.Converter._byteToHex(digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message)));
+    }
+    
+    /** 
+     * returns the calculated bi from a given message
+     * @param message
+     * @return
+     */
+    public String getBi(String message) {
+    	byte[] m = digest.digest(org.jcryptool.visual.wots.files.Converter._hexStringToByte(message));
+    	return org.jcryptool.visual.wots.files.Converter._byteToHex(calculateExponentB(m));
     }
 }

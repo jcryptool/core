@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
@@ -23,6 +24,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
+import org.jcryptool.visual.wots.files.WotsComposite;
 
 public class WotsView extends ViewPart {
 	public WotsView() {
@@ -39,6 +41,13 @@ public class WotsView extends ViewPart {
 	private Button btnWots;
 	private Button btnWotsPlus;
 	private Text txt_Output;
+	private Text txt_Hash;
+	private Text txt_Bi;
+	private boolean details = false;
+	private Label lblMessageHash;
+	private Label lblBi;
+	private Button btnHash;
+	private Button btn_CalcB;
 	
 	
 	/**
@@ -97,29 +106,27 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
+				// KEY GENERATION
 				
+				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
+					
 					// Set Image & Output field
 					
 					txt_Output.setText("This message should explain the WOTS Key-Generation.");
 					
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Key_Generation.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Key_Generation.PNG");
-//					img_right.setImage(img);
-//				
+		
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field 
 					// and initializes it to make instance of a PRF to generate 
 				
 					byte[] seed;
 					int w = Integer.parseInt(txt_winternitzP.getText());
-					WinternitzOTS instance = new WinternitzOTS(w);
+					org.jcryptool.visual.wots.WinternitzOTS instance = new org.jcryptool.visual.wots.WinternitzOTS(w);
 					org.jcryptool.visual.wots.files.PseudorandomFunction prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
-					//int n = prf.getLength();
 					int n = 16;
 					SecureRandom sRandom = new SecureRandom();
-					System.out.println(n);
 					seed = new byte[n];
-	                sRandom.nextBytes(seed);
+					sRandom.nextBytes(seed);
 					instance.init(prf);
 			    
 					// Generate Keys
@@ -130,7 +137,8 @@ public class WotsView extends ViewPart {
 					// Put keys into Key-Fields
 					txt_Sigkey.setText(org.jcryptool.visual.wots.files.Converter._2dByteToHex(instance.getPrivateKey()));
 					txt_Verifkey.setText(org.jcryptool.visual.wots.files.Converter._2dByteToHex(instance.getPublicKey()));
-			    			    
+			    
+			    
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field
@@ -138,17 +146,14 @@ public class WotsView extends ViewPart {
 					txt_Output.setText("This message should explain the WOTS+ Key-Generation.");
 					
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Key_Generation.PNG");
-//					img_right.setImage(img);
 					
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field 
 					// and initializes it to make instance of a PRF to generate 
 					
 					byte[] seed;
 					int w = Integer.parseInt(txt_winternitzP.getText());
-					WOTSPlus instance = new WOTSPlus(w);
+					org.jcryptool.visual.wots.WOTSPlus instance = new org.jcryptool.visual.wots.WOTSPlus(w);
 					org.jcryptool.visual.wots.files.PseudorandomFunction prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
-					//int n = prf.getLength();
 					int n = 16;
 				    SecureRandom sRandom = new SecureRandom();
 				    seed = new byte[n];
@@ -180,6 +185,8 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
+				// SIGNATURE GENERATION
+				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
 					// Set Image & Output field
@@ -187,23 +194,28 @@ public class WotsView extends ViewPart {
 					txt_Output.setText("This message should explain the WOTS Signature-Generation.");
 				
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Signature_Generation.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Signature_Generation.PNG");
-//					img_right.setImage(img);
-				
+		
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
 				
 					int w = Integer.parseInt(txt_winternitzP.getText());
-					WinternitzOTS instance = new WinternitzOTS(w);
+					org.jcryptool.visual.wots.WinternitzOTS instance = new org.jcryptool.visual.wots.WinternitzOTS(w);
 				
 					// Set private key of the WOTS-Instance to the one given in the Key-Field
 					
 					byte[][] privateKey = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(txt_Sigkey.getText(), instance.getLength());
 					instance.setPrivateKey(privateKey);
-				
+					
+					// Hash message and set txt_Hash + Calculate bi and set txt_bi if necessary
+					if (!details) {
+						txt_Hash.setText(instance.getHash(txt_message.getText()));
+						txt_Bi.setText(instance.getBi(txt_Hash.getText()));
+					}
+					
 					// Sign message and put Signature in Output Field
-				
-					byte[] message = org.jcryptool.visual.wots.files.Converter._stringToByte(txt_message.getText());
-					txt_Sig.setText(org.jcryptool.visual.wots.files.Converter._byteToHex(instance.sign(message)));
+					byte[] message = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Hash.getText());
+					txt_Sig.setText(org.jcryptool.visual.wots.files.Converter._byteToHex(instance.sign(message, org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Bi.getText()))));
+					
+					
 					
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
@@ -212,9 +224,7 @@ public class WotsView extends ViewPart {
 					txt_Output.setText("This message should explain the WOTS+ Key-Generation.");
 					
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Signature_Generation.PNG");
-//					img_right.setImage(img);
-					
+//					
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
 					
 					int w = Integer.parseInt(txt_winternitzP.getText());
@@ -227,10 +237,18 @@ public class WotsView extends ViewPart {
 					byte[][] publicKey = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(txt_Verifkey.getText(), (instance.getLength() + w-1));
 					instance.setPublicKey(publicKey);
 					
+					// Hash message and set txt_Hash + Calculate bi and set txt_bi if necessary
+					if (!details) {
+						txt_Hash.setText(instance.getHash(txt_message.getText()));
+						txt_Bi.setText(instance.getBi(txt_Hash.getText()));
+					}
+					
 					// Sign message and put Signature in Output Field
 				
-					byte[] message = org.jcryptool.visual.wots.files.Converter._stringToByte(txt_message.getText());
-					txt_Sig.setText(org.jcryptool.visual.wots.files.Converter._byteToHex(instance.sign(message)));
+					byte[] message = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Hash.getText());
+					txt_Sig.setText(org.jcryptool.visual.wots.files.Converter._byteToHex(instance.sign(message, org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Bi.getText()))));
+					
+					
 				} else {
 					
 					// TODO ERROR MESSAGE
@@ -246,6 +264,8 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
+				// SIGNATURE VERIFICATION
+				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
 					// Set Image & Output field 
@@ -253,29 +273,34 @@ public class WotsView extends ViewPart {
 					txt_Output.setText("This message should explain the WOTS Signature-Verification.");
 				
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Signature_Verification.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Signature_Verification.PNG");
-//					img_right.setImage(img);
 				
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
 				
 					int w = Integer.parseInt(txt_winternitzP.getText());
-					WinternitzOTS instance = new WinternitzOTS(w);
+					org.jcryptool.visual.wots.WinternitzOTS instance = new org.jcryptool.visual.wots.WinternitzOTS(w);
 				
 					// Set public key of the WOTS-Instance to the one given in the Key-Field
 				
 					byte[][] publicKey = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(txt_Verifkey.getText(), instance.getLength());
 					instance.setPublicKey(publicKey);
+					
+					// Hash message and set txt_Hash + Calculate bi and set txt_bi if necessary
+					if (!details) {
+						txt_Hash.setText(instance.getHash(txt_message.getText()));
+						txt_Bi.setText(instance.getBi(txt_Hash.getText()));
+					}
 				
 					// Get message and signature from Input-fields and set result of Verification to Output field
 				
-					byte[] message = org.jcryptool.visual.wots.files.Converter._stringToByte(txt_message.getText());
+					byte[] message = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Hash.getText());
 					byte[] signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Sig.getText());
 				
-					if (instance.verify(message, signature)) {
+					if (instance.verify(message, signature, org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Bi.getText()))) {
 						txt_true_false.setText("Signature valid");
 					} else {
 						txt_true_false.setText("Signature rejected");
 					}
+					
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field
@@ -283,30 +308,33 @@ public class WotsView extends ViewPart {
 					txt_Output.setText("This message should explain the WOTS+ Signature-Verification.");
 					
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
-//					Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Signature_Verification.PNG");
-//					img_right.setImage(img);
 					
 					// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
 					
 					int w = Integer.parseInt(txt_winternitzP.getText());
-					WOTSPlus instance = new WOTSPlus(w);
+					org.jcryptool.visual.wots.WOTSPlus instance = new org.jcryptool.visual.wots.WOTSPlus(w);
 					
 					// Set public key of the WOTS-Instance to the one given in the Key-Field
 					
 					byte[][] publicKey = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(txt_Verifkey.getText(), (instance.getLength() + w-1));
 					instance.setPublicKey(publicKey);
 					
+					// Hash message and set txt_Hash + Calculate bi and set txt_bi if necessary
+					if (!details) {
+						txt_Hash.setText(instance.getHash(txt_message.getText()));
+						txt_Bi.setText(instance.getBi(txt_Hash.getText()));
+					}
+					
 					// Get message and signature from Input-fields and set result of Verification to Output field
 					
-					byte[] message = org.jcryptool.visual.wots.files.Converter._stringToByte(txt_message.getText());
+					byte[] message = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Hash.getText());
 					byte[] signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Sig.getText());
 				
-					if (instance.verify(message, signature)) {
+					if (instance.verify(message, signature, org.jcryptool.visual.wots.files.Converter._hexStringToByte(txt_Bi.getText()))) {
 						txt_true_false.setText("Signature valid");
 					} else {
 						txt_true_false.setText("Signature rejected");
 					}
-					
 					
 				} else {
 					
@@ -334,9 +362,9 @@ public class WotsView extends ViewPart {
 		btnLoadMessageFrom.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				JFileChooser chooser = new JFileChooser();
-			    //FileNameExtensionFilter filter = new FileNameExtensionFilter(
-			    //    "JPG & GIF Images", "jpg", "gif");
-			    //chooser.setFileFilter(filter);
+			    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+			        "Text Files", "txt", ".");
+			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(null);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
 			       System.out.println("You chose to open this file: " +
@@ -345,7 +373,7 @@ public class WotsView extends ViewPart {
 			       File file = chooser.getSelectedFile();
 			       String path = file.getAbsolutePath();
 			       try {
-						txt_message.setText(org.jcryptool.visual.wots.files.WotsComposite.readFile(path));
+						txt_message.setText(WotsComposite.readFile(path));
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -406,12 +434,13 @@ public class WotsView extends ViewPart {
 				txt_winternitzP.setText("4");
 				txt_true_false.setText("");
 				txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
-				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.png"));
-//				Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Overview2.PNG");
-//				img_right.setImage(img);
+				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
+
+				txt_Hash.setText("");
+				txt_Bi.setText("");
 			}
 		});
-		btn_reset.setBounds(412, 615, 75, 25);
+		btn_reset.setBounds(520, 615, 75, 25);
 		btn_reset.setText("Reset");
 		
 		txt_true_false = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.CENTER);
@@ -420,12 +449,9 @@ public class WotsView extends ViewPart {
 		txt_message.setText("standard message");
 		img_right = new Label(parent, 0);
 		img_right.setBounds(723, 283, 483, 322);
-		//img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Key_Generation.PNG"));
+		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
 
-//		Image img = new Image(org.eclipse.swt.widgets.Display.getCurrent(), "C:/Users/Hannes/Desktop/Studium/4.Semester/Projekt/Images/Konzept/Overview2.PNG");
-//		img_right.setImage(img);
-        img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.png"));
-
+		
 		btnWots = new Button(parent, SWT.RADIO);
 		btnWots.setBounds(352, 186, 111, 20);
 		btnWots.setText("WOTS");
@@ -439,6 +465,148 @@ public class WotsView extends ViewPart {
 		txt_Output.setEditable(false);
 		txt_Output.setBounds(723, 58, 483, 191);
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
+		
+		Button btn_Details = new Button(parent, SWT.NONE);
+		btn_Details.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				if (!details) {
+					
+					// Explains what is different to normal Version
+					
+					txt_Output.setText("This is a more detailed view of the WOTS/WOTS+ algorithm. In this view you are able to take a look and edit the hash of the message and the calculated Bitstring Bi.\nTo use the detailed version properly, you have to generate the Hash and the Bitstring Bi manually by clicking on the Buttons \"Hash Message\" and \"Calculate Bi\".");
+					
+					// Sets the View to a more detailed Version
+					
+					details = true;
+					
+					txt_Hash.setEnabled(true);
+					txt_Hash.setVisible(true);
+					
+					lblMessageHash.setEnabled(true);
+					lblMessageHash.setVisible(true);
+					
+					txt_Bi.setEnabled(true);
+					txt_Bi.setVisible(true);
+					
+					lblBi.setEnabled(true);
+					lblBi.setVisible(true);
+					
+					btnHash.setEnabled(true);
+					btnHash.setVisible(true);
+					
+					btn_CalcB.setEnabled(true);
+					btn_CalcB.setVisible(true);
+					
+					// Compress txt_fields to fit detailed view
+					
+					txt_message.setBounds(9, 58, 337, 96);
+					txt_Sigkey.setBounds(10, 283, 336, 75);
+					txt_Verifkey.setBounds(352, 283, 336, 75);
+					
+				} else if (details) {
+					
+					// States that now the normal view is showed
+					
+					txt_Output.setText("You switched back to the normal view of the WOTS/WOTS+ algorithm.");
+					
+					// Hides the details shown before
+					
+					details = false;
+					
+					txt_Hash.setEnabled(false);
+					txt_Hash.setVisible(false);
+					
+					lblMessageHash.setEnabled(false);
+					lblMessageHash.setVisible(false);
+					
+					txt_Bi.setEnabled(false);
+					txt_Bi.setVisible(false);
+					
+					lblBi.setEnabled(false);
+					lblBi.setVisible(false);
+					
+					btnHash.setEnabled(false);
+					btnHash.setVisible(false);
+					
+					btn_CalcB.setEnabled(false);
+					btn_CalcB.setVisible(false);
+					
+					// Set sizes back to original
+					
+					txt_message.setBounds(9, 58, 679, 96);
+					txt_Sigkey.setBounds(10, 283, 336, 151);
+					txt_Verifkey.setBounds(352, 283, 336, 151);
+					
+				
+				} else {
+					// TODO error message
+				}		
+			}
+		});
+		btn_Details.setBounds(412, 615, 102, 25);
+		btn_Details.setText("Toggle Details");
+		
+		txt_Hash = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Hash.setBounds(352, 58, 336, 96);
+		txt_Hash.setEnabled(false);
+		txt_Hash.setVisible(false);
+		
+		lblMessageHash = new Label(parent, SWT.NONE);
+		lblMessageHash.setBounds(354, 37, 109, 20);
+		lblMessageHash.setText("Message Hash");
+		lblMessageHash.setEnabled(false);
+		lblMessageHash.setVisible(false);
+		
+		txt_Bi = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Bi.setBounds(10, 415, 678, 56);
+		txt_Bi.setEnabled(false);
+		txt_Bi.setVisible(false);
+		
+		lblBi = new Label(parent, SWT.NONE);
+		lblBi.setBounds(10, 389, 70, 20);
+		lblBi.setText("Bi");
+		lblBi.setEnabled(false);
+		lblBi.setVisible(false);
+		
+		btnHash = new Button(parent, SWT.NONE);
+		btnHash.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
+				
+				int w = Integer.parseInt(txt_winternitzP.getText());
+				org.jcryptool.visual.wots.WOTSPlus instance = new org.jcryptool.visual.wots.WOTSPlus(w);
+				
+				// Hash message and set txt_Hash
+				txt_Hash.setText(instance.getHash(txt_message.getText()));
+			}
+		});
+		btnHash.setBounds(193, 160, 116, 25);
+		btnHash.setText("Hash Message");
+		btnHash.setEnabled(false);
+		btnHash.setVisible(false);
+		
+		btn_CalcB = new Button(parent, SWT.NONE);
+		btn_CalcB.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				// Make instance of WinternitzOTS with Winternitz-Paramenter w from Input-Field
+				
+				int w = Integer.parseInt(txt_winternitzP.getText());
+				org.jcryptool.visual.wots.WOTSPlus instance = new org.jcryptool.visual.wots.WOTSPlus(w);
+				
+				// Calculate Bi's and set txt_Bi
+				txt_Bi.setText(instance.getBi((txt_Hash.getText())));
+			}
+		});
+		btn_CalcB.setBounds(316, 160, 111, 25);
+		btn_CalcB.setText("Calculate Bi's");
+		btn_CalcB.setEnabled(false);
+		btn_CalcB.setVisible(false);
 
 		
 	}
