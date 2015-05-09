@@ -4,16 +4,19 @@ import org.jcryptool.visual.wots.files.PseudorandomFunction;
 import org.jcryptool.visual.wots.files.ByteUtils;
 import org.jcryptool.visual.wots.files.IntegerUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
+ * @author Hannes Sochor <sochorhannes@gmail.com>
+ * Source Code by Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public class WinternitzOTS {
+public class WinternitzOTS implements OTS{
 
     // Lengths 
     private int m, l, l1, l2;
@@ -29,7 +32,14 @@ public class WinternitzOTS {
     private byte[][] publicKey;
     // Message digest
     private MessageDigest digest;
-    //private byte[][] signature;
+    // Signature
+    private byte[] signature;
+    // hashed message
+    private byte[] messageHash;
+    // Bitstring b
+    private byte[] b;
+    // Seed used to generate random values
+    private byte[] seed;
 
     /**
      * Creates a new Winternitz OTS.
@@ -37,25 +47,26 @@ public class WinternitzOTS {
      * @param w Winternitz parameter w
      */
     public WinternitzOTS(int w) {
-	this.w = w;
-	this.n = 32; // TODO For SHA256, should be dynamic
+	
+    	// Generate seed and get Pseudo-Random Function
+    	SecureRandom sRandom = new SecureRandom();
+    	seed = new byte[16];
+    	sRandom.nextBytes(seed);
+    	prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
+    	
+    	// Set winternitz parameter and block-length
+    	this.w = w;
+    	this.n = 32; // TODO For SHA256, should be dynamic
 
-	try {
-	    digest = MessageDigest.getInstance("SHA-256");
-	} catch (NoSuchAlgorithmException e) {
-	    throw new RuntimeException(e);
-	}
-
-	calculateLengths();
-    }
-
-    /**
-     * Initialize the Winternitz OTS.
-     *
-     * @param prf Pseudorandom function
-     */
-    public void init(PseudorandomFunction prf) {
-	this.prf = prf;
+    	// Try to set up hash-function
+    	try {
+    		digest = MessageDigest.getInstance("SHA-256");
+    	} catch (NoSuchAlgorithmException e) {
+    		throw new RuntimeException(e);
+    	}
+    	
+    	// Calculate m, l, l1, l2
+    	calculateLengths();
     }
 
     /**
@@ -74,9 +85,9 @@ public class WinternitzOTS {
      *
      * @param seed Seed
      */
-    public void generateKeyPair(byte[] seed) {
-	generatePrivateKey(seed);
-	generatePublicKey();
+    public void generateKeyPair() {
+    	generatePrivateKey();
+    	generatePublicKey();
     }
 
     /**
@@ -84,20 +95,17 @@ public class WinternitzOTS {
      *
      * @param seed Seed
      */
-    public void generatePrivateKey(byte[] seed) {
-	privateKey = new byte[l][n];
+    public void generatePrivateKey() {
+    	
+    	privateKey = new byte[l][n];
 
-	for (int i = 0; i < l; i++) {
-	    byte[] key = new byte[n];
-	    byte[] input = IntegerUtils.toByteArray(i);
-	    System.arraycopy(input, 0, key, key.length - input.length, input.length);
-	    privateKey[i] = prf.apply(key, seed);
-	}
-
-	//logger.debug("Generate private key");
-	//logger.trace("SK: {} ...", ByteUtils.toHexString(ByteUtils.convert(privateKey), 10));
-	//logger.trace("Seed: {} ...", ByteUtils.toHexString(seed, 10));
-	//logger.trace("Private key: {} ({} bytes)", new Object[]{ByteUtils.toHexString(privateKey),});
+    	// Fills the private Key with random values
+    	for (int i = 0; i < l; i++) {
+    		byte[] key = new byte[n];
+    		byte[] input = IntegerUtils.toByteArray(i);
+    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    		privateKey[i] = prf.apply(key, seed);
+    	}
     }
 
     /**
@@ -105,17 +113,18 @@ public class WinternitzOTS {
      *
      */
     public void generatePublicKey() {
-	publicKey = new byte[l][n];
+    	
+    	publicKey = new byte[l][n];
 	
-	// Hash each parts w-1 times
-	for (int i = 0; i < l; i++) {
+    	// Hash each part of private key w-1 times
+    	for (int i = 0; i < l; i++) {
 		
-		System.arraycopy(privateKey[i], 0, publicKey[i], 0, publicKey[i].length);
+    		System.arraycopy(privateKey[i], 0, publicKey[i], 0, publicKey[i].length);
 		
-		for (int j = 0; j < w-1; j++) {
-			publicKey[i] = digest.digest(publicKey[i]);
-		}
-	}
+    		for (int j = 0; j < w-1; j++) {
+    			publicKey[i] = digest.digest(publicKey[i]);
+    		}
+    	}
     }
 
     /**
@@ -124,28 +133,21 @@ public class WinternitzOTS {
      * @param message Message
      * @return Signature of the message
      */
-    public byte[] sign(byte[] message, byte[] b) {
-	byte[][] tmpSignature = new byte[l][n];
-
-	// Hash message
-	// byte[] message2 = digest.digest(message);
-	// System.out.println("Hash within sign():\n" + org.jcryptool.visual.wots.files.Converter._byteToHex(message2) + "\n" + message2.length);
+    public void sign() {
 	
-	
-	// Calculate exponent b
-	// byte[] b = calculateExponentB(message);
+    	byte[][] tmpSignature = new byte[l][n];
 
-	// Hash each part bi times
-	for (int i = 0; i < l; i++) {
+    	// Hash each part of the private key bi times
+    	for (int i = 0; i < l; i++) {
 		
-			tmpSignature[i] = this.privateKey[i];
+				tmpSignature[i] = this.privateKey[i];
 			
-			for (int j = 0; j < (b[i] & 0xFF); j++) {
-				tmpSignature[i] = digest.digest(tmpSignature[i]);
-			}
-	}
+				for (int j = 0; j < (b[i] & 0xFF); j++) {
+					tmpSignature[i] = digest.digest(tmpSignature[i]);
+				}
+    	}
 	
-	return org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
+    	signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
     }
 
     /**
@@ -155,29 +157,22 @@ public class WinternitzOTS {
      * @param signature Signature
      * @return True if the signature is valid, otherwise false
      */
-    public boolean verify(byte[] message, byte[] signature, byte[] b) {
+    public boolean verify() {
 	
-    // Hash message
-	// message = digest.digest(message);
+    	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
 	
-	
-	// Calculate exponent b
-	//byte[] b = calculateExponentB(message);
-	
-	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
-	
-	// Hash each part w-1-bi times and verifies it with public Key
-	for (int i = 0; i < l; i++) {
+    	// Hash each part of the signature w-1-bi times and verifies it with public Key
+    	for (int i = 0; i < l; i++) {
 
-	    for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
-	    	tmpSignature[i] = digest.digest(tmpSignature[i]);
-	    }
+    		for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
+    			tmpSignature[i] = digest.digest(tmpSignature[i]);
+    		}
 
-	    // Compare sigma_i with pk_i
-	    if (!Arrays.equals(tmpSignature[i], publicKey[i])) {
-	    	return false;
-	    }
-	}
+    		// Compare sigma_i with pk_i
+    		if (!Arrays.equals(tmpSignature[i], publicKey[i])) {
+    			return false;
+    		}
+    	}
 	
 	return true;
     }
@@ -186,13 +181,11 @@ public class WinternitzOTS {
      * Calculate the lengths l1, l2, and l.
      */
     private void calculateLengths() {
-	m = digest.getDigestLength() * 8;
-	l1 = (int) Math.ceil((double) m / MathUtils.log2(w));
-	l2 = (int) Math.floor(MathUtils.log2(l1 * (w - 1)) / MathUtils.log2(w)) + 1;
-	l = l1 + l2;
-
-	//logger.debug("Using Winternitz OTS with w={} and m={}", new Object[]{w, m});
-	//logger.debug("Lengths are: l1={}, l2={}, and l={}", new Object[]{l1, l2, l});
+    	
+    	m = digest.getDigestLength() * 8;
+    	l1 = (int) Math.ceil((double) m / MathUtils.log2(w));
+    	l2 = (int) Math.floor(MathUtils.log2(l1 * (w - 1)) / MathUtils.log2(w)) + 1;
+    	l = l1 + l2;
     }
 
     /**
@@ -201,23 +194,24 @@ public class WinternitzOTS {
      * @param message Message
      * @return Exponent b
      */
-    private byte[] calculateExponentB(byte[] message) {
-	// Convert message to base w representation
-	byte[] mBaseW = convertToBaseW(message, l1);
+    private void calculateExponentB() {
+    	
+    	// Convert message to base w representation
+    	byte[] mBaseW = convertToBaseW(messageHash, l1);
 
-	// Calculate checksum c
-	BigInteger checksum = BigInteger.ZERO;
-	for (int i = 0; i < l1; i++) {
-	    checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
-	}
+    	// Calculate checksum c
+    	BigInteger checksum = BigInteger.ZERO;
+    	for (int i = 0; i < l1; i++) {
+    		checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
+    	}
 
-	// Convert checksum to base w representation
-	byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
+    	// Convert checksum to base w representation
+    	byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
 
-	// Concatenate message and checksum
-	byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
+    	// Concatenate message and checksum
+    	byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
 
-	return b;
+    	this.b = b;
     }
 
     /**
@@ -228,21 +222,22 @@ public class WinternitzOTS {
      * @return Base w representation of the input
      */
     private byte[] convertToBaseW(byte[] input, int length) {
-	BigInteger i = new BigInteger(1, input);
-	BigInteger b = BigInteger.valueOf(w);
-	ArrayList<Byte> result = new ArrayList<Byte>();
+    	
+    	BigInteger i = new BigInteger(1, input);
+    	BigInteger b = BigInteger.valueOf(w);
+    	ArrayList<Byte> result = new ArrayList<Byte>();
 
-	while (i.compareTo(BigInteger.ZERO) != 0) {
-	    result.add(i.mod(b).byteValue());
-	    i = i.divide(b);
-	}
+    	while (i.compareTo(BigInteger.ZERO) != 0) {
+    		result.add(i.mod(b).byteValue());
+    		i = i.divide(b);
+    	}
 
-	byte[] ret = new byte[length];
-	for (int j = (length - result.size()); j < ret.length; j++) {
-	    ret[j] = result.get(ret.length - j - 1).byteValue();
-	}
+    	byte[] ret = new byte[length];
+    	for (int j = (length - result.size()); j < ret.length; j++) {
+    		ret[j] = result.get(ret.length - j - 1).byteValue();
+    	}
 
-	return ret;
+    	return ret;
     }
 
     /**
@@ -251,7 +246,7 @@ public class WinternitzOTS {
      * @return Private key
      */
     public byte[][] getPrivateKey() {
-	return privateKey;
+    	return privateKey;
     }
 
     /**
@@ -260,7 +255,7 @@ public class WinternitzOTS {
      * @return Public key
      */
     public byte[][] getPublicKey() {
-	return publicKey;
+    	return publicKey;
     }
 
     /**
@@ -270,9 +265,16 @@ public class WinternitzOTS {
      * @return Length l
      */
     public int getLength() {
-	return l;
+    	return l;
     }
 
+    /** 
+     * returns the public Key Length
+     */
+    public int getPublicKeyLength() {
+    	return l;
+    }
+    
     /**
      * Returns the message length.
      *
@@ -280,6 +282,86 @@ public class WinternitzOTS {
      */
     public int getMessageLength() {
 	return m;
+    }
+    
+    /**
+     * returns the signature
+     */
+    public byte[] getSignature() {
+    	return signature;
+    }
+    
+    /**
+     * returns blocklength n
+     */
+    public int getN() {
+    	return n;
+    }
+    
+    /**
+     * returns l
+     */
+    public int getL() {
+    	return l;
+    }
+    
+    /**
+     * returns hashed message
+     */
+    public byte[] getMessageHash() {
+    	return this.messageHash;
+    }
+    
+    /** 
+     * returns Bitstring bi
+     */
+    public byte[] getBi() {
+    	return b;
+    }
+    
+    /**
+     * hashes given message and set new message hash
+     */
+    public void setMessage(byte[] message) {
+    	this.messageHash = message;
+    }
+    
+    /**
+     * Sets new bi
+     */
+    public void setBi(byte[] b) {
+    	this.b = b;
+    }
+    
+    /**
+     * sets new signature
+     */
+    public void setSignature(byte[] signature) {
+    	this.signature = signature;
+    }
+    
+    /**
+     * sets new w and calculates new length
+     */
+    public void setW(int w) {
+    	this.w = w;
+    	calculateLengths();
+    }
+    
+    /**
+     * hashes message and sets new message hash + returns it
+     */
+    public byte[] hashMessage(String message) {
+    	this.messageHash = digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message));
+    	return messageHash;
+    }
+    
+    /**
+     * returns new calculated Bitstring b
+     */
+    public byte[] initB() {
+    	calculateExponentB();
+    	return b;
     }
     
     /**
@@ -296,27 +378,5 @@ public class WinternitzOTS {
      */
     public void setPublicKey(byte[][] p) {
     	this.publicKey = p;
-    }
-    
-    /**
-     * returns hash of given String
-     * @param message
-     * @return
-     */
-    public String getHash(String message) {
-    	return org.jcryptool.visual.wots.files.Converter._byteToHex(digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message)));
-    }
-    
-    /** 
-     * returns the calculated bi from a given message
-     * @param message
-     * @return
-     */
-    public String getBi(String message) {
-    	byte[] m = digest.digest(org.jcryptool.visual.wots.files.Converter._hexStringToByte(message));
-    	
-    	//System.out.println("Länge nach getHash(): " +  m.length);
-    	
-    	return org.jcryptool.visual.wots.files.Converter._byteToHex(calculateExponentB(m));
     }
 }

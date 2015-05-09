@@ -8,13 +8,15 @@ import org.jcryptool.visual.wots.files.MathUtils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
+ * @author Hannes Sochor <sochorhannes@gmail.com>
+ * Source Code by Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public class WOTSPlus {
+public class WOTSPlus implements OTS {
 
     // Lengths 
     private int m, l, l1, l2;
@@ -30,8 +32,14 @@ public class WOTSPlus {
     private byte[][] publicKey;
     // Message digest
     private MessageDigest digest;
-    //private byte[][] signature;
-    //private byte[][] r;
+    // signature
+    private byte[] signature;
+    // hashed message
+    private byte[] messageHash;
+    // Bitstring b
+    private byte[] b;
+    // seed used to generate random Values
+    private byte[] seed;
 
     /**
      * Creates a new Winternitz OTS.
@@ -39,25 +47,26 @@ public class WOTSPlus {
      * @param w Winternitz parameter w
      */
     public WOTSPlus(int w) {
-	this.w = w;
-	this.n = 32; // TODO For SHA256, should be dynamic
+	
+    	// Generate seed and get Pseudo-Random Function
+    	SecureRandom sRandom = new SecureRandom();
+    	seed = new byte[16];
+    	sRandom.nextBytes(seed);
+    	prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();	
+    	
+    	// Set winternitz parameter and block-length
+    	this.w = w;
+    	this.n = 32; // TODO For SHA256, should be dynamic
 
-	try {
-	    digest = MessageDigest.getInstance("SHA-256");
-	} catch (NoSuchAlgorithmException e) {
-	    throw new RuntimeException(e);
-	}
+    	// Try to set up hash-function
+    	try {
+    		digest = MessageDigest.getInstance("SHA-256");
+    	} catch (NoSuchAlgorithmException e) {
+    		throw new RuntimeException(e);
+    	}
 
-	calculateLengths();
-    }
-
-    /**
-     * Initialize the Winternitz OTS.
-     *
-     * @param prf Pseudorandom function
-     */
-    public void init(PseudorandomFunction prf) {
-	this.prf = prf;
+    	// Calculate m, l, l1, l2
+    	calculateLengths();
     }
 
     /**
@@ -76,9 +85,9 @@ public class WOTSPlus {
      *
      * @param seed Seed
      */
-    public void generateKeyPair(byte[] seed) {
-	generatePrivateKey(seed);
-	generatePublicKey(seed);
+    public void generateKeyPair() {
+    	generatePrivateKey();
+    	generatePublicKey();
     }
 
     /**
@@ -86,56 +95,48 @@ public class WOTSPlus {
      *
      * @param seed Seed
      */
-    public void generatePrivateKey(byte[] seed) {
-	privateKey = new byte[l][n];
+    public void generatePrivateKey() {
+    	
+    	privateKey = new byte[l][n];
 
-	for (int i = 0; i < l; i++) {
-	    byte[] key = new byte[n];
-	    byte[] input = IntegerUtils.toByteArray(i);
-	    System.arraycopy(input, 0, key, key.length - input.length, input.length);
-	    privateKey[i] = prf.apply(key, seed);
-	}
-	
-	
-
-	//logger.debug("Generate private key");
-	//logger.trace("SK: {} ...", ByteUtils.toHexString(ByteUtils.convert(privateKey), 10));
-	//logger.trace("Seed: {} ...", ByteUtils.toHexString(seed, 10));
-	//logger.trace("Private key: {} ({} bytes)", new Object[]{ByteUtils.toHexString(privateKey),});
+    	// Fills private Key with random values
+    	for (int i = 0; i < l; i++) {
+    		byte[] key = new byte[n];
+    		byte[] input = IntegerUtils.toByteArray(i);
+    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    		privateKey[i] = prf.apply(key, seed);
+    	}
     }
 
     /**
      * Generates the public key.
      *
      */
-    public void generatePublicKey(byte[] seed) {
-	publicKey = new byte[l+w-1][n];
+    public void generatePublicKey() {
+    	
+    	publicKey = new byte[l+w-1][n];
 	
-	// Generate r and apply to public Key
+    	// Fills first w-1 blocks of public key with random values ri
+    	for (int i = 0; i < w-1; i++) {
+    		byte[] key = new byte[n];
+    		byte[] input = IntegerUtils.toByteArray(i);
+    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    		publicKey[i] = prf.apply(key, seed);
+    	}
 	
-	//r = new byte[w-1][n];
-	
-	for (int i = 0; i < w-1; i++) {
-	    byte[] key = new byte[n];
-	    byte[] input = IntegerUtils.toByteArray(i);
-	    System.arraycopy(input, 0, key, key.length - input.length, input.length);
-	    //r[i] = prf.apply(key, seed);
-	    publicKey[i] = prf.apply(key, seed);
-	}
-	
-	// Hash + xor with ri each part w-1 times
-	for (int i = w-1; i < l+w-1; i++) {
+    	// Hash + xor with ri each part w-1 times
+    	for (int i = w-1; i < l+w-1; i++) {
 		
-		System.arraycopy(privateKey[i-(w-1)], 0, publicKey[i], 0, publicKey[i].length);
+    		System.arraycopy(privateKey[i-(w-1)], 0, publicKey[i], 0, publicKey[i].length);
 		
-		for (int j = 0; j < w-1; j++) {
+    		for (int j = 0; j < w-1; j++) {
 			
-			for( int k = 0; k < publicKey[i].length; k++ )
-				publicKey[i][k] = (byte) (publicKey[i][k] ^ publicKey[j][k]);
+    			for( int k = 0; k < publicKey[i].length; k++ )
+    				publicKey[i][k] = (byte) (publicKey[i][k] ^ publicKey[j][k]);
 			
-			publicKey[i] = digest.digest(publicKey[i]);
-		}
-	}
+    			publicKey[i] = digest.digest(publicKey[i]);
+    		}
+    	}
     }
 
     /**
@@ -145,30 +146,25 @@ public class WOTSPlus {
      * @param message Message
      * @return Signature of the message
      */
-    public byte[] sign(byte[] message, byte[] b) {
-	byte[][] tmpSignature = new byte[l][n];
-	
-	// Hash message
-	// message = digest.digest(message);
-	
-	// Calculate exponent b
-	// byte[] b = calculateExponentB(message);
+    public void sign() {
+    	
+    	byte[][] tmpSignature = new byte[l][n];
 
-	// Hash each part bi times
-	for (int i = 0; i < l; i++) {
+    	// Hash + xor with ri each part bi times
+    	for (int i = 0; i < l; i++) {
 		
-			tmpSignature[i] = this.privateKey[i];
+				tmpSignature[i] = this.privateKey[i];
 			
-			for (int j = 0; j < (b[i] & 0xFF); j++) {
+				for (int j = 0; j < (b[i] & 0xFF); j++) {
 				
-				for( int k = 0; k < tmpSignature[i].length; k++ )
-					tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j][k]);
+					for( int k = 0; k < tmpSignature[i].length; k++ )
+						tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j][k]);
 				
-				tmpSignature[i] = digest.digest(tmpSignature[i]);
-			}
-	}
+					tmpSignature[i] = digest.digest(tmpSignature[i]);
+				}
+    	}
 	
-	return org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
+    	signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
     }
 
     /**
@@ -178,51 +174,41 @@ public class WOTSPlus {
      * @param signature Signature
      * @return True if the signature is valid, otherwise false
      */
-    public boolean verify(byte[] message, byte[] signature, byte[] b) {
+    public boolean verify() {
 	
-    // Hash message
-	// message = digest.digest(message);
+    	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
 	
-	
-	// Calculate exponent b
-	// byte[] b = calculateExponentB(message);
-	
-	byte[][] tmpSignature = org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte((org.jcryptool.visual.wots.files.Converter._byteToHex(signature)), l);
-	
-	// Hash + xor each part w-1-bi times and verifies it with public Key
-	for (int i = 0; i < l; i++) {
+    	// Hash + xor each part w-1-bi times and verifies it with public Key
+    	for (int i = 0; i < l; i++) {
 
-	    for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
+    		for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
 	    	
-	    	for( int k = 0; k < tmpSignature[i].length; k++ )
-				tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j+(b[i] & 0xFF)][k]);
+    			for( int k = 0; k < tmpSignature[i].length; k++ )
+    				tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j+(b[i] & 0xFF)][k]);
 	    	
-	    	tmpSignature[i] = digest.digest(tmpSignature[i]);
-	    }
+    			tmpSignature[i] = digest.digest(tmpSignature[i]);
+    		}
 
-	    // Compare sigma_i with pk_i
-	    if (!Arrays.equals(tmpSignature[i], publicKey[i+w-1])) {
+    		// Compare sigma_i with pk_i
+    		if (!Arrays.equals(tmpSignature[i], publicKey[i+w-1])) {
 	    	
-	    	System.out.println("\nERROR in Block " + i + "\nPublicKey: " + org.jcryptool.visual.wots.files.Converter._byteToHex(publicKey[i+w-1]) + "\nSignature: " + org.jcryptool.visual.wots.files.Converter._byteToHex(tmpSignature[i]));
+    			System.out.println("\nERROR in Block " + i + "\nPublicKey: " + org.jcryptool.visual.wots.files.Converter._byteToHex(publicKey[i+w-1]) + "\nSignature: " + org.jcryptool.visual.wots.files.Converter._byteToHex(tmpSignature[i]));
 	    	
-	    	return false;
-	    }
-	}
-	
-	return true;
+    			return false;
+    		}
+    	}
+    	return true;
     }
 
     /**
      * Calculate the lengths l1, l2, and l.
      */
     private void calculateLengths() {
-	m = digest.getDigestLength() * 8;
-	l1 = (int) Math.ceil((double) m / MathUtils.log2(w));
-	l2 = (int) Math.floor(MathUtils.log2(l1 * (w - 1)) / MathUtils.log2(w)) + 1;
-	l = l1 + l2;
-
-	//logger.debug("Using Winternitz OTS with w={} and m={}", new Object[]{w, m});
-	//logger.debug("Lengths are: l1={}, l2={}, and l={}", new Object[]{l1, l2, l});
+    	
+    	m = digest.getDigestLength() * 8;
+    	l1 = (int) Math.ceil((double) m / MathUtils.log2(w));
+    	l2 = (int) Math.floor(MathUtils.log2(l1 * (w - 1)) / MathUtils.log2(w)) + 1;
+    	l = l1 + l2;
     }
 
     /**
@@ -231,23 +217,24 @@ public class WOTSPlus {
      * @param message Message
      * @return Exponent b
      */
-    private byte[] calculateExponentB(byte[] message) {
-	// Convert message to base w representation
-	byte[] mBaseW = convertToBaseW(message, l1);
+    private void calculateExponentB() {
+    	
+    	// Convert message to base w representation
+    	byte[] mBaseW = convertToBaseW(messageHash, l1);
 
-	// Calculate checksum c
-	BigInteger checksum = BigInteger.ZERO;
-	for (int i = 0; i < l1; i++) {
-	    checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
-	}
+    	// Calculate checksum c
+    	BigInteger checksum = BigInteger.ZERO;
+    	for (int i = 0; i < l1; i++) {
+    		checksum = checksum.add(BigInteger.valueOf(w - 1 - (mBaseW[i] & 0xFF)));
+    	}
 
-	// Convert checksum to base w representation
-	byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
+    	// Convert checksum to base w representation
+    	byte[] checksumBaseW = convertToBaseW(checksum.toByteArray(), l2);
 
-	// Concatenate message and checksum
-	byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
+    	// Concatenate message and checksum
+    	byte[] b = ByteUtils.concatenate(mBaseW, checksumBaseW);
 
-	return b;
+    	this.b = b;
     }
 
     /**
@@ -258,21 +245,22 @@ public class WOTSPlus {
      * @return Base w representation of the input
      */
     private byte[] convertToBaseW(byte[] input, int length) {
-	BigInteger i = new BigInteger(1, input);
-	BigInteger b = BigInteger.valueOf(w);
-	ArrayList<Byte> result = new ArrayList<Byte>();
+    	
+    	BigInteger i = new BigInteger(1, input);
+    	BigInteger b = BigInteger.valueOf(w);
+    	ArrayList<Byte> result = new ArrayList<Byte>();
 
-	while (i.compareTo(BigInteger.ZERO) != 0) {
-	    result.add(i.mod(b).byteValue());
-	    i = i.divide(b);
-	}
+    	while (i.compareTo(BigInteger.ZERO) != 0) {
+    		result.add(i.mod(b).byteValue());
+    		i = i.divide(b);
+    	}
 
-	byte[] ret = new byte[length];
-	for (int j = (length - result.size()); j < ret.length; j++) {
-	    ret[j] = result.get(ret.length - j - 1).byteValue();
-	}
+    	byte[] ret = new byte[length];
+    	for (int j = (length - result.size()); j < ret.length; j++) {
+    		ret[j] = result.get(ret.length - j - 1).byteValue();
+    	}
 
-	return ret;
+    	return ret;
     }
 
     /**
@@ -295,12 +283,17 @@ public class WOTSPlus {
 
     /**
      * Returns the length l.
-     * The size of the signature, public, and private key is l * n.
-     *
      * @return Length l
      */
     public int getLength() {
 	return l;
+    }
+    
+    /**
+     * returns public key length of WOTS+
+     */
+    public int getPublicKeyLength() {
+    	return l + w-1;
     }
 
     /**
@@ -310,6 +303,42 @@ public class WOTSPlus {
      */
     public int getMessageLength() {
 	return m;
+    }
+    
+    /** 
+     * returns Bitstring bi
+     * @return
+     */
+    public byte[] getBi() {
+    	return b;
+    }
+    
+    /** 
+     * returns the signature
+     */
+    public byte[] getSignature() {
+    	return signature;
+    }
+    
+    /**
+     * returns hashed message
+     */
+    public byte[] getMessageHash() {
+    	return this.messageHash;
+    }
+    
+    /**
+     * returns blocklength n
+     */
+    public int getN() {
+    	return n;
+    }
+    
+    /**
+     * returns l
+     */
+    public int getL() {
+    	return l;
     }
     
     /**
@@ -329,21 +358,47 @@ public class WOTSPlus {
     }
     
     /**
-     * returns hash of given String
-     * @param message
-     * @return
+     * hashes message and set as new message
      */
-    public String getHash(String message) {
-    	return org.jcryptool.visual.wots.files.Converter._byteToHex(digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message)));
+    public void setMessage(byte[] message) {
+    	this.messageHash = message;
     }
     
-    /** 
-     * returns the calculated bi from a given message
-     * @param message
-     * @return
+    /**
+     * sets new bi
      */
-    public String getBi(String message) {
-    	byte[] m = digest.digest(org.jcryptool.visual.wots.files.Converter._hexStringToByte(message));
-    	return org.jcryptool.visual.wots.files.Converter._byteToHex(calculateExponentB(m));
+    public void setBi(byte[] b) {
+    	this.b = b;
+    }
+    
+    /**
+     * sets new signature
+     */
+    public void setSignature(byte[] signature) {
+    	this.signature = signature;
+    }
+    
+    /**
+     * sets new w andd calculates new lengths
+     */
+    public void setW(int w) {
+    	this.w = w;
+    	calculateLengths();
+    }
+    
+    /**
+     * hashes message, set as new message and returns hash
+     */
+    public byte[] hashMessage(String message) {
+    	this.messageHash = digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message));
+    	return messageHash;
+    }
+    
+    /**
+     * returns new calculated Bitstring bi
+     */
+    public byte[] initB() {
+    	calculateExponentB();
+    	return b;
     }
 }
