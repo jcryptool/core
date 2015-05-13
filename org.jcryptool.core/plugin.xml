@@ -21,6 +21,7 @@
             name="%command.name.0">
       </command>
       <command
+            defaultHandler="org.jcryptool.core.commands.OpenFileHandler"
             id="org.jcryptool.core.action.open"
             name="%command.openfile">
       </command>
@@ -48,21 +49,6 @@
                style="pulldown"
                toolbarPath="org.jcryptool.core.toolbar/fileStart"
                tooltip="%editors.action.tooltip">
-         </action>
-      </actionSet>
-      <actionSet
-            id="org.jcryptool.core.openActionSet"
-            label="%set.fileactions"
-            visible="true">
-         <action
-               class="org.jcryptool.core.fileActions.OpenFileAction"
-               definitionId="org.jcryptool.core.action.open"
-               icon="icons/open_file.gif"
-               id="org.jcryptool.core.action.openFile"
-               label="%action.openfile"
-               menubarPath="file/fileStart"
-               style="push"
-               toolbarPath="org.jcryptool.core.toolbar/fileStart">
          </action>
       </actionSet>
    </extension>
@@ -94,13 +80,23 @@
          </menu>
       </menuContribution>
       <menuContribution
+            locationURI="toolbar:org.jcryptool.core.toolbar?before=org.eclipse.ui.file.save">
+         <command
+               commandId="org.jcryptool.core.action.open"
+               icon="icons/open_file.gif"
+               label="%command.openfile"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.jcryptool.core.toolbar">
-         <menu
-               commandId="org.jcryptool.core.command.editorsPulldown"
-               label="label"
-               tooltip="%command.tooltip.0">
-         </menu>
+            locationURI="menu:file?after=fileStart">
+         <command
+               commandId="org.jcryptool.core.action.open"
+               icon="icons/open_file.gif"
+               label="%command.openfile"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
 
