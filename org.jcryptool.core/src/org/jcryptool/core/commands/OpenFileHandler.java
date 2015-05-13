@@ -26,6 +26,7 @@ import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
 import org.jcryptool.core.util.constants.IConstants;
@@ -40,7 +41,7 @@ public class OpenFileHandler extends AbstractHandler {
     }
 
     private String getEditorId(final String osString) {
-        final IEditorDescriptor descriptor = this.window.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
+        final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
 
         if (descriptor != null) {
             return descriptor.getId();
@@ -82,19 +83,19 @@ public class OpenFileHandler extends AbstractHandler {
             if (editorId != null) {
                 try {
                     if (editorId.equals(TEXT_EDITOR)) {
-                        this.window.getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
                                 IWorkbenchPage.MATCH_NONE);
                     } else if (editorId.equals(HEX_EDITOR)) {
-                        this.window.getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
+                    	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
                                 IWorkbenchPage.MATCH_NONE);
                     }
                 } catch (final PartInitException ex) {
-                    MessageDialog.openError(this.window.getShell(), Messages.OpenFileAction_title_could_not_open,
+                    MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(), Messages.OpenFileAction_title_could_not_open,
                             NLS.bind(Messages.OpenFileAction_message_could_not_open, editorId));
                     LogUtil.logError(ex);
                 }
             } else { // no editor is associated
-                MessageDialog.openInformation(this.window.getShell(),
+                MessageDialog.openInformation(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
                         Messages.OpenFileAction_title_could_not_open,
                         NLS.bind(Messages.OpenFileAction_message_assign_editor, path.getFileExtension()));
             }
