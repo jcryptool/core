@@ -39,7 +39,7 @@ public class WOTSPlus implements OTS {
     // Bitstring b
     private byte[] b;
     // seed used to generate random Values
-    private byte[] seed;
+    //private byte[] seed;
 
     /**
      * Creates a new Winternitz OTS.
@@ -49,14 +49,10 @@ public class WOTSPlus implements OTS {
     public WOTSPlus(int w) {
 	
     	// Generate seed and get Pseudo-Random Function
-    	SecureRandom sRandom = new SecureRandom();
-    	seed = new byte[16];
-    	sRandom.nextBytes(seed);
-    	prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();	
-    	
-    	// Set winternitz parameter and block-length
-    	this.w = w;
-    	this.n = 32; // TODO For SHA256, should be dynamic
+    	//SecureRandom sRandom = new SecureRandom();
+    	//seed = new byte[16];
+    	//sRandom.nextBytes(seed);
+    	//prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();	
 
     	// Try to set up hash-function
     	try {
@@ -65,6 +61,10 @@ public class WOTSPlus implements OTS {
     		throw new RuntimeException(e);
     	}
 
+    	// Set winternitz parameter and block-length
+    	this.w = w;
+    	this.n = digest.getDigestLength(); // TODO For SHA256, should be dynamic
+    	
     	// Calculate m, l, l1, l2
     	calculateLengths();
     }
@@ -74,10 +74,19 @@ public class WOTSPlus implements OTS {
      *
      * @param digest Message digest
      */
-    public void setMessageDigest(MessageDigest digest) {
-	this.digest = digest;
-	// Update lengths
-	calculateLengths();
+    public void setMessageDigest(String digest) {
+    	
+    	try {
+    		this.digest = MessageDigest.getInstance(digest);
+    	} catch (NoSuchAlgorithmException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+    	
+    	this.n = this.digest.getDigestLength();
+    			
+    	// Update lengths
+    	calculateLengths();
     }
 
     /**
@@ -100,11 +109,20 @@ public class WOTSPlus implements OTS {
     	privateKey = new byte[l][n];
 
     	// Fills private Key with random values
+    	//for (int i = 0; i < l; i++) {
+    	//	byte[] key = new byte[n];
+    	//	byte[] input = IntegerUtils.toByteArray(i);
+    	//	System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    	//	privateKey[i] = prf.apply(key, seed);
+    	//}
+    	
+    	byte[] rand = new byte[n];
+    	
     	for (int i = 0; i < l; i++) {
-    		byte[] key = new byte[n];
-    		byte[] input = IntegerUtils.toByteArray(i);
-    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
-    		privateKey[i] = prf.apply(key, seed);
+    		
+    		SecureRandom sRandom = new SecureRandom();
+    		sRandom.nextBytes(rand);
+    		privateKey[i] = rand;
     	}
     }
 
@@ -115,13 +133,17 @@ public class WOTSPlus implements OTS {
     public void generatePublicKey() {
     	
     	publicKey = new byte[l+w-1][n];
-	
+    	
+    	byte[] seed = new byte[n];
+    	SecureRandom sRandom = new SecureRandom();
+    	
     	// Fills first w-1 blocks of public key with random values ri
     	for (int i = 0; i < w-1; i++) {
-    		byte[] key = new byte[n];
-    		byte[] input = IntegerUtils.toByteArray(i);
-    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
-    		publicKey[i] = prf.apply(key, seed);
+    		//byte[] key = new byte[n];
+    		//byte[] input = IntegerUtils.toByteArray(i);
+    		//System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    		sRandom.nextBytes(seed);
+    		publicKey[i] = seed;
     	}
 	
     	// Hash + xor with ri each part w-1 times

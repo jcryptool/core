@@ -1,8 +1,8 @@
 package org.jcryptool.visual.wots;
 
-import org.jcryptool.visual.wots.files.PseudorandomFunction;
+//import org.jcryptool.visual.wots.files.PseudorandomFunction;
 import org.jcryptool.visual.wots.files.ByteUtils;
-import org.jcryptool.visual.wots.files.IntegerUtils;
+//import org.jcryptool.visual.wots.files.IntegerUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
 
 import java.math.BigInteger;
@@ -25,7 +25,7 @@ public class WinternitzOTS implements OTS{
     // Security parameter
     private int n;
     // Pseudorandom function
-    private PseudorandomFunction prf;
+   // private PseudorandomFunction prf;
     // Private key
     private byte[][] privateKey;
     // Public key
@@ -39,31 +39,31 @@ public class WinternitzOTS implements OTS{
     // Bitstring b
     private byte[] b;
     // Seed used to generate random values
-    private byte[] seed;
+    //private byte[] seed;
 
     /**
      * Creates a new Winternitz OTS.
      *
      * @param w Winternitz parameter w
      */
-    public WinternitzOTS(int w) {
+    public WinternitzOTS(int w, String hash) {
 	
     	// Generate seed and get Pseudo-Random Function
-    	SecureRandom sRandom = new SecureRandom();
-    	seed = new byte[16];
-    	sRandom.nextBytes(seed);
-    	prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
-    	
-    	// Set winternitz parameter and block-length
-    	this.w = w;
-    	this.n = 32; // TODO For SHA256, should be dynamic
+    	//SecureRandom sRandom = new SecureRandom();
+    	//seed = new byte[16];
+    	//sRandom.nextBytes(seed);
+    	//prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
 
     	// Try to set up hash-function
     	try {
-    		digest = MessageDigest.getInstance("SHA-256");
+    		digest = MessageDigest.getInstance(hash);
     	} catch (NoSuchAlgorithmException e) {
     		throw new RuntimeException(e);
     	}
+    	
+    	// Set winternitz parameter and block-length
+    	this.w = w;
+    	this.n = digest.getDigestLength(); // TODO For SHA256, should be dynamic
     	
     	// Calculate m, l, l1, l2
     	calculateLengths();
@@ -74,10 +74,19 @@ public class WinternitzOTS implements OTS{
      *
      * @param digest Message digest
      */
-    public void setMessageDigest(MessageDigest digest) {
-	this.digest = digest;
-	// Update lengths
-	calculateLengths();
+    public void setMessageDigest(String digest) {
+    
+    	try {
+    		this.digest = MessageDigest.getInstance(digest);
+    	} catch (NoSuchAlgorithmException e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    	}
+	
+    	this.n = this.digest.getDigestLength();
+			
+    	// Update lengths
+    	calculateLengths();
     }
 
     /**
@@ -100,11 +109,20 @@ public class WinternitzOTS implements OTS{
     	privateKey = new byte[l][n];
 
     	// Fills the private Key with random values
+//    	for (int i = 0; i < l; i++) {
+//    		byte[] key = new byte[n];
+//    		byte[] input = IntegerUtils.toByteArray(i);
+//    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
+//    		privateKey[i] = prf.apply(key, seed);
+//    	}
+    	
+    	byte[] rand = new byte[n];
+    	
     	for (int i = 0; i < l; i++) {
-    		byte[] key = new byte[n];
-    		byte[] input = IntegerUtils.toByteArray(i);
-    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
-    		privateKey[i] = prf.apply(key, seed);
+    		
+    		SecureRandom sRandom = new SecureRandom();
+    		sRandom.nextBytes(rand);
+    		privateKey[i] = rand;
     	}
     }
 

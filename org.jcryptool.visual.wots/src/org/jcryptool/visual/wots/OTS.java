@@ -55,5 +55,7 @@ public interface OTS {
     public void setPrivateKey(byte[][] p);
     
     public void setPublicKey(byte[][] p);
+    
+    public void setMessageDigest(String digest);
        
 }

@@ -23,11 +23,11 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
-import org.eclipse.swt.custom.ScrolledComposite;
+//import org.eclipse.swt.custom.ScrolledComposite;
 
 /**
  * @author Hannes Sochor <sochorhannes@gmail.com>
- * @author Klaus Schönberger <TODO edit email>
+ * @author Klaus Schï¿½nberger <TODO edit email>
  * @author Raphael Luger <TODO edit email>
  */
 public class WotsView extends ViewPart {
@@ -85,7 +85,8 @@ public class WotsView extends ViewPart {
 	private Combo cmb_Hash;
 	
 	// Parameter for WOTS/WOTS+
-	private OTS instance = new WinternitzOTS(4);
+	private String hashFuction = "SHA-256";
+	private OTS instance = new WinternitzOTS(4, hashFuction);
 	private String privateKey = "";
 	private String publicKey = "";
 	private String signature = "";
@@ -192,7 +193,7 @@ public class WotsView extends ViewPart {
 		txt_message = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_message.setBounds(9, 58, 679, 96);
 		txt_winternitzP = new Text(parent, SWT.BORDER);
-		txt_winternitzP.setBounds(156, 197, 31, 21);
+		txt_winternitzP.setBounds(177, 197, 31, 21);
 		txt_Sigkey = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Sigkey.setBounds(10, 283, 336, 151);
 		txt_Verifkey = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
@@ -221,7 +222,7 @@ public class WotsView extends ViewPart {
 		txt_BSize.setBounds(610, 477, 78, 26);
 		
 		cmb_Hash = new Combo(parent, SWT.NONE);
-		cmb_Hash.setBounds(112, 221, 75, 23);
+		cmb_Hash.setBounds(112, 221, 96, 28);
 		img_right = new Label(parent, 0);
 		img_right.setBounds(723, 346, 483, 322);
 
@@ -274,6 +275,9 @@ public class WotsView extends ViewPart {
 		txt_BSize.setVisible(false);
 		
 		cmb_Hash.setText("SHA-256");
+		cmb_Hash.add("SHA-256");
+		cmb_Hash.add("SHA-1");
+		cmb_Hash.add("MD5");
 		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
 		
 		
@@ -419,35 +423,7 @@ public class WotsView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				
 				// resets everything
-				instance = new WinternitzOTS(4);
-				privateKey = "";
-				publicKey = "";
-				signature = "";
-				w = 4;
-				message = "standard message";
-				messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
-				b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
-				
-				txt_message.setText("standard message");
-				txt_Sigkey.setText("");
-				txt_Sig.setText("");
-				txt_Verifkey.setText("");
-				txt_winternitzP.setText("4");
-				txt_true_false.setText("");
-				txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
-				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
-				txt_Hash.setText(messageHash);
-				txt_Bi.setText(b);
-				
-				btnWots.setSelection(true);
-				btnWotsPlus.setSelection(false);
-				
-				// reset key lengths
-				
-				txt_SigKeySize.setText("0/" + (n*l) + " B");
-				txt_VerKeySize.setText("0/" + (n*instance.getPublicKeyLength()) + " B");
-				
-				setEnabled();
+				reset();
 			}
 		});
 		
@@ -456,7 +432,7 @@ public class WotsView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 
 				// Changes type to WOTS and resets what is necessary to do so
-				instance = new org.jcryptool.visual.wots.WinternitzOTS(w);
+				instance = new org.jcryptool.visual.wots.WinternitzOTS(w, hashFuction);
 				privateKey = "";
 				publicKey = "";
 				signature = "";
@@ -580,6 +556,50 @@ public class WotsView extends ViewPart {
 				} else {
 					// TODO error message
 				}		
+			}
+		});
+		
+		// ############################################
+		// ## ADD MODIFY LISTENER FOR DROP-DOWN-LIST ##
+		// ############################################
+		
+		cmb_Hash.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+				reset();
+				
+				disable = false;
+				
+				int index = cmb_Hash.getSelectionIndex();
+				
+				switch (index) {
+					case 0:
+						hashFuction = "SHA-256";
+						break;
+					case 1:
+						hashFuction = "SHA-1";
+						break;
+					case 2:
+						hashFuction = "MD5";
+						break;
+					default:
+						//TODO ERROR Handling
+				}
+				
+				disable = true;
+				
+				setOutputs();
+				getOutputs();
+				
+				txt_message.setText(message);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		
@@ -747,6 +767,7 @@ public class WotsView extends ViewPart {
 	private void setOutputs() {
 		
 		instance.setW(w);
+		instance.setMessageDigest(hashFuction);
 		instance.setPrivateKey(org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(privateKey, instance.getLength()));
 		instance.setPublicKey(org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(publicKey, instance.getPublicKeyLength()));
 		instance.setSignature(org.jcryptool.visual.wots.files.Converter._hexStringToByte(signature));
@@ -804,6 +825,38 @@ public class WotsView extends ViewPart {
 		}
 		
 		ctr = 0;
+	}
+	
+	private void reset() {
+		instance = new WinternitzOTS(4, hashFuction);
+		privateKey = "";
+		publicKey = "";
+		signature = "";
+		w = 4;
+		message = "standard message";
+		messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
+		b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
+		
+		txt_message.setText("standard message");
+		txt_Sigkey.setText("");
+		txt_Sig.setText("");
+		txt_Verifkey.setText("");
+		txt_winternitzP.setText("4");
+		txt_true_false.setText("");
+		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
+		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
+		txt_Hash.setText(messageHash);
+		txt_Bi.setText(b);
+		
+		//btnWots.setSelection(true);
+		//btnWotsPlus.setSelection(false);
+		
+		// reset key lengths
+		
+		txt_SigKeySize.setText("0/" + (n*l) + " B");
+		txt_VerKeySize.setText("0/" + (n*instance.getPublicKeyLength()) + " B");
+		
+		setEnabled();
 	}
 }
 
