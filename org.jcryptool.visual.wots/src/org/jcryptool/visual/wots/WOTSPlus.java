@@ -25,7 +25,7 @@ public class WOTSPlus implements OTS {
     // Security parameter
     private int n;
     // Pseudorandom function
-    private PseudorandomFunction prf;
+    // private PseudorandomFunction prf;
     // Private key
     private byte[][] privateKey;
     // Public key
@@ -46,7 +46,7 @@ public class WOTSPlus implements OTS {
      *
      * @param w Winternitz parameter w
      */
-    public WOTSPlus(int w) {
+    public WOTSPlus(int w, String hash) {
 	
     	// Generate seed and get Pseudo-Random Function
     	//SecureRandom sRandom = new SecureRandom();
@@ -56,7 +56,7 @@ public class WOTSPlus implements OTS {
 
     	// Try to set up hash-function
     	try {
-    		digest = MessageDigest.getInstance("SHA-256");
+    		digest = MessageDigest.getInstance(hash);
     	} catch (NoSuchAlgorithmException e) {
     		throw new RuntimeException(e);
     	}

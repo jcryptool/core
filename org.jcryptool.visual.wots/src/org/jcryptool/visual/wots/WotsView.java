@@ -85,8 +85,8 @@ public class WotsView extends ViewPart {
 	private Combo cmb_Hash;
 	
 	// Parameter for WOTS/WOTS+
-	private String hashFuction = "SHA-256";
-	private OTS instance = new WinternitzOTS(4, hashFuction);
+	private String hashFunction = "SHA-256";
+	private OTS instance = new WinternitzOTS(4, hashFunction);
 	private String privateKey = "";
 	private String publicKey = "";
 	private String signature = "";
@@ -293,6 +293,7 @@ public class WotsView extends ViewPart {
 				// KEY GENERATION
 				
 				disable = false;
+				txt_true_false.setText("");
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 					
@@ -328,6 +329,7 @@ public class WotsView extends ViewPart {
 				// SIGNATURE GENERATION
 				
 				disable = false;
+				txt_true_false.setText("");
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
@@ -432,7 +434,7 @@ public class WotsView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 
 				// Changes type to WOTS and resets what is necessary to do so
-				instance = new org.jcryptool.visual.wots.WinternitzOTS(w, hashFuction);
+				instance = new org.jcryptool.visual.wots.WinternitzOTS(w, hashFunction);
 				privateKey = "";
 				publicKey = "";
 				signature = "";
@@ -453,7 +455,7 @@ public class WotsView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 
 				// Changes type to WOTS+ and resets what is necessary to do so
-				instance = new org.jcryptool.visual.wots.WOTSPlus(w);
+				instance = new org.jcryptool.visual.wots.WOTSPlus(w, hashFunction);
 				privateKey = "";
 				publicKey = "";
 				signature = "";
@@ -576,13 +578,13 @@ public class WotsView extends ViewPart {
 				
 				switch (index) {
 					case 0:
-						hashFuction = "SHA-256";
+						hashFunction = "SHA-256";
 						break;
 					case 1:
-						hashFuction = "SHA-1";
+						hashFunction = "SHA-1";
 						break;
 					case 2:
-						hashFuction = "MD5";
+						hashFunction = "MD5";
 						break;
 					default:
 						//TODO ERROR Handling
@@ -594,6 +596,8 @@ public class WotsView extends ViewPart {
 				getOutputs();
 				
 				txt_message.setText(message);
+				
+				reset();
 			}
 			
 			@Override
@@ -661,7 +665,7 @@ public class WotsView extends ViewPart {
 		txt_Verifkey.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				
+								
 				// Changes Public Key if modified
 				
 				ctr++;
@@ -676,6 +680,9 @@ public class WotsView extends ViewPart {
 						setEnabled();
 					}
 				}
+				
+				//System.out.println(instance.getPublicKeyLength());
+				//System.out.println(n);
 			}
 		});
 		
@@ -767,7 +774,7 @@ public class WotsView extends ViewPart {
 	private void setOutputs() {
 		
 		instance.setW(w);
-		instance.setMessageDigest(hashFuction);
+		instance.setMessageDigest(hashFunction);
 		instance.setPrivateKey(org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(privateKey, instance.getLength()));
 		instance.setPublicKey(org.jcryptool.visual.wots.files.Converter._hexStringTo2dByte(publicKey, instance.getPublicKeyLength()));
 		instance.setSignature(org.jcryptool.visual.wots.files.Converter._hexStringToByte(signature));
@@ -793,6 +800,10 @@ public class WotsView extends ViewPart {
 		txt_Bi.setText(b);
 		txt_Sig.setText(signature);
 		txt_Hash.setText(messageHash);
+		
+		//System.out.println(n);
+		//System.out.println(l);
+		//System.out.println(w);
 	}
 	
 	/**
@@ -828,7 +839,12 @@ public class WotsView extends ViewPart {
 	}
 	
 	private void reset() {
-		instance = new WinternitzOTS(4, hashFuction);
+		
+		if (btnWots.getSelection()) {
+			instance = new WinternitzOTS(4, hashFunction);
+		} else {
+			instance = new WOTSPlus(4, hashFunction);
+		}
 		privateKey = "";
 		publicKey = "";
 		signature = "";
