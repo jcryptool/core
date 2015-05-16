@@ -2,18 +2,22 @@ package org.jcryptool.visual.wots;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JFileChooser;
+
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -23,6 +27,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.swt.graphics.Point;
+//import org.eclipse.draw2d;
 //import org.eclipse.swt.custom.ScrolledComposite;
 
 /**
@@ -36,6 +42,9 @@ public class WotsView extends ViewPart {
 	}
 	public static final String ID = "asdf.view";
 	
+    private ScrolledComposite scrolledComposite;
+    private Composite mainContent;
+
 	// Text-Fields for message 
 	private Text txt_message;
 	private Text txt_MessageSize;
@@ -149,81 +158,88 @@ public class WotsView extends ViewPart {
 	 * This is a callback that will allow us to create the viewer and initialize
 	 * it.
 	 */
-	public void createPartControl(Composite parent) {
-		parent.setToolTipText("");
-		parent.setLayout(null);
+	public void createPartControl(final Composite parent) {
+	    scrolledComposite = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+	    mainContent = new Composite(scrolledComposite, SWT.NONE);
+        scrolledComposite.setContent(mainContent);
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setMinSize(new Point(1220, 720));
+	    
+	    //parent.setToolTipText("");
+		//parent.setLayout(null);
 		
 		// Initialize Objects
-		btn_Genkey = new Button(parent, SWT.NONE);
+		btn_Genkey = new Button(mainContent, SWT.NONE);
 		btn_Genkey.setBounds(10, 674, 116, 25);
-		btn_Sign = new Button(parent, SWT.NONE);
+		btn_Sign = new Button(mainContent, SWT.NONE);
 		btn_Sign.setBounds(132, 674, 146, 25);
-		btn_VerifySig = new Button(parent, SWT.NONE);
+		btn_VerifySig = new Button(mainContent, SWT.NONE);
 		btn_VerifySig.setBounds(284, 674, 122, 25);
-		btnLoadMessageFrom = new Button(parent, SWT.NONE);
+		btnLoadMessageFrom = new Button(mainContent, SWT.NONE);
 		btnLoadMessageFrom.setBounds(10, 160, 177, 25);
-		btn_reset = new Button(parent, SWT.NONE);
+		btn_reset = new Button(mainContent, SWT.NONE);
 		btn_reset.setBounds(520, 674, 75, 25);
-		btnWots = new Button(parent, SWT.RADIO);
+		btnWots = new Button(mainContent, SWT.RADIO);
 		btnWots.setBounds(352, 186, 111, 20);
-		btnWotsPlus = new Button(parent, SWT.RADIO);
+		btnWotsPlus = new Button(mainContent, SWT.RADIO);
 		btnWotsPlus.setBounds(352, 217, 111, 20);
-		btn_Details = new Button(parent, SWT.NONE);
+		btn_Details = new Button(mainContent, SWT.NONE);
 		btn_Details.setBounds(412, 674, 102, 25);
 
-		lblWotsVisualization = new Label(parent, SWT.NONE);
+		lblWotsVisualization = new Label(mainContent, SWT.NONE);
 		lblWotsVisualization.setBounds(10, 10, 140, 21);
-		lblMessage = new Label(parent, SWT.NONE);
+		lblMessage = new Label(mainContent, SWT.NONE);
 		lblMessage.setBounds(10, 37, 86, 21);
-		lblWinternitzParameterw = new Label(parent, SWT.NONE);
+		lblWinternitzParameterw = new Label(mainContent, SWT.NONE);
 		lblWinternitzParameterw.setBounds(10, 200, 140, 21);
-		lblHashFunction = new Label(parent, SWT.NONE);
+		lblHashFunction = new Label(mainContent, SWT.NONE);
 		lblHashFunction.setBounds(10, 224, 96, 25);
-		lblSignatureKey = new Label(parent, SWT.NONE);
+		lblSignatureKey = new Label(mainContent, SWT.NONE);
 		lblSignatureKey.setBounds(10, 262, 93, 20);
-		lblVerificationKey = new Label(parent, SWT.NONE);
+		lblVerificationKey = new Label(mainContent, SWT.NONE);
 		lblVerificationKey.setBounds(352, 262, 111, 20);
-		lblSignature = new Label(parent, SWT.NONE);
+		lblSignature = new Label(mainContent, SWT.NONE);
 		lblSignature.setBounds(10, 463, 75, 21);
-		lblMessageHash = new Label(parent, SWT.NONE);
+		lblMessageHash = new Label(mainContent, SWT.NONE);
 		lblMessageHash.setBounds(354, 37, 109, 20);
-		lblBi = new Label(parent, SWT.NONE);
+		lblBi = new Label(mainContent, SWT.NONE);
 		lblBi.setBounds(10, 389, 70, 20);
 		
-		txt_message = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_message = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_message.setBounds(9, 58, 679, 96);
-		txt_winternitzP = new Text(parent, SWT.BORDER);
+		txt_winternitzP = new Text(mainContent, SWT.BORDER);
 		txt_winternitzP.setBounds(177, 197, 31, 21);
-		txt_Sigkey = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Sigkey = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Sigkey.setBounds(10, 283, 336, 151);
-		txt_Verifkey = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Verifkey = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Verifkey.setBounds(352, 283, 336, 151);
-		txt_Sig = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Sig = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Sig.setBounds(10, 490, 570, 107);
-		txt_true_false = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		txt_true_false = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.CENTER);
 		txt_true_false.setBounds(586, 490, 102, 107);
-		txt_Output = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.MULTI);
+		txt_Output = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.MULTI);
 		txt_Output.setBounds(723, 58, 483, 282);
-		txt_Hash = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Hash = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Hash.setBounds(352, 58, 336, 96);
-		txt_Bi = new Text(parent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
+		txt_Bi = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Bi.setBounds(10, 415, 678, 56);
-		txt_MessageSize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_MessageSize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_MessageSize.setBounds(610, 159, 78, 26);
-		txt_SigKeySize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_SigKeySize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_SigKeySize.setBounds(238, 440, 108, 26);
-		txt_VerKeySize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_VerKeySize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_VerKeySize.setBounds(580, 440, 108, 26);
-		txt_HashSize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_HashSize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_HashSize.setBounds(610, 159, 78, 26);
-		txt_SignatureSize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_SignatureSize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_SignatureSize.setBounds(472, 603, 108, 26);
-		txt_BSize = new Text(parent, SWT.BORDER | SWT.READ_ONLY);
+		txt_BSize = new Text(mainContent, SWT.BORDER | SWT.READ_ONLY);
 		txt_BSize.setBounds(610, 477, 78, 26);
 		
-		cmb_Hash = new Combo(parent, SWT.NONE);
+		cmb_Hash = new Combo(mainContent, SWT.NONE);
 		cmb_Hash.setBounds(112, 221, 96, 28);
-		img_right = new Label(parent, 0);
+		img_right = new Label(mainContent, 0);
 		img_right.setBounds(723, 346, 483, 322);
 
 		// Set Attributes for Objects
