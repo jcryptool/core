@@ -16,6 +16,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -270,6 +271,7 @@ public class WotsView extends ViewPart {
 		txt_winternitzP.setText("4");
 		txt_Sigkey.setText("");
 		txt_true_false.setEditable(false);
+		txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 		txt_message.setText("standard message");
 		txt_Output.setEditable(false);
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
@@ -310,6 +312,7 @@ public class WotsView extends ViewPart {
 				
 				disable = false;
 				txt_true_false.setText("");
+				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 					
@@ -346,6 +349,7 @@ public class WotsView extends ViewPart {
 				
 				disable = false;
 				txt_true_false.setText("");
+				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
@@ -403,8 +407,11 @@ public class WotsView extends ViewPart {
 				setOutputs();
 				if (instance.verify()) {
 					txt_true_false.setText("Signature valid");
+					txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 0, 255, 0));
 				} else {
 					txt_true_false.setText("Signature rejected");
+					txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 0, 0));
+
 				}
 				getOutputs();
 				disable = true;
@@ -454,9 +461,13 @@ public class WotsView extends ViewPart {
 				privateKey = "";
 				publicKey = "";
 				signature = "";
+				txt_Sigkey.setText(".");
 				txt_Sigkey.setText("");
+				txt_Verifkey.setText(".");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
+				txt_true_false.setText("");
+				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				setEnabled();
 			}
@@ -478,6 +489,8 @@ public class WotsView extends ViewPart {
 				txt_Sigkey.setText("");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
+				txt_true_false.setText("");
+				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				setEnabled();
 			}
@@ -875,6 +888,7 @@ public class WotsView extends ViewPart {
 		txt_Verifkey.setText("");
 		txt_winternitzP.setText("4");
 		txt_true_false.setText("");
+		txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
 		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
 		txt_Hash.setText(messageHash);
