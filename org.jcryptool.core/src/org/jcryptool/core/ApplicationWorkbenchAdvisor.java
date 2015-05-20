@@ -11,6 +11,8 @@ package org.jcryptool.core;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -45,7 +47,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
     public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
         return new ApplicationWorkbenchWindowAdvisor(configurer);
     }
-
+    
     /**
      * Returns the id of the perspective to use for the initial workbench window, or <code>null</code> if no initial
      * perspective should be shown in the initial workbench window.

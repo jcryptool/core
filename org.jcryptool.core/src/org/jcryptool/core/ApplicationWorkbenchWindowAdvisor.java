@@ -10,6 +10,9 @@
 package org.jcryptool.core;
 
 import org.eclipse.jface.dialogs.TrayDialog;
+import org.eclipse.swt.dnd.ByteArrayTransfer;
+import org.eclipse.swt.dnd.FileTransfer;
+import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
@@ -57,6 +60,10 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowProgressIndicator(true);
         configurer.setShowStatusLine(true);
 
+    	System.out.println("about to configure drag & drop in preWindowOpen()...");
+    	configurer.addEditorAreaTransfer(FileTransfer.getInstance());
+    	configurer.configureEditorAreaDropListener(new EditorAreaDropTargetListener());
+        
         PlatformUI.getPreferenceStore().setValue(IWorkbenchPreferenceConstants.PERSPECTIVE_BAR_EXTRAS, Perspective.PERSPECTIVE_ID
                 + ", org.jcryptool.crypto.flexiprovider.ui.perspective.FlexiProviderPerspective"); //$NON-NLS-1$
     }
