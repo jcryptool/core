@@ -26,13 +26,17 @@ import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetAdapter;
 import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.jcryptool.core.logging.utils.LogUtil;
@@ -54,7 +58,20 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 	private boolean isDirty = false;
 	private boolean isHot = false;
 
-	/**
+    private static final String TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
+    private static final String HEX_EDITOR = "net.sourceforge.ehep.editors.HexEditor"; //$NON-NLS-1$
+    private String getEditorId(final String osString) {
+        final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
+
+        if (descriptor != null) {
+            return descriptor.getId();
+        } else {
+            // no file association; opening the file with the hex editor
+            return HEX_EDITOR;
+        }
+    }
+
+    /**
 	 * constructor which sets the key bindings' scopes and process an internal
 	 * init.
 	 */
@@ -73,11 +90,44 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 		super.createPartControl(parent);
 
 		DropTarget target = new DropTarget(parent, DND.DROP_MOVE);
-		target.setTransfer(new Transfer[] { TextTransfer.getInstance() });
+		target.setTransfer(new Transfer[] { TextTransfer.getInstance(), FileTransfer.getInstance() });
 
 		target.addDropListener(new DropTargetAdapter() {
 			public void drop(DropTargetEvent event) {
-				AlgorithmView.doAction((String) event.data); // call the algorithm action
+				System.out.println("drop() called for JCTTextEditor");
+				if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
+					System.out.println("now we should handle dropping the file");
+					String[] filenames = (String [])event.data;
+					for(String filename:  filenames)
+					{
+					final IPath path = new Path(filename);
+		            final String editorId = getEditorId(path.toOSString());
+
+		            if (editorId != null) {
+		                try {
+		                    if (editorId.equals(TEXT_EDITOR)) {
+		                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
+		                                IWorkbenchPage.MATCH_NONE);
+		                    } else if (editorId.equals(HEX_EDITOR)) {
+		                    	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
+		                                IWorkbenchPage.MATCH_NONE);
+		                    }
+		                } catch (final PartInitException ex) {
+		                    MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(), 
+		                    		"could not open", // Messages.OpenFileAction_title_could_not_open,
+		                            "could not open");  // NLS.bind(Messages.OpenFileAction_message_could_not_open, editorId));
+		                    LogUtil.logError(ex);
+		                }
+		            } else { // no editor is associated
+		                MessageDialog.openInformation(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+		                        "could not open", // Messages.OpenFileAction_title_could_not_open,
+		                        "assign editor");  // NLS.bind(Messages.OpenFileAction_message_assign_editor, path.getFileExtension()));
+		            }
+					}
+					
+				} else {
+					AlgorithmView.doAction((String) event.data); // call the algorithm action
+				}
 			}
 		});
 
