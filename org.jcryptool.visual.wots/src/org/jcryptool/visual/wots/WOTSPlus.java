@@ -1,8 +1,6 @@
 package org.jcryptool.visual.wots;
 
-import org.jcryptool.visual.wots.files.PseudorandomFunction;
 import org.jcryptool.visual.wots.files.ByteUtils;
-import org.jcryptool.visual.wots.files.IntegerUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
 
 import java.math.BigInteger;
@@ -63,7 +61,7 @@ public class WOTSPlus implements OTS {
 
     	// Set winternitz parameter and block-length
     	this.w = w;
-    	this.n = digest.getDigestLength(); // TODO For SHA256, should be dynamic
+    	this.n = digest.getDigestLength();
     	
     	// Calculate m, l, l1, l2
     	calculateLengths();
@@ -212,10 +210,7 @@ public class WOTSPlus implements OTS {
     		}
 
     		// Compare sigma_i with pk_i
-    		if (!Arrays.equals(tmpSignature[i], publicKey[i+w-1])) {
-	    	
-    			System.out.println("\nERROR in Block " + i + "\nPublicKey: " + org.jcryptool.visual.wots.files.Converter._byteToHex(publicKey[i+w-1]) + "\nSignature: " + org.jcryptool.visual.wots.files.Converter._byteToHex(tmpSignature[i]));
-	    	
+    		if (!Arrays.equals(tmpSignature[i], publicKey[i+w-1])) {	    	
     			return false;
     		}
     	}
@@ -410,7 +405,7 @@ public class WOTSPlus implements OTS {
     
     /**
      * hashes message, set as new message and returns hash
-     */
+     */ 
     public byte[] hashMessage(String message) {
     	this.messageHash = digest.digest(org.jcryptool.visual.wots.files.Converter._stringToByte(message));
     	return messageHash;

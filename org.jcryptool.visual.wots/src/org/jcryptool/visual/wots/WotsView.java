@@ -18,7 +18,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -29,8 +28,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.wb.swt.ResourceManager;
 import org.eclipse.swt.graphics.Point;
-//import org.eclipse.draw2d;
-//import org.eclipse.swt.custom.ScrolledComposite;
 
 /**
  * @author Hannes Sochor <sochorhannes@gmail.com>
@@ -39,7 +36,7 @@ import org.eclipse.swt.graphics.Point;
  */
 public class WotsView extends ViewPart {
 	public WotsView() {
-		setPartName("WOTS-Visualisierung");
+		setPartName("Winternitz OT-Signature (WOTS / WOTS+)");
 	}
 	public static final String ID = "asdf.view";
 	
@@ -67,7 +64,6 @@ public class WotsView extends ViewPart {
 	// Text-Field for Winternitz Parameter p
 	private Text txt_winternitzP;
 	// Text-Field for Output if Signature is valid or not
-	private Text txt_true_false;
 	// Buttons to switch between WOTS and WOTS+
 	private Button btnWots;
 	private Button btnWotsPlus;
@@ -75,18 +71,19 @@ public class WotsView extends ViewPart {
 	private Label lblMessageHash;
 	private Label lblBi;
 	private Label lblSignature;
-	private Label lblWotsVisualization;
 	private Label lblMessage;
 	private Label lblWinternitzParameterw;
 	private Label lblHashFunction;
 	private Label lblSignatureKey;
 	private Label lblVerificationKey;
+	private Button lbl_true_false;
 	// Buttons to generate Keys, Signature, Verification, loading Files, reset and toggle Details
 	private Button btn_Genkey;
 	private Button btn_VerifySig;
 	private Button btn_Sign;
 	private Button btnLoadMessageFrom;
 	private Button btn_reset;
+	private Button btn_restart;
 	private Button btn_Details;
 	// Output fields for rigth side
 	private Label img_right;
@@ -166,9 +163,6 @@ public class WotsView extends ViewPart {
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.setMinSize(new Point(1220, 720));
-	    
-	    //parent.setToolTipText("");
-		//parent.setLayout(null);
 		
 		// Initialize Objects
 		btn_Genkey = new Button(mainContent, SWT.NONE);
@@ -181,15 +175,14 @@ public class WotsView extends ViewPart {
 		btnLoadMessageFrom.setBounds(10, 160, 177, 25);
 		btn_reset = new Button(mainContent, SWT.NONE);
 		btn_reset.setBounds(520, 674, 75, 25);
+		btn_restart = new Button(mainContent, SWT.NONE);
+		btn_restart.setBounds(601, 674, 75, 25);
 		btnWots = new Button(mainContent, SWT.RADIO);
 		btnWots.setBounds(352, 186, 111, 20);
 		btnWotsPlus = new Button(mainContent, SWT.RADIO);
 		btnWotsPlus.setBounds(352, 217, 111, 20);
 		btn_Details = new Button(mainContent, SWT.NONE);
 		btn_Details.setBounds(412, 674, 102, 25);
-
-		lblWotsVisualization = new Label(mainContent, SWT.NONE);
-		lblWotsVisualization.setBounds(10, 10, 140, 21);
 		lblMessage = new Label(mainContent, SWT.NONE);
 		lblMessage.setBounds(10, 37, 86, 21);
 		lblWinternitzParameterw = new Label(mainContent, SWT.NONE);
@@ -217,8 +210,8 @@ public class WotsView extends ViewPart {
 		txt_Verifkey.setBounds(352, 283, 336, 151);
 		txt_Sig = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
 		txt_Sig.setBounds(10, 490, 570, 107);
-		txt_true_false = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.CENTER);
-		txt_true_false.setBounds(586, 490, 102, 107);
+		lbl_true_false = new Button(mainContent, SWT.BORDER | SWT.WRAP | SWT.CENTER);
+		lbl_true_false.setBounds(586, 490, 102, 107);
 		txt_Output = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.MULTI);
 		txt_Output.setBounds(723, 58, 483, 282);
 		txt_Hash = new Text(mainContent, SWT.BORDER | SWT.WRAP | SWT.V_SCROLL | SWT.MULTI);
@@ -246,15 +239,16 @@ public class WotsView extends ViewPart {
 		// Set Attributes for Objects
 		btn_Genkey.setText("Generate keys");
 		btn_Sign.setText("Generate signature");
+		btn_Sign.setEnabled(false);
 		btn_VerifySig.setText("Verify signature");
+		btn_VerifySig.setEnabled(false);
 		btnLoadMessageFrom.setText("Load message from file");
 		btn_reset.setText("Reset");
+		btn_restart.setText("Restart");
 		btnWots.setText("WOTS");
 		btnWots.setSelection(true);
 		btnWotsPlus.setText("WOTS+");
-		btn_Details.setText("Toggle Details");
-
-		lblWotsVisualization.setText("WOTS Visualization");
+		btn_Details.setText("Show Details");
 		lblMessage.setText("Message");
 		lblWinternitzParameterw.setText("Winternitz Parameter (w)");
 		lblHashFunction.setText("Hash function");
@@ -264,14 +258,14 @@ public class WotsView extends ViewPart {
 		lblMessageHash.setText("Message Hash");
 		lblMessageHash.setEnabled(false);
 		lblMessageHash.setVisible(false);
-		lblBi.setText("Bi");
+		lblBi.setText("b_i");
 		lblBi.setEnabled(false);
 		lblBi.setVisible(false);
 		
 		txt_winternitzP.setText("4");
 		txt_Sigkey.setText("");
-		txt_true_false.setEditable(false);
-		txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+		lbl_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+		lbl_true_false.setEnabled(false);
 		txt_message.setText("standard message");
 		txt_Output.setEditable(false);
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
@@ -282,13 +276,13 @@ public class WotsView extends ViewPart {
 		txt_Bi.setVisible(false);
 		txt_Bi.setText(b);
 		txt_MessageSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(message).length) + " Bytes");
-		txt_SigKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2) + "/" + (n*l) + " B");
-		txt_VerKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2) + "/" + (n*instance.getPublicKeyLength()) + " B");
-		txt_HashSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(messageHash).length) + "/" + n + " B");
+		txt_SigKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2) + "/" + (n*l) + " Bytes");
+		txt_VerKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2) + "/" + (n*instance.getPublicKeyLength()) + " Bytes");
+		txt_HashSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(messageHash).length) + "/" + n + " Bytes");
 		txt_HashSize.setEnabled(false);
 		txt_HashSize.setVisible(false);
-		txt_SignatureSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2) + "/" + (n*l) + " B");
-		txt_BSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(b).length) + "/" + l + " B");
+		txt_SignatureSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2) + "/" + (n*l) + " Bytes");
+		txt_BSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(b).length) + "/" + l + " Bytes");
 		txt_BSize.setEnabled(false);
 		txt_BSize.setVisible(false);
 		
@@ -296,8 +290,7 @@ public class WotsView extends ViewPart {
 		cmb_Hash.add("SHA-256");
 		cmb_Hash.add("SHA-1");
 		cmb_Hash.add("MD5");
-		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
-		
+		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));		
 		
 
 		// ########################################
@@ -308,27 +301,27 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				// KEY GENERATION
+				clearOutput();
 				
+				// KEY GENERATION
+						
 				disable = false;
-				txt_true_false.setText("");
-				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field for WOTS
-					txt_Output.setText("This message should explain the WOTS Key-Generation.");
+					txt_Output.setText("Explanation of the WOTS Key-Generation.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Key_Generation.PNG"));
 			    
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field for WOTS+
-					txt_Output.setText("This message should explain the WOTS+ Key-Generation.");
+					txt_Output.setText("Explanation of the WOTS+ Key-Generation.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
 					
 				} else {
 					
-					// TODO ERROR MESSAGE
+					txt_Output.setText("An Error occured");
 					
 				}
 				
@@ -338,6 +331,8 @@ public class WotsView extends ViewPart {
 				getOutputs();
 				
 				disable = true;
+				
+				btn_VerifySig.setEnabled(false);
 			}
 		});
 
@@ -345,22 +340,22 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				// SIGNATURE GENERATION
+				clearOutput();
 				
+				// SIGNATURE GENERATION
+						
 				disable = false;
-				txt_true_false.setText("");
-				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
 					// Set Image & Output field for WOTS
-					txt_Output.setText("This message should explain the WOTS Signature-Generation.");
+					txt_Output.setText("Explanation of the WOTS Signature-Generation.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Signature_Generation.PNG"));
 					
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field for WOTS+
-					txt_Output.setText("This message should explain the WOTS+ Key-Generation.");
+					txt_Output.setText("Explanation of the WOTS+ Key-Generation.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
 					
 				} else {
@@ -382,19 +377,19 @@ public class WotsView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				
 				// SIGNATURE VERIFICATION
-				
+								
 				disable = false;
 				
 				if (btnWots.getSelection() && !btnWotsPlus.getSelection()) {
 				
 					// Set Image & Output field for WOTS
-					txt_Output.setText("This message should explain the WOTS Signature-Verification.");
+					txt_Output.setText("Explanation of the WOTS Signature-Verification.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Signature_Verification.PNG"));
 					
 				} else if (!btnWots.getSelection() && btnWotsPlus.getSelection()) {
 					
 					// Set Image & Output field for WOTS+
-					txt_Output.setText("This message should explain the WOTS+ Signature-Verification.");
+					txt_Output.setText("Explanation of the WOTS+ Signature-Verification.");
 					img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/WOTSPlus.PNG"));
 					
 				} else {
@@ -406,14 +401,14 @@ public class WotsView extends ViewPart {
 				// Verify Signature
 				setOutputs();
 				if (instance.verify()) {
-					txt_true_false.setText("Signature valid");
-					txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 0, 255, 0));
+					lbl_true_false.setText("Signature valid");
+					lbl_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 0, 255, 0));
 				} else {
-					txt_true_false.setText("Signature rejected");
-					txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 0, 0));
+					lbl_true_false.setText("Signature rejected");
+					lbl_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 0, 0));
 
 				}
-				getOutputs();
+				//getOutputs();
 				disable = true;
 			}
 		});
@@ -446,9 +441,14 @@ public class WotsView extends ViewPart {
 		btn_reset.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-				// resets everything
 				reset();
+			}
+		});
+		
+		btn_restart.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				restart();
 			}
 		});
 		
@@ -456,20 +456,26 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
+				clearOutput();
+				
+				disable = false;
+				
 				// Changes type to WOTS and resets what is necessary to do so
 				instance = new org.jcryptool.visual.wots.WinternitzOTS(w, hashFunction);
 				privateKey = "";
 				publicKey = "";
 				signature = "";
-				txt_Sigkey.setText(".");
 				txt_Sigkey.setText("");
-				txt_Verifkey.setText(".");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
-				txt_true_false.setText("");
-				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
+				txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
 				
-				setEnabled();
+				updateLengths();
+				disable = true;
+				
+				btn_Sign.setEnabled(false);
+				btn_VerifySig.setEnabled(false);
 			}
 			
 			@Override
@@ -481,6 +487,10 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
+				clearOutput();
+				
+				disable = false;
+				
 				// Changes type to WOTS+ and resets what is necessary to do so
 				instance = new org.jcryptool.visual.wots.WOTSPlus(w, hashFunction);
 				privateKey = "";
@@ -489,10 +499,15 @@ public class WotsView extends ViewPart {
 				txt_Sigkey.setText("");
 				txt_Verifkey.setText("");
 				txt_Sig.setText("");
-				txt_true_false.setText("");
-				txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
+				txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
+
+				updateLengths();
 				
-				setEnabled();
+				disable = true;
+				
+				btn_Sign.setEnabled(false);
+				btn_VerifySig.setEnabled(false);
 			}
 			
 			@Override
@@ -509,6 +524,7 @@ public class WotsView extends ViewPart {
 					// Sets the View to a more detailed Version
 					
 					details = true;
+					btn_Details.setText("Hide Details");
 					
 					txt_Hash.setEnabled(true);
 					txt_Hash.setVisible(true);
@@ -541,7 +557,7 @@ public class WotsView extends ViewPart {
 					
 					txt_Sig.setBounds(10, 531, 570, 107);
 					txt_SignatureSize.setBounds(472, 642, 108, 26);
-					txt_true_false.setBounds(586, 531, 102, 107);
+					lbl_true_false.setBounds(586, 531, 102, 107);
 					lblSignature.setBounds(10, 500, 75, 21);
 					
 				} else if (details) {
@@ -549,6 +565,7 @@ public class WotsView extends ViewPart {
 					// Hides the details shown before
 					
 					details = false;
+					btn_Details.setText("Show Details");
 					
 					txt_Hash.setEnabled(false);
 					txt_Hash.setVisible(false);
@@ -581,7 +598,7 @@ public class WotsView extends ViewPart {
 					
 					txt_Sig.setBounds(10, 490, 570, 107);
 					txt_SignatureSize.setBounds(472, 603, 108, 26);
-					txt_true_false.setBounds(586, 490, 102, 107);
+					lbl_true_false.setBounds(586, 490, 102, 107);
 					lblSignature.setBounds(10, 463, 75, 21);
 				
 				} else {
@@ -599,10 +616,12 @@ public class WotsView extends ViewPart {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				
-				reset();
+				messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
+				b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
 				
-				disable = false;
-				
+				txt_Hash.setText(messageHash);
+				txt_Bi.setText(b);
+								
 				int index = cmb_Hash.getSelectionIndex();
 				
 				switch (index) {
@@ -619,20 +638,24 @@ public class WotsView extends ViewPart {
 						//TODO ERROR Handling
 				}
 				
-				disable = true;
+				privateKey = "";
+				publicKey = "";
+				signature = "";
 				
 				setOutputs();
 				getOutputs();
-				
+			
 				txt_message.setText(message);
+
+				updateLengths();
+				setEnabled();
 				
-				reset();
+				btn_Sign.setEnabled(false);
+				btn_VerifySig.setEnabled(false);
 			}
 			
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 		
@@ -645,15 +668,18 @@ public class WotsView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				
-				// Changes hash and Bitstring bi if message is modified
+				clearOutput();
+				
 				disable = false;
+				
+				// Changes hash and Bitstring bi if message is modified
 				message = txt_message.getText();
 				messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
 				b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
 				txt_Hash.setText(messageHash);
 				txt_Bi.setText(b);
-				txt_MessageSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(message).length) + " Bytes");
 				
+				updateLengths();
 				disable = true;
 			}
 		});
@@ -662,17 +688,29 @@ public class WotsView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				
+				clearOutput();
+				
 				// Changes Winternitz Parameter if modified
 				w = Integer.parseInt(txt_winternitzP.getText());
-				instance.setW(w);
-				
-				// TODO Should also change Sizes of keys when edited (Now they only change if one of the other btns is activated
+				privateKey = "";
+				publicKey = "";
+				signature = "";
+				setOutputs();
+				instance.initB();
+				getOutputs();
+				updateLengths();
+				setEnabled();
+				btn_Sign.setEnabled(false);
+				btn_VerifySig.setEnabled(false);
 			}
 		});
 		
 		txt_Sigkey.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
+				
+				clearOutput();
+				updateLengths();
 				
 				// Changes Private Key if modified
 				
@@ -682,7 +720,7 @@ public class WotsView extends ViewPart {
 					setDisabled(txt_Sigkey);
 				} else {
 					privateKey = txt_Sigkey.getText();
-					txt_SigKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2) + "/" + (n*l) + " B");
+					txt_SigKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2) + "/" + (n*l) + " Bytes");
 			
 					if (org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2 == n*l) {
 						setEnabled();
@@ -694,24 +732,23 @@ public class WotsView extends ViewPart {
 		txt_Verifkey.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-								
-				// Changes Public Key if modified
+						
+				clearOutput();
 				
+				// Changes Public Key if modified
+								
 				ctr++;
 				
 				if (ctr%2 != 0 && disable) {
 					setDisabled(txt_Verifkey);
 				} else {
 					publicKey = txt_Verifkey.getText();
-					txt_VerKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2) + "/" + (n*instance.getPublicKeyLength()) + " B");
+					txt_VerKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2) + "/" + (n*instance.getPublicKeyLength()) + " Bytes");
 			
 					if (org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2 == (n*instance.getPublicKeyLength())) {
 						setEnabled();
 					}
 				}
-				
-				//System.out.println(instance.getPublicKeyLength());
-				//System.out.println(n);
 			}
 		});
 		
@@ -719,15 +756,17 @@ public class WotsView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				
-				// Changes signature if modified
+				clearOutput();
 				
+				// Changes signature if modified
+								
 				ctr++;
 				
 				if (ctr%2 != 0 && disable) {
 					setDisabled(txt_Sig);
 				} else {
 					signature = txt_Sig.getText();
-					txt_SignatureSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2) + "/" + (n*l) + " B");
+					txt_SignatureSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2) + "/" + (n*l) + " Bytes");
 			
 					if (org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2 == n*l) {
 						setEnabled();
@@ -740,15 +779,17 @@ public class WotsView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				
-				// Changes Hash and Bitstring bi if modified
+				clearOutput();
 				
+				// Changes Hash and Bitstring bi if modified
+								
 				ctr++;
 				
 				if (ctr%2 != 0 && disable) {
 					setDisabled(txt_Hash);
 				} else {
 					messageHash = txt_Hash.getText();
-					txt_HashSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(messageHash).length/2) + "/" + n + " B");
+					txt_HashSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(messageHash).length/2) + "/" + n + " Bytes");
 
 					if (org.jcryptool.visual.wots.files.Converter._stringToByte(messageHash).length/2 == n) {
 						
@@ -766,8 +807,10 @@ public class WotsView extends ViewPart {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				
-				// Changes Bitstring bi if modified
+				clearOutput();
 				
+				// Changes Bitstring bi if modified
+								
 				ctr++;
 				
 				if (ctr%2 != 0 && disable) {
@@ -775,7 +818,7 @@ public class WotsView extends ViewPart {
 				} else {
 					b = txt_Bi.getText();
 					instance.setBi(org.jcryptool.visual.wots.files.Converter._hexStringToByte(b));
-					txt_BSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(b).length/2) + "/" + l + " B");
+					txt_BSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(b).length/2) + "/" + l + " Bytes");
 			
 					if (org.jcryptool.visual.wots.files.Converter._stringToByte(b).length/2 == l) {
 						setEnabled();
@@ -830,9 +873,7 @@ public class WotsView extends ViewPart {
 		txt_Sig.setText(signature);
 		txt_Hash.setText(messageHash);
 		
-		//System.out.println(n);
-		//System.out.println(l);
-		//System.out.println(w);
+		updateLengths();
 	}
 	
 	/**
@@ -849,6 +890,7 @@ public class WotsView extends ViewPart {
 		for (int i = 0; i < btnToEnableOrDisable.length; i++) {
 			btnToEnableOrDisable[i].setEnabled(false);
 		}	
+		cmb_Hash.setEnabled(false);
 	}
 	
 	/** 
@@ -863,46 +905,118 @@ public class WotsView extends ViewPart {
 		for (int i = 0; i < btnToEnableOrDisable.length; i++) {
 			btnToEnableOrDisable[i].setEnabled(true);
 		}
-		
+		cmb_Hash.setEnabled(true);
 		ctr = 0;
 	}
 	
 	private void reset() {
 		
-		if (btnWots.getSelection()) {
-			instance = new WinternitzOTS(4, hashFunction);
-		} else {
-			instance = new WOTSPlus(4, hashFunction);
-		}
+		clearOutput();
+		
 		privateKey = "";
 		publicKey = "";
 		signature = "";
-		w = 4;
-		message = "standard message";
 		messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
 		b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
 		
-		txt_message.setText("standard message");
 		txt_Sigkey.setText("");
 		txt_Sig.setText("");
 		txt_Verifkey.setText("");
-		txt_winternitzP.setText("4");
-		txt_true_false.setText("");
-		txt_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
 		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
 		txt_Hash.setText(messageHash);
 		txt_Bi.setText(b);
 		
-		//btnWots.setSelection(true);
-		//btnWotsPlus.setSelection(false);
-		
-		// reset key lengths
-		
-		txt_SigKeySize.setText("0/" + (n*l) + " B");
-		txt_VerKeySize.setText("0/" + (n*instance.getPublicKeyLength()) + " B");
-		
+		updateLengths();
 		setEnabled();
+		
+		btn_Sign.setEnabled(false);
+		btn_VerifySig.setEnabled(false);
+	}
+	
+	private void updateLengths() {
+		
+		txt_MessageSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(message).length) + " Bytes");
+		txt_SigKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(privateKey).length/2) + "/" + (n*l) + " Bytes");
+		txt_VerKeySize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(publicKey).length/2) + "/" + (n*instance.getPublicKeyLength()) + " Bytes");
+		txt_HashSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(messageHash).length) + "/" + n + " Bytes");
+		txt_SignatureSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._stringToByte(signature).length/2) + "/" + (n*l) + " Bytes");
+		txt_BSize.setText(Integer.toString(org.jcryptool.visual.wots.files.Converter._hexStringToByte(b).length) + "/" + l + " Bytes");
+	}
+	
+	private void clearOutput() {
+		lbl_true_false.setText("");
+		lbl_true_false.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+	}
+	
+	private void restart() {
+		
+		hashFunction = "SHA-256";
+		instance = new WinternitzOTS(4, hashFunction);
+		privateKey = "";
+		publicKey = "";
+		signature = "";
+		w = 4;
+		n = instance.getN();
+		l = instance.getL();
+		message = "standard message";
+		messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
+		b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
+		details = false;
+		disable = true;
+		
+		lblSignature.setBounds(10, 463, 75, 21);
+		txt_message.setBounds(9, 58, 679, 96);
+		txt_Sigkey.setBounds(10, 283, 336, 151);
+		txt_Verifkey.setBounds(352, 283, 336, 151);
+		txt_Sig.setBounds(10, 490, 570, 107);
+		txt_MessageSize.setBounds(610, 159, 78, 26);
+		txt_SigKeySize.setBounds(238, 440, 108, 26);
+		txt_VerKeySize.setBounds(580, 440, 108, 26);
+		txt_SignatureSize.setBounds(472, 603, 108, 26);
+
+		// Set Attributes for Objects
+	
+		btn_Details.setText("Show details");
+		
+		btnWots.setSelection(true);
+		btnWotsPlus.setSelection(false);
+
+		lblMessageHash.setEnabled(false);
+		lblMessageHash.setVisible(false);
+		
+		lblBi.setEnabled(false);
+		lblBi.setVisible(false);
+		
+		txt_winternitzP.setText("4");
+		txt_Sigkey.setText("");
+		clearOutput();
+		txt_message.setText("standard message");
+		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
+		txt_Hash.setEnabled(false);
+		txt_Hash.setVisible(false);
+		txt_Hash.setText(messageHash);
+		txt_Bi.setEnabled(false);
+		txt_Bi.setVisible(false);
+		txt_Bi.setText(b);
+		txt_HashSize.setEnabled(false);
+		txt_HashSize.setVisible(false);
+		txt_BSize.setEnabled(false);
+		txt_BSize.setVisible(false);
+		lbl_true_false.setBounds(586, 490, 102, 107);
+		
+		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));		
+		cmb_Hash.select(0);
+		
+		txt_Sig.setText("");
+		txt_Sigkey.setText("");
+		txt_Verifkey.setText("");
+		
+		updateLengths();
+		setEnabled();
+		
+		btn_Sign.setEnabled(false);
+		btn_VerifySig.setEnabled(false);
 	}
 }
 

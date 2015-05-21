@@ -1,8 +1,6 @@
 package org.jcryptool.visual.wots;
 
-//import org.jcryptool.visual.wots.files.PseudorandomFunction;
 import org.jcryptool.visual.wots.files.ByteUtils;
-//import org.jcryptool.visual.wots.files.IntegerUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
 
 import java.math.BigInteger;
@@ -63,7 +61,7 @@ public class WinternitzOTS implements OTS{
     	
     	// Set winternitz parameter and block-length
     	this.w = w;
-    	this.n = digest.getDigestLength(); // TODO For SHA256, should be dynamic
+    	this.n = digest.getDigestLength();
     	
     	// Calculate m, l, l1, l2
     	calculateLengths();

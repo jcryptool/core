@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="WOTS"
+            name="Winternitz OT-Signature (WOTS / WOTS+)"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.wots.WotsView"
             id="org.jcryptool.visual.wots.WotsView">
@@ -19,7 +19,7 @@
     <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="WOTS"
+            name="%view.name.0"
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension>   
