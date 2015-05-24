@@ -51,7 +51,7 @@
 	<module>org.jcryptool.crypto.modern</module>
 	<module>org.jcryptool.crypto.modern.feature</module>
 	<module>org.jcryptool.crypto.modern.sha3</module>
-	<module>../Hagenberg/org.jcryptool.crypto.modern.stream.arc4</module>
+	<module>org.jcryptool.crypto.modern.stream.arc4</module>
 	<module>org.jcryptool.crypto.modern.stream.dragon</module>
 	<module>org.jcryptool.crypto.modern.stream.lfsr</module>
 	<module>org.jcryptool.crypto.ui</module>
