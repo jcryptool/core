@@ -1,0 +1,29 @@
+This is the JCrypTool sample file.
+
+You can use this file for a fast start with JCrypTool, e.g. by
+encrypting or digitally signing it using the 'Algorithms' menu,
+or by applying one of the analysis offered in the
+'Analysis' menu.
+
+All cryptographic operations are additionally arranged in the
+'Crypto Explorer' view on the right side. A double click on the
+selected entry on the 'Algorithms' tab launches a wizard which
+guides you step by step through the encryption process.
+Decrypting the file at a later time works the same way.
+
+All offered algorithms as well as all analysis always
+require an opened file in one of the JCrypTool editors.
+Visualizations and games on the other hand are normally
+independent of any opened file. You can either use this sample
+file or open any of your own files wherever one is required.
+The original file remains untouched all the time, every
+cryptographic operation creates its own working file.
+
+The filter field on top of the 'Crypto Explorer' view can help you
+searching a particular algorithm (as well as an analysis,
+visualization or game). Using this field filters the currently
+active tab on matching results.
+
+More information on learning, using and extending JCrypTool is
+available in the extensive online help, which can be accessed
+via the menu 'Help' --> 'Help Contents'.
