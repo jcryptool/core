@@ -81,7 +81,7 @@
 	<module>org.jcryptool.visual.euclid</module>
 	<module>org.jcryptool.visual.feature</module>
 	<module>org.jcryptool.visual.grille</module>
-	<module>../merkleHellman/org.jcryptool.visual.hashing</module>
+	<module>org.jcryptool.visual.hashing</module>
 	<module>org.jcryptool.visual.he</module>
 	<module>org.jcryptool.visual.huffmanCoding</module>
 	<module>org.jcryptool.visual.jctca</module>
