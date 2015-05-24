@@ -11,7 +11,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 public class BackupRestorePage extends WizardPage {
 	private static final String PAGENAME = "BackupRestorePage"; //$NON-NLS-1$

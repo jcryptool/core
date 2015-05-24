@@ -5,13 +5,11 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.PlatformUI;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.crypto.keystore.KeyStorePlugin;
 import org.jcryptool.crypto.keystore.backend.KeyStoreManager;
-import org.jcryptool.crypto.keystore.ui.KeystoreViewer;
 import org.jcryptool.crypto.keystore.ui.views.KeystoreView;
 import org.jcryptool.crypto.keystore.ui.wizards.BackupRestoreWizard;
 
