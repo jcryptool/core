@@ -4,4 +4,4 @@ Bundle-Name: %bundleName
 Bundle-SymbolicName: org.jcryptool.core.help;singleton:=true
 Bundle-Version: 0.9.9
 Bundle-Vendor: %bundleVendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

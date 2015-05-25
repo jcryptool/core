@@ -9,7 +9,7 @@
    </extension>
    <extension
          id="de.flexiprovider"
-         name="FlexiProvider 1.7.0.p1"
+         name="FlexiProvider 1.7.0.p7"
          point="org.jcryptool.core.operations.providers">
       <provider
             cipherModes="CBC|CFB|ECB"

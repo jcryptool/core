@@ -9,6 +9,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.core.logging,
  org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.ui;bundle-version="3.7.0"
