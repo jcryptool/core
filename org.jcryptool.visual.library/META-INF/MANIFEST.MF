@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.library;singleton:=true
 Bundle-Version: 0.9.9
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.jcryptool.visual.library
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy

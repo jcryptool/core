@@ -11,7 +11,7 @@ Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.jcryptool.crypto.classic.transposition,
  org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,

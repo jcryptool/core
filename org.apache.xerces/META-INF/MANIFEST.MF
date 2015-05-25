@@ -42,4 +42,4 @@ Export-Package: org.apache.html.dom,
  org.apache.xerces.xs.datatypes,
  org.apache.xml.serialize,
  org.w3c.dom.html
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

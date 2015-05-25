@@ -11,7 +11,7 @@ Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.5",
  org.jcryptool.visual.library;bundle-version="0.9.5",
  net.sourceforge.codec;bundle-version="1.7.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,

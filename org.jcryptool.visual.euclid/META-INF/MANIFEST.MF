@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.ui,
  org.jcryptool.core.operations,
  org.eclipse.help,
  com.lowagie.itext
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor
 Export-Package: org.jcryptool.visual.euclid

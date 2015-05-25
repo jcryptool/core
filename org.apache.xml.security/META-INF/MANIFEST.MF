@@ -34,7 +34,7 @@ Export-Package: javax.xml.crypto,
  org.apache.xml.security.utils,
  org.apache.xml.security.utils.resolver,
  org.apache.xml.security.utils.resolver.implementations
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.apache.commons.logging;bundle-version="1.0.4",
  org.apache.xalan;bundle-version="2.7.1",

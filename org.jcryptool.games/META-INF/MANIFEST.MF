@@ -4,4 +4,4 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.games;singleton:=true
 Bundle-Version: 0.9.9
 Bundle-Vendor: %Bundle-Vendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

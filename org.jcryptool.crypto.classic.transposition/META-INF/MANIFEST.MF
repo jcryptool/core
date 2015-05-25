@@ -18,6 +18,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.classic.transposition.algorithm,
  org.jcryptool.crypto.classic.transposition.ui,
  org.jcryptool.crypto.classic.transposition
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.classic.model.ui.wizard

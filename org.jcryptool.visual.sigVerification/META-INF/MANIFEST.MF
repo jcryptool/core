@@ -13,7 +13,7 @@ Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.8",
  org.jcryptool.crypto.ui,
  org.eclipse.swt,
  de.flexiprovider
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: de.flexiprovider.api.keys,
  de.flexiprovider.core.dsa,
