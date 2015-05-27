@@ -1,6 +1,12 @@
-/**
- * 
- */
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2015 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
+ * Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.core;
 
 import org.eclipse.core.runtime.IPath;
@@ -14,11 +20,12 @@ import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.jcryptool.core.commands.FileOpener;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.util.PathEditorInput;
 
 /**
- * @author frh
+ * @author Holger Friedrich
  *
  */
 public class EditorAreaDropTargetListener implements DropTargetListener {
@@ -84,31 +91,8 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 		// TODO Auto-generated method stub
 		if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
 			String[] filenames = (String [])event.data;
-			for(String filename:  filenames)
-			{
-			final IPath path = new Path(filename);
-            final String editorId = getEditorId(path.toOSString());
-
-            if (editorId != null) {
-                try {
-                    if (editorId.equals(TEXT_EDITOR)) {
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
-                                IWorkbenchPage.MATCH_NONE);
-                    } else if (editorId.equals(HEX_EDITOR)) {
-                    	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(new PathEditorInput(path.toOSString()), editorId, true,
-                                IWorkbenchPage.MATCH_NONE);
-                    }
-                } catch (final PartInitException ex) {
-                    MessageDialog.openError(PlatformUI.getWorkbench().getDisplay().getActiveShell(), 
-                    		"could not open", // Messages.OpenFileAction_title_could_not_open,
-                            "could not open");  // NLS.bind(Messages.OpenFileAction_message_could_not_open, editorId));
-                    LogUtil.logError(ex);
-                }
-            } else { // no editor is associated
-                MessageDialog.openInformation(PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-                        "could not open", // Messages.OpenFileAction_title_could_not_open,
-                        "assign editor");  // NLS.bind(Messages.OpenFileAction_message_assign_editor, path.getFileExtension()));
-            }
+			for(String filename:  filenames) {
+				FileOpener.open(filename);
 			}
 		}
 	}
