@@ -5,4 +5,4 @@ Bundle-SymbolicName: org.jcryptool.core.nl;singleton:=true
 Bundle-Version: 0.9.9
 Bundle-Vendor: %bundleProvider
 Fragment-Host: org.jcryptool.core;bundle-version="0.9.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -41,10 +41,6 @@
 
    <intro introId="org.jcryptool.intro"/>
 
-   <vm>
-      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7</macos>
-   </vm>
-
    <license>
         <url>http://www.eclipse.org/legal/epl-v10.html</url>
         <text>

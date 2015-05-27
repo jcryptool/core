@@ -12,7 +12,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  de.flexiprovider;bundle-version="1.7.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jcryptool.crypto.flexiprovider.operations.engines
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations,
