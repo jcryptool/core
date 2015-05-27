@@ -47,16 +47,10 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	 */
 	@Override
 	public void dragEnter(DropTargetEvent event) {
-		System.out.println("dragEnter() called");
 		if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
-			System.out.println("we are looking at a valid FileTransfer");
-			System.out.println("event.detail == " + event.detail);
-			System.out.println("event.feedback == " + event.feedback);
 			if(event.detail == DND.DROP_DEFAULT) {
 				event.detail = DND.DROP_COPY;
 			}
-		} else {
-			System.out.println("this does not seem to be a valid FileTransfer");
 		}
 	}
 
@@ -65,9 +59,6 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	 */
 	@Override
 	public void dragLeave(DropTargetEvent event) {
-		System.out.println("dragLeave() called");
-		System.out.println("event.detail == " + event.detail);
-		System.out.println("event.feedback == " + event.feedback);
 	}
 
 	/* (non-Javadoc)
@@ -76,7 +67,6 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	@Override
 	public void dragOperationChanged(DropTargetEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("dragOperationChanged() called");
 	}
 
 	/* (non-Javadoc)
@@ -84,9 +74,6 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	 */
 	@Override
 	public void dragOver(DropTargetEvent event) {
-		System.out.println("dragOver() called");
-		System.out.println("event.detail == " + event.detail);
-		System.out.println("event.feedback == " + event.feedback);
 	}
 
 	/* (non-Javadoc)
@@ -95,9 +82,7 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	@Override
 	public void drop(DropTargetEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("drop() called");
 		if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
-			System.out.println("now we should handle dropping the file");
 			String[] filenames = (String [])event.data;
 			for(String filename:  filenames)
 			{
@@ -133,7 +118,6 @@ public class EditorAreaDropTargetListener implements DropTargetListener {
 	 */
 	@Override
 	public void dropAccept(DropTargetEvent event) {
-		System.out.println("dropAccept() called");
 		if(!FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
 			// * <p>The application can veto the drop by setting the <code>event.detail</code> field to 
 			// * <code>DND.DROP_NONE</code>.</p>

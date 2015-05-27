@@ -60,7 +60,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setShowProgressIndicator(true);
         configurer.setShowStatusLine(true);
 
-    	System.out.println("about to configure drag & drop in preWindowOpen()...");
     	configurer.addEditorAreaTransfer(FileTransfer.getInstance());
     	configurer.configureEditorAreaDropListener(new EditorAreaDropTargetListener());
         

@@ -94,9 +94,7 @@ public class JCTTextEditor extends AbstractTextEditor implements IPropertyListen
 
 		target.addDropListener(new DropTargetAdapter() {
 			public void drop(DropTargetEvent event) {
-				System.out.println("drop() called for JCTTextEditor");
 				if(FileTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					System.out.println("now we should handle dropping the file");
 					String[] filenames = (String [])event.data;
 					for(String filename:  filenames)
 					{
