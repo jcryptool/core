@@ -21,6 +21,8 @@ import java.util.Arrays;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.swt.SWT;
@@ -31,6 +33,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -53,11 +56,14 @@ import org.jcryptool.core.logging.utils.LogUtil;
  */
 public class GeneralPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
     private Combo listLanguage;
+    private Label lblLocation;
 
     private String[] nl;
     private String[] nlText;
 
     private String currentLanguage = Platform.getNL().substring(0, 2);
+    private String currentLocation;
+    private URL currentLocationURL = Platform.getInstanceLocation().getURL();
 
     public GeneralPage() {
         super(GRID);
@@ -71,6 +77,12 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
             IConfigurationElement element = (IConfigurationElement) ext[i].getConfigurationElements()[0];
             nl[i] = element.getAttribute("languageCode").substring(0, 2); //$NON-NLS-1$
             nlText[i] = element.getAttribute("languageDescription"); //$NON-NLS-1$
+        }
+        if(currentLocationURL.getProtocol().equals("file")) {
+        	IPath path = new Path(currentLocationURL.getPath());
+        	currentLocation = path.toOSString();
+        } else {
+        	currentLocation = currentLocationURL.toString();
         }
     }
 
@@ -104,6 +116,18 @@ public class GeneralPage extends FieldEditorPreferencePage implements IWorkbench
             listLanguage.select(0);
         }
 
+        GridData gridData2 = new GridData();
+        gridData2.horizontalAlignment = GridData.FILL;
+        gridData2.grabExcessHorizontalSpace = true;
+
+        Group gLocation = new Group(parent, SWT.NONE);
+        gLocation.setText(Messages.WorkspaceLocation);
+        gLocation.setLayoutData(gridData2);
+        gLocation.setLayout(new GridLayout());
+        
+        lblLocation = new Label(gLocation, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
+        lblLocation.setText(currentLocation);
+        
         return super.createContents(parent);
     }
 

@@ -30,6 +30,7 @@ public class Messages extends NLS {
     public static String MessageRestart;
     public static String MessageTitleRestart;
     public static String SelectLanguage;
+    public static String WorkspaceLocation;
     public static String VisualsPage_0;
     static {
         // initialize resource bundle
