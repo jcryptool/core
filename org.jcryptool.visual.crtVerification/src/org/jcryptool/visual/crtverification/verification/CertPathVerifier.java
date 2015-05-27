@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2015 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.crtverification.verification;
 
 import java.security.InvalidAlgorithmParameterException;
@@ -8,6 +17,7 @@ import java.security.cert.CertPathValidatorException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.PKIXParameters;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -15,8 +25,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
+import org.bouncycastle.jcajce.PKIXExtendedParameters;
+import org.bouncycastle.jcajce.PKIXExtendedParameters.Builder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.x509.ExtendedPKIXParameters;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.visual.crtverification.Activator;
 
@@ -71,7 +82,7 @@ public class CertPathVerifier {
      * Constructs a new validator for a certification Path
      * 
      * @param verificationDate the date when the signature is verified
-     * @param signatureDate the date when the signarue was created
+     * @param signatureDate the date when the signature was created
      */
     public CertPathVerifier(Date verificationDate, Date signatureDate) {
         if (verificationDate == null || signatureDate == null) {
@@ -153,7 +164,6 @@ public class CertPathVerifier {
      * @throws InvalidAlgorithmParameterException exception if a not existing model is selected
      */
     public boolean validate(int model) throws InvalidAlgorithmParameterException {
-
         boolean valid = false;
 
         if (model != 0 && model != 1 && model != 2) {
@@ -163,55 +173,52 @@ public class CertPathVerifier {
         }
 
         try {
-            CertPathValidator mCertPathValidator = CertPathValidator.getInstance("PKIX", new BouncyCastleProvider());
-            CertPath path = buildCertPath(clientCertificate, caCertificate, rootCertificate);
-            ExtendedPKIXParameters mExtendedPKIXParameters = null;
+            CertPathValidator certPathValidator = CertPathValidator.getInstance("PKIX", new BouncyCastleProvider());
+            CertPath certPath = buildCertPath(clientCertificate, caCertificate, rootCertificate);
 
             // set rootcert as trust anchor
-            TrustAnchor anchor = new TrustAnchor((X509Certificate) rootCertificate, null);
-            HashSet<TrustAnchor> trustAnchors = new HashSet<TrustAnchor>();
-            trustAnchors.add(anchor);
-
-            mExtendedPKIXParameters = new ExtendedPKIXParameters(trustAnchors);
-            mExtendedPKIXParameters.setRevocationEnabled(false);
+            TrustAnchor trustAnchor = new TrustAnchor((X509Certificate) rootCertificate, null);
+            HashSet<TrustAnchor> trustAnchors = new HashSet<>();
+            trustAnchors.add(trustAnchor);
+            PKIXParameters pkixParameters = new PKIXParameters(trustAnchors);
+            Builder builder = new PKIXExtendedParameters.Builder(pkixParameters);
+            builder.setRevocationEnabled(false);
 
             // select validity model and set parameters
             if (model != 2) {
-                mExtendedPKIXParameters.setValidityModel(ExtendedPKIXParameters.PKIX_VALIDITY_MODEL);
+                builder.setValidityModel(PKIXExtendedParameters.PKIX_VALIDITY_MODEL);
                 // modified shell model, verificationdate = sig date
                 if (model == 1) {
-                    mExtendedPKIXParameters.setDate(signatureDate);
+                    pkixParameters.setDate(signatureDate);
                 } else {
-
-                    mExtendedPKIXParameters.setDate(verificationDate);
+                    pkixParameters.setDate(verificationDate);
                 }
             } else {
-                mExtendedPKIXParameters.setValidityModel(ExtendedPKIXParameters.CHAIN_VALIDITY_MODEL);
-                mExtendedPKIXParameters.setDate(signatureDate);
+                builder.setValidityModel(PKIXExtendedParameters.CHAIN_VALIDITY_MODEL);
+                pkixParameters.setDate(signatureDate);
             }
 
-            mCertPathValidator.validate(path, mExtendedPKIXParameters);
+            certPathValidator.validate(certPath, builder.build());
 
             // if shell model, verify a second time at signing time
             if (model == 0) {
-                mExtendedPKIXParameters.setDate(signatureDate);
-                mCertPathValidator.validate(path, mExtendedPKIXParameters);
+                pkixParameters.setDate(signatureDate);
+                certPathValidator.validate(certPath, builder.build());
             }
 
             // if no exception is thrown, the path is valid
             valid = true;
-
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException e) {
             LogUtil.logError(Activator.PLUGIN_ID, e);
         } catch (CertPathValidatorException e) {
-            LogUtil.logError(Activator.PLUGIN_ID, e);
+            LogUtil.logInfo(e.getMessage());
         }
 
         return valid;
     }
 
     /**
-     * checks if the verification and/or signature dates are within the valididity periods of the
+     * checks if the verification and/or signature dates are within the validity periods of the
      * certificate chain, based on the selected validity model. Expects validity periods for all
      * three certs in this order:
      * 
@@ -224,14 +231,14 @@ public class CertPathVerifier {
      * @param rootNotAfter
      * @param signatureDate
      * @param verificationDate
-     * @return an ArrayList containing all error messages as Strings, if no errors occoured, the
+     * @return an ArrayList containing all error messages as Strings, if no errors occurred, the
      *         list is empty
      * @throws InvalidAlgorithmParameterException if a non existing model is selected
      */
     public ArrayList<String> verifyChangedDate(int model, Date clientNotBefore, Date clientNotAfter, Date caNotBefore,
             Date caNotAfter, Date rootNotBefore, Date rootNotAfter, Date signatureDate, Date verificationDate)
             throws InvalidAlgorithmParameterException {
-        errors = new ArrayList<String>();
+        errors = new ArrayList<>();
 
         if (model != 0 && model != 1 && model != 2) {
             throw new InvalidAlgorithmParameterException();
@@ -241,7 +248,6 @@ public class CertPathVerifier {
             // check if ver and sig date are within the validity period of the client cert
             verifyShellModelPeriodes(clientNotBefore, clientNotAfter, caNotBefore, caNotAfter, rootNotBefore,
                     rootNotAfter);
-            
 
             if (!isDateWithinPeriod(signatureDate, clientNotBefore, clientNotAfter)) {
                 errors.add(Messages.CrtVericiation_sigDateNotWithinClient);
@@ -249,12 +255,12 @@ public class CertPathVerifier {
 
             // check sig and ver date if shell model
             if (model == 0) {
-            	// check if sig date is before ver date
+                // check if sig date is before ver date
                 if (signatureDate.after(verificationDate)) {
                     errors.add(Messages.CrtVerifciation_sigDateAfterVerDate);
 
                 }
-            	
+
                 if (!isDateWithinPeriod(verificationDate, clientNotBefore, clientNotAfter)) {
                     errors.add(Messages.CrtVericiation_verDateNotWithinClient);
                 }
@@ -308,7 +314,7 @@ public class CertPathVerifier {
     }
 
     /**
-     * check if client is within the ca, and ca within the root validity period, occoured errors are
+     * check if client is within the ca, and ca within the root validity period, occurred errors are
      * added to the errors list
      * <p>
      * Requires the dates in the following order:
@@ -349,7 +355,6 @@ public class CertPathVerifier {
      * @return true if the date is within the valid period
      */
     private boolean isDateWithinPeriod(Date compareDate, Date validityBegin, Date validityEnd) {
-
         if (validityBegin.before(compareDate) && validityEnd.after(compareDate)) {
             return true;
         }
