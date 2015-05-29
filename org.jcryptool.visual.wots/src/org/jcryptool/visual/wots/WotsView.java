@@ -125,8 +125,9 @@ public class WotsView extends ViewPart {
 	private String message = "standard message";
 	private String messageHash = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.hashMessage(message));
 	private String b = org.jcryptool.visual.wots.files.Converter._byteToHex(instance.initB());
-	private boolean details = true;
+	private boolean details = false;
 	private boolean disable = true;
+	//private boolean coloured = false;
 	private int ctr;
 	private Text[] txtToEnableOrDisable;
 	private Button[] btnToEnableOrDisable; 
@@ -233,6 +234,11 @@ public class WotsView extends ViewPart {
 			txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
 		}
 		{
+			txt_MessageSize = new Label(container, SWT.NONE);
+			txt_MessageSize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
+			txt_MessageSize.setText("New Label");
+		}
+		{
 			btnLoadMessageFrom = new Button(container, SWT.NONE);
 			btnLoadMessageFrom.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 			btnLoadMessageFrom.setText("Load Message from File");
@@ -261,16 +267,10 @@ public class WotsView extends ViewPart {
 				}
 			});
 		}
-		{
-			txt_MessageSize = new Label(container, SWT.NONE);
-			txt_MessageSize.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
-			txt_MessageSize.setText("New Label");
-		}
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
-			txt_HashSize = new Label(container, SWT.NONE);
-			txt_HashSize.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
+			txt_HashSize = new Label(container, SWT.RIGHT);
+			txt_HashSize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 			txt_HashSize.setText("New Label");
 		}
 		{
@@ -281,6 +281,7 @@ public class WotsView extends ViewPart {
 		{
 			txt_winternitzP = new Text(container, SWT.BORDER);
 			txt_winternitzP.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			txt_winternitzP.setText("4");
 			txt_winternitzP.addModifyListener(new ModifyListener() {
 				@Override
 				public void modifyText(ModifyEvent e) {
@@ -514,18 +515,16 @@ public class WotsView extends ViewPart {
 			img_right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 5));
 			img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));	
 		}
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		{
 			txt_SigKeySize = new Label(container, SWT.NONE);
-			txt_SigKeySize.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1));
+			txt_SigKeySize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 			txt_SigKeySize.setText("New Label");
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
-			txt_VerKeySize = new Label(container, SWT.NONE);
-			txt_VerKeySize.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, true, false, 1, 1));
+			txt_VerKeySize = new Label(container, SWT.RIGHT);
+			txt_VerKeySize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 			txt_VerKeySize.setText("New Label");
 		}
 		{
@@ -600,18 +599,16 @@ public class WotsView extends ViewPart {
 				}
 			});
 		}
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		{
 			txt_SignatureSize = new Label(container, SWT.NONE);
-			txt_SignatureSize.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
+			txt_SignatureSize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 			txt_SignatureSize.setText("New Label");
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
-			txt_BSize = new Label(container, SWT.NONE);
-			txt_BSize.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, true, false, 1, 1));
+			txt_BSize = new Label(container, SWT.RIGHT);
+			txt_BSize.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1));
 			txt_BSize.setText("New Label");
 		}
 		{
@@ -661,6 +658,7 @@ public class WotsView extends ViewPart {
 			btn_Sign = new Button(container, SWT.NONE);
 			btn_Sign.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 			btn_Sign.setText("Generate Signature");
+			btn_Sign.setEnabled(false);
 			btn_Sign.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -701,6 +699,7 @@ public class WotsView extends ViewPart {
 			btn_VerifySig = new Button(container, SWT.NONE);
 			btn_VerifySig.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1));
 			btn_VerifySig.setText("Verify Signature");
+			btn_VerifySig.setEnabled(false);
 			btn_VerifySig.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -730,11 +729,13 @@ public class WotsView extends ViewPart {
 					// Verify Signature
 					setOutputs();
 					if (instance.verify()) {
-						txt_Sig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 0, 255, 0));
+						btn_VerifySig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 0, 255, 0));
+						btn_VerifySig.setText("Signature valid");
 					} else {
-						txt_Sig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 0, 0));
-
+						btn_VerifySig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 0, 0));
+						btn_VerifySig.setText("Signature rejected");
 					}
+					//coloured = true;
 					//getOutputs();
 					disable = true;
 				}
@@ -747,7 +748,7 @@ public class WotsView extends ViewPart {
 			gd_btn_Details = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1);
 			gd_btn_Details.minimumWidth = 95;
 			btn_Details.setLayoutData(gd_btn_Details);
-			btn_Details.setText("Hide details");
+			//btn_Details.setText("Hide details");
 			btn_Details.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -755,46 +756,31 @@ public class WotsView extends ViewPart {
 					if (!details) {
 						
 						details = true;
-						
-						// make Message and Hash
-						gd_txt_Hash.exclude = false;
-						txt_Hash.setEnabled(true);
-						txt_Hash.setVisible(true);
-						gd_txt_message.horizontalSpan = 3;
-						//gd_txt_message.minimumWidth = 400;
-						lblMessageHash.setVisible(true);
-						txt_HashSize.setVisible(true);
-						// TODO txt_messageSize verschieben
-						gd_txt_HashSize.exclude = false;
-						gd_txt_MessageSize.horizontalSpan = 1;
-						txt_HashSize.setVisible(true);
-						
-						// B_i
-						
+						enableDetails();
 						
 						
 					} else if (details) {
 						
 						details = false;
-						
-						// make Message and Hash
-						gd_txt_Hash.exclude = true;
-						txt_Hash.setEnabled(false);
-						txt_Hash.setVisible(false);
-						gd_txt_message.horizontalSpan = 6;
-						//gd_txt_message.minimumWidth = 800;
-						lblMessageHash.setVisible(false);
-						txt_HashSize.setVisible(false);
-						// TODO txt_messageSize verschieben
-						gd_txt_HashSize.exclude = true;
-						gd_txt_MessageSize.horizontalSpan = 4;
-						txt_HashSize.setVisible(false);
-						
-						// B_i
+						disableDetails();
 						
 					} else {
 						// TODO error message
-					}		
+					}	
+					//container.pack();
+					//container.redraw();
+					//txt_message.redraw();
+					//container.reskin(SWT.ALL);
+					//container.update();
+					//txt_message.setLayoutData(gd_txt_message);
+					//txt_message.setRedraw(true);
+					//txt_message.update();
+					//Point tmp = txt_message.getLocation();
+					//txt_message.setLocation(1,1);
+					
+					//gd_txt_Bi.minimumHeight = 25;
+					//txt_message.setLayoutData(SWT.FILL, SWT.FILL, true, true, 3, 1);
+					
 				}
 			});
 		}
@@ -824,6 +810,7 @@ public class WotsView extends ViewPart {
 		// Finisch Initialization
 		txtToEnableOrDisable = new Text[]{txt_message,txt_Sigkey,txt_Verifkey,txt_Hash,txt_Sig,txt_Bi,txt_winternitzP};
 		btnToEnableOrDisable = new Button[]{btnWots,btnWotsPlus,btn_Genkey,btn_VerifySig,btn_Sign,btnLoadMessageFrom};
+		disableDetails();
 		updateLengths();
 		createActions();
 		initializeToolBar();
@@ -963,7 +950,11 @@ public class WotsView extends ViewPart {
 	}
 	
 	private void clearOutput() {
-		txt_Sig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 255, 255, 255));
+		//if (coloured) {
+		btn_VerifySig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
+		btn_VerifySig.setText("Verify Signature");
+		//coloured = false;
+		//}
 	}
 	
 	private void restart() {
@@ -1023,5 +1014,49 @@ public class WotsView extends ViewPart {
 		
 		btn_Sign.setEnabled(false);
 		btn_VerifySig.setEnabled(false);
+	}
+	
+	private void disableDetails() {
+		
+		btn_Details.setText("Show Details");
+		
+		// make Message and Hash
+		gd_txt_Hash.exclude = true;
+		txt_Hash.setEnabled(false);
+		txt_Hash.setVisible(false);
+		gd_txt_message.horizontalSpan = 6;
+		lblMessageHash.setVisible(false);
+		txt_HashSize.setVisible(false);
+		gd_txt_Sig.minimumHeight = 25;
+		
+		// make b_i and Signature
+		gd_txt_Bi.exclude = true;
+		txt_Bi.setEnabled(false);
+		txt_Bi.setVisible(false);
+		gd_txt_Sig.horizontalSpan = 6;
+		lblBi.setVisible(false);
+		txt_BSize.setVisible(false);
+		gd_txt_Sig.minimumHeight = 50;
+	}
+	
+	private void enableDetails() {
+		
+		btn_Details.setText("Hide Details");
+		
+		// make Message and Hash
+		gd_txt_Hash.exclude = false;
+		txt_Hash.setEnabled(true);
+		txt_Hash.setVisible(true);
+		gd_txt_message.horizontalSpan = 3;
+		lblMessageHash.setVisible(true);
+		txt_HashSize.setVisible(true);
+				
+		// make b_i and Signature
+		gd_txt_Bi.exclude = false;
+		txt_Bi.setEnabled(true);
+		txt_Bi.setVisible(true);
+		gd_txt_Sig.horizontalSpan = 3;
+		lblBi.setVisible(true);
+		txt_BSize.setVisible(true);
 	}
 }
