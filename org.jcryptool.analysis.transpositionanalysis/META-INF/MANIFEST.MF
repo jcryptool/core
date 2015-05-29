@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.transpositionanalysis; singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Activator: org.jcryptool.analysis.transpositionanalysis.TranspositionAnalysisPlugin
 Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.eclipse.help.ui;bundle-version="3.5.100",
@@ -11,7 +11,7 @@ Require-Bundle: org.jcryptool.core.operations;bundle-version="0.9.5",
  org.jcryptool.crypto.classic.transposition,
  org.jcryptool.crypto.ui
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.crypto.ui.textmodify.wizard,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts,

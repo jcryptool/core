@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.textmodify;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Activator: org.jcryptool.analysis.textmodify.TextmodifyPlugin
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.jcryptool.core.operations;bundle-version="0.9.5",
  org.eclipse.ui;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,

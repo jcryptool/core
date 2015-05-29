@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hash Sensitivity</title>
+</head>
+<body>
+<h1>Hash Sensitivity</h1>
+
+<p>
+This online help describes the functionality of the plug-in <b>Hash Sensitivity</b>.
+<p>
+The plug-in can be started via the menu <b>Visuals</b> or via the crypto explorer tab <b>Visuals</b>.
+<p>
+<img src="hashes.jpg">
+<p>
+The plug-in consists of a description field and four basic areas: <b>Hash function</b>, <b>Input 1 text</b>, <b>Input 2 text</b> and <b>Difference</b>.
+
+<p>
+In the description field some statements about the algorithm are displayed dynamically. 
+<p>
+In the hash function area you can select a hash function and the representation you want.
+<p>
+<img src="selection.jpg">
+<p>
+ 
+There are the following hash functions available:
+<ul>
+  <li>MD2 (128 bits)</li>
+  <li>MD4 (128 bits)</li>
+  <li>MD5 (128 bits)</li>
+  <li>SHA-1 (160 bits)</li>
+  <li>SHA-2 (256 bits)</li>
+  <li>SHA-2 (512 bits)</li>
+  <li>SHA-3 (224 bits)</li>
+  <li>SHA-3 (256 bits)</li>
+  <li>SHA-3 (384 bits)</li>
+  <li>SHA-3 (512 bits)</li>
+  <li>SKEIN-256 (256 bits)</li>
+  <li>SKEIN-512 (512 bits)</li>
+  <li>SKEIN-1024 (1024 bits)</li>
+  <li>SM3 (256 bits)  </li>
+  <li>RIPEMD-160 (160 bits)</li>
+  <li>TIGER (192 bits)</li>
+  <li>GOST3411 (256 bits)</li>
+  <li>WHIRLPOOL (512 bits)</li>
+</ul>
+ 
+<p>
+The hash function can be represented in <b>hexadecimal</b>, <b>decimal</b> or <b>binary</b>.
+<p>
+<img src="representation.jpg">
+<p>
+
+In the input 1 text area you can enter any text.
+<p>
+<img src="input.jpg">
+<p>
+
+The same for the input 2 text area.
+<p>
+<img src="output.jpg">
+<p>
+
+The hash values of input 1 and input 2 text will be calculated and displayed below in the corresponding representation.
+
+<p>
+<img src="HashValues.jpg">
+<p>
+
+Based on the entry of the input 1 and input 2 text the differences of the bits in the hash value will be displayed in the differences area.
+The different bits are highlighted in color red.
+<p>
+<img src="difference.jpg">
+<p>
+
+There are also some statistics displayed.
+<p>
+You can change at any time the hash function and the representation. The hash values of the input 1 and input 2 text will be calculated dynamically and the differences of the has values will be shown in the <b>difference</b> area.
+<p>
+When you click the radio button <b>Underline longest unchanged bit sequences</b> the unchanged bit sequence will be underlined. The same is for the button <b>Underline longest changed bit sequences</b>.
+<p>
+<img src="button.jpg">
+<p>
+
+When you click the Restart icon <img src="restart.jpg" style="vertical-align:middle"> in the menu bar the default text will be loaded into the input 1 and input 2 text area.
+<p>
+<b>References</b></a> 
+<ol type="1">
+<li>&nbsp Dogan, Ferit: <i>Design and Implementation of Plug-ins for JCrypTool - Visualization of the Merkle-Hellman Algorithm and of Hash Sensitivity </i> Diploma Thesis 2015 - TU-Darmstadt</li>
+<li>&nbsp Wikipedia-Link <a href="http://en.wikipedia.org/wiki/Cryptographic_hash_function">Cryptographic hash function</a></li>
+<li>&nbsp <a href="https://www.bouncycastle.org/java.html">The Legion of the Bouncy Castle</a></li>
+</ol>
+
+</body>
+</html>

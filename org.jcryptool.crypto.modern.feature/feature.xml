@@ -2,7 +2,7 @@
 <feature
       id="org.jcryptool.crypto.modern.feature"
       label="JCrypTool Modern Algorithms Feature"
-      version="1.0.0"
+      version="0.9.9"
       provider-name="jcryptool.org"
       plugin="org.jcryptool.crypto.modern">
 
@@ -246,6 +246,13 @@ litigation.
 
    <plugin
          id="org.jcryptool.crypto.modern.sha3"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jcryptool.crypto.modern.stream.arc4"
          download-size="0"
          install-size="0"
          version="0.0.0"

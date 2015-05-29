@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.he;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Activator: org.jcryptool.visual.he.HEPlugin
 Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.5",
  org.eclipse.ui;bundle-version="3.7.0",
@@ -17,16 +17,12 @@ Require-Bundle: org.jcryptool.crypto.keystore;bundle-version="0.9.5",
  org.eclipse.jface.databinding,
  com.ibm.icu
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.jcryptool.core.logging.dialogs,
  org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.colors,
  org.jcryptool.core.util.directories,
- org.jcryptool.core.util.fonts,
- org.jcryptool.visual.he.wizards
-Export-Package: org.jcryptool.visual.he,
- org.jcryptool.visual.he.ui,
- org.jcryptool.visual.he.wizards
+ org.jcryptool.core.util.fonts
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ClassPath: .,
  swing2swt.jar

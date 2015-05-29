@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.jcryptool.visual.huffmanCoding;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Activator: org.jcryptool.visual.huffmanCoding.HuffmanCodingPlugin
 Bundle-Vendor: %Bundle-Vendor.0
 Require-Bundle: org.eclipse.ui,
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.help,
  org.eclipse.core.expressions;bundle-version="3.4.300",
  org.eclipse.jface.text;bundle-version="3.7.2"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.util.fonts

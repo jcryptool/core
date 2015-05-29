@@ -11,15 +11,20 @@
 package org.jcryptool.analysis.freqanalysis.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.jcryptool.analysis.freqanalysis.FreqAnalysisPlugin;
 import org.jcryptool.core.logging.utils.LogUtil;
+import org.jcryptool.core.util.fonts.FontService;
 
 /**
  * @author SLeischnig
@@ -31,6 +36,9 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
     private Button button2;
     private Button fakebtn;
     private Button button1;
+    private Composite headerComposite;
+    private Label label;
+    private StyledText stDescription; 
     SimpleAnalysisUI C1;
     FullAnalysisUI C2;
 
@@ -49,6 +57,24 @@ public class FreqAnalysisUI extends org.eclipse.swt.widgets.Composite {
             thisLayout.makeColumnsEqualWidth = true;
             this.setLayout(thisLayout);
             this.setSize(525, 237);
+            headerComposite = new Composite(this, SWT.NONE);
+    		headerComposite.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+    		headerComposite.setLayout(new GridLayout(1, false));
+            GridData headerLData = new GridData();
+            headerLData.grabExcessHorizontalSpace = true;
+            headerLData.horizontalAlignment = GridData.FILL;
+            headerComposite.setLayoutData(headerLData);
+
+    		label = new Label(headerComposite, SWT.NONE);
+    		label.setFont(FontService.getHeaderFont());
+    		label.setText("Frequency Analysis");
+    		label.setBackground(Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+    		stDescription = new StyledText(headerComposite, SWT.READ_ONLY | SWT.MULTI
+    				| SWT.WRAP);
+    		stDescription.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false,
+    				false));
+    		stDescription
+    				.setText("");
             group1 = new Group(this, SWT.NONE);
             GridLayout group1Layout = new GridLayout();
             group1Layout.makeColumnsEqualWidth = true;

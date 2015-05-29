@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.visual.crtVerification;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Activator: org.jcryptool.visual.crtverification.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: org.bouncycastle.jce.provider,
- org.bouncycastle.x509,
+Import-Package: org.bouncycastle.jcajce,
+ org.bouncycastle.jce.provider,
  org.jcryptool.core.logging.utils,
  org.jcryptool.crypto.keystore.backend,
  org.jcryptool.crypto.keystore.keys

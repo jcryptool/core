@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="org.jcryptool.crypto.modern.stream.arc4.algorithm"
+         point="org.jcryptool.core.operations.algorithms_cmd">
+      <algorithm_cmd
+            class="org.jcryptool.crypto.modern.stream.arc4.algorithm.Arc4Algorithm"
+            contextHelpId="org.jcryptool.crypto.modern.stream.arc4.wizard"
+            handlerClass="org.jcryptool.crypto.modern.stream.arc4.algorithm.Arc4AlgorithmHandler"
+            id="org.jcryptool.crypto.modern.stream.arc4.algorithm_cmd1"
+            name="%algorithm.name"
+            type="symmetric">
+      </algorithm_cmd>
+   </extension>
+   <extension
+         point="org.eclipse.help.toc">
+      <toc
+            file="$nl$/tocUI.xml"
+            primary="false">
+      </toc>
+   </extension>
+   <extension point="org.eclipse.help.contexts">
+      <contexts
+            file="$nl$/contexts.xml">
+      </contexts>
+   </extension>
+
+</plugin>

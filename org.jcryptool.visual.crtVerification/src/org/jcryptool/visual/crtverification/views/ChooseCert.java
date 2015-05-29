@@ -1,3 +1,12 @@
+// -----BEGIN DISCLAIMER-----
+/*******************************************************************************
+ * Copyright (c) 2015 JCrypTool Team and Contributors
+ *
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
+// -----END DISCLAIMER-----
 package org.jcryptool.visual.crtverification.views;
 
 import java.security.cert.X509Certificate;
@@ -17,7 +26,7 @@ public class ChooseCert extends Wizard {
         this.composite = composite;
         TrayDialog.setDialogHelpAvailable(false);
         setWindowTitle(name);
-        certType = type;        
+        certType = type;
     }
 
     @Override
@@ -28,18 +37,18 @@ public class ChooseCert extends Wizard {
 
     @Override
     public boolean performFinish() {
-    	String contact_name = page.contact_name;
-        IKeyStoreAlias alias = composite.controller.ksc.getAliasByContactName(contact_name);
-        X509Certificate cert = (X509Certificate) composite.controller.ksc.getCertificate(alias);
-        composite.controller.loadCertificate(page, cert, contact_name);
-    	composite.btnValidate.setFocus();
+        String contactName = page.contact_name;
+        IKeyStoreAlias alias = composite.controller.getKsc().getAliasByContactName(contactName);
+        X509Certificate cert = (X509Certificate) composite.controller.getKsc().getCertificate(alias);
+        composite.controller.loadCertificate(page, cert, contactName);
+        composite.btnValidate.setFocus();
         return true;
     }
-    
+
     @Override
     public boolean performCancel() {
-    	composite.btnValidate.setFocus();
+        composite.btnValidate.setFocus();
         return true;
     }
-    
+
 }

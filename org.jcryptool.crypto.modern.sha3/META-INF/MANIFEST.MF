@@ -1,11 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Version: 1.0.0
+Bundle-Version: 0.9.9
 Bundle-Name: %BundleName
 Bundle-SymbolicName: org.jcryptool.crypto.modern.sha3;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %BundleVendor
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.ui;bundle-version="3.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
  org.jcryptool.core.operations;bundle-version="0.9.5"

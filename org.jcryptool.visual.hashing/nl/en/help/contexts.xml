@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Hash Sensitivity">
+      <description>Hash Sensitivity</description>
+      <topic href="nl/en/help/content/index.html" label="Hashing Visualization"/>
+   </context>
+</contexts>

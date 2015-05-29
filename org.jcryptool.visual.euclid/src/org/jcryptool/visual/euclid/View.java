@@ -31,6 +31,7 @@ import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -51,6 +52,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
+import org.jcryptool.core.util.fonts.FontService;
 
 /**
  * @author Felix Eckardt
@@ -67,6 +69,8 @@ public class View extends ViewPart {
     private Action restartAction;
     private ScrolledComposite scrolledComposite;
     private Composite composite_1;
+    private Composite headerBox_1;
+    private Label lblHeader_1;
     private TabFolder tabFolder;
     private TabItem tbtmEuclidean;
     private StyledText txtDescription_1;
@@ -86,6 +90,8 @@ public class View extends ViewPart {
     
     private TabItem tbtmXEuclidean;
     private Composite composite_2;
+    private Composite headerBox_2;
+    private Label lblHeader_2;
     private StyledText txtDescription_2;
     private Group grpInput_2;
     private Label lblP_2;
@@ -804,6 +810,12 @@ public class View extends ViewPart {
         tbtmEuclidean.setControl(composite_1);
         composite_1.setLayout(new GridLayout(6, false));
         
+        headerBox_1 = new Composite(composite_1, SWT.NONE);
+        headerBox_1.setLayout(new FormLayout());
+        lblHeader_1 = new Label(headerBox_1, SWT.NONE);
+        lblHeader_1.setFont(FontService.getHeaderFont());
+        lblHeader_1.setText(Messages.Euclid_Euclidean);
+        
         txtDescription_1 = new StyledText(composite_1, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
         txtDescription_1.setText(Messages.Euclid_Description_1);
         GridData gd_styledTextDescription1 = new GridData(SWT.FILL, SWT.FILL, false, false, 6, 1);
@@ -955,6 +967,12 @@ public class View extends ViewPart {
         composite_2 = new Composite(tabFolder, SWT.NONE);
         tbtmXEuclidean.setControl(composite_2);
         composite_2.setLayout(new GridLayout(5, false));
+        
+        headerBox_2 = new Composite(composite_2, SWT.NONE);
+        headerBox_2.setLayout(new FormLayout());
+        lblHeader_2 = new Label(headerBox_2, SWT.NONE);
+        lblHeader_2.setFont(FontService.getHeaderFont());
+        lblHeader_2.setText(Messages.Euclid_XEuclidean);
         
         txtDescription_2 = new StyledText(composite_2, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
         txtDescription_2.setText(Messages.Euclid_Description_2);

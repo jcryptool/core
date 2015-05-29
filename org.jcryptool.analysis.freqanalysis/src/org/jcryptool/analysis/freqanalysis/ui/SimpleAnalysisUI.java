@@ -280,7 +280,12 @@ public class SimpleAnalysisUI extends AbstractAnalysisUI {
 	private void hideObject(final Control that, final boolean hideit)
 	{
 		GridData GData  = (GridData) that.getLayoutData();
-		GData.exclude = true && hideit;
+		// the (GData != null) test is to work around a NullPointerException (bug #95)
+		// happening after one leaves the Frequency Analysis open
+		// while closing down JCrypTool, then restarts JCrypTool
+		if(GData != null) {
+			GData.exclude = true && hideit;
+		}
 		that.setVisible(true && !hideit);
 		Control[] myArray = {that};
 		layout(myArray);

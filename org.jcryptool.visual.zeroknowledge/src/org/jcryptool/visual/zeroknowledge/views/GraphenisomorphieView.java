@@ -53,6 +53,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
     private Group info;
     private Group action;
     private Composite parent;
+    private ZKHeaderComposite headerComp;
 
     @Override
     public void createPartControl(Composite parent) {
@@ -67,7 +68,7 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
 
         // Create srollable composite and composite within it
         ScrolledComposite sc =
-                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
+                new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL /*| SWT.BORDER*/);
         sc.setExpandHorizontal(true);
         sc.setExpandVertical(true);
         sc.setLayoutData(gridData);
@@ -78,7 +79,13 @@ public class GraphenisomorphieView extends ViewPart implements Observer, Protoco
         pageComposite.setLayout(new GridLayout(1, true));
         pageComposite.setLayoutData(gridData);
 
-        // pointer main points to pageComposite
+		headerComp = new ZKHeaderComposite(pageComposite);
+		headerComp.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, false,
+				4, 1));
+		headerComp.setTitle(Messages.GraphenisomorphieView_title);
+		headerComp.setDescription(Messages.GraphenisomorphieView_text);
+
+		// pointer main points to pageComposite
         main = pageComposite;
 
         // Modelle
