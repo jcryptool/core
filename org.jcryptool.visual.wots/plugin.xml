@@ -19,7 +19,7 @@
     <extension
          point="org.jcryptool.core.operations.visuals">
       <Visual
-            name="%view.name.0"
+            name="WOTS/WOTS+"
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension>   

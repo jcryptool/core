@@ -513,7 +513,7 @@ public class WotsView extends ViewPart {
 		{
 			img_right = new Label(container, SWT.CENTER);
 			img_right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 5));
-			img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));	
+			img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
 		}
 		{
 			txt_SigKeySize = new Label(container, SWT.NONE);
@@ -537,7 +537,7 @@ public class WotsView extends ViewPart {
 		{
 			lblBi = new Label(container, SWT.NONE);
 			lblBi.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true, false, 1, 1));
-			lblBi.setText("B_i");
+			lblBi.setText("b_i");
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -780,7 +780,7 @@ public class WotsView extends ViewPart {
 					
 					//gd_txt_Bi.minimumHeight = 25;
 					//txt_message.setLayoutData(SWT.FILL, SWT.FILL, true, true, 3, 1);
-					
+					//getViewSite().getActionBars().getToolBarManager().update(true);
 				}
 			});
 		}
@@ -815,6 +815,7 @@ public class WotsView extends ViewPart {
 		createActions();
 		initializeToolBar();
 		initializeMenu();
+		//reset();
 	}
 
 	/**
@@ -991,16 +992,17 @@ public class WotsView extends ViewPart {
 		clearOutput();
 		txt_message.setText("standard message");
 		txt_Output.setText("This is the welcome message of our plugin, please insert something which makes more sense!");
-		txt_Hash.setEnabled(false);
-		txt_Hash.setVisible(false);
+		//txt_Hash.setEnabled(false);
+		//txt_Hash.setVisible(false);
 		txt_Hash.setText(messageHash);
-		txt_Bi.setEnabled(false);
-		txt_Bi.setVisible(false);
+		//txt_Bi.setEnabled(false);
+		//txt_Bi.setVisible(false);
 		txt_Bi.setText(b);
-		txt_HashSize.setEnabled(false);
-		txt_HashSize.setVisible(false);
-		txt_BSize.setEnabled(false);
-		txt_BSize.setVisible(false);
+		//txt_HashSize.setEnabled(false);
+		//txt_HashSize.setVisible(false);
+		//txt_BSize.setEnabled(false);
+		//txt_BSize.setVisible(false);
+		disableDetails();
 		
 		img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));		
 		cmb_Hash.select(0);
