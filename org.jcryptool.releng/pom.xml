@@ -36,7 +36,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<product.id>jcryptool</product.id>
 		<product.version>0.9.9</product.version>
-		<timestamp>R${maven.build.timestamp} (weekly)</timestamp>
+		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 	</properties>
 
@@ -121,6 +121,20 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 			<modules>
 				<module>../../crypto</module>
 			</modules>
+		</profile>
+
+		<profile>
+			<!-- default release id is release date only, weekly build ends with (weekly) and needs activation: mvn clean package -Dbuild=weekly -->
+			<id>weeklyBuild</id>
+			<activation>
+				<property>
+					<name>build</name>
+					<value>weekly</value>
+				</property>
+			</activation>
+			<properties>
+				<timestamp>${maven.build.timestamp} (weekly)</timestamp>
+			</properties>
 		</profile>
 
 		<profile>
