@@ -26,7 +26,7 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	<prerequisites>
 		<maven>3.0</maven>
 	</prerequisites>
-	
+
 	<modules>
 		<module>../../core</module>
 	</modules>
@@ -124,7 +124,8 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 		</profile>
 
 		<profile>
-			<!-- default release id is release date only, weekly build ends with (weekly) and needs activation: mvn clean package -Dbuild=weekly -->
+			<!-- default release id is release date only, weekly build ends with (weekly) 
+				and needs activation: mvn clean package -Dbuild=weekly -->
 			<id>weeklyBuild</id>
 			<activation>
 				<property>
@@ -139,7 +140,9 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 
 		<profile>
 			<!-- release is only signed if jcryptool.keystore is given as runtime 
-				parameter (more parameters are required): mvn clean package -Djcryptool.keystore=[path to jks file] -Djcryptool.alias=[key alias] -Djcryptool.storepass=[store password] -Djcryptool.keypass=[key password] -->
+				parameter (more parameters are required): mvn clean package -Djcryptool.keystore=[path 
+				to jks file] -Djcryptool.alias=[key alias] -Djcryptool.storepass=[store password] 
+				-Djcryptool.keypass=[key password] -->
 			<id>signRelease</id>
 			<activation>
 				<property>
@@ -180,9 +183,24 @@ The categorized p2 repository is generated in org.jcryptool.repository/target/re
 	</profiles>
 
 	<reporting>
+		<!-- execute with: mvn site -->
 		<plugins>
 			<plugin>
-				<!-- mvn site -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.15</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<version>3.0.1</version>
