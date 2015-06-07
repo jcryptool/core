@@ -18,3 +18,4 @@ Export-Package: org.eclipse.wb.swt,
  org.jcryptool.visual.crtverification.verification,
  org.jcryptool.visual.crtverification.views
 Bundle-Localization: OSGI-INF/l10n/bundle
+Bundle-Vendor: %Bundle-Vendor
