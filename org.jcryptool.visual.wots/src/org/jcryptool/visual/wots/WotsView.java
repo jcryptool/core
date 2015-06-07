@@ -8,6 +8,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -276,7 +278,8 @@ public class WotsView extends ViewPart {
 									.setText(org.jcryptool.visual.wots.files.WotsComposite
 											.readFile(path));
 						} catch (IOException e1) {
-							// TODO Auto-generated catch block
+		                    JOptionPane.showMessageDialog(null, "Failed to load message from file", "Error", JOptionPane.OK_OPTION);
+		                    txt_message.setText("Standard message");
 							e1.printStackTrace();
 						}
 					}
@@ -405,10 +408,13 @@ public class WotsView extends ViewPart {
 						break;
 					case 2:
 						hashFunction = "MD5";
+                        btnWots.setSelection(true);
 						break;
 					default:
-						// TODO ERROR Handling
-					}
+					    JOptionPane.showMessageDialog(null, "No Hash function selected, SHA-256 will be selected automatically!", "Error", JOptionPane.OK_OPTION);
+                        hashFunction = "SHA-256";
+                        cmb_Hash.select(0);
+                    }
 
 					privateKey = "";
 					publicKey = "";
@@ -476,18 +482,17 @@ public class WotsView extends ViewPart {
 		{
 			lblSignatureKey = new Label(container, SWT.NONE);
 			lblSignatureKey.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM,
-					true, false, 1, 1));
+					true, false, 2, 1));
 			lblSignatureKey.setText(privateKey_txt);
+			
 		}
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
 			lblVerificationKey = new Label(container, SWT.NONE);
 			lblVerificationKey.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM,
-					true, false, 1, 1));
+					true, false, 2, 1));
 			lblVerificationKey.setText(publicKey_txt);
 		}
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
 			txt_Sigkey = new Text(container, SWT.BORDER | SWT.WRAP
@@ -585,10 +590,9 @@ public class WotsView extends ViewPart {
 		{
 			lblSignature = new Label(container, SWT.NONE);
 			lblSignature.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true,
-					false, 1, 1));
+					false, 2, 1));
 			lblSignature.setText(signature_txt);
 		}
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
 			lblBi = new Label(container, SWT.NONE);
@@ -766,7 +770,9 @@ public class WotsView extends ViewPart {
 
 					} else {
 
-						// TODO ERROR MESSAGE
+						 JOptionPane.showMessageDialog(null, "No WOTS version selected, WOTS will be selected automatically!", "Error", JOptionPane.OK_OPTION);
+	                     btnWots.setSelection(true);
+	                     btnWotsPlus.setSelection(false);
 					}
 
 					// Sign message and put Signature in Output Field
@@ -811,8 +817,9 @@ public class WotsView extends ViewPart {
 
 					} else {
 
-						// TODO ERROR MESSAGE
-
+	                       JOptionPane.showMessageDialog(null, "No WOTS version selected, WOTS will be selected automatically!", "Error", JOptionPane.OK_OPTION);
+	                       btnWots.setSelection(true);
+	                       btnWotsPlus.setSelection(false);
 					}
 
 					// Verify Signature
