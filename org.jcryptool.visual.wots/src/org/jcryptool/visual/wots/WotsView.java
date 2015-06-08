@@ -8,7 +8,6 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -26,6 +25,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
 
 public class WotsView extends ViewPart {
@@ -121,8 +121,11 @@ public class WotsView extends ViewPart {
 	private String outGenSigPlus_txt;
 	private String outVerSigPlus_txt;
 
+	public static String currentImg = "images/Overview2.PNG";
+	
 	ScrolledComposite scrolledContainer;
 	Composite container;
+	private Composite composite;
 
 	public WotsView() {
 	}
@@ -352,9 +355,9 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					img_right.setImage(ResourceManager
-							.getPluginImage("org.jcryptool.visual.wots",
-									"images/Overview2.PNG"));
+					currentImg = "images/Overview2.PNG";
+					Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+					img_right.setImage(tmp);
 					txt_Output.setText(outWelcome_txt);
 
 					updateLengths();
@@ -461,9 +464,9 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					img_right.setImage(ResourceManager
-							.getPluginImage("org.jcryptool.visual.wots",
-									"images/Overview2.PNG"));
+					currentImg = "images/WOTSPlus.PNG";
+					Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+					img_right.setImage(tmp);
 					txt_Output.setText(outWelcome_txt);
 
 					updateLengths();
@@ -567,11 +570,16 @@ public class WotsView extends ViewPart {
 			});
 		}
 		{
-			img_right = new Label(container, SWT.CENTER);
-			img_right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
-					true, 5, 5));
-			img_right.setImage(ResourceManager.getPluginImage(
-					"org.jcryptool.visual.wots", "images/Overview2.PNG"));
+			composite = new Composite(container, SWT.NONE);
+			composite.setLayout(new GridLayout(1, false));
+			composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 5, 5));
+			{
+				img_right = new Label(composite, SWT.CENTER);
+				img_right.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+				img_right.setSize(96, 184);
+				img_right.setImage(ResourceManager.getPluginImage("org.jcryptool.visual.wots", "images/Overview2.PNG"));
+				img_right.addControlListener(new org.jcryptool.visual.wots.files.ResizeListener(img_right, composite));
+			}
 		}
 		{
 			txt_SigKeySize = new Label(container, SWT.NONE);
@@ -705,18 +713,18 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenKeys_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/Key_Generation.PNG"));
+						currentImg = "images/Key_Generation.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else if (!btnWots.getSelection()
 							&& btnWotsPlus.getSelection()) {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenKeysPlus_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/WOTSPlus.PNG"));
+						currentImg = "images/WOTSPlus.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else {
 
@@ -755,18 +763,18 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenSig_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/Signature_Generation.PNG"));
+						currentImg = "images/Signature_Generation.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else if (!btnWots.getSelection()
 							&& btnWotsPlus.getSelection()) {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenSigPlus_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/WOTSPlus.PNG"));
+						currentImg = "images/WOTSPlus.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else {
 
@@ -781,6 +789,8 @@ public class WotsView extends ViewPart {
 					getOutputs();
 
 					disable = true;
+					
+					
 				}
 			});
 		}
@@ -802,18 +812,18 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outVerSig_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/Signature_Verification.PNG"));
+						currentImg = "images/Signature_Verification.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else if (!btnWots.getSelection()
 							&& btnWotsPlus.getSelection()) {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outVerSigPlus_txt);
-						img_right.setImage(ResourceManager.getPluginImage(
-								"org.jcryptool.visual.wots",
-								"images/WOTSPlus.PNG"));
+						currentImg = "images/WOTSPlus.PNG";
+						Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+						img_right.setImage(tmp);
 
 					} else {
 
@@ -900,13 +910,14 @@ public class WotsView extends ViewPart {
 		updateLengths();
 		
 		scrolledContainer.setContent(container);
-		scrolledContainer.setMinSize(1200,700); //TODO
+		scrolledContainer.setMinSize(1200,700);
 		
-		createActions();
-		initializeToolBar();
-		initializeMenu();
+		//createActions();
+		//initializeToolBar();
+		//initializeMenu();
 	}
 
+	
 	/**
 	 * Create the actions.
 	 */
@@ -1035,8 +1046,9 @@ public class WotsView extends ViewPart {
 		txt_Sig.setText("");
 		txt_Verifkey.setText("");
 		txt_Output.setText(outWelcome_txt);
-		img_right.setImage(ResourceManager.getPluginImage(
-				"org.jcryptool.visual.wots", "images/Overview2.PNG"));
+		currentImg = "images/Overview2.PNG";
+		Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+		img_right.setImage(tmp);
 		txt_Hash.setText(messageHash);
 		txt_Bi.setText(b);
 
@@ -1137,8 +1149,9 @@ public class WotsView extends ViewPart {
 		txt_Bi.setText(b);
 		disableDetails();
 
-		img_right.setImage(ResourceManager.getPluginImage(
-				"org.jcryptool.visual.wots", "images/Overview2.PNG"));
+		currentImg = "images/Overview2.PNG";
+		Image tmp = new Image(img_right.getDisplay(), org.eclipse.ui.plugin.AbstractUIPlugin.imageDescriptorFromPlugin("org.jcryptool.visual.wots", org.jcryptool.visual.wots.WotsView.currentImg).createImage().getImageData().scaledTo(img_right.getImage().getBounds().width, img_right.getImage().getBounds().height));
+		img_right.setImage(tmp);
 		cmb_Hash.select(0);
 
 		txt_Sig.setText("");
@@ -1215,57 +1228,57 @@ public class WotsView extends ViewPart {
 			loadMessage_txt = "Lade Nachricht von Datei";
 			winPara_txt = "Winternitz Parameter w";
 			hashFunction_txt = "Hashfunktion";
-			privateKey_txt = "Privater Schlüssel";
-			publicKey_txt = "Öffentlicher Schlüssel";
+			privateKey_txt = "Privater Schl\u00fcssel";
+			publicKey_txt = "\u00D6ffentlicher Schl\u00fcssel";
 			signature_txt = "Signatur";
-			btnGenKeys_txt = "Schlüssel erstellen";
+			btnGenKeys_txt = "Schl\u00fcssel erstellen";
 			btnGenSig_txt = "Signatur erstellen";
-			btnVerSig_txt = "Signatur prüfen";
+			btnVerSig_txt = "Signatur pr\u00fcfen";
 			btnVerSigTrue_txt = "Signatur richtig";
 			btnVerSigFalse_txt = "Signatur falsch";
 			showDetails_txt = "Details anzeigen";
-			hideDetails_txt = "Deteils verstecken";
+			hideDetails_txt = "Details verstecken";
 			outWelcome_txt = "Willkommen zur JCT-Visualisierung WOTS/WOTS+\n\n"
 					+ "Das Winternitz-Einmal-Signaturverfahren (Winternitz-One-Time-Signature - WOTS)"
-					+ " ist ein Hash-basiertes Verfahren zum digitalen Signieren von Nachrichten. Der"
-					+ "öffentliche Schlüssel  wird erzeugt, indem die Blöcke des privaten Schlüssels eine "
-					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abhängig vom"
+					+ " ist ein Hash-basiertes Verfahren zum digitalen Signieren von Nachrichten. Der "
+					+ "\u00f6ffentliche Schl\u00fcssel  wird erzeugt, indem die Bl\u00f6cke des privaten Schl\u00fcssels eine "
+					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abh\u00e4ngig vom"
 					+ "Winternitz-Parameter w (>= 2)).\n\nDetails siehe Online-Hilfe: www.onlinehilfe.com/Einleitung";
-			outGenKeys_txt = "Bei der Schlüsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
-					+ "ermittelt.\n\nPrivater Schlüssel:\nEs werden t Blöcke mit n zufälligen Bytes aufgefüllt.\n\n"
-					+ "Öffentlicher Schlüssel:\nJeder Block des privaten Schlüssels durchläuft w-1 mal die "
-					+ "Hashfunktion. Das Resultat sind die Blöcke des öffentlichen Schlüssels.\n\nDetails und "
+			outGenKeys_txt = "Bei der Schl\u00fcsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
+					+ "ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
+					+ "\u00D6ffentlicher Schl\u00fcssel:\nJeder Block des privaten Schl\u00fcssels durchl\u00e4uft w-1 mal die "
+					+ "Hashfunktion. Das Resultat sind die Bl\u00f6cke des \u00f6ffentlichen Schl\u00fcssels.\n\nDetails und "
 					+ "Formeln zur Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS-Key-Generation";
 			outGenSig_txt = "Bei der Erstellung einer Signatur mit WOTS wird zuerst der Hash der Nachricht "
-					+ "erzeugt und eine Prüfsumme über diesen berechnet.\n\nDiese beiden Werte werden in t "
-					+ "Teile aufgeteilt und für das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
-					+ "Bei der Erstellung der Signatur werden die Blöcke des privaten Schlüssels jeweils b_i "
-					+ "mal gehashed.\n\nDetails und Formel zur Berechnung der Prüfsumme siehe Online-Hilfe: "
+					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.\n\nDiese beiden Werte werden in t "
+					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
+					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels jeweils b_i "
+					+ "mal gehashed.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
 					+ "www.onlinehilfe.com/WOTS-Signature-Generation";
-			outVerSig_txt = "Bei der Prüfung der Signatur mit WOTS werden zuerst die b_i Werte gleich wie "
+			outVerSig_txt = "Bei der Pr\u00fcfung der Signatur mit WOTS werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur w-1-b_i "
-					+ "mal gehashed, somit wurde der private Schlüssel nun insgesamt w-1 mal gehashed und es "
-					+ "sollte jeder berechnete Block dem Wert des öffentlichen Schlüssels entsprechen.\n\n"
-					+ "Details und Formel zur Berechnung der Prüfsumme siehe Online-Hilfe: "
+					+ "mal gehashed, somit wurde der private Schl\u00fcssel nun insgesamt w-1 mal gehashed und es "
+					+ "sollte jeder berechnete Block dem Wert des \u00f6ffentlichen Schl\u00fcssels entsprechen.\n\n"
+					+ "Details und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
 					+ "www.onlinehilfe.com/WOTS-Signature-Verification";
-			outGenKeysPlus_txt = "Bei der Schlüsselerzeugung von WOTS+ werden zuerst die Parameter t, n und "
-					+ "w ermittelt.\n\nPrivater Schlüssel:\nEs werden t Blöcke mit n zufälligen Bytes aufgefüllt.\n\n"
-					+ "Öffentlicher Schlüssel:\nZusätzlich werden w-1 Blöcke (R) zufällig generiert. Danach wird "
-					+ "auf jeden Block des privaten Schlüssels in w-1 Runden zuerst ein XOR mit den Blöcken R und "
-					+ "danach die Hashfunktion angewandt.\nDer öffentliche Schlüssel besteht nun aus den "
-					+ "berechneten Blöcken plus den vorangestellten Blöcken von R.\n\nDetails und Formeln zur "
+			outGenKeysPlus_txt = "Bei der Schl\u00fcsselerzeugung von WOTS+ werden zuerst die Parameter t, n und "
+					+ "w ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
+					+ "\u00D6ffentlicher Schl\u00fcssel:\nZus\u00e4tzlich werden w-1 Bl\u00f6cke (R) zuf\u00e4llig generiert. Danach wird "
+					+ "auf jeden Block des privaten Schl\u00fcssels in w-1 Runden zuerst ein XOR mit den Bl\u00f6cken R und "
+					+ "danach die Hashfunktion angewandt.\nDer \u00f6ffentliche Schl\u00fcssel besteht nun aus den "
+					+ "berechneten Bl\u00f6cken plus den vorangestellten Bl\u00f6cken von R.\n\nDetails und Formeln zur "
 					+ "Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Key-Generation";
 			outGenSigPlus_txt = "Bei der Erstellung einer Signatur mit WOTS+ wird zuerst der Hash der Nachricht "
-					+ "erzeugt und eine Prüfsumme über diesen berechnet.Diese beiden Werte werden in t "
-					+ "Teile aufgeteilt und für das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
-					+ "Bei der Erstellung der Signatur werden die Blöcke des privaten Schlüssels nun jeweils "
+					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.Diese beiden Werte werden in t "
+					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
+					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels nun jeweils "
 					+ "in b_i Runden bearbeitet (jede Runde XOR + Hash).\n\nDetails und Formel zur Berechnung "
-					+ "der Prüfsumme siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Generation";
-			outVerSigPlus_txt = "Bei der Prüfung der Signatur mit WOTS+ werden zuerst die b_i Werte gleich wie "
+					+ "der Pr\u00fcfsumme siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Generation";
+			outVerSigPlus_txt = "Bei der Pr\u00fcfung der Signatur mit WOTS+ werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur in w-1-b_i "
-					+ "Runden bearbeitet (jede Runde XOR + Hash), somit wurde der private Schlüssel nun "
+					+ "Runden bearbeitet (jede Runde XOR + Hash), somit wurde der private Schl\u00fcssel nun "
 					+ "insgesamt w-1 mal bearbeitet und es sollte jeder berechnete Block dem Wert des "
-					+ "öffentlichen Schlüssels entsprechen.\n\nDetails und Formel zur Berechnung der Prüfsumme "
+					+ "\u00f6ffentlichen Schl\u00fcssels entsprechen.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme "
 					+ "siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Verification";
 		} else {
 			message_txt = "Message";
