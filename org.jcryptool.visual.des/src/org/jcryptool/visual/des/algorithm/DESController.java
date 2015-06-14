@@ -7,7 +7,7 @@ import org.jcryptool.visual.des.view.Messages;
 public class DESController {
 
     // General Variables
-    private DESModel DESMod = null;
+    private DESModel dESMod = new DESModel();
     public String[] errMsg = null;
 
     // Algorithm Variables
@@ -39,29 +39,26 @@ public class DESController {
     public String SBox_Out_randomk = null;
     public int[][] SBox_Out_activeBoxes = null;;
 
-    public DESController() {
-        DESMod = new DESModel();
-    }
-
-    public int AlgorithmStudy() {
+    public int algorithmStudy() {
         String strData = ""; //$NON-NLS-1$
-        int[] intData = null;
+        int[] intData = new int[64];
         int[] M0M17_Dist = null;
         int[] cipherM_Dist = null;
 
         if (checkAlgInput() != 0) {
             return 1;
+        } else {
+            dESMod.convert_Hex_To_Binary(Alg_In_manualKey);
         }
 
-        strData = DESMod.hexToBinary(this.Alg_In_Data, true);
-        intData = new int[64];
+        strData = dESMod.hexToBinary(this.Alg_In_Data, true);
         for (int k = 0; k < strData.length(); k++) {
             intData[k] = Character.getNumericValue(strData.charAt(k));
         }
-        DESMod.DES_plaintext = intData;
+        dESMod.DES_plaintext = intData;
 
-        DESMod.doOperation(this.Alg_In_selectedKey);
-        this.Alg_Out_M0M17 = DESMod.get_m0_to_m17();
+        dESMod.doOperation(this.Alg_In_selectedKey);
+        this.Alg_Out_M0M17 = dESMod.get_m0_to_m17();
         M0M17_Dist = new int[this.Alg_Out_M0M17.length];
         for (int i = 1; i < this.Alg_Out_M0M17.length; i++) {
             for (int j = 0; j < this.Alg_Out_M0M17[i].length; j++) {
@@ -72,7 +69,7 @@ public class DESController {
         }
         this.Alg_Out_M0M17_Dist = M0M17_Dist;
 
-        this.Alg_Out_cipherMatrix = DESMod.get_DES_cipher_Matrix();
+        this.Alg_Out_cipherMatrix = dESMod.get_DES_cipher_Matrix();
         cipherM_Dist = new int[this.Alg_Out_cipherMatrix.length];
         for (int i = 1; i < this.Alg_Out_cipherMatrix.length; i++) {
             for (int j = 0; j < this.Alg_Out_cipherMatrix[i].length; j++) {
@@ -83,11 +80,11 @@ public class DESController {
         }
         this.Alg_Out_cipherMatrix_Dist = cipherM_Dist;
 
-        this.Alg_Out_Roundkeys = DESMod.get_DES_Rundenkeys();
-        this.Alg_Out_CDMatrix = DESMod.CD_mix;
-        this.Alg_Out_EncDecResult = new String(DESMod.convert_Binary_To_Hex(DESMod.DES_ciphertext));
-        this.Alg_Out_DistMatrix1 = DESMod.DES_dist_1_Ciphertext_Matrix;
-        this.Alg_Out_DistMatrix2 = DESMod.DES_dist_2_Ciphertext_Matrix;
+        this.Alg_Out_Roundkeys = dESMod.get_DES_Rundenkeys();
+        this.Alg_Out_CDMatrix = dESMod.CD_mix;
+        this.Alg_Out_EncDecResult = new String(dESMod.convert_Binary_To_Hex(dESMod.DES_ciphertext));
+        this.Alg_Out_DistMatrix1 = dESMod.DES_dist_1_Ciphertext_Matrix;
+        this.Alg_Out_DistMatrix2 = dESMod.DES_dist_2_Ciphertext_Matrix;
 
         return 0;
     }
@@ -98,34 +95,34 @@ public class DESController {
         int[] dist;
 
         if (FPoints_In_FixedPoints) {
-            DESMod.DES_fixed_status = 0;
+            dESMod.DES_fixed_status = 0;
         } else {
-            DESMod.DES_fixed_status = 1;
+            dESMod.DES_fixed_status = 1;
         }
 
         if (checkFPointsInput() != 0) {
             return 1;
         }
 
-        strData = DESMod.hexToBinary(this.FPoints_In_M8, false);
+        strData = dESMod.hexToBinary(this.FPoints_In_M8, false);
 
-        DESMod.DES_action_type = 0;
+        dESMod.DES_action_type = 0;
 
         intData = new int[32];
         for (int k = 0; k < intData.length; k++) {
             intData[k] = Character.getNumericValue(strData.charAt(k));
         }
 
-        DESMod.DES_m8 = intData;
+        dESMod.DES_m8 = intData;
 
-        DESMod.doOperation(FPoints_In_selectedKey);
+        dESMod.doOperation(FPoints_In_selectedKey);
 
-        this.FPoints_Out_M8M17 = DESMod.get_m8_to_m17();
+        this.FPoints_Out_M8M17 = dESMod.get_m8_to_m17();
 
         if (this.FPoints_In_FixedPoints) {
-            this.FPoints_Out_AFpoints = new String(DESMod.convert_Binary_To_Hex(DESMod.DES_fixedpoint));
+            this.FPoints_Out_AFpoints = new String(dESMod.convert_Binary_To_Hex(dESMod.DES_fixedpoint));
         } else {
-            this.FPoints_Out_AFpoints = new String(DESMod.convert_Binary_To_Hex(DESMod.DES_anti_fixedpoint));
+            this.FPoints_Out_AFpoints = new String(dESMod.convert_Binary_To_Hex(dESMod.DES_anti_fixedpoint));
         }
 
         dist = new int[10];
@@ -150,29 +147,29 @@ public class DESController {
             return 1;
         }
 
-        strData = DESMod.hexToBinary(this.SBox_In_Deltap, true);
-        DESMod.DES_action_type = 0;
+        strData = dESMod.hexToBinary(this.SBox_In_Deltap, true);
+        dESMod.DES_action_type = 0;
 
         intData = new int[64];
         for (int k = 0; k < intData.length; k++) {
             intData[k] = Character.getNumericValue(strData.charAt(k));
         }
 
-        DESMod.DES_delta_Plaintext = intData;
+        dESMod.DES_delta_Plaintext = intData;
 
-        DESMod.key_user = DESMod.generate_random_key();
+        dESMod.key_user = dESMod.generate_random_key();
 
-        this.SBox_Out_randomk = new String(DESMod.convert_Binary_To_Hex(DESMod.key_user));
-        DESMod.DES_m_Plaintext = DESMod.generate_random_binary_array(64);
-        this.SBox_Out_randomm = new String(DESMod.convert_Binary_To_Hex(DESMod.DES_m_Plaintext));
+        this.SBox_Out_randomk = new String(dESMod.convert_Binary_To_Hex(dESMod.key_user));
+        dESMod.DES_m_Plaintext = dESMod.generate_random_binary_array(64);
+        this.SBox_Out_randomm = new String(dESMod.convert_Binary_To_Hex(dESMod.DES_m_Plaintext));
 
         for (int i = 0; i < intData.length; i++) {
-            DESMod.DES_m_oplus_Delta_Plaintext[i] = DESMod.DES_m_Plaintext[i] ^ DESMod.DES_delta_Plaintext[i];
+            dESMod.DES_m_oplus_Delta_Plaintext[i] = dESMod.DES_m_Plaintext[i] ^ dESMod.DES_delta_Plaintext[i];
         }
 
-        DESMod.doOperation(16);
+        dESMod.doOperation(16);
 
-        this.SBox_Out_activeBoxes = DESMod.get_DES_active_SBoxes();
+        this.SBox_Out_activeBoxes = dESMod.get_DES_active_SBoxes();
 
         return 0;
     }
@@ -183,12 +180,12 @@ public class DESController {
 
         // Check manual Key
         if (this.Alg_In_selectedKey == 16) {
-            this.Alg_In_manualKey = DESMod.cleanTheString(this.Alg_In_manualKey);
+            this.Alg_In_manualKey = dESMod.cleanTheString(this.Alg_In_manualKey);
             if (this.Alg_In_manualKey.length() != 16) {
                 errList.add(Messages.DESController_12);
                 err++;
             }
-            if (DESMod.check_key_for_parity(this.Alg_In_manualKey.toCharArray()) == false) {
+            if (dESMod.check_key_for_parity(this.Alg_In_manualKey.toCharArray()) == false) {
                 errList.add(Messages.DESController_13);
                 err++;
             }
@@ -199,7 +196,7 @@ public class DESController {
         }
 
         // Check Input Data
-        this.Alg_In_Data = DESMod.cleanTheString(this.Alg_In_Data);
+        this.Alg_In_Data = dESMod.cleanTheString(this.Alg_In_Data);
         if (this.Alg_In_Data.length() != 16) {
             errList.add(Messages.DESController_15);
             err++;
@@ -221,7 +218,7 @@ public class DESController {
         int len = 0;
 
         // Clean Spaces
-        this.FPoints_In_M8 = DESMod.cleanTheString(this.FPoints_In_M8);
+        this.FPoints_In_M8 = dESMod.cleanTheString(this.FPoints_In_M8);
         // Check length
         len = this.FPoints_In_M8.length();
         if (len != 8) {
@@ -245,7 +242,7 @@ public class DESController {
         int len = 0;
 
         // Clean Spaces
-        this.SBox_In_Deltap = DESMod.cleanTheString(this.SBox_In_Deltap);
+        this.SBox_In_Deltap = dESMod.cleanTheString(this.SBox_In_Deltap);
         // Check Input Length
         len = this.SBox_In_Deltap.length();
         if (len != 16) {

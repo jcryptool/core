@@ -35,11 +35,10 @@ import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.des.algorithm.DESController;
 
 public class DesView extends ViewPart {
-    // Auto Gen
     public static final String ID = "org.jcryptool.visual.des.view.DesView"; //$NON-NLS-1$
 
     // Controller
-    private DESController DESCon = null;
+    private DESController dESCon = new DESController();
 
     // Layout Components
     // Algorithm Study
@@ -192,9 +191,6 @@ public class DesView extends ViewPart {
     StyledText txtSBoxInformation = null;
     private Composite parent;
 
-    public DesView() {
-    }
-
     /**
      * Create contents of the view part.
      * 
@@ -225,36 +221,7 @@ public class DesView extends ViewPart {
         wrapper.setContent(tfolder);
 
         // Create DES Controller
-        DESCon = new DESController();
-
-        createActions();
-        initializeToolBar();
-        initializeMenu();
-    }
-
-    public void dispose() {
-        super.dispose();
-    }
-
-    /**
-     * Create the actions.
-     */
-    private void createActions() {
-        // Create the actions
-    }
-
-    /**
-     * Initialize the toolbar.
-     */
-    private void initializeToolBar() {
-
-    }
-
-    /**
-     * Initialize the menu.
-     */
-    private void initializeMenu() {
-
+        dESCon = new DESController();
     }
 
     @Override
@@ -843,81 +810,81 @@ public class DesView extends ViewPart {
                 String sMode = Messages.DesView_109;
                 String err = Messages.DesView_110;
 
-                DESCon.Alg_In_Data = txtAlgInputData.getText();
+                dESCon.Alg_In_Data = txtAlgInputData.getText();
                 if (btnAlgEncrypt.getSelection()) {
-                    DESCon.Alg_In_Mode = 0;
+                    dESCon.Alg_In_Mode = 0;
                     sMode = Messages.DesView_111;
                 } else {
-                    DESCon.Alg_In_Mode = 1;
+                    dESCon.Alg_In_Mode = 1;
                     sMode = Messages.DesView_112;
                 }
                 if (btnAlgK0.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 0;
+                    dESCon.Alg_In_selectedKey = 0;
                     sKey = Messages.DesView_113;
                 } else if (btnAlgK3.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 3;
+                    dESCon.Alg_In_selectedKey = 3;
                     sKey = Messages.DesView_114;
                 } else if (btnAlgK5.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 5;
+                    dESCon.Alg_In_selectedKey = 5;
                     sKey = Messages.DesView_115;
                 } else if (btnAlgK6.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 6;
+                    dESCon.Alg_In_selectedKey = 6;
                     sKey = Messages.DesView_116;
                 } else if (btnAlgK9.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 9;
+                    dESCon.Alg_In_selectedKey = 9;
                     sKey = Messages.DesView_117;
                 } else if (btnAlgK10.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 10;
+                    dESCon.Alg_In_selectedKey = 10;
                     sKey = Messages.DesView_118;
                 } else if (btnAlgK12.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 12;
+                    dESCon.Alg_In_selectedKey = 12;
                     sKey = Messages.DesView_119;
                 } else if (btnAlgK15.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 15;
+                    dESCon.Alg_In_selectedKey = 15;
                     sKey = Messages.DesView_120;
                 } else if (btnAlgManual.getSelection()) {
-                    DESCon.Alg_In_selectedKey = 16;
-                    DESCon.Alg_In_manualKey = txtAlgKeyManual.getText();
+                    dESCon.Alg_In_selectedKey = 16;
+                    dESCon.Alg_In_manualKey = txtAlgKeyManual.getText();
                     sKey = Messages.DesView_121 + txtAlgKeyManual.getText() + Messages.DesView_122;
                 }
 
-                if (DESCon.AlgorithmStudy() == 0) {
+                if (dESCon.algorithmStudy() == 0) {
                     if (btnAlgEncrypt.getSelection()) {
-                        lblAlgInputCipherOut.setText(Messages.DesView_123 + DESCon.Alg_Out_EncDecResult);
+                        lblAlgInputCipherOut.setText(Messages.DesView_123 + dESCon.Alg_Out_EncDecResult);
                     } else {
-                        lblAlgInputCipherOut.setText(Messages.DesView_124 + DESCon.Alg_Out_EncDecResult);
+                        lblAlgInputCipherOut.setText(Messages.DesView_124 + dESCon.Alg_Out_EncDecResult);
                     }
-                    fillTable(tblAlgOutputM0M17, 0, 17, 1, 32, DESCon.Alg_Out_M0M17);
+                    fillTable(tblAlgOutputM0M17, 0, 17, 1, 32, dESCon.Alg_Out_M0M17);
                     colorTable(tblAlgOutputM0M17, 1);
                     for (int i = 1; i < tblAlgOutputM0M17.getItemCount(); i++) {
                         tblAlgOutputM0M17.getItem(i).setText(tblAlgOutputM0M17.getColumnCount() - 1,
-                                Integer.toString(DESCon.Alg_Out_M0M17_Dist[i]));
+                                Integer.toString(dESCon.Alg_Out_M0M17_Dist[i]));
                     }
 
-                    fillTable(tblAlgOutputDeskpei, 0, 64, 1, 64, DESCon.Alg_Out_cipherMatrix);
+                    fillTable(tblAlgOutputDeskpei, 0, 64, 1, 64, dESCon.Alg_Out_cipherMatrix);
                     // doColoring(0, 64, 1, 64, output2, true, 3, DES_C.DES_action_type);
                     for (int i = 1; i < tblAlgOutputDeskpei.getItemCount(); i++) {
                         tblAlgOutputDeskpei.getItem(i).setText(tblAlgOutputDeskpei.getColumnCount() - 1,
-                                Integer.toString(DESCon.Alg_Out_cipherMatrix_Dist[i]));
+                                Integer.toString(dESCon.Alg_Out_cipherMatrix_Dist[i]));
                     }
                     colorTable(tblAlgOutputDeskpei, 1);
 
-                    fillTable(tblAlgOutputRoundkeys, 0, 15, 1, 48, DESCon.Alg_Out_Roundkeys);
+                    fillTable(tblAlgOutputRoundkeys, 0, 15, 1, 48, dESCon.Alg_Out_Roundkeys);
 
-                    fillTable(tblAlgOutputCDMatrix, 0, 33, 1, 28, DESCon.Alg_Out_CDMatrix);
+                    fillTable(tblAlgOutputCDMatrix, 0, 33, 1, 28, dESCon.Alg_Out_CDMatrix);
                     colorTable(tblAlgOutputCDMatrix, 3);
 
-                    fillTable(tblAlgOutputHamming1, 0, 7, 0, 7, DESCon.Alg_Out_DistMatrix1);
-                    fillTable(tblAlgOutputHamming2, 0, 7, 0, 7, DESCon.Alg_Out_DistMatrix2);
+                    fillTable(tblAlgOutputHamming1, 0, 7, 0, 7, dESCon.Alg_Out_DistMatrix1);
+                    fillTable(tblAlgOutputHamming2, 0, 7, 0, 7, dESCon.Alg_Out_DistMatrix2);
 
                     txtAlgStatus.append(Messages.DesView_125 + getCurrentTime() + Messages.DesView_126 + sMode
                             + Messages.DesView_127 + sKey + Messages.DesView_128 + txtAlgInputData.getText());
                 } else {
-                    for (int i = 0; i < DESCon.errMsg.length; i++) {
-                        if (i != DESCon.errMsg.length - 1) {
-                            err += DESCon.errMsg[i] + Messages.DesView_129;
+                    for (int i = 0; i < dESCon.errMsg.length; i++) {
+                        if (i != dESCon.errMsg.length - 1) {
+                            err += dESCon.errMsg[i] + Messages.DesView_129;
                         } else {
-                            err += DESCon.errMsg[i];
+                            err += dESCon.errMsg[i];
                         }
                     }
                     txtAlgStatus.append(Messages.DesView_130 + getCurrentTime() + Messages.DesView_131 + err);
@@ -1239,48 +1206,48 @@ public class DesView extends ViewPart {
 
         btnFPointsEvaluate.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                DESCon.FPoints_In_FixedPoints = btnFPointsFixedpoint.getSelection();
-                DESCon.FPoints_In_M8 = txtFPointsInputM8.getText();
+                dESCon.FPoints_In_FixedPoints = btnFPointsFixedpoint.getSelection();
+                dESCon.FPoints_In_M8 = txtFPointsInputM8.getText();
                 String err = Messages.DesView_208;
 
                 if (btnFPointsK0.getSelection() && btnFPointsK0.getText().equals(Messages.DesView_209)) {
-                    DESCon.FPoints_In_selectedKey = 0;
+                    dESCon.FPoints_In_selectedKey = 0;
                 } else if (btnFPointsK0.getSelection() && btnFPointsK0.getText().equals(Messages.DesView_210)) {
-                    DESCon.FPoints_In_selectedKey = 0;
+                    dESCon.FPoints_In_selectedKey = 0;
                 } else if (btnFPointsK1.getSelection() && btnFPointsK1.getText().equals(Messages.DesView_211)) {
-                    DESCon.FPoints_In_selectedKey = 10;
+                    dESCon.FPoints_In_selectedKey = 10;
                 } else if (btnFPointsK1.getSelection() && btnFPointsK1.getText().equals(Messages.DesView_212)) {
-                    DESCon.FPoints_In_selectedKey = 9;
+                    dESCon.FPoints_In_selectedKey = 9;
                 } else if (btnFPointsK2.getSelection() && btnFPointsK2.getText().equals(Messages.DesView_213)) {
-                    DESCon.FPoints_In_selectedKey = 5;
+                    dESCon.FPoints_In_selectedKey = 5;
                 } else if (btnFPointsK2.getSelection() && btnFPointsK2.getText().equals(Messages.DesView_214)) {
-                    DESCon.FPoints_In_selectedKey = 6;
+                    dESCon.FPoints_In_selectedKey = 6;
                 } else if (btnFPointsK3.getSelection() && btnFPointsK3.getText().equals(Messages.DesView_215)) {
-                    DESCon.FPoints_In_selectedKey = 15;
+                    dESCon.FPoints_In_selectedKey = 15;
                 } else if (btnFPointsK3.getSelection() && btnFPointsK3.getText().equals(Messages.DesView_216)) {
-                    DESCon.FPoints_In_selectedKey = 11;
+                    dESCon.FPoints_In_selectedKey = 11;
                 }
 
-                if (DESCon.FPointsStudy() == 0) {
+                if (dESCon.FPointsStudy() == 0) {
                     txtFPointsStatus.append(Messages.DesView_217 + getCurrentTime() + Messages.DesView_218
                             + txtFPointsInputM8.getText());
-                    fillTable(tblFPointsOutputAFP, 0, 9, 1, 32, DESCon.FPoints_Out_M8M17);
+                    fillTable(tblFPointsOutputAFP, 0, 9, 1, 32, dESCon.FPoints_Out_M8M17);
                     if (btnFPointsFixedpoint.getSelection()) {
-                        lblFPointsOutputAFPoint.setText(Messages.DesView_219 + DESCon.FPoints_Out_AFpoints);
+                        lblFPointsOutputAFPoint.setText(Messages.DesView_219 + dESCon.FPoints_Out_AFpoints);
                     } else {
-                        lblFPointsOutputAFPoint.setText(Messages.DesView_220 + DESCon.FPoints_Out_AFpoints);
+                        lblFPointsOutputAFPoint.setText(Messages.DesView_220 + dESCon.FPoints_Out_AFpoints);
                     }
                     colorTable(tblFPointsOutputAFP, 1);
                     for (int i = 1; i < tblFPointsOutputAFP.getItemCount(); i++) {
                         tblFPointsOutputAFP.getItem(i).setText(tblFPointsOutputAFP.getColumnCount() - 1,
-                                Integer.toString(DESCon.FPoints_Out_Distances[i]));
+                                Integer.toString(dESCon.FPoints_Out_Distances[i]));
                     }
                 } else {
-                    for (int i = 0; i < DESCon.errMsg.length; i++) {
-                        if (i != DESCon.errMsg.length - 1) {
-                            err += DESCon.errMsg[i] + Messages.DesView_221;
+                    for (int i = 0; i < dESCon.errMsg.length; i++) {
+                        if (i != dESCon.errMsg.length - 1) {
+                            err += dESCon.errMsg[i] + Messages.DesView_221;
                         } else {
-                            err += DESCon.errMsg[i];
+                            err += dESCon.errMsg[i];
                         }
                     }
                     txtFPointsStatus.append(Messages.DesView_222 + getCurrentTime() + Messages.DesView_223 + err);
@@ -1561,25 +1528,25 @@ public class DesView extends ViewPart {
         btnSBoxEvaluate.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                DESCon.SBox_In_Deltap = txtSBoxInputDeltap.getText();
+                dESCon.SBox_In_Deltap = txtSBoxInputDeltap.getText();
                 String err = Messages.DesView_275;
 
-                if (DESCon.SBoxStudy() == 0) {
+                if (dESCon.SBoxStudy() == 0) {
                     txtSBoxStatus.append(Messages.DesView_276 + getCurrentTime() + Messages.DesView_277
                             + txtSBoxInputDeltap.getText());
                     txtSBoxInputDeltap.setEnabled(false);
                     intSBoxOutputCurStep++;
                     lblSBoxOutputCurStep.setText(Messages.DesView_278 + intSBoxOutputCurStep);
-                    lblSBoxOutputP.setText(Messages.DesView_279 + DESCon.SBox_Out_randomm);
-                    lblSBoxOutputK.setText(Messages.DesView_280 + DESCon.SBox_Out_randomk);
-                    fillTable(tblSBoxOutput, 0, 15, 0, 7, DESCon.SBox_Out_activeBoxes);
+                    lblSBoxOutputP.setText(Messages.DesView_279 + dESCon.SBox_Out_randomm);
+                    lblSBoxOutputK.setText(Messages.DesView_280 + dESCon.SBox_Out_randomk);
+                    fillTable(tblSBoxOutput, 0, 15, 0, 7, dESCon.SBox_Out_activeBoxes);
                     colorTable(tblSBoxOutput, 0);
                 } else {
-                    for (int i = 0; i < DESCon.errMsg.length; i++) {
-                        if (i != DESCon.errMsg.length - 1) {
-                            err += DESCon.errMsg[i] + Messages.DesView_281;
+                    for (int i = 0; i < dESCon.errMsg.length; i++) {
+                        if (i != dESCon.errMsg.length - 1) {
+                            err += dESCon.errMsg[i] + Messages.DesView_281;
                         } else {
-                            err += DESCon.errMsg[i];
+                            err += dESCon.errMsg[i];
                         }
                     }
                     txtSBoxStatus.append(Messages.DesView_282 + getCurrentTime() + Messages.DesView_283 + err);
@@ -1600,10 +1567,10 @@ public class DesView extends ViewPart {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 String err = Messages.DesView_285;
-                DESCon.SBox_In_Deltap = txtSBoxInputDeltap.getText();
+                dESCon.SBox_In_Deltap = txtSBoxInputDeltap.getText();
                 Display curdis = Display.getCurrent();
 
-                if (DESCon.SBoxStudy() == 0) {
+                if (dESCon.SBoxStudy() == 0) {
                     txtSBoxStatus.append(Messages.DesView_286 + getCurrentTime() + Messages.DesView_287
                             + txtSBoxInputDeltap.getText() + Messages.DesView_288
                             + slSBoxInputSeriesCount.getSelection() + Messages.DesView_289
@@ -1618,9 +1585,9 @@ public class DesView extends ViewPart {
                     for (int i = 0; i < slSBoxInputSeriesCount.getSelection() - 1; i++) {
                         intSBoxOutputCurStep++;
                         lblSBoxOutputCurStep.setText(Messages.DesView_290 + intSBoxOutputCurStep);
-                        lblSBoxOutputP.setText(Messages.DesView_291 + DESCon.SBox_Out_randomm);
-                        lblSBoxOutputK.setText(Messages.DesView_292 + DESCon.SBox_Out_randomk);
-                        fillTable(tblSBoxOutput, 0, 15, 0, 7, DESCon.SBox_Out_activeBoxes);
+                        lblSBoxOutputP.setText(Messages.DesView_291 + dESCon.SBox_Out_randomm);
+                        lblSBoxOutputK.setText(Messages.DesView_292 + dESCon.SBox_Out_randomk);
+                        fillTable(tblSBoxOutput, 0, 15, 0, 7, dESCon.SBox_Out_activeBoxes);
                         colorTable(tblSBoxOutput, 0);
                         tblSBoxOutput.redraw();
                         tblSBoxOutput.update();
@@ -1630,7 +1597,7 @@ public class DesView extends ViewPart {
                         } catch (Exception ex) {
                             LogUtil.logError(ex);
                         }
-                        DESCon.SBoxStudy();
+                        dESCon.SBoxStudy();
                     }
                     intSBoxOutputCurStep++;
                     lblSBoxOutputCurStep.setText(Messages.DesView_293 + intSBoxOutputCurStep);
@@ -1642,11 +1609,11 @@ public class DesView extends ViewPart {
                     btnSBoxEvaluateSeries.setEnabled(true);
 
                 } else {
-                    for (int i = 0; i < DESCon.errMsg.length; i++) {
-                        if (i != DESCon.errMsg.length - 1) {
-                            err += DESCon.errMsg[i] + Messages.DesView_294;
+                    for (int i = 0; i < dESCon.errMsg.length; i++) {
+                        if (i != dESCon.errMsg.length - 1) {
+                            err += dESCon.errMsg[i] + Messages.DesView_294;
                         } else {
-                            err += DESCon.errMsg[i];
+                            err += dESCon.errMsg[i];
                         }
                     }
                     txtSBoxStatus.append(Messages.DesView_295 + getCurrentTime() + Messages.DesView_296 + err);
