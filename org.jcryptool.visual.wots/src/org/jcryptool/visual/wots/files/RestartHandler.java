@@ -13,7 +13,7 @@ public class RestartHandler extends AbstractHandler {
         if (HandlerUtil.getActivePart(event) instanceof WotsView) {
                 WotsView view = ((WotsView) HandlerUtil.getActivePart(event));
                 
-                view.reset();
+                view.restart();
         }
 
         return null;
