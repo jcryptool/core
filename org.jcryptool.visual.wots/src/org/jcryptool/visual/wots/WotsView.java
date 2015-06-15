@@ -32,7 +32,7 @@ import org.eclipse.wb.swt.ResourceManager;
 
 public class WotsView extends ViewPart {
 
-	private boolean german = false;
+	private boolean german = true;
 
 	public static final String ID = "org.jcryptool.visual.wots.WOTSView2"; //$NON-NLS-1$
 	private Button btn_Genkey;
@@ -130,6 +130,9 @@ public class WotsView extends ViewPart {
 	ScrolledComposite scrolledContainer;
 	Composite container;
 	private Composite composite;
+	private Label lblberschrift;
+	private Label lblNewLabel;
+	private Label lblNewLabel_1;
 
 	public WotsView() {
 	}
@@ -159,6 +162,29 @@ public class WotsView extends ViewPart {
 		gl_container.marginBottom = 10;
 		container.setLayout(gl_container);
 		{
+			lblberschrift = new Label(container, SWT.NONE);
+			lblberschrift.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
+			lblberschrift.setText("Überschrift");
+		}
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		{
+			lblNewLabel = new Label(container, SWT.NONE);
+			lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 6, 1));
+			lblNewLabel.setText("Kurze Erklärung blablabla");
+		}
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		{
 			lblMessage = new Label(container, SWT.NONE);
 			lblMessage.setLayoutData(new GridData(SWT.LEFT, SWT.BOTTOM, true,
 					false, 1, 1));
@@ -174,10 +200,11 @@ public class WotsView extends ViewPart {
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
+		{
+			lblNewLabel_1 = new Label(container, SWT.NONE);
+			lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
+			lblNewLabel_1.setText("Überschrift");
+		}
 		new Label(container, SWT.NONE);
 		{
 			txt_message = new Text(container, SWT.BORDER | SWT.WRAP
@@ -474,6 +501,9 @@ public class WotsView extends ViewPart {
 
 					btn_Sign.setEnabled(false);
 					btn_VerifySig.setEnabled(false);
+					
+					txt_Sigkey.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
 				}
 
 				@Override
@@ -1096,7 +1126,7 @@ public class WotsView extends ViewPart {
 			btn_reset = new Button(container, SWT.NONE);
 			btn_reset.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 					false, 1, 1));
-			btn_reset.setText("Restart");
+			btn_reset.setText("Reset");
 			btn_reset.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -1108,7 +1138,7 @@ public class WotsView extends ViewPart {
 			btn_restart = new Button(container, SWT.NONE);
 			btn_restart.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true,
 					false, 1, 1));
-			btn_restart.setText("Reset");
+			btn_restart.setText("Restart");
 			btn_restart.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -1288,6 +1318,8 @@ public class WotsView extends ViewPart {
 				.getCurrent(), 240, 240, 240));
 		txt_SignatureSize.setBackground(new Color(
 				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
+		txt_BSize.setBackground(new Color(
+				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
 
 		container.layout();
 	}
@@ -1409,6 +1441,8 @@ public class WotsView extends ViewPart {
 				.getCurrent(), 240, 240, 240));
 		txt_SignatureSize.setBackground(new Color(
 				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
+		txt_BSize.setBackground(new Color(
+				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
 
 		container.layout();
 	}
@@ -1511,7 +1545,7 @@ public class WotsView extends ViewPart {
 					+ "Das Winternitz-Einmal-Signaturverfahren (Winternitz-One-Time-Signature - WOTS)"
 					+ " ist ein Hash-basiertes Verfahren zum digitalen Signieren von Nachrichten. Der "
 					+ "\u00f6ffentliche Schl\u00fcssel  wird erzeugt, indem die Bl\u00f6cke des privaten Schl\u00fcssels eine "
-					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abh\u00e4ngig vom"
+					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abh\u00e4ngig vom "
 					+ "Winternitz-Parameter w (\u2265 2)).\n\nDetails siehe Online-Hilfe: www.onlinehilfe.com/Einleitung";
 			outGenKeys_txt = "Bei der Schl\u00fcsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
 					+ "ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"

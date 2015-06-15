@@ -115,10 +115,11 @@ public class WOTSPlus implements OTS {
     	//}
     	
     	byte[] rand = new byte[n];
+    	SecureRandom sRandom = new SecureRandom();
     	
     	for (int i = 0; i < l; i++) {
     		
-    		SecureRandom sRandom = new SecureRandom();
+    		rand = new byte[n];
     		sRandom.nextBytes(rand);
     		privateKey[i] = rand;
     	}
