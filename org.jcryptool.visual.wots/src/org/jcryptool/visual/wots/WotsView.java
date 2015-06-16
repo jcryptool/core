@@ -29,6 +29,7 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class WotsView extends ViewPart {
 
@@ -130,9 +131,9 @@ public class WotsView extends ViewPart {
 	ScrolledComposite scrolledContainer;
 	Composite container;
 	private Composite composite;
-	private Label lblberschrift;
-	private Label lblNewLabel;
-	private Label lblNewLabel_1;
+	private Label txt_head;
+	private Text txtTheWinternitzonetimesignatureIs;
+	private Text txtWinternitzOtsignaturewots;
 
 	public WotsView() {
 	}
@@ -162,25 +163,23 @@ public class WotsView extends ViewPart {
 		gl_container.marginBottom = 10;
 		container.setLayout(gl_container);
 		{
-			lblberschrift = new Label(container, SWT.NONE);
-			lblberschrift.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 3, 1));
-			lblberschrift.setText("Überschrift");
+			txtWinternitzOtsignaturewots = new Text(container, SWT.NONE);
+			txtWinternitzOtsignaturewots.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
+			txtWinternitzOtsignaturewots.setText("Winternitz OT-Signature (WOTS / WOTS+)");
+			txtWinternitzOtsignaturewots.setEditable(false);
+			txtWinternitzOtsignaturewots.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
 		}
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
-			lblNewLabel = new Label(container, SWT.NONE);
-			lblNewLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 6, 1));
-			lblNewLabel.setText("Kurze Erklärung blablabla");
+			txtTheWinternitzonetimesignatureIs = new Text(container, SWT.NONE);
+			txtTheWinternitzonetimesignatureIs.setText("The Winternitz-One-Time-Signature is a algorithm to create a signature to a given message");
+			txtTheWinternitzonetimesignatureIs.setEditable(false);
+			txtTheWinternitzonetimesignatureIs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
 		}
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -201,11 +200,11 @@ public class WotsView extends ViewPart {
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
 		{
-			lblNewLabel_1 = new Label(container, SWT.NONE);
-			lblNewLabel_1.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 4, 1));
-			lblNewLabel_1.setText("Überschrift");
+			txt_head = new Label(container, SWT.BORDER);
+			txt_head.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+			txt_head.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
+			txt_head.setText("Welcome!");
 		}
-		new Label(container, SWT.NONE);
 		{
 			txt_message = new Text(container, SWT.BORDER | SWT.WRAP
 					| SWT.V_SCROLL | SWT.MULTI);
@@ -927,6 +926,9 @@ public class WotsView extends ViewPart {
 					setOutputs();
 					instance.generateKeyPair();
 					getOutputs();
+					
+					txt_head.setText("Key Generation:");
+					container.layout();
 
 					disable = true;
 
@@ -1007,6 +1009,9 @@ public class WotsView extends ViewPart {
 					instance.sign();
 					getOutputs();
 
+					txt_head.setText("Signature Generation:");
+					container.layout();
+					
 					disable = true;
 
 				}
@@ -1092,6 +1097,9 @@ public class WotsView extends ViewPart {
 						btn_VerifySig.setText(btnVerSigFalse_txt);
 					}
 					disable = true;
+					
+					txt_head.setText("Signature Verification:");
+					container.layout();
 				}
 			});
 		}

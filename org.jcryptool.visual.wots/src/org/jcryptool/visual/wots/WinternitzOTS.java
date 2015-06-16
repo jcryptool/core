@@ -105,14 +105,6 @@ public class WinternitzOTS implements OTS{
     public void generatePrivateKey() {
     	
     	privateKey = new byte[l][n];
-
-    	// Fills the private Key with random values
-//    	for (int i = 0; i < l; i++) {
-//    		byte[] key = new byte[n];
-//    		byte[] input = IntegerUtils.toByteArray(i);
-//    		System.arraycopy(input, 0, key, key.length - input.length, input.length);
-//    		privateKey[i] = prf.apply(key, seed);
-//    	}
     	
     	byte[] rand = new byte[n];
     	SecureRandom sRandom = new SecureRandom();
