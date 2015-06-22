@@ -24,8 +24,6 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.wb.swt.ResourceManager;
@@ -112,8 +110,6 @@ public class WotsView extends ViewPart {
 	private String btnGenKeys_txt;
 	private String btnGenSig_txt;
 	private String btnVerSig_txt;
-	private String btnVerSigTrue_txt;
-	private String btnVerSigFalse_txt;
 	private String showDetails_txt;
 	private String hideDetails_txt;
 	private String outWelcome_txt;
@@ -125,13 +121,14 @@ public class WotsView extends ViewPart {
 	private String outVerSigPlus_txt;
 	private String Byte_txt;
 	private String Hash_txt;
+	private String header_txt;
+	private String headline_txt;
 
-	public static String currentImg = "images/Overview2.PNG";
+	public static String currentImg = "images/Overview2.JPG";
 
 	ScrolledComposite scrolledContainer;
 	Composite container;
 	private Composite composite;
-	private Label txt_head;
 	private Text txtTheWinternitzonetimesignatureIs;
 	private Text txtWinternitzOtsignaturewots;
 
@@ -164,10 +161,12 @@ public class WotsView extends ViewPart {
 		container.setLayout(gl_container);
 		{
 			txtWinternitzOtsignaturewots = new Text(container, SWT.NONE);
-			txtWinternitzOtsignaturewots.setFont(SWTResourceManager.getFont("Segoe UI", 11, SWT.BOLD));
-			txtWinternitzOtsignaturewots.setText("Winternitz OT-Signature (WOTS / WOTS+)");
+			txtWinternitzOtsignaturewots.setFont(SWTResourceManager.getFont(
+					"Segoe UI", 11, SWT.BOLD));
+			txtWinternitzOtsignaturewots.setText(headline_txt);
 			txtWinternitzOtsignaturewots.setEditable(false);
-			txtWinternitzOtsignaturewots.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 6, 1));
+			txtWinternitzOtsignaturewots.setLayoutData(new GridData(SWT.FILL,
+					SWT.CENTER, true, false, 6, 1));
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -176,9 +175,10 @@ public class WotsView extends ViewPart {
 		new Label(container, SWT.NONE);
 		{
 			txtTheWinternitzonetimesignatureIs = new Text(container, SWT.NONE);
-			txtTheWinternitzonetimesignatureIs.setText("The Winternitz-One-Time-Signature is a algorithm to create a signature to a given message");
+			txtTheWinternitzonetimesignatureIs.setText(header_txt);
 			txtTheWinternitzonetimesignatureIs.setEditable(false);
-			txtTheWinternitzonetimesignatureIs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 8, 1));
+			txtTheWinternitzonetimesignatureIs.setLayoutData(new GridData(
+					SWT.FILL, SWT.CENTER, true, false, 8, 1));
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
@@ -199,12 +199,11 @@ public class WotsView extends ViewPart {
 		}
 		new Label(container, SWT.NONE);
 		new Label(container, SWT.NONE);
-		{
-			txt_head = new Label(container, SWT.BORDER);
-			txt_head.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
-			txt_head.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 5, 1));
-			txt_head.setText("Welcome!");
-		}
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
+		new Label(container, SWT.NONE);
 		{
 			txt_message = new Text(container, SWT.BORDER | SWT.WRAP
 					| SWT.V_SCROLL | SWT.MULTI);
@@ -368,18 +367,44 @@ public class WotsView extends ViewPart {
 
 					clearOutput(false);
 
-					// Changes Winternitz Parameter if modified
-					w = Integer.parseInt(txt_winternitzP.getText());
-					privateKey = "";
-					publicKey = "";
-					signature = "";
-					setOutputs();
-					instance.initB();
-					getOutputs();
-					updateLengths();
-					setEnabled();
-					btn_Sign.setEnabled(false);
-					btn_VerifySig.setEnabled(false);
+					if (txt_winternitzP.getText().equals("")) {
+						setDisabled(txt_winternitzP);
+						txt_Hash.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
+						txt_Sigkey.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
+						txt_Verifkey.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
+						txt_Sig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
+						txt_Bi.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							240, 240, 240));
+					} else {
+						// Changes Winternitz Parameter if modified
+						w = Integer.parseInt(txt_winternitzP.getText());
+						privateKey = "";
+						publicKey = "";
+						signature = "";
+						setOutputs();
+						instance.initB();
+						getOutputs();
+						updateLengths();
+						setEnabled();
+						btn_Sign.setEnabled(false);
+						btn_VerifySig.setEnabled(false);
+
+						txt_HashSize.setBackground(new Color(
+								org.eclipse.swt.widgets.Display.getCurrent(),
+								240, 240, 240));
+						txt_BSize.setBackground(new Color(
+								org.eclipse.swt.widgets.Display.getCurrent(),
+								240, 240, 240));
+						txt_SigKeySize.setBackground(new Color(
+								org.eclipse.swt.widgets.Display.getCurrent(),
+								240, 240, 240));
+						txt_Sig.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+							255, 255, 255));
+					}
 				}
 			});
 		}
@@ -408,7 +433,7 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					currentImg = "images/Overview2.PNG";
+					currentImg = "images/Overview2.JPG";
 					Image tmp = new Image(
 							img_right.getDisplay(),
 							org.eclipse.ui.plugin.AbstractUIPlugin
@@ -500,9 +525,13 @@ public class WotsView extends ViewPart {
 
 					btn_Sign.setEnabled(false);
 					btn_VerifySig.setEnabled(false);
-					
-					txt_Sigkey.setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
-							240, 240, 240));
+
+					txt_Sigkey.setBackground(new Color(
+							org.eclipse.swt.widgets.Display.getCurrent(), 255,
+							255, 255));
+					txt_SigKeySize.setBackground(new Color(
+							org.eclipse.swt.widgets.Display.getCurrent(), 240,
+							240, 240));
 				}
 
 				@Override
@@ -534,7 +563,7 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					currentImg = "images/WOTSPlus.PNG";
+					currentImg = "images/WOTSPlus.JPG";
 					Image tmp = new Image(
 							img_right.getDisplay(),
 							org.eclipse.ui.plugin.AbstractUIPlugin
@@ -700,7 +729,7 @@ public class WotsView extends ViewPart {
 						true, 1, 1));
 				img_right.setSize(96, 184);
 				img_right.setImage(ResourceManager.getPluginImage(
-						"org.jcryptool.visual.wots", "images/Overview2.PNG"));
+						"org.jcryptool.visual.wots", "images/Overview2.JPG"));
 				img_right
 						.addControlListener(new org.jcryptool.visual.wots.files.ResizeListener(
 								img_right, composite));
@@ -879,7 +908,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenKeys_txt);
-						currentImg = "images/Key_Generation.PNG";
+						currentImg = "images/Key_Generation.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -900,7 +929,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenKeysPlus_txt);
-						currentImg = "images/WOTSPlus.PNG";
+						currentImg = "images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -926,9 +955,6 @@ public class WotsView extends ViewPart {
 					setOutputs();
 					instance.generateKeyPair();
 					getOutputs();
-					
-					txt_head.setText("Key Generation:");
-					container.layout();
 
 					disable = true;
 
@@ -956,7 +982,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenSig_txt);
-						currentImg = "images/Signature_Generation.PNG";
+						currentImg = "images/Signature_Generation.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -977,7 +1003,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenSigPlus_txt);
-						currentImg = "images/WOTSPlus.PNG";
+						currentImg = "images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1009,9 +1035,6 @@ public class WotsView extends ViewPart {
 					instance.sign();
 					getOutputs();
 
-					txt_head.setText("Signature Generation:");
-					container.layout();
-					
 					disable = true;
 
 				}
@@ -1035,7 +1058,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outVerSig_txt);
-						currentImg = "images/Signature_Verification.PNG";
+						currentImg = "images/Signature_Verification.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1056,7 +1079,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outVerSigPlus_txt);
-						currentImg = "images/WOTSPlus.PNG";
+						currentImg = "images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1089,17 +1112,12 @@ public class WotsView extends ViewPart {
 						txt_Sig.setBackground(new Color(
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								0, 255, 0));
-						btn_VerifySig.setText(btnVerSigTrue_txt);
 					} else {
 						txt_Sig.setBackground(new Color(
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
-						btn_VerifySig.setText(btnVerSigFalse_txt);
 					}
 					disable = true;
-					
-					txt_head.setText("Signature Verification:");
-					container.layout();
 				}
 			});
 		}
@@ -1127,6 +1145,9 @@ public class WotsView extends ViewPart {
 						txt_Output.setText("An Error occured");
 					}
 					container.layout();
+					txt_HashSize.setBackground(new Color(
+							org.eclipse.swt.widgets.Display.getCurrent(), 240,
+							240, 240));
 				}
 			});
 		}
@@ -1164,7 +1185,7 @@ public class WotsView extends ViewPart {
 		updateLengths();
 
 		scrolledContainer.setContent(container);
-		scrolledContainer.setMinSize(1200, 700);
+		scrolledContainer.setMinSize(1200, 800);
 
 		// createActions();
 		// initializeToolBar();
@@ -1258,6 +1279,9 @@ public class WotsView extends ViewPart {
 		for (int i = 0; i < txtToEnableOrDisable.length; i++) {
 			if (!txtToEnableOrDisable[i].equals(exception)) {
 				txtToEnableOrDisable[i].setEnabled(false);
+				txtToEnableOrDisable[i].setEditable(false);
+				txtToEnableOrDisable[i].setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+						240, 240, 240));
 			}
 		}
 		for (int i = 0; i < btnToEnableOrDisable.length; i++) {
@@ -1274,6 +1298,9 @@ public class WotsView extends ViewPart {
 		// Enables all Buttons and editable text-fields
 		for (int i = 0; i < txtToEnableOrDisable.length; i++) {
 			txtToEnableOrDisable[i].setEnabled(true);
+			txtToEnableOrDisable[i].setEditable(true);
+			txtToEnableOrDisable[i].setBackground(new Color(org.eclipse.swt.widgets.Display.getCurrent(),
+					255, 255, 255));
 		}
 		for (int i = 0; i < btnToEnableOrDisable.length; i++) {
 			btnToEnableOrDisable[i].setEnabled(true);
@@ -1299,7 +1326,7 @@ public class WotsView extends ViewPart {
 		txt_Sig.setText("");
 		txt_Verifkey.setText("");
 		txt_Output.setText(outWelcome_txt);
-		currentImg = "images/Overview2.PNG";
+		currentImg = "images/Overview2.JPG";
 		Image tmp = new Image(img_right.getDisplay(),
 				org.eclipse.ui.plugin.AbstractUIPlugin
 						.imageDescriptorFromPlugin("org.jcryptool.visual.wots",
@@ -1319,15 +1346,15 @@ public class WotsView extends ViewPart {
 		btn_VerifySig.setEnabled(false);
 
 		clearOutput(false);
-		
+
 		txt_SigKeySize.setBackground(new Color(org.eclipse.swt.widgets.Display
 				.getCurrent(), 240, 240, 240));
 		txt_VerKeySize.setBackground(new Color(org.eclipse.swt.widgets.Display
 				.getCurrent(), 240, 240, 240));
 		txt_SignatureSize.setBackground(new Color(
 				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
-		txt_BSize.setBackground(new Color(
-				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
+		txt_BSize.setBackground(new Color(org.eclipse.swt.widgets.Display
+				.getCurrent(), 240, 240, 240));
 
 		container.layout();
 	}
@@ -1420,7 +1447,7 @@ public class WotsView extends ViewPart {
 		txt_Bi.setText(b);
 		disableDetails();
 
-		currentImg = "images/Overview2.PNG";
+		currentImg = "images/Overview2.JPG";
 		Image tmp = new Image(img_right.getDisplay(),
 				org.eclipse.ui.plugin.AbstractUIPlugin
 						.imageDescriptorFromPlugin("org.jcryptool.visual.wots",
@@ -1449,8 +1476,8 @@ public class WotsView extends ViewPart {
 				.getCurrent(), 240, 240, 240));
 		txt_SignatureSize.setBackground(new Color(
 				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
-		txt_BSize.setBackground(new Color(
-				org.eclipse.swt.widgets.Display.getCurrent(), 240, 240, 240));
+		txt_BSize.setBackground(new Color(org.eclipse.swt.widgets.Display
+				.getCurrent(), 240, 240, 240));
 
 		container.layout();
 	}
@@ -1533,8 +1560,10 @@ public class WotsView extends ViewPart {
 
 		// Set language
 		if (german) {
+			headline_txt = "Winternitz Einmal-Signatur (WOTS / WOTS+)";
+			header_txt = "Die Winternitz Einmal-Signatur ist ein Algorithmus zum Signieren einer Nachricht";
 			message_txt = "Nachricht";
-			loadMessage_txt = "Lade Nachricht von Datei";
+			loadMessage_txt = "Lade Nachricht aus Datei";
 			winPara_txt = "Winternitz Parameter w";
 			hashFunction_txt = "Hashfunktion";
 			privateKey_txt = "Privater Schl\u00fcssel";
@@ -1543,8 +1572,6 @@ public class WotsView extends ViewPart {
 			btnGenKeys_txt = "Schl\u00fcssel erstellen";
 			btnGenSig_txt = "Signatur erstellen";
 			btnVerSig_txt = "Signatur pr\u00fcfen";
-			btnVerSigTrue_txt = "Signatur richtig";
-			btnVerSigFalse_txt = "Signatur falsch";
 			showDetails_txt = "Details anzeigen";
 			hideDetails_txt = "Details verstecken";
 			Byte_txt = " Byte";
@@ -1555,43 +1582,45 @@ public class WotsView extends ViewPart {
 					+ "\u00f6ffentliche Schl\u00fcssel  wird erzeugt, indem die Bl\u00f6cke des privaten Schl\u00fcssels eine "
 					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abh\u00e4ngig vom "
 					+ "Winternitz-Parameter w (\u2265 2)).\n\nDetails siehe Online-Hilfe: www.onlinehilfe.com/Einleitung";
-			outGenKeys_txt = "Bei der Schl\u00fcsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
+			outGenKeys_txt = "Schl\u00fcsselerzeugung:\n\nBei der Schl\u00fcsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
 					+ "ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
 					+ "\u00D6ffentlicher Schl\u00fcssel:\nJeder Block des privaten Schl\u00fcssels durchl\u00e4uft w-1 mal die "
 					+ "Hashfunktion. Das Resultat sind die Bl\u00f6cke des \u00f6ffentlichen Schl\u00fcssels.\n\nDetails und "
 					+ "Formeln zur Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS-Key-Generation";
-			outGenSig_txt = "Bei der Erstellung einer Signatur mit WOTS wird zuerst der Hash der Nachricht "
+			outGenSig_txt = "Signaturerzeugung:\n\nBei der Erstellung einer Signatur mit WOTS wird zuerst der Hash der Nachricht "
 					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.\n\nDiese beiden Werte werden in t "
 					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
 					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels jeweils b_i "
 					+ "mal gehashed.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
 					+ "www.onlinehilfe.com/WOTS-Signature-Generation";
-			outVerSig_txt = "Bei der Pr\u00fcfung der Signatur mit WOTS werden zuerst die b_i Werte gleich wie "
+			outVerSig_txt = "Signaturpr\u00fcfung:\n\nBei der Pr\u00fcfung der Signatur mit WOTS werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur w-1-b_i "
 					+ "mal gehashed, somit wurde der private Schl\u00fcssel nun insgesamt w-1 mal gehashed und es "
 					+ "sollte jeder berechnete Block dem Wert des \u00f6ffentlichen Schl\u00fcssels entsprechen.\n\n"
 					+ "Details und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
 					+ "www.onlinehilfe.com/WOTS-Signature-Verification";
-			outGenKeysPlus_txt = "Bei der Schl\u00fcsselerzeugung von WOTS+ werden zuerst die Parameter t, n und "
+			outGenKeysPlus_txt = "Schl\u00fcsselerzeugung:\n\nBei der Schl\u00fcsselerzeugung von WOTS+ werden zuerst die Parameter t, n und "
 					+ "w ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
 					+ "\u00D6ffentlicher Schl\u00fcssel:\nZus\u00e4tzlich werden w-1 Bl\u00f6cke (R) zuf\u00e4llig generiert. Danach wird "
 					+ "auf jeden Block des privaten Schl\u00fcssels in w-1 Runden zuerst ein XOR mit den Bl\u00f6cken R und "
 					+ "danach die Hashfunktion angewandt.\nDer \u00f6ffentliche Schl\u00fcssel besteht nun aus den "
 					+ "berechneten Bl\u00f6cken plus den vorangestellten Bl\u00f6cken von R.\n\nDetails und Formeln zur "
 					+ "Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Key-Generation";
-			outGenSigPlus_txt = "Bei der Erstellung einer Signatur mit WOTS+ wird zuerst der Hash der Nachricht "
+			outGenSigPlus_txt = "Signaturerzeugung:\n\nBei der Erstellung einer Signatur mit WOTS+ wird zuerst der Hash der Nachricht "
 					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.Diese beiden Werte werden in t "
 					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
 					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels nun jeweils "
 					+ "in b_i Runden bearbeitet (jede Runde XOR + Hash).\n\nDetails und Formel zur Berechnung "
 					+ "der Pr\u00fcfsumme siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Generation";
-			outVerSigPlus_txt = "Bei der Pr\u00fcfung der Signatur mit WOTS+ werden zuerst die b_i Werte gleich wie "
+			outVerSigPlus_txt = "Signaturpr\u00fcfung:\n\nBei der Pr\u00fcfung der Signatur mit WOTS+ werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur in w-1-b_i "
 					+ "Runden bearbeitet (jede Runde XOR + Hash), somit wurde der private Schl\u00fcssel nun "
 					+ "insgesamt w-1 mal bearbeitet und es sollte jeder berechnete Block dem Wert des "
 					+ "\u00f6ffentlichen Schl\u00fcssels entsprechen.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme "
 					+ "siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Verification";
 		} else {
+			headline_txt = "Winternitz OT-Signature (WOTS / WOTS+)";
+			header_txt = "The Winternitz-One-Time-Signature is a algorithm to create a signature to a given message";
 			message_txt = "Message";
 			loadMessage_txt = "Load message from file";
 			winPara_txt = "Winternitz parameter w";
@@ -1602,8 +1631,6 @@ public class WotsView extends ViewPart {
 			btnGenKeys_txt = "Generate keys";
 			btnGenSig_txt = "Generate signature";
 			btnVerSig_txt = "Verify signature";
-			btnVerSigTrue_txt = "Signature valid";
-			btnVerSigFalse_txt = "Signature rejected";
 			showDetails_txt = "Show details";
 			hideDetails_txt = "Hide details";
 			Byte_txt = " byte";
@@ -1616,32 +1643,32 @@ public class WotsView extends ViewPart {
 					+ "used hash function it is impossible to get back to the private key using the signature, "
 					+ "but with further calculation the result will be the public key.\n\nFor more details "
 					+ "visit: www.onlinehilfe.com/Introduction";
-			outGenKeys_txt = "When generating the keys, the parameters t,n and w are defined first.\n\nPrivate "
+			outGenKeys_txt = "Key generation:\n\nWhen generating the keys, the parameters t,n and w are defined first.\n\nPrivate "
 					+ "key:\nt blocks are filled with n random bytes.\n\nPublic key:\nEvery block of the private"
 					+ " key is hashed w-1 times, which results into the blocks of the public key.\n\nFor more "
 					+ "details and formulas on how to generate the parameters visit: www.onlinehilfe.com/WOTS-key-generation";
-			outGenSig_txt = "When generating a signature of a message, first the hash-value and a checksum over "
+			outGenSig_txt = "Signature generation:\n\nWhen generating a signature of a message, first the hash-value and a checksum over "
 					+ "the hash-value are calculated. These values are split up into t parts and will be used "
 					+ "as integer values b_i for further calculations.\n\nTo compute the signature, the blocks "
 					+ "of the private key are hashed b_i times.\n\nFor more details and formulas on how to "
 					+ "calculate the checksum visit: www.onlinehilfe.com/WOTS-signature-generation";
-			outVerSig_txt = "To verify a signature, first the b_i values are calculated (see signature "
+			outVerSig_txt = "Signature verification:\n\nTo verify a signature, first the b_i values are calculated (see signature "
 					+ "generation).\n\nSecond the blocks of the signature are hashed w-1-b_i times. If the "
 					+ "computation matches the blocks of the public key (hashed w-1 times), the signature is "
 					+ "valid.\n\nFor more details and formulas on checksum calculation the checksum visit: "
 					+ "www.onlinehilfe.com/WOTS-signature-verification";
-			outGenKeysPlus_txt = "When generating the keys, the parameters t,n and w are defined first.\n\n"
+			outGenKeysPlus_txt = "Key generation:\n\nWhen generating the keys, the parameters t,n and w are defined first.\n\n"
 					+ "Private key:\nt blocks are filled with n random bytes.\n\nPublic key:\nAdditionally w-1 "
 					+ "random blocks (R) are generated. Now on every block, in w-1 rounds, first a XOR with the "
 					+ "block of R followed by the hash function are applied. The public key consists of the "
 					+ "calculated blocks and the blocks of R.\n\nFor more details and formulas on how to "
 					+ "generate the parameters visit: www.onlinehilfe.com/WOTS+-key-generation";
-			outGenSigPlus_txt = "When generating a signature of a message, first the hash-value and a checksum "
+			outGenSigPlus_txt = "Signature generation:\n\nWhen generating a signature of a message, first the hash-value and a checksum "
 					+ "over the hash-value are calculated. These values are split up into t parts and will be "
 					+ "used as integer values b_i for further calculations.\n\nTo compute the signature, the "
 					+ "blocks of the private key are processed in b_i rounds (XOR and hash every round).\n\nFor "
 					+ "more details and formulas on how to calculate the checksum visit: www.onlinehilfe.com/WOTS+-signature-generation";
-			outVerSigPlus_txt = "To verify a signature, first the b_i values are calculated (see signature "
+			outVerSigPlus_txt = "Signature verification:\n\nTo verify a signature, first the b_i values are calculated (see signature "
 					+ "generation).\n\nSecond the blocks of the signature are processed w-1-b_i times (XOR and "
 					+ "hash every round).  If the computation matches the blocks of the public key (processed "
 					+ "w-1 times), the signature is valid.\n\nFor more details and formulas on how to calculate "
