@@ -55,7 +55,7 @@
     <module>org.jcryptool.fileexplorer</module>
     <module>org.jcryptool.providers.feature</module>
     <module>org.jcryptool.product</module>
-    <module>org.jcryptool.repository</module>
+    <module>org.jcryptool.target</module>
     <module>org.jcryptool.views.feature</module>
     <module>org.jcryptool.webbrowser</module>
     <module>org.jdom</module>
