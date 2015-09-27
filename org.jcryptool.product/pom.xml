@@ -41,7 +41,7 @@
 					<formats>
 						<linux>tar.gz</linux>
 						<macosx>tar.gz</macosx>
-						<windows>zip</windows>
+						<win32>zip</win32>
 					</formats>
 					<products>
 						<product>
@@ -49,7 +49,7 @@
 							<rootFolders>
 								<linux>${product.id}</linux>
 								<macosx>${product.id}.app</macosx>
-								<windows>${product.id}</windows>
+								<win32>${product.id}</win32>
 							</rootFolders>
 						</product>
 					</products>
