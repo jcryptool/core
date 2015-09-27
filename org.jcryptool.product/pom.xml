@@ -41,11 +41,16 @@
 					<formats>
 						<linux>tar.gz</linux>
 						<macosx>tar.gz</macosx>
+						<windows>zip</windows>
 					</formats>
 					<products>
 						<product>
 							<id>${product.id}</id>
-							<rootFolder>${product.id}</rootFolder>
+							<rootFolders>
+								<linux>${product.id}</linux>
+								<macosx>${product.id}.app</macosx>
+								<windows>${product.id}</windows>
+							</rootFolders>
 						</product>
 					</products>
 				</configuration>
