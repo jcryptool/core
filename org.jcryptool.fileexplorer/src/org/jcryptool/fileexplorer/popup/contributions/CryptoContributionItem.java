@@ -32,7 +32,6 @@ import org.jcryptool.core.ApplicationActionBarAdvisor;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
-import org.jcryptool.core.operations.algorithm.ShadowAlgorithmHandler;
 import org.jcryptool.fileexplorer.FileExplorerPlugin;
 import org.jcryptool.fileexplorer.views.FileExplorerView;
 
