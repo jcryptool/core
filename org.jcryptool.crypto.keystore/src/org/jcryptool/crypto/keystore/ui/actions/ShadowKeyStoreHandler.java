@@ -25,17 +25,11 @@ import org.jcryptool.crypto.keystore.KeyStorePlugin;
 
 public class ShadowKeyStoreHandler extends AbstractHandler {
     private String extensionUID;
-    private String icon;
-    private String text;
-    private String tooltip;
     private String id;
 
     public ShadowKeyStoreHandler(IKeyStoreActionDescriptor descriptor) {
         extensionUID = descriptor.getExtensionUID();
         LogUtil.logInfo("ExtensionUID: " + extensionUID); //$NON-NLS-1$
-        icon = descriptor.getIcon();
-        text = descriptor.getText();
-        tooltip = descriptor.getToolTipText();
         id = descriptor.getID();
         // setText(text);
         // setToolTipText(tooltip);

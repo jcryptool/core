@@ -29,13 +29,6 @@ public class FileOpener {
     private static final String TEXT_EDITOR = "org.jcryptool.editor.text.editor.JCTTextEditor"; //$NON-NLS-1$
     private static final String HEX_EDITOR = "net.sourceforge.ehep.editors.HexEditor"; //$NON-NLS-1$
 
-	/**
-	 * 
-	 */
-	public FileOpener() {
-		// TODO Auto-generated constructor stub
-	}
-
     private static String getEditorId(final String osString) {
         final IEditorDescriptor descriptor = PlatformUI.getWorkbench().getEditorRegistry().getDefaultEditor(osString);
 

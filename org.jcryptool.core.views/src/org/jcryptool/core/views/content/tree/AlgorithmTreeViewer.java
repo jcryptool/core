@@ -203,13 +203,11 @@ public class AlgorithmTreeViewer extends TreeViewer implements ISearchable {
 
 			String text = "";
 			String type = "";
-			String toolTipText = "";
 			boolean isFlexiProviderAlgorithm = false;
 			
 			ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)info.getHandler();
 			text = handler.getText();
 			type = handler.getType();
-			toolTipText = handler.getToolTipText();
 			isFlexiProviderAlgorithm = handler.isFlexiProviderAlgorithm();
             
             // filter

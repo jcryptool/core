@@ -98,8 +98,7 @@ public class CryptoContributionItem extends ContributionItem {
             // create an item for the algorithm
             MenuItem item = new MenuItem(typeMenu, SWT.CASCADE);
             final String commandId = commandInfo.getCommandId();
-            final ShadowAlgorithmHandler handler = (ShadowAlgorithmHandler)commandInfo.getHandler();
-            
+
             item.setText(commandInfo.getText());
             item.addSelectionListener(new SelectionAdapter() {
             	public void widgetSelected(SelectionEvent e) {
