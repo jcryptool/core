@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="20">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="22">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.rcp.feature.group" version="4.5.0.v20150603-2331"/>
-<unit id="org.eclipse.rcp.sdk.id" version="4.5.0.I20150603-2000"/>
-<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.2.100.v20150601-1708"/>
-<unit id="org.eclipse.sdk.ide" version="4.5.0.I20150603-2000"/>
-<unit id="org.eclipse.zest.sdk.feature.group" version="1.6.0.201506010206"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.0.201506010206"/>
-<unit id="org.eclipse.rcp.source.feature.group" version="4.5.0.v20150603-2331"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.0.v20150602-1417"/>
-<repository location="http://download.eclipse.org/releases/mars/"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.5.0.v20150804081228"/>
 <repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.0/mars"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.rcp.sdk.id" version="4.5.1.M20150904-0015"/>
+<unit id="org.eclipse.rcp.source.feature.group" version="4.5.1.v20150904-0015"/>
+<unit id="org.eclipse.sdk.ide" version="4.5.1.M20150904-0015"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342"/>
+<unit id="org.eclipse.gef.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.zest.sdk.feature.group" version="1.6.1.201508170204"/>
+<unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.2.101.v20150826-1318"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.5.1.v20150904-0015"/>
+<repository location="http://download.eclipse.org/releases/mars/"/>
 </location>
 </locations>
 <launcherArgs>
