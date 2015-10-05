@@ -4,8 +4,7 @@ Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.jcryptool.analysis.graphtools;singleton:=true
 Bundle-Version: 0.9.9
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.swt.graphics,
- org.eclipse.swt.widgets
 Export-Package: org.jcryptool.analysis.graphtools, org.jcryptool.analysis.graphtools.derivates
 Bundle-Vendor: %Bundle-Vendor
 Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.ui;bundle-version="3.107.0"
