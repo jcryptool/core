@@ -19,25 +19,23 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.util.constants.IConstants;
 import org.jcryptool.core.util.directories.DirectoryService;
 
 public class OpenFileHandler extends AbstractHandler {
-    private IWorkbenchWindow window;
 
     public void dispose() {
     }
 
     public void init(final IWorkbenchWindow window) {
-        this.window = window;
     }
 
     public void run(final IAction action) {
         try {
 			this.execute(null);
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ExecutionException ex) {
+		    LogUtil.logError(ex);
 		}
     }
 
