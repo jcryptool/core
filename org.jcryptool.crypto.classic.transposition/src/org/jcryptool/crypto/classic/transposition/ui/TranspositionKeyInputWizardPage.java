@@ -24,12 +24,10 @@ public class TranspositionKeyInputWizardPage extends WizardPage {
 	private Composite pageComposite;
 	private Composite composite;
 	private Label lblForKeysWith;
-	private TranspositionKeyInputComposite keySelectionComposite;
 	private Composite compTranspositionKey;
 	private Text textKey;
 	private Text textPreview;
 	private KeyInput<TranspositionKey> keyInput;
-	private AbstractAlphabet alpha;
 	private TranspositionKey initialKey;
 	protected String lastInputText;
 	private String initialTextfieldText;

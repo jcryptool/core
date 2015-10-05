@@ -234,7 +234,7 @@ public class TranspAnalysisUI extends org.eclipse.swt.widgets.Composite implemen
 						public void mouseDown(MouseEvent e) {
 							 AddAlphabetWizard wizard = new AddAlphabetWizard();
 						        WizardDialog dialog = new WizardDialog(getShell(), wizard);
-						        int value = dialog.open();
+						        dialog.open();
 						}
 					});
 				}

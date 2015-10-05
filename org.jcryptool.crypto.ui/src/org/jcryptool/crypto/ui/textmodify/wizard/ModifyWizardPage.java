@@ -26,7 +26,6 @@ public class ModifyWizardPage extends WizardPage{
 
 	private TransformData predefinedData = new TransformData();
 	private ModifySelectionComposite composite1;
-	private TransformData initTransformData;
 	
 	private Mode alphabetSelectionMode = Mode.SINGLE_COMBO_BOX_WITH_CUSTOM_ALPHABETS;
 

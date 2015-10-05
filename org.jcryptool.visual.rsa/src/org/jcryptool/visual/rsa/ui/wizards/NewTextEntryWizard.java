@@ -7,13 +7,9 @@ import org.jcryptool.visual.rsa.RSAData;
 
 public class NewTextEntryWizard extends TextAsNumbersLoaderWizard {
 
-	private RSAData data;
-	private int verificationStep;
 
 	public NewTextEntryWizard(RSAData data, int verificationStep) {
 		super(extractMaxNuimberFromData(data), onlyNumbersLoadingData(data, verificationStep));
-		this.data = data;
-		//TODO: initialize wizard titles and descriptions accordingly
 		initializeWizard(data, verificationStep);
 	}
 	private void initializeWizard(RSAData data2, int verificationStep2) {

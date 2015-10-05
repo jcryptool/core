@@ -711,7 +711,6 @@ public class AlphabetSelectorComposite extends org.eclipse.swt.widgets.Composite
 
     @Override
     public void setEnabled(boolean enabled) {
-        boolean thisEnabled = this.isEnabled();
         if (enabled == false && this.isEnabled()) {
             enabledStateMap = new HashMap<Control, Boolean>();
             disableAndPopulateEnabledMap(this);

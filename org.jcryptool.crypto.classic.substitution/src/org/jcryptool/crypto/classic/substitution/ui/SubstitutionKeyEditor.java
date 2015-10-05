@@ -77,12 +77,10 @@ public class SubstitutionKeyEditor extends Composite {
 	public static class NoCharRepresentationDetectedVerificationResult extends InputVerificationResult {
 
 		private String textfieldContent;
-		private Character parsedContent;
 		private char plaintextChar;
 
 		public NoCharRepresentationDetectedVerificationResult(String textfieldContent, Character parsedContent, char plaintextChar) {
 			this.textfieldContent = textfieldContent;
-			this.parsedContent = parsedContent;
 			this.plaintextChar = plaintextChar;
 		}
 
@@ -112,17 +110,11 @@ public class SubstitutionKeyEditor extends Composite {
 
 	public static class CharNotInAlphabetVerificationResult extends InputVerificationResult {
 
-		private String textfieldContent;
 		private Character parsedContent;
-		private AbstractAlphabet plaintextAlpha;
-		private char plaintextChar;
 
 		public CharNotInAlphabetVerificationResult(String textfieldContent, Character parsedContent,
 				AbstractAlphabet plaintextAlpha, char plaintextChar) {
-			this.textfieldContent = textfieldContent;
 			this.parsedContent = parsedContent;
-			this.plaintextAlpha = plaintextAlpha;
-			this.plaintextChar = plaintextChar;
 		}
 
 		@Override
@@ -200,11 +192,6 @@ public class SubstitutionKeyEditor extends Composite {
 		createGUI(plaintextAlphabet);
 	}
 
-	private static class SubstitutionKeyHolder {
-		public SubstitutionKey key = null;
-	}
-	
-	
 	private void createGUI(final AbstractAlphabet plaintextAlphabet) {
 		setLayout(new GridLayout(1, false));
 

@@ -21,10 +21,6 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.util.input.TextfieldInput;
 
 public class SubstitutionKeyEditor extends Composite {
-	private static final int WIDTH_HINT_GLOBAL = 500;
-
-
-
 	private final Color UNDETERMINED_SUBST_COLOR;
 
 	private Map<Character, Character> charMapping;
@@ -141,7 +137,6 @@ public class SubstitutionKeyEditor extends Composite {
 	}
 
 	private void createSubstitutionControls(AbstractAlphabet plaintextAlphabet) {
-		char[] characterSet = plaintextAlphabet.getCharacterSet();
 		Composite centerComp = new Composite(scrollCompMain, SWT.NONE);
 		GridLayout layout = new GridLayout(plaintextChars.size()+(showIllustrativeMapper?2:0), false);
 		layout.marginWidth = 0;

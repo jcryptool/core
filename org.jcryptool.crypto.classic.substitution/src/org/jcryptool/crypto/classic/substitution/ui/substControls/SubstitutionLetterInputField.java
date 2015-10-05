@@ -225,8 +225,6 @@ public class SubstitutionLetterInputField extends Composite {
             }
         });
 
-        List<MenuItem> items = new LinkedList<MenuItem>();
-
         boolean usedCharsSeparatorNotYetTried = true;
         for (Character c : characterList) {
             if (this.charactersInUse.contains(c) && usedCharsSeparatorNotYetTried) {
@@ -350,7 +348,6 @@ public class SubstitutionLetterInputField extends Composite {
             List<Character> charactersInUse) {
         Integer lexicalValRangeSize = alphabet.getCharacterSet().length; // alphabet size
         Integer specialCharValRangeSize = 2; // true and false
-        Integer notInUseValRangeSize = 2; // true and false
 
         Integer lexicalPosWeight = 1;
         Integer specialCharPosWeight = lexicalValRangeSize * lexicalPosWeight;

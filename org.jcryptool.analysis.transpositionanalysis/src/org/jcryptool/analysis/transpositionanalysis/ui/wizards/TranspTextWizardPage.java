@@ -165,9 +165,7 @@ public class TranspTextWizardPage extends WizardPage {
 	private TranspositionTableComposite transpositionTable1;
 	private Text txtInputText;
 	private Group grpTextinputCtrls;
-	private Composite composite1;
 	private Group parttextGroup;
-	private Composite parttextCompRow;
 	private Button parttextCheck;
 	private Spinner parttextCount;
 	private boolean isPageBuilt = false;

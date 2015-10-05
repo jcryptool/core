@@ -891,7 +891,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 		});
 
 		int counter = 0;
-		double avarageCodelength = 0.0;
 		int maxCodelenght = bitStrings[0].getLength();
 		int minCodelenght = bitStrings[0].getLength();
 
@@ -942,7 +941,6 @@ public class HuffmanCodingView extends ViewPart implements IZoomableWorkbenchPar
 						maxCodelenght = bitStrings[i].getLength();
 
 					counter++;
-					avarageCodelength += tmp.getValue() * bitStrings[i].getLength();
 				}
 			}
 			StringBuilder sb = new StringBuilder();

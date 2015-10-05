@@ -33,7 +33,6 @@ public class CharsToNumbersComposite extends Composite {
 	private Button btnConvertIntoIndices;
 	private Button btnConvertIntoASCII;
 
-	private int maxNumber;
 	private Button btnStartWithOne;
 	private ButtonInput startWithOneInput;
 
@@ -45,7 +44,6 @@ public class CharsToNumbersComposite extends Composite {
 	 */
 	public CharsToNumbersComposite(Composite parent, int style, int maxNumber) {
 		super(parent, style);
-		this.maxNumber = maxNumber;
 		setLayout(new GridLayout(1, false));
 
 		boolean canUseASCII = maxNumber >= 255;

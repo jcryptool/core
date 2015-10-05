@@ -1652,7 +1652,6 @@ public class RSAComposite extends Composite {
 		stepbackButton.setEnabled(false);
 		numberIndex = 0;
 		started = false;
-		data.setTemp(""); //$NON-NLS-1$
 		setTextfieldResultBlockContent(new LinkedList<Integer>());
 		if (data.getAction() == Action.VerifyAction)
 			setTextfield2BlockContent(new LinkedList<Integer>());

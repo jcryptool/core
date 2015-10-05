@@ -19,8 +19,6 @@ import org.jcryptool.crypto.classic.substitution.algorithm.SubstitutionKeyValidi
 public class SubstKeyViewer extends Shell {
 
 	protected static SubstKeyViewer activeShell;
-	private Map<Character, Character> mapping;
-	private AbstractAlphabet alphabet;
 	private Text k1PreviewText;
 	private Text k2PreviewText;
 	
@@ -70,8 +68,6 @@ public class SubstKeyViewer extends Shell {
 	 */
 	public SubstKeyViewer(Display display, Map<Character, Character> mapping, AbstractAlphabet alphabet) {
 		super(display, SWT.SHELL_TRIM);
-		this.mapping = mapping;
-		this.alphabet = alphabet;
 		createContents();
 		
 		Map<Character, Character> key1Data = mapping;

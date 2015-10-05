@@ -42,8 +42,6 @@ public class StatisticsDisplayer extends Composite {
 	private Color DEFAULT_BAR_COLOR;
 	private Color DEFAULT_MAPPED_LABEL_COLOR;
 	
-	private TextStatistic referenceStatistic;
-	private TextStatistic ciphertextStatistic;
 	private List<Composite> referenceGraphs;
 	private List<Composite> cipherGraphs;
 	private Combo combo;
@@ -81,8 +79,6 @@ public class StatisticsDisplayer extends Composite {
 		this.DEFAULT_BAR_COLOR = getDisplay().getSystemColor(SWT.COLOR_BLUE);
 		this.DEFAULT_MAPPED_LABEL_COLOR = getDisplay().getSystemColor(SWT.COLOR_RED);
 		
-		this.referenceStatistic = referenceStatistic;
-		this.ciphertextStatistic = ciphertextStatistic;
 		GridLayout gridLayout = new GridLayout(1, false);
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
@@ -385,10 +381,8 @@ public class StatisticsDisplayer extends Composite {
 
 
 	private void setMappedLabelVisible(Label mappedLabel, boolean visible) {
-		GridData lData = (GridData) mappedLabel.getLayoutData();
 		mappedLabel.setVisible(visible);
 		mappedLabel.setText(""); //$NON-NLS-1$
-//		lData.exclude = !visible;
 	}
 
 
@@ -416,7 +410,6 @@ public class StatisticsDisplayer extends Composite {
 				ciphertextStringArray[i] = subst;
 			}
 		}
-		String plaintext = String.valueOf(plaintextStringArray);
 		String ciphertext = String.valueOf(ciphertextStringArray);
 		return "["+ciphertext+"]"; //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -452,7 +445,6 @@ public class StatisticsDisplayer extends Composite {
 		mappedLabelCtrls[1] = compCipherMain;
 		int i=2;
 		for(Entry<String, Label> entry: this.mappedLabels.entrySet()) {
-			String labelData = entry.getKey();
 			Label label = entry.getValue();
 			
 //			label.setText(generateMappedLabelString(labelData, charMapping));

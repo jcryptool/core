@@ -3,9 +3,6 @@ package org.jcryptool.visual.babystepgiantstep.algorithm;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * 
@@ -141,15 +138,6 @@ public class BabystepGiantstep {
 
 	}
 
-	public void ausgebenBabysteps(HashMap<BigInteger, BigInteger> menge) {
-		Set<Entry<BigInteger, BigInteger>> a = menge.entrySet();
-
-		for (Iterator<Entry<BigInteger, BigInteger>> iterator = a.iterator(); iterator.hasNext();) {
-			Entry<BigInteger, BigInteger> entry = iterator.next();
-
-		}
-	}
-
 	public void ausgebenGiantsteps(ArrayList<BigInteger> menge) {
 
 		for (int k = 0; k < menge.size(); k++) {
@@ -159,7 +147,6 @@ public class BabystepGiantstep {
 	}
 
 	public BigInteger sqrt(BigInteger n) {
-		int i = 0;
 		BigInteger a = BigInteger.ONE;
 		BigInteger b = new BigInteger(n.shiftRight(5).add(new BigInteger("8")).toString());
 		while (b.compareTo(a) >= 0) {
@@ -168,8 +155,6 @@ public class BabystepGiantstep {
 				b = mid.subtract(BigInteger.ONE);
 			else
 				a = mid.add(BigInteger.ONE);
-			
-			i++;
 		}
 		return a.subtract(BigInteger.ONE);
 	}

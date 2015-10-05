@@ -144,7 +144,6 @@ public abstract class ClassicAlgorithmConfiguration {
 			descr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 			descr.setText(Messages.ClassicAlgorithmConfiguration_3);
 
-			Control filterDisplay = generateFilterNonalphaDisplay(main, editor);
 		}
 
 

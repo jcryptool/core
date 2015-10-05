@@ -110,15 +110,11 @@ public class SubstitutionLetterInputField extends Composite {
 
     public static class CharNotInAlphabetVerificationResult extends InputVerificationResult {
 
-        private String textfieldContent;
         private Character parsedContent;
-        private AbstractAlphabet plaintextAlpha;
 
         public CharNotInAlphabetVerificationResult(String textfieldContent, Character parsedContent,
                 AbstractAlphabet plaintextAlpha) {
-            this.textfieldContent = textfieldContent;
             this.parsedContent = parsedContent;
-            this.plaintextAlpha = plaintextAlpha;
         }
 
         @Override
@@ -232,8 +228,6 @@ public class SubstitutionLetterInputField extends Composite {
                 return compareCharsForMenu(o1, o2, alphabet, getCharactersInUse());
             }
         });
-
-        List<MenuItem> items = new LinkedList<MenuItem>();
 
         boolean usedCharsSeparatorNotYetTried = true;
         for (Character c : characterList) {
@@ -407,7 +401,6 @@ public class SubstitutionLetterInputField extends Composite {
             List<Character> charactersInUse) {
         Integer lexicalValRangeSize = alphabet.getCharacterSet().length; // alphabet size
         Integer specialCharValRangeSize = 2; // true and false
-        Integer notInUseValRangeSize = 2; // true and false
 
         Integer lexicalPosWeight = 1;
         Integer specialCharPosWeight = lexicalValRangeSize * lexicalPosWeight;

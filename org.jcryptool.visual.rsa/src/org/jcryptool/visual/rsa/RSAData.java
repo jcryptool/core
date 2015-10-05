@@ -67,9 +67,6 @@ public class RSAData {
         this.contactName = contactName;
     }
 
-    /** current temp working string */
-    private String temp;
-    
     /** current ciphertext for decrypting. */
     private List<Integer> cipherText;
 
@@ -278,15 +275,6 @@ public class RSAData {
      */
     public final void setrandomKey(final boolean randomKey) {
         this.randomKey = randomKey;
-    }
-    
-    /**
-     * setter for temp.
-     *
-     * @param string the temp to set
-     */
-    public final void setTemp(final String temp) {
-        this.temp = temp;
     }
     
     public void setTempAsNumbers(List<Integer> temp) {

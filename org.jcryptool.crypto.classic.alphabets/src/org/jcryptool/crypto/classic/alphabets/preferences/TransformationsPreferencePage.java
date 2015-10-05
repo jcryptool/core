@@ -142,7 +142,6 @@ public class TransformationsPreferencePage extends PreferencePage implements IWo
     private void savePreferences() {
         Preferences preferences = ConfigurationScope.INSTANCE.getNode(PREFID);
         Preferences mainnode = preferences.node(SUBNODE);
-        String[][] myPrefSaveArray;
 
         for (int i = 0; i < alphabets.length; i++) {
             Preferences myNode = mainnode.node(alphabets[i]);

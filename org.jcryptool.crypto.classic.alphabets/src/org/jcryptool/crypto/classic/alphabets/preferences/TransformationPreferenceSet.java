@@ -22,7 +22,6 @@ import org.jcryptool.core.operations.alphabets.AlphabetsManager;
  *         Preference Format
  */
 public class TransformationPreferenceSet {
-    private static final String ALPHA_DATA_SEPARATOR = "{alpha-data-separator}"; //$NON-NLS-1$
 
 	// Will be the subnode's name
     public static final String ID_TRANSFORM_DATA = "TransformData"; //$NON-NLS-1$

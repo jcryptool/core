@@ -524,7 +524,6 @@ public class AlphabetsPreferencePage extends PreferencePage implements IWorkbenc
 	public void performDefaults() {
         // alphabets
     	
-    	AbstractAlphabet[] alphabets = AlphabetsManager.getInstance().getAlphabets();
 		for (int i = 0; i < tempAlphas.size(); i++) {
 			AbstractAlphabet a = tempAlphas.get(i);
 			

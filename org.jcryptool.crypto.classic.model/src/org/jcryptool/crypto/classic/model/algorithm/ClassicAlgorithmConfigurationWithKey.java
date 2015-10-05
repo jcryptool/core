@@ -35,7 +35,6 @@ public class ClassicAlgorithmConfigurationWithKey extends
 					false, 1, 1));
 			descr.setText("Key:");
 
-			Control keyDisplay = generateKeyDisplay(main, editor);
 		}
 
 		return main;

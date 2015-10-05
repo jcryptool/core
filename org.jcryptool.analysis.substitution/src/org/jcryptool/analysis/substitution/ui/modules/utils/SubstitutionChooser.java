@@ -59,7 +59,6 @@ public class SubstitutionChooser extends Shell {
 		return null;
 	}
 
-	private Composite comp;
 	private List<Character> chars;
 	private AbstractAlphabet alpha;
 	protected Map<Character, Character> selectedMapping;

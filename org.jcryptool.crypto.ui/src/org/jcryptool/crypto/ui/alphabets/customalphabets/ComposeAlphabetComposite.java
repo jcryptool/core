@@ -691,7 +691,7 @@ public class ComposeAlphabetComposite extends org.eclipse.swt.widgets.Composite 
 		} else if(method == ExcludeCharBlock.class) {
 			LeaveOutCharSelectorWizard charSelectorWizard = new LeaveOutCharSelectorWizard(alphaNow);
 			WizardDialog charSelector = new WizardDialog(getShell(), charSelectorWizard);
-			int dialogResult = charSelector.open();
+			charSelector.open();
 
 			Character leaveOutChar = charSelectorWizard.getSelectedChar();
 			if(leaveOutChar != null) {

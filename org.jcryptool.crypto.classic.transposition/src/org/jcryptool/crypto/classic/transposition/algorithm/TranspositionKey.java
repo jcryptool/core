@@ -31,7 +31,6 @@ public class TranspositionKey {
 	private static final String[] POSSIBLE_PARSE_SEPARATORS = new String[]{",", ";", "|", " "};
 	private static final Integer NOVALUE = -1;
 	private static final String SEPARATOR = "|"; //$NON-NLS-1$
-	private static final String SEPARATOR_REGEX = "\\|"; //$NON-NLS-1$
 
 	private HashMap<Integer, Integer> internalRepresentation;
 
