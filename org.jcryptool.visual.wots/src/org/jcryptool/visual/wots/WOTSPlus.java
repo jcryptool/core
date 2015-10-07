@@ -139,7 +139,7 @@ public class WOTSPlus implements OTS {
 	
     	// Hash + xor with ri each part w-1 times
     	for (int i = w-1; i < l+w-1; i++) {
-		
+    		
     		System.arraycopy(privateKey[i-(w-1)], 0, publicKey[i], 0, publicKey[i].length);
 		
     		for (int j = 0; j < w-1; j++) {
@@ -166,7 +166,8 @@ public class WOTSPlus implements OTS {
     	// Hash + xor with ri each part bi times
     	for (int i = 0; i < l; i++) {
 		
-				tmpSignature[i] = this.privateKey[i];
+    			System.arraycopy(privateKey[i], 0, tmpSignature[i], 0, tmpSignature[i].length);
+				//tmpSignature[i] = this.privateKey[i];
 			
 				for (int j = 0; j < (b[i] & 0xFF); j++) {
 				
@@ -176,7 +177,6 @@ public class WOTSPlus implements OTS {
 					tmpSignature[i] = digest.digest(tmpSignature[i]);
 				}
     	}
-	
     	signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
     }
 

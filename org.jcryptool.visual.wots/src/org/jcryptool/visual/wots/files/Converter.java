@@ -60,6 +60,9 @@ public class Converter {
 	    	output += _byteToHex(input[i]);
 	    }
 		
+		// TODO 
+		System.out.println("§§§§" + output);
+		
 		return output;
 	}
 	
@@ -76,6 +79,10 @@ public class Converter {
 	        hexChars[j * 2] = hexArray[v >>> 4];
 	        hexChars[j * 2 + 1] = hexArray[v & 0x0F];
 	    }
+	    
+	    // TODO 
+	 	System.out.println("§§§§" + new String(hexChars));
+	 		
 	    return new String(hexChars);
 	}
 	
@@ -86,6 +93,10 @@ public class Converter {
 	 * @throws UnsupportedEncodingException
 	 */
 	public static String _byteToString (byte[] input) throws UnsupportedEncodingException {
+		
+		// TODO 
+		System.out.println("§§§§" + new String(input, "UTF-8"));
+		
 		return new String(input, "UTF-8");
 	}
 	

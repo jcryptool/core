@@ -1229,7 +1229,7 @@ public class WotsView extends ViewPart {
 		instance.setW(w);
 		instance.setMessageDigest(hashFunction);
 		instance.setPrivateKey(org.jcryptool.visual.wots.files.Converter
-				._hexStringTo2dByte(privateKey, instance.getLength()));
+				._hexStringTo2dByte(privateKey, instance.getLength()));		
 		instance.setPublicKey(org.jcryptool.visual.wots.files.Converter
 				._hexStringTo2dByte(publicKey, instance.getPublicKeyLength()));
 		instance.setSignature(org.jcryptool.visual.wots.files.Converter
@@ -1246,8 +1246,7 @@ public class WotsView extends ViewPart {
 	 * instance
 	 */
 	private void getOutputs() {
-		this.privateKey = org.jcryptool.visual.wots.files.Converter
-				._2dByteToHex(instance.getPrivateKey());
+		this.privateKey = org.jcryptool.visual.wots.files.Converter._2dByteToHex(instance.getPrivateKey());
 		this.publicKey = org.jcryptool.visual.wots.files.Converter
 				._2dByteToHex(instance.getPublicKey());
 		this.signature = org.jcryptool.visual.wots.files.Converter
