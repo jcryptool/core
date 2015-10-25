@@ -7,3 +7,5 @@ before_install:
   - echo "MAVEN_OPTS=-Xmx2048m" > ~/.mavenrc
 install:
   - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true
+script:
+  - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true
