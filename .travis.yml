@@ -2,7 +2,8 @@ sudo: false
 language: java
 jdk:
   - oraclejdk8
-before_install:
+before_install: 
   - git clone https://github.com/jcryptool/crypto.git ~/build/jcryptool/crypto
+  - echo "MAVEN_OPTS=-Xmx2048m" > ~/.mavenrc
 install:
   - mvn -f org.jcryptool.releng/pom.xml -DskipTests=true
