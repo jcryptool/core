@@ -6,9 +6,9 @@ import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
-public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
+public class OLD_ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 
-	public ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
+	public OLD_ApplicationWorkbenchWindowAdvisor(IWorkbenchWindowConfigurer configurer) {
 		super(configurer);
 	}
 

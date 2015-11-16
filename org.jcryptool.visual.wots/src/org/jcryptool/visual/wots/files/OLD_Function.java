@@ -3,7 +3,7 @@ package org.jcryptool.visual.wots.files;
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public abstract class Function implements XMSSObjectIdentifer {
+public abstract class OLD_Function implements XMSSObjectIdentifer {
 
     private final String oid;
 
@@ -12,7 +12,7 @@ public abstract class Function implements XMSSObjectIdentifer {
      *
      * @param oid Object identifier
      */
-    protected Function(String oid) {
+    protected OLD_Function(String oid) {
 	this.oid = oid;
     }
 

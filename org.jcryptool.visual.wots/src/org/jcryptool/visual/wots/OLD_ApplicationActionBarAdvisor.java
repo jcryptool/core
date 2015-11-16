@@ -8,14 +8,14 @@ import org.eclipse.ui.application.IActionBarConfigurer;
  * the actions added to a workbench window. Each window will be populated with
  * new actions.
  */
-public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
+public class OLD_ApplicationActionBarAdvisor extends ActionBarAdvisor {
 
 	// Actions - important to allocate these only in makeActions, and then use
 	// them
 	// in the fill methods. This ensures that the actions aren't recreated
 	// when fillActionBars is called with FILL_PROXY.
 
-	public ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
+	public OLD_ApplicationActionBarAdvisor(IActionBarConfigurer configurer) {
 		super(configurer);
 	}
 

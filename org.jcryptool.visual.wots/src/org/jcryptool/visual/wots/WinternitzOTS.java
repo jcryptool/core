@@ -36,8 +36,6 @@ public class WinternitzOTS implements OTS{
     private byte[] messageHash;
     // Bitstring b
     private byte[] b;
-    // Seed used to generate random values
-    //private byte[] seed;
 
     /**
      * Creates a new Winternitz OTS.
@@ -46,12 +44,6 @@ public class WinternitzOTS implements OTS{
      */
     public WinternitzOTS(int w, String hash) {
 	
-    	// Generate seed and get Pseudo-Random Function
-    	//SecureRandom sRandom = new SecureRandom();
-    	//seed = new byte[16];
-    	//sRandom.nextBytes(seed);
-    	//prf = new org.jcryptool.visual.wots.files.AESPRF.AES128();
-
     	// Try to set up hash-function
     	try {
     		digest = MessageDigest.getInstance(hash);
@@ -77,7 +69,6 @@ public class WinternitzOTS implements OTS{
     	try {
     		this.digest = MessageDigest.getInstance(digest);
     	} catch (NoSuchAlgorithmException e) {
-    		// TODO Auto-generated catch block
     		e.printStackTrace();
     	}
 	

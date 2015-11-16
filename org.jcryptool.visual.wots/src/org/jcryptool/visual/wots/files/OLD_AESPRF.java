@@ -6,7 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public abstract class AESPRF extends PseudorandomFunction {
+public abstract class OLD_AESPRF extends PseudorandomFunction {
 
     private final Cipher cipher;
 
@@ -15,7 +15,7 @@ public abstract class AESPRF extends PseudorandomFunction {
      *
      * @param oid Object identifier
      */
-    protected AESPRF(String oid) {
+    protected OLD_AESPRF(String oid) {
 	super(oid);
 
 	try {

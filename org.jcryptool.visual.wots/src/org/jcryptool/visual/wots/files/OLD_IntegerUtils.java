@@ -7,7 +7,7 @@ import java.math.BigInteger;
  *
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public class IntegerUtils {
+public class OLD_IntegerUtils {
 
     /**
      * Convert an integer to a byte array.

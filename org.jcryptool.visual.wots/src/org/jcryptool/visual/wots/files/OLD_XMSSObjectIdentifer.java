@@ -3,7 +3,7 @@ package org.jcryptool.visual.wots.files;
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public interface XMSSObjectIdentifer {
+public interface OLD_XMSSObjectIdentifer {
 
     /** XMMS object identifier. OID: 1.3.6.1.4.1.8301.3.1 */
     public static final String XMSS = "1.3.6.1.4.1.8301.3.1";

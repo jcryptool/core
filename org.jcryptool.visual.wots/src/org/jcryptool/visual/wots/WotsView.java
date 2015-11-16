@@ -321,8 +321,8 @@ public class WotsView extends ViewPart {
 					JFileChooser chooser = new JFileChooser();
 					int returnVal = chooser.showOpenDialog(null);
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						System.out.println("You chose to open this file: "
-								+ chooser.getSelectedFile().getName());
+						//System.out.println("You chose to open this file: "
+						//		+ chooser.getSelectedFile().getName());
 
 						File file = chooser.getSelectedFile();
 						String path = file.getAbsolutePath();

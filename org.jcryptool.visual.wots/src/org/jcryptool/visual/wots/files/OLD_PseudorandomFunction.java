@@ -5,14 +5,14 @@ import org.jcryptool.visual.wots.files.Function;
 /**
  * @author Moritz Horsch <horsch@cdc.informatik.tu-darmstadt.de>
  */
-public abstract class PseudorandomFunction extends Function {
+public abstract class OLD_PseudorandomFunction extends Function {
 
     /**
      * Creates a new PseudorandomFunction.
      *
      * @param oid Object identifier
      */
-    protected PseudorandomFunction(String oid) {
+    protected OLD_PseudorandomFunction(String oid) {
 	super(oid);
     }
 
