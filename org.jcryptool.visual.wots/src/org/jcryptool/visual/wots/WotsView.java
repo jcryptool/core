@@ -499,7 +499,6 @@ public class WotsView extends ViewPart {
 						break;
 					case 2:
 						hashFunction = "MD5";
-						btnWots.setSelection(true);
 						break;
 					default:
 						JOptionPane

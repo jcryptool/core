@@ -121,9 +121,7 @@ public class WOTSPlus implements OTS {
     	
     	// Fills first w-1 blocks of public key with random values ri
     	for (int i = 0; i < w-1; i++) {
-    		//byte[] key = new byte[n];
-    		//byte[] input = IntegerUtils.toByteArray(i);
-    		//System.arraycopy(input, 0, key, key.length - input.length, input.length);
+    		seed = new byte[n];
     		sRandom.nextBytes(seed);
     		publicKey[i] = seed;
     	}
