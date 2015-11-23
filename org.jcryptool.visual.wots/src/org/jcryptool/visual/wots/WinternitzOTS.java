@@ -22,8 +22,6 @@ public class WinternitzOTS implements OTS{
     private int w;
     // Security parameter
     private int n;
-    // Pseudorandom function
-   // private PseudorandomFunction prf;
     // Private key
     private byte[][] privateKey;
     // Public key
@@ -122,7 +120,7 @@ public class WinternitzOTS implements OTS{
     		System.arraycopy(privateKey[i], 0, publicKey[i], 0, publicKey[i].length);
 		
     		for (int j = 0; j < w-1; j++) {
-    			publicKey[i] = digest.digest(publicKey[i]);
+    			publicKey[i] = calcHash(publicKey[i]);
     		}
     	}
     }
@@ -143,7 +141,7 @@ public class WinternitzOTS implements OTS{
 				tmpSignature[i] = this.privateKey[i];
 			
 				for (int j = 0; j < (b[i] & 0xFF); j++) {
-					tmpSignature[i] = digest.digest(tmpSignature[i]);
+					tmpSignature[i] = calcHash(tmpSignature[i]);
 				}
     	}
 	
@@ -165,7 +163,7 @@ public class WinternitzOTS implements OTS{
     	for (int i = 0; i < l; i++) {
 
     		for (int j = 0; j < (w - 1 - (b[i] & 0xFF)); j++) {
-    			tmpSignature[i] = digest.digest(tmpSignature[i]);
+    			tmpSignature[i] = calcHash(tmpSignature[i]);
     		}
 
     		// Compare sigma_i with pk_i
@@ -378,5 +376,29 @@ public class WinternitzOTS implements OTS{
      */
     public void setPublicKey(byte[][] p) {
     	this.publicKey = p;
+    }
+
+    /** 
+     * Generates a hash-String to a given String
+     * @return
+     */
+    private byte[] calcHash(byte[] tmp) {
+    	
+    	String base = org.jcryptool.visual.wots.files.Converter._byteToHex(tmp);
+    	
+    	try{
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return org.jcryptool.visual.wots.files.Converter._hexStringToByte(hexString.toString());
+        } catch(Exception ex){
+           throw new RuntimeException(ex);
+        }
     }
 }

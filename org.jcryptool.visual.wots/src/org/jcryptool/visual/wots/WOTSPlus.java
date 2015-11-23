@@ -22,8 +22,6 @@ public class WOTSPlus implements OTS {
     private int w;
     // Security parameter
     private int n;
-    // Pseudorandom function
-    // private PseudorandomFunction prf;
     // Private key
     private byte[][] privateKey;
     // Public key
@@ -136,7 +134,7 @@ public class WOTSPlus implements OTS {
     			for( int k = 0; k < publicKey[i].length; k++ )
     				publicKey[i][k] = (byte) (publicKey[i][k] ^ publicKey[j][k]);
 			
-    			publicKey[i] = digest.digest(publicKey[i]);
+    			publicKey[i] = calcHash(publicKey[i]);
     		}
     	}
     }
@@ -163,7 +161,7 @@ public class WOTSPlus implements OTS {
 					for( int k = 0; k < tmpSignature[i].length; k++ )
 						tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j][k]);
 				
-					tmpSignature[i] = digest.digest(tmpSignature[i]);
+					tmpSignature[i] = calcHash(tmpSignature[i]);
 				}
     	}
     	signature = org.jcryptool.visual.wots.files.Converter._hexStringToByte(org.jcryptool.visual.wots.files.Converter._2dByteToHex(tmpSignature));
@@ -188,7 +186,7 @@ public class WOTSPlus implements OTS {
     			for( int k = 0; k < tmpSignature[i].length; k++ )
     				tmpSignature[i][k] = (byte) (tmpSignature[i][k] ^ publicKey[j+(b[i] & 0xFF)][k]);
 	    	
-    			tmpSignature[i] = digest.digest(tmpSignature[i]);
+    			tmpSignature[i] = calcHash(tmpSignature[i]);
     		}
 
     		// Compare sigma_i with pk_i
@@ -399,5 +397,29 @@ public class WOTSPlus implements OTS {
     public byte[] initB() {
     	calculateExponentB();
     	return b;
+    }
+
+    /** 
+     * Generates a hash-String to a given String
+     * @return
+     */
+    private byte[] calcHash(byte[] tmp) {
+    	
+    	String base = org.jcryptool.visual.wots.files.Converter._byteToHex(tmp);
+    	
+    	try{
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
+
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return org.jcryptool.visual.wots.files.Converter._hexStringToByte(hexString.toString());
+        } catch(Exception ex){
+           throw new RuntimeException(ex);
+        }
     }
 }

@@ -123,6 +123,7 @@ public class WotsView extends ViewPart {
 	private String Hash_txt;
 	private String header_txt;
 	private String headline_txt;
+	private String invalidChar_txt;
 
 	public static String currentImg = "images/Overview2.JPG";
 
@@ -256,7 +257,7 @@ public class WotsView extends ViewPart {
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
 						setDisabled(txt_Hash);
-						txt_HashSize.setText("Invalid character");
+						txt_HashSize.setText(invalidChar_txt);
 					} else {
 
 						txt_Hash.setBackground(new Color(
@@ -627,7 +628,7 @@ public class WotsView extends ViewPart {
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
 						setDisabled(txt_Sigkey);
-						txt_SigKeySize.setText("Invalid character");
+						txt_SigKeySize.setText(invalidChar_txt);
 					} else {
 
 						txt_Sigkey.setBackground(new Color(
@@ -682,7 +683,7 @@ public class WotsView extends ViewPart {
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
 						setDisabled(txt_Verifkey);
-						txt_VerKeySize.setText("Invalid character");
+						txt_VerKeySize.setText(invalidChar_txt);
 					} else {
 
 						txt_Verifkey.setBackground(new Color(
@@ -785,7 +786,7 @@ public class WotsView extends ViewPart {
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
 						setDisabled(txt_Sig);
-						txt_SignatureSize.setText("Invalid character");
+						txt_SignatureSize.setText(invalidChar_txt);
 					} else {
 
 						txt_Sig.setBackground(new Color(
@@ -840,7 +841,7 @@ public class WotsView extends ViewPart {
 								org.eclipse.swt.widgets.Display.getCurrent(),
 								255, 0, 0));
 						setDisabled(txt_Bi);
-						txt_BSize.setText("Invalid character");
+						txt_BSize.setText(invalidChar_txt);
 					} else {
 
 						txt_Bi.setBackground(new Color(
@@ -1558,11 +1559,12 @@ public class WotsView extends ViewPart {
 
 		// Set language
 		if (german) {
+			invalidChar_txt = "Ungültiges Zeichen";
 			headline_txt = "Winternitz Einmal-Signatur (WOTS / WOTS+)";
-			header_txt = "Die Winternitz Einmal-Signatur ist ein Algorithmus zum Signieren einer Nachricht";
+			header_txt = "Die Winternitz Einmal-Signatur ist ein Algorithmus zum Signieren einer Nachricht.";
 			message_txt = "Nachricht";
 			loadMessage_txt = "Lade Nachricht aus Datei";
-			winPara_txt = "Winternitz Parameter w";
+			winPara_txt = "Winternitz-Parameter w";
 			hashFunction_txt = "Hashfunktion";
 			privateKey_txt = "Privater Schl\u00fcssel";
 			publicKey_txt = "\u00D6ffentlicher Schl\u00fcssel";
@@ -1575,48 +1577,49 @@ public class WotsView extends ViewPart {
 			Byte_txt = " Byte";
 			Hash_txt = "Hash der Nachricht";
 			outWelcome_txt = "Willkommen zur JCT-Visualisierung WOTS/WOTS+\n\n"
-					+ "Das Winternitz-Einmal-Signaturverfahren (Winternitz-One-Time-Signature - WOTS)"
+					+ "Das Winternitz Einmal-Signaturverfahren (Winternitz-One-Time-Signature - WOTS)"
 					+ " ist ein Hash-basiertes Verfahren zum digitalen Signieren von Nachrichten. Der "
 					+ "\u00f6ffentliche Schl\u00fcssel  wird erzeugt, indem die Bl\u00f6cke des privaten Schl\u00fcssels eine "
 					+ "bestimmte Anzahl oft eine Hashfunktion durchlaufen (diese Anzahl ist abh\u00e4ngig vom "
-					+ "Winternitz-Parameter w (\u2265 2)).\n\nDetails siehe Online-Hilfe: www.onlinehilfe.com/Einleitung";
+					+ "Winternitz-Parameter w\u22652).\n\nDetails: siehe Online-Hilfe (bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outGenKeys_txt = "Schl\u00fcsselerzeugung:\n\nBei der Schl\u00fcsselerzeugung von WOTS werden zuerst die Parameter t, n und w "
 					+ "ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
 					+ "\u00D6ffentlicher Schl\u00fcssel:\nJeder Block des privaten Schl\u00fcssels durchl\u00e4uft w-1 mal die "
 					+ "Hashfunktion. Das Resultat sind die Bl\u00f6cke des \u00f6ffentlichen Schl\u00fcssels.\n\nDetails und "
-					+ "Formeln zur Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS-Key-Generation";
+					+ "Formeln zur Berechnung der Parameter siehe Online-Hilfe (bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outGenSig_txt = "Signaturerzeugung:\n\nBei der Erstellung einer Signatur mit WOTS wird zuerst der Hash der Nachricht "
 					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.\n\nDiese beiden Werte werden in t "
 					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
 					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels jeweils b_i "
-					+ "mal gehashed.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
-					+ "www.onlinehilfe.com/WOTS-Signature-Generation";
+					+ "mal gehashed.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe "
+					+ "(bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outVerSig_txt = "Signaturpr\u00fcfung:\n\nBei der Pr\u00fcfung der Signatur mit WOTS werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur w-1-b_i "
 					+ "mal gehashed, somit wurde der private Schl\u00fcssel nun insgesamt w-1 mal gehashed und es "
 					+ "sollte jeder berechnete Block dem Wert des \u00f6ffentlichen Schl\u00fcssels entsprechen.\n\n"
-					+ "Details und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe: "
-					+ "www.onlinehilfe.com/WOTS-Signature-Verification";
+					+ "Details und Formel zur Berechnung der Pr\u00fcfsumme siehe Online-Hilfe "
+					+ "(bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outGenKeysPlus_txt = "Schl\u00fcsselerzeugung:\n\nBei der Schl\u00fcsselerzeugung von WOTS+ werden zuerst die Parameter t, n und "
 					+ "w ermittelt.\n\nPrivater Schl\u00fcssel:\nEs werden t Bl\u00f6cke mit n zuf\u00e4lligen Bytes aufgef\u00fcllt.\n\n"
 					+ "\u00D6ffentlicher Schl\u00fcssel:\nZus\u00e4tzlich werden w-1 Bl\u00f6cke (R) zuf\u00e4llig generiert. Danach wird "
 					+ "auf jeden Block des privaten Schl\u00fcssels in w-1 Runden zuerst ein XOR mit den Bl\u00f6cken R und "
 					+ "danach die Hashfunktion angewandt.\nDer \u00f6ffentliche Schl\u00fcssel besteht nun aus den "
 					+ "berechneten Bl\u00f6cken plus den vorangestellten Bl\u00f6cken von R.\n\nDetails und Formeln zur "
-					+ "Berechnung der Parameter siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Key-Generation";
+					+ "Berechnung der Parameter siehe Online-Hilfe (bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outGenSigPlus_txt = "Signaturerzeugung:\n\nBei der Erstellung einer Signatur mit WOTS+ wird zuerst der Hash der Nachricht "
 					+ "erzeugt und eine Pr\u00fcfsumme \u00fcber diesen berechnet.Diese beiden Werte werden in t "
 					+ "Teile aufgeteilt und f\u00fcr das weitere Vorgehen als Integer-Werte b_i interpretiert.\n\n"
 					+ "Bei der Erstellung der Signatur werden die Bl\u00f6cke des privaten Schl\u00fcssels nun jeweils "
 					+ "in b_i Runden bearbeitet (jede Runde XOR + Hash).\n\nDetails und Formel zur Berechnung "
-					+ "der Pr\u00fcfsumme siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Generation";
+					+ "der Pr\u00fcfsumme siehe Online-Hilfe (bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 			outVerSigPlus_txt = "Signaturpr\u00fcfung:\n\nBei der Pr\u00fcfung der Signatur mit WOTS+ werden zuerst die b_i Werte gleich wie "
 					+ "bei der Signaturerstellung berechnet.\n\nDanach wird jeder Block der Signatur in w-1-b_i "
 					+ "Runden bearbeitet (jede Runde XOR + Hash), somit wurde der private Schl\u00fcssel nun "
 					+ "insgesamt w-1 mal bearbeitet und es sollte jeder berechnete Block dem Wert des "
 					+ "\u00f6ffentlichen Schl\u00fcssels entsprechen.\n\nDetails und Formel zur Berechnung der Pr\u00fcfsumme "
-					+ "siehe Online-Hilfe: www.onlinehilfe.com/WOTS+-Signature-Verification";
+					+ "siehe Online-Hilfe (bitte F1 oder Fragezeichen-Symbol dr\u00fccken)";
 		} else {
+			invalidChar_txt = "Invalid character";
 			headline_txt = "Winternitz OT-Signature (WOTS / WOTS+)";
 			header_txt = "The Winternitz-One-Time-Signature is a algorithm to create a signature to a given message";
 			message_txt = "Message";
@@ -1636,41 +1639,41 @@ public class WotsView extends ViewPart {
 			outWelcome_txt = "Welcome to JCT-Visualization WOTS/WOTS+\n\nThe Winternitz-One-Time-Signature-"
 					+ "Algorithm is a hash based method to sign messages. The public key is generated by "
 					+ "hashing the randomly generated blocks of the private key. How often the blocks are "
-					+ "hashed is determined by the Winternitz parameter w (\u2265 2)).\n\nAs a step of calculating the "
+					+ "hashed is determined by the Winternitz parameter w\u22652).\n\nAs a step of calculating the "
 					+ "public key, the signature is generated. Because of the one-way functionality of the "
 					+ "used hash function it is impossible to get back to the private key using the signature, "
 					+ "but with further calculation the result will be the public key.\n\nFor more details "
-					+ "visit: www.onlinehilfe.com/Introduction";
+					+ "visit our online help (press F1 or ?)";
 			outGenKeys_txt = "Key generation:\n\nWhen generating the keys, the parameters t,n and w are defined first.\n\nPrivate "
 					+ "key:\nt blocks are filled with n random bytes.\n\nPublic key:\nEvery block of the private"
 					+ " key is hashed w-1 times, which results into the blocks of the public key.\n\nFor more "
-					+ "details and formulas on how to generate the parameters visit: www.onlinehilfe.com/WOTS-key-generation";
+					+ "details and formulas on how to generate the parameters visit our online help (press F1 or ?)";
 			outGenSig_txt = "Signature generation:\n\nWhen generating a signature of a message, first the hash-value and a checksum over "
 					+ "the hash-value are calculated. These values are split up into t parts and will be used "
 					+ "as integer values b_i for further calculations.\n\nTo compute the signature, the blocks "
 					+ "of the private key are hashed b_i times.\n\nFor more details and formulas on how to "
-					+ "calculate the checksum visit: www.onlinehilfe.com/WOTS-signature-generation";
+					+ "calculate the checksum visit our online help (press F1 or ?)";
 			outVerSig_txt = "Signature verification:\n\nTo verify a signature, first the b_i values are calculated (see signature "
 					+ "generation).\n\nSecond the blocks of the signature are hashed w-1-b_i times. If the "
 					+ "computation matches the blocks of the public key (hashed w-1 times), the signature is "
-					+ "valid.\n\nFor more details and formulas on checksum calculation the checksum visit: "
-					+ "www.onlinehilfe.com/WOTS-signature-verification";
+					+ "valid.\n\nFor more details and formulas on checksum calculation the checksum visit"
+					+ " our online help (press F1 or ?)";
 			outGenKeysPlus_txt = "Key generation:\n\nWhen generating the keys, the parameters t,n and w are defined first.\n\n"
 					+ "Private key:\nt blocks are filled with n random bytes.\n\nPublic key:\nAdditionally w-1 "
 					+ "random blocks (R) are generated. Now on every block, in w-1 rounds, first a XOR with the "
 					+ "block of R followed by the hash function are applied. The public key consists of the "
 					+ "calculated blocks and the blocks of R.\n\nFor more details and formulas on how to "
-					+ "generate the parameters visit: www.onlinehilfe.com/WOTS+-key-generation";
+					+ "generate the parameters visit our online help (press F1 or ?)";
 			outGenSigPlus_txt = "Signature generation:\n\nWhen generating a signature of a message, first the hash-value and a checksum "
 					+ "over the hash-value are calculated. These values are split up into t parts and will be "
 					+ "used as integer values b_i for further calculations.\n\nTo compute the signature, the "
 					+ "blocks of the private key are processed in b_i rounds (XOR and hash every round).\n\nFor "
-					+ "more details and formulas on how to calculate the checksum visit: www.onlinehilfe.com/WOTS+-signature-generation";
+					+ "more details and formulas on how to calculate the checksum visit our online help (press F1 or ?)";
 			outVerSigPlus_txt = "Signature verification:\n\nTo verify a signature, first the b_i values are calculated (see signature "
 					+ "generation).\n\nSecond the blocks of the signature are processed w-1-b_i times (XOR and "
 					+ "hash every round).  If the computation matches the blocks of the public key (processed "
 					+ "w-1 times), the signature is valid.\n\nFor more details and formulas on how to calculate "
-					+ "the checksum visit: www.onlinehilfe.com/WOTS+-signature-verification";
+					+ "the checksum visit our online help (press F1 or ?)";
 		}
 	}
 }
