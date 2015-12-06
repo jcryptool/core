@@ -2,8 +2,8 @@
 /*******************************************************************************
  * Copyright (c) 2008 JCrypTool Team and Contributors
  * 
- * All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse
- * Public License v1.0 which accompanies this distribution, and is available at
+ * All rights reserved. This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 // -----END DISCLAIMER-----
@@ -16,8 +16,8 @@ import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.OperationsPlugin;
 
 /**
- * The AlphaConverter class provides the function to convert char arrays to int arrays and the way back, by using a
- * specified alphabet. For indexing the input values the class uses a hash map.
+ * The AlphaConverter class provides the function to convert char arrays to int arrays and the way
+ * back, by using a specified alphabet. For indexing the input values the class uses a hash map.
  * 
  * @author amro
  * @version 0.1
@@ -47,8 +47,8 @@ public class AlphaConverter {
             // Build alpha map and assign to HashMap field
             this.alphaMap = buildMap(alpha);
         } catch (Exception e) {
-            LogUtil.logError(OperationsPlugin.PLUGIN_ID,
-                    "Exception while building the hashmap for an alphabet", e, false); //$NON-NLS-1$
+            LogUtil.logError(OperationsPlugin.PLUGIN_ID, "Exception while building the hashmap for an alphabet", e, //$NON-NLS-1$
+                    false);
         }
 
     }
@@ -75,7 +75,8 @@ public class AlphaConverter {
     }
 
     /**
-     * Reconvert the indexes to chars by using the specified alphabet (also see charArrayToIntArray(char []).
+     * Reconvert the indexes to chars by using the specified alphabet (also see
+     * charArrayToIntArray(char []).
      * 
      * @param input the int values to be converted back to the appropriate chars.
      * @return the reconverted
@@ -92,16 +93,13 @@ public class AlphaConverter {
     }
 
     /**
-     * Returns the positiion of value in the specified alphabet.
+     * Returns the position of value in the specified alphabet.
      * 
      * @param value the char to search for in alphabet.
      * @return the index of the value in the specified alphabet.
      * @throws Exception if the alphabet does not contain the value parameter
      */
     public int getAlphaIndex(char value) throws Exception {
-
-        int index;
-
         // Get key value
         Integer indexObject = alphaMap.get(value);
 
@@ -111,9 +109,7 @@ public class AlphaConverter {
                     + ". The int value of the char value is " + ((int) value) + "."); //$NON-NLS-1$ //$NON-NLS-2$
 
         // Pass to (int) index by using wrapper class of int and increment.
-        index = indexObject.intValue();
-
-        return index;
+        return indexObject.intValue();
     }
 
     /**
@@ -145,8 +141,8 @@ public class AlphaConverter {
     }
 
     /**
-     * This method filters the non alpha chars. It is used to get the the cipher input for classic algorithms out of the
-     * plain text.
+     * This method filters the non alpha chars. It is used to get the the cipher input for classic
+     * algorithms out of the plain text.
      * 
      * @param plain the plain text
      * @return the filtered plain text (cipher input)
