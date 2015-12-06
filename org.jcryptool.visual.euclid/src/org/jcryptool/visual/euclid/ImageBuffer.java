@@ -42,43 +42,50 @@ public class ImageBuffer {
         // für die nützlichen Zeichenoperationen
         bufferGC = new GC(bufferImage);
     }
-    
+
     public void paintImage(ArrayList<int[]> values) {
         bufferGC.setForeground(BLACK);
-        bufferGC.drawText(Messages.Euclid_Long_Line+values.get(0)[0], 10, 10, true);
-        bufferGC.drawText(Messages.Euclid_Short_Line+values.get(0)[1], 10, 40, true);
+        bufferGC.drawText(Messages.Euclid_Long_Line + values.get(0)[0], 10, 10, true);
+        bufferGC.drawText(Messages.Euclid_Short_Line + values.get(0)[1], 10, 40, true);
         drawLine(10, 30, values.get(0)[0], GREEN, bufferGC);
         drawLine(10, 60, values.get(0)[1], RED, bufferGC);
-        
-        for(int i=1; i<values.size(); i++) {
+
+        for (int i = 1; i < values.size(); i++) {
             bufferGC.setForeground(BLACK);
-            bufferGC.drawText(values.get(i)[0]+" - "+values.get(i)[2]+"*"+values.get(i)[1]+" = "+values.get(i)[3], 10, 75+45*(i-1), true);
-            drawLine(10, 95+45*(i-1), values.get(i)[0], GREEN, bufferGC);
-            for(int j=0; j<values.get(i)[2]; j++) {
-                drawLine(10+5*j*values.get(i)[1], 105+45*(i-1)+(j%2)*2, values.get(i)[1], RED, bufferGC);
+            bufferGC.drawText(
+                    values.get(i)[0] + " - " + values.get(i)[2] + "*" + values.get(i)[1] + " = " + values.get(i)[3], 10,
+                    75 + 45 * (i - 1), true);
+            drawLine(10, 95 + 45 * (i - 1), values.get(i)[0], GREEN, bufferGC);
+            for (int j = 0; j < values.get(i)[2]; j++) {
+                drawLine(10 + 5 * j * values.get(i)[1], 105 + 45 * (i - 1) + (j % 2) * 2, values.get(i)[1], RED,
+                        bufferGC);
             }
-            
-            if (values.get(i)[3]==0) {
+
+            if (values.get(i)[3] == 0) {
                 bufferGC.setForeground(BLACK);
-                bufferGC.drawText(Messages.Euclid_GCD+values.get(0)[0]+","+values.get(0)[1]+") = "+values.get(i)[1], 10, 75+45*(i), true);
+                bufferGC.drawText(
+                        Messages.Euclid_GCD + values.get(0)[0] + "," + values.get(0)[1] + ") = " + values.get(i)[1], 10,
+                        75 + 45 * (i), true);
             } else {
-                drawLine(10+5*values.get(i)[1]*values.get(i)[2], 105+45*(i-1), values.get(i)[3], BLUE, bufferGC);
+                drawLine(10 + 5 * values.get(i)[1] * values.get(i)[2], 105 + 45 * (i - 1), values.get(i)[3], BLUE,
+                        bufferGC);
             }
         }
     }
 
     private void drawLine(int x, int y, int w, Color color, GC gc) {
         gc.setForeground(color);
-        gc.drawLine(x, y, x+w*5, y);
-        gc.drawLine(x, y+5, x+w*5, y+5);
-        for(int i=0; i<=w; i++)
-            gc.drawLine(x+5*i, y, x+5*i, y+5);
+        gc.drawLine(x, y, x + w * 5, y);
+        gc.drawLine(x, y + 5, x + w * 5, y + 5);
+        for (int i = 0; i <= w; i++)
+            gc.drawLine(x + 5 * i, y, x + 5 * i, y + 5);
     }
 
     // diese Methode ist dafür da, das PaintEvent im Listener zu verarbeiten.
     // achtet darauf, dass das canvas und der Buffer immer dieselbe Höhe und Breite beitzen.
     public void copyImageToUI(PaintEvent event) {
-        // Das Event sagt uns, welches Rechteck bemalt werden soll. Möglicheweise ist es imer nur der
+        // Das Event sagt uns, welches Rechteck bemalt werden soll. Möglicheweise ist es imer nur
+        // der
         // gerade sichtbare Teil (was neben der bereits gepufferten Zeichenoperaton noch weiteren
         // Performance-Gewinn bringen würde)!
         int x = event.x;
@@ -86,10 +93,7 @@ public class ImageBuffer {
         int width = event.width;
         int height = event.height;
         GC canvasGC = event.gc;
-        System.out.println(bufferImage.getBounds().width+" . "+bufferImage.getBounds().height);
-        System.out.println(x+" "+y+" "+width+" "+height);
-        canvasGC.drawImage(bufferImage,
-            x, y, width, height,   // Buffer-Rechteck
-            x, y, width, height);  // Ziel-Rechteck (im Canvas)
+        canvasGC.drawImage(bufferImage, x, y, width, height, // Buffer-Rechteck
+                x, y, width, height); // Ziel-Rechteck (im Canvas)
     }
 }

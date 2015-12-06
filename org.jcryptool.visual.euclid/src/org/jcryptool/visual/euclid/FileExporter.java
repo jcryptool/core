@@ -33,8 +33,6 @@ public class FileExporter {
 	private static final String tab = "\t";
 	private static final String seperator = ";";
 
-	com.lowagie.text.Font fontValues = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 8,
-			com.lowagie.text.Font.NORMAL);
 	com.lowagie.text.Font fontValuesItalic = new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA,
 			com.lowagie.text.Font.DEFAULTSIZE, com.lowagie.text.Font.ITALIC);
 
