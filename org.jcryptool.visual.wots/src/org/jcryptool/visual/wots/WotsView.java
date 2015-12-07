@@ -125,7 +125,7 @@ public class WotsView extends ViewPart {
 	private String headline_txt;
 	private String invalidChar_txt;
 
-	public static String currentImg = "images/Overview2.JPG";
+	public static String currentImg = "src/images/Overview2.JPG";
 
 	ScrolledComposite scrolledContainer;
 	Composite container;
@@ -434,7 +434,7 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					currentImg = "images/Overview2.JPG";
+					currentImg = "src/images/Overview2.JPG";
 					Image tmp = new Image(
 							img_right.getDisplay(),
 							org.eclipse.ui.plugin.AbstractUIPlugin
@@ -563,7 +563,7 @@ public class WotsView extends ViewPart {
 					txt_Sigkey.setText("");
 					txt_Verifkey.setText("");
 					txt_Sig.setText("");
-					currentImg = "images/WOTSPlus.JPG";
+					currentImg = "src/images/WOTSPlus.JPG";
 					Image tmp = new Image(
 							img_right.getDisplay(),
 							org.eclipse.ui.plugin.AbstractUIPlugin
@@ -729,7 +729,7 @@ public class WotsView extends ViewPart {
 						true, 1, 1));
 				img_right.setSize(96, 184);
 				img_right.setImage(ResourceManager.getPluginImage(
-						"org.jcryptool.visual.wots", "images/Overview2.JPG"));
+						"org.jcryptool.visual.wots", "src/images/Overview2.JPG"));
 				img_right
 						.addControlListener(new org.jcryptool.visual.wots.files.ResizeListener(
 								img_right, composite));
@@ -908,7 +908,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenKeys_txt);
-						currentImg = "images/Key_Generation.JPG";
+						currentImg = "src/images/Key_Generation.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -929,7 +929,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenKeysPlus_txt);
-						currentImg = "images/WOTSPlus.JPG";
+						currentImg = "/src/images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -982,7 +982,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outGenSig_txt);
-						currentImg = "images/Signature_Generation.JPG";
+						currentImg = "src/images/Signature_Generation.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1003,7 +1003,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outGenSigPlus_txt);
-						currentImg = "images/WOTSPlus.JPG";
+						currentImg = "src/images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1058,7 +1058,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS
 						txt_Output.setText(outVerSig_txt);
-						currentImg = "images/Signature_Verification.JPG";
+						currentImg = "src/images/Signature_Verification.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1079,7 +1079,7 @@ public class WotsView extends ViewPart {
 
 						// Set Image & Output field for WOTS+
 						txt_Output.setText(outVerSigPlus_txt);
-						currentImg = "images/WOTSPlus.JPG";
+						currentImg = "src/images/WOTSPlus.JPG";
 						Image tmp = new Image(
 								img_right.getDisplay(),
 								org.eclipse.ui.plugin.AbstractUIPlugin
@@ -1325,7 +1325,7 @@ public class WotsView extends ViewPart {
 		txt_Sig.setText("");
 		txt_Verifkey.setText("");
 		txt_Output.setText(outWelcome_txt);
-		currentImg = "images/Overview2.JPG";
+		currentImg = "src/images/Overview2.JPG";
 		Image tmp = new Image(img_right.getDisplay(),
 				org.eclipse.ui.plugin.AbstractUIPlugin
 						.imageDescriptorFromPlugin("org.jcryptool.visual.wots",
@@ -1446,7 +1446,7 @@ public class WotsView extends ViewPart {
 		txt_Bi.setText(b);
 		disableDetails();
 
-		currentImg = "images/Overview2.JPG";
+		currentImg = "src/images/Overview2.JPG";
 		Image tmp = new Image(img_right.getDisplay(),
 				org.eclipse.ui.plugin.AbstractUIPlugin
 						.imageDescriptorFromPlugin("org.jcryptool.visual.wots",

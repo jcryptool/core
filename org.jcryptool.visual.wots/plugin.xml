@@ -29,16 +29,6 @@
             commandId="org.jcryptool.visual.wots.restartCommand">
       </handler>
    </extension>
-  <!-- <extension
-         point="org.eclipse.ui.commands">
-      <command
-            id="org.jcryptool.visual.wots.restartCommand"
-            name="Restart">
-      </command>
-   </extension>
-   -->
-   
-   
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
