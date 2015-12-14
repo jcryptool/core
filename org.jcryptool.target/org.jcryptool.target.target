@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="22">
+<?pde version="3.8"?><target name="JCrypTool RCP" sequenceNumber="23">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.5.0.v20150804081228"/>
-<repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.0/mars"/>
-</location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.rcp.sdk.id" version="4.5.1.M20150904-0015"/>
 <unit id="org.eclipse.rcp.source.feature.group" version="4.5.1.v20150904-0015"/>
@@ -15,6 +11,10 @@
 <unit id="org.eclipse.equinox.p2.user.ui.source.feature.group" version="2.2.101.v20150826-1318"/>
 <unit id="org.eclipse.rcp.feature.group" version="4.5.1.v20150904-0015"/>
 <repository location="http://download.eclipse.org/releases/mars/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.babel.nls_eclipse_de.feature.group" version="4.5.0.v20151128060001"/>
+<repository location="http://download.eclipse.org/technology/babel/update-site/R0.13.1/mars"/>
 </location>
 </locations>
 <launcherArgs>
