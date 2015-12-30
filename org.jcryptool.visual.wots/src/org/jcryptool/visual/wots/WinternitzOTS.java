@@ -2,6 +2,7 @@ package org.jcryptool.visual.wots;
 
 import org.jcryptool.visual.wots.files.ByteUtils;
 import org.jcryptool.visual.wots.files.MathUtils;
+import org.jcryptool.core.logging.utils.LogUtil;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -46,6 +47,7 @@ public class WinternitzOTS implements OTS{
     	try {
     		digest = MessageDigest.getInstance(hash);
     	} catch (NoSuchAlgorithmException e) {
+            LogUtil.logError(e);
     		throw new RuntimeException(e);
     	}
     	
@@ -67,6 +69,7 @@ public class WinternitzOTS implements OTS{
     	try {
     		this.digest = MessageDigest.getInstance(digest);
     	} catch (NoSuchAlgorithmException e) {
+            LogUtil.logError(e);
     		e.printStackTrace();
     	}
 	
@@ -398,6 +401,7 @@ public class WinternitzOTS implements OTS{
 
             return org.jcryptool.visual.wots.files.Converter._hexStringToByte(hexString.toString());
         } catch(Exception ex){
+            LogUtil.logError(ex);
            throw new RuntimeException(ex);
         }
     }
