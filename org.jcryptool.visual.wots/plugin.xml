@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Winternitz OT-Signature (WOTS / WOTS+)"
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.wots.WotsView"
+            id="org.jcryptool.visual.wots.WotsView">
+      </view>
+      <view
+            class="org.jcryptool.visual.wots.WotsView"
+            id="org.jcryptool.visual.wots.WotsView"
+            name="WOTS">
+      </view>
+   </extension>
+  <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="WOTS/WOTS+"
+            viewId="org.jcryptool.visual.wots.WotsView">
+      </Visual>
+   </extension> 
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.jcryptool.visual.wots.files.RestartHandler"
+            commandId="org.jcryptool.visual.wots.restartCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
+         <command
+               commandId="org.jcryptool.visual.wots.restartCommand"
+               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension> 
+</plugin>
