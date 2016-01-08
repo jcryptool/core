@@ -14,6 +14,8 @@ import org.eclipse.osgi.util.NLS;
 
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.jcryptool.crypto.classic.caesar.ui.messages"; //$NON-NLS-1$
+	public static String CaesarKeyInput_0;
+	public static String CaesarKeyInput_1;
 	public static String CaesarWizardPage_key_instruction;
 	public static String CaesarWizardPage_keyTooLong;
 	public static String Label_Caesar;
