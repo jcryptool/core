@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.bouncycastle;singleton:=true
-Bundle-Version: 1.53.0
+Bundle-Version: 1.54.0
 Bundle-Activator: org.bouncycastle.BouncyCastlePlugin
 Bundle-Vendor: %Bundle-Vendor
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
@@ -139,6 +139,6 @@ Export-Package: org.bouncycastle,
  org.bouncycastle.x509.util
 Bundle-ClassPath: .,
  src/org/bouncycastle/,
- libs/bcprov-jdk15on-153.jar
+ libs/bcprov-jdk15on-154.jar
 Import-Package: org.jcryptool.core.logging.utils,
  org.jcryptool.core.operations.providers
