@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="%view.name.0"
-            icon="icons/view.gif"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.ssl.views.SslView"
-            id="org.jcryptool.visual.ssl.views.SslView">
-      </view>
-      <view
-            class="org.jcryptool.visual.ssl.views.SslView"
+            icon="icons/view.gif"
             id="org.jcryptool.visual.ssl.views.SslView"
             name="%view.name.0">
       </view>

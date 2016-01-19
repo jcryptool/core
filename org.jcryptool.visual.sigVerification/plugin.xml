@@ -4,13 +4,11 @@
 	 <extension
          point="org.eclipse.ui.views">
       <view
-            allowMultiple="true"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.sigVerification.ui.view.SigVerView"
             icon="icons/view.gif"
             id="org.jcryptool.visual.sigVerification.view"
-            name="%view.name"
-            restorable="true">
+            name="%view.name">
       </view>
    </extension>
   	<extension point="org.eclipse.help.contexts">
