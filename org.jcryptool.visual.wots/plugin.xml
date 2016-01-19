@@ -4,15 +4,11 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Winternitz OT-Signature (WOTS / WOTS+)"
             category="org.jcryptool.visual"
             class="org.jcryptool.visual.wots.WotsView"
-            id="org.jcryptool.visual.wots.WotsView">
-      </view>
-      <view
-            class="org.jcryptool.visual.wots.WotsView"
+            icon="icons/view.gif"
             id="org.jcryptool.visual.wots.WotsView"
-            name="WOTS">
+            name="Winternitz OT-Signature (WOTS / WOTS+)">
       </view>
    </extension>
   <extension
@@ -22,6 +18,7 @@
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension> 
+   <!-- TODO there is no restartCommand available? e.g. org.jcryptool.visual.verifiablesecretsharing/plugin.xml -->
    <extension
          point="org.eclipse.ui.handlers">
       <handler
