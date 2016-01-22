@@ -18,24 +18,4 @@
             viewId="org.jcryptool.visual.wots.WotsView">
       </Visual>
    </extension> 
-   <!-- TODO there is no restartCommand available? e.g. org.jcryptool.visual.verifiablesecretsharing/plugin.xml -->
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.jcryptool.visual.wots.files.RestartHandler"
-            commandId="org.jcryptool.visual.wots.restartCommand">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.jcryptool.visual.wots.WotsView">
-         <command
-               commandId="org.jcryptool.visual.wots.restartCommand"
-               icon="platform:/plugin/org.eclipse.ui/icons/full/etool16/new_wiz.gif"
-               style="push">
-         </command>
-      </menuContribution>
-   </extension> 
 </plugin>
