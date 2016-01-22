@@ -52,7 +52,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
         configurer.setInitialSize(new Point(950, 700));
         configurer.setShowCoolBar(true);
-        configurer.setShowFastViewBars(true);
         configurer.setShowMenuBar(true);
         configurer.setShowPerspectiveBar(true);
         configurer.setShowProgressIndicator(true);
