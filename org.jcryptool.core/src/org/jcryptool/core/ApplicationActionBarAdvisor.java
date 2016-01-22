@@ -18,7 +18,6 @@ import java.util.TreeMap;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.CommandManager;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -31,27 +30,20 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarContributionItem;
 import org.eclipse.jface.action.ToolBarManager;
-import org.eclipse.jface.bindings.Binding;
-import org.eclipse.jface.bindings.keys.KeyBinding;
-import org.eclipse.jface.bindings.keys.KeySequence;
-import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
-import org.eclipse.ui.actions.ActionFactory.IWorkbenchAction;
 import org.eclipse.ui.actions.ContributionItemFactory;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
 import org.eclipse.ui.commands.ICommandService;
-import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.menus.CommandContributionItem;
 import org.eclipse.ui.menus.CommandContributionItemParameter;
 import org.eclipse.ui.services.IServiceLocator;
 import org.jcryptool.core.actions.ShowPluginViewHandler;
-import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.CommandInfo;
 import org.jcryptool.core.operations.OperationsPlugin;
 
@@ -249,12 +241,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
      * be disabled in the menus.
      */
     private void registerActionsForCommands() {
-
         if (OS_MAC_OS_X.equalsIgnoreCase(OS)) {
             // hide the about action, Mac OS X adds this automatically
             hiddenMenu.add(createContributionItem(PlatformUI.getWorkbench(), null, IWorkbenchCommandConstants.HELP_ABOUT));
         }
-        // TODO:  Do we need to move this below the registration of the ActionFactory.ABOUT action?
 
         register(ActionFactory.HELP_SEARCH.create(window));
         register(ActionFactory.DYNAMIC_HELP.create(window));
@@ -438,10 +428,6 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         return menu;
     }
 
-    /* TODO:  According to the information I have, we can use the standard command IDs
-     * but need to enable those commands by registering actions created through the ActionFactory.
-     * It is conceivable that this may change in future versions of Eclipse.
-     */
     private void createFileActions(IWorkbenchWindow window) {
         register(ActionFactory.SAVE.create(window));
         register(ActionFactory.SAVE_AS.create(window));
@@ -449,36 +435,8 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         register(ActionFactory.CLOSE.create(window));
         register(ActionFactory.CLOSE_ALL.create(window));
         register(ActionFactory.PRINT.create(window));
-
-        IWorkbenchAction exitAction = ActionFactory.QUIT.create(window);
-        exitAction.setAccelerator(SWT.ALT | SWT.F4);	// this doesn't seem to work when I use Commands
-        register(exitAction);
-        
-        // TODO:  This doesn't seem to have any effect right now
-        try {
-        	ICommandService commandService = (ICommandService)window.getService(ICommandService.class);
-        	KeyStroke keyStroke = KeyStroke.getInstance(SWT.ALT, SWT.F4);
-        	KeySequence keySequence = KeySequence.getInstance(keyStroke);
-        	KeyBinding binding = new KeyBinding(keySequence,
-        		new ParameterizedCommand(commandService.getCommand(IWorkbenchCommandConstants.FILE_EXIT), null),
-        		"org.eclipse.ui.defaultAcceleratorConfiguration",
-        		"org.eclipse.ui.contexts.window", null, null, null, Binding.SYSTEM);
-
-        	IBindingService bindingService = (IBindingService)window.getService(IBindingService.class);
-        	Binding[] oldBindings = bindingService.getBindings();
-        	Binding[] newBindings = new Binding[oldBindings.length + 1];
-        	System.arraycopy(oldBindings, 0, newBindings, 0, oldBindings.length);
-        	newBindings[oldBindings.length] = binding;
-        	bindingService.savePreferences(bindingService.getActiveScheme(), newBindings);
-        } catch(Exception ex) {
-        	LogUtil.logError(ex);
-        }
+        register(ActionFactory.QUIT.create(window));
     }
-    /* TODO:  Figure out how to use accelerators (key bindings) with Commands.
-     * The provided pointers to IWorkbenchCommandSupport, IWorkbenchContextSupport,
-     * ICommandService, and IHandlerService all don't seem to lead anywhere.
-     * Maybe IBindingService?
-     */
 
     private void createEditActions(IWorkbenchWindow window) {
         register(ActionFactory.UNDO.create(window));
@@ -490,13 +448,10 @@ public class ApplicationActionBarAdvisor extends ActionBarAdvisor {
         register(ActionFactory.SELECT_ALL.create(window));
 
         register(ActionFactory.FIND.create(window));
-        // maps to EDIT_FIND_AND_REPLACE
     }
 
     private void createWindowActions(IWorkbenchWindow window) {
         register(ActionFactory.EDIT_ACTION_SETS.create(window));
-        // maps to WINDOW_CUSTOMIZE_PERSPECTIVE
-
         register(ActionFactory.RESET_PERSPECTIVE.create(window));
         register(ActionFactory.PREFERENCES.create(window));
     }
