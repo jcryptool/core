@@ -70,7 +70,6 @@ public class WinternitzOTS implements OTS{
     		this.digest = MessageDigest.getInstance(digest);
     	} catch (NoSuchAlgorithmException e) {
             LogUtil.logError(e);
-    		e.printStackTrace();
     	}
 	
     	this.n = this.digest.getDigestLength();

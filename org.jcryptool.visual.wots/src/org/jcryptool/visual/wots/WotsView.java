@@ -332,7 +332,6 @@ public class WotsView extends ViewPart {
 									"Failed to load message from file",
 									"Error", JOptionPane.OK_OPTION);
 							txt_message.setText("Standard message");
-							ex.printStackTrace();
 						}
 					}
 

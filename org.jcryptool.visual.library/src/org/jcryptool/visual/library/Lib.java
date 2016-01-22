@@ -441,7 +441,7 @@ public class Lib {
                     bytearray = integersToBytes(intarray);
                 } catch (IOException e) {
                     bytearray = new byte[] { 0 };
-                    e.printStackTrace();
+                    LogUtil.logError(e);
                 }
                 md = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
                 rv = new BigInteger(md.digest(bytearray));
