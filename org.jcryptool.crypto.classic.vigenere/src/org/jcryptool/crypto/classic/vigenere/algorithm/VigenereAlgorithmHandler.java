@@ -28,6 +28,7 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 import org.jcryptool.crypto.classic.vigenere.VigenerePlugin;
 import org.jcryptool.crypto.classic.vigenere.ui.VigenereWizard;
 
@@ -57,7 +58,7 @@ public class VigenereAlgorithmHandler extends AbstractAlgorithmHandler {
 	public Object execute(ExecutionEvent event) {
         final VigenereWizard wizard = new VigenereWizard();
         final AbstractClassicAlgorithm algorithm = new VigenereAlgorithm();
-        WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+        WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
         dialog.setHelpAvailable(true);
 
         if (dialog.open() == Window.OK) {

@@ -33,6 +33,7 @@ import org.jcryptool.crypto.classic.delastelle.DelastellePlugin;
 import org.jcryptool.crypto.classic.delastelle.ui.DelastelleWizard;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 
 /**
  * The DelastelleAlgorithmHandler class is a specific
@@ -60,7 +61,7 @@ public class DelastelleAlgorithmHandler extends AbstractAlgorithmHandler{
 	@Override
 	public Object execute(ExecutionEvent event) {
 		final DelastelleWizard wizard = new DelastelleWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {

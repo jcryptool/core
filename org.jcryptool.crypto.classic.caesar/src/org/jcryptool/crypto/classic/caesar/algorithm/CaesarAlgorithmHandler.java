@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.graphics.Point;
 import org.jcryptool.core.logging.utils.LogUtil;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithm;
 import org.jcryptool.core.operations.algorithm.AbstractAlgorithmHandler;
@@ -27,8 +28,10 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.caesar.CaesarPlugin;
 import org.jcryptool.crypto.classic.caesar.ui.CaesarWizard;
+import org.jcryptool.crypto.classic.caesar.ui.CaesarWizardPage;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 
 /**
  * The CaesarAlgorithmAction class is a specific implementation of AbstractClassicAlgorithmAction2.
@@ -49,10 +52,11 @@ public class CaesarAlgorithmHandler extends AbstractAlgorithmHandler {
     @Override
 	public Object execute(ExecutionEvent event) {
         final CaesarWizard wizard = new CaesarWizard();
-        final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+        final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {
+			
             Job job = new Job(Messages.CaesarAlgorithmHandler_0) {
                 @Override
 				public IStatus run(final IProgressMonitor monitor) {
@@ -70,6 +74,14 @@ public class CaesarAlgorithmHandler extends AbstractAlgorithmHandler {
                         }
                         
 			            char[] key = wizard.getKey().toCharArray();
+			            Character charKey = key[0];
+			    		AbstractAlphabet alpha = wizard.getSelectedAlphabet();
+			    		int shift = alpha.asList().indexOf(charKey);
+			    		
+			    		int aShift = ((CaesarWizardPage) wizard.getPrimaryPage()).getaShift();
+			            int realShift = shift+aShift;
+			    		Character realChar = alpha.asList().get(realShift);
+			    		char[] realKey = String.valueOf(realChar).toCharArray();
 			            
 			            monitor.worked(1);
 			            
@@ -80,10 +92,10 @@ public class CaesarAlgorithmHandler extends AbstractAlgorithmHandler {
 			
 			            if (wizard.encrypt()) {
 			                // explicit encrypt
-			                algorithm.init(AbstractAlgorithm.ENCRYPT_MODE, getActiveEditorInputStream(), alphabet, key, wizard.getTransformData());
+			                algorithm.init(AbstractAlgorithm.ENCRYPT_MODE, getActiveEditorInputStream(), alphabet, realKey, wizard.getTransformData());
 			            } else {
 			                // implicit decrypt
-			                algorithm.init(AbstractAlgorithm.DECRYPT_MODE, getActiveEditorInputStream(), alphabet, key, wizard.getTransformData());
+			                algorithm.init(AbstractAlgorithm.DECRYPT_MODE, getActiveEditorInputStream(), alphabet, realKey, wizard.getTransformData());
 			            }
 			            
 			            monitor.worked(3);

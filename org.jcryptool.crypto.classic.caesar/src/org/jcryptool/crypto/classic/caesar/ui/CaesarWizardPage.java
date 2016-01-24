@@ -21,8 +21,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -45,6 +47,10 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
 
 	private CaesarKeyInput keyInputComp;
+	private boolean dontlistenCombo;
+	private Button btnShift0;
+	private Button btnShift1;
+	protected int aShift;
 	/**
 	 * Creates a new instance of CaesarWizardPage.
 	 */
@@ -72,6 +78,25 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     }
     
     @Override
+    protected void createCustomAlphaGroupObjects(Composite innerGroup) {
+    	Composite cmpAlphaExpl = new Composite(innerGroup, SWT.NONE);
+    	GridLayout layout = new GridLayout(3, false);
+    	layout.marginWidth = 0;
+    	layout.marginHeight = 0;
+		cmpAlphaExpl.setLayout(layout);
+		cmpAlphaExpl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+    	
+		Label lblAlphaExpl = new Label(cmpAlphaExpl, SWT.NONE);
+		lblAlphaExpl.setText("Interpretation des ersten Alphabetzeichens: ");
+		
+		btnShift0 = new Button(cmpAlphaExpl, SWT.RADIO);
+		btnShift0.setText("Verschiebewert = 0");
+		
+    	btnShift1 = new Button(cmpAlphaExpl, SWT.RADIO);
+    	btnShift1.setText("Verschiebewert = 1");
+    }
+    
+    @Override
     protected void createKeyGroup(Composite parent) {
     	keyGroup = new Group(parent, SWT.NONE);
 
@@ -91,11 +116,13 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
         keyInputComp = new CaesarKeyInput(keyGroup, SWT.NONE);
         keyInputComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         
+        
     }
     @Override
     protected void createKeyInputObjects() {
     	keyInput = new KeyInput<String>() {
-            @Override
+            
+			@Override
             public Text getTextfield() {
                 return keyInputComp.passwordText;
             }
@@ -107,12 +134,12 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
             @Override
             protected String getDefaultContent() {
-                return ""; //$NON-NLS-1$
+                return String.valueOf(getSelectedAlphabet().getCharacterSet()[Math.min(getSelectedAlphabet().getCharacterSet().length-1, 2)]); //$NON-NLS-1$
             }
 
             @Override
             public String getName() {
-                return "";
+                return "Caesar key";
             }
 
             @Override
@@ -128,8 +155,30 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 
                 setTextfieldTextExternal(stringBuilder.toString());
                 reread(inputWhichCausedThis);
+                
+                
             }
 
+            @Override
+            protected void saveDefaultRawUserInput() {
+            	super.saveDefaultRawUserInput();
+            	CaesarWizardPage.this.aShift = 0;
+            }
+            
+            @Override
+            protected void saveRawUserInput() {
+            	super.saveRawUserInput();
+            	CaesarWizardPage.this.aShift = btnShift0.getSelection()?0:1;
+            }
+            
+            @Override
+            protected void resetUserInput() {
+            	// TODO Auto-generated method stub
+            	super.resetUserInput();
+            	btnShift0.setSelection(aShift==0);
+            	btnShift1.setSelection(aShift!=0);
+            }
+            
             @Override
             public AbstractAlphabet getAlphabet() {
                 return getAlphabetInput().getContent();
@@ -142,29 +191,45 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
             
             @Override
             public void writeContent(String content) {
-            	// TODO Auto-generated method stub
             	super.writeContent(content);
             	AbstractAlphabet alpha = getSelectedAlphabet();
             	if(content == null || content.length() < 1) {
             		keyInputComp.shiftCombo.select(-1);
             	} else {
-            		int shift = alpha.asList().indexOf(Character.valueOf(content.charAt(0)));
+            		char keyChar = content.charAt(0);
+					int shift = keyCharToShift(alpha, keyChar, aShift);
             		if(!keyInputComp.shiftCombo.getText().equals(String.valueOf(shift))) {
-            			keyInputComp.shiftCombo.select(shift);
+            			dontlistenCombo = true;
+            			String valueOf = String.valueOf(shift);
+						keyInputComp.shiftCombo.setText(valueOf);
+            			dontlistenCombo = false;
             		}
             	}
             	
             }
+
         };
 
         final TextfieldInput<String> inp = keyInput;
         
+        SelectionAdapter shiftChangeListener = new SelectionAdapter() {
+        	@Override
+        	public void widgetSelected(SelectionEvent e) {
+        		keyInput.synchronizeWithUserSide();
+        		updateShiftcombo();
+        		keyInput.writeContent(keyInput.getContent());
+        	}
+		};
+		btnShift0.addSelectionListener(shiftChangeListener);
+		btnShift1.addSelectionListener(shiftChangeListener);
+        
         keyInputComp.shiftCombo.addSelectionListener(new SelectionAdapter() {
         	@Override
         	public void widgetSelected(SelectionEvent e) {
+        		if(dontlistenCombo) return;
         		String selection = keyInputComp.shiftCombo.getText();
-            	Integer shift = keyInputComp.shiftCombo.getSelectionIndex();
-            	Character shiftChar = getSelectedAlphabet().getCharacterSet()[shift];
+            	Integer shift = keyInputComp.shiftCombo.getSelectionIndex()+aShift;
+            	Character shiftChar = getSelectedAlphabet().getCharacterSet()[shift-aShift];
             	inp.setTextfieldTextExternal(String.valueOf(shiftChar));
             	inp.synchronizeWithUserSide();
         	}
@@ -174,11 +239,12 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
 			
 			@Override
 			public void modifyText(ModifyEvent e) {
+				if(dontlistenCombo) return;
 				String selection = keyInputComp.shiftCombo.getText();
             	try{
             		Integer shift = Integer.parseInt(selection);
-            		if(shift > 0 || shift < keyInputComp.shiftCombo.getItemCount()) {
-            			Character shiftChar = getSelectedAlphabet().getCharacterSet()[shift];
+            		if(shift > 0+getaShift() || shift < keyInputComp.shiftCombo.getItemCount()) {
+            			Character shiftChar = getSelectedAlphabet().getCharacterSet()[shift-aShift];
                     	inp.setTextfieldTextExternal(String.valueOf(shiftChar));
                     	inp.synchronizeWithUserSide();
             		} else {
@@ -214,12 +280,17 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
         updateShiftcombo();
     }
     
+    private int keyCharToShift(AbstractAlphabet alpha, char keyChar, int aShift) {
+		return alpha.asList().indexOf(Character.valueOf(keyChar))+aShift;
+	}
+    
     private void updateShiftcombo() {
 		AbstractAlphabet alpha = getSelectedAlphabet();
 		keyInputComp.shiftCombo.setItems(new String[]{});
 		List<Character> asList = alpha.asList();
 		for (int i = 0; i < asList.size(); i++) {
-			keyInputComp.shiftCombo.add(String.valueOf(i));
+			String comboItem = String.valueOf(i+getaShift());
+			keyInputComp.shiftCombo.add(comboItem);
 		}
 	}
     
@@ -229,5 +300,27 @@ public class CaesarWizardPage extends AbstractClassicCryptoPage {
     	verificationDisplayHandler.addInputWidgetMapping(keyInput, keyInput.getTextfield());
     }
     
+    @Override
+    protected void createAlphabetInputObjects() {
+    	// TODO Auto-generated method stub
+    	super.createAlphabetInputObjects();
+    	getAlphabetInput().addObserver(new Observer() {
+			
+			@Override
+			public void update(Observable arg0, Object arg1) {
+				updateAlphaGroupText();
+			}
+		});
+    	updateAlphaGroupText();
+    }
 
+	protected void updateAlphaGroupText() {
+		alphabetGroup.setText(org.jcryptool.crypto.classic.model.ui.wizard.Messages.WizardPage_alpha + 
+				String.format(" (current length: %s )", getAlphabetInput().getContent().getCharacterSet().length));
+	}
+	
+	public int getaShift() {
+		return aShift;
+	}
+	
 }

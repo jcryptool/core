@@ -30,6 +30,7 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 import org.jcryptool.crypto.classic.playfair.PlayfairPlugin;
 import org.jcryptool.crypto.classic.playfair.ui.PlayfairWizard;
 
@@ -59,7 +60,7 @@ public class PlayfairAlgorithmHandler extends AbstractAlgorithmHandler{
 	@Override
 	public Object execute(ExecutionEvent event) {
 		final PlayfairWizard wizard = new PlayfairWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {

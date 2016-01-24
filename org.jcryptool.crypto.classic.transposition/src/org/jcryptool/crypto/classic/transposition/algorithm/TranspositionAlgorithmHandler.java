@@ -29,6 +29,7 @@ import org.jcryptool.core.operations.alphabets.AbstractAlphabet;
 import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 import org.jcryptool.crypto.classic.transposition.TranspositionPlugin;
 import org.jcryptool.crypto.classic.transposition.ui.TranspositionWizard;
 
@@ -58,7 +59,7 @@ public class TranspositionAlgorithmHandler extends AbstractAlgorithmHandler{
 	@Override
 	public Object execute(ExecutionEvent event) {
 		final TranspositionWizard wizard = new TranspositionWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {

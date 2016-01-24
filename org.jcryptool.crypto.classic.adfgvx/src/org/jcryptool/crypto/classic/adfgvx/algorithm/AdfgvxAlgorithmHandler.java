@@ -30,6 +30,7 @@ import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.adfgvx.AdfgvxPlugin;
 import org.jcryptool.crypto.classic.adfgvx.ui.AdfgvxWizard;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 
 public class AdfgvxAlgorithmHandler extends AbstractAlgorithmHandler{
 	/**
@@ -46,7 +47,7 @@ public class AdfgvxAlgorithmHandler extends AbstractAlgorithmHandler{
 	@Override
 	public Object execute(ExecutionEvent event) {
 		final AdfgvxWizard wizard = new AdfgvxWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 		
 		if (dialog.open() == Window.OK) {
