@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.jcryptool.visual"
+            class="org.jcryptool.visual.wots.WotsView"
+            icon="icons/view.gif"
+            id="org.jcryptool.visual.wots.WotsView"
+            name="Winternitz OT-Signature (WOTS / WOTS+)">
+      </view>
+   </extension>
+  <extension
+         point="org.jcryptool.core.operations.visuals">
+      <Visual
+            name="WOTS/WOTS+"
+            viewId="org.jcryptool.visual.wots.WotsView">
+      </Visual>
+   </extension> 
+</plugin>
