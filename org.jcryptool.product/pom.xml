@@ -82,6 +82,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>net.ju-n.maven.plugins</groupId>
+				<artifactId>checksum-maven-plugin</artifactId>
+				<version>1.3</version>
+				<configuration>
+					<algorithms>
+						<algorithm>MD5</algorithm>
+						<algorithm>SHA-1</algorithm>
+					</algorithms>
+					<individualFilesOutputDirectory>${project.build.directory}/products</individualFilesOutputDirectory>
+					<fileSets>
+						<fileSet>
+							<directory>${project.build.directory}/products</directory>
+							<includes>
+								<include>*.zip</include>
+								<include>*.tar.gz</include>
+							</includes>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
