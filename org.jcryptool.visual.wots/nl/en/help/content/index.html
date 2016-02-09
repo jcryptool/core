@@ -1,0 +1,229 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Winternitz One-Time Signatures (WOTS)</title>
+	</head>
+	<body>
+		<h1>Winternitz One-Time Signatures (WOTS)</h1>
+		<h2>Content of the online help for WOTS</h2>
+		<p>
+		1) <a href="#general">General functionality of the plugin</a></br>
+		1.1) <a href="#input">Input fields</a></br>
+		1.2) <a href="#param">Parameters</a></br>
+		1.3) <a href="#button">Buttons</a></br></br>
+		2) <a href="#method">Winternitz OTS algorithm</a></br>
+		2.1) <a href="#keygen">Key generation</a></br>
+		2.1.1) <a href="#usedParam">Used parameters</a></br>
+		2.1.2) <a href="#privkey">Private key (X)</a></br>
+		2.1.3) <a href="#pubkey">Public key (Y)</a></br></br>
+		2.2) <a href="#siggen">Signature generation</a></br>
+		2.2.1) <a href="#genB">Generation of vector B</a></br>
+		2.2.2) <a href="#signature">Signature</a></br>
+		2.3) <a href="#sigver">Signature validation</a></br></br>
+		3) <a href="#genB">WOTS+</a></br>
+		3.1) <a href="#bitstring">Bitstring R</a></br>
+		3.2) <a href="#example">Example</a></br></br>
+		4) <a href="#security">Security</a></br></br>
+                5) <a href="#links">References</a></p>
+		
+		<p>This visualization is a demonstration of the Winternitz One-Time Signature (WOTS).</p>
+		<p>WOTS is an algorithm to sign digital messages.</br>
+		   When using a <b>one-time</b> signature, a pair of keys is used only once to sign a single message.</p>
+		
+		<p> </br> </p>
+		<h2 id="general">1) General functionality of the plugin</h2>
+		
+		
+		<h3 id="input">1.1) Input fields</h3>
+		All "input fields" can be edited. Only the <b>message</b> field has to be filled with text by the user; all other fields are calculated by pressing the buttons <b>Generate signature</b> or <b>Validate signature</b>. The calculated fields continue to be editable in order to show the correctness of the signature validation.
+
+		<ul>
+		       <li><b>Message</b> </br>
+                A message can either be entered manually or be loaded from a text file.
+				Alternatively, the standard message can be used. Any change of the message automatically updates the fields "Message digest" and "b_i" if the button "Show details" has been pressed.
+				</li>
+		       <li><b>Message digest</b> </br>
+				The content of this field is the calculated hash of the given message.
+				</li>
+		       <li><b>b_i</b> </br>
+				The content of this field is the value of b_i. For further information 
+				on how b_i is calculated see chapter <a href="#siggen">Generate signature</a>.
+		       </li>
+		       <li><b>Keys</b> </br>
+				These fields show the calculated keys.
+		       </li>
+		       <li><b>Signature</b> </br>
+				This field contains the signature after it has been calculated.
+		       </li>
+	       	</ul>
+
+			<img src="images/empty.PNG" alt="empty">
+
+		<p> </br> </p>
+		<h3 id="param">1.2) Parameters</h3>
+		<ul> 
+		       <li><b>Winternitz parameter w</b> </br>
+				Determines the level of compression while generating the keys. Possible values are integers 
+				greater 1. Using a bigger value for w leads to smaller keys, but also increased runtime.
+		       </li>			
+		       <li><b>Hash function</b> </br>
+				It is possible to switch between three hash functions: SHA-256, SHA-1
+		       	and MD5 (SHA-1 and MD5 should not be used in real implementations due to successful collision attacks).
+		       </li>			
+		       <li><b>WOTS/WOTS+</b> </br>
+				It is possible to switch between these two variants. Please note that after this switch the fields "Message", "Keys", and "Signature" will be 
+				cleared. For further information about the differences between WOTS and WOTS+ see chapter <a href="#wotsplus">WOTS+</a>.
+		       </li>			
+	       	</ul>
+
+		<p><b>General information to avoid misuse:</b></br>
+	       	Below every editable field, the actual length and the target length of the field are displayed. While editing 
+			in any field the actual value will change dynamically, and it changes to red if actual and target value of the field length don't match.</br>
+			You may use arbitrary symbols while editing the message field, but all other fields accept only hexadecimal 
+			values (0-9 and A-F). If an invalid symbol is entered, the field will change its color to red.</br>
+			As long as either invalid symbols are present, or the actual and target values don't match, the possibility 
+			to edit other fields is disabled.</p>
+
+		<img src="images/small_1.PNG" alt="small_1">
+		<img src="images/small_2.PNG" alt="small_2">
+
+		<p> </br> </p>
+		<h3 id="button">1.3) Buttons</h3>
+		<ul> 
+		       <li><b>Load message from file</b> </br>
+			Opens a dialog to choose a file, which is subsequently displayed in the message field.
+		       </li>			
+		       <li><b>Generate keys</b> </br>
+			A valid pair of keys is calculated and displayed in the key fields. For further information on how keys are 
+			generated see chapter <a href="#keygen">Key generation</a>.
+		       </li>			
+		       <li><b>Generate signature</b> </br>
+			A valid signature will be generated using the given private key, and displayed in the signature field. For 
+			further information on how a signature is 
+			generated see the chapter <a href="#siggen">Signature generation</a>.
+
+		       </li>			
+		       <li><b>Validate signature</b> </br>
+			The given signature will be validated using the public key. If the signature is valid, the signature 
+			field will change its color to green. If the signature is invalid the color will change to red.
+		       </li>		
+		       <li><b>Show/Hide details</b> </br>
+			It is possible to enable details such as the fields "Message digest" and "b_i". 
+			This is a pure visual feature which has no impact on the actual algorithm.
+		       </li>			
+		       <li><b>Reset</b> </br>
+			Clears the calculated values (key and signature), but doesn't change any other values or parameters. So the message field is left unchanged.
+		       </li>			
+		       <li><b>Restart</b> </br>
+			The plugin will be set back to its original state. In contrast to the <b>Reset</b> button, here also changed  parameters or messages are set back.
+		       </li>			
+	       	</ul>
+
+		<p>There is a dependency between the buttons "Generate keys", "Generate signature", and "Validate signature" concerning their activation: The button "Generate signature" is disabled as long as the button "Generate keys" has not been pushed. 
+		The same applies for "Validate signature", which is only activated after a signature has been generated.</p>
+
+
+
+		<p> </br> </p>
+		<h2 id="method">2) Winternitz OTS algorithm</h2>
+		<h3 id="keygen">2.1) Key generation</h3>
+		<h4 id="usedParam">2.1.1) Used parameters</h4>
+		<ul> 
+		       <li><b>n = Size of a block in byte</b> </br>
+			       n is determined by the chosen hash function (for instance, SHA-256 creates a 32 byte (256 bit) output, so n is 32).
+		       </li>			
+		       <li><b>m = Size of the hash value of the message in bit</b></br>
+			       The hash value of the message using SHA-256 has a length of 256 bit.
+		       </li>			
+		       <li><b>t = Number of blocks which form each key</b> </br>
+			       This number is calculated in two steps, and it is the sum of their results (t_1 and t_2).
+		       </li>			
+		       <li><b>t_1 = m/log2(w) = number of base-w elements generated from a message</b> </br>
+			       	whereupon the result is rounded up.
+		       </li>			
+		       <li><b>t_2 = (log2(l_1(w-1))/log2(w))+1 = number of base-w elements generated from the checksum</b> </br>
+			       	whereupon the result is rounded down.
+		       </li>			
+		       <li><b>t = t_1 + t_2</b> </br>
+		       </li>			
+	       	</ul>
+
+		<h4 id="privkey">2.1.2) Private key (X)</h4>
+		The private key X consists of t blocks, each containing n pseudorandom bytes.</p>
+
+		<h4 id="pubkey">2.1.3) Public key (Y)</h4>
+		The public key Y also consists of t blocks. These blocks are generated by hashing each block of X w-1 times.</p>
+
+		<img src="images/keys.PNG" alt="keys">
+
+		<p> </br> </p>
+		<h3 id="siggen">2.2) Signature generation</h3>
+		<h4 id="genB">2.2.1) Generation of vector B</h4>
+		<b>B</b> consists of t blocks. To get these blocks, a checksum of m (m is the hash value of the message) is calculated. To 
+		be able to do this, m is converted to base w.</p>
+		<p><b>C</b> = checksum = sum of w-1-M_i with 1 <= i <= l_1. </p>
+		<p>Now, both m and C are converted to base w, which results in t values (m base w has t_1 values, C base w has t_2 values). 
+		If necessary, t_1 and t_2 are padded with 0s in order to calculate their correct values.</p>
+		<p>For further calculation, the t values of B are interpreted as integers.</p>
+		<p><b>Example:</b> block b_i = 0111 = 7</p>
+
+		<p> </br> </p>
+		<h4 id="signature">2.2.2) Signature</h4>
+		To generate a signature, each block X_i of the t secret key blocks is hashed b_i times. The results are t blocks, which 
+		form the signature sig.</p>
+
+		<img src="images/signature.PNG" alt="signature">
+
+		<p> </br> </p>
+		<h3 id="sigver">2.3) Signature validation</h3>
+		To validate a signature, the vector B is calculated the same way as in section <a href="#genB">2.2.1</a>.
+		Each block sig_i of the signature is hashed w - 1 - b_i times. The resulting check signature consists of the blocks 
+		of the private key, which have been hashed w-1 times each (b_i + w - 1 - b_i). Because the public key also consists of the w-1 times
+		hashed blocks of the private key, the public key and the calculated check signature should be the same. If this 
+		is the case, the signature is valid.</p>
+
+		<img src="images/validated.PNG" alt="validated">
+
+		<p> </br> </p>
+		<h2 id="wotsplus">3) WOTS+</h2>
+		<p>The difference between WOTS and WOTS+ is how each block is processed. In WOTS+, an additional bitstring R consisting of 
+		w-1 blocks (n bits each) is generated. When hashing the blocks for the xth time, an additional XOR with the xth block of 
+		R is applied.</p>
+
+		<h3 id="bitstring">3.1) Bitstring R</h3>
+		<b>R</b> consists of w-1 blocks, each block containing of n pseudorandom bits, which are added to the beginning of the public key Y.</p>
+
+		<h3 id="example">3.2) Example</h3>
+		<b>Calculation of the first block of the public key (Y_1):</b> Before hashing the block X_1 for the first time, an XOR operation with the 
+		first block of R (R_1) is applied. Before hashing it the second time, an XOR operation with the second block of R (R_2) is applied. Because 
+		the block is hashed w-1 times in total, R also consists of w-1 blocks.</br></br>
+		<b>Calculation of the first block of the validation signature:</b> Assuming that b_1 = 6 and w = 10, sig_1 will be processed 
+		w - 1 - b_1 = 3 times. For the first block, R_1 is not used for the XOR operation, but R_(b_i + 1) is. The reason behind this is to get the correct 
+		value, which can be compared to Y_1 (first block of the public key).</p>
+
+		<img src="images/wotsplus.PNG" alt="wotsplus">
+
+		
+
+		<p> </br> </p>
+		<h2 id="security">4) Security</h2>
+		<p>For both algorithms it is absolutely necessary that a pair of keys is only used to sign one single message (one-time signature), 
+		otherwise it would be possible for an attacker to learn the whole private key by signing two chosen messages. As a solution to this problem, it is possible to 
+		authenticate many one-time public keys with a binary tree through a single hash (see Merkle trees).</br></br>
+
+		The security of both algorithms strongly depends on the used hash function. WOTS requires a collision-resistant hash function, WOTS+ a 
+		2nd-preimage-resistent hash function. In conclusion, WOTS+ has less requirements to the used hash function, but is more complex 
+		in calculation.</p>
+		<p> </br> </p>
+                
+                <h2 id="links">5.) References</h2>
+                <p>Additional Information about the Winternitz One-Time-Signature can be found here:</p>
+                <ul>
+                        <li><a href="https://en.wikipedia.org/wiki/Merkle_signature_scheme">Merkle signature scheme on wikipedia</a></li>
+						<li><a href="https://eprint.iacr.org/2011/191.pdf">On the security of WOTS ("On the Security of the Winternitz One-Time Signature Scheme", 2011)</a></li>
+						<li><a href="https://eprint.iacr.org/2011/484.pdf">XMSS ("XMSS -- A Practical Forward Secure Signature Scheme based on Minimal Security Assumptions", 2011)</a></li>
+						<!--                        <li></li>-->
+                </ul>
+		<p> </br> </p>
+	</body>
+</html>
