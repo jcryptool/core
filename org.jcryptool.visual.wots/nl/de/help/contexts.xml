@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contexts>
+   <context id="view" title="Wots/WotsPlus-Visualisierung">
+      <description>Beschreibung.</description>
+      <topic href="nl/de/help/content/index.html" label="Wots/WotsPlus-Visualisierung"/>
+   </context>
+</contexts>

@@ -1,0 +1,212 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Winternitz Einmal-Signaturverfahren (WOTS)</title>
+	</head>
+	<body>
+		<h1>Winternitz Einmal-Signaturverfahren (WOTS)</h1>
+		<h2>Inhaltsübersicht der Onlinehilfe zu WOTS</h2>
+		<p>
+		1) <a href="#general">Generelle Funktionsweise des Plugins</a></br>
+		1.1) <a href="#input">Eingabefelder</a></br>
+		1.2) <a href="#param">Parameter</a></br>
+		1.3) <a href="#button">Buttons</a></br></br>
+		2) <a href="#method">Winternitz OTS-Verfahren</a></br>
+		2.1) <a href="#keygen">Schlüsselerzeugung</a></br>
+		2.1.1) <a href="#usedParam">Verwendete Parameter</a></br>
+		2.1.2) <a href="#privkey">Privater Schlüssel (X)</a></br>
+		2.1.3) <a href="#pubkey">Öffentlicher Schlüssel (Y)</a></br></br>
+		2.2) <a href="#siggen">Signaturerzeugung</a></br>
+		2.2.1) <a href="#genB">Erzeugung des Vektors B</a></br>
+		2.2.2) <a href="#signature">Signatur</a></br>
+		2.3) <a href="#sigver">Signaturprüfung</a></br></br>
+		3) <a href="#genB">WOTS+</a></br>
+		3.1) <a href="#bitstring">Bitstring R</a></br>
+		3.2) <a href="#example">Beispiel</a></br></br>
+		4) <a href="#security">Sicherheit</a></br></br>
+                5) <a href="#links">Weiterführende Verweise</a></p>
+		
+		<p>Diese Visualisierung demonstriert das Winternitz Einmal-Signaturverfahren (WOTS).</p>
+		<p>WOTS ist ein Verfahren zum digitalen Signieren von Nachrichten.</br>
+		   Bei einem <b>Einmal</b>-Signaturverfahren wird ein Schlüsselpaar nur zum einmaligen
+		   Signieren einer einzigen Nachricht verwendet.</p>
+		
+		<p> </br> </p>
+		<h2 id="general">1) Generelle Funktionsweise des Plugins</h2>
+		
+		
+		<h3 id="input">1.1) Eingabefelder</h3>
+		<p>Alle "Eingabefelder" sind editierbar. Nur das Feld <b>Nachricht</b> ist vom Nutzer mit Text zu füllen; alle anderen Felder werden durch Drücken der Buttons <b>Schlüssel erstellen</b> oder <b>Signatur erstellen</b> berechnet. 
+                Auch die berechneten Felder bleiben editierbar, um die Korrektheit der Signaturprüfung zeigen zu können.</p>
+
+		<ul>
+		       <li><b>Nachricht</b> </br>
+			Man kann Nachrichten von Hand eingeben, den Inhalt einer Text-Datei laden
+		       	oder die voreingestellte Standard-Nachricht verwenden. Bei jeder Änderung der Nachricht werden die Felder
+		       	"Hash der Nachricht" und "b_i" automatisch aktualisiert, sofern Sie den Button "Details anzeigen" gedrückt haben.
+		       </li>
+		       <li><b>Hash der Nachricht</b> </br>
+			Dieses Feld beinhaltet den Hashwert der eingegebenen Nachricht.
+		       </li>
+		       <li><b>b_i</b> </br>
+			Dieses Feld beinhaltet den Wert von b_i (Näheres zu dessen Berechnung
+		       	siehe Kapitel <a href="#siggen">Signaturerzeugung</a>).
+		       </li>
+		       <li><b>Schlüssel</b> </br>
+			In diesen Feldern werden die berechneten Schlüssel angezeigt.
+		       </li>
+		       <li><b>Signatur</b> </br>
+			Dieses Feld beinhaltet die berechnete Signatur der gegebenen Nachricht.
+		       </li>
+	       	</ul>
+
+		<img src="images/empty.PNG" alt="empty">
+
+		<p> </br> </p>
+		<h3 id="param">1.2) Parameter</h3>
+		<ul> 
+		       <li><b>Winternitz-Parameter w</b> </br>
+			Bestimmt das Kompressionslevel bei der Schlüsselerzeugung. Man kann
+		       	beliebige ganze Zahlen größer 1 verwenden. Ein größeres w führt zu kleineren Schlüsseln und
+Signaturen, erhöht allerdings die Laufzeit der Algorithmen.
+		       </li>			
+		       <li><b>Hashfunktion</b> </br>
+			Man kann zwischen drei verschiedenen Hashfunktionen wählen: SHA-256, SHA-1
+		       	und MD5 (SHA-1 und MD5 sollten in der Praxis aufgrund von erfolgreichen
+			Kollisionsangriffen nicht mehr verwendet werden.)
+		       </li>			
+		       <li><b>WOTS/WOTS+</b> </br>
+			Man kann zwischen zwei Varianten umschalten. Bei diesem Wechsel
+		       	werden die Felder "Schlüssel", "Signatur" sowie "Nachricht"
+		       	zurückgesetzt. Details zum Unterschied der beiden Varianten
+		       	siehe Kapitel <a href="#wotsplus">WOTS+</a>.
+		       </li>			
+	       	</ul>
+
+		<p><b>Generelles zur Vermeidung von Falscheingaben:</b></br>
+	       	Unterhalb jedes editierbaren Feldes befindet sich eine Anzeige mit dem Ist- und Soll-Wert der Länge des Feldinhalts. Beim Editieren der Felder verändert sich der Ist-Wert dynamisch und färbt sich rot, wenn der Wert vom Soll-Wert der Länge abweicht.</br>
+		Im Nachrichtenfeld sind beliebige Zeichen verwendbar, in den restlichen Feldern jedoch nur gültige Hexadezimalziffern (0-9 und A-F). Wenn ungültige Zeichen eingegeben werden, färbt sich das jeweilige Feld rot.</br>
+		Solange ungültige Eingaben oder falsche Längen eingegeben sind, ist die Bearbeitung der restlichen Felder deaktiviert.</p>
+
+		<img src="images/small_1.PNG" alt="small_1">
+		<img src="images/small_2.PNG" alt="small_2">
+
+		<p> </br> </p>
+		<h3 id="button">1.3) Buttons</h3>
+		<ul> 
+		       <li><b>Nachricht aus Datei laden</b> </br>
+			Öffnet ein neues Fenster, in dem man eine Text-Datei auswählen kann. Deren Inhalt wird dann im Nachrichten-Feld angezeigt.
+		       </li>			
+		       <li><b>Schlüssel erstellen</b> </br>
+			Ein gültiges Schlüsselpaar wird berechnet und in den dazugehörigen Ausgabefeldern angezeigt. Details zur Berechnung siehe Kapitel <a href="#keygen">Schlüsselerzeugung</a>.
+		       </li>			
+		       <li><b>Signatur erstellen</b> </br>
+			Die Signatur wird mithilfe des verwendeten privaten Schlüssels berechnet und im Signaturfeld ausgegeben. Details zur Berechnung siehe Kapitel <a href="#siggen">Signaturerzeugung</a>.
+
+		       </li>			
+		       <li><b>Signatur prüfen</b> </br>
+			Die Signatur wird mit Hilfe des öffentlichen Schlüssels geprüft. Wenn die Signatur gültig ist, wird das Signaturfeld grün eingefärbt, anderenfalls rot.
+		       </li>			
+		       <li><b>Details anzeigen/verbergen</b> </br>
+			Mit diesem Button kann man zwischen einer Ansicht mit höherem Detailgrad und der normalen Ansicht umschalten. Als Details werden die zusätzlichen Textfelder „Hash der Nachricht“ und „b_i“ angezeigt beziehungsweise verborgen. Dies hat keine Auswirkung auf das Verfahren, sondern ist nur ein optisches Feature.
+		       </li>			
+		       <li><b>Reset</b> </br>
+			Löscht die berechneten Werte (Schlüssel und Signatur), verändert die restlichen Parameter jedoch nicht. D.h. die Nachricht bleibt erhalten.
+		       </li>			
+		       <li><b>Restart</b> </br>
+			Das Plugin wird auf den Ursprungszustand zurückgesetzt. Im Unterschied zum <b>Reset</b>-Button werden auch evtl. geänderte Parameter- und Nachrichtenwerte zurückgesetzt.
+		       </li>			
+	       	</ul>
+
+		<p>Zwischen den Buttons "Schlüssel erstellen", "Signatur erstellen" und "Signatur prüfen" besteht eine Abhängigkeit bzgl. ihrer Aktivierung: Der Button "Signatur erstellen" wird erst aktiviert, wenn Schlüssel erstellt worden sind; und der Button "Signatur prüfen" wird erst aktiviert, wenn eine Signatur erstellt worden ist.</p>
+
+
+
+		<p> </br> </p>
+		<h2 id="method">2) Winternitz OTS-Verfahren</h2>
+		<h3 id="keygen">2.1) Schlüsselerzeugung</h3>
+		<h4 id="usedParam">2.1.1) Verwendete Parameter</h4>
+		<ul> 
+		       <li><b>n = Größe eines Blocks in byte</b> </br>
+			       Die Größe der Blöcke wird von der jeweiligen Hashfunktion bestimmt (z.B. erzeugt SHA-256 einen 32 byte (256 bit) großen Hash-Wert --> Blockgröße ist 32 byte).
+		       </li>			
+		       <li><b>m = Hashwert-Länge der Nachricht in bit</b> </br>
+			       Somit hat der Hashwert der Nachricht bei SHA-256 eine Länge von 256 bit.
+		       </li>			
+		       <li><b>t = Anzahl der Blöcke jedes Schlüssels</b> </br>
+			       Die Anzahl t wird in zwei Schritten berechnet, und die Ergebnisse beider Berechnungen (t_1, t_2) werden addiert.
+		       </li>			
+		       <li><b>t_1 = m/log2(w) = Anzahl der Blöcke, die aus einer Nachricht generiert werden</b> </br>
+			        Die Blöcke werden aus der Nachrichtenlänge generiert. Das Ergebnis t_1 wird aufgerundet.
+		       </li>			
+		       <li><b>t_2 = (log2(l_1(w-1))/log2(w))+1 = Anzahl der Blöcke, die aus der Checksum generiert werden</b> </br>
+			       Die Blöcke werden aus der Checksum C (siehe unten) generiert. Das Ergebnis t_2 wird abgerundet.
+		       </li>			
+		       <li><b>t = t_1 + t_2</b> </br>
+		       </li>			
+	       	</ul>
+
+		<h4 id="privkey">2.1.2) Privater Schlüssel (X)</h4>
+		Der private Schlüssel X besteht aus t Blöcken. Jeder Block besteht aus n pseudozufällig erzeugten Bytes.</p>
+
+		<h4 id="pubkey">2.1.3) Öffentlicher Schlüssel (Y)</h4>
+		Der öffentliche Schlüssel Y besteht ebenfalls aus t Blöcken. Y leitet sich vom privaten Schlüssel X ab, indem die einzelnen Blöcke des privaten Schlüssels jeweils w-1 mal die Hashfunktion durchlaufen.</p>
+
+		<img src="images/keys.PNG" alt="keys">
+		
+		<p> </br> </p>
+		<h3 id="siggen">2.2) Signaturerzeugung</h3>
+		<h4 id="genB">2.2.1) Erzeugung des Vektors B</h4>
+		<b>B</b> setzt sich aus t Blöcken zusammen. Zur Berechnung wird zum Nachrichtenhash m (mit m ist hier immer der Hashwert der eigentlichen Nachricht gemeint) eine Checksum C berechnet. Dazu wird vorher m zur Basis w dargestellt.</p>
+		<p><b>C</b> = Checksum = Summe aus w-1-M_i mit 1 <= i <= l_1. </p>
+		<p>Nun werden beide Werte m und C jeweils zur Basis w dargestellt; das Ergebnis bilden insgesamt t Werte (m zur Basis w resultiert in t_1 Werte, C resultiert in t_2 Werte). Um genau auf die Werte  t_1 und t_2 zu kommen, wird eine ausreichende Anzahl an "0" vorangestellt.</p>
+		<p>Zur weiteren Berechnung werden diese t Blöcke des Vektors B als natürliche Zahl (Integer) interpretiert.</p>
+		<p><b>Beispiel:</b> Block b_i  = 0111 = 7</p>
+
+		<p> </br> </p>
+		<h4 id="signature">2.2.2) Signatur</h4>
+		Zur Erstellung der Signatur (welche ebenfalls aus t Blöcken besteht) durchläuft jeder Block X_i des privaten Schlüssels genau b_i mal die verwendete Hashfunktion. Das Ergebnis ist die Signatur sig.</p>
+
+		<img src="images/signature.PNG" alt="signature">
+
+		<p> </br> </p>
+		<h3 id="sigver">2.3) Signaturprüfung</h3>
+		Um die Signatur zu überprüfen, wird der Vektor B berechnet wie in Punkt <a href="#genB">2.2.1</a>.
+		Nun durchläuft jeder Block sig_i der Signatur genau w - 1 - b_i mal die verwendete Hashfunktion. Diese Prüfsignatur besteht also aus den Blöcken des privaten Schlüssels, die jeweils w-1 mal (b_i + w - 1 - b_i) die Hashfunktion durchlaufen haben. Da das die gleiche Berechnung wie die des öffentlichen Schlüssels ist, werden nun die Blöcke mit denen des öffentlichen Schlüssels verglichen. Wenn keine Abweichungen vorhanden sind, ist die Signatur korrekt.</p>
+
+		<img src="images/validated.PNG" alt="validated">
+
+		<p> </br> </p>
+		<h2 id="wotsplus">3) WOTS+</h2>
+		<p>Bei WOTS+ unterscheidet sich die Verarbeitung der einzelnen Blöcke geringfügig gegenüber WOTS. Hier wird zuerst ein zusätzlicher Bitstring R erzeugt, der aus w-1, n-bit großen Blöcken besteht. Bei der Berechnung des x-ten Hashes wird der Wert vorher mit dem x-ten Block von R geXORt.</p>
+
+		<h3 id="bitstring">3.1) Bitstring R</h3>
+		<b>R</b> besteht aus w-1 Blöcken, die jeweils aus n pseudozufälligen Bits bestehen. Diese Blöcke werden beim öffentlichen Schlüssel Y vorne angehängt.</p>
+
+		<h3 id="example">3.2) Beispiel</h3>
+		<b>Berechnung des ersten Blocks des öffentlichen Schlüssels (Y_1):</b> Bevor der Block X_1 von der Hashfunktion verarbeitet wird, wird auf ihn ein XOR mit dem ersten Block des Vektors R, also R_1, angewandt. Vor dem zweiten Hashvorgang wird ein XOR mit R_2 durchgeführt. Da der Block w-1 mal die Hashfunktion durchläuft, besteht R auch aus w-1 Blöcken. </br></br>
+		<b>Berechnung des ersten Blocks der Prüfsignatur:</b> Angenommen b_1 = 6 und w = 10, dann wird sig_1 in w - 1 - b_i = 3 Runden bearbeitet.  Beim ersten Block wird nicht R_1 verwendet, sondern R_(b_i + 1), um auf den korrekten Wert zu kommen, der sich mit Y_1 (erster Block des öffentlichen Schlüssels) abgleichen lässt.</p>
+
+		<img src="images/wotsplus.PNG" alt="wotsplus">
+
+		<p> </br> </p>
+		<h2 id="security">4) Sicherheit</h2>
+		<p>Für beide Verfahren gilt, dass ein Schlüsselpaar nur zum einmaligen Signieren (Einmal-Signatur) verwendet werden darf, da ein Angreifer ansonsten Teile des privaten Schlüssels lernen kann. Um dieses Problem zu lösen, gibt es Methoden, bei denen viele öffentliche Einmal-Signatur-Schlüssel mit Hilfe eines binären Hashbaumes durch einen einzigen Hashwert authentifiziert werden (siehe Merkle-Bäume).</br></br>
+
+		Die Sicherheit hängt stark von der verwendeten Hashfunktion ab. Bei WOTS muss diese kollisionsresistent sein, bei WOTS+ 2nd-preimage-resistent. D.h. WOTS+ stellt geringere Anforderungen an die Hashfunktion, ist jedoch auch komplexer in der Berechnung.</p>
+		<p> </br> </p>
+                
+                
+
+                <h2 id="links">5.) Weiterführende Verweise</h2>
+                <p>Weitere Informationen zum Thema Kryptographie und Winternitz Einmal-Signaturverfahren (WOTS) finden Sie beispielsweise unter:</p>
+                <ul>
+                        <li><a href="https://de.wikipedia.org/wiki/Merkle-Signatur">Merkle-Signatur in der deutschen Wikipedia</a></li>
+                        <li><a href="https://eprint.iacr.org/2011/191.pdf">Sicherheit von WOTS ("On the Security of the Winternitz One-Time Signature Scheme", 2011)</a></li>
+						<li><a href="https://eprint.iacr.org/2011/484.pdf">XMSS ("XMSS -- A Practical Forward Secure Signature Scheme based on Minimal Security Assumptions", 2011)</a></li>
+						<!--<li></li>-->
+                
+                </ul>
+		<p> </br> </p>
+	</body>
+</html>
