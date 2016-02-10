@@ -29,6 +29,7 @@ import org.jcryptool.core.operations.dataobject.IDataObject;
 import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfigurationWithKey;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 import org.jcryptool.crypto.classic.substitution.SubstitutionPlugin;
 import org.jcryptool.crypto.classic.substitution.ui.SubstitutionWizard;
 
@@ -49,7 +50,7 @@ public class SubstitutionAlgorithmHandler extends AbstractAlgorithmHandler {
 	public Object execute(ExecutionEvent event) {
 
 		final SubstitutionWizard wizard = new SubstitutionWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {

@@ -31,6 +31,7 @@ import org.jcryptool.core.operations.dataobject.classic.ClassicDataObject;
 import org.jcryptool.crypto.classic.doppelkasten.DoppelkastenPlugin;
 import org.jcryptool.crypto.classic.doppelkasten.ui.DoppelkastenWizard;
 import org.jcryptool.crypto.classic.model.algorithm.ClassicAlgorithmConfiguration;
+import org.jcryptool.crypto.classic.model.ui.wizard.ClassicWizardDialog;
 
 /**
  * The DoppelkastenAlgorithmHandler class is a specific
@@ -58,7 +59,7 @@ public class DoppelkastenAlgorithmHandler extends AbstractAlgorithmHandler{
 	@Override
 	public Object execute(ExecutionEvent event) {
 		final DoppelkastenWizard wizard = new DoppelkastenWizard();
-		final WizardDialog dialog = new WizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
+		final WizardDialog dialog = new ClassicWizardDialog(getActiveWorkbenchWindow().getShell(), wizard);
 		dialog.setHelpAvailable(true);
 
 		if (dialog.open() == Window.OK) {

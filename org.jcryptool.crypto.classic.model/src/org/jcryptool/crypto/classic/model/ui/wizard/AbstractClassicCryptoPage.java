@@ -177,6 +177,7 @@ public class AbstractClassicCryptoPage extends WizardPage {
         pageCompositeLayoutData.grabExcessVerticalSpace = true;
         pageCompositeLayoutData.horizontalAlignment = SWT.FILL;
         pageCompositeLayoutData.verticalAlignment = SWT.FILL;
+        pageCompositeLayout.verticalSpacing = 13;
         pageComposite = new Composite(parent, SWT.NULL);
         pageComposite.setLayout(pageCompositeLayout);
         pageComposite.setLayoutData(pageCompositeLayoutData);
@@ -684,12 +685,12 @@ public class AbstractClassicCryptoPage extends WizardPage {
 
         alphabetGroup.setLayoutData(alphabetGroupGridData);
         alphabetGroup.setLayout(alphabetGroupGridLayout);
-        alphabetGroup.setText(Messages.WizardPage_alpha);
 
         alphabetInnerGroup = new Composite(alphabetGroup, SWT.NONE);
 
         GridLayout alphabetInnerGroupGridLayout = new GridLayout();
         alphabetInnerGroupGridLayout.numColumns = 3;
+        alphabetInnerGroupGridLayout.marginWidth = 0;
 
         GridData alphabetInnerGroupGridData = new GridData();
         alphabetInnerGroupGridData.horizontalAlignment = GridData.FILL;
@@ -771,7 +772,9 @@ public class AbstractClassicCryptoPage extends WizardPage {
             customAlphaHint.setForeground(SWTResourceManager.getColor(SWT.COLOR_DARK_GRAY));
             customAlphaHint.setFont(SWTResourceManager.getFont("Segoe UI", 8, SWT.ITALIC)); //$NON-NLS-1$
         }
-
+        
+        createCustomAlphaGroupObjects(alphabetInnerGroup);
+        
         filterCheckBox = new Button(alphabetInnerGroup, SWT.CHECK);
 
         GridData filterCheckBoxGridData = new GridData();
@@ -786,7 +789,12 @@ public class AbstractClassicCryptoPage extends WizardPage {
         filterCheckBox.setLayoutData(filterCheckBoxGridData);
     }
 
-    /**
+    protected void createCustomAlphaGroupObjects(Composite innerGroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
      * This method initializes transformaGroup, providing the transformation controls <br>
      * Subclasses should override this, if more controls are needed. *
      */

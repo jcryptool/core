@@ -23,7 +23,11 @@ public class CaesarKeyInput extends Composite {
 	public CaesarKeyInput(Composite parent, int style) {
 		super(parent, style);
 		
-		this.setLayout(new GridLayout(4, false));
+		GridLayout layout = new GridLayout(4, false);
+		layout.marginWidth = 0;
+		layout.marginHeight = 0;
+		
+		this.setLayout(layout);
 		
 		passwordLabel = new Label(this, SWT.NONE);
 		GridData pwdLabelData = new GridData(SWT.FILL, SWT.CENTER, false, false);

@@ -54,6 +54,10 @@ public class AbstractClassicWizard extends Wizard {
 		return true;
 	}
 	
+	public AbstractClassicCryptoPage getPrimaryPage() {
+		return page;
+	}
+	
 	/**
 	 * Returns the selected key.
 	 * 
