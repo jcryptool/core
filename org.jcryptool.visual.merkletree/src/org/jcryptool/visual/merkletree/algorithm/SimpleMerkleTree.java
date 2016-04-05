@@ -1,0 +1,345 @@
+package org.jcryptool.visual.merkletree.algorithm;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+
+public class SimpleMerkleTree implements ISimpleMerkle {
+
+	int keyLength;
+
+	int keyIndex;
+	byte[] privateSeed;
+	byte[] publicSeed;
+	boolean treeGenerated;
+	OTS otsAlgo;
+
+	// ArrayList<MerkleTreeNode> leaves = new ArrayList<>();
+	// ArrayList<ArrayList<MerkleTreeNode>> merkleTreeHeight;
+	// ArrayList<MerkleTreeNode> merkleTreeRow = null;
+
+	ArrayList<Node> tree = new ArrayList<Node>();
+	ArrayList<Node> leaves = new ArrayList<Node>();
+	// ArrayList<ArrayList<Node>> merkleTreeHeight;
+	// ArrayList<Node> merkleTreeRow = null;
+
+	MessageDigest mDigest;
+	ArrayList<byte[][]> privKeys = new ArrayList<byte[][]>();
+	ArrayList<byte[][]> publicKeys = new ArrayList<byte[][]>();
+	int leafCounter = 0;
+	int leafNumber = 0;
+
+	SimpleMerkleTree(int keyLength, int leafCounter) {
+		this.keyLength = keyLength;
+		this.leafCounter = leafCounter;
+		this.treeGenerated = false;
+	}
+
+	public SimpleMerkleTree(byte[] privateSeed, byte[] publicSeed, int keyLength, int leafCounter) {
+		this.privateSeed = privateSeed;
+		this.publicSeed = publicSeed;
+		this.keyLength = keyLength;
+		this.treeGenerated = false;
+		this.keyIndex = 0;
+		this.leafCounter = leafCounter;
+	}
+
+	@Override
+	public void addPrivateSeed(byte[] privateSeed) {
+		this.privateSeed = privateSeed;
+
+	}
+
+	@Override
+	public void addPublicSeed(byte[] publicSeed) {
+		this.publicSeed = publicSeed;
+	}
+
+	@Override
+	public void addTreeLeaf(byte[] LeafContent, String pubKey) {
+		Node leafNode = new Node(LeafContent, true, ++this.leafNumber);
+		leafNode.setCode(pubKey);
+		leaves.add(leafNode);
+	}
+
+	@Override
+	public byte[] getMerkleRoot() {
+
+		for (int i = 0; i < tree.size(); i++) {
+			if (tree.get(i).getParent() == null) {
+				return tree.get(i).getName();
+			}
+		}
+		return null;
+		// return merkleTreeHeight.get(getTreeHeight()).get(0).getContent();
+	}
+
+	@Override
+	public byte[] getPrivateSeed() {
+		// TODO Auto-generated method stub
+		return privateSeed;
+	}
+
+	@Override
+	public byte[] getPublicSeed() {
+		// TODO Auto-generated method stub
+		return publicSeed;
+	}
+
+	@Override
+	public int getKeyLength() {
+		return keyLength;
+	}
+
+	@Override
+	public int getLeafCounter() {
+		return leafCounter;
+	}
+
+	@Override
+	public ArrayList<Node> getTree() {
+		return this.tree;
+	}
+
+	@Override
+	public boolean isGenerated() {
+		return treeGenerated;
+	}
+
+	@Override
+	public Node getTreeLeaf(int treeLeafNumber) {
+
+		return leaves.get(treeLeafNumber);
+	}
+
+	@Override
+	public byte[] getNodeContentbyIndex(int index) {
+
+		return tree.get(index).getName();
+	}
+
+	@Override
+	public void generateMerkleTree() {
+
+		int height = getTreeHeight();
+
+		if (height == 0) {
+			return;
+		}
+		// int tHorizontal = leafCounter;
+
+		tree = new ArrayList<Node>();
+		tree.addAll(leaves);
+		Node helperNode;
+		ArrayList<Node> treeLevel = new ArrayList<Node>();
+		int index = 0;
+		int levelCount;
+		int NodeLevelCounter = tree.size();
+		int treeIndex = 0;
+		for (levelCount = 0; levelCount < height; levelCount++) {
+			treeLevel = new ArrayList<Node>();
+			NodeLevelCounter = (int) Math.round(NodeLevelCounter / 2.0);
+
+			for (index = 0; index < NodeLevelCounter; index++, treeIndex += 2) {
+				if (treeIndex + 1 < tree.size()) {
+					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex + 1));
+					helperNode = new Node(content, tree.get(treeIndex), tree.get(treeIndex + 1));
+					treeLevel.add(helperNode);
+					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
+					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex + 1));
+					tree.get(treeIndex).setParent(treeLevel.get(index));
+					tree.get(treeIndex + 1).setParent(treeLevel.get(index));
+				} else {
+					byte[] content = hashingContent(tree.get(treeIndex), tree.get(treeIndex));
+					helperNode = new Node(content, false, 0);
+					helperNode.setLeft(tree.get(treeIndex));
+					treeLevel.add(helperNode);
+					treeLevel.get(index).getConnectedTo().add(tree.get(treeIndex));
+					tree.get(treeIndex).setParent(treeLevel.get(index));
+				}
+
+			}
+			treeIndex = tree.size();
+			tree.addAll(treeLevel);
+		}
+		/*
+		 * for (int i = 0; i < height-1; i++) { int nextRowNode = 0;
+		 * 
+		 * for (int j = 0; j < tHorizontal; j += 2) {
+		 * 
+		 * byte[] content = hashingContent(tree.get(i), tree.get(i+1));
+		 * helperNode = new Node(content, tree.get(i), tree.get(i+1));
+		 * tree.add(helperNode); nextRowNode++;
+		 * 
+		 * } if (tHorizontal % 2 == 1) { byte[] content =
+		 * hashingContent(merkleTreeHeight.get(i).get((tHorizontal - 1)),
+		 * merkleTreeHeight.get(i).get((tHorizontal - 1))); helperNode = new
+		 * MerkleTreeNode(i + 1, nextRowNode + 1, content);
+		 * merkleTreeRow.add(helperNode); }
+		 * 
+		 * merkleTreeHeight.add(merkleTreeRow); }
+		 */
+		treeGenerated = true;
+	}
+
+	byte[] hashingContent(Node a, Node b) {
+		byte[] toHash = appendByteArrays(a.getName(), b.getName());
+
+		return mDigest.digest(toHash);
+	}
+
+	byte[] appendByteArrays(byte[] array1, byte[] array2) {
+		byte[] appended;
+		String String1 = array1.toString();
+		String String2 = array2.toString();
+		String String3 = String1 + String2;
+
+		appended = String3.getBytes();
+
+		return appended;
+	}
+
+	public int getTreeHeight() {
+		/*
+		 * int height = 1; double helper = (double) Leaves.size();
+		 * 
+		 * if(helper == 0){ return 0; }
+		 * 
+		 * 
+		 * do { height++;
+		 * 
+		 * }while ((Math.ceil(helper /= 2)) > 1);
+		 * 
+		 * return height;
+		 */
+
+		return Integer.bitCount(Integer.highestOneBit(this.leafCounter - 1) * 2 - 1);
+
+	}
+
+	@Override
+	public void selectHashAlgorithmus(String hAlgo) {
+		try {
+			mDigest = MessageDigest.getInstance(hAlgo);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Do stuff with it!
+			e.printStackTrace();
+			try {
+				mDigest = MessageDigest.getInstance("SHA256");
+			} catch (NoSuchAlgorithmException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+
+	@Override
+	public void selectOneTimeSignatureAlgorithmus(String hash, String algo) {
+		switch (algo) {
+		case "WOTS":
+			this.otsAlgo = new WinternitzOTS(16, hash);
+			break;
+		case "WOTSPlus":
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			break;
+		default:
+			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			break;
+		}
+		if (this.mDigest == null) {
+			try {
+				mDigest = MessageDigest.getInstance(hash);
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		this.generateKeyPairsAndLeaves();
+	}
+
+	@Override
+	public String sign(String message) {
+		String tmpSignature="";
+		int iHeight = this.keyIndex;
+		int treeHeight = tree.size();
+		
+		if(this.keyIndex < this.privKeys.size()) {
+			
+			String messageHash = org.jcryptool.visual.merkletree.files.Converter
+					._byteToHex(this.otsAlgo.hashMessage(message));
+			String b = org.jcryptool.visual.merkletree.files.Converter
+					._byteToHex(this.otsAlgo.initB());
+			
+			this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
+			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
+			this.otsAlgo.setMessage(message.getBytes());
+			this.otsAlgo.sign();
+	
+			tmpSignature = org.jcryptool.visual.merkletree.files.Converter
+					._byteToHex(this.otsAlgo.getSignature());// to-be-done
+
+			tmpSignature += "\r\n" + Integer.toString(this.keyIndex)+"\r\n";
+			
+			while (iHeight < treeHeight-1) {
+				if(this.tree.get(iHeight).getParent().getLeft().equals(this.tree.get(iHeight))) {
+					tmpSignature= tmpSignature+ '|'+this.tree.get(iHeight).getParent().getRight().getNameAsString();
+				}
+				else if (this.tree.get(iHeight).getParent().getRight().equals(this.tree.get(iHeight))) {
+					tmpSignature = tmpSignature + '|' + this.tree.get(iHeight).getParent().getLeft().getNameAsString();
+				}
+				iHeight=this.tree.lastIndexOf(this.tree.get(iHeight).getParent());
+			}
+			this.keyIndex++;
+		}
+		return tmpSignature; // OTS Signatur+tmpSignature to byte array
+	}
+
+	@Override
+	public boolean verify(String message, String signature) {
+		String[] signer = signature.split("|");
+		boolean verifier;
+		int keyIndex = Integer.parseInt(signer[signer.length - 1]);
+		byte[][] curPubKey = this.publicKeys.get(keyIndex);
+		otsAlgo.setPublicKey(curPubKey);
+		otsAlgo.setSignature(signer[0].getBytes());
+		verifier = otsAlgo.verify();
+		if (verifier) {
+			if (keyIndex % 2 == 0)
+				this.appendByteArrays(leaves.get(keyIndex).getName(), signer[1].getBytes());
+			for (int i = 1; i < signer.length; i++) {
+				// TODO: GenerateRootKey
+
+			}
+		}
+		return verifier;
+	}
+
+	private void generateKeyPairsAndLeaves() {
+		Node leaf;
+		byte[] d1pubKey;
+		String code;
+		for (int i = 0; i < this.leafCounter; i++) {
+			this.otsAlgo.generateKeyPair();
+			this.privKeys.add(this.otsAlgo.getPrivateKey());
+			this.publicKeys.add(this.otsAlgo.getPublicKey());
+			// Frage byte[][] zu byte[] ?????
+			d1pubKey = org.jcryptool.visual.merkletree.files.Converter._hexStringToByte(
+					org.jcryptool.visual.merkletree.files.Converter._2dByteToHex(this.otsAlgo.getPublicKey()));
+			leaf = new Node(this.mDigest.digest(d1pubKey), true, i);
+			this.leafNumber++;
+			code= org.jcryptool.visual.merkletree.files.Converter
+					._byteToHex(d1pubKey).substring(0, 5);
+			code+="...";
+			code+= org.jcryptool.visual.merkletree.files.Converter
+					._byteToHex(d1pubKey).substring(d1pubKey.length-5, d1pubKey.length);
+			leaf.setCode(code);
+			this.leaves.add(leaf);
+		}
+		
+	}
+	@Override
+	public OTS getOneTimeSignatureAlgorithmus() {
+		return this.otsAlgo;
+	}
+}
