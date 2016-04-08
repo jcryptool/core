@@ -88,6 +88,7 @@
 	<module>org.jcryptool.visual.kleptography</module>
 	<module>org.jcryptool.visual.library</module>
 	<module>org.jcryptool.visual.merkleHellman</module>
+	<module>org.jcryptool.visual.merkleTree</module>
 	<module>org.jcryptool.visual.pairingbd2</module>
 	<module>org.jcryptool.visual.rsa</module>
 	<module>org.jcryptool.visual.secretsharing</module>
