@@ -8,6 +8,6 @@
 		<version>0.9.9</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.jcryptool.visual.merkletree</artifactId>
+	<artifactId>org.jcryptool.visual.merkleTree</artifactId>
 	<packaging>eclipse-plugin</packaging>
 </project>
