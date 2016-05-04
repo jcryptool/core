@@ -23,7 +23,7 @@ public class Node {
 	// has to be done
 	private List<Node> connections;
 	// if leaf, number of the leaf
-	private int leafNumber;
+	private int leafNumber=-1;
 	// Representation of the Public Key (ONLY LEAFS!!!)
 	private String code;
 

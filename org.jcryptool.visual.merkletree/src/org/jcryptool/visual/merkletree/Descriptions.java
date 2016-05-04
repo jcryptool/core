@@ -25,6 +25,7 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeView_0;
 	public static String MerkleTreeView_1; 
 	public static String MerkleTreeView_2; 
+	public static String MerkleTreeView_3;
 
 	public static String MerkleTree_Generation_Info;
 	public static String ZestLabelProvider_0;
@@ -58,6 +59,15 @@ public class Descriptions extends NLS {
 	public static String MerkleTreeSign_6;
 	public static String MerkleTreeSign_7;
 	
+	public static String MerkleTreeVerify_0;
+	public static String MerkleTreeVerify_1;
+	public static String MerkleTreeVerify_2;
+	public static String MerkleTreeVerify_3;
+	public static String MerkleTreeVerify_4;
+	
+	public static String MerkleTree_Signature_Generation_Info;
+	
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Descriptions.class);

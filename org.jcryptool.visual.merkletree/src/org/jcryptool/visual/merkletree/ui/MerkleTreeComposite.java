@@ -1,5 +1,6 @@
 package org.jcryptool.visual.merkletree.ui;
 
+import org.eclipse.osgi.service.resolver.DisabledInfo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -10,7 +11,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
-import org.jcryptool.core.util.fonts.FontService;
+//import org.jcryptool.core.util.fonts.FontService;
 import org.jcryptool.visual.merkletree.Descriptions;
 
 /**
@@ -47,12 +48,15 @@ public class MerkleTreeComposite extends Composite {
 		combo.add(Descriptions.CompositeDescriptionXMSS);
 		combo.setEnabled(false);
 		combo.addSelectionListener(new SelectionAdapter() {
+			
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				if( combo.getText().equals(Descriptions.CompositeDescriptionXMSS))
+					
 				if (combo.getSelectionIndex() == 0) {
 					extended = false;
 
-				} else if (combo.getSelectionIndex() == 0) {
+				} else if (combo.getSelectionIndex() == 1) {
 					extended = true;
 				}
 				seedc = new MerkleTreeSeed(descr, SWT.WRAP | SWT.BORDER | SWT.LEFT, extended, masterView);
@@ -62,7 +66,7 @@ public class MerkleTreeComposite extends Composite {
 		// the heading of the description; is not selectable by mouse
 		Label descLabel = new Label(descr, SWT.NONE);
 		descLabel.setText(Descriptions.CompositeDescriptionMerkleTree);
-		descLabel.setFont(FontService.getHeaderFont());
+		//descLabel.setFont(FontService.getHeaderFont());
 
 		// this divide has been made to allow selection of text in this section
 		// but not of the

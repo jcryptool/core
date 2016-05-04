@@ -17,6 +17,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.zest.core.viewers.GraphViewer;
 import org.eclipse.zest.core.viewers.IZoomableWorkbenchPart;
@@ -40,7 +41,7 @@ import org.jcryptool.visual.merkletree.algorithm.Node;
  * @author Kevin Muehlboeck
  *
  */
-public class MerkleTreeZestComposite extends Composite implements IZoomableWorkbenchPart {
+public class MerkleTreeVerifikationComposite extends Composite implements IZoomableWorkbenchPart {
 
 	//private Composite parent;
 	private Composite compositeTree;
@@ -60,7 +61,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 	 * @param parent
 	 * @param style
 	 */
-	public MerkleTreeZestComposite(Composite parent, int style, ISimpleMerkle merkle) {
+	public MerkleTreeVerifikationComposite(Composite parent, int style, ISimpleMerkle merkle, int leafNumber, String signature, String message) {
 		super(parent, style);
 		this.setLayout(new GridLayout(MerkleConst.H_SPAN_MAIN, true));
 		//this.merkle = merkle;
@@ -80,7 +81,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		});
 		// the heading of the description; is not selectable by mouse
 		Label descLabel = new Label(compositeTree, SWT.NONE);
-		descLabel.setText(Descriptions.MerkleTreeView_1);
+		descLabel.setText(Descriptions.MerkleTreeView_3);
 		//descLabel.setFont(FontService.getHeaderFont());
 
 		// this divide has been made to allow selection of text in this section
@@ -88,14 +89,46 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		// heading
 		// while not allowing modification of either section
 		StyledText descText = new StyledText(compositeTree, SWT.WRAP);
-		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 2));
+		descText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
 		descText.setCaret(null);
-		descText.setText(Descriptions.ZestLabelProvider_4);
+		descText.setText(Descriptions.MerkleTreeVerify_0);
 		descText.setEditable(false);
 		compositeTree.setLayout(new GridLayout(1, true));
-
-		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP);
-		styledTextTree.setText(Descriptions.ZestLabelProvider_7);
+		Button bt_Verify = new Button(compositeTree,SWT.WRAP);
+		bt_Verify.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1));
+		bt_Verify.setText(Descriptions.MerkleTreeVerify_1);
+		bt_Verify.addSelectionListener(new SelectionAdapter() {
+			/* (non-Javadoc)
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 * Event to verify a signature
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int currentLeaf=-1;
+				for(GraphConnection con : markedConnectionList) {
+					/*if(((Node)con.getSource().getData()).getLeafNumber()>=0) {
+						currentLeaf=((Node)con.getSource().getData()).getLeafNumber();
+					}*/
+					if(((Node)con.getDestination().getData()).getLeafNumber() >=0) {
+						currentLeaf=((Node)con.getDestination().getData()).getLeafNumber();
+					}
+					/*if(((Node)con.getData()).getLeafNumber() >= 0) {
+						currentLeaf=((Node)con.getData()).getLeafNumber();
+					}*/
+				}
+				if(currentLeaf >= 0) {
+					if(merkle.verify(message, signature,currentLeaf))
+						styledTextTree.setText("Signatur wurde mit ausgew\u00E4hlten Knoten erfolgreich verifiziert!");
+					else
+						styledTextTree.setText("Signatur konnte mit dem gew\u00E4hlten Knoten nicht erfolgreich verifiziert werden!");
+				}
+				else {
+					styledTextTree.setText("Bitte wählen Sie ein Blatt aus um die Signatur zu verifizieren. Ein Knoten kann nicht als gültiger öffentlicher Schlüssel verwendet werden!");
+				}
+			}
+		});
+		styledTextTree = new StyledText(compositeTree, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.H_SCROLL);
+		styledTextTree.setText(Descriptions.MerkleTreeVerify_4+signature);
 		// styledTextTree.setFont(FontService.getNormalFont());
 
 		GridData gd_styledTextTree = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
@@ -113,6 +146,23 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 		control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
 		Graph graph = viewer.getGraphControl();
+		
+		List<GraphNode> gNodes = graph.getNodes();
+		for(GraphNode gnode : gNodes) {
+			if(((Node)gnode.getData()).getLeafNumber() == leafNumber) {
+				if (markedConnectionList.size() == 0) {
+					markBranch(gnode);
+					markAuthPath(markedConnectionList);
+				} else {
+					unmarkBranch(markedConnectionList);
+					markedConnectionList.clear();
+					markBranch(gnode);
+					markAuthPath(markedConnectionList);
+				}
+			}
+		}
+		
+		
 		graph.addSelectionListener(new SelectionAdapter() {
 			/* (non-Javadoc)
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
@@ -127,9 +177,9 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 					if (n.isLeaf()) {
 						styledTextTree.setForeground(new Color(null, new RGB(1, 70, 122)));
 						// styledTextTree.setFont(FontService.getHugeFont());
-						styledTextTree.setText(
+						/*styledTextTree.setText(
 								Descriptions.ZestLabelProvider_5 + " " + n.getCode() + ") = " + n.getNameAsString()); //$NON-NLS-1$ //$NON-NLS-2$
-
+						*/
 						if (markedConnectionList.size() == 0) {
 							markBranch(node);
 							markAuthPath(markedConnectionList);
@@ -150,7 +200,7 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 						styledTextTree.setForeground(new Color(null, new RGB(0, 0, 0)));
 						styledTextTree.setAlignment(SWT.LEFT);
 						// styledTextTree.setFont(FontService.getNormalFont());
-						styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
+						// styledTextTree.setText(Descriptions.ZestLabelProvider_6 + n.getNameAsString());
 					}
 
 					/*
@@ -301,7 +351,6 @@ public class MerkleTreeZestComposite extends Composite implements IZoomableWorkb
 			LayoutAlgorithm layout = new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING);
 			viewer.setLayoutAlgorithm(layout, true);
 			viewer.applyLayout();
-			styledTextTree.setText(Descriptions.ZestLabelProvider_7);
 		}
 
 	}

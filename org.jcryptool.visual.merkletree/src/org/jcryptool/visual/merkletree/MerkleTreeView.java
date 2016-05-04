@@ -24,6 +24,7 @@ import org.jcryptool.visual.merkletree.ui.MerkleTreeComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeKeyPairs;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSeed;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeSignatureComposite;
+import org.jcryptool.visual.merkletree.ui.MerkleTreeVerifikationComposite;
 import org.jcryptool.visual.merkletree.ui.MerkleTreeZestComposite;
 
 /**
@@ -48,6 +49,7 @@ public class MerkleTreeView extends ViewPart {
 	private MerkleTreeComposite mtC;
 	private MerkleTreeZestComposite mtZ;
 	private MerkleTreeSignatureComposite mtS;
+	private MerkleTreeVerifikationComposite mtV;
 	private ISimpleMerkle merkle;
 
 
@@ -125,12 +127,11 @@ public class MerkleTreeView extends ViewPart {
 				//Kevin, 29.01.2016 generate new merkleTree
 				if(seedCheck.length > 0) {
 					if(!Arrays.equals(seedCheck, merkle.getPrivateSeed()) || keyCheck != merkle.getLeafCounter()) {
+						
 						//merkle neu zuweisen
 						merkle = new SimpleMerkleTree(seedCheck,seedCheck,128,keyCheck);
 						merkle.selectOneTimeSignatureAlgorithmus("SHA-256","WOTSPlus");
 						merkle.generateMerkleTree();
-						//mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-						//mtZ=new MerkleTreeZestComposite(tabFolder,SWT.NONE,merkle);
 						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
 							tabFolder.getSelection()[0].setControl(mtS);
 						}
@@ -167,9 +168,42 @@ public class MerkleTreeView extends ViewPart {
 					/*if(mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_3)
 							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_4)
 							|| mtS.getSignatureFromForm().equals(Descriptions.MerkleTreeSign_5)) {
-						mtS = new MerkleTreeSignatureComposite(tabFolder, SWT.NONE, merkle);
+						//mtS.setSignatureFromForm(Descriptions.MerkleTreeSign_3);
+						mtZ=mtZ;
 					}*/
 					tabFolder.getSelection()[0].setControl(mtS);
+				}
+				if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && merkle.isGenerated()) {
+					if(!mtS.getSignatureFromForm().isEmpty()) {
+						String signature=mtS.getSignatureFromForm();
+						String[]splittedSign = signature.split("\r\n");
+						String otSign = "";
+						String keyIndex = "";
+						String message;
+						message=mtS.getMessageFromForm();
+						if(splittedSign.length> 1){
+							otSign =splittedSign[0];
+							keyIndex =splittedSign[1];
+						}
+						mtV=new MerkleTreeVerifikationComposite(tabFolder, SWT.NONE, merkle, Integer.parseInt(keyIndex),signature,message);
+						tabFolder.getSelection()[0].setControl(mtV);
+						
+					}
+					else
+					{
+						MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+						messageBox.setMessage(Descriptions.MerkleTree_Signature_Generation_Info);
+						messageBox.setText("Info");
+						messageBox.open();
+						tabFolder.setSelection(0);
+					}
+				}
+				else if(tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_3) && !merkle.isGenerated()){
+					MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_INFORMATION | SWT.OK);
+					messageBox.setMessage(Descriptions.MerkleTree_Generation_Info);
+					messageBox.setText("Info");
+					messageBox.open();
+					tabFolder.setSelection(0);
 				}
 				
 				
@@ -191,9 +225,12 @@ public class MerkleTreeView extends ViewPart {
 		
 		TabItem tbtmParameter3 = new TabItem(tabFolder,SWT.NONE);
 		tbtmParameter3.setText(Descriptions.MerkleTreeView_2);
-
 		mtS=new MerkleTreeSignatureComposite(tabFolder,SWT.NONE,merkle);
-		tbtmParameter.setControl(mtS);
+		tbtmParameter3.setControl(mtS);
+		
+		TabItem tbtmParameter4 = new TabItem(tabFolder,SWT.NONE);
+		tbtmParameter4.setText(Descriptions.MerkleTreeView_3);
+		tbtmParameter4.setControl(mtV);
 		
 		mtC = new MerkleTreeComposite(tabFolder, SWT.NONE, this);
 		tbtmParameter.setControl(mtC);

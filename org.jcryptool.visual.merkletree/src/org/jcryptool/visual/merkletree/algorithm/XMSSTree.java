@@ -390,4 +390,10 @@ public class XMSSTree implements ISimpleMerkle {
 	public OTS getOneTimeSignatureAlgorithmus() {
 		return this.otsAlgo;
 	}
+
+	@Override
+	public boolean verify(String message, String signature, int keyIndex) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

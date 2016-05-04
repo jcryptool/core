@@ -3,6 +3,7 @@ package org.jcryptool.visual.merkletree.algorithm;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SimpleMerkleTree implements ISimpleMerkle {
 
@@ -273,7 +274,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 			
 			this.otsAlgo.setPrivateKey(this.privKeys.get(this.keyIndex));
 			this.otsAlgo.setPublicKey(this.publicKeys.get(this.keyIndex));
-			this.otsAlgo.setMessage(message.getBytes());
+			this.otsAlgo.setMessage(messageHash.getBytes());
 			this.otsAlgo.sign();
 	
 			tmpSignature = org.jcryptool.visual.merkletree.files.Converter
@@ -297,24 +298,71 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 
 	@Override
 	public boolean verify(String message, String signature) {
-		String[] signer = signature.split("|");
-		boolean verifier;
-		int keyIndex = Integer.parseInt(signer[signer.length - 1]);
-		byte[][] curPubKey = this.publicKeys.get(keyIndex);
-		otsAlgo.setPublicKey(curPubKey);
-		otsAlgo.setSignature(signer[0].getBytes());
+		String[] signer = signature.split("\r\n");
+		boolean verifier=true;
+		int keyIndex = Integer.parseInt(signer[1]);
+		byte[][] curPubKey = this.publicKeys.get(keyIndex);	
+		//set OTS Algorithm values
+		String messageHash = org.jcryptool.visual.merkletree.files.Converter
+				._byteToHex(this.otsAlgo.hashMessage(message));
+		
+		otsAlgo.setPrivateKey(this.privKeys.get(keyIndex));		
+		otsAlgo.setPublicKey(publicKeys.get(keyIndex));
+		otsAlgo.setSignature(org.jcryptool.visual.merkletree.files.Converter
+				._hexStringToByte(signer[0]));
+		otsAlgo.setMessage(messageHash.getBytes());
+		
+		
 		verifier = otsAlgo.verify();
+		int iHigh=keyIndex;
+		//String currentAuthPath="";
+		byte[] currentNode=leaves.get(keyIndex).getName();
+		int treeHigh=tree.size();
 		if (verifier) {
-			if (keyIndex % 2 == 0)
-				this.appendByteArrays(leaves.get(keyIndex).getName(), signer[1].getBytes());
-			for (int i = 1; i < signer.length; i++) {
-				// TODO: GenerateRootKey
-
+			while (iHigh < treeHigh-1) {
+				if(this.tree.get(iHigh).getParent().getLeft().equals(this.tree.get(iHigh))) {
+					//currentAuthPath=this.tree.get(iHigh).getParent().getRight().getNameAsString();
+					currentNode=this.createNode(currentNode,this.tree.get(iHigh).getParent().getRight().getName());
+					
+					if(!Arrays.equals(currentNode,this.tree.get(iHigh).getParent().getName())) {
+						return false;
+					}
+					else {
+						currentNode=this.tree.get(iHigh).getParent().getName();
+					}
+				}
+				else if (this.tree.get(iHigh).getParent().getRight().equals(this.tree.get(iHigh))) {
+					//currentAuthPath = this.tree.get(iHigh).getParent().getLeft().getNameAsString();
+					currentNode=this.createNode(this.tree.get(iHigh).getParent().getLeft().getName(),currentNode);
+					if(!Arrays.equals(currentNode,this.tree.get(iHigh).getParent().getName())) {
+						return false;
+					}
+					else {
+						currentNode=this.tree.get(iHigh).getParent().getName();
+					}
+				}
+				iHigh=this.tree.lastIndexOf(this.tree.get(iHigh).getParent());
 			}
 		}
 		return verifier;
 	}
+	public boolean verify(String message, String signature,int markedLeafIndex) {
+		String[] signer = signature.split("\r\n");
+		int keyIndex = Integer.parseInt(signer[1]);
+		if(markedLeafIndex != keyIndex) {
+			return false;
+		}
+		else
+			return this.verify(message, signature);
+		
+	}
+	public byte[] createNode(byte[]node1,byte[]node2) {
+		byte[] toHash = appendByteArrays(node1, node2);
 
+		return mDigest.digest(toHash);
+
+		
+	}
 	private void generateKeyPairsAndLeaves() {
 		Node leaf;
 		byte[] d1pubKey;

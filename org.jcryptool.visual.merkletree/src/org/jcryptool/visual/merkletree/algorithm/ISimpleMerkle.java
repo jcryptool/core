@@ -35,6 +35,7 @@ public interface ISimpleMerkle {
 
 	public boolean verify(String message, String signature);
 
+	public boolean verify(String message, String signature, int keyIndex);
 	// Options
 	public void selectHashAlgorithmus(String hAlgo);
 
