@@ -76,8 +76,7 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	public byte[] getPrivateSeed() {
-		// TODO Auto-generated method stub
-		return null;
+		return privateSeed;
 	}
 
 	@Override
@@ -87,31 +86,28 @@ public class XMSSTree implements ISimpleMerkle {
 
 	@Override
 	public byte[] getPublicSeed() {
-		// TODO Auto-generated method stub
-		return null;
+		return publicSeed;
+
 	}
 	
 	@Override
 	public int getKeyLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return keyLength;
 	}
 
 	@Override
 	public int getLeafCounter() {
-		// TODO Auto-generated method stub
-		return 0;
+		return leafCounter;
 	}
 
 	@Override
 	public Node getTreeLeaf(int treeLeafNumber) {
-
 		return leaves.get(treeLeafNumber);
 	}
 
 	@Override
 	public byte[] getNodeContentbyIndex(int index) {
-
+		//warum Name und nicht in Content????
 		return tree.get(index).getName();
 	}
 
@@ -140,8 +136,11 @@ public class XMSSTree implements ISimpleMerkle {
 		byte[] bitmk = { 0, 0, 0, 0, 0 };
 		byte[] message = this.appendByteArrays(pKey, pKey2);
 		for (int i = 0; i < message.length; i++) {
+			//XOR message with bitmask
+			//bitmk[0] sollte eigentlich bitmk[i] sein?????
 			message[i] ^= bitmk[0];
 		}
+		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
 		String tohash = String.format("%512s", (ksecret.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
 	}
@@ -274,7 +273,7 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectHashAlgorithmus(String hAlgo) {
+	public void selectHashAlgorithm(String hAlgo) {
 		try {
 			mDigest = MessageDigest.getInstance(hAlgo);
 		} catch (NoSuchAlgorithmException e) {
@@ -291,16 +290,19 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectOneTimeSignatureAlgorithmus(String hash, String algo) {
+	/**
+	 * Selects the Signature Algorithm
+	 */
+	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
 		switch (algo) {
 		case "WOTS":
 			this.otsAlgo = new WinternitzOTS(16, hash);
 			break;
 		case "WOTSPlus":
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.privateSeed);
 			break;
 		default:
-			this.otsAlgo = new WOTSPlusMerkle(16, hash, this.privateSeed);
+			this.otsAlgo = new WOTSPlusXMSS(16, hash, this.privateSeed);
 			break;
 		}
 		if (this.mDigest == null) {
@@ -387,7 +389,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return treeGenerated;
 	}
 	@Override
-	public OTS getOneTimeSignatureAlgorithmus() {
+	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
 	}
 

@@ -219,7 +219,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectHashAlgorithmus(String hAlgo) {
+	public void selectHashAlgorithm(String hAlgo) {
 		try {
 			mDigest = MessageDigest.getInstance(hAlgo);
 		} catch (NoSuchAlgorithmException e) {
@@ -236,7 +236,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 	}
 
 	@Override
-	public void selectOneTimeSignatureAlgorithmus(String hash, String algo) {
+	public void selectOneTimeSignatureAlgorithm(String hash, String algo) {
 		switch (algo) {
 		case "WOTS":
 			this.otsAlgo = new WinternitzOTS(16, hash);
@@ -387,7 +387,7 @@ public class SimpleMerkleTree implements ISimpleMerkle {
 		
 	}
 	@Override
-	public OTS getOneTimeSignatureAlgorithmus() {
+	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
 	}
 }

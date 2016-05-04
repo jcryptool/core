@@ -130,7 +130,7 @@ public class MerkleTreeView extends ViewPart {
 						
 						//merkle neu zuweisen
 						merkle = new SimpleMerkleTree(seedCheck,seedCheck,128,keyCheck);
-						merkle.selectOneTimeSignatureAlgorithmus("SHA-256","WOTSPlus");
+						merkle.selectOneTimeSignatureAlgorithm("SHA-256","WOTSPlus");
 						merkle.generateMerkleTree();
 						if (tabFolder.getSelection()[0].getText().equals(Descriptions.MerkleTreeView_2)) {
 							tabFolder.getSelection()[0].setControl(mtS);

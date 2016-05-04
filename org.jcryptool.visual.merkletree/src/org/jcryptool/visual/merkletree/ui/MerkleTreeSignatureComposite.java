@@ -100,7 +100,7 @@ public class MerkleTreeSignatureComposite extends Composite {
 				}
 				styledTextSignSize.setText(Integer
 						.toString(org.jcryptool.visual.merkletree.files.Converter._stringToByte(otSign).length / 2)
-						+ "/" + (merkle.getOneTimeSignatureAlgorithmus().getN() * merkle.getOneTimeSignatureAlgorithmus().getL()) + " Bytes");
+						+ "/" + (merkle.getOneTimeSignatureAlgorithm().getN() * merkle.getOneTimeSignatureAlgorithm().getL()) + " Bytes");
 				styledTextKeyNumber.setText(keyIndex);
 				if(signature == "") {
 					styledTextSign.setText(Descriptions.MerkleTreeSign_4);

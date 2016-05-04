@@ -37,9 +37,9 @@ public interface ISimpleMerkle {
 
 	public boolean verify(String message, String signature, int keyIndex);
 	// Options
-	public void selectHashAlgorithmus(String hAlgo);
+	public void selectHashAlgorithm(String hAlgo);
 
-	public void selectOneTimeSignatureAlgorithmus(String hash, String algo);
+	public void selectOneTimeSignatureAlgorithm(String hash, String algo);
 	
-	public OTS getOneTimeSignatureAlgorithmus();
+	public OTS getOneTimeSignatureAlgorithm();
 }
