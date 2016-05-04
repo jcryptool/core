@@ -10,6 +10,7 @@ public abstract class MerkleConst {
  
 	// Identifies a key data vector, as well as a wizard for key changing
 	public static final int KEY = 1;
+	
 
 	// Identifies a ciphertext data vector
 	public static final int ENC = 2;
