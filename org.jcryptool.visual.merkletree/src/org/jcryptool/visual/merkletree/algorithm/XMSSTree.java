@@ -229,36 +229,7 @@ public class XMSSTree implements ISimpleMerkle {
 			tree.addAll(treeLevel);
 		}
 
-		/*
-		 * int tHorizontal = leaves.size();
-		 * 
-		 * merkleTreeHeight = new ArrayList<ArrayList<MerkleTreeNode>>();
-		 * MerkleTreeNode helperNode;
-		 * 
-		 * merkleTreeHeight.add(this.leaves);
-		 * 
-		 * for (int i = 0; i < height-1; i++) {
-		 * 
-		 * merkleTreeRow = new ArrayList<MerkleTreeNode>(); int nextRowNode = 0;
-		 * 
-		 * for (int j = 0; j < tHorizontal; j += 2) {
-		 * 
-		 * byte[] content =
-		 * this.hashNode(merkleTreeHeight.get(i).get(j).getContent(),
-		 * merkleTreeHeight.get(i).get(j + 1).getContent(), null,
-		 * this.publicSeed); helperNode = new MerkleTreeNode(i + 1, nextRowNode,
-		 * content); merkleTreeRow.add(helperNode); nextRowNode++;
-		 * 
-		 * } if (tHorizontal % 2 == 1) { byte[] content =
-		 * this.hashNode(merkleTreeHeight.get(i).get((tHorizontal -
-		 * 1)).getContent(), merkleTreeHeight.get(i).get((tHorizontal -
-		 * 1)).getContent(),null,this.publicSeed); helperNode = new
-		 * MerkleTreeNode(i + 1, nextRowNode + 1, content);
-		 * merkleTreeRow.add(helperNode); }
-		 * 
-		 * merkleTreeHeight.add(merkleTreeRow); }
-		 */
-
+		//set the treeGenerated to true -> needed for method isGenerated()
 		treeGenerated = true;
 	}
 
@@ -419,6 +390,9 @@ public class XMSSTree implements ISimpleMerkle {
 		return treeGenerated;
 	}
 	@Override
+	/**
+	 * returns the used One Time Signature Algorithm including the public key, secret key, message
+	 */
 	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
 	}
