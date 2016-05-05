@@ -2,7 +2,10 @@ package org.jcryptool.visual.merkletree.algorithm;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+
+import org.jcryptool.visual.merkletree.files.ByteUtils;
 
 public class XMSSTree implements ISimpleMerkle {
 
@@ -163,18 +166,28 @@ public class XMSSTree implements ISimpleMerkle {
 	public byte[] hashLTree(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
 		//TODO get Bitmask and Keysecret
-		byte[] ksecret = { 0, 0, 0, 0, 0 };
-		byte[] bitmk = { 0, 0, 0, 0, 0 };
-		byte[] message = this.appendByteArrays(pKey, pKey2);
+		//byte[] ksecret = { 0, 0, 0, 0, 0 }; ??
+		int len = pKey.length;
+		byte[] bitmk_0, bitmk_1, bitmk, key;
+		byte[] message = this.appendByteArrays(pKey, pKey2);		
+		//adrs.setKeyBit(0);
+		//adrs.setBlockBit(0);
+		bitmk_0 = randomGenerator(seed, adrs, len);
+		//adrs.setBlockBit(1);
+		bitmk_1 = randomGenerator(seed, adrs, len);
+		//adrs.setKeyBit(1);
+		//adrs.setBlockBit(0);
+		key = randomGenerator(seed, adrs, len);
+		bitmk = ByteUtils.concatenate(bitmk_0, bitmk_1);
 		for (int i = 0; i < message.length; i++) {
 			//XOR message with bitmask
 			//bitmk[0] sollte eigentlich bitmk[i] sein?????
 			message[i] ^= bitmk[i];
 		}
 		//Formatiert den ksecret und message zu einem 512 Byte hexadezimalen Wert
-		String tohash = String.format("%512s", (ksecret.toString() + message.toString()));
+		String tohash = String.format("%512s", (key.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
-	}
+		}
 
 	public byte[] hashNode(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
@@ -423,5 +436,26 @@ public class XMSSTree implements ISimpleMerkle {
 	 */
 	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
+	}
+	
+	/**
+	 * PRNG used to generate the bitmasks and the key for hashing
+	 * @param seed
+	 * 		seed for the PRNG
+	 * @param address
+	 * 		address of left/right node
+	 */
+	private byte[] randomGenerator(byte[] seed, byte[] address, int len) {
+		byte[] res = new byte[len];	//erstellen des zu befüllenden arrays
+		SecureRandom rnd = null;
+		try {
+			rnd = SecureRandom.getInstance("SHA1PRNG");
+		} catch(NoSuchAlgorithmException e) {
+			//Der Algo existiert!
+		}
+		seed = ByteUtils.concatenate(seed, address);
+		rnd.setSeed(seed);	//setzen des seeds seed+address für den PRNG
+		rnd.nextBytes(res); //befüllen des byte[]
+		return res;
 	}
 }
