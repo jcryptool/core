@@ -186,7 +186,9 @@ public class XMSSTree implements ISimpleMerkle {
 		String tohash = String.format("%512s", (key.toString() + message.toString()));
 		return mDigest.digest(tohash.getBytes());
 		}
-
+	
+	
+	//TODO müsste algo 9 aus dem rfc sein
 	public byte[] hashNode(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
 		// get Bitmasken and Keysecret
