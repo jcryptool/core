@@ -347,6 +347,9 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * Verifys the Signature and return true or false
+	 */
 	public boolean verify(String message, String signature) {
 		String[] signer = signature.split("|");
 		boolean verifier;
@@ -364,6 +367,15 @@ public class XMSSTree implements ISimpleMerkle {
 			}
 		}
 		return verifier;
+	}
+	
+	@Override
+	/**
+	 * Verifys the Signature of an given index and return true or false
+	 */
+	public boolean verify(String message, String signature, int keyIndex) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	private void generateKeyPairsAndLeaves() {
@@ -384,18 +396,14 @@ public class XMSSTree implements ISimpleMerkle {
 	}
 
 	@Override
+	/**
+	 * Returns if the tree is already generated
+	 */
 	public boolean isGenerated() {
-
 		return treeGenerated;
 	}
 	@Override
 	public OTS getOneTimeSignatureAlgorithm() {
 		return this.otsAlgo;
-	}
-
-	@Override
-	public boolean verify(String message, String signature, int keyIndex) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
