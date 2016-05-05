@@ -38,5 +38,7 @@ public abstract class Address {
 	public abstract void setLayerAddress(int i);
 	
 	public abstract void setTreeAddress(int i);
+	
+	public abstract byte[] getAddress();
 
 }
