@@ -185,6 +185,7 @@ public class XMSSTree implements ISimpleMerkle {
 		return mDigest.digest(tohash.getBytes());
 		}
 
+	//zuck: hashNode müsste überflüssig sein; selbe wie hashLTree
 	public byte[] hashNode(byte[] pKey, byte[] pKey2, byte[] adrs, byte[] seed) {
 
 		// get Bitmasken and Keysecret
